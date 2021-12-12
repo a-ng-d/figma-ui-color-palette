@@ -1,0 +1,78 @@
+#react-page {
+  height: 100%;
+  padding: 24px;
+}
+
+section + section {
+  margin: 48px 0 0
+}
+
+section > div + div {
+  margin: 24px 0 0;
+}
+
+.slider {
+  display: flex;
+  align-items: center;
+}
+
+.slider > div + div {
+  margin: 0 0 0 24px
+}
+
+.slider .slider_range {
+  flex: 1 1 auto;
+  height: 48px;
+  background: linear-gradient(-90deg, var(--white) 0%, var(--black) 100%);
+  border-radius: 8px;
+  box-shadow: inset 0px 0px 0px 1px var(--black3);
+  position: relative;
+}
+
+.slider .slider_knob {
+  width: 32px;
+  height: 64px;
+  background: var(--white);
+  box-shadow: 0px 1px 2px var(--black1), inset 0px 0px 0px 1px var(--black3);
+  border-radius: 8px;
+  transform: translateX(-50%);
+  display: flex;
+  position: absolute;
+  top: -10px;
+  cursor: ew-resize;
+  z-index: 1
+}
+
+.slider .slider_tooltip {
+  padding: 4px;
+  background: var(--black);
+  color: var(--white);
+  position: absolute;
+  transform: translateX(-50%) translateY(-100%);
+  left: 50%;
+  top: -16px;
+  user-select: none;
+  display: none
+}
+
+.slider .slider_knob:hover .slider_tooltip {
+  display: block !important
+}
+
+.slider .slider_tooltip:after {
+  content: '';
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 8px solid var(--black);
+  position: absolute;
+  bottom: -6px;
+  left: calc(50% - 8px)
+}
+
+.slider .slider_label {
+  margin: auto;
+  user-select: none;
+  pointer-events: none
+}

@@ -1,0 +1,10 @@
+{
+  "name": "Palette generator",
+  "id": "1049711633063661801",
+  "api": "1.0.0",
+  "editorType": [
+    "figma"
+  ],
+  "main": "dist/code.js",
+  "ui": "dist/ui.html"
+}
