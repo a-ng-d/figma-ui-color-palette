@@ -2,7 +2,7 @@ import chroma from 'chroma-js';
 import Sample from './nodes';
 
 figma.showUI(__html__);
-figma.ui.resize(800, 232);
+figma.ui.resize(640, 264);
 figma.loadFontAsync({ family: "Roboto", style: "Regular" });
 
 figma.ui.onmessage = msg => {

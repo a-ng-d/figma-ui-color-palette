@@ -41,6 +41,7 @@ class App extends React.Component {
           knobs = Array.from(range.childNodes as HTMLCollectionOf<HTMLElement>);
 
     let offset;
+    knob.style.zIndex = 2;
 
     const slide = (e) => {
       let limitMin, limitMax;
@@ -79,6 +80,7 @@ class App extends React.Component {
     document.onmouseup = () => {
       document.removeEventListener('mousemove', slide);
       knob.onmouseup = null;
+      knob.style.zIndex = 1;
       knob.style.left = this.doMap(offset, 0, rangeWidth, 0, 100).toFixed(1) + '%';
       knobs.forEach(knob => (knob.children[1] as HTMLElement).style.display = 'none')
       console.log(this.lightnessScale)
@@ -119,11 +121,10 @@ class App extends React.Component {
       knob.style.left = this.lightnessScale[knob.classList[1]] + '%';
       this.updateKnobTooltip(knob.childNodes[1], this.lightnessScale[knob.classList[1]])
     })
-
   }
 
   render() {
-    return <div>
+    return <main>
       <section id='lightness-scale'>
         <div className='section-title'>Lightness scale</div>
         <div className='slider'>
@@ -133,11 +134,15 @@ class App extends React.Component {
             )}
           </div>
         </div>
+        <div className="onboarding-tip">
+          <div className="icon icon--library"></div>
+          <div className="onboarding-tip__msg">Hold Shift ⇧ while dragging 50 or 900 to distribute horizontal spacing</div>
+        </div>
       </section>
       <section id='actions'>
-        <button id='create' className='button button--primary' onClick={this.onCreate}>Generate a palette</button>
+        <button className='button button--primary' onClick={this.onCreate}>Generate a palette</button>
       </section>
-    </div>
+    </main>
   }
 };
 

@@ -1,40 +1,52 @@
 #react-page {
   height: 100%;
-  padding: 24px;
 }
 
-section + section {
-  margin: 48px 0 0
+main {
+  height: inherit;
+  display: flex;
+  flex-direction: column;
 }
 
-section > div + div {
-  margin: 24px 0 0;
+section#lightness-scale {
+  flex: 1;
+  padding: var(--size-small);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--size-xxsmall)
 }
 
+section#actions {
+  width: 100%;
+  padding: var(--size-small);
+  border-top: 1px solid var(--silver);
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--size-xxsmall)
+}
+
+/* Slider */
 .slider {
   display: flex;
-  align-items: center;
-}
-
-.slider > div + div {
-  margin: 0 0 0 24px
+  align-items: center
 }
 
 .slider .slider_range {
   flex: 1 1 auto;
-  height: 48px;
+  height: var(--size-xlarge);
   background: linear-gradient(-90deg, var(--white) 0%, var(--black) 100%);
-  border-radius: 8px;
+  border-radius: var(--border-radius-large);
   box-shadow: inset 0px 0px 0px 1px var(--black3);
   position: relative;
 }
 
 .slider .slider_knob {
-  width: 32px;
-  height: 64px;
+  width: var(--size-medium);
+  height: var(--size-xxlarge);
   background: var(--white);
   box-shadow: 0px 1px 2px var(--black1), inset 0px 0px 0px 1px var(--black3);
-  border-radius: 8px;
+  border-radius: var(--border-radius-large);
   transform: translateX(-50%);
   display: flex;
   position: absolute;
@@ -44,7 +56,7 @@ section > div + div {
 }
 
 .slider .slider_tooltip {
-  padding: 4px;
+  padding: var(--size-xxxsmall);
   background: var(--black);
   color: var(--white);
   position: absolute;
