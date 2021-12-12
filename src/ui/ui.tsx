@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import '../node_modules/figma-plugin-ds/dist/figma-plugin-ds.css';
+import '../../node_modules/figma-plugin-ds/dist/figma-plugin-ds.css';
 import './ui.css';
 
 declare function require(path: string): any;
