@@ -37,30 +37,41 @@ class App extends React.Component {
           range = e.nativeEvent.path[1],
           shift = e.nativeEvent.layerX,
           tooltip = knob.children[1],
-          max = range.offsetWidth,
+          rangeWidth = range.offsetWidth,
           knobs = Array.from(range.childNodes as HTMLCollectionOf<HTMLElement>);
 
     let offset;
 
-    knob.style.zIndex = 2;
-
     const slide = (e) => {
+      let limitMin, limitMax;
       offset = e.clientX - range.offsetLeft - shift;
 
-      if (offset < 0)
-        offset = 0;
-      else if (offset >= max)
-        offset = max;
+      if (knob == range.lastChild) { // 900
+        limitMin = 0;
+        limitMax = knob.previousElementSibling.offsetLeft - 10
+      } else if (knob == range.firstChild) { // 50
+        limitMin = knob.nextElementSibling.offsetLeft + 10;
+        limitMax = rangeWidth
+      } else {
+        limitMin = knob.nextElementSibling.offsetLeft + 10;
+        limitMax = knob.previousElementSibling.offsetLeft - 10
+      }
 
-      if (range.lastChild == knob)
-        this.updateKnobsPosition('min', this.doMap(offset, 0, max, 0, 100).toFixed(1), knobs)
+      if (offset < limitMin)
+        offset = limitMin;
+      else if (offset >= limitMax)
+        offset = limitMax;
 
-      if (range.firstChild == knob)
-        this.updateKnobsPosition('max', this.doMap(offset, 0, max, 0, 100).toFixed(1), knobs)
+      if (knob == range.lastChild && e.shiftKey == true) // 900
+        this.updateKnobsPosition('min', this.doMap(offset, 0, rangeWidth, 0, 100).toFixed(1), knobs);
+      else if (knob == range.firstChild && e.shiftKey == true) // 50
+          this.updateKnobsPosition('max', this.doMap(offset, 0, rangeWidth, 0, 100).toFixed(1), knobs);
+      else if (e.shiftKey == false)
+        knobs.forEach(knob => (knob.children[1] as HTMLElement).style.display = 'none');
 
       knob.style.left = offset + 'px'
-      this.updateLightnessScaleEntry(knob.classList[1], this.doMap(offset, 0, max, 0, 100).toFixed(1));
-      this.updateKnobTooltip(tooltip, this.doMap(offset, 0, max, 0, 100).toFixed(1))
+      this.updateLightnessScaleEntry(knob.classList[1], this.doMap(offset, 0, rangeWidth, 0, 100).toFixed(1));
+      this.updateKnobTooltip(tooltip, this.doMap(offset, 0, rangeWidth, 0, 100).toFixed(1));
     }
 
     document.addEventListener('mousemove', slide)
@@ -68,9 +79,9 @@ class App extends React.Component {
     document.onmouseup = () => {
       document.removeEventListener('mousemove', slide);
       knob.onmouseup = null;
-      knob.style.left = this.doMap(offset, 0, max, 0, 100).toFixed(1) + '%';
-      knob.style.zIndex = 1
+      knob.style.left = this.doMap(offset, 0, rangeWidth, 0, 100).toFixed(1) + '%';
       knobs.forEach(knob => (knob.children[1] as HTMLElement).style.display = 'none')
+      console.log(this.lightnessScale)
     }
 
   }
@@ -118,7 +129,7 @@ class App extends React.Component {
         <div className='slider'>
           <div className='slider_range'>
             {Object.entries(this.doLightnessScale()).map(lightness =>
-              <div className={`slider_knob ${lightness[0]}`} style={{left: `${lightness[1]}%`}} onMouseDown={this.onSlide}><span className='type slider_label'>{lightness[0].replace('lightness-', '')}</span><div className='type type--inverse slider_tooltip'>{lightness[1]}</div></div>
+              <div key={lightness[0]} className={`slider_knob ${lightness[0]}`} style={{left: `${lightness[1]}%`}} onMouseDown={this.onSlide}><span className='type slider_label'>{lightness[0].replace('lightness-', '')}</span><div className='type type--inverse slider_tooltip'>{lightness[1]}</div></div>
             )}
           </div>
         </div>
