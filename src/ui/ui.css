@@ -14,7 +14,7 @@ section#lightness-scale {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: var(--size-xxsmall)
+  gap: var(--size-xsmall)
 }
 
 section#actions {
