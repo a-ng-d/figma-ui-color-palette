@@ -9,10 +9,16 @@ figma.ui.onmessage = msg => {
 
   if (msg.type === 'make-palette' && figma.currentPage.selection.length != 0) {
 
-    let i = 0,
-        j = 0;
+    const scene: SceneNode[] = [],
+          palette: FrameNode = figma.createFrame();
 
-    const nodes: SceneNode[] = [];
+    palette.layoutMode = "VERTICAL";
+    palette.primaryAxisSizingMode = "AUTO";
+    palette.counterAxisSizingMode = "AUTO";
+    palette.name = "Awesome Palette";
+    palette.paddingTop = palette.paddingRight = palette.paddingBottom = palette.paddingLeft = 32;
+    palette.cornerRadius = 16;
+
 
     figma.currentPage.selection.forEach(element => {
 
@@ -24,18 +30,23 @@ figma.ui.onmessage = msg => {
 
           let rgb = fill.color;
 
+          const paletteItem: FrameNode = figma.createFrame();
+          paletteItem.layoutMode = "HORIZONTAL";
+          paletteItem.counterAxisSizingMode = "AUTO";
+          paletteItem.name = element.name;
+
           Object.values(msg.data).forEach(lightness => {
-      			let palette = chroma([rgb.r * 255, rgb.g * 255, rgb.b * 255]).set('lch.l', lightness);
-            const sample = new Sample(`${element.name}-${Object.keys(msg.data).find(key => msg.data[key] === lightness).substr(10)}`, 128, 64, i, j, palette._rgb).makeNode();
-            figma.currentPage.appendChild(sample);
-            nodes.push(sample);
-            i += 128;
+      			let newColor = chroma([rgb.r * 255, rgb.g * 255, rgb.b * 255]).set('lch.l', lightness);
+            const sample = new Sample(`${element.name}-${Object.keys(msg.data).find(key => msg.data[key] === lightness).substr(10)}`, 128, 96, newColor._rgb).makeNode();
+            paletteItem.name = element.name;
+            paletteItem.appendChild(sample)
       		});
 
-          i = 0;
-          j += 64
+          palette.appendChild(paletteItem)
+          figma.currentPage.appendChild(palette);
+          scene.push(palette);
 
-        });
+        })
 
       } else {
         figma.notify(`The layer "${element.name}" must get at least one solid color`)
@@ -44,8 +55,8 @@ figma.ui.onmessage = msg => {
 
     });
 
-    figma.currentPage.selection = nodes;
-    figma.viewport.scrollAndZoomIntoView(nodes)
+    figma.currentPage.selection = scene;
+    figma.viewport.scrollAndZoomIntoView(scene)
 
   } else {
     figma.notify('Select some filled layers to generate a palette')

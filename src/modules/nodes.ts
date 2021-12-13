@@ -5,25 +5,19 @@ export default class Sample {
   name: string;
   width: number;
   height: number;
-  x: number;
-  y: number;
   rgb: Array<number>;
   node: FrameNode;
 
-  constructor(name, width, height, x, y, rgb) {
+  constructor(name, width, height, rgb) {
     this.name = name;
     this.width = width;
     this.height = height;
-    this.x = x;
-    this.y = y;
     this.rgb = rgb;
     this.node = figma.createFrame();
   }
 
   makeNode() {
     this.node.name = this.name;
-    this.node.x = this.x;
-    this.node.y = this.y;
     this.node.resize(this.width, this.height);
     this.node.fills = [{
       type: 'SOLID',
@@ -37,7 +31,7 @@ export default class Sample {
     this.node.paddingTop = this.node.paddingRight = this.node.paddingBottom = this.node.paddingLeft = 8;
     this.node.primaryAxisSizingMode = "FIXED";
 
-    this.node.appendChild(new Legend(this.rgb).makeNode())
+    this.node.appendChild(new Legend(this.name, this.rgb).makeNode())
 
     return this.node
   }
@@ -46,12 +40,14 @@ export default class Sample {
 
 class Legend {
 
+  name: string;
   rgb: Array<number>;
   hex: string;
   lch: Array<number>;
   node: TextNode;
 
-  constructor(rgb) {
+  constructor(name, rgb) {
+    this.name = name;
     this.rgb = rgb;
     this.hex = chroma(rgb).hex();
     this.lch = chroma(rgb).lch();
@@ -73,7 +69,7 @@ class Legend {
   }
 
   doContent() {
-    return `${this.hex}\nR ${Math.floor(this.rgb[0])} G ${Math.floor(this.rgb[1])} B ${Math.floor(this.rgb[2])}\nL ${Math.floor(this.lch[0])} C ${Math.floor(this.lch[1])} H ${Math.floor(this.lch[2])}\n${this.getLevel()} ${this.getContrast().toFixed(2)} : 1`
+    return `${this.name}\n${this.hex}\nR ${Math.floor(this.rgb[0])} G ${Math.floor(this.rgb[1])} B ${Math.floor(this.rgb[2])}\nL ${Math.floor(this.lch[0])} C ${Math.floor(this.lch[1])} H ${Math.floor(this.lch[2])}\n${this.getLevel()} ${this.getContrast().toFixed(2)} : 1`
   }
 
   makeNode() {
