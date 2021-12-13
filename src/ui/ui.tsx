@@ -45,17 +45,18 @@ class App extends React.Component {
 
     const slide = (e) => {
       let limitMin, limitMax;
+      const gap = this.doMap(2, 0, 100, 0, rangeWidth);
       offset = e.clientX - range.offsetLeft - shift;
 
       if (knob == range.lastChild) { // 900
         limitMin = 0;
-        limitMax = knob.previousElementSibling.offsetLeft - 10
+        limitMax = knob.previousElementSibling.offsetLeft - gap
       } else if (knob == range.firstChild) { // 50
-        limitMin = knob.nextElementSibling.offsetLeft + 10;
+        limitMin = knob.nextElementSibling.offsetLeft + gap;
         limitMax = rangeWidth
       } else {
-        limitMin = knob.nextElementSibling.offsetLeft + 10;
-        limitMax = knob.previousElementSibling.offsetLeft - 10
+        limitMin = knob.nextElementSibling.offsetLeft + gap;
+        limitMax = knob.previousElementSibling.offsetLeft - gap
       }
 
       if (offset < limitMin)
