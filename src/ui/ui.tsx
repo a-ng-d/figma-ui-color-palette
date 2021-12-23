@@ -67,12 +67,11 @@ class App extends React.Component {
       else if (offset >= limitMax)
         offset = limitMax;
 
+      // distribute horizontal spacing
       if (knob == range.lastChild && e.shiftKey == true) // 900
-        this.updateKnobsPosition('min', this.doMap(offset, 0, rangeWidth, 0, 100).toFixed(1), knobs);
+        this.updateKnobsPosition('MIN', this.doMap(offset, 0, rangeWidth, 0, 100).toFixed(1), knobs)
       else if (knob == range.firstChild && e.shiftKey == true) // 50
-          this.updateKnobsPosition('max', this.doMap(offset, 0, rangeWidth, 0, 100).toFixed(1), knobs);
-      else if (e.shiftKey == false)
-        knobs.forEach(knob => (knob.children[1] as HTMLElement).style.display = 'none');
+        this.updateKnobsPosition('MAX', this.doMap(offset, 0, rangeWidth, 0, 100).toFixed(1), knobs)
       knob.style.left = this.doMap(offset, 0, rangeWidth, 0, 100).toFixed(1) + '%';
 
       // update lightness scale
@@ -117,10 +116,10 @@ class App extends React.Component {
   }
 
   updateKnobsPosition = (type, value, knobs) => {
-    if (type === 'min')
+    if (type === 'MIN')
       this.lightnessMin = parseFloat(value)
-    else if (type === 'max')
-      this.lightnessMax = parseFloat(value)
+    else if (type === 'MAX')
+      this.lightnessMax = parseFloat(value);
 
     this.doLightnessScale();
 
