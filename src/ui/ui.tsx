@@ -48,6 +48,9 @@ class App extends React.Component {
       const gap = this.doMap(2, 0, 100, 0, rangeWidth);
       offset = e.clientX - range.offsetLeft - shift;
 
+      this.lightnessMin = parseFloat(this.doMap(range.lastChild.offsetLeft, 0, rangeWidth, 0, 100).toFixed(1));
+      this.lightnessMax = parseFloat(this.doMap(range.firstChild.offsetLeft, 0, rangeWidth, 0, 100).toFixed(1));
+
       if (knob == range.lastChild) { // 900
         limitMin = 0;
         limitMax = knob.previousElementSibling.offsetLeft - gap
@@ -72,8 +75,11 @@ class App extends React.Component {
         knobs.forEach(knob => (knob.children[1] as HTMLElement).style.display = 'none');
 
       knob.style.left = offset + 'px'
-      this.updateLightnessScaleEntry(knob.classList[1], this.doMap(offset, 0, rangeWidth, 0, 100).toFixed(1));
-      this.updateKnobTooltip(tooltip, this.doMap(offset, 0, rangeWidth, 0, 100).toFixed(1));
+      // update lightness scale
+      knobs.forEach(knob => {
+        this.updateLightnessScaleEntry(knob.classList[1], this.doMap(knob.offsetLeft, 0, rangeWidth, 0, 100).toFixed(1))
+      });
+      this.updateKnobTooltip(tooltip, this.doMap(offset, 0, rangeWidth, 0, 100).toFixed(1))
     }
 
     document.addEventListener('mousemove', slide)
