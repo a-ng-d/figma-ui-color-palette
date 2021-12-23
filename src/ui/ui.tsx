@@ -72,6 +72,15 @@ class App extends React.Component {
         this.updateKnobsPosition('MIN', this.doMap(offset, 0, rangeWidth, 0, 100).toFixed(1), knobs)
       else if (knob == range.firstChild && e.shiftKey == true) // 50
         this.updateKnobsPosition('MAX', this.doMap(offset, 0, rangeWidth, 0, 100).toFixed(1), knobs)
+
+      // link every knob
+      if (e.ctrlKey == true || e.metaKey == true) {
+        if (offset <= (knob.offsetLeft - range.lastChild.offsetLeft) || offset > (rangeWidth - range.firstChild.offsetLeft + knob.offsetLeft))
+          offset = knob.offsetLeft
+        else
+          this.linkKnobs(offset, knob, knobs, rangeWidth)
+      }
+
       knob.style.left = this.doMap(offset, 0, rangeWidth, 0, 100).toFixed(1) + '%';
 
       // update lightness scale
@@ -125,6 +134,15 @@ class App extends React.Component {
 
     knobs.forEach(knob => {
       knob.style.left = this.lightnessScale[knob.classList[1]] + '%';
+      this.updateKnobTooltip(knob.childNodes[1], this.lightnessScale[knob.classList[1]])
+    })
+  }
+
+  linkKnobs = (offset, src, knobs, width) => {
+    knobs.forEach(knob => {
+      let shift = (knob.offsetLeft - src.offsetLeft) + offset;
+      if (knob != src)
+        knob.style.left = this.doMap(shift, 0, width, 0, 100) + '%';
       this.updateKnobTooltip(knob.childNodes[1], this.lightnessScale[knob.classList[1]])
     })
   }
