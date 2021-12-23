@@ -62,7 +62,7 @@ class App extends React.Component {
         limitMax = knob.previousElementSibling.offsetLeft - gap
       }
 
-      if (offset < limitMin)
+      if (offset <= limitMin)
         offset = limitMin;
       else if (offset >= limitMax)
         offset = limitMax;
