@@ -164,7 +164,8 @@ class App extends React.Component {
         </div>
         <div className="onboarding-tip">
           <div className="icon icon--library"></div>
-          <div className="onboarding-tip__msg">Hold Shift ⇧ while dragging 50 or 900 to distribute horizontal spacing</div>
+          <div className="onboarding-tip__msg">Hold Shift ⇧ while dragging 50 or 900 to distribute knobs' horizontal spacing</div>
+          <div className="onboarding-tip__msg">Hold Ctrl or Cmd ⌘ while dragging a scale to shift every one</div>
         </div>
       </section>
       <section id='actions'>
