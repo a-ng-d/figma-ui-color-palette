@@ -73,8 +73,8 @@ class App extends React.Component {
           this.updateKnobsPosition('max', this.doMap(offset, 0, rangeWidth, 0, 100).toFixed(1), knobs);
       else if (e.shiftKey == false)
         knobs.forEach(knob => (knob.children[1] as HTMLElement).style.display = 'none');
+      knob.style.left = this.doMap(offset, 0, rangeWidth, 0, 100).toFixed(1) + '%';
 
-      knob.style.left = offset + 'px'
       // update lightness scale
       knobs.forEach(knob => {
         this.updateLightnessScaleEntry(knob.classList[1], this.doMap(knob.offsetLeft, 0, rangeWidth, 0, 100).toFixed(1))
