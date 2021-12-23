@@ -81,6 +81,10 @@ class App extends React.Component {
           this.linkKnobs(offset, knob, knobs, rangeWidth)
       }
 
+      if (e.ctrlKey == false && e.metaKey == false && e.shiftKey == false) {
+        knobs.forEach(knob => (knob.children[1] as HTMLElement).style.display = 'none')
+      };
+
       knob.style.left = this.doMap(offset, 0, rangeWidth, 0, 100).toFixed(1) + '%';
 
       // update lightness scale
