@@ -1,5 +1,4 @@
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
 import { lightness } from '../data';
 
 export default class Slider extends React.Component {
