@@ -63,15 +63,15 @@ class App extends React.Component {
       }
 
       if (offset <= limitMin)
-        offset = limitMin;
+        offset = limitMin
       else if (offset >= limitMax)
         offset = limitMax;
 
-      // distribute horizontal spacing
+      // distribute knobs horizontal spacing
       if (knob == range.lastChild && e.shiftKey == true) // 900
-        this.updateKnobsPosition('MIN', this.doMap(offset, 0, rangeWidth, 0, 100).toFixed(1), knobs)
+        this.distributeKnobs('MIN', this.doMap(offset, 0, rangeWidth, 0, 100).toFixed(1), knobs)
       else if (knob == range.firstChild && e.shiftKey == true) // 50
-        this.updateKnobsPosition('MAX', this.doMap(offset, 0, rangeWidth, 0, 100).toFixed(1), knobs)
+        this.distributeKnobs('MAX', this.doMap(offset, 0, rangeWidth, 0, 100).toFixed(1), knobs)
 
       // link every knob
       if (e.ctrlKey == true || e.metaKey == true) {
@@ -81,16 +81,13 @@ class App extends React.Component {
           this.linkKnobs(offset, knob, knobs, rangeWidth)
       }
 
-      if (e.ctrlKey == false && e.metaKey == false && e.shiftKey == false) {
-        knobs.forEach(knob => (knob.children[1] as HTMLElement).style.display = 'none')
-      };
+      if (e.ctrlKey == false && e.metaKey == false && e.shiftKey == false)
+        knobs.forEach(knob => (knob.children[1] as HTMLElement).style.display = 'none');
 
       knob.style.left = this.doMap(offset, 0, rangeWidth, 0, 100).toFixed(1) + '%';
 
       // update lightness scale
-      knobs.forEach(knob => {
-        this.updateLightnessScaleEntry(knob.classList[1], this.doMap(knob.offsetLeft, 0, rangeWidth, 0, 100).toFixed(1))
-      });
+      knobs.forEach(knob => this.updateLightnessScaleEntry(knob.classList[1], this.doMap(knob.offsetLeft, 0, rangeWidth, 0, 100).toFixed(1)));
       this.updateKnobTooltip(tooltip, this.doMap(offset, 0, rangeWidth, 0, 100).toFixed(1))
     }
 
@@ -101,7 +98,7 @@ class App extends React.Component {
       knob.onmouseup = null;
       knob.style.zIndex = 1;
       knob.style.left = this.doMap(offset, 0, rangeWidth, 0, 100).toFixed(1) + '%';
-      knobs.forEach(knob => (knob.children[1] as HTMLElement).style.display = 'none')
+      knobs.forEach(knob => (knob.children[1] as HTMLElement).style.display = 'none');
       console.log(this.lightnessScale)
     }
 
@@ -114,7 +111,7 @@ class App extends React.Component {
     this.lightnessList.forEach(index => {
       this.lightnessScale[`lightness-${index}`] = this.doMap(granularity, 0, 1, this.lightnessMin, this.lightnessMax).toFixed(1);
       granularity -= 1 / (this.lightnessList.length - 1)
-    })
+    });
 
     return this.lightnessScale
   }
@@ -128,7 +125,7 @@ class App extends React.Component {
     tooltip.textContent = value
   }
 
-  updateKnobsPosition = (type, value, knobs) => {
+  distributeKnobs = (type, value, knobs) => {
     if (type === 'MIN')
       this.lightnessMin = parseFloat(value)
     else if (type === 'MAX')
