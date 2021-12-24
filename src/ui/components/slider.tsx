@@ -1,35 +1,19 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import '../../node_modules/figma-plugin-ds/dist/figma-plugin-ds.css';
-import './ui.css';
+import { lightness } from '../data';
 
-declare function require(path: string): any;
-
-class App extends React.Component {
-  lightnessScale: object;
-  lightnessMin: number;
-  lightnessMax: number;
+export default class Slider extends React.Component {
   lightnessList: Array<number>;
 
   constructor(props) {
     super(props)
-    this.lightnessScale = {};
-    this.lightnessMin = 24;
-    this.lightnessMax = 96;
     this.lightnessList = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900]
   }
 
-  // Generic
   doMap = (value, oldMin, oldMax, newMin, newMax) => {
-  	const oldRange = oldMax - oldMin,
+    const oldRange = oldMax - oldMin,
         newRange = newMax - newMin
-  	return ((value - oldMin) * newRange / oldRange) + newMin
-  }
-
-  // Events
-  onCreate = () => {
-    const data = this.lightnessScale;
-    parent.postMessage({ pluginMessage: { type: 'make-palette', data } }, '*')
+    return ((value - oldMin) * newRange / oldRange) + newMin
   }
 
   onSlide = (e) => {
@@ -48,8 +32,8 @@ class App extends React.Component {
       const gap = this.doMap(2, 0, 100, 0, rangeWidth);
       offset = e.clientX - range.offsetLeft - shift;
 
-      this.lightnessMin = parseFloat(this.doMap(range.lastChild.offsetLeft, 0, rangeWidth, 0, 100).toFixed(1));
-      this.lightnessMax = parseFloat(this.doMap(range.firstChild.offsetLeft, 0, rangeWidth, 0, 100).toFixed(1));
+      lightness.min = parseFloat(this.doMap(range.lastChild.offsetLeft, 0, rangeWidth, 0, 100).toFixed(1));
+      lightness.max = parseFloat(this.doMap(range.firstChild.offsetLeft, 0, rangeWidth, 0, 100).toFixed(1));
 
       if (knob == range.lastChild) { // 900
         limitMin = 0;
@@ -99,7 +83,7 @@ class App extends React.Component {
       knob.style.zIndex = 1;
       knob.style.left = this.doMap(offset, 0, rangeWidth, 0, 100).toFixed(1) + '%';
       knobs.forEach(knob => (knob.children[1] as HTMLElement).style.display = 'none');
-      console.log(this.lightnessScale)
+      console.log(lightness.scale)
     }
 
   }
@@ -109,15 +93,15 @@ class App extends React.Component {
     let granularity: number = 1;
 
     this.lightnessList.forEach(index => {
-      this.lightnessScale[`lightness-${index}`] = this.doMap(granularity, 0, 1, this.lightnessMin, this.lightnessMax).toFixed(1);
+      lightness.scale[`lightness-${index}`] = this.doMap(granularity, 0, 1, lightness.min, lightness.max).toFixed(1);
       granularity -= 1 / (this.lightnessList.length - 1)
     });
 
-    return this.lightnessScale
+    return lightness.scale
   }
 
   updateLightnessScaleEntry = (key, value) => {
-    this.lightnessScale[key] = value;
+    lightness.scale[key] = value;
   }
 
   updateKnobTooltip = (tooltip, value) => {
@@ -127,15 +111,15 @@ class App extends React.Component {
 
   distributeKnobs = (type, value, knobs) => {
     if (type === 'MIN')
-      this.lightnessMin = parseFloat(value)
+      lightness.min = parseFloat(value)
     else if (type === 'MAX')
-      this.lightnessMax = parseFloat(value);
+      lightness.max = parseFloat(value);
 
     this.doLightnessScale();
 
     knobs.forEach(knob => {
-      knob.style.left = this.lightnessScale[knob.classList[1]] + '%';
-      this.updateKnobTooltip(knob.childNodes[1], this.lightnessScale[knob.classList[1]])
+      knob.style.left = lightness.scale[knob.classList[1]] + '%';
+      this.updateKnobTooltip(knob.childNodes[1], lightness.scale[knob.classList[1]])
     })
   }
 
@@ -144,32 +128,17 @@ class App extends React.Component {
       let shift = (knob.offsetLeft - src.offsetLeft) + offset;
       if (knob != src)
         knob.style.left = this.doMap(shift, 0, width, 0, 100) + '%';
-      this.updateKnobTooltip(knob.childNodes[1], this.lightnessScale[knob.classList[1]])
+      this.updateKnobTooltip(knob.childNodes[1], lightness.scale[knob.classList[1]])
     })
   }
 
   render() {
-    return <main>
-      <section id='lightness-scale'>
-        <div className='section-title'>Lightness scale</div>
-        <div className='slider'>
-          <div className='slider_range'>
-            {Object.entries(this.doLightnessScale()).map(lightness =>
-              <div key={lightness[0]} className={`slider_knob ${lightness[0]}`} style={{left: `${lightness[1]}%`}} onMouseDown={this.onSlide}><span className='type slider_label'>{lightness[0].replace('lightness-', '')}</span><div className='type type--inverse slider_tooltip'>{lightness[1]}</div></div>
-            )}
-          </div>
-        </div>
-        <div className="onboarding-tip">
-          <div className="icon icon--library"></div>
-          <div className="onboarding-tip__msg">Hold Shift ⇧ while dragging 50 or 900 to distribute knobs' horizontal spacing</div>
-          <div className="onboarding-tip__msg">Hold Ctrl or Cmd ⌘ while dragging a scale to shift every one</div>
-        </div>
-      </section>
-      <section id='actions'>
-        <button className='button button--primary' onClick={this.onCreate}>Generate a palette</button>
-      </section>
-    </main>
+    return <div className='slider'>
+      <div className='slider_range'>
+        {Object.entries(this.doLightnessScale()).map(lightness =>
+          <div key={lightness[0]} className={`slider_knob ${lightness[0]}`} style={{left: `${lightness[1]}%`}} onMouseDown={this.onSlide}><span className='type slider_label'>{lightness[0].replace('lightness-', '')}</span><div className='type type--inverse slider_tooltip'>{lightness[1]}</div></div>
+        )}
+      </div>
+    </div>
   }
-};
-
-ReactDOM.render(<App />, document.getElementById('react-page'))
+}
