@@ -35,9 +35,9 @@ figma.ui.onmessage = msg => {
           paletteItem.counterAxisSizingMode = "AUTO";
           paletteItem.name = element.name;
 
-          Object.values(msg.data).forEach(lightness => {
+          Object.values(msg.lightness.scale).forEach(lightness => {
       			let newColor = chroma([rgb.r * 255, rgb.g * 255, rgb.b * 255]).set('lch.l', lightness);
-            const sample = new Sample(`${element.name}-${Object.keys(msg.data).find(key => msg.data[key] === lightness).substr(10)}`, 128, 96, newColor._rgb).makeNode();
+            const sample = new Sample(`${element.name}-${Object.keys(msg.lightness.scale).find(key => msg.lightness.scale[key] === lightness).substr(10)}`, 128, 96, newColor._rgb).makeNode();
             paletteItem.name = element.name;
             paletteItem.appendChild(sample)
       		});

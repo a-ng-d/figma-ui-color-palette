@@ -11,8 +11,7 @@ class App extends React.Component {
 
   // Events
   onCreate = () => {
-    const data = lightness.scale;
-    parent.postMessage({ pluginMessage: { type: 'make-palette', data } }, '*')
+    parent.postMessage({ pluginMessage: { type: 'make-palette', lightness } }, '*')
   }
 
   render() {
