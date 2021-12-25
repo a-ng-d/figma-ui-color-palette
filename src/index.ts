@@ -18,7 +18,9 @@ figma.ui.onmessage = msg => {
     palette.name = "Awesome Palette";
     palette.paddingTop = palette.paddingRight = palette.paddingBottom = palette.paddingLeft = 32;
     palette.cornerRadius = 16;
-
+    palette.setPluginData('min', msg.lightness.min.toString());
+    palette.setPluginData('max', msg.lightness.max.toString());
+    palette.setPluginData('scale', JSON.stringify(msg.lightness.scale));
 
     figma.currentPage.selection.forEach(element => {
 
