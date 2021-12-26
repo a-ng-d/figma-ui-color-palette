@@ -7,7 +7,7 @@ figma.loadFontAsync({ family: "Roboto", style: "Regular" });
 
 figma.ui.onmessage = msg => {
 
-  if (msg.type === 'make-palette' && figma.currentPage.selection.length != 0) {
+  if (msg.type === 'create-palette' && figma.currentPage.selection.length != 0) {
 
     const scene: SceneNode[] = [],
           palette: FrameNode = figma.createFrame();

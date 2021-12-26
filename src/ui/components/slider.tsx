@@ -132,12 +132,18 @@ export default class Slider extends React.Component {
   }
 
   render() {
-    return <div className='slider'>
-      <div className='slider_range'>
-        {Object.entries(this.doLightnessScale()).map(lightness =>
-          <div key={lightness[0]} className={`slider_knob ${lightness[0]}`} style={{left: `${lightness[1]}%`}} onMouseDown={this.onSlide}><span className='type slider_label'>{lightness[0].replace('lightness-', '')}</span><div className='type type--inverse slider_tooltip'>{lightness[1]}</div></div>
-        )}
+    return (
+      <div className='slider'>
+        <div className='slider_range'>
+          {Object.entries(this.doLightnessScale()).map(lightness =>
+            <div key={lightness[0]} className={`slider_knob ${lightness[0]}`} style={{left: `${lightness[1]}%`}} onMouseDown={this.onSlide}>
+              <span className='type slider_label'>{lightness[0].replace('lightness-', '')}</span>
+              <div className='type type--inverse slider_tooltip'>{lightness[1]}</div>
+            </div>
+          )}
+        </div>
       </div>
-    </div>
+    )
   }
+
 }
