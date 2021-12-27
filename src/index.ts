@@ -1,5 +1,5 @@
 import chroma from 'chroma-js';
-import Palette from './modules/nodes';
+import Palette from './modules/Palette';
 
 figma.showUI(__html__);
 figma.ui.resize(640, 312);
