@@ -18,9 +18,9 @@ export default class Slider extends React.Component {
   // Events
   onSlide = (e: any) => {
     const knob = e.target,
-          range = e.nativeEvent.path[1],
+          range = knob.parentElement,
           shift = e.nativeEvent.layerX,
-          tooltip = knob.children[1],
+          tooltip = knob.children[0],
           rangeWidth = range.offsetWidth,
           knobs = Array.from(range.childNodes as HTMLCollectionOf<HTMLElement>);
 
@@ -66,7 +66,7 @@ export default class Slider extends React.Component {
       }
 
       if (e.ctrlKey == false && e.metaKey == false && e.shiftKey == false)
-        knobs.forEach(knob => (knob.children[1] as HTMLElement).style.display = 'none');
+        knobs.forEach(knob => (knob.children[0] as HTMLElement).style.display = 'none');
 
       knob.style.left = this.doMap(offset, 0, rangeWidth, 0, 100).toFixed(1) + '%';
 
@@ -82,7 +82,7 @@ export default class Slider extends React.Component {
       knob.onmouseup = null;
       knob.style.zIndex = 1;
       knob.style.left = this.doMap(offset, 0, rangeWidth, 0, 100).toFixed(1) + '%';
-      knobs.forEach(knob => (knob.children[1] as HTMLElement).style.display = 'none');
+      knobs.forEach(knob => (knob.children[0] as HTMLElement).style.display = 'none');
       console.log(lightness.scale)
     }
 
@@ -119,7 +119,7 @@ export default class Slider extends React.Component {
 
     knobs.forEach(knob => {
       knob.style.left = lightness.scale[knob.classList[1]] + '%';
-      this.updateKnobTooltip(knob.childNodes[1], lightness.scale[knob.classList[1]])
+      this.updateKnobTooltip(knob.childNodes[0], lightness.scale[knob.classList[1]])
     })
   }
 
@@ -128,7 +128,7 @@ export default class Slider extends React.Component {
       let shift = (knob.offsetLeft - src.offsetLeft) + offset;
       if (knob != src)
         knob.style.left = this.doMap(shift, 0, width, 0, 100) + '%';
-      this.updateKnobTooltip(knob.childNodes[1], lightness.scale[knob.classList[1]])
+      this.updateKnobTooltip(knob.childNodes[0], lightness.scale[knob.classList[1]])
     })
   }
 
