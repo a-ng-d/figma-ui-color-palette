@@ -2,7 +2,7 @@ import * as React from 'react';
 import Slider from './Slider';
 
 interface Props {
-  palette: boolean
+  isPaletteSelected: boolean;
 };
 
 export default class UpdatePalette extends React.Component<Props> {

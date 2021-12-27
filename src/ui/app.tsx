@@ -14,7 +14,8 @@ class App extends React.Component {
     super(props);
     this.state = {
       activeTab: 'Create',
-      isSelected: false
+      isPaletteSelected: false,
+      newScale: null
     }
   }
 
@@ -26,9 +27,9 @@ class App extends React.Component {
   render() {
     onmessage = (e: any) => {
       if (e.data.pluginMessage === 'empty-selection' || e.data.pluginMessage === '')
-        this.setState({ isSelected: false })
+        this.setState({ isPaletteSelected: false })
       else
-        this.setState({ isSelected: true })
+        this.setState({ isPaletteSelected: true, newScale: e.data.pluginMessage })
     };
 
     return (

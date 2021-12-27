@@ -14,7 +14,12 @@ export default class CreatePalette extends React.Component {
       <section>
         <div className='lightness-scale'>
           <div className='section-title'>Lightness scale</div>
-          <Slider />
+          <Slider
+            type='EQUAL'
+            knobsList='50 100 200 300 400 500 600 700 800 900'
+            min='24'
+            max='96'
+          />
           <div className='onboarding-tip'>
             <div className='icon icon--library'></div>
             <div className='onboarding-tip__msg'>Hold Shift ⇧ while dragging 50 or 900 to distribute knobs' horizontal spacing</div>

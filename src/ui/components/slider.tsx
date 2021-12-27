@@ -1,12 +1,17 @@
 import * as React from 'react';
 import { lightness } from '../data';
 
-export default class Slider extends React.Component {
-  lightnessList: Array<number>;
+interface Props {
+  knobsList: string;
+  type: string;
+  min: string;
+  max: string;
+};
+
+export default class Slider extends React.Component<Props> {
 
   constructor(props) {
     super(props)
-    this.lightnessList = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900];
     this.state = {
       id: null,
       value: null
@@ -96,9 +101,9 @@ export default class Slider extends React.Component {
   doLightnessScale = () => {
     let granularity: number = 1;
 
-    this.lightnessList.forEach(index => {
+    this.props.knobsList.split(' ').forEach(index => {
       lightness.scale[`lightness-${index}`] = this.doMap(granularity, 0, 1, lightness.min, lightness.max).toFixed(1);
-      granularity -= 1 / (this.lightnessList.length - 1)
+      granularity -= 1 / (this.props.knobsList.split(' ').length - 1)
     });
 
     return lightness.scale
@@ -145,18 +150,25 @@ export default class Slider extends React.Component {
     )
   }
 
+  Equal = (props) => {
+    lightness.min = parseFloat(this.props.min);
+    lightness.max = parseFloat(this.props.max);
+    return (
+      <div className='slider__range'>
+        {Object.entries(this.doLightnessScale()).map(lightness =>
+          <div key={lightness[0]} className={`slider__knob ${lightness[0]}`} style={{left: `${lightness[1]}%`}} onMouseDown={this.onSlide}>
+            <div className='type type--inverse slider__tooltip'>{lightness[1]}</div>
+            <div className='type slider__label'>{lightness[0].replace('lightness-', '')}</div>
+            <div className='slider__input'>{this.state['id'] === lightness[0] ? <this.Input value={this.state['value']} /> : null}</div>
+          </div>
+        )}
+      </div>
+    )
+  }
   render() {
     return (
       <div className='slider'>
-        <div className='slider__range'>
-          {Object.entries(this.doLightnessScale()).map(lightness =>
-            <div key={lightness[0]} className={`slider__knob ${lightness[0]}`} style={{left: `${lightness[1]}%`}} onMouseDown={this.onSlide}>
-              <div className='type type--inverse slider__tooltip'>{lightness[1]}</div>
-              <div className='type slider__label'>{lightness[0].replace('lightness-', '')}</div>
-              <div className='slider__input'>{this.state['id'] === lightness[0] ? <this.Input value={this.state['value']} /> : null}</div>
-            </div>
-          )}
-        </div>
+        {this.props.type == 'EQUAL' ? <this.Equal /> : null}
       </div>
     )
   }

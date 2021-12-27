@@ -1,5 +1,5 @@
 export const lightness = {
   scale: {},
-  min: 24,
-  max: 96
+  min: null,
+  max: null
 };
