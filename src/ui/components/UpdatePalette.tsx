@@ -1,5 +1,6 @@
 import * as React from 'react';
 import Slider from './Slider';
+import { lightness } from '../data';
 
 interface Props {
   isPaletteSelected: boolean;
@@ -7,6 +8,11 @@ interface Props {
 };
 
 export default class UpdatePalette extends React.Component<Props> {
+
+  // Events
+  callback = () => {
+    parent.postMessage({ pluginMessage: { type: 'update-palette', lightness } }, '*')
+  }
 
   // Templates
   Message = () => {
@@ -30,6 +36,7 @@ export default class UpdatePalette extends React.Component<Props> {
           min=''
           max=''
           scale={this.props.scale}
+          parentCallback={this.callback}
         />
         <div className='onboarding-tip'>
           <div className='icon icon--library'></div>

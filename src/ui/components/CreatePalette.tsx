@@ -9,6 +9,8 @@ export default class CreatePalette extends React.Component {
     parent.postMessage({ pluginMessage: { type: 'create-palette', lightness } }, '*')
   }
 
+  callback = () => { }
+
   render() {
     return (
       <section>
@@ -20,6 +22,7 @@ export default class CreatePalette extends React.Component {
             min='24'
             max='96'
             scale='null'
+            parentCallback={this.callback}
           />
           <div className='onboarding-tip'>
             <div className='icon icon--library'></div>

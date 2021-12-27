@@ -6,7 +6,8 @@ interface Props {
   type: string;
   min: string;
   max: string;
-  scale: string
+  scale: string;
+  parentCallback: any
 };
 
 export default class Slider extends React.Component<Props> {
@@ -82,7 +83,9 @@ export default class Slider extends React.Component<Props> {
 
       // update lightness scale
       knobs.forEach(knob => this.updateLightnessScaleEntry(knob.classList[1], this.doMap(knob.offsetLeft, 0, rangeWidth, 0, 100).toFixed(1)));
-      this.updateKnobTooltip(tooltip, this.doMap(offset, 0, rangeWidth, 0, 100).toFixed(1))
+      this.updateKnobTooltip(tooltip, this.doMap(offset, 0, rangeWidth, 0, 100).toFixed(1));
+      this.props.parentCallback()
+      //console.log(lightness.scale)
     };
 
     document.addEventListener('mousemove', slide);
@@ -92,8 +95,7 @@ export default class Slider extends React.Component<Props> {
       knob.onmouseup = null;
       knob.style.zIndex = 1;
       knob.style.left = this.doMap(offset, 0, rangeWidth, 0, 100).toFixed(1) + '%';
-      knobs.forEach(knob => (knob.children[0] as HTMLElement).style.display = 'none');
-      console.log(lightness.scale)
+      knobs.forEach(knob => (knob.children[0] as HTMLElement).style.display = 'none')
     }
 
   }
