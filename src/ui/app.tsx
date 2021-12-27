@@ -25,8 +25,8 @@ class App extends React.Component {
     return (
       <main>
         <Tabs tabs='Create Update' active={this.state['activeTab']} onClick={this.handleClick}/>
-        {this.state['activeTab'] === 'Create' ? <CreatePalette /> : ''}
-        {this.state['activeTab'] === 'Update' ? <UpdatePalette /> : ''}
+        {this.state['activeTab'] === 'Create' ? <CreatePalette /> : null}
+        {this.state['activeTab'] === 'Update' ? <UpdatePalette /> : null}
       </main>
     )
   }
