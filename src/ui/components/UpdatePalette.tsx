@@ -3,6 +3,7 @@ import Slider from './Slider';
 
 interface Props {
   isPaletteSelected: boolean;
+  scale: string
 };
 
 export default class UpdatePalette extends React.Component<Props> {
@@ -23,7 +24,13 @@ export default class UpdatePalette extends React.Component<Props> {
     return (
       <div className='lightness-scale'>
         <div className='section-title'>Lightness scale</div>
-        <Slider />
+        <Slider
+          type='CUSTOM'
+          knobsList=''
+          min=''
+          max=''
+          scale={this.props.scale}
+        />
         <div className='onboarding-tip'>
           <div className='icon icon--library'></div>
           <div className='onboarding-tip__msg'>Hold Shift ⇧ while dragging 50 or 900 to distribute knobs' horizontal spacing</div>
@@ -36,8 +43,11 @@ export default class UpdatePalette extends React.Component<Props> {
   render() {
     return (
       <section>
-        {this.props.palette == false ? <this.Message /> : null}
-        {this.props.palette == true ? <this.Scale /> : null}
+        {this.props.isPaletteSelected == false ? <this.Message /> : null}
+        {this.props.isPaletteSelected == true ? <this.Scale /> : null}
+        <div className='actions'>
+          <button className='button button--primary'>Update local styles</button>
+        </div>
       </section>
     )
   }

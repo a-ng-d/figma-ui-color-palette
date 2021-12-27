@@ -6,6 +6,7 @@ interface Props {
   type: string;
   min: string;
   max: string;
+  scale: string
 };
 
 export default class Slider extends React.Component<Props> {
@@ -165,10 +166,26 @@ export default class Slider extends React.Component<Props> {
       </div>
     )
   }
+
+  Custom = (props) => {
+    return (
+      <div className='slider__range'>
+        {Object.entries(JSON.parse(this.props.scale)).map(lightness =>
+          <div key={lightness[0]} className={`slider__knob ${lightness[0]}`} style={{left: `${lightness[1]}%`}} onMouseDown={this.onSlide}>
+            <div className='type type--inverse slider__tooltip'>{lightness[1]}</div>
+            <div className='type slider__label'>{lightness[0].replace('lightness-', '')}</div>
+            <div className='slider__input'>{this.state['id'] === lightness[0] ? <this.Input value={this.state['value']} /> : null}</div>
+          </div>
+        )}
+      </div>
+    )
+  }
+
   render() {
     return (
       <div className='slider'>
         {this.props.type == 'EQUAL' ? <this.Equal /> : null}
+        {this.props.type == 'CUSTOM' ? <this.Custom /> : null}
       </div>
     )
   }

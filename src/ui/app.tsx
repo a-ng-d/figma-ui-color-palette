@@ -36,7 +36,7 @@ class App extends React.Component {
       <main>
         <Tabs tabs='Create Update' active={this.state['activeTab']} onClick={this.handleClick}/>
         {this.state['activeTab'] === 'Create' ? <CreatePalette /> : null}
-        {this.state['activeTab'] === 'Update' ? <UpdatePalette palette={this.state['isSelected']}/> : null}
+        {this.state['activeTab'] === 'Update' ? <UpdatePalette isPaletteSelected={this.state['isPaletteSelected']} scale={this.state['newScale']}/> : null}
       </main>
     )
   }

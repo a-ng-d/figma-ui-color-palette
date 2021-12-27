@@ -19,6 +19,7 @@ export default class CreatePalette extends React.Component {
             knobsList='50 100 200 300 400 500 600 700 800 900'
             min='24'
             max='96'
+            scale='null'
           />
           <div className='onboarding-tip'>
             <div className='icon icon--library'></div>
