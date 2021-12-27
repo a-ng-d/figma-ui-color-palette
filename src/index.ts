@@ -1,5 +1,7 @@
 import chroma from 'chroma-js';
 import Palette from './modules/Palette';
+import Sample from './modules/Sample';
+
 
 figma.showUI(__html__);
 figma.ui.resize(640, 312);
@@ -37,7 +39,22 @@ figma.ui.onmessage = msg => {
       break;
 
     case 'update-palette':
-      console.log('ok')
+      const palette = figma.currentPage.selection[0];
+      palette.setPluginData('min', msg.lightness.min.toString());
+      palette.setPluginData('max', msg.lightness.max.toString());
+      palette.setPluginData('scale', JSON.stringify(msg.lightness.scale));
+
+      for (let i = 0 ; i < (palette as FrameNode).children.length ; i++) {
+        const rgb = JSON.parse(palette.getPluginData('colors'))[i],
+              row = (palette as FrameNode).children[i];
+
+        for(let j = 0 ; j < (row as FrameNode).children.length ; j++) {
+          const sample = (row as FrameNode).children[j],
+                newColor = chroma([rgb.r * 255, rgb.g * 255, rgb.b * 255]).set('lch.l', Object.values(msg.lightness.scale)[j]);
+          (row as FrameNode).insertChild(j, new Sample(sample.name, 128, 96, newColor._rgb).makeNode())
+          sample.remove()
+        }
+      }
 
   }
 
