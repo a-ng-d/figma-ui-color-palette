@@ -6,6 +6,7 @@ export default class Palette {
   min: number;
   max: number;
   scale: string;
+  colors: Array<string>;
   node: FrameNode;
 
   constructor(min, max, scale) {
@@ -13,6 +14,7 @@ export default class Palette {
     this.min = min;
     this.max = max;
     this.scale = scale;
+    this.colors = [];
     this.node = figma.createFrame();
   }
 
@@ -41,6 +43,7 @@ export default class Palette {
           item.layoutMode = "HORIZONTAL";
           item.counterAxisSizingMode = "AUTO";
           item.name = element.name;
+          this.colors.push(rgb);
 
           Object.values(this.scale).forEach(lightness => {
             let newColor = chroma([rgb.r * 255, rgb.g * 255, rgb.b * 255]).set('lch.l', lightness);
@@ -56,8 +59,10 @@ export default class Palette {
       } else {
         figma.notify(`The layer "${element.name}" must get at least one solid color`);
       }
-  });
 
+    });
+
+    this.node.setPluginData('colors', JSON.stringify(this.colors));
     return this.node
   }
 
