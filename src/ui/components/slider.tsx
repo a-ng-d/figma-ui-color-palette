@@ -15,7 +15,8 @@ export default class Slider extends React.Component {
     return ((value - oldMin) * newRange / oldRange) + newMin
   }
 
-  onSlide = (e) => {
+  // Events
+  onSlide = (e: any) => {
     const knob = e.target,
           range = e.nativeEvent.path[1],
           shift = e.nativeEvent.layerX,
@@ -72,9 +73,9 @@ export default class Slider extends React.Component {
       // update lightness scale
       knobs.forEach(knob => this.updateLightnessScaleEntry(knob.classList[1], this.doMap(knob.offsetLeft, 0, rangeWidth, 0, 100).toFixed(1)));
       this.updateKnobTooltip(tooltip, this.doMap(offset, 0, rangeWidth, 0, 100).toFixed(1))
-    }
+    };
 
-    document.addEventListener('mousemove', slide)
+    document.addEventListener('mousemove', slide);
 
     document.onmouseup = () => {
       document.removeEventListener('mousemove', slide);
