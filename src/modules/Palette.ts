@@ -39,20 +39,21 @@ export default class Palette {
 
           let rgb = fill.color;
 
-          const item = figma.createFrame();
-          item.layoutMode = "HORIZONTAL";
-          item.counterAxisSizingMode = "AUTO";
-          item.name = element.name;
           this.colors.push(rgb);
+
+          const row = figma.createFrame();
+          row.layoutMode = "HORIZONTAL";
+          row.counterAxisSizingMode = "AUTO";
+          row.name = element.name;
 
           Object.values(this.scale).forEach(lightness => {
             let newColor = chroma([rgb.r * 255, rgb.g * 255, rgb.b * 255]).set('lch.l', lightness);
             const sample = new Sample(`${element.name}-${Object.keys(this.scale).find(key => this.scale[key] === lightness).substr(10)}`, 128, 96, newColor._rgb).makeNode();
-            item.name = element.name;
-            item.appendChild(sample)
+            row.name = element.name;
+            row.appendChild(sample)
           });
 
-          this.node.appendChild(item);
+          this.node.appendChild(row);
 
         })
 
