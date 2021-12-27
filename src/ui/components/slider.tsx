@@ -6,7 +6,11 @@ export default class Slider extends React.Component {
 
   constructor(props) {
     super(props)
-    this.lightnessList = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900]
+    this.lightnessList = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900];
+    this.state = {
+      id: null,
+      value: null
+    }
   }
 
   doMap = (value, oldMin, oldMax, newMin, newMax) => {
@@ -132,14 +136,23 @@ export default class Slider extends React.Component {
     })
   }
 
+  Input = (props) => {
+    return (
+      <div className='input'>
+        <input type='number' min='0' max='100' step='0.1' className='input__field' value={props.value} />
+      </div>
+    )
+  }
+
   render() {
     return (
       <div className='slider'>
-        <div className='slider_range'>
+        <div className='slider__range'>
           {Object.entries(this.doLightnessScale()).map(lightness =>
-            <div key={lightness[0]} className={`slider_knob ${lightness[0]}`} style={{left: `${lightness[1]}%`}} onMouseDown={this.onSlide}>
-              <span className='type slider_label'>{lightness[0].replace('lightness-', '')}</span>
-              <div className='type type--inverse slider_tooltip'>{lightness[1]}</div>
+            <div key={lightness[0]} className={`slider__knob ${lightness[0]}`} style={{left: `${lightness[1]}%`}} onMouseDown={this.onSlide}>
+              <div className='type type--inverse slider__tooltip'>{lightness[1]}</div>
+              <div className='type slider__label'>{lightness[0].replace('lightness-', '')}</div>
+              <div className='slider__input'>{this.state['id'] === lightness[0] ? <this.Input value={this.state['value']} /> : null}</div>
             </div>
           )}
         </div>

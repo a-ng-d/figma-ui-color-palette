@@ -69,7 +69,7 @@ div.tabs .tabs__tab--active {
   align-items: center
 }
 
-.slider .slider_range {
+.slider .slider__range {
   flex: 1 1 auto;
   height: var(--size-xlarge);
   background: linear-gradient(-90deg, var(--white) 0%, var(--black) 100%);
@@ -78,7 +78,7 @@ div.tabs .tabs__tab--active {
   position: relative;
 }
 
-.slider .slider_knob {
+.slider .slider__knob {
   width: var(--size-medium);
   height: var(--size-xxlarge);
   background: var(--white);
@@ -86,13 +86,20 @@ div.tabs .tabs__tab--active {
   border-radius: var(--border-radius-large);
   transform: translateX(-50%);
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   position: absolute;
   top: -10px;
   cursor: ew-resize;
   z-index: 1
 }
 
-.slider .slider_tooltip {
+.slider .slider__knob:hover {
+  background: var(--grey)
+}
+
+.slider .slider__tooltip {
   padding: var(--size-xxxsmall);
   background: var(--black);
   color: var(--white);
@@ -104,11 +111,11 @@ div.tabs .tabs__tab--active {
   display: none
 }
 
-.slider .slider_knob:hover .slider_tooltip {
+.slider .slider__knob:hover .slider__tooltip {
   display: block !important
 }
 
-.slider .slider_tooltip:after {
+.slider .slider__tooltip:after {
   content: '';
   width: 0;
   height: 0;
@@ -120,8 +127,22 @@ div.tabs .tabs__tab--active {
   left: calc(50% - 8px)
 }
 
-.slider .slider_label {
-  margin: auto;
+.slider .slider__label {
   user-select: none;
   pointer-events: none
+}
+
+.slider .slider__input {
+  position: absolute;
+  transform: translateX(-50%) translateY(-100%);
+  left: 50%;
+  bottom: -96px;
+}
+
+.slider .slider__input .input {
+  width: var(--size-xxlarge);
+  padding: var(--size-xxsmall);
+  background: var(--white);
+  border: 1px solid var(--silver);
+  box-shadow: var(--shadow-floating-window)
 }
