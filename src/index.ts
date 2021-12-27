@@ -34,7 +34,7 @@ figma.ui.onmessage = msg => {
         }
 
       } else {
-        figma.notify('Select some filled layers to generate a palette')
+        figma.notify('Select some filled layers to create a palette')
       };
       break;
 
