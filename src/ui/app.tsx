@@ -17,6 +17,7 @@ class App extends React.Component {
     }
   }
 
+  // Events
   handleClick = (e: any) => {
     this.setState({ activeTab: e.target.innerText })
   }

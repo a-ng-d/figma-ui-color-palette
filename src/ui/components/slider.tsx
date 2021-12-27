@@ -136,6 +136,7 @@ export default class Slider extends React.Component {
     })
   }
 
+  // Templates
   Input = (props) => {
     return (
       <div className='input'>
