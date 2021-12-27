@@ -13,7 +13,8 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      activeTab: 'Create'
+      activeTab: 'Create',
+      isSelected: false
     }
   }
 
@@ -23,11 +24,18 @@ class App extends React.Component {
   }
 
   render() {
+    onmessage = (e: any) => {
+      if (e.data.pluginMessage === 'empty-selection' || e.data.pluginMessage === '')
+        this.setState({ isSelected: false })
+      else
+        this.setState({ isSelected: true })
+    };
+
     return (
       <main>
         <Tabs tabs='Create Update' active={this.state['activeTab']} onClick={this.handleClick}/>
         {this.state['activeTab'] === 'Create' ? <CreatePalette /> : null}
-        {this.state['activeTab'] === 'Update' ? <UpdatePalette /> : null}
+        {this.state['activeTab'] === 'Update' ? <UpdatePalette palette={this.state['isSelected']}/> : null}
       </main>
     )
   }
