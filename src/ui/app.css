@@ -32,7 +32,8 @@ div.actions {
   padding: var(--size-xsmall) var(--size-small);
   border-top: 1px solid var(--silver);
   display: flex;
-  justify-content: flex-end;
+  flex-direction: row-reverse;
+  justify-content: space-between;
   gap: var(--size-xxsmall)
 }
 
