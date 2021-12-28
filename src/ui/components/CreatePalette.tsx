@@ -1,5 +1,6 @@
 import * as React from 'react';
 import Slider from './Slider';
+import Button from './Button';
 import { lightness } from '../data';
 
 export default class CreatePalette extends React.Component {
@@ -31,7 +32,7 @@ export default class CreatePalette extends React.Component {
           </div>
         </div>
         <div className='actions'>
-          <button className='button button--primary' onClick={this.onCreate}>Create a palette</button>
+          <Button type='primary' label='Create palette' action={this.onCreate} />
         </div>
       </section>
     )

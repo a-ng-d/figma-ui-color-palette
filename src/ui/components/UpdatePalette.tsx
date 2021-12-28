@@ -1,5 +1,6 @@
 import * as React from 'react';
 import Slider from './Slider';
+import Button from './Button';
 import { lightness } from '../data';
 
 interface Props {
@@ -53,7 +54,7 @@ export default class UpdatePalette extends React.Component<Props> {
         {this.props.isPaletteSelected == false ? <this.Message /> : null}
         {this.props.isPaletteSelected == true ? <this.Scale /> : null}
         <div className='actions'>
-          <button className='button button--primary'>Update local styles</button>
+          <Button type='primary' label='Update local styles' action={null} />
         </div>
       </section>
     )
