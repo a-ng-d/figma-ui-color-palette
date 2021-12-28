@@ -1,5 +1,6 @@
 import * as React from 'react';
 import Slider from './Slider';
+import Switch from './Switch';
 import Button from './Button';
 import { lightness } from '../data';
 
@@ -29,6 +30,7 @@ export default class UpdatePalette extends React.Component<Props> {
 
   Scale = () => {
     return (
+      <>
       <div className='lightness-scale'>
         <div className='section-title'>Lightness scale</div>
         <Slider
@@ -45,6 +47,11 @@ export default class UpdatePalette extends React.Component<Props> {
           <div className='onboarding-tip__msg'>Hold Ctrl or Cmd ⌘ while dragging a scale to shift every one</div>
         </div>
       </div>
+      <div className='actions'>
+        <Button type='primary' label='Update local styles' action={null} />
+        <Switch id='legend' isChecked={true} label='Show legends' />
+      </div>
+      </>
     )
   }
 
@@ -53,9 +60,6 @@ export default class UpdatePalette extends React.Component<Props> {
       <section>
         {this.props.isPaletteSelected == false ? <this.Message /> : null}
         {this.props.isPaletteSelected == true ? <this.Scale /> : null}
-        <div className='actions'>
-          <Button type='primary' label='Update local styles' action={null} />
-        </div>
       </section>
     )
   }
