@@ -11,9 +11,20 @@ interface Props {
 
 export default class UpdatePalette extends React.Component<Props> {
 
+  constructor(props) {
+    super(props)
+    this.state = {
+      hasLegend: true
+    }
+  }
+
   // Events
   callback = () => {
     parent.postMessage({ pluginMessage: { type: 'update-palette', lightness } }, '*')
+  }
+
+  handleCheck = (e: any) => {
+    this.setState({ hasLegend: e.target.checked })
   }
 
   // Templates
@@ -49,7 +60,7 @@ export default class UpdatePalette extends React.Component<Props> {
       </div>
       <div className='actions'>
         <Button type='primary' label='Update local styles' action={null} />
-        <Switch id='legend' isChecked={true} label='Show legends' />
+        <Switch id='hasLegend' label='Show legends' onChange={this.handleCheck} isChecked={this.state['hasLegend']} />
       </div>
       </>
     )
