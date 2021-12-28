@@ -23,7 +23,7 @@ export default class UpdatePalette extends React.Component<Props> {
     parent.postMessage({ pluginMessage: { type: 'update-palette', lightness } }, '*')
   }
 
-  handleCheck = (e: any) => {
+  onLegend = (e: any) => {
     this.setState({ hasLegend: e.target.checked })
   }
 
@@ -60,7 +60,7 @@ export default class UpdatePalette extends React.Component<Props> {
       </div>
       <div className='actions'>
         <Button type='primary' label='Update local styles' action={null} />
-        <Switch id='hasLegend' label='Show legends' onChange={this.handleCheck} isChecked={this.state['hasLegend']} />
+        <Switch id='hasLegend' label='Show legends' onChange={this.onLegend} isChecked={this.state['hasLegend']} />
       </div>
       </>
     )
