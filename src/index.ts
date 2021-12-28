@@ -63,6 +63,8 @@ figma.ui.onmessage = msg => {
         }
       }
 
+      figma.ui.postMessage(palette.getPluginData('scale'))
+
   }
 
 };
