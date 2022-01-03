@@ -5,7 +5,7 @@ import Sample from './modules/Sample';
 
 figma.showUI(__html__);
 figma.ui.resize(640, 312);
-figma.loadFontAsync({ family: "Roboto", style: "Regular" });
+figma.loadFontAsync({ family: 'Roboto', style: 'Regular' });
 
 figma.on('run', () => {
   if (figma.currentPage.selection.length == 1)

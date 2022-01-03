@@ -11,8 +11,8 @@ export default class Palette {
   caption: boolean;
   node: FrameNode;
 
-    this.name = "Awesome Palette";
   constructor(min, max, scale, caption) {
+    this.name = 'Awesome Palette';
     this.min = min;
     this.max = max;
     this.scale = scale;
@@ -22,9 +22,9 @@ export default class Palette {
   }
 
   makeNode() {
-    this.node.layoutMode = "VERTICAL";
-    this.node.primaryAxisSizingMode = "AUTO";
-    this.node.counterAxisSizingMode = "AUTO";
+    this.node.layoutMode = 'VERTICAL';
+    this.node.primaryAxisSizingMode = 'AUTO';
+    this.node.counterAxisSizingMode = 'AUTO';
     this.node.name = this.name;
     this.node.paddingTop = this.node.paddingRight = this.node.paddingBottom = this.node.paddingLeft = 32;
     this.node.cornerRadius = 16;
@@ -34,7 +34,7 @@ export default class Palette {
 
     figma.currentPage.selection.forEach(element => {
 
-      let fills = element['fills'].filter(fill => fill.type === "SOLID");
+      let fills = element['fills'].filter(fill => fill.type === 'SOLID');
 
       if (fills.length != 0) {
 
@@ -45,13 +45,12 @@ export default class Palette {
           this.colors.push(rgb);
 
           const row = figma.createFrame();
-          row.layoutMode = "HORIZONTAL";
-          row.counterAxisSizingMode = "AUTO";
+          row.layoutMode = 'HORIZONTAL';
+          row.counterAxisSizingMode = 'AUTO';
           row.name = element.name;
 
           Object.values(this.scale).forEach(lightness => {
             let newColor = chroma([rgb.r * 255, rgb.g * 255, rgb.b * 255]).set('lch.l', lightness);
-            const sample = new Sample(`${element.name}-${Object.keys(this.scale).find(key => this.scale[key] === lightness).substr(10)}`, 128, 96, newColor._rgb).makeNode();
             const sample = new Sample(`${element.name}-${Object.keys(this.scale).find(key => this.scale[key] === lightness).substr(10)}`, 128, 96, newColor._rgb, this.caption).makeNode();
             row.name = element.name;
             row.appendChild(sample)
@@ -62,7 +61,7 @@ export default class Palette {
         })
 
       } else {
-        figma.notify(`The layer "${element.name}" must get at least one solid color`);
+        figma.notify(`The layer '${element.name}' must get at least one solid color`);
       }
 
     });

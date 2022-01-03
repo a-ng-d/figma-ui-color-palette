@@ -29,9 +29,9 @@ export default class Sample {
         b: this.rgb[2] / 255
       }
     }];
-    this.node.layoutMode = "HORIZONTAL";
+    this.node.layoutMode = 'HORIZONTAL';
     this.node.paddingTop = this.node.paddingRight = this.node.paddingBottom = this.node.paddingLeft = 8;
-    this.node.primaryAxisSizingMode = "FIXED";
+    this.node.primaryAxisSizingMode = 'FIXED';
 
     if (this.caption == true)
       this.node.appendChild(new Caption(this.name, this.rgb).makeNode());

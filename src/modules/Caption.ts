@@ -38,7 +38,7 @@ export default class Caption {
     this.node.name = 'caption';
     this.node.characters = this.doContent();
     this.node.fontSize = 10;
-    this.node.textAlignVertical = "CENTER";
+    this.node.textAlignVertical = 'CENTER';
     this.node.fills = [{
       type: 'SOLID',
       color: {
