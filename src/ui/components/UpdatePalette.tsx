@@ -6,25 +6,19 @@ import { palette } from '../data';
 
 interface Props {
   isPaletteSelected: boolean;
-  scale: string
+  scale: string;
+  hasCaption: boolean
 };
 
 export default class UpdatePalette extends React.Component<Props> {
-
-  constructor(props) {
-    super(props)
-    this.state = {
-      hasLegend: true
-    }
-  }
 
   // Events
   callback = () => {
     parent.postMessage({ pluginMessage: { type: 'update-palette', palette } }, '*');
   }
 
-  onLegend = (e: any) => {
-    this.setState({ hasLegend: e.target.checked })
+  onCaption = (e: any) => {
+    this.setState({ hasCaption: e.target.checked })
   }
 
   // Templates
@@ -60,7 +54,7 @@ export default class UpdatePalette extends React.Component<Props> {
       </div>
       <div className='actions'>
         <Button type='primary' label='Update local styles' action={null} />
-        <Switch id='hasLegend' label='Show legends' onChange={this.onLegend} isChecked={this.state['hasLegend']} />
+        <Switch id='hasCaption' label='Show captions' isChecked={this.props.hasCaption} onChange={this.onCaption} />
       </div>
       </>
     )

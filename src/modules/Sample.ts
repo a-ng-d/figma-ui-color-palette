@@ -1,4 +1,4 @@
-import Legend from './Legend';
+import Caption from './Caption';
 
 export default class Sample {
 
@@ -31,7 +31,7 @@ export default class Sample {
     this.node.paddingTop = this.node.paddingRight = this.node.paddingBottom = this.node.paddingLeft = 8;
     this.node.primaryAxisSizingMode = "FIXED";
 
-    this.node.appendChild(new Legend(this.name, this.rgb).makeNode())
+    this.node.appendChild(new Caption(this.name, this.rgb).makeNode())
 
     return this.node
   }

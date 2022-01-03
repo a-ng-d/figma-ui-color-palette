@@ -1,6 +1,6 @@
 import chroma from 'chroma-js';
 
-export default class Legend {
+export default class Caption {
 
   name: string;
   rgb: Array<number>;
@@ -26,7 +26,7 @@ export default class Legend {
          : 'AAA'
   }
 
-  getLegendColor() {
+  getCaptionColor() {
     return chroma.contrast(this.rgb, '#FFF') < chroma.contrast(this.rgb, '#000') ? [0, 0, 0] : [1, 1, 1];
   }
 
@@ -35,16 +35,16 @@ export default class Legend {
   }
 
   makeNode() {
-    this.node.name = 'legend';
+    this.node.name = 'caption';
     this.node.characters = this.doContent();
     this.node.fontSize = 10;
     this.node.textAlignVertical = "CENTER";
     this.node.fills = [{
       type: 'SOLID',
       color: {
-        r: this.getLegendColor()[0],
-        g: this.getLegendColor()[1],
-        b: this.getLegendColor()[2]
+        r: this.getCaptionColor()[0],
+        g: this.getCaptionColor()[1],
+        b: this.getCaptionColor()[2]
       }
     }];
     this.node.layoutGrow = 1;
