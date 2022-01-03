@@ -1,5 +1,6 @@
 import chroma from 'chroma-js';
 import Sample from './Sample';
+
 export default class Palette {
 
   name: string;
@@ -7,15 +8,17 @@ export default class Palette {
   max: number;
   scale: string;
   colors: Array<string>;
+  caption: boolean;
   node: FrameNode;
 
-  constructor(min, max, scale) {
     this.name = "Awesome Palette";
+  constructor(min, max, scale, caption) {
     this.min = min;
     this.max = max;
     this.scale = scale;
     this.colors = [];
-    this.node = figma.createFrame();
+    this.caption = caption;
+    this.node = figma.createFrame()
   }
 
   makeNode() {
@@ -49,6 +52,7 @@ export default class Palette {
           Object.values(this.scale).forEach(lightness => {
             let newColor = chroma([rgb.r * 255, rgb.g * 255, rgb.b * 255]).set('lch.l', lightness);
             const sample = new Sample(`${element.name}-${Object.keys(this.scale).find(key => this.scale[key] === lightness).substr(10)}`, 128, 96, newColor._rgb).makeNode();
+            const sample = new Sample(`${element.name}-${Object.keys(this.scale).find(key => this.scale[key] === lightness).substr(10)}`, 128, 96, newColor._rgb, this.caption).makeNode();
             row.name = element.name;
             row.appendChild(sample)
           });
