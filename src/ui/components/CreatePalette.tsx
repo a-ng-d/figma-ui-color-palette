@@ -1,13 +1,13 @@
 import * as React from 'react';
 import Slider from './Slider';
 import Button from './Button';
-import { lightness } from '../data';
+import { palette } from '../data';
 
 export default class CreatePalette extends React.Component {
 
   // Events
   onCreate = () => {
-    parent.postMessage({ pluginMessage: { type: 'create-palette', lightness } }, '*')
+    parent.postMessage({ pluginMessage: { type: 'create-palette', palette } }, '*')
   }
 
   callback = () => { }

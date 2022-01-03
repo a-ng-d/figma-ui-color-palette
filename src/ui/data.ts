@@ -1,5 +1,6 @@
-export const lightness = {
+export const palette = {
   scale: {},
   min: null,
-  max: null
+  max: null,
+  caption: true
 };

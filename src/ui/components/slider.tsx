@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { lightness } from '../data';
+import { palette } from '../data';
 
 interface Props {
   knobsList: string;
@@ -43,8 +43,8 @@ export default class Slider extends React.Component<Props> {
       const gap = this.doMap(2, 0, 100, 0, rangeWidth);
       offset = e.clientX - range.offsetLeft - shift;
 
-      lightness.min = parseFloat(this.doMap(range.lastChild.offsetLeft, 0, rangeWidth, 0, 100).toFixed(1));
-      lightness.max = parseFloat(this.doMap(range.firstChild.offsetLeft, 0, rangeWidth, 0, 100).toFixed(1));
+      palette.min = parseFloat(this.doMap(range.lastChild.offsetLeft, 0, rangeWidth, 0, 100).toFixed(1));
+      palette.max = parseFloat(this.doMap(range.firstChild.offsetLeft, 0, rangeWidth, 0, 100).toFixed(1));
 
       if (knob == range.lastChild) { // 900
         limitMin = 0;
@@ -85,7 +85,7 @@ export default class Slider extends React.Component<Props> {
       knobs.forEach(knob => this.updateLightnessScaleEntry(knob.classList[1], this.doMap(knob.offsetLeft, 0, rangeWidth, 0, 100).toFixed(1)));
       this.updateKnobTooltip(tooltip, this.doMap(offset, 0, rangeWidth, 0, 100).toFixed(1));
       this.props.parentCallback()
-      //console.log(lightness.scale)
+      //console.log(palette.scale)
     };
 
     document.addEventListener('mousemove', slide);
@@ -105,15 +105,15 @@ export default class Slider extends React.Component<Props> {
     let granularity: number = 1;
 
     this.props.knobsList.split(' ').forEach(index => {
-      lightness.scale[`lightness-${index}`] = this.doMap(granularity, 0, 1, lightness.min, lightness.max).toFixed(1);
+      palette.scale[`lightness-${index}`] = this.doMap(granularity, 0, 1, palette.min, palette.max).toFixed(1);
       granularity -= 1 / (this.props.knobsList.split(' ').length - 1)
     });
 
-    return lightness.scale
+    return palette.scale
   }
 
   updateLightnessScaleEntry = (key, value) => {
-    lightness.scale[key] = value;
+    palette.scale[key] = value;
   }
 
   updateKnobTooltip = (tooltip, value) => {
@@ -123,15 +123,15 @@ export default class Slider extends React.Component<Props> {
 
   distributeKnobs = (type, value, knobs) => {
     if (type === 'MIN')
-      lightness.min = parseFloat(value)
+      palette.min = parseFloat(value)
     else if (type === 'MAX')
-      lightness.max = parseFloat(value);
+      palette.max = parseFloat(value);
 
     this.doLightnessScale();
 
     knobs.forEach(knob => {
-      knob.style.left = lightness.scale[knob.classList[1]] + '%';
-      this.updateKnobTooltip(knob.childNodes[0], lightness.scale[knob.classList[1]])
+      knob.style.left = palette.scale[knob.classList[1]] + '%';
+      this.updateKnobTooltip(knob.childNodes[0], palette.scale[knob.classList[1]])
     })
   }
 
@@ -140,7 +140,7 @@ export default class Slider extends React.Component<Props> {
       let shift = (knob.offsetLeft - src.offsetLeft) + offset;
       if (knob != src)
         knob.style.left = this.doMap(shift, 0, width, 0, 100) + '%';
-      this.updateKnobTooltip(knob.childNodes[0], lightness.scale[knob.classList[1]])
+      this.updateKnobTooltip(knob.childNodes[0], palette.scale[knob.classList[1]])
     })
   }
 
@@ -154,8 +154,8 @@ export default class Slider extends React.Component<Props> {
   }
 
   Equal = (props) => {
-    lightness.min = parseFloat(this.props.min);
-    lightness.max = parseFloat(this.props.max);
+    palette.min = parseFloat(this.props.min);
+    palette.max = parseFloat(this.props.max);
     return (
       <div className='slider__range'>
         {Object.entries(this.doLightnessScale()).map(lightness =>

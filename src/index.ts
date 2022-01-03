@@ -29,7 +29,7 @@ figma.ui.onmessage = msg => {
       if (figma.currentPage.selection.length != 0) {
 
         const scene: SceneNode[] = [],
-              palette: any = new Palette(msg.lightness.min, msg.lightness.max, msg.lightness.scale).makeNode();
+              palette: any = new Palette(msg.palette.min, msg.palette.max, msg.palette.scale).makeNode();
 
         if (palette.children.length != 0) {
           figma.currentPage.appendChild(palette);
@@ -47,9 +47,9 @@ figma.ui.onmessage = msg => {
 
     case 'update-palette':
       const palette = figma.currentPage.selection[0];
-      palette.setPluginData('min', msg.lightness.min.toString());
-      palette.setPluginData('max', msg.lightness.max.toString());
-      palette.setPluginData('scale', JSON.stringify(msg.lightness.scale));
+      palette.setPluginData('min', msg.palette.min.toString());
+      palette.setPluginData('max', msg.palette.max.toString());
+      palette.setPluginData('scale', JSON.stringify(msg.palette.scale));
 
       for (let i = 0 ; i < (palette as FrameNode).children.length ; i++) {
         const rgb = JSON.parse(palette.getPluginData('colors'))[i],
@@ -57,7 +57,7 @@ figma.ui.onmessage = msg => {
 
         for(let j = 0 ; j < (row as FrameNode).children.length ; j++) {
           const sample = (row as FrameNode).children[j],
-                newColor = chroma([rgb.r * 255, rgb.g * 255, rgb.b * 255]).set('lch.l', Object.values(msg.lightness.scale)[j]);
+                newColor = chroma([rgb.r * 255, rgb.g * 255, rgb.b * 255]).set('lch.l', Object.values(msg.palette.scale)[j]);
           (row as FrameNode).insertChild(j, new Sample(sample.name, 128, 96, newColor._rgb).makeNode())
           sample.remove()
         }

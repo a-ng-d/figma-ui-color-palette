@@ -2,7 +2,7 @@ import * as React from 'react';
 import Slider from './Slider';
 import Switch from './Switch';
 import Button from './Button';
-import { lightness } from '../data';
+import { palette } from '../data';
 
 interface Props {
   isPaletteSelected: boolean;
@@ -20,7 +20,7 @@ export default class UpdatePalette extends React.Component<Props> {
 
   // Events
   callback = () => {
-    parent.postMessage({ pluginMessage: { type: 'update-palette', lightness } }, '*')
+    parent.postMessage({ pluginMessage: { type: 'update-palette', palette } }, '*');
   }
 
   onLegend = (e: any) => {
