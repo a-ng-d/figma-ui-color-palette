@@ -1,9 +1,14 @@
 import * as React from 'react';
 import Slider from './Slider';
 import Button from './Button';
+import Checkbox from './Checkbox';
 import { palette } from '../data';
 
-export default class CreatePalette extends React.Component {
+interface Props {
+  hasCaption: boolean
+};
+
+export default class CreatePalette extends React.Component<Props> {
 
   // Events
   onCreate = () => {
@@ -11,6 +16,11 @@ export default class CreatePalette extends React.Component {
   }
 
   callback = () => { }
+
+  onCaption = (e: any) => {
+    this.setState({ hasCaption: e.target.checked });
+    palette.hasCaption = e.target.checked
+  }
 
   render() {
     return (
@@ -33,6 +43,7 @@ export default class CreatePalette extends React.Component {
         </div>
         <div className='actions'>
           <Button type='primary' label='Create palette' action={this.onCreate} />
+          <Checkbox id='hasCaption' label='Show captions' isChecked={true} onChange={this.onCaption} />
         </div>
       </section>
     )
