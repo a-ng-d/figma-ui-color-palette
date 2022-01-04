@@ -18,7 +18,6 @@ export default class CreatePalette extends React.Component<Props> {
   slideHandler = () => { }
 
   checkHandler = (e: any) => {
-    this.setState({ hasCaption: e.target.checked });
     palette.captions = e.target.checked
   }
 

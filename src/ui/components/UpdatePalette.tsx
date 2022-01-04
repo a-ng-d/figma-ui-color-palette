@@ -63,8 +63,8 @@ export default class UpdatePalette extends React.Component<Props> {
   render() {
     return (
       <section>
-        {this.props.isPaletteSelected == false ? <this.Message /> : null}
-        {this.props.isPaletteSelected == true ? <this.Scale /> : null}
+        {!this.props.isPaletteSelected ? <this.Message /> : null}
+        {this.props.isPaletteSelected ? <this.Scale /> : null}
       </section>
     )
   }

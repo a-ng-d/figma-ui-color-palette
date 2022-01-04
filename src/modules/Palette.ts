@@ -31,7 +31,7 @@ export default class Palette {
     this.node.setPluginData('min', this.min.toString());
     this.node.setPluginData('max', this.max.toString());
     this.node.setPluginData('scale', JSON.stringify(this.scale));
-    if (this.captions == true)
+    if (this.captions)
       this.node.setPluginData('caption', 'hasCaption')
     else
       this.node.setPluginData('caption', 'hasNotCaption');

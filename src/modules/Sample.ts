@@ -33,7 +33,7 @@ export default class Sample {
     this.node.paddingTop = this.node.paddingRight = this.node.paddingBottom = this.node.paddingLeft = 8;
     this.node.primaryAxisSizingMode = 'FIXED';
 
-    if (this.captions == true)
+    if (this.captions)
       this.node.appendChild(new Caption(this.name, this.rgb).makeNode());
 
     return this.node

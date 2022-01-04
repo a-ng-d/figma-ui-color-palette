@@ -63,13 +63,13 @@ export default class Slider extends React.Component<Props> {
         offset = limitMax;
 
       // distribute knobs horizontal spacing
-      if (knob == range.lastChild && e.shiftKey == true) // 900
+      if (knob == range.lastChild && e.shiftKey) // 900
         this.distributeKnobs('MIN', this.doMap(offset, 0, rangeWidth, 0, 100).toFixed(1), knobs)
-      else if (knob == range.firstChild && e.shiftKey == true) // 50
+      else if (knob == range.firstChild && e.shiftKey) // 50
         this.distributeKnobs('MAX', this.doMap(offset, 0, rangeWidth, 0, 100).toFixed(1), knobs)
 
       // link every knob
-      if (e.ctrlKey == true || e.metaKey == true) {
+      if (e.ctrlKey || e.metaKey) {
         if (offset <= (knob.offsetLeft - range.lastChild.offsetLeft) || offset > (rangeWidth - range.firstChild.offsetLeft + knob.offsetLeft))
           offset = knob.offsetLeft
         else
