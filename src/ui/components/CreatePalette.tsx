@@ -19,7 +19,7 @@ export default class CreatePalette extends React.Component<Props> {
 
   onCaption = (e: any) => {
     this.setState({ hasCaption: e.target.checked });
-    palette.hasCaption = e.target.checked
+    palette.caption = e.target.checked
   }
 
   render() {
