@@ -15,7 +15,8 @@ class App extends React.Component {
     this.state = {
       activeTab: 'Create',
       isPaletteSelected: false,
-      newScale: null
+      newScale: null,
+      hasCaption: true
     }
   }
 
@@ -37,9 +38,8 @@ class App extends React.Component {
     return (
       <main>
         <Tabs tabs='Create Update' active={this.state['activeTab']} onClick={this.onNav}/>
-        {this.state['activeTab'] === 'Create' ? <CreatePalette /> : null}
-        {this.state['activeTab'] === 'Update' ? <UpdatePalette isPaletteSelected={this.state['isPaletteSelected']} scale={this.state['newScale']}/> : null}
         {this.state['activeTab'] === 'Create' ? <CreatePalette hasCaption={this.state['hasCaption']} /> : null}
+        {this.state['activeTab'] === 'Update' ? <UpdatePalette isPaletteSelected={this.state['isPaletteSelected']} scale={this.state['newScale']} hasCaption={this.state['hasCaption']} /> : null}
       </main>
     )
   }
