@@ -12,8 +12,7 @@ figma.on('run', () => {
     figma.ui.postMessage(JSON.stringify({
       scale: figma.currentPage.selection[0].getPluginData('scale'),
       caption: figma.currentPage.selection[0].getPluginData('caption')
-    }));
-    //figma.ui.postMessage(figma.currentPage.selection[0].getPluginData('caption'))
+    }))
   }
   else if (figma.currentPage.selection.length == 0)
     figma.ui.postMessage('empty-selection')
@@ -24,8 +23,7 @@ figma.on('selectionchange', () => {
     figma.ui.postMessage(JSON.stringify({
       scale: figma.currentPage.selection[0].getPluginData('scale'),
       caption: figma.currentPage.selection[0].getPluginData('caption')
-    }));
-    //figma.ui.postMessage(figma.currentPage.selection[0].getPluginData('caption'))
+    }))
   }
   else if (figma.currentPage.selection.length == 0)
     figma.ui.postMessage('empty-selection')
