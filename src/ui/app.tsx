@@ -29,9 +29,9 @@ class App extends React.Component {
     onmessage = (e: any) => {
       if (e.data.pluginMessage === 'empty-selection' || e.data.pluginMessage === '')
         this.setState({ isPaletteSelected: false })
-      else if (JSON.parse(e.data.pluginMessage).caption === 'hasNotCaption')
+      else if (JSON.parse(e.data.pluginMessage).captions === 'hasNotCaptions')
         this.setState({ isPaletteSelected: true, newScale: JSON.parse(e.data.pluginMessage).scale, hasCaptions: false })
-      else if (JSON.parse(e.data.pluginMessage).caption === 'hasCaption')
+      else if (JSON.parse(e.data.pluginMessage).captions === 'hasCaptions')
         this.setState({ isPaletteSelected: true, newScale: JSON.parse(e.data.pluginMessage).scale, hasCaptions: true })
     };
 

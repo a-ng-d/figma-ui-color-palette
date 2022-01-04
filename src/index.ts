@@ -11,7 +11,7 @@ figma.on('run', () => {
   if (figma.currentPage.selection.length == 1) {
     figma.ui.postMessage(JSON.stringify({
       scale: figma.currentPage.selection[0].getPluginData('scale'),
-      caption: figma.currentPage.selection[0].getPluginData('caption')
+      captions: figma.currentPage.selection[0].getPluginData('captions')
     }))
   }
   else if (figma.currentPage.selection.length == 0)
@@ -22,7 +22,7 @@ figma.on('selectionchange', () => {
   if (figma.currentPage.selection.length == 1) {
     figma.ui.postMessage(JSON.stringify({
       scale: figma.currentPage.selection[0].getPluginData('scale'),
-      caption: figma.currentPage.selection[0].getPluginData('caption')
+      captions: figma.currentPage.selection[0].getPluginData('captions')
     }))
   }
   else if (figma.currentPage.selection.length == 0)

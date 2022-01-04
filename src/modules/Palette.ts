@@ -32,9 +32,9 @@ export default class Palette {
     this.node.setPluginData('max', this.max.toString());
     this.node.setPluginData('scale', JSON.stringify(this.scale));
     if (this.captions)
-      this.node.setPluginData('caption', 'hasCaption')
+      this.node.setPluginData('captions', 'hasCaptions')
     else
-      this.node.setPluginData('caption', 'hasNotCaption');
+      this.node.setPluginData('captions', 'hasNotCaptions');
 
     figma.currentPage.selection.forEach(element => {
 
