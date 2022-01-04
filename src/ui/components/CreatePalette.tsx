@@ -15,7 +15,7 @@ export default class CreatePalette extends React.Component<Props> {
     parent.postMessage({ pluginMessage: { type: 'create-palette', palette } }, '*')
   }
 
-  callback = () => { }
+  slideHandler = () => { }
 
   onCaption = (e: any) => {
     this.setState({ hasCaption: e.target.checked });
@@ -33,7 +33,7 @@ export default class CreatePalette extends React.Component<Props> {
             min='24'
             max='96'
             scale='null'
-            parentCallback={this.callback}
+            onChange={this.slideHandler}
           />
           <div className='onboarding-tip'>
             <div className='icon icon--library'></div>

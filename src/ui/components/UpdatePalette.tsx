@@ -13,7 +13,7 @@ interface Props {
 export default class UpdatePalette extends React.Component<Props> {
 
   // Events
-  callback = () => {
+  slideHandler = () => {
     parent.postMessage({ pluginMessage: { type: 'update-palette', palette } }, '*');
   }
 
@@ -44,7 +44,7 @@ export default class UpdatePalette extends React.Component<Props> {
           min=''
           max=''
           scale={this.props.scale}
-          parentCallback={this.callback}
+          onChange={this.slideHandler}
         />
         <div className='onboarding-tip'>
           <div className='icon icon--library'></div>

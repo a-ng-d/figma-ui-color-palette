@@ -7,7 +7,7 @@ interface Props {
   min: string;
   max: string;
   scale: string;
-  parentCallback: any
+  onChange: any
 };
 
 export default class Slider extends React.Component<Props> {
@@ -84,7 +84,7 @@ export default class Slider extends React.Component<Props> {
       // update lightness scale
       knobs.forEach(knob => this.updateLightnessScaleEntry(knob.classList[1], this.doMap(knob.offsetLeft, 0, rangeWidth, 0, 100).toFixed(1)));
       this.updateKnobTooltip(tooltip, this.doMap(offset, 0, rangeWidth, 0, 100).toFixed(1));
-      this.props.parentCallback()
+      this.props.onChange()
       //console.log(palette.scale)
     };
 
