@@ -8,16 +8,16 @@ export default class Palette {
   max: number;
   scale: string;
   colors: Array<string>;
-  caption: boolean;
+  captions: boolean;
   node: FrameNode;
 
-  constructor(min, max, scale, caption) {
+  constructor(min, max, scale, captions) {
     this.name = 'Awesome Palette';
     this.min = min;
     this.max = max;
     this.scale = scale;
     this.colors = [];
-    this.caption = caption;
+    this.captions = captions;
     this.node = figma.createFrame()
   }
 
@@ -31,7 +31,7 @@ export default class Palette {
     this.node.setPluginData('min', this.min.toString());
     this.node.setPluginData('max', this.max.toString());
     this.node.setPluginData('scale', JSON.stringify(this.scale));
-    if (this.caption == true)
+    if (this.captions == true)
       this.node.setPluginData('caption', 'hasCaption')
     else
       this.node.setPluginData('caption', 'hasNotCaption');
@@ -55,7 +55,7 @@ export default class Palette {
 
           Object.values(this.scale).forEach(lightness => {
             let newColor = chroma([rgb.r * 255, rgb.g * 255, rgb.b * 255]).set('lch.l', lightness);
-            const sample = new Sample(`${element.name}-${Object.keys(this.scale).find(key => this.scale[key] === lightness).substr(10)}`, 128, 96, newColor._rgb, this.caption).makeNode();
+            const sample = new Sample(`${element.name}-${Object.keys(this.scale).find(key => this.scale[key] === lightness).substr(10)}`, 128, 96, newColor._rgb, this.captions).makeNode();
             row.name = element.name;
             row.appendChild(sample)
           });

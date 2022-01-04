@@ -5,7 +5,7 @@ import Checkbox from './Checkbox';
 import { palette } from '../data';
 
 interface Props {
-  hasCaption: boolean
+  hasCaptions: boolean
 };
 
 export default class CreatePalette extends React.Component<Props> {
@@ -19,7 +19,7 @@ export default class CreatePalette extends React.Component<Props> {
 
   checkHandler = (e: any) => {
     this.setState({ hasCaption: e.target.checked });
-    palette.caption = e.target.checked
+    palette.captions = e.target.checked
   }
 
   render() {

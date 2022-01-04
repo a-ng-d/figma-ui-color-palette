@@ -7,7 +7,7 @@ import { palette } from '../data';
 interface Props {
   isPaletteSelected: boolean;
   scale: string;
-  hasCaption: boolean
+  hasCaptions: boolean
 };
 
 export default class UpdatePalette extends React.Component<Props> {
@@ -54,7 +54,7 @@ export default class UpdatePalette extends React.Component<Props> {
       </div>
       <div className='actions'>
         <Button type='primary' label='Update local styles' action={null} />
-        <Switch id='showCaptions' label='Show captions' isChecked={this.props.hasCaption} onChange={this.checkHandler} />
+        <Switch id='showCaptions' label='Show captions' isChecked={this.props.hasCaptions} onChange={this.checkHandler} />
       </div>
       </>
     )

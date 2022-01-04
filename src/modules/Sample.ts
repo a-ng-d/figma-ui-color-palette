@@ -6,15 +6,15 @@ export default class Sample {
   width: number;
   height: number;
   rgb: Array<number>;
-  caption: boolean;
+  captions: boolean;
   node: FrameNode;
 
-  constructor(name, width, height, rgb, caption) {
+  constructor(name, width, height, rgb, captions) {
     this.name = name;
     this.width = width;
     this.height = height;
     this.rgb = rgb;
-    this.caption = caption;
+    this.captions = captions;
     this.node = figma.createFrame();
   }
 
@@ -33,7 +33,7 @@ export default class Sample {
     this.node.paddingTop = this.node.paddingRight = this.node.paddingBottom = this.node.paddingLeft = 8;
     this.node.primaryAxisSizingMode = 'FIXED';
 
-    if (this.caption == true)
+    if (this.captions == true)
       this.node.appendChild(new Caption(this.name, this.rgb).makeNode());
 
     return this.node
