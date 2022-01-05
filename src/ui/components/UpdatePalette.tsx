@@ -2,6 +2,7 @@ import * as React from 'react';
 import Slider from './Slider';
 import Switch from './Switch';
 import Button from './Button';
+import Message from './Message';
 import { palette } from '../data';
 
 interface Props {
@@ -27,10 +28,10 @@ export default class UpdatePalette extends React.Component<Props> {
   Message = () => {
     return (
       <div className='message'>
-        <div className='onboarding-tip'>
-          <div className='icon icon--warning'></div>
-          <div className='onboarding-tip__msg'>Select an Awesome palette to update its lightness scale</div>
-        </div>
+        <Message
+          icon='warning'
+          messages= 'Select an Awesome palette to update it'
+        />
       </div>
     )
   }
@@ -48,11 +49,10 @@ export default class UpdatePalette extends React.Component<Props> {
           scale={this.props.scale}
           onChange={this.slideHandler}
         />
-        <div className='onboarding-tip'>
-          <div className='icon icon--library'></div>
-          <div className='onboarding-tip__msg'>Hold Shift ⇧ while dragging 50 or 900 to distribute knobs' horizontal spacing</div>
-          <div className='onboarding-tip__msg'>Hold Ctrl or Cmd ⌘ while dragging a scale to shift every one</div>
-        </div>
+        <Message
+          icon='library'
+          messages= 'Hold Shift ⇧ while dragging 50 or 900 to distribute knobs\' horizontal spacing ; Hold Ctrl or Cmd ⌘ while dragging a scale to shift every one'
+        />
       </div>
       <div className='actions'>
         <Button type='primary' label='Update local styles' action={null} />

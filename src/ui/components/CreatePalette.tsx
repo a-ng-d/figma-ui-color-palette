@@ -2,6 +2,7 @@ import * as React from 'react';
 import Slider from './Slider';
 import Button from './Button';
 import Checkbox from './Checkbox';
+import Message from './Message';
 import { palette } from '../data';
 
 interface Props {
@@ -34,11 +35,10 @@ export default class CreatePalette extends React.Component<Props> {
             scale='null'
             onChange={this.slideHandler}
           />
-          <div className='onboarding-tip'>
-            <div className='icon icon--library'></div>
-            <div className='onboarding-tip__msg'>Hold Shift ⇧ while dragging 50 or 900 to distribute knobs' horizontal spacing</div>
-            <div className='onboarding-tip__msg'>Hold Ctrl or Cmd ⌘ while dragging a scale to shift every one</div>
-          </div>
+          <Message
+            icon='library'
+            messages= 'Hold Shift ⇧ while dragging 50 or 900 to distribute knobs\' horizontal spacing ; Hold Ctrl or Cmd ⌘ while dragging a scale to shift every one'
+          />
         </div>
         <div className='actions'>
           <Button type='primary' label='Create palette' action={this.onCreate} />
