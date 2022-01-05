@@ -35,8 +35,10 @@ export default class Slider extends React.Component<Props> {
           rangeWidth = range.offsetWidth,
           knobs = Array.from(range.childNodes as HTMLCollectionOf<HTMLElement>);
 
-    let offset;
+    let offset, update;
     knob.style.zIndex = 2;
+
+    update = setInterval(() => this.props.onChange(), 500);
 
     const slide = (e) => {
       let limitMin, limitMax;
@@ -84,7 +86,6 @@ export default class Slider extends React.Component<Props> {
       // update lightness scale
       knobs.forEach(knob => this.updateLightnessScaleEntry(knob.classList[1], this.doMap(knob.offsetLeft, 0, rangeWidth, 0, 100).toFixed(1)));
       this.updateKnobTooltip(tooltip, this.doMap(offset, 0, rangeWidth, 0, 100).toFixed(1));
-      this.props.onChange()
       //console.log(palette.scale)
     };
 
@@ -95,7 +96,8 @@ export default class Slider extends React.Component<Props> {
       knob.onmouseup = null;
       knob.style.zIndex = 1;
       knob.style.left = this.doMap(offset, 0, rangeWidth, 0, 100).toFixed(1) + '%';
-      knobs.forEach(knob => (knob.children[0] as HTMLElement).style.display = 'none')
+      knobs.forEach(knob => (knob.children[0] as HTMLElement).style.display = 'none');
+      clearInterval(update)
     }
 
   }
