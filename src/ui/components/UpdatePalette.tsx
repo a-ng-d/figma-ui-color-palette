@@ -43,7 +43,7 @@ export default class UpdatePalette extends React.Component<Props> {
         <div className='section-title'>Lightness scale</div>
         <Slider
           type='CUSTOM'
-          knobsList=''
+          knobsList='50 100 200 300 400 500 600 700 800 900'
           min=''
           max=''
           scale={this.props.scale}
