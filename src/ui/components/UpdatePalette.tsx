@@ -18,7 +18,9 @@ export default class UpdatePalette extends React.Component<Props> {
   }
 
   checkHandler = (e: any) => {
-    this.setState({ hasCaption: e.target.checked })
+    this.setState({ hasCaptions: e.target.checked });
+    const hasCaptions = e.target.checked;
+    parent.postMessage({ pluginMessage: { type: 'update-captions', hasCaptions } }, '*')
   }
 
   // Templates
