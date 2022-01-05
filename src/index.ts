@@ -80,7 +80,7 @@ figma.ui.onmessage = msg => {
     case 'update-captions':
       palette = figma.currentPage.selection[0];
 
-      if (msg.hasCaptions) {
+      if (msg.palette.captions) {
         palette.setPluginData('captions', 'hasCaptions');
         palette.children.forEach(row => {
           row.children.forEach(sample => {
