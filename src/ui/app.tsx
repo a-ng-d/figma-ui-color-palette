@@ -21,7 +21,7 @@ class App extends React.Component {
   }
 
   // Events
-  onNav = (e: any) => {
+  navHandler = (e: any) => {
     this.setState({ activeTab: e.target.innerText })
   }
 
@@ -37,7 +37,7 @@ class App extends React.Component {
 
     return (
       <main>
-        <Tabs tabs='Create Update' active={this.state['activeTab']} onClick={this.onNav}/>
+        <Tabs tabs='Create Update' active={this.state['activeTab']} onClick={this.navHandler}/>
         {this.state['activeTab'] === 'Create' ? <CreatePalette hasCaptions={this.state['hasCaptions']} /> : null}
         {this.state['activeTab'] === 'Update' ? <UpdatePalette isPaletteSelected={this.state['isPaletteSelected']} scale={this.state['newScale']} hasCaptions={this.state['hasCaptions']} /> : null}
       </main>
