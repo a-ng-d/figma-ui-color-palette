@@ -8,6 +8,7 @@ export default class Sample {
   rgb: Array<number>;
   captions: boolean;
   node: FrameNode;
+  children: any;
 
   constructor(name, width, height, rgb, captions) {
     this.name = name;
@@ -16,6 +17,7 @@ export default class Sample {
     this.rgb = rgb;
     this.captions = captions;
     this.node = figma.createFrame();
+    this.children = null
   }
 
   makeNode() {
@@ -32,9 +34,13 @@ export default class Sample {
     this.node.layoutMode = 'HORIZONTAL';
     this.node.paddingTop = this.node.paddingRight = this.node.paddingBottom = this.node.paddingLeft = 8;
     this.node.primaryAxisSizingMode = 'FIXED';
+    this.children = new Caption(this.name, this.rgb).makeNode();
+    this.node.appendChild(this.children);
 
-    if (this.captions)
-      this.node.appendChild(new Caption(this.name, this.rgb).makeNode());
+    if (!this.captions)
+      this.children.visible = false
+    else
+      this.children.visible = true
 
     return this.node
   }
