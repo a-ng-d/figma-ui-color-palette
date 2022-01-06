@@ -55,7 +55,7 @@ export default class UpdatePalette extends React.Component<Props> {
         />
         <Message
           icon='library'
-          messages= 'Hold Shift ⇧ while dragging 50 or 900 to distribute knobs\' horizontal spacing ; Hold Ctrl or Cmd ⌘ while dragging a scale to shift every one'
+          messages= 'Hold Shift ⇧ while dragging 50 or 900 to distribute knobs\' horizontal spacing ; Hold Ctrl ⌃ or Cmd ⌘ while dragging a knob to move them all'
         />
       </div>
       <div className='actions'>
