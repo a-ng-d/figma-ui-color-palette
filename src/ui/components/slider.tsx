@@ -99,7 +99,6 @@ export default class Slider extends React.Component<Props> {
       knobs.forEach(knob => (knob.children[0] as HTMLElement).style.display = 'none');
       clearInterval(update)
     }
-
   }
 
   // Actions
