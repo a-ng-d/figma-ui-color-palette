@@ -1,6 +1,7 @@
 import chroma from 'chroma-js';
 import Palette from './modules/Palette';
 import Sample from './modules/Sample';
+import Style from './modules/Style';
 
 
 figma.showUI(__html__);
@@ -109,7 +110,20 @@ figma.ui.onmessage = msg => {
           scale: palette.getPluginData('scale'),
           captions: palette.getPluginData('captions')
         }))
-      } catch { console.log('ko') }
+      } catch { }
+      break;
+
+    case 'create-local-styles':
+      palette = figma.currentPage.selection[0];
+
+      palette.children.forEach(row => {
+        row.children.forEach(sample => {
+          new Style(
+            sample.name.replace('-', '/'),
+            sample.fills[0].color
+          ).makeNode()
+        })
+      })
 
   }
 
