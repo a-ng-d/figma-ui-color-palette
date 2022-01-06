@@ -37,6 +37,11 @@ div.actions {
   gap: var(--size-xxsmall)
 }
 
+div.actions .buttons {
+  display: flex;
+  gap: var(--size-xxsmall)
+}
+
 /* Tabs */
 div.tabs {
   flex: 0 0 var(--size-large);

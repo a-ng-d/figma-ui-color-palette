@@ -59,7 +59,10 @@ export default class UpdatePalette extends React.Component<Props> {
         />
       </div>
       <div className='actions'>
-        <Button type='primary' label='Create local styles' action={this.onCreate} />
+        <div className='buttons'>
+          <Button type='secondary' label='Update local styles' action={null} />
+          <Button type='primary' label='Create local styles' action={this.onCreate} />
+        </div>
         <Switch id='showCaptions' label='Show captions' isChecked={this.props.hasCaptions} onChange={this.checkHandler} />
       </div>
       </>
