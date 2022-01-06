@@ -100,6 +100,16 @@ figma.ui.onmessage = msg => {
           })
         })
       }
+      break;
+
+    case 'get-infos':
+      palette = figma.currentPage.selection[0];
+      try {
+        figma.ui.postMessage(JSON.stringify({
+          scale: palette.getPluginData('scale'),
+          captions: palette.getPluginData('captions')
+        }))
+      } catch { console.log('ko') }
 
   }
 

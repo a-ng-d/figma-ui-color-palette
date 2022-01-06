@@ -22,7 +22,8 @@ class App extends React.Component {
 
   // Events
   navHandler = (e: any) => {
-    this.setState({ activeTab: e.target.innerText })
+    this.setState({ activeTab: e.target.innerText });
+    parent.postMessage({ pluginMessage: { type: 'get-infos' } }, '*');
   }
 
   render() {

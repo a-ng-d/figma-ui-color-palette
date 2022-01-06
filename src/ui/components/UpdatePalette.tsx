@@ -15,6 +15,7 @@ export default class UpdatePalette extends React.Component<Props> {
 
   // Events
   slideHandler = () => {
+    this.setState({ newScale: JSON.stringify(palette.scale) });
     parent.postMessage({ pluginMessage: { type: 'update-palette', palette } }, '*');
   }
 
