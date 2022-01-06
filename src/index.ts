@@ -90,7 +90,6 @@ figma.ui.onmessage = msg => {
             })
           })
         })
-
       } else {
         palette.setPluginData('captions', 'hasNotCaptions');
         palette.children.forEach(row => {
@@ -105,6 +104,7 @@ figma.ui.onmessage = msg => {
 
     case 'get-infos':
       palette = figma.currentPage.selection[0];
+
       try {
         figma.ui.postMessage(JSON.stringify({
           scale: palette.getPluginData('scale'),
@@ -122,6 +122,21 @@ figma.ui.onmessage = msg => {
             sample.name.replace('-', '/'),
             sample.fills[0].color
           ).makeNode()
+        })
+      })
+      break;
+
+    case 'update-local-styles':
+      palette = figma.currentPage.selection[0];
+      const localStyles = figma.getLocalPaintStyles();
+
+      palette.children.forEach(row => {
+        row.children.forEach(sample => {
+          localStyles.forEach(localStyle => {
+            if (sample.name === localStyle.name.replace('/', '-')) {
+              localStyle.paints = sample.fills
+            }
+          })
         })
       })
 

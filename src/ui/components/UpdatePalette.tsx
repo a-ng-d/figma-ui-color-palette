@@ -28,6 +28,10 @@ export default class UpdatePalette extends React.Component<Props> {
     parent.postMessage({ pluginMessage: { type: 'create-local-styles', palette } }, '*')
   }
 
+  onUpdate = () => {
+    parent.postMessage({ pluginMessage: { type: 'update-local-styles', palette } }, '*')
+  }
+
   // Templates
   Message = () => {
     return (
@@ -60,7 +64,7 @@ export default class UpdatePalette extends React.Component<Props> {
       </div>
       <div className='actions'>
         <div className='buttons'>
-          <Button type='secondary' label='Update local styles' action={null} />
+          <Button type='secondary' label='Update local styles' action={this.onUpdate} />
           <Button type='primary' label='Create local styles' action={this.onCreate} />
         </div>
         <Switch id='showCaptions' label='Show captions' isChecked={this.props.hasCaptions} onChange={this.checkHandler} />
