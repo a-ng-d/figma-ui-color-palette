@@ -41,7 +41,12 @@ figma.ui.onmessage = msg => {
 
         const scene: SceneNode[] = [];
 
-        palette = new Palette(msg.palette.min, msg.palette.max, msg.palette.scale, msg.palette.captions).makeNode();
+        palette = new Palette(
+            msg.palette.min,
+            msg.palette.max,
+            msg.palette.scale,
+            msg.palette.captions
+          ).makeNode();
 
         if (palette.children.length != 0) {
           figma.currentPage.appendChild(palette);
@@ -70,7 +75,13 @@ figma.ui.onmessage = msg => {
         for (let j = 0 ; j < (row as FrameNode).children.length ; j++) {
           const sample = (row as FrameNode).children[j],
                 newColor = chroma([rgb.r * 255, rgb.g * 255, rgb.b * 255]).set('lch.l', Object.values(msg.palette.scale)[j]);
-          (row as FrameNode).insertChild(j, new Sample(sample.name, 128, 96, newColor._rgb, msg.palette.captions).makeNode())
+          (row as FrameNode).insertChild(j, new Sample(
+            sample.name,
+            128,
+            96,
+            newColor._rgb,
+            msg.palette.captions
+          ).makeNode())
           sample.remove()
         }
       };
