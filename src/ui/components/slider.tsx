@@ -27,7 +27,7 @@ export default class Slider extends React.Component<Props> {
   }
 
   // Events
-  onSlide = (e: any) => {
+  onGrab = (e: any) => {
     const knob = e.target,
           range = knob.parentElement,
           shift = e.nativeEvent.layerX,
@@ -35,70 +35,90 @@ export default class Slider extends React.Component<Props> {
           rangeWidth = range.offsetWidth,
           knobs = Array.from(range.childNodes as HTMLCollectionOf<HTMLElement>);
 
-    let offset, update;
+    let offset,
+        update = setInterval(() => this.props.onChange(), 500);
+
     knob.style.zIndex = 2;
 
-    update = setInterval(() => this.props.onChange(), 500);
+    document.onmousemove = (e) => this.onSlide(
+      e,
+      range,
+      knobs,
+      knob,
+      tooltip,
+      offset,
+      shift,
+      rangeWidth
+    );
 
-    const slide = (e) => {
-      let limitMin, limitMax;
-      const gap = this.doMap(2, 0, 100, 0, rangeWidth);
-      offset = e.clientX - range.offsetLeft - shift;
+    document.onmouseup = () => this.onRelease(
+      knobs,
+      knob,
+      offset,
+      update,
+      rangeWidth
+    )
+  }
 
-      palette.min = parseFloat(this.doMap(range.lastChild.offsetLeft, 0, rangeWidth, 0, 100).toFixed(1));
-      palette.max = parseFloat(this.doMap(range.firstChild.offsetLeft, 0, rangeWidth, 0, 100).toFixed(1));
+  onSlide = (e, range, knobs, knob, tooltip, offset, shift, rangeWidth) => {
+    let limitMin, limitMax;
+    const gap = this.doMap(2, 0, 100, 0, rangeWidth);
+    offset = e.clientX - range.offsetLeft - shift;
 
-      if (knob == range.lastChild) { // 900
-        limitMin = 0;
-        limitMax = knob.previousElementSibling.offsetLeft - gap
-      } else if (knob == range.firstChild) { // 50
-        limitMin = knob.nextElementSibling.offsetLeft + gap;
-        limitMax = rangeWidth
-      } else {
-        limitMin = knob.nextElementSibling.offsetLeft + gap;
-        limitMax = knob.previousElementSibling.offsetLeft - gap
-      }
+    palette.min = parseFloat(this.doMap(range.lastChild.offsetLeft, 0, rangeWidth, 0, 100).toFixed(1));
+    palette.max = parseFloat(this.doMap(range.firstChild.offsetLeft, 0, rangeWidth, 0, 100).toFixed(1));
 
-      if (offset <= limitMin)
-        offset = limitMin
-      else if (offset >= limitMax)
-        offset = limitMax;
-
-      // distribute knobs horizontal spacing
-      if (knob == range.lastChild && e.shiftKey) // 900
-        this.distributeKnobs('MIN', this.doMap(offset, 0, rangeWidth, 0, 100).toFixed(1), knobs)
-      else if (knob == range.firstChild && e.shiftKey) // 50
-        this.distributeKnobs('MAX', this.doMap(offset, 0, rangeWidth, 0, 100).toFixed(1), knobs)
-
-      // link every knob
-      if (e.ctrlKey || e.metaKey) {
-        if (offset <= (knob.offsetLeft - range.lastChild.offsetLeft) || offset > (rangeWidth - range.firstChild.offsetLeft + knob.offsetLeft))
-          offset = knob.offsetLeft
-        else
-          this.linkKnobs(offset, knob, knobs, rangeWidth)
-      }
-
-      if (e.ctrlKey == false && e.metaKey == false && e.shiftKey == false)
-        knobs.forEach(knob => (knob.children[0] as HTMLElement).style.display = 'none');
-
-      knob.style.left = this.doMap(offset, 0, rangeWidth, 0, 100).toFixed(1) + '%';
-
-      // update lightness scale
-      knobs.forEach(knob => this.updateLightnessScaleEntry(knob.classList[1], this.doMap(knob.offsetLeft, 0, rangeWidth, 0, 100).toFixed(1)));
-      this.updateKnobTooltip(tooltip, this.doMap(offset, 0, rangeWidth, 0, 100).toFixed(1));
-      //console.log(palette.scale)
-    };
-
-    document.addEventListener('mousemove', slide);
-
-    document.onmouseup = () => {
-      document.removeEventListener('mousemove', slide);
-      knob.onmouseup = null;
-      knob.style.zIndex = 1;
-      knob.style.left = this.doMap(offset, 0, rangeWidth, 0, 100).toFixed(1) + '%';
-      knobs.forEach(knob => (knob.children[0] as HTMLElement).style.display = 'none');
-      clearInterval(update)
+    if (knob == range.lastChild) { // 900
+      limitMin = 0;
+      limitMax = knob.previousElementSibling.offsetLeft - gap
+    } else if (knob == range.firstChild) { // 50
+      limitMin = knob.nextElementSibling.offsetLeft + gap;
+      limitMax = rangeWidth
+    } else {
+      limitMin = knob.nextElementSibling.offsetLeft + gap;
+      limitMax = knob.previousElementSibling.offsetLeft - gap
     }
+
+    if (offset <= limitMin)
+      offset = limitMin
+    else if (offset >= limitMax)
+      offset = limitMax;
+
+    // distribute knobs horizontal spacing
+    if (knob == range.lastChild && e.shiftKey) // 900
+      this.distributeKnobs('MIN', this.doMap(offset, 0, rangeWidth, 0, 100).toFixed(1), knobs)
+    else if (knob == range.firstChild && e.shiftKey) // 50
+      this.distributeKnobs('MAX', this.doMap(offset, 0, rangeWidth, 0, 100).toFixed(1), knobs)
+
+    // link every knob
+    if (e.ctrlKey || e.metaKey) {
+      if (offset <= (knob.offsetLeft - range.lastChild.offsetLeft) || offset > (rangeWidth - range.firstChild.offsetLeft + knob.offsetLeft))
+        offset = knob.offsetLeft
+      else
+        this.linkKnobs(offset, knob, knobs, rangeWidth)
+    }
+
+    if (e.ctrlKey == false && e.metaKey == false && e.shiftKey == false)
+      knobs.forEach(knob => (knob.children[0] as HTMLElement).style.display = 'none');
+
+    knob.style.left = this.doMap(offset, 0, rangeWidth, 0, 100).toFixed(1) + '%';
+
+    // update lightness scale
+    knobs.forEach(knob => this.updateLightnessScaleEntry(knob.classList[1], this.doMap(knob.offsetLeft, 0, rangeWidth, 0, 100).toFixed(1)));
+    this.updateKnobTooltip(tooltip, this.doMap(offset, 0, rangeWidth, 0, 100).toFixed(1));
+  }
+
+  onRelease = (knobs, knob, offset, update, rangeWidth) => {
+    document.onmousemove = null;
+    document.onmouseup = null;
+    knob.onmouseup = null;
+    knob.style.zIndex = 1;
+    knobs.forEach(knob => (knob.children[0] as HTMLElement).style.display = 'none');
+    clearInterval(update)
+  }
+
+  onEdit = (e: any) => {
+    this.setState({ value: e.target.value })
   }
 
   // Actions
@@ -149,7 +169,7 @@ export default class Slider extends React.Component<Props> {
   Input = (props) => {
     return (
       <div className='input'>
-        <input type='number' min='0' max='100' step='0.1' className='input__field' value={props.value} />
+        <input type='number' min='0' max='100' step='0.1' className='input__field' value={props.value} onChange={this.onEdit} />
       </div>
     )
   }
@@ -160,10 +180,9 @@ export default class Slider extends React.Component<Props> {
     return (
       <div className='slider__range'>
         {Object.entries(this.doLightnessScale()).map(lightness =>
-          <div key={lightness[0]} className={`slider__knob ${lightness[0]}`} style={{left: `${lightness[1]}%`}} onMouseDown={this.onSlide}>
+          <div key={lightness[0]} className={`slider__knob ${lightness[0]}`} style={{left: `${lightness[1]}%`}} onMouseDown={this.onGrab}>
             <div className='type type--inverse slider__tooltip'>{lightness[1]}</div>
             <div className='type slider__label'>{lightness[0].replace('lightness-', '')}</div>
-            <div className='slider__input'>{this.state['id'] === lightness[0] ? <this.Input value={this.state['value']} /> : null}</div>
           </div>
         )}
       </div>
@@ -174,10 +193,9 @@ export default class Slider extends React.Component<Props> {
     return (
       <div className='slider__range'>
         {Object.entries(JSON.parse(this.props.scale)).map(lightness =>
-          <div key={lightness[0]} className={`slider__knob ${lightness[0]}`} style={{left: `${lightness[1]}%`}} onMouseDown={this.onSlide}>
+          <div key={lightness[0]} className={`slider__knob ${lightness[0]}`} style={{left: `${lightness[1]}%`}} onMouseDown={this.onGrab}>
             <div className='type type--inverse slider__tooltip'>{lightness[1]}</div>
             <div className='type slider__label'>{lightness[0].replace('lightness-', '')}</div>
-            <div className='slider__input'>{this.state['id'] === lightness[0] ? <this.Input value={this.state['value']} /> : null}</div>
           </div>
         )}
       </div>
