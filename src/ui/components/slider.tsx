@@ -11,9 +11,11 @@ interface Props {
 };
 
 export default class Slider extends React.Component<Props> {
+  time: number;
 
   constructor(props) {
-    super(props)
+    super(props);
+    this.time = 0;
     this.state = {
       id: null,
       value: null
@@ -33,11 +35,17 @@ export default class Slider extends React.Component<Props> {
           shift = e.nativeEvent.layerX,
           tooltip = knob.children[0],
           rangeWidth = range.offsetWidth,
-          knobs = Array.from(range.childNodes as HTMLCollectionOf<HTMLElement>);
+          knobs = Array.from(range.childNodes as HTMLCollectionOf<HTMLElement>)
 
     let offset,
         update = setInterval(() => this.props.onChange(), 500);
 
+    if ((e.timeStamp - this.time) < 300) {
+      console.log('double click');
+      this.time = 0
+    };
+
+    this.time = e.timeStamp;
     knob.style.zIndex = 2;
 
     document.onmousemove = (e) => this.onSlide(
