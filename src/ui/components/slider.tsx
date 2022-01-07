@@ -166,14 +166,6 @@ export default class Slider extends React.Component<Props> {
   }
 
   // Templates
-  Input = (props) => {
-    return (
-      <div className='input'>
-        <input type='number' min='0' max='100' step='0.1' className='input__field' value={props.value} onChange={this.onEdit} />
-      </div>
-    )
-  }
-
   Equal = (props) => {
     palette.min = parseFloat(this.props.min);
     palette.max = parseFloat(this.props.max);
