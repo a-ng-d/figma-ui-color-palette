@@ -103,7 +103,13 @@ div.tabs .tabs__tab--active {
 }
 
 .slider .slider__knob:hover {
-  background: var(--grey)
+  background: var(--selection-b);
+  box-shadow: 0px 1px 2px var(--black1), inset 0px 0px 0px 1px var(--blue)
+}
+
+.slider .slider__knob:active {
+  background: var(--selection-a);
+  box-shadow: 0px 1px 2px var(--black1), inset 0px 0px 0px 1px var(--blue)
 }
 
 .slider .slider__tooltip {
