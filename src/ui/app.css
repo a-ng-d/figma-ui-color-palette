@@ -74,7 +74,7 @@ div.tabs .tabs__tab--active {
 .slider {
   display: flex;
   align-items: center;
-  position: relative;
+  position: relative
 }
 
 .slider .slider__range {
@@ -143,15 +143,4 @@ div.tabs .tabs__tab--active {
 
 .slider .slider__label {
   pointer-events: none
-}
-
-.slider .slider__input {
-  position: absolute;
-  transform: translateX(-50%) translateY(100%);
-  bottom: calc(var(--size-xsmall) * -1);
-  width: var(--size-xxxlarge);
-  padding: var(--size-xxsmall);
-  background: var(--white);
-  border: 1px solid var(--silver);
-  box-shadow: var(--shadow-floating-window)
 }

@@ -1,5 +1,4 @@
 import * as React from 'react';
-import NumericStepper from './NumericStepper';
 import { palette } from '../data';
 
 interface Props {
@@ -12,17 +11,6 @@ interface Props {
 };
 
 export default class Slider extends React.Component<Props> {
-  time: number;
-
-  constructor(props) {
-    super(props);
-    this.time = 0;
-    this.state = {
-      id: null,
-      value: null,
-      hasInput: false
-    }
-  }
 
   doMap = (value, oldMin, oldMax, newMin, newMax) => {
     const oldRange = oldMax - oldMin,
@@ -43,12 +31,6 @@ export default class Slider extends React.Component<Props> {
     let offset,
         update = setInterval(() => this.props.onChange(), 500);
 
-    if ((e.timeStamp - this.time) < 300) {
-      this.onDoubleClick(knob.style.left.slice(0, -1));
-      this.time = 0
-    };
-
-    this.time = e.timeStamp;
     knob.style.zIndex = 2;
 
     document.onmousemove = (e) => this.onSlide(
@@ -129,14 +111,6 @@ export default class Slider extends React.Component<Props> {
     clearInterval(update)
   }
 
-  onDoubleClick = (value: string) => {
-    this.setState({ hasInput: true, value: value })
-  }
-
-  onEdit = () => {
-    console.log('ok')
-  }
-
   // Actions
   doLightnessScale = () => {
     let granularity: number = 1;
@@ -215,11 +189,6 @@ export default class Slider extends React.Component<Props> {
       <div className='slider'>
         {this.props.type == 'EQUAL' ? <this.Equal /> : null}
         {this.props.type == 'CUSTOM' ? <this.Custom /> : null}
-        {this.state['hasInput'] ?
-          <div className='slider__input' style={{left: `${this.state['value']}%`}}>
-            <NumericStepper min='0' max='100' step='0.1' value={this.state['value']} onChange={this.onEdit} />
-          </div>
-        : null}
       </div>
     )
   }
