@@ -73,7 +73,8 @@ div.tabs .tabs__tab--active {
 /* Slider */
 .slider {
   display: flex;
-  align-items: center
+  align-items: center;
+  position: relative;
 }
 
 .slider .slider__range {
@@ -146,13 +147,9 @@ div.tabs .tabs__tab--active {
 
 .slider .slider__input {
   position: absolute;
-  transform: translateX(-50%) translateY(-100%);
-  left: 50%;
-  bottom: -96px;
-}
-
-.slider .slider__input .input {
-  width: var(--size-xxlarge);
+  transform: translateX(-50%) translateY(100%);
+  bottom: calc(var(--size-xsmall) * -1);
+  width: var(--size-xxxlarge);
   padding: var(--size-xxsmall);
   background: var(--white);
   border: 1px solid var(--silver);

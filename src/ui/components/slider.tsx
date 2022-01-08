@@ -1,4 +1,5 @@
 import * as React from 'react';
+import NumericStepper from './NumericStepper';
 import { palette } from '../data';
 
 interface Props {
@@ -18,7 +19,8 @@ export default class Slider extends React.Component<Props> {
     this.time = 0;
     this.state = {
       id: null,
-      value: null
+      value: null,
+      hasInput: false
     }
   }
 
@@ -41,7 +43,7 @@ export default class Slider extends React.Component<Props> {
         update = setInterval(() => this.props.onChange(), 500);
 
     if ((e.timeStamp - this.time) < 300) {
-      console.log('double click');
+      this.onDoubleClick(knob.style.left.slice(0, -1));
       this.time = 0
     };
 
@@ -125,8 +127,8 @@ export default class Slider extends React.Component<Props> {
     clearInterval(update)
   }
 
-  onEdit = (e: any) => {
-    this.setState({ value: e.target.value })
+  onDoubleClick = (value) => {
+    this.setState({ hasInput: true, value: value })
   }
 
   // Actions
@@ -207,6 +209,11 @@ export default class Slider extends React.Component<Props> {
       <div className='slider'>
         {this.props.type == 'EQUAL' ? <this.Equal /> : null}
         {this.props.type == 'CUSTOM' ? <this.Custom /> : null}
+        {this.state['hasInput'] ?
+          <div className='slider__input' style={{left: `${this.state['value']}%`}}>
+            <NumericStepper min='0' max='100' step='0.1' value={this.state['value']} onChange={null} />
+          </div>
+        : null}
       </div>
     )
   }
