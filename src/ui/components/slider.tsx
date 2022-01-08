@@ -37,7 +37,7 @@ export default class Slider extends React.Component<Props> {
           shift = e.nativeEvent.layerX,
           tooltip = knob.children[0],
           rangeWidth = range.offsetWidth,
-          knobs = Array.from(range.childNodes as HTMLCollectionOf<HTMLElement>)
+          knobs = Array.from(range.childNodes as HTMLCollectionOf<HTMLElement>);
 
     let offset,
         update = setInterval(() => this.props.onChange(), 500);
@@ -127,8 +127,12 @@ export default class Slider extends React.Component<Props> {
     clearInterval(update)
   }
 
-  onDoubleClick = (value) => {
+  onDoubleClick = (value: string) => {
     this.setState({ hasInput: true, value: value })
+  }
+
+  onEdit = () => {
+    console.log('ok')
   }
 
   // Actions
@@ -211,7 +215,7 @@ export default class Slider extends React.Component<Props> {
         {this.props.type == 'CUSTOM' ? <this.Custom /> : null}
         {this.state['hasInput'] ?
           <div className='slider__input' style={{left: `${this.state['value']}%`}}>
-            <NumericStepper min='0' max='100' step='0.1' value={this.state['value']} onChange={null} />
+            <NumericStepper min='0' max='100' step='0.1' value={this.state['value']} onChange={this.onEdit} />
           </div>
         : null}
       </div>
