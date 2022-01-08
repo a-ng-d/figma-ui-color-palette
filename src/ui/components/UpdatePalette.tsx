@@ -74,7 +74,6 @@ export default class UpdatePalette extends React.Component<Props> {
   }
 
   render() {
-    palette.captions = this.props.hasCaptions
     return (
       <section>
         {!this.props.isPaletteSelected ? <this.Message /> : null}
