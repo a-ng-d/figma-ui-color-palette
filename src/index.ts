@@ -8,27 +8,8 @@ figma.showUI(__html__);
 figma.ui.resize(640, 312);
 figma.loadFontAsync({ family: 'Roboto', style: 'Regular' });
 
-figma.on('run', () => {
-  if (figma.currentPage.selection.length == 1) {
-    figma.ui.postMessage(JSON.stringify({
-      scale: figma.currentPage.selection[0].getPluginData('scale'),
-      captions: figma.currentPage.selection[0].getPluginData('captions')
-    }))
-  }
-  else if (figma.currentPage.selection.length == 0)
-    figma.ui.postMessage('empty-selection')
-})
-
-figma.on('selectionchange', () => {
-  if (figma.currentPage.selection.length == 1) {
-    figma.ui.postMessage(JSON.stringify({
-      scale: figma.currentPage.selection[0].getPluginData('scale'),
-      captions: figma.currentPage.selection[0].getPluginData('captions')
-    }))
-  }
-  else if (figma.currentPage.selection.length == 0)
-    figma.ui.postMessage('empty-selection')
-})
+figma.on('run', () => messageToUI());
+figma.on('selectionchange', () => messageToUI());
 
 figma.ui.onmessage = msg => {
 
@@ -154,3 +135,27 @@ figma.ui.onmessage = msg => {
   }
 
 };
+
+const messageToUI = () => {
+  if (figma.currentPage.selection.length == 1 && figma.currentPage.selection[0].getPluginData('scale') != '')
+    figma.ui.postMessage(JSON.stringify({
+      type: 'palette-selected',
+      data: {
+        scale: figma.currentPage.selection[0].getPluginData('scale'),
+        captions: figma.currentPage.selection[0].getPluginData('captions')
+      }
+    }))
+  else if (figma.currentPage.selection.length == 0)
+    figma.ui.postMessage(JSON.stringify({
+      type: 'empty-selection',
+      data: {}
+    }));
+
+  figma.currentPage.selection.forEach(element => {
+    if (element['fills'].filter(fill => fill.type === 'SOLID').length != 0 && element.getPluginData('scale') === '')
+      figma.ui.postMessage(JSON.stringify({
+        type: 'color-selected',
+        data: {}
+      }))
+  })
+}
