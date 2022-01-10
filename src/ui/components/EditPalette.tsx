@@ -19,8 +19,7 @@ export default class EditPalette extends React.Component<Props> {
   }
 
   checkHandler = (e: any) => {
-    this.setState({ hasCaptions: e.target.checked });
-    palette.captions = e.target.checked
+    palette.captions = e.target.checked;
     parent.postMessage({ pluginMessage: { type: 'update-captions', palette } }, '*')
   }
 
@@ -74,6 +73,7 @@ export default class EditPalette extends React.Component<Props> {
   }
 
   render() {
+    palette.captions = this.props.hasCaptions;
     return (
       <section>
         {!this.props.isPaletteSelected ? <this.Message /> : null}
