@@ -41,9 +41,9 @@ class App extends React.Component {
 
         case 'palette-selected':
           if (JSON.parse(e.data.pluginMessage).data.captions === 'hasNotCaptions')
-            this.setState({ isPaletteSelected: true, newScale: JSON.parse(e.data.pluginMessage).data.scale, hasCaptions: false })
+            this.setState({ isPaletteSelected: true, isColorSelected: false, newScale: JSON.parse(e.data.pluginMessage).data.scale, hasCaptions: false })
           else if (JSON.parse(e.data.pluginMessage).data.captions === 'hasCaptions')
-            this.setState({ isPaletteSelected: true, newScale: JSON.parse(e.data.pluginMessage).data.scale, hasCaptions: true })
+            this.setState({ isPaletteSelected: true, isColorSelected: false, newScale: JSON.parse(e.data.pluginMessage).data.scale, hasCaptions: true })
 
       }
     };
