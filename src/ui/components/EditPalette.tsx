@@ -14,22 +14,16 @@ interface Props {
 export default class EditPalette extends React.Component<Props> {
 
   // Events
-  slideHandler = () => {
-    parent.postMessage({ pluginMessage: { type: 'edit-palette', palette } }, '*');
-  }
+  slideHandler = () => parent.postMessage({ pluginMessage: { type: 'edit-palette', palette } }, '*')
 
   checkHandler = (e: any) => {
     palette.captions = e.target.checked;
     parent.postMessage({ pluginMessage: { type: 'update-captions', palette } }, '*')
   }
 
-  onCreate = () => {
-    parent.postMessage({ pluginMessage: { type: 'create-local-styles', palette } }, '*')
-  }
+  onCreate = () => parent.postMessage({ pluginMessage: { type: 'create-local-styles', palette } }, '*');
 
-  onUpdate = () => {
-    parent.postMessage({ pluginMessage: { type: 'update-local-styles', palette } }, '*')
-  }
+  onUpdate = () => parent.postMessage({ pluginMessage: { type: 'update-local-styles', palette } }, '*');
 
   // Templates
   Message = () => {

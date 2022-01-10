@@ -13,15 +13,11 @@ interface Props {
 export default class CreatePalette extends React.Component<Props> {
 
   // Events
-  onCreate = () => {
-    parent.postMessage({ pluginMessage: { type: 'create-palette', palette } }, '*')
-  }
+  onCreate = () => parent.postMessage({ pluginMessage: { type: 'create-palette', palette } }, '*');
 
   slideHandler = () => { }
 
-  checkHandler = (e: any) => {
-    palette.captions = e.target.checked
-  }
+  checkHandler = (e: any) => palette.captions = e.target.checked;
 
   // Templates
   Message = () => {
