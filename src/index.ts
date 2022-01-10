@@ -13,7 +13,8 @@ figma.on('selectionchange', () => messageToUI());
 
 figma.ui.onmessage = msg => {
 
-  let palette: any;
+  let palette: any,
+      i = 0;
 
   switch (msg.type) {
 
@@ -107,30 +108,43 @@ figma.ui.onmessage = msg => {
 
     case 'create-local-styles':
       palette = figma.currentPage.selection[0];
+      i = 0;
 
       palette.children.forEach(row => {
         row.children.forEach(sample => {
           new Style(
             sample.name.replace('-', '/'),
             sample.fills[0].color
-          ).makeNode()
+          ).makeNode();
+          i++
         })
       })
+      figma.notify(`${i} local color styles have been created 🙌`)
       break;
 
     case 'update-local-styles':
       palette = figma.currentPage.selection[0];
       const localStyles = figma.getLocalPaintStyles();
+      i = 0;
 
       palette.children.forEach(row => {
         row.children.forEach(sample => {
           localStyles.forEach(localStyle => {
             if (sample.name === localStyle.name.replace('/', '-')) {
-              localStyle.paints = sample.fills
+              if (JSON.stringify(localStyle.paints[0]['color']) != JSON.stringify(sample.fills[0]['color'])) {
+                localStyle.paints = sample.fills;
+                i++
+              }
             }
           })
         })
-      })
+      });
+      if (i > 1)
+        figma.notify(`${i} local color styles have been updated 🙌`)
+      else if (i == 1)
+        figma.notify(`${i} local color style has been updated 🙌`)
+      else
+        figma.notify(`No local color style has been updated`)
 
   }
 
