@@ -15,6 +15,7 @@ class App extends React.Component {
     this.state = {
       activeTab: 'Create',
       isPaletteSelected: false,
+      isColorSelected: false,
       newScale: null,
       hasCaptions: true
     }
@@ -28,18 +29,29 @@ class App extends React.Component {
 
   render() {
     onmessage = (e: any) => {
-      if (e.data.pluginMessage === 'empty-selection' || JSON.parse(e.data.pluginMessage).scale === '')
-        this.setState({ isPaletteSelected: false })
-      else if (JSON.parse(e.data.pluginMessage).captions === 'hasNotCaptions')
-        this.setState({ isPaletteSelected: true, newScale: JSON.parse(e.data.pluginMessage).scale, hasCaptions: false })
-      else if (JSON.parse(e.data.pluginMessage).captions === 'hasCaptions')
-        this.setState({ isPaletteSelected: true, newScale: JSON.parse(e.data.pluginMessage).scale, hasCaptions: true })
+      switch (JSON.parse(e.data.pluginMessage).type) {
+
+        case 'empty-selection':
+          this.setState({ isPaletteSelected: false, isColorSelected: false });
+          break;
+
+        case 'color-selected':
+          this.setState({ isPaletteSelected: false, isColorSelected: true });
+          break;
+
+        case 'palette-selected':
+          if (JSON.parse(e.data.pluginMessage).data.captions === 'hasNotCaptions')
+            this.setState({ isPaletteSelected: true, newScale: JSON.parse(e.data.pluginMessage).data.scale, hasCaptions: false })
+          else if (JSON.parse(e.data.pluginMessage).data.captions === 'hasCaptions')
+            this.setState({ isPaletteSelected: true, newScale: JSON.parse(e.data.pluginMessage).data.scale, hasCaptions: true })
+
+      }
     };
 
     return (
       <main>
         <Tabs tabs='Create Update' active={this.state['activeTab']} onClick={this.navHandler}/>
-        {this.state['activeTab'] === 'Create' ? <CreatePalette hasCaptions={this.state['hasCaptions']} /> : null}
+        {this.state['activeTab'] === 'Create' ? <CreatePalette isColorSelected={this.state['isColorSelected']} hasCaptions={this.state['hasCaptions']} /> : null}
         {this.state['activeTab'] === 'Update' ? <UpdatePalette isPaletteSelected={this.state['isPaletteSelected']} scale={this.state['newScale']} hasCaptions={this.state['hasCaptions']} /> : null}
       </main>
     )
