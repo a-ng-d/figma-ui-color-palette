@@ -37,7 +37,7 @@ export default class UpdatePalette extends React.Component<Props> {
     return (
       <div className='message'>
         <Message
-          icon='warning'
+          icon='theme'
           messages= 'Select an Awesome palette to update it'
         />
       </div>
