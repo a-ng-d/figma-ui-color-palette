@@ -30,6 +30,7 @@ export default class Palette {
     this.node.cornerRadius = 16;
     this.node.setPluginData('min', this.min.toString());
     this.node.setPluginData('max', this.max.toString());
+    this.node.setRelaunchData({ update: 'Update the lightness scale' });
     this.node.setPluginData('scale', JSON.stringify(this.scale));
     if (this.captions)
       this.node.setPluginData('captions', 'hasCaptions')

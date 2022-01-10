@@ -5,6 +5,9 @@
   "editorType": [
     "figma"
   ],
+  "relaunchButtons": [
+    { "command": "update", "name": "Update the palette" }
+  ],
   "main": "dist/code.js",
   "ui": "dist/ui.html"
 }
