@@ -11,11 +11,11 @@ interface Props {
   hasCaptions: boolean
 };
 
-export default class UpdatePalette extends React.Component<Props> {
+export default class EditPalette extends React.Component<Props> {
 
   // Events
   slideHandler = () => {
-    parent.postMessage({ pluginMessage: { type: 'update-palette', palette } }, '*');
+    parent.postMessage({ pluginMessage: { type: 'edit-palette', palette } }, '*');
   }
 
   checkHandler = (e: any) => {
@@ -38,7 +38,7 @@ export default class UpdatePalette extends React.Component<Props> {
       <div className='message'>
         <Message
           icon='theme'
-          messages= 'Select an Awesome palette to update it'
+          messages= 'Select an Awesome Color Palette to edit it'
         />
       </div>
     )
@@ -64,7 +64,7 @@ export default class UpdatePalette extends React.Component<Props> {
       </div>
       <div className='actions'>
         <div className='buttons'>
-          <Button type='secondary' label='Update local styles' action={this.onUpdate} />
+          <Button type='secondary' label='Update the local styles' action={this.onUpdate} />
           <Button type='primary' label='Create local styles' action={this.onCreate} />
         </div>
         <Switch id='showCaptions' label='Show captions' isChecked={this.props.hasCaptions} onChange={this.checkHandler} />

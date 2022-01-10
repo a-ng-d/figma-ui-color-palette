@@ -44,7 +44,7 @@ figma.ui.onmessage = msg => {
       };
       break;
 
-    case 'update-palette':
+    case 'edit-palette':
       palette = figma.currentPage.selection[0];
       palette.setPluginData('min', msg.palette.min.toString());
       palette.setPluginData('max', msg.palette.max.toString());

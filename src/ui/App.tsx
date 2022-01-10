@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import CreatePalette from './components/CreatePalette';
-import UpdatePalette from './components/UpdatePalette';
+import EditPalette from './components/EditPalette';
 import Tabs from './components/Tabs';
 import '../../node_modules/figma-plugin-ds/dist/figma-plugin-ds.css';
 import './app.css';
@@ -41,18 +41,18 @@ class App extends React.Component {
 
         case 'palette-selected':
           if (JSON.parse(e.data.pluginMessage).data.captions === 'hasNotCaptions')
-            this.setState({ isPaletteSelected: true, activeTab: 'Update', isColorSelected: false, newScale: JSON.parse(e.data.pluginMessage).data.scale, hasCaptions: false })
+            this.setState({ isPaletteSelected: true, activeTab: 'Edit', isColorSelected: false, newScale: JSON.parse(e.data.pluginMessage).data.scale, hasCaptions: false })
           else if (JSON.parse(e.data.pluginMessage).data.captions === 'hasCaptions')
-            this.setState({ isPaletteSelected: true, activeTab: 'Update', isColorSelected: false, newScale: JSON.parse(e.data.pluginMessage).data.scale, hasCaptions: true })
+            this.setState({ isPaletteSelected: true, activeTab: 'Edit', isColorSelected: false, newScale: JSON.parse(e.data.pluginMessage).data.scale, hasCaptions: true })
 
       }
     };
 
     return (
       <main>
-        <Tabs tabs='Create Update' active={this.state['activeTab']} onClick={this.navHandler}/>
+        <Tabs tabs='Create Edit' active={this.state['activeTab']} onClick={this.navHandler}/>
         {this.state['activeTab'] === 'Create' ? <CreatePalette isColorSelected={this.state['isColorSelected']} hasCaptions={this.state['hasCaptions']} /> : null}
-        {this.state['activeTab'] === 'Update' ? <UpdatePalette isPaletteSelected={this.state['isPaletteSelected']} scale={this.state['newScale']} hasCaptions={this.state['hasCaptions']} /> : null}
+        {this.state['activeTab'] === 'Edit' ? <EditPalette isPaletteSelected={this.state['isPaletteSelected']} scale={this.state['newScale']} hasCaptions={this.state['hasCaptions']} /> : null}
       </main>
     )
   }
