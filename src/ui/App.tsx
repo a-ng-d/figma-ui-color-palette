@@ -32,18 +32,18 @@ class App extends React.Component {
       switch (JSON.parse(e.data.pluginMessage).type) {
 
         case 'empty-selection':
-          this.setState({ isPaletteSelected: false, isColorSelected: false });
+          this.setState({ isPaletteSelected: false, isColorSelected: false, });
           break;
 
         case 'color-selected':
-          this.setState({ isPaletteSelected: false, isColorSelected: true });
+          this.setState({ isPaletteSelected: false, isColorSelected: true, activeTab: 'Create' });
           break;
 
         case 'palette-selected':
           if (JSON.parse(e.data.pluginMessage).data.captions === 'hasNotCaptions')
-            this.setState({ isPaletteSelected: true, isColorSelected: false, newScale: JSON.parse(e.data.pluginMessage).data.scale, hasCaptions: false })
+            this.setState({ isPaletteSelected: true, activeTab: 'Update', isColorSelected: false, newScale: JSON.parse(e.data.pluginMessage).data.scale, hasCaptions: false })
           else if (JSON.parse(e.data.pluginMessage).data.captions === 'hasCaptions')
-            this.setState({ isPaletteSelected: true, isColorSelected: false, newScale: JSON.parse(e.data.pluginMessage).data.scale, hasCaptions: true })
+            this.setState({ isPaletteSelected: true, activeTab: 'Update', isColorSelected: false, newScale: JSON.parse(e.data.pluginMessage).data.scale, hasCaptions: true })
 
       }
     };
