@@ -29,7 +29,12 @@ export default class Slider extends React.Component<Props> {
           knobs = Array.from(range.childNodes as HTMLCollectionOf<HTMLElement>);
 
     let offset,
-        update = setInterval(() => this.props.onChange(), 500);
+        update = setInterval(() => {
+          palette.min = parseFloat(this.doMap(range.lastChild.offsetLeft, 0, rangeWidth, 0, 100).toFixed(1));
+          palette.max = parseFloat(this.doMap(range.firstChild.offsetLeft, 0, rangeWidth, 0, 100).toFixed(1));
+          knobs.forEach(knob => this.updateLightnessScaleEntry(knob.classList[1], this.doMap(knob.offsetLeft, 0, rangeWidth, 0, 100).toFixed(1)));
+          this.props.onChange()
+        }, 500);
 
     knob.style.zIndex = 2;
 
