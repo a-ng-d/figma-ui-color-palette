@@ -12,7 +12,7 @@ interface Props {
 
 export default class Slider extends React.Component<Props> {
 
-  doMap = (value, oldMin, oldMax, newMin, newMax) => {
+  doMap = (value: number, oldMin: number, oldMax: number, newMin: number, newMax: number) => {
     const oldRange = oldMax - oldMin,
         newRange = newMax - newMin
     return ((value - oldMin) * newRange / oldRange) + newMin
@@ -20,23 +20,23 @@ export default class Slider extends React.Component<Props> {
 
   // Events
   onGrab = (e: any) => {
-    const knob = e.target,
-          range = knob.parentElement,
-          shift = e.nativeEvent.layerX,
-          tooltip = knob.children[0],
-          rangeWidth = range.offsetWidth,
-          slider = range.parentElement,
-          knobs = Array.from(range.childNodes as HTMLCollectionOf<HTMLElement>);
+    const knob = e.target as HTMLElement,
+          range = knob.parentElement as HTMLElement,
+          shift = e.nativeEvent.layerX as number,
+          tooltip = knob.children[0] as HTMLElement,
+          rangeWidth = range.offsetWidth as number,
+          slider = range.parentElement as HTMLElement,
+          knobs = Array.from(range.children as HTMLCollectionOf<HTMLElement>);
 
-    let offset,
+    let offset: number,
         update = setInterval(() => {
-          palette.min = parseFloat(this.doMap(range.lastChild.offsetLeft, 0, rangeWidth, 0, 100).toFixed(1));
-          palette.max = parseFloat(this.doMap(range.firstChild.offsetLeft, 0, rangeWidth, 0, 100).toFixed(1));
+          palette.min = parseFloat(this.doMap((range.lastChild as HTMLElement).offsetLeft, 0, rangeWidth, 0, 100).toFixed(1));
+          palette.max = parseFloat(this.doMap((range.firstChild as HTMLElement).offsetLeft, 0, rangeWidth, 0, 100).toFixed(1));
           knobs.forEach(knob => this.updateLightnessScaleEntry(knob.classList[1], this.doMap(knob.offsetLeft, 0, rangeWidth, 0, 100).toFixed(1)));
           this.props.onChange()
         }, 500);
 
-    knob.style.zIndex = 2;
+    knob.style.zIndex = '2';
 
     document.onmousemove = (e) => this.onSlide(
       e,
@@ -59,23 +59,23 @@ export default class Slider extends React.Component<Props> {
     )
   }
 
-  onSlide = (e, slider, range, knobs, knob, tooltip, offset, shift, rangeWidth) => {
-    let limitMin, limitMax;
-    const gap = this.doMap(2, 0, 100, 0, rangeWidth);
+  onSlide = (e: any, slider: HTMLElement, range: HTMLElement, knobs: Array<HTMLElement>, knob: HTMLElement, tooltip: HTMLElement, offset: number, shift: number, rangeWidth: number) => {
+    let limitMin: number, limitMax: number;
+    const gap: number = this.doMap(2, 0, 100, 0, rangeWidth);
     offset = e.clientX - slider.offsetLeft - shift;
 
-    palette.min = parseFloat(this.doMap(range.lastChild.offsetLeft, 0, rangeWidth, 0, 100).toFixed(1));
-    palette.max = parseFloat(this.doMap(range.firstChild.offsetLeft, 0, rangeWidth, 0, 100).toFixed(1));
+    palette.min = parseFloat(this.doMap((range.lastChild as HTMLElement).offsetLeft, 0, rangeWidth, 0, 100).toFixed(1));
+    palette.max = parseFloat(this.doMap((range.firstChild as HTMLElement).offsetLeft, 0, rangeWidth, 0, 100).toFixed(1));
 
     if (knob == range.lastChild) { // 900
       limitMin = 0;
-      limitMax = knob.previousElementSibling.offsetLeft - gap
+      limitMax = (knob.previousElementSibling as HTMLElement).offsetLeft - gap
     } else if (knob == range.firstChild) { // 50
-      limitMin = knob.nextElementSibling.offsetLeft + gap;
+      limitMin = (knob.nextElementSibling as HTMLElement).offsetLeft + gap;
       limitMax = rangeWidth
     } else {
-      limitMin = knob.nextElementSibling.offsetLeft + gap;
-      limitMax = knob.previousElementSibling.offsetLeft - gap
+      limitMin = (knob.nextElementSibling as HTMLElement).offsetLeft + gap;
+      limitMax = (knob.previousElementSibling as HTMLElement).offsetLeft - gap
     }
 
     if (offset <= limitMin)
@@ -91,7 +91,7 @@ export default class Slider extends React.Component<Props> {
 
     // link every knob
     if (e.ctrlKey || e.metaKey) {
-      if (offset <= (knob.offsetLeft - range.lastChild.offsetLeft) || offset > (rangeWidth - range.firstChild.offsetLeft + knob.offsetLeft))
+      if (offset <= (knob.offsetLeft - (range.lastChild as HTMLElement).offsetLeft) || offset > (rangeWidth - (range.firstChild as HTMLElement).offsetLeft + knob.offsetLeft))
         offset = knob.offsetLeft
       else
         this.linkKnobs(offset, knob, knobs, rangeWidth)
@@ -107,11 +107,11 @@ export default class Slider extends React.Component<Props> {
     this.updateKnobTooltip(tooltip, this.doMap(offset, 0, rangeWidth, 0, 100).toFixed(1));
   }
 
-  onRelease = (knobs, knob, offset, update, rangeWidth) => {
+  onRelease = (knobs: Array<HTMLElement>, knob: HTMLElement, offset: number, update: any, rangeWidth: number) => {
     document.onmousemove = null;
     document.onmouseup = null;
     knob.onmouseup = null;
-    knob.style.zIndex = 1;
+    knob.style.zIndex = '1';
     knobs.forEach(knob => (knob.children[0] as HTMLElement).style.display = 'none');
     clearInterval(update)
   }
@@ -128,16 +128,16 @@ export default class Slider extends React.Component<Props> {
     return palette.scale
   }
 
-  updateLightnessScaleEntry = (key, value) => {
+  updateLightnessScaleEntry = (key: string, value: string) => {
     palette.scale[key] = value;
   }
 
-  updateKnobTooltip = (tooltip, value) => {
+  updateKnobTooltip = (tooltip: HTMLElement, value: string) => {
     tooltip.style.display = 'block';
     tooltip.textContent = value
   }
 
-  distributeKnobs = (type, value, knobs) => {
+  distributeKnobs = (type: string, value: string, knobs: Array<HTMLElement>) => {
     if (type === 'MIN')
       palette.min = parseFloat(value)
     else if (type === 'MAX')
@@ -147,16 +147,16 @@ export default class Slider extends React.Component<Props> {
 
     knobs.forEach(knob => {
       knob.style.left = palette.scale[knob.classList[1]] + '%';
-      this.updateKnobTooltip(knob.childNodes[0], palette.scale[knob.classList[1]])
+      this.updateKnobTooltip(knob.childNodes[0] as HTMLElement, palette.scale[knob.classList[1]])
     })
   }
 
-  linkKnobs = (offset, src, knobs, width) => {
+  linkKnobs = (offset: number, src: HTMLElement, knobs: Array<HTMLElement>, width: number) => {
     knobs.forEach(knob => {
       let shift = (knob.offsetLeft - src.offsetLeft) + offset;
       if (knob != src)
         knob.style.left = this.doMap(shift, 0, width, 0, 100) + '%';
-      this.updateKnobTooltip(knob.childNodes[0], palette.scale[knob.classList[1]])
+      this.updateKnobTooltip(knob.childNodes[0] as HTMLElement, palette.scale[knob.classList[1]])
     })
   }
 
