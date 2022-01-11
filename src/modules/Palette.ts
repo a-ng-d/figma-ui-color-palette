@@ -54,7 +54,7 @@ export default class Palette {
           row.counterAxisSizingMode = 'AUTO';
           row.name = element.name;
 
-          Object.values(this.scale).forEach(lightness => {
+          Object.values(this.scale).reverse().forEach(lightness => {
             let newColor = chroma([rgb.r * 255, rgb.g * 255, rgb.b * 255]).set('lch.l', lightness);
             const sample = new Sample(`${element.name}-${Object.keys(this.scale).find(key => this.scale[key] === lightness).substr(10)}`, 128, 96, newColor._rgb, this.captions).makeNode();
             row.name = element.name;

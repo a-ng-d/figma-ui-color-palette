@@ -56,7 +56,7 @@ figma.ui.onmessage = msg => {
 
         for (let j = 0 ; j < (row as FrameNode).children.length ; j++) {
           const sample = (row as FrameNode).children[j],
-                newColor = chroma([rgb.r * 255, rgb.g * 255, rgb.b * 255]).set('lch.l', Object.values(msg.palette.scale)[j]);
+                newColor = chroma([rgb.r * 255, rgb.g * 255, rgb.b * 255]).set('lch.l', Object.values(msg.palette.scale).reverse()[j]);
           (row as FrameNode).insertChild(j, new Sample(
             sample.name,
             128,
@@ -112,10 +112,11 @@ figma.ui.onmessage = msg => {
 
       palette.children.forEach(row => {
         row.children.forEach(sample => {
-          new Style(
+          const style = new Style(
             sample.name.replace('-', '/'),
             sample.fills[0].color
           ).makeNode();
+          figma.moveLocalPaintStyleAfter(style, null);
           i++
         })
       })
