@@ -8,7 +8,8 @@ import { palette } from '../data';
 interface Props {
   isPaletteSelected: boolean;
   scale: string;
-  hasCaptions: boolean
+  hasCaptions: boolean;
+  onCaptionsChange: any
 };
 
 export default class EditPalette extends React.Component<Props> {
@@ -17,6 +18,7 @@ export default class EditPalette extends React.Component<Props> {
   slideHandler = () => parent.postMessage({ pluginMessage: { type: 'edit-palette', palette } }, '*')
 
   checkHandler = (e: any) => {
+    this.props.onCaptionsChange(e.target.checked);
     palette.captions = e.target.checked;
     parent.postMessage({ pluginMessage: { type: 'update-captions', palette } }, '*')
   }

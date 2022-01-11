@@ -27,12 +27,14 @@ class App extends React.Component {
     parent.postMessage({ pluginMessage: { type: 'get-infos' } }, '*');
   }
 
+  captionsHandler = (bool: boolean) => this.setState({ hasCaptions: bool });
+
   render() {
     onmessage = (e: any) => {
       switch (JSON.parse(e.data.pluginMessage).type) {
 
         case 'empty-selection':
-          this.setState({ isPaletteSelected: false, isColorSelected: false, });
+          this.setState({ isPaletteSelected: false, isColorSelected: false, hasCaptions: true });
           break;
 
         case 'color-selected':
@@ -51,8 +53,8 @@ class App extends React.Component {
     return (
       <main>
         <Tabs tabs='Create Edit' active={this.state['activeTab']} onClick={this.navHandler}/>
-        {this.state['activeTab'] === 'Create' ? <CreatePalette isColorSelected={this.state['isColorSelected']} hasCaptions={this.state['hasCaptions']} /> : null}
-        {this.state['activeTab'] === 'Edit' ? <EditPalette isPaletteSelected={this.state['isPaletteSelected']} scale={this.state['newScale']} hasCaptions={this.state['hasCaptions']} /> : null}
+        {this.state['activeTab'] === 'Create' ? <CreatePalette isColorSelected={this.state['isColorSelected']} hasCaptions={this.state['hasCaptions']} onCaptionsChange={this.captionsHandler} /> : null}
+        {this.state['activeTab'] === 'Edit' ? <EditPalette isPaletteSelected={this.state['isPaletteSelected']} scale={this.state['newScale']} hasCaptions={this.state['hasCaptions']} onCaptionsChange={this.captionsHandler} /> : null}
       </main>
     )
   }

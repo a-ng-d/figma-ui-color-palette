@@ -7,7 +7,8 @@ import { palette } from '../data';
 
 interface Props {
   hasCaptions: boolean;
-  isColorSelected: boolean
+  isColorSelected: boolean;
+  onCaptionsChange: any
 };
 
 export default class CreatePalette extends React.Component<Props> {
@@ -17,7 +18,10 @@ export default class CreatePalette extends React.Component<Props> {
 
   slideHandler = () => { }
 
-  checkHandler = (e: any) => palette.captions = e.target.checked;
+  checkHandler = (e: any) => {
+    this.props.onCaptionsChange(e.target.checked);
+    palette.captions = e.target.checked;
+  };
 
   // Templates
   Message = () => {
@@ -51,13 +55,14 @@ export default class CreatePalette extends React.Component<Props> {
       </div>
       <div className='actions'>
         <Button type='primary' label='Create a color palette' action={this.onCreate} />
-        <Checkbox id='showCaptions' label='Show captions' isChecked={true} onChange={this.checkHandler} />
+        <Checkbox id='showCaptions' label='Show captions' isChecked={this.props.hasCaptions} onChange={this.checkHandler} />
       </div>
       </>
     )
   }
 
   render() {
+    palette.captions = this.props.hasCaptions;
     return (
       <section>
       {!this.props.isColorSelected ? <this.Message /> : null}
