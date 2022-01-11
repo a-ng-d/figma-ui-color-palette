@@ -15,7 +15,7 @@ interface Props {
 export default class EditPalette extends React.Component<Props> {
 
   // Events
-  slideHandler = () => parent.postMessage({ pluginMessage: { type: 'edit-palette', palette } }, '*')
+  slideHandler = () => parent.postMessage({ pluginMessage: { type: 'edit-palette', palette } }, '*');
 
   checkHandler = (e: any) => {
     this.props.onCaptionsChange(e.target.checked);

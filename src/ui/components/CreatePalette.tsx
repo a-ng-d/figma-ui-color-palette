@@ -16,7 +16,7 @@ export default class CreatePalette extends React.Component<Props> {
   // Events
   onCreate = () => parent.postMessage({ pluginMessage: { type: 'create-palette', palette } }, '*');
 
-  slideHandler = () => { }
+  slideHandler = () => { };
 
   checkHandler = (e: any) => {
     this.props.onCaptionsChange(e.target.checked);
