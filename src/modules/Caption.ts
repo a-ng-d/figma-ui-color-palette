@@ -48,6 +48,7 @@ export default class Caption {
       }
     }];
     this.node.layoutGrow = 1;
+    this.node.locked = true;
 
     return this.node
   }

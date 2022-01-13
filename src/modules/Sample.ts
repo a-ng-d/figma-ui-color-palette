@@ -34,6 +34,7 @@ export default class Sample {
     this.node.layoutMode = 'HORIZONTAL';
     this.node.paddingTop = this.node.paddingRight = this.node.paddingBottom = this.node.paddingLeft = 8;
     this.node.primaryAxisSizingMode = 'FIXED';
+    this.node.locked = true;
     this.children = new Caption(this.name, this.rgb).makeNode();
     this.node.appendChild(this.children);
 
