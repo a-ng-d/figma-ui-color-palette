@@ -76,20 +76,16 @@ figma.ui.onmessage = msg => {
 
       if (msg.palette.captions) {
         palette.setPluginData('captions', 'hasCaptions');
-        palette.children.forEach(row => {
+        palette.children[0].children.forEach(row => {
           row.children.forEach(sample => {
-            sample.children.forEach(caption => {
-              caption.visible = true
-            })
+            sample.children[0].visible = true
           })
         })
       } else {
         palette.setPluginData('captions', 'hasNotCaptions');
-        palette.children.forEach(row => {
+        palette.children[0].children.forEach(row => {
           row.children.forEach(sample => {
-            sample.children.forEach(caption => {
-              caption.visible = false
-            })
+            sample.children[0].visible = false
           })
         })
       }

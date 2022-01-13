@@ -1,5 +1,5 @@
 import chroma from 'chroma-js';
-import Sample from './Sample';
+import Colors from './Colors';
 
 export default class Palette {
 
@@ -9,6 +9,7 @@ export default class Palette {
   scale: string;
   colors: Array<string>;
   captions: boolean;
+  children: any;
   node: FrameNode;
 
   constructor(min, max, scale, captions) {
@@ -18,6 +19,7 @@ export default class Palette {
     this.scale = scale;
     this.colors = [];
     this.captions = captions;
+    this.children = null;
     this.node = figma.createFrame()
   }
 
@@ -37,39 +39,7 @@ export default class Palette {
     else
       this.node.setPluginData('captions', 'hasNotCaptions');
 
-    figma.currentPage.selection.forEach(element => {
-
-      let fills = element['fills'].filter(fill => fill.type === 'SOLID');
-
-      if (fills.length != 0) {
-
-        fills.forEach(fill => {
-
-          let rgb = fill.color;
-
-          this.colors.push(rgb);
-
-          const row = figma.createFrame();
-          row.layoutMode = 'HORIZONTAL';
-          row.counterAxisSizingMode = 'AUTO';
-          row.name = element.name;
-
-          Object.values(this.scale).reverse().forEach(lightness => {
-            let newColor = chroma([rgb.r * 255, rgb.g * 255, rgb.b * 255]).set('lch.l', lightness);
-            const sample = new Sample(`${element.name}-${Object.keys(this.scale).find(key => this.scale[key] === lightness).substr(10)}`, 128, 96, newColor._rgb, this.captions).makeNode();
-            row.name = element.name;
-            row.appendChild(sample)
-          });
-
-          this.node.appendChild(row);
-
-        })
-
-      } else {
-        figma.notify(`The layer '${element.name}' must get at least one solid color`);
-      }
-
-    });
+    this.node.appendChild(new Colors(this).makeNode())
 
     this.node.setPluginData('colors', JSON.stringify(this.colors));
     return this.node
