@@ -1,8 +1,7 @@
 import chroma from 'chroma-js';
 import Palette from './modules/Palette';
-import Sample from './modules/Sample';
 import Style from './modules/Style';
-
+import Colors from './modules/Colors';
 
 figma.showUI(__html__);
 figma.ui.resize(640, 312);
@@ -50,23 +49,12 @@ figma.ui.onmessage = msg => {
       palette.setPluginData('max', msg.palette.max.toString());
       palette.setPluginData('scale', JSON.stringify(msg.palette.scale));
 
-      for (let i = 0 ; i < (palette as FrameNode).children.length ; i++) {
-        const rgb = JSON.parse(palette.getPluginData('colors'))[i],
-              row = (palette as FrameNode).children[i];
-
-        for (let j = 0 ; j < (row as FrameNode).children.length ; j++) {
-          const sample = (row as FrameNode).children[j],
-                newColor = chroma([rgb.r * 255, rgb.g * 255, rgb.b * 255]).set('lch.l', Object.values(msg.palette.scale).reverse()[j]);
-          (row as FrameNode).insertChild(j, new Sample(
-            sample.name,
-            128,
-            96,
-            newColor._rgb,
-            msg.palette.captions
-          ).makeNode())
-          sample.remove()
-        }
-      };
+      palette.children[0].remove();
+      palette.appendChild(new Colors({
+        colors: JSON.parse(palette.getPluginData('colors')),
+        scale: JSON.parse(palette.getPluginData('scale')),
+        captions: palette.getPluginData('captions') == 'hasCaptions' ? true : false
+      }).makeNode());
 
       figma.ui.postMessage(palette.getPluginData('scale'));
       break;

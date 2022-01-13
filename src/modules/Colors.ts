@@ -18,37 +18,21 @@ export default class Colors {
     this.node.counterAxisSizingMode = 'AUTO';
     this.node.name = 'colors';
 
-    figma.currentPage.selection.forEach(element => {
+    this.parent.colors.forEach(color => {
 
-      let fills = element['fills'].filter(fill => fill.type === 'SOLID');
+      const row = figma.createFrame();
+      row.layoutMode = 'HORIZONTAL';
+      row.counterAxisSizingMode = 'AUTO';
+      row.name = color.name;
 
-      if (fills.length != 0) {
+      Object.values(this.parent.scale).reverse().forEach(lightness => {
+        let newColor = chroma([color.rgb.r * 255, color.rgb.g * 255, color.rgb.b * 255]).set('lch.l', lightness);
+        const sample = new Sample(`${color.name}-${Object.keys(this.parent.scale).find(key => this.parent.scale[key] === lightness).substr(10)}`, 128, 96, newColor._rgb, this.parent.captions).makeNode();
+        row.name = color.name;
+        row.appendChild(sample)
+      });
 
-        fills.forEach(fill => {
-
-          let rgb = fill.color;
-
-          this.parent.colors.push(rgb);
-
-          const row = figma.createFrame();
-          row.layoutMode = 'HORIZONTAL';
-          row.counterAxisSizingMode = 'AUTO';
-          row.name = element.name;
-
-          Object.values(this.parent.scale).reverse().forEach(lightness => {
-            let newColor = chroma([rgb.r * 255, rgb.g * 255, rgb.b * 255]).set('lch.l', lightness);
-            const sample = new Sample(`${element.name}-${Object.keys(this.parent.scale).find(key => this.parent.scale[key] === lightness).substr(10)}`, 128, 96, newColor._rgb, this.parent.captions).makeNode();
-            row.name = element.name;
-            row.appendChild(sample)
-          });
-
-          this.node.appendChild(row);
-
-        })
-
-      } else {
-        figma.notify(`The layer '${element.name}' must get at least one solid color`);
-      }
+      this.node.appendChild(row);
 
     });
 

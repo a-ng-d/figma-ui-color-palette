@@ -7,7 +7,7 @@ export default class Palette {
   min: number;
   max: number;
   scale: string;
-  colors: Array<string>;
+  colors: Array<Object>;
   captions: boolean;
   children: any;
   node: FrameNode;
@@ -39,7 +39,23 @@ export default class Palette {
     else
       this.node.setPluginData('captions', 'hasNotCaptions');
 
-    this.node.appendChild(new Colors(this).makeNode())
+    figma.currentPage.selection.forEach(element => {
+
+      let fills = element['fills'].filter(fill => fill.type === 'SOLID');
+
+      if (fills.length != 0) {
+        fills.forEach(fill => {
+          const obj = {};
+          obj['name'] = element.name;
+          obj['rgb'] = fill.color;
+          this.colors.push(obj)
+        })
+      } else
+        figma.notify(`The layer '${element.name}' must get at least one solid color`)
+
+    });
+
+    this.node.appendChild(new Colors(this).makeNode());
 
     this.node.setPluginData('colors', JSON.stringify(this.colors));
     return this.node
