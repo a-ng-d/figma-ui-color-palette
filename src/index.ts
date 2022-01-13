@@ -94,7 +94,7 @@ figma.ui.onmessage = msg => {
       palette = figma.currentPage.selection[0];
       i = 0;
       if (palette.children.length == 1) {
-        palette.children.forEach(row => {
+        palette.children[0].children.forEach(row => {
           row.children.forEach(sample => {
             const style = new Style(
               sample.name.replace('-', '/'),
@@ -116,7 +116,7 @@ figma.ui.onmessage = msg => {
         const localStyles = figma.getLocalPaintStyles();
         i = 0;
 
-        palette.children.forEach(row => {
+        palette.children[0].children.forEach(row => {
           row.children.forEach(sample => {
             localStyles.forEach(localStyle => {
               if (sample.name === localStyle.name.replace('/', '-')) {
