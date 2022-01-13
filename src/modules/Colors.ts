@@ -16,7 +16,7 @@ export default class Colors {
     this.node.layoutMode = 'VERTICAL';
     this.node.primaryAxisSizingMode = 'AUTO';
     this.node.counterAxisSizingMode = 'AUTO';
-    this.node.name = 'colors';
+    this.node.name = 'colors (do not edit any layer)';
 
     this.parent.colors.forEach(color => {
 
