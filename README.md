@@ -1,40 +1,46 @@
-Below are the steps to get your plugin running. You can also find instructions at:
+# Awesome Colors Palette
+Awesome Colors Palette is a Figma plugin that generates consistante xand accessible color palettes. The plugin uses the LCH model to generate colors according to the lightness scale. The model LCH is relevant to make colors compliant with the [WCAG standards](https://www.w3.org/WAI/standarsds-guidelines/wcag/). The idea to make a Figma plugin to build a color system comes from that article: [Accessible Palette: stop using HSL for color systems](https://wildbit.com/blog/accessible-palette-stop-using-hsl-for-color-systems).
 
-  https://www.figma.com/plugin-docs/setup/
+## Documentation
+### Create a colors palette
+![Create a colors palette](./assets/create-colors-palette.gif 'Create a colors palette')
+- Run the plugin
+- Select some layers in the canvas with at least one solid color as fill. Those fills will be use as starting colors at creating the colors palette
+- Edit the lightness scale with the multiple knobs slider. There are 10 steps (from 50 to 900), indexed on lightness scale (from 0% to 100%) from the LCH model.
+- Choose if you want to display a caption for every color by clicking on the `Show captions` checkbox. The caption indicates the color name, the hexadecimal code, the LCH code, and the contrast (and WCAG compliance)
+- Click `Create a colors palette` to generate directly the palette on the Figma canvas. The palette is automatically selected and the view is centered on it. Its default name is `Awesome Colors Palette`.
 
-This plugin template uses Typescript and NPM, two standard tools in creating JavaScript applications.
+The Awesome Colors Palette is composed of a frame called `colors`. This frame gathers every variants of the starting colors according to the chosen lightness scale (10 steps, from 50 to 900). Here is the palette architecture (do not manual edit it):
 
-First, download Node.js which comes with NPM. This will allow you to install TypeScript and other
-libraries. You can find the download link here:
+- Awesome Colors Palette
+  - colors
+    - layerName
+      - layerName-50
+      - …
+      - layerName-900
+    - …
 
-  https://nodejs.org/en/download/
+### Edit a colors palette
+> Note: Editing a colors palette only works on those already created with the plugin
 
-Next, install TypeScript using the command:
+![Edit a colors palette](./assets/edit-colors-palette.gif 'Edit a colors palette')
+- Run the plugin
+- Select a colors palette
+- Edit the palette lightness scale by moving the knobs. The editing occurs in real time
+- Choose the caption display. Your choice will occur in real time.
+- Click `Create local styles` to create Figma document local styles from each color of the palette
+- Click `Update the local styles` to update every edited colors already declared as local style
 
-  npm install -g typescript
+### Troubleshooting
+- `Your Awesome Color Palette seems corrupted. Do not edit any layer within it.`: The palette has been edited without the plugin. Some manual editing may occur troubles and errors. So the plugins avoids executing editing while the palette does not seem compliant with the architecture
+- `The layer 'foo' must get at least one solid color`: You have selected a layer without any solid color fill
 
-Finally, in the directory of your plugin, get the latest type definitions for the plugin API by running:
+## Contribution
+- Clone this repository (or fork it)
+- Install dependencies with `npm install`
+- Run `npm run start` to watch in development mode
+- Go to Figma, then `Plugins` > `Development` > `Import plugin from manifest…` and choose `manifest.json` in the repository
 
-  npm install --save-dev @figma/plugin-typings
-
-If you are familiar with JavaScript, TypeScript will look very familiar. In fact, valid JavaScript code
-is already valid Typescript code.
-
-TypeScript adds type annotations to variables. This allows code editors such as Visual Studio Code
-to provide information about the Figma API while you are writing code, as well as help catch bugs
-you previously didn't notice.
-
-For more information, visit https://www.typescriptlang.org/
-
-Using TypeScript requires a compiler to convert TypeScript (code.ts) into JavaScript (code.js)
-for the browser to run.
-
-We recommend writing TypeScript code using Visual Studio code:
-
-1. Download Visual Studio Code if you haven't already: https://code.visualstudio.com/.
-2. Open this directory in Visual Studio Code.
-3. Compile TypeScript to JavaScript: Run the "Terminal > Run Build Task..." menu item,
-    then select "tsc: watch - tsconfig.json". You will have to do this again every time
-    you reopen Visual Studio Code.
-
-That's it! Visual Studio Code will regenerate the JavaScript file every time you save.
+## Support
+- [Follow me on Twitter 🐦](https://twitter.com/inVoltag)
+- [Shoot me a coffee ☕️](https://www.buymeacoffee.com/inVoltag)
