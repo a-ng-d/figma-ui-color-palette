@@ -8,7 +8,8 @@ import { palette } from '../data';
 interface Props {
   hasCaptions: boolean;
   isColorSelected: boolean;
-  onCaptionsChange: any
+  onCaptionsChange: any;
+  onGoingStep: string
 };
 
 export default class CreatePalette extends React.Component<Props> {
@@ -40,6 +41,7 @@ export default class CreatePalette extends React.Component<Props> {
       <>
       <div className='lightness-scale'>
         <div className='section-title'>Lightness scale</div>
+        {this.props.onGoingStep != 'captions changed' ?
         <Slider
           type='EQUAL'
           knobsList='50 100 200 300 400 500 600 700 800 900'
@@ -47,7 +49,15 @@ export default class CreatePalette extends React.Component<Props> {
           max='96'
           scale={null}
           onChange={this.slideHandler}
-        />
+        /> :
+        <Slider
+          type='CUSTOM'
+          knobsList='50 100 200 300 400 500 600 700 800 900'
+          min=''
+          max=''
+          scale={JSON.stringify(palette.scale)}
+          onChange={this.slideHandler}
+        />}
         <Message
           icon='library'
           messages= 'Hold Shift ⇧ while dragging 50 or 900 to distribute knobs\' horizontal spacing ; Hold Ctrl ⌃ or Cmd ⌘ while dragging a knob to move them all'

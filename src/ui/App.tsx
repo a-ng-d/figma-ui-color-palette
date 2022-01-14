@@ -17,35 +17,36 @@ class App extends React.Component {
       isPaletteSelected: false,
       isColorSelected: false,
       newScale: null,
-      hasCaptions: true
+      hasCaptions: true,
+      onGoingStep: '',
     }
   }
 
   // Events
   navHandler = (e: any) => {
-    this.setState({ activeTab: e.target.innerText });
+    this.setState({ activeTab: e.target.innerText, onGoingStep: 'tab changed' });
     parent.postMessage({ pluginMessage: { type: 'get-infos' } }, '*');
   }
 
-  captionsHandler = (bool: boolean) => this.setState({ hasCaptions: bool });
+  captionsHandler = (bool: boolean) => this.setState({ hasCaptions: bool, onGoingStep: 'captions changed' });
 
   render() {
     onmessage = (e: any) => {
       switch (JSON.parse(e.data.pluginMessage).type) {
 
         case 'empty-selection':
-          this.setState({ isPaletteSelected: false, isColorSelected: false, hasCaptions: true });
+          this.setState({ isPaletteSelected: false, isColorSelected: false, hasCaptions: true, onGoingStep: 'selection empty' });
           break;
 
         case 'color-selected':
-          this.setState({ isPaletteSelected: false, isColorSelected: true, activeTab: 'Create' });
+          this.setState({ isPaletteSelected: false, isColorSelected: true, activeTab: 'Create', onGoingStep: 'colors selected' });
           break;
 
         case 'palette-selected':
           if (JSON.parse(e.data.pluginMessage).data.captions === 'hasNotCaptions')
-            this.setState({ isPaletteSelected: true, activeTab: 'Edit', isColorSelected: false, newScale: JSON.parse(e.data.pluginMessage).data.scale, hasCaptions: false })
+            this.setState({ isPaletteSelected: true, activeTab: 'Edit', isColorSelected: false, newScale: JSON.parse(e.data.pluginMessage).data.scale, hasCaptions: false, onGoingStep: 'palette selected' })
           else if (JSON.parse(e.data.pluginMessage).data.captions === 'hasCaptions')
-            this.setState({ isPaletteSelected: true, activeTab: 'Edit', isColorSelected: false, newScale: JSON.parse(e.data.pluginMessage).data.scale, hasCaptions: true })
+            this.setState({ isPaletteSelected: true, activeTab: 'Edit', isColorSelected: false, newScale: JSON.parse(e.data.pluginMessage).data.scale, hasCaptions: true, onGoingStep: 'palette selected' })
 
       }
     };
@@ -53,7 +54,7 @@ class App extends React.Component {
     return (
       <main>
         <Tabs tabs='Create Edit' active={this.state['activeTab']} onClick={this.navHandler}/>
-        {this.state['activeTab'] === 'Create' ? <CreatePalette isColorSelected={this.state['isColorSelected']} hasCaptions={this.state['hasCaptions']} onCaptionsChange={this.captionsHandler} /> : null}
+        {this.state['activeTab'] === 'Create' ? <CreatePalette isColorSelected={this.state['isColorSelected']} hasCaptions={this.state['hasCaptions']} onCaptionsChange={this.captionsHandler} onGoingStep={this.state['onGoingStep']} /> : null}
         {this.state['activeTab'] === 'Edit' ? <EditPalette isPaletteSelected={this.state['isPaletteSelected']} scale={this.state['newScale']} hasCaptions={this.state['hasCaptions']} onCaptionsChange={this.captionsHandler} /> : null}
       </main>
     )
