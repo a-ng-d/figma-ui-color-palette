@@ -13,7 +13,7 @@ export default class Palette {
   node: FrameNode;
 
   constructor(min, max, scale, captions) {
-    this.name = 'Awesome Color Palette';
+    this.name = 'Awesome Colors Palette';
     this.min = min;
     this.max = max;
     this.scale = scale;

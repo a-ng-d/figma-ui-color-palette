@@ -33,7 +33,7 @@ export default class EditPalette extends React.Component<Props> {
       <div className='message'>
         <Message
           icon='theme'
-          messages= 'Select an Awesome Color Palette to edit it'
+          messages= 'Select an Awesome Colors Palette to edit it'
         />
       </div>
     )
