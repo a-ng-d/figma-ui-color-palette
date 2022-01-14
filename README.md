@@ -2,6 +2,9 @@
 Awesome Colors Palette is a Figma plugin that generates consistante xand accessible color palettes. The plugin uses the LCH model to generate colors according to the lightness scale. The model LCH is relevant to make colors compliant with the [WCAG standards](https://www.w3.org/WAI/standarsds-guidelines/wcag/). The idea to make a Figma plugin to build a color system comes from that article: [Accessible Palette: stop using HSL for color systems](https://wildbit.com/blog/accessible-palette-stop-using-hsl-for-color-systems).
 
 ## Documentation
+### What is LCH model
+Every variants from a starting color is created using the LCH (Lightness Chroma Hue) color model. It works a bit like the HSL (Hue Saturation Lightness) color model. The HSL is really simple to use to build a color system, because the lightness can just be changed to create variants. The LCH too, but the Chroma, and Hue are automatically adjusted to keep the colors within the [sRGB gamut](https://lea.verou.me/2020/04/lch-colors-in-css-what-why-and-how/#1-we-actually-get-access-to-about-50-more-colors).
+
 ### Create a colors palette
 ![Create a colors palette](./assets/create-colors-palette.gif 'Create a colors palette')
 - Run the plugin
