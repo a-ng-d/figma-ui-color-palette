@@ -157,10 +157,11 @@ const messageToUI = () => {
     }));
 
   figma.currentPage.selection.forEach(element => {
-    if (element['fills'].filter(fill => fill.type === 'SOLID').length != 0 && element.getPluginData('scale') === '')
-      figma.ui.postMessage(JSON.stringify({
-        type: 'color-selected',
-        data: {}
-      }))
+    if (element.type != 'GROUP')
+      if (element['fills'].filter(fill => fill.type === 'SOLID').length != 0 && element.getPluginData('scale') === '')
+        figma.ui.postMessage(JSON.stringify({
+          type: 'color-selected',
+          data: {}
+        }))
   })
 }
