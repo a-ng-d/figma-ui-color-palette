@@ -1,12 +1,12 @@
 {
-  "name": "Awesome Colors Palette",
+  "name": "UI Color Palette",
   "id": "1063959496693642315",
   "api": "1.0.0",
   "editorType": [
     "figma"
   ],
   "relaunchButtons": [
-    { "command": "edit", "name": "Edit the colors palette" }
+    { "command": "edit", "name": "Edit the color palette" }
   ],
   "main": "dist/code.js",
   "ui": "dist/ui.html"

@@ -52,7 +52,7 @@ figma.ui.onmessage = msg => {
 
         figma.ui.postMessage(palette.getPluginData('scale'));
       } else
-        figma.notify('Your Awesome Color Palette seems corrupted. Do not edit any layer within it.')
+        figma.notify('Your UI Color Palette seems corrupted. Do not edit any layer within it.')
       break;
 
     case 'update-captions':
@@ -76,7 +76,7 @@ figma.ui.onmessage = msg => {
           }).makeNode());
         }
       } else
-        figma.notify('Your Awesome Color Palette seems corrupted. Do not edit any layer within it.')
+        figma.notify('Your UI Color Palette seems corrupted. Do not edit any layer within it.')
       break;
 
     case 'get-infos':
@@ -106,7 +106,7 @@ figma.ui.onmessage = msg => {
         })
         figma.notify(`${i} local color styles have been created 🙌`)
       } else
-        figma.notify('Your Awesome Color Palette seems corrupted. Do not edit any layer within it.')
+        figma.notify('Your UI Color Palette seems corrupted. Do not edit any layer within it.')
       break;
 
     case 'update-local-styles':
@@ -135,7 +135,7 @@ figma.ui.onmessage = msg => {
         else
           figma.notify(`No local color style has been updated`)
       } else
-      figma.notify('Your Awesome Color Palette seems corrupted. Do not edit any layer within it.')
+      figma.notify('Your UI Color Palette seems corrupted. Do not edit any layer within it.')
 
   }
 
