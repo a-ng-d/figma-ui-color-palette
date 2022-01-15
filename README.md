@@ -48,7 +48,7 @@ The palette architecture (do not manual edit it) is:
 - Go to Figma, then `Plugins` > `Development` > `Import plugin from manifest…` and choose `manifest.json` in the repository
 
 ## Attribution
-- The colors are generated thanks to the [chroma.js](https://github.com/gka/chroma.js) library
+- The colors are managed thanks to the [chroma.js](https://github.com/gka/chroma.js) library by [Gregor Aisch](https://github.com/gka)
 
 ## Support
 - [Follow me on Twitter 🐦](https://twitter.com/inVoltag)
