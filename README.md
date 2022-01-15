@@ -47,6 +47,9 @@ The palette architecture (do not manual edit it) is:
 - Run `npm run start` to watch in development mode
 - Go to Figma, then `Plugins` > `Development` > `Import plugin from manifest…` and choose `manifest.json` in the repository
 
+## Attribution
+- The colors are generated thanks to the [chroma.js](https://github.com/gka/chroma.js) library
+
 ## Support
 - [Follow me on Twitter 🐦](https://twitter.com/inVoltag)
 - [Shoot me a coffee ☕️](https://www.buymeacoffee.com/inVoltag)
