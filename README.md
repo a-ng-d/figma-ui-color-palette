@@ -1,5 +1,5 @@
 # UI Color Palette
-UI Color Palette is a Figma plugin that generates consistante and accessible color palettes. The plugin uses the LCH model to generate colors according to the chosen lightness scale. The model LCH is relevant to make colors compliant with the [WCAG standards](https://www.w3.org/WAI/standards-guidelines/wcag/). The idea to make this Figma plugin comes from that article: [Accessible Palette: stop using HSL for color systems](https://wildbit.com/blog/accessible-palette-stop-using-hsl-for-color-systems).
+UI Color Palette is a Figma plugin that generates consistant and accessible color palettes. The plugin uses the LCH model to generate colors according to the chosen lightness scale. The model LCH is relevant to make colors compliant with the [WCAG standards](https://www.w3.org/WAI/standards-guidelines/wcag/). The idea to make this Figma plugin comes from that article: [Accessible Palette: stop using HSL for color systems](https://wildbit.com/blog/accessible-palette-stop-using-hsl-for-color-systems).
 
 ## Documentation
 ### What is LCH model
