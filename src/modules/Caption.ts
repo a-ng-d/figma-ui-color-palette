@@ -43,7 +43,7 @@ export default class Caption {
     this.nodeTitle.characters = this.scale;
     this.nodeTitle.fontName = {
       family: 'Roboto Mono',
-      style: 'Regular'
+      style: 'Medium'
     };
     this.nodeTitle.fontSize = 10;
     this.nodeTitle.fills = [{
@@ -54,7 +54,7 @@ export default class Caption {
         b: this.getCaptionColor()[2]
       }
     }];
-    this.nodeTitle.layoutGrow = 1;
+    this.nodeTitle.layoutAlign = 'STRETCH';
 
     return this.nodeTitle
   }
@@ -75,7 +75,7 @@ export default class Caption {
         b: this.getCaptionColor()[2]
       }
     }];
-    this.nodeProperties.layoutGrow = 1;
+    this.nodeProperties.layoutAlign = 'STRETCH';
 
     return this.nodeProperties
   }
@@ -83,6 +83,12 @@ export default class Caption {
   makeNode() {
     this.node.name = 'captions';
     this.node.fills = [];
+    this.node.layoutMode = 'VERTICAL';
+    this.node.primaryAxisSizingMode = 'FIXED';
+    this.node.counterAxisSizingMode = 'FIXED';
+    this.node.primaryAxisAlignItems = 'SPACE_BETWEEN';
+    this.node.layoutAlign = 'STRETCH';
+    this.node.layoutGrow = 1;
     this.node.locked = true;
 
     this.node.appendChild(this.makeNodeTitle());
