@@ -2,18 +2,22 @@ import chroma from 'chroma-js';
 
 export default class Caption {
 
-  name: string;
+  scale: string;
   rgb: Array<number>;
   hex: string;
   lch: Array<number>;
-  node: TextNode;
+  nodeTitle: TextNode;
+  nodeProperties: TextNode;
+  node: FrameNode;
 
-  constructor(name, rgb) {
-    this.name = name;
+  constructor(scale, rgb) {
+    this.scale = scale;
     this.rgb = rgb;
     this.hex = chroma(rgb).hex();
     this.lch = chroma(rgb).lch();
-    this.node = figma.createText();
+    this.nodeTitle = figma.createText();
+    this.nodeProperties = figma.createText();
+    this.node = figma.createFrame()
   }
 
   getContrast() {
@@ -31,15 +35,18 @@ export default class Caption {
   }
 
   doContent() {
-    return `${this.name}\n${this.hex.toUpperCase()}\nR ${Math.floor(this.rgb[0])}﹒G ${Math.floor(this.rgb[1])}﹒B ${Math.floor(this.rgb[2])}\nL ${Math.floor(this.lch[0])}﹒C ${Math.floor(this.lch[1])}﹒H ${Math.floor(this.lch[2])}\n${this.getLevel()}﹒${this.getContrast().toFixed(2)} : 1`
+    return `${this.hex.toUpperCase()}\nR ${Math.floor(this.rgb[0])}﹒G ${Math.floor(this.rgb[1])}﹒B ${Math.floor(this.rgb[2])}\nL ${Math.floor(this.lch[0])}﹒C ${Math.floor(this.lch[1])}﹒H ${Math.floor(this.lch[2])}\n${this.getLevel()}﹒${this.getContrast().toFixed(2)} : 1`
   }
 
-  makeNode() {
-    this.node.name = 'caption';
-    this.node.characters = this.doContent();
-    this.node.fontSize = 10;
-    this.node.textAlignVertical = 'CENTER';
-    this.node.fills = [{
+  makeNodeTitle() {
+    this.nodeTitle.name = 'lightning-scale';
+    this.nodeTitle.characters = this.scale;
+    this.nodeTitle.fontName = {
+      family: 'Roboto Mono',
+      style: 'Regular'
+    };
+    this.nodeTitle.fontSize = 10;
+    this.nodeTitle.fills = [{
       type: 'SOLID',
       color: {
         r: this.getCaptionColor()[0],
@@ -47,8 +54,39 @@ export default class Caption {
         b: this.getCaptionColor()[2]
       }
     }];
-    this.node.layoutGrow = 1;
+    this.nodeTitle.layoutGrow = 1;
+
+    return this.nodeTitle
+  }
+
+  makeNodeProperties() {
+    this.nodeProperties.name = 'properties';
+    this.nodeProperties.characters = this.doContent();
+    this.nodeProperties.fontName = {
+      family: 'Roboto Mono',
+      style: 'Regular'
+    };
+    this.nodeProperties.fontSize = 10;
+    this.nodeProperties.fills = [{
+      type: 'SOLID',
+      color: {
+        r: this.getCaptionColor()[0],
+        g: this.getCaptionColor()[1],
+        b: this.getCaptionColor()[2]
+      }
+    }];
+    this.nodeProperties.layoutGrow = 1;
+
+    return this.nodeProperties
+  }
+
+  makeNode() {
+    this.node.name = 'captions';
+    this.node.fills = [];
     this.node.locked = true;
+
+    this.node.appendChild(this.makeNodeTitle());
+    this.node.appendChild(this.makeNodeProperties());
 
     return this.node
   }

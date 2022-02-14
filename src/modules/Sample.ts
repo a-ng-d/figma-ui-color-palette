@@ -3,6 +3,7 @@ import Caption from './Caption';
 export default class Sample {
 
   name: string;
+  scale: number;
   width: number;
   height: number;
   rgb: Array<number>;
@@ -10,8 +11,9 @@ export default class Sample {
   node: FrameNode;
   children: any;
 
-  constructor(name, width, height, rgb, captions) {
+  constructor(name, scale, width, height, rgb, captions) {
     this.name = name;
+    this.scale = scale;
     this.width = width;
     this.height = height;
     this.rgb = rgb;
@@ -35,7 +37,7 @@ export default class Sample {
     this.node.paddingTop = this.node.paddingRight = this.node.paddingBottom = this.node.paddingLeft = 8;
     this.node.primaryAxisSizingMode = 'FIXED';
     this.node.locked = true;
-    this.children = new Caption(this.name, this.rgb).makeNode();
+    this.children = new Caption(this.scale, this.rgb).makeNode();
     this.node.appendChild(this.children);
 
     if (!this.captions)
