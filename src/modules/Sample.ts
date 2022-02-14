@@ -3,7 +3,7 @@ import Caption from './Caption';
 export default class Sample {
 
   name: string;
-  scale: number;
+  scale: string;
   width: number;
   height: number;
   rgb: Array<number>;
@@ -22,7 +22,7 @@ export default class Sample {
   }
 
   makeNode() {
-    this.node.name = this.name;
+    this.node.name = this.scale;
     this.node.resize(this.width, 100);
     this.node.fills = [{
       type: 'SOLID',

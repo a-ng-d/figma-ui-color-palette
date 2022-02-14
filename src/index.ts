@@ -99,7 +99,7 @@ figma.ui.onmessage = msg => {
         palette.children[0].children.forEach(row => {
           row.children.forEach(sample => {
             const style = new Style(
-              sample.name.replace('-', '/'),
+              `${row.name}/${sample.name}`,
               sample.fills[0].color
             ).makeNode();
             figma.moveLocalPaintStyleAfter(style, null);
