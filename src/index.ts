@@ -97,13 +97,15 @@ figma.ui.onmessage = msg => {
       i = 0;
       if (palette.children.length == 1) {
         palette.children[0].children.forEach(row => {
-          row.children.forEach(sample => {
-            const style = new Style(
-              `${row.name}/${sample.name}`,
-              sample.fills[0].color
-            ).makeNode();
-            figma.moveLocalPaintStyleAfter(style, null);
-            i++
+          row.children.forEach((sample, index) => {
+            if (index != 0) {
+              const style = new Style(
+                `${row.name}/${sample.name}`,
+                sample.fills[0].color
+              ).makeNode();
+              figma.moveLocalPaintStyleAfter(style, null);
+              i++
+            }
           })
         })
         figma.notify(`${i} local color styles have been created 🙌`)
