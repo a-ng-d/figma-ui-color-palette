@@ -21,7 +21,29 @@ export default class Sample {
     this.children = null
   }
 
-  makeNode() {
+  makeName() {
+    this.node.name = this.name;
+    this.node.resize(this.width, 100);
+    this.node.fills = [{
+      type: 'SOLID',
+      color: {
+        r: this.rgb[0] / 255,
+        g: this.rgb[1] / 255,
+        b: this.rgb[2] / 255
+      }
+    }];
+    this.node.layoutMode = 'HORIZONTAL';
+    this.node.paddingTop = this.node.paddingRight = this.node.paddingBottom = this.node.paddingLeft = 8;
+    this.node.primaryAxisSizingMode = 'FIXED';
+    this.node.layoutAlign = 'STRETCH';
+    this.node.locked = true;
+    this.children = new Caption(this.name, this.rgb).makeNode('NAME');
+    this.node.appendChild(this.children);
+
+    return this.node
+  }
+
+  makeScale() {
     this.node.name = this.scale;
     this.node.resize(this.width, 100);
     this.node.fills = [{
@@ -37,7 +59,7 @@ export default class Sample {
     this.node.primaryAxisSizingMode = 'FIXED';
     this.node.layoutAlign = 'STRETCH';
     this.node.locked = true;
-    this.children = new Caption(this.scale, this.rgb).makeNode();
+    this.children = new Caption(this.scale, this.rgb).makeNode('SAMPLE');
     this.node.appendChild(this.children);
 
     if (!this.captions)
