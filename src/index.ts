@@ -123,7 +123,7 @@ figma.ui.onmessage = msg => {
         palette.children[0].children.forEach(row => {
           row.children.forEach(sample => {
             localStyles.forEach(localStyle => {
-              if (sample.name === localStyle.name.replace('/', '-')) {
+              if (`${row.name}/${sample.name}` === localStyle.name) {
                 if (JSON.stringify(localStyle.paints[0]['color']) != JSON.stringify(sample.fills[0]['color'])) {
                   localStyle.paints = sample.fills;
                   i++
