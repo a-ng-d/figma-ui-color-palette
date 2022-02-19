@@ -14,6 +14,7 @@ export default class Header {
     // base
     this.node.name = 'header';
     this.node.resize(100, 48);
+    this.node.fills = [];
     this.node.locked = true;
 
     // layout
