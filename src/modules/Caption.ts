@@ -37,7 +37,7 @@ export default class Caption {
   }
 
   doContent() {
-    return `${this.hex.toUpperCase()}\nR ${Math.floor(this.rgb[0])}﹒G ${Math.floor(this.rgb[1])}﹒B ${Math.floor(this.rgb[2])}\nL ${Math.floor(this.lch[0])}﹒C ${Math.floor(this.lch[1])}﹒H ${Math.floor(this.lch[2])}\n${this.getLevel()}﹒${this.getContrast().toFixed(2)} : 1`
+    return `${this.hex.toUpperCase()}\nR ${Math.floor(this.rgb[0])} • G ${Math.floor(this.rgb[1])} • B ${Math.floor(this.rgb[2])}\nL ${Math.floor(this.lch[0])} • C ${Math.floor(this.lch[1])} • H ${Math.floor(this.lch[2])}\n${this.getLevel()} • ${this.getContrast().toFixed(2)} : 1`
   }
 
   makeName() {
