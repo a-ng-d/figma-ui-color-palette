@@ -36,7 +36,6 @@ export default class Sample {
     this.node.paddingTop = this.node.paddingRight = this.node.paddingBottom = this.node.paddingLeft = 8;
     this.node.primaryAxisSizingMode = 'FIXED';
     this.node.layoutAlign = 'STRETCH';
-    this.node.locked = true;
     this.children = new Caption(this.name, this.rgb).makeNode('NAME');
     this.node.appendChild(this.children);
 
@@ -58,7 +57,6 @@ export default class Sample {
     this.node.paddingTop = this.node.paddingRight = this.node.paddingBottom = this.node.paddingLeft = 8;
     this.node.primaryAxisSizingMode = 'FIXED';
     this.node.layoutAlign = 'STRETCH';
-    this.node.locked = true;
     this.children = new Caption(this.scale, this.rgb).makeNode('SAMPLE');
     this.node.appendChild(this.children);
 

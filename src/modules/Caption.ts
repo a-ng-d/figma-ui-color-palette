@@ -113,7 +113,6 @@ export default class Caption {
     this.node.primaryAxisAlignItems = 'SPACE_BETWEEN';
     this.node.layoutAlign = 'STRETCH';
     this.node.layoutGrow = 1;
-    this.node.locked = true;
 
     if (type === 'SAMPLE') {
       this.nodeName.remove();
