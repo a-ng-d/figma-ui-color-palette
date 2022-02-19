@@ -63,6 +63,7 @@ export default class Caption {
   }
 
   makeNodeScale() {
+    // base
     this.nodeScale.name = 'lightness-scale';
     this.nodeScale.characters = this.name;
     this.nodeScale.fontName = {
@@ -78,12 +79,15 @@ export default class Caption {
         b: this.getCaptionColor()[2]
       }
     }];
+
+    // layout
     this.nodeScale.layoutAlign = 'STRETCH';
 
     return this.nodeScale
   }
 
   makeNodeProperties() {
+    // base
     this.nodeProperties.name = 'properties';
     this.nodeProperties.characters = this.doContent();
     this.nodeProperties.fontName = {
@@ -99,14 +103,19 @@ export default class Caption {
         b: this.getCaptionColor()[2]
       }
     }];
+
+    // layout
     this.nodeProperties.layoutAlign = 'STRETCH';
 
     return this.nodeProperties
   }
 
   makeNode(type) {
+    // base
     this.node.name = 'captions';
     this.node.fills = [];
+
+    // layout
     this.node.layoutMode = 'VERTICAL';
     this.node.primaryAxisSizingMode = 'FIXED';
     this.node.counterAxisSizingMode = 'FIXED';
