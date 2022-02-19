@@ -4,17 +4,14 @@ export default class Sample {
 
   name: string;
   scale: string;
-  width: number;
-  height: number;
   rgb: Array<number>;
   captions: boolean;
   node: FrameNode;
   children: any;
 
-  constructor(name, scale, width, rgb, captions) {
+  constructor(name, scale, rgb, captions) {
     this.name = name;
     this.scale = scale;
-    this.width = width;
     this.rgb = rgb;
     this.captions = captions;
     this.node = figma.createFrame();
