@@ -51,7 +51,7 @@ export default class Colors {
         row.appendChild(sample)
       });
 
-      this.node.appendChild(row);
+      this.node.appendChild(row)
 
     });
 
