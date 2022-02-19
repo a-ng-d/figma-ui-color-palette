@@ -95,8 +95,8 @@ figma.ui.onmessage = msg => {
     case 'create-local-styles':
       palette = figma.currentPage.selection[0];
       i = 0;
-      if (palette.children.length == 1) {
-        palette.children[0].children.forEach(row => {
+      if (palette.children.length == 2) {
+        palette.children[1].children.forEach(row => {
           row.children.forEach((sample, index) => {
             if (index != 0) {
               const style = new Style(
@@ -116,11 +116,11 @@ figma.ui.onmessage = msg => {
     case 'update-local-styles':
       palette = figma.currentPage.selection[0];
 
-      if (palette.children.length == 1) {
+      if (palette.children.length == 2) {
         const localStyles = figma.getLocalPaintStyles();
         i = 0;
 
-        palette.children[0].children.forEach(row => {
+        palette.children[1].children.forEach(row => {
           row.children.forEach(sample => {
             localStyles.forEach(localStyle => {
               if (`${row.name}/${sample.name}` === localStyle.name) {
@@ -139,7 +139,7 @@ figma.ui.onmessage = msg => {
         else
           figma.notify(`No local color style has been updated`)
       } else
-      figma.notify('Your UI Color Palette seems corrupted. Do not edit any layer within it.')
+        figma.notify('Your UI Color Palette seems corrupted. Do not edit any layer within it.')
 
   }
 
