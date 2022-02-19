@@ -40,12 +40,12 @@ figma.ui.onmessage = msg => {
 
     case 'edit-palette':
       palette = figma.currentPage.selection[0];
-      if (palette.children.length == 1) {
+      if (palette.children.length == 2) {
         palette.setPluginData('min', msg.palette.min.toString());
         palette.setPluginData('max', msg.palette.max.toString());
         palette.setPluginData('scale', JSON.stringify(msg.palette.scale));
 
-        palette.children[0].remove();
+        palette.children[1].remove();
         palette.appendChild(new Colors({
           colors: JSON.parse(palette.getPluginData('colors')),
           scale: JSON.parse(palette.getPluginData('scale')),
