@@ -59,10 +59,10 @@ figma.ui.onmessage = msg => {
 
     case 'update-captions':
       palette = figma.currentPage.selection[0];
-      if (palette.children.length == 1) {
+      if (palette.children.length == 2) {
         if (msg.palette.captions) {
           palette.setPluginData('captions', 'hasCaptions');
-          palette.children[0].remove();
+          palette.children[1].remove();
           palette.appendChild(new Colors({
             colors: JSON.parse(palette.getPluginData('colors')),
             scale: JSON.parse(palette.getPluginData('scale')),
@@ -70,7 +70,7 @@ figma.ui.onmessage = msg => {
           }).makeNode());
         } else {
           palette.setPluginData('captions', 'hasNotCaptions');
-          palette.children[0].remove();
+          palette.children[1].remove();
           palette.appendChild(new Colors({
             colors: JSON.parse(palette.getPluginData('colors')),
             scale: JSON.parse(palette.getPluginData('scale')),
