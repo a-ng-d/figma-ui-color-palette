@@ -27,7 +27,7 @@ export default class Palette {
   makeNode() {
     // base
     this.node.name = this.name;
-    this.node.resize(1400, 100);
+    this.node.resize(1640, 100);
     this.node.cornerRadius = 16;
 
     // layout
