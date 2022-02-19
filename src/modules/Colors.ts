@@ -13,20 +13,34 @@ export default class Colors {
   }
 
   makeNode() {
+    // base
+    this.node.name = 'colors (do not edit any layer)';
+    this.node.fills = [];
+    this.node.locked = true;
+
+    // layout
     this.node.layoutMode = 'VERTICAL';
     this.node.primaryAxisSizingMode = 'AUTO';
     this.node.counterAxisSizingMode = 'AUTO';
-    this.node.name = 'colors (do not edit any layer)';
-    this.node.locked = true;
+    this.node.layoutAlign = 'STRETCH';
 
+    // insert
     this.parent.colors.forEach(color => {
 
       const row = figma.createFrame();
-      row.layoutMode = 'HORIZONTAL';
-      row.resize(100, 160);
-      row.counterAxisSizingMode = 'AUTO';
-      row.name = color.name;
 
+      // base
+      row.name = color.name;
+      row.resize(100, 160);
+      row.fills = [];
+
+      // layout
+      row.layoutMode = 'HORIZONTAL';
+      row.primaryAxisSizingMode = 'FIXED';
+      row.counterAxisSizingMode = 'AUTO';
+      row.layoutAlign = 'STRETCH';
+
+      // insert
       const rowName = new Sample(color.name, null, 128, [color.rgb.r * 255, color.rgb.g * 255, color.rgb.b * 255], this.parent.captions).makeName();
       row.appendChild(rowName);
 

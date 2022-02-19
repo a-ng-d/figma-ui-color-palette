@@ -22,8 +22,8 @@ export default class Sample {
   }
 
   makeName() {
+    // base
     this.node.name = this.name;
-    this.node.resize(this.width, 100);
     this.node.fills = [{
       type: 'SOLID',
       color: {
@@ -32,10 +32,15 @@ export default class Sample {
         b: this.rgb[2] / 255
       }
     }];
+
+    // layout
     this.node.layoutMode = 'HORIZONTAL';
     this.node.paddingTop = this.node.paddingRight = this.node.paddingBottom = this.node.paddingLeft = 8;
-    this.node.primaryAxisSizingMode = 'FIXED';
+    this.node.primaryAxisSizingMode = 'AUTO';
     this.node.layoutAlign = 'STRETCH';
+    this.node.layoutGrow = 1;
+
+    // insert
     this.children = new Caption(this.name, this.rgb).makeNode('NAME');
     this.node.appendChild(this.children);
 
@@ -43,8 +48,8 @@ export default class Sample {
   }
 
   makeScale() {
+    // base
     this.node.name = this.scale;
-    this.node.resize(this.width, 100);
     this.node.fills = [{
       type: 'SOLID',
       color: {
@@ -53,10 +58,15 @@ export default class Sample {
         b: this.rgb[2] / 255
       }
     }];
+
+    // layout
     this.node.layoutMode = 'HORIZONTAL';
     this.node.paddingTop = this.node.paddingRight = this.node.paddingBottom = this.node.paddingLeft = 8;
-    this.node.primaryAxisSizingMode = 'FIXED';
+    this.node.primaryAxisSizingMode = 'AUTO';
+    this.node.layoutGrow = 1;
     this.node.layoutAlign = 'STRETCH';
+
+    // insert
     this.children = new Caption(this.scale, this.rgb).makeNode('SAMPLE');
     this.node.appendChild(this.children);
 

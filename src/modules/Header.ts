@@ -11,15 +11,19 @@ export default class Header {
   }
 
   makeNode() {
-    this.node.layoutMode = 'HORIZONTAL';
-    this.node.primaryAxisSizingMode = 'AUTO';
-    this.node.counterAxisSizingMode = 'AUTO';
+    // base
     this.node.name = 'header';
     this.node.resize(100, 48);
     this.node.locked = true;
 
-    this.node.appendChild(new Sample('Colors', null, 128, [255, 255, 255], this.parent.captions).makeName())
+    // layout
+    this.node.layoutMode = 'HORIZONTAL';
+    this.node.primaryAxisSizingMode = 'FIXED';
+    this.node.counterAxisSizingMode = 'AUTO';
+    this.node.layoutAlign = 'STRETCH';
 
+    // insert
+    this.node.appendChild(new Sample('Colors', null, 128, [255, 255, 255], this.parent.captions).makeName())
     Object.values(this.parent.scale).reverse().forEach(lightness => {
       this.node.appendChild(new Sample(Object.keys(this.parent.scale).find(key => this.parent.scale[key] === lightness).substr(10), null, 128, [255, 255, 255], this.parent.captions).makeName())
     });
