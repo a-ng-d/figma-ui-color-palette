@@ -12,7 +12,7 @@ export default class Header {
 
   makeNode() {
     // base
-    this.node.name = 'header';
+    this.node.name = '_header';
     this.node.resize(100, 48);
     this.node.fills = [];
     this.node.locked = true;

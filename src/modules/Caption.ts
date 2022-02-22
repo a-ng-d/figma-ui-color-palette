@@ -41,7 +41,7 @@ export default class Caption {
   }
 
   makeName() {
-    this.nodeName.name = 'color-name';
+    this.nodeName.name = '_color-name';
     this.nodeName.characters = this.name;
     this.nodeName.fontName = {
       family: 'Roboto Mono',
@@ -64,7 +64,7 @@ export default class Caption {
 
   makeNodeScale() {
     // base
-    this.nodeScale.name = 'lightness-scale';
+    this.nodeScale.name = '_lightness-scale';
     this.nodeScale.characters = this.name;
     this.nodeScale.fontName = {
       family: 'Roboto Mono',
@@ -88,7 +88,7 @@ export default class Caption {
 
   makeNodeProperties() {
     // base
-    this.nodeProperties.name = 'properties';
+    this.nodeProperties.name = '_properties';
     this.nodeProperties.characters = this.doContent();
     this.nodeProperties.fontName = {
       family: 'Roboto Mono',
@@ -112,7 +112,7 @@ export default class Caption {
 
   makeNode(type) {
     // base
-    this.node.name = 'captions';
+    this.node.name = '_captions';
     this.node.fills = [];
 
     // layout

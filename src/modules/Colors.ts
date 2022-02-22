@@ -15,7 +15,7 @@ export default class Colors {
 
   makeNode() {
     // base
-    this.node.name = 'colors (do not edit any layer)';
+    this.node.name = '_colors﹒do not edit any layer';
     this.node.fills = [];
     this.node.locked = true;
 
