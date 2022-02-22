@@ -1,6 +1,5 @@
 import chroma from 'chroma-js';
 import Colors from './Colors';
-import Header from './Header';
 
 export default class Palette {
 
@@ -63,7 +62,6 @@ export default class Palette {
 
     });
 
-    this.node.appendChild(new Header(this).makeNode());
     this.node.appendChild(new Colors(this).makeNode());
 
     this.node.setPluginData('colors', JSON.stringify(this.colors));

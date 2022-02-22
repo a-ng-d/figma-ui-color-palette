@@ -1,5 +1,6 @@
 import chroma from 'chroma-js';
 import Sample from './Sample';
+import Header from './Header';
 
 export default class Colors {
 
@@ -25,6 +26,7 @@ export default class Colors {
     this.node.layoutAlign = 'STRETCH';
 
     // insert
+    this.node.appendChild(new Header(this.parent).makeNode());
     this.parent.colors.forEach(color => {
 
       const row = figma.createFrame();
