@@ -20,7 +20,7 @@ export default class Sample {
 
   makeName() {
     // base
-    this.node.name = 'base';
+    this.node.name = this.name;
     this.node.fills = [{
       type: 'SOLID',
       color: {
