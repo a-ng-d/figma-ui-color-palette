@@ -30,7 +30,7 @@ export default class CreatePalette extends React.Component<Props> {
       <div className='message'>
         <Message
           icon='library'
-          messages= 'Select your starting colors on the canvas'
+          messages= 'Select your starting colors on the Figma canvas－from the layers filled with a solid color'
         />
       </div>
     )
