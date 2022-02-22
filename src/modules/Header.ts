@@ -15,7 +15,6 @@ export default class Header {
     this.node.name = '_header';
     this.node.resize(100, 48);
     this.node.fills = [];
-    this.node.locked = true;
 
     // layout
     this.node.layoutMode = 'HORIZONTAL';
