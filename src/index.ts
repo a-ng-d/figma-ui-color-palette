@@ -40,12 +40,12 @@ figma.ui.onmessage = msg => {
 
     case 'edit-palette':
       palette = figma.currentPage.selection[0];
-      if (palette.children.length == 2) {
+      if (palette.children.length == 1) {
         palette.setPluginData('min', msg.palette.min.toString());
         palette.setPluginData('max', msg.palette.max.toString());
         palette.setPluginData('scale', JSON.stringify(msg.palette.scale));
 
-        palette.children[1].remove();
+        palette.children[0].remove();
         palette.appendChild(new Colors({
           colors: JSON.parse(palette.getPluginData('colors')),
           scale: JSON.parse(palette.getPluginData('scale')),
@@ -59,10 +59,10 @@ figma.ui.onmessage = msg => {
 
     case 'update-captions':
       palette = figma.currentPage.selection[0];
-      if (palette.children.length == 2) {
+      if (palette.children.length == 1) {
         if (msg.palette.captions) {
           palette.setPluginData('captions', 'hasCaptions');
-          palette.children[1].remove();
+          palette.children[0].remove();
           palette.appendChild(new Colors({
             colors: JSON.parse(palette.getPluginData('colors')),
             scale: JSON.parse(palette.getPluginData('scale')),
@@ -70,7 +70,7 @@ figma.ui.onmessage = msg => {
           }).makeNode());
         } else {
           palette.setPluginData('captions', 'hasNotCaptions');
-          palette.children[1].remove();
+          palette.children[0].remove();
           palette.appendChild(new Colors({
             colors: JSON.parse(palette.getPluginData('colors')),
             scale: JSON.parse(palette.getPluginData('scale')),
@@ -95,18 +95,19 @@ figma.ui.onmessage = msg => {
     case 'create-local-styles':
       palette = figma.currentPage.selection[0];
       i = 0;
-      if (palette.children.length == 2) {
-        palette.children[1].children.forEach(row => {
-          row.children.forEach((sample, index) => {
-            if (index != 0) {
-              const style = new Style(
-                `${row.name}/${sample.name}`,
-                sample.fills[0].color
-              ).makeNode();
-              figma.moveLocalPaintStyleAfter(style, null);
-              i++
-            }
-          })
+      if (palette.children.length == 1) {
+        palette.children[0].children.forEach((row, index) => {
+          if (index != 0)
+            row.children.forEach((sample, index) => {
+              if (index != 0) {
+                const style = new Style(
+                  `${row.name}/${sample.name.replace(row.name + '-', '')}`,
+                  sample.fills[0].color
+                ).makeNode();
+                figma.moveLocalPaintStyleAfter(style, null);
+                i++
+              }
+            })
         })
         figma.notify(`${i} local color styles have been created 🙌`)
       } else
@@ -116,11 +117,11 @@ figma.ui.onmessage = msg => {
     case 'update-local-styles':
       palette = figma.currentPage.selection[0];
 
-      if (palette.children.length == 2) {
+      if (palette.children.length == 1) {
         const localStyles = figma.getLocalPaintStyles();
         i = 0;
 
-        palette.children[1].children.forEach(row => {
+        palette.children[0].children.forEach(row => {
           row.children.forEach(sample => {
             localStyles.forEach(localStyle => {
               if (`${row.name}/${sample.name}` === localStyle.name) {
