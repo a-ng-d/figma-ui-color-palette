@@ -6,6 +6,8 @@ import Colors from './modules/Colors';
 figma.showUI(__html__);
 figma.ui.resize(640, 312);
 figma.loadFontAsync({ family: 'Roboto', style: 'Regular' });
+figma.loadFontAsync({ family: 'Roboto Mono', style: 'Regular' });
+figma.loadFontAsync({ family: 'Roboto Mono', style: 'Medium' });
 
 figma.on('run', () => messageToUI());
 figma.on('selectionchange', () => messageToUI());
@@ -94,15 +96,18 @@ figma.ui.onmessage = msg => {
       palette = figma.currentPage.selection[0];
       i = 0;
       if (palette.children.length == 1) {
-        palette.children[0].children.forEach(row => {
-          row.children.forEach(sample => {
-            const style = new Style(
-              sample.name.replace('-', '/'),
-              sample.fills[0].color
-            ).makeNode();
-            figma.moveLocalPaintStyleAfter(style, null);
-            i++
-          })
+        palette.children[0].children.forEach((row, index) => {
+          if (index != 0)
+            row.children.forEach((sample, index) => {
+              if (index != 0) {
+                const style = new Style(
+                  `${row.name}/${sample.name.replace(row.name + '-', '')}`,
+                  sample.fills[0].color
+                ).makeNode();
+                figma.moveLocalPaintStyleAfter(style, null);
+                i++
+              }
+            })
         })
         figma.notify(`${i} local color styles have been created 🙌`)
       } else
@@ -119,7 +124,7 @@ figma.ui.onmessage = msg => {
         palette.children[0].children.forEach(row => {
           row.children.forEach(sample => {
             localStyles.forEach(localStyle => {
-              if (sample.name === localStyle.name.replace('/', '-')) {
+              if (`${row.name}/${sample.name}` === localStyle.name) {
                 if (JSON.stringify(localStyle.paints[0]['color']) != JSON.stringify(sample.fills[0]['color'])) {
                   localStyle.paints = sample.fills;
                   i++
@@ -135,7 +140,7 @@ figma.ui.onmessage = msg => {
         else
           figma.notify(`No local color style has been updated`)
       } else
-      figma.notify('Your UI Color Palette seems corrupted. Do not edit any layer within it.')
+        figma.notify('Your UI Color Palette seems corrupted. Do not edit any layer within it.')
 
   }
 

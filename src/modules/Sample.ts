@@ -3,26 +3,24 @@ import Caption from './Caption';
 export default class Sample {
 
   name: string;
-  width: number;
-  height: number;
+  scale: string;
   rgb: Array<number>;
   captions: boolean;
   node: FrameNode;
   children: any;
 
-  constructor(name, width, height, rgb, captions) {
+  constructor(name, scale, rgb, captions) {
     this.name = name;
-    this.width = width;
-    this.height = height;
+    this.scale = scale;
     this.rgb = rgb;
     this.captions = captions;
     this.node = figma.createFrame();
     this.children = null
   }
 
-  makeNode() {
-    this.node.name = this.name;
-    this.node.resize(this.width, this.height);
+  makeName() {
+    // base
+    this.node.name = 'base';
     this.node.fills = [{
       type: 'SOLID',
       color: {
@@ -31,11 +29,42 @@ export default class Sample {
         b: this.rgb[2] / 255
       }
     }];
+
+    // layout
     this.node.layoutMode = 'HORIZONTAL';
     this.node.paddingTop = this.node.paddingRight = this.node.paddingBottom = this.node.paddingLeft = 8;
-    this.node.primaryAxisSizingMode = 'FIXED';
-    this.node.locked = true;
-    this.children = new Caption(this.name, this.rgb).makeNode();
+    this.node.primaryAxisSizingMode = 'AUTO';
+    this.node.layoutAlign = 'STRETCH';
+    this.node.layoutGrow = 1;
+
+    // insert
+    this.children = new Caption(this.name, this.rgb).makeNode('NAME');
+    this.node.appendChild(this.children);
+
+    return this.node
+  }
+
+  makeScale() {
+    // base
+    this.node.name = this.scale;
+    this.node.fills = [{
+      type: 'SOLID',
+      color: {
+        r: this.rgb[0] / 255,
+        g: this.rgb[1] / 255,
+        b: this.rgb[2] / 255
+      }
+    }];
+
+    // layout
+    this.node.layoutMode = 'HORIZONTAL';
+    this.node.paddingTop = this.node.paddingRight = this.node.paddingBottom = this.node.paddingLeft = 8;
+    this.node.primaryAxisSizingMode = 'AUTO';
+    this.node.layoutGrow = 1;
+    this.node.layoutAlign = 'STRETCH';
+
+    // insert
+    this.children = new Caption(this.scale, this.rgb).makeNode('SAMPLE');
     this.node.appendChild(this.children);
 
     if (!this.captions)

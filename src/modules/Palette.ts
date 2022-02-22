@@ -24,12 +24,18 @@ export default class Palette {
   }
 
   makeNode() {
+    // base
+    this.node.name = this.name;
+    this.node.resize(1640, 100);
+    this.node.cornerRadius = 16;
+
+    // layout
     this.node.layoutMode = 'VERTICAL';
     this.node.primaryAxisSizingMode = 'AUTO';
-    this.node.counterAxisSizingMode = 'AUTO';
-    this.node.name = this.name;
+    this.node.counterAxisSizingMode = 'FIXED';
     this.node.paddingTop = this.node.paddingRight = this.node.paddingBottom = this.node.paddingLeft = 32;
-    this.node.cornerRadius = 16;
+
+    // data
     this.node.setPluginData('min', this.min.toString());
     this.node.setPluginData('max', this.max.toString());
     this.node.setRelaunchData({ edit: '' });
@@ -39,6 +45,7 @@ export default class Palette {
     else
       this.node.setPluginData('captions', 'hasNotCaptions');
 
+    // insert
     figma.currentPage.selection.forEach(element => {
 
       let fills = element['fills'].filter(fill => fill.type === 'SOLID');
