@@ -19,6 +19,7 @@ class App extends React.Component {
       newScale: null,
       hasCaptions: true,
       onGoingStep: '',
+      newColors: null
     }
   }
 
@@ -44,9 +45,9 @@ class App extends React.Component {
 
         case 'palette-selected':
           if (JSON.parse(e.data.pluginMessage).data.captions === 'hasNotCaptions')
-            this.setState({ isPaletteSelected: true, activeTab: 'Edit', isColorSelected: false, newScale: JSON.parse(e.data.pluginMessage).data.scale, hasCaptions: false, onGoingStep: 'palette selected' })
+            this.setState({ isPaletteSelected: true, activeTab: 'Edit', isColorSelected: false, newScale: JSON.parse(e.data.pluginMessage).data.scale, hasCaptions: false, newColors: JSON.parse(e.data.pluginMessage).data.colors, onGoingStep: 'palette selected' })
           else if (JSON.parse(e.data.pluginMessage).data.captions === 'hasCaptions')
-            this.setState({ isPaletteSelected: true, activeTab: 'Edit', isColorSelected: false, newScale: JSON.parse(e.data.pluginMessage).data.scale, hasCaptions: true, onGoingStep: 'palette selected' })
+            this.setState({ isPaletteSelected: true, activeTab: 'Edit', isColorSelected: false, newScale: JSON.parse(e.data.pluginMessage).data.scale, hasCaptions: true, newColors: JSON.parse(e.data.pluginMessage).data.colors, onGoingStep: 'palette selected' })
 
       }
     };

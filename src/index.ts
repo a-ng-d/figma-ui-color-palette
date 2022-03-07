@@ -152,7 +152,8 @@ const messageToUI = () => {
       type: 'palette-selected',
       data: {
         scale: figma.currentPage.selection[0].getPluginData('scale'),
-        captions: figma.currentPage.selection[0].getPluginData('captions')
+        captions: figma.currentPage.selection[0].getPluginData('captions'),
+        colors: figma.currentPage.selection[0].getPluginData('colors')
       }
     }))
   else if (figma.currentPage.selection.length == 0)
