@@ -1,4 +1,5 @@
 import * as React from 'react';
+import chroma from 'chroma-js';
 import Slider from './Slider';
 import Switch from './Switch';
 import Button from './Button';
@@ -9,6 +10,7 @@ interface Props {
   isPaletteSelected: boolean;
   scale: string;
   hasCaptions: boolean;
+  colors: string;
   onCaptionsChange: any
 };
 
@@ -56,6 +58,14 @@ export default class EditPalette extends React.Component<Props> {
           icon='library'
           messages= 'Hold Shift ⇧ while dragging 50 or 900 to distribute knobs\' horizontal spacing ; Hold Ctrl ⌃ or Cmd ⌘ while dragging a knob to move them all'
         />
+      </div>
+      <div className='starting-colors'>
+        {JSON.parse(this.props.colors).map(color =>
+          <div key={color.name}>
+            <label htmlFor='color'>{color.name}</label>
+            <input id='color' type='color' value={chroma(color.rgb.r * 255, color.rgb.g * 255, color.rgb.b * 255)} />
+          </div>
+        )}
       </div>
       <div className='actions'>
         <div className='buttons'>
