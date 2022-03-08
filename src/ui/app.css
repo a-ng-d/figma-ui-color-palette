@@ -154,3 +154,52 @@ div.tabs .tabs__tab--active {
 .slider .slider__label {
   pointer-events: none
 }
+
+/* Color items */
+input[type="color" i] {
+  width: var(--size-xsmall);
+  height: var(--size-xsmall);
+  background-color: transparent;
+  padding: 0;
+  appearance: none;
+  background-color: transparent;
+  appearance: none;
+  border: none
+}
+
+input[type="color" i]::-webkit-color-swatch-wrapper {
+	padding: 0;
+}
+
+input[type="color" i]::-webkit-color-swatch {
+	border: none;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 0px 1px inset;
+}
+
+.colors {
+  padding: 0;
+  margin: 0
+}
+
+.colors__item {
+  display: flex;
+  gap: var(--size-xsmall)
+}
+
+.colors__item label {
+  flex: 1
+}
+
+.colors__parameters {
+  display: flex;
+  flex: 4;
+  gap: var(--size-xxxsmall)
+}
+
+.colors__parameters div {
+  flex: 0 0 88px
+}
+
+.colors__parameters div:first-child .icon {
+  opacity: 1
+}
