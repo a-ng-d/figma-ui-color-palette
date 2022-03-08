@@ -4,6 +4,7 @@ import Slider from './Slider';
 import Switch from './Switch';
 import Button from './Button';
 import Message from './Message';
+import ColorItem from './ColorItem';
 import { palette } from '../data';
 
 interface Props {
@@ -67,10 +68,7 @@ export default class EditPalette extends React.Component<Props> {
         <div className='section-title'>Starting colors</div>
         <ul className='colors'>
           {JSON.parse(this.props.colors).map(color =>
-            <li key={color.name}>
-              <label className='label'>{color.name}</label>
-              <input type='color' value={chroma(color.rgb.r * 255, color.rgb.g * 255, color.rgb.b * 255)} />
-            </li>
+            <ColorItem name={color.name} hex={chroma(color.rgb.r * 255, color.rgb.g * 255, color.rgb.b * 255).hex()} />
           )}
         </ul>
       </div>
