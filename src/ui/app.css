@@ -21,11 +21,12 @@ div.message {
 }
 
 div.controls {
+  flex: 1;
   overflow: scroll
 }
 
 div.actions {
-  flex: 1
+  flex: 0 0 var(--size-xxlarge)
 }
 
 div.lightness-scale,
