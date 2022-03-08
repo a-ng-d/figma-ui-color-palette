@@ -65,14 +65,14 @@ export default class EditPalette extends React.Component<Props> {
     return (
       <div className='starting-colors'>
         <div className='section-title'>Starting colors</div>
-        <div className='colors'>
+        <ul className='colors'>
           {JSON.parse(this.props.colors).map(color =>
-            <div key={color.name}>
+            <li key={color.name}>
               <label className='label'>{color.name}</label>
               <input type='color' value={chroma(color.rgb.r * 255, color.rgb.g * 255, color.rgb.b * 255)} />
-            </div>
+            </li>
           )}
-        </div>
+        </ul>
       </div>
     )
   }
