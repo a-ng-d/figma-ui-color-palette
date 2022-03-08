@@ -31,11 +31,15 @@ div.actions {
 
 div.lightness-scale,
 div.starting-colors {
-  padding: var(--size-small);
+  padding: var(--size-xsmall) var(--size-small);
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: var(--size-xsmall)
+  gap: var(--size-xxsmall)
+}
+
+div.starting-colors {
+  border-top: 1px solid var(--silver)
 }
 
 div.actions {
