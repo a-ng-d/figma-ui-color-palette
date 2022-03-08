@@ -43,7 +43,6 @@ export default class EditPalette extends React.Component<Props> {
 
   Scale = () => {
     return (
-      <>
       <div className='lightness-scale'>
         <div className='section-title'>Lightness scale</div>
         <Slider
@@ -59,14 +58,27 @@ export default class EditPalette extends React.Component<Props> {
           messages= 'Hold Shift ⇧ while dragging 50 or 900 to distribute knobs\' horizontal spacing ; Hold Ctrl ⌃ or Cmd ⌘ while dragging a knob to move them all'
         />
       </div>
+    )
+  }
+
+  Colors = () => {
+    return (
       <div className='starting-colors'>
-        {JSON.parse(this.props.colors).map(color =>
-          <div key={color.name}>
-            <label htmlFor='color'>{color.name}</label>
-            <input id='color' type='color' value={chroma(color.rgb.r * 255, color.rgb.g * 255, color.rgb.b * 255)} />
-          </div>
-        )}
+        <div className='section-title'>Starting colors</div>
+        <div className='colors'>
+          {JSON.parse(this.props.colors).map(color =>
+            <div key={color.name}>
+              <label className='label'>{color.name}</label>
+              <input type='color' value={chroma(color.rgb.r * 255, color.rgb.g * 255, color.rgb.b * 255)} />
+            </div>
+          )}
+        </div>
       </div>
+    )
+  }
+
+  Actions = () => {
+    return (
       <div className='actions'>
         <div className='buttons'>
           <Button type='secondary' label='Update the local styles' action={this.onUpdate} />
@@ -74,6 +86,17 @@ export default class EditPalette extends React.Component<Props> {
         </div>
         <Switch id='showCaptions' label='Show captions' isChecked={this.props.hasCaptions} onChange={this.checkHandler} />
       </div>
+    )
+  }
+
+  Controls = () => {
+    return (
+      <>
+      <div className='controls'>
+        <this.Scale />
+        <this.Colors />
+      </div>
+      <this.Actions />
       </>
     )
   }
@@ -83,7 +106,7 @@ export default class EditPalette extends React.Component<Props> {
     return (
       <section>
         {!this.props.isPaletteSelected ? <this.Message /> : null}
-        {this.props.isPaletteSelected ? <this.Scale /> : null}
+        {this.props.isPaletteSelected ? <this.Controls /> : null}
       </section>
     )
   }

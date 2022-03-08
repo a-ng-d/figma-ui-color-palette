@@ -13,14 +13,23 @@ section {
   flex: 1;
   display: flex;
   flex-direction: column;
+  overflow: hidden
 }
 
 div.message {
   margin: auto
 }
 
-div.lightness-scale {
-  flex: 1;
+div.controls {
+  overflow: scroll
+}
+
+div.actions {
+  flex: 1
+}
+
+div.lightness-scale,
+div.starting-colors {
   padding: var(--size-small);
   display: flex;
   flex-direction: column;
@@ -62,7 +71,7 @@ div.tabs .tabs__tab {
 }
 
 div.tabs .tabs__tab:hover {
-  color: var(--black-8-opaque);
+  color: var(--black-8-opaque)
 }
 
 div.tabs .tabs__tab--active {
@@ -83,7 +92,7 @@ div.tabs .tabs__tab--active {
   background: linear-gradient(-90deg, var(--white) 0%, var(--black) 100%);
   border-radius: var(--border-radius-large);
   box-shadow: inset 0px 0px 0px 1px var(--black3);
-  position: relative;
+  position: relative
 }
 
 .slider .slider__knob {
