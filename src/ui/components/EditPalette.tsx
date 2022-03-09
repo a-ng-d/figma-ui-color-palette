@@ -12,7 +12,8 @@ interface Props {
   scale: string;
   hasCaptions: boolean;
   colors: string;
-  onCaptionsChange: any
+  onCaptionsChange: any;
+  onColorChange: any
 };
 
 export default class EditPalette extends React.Component<Props> {
@@ -24,6 +25,10 @@ export default class EditPalette extends React.Component<Props> {
     this.props.onCaptionsChange(e.target.checked);
     palette.captions = e.target.checked;
     parent.postMessage({ pluginMessage: { type: 'update-captions', palette } }, '*')
+  }
+
+  colorHandler = (e: any) => {
+    this.props.onColorChange(e)
   }
 
   onCreate = () => parent.postMessage({ pluginMessage: { type: 'create-local-styles', palette } }, '*')
@@ -68,7 +73,7 @@ export default class EditPalette extends React.Component<Props> {
         <div className='section-title'>Starting colors</div>
         <ul className='colors'>
           {JSON.parse(this.props.colors).map(color =>
-            <ColorItem name={color.name} hex={chroma(color.rgb.r * 255, color.rgb.g * 255, color.rgb.b * 255).hex()} />
+            <ColorItem name={color.name} hex={chroma(color.rgb.r * 255, color.rgb.g * 255, color.rgb.b * 255).hex()} onColorChange={this.colorHandler} />
           )}
         </ul>
       </div>

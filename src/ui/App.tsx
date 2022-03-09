@@ -5,6 +5,7 @@ import EditPalette from './components/EditPalette';
 import Tabs from './components/Tabs';
 import '../../node_modules/figma-plugin-ds/dist/figma-plugin-ds.css';
 import './app.css';
+import chroma from 'chroma-js';
 
 declare function require(path: string): any;
 
@@ -29,7 +30,95 @@ class App extends React.Component {
     parent.postMessage({ pluginMessage: { type: 'get-infos' } }, '*');
   }
 
-  captionsHandler = (bool: boolean) => this.setState({ hasCaptions: bool, onGoingStep: 'captions changed' });
+  captionsHandler = (bool: boolean) => this.setState({ hasCaptions: bool, onGoingStep: 'captions changed' })
+
+  colorHandler = (e: any) => {
+    const name = e.nativeEvent.path.filter(el => el.className === 'colors__item')[0].id;
+
+    switch (e.target.id) {
+
+      case 'hex':
+        this.setState({
+          newColors: JSON.stringify(JSON.parse(this.state['newColors']).map(item => {
+            const rgb = chroma(e.target.value)._rgb;
+            if (item.name === name)
+              return {
+                name: name,
+                rgb: {
+                  r: rgb[0] / 255,
+                  g: rgb[1] / 255,
+                  b: rgb[2] / 255
+                }
+              }
+            else
+              return item
+          })),
+          onGoingStep: 'color changed'
+        });
+        break;
+
+      case 'lightness':
+        this.setState({
+          newColors: JSON.stringify(JSON.parse(this.state['newColors']).map(item => {
+            const rgb = chroma(item.rgb.r * 255, item.rgb.g * 255, item.rgb.b * 255).set('lch.l', e.target.value)._rgb
+            if (item.name === name)
+              return {
+                name: name,
+                rgb: {
+                  r: rgb[0] / 255,
+                  g: rgb[1] / 255,
+                  b: rgb[2] / 255
+                }
+              }
+            else
+              return item
+          })),
+          onGoingStep: 'color changed'
+        });
+        break;
+
+      case 'chroma':
+        this.setState({
+          newColors: JSON.stringify(JSON.parse(this.state['newColors']).map(item => {
+            const rgb = chroma(item.rgb.r * 255, item.rgb.g * 255, item.rgb.b * 255).set('lch.c', e.target.value)._rgb
+            if (item.name === name)
+              return {
+                name: name,
+                rgb: {
+                  r: rgb[0] / 255,
+                  g: rgb[1] / 255,
+                  b: rgb[2] / 255
+                }
+              }
+            else
+              return item
+          })),
+          onGoingStep: 'color changed'
+        });
+        break;
+
+      case 'hue':
+        this.setState({
+          newColors: JSON.stringify(JSON.parse(this.state['newColors']).map(item => {
+            const rgb = chroma(item.rgb.r * 255, item.rgb.g * 255, item.rgb.b * 255).set('lch.h', e.target.value)._rgb
+            if (item.name === name)
+              return {
+                name: name,
+                rgb: {
+                  r: rgb[0] / 255,
+                  g: rgb[1] / 255,
+                  b: rgb[2] / 255
+                }
+              }
+            else
+              return item
+          })),
+          onGoingStep: 'color changed'
+        });
+        break;
+
+    }
+  }
 
   render() {
     onmessage = (e: any) => {
@@ -56,7 +145,7 @@ class App extends React.Component {
       <main>
         <Tabs tabs='Create Edit' active={this.state['activeTab']} onClick={this.navHandler}/>
         {this.state['activeTab'] === 'Create' ? <CreatePalette isColorSelected={this.state['isColorSelected']} hasCaptions={this.state['hasCaptions']} onCaptionsChange={this.captionsHandler} onGoingStep={this.state['onGoingStep']} /> : null}
-        {this.state['activeTab'] === 'Edit' ? <EditPalette isPaletteSelected={this.state['isPaletteSelected']} scale={this.state['newScale']} hasCaptions={this.state['hasCaptions']} colors={this.state['newColors']} onCaptionsChange={this.captionsHandler} /> : null}
+        {this.state['activeTab'] === 'Edit' ? <EditPalette isPaletteSelected={this.state['isPaletteSelected']} scale={this.state['newScale']} hasCaptions={this.state['hasCaptions']} colors={this.state['newColors']} onCaptionsChange={this.captionsHandler} onColorChange={this.colorHandler} /> : null}
       </main>
     )
   }

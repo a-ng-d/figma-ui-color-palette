@@ -2,11 +2,12 @@ import * as React from 'react';
 
 interface Props {
   type: string;
+  id: string;
   icon: any;
   value: string;
   min: string;
   max: string;
-  action: any
+  onChange: any
 };
 
 export default class Input extends React.Component<Props> {
@@ -14,8 +15,8 @@ export default class Input extends React.Component<Props> {
   Color = () => {
     return (
       <div className='input input--with-icon'>
-        <div className='icon'><input type='color' value={this.props.value} /></div>
-        <input type='input' className='input__field' value={this.props.value.toUpperCase().substr(1, 6)} />
+        <div className='icon'><input id={this.props.id} type='color' value={this.props.value} onChange={this.props.onChange} /></div>
+        <input id={this.props.id} type='input' className='input__field' value={this.props.value.toUpperCase().substr(1, 6)} onChange={this.props.onChange} />
       </div>
     )
   }
@@ -24,13 +25,12 @@ export default class Input extends React.Component<Props> {
     return (
       <div className={`input ${this.props.icon.type === 'none' ? '' : 'input--with-icon'}`}>
         <div className={`icon ${this.props.icon.type === 'icon' ? `icon--${this.props.icon.value}` : ''}`}>{this.props.icon.type === 'letter' ? this.props.icon.value : ''}</div>
-        <input type='number' className='input__field' value={this.props.value} min={this.props.min} max={this.props.max} />
+        <input id={this.props.id} type='number' className='input__field' value={this.props.value} min={this.props.min} max={this.props.max} step='1' onChange={this.props.onChange} />
       </div>
     )
   }
 
   render() {
-    console.log(this.props.icon)
     return (
       <>
       {this.props.type === 'number' ? <this.Number /> : null}
