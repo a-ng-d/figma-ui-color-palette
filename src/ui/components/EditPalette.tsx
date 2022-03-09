@@ -27,9 +27,7 @@ export default class EditPalette extends React.Component<Props> {
     parent.postMessage({ pluginMessage: { type: 'update-captions', palette } }, '*')
   }
 
-  colorHandler = (e: any) => {
-    this.props.onColorChange(e)
-  }
+  colorHandler = (e: any) => this.props.onColorChange(e)
 
   onCreate = () => parent.postMessage({ pluginMessage: { type: 'create-local-styles', palette } }, '*')
 

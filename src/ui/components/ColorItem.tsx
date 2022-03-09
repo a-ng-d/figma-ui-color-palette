@@ -10,9 +10,7 @@ interface Props {
 
 export default class ColorItem extends React.Component<Props> {
 
-  inputHandler = (e: any) => {
-    this.props.onColorChange(e)
-  }
+  inputHandler = (e: any) => this.props.onColorChange(e)
 
   render() {
     return(

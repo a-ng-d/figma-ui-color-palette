@@ -1,3 +1,4 @@
+/* Layout */
 #react-page {
   height: 100%;
   user-select: none;
@@ -159,7 +160,9 @@ div.tabs .tabs__tab--active {
   pointer-events: none
 }
 
-/* Color items */
+/* Inputs */
+}
+
 input[type="color" i] {
   width: var(--size-xsmall);
   height: var(--size-xsmall);
@@ -203,6 +206,8 @@ input[type='number']::-webkit-inner-spin-button {
 .icon {
   pointer-events: none
 }
+
+/* Color items */
 .colors {
   padding: 0;
   margin: 0
