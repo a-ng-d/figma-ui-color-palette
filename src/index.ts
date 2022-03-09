@@ -81,6 +81,17 @@ figma.ui.onmessage = msg => {
         figma.notify('Your UI Color Palette seems corrupted. Do not edit any layer within it.')
       break;
 
+    case 'update-colors':
+      palette = figma.currentPage.selection[0];
+      palette.setPluginData('colors', JSON.stringify(msg.palette.colors));
+      palette.children[0].remove();
+      palette.appendChild(new Colors({
+        colors: JSON.parse(palette.getPluginData('colors')),
+        scale: JSON.parse(palette.getPluginData('scale')),
+        captions: palette.getPluginData('captions') == 'hasCaptions' ? true : false
+      }).makeNode());
+      break;
+
     case 'get-infos':
       palette = figma.currentPage.selection[0];
 

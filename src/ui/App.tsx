@@ -6,6 +6,7 @@ import Tabs from './components/Tabs';
 import '../../node_modules/figma-plugin-ds/dist/figma-plugin-ds.css';
 import './app.css';
 import chroma from 'chroma-js';
+import { palette } from './data';
 
 declare function require(path: string): any;
 
@@ -34,7 +35,6 @@ class App extends React.Component {
 
   colorHandler = (e: any) => {
     const name = e.nativeEvent.path.filter(el => el.className === 'colors__item')[0].id;
-
     switch (e.target.id) {
 
       case 'hex':
@@ -115,9 +115,9 @@ class App extends React.Component {
           })),
           onGoingStep: 'color changed'
         });
-        break;
-
     }
+    (palette as any).colors = JSON.parse(this.state['newColors']);
+    parent.postMessage({ pluginMessage: { type: 'update-colors', palette } }, '*')
   }
 
   render() {
