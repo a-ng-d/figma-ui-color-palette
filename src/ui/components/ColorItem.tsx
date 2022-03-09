@@ -54,7 +54,7 @@ export default class ColorItem extends React.Component<Props> {
             onChange={this.inputHandler}
           />
         </div>
-        <div className='icon-button'>
+        <div id='delete' className='icon-button' onClick={this.inputHandler}>
           <div className='icon icon--minus'></div>
         </div>
       </li>

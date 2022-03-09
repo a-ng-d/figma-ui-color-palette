@@ -35,6 +35,8 @@ class App extends React.Component {
 
   colorHandler = (e: any) => {
     const name = e.nativeEvent.path.filter(el => el.className === 'colors__item')[0].id;
+    let colors;
+
     switch (e.target.id) {
 
       case 'hex':
@@ -115,6 +117,17 @@ class App extends React.Component {
           })),
           onGoingStep: 'color changed'
         });
+        (palette as any).colors = colors;
+        break;
+
+      case 'delete':
+        colors = JSON.parse(this.state['newColors']).filter(item => item.name != name);
+        this.setState({
+          newColors: JSON.stringify(colors),
+          onGoingStep: 'color changed'
+        });
+        (palette as any).colors = colors
+
     }
     (palette as any).colors = JSON.parse(this.state['newColors']);
     parent.postMessage({ pluginMessage: { type: 'update-colors', palette } }, '*')
