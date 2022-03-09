@@ -12,6 +12,13 @@ interface Props {
 
 export default class Input extends React.Component<Props> {
 
+  onNudge = (e: any) => {
+    if (e.shiftKey && e.key === 'ArrowUp')
+      e.target.value = parseFloat(e.target.value) + 9
+    else if (e.shiftKey && e.key === 'ArrowDown')
+      e.target.value = parseFloat(e.target.value) - 9
+  }
+
   Color = () => {
     return (
       <div className='input input--with-icon'>
@@ -25,7 +32,7 @@ export default class Input extends React.Component<Props> {
     return (
       <div className={`input ${this.props.icon.type === 'none' ? '' : 'input--with-icon'}`}>
         <div className={`icon ${this.props.icon.type === 'icon' ? `icon--${this.props.icon.value}` : ''}`}>{this.props.icon.type === 'letter' ? this.props.icon.value : ''}</div>
-        <input id={this.props.id} type='number' className='input__field' value={this.props.value} min={this.props.min} max={this.props.max} step='1' onChange={this.props.onChange} />
+        <input id={this.props.id} type='number' className='input__field' value={this.props.value} min={this.props.min} max={this.props.max} step='1' onKeyDown={this.onNudge} onChange={this.props.onChange} />
       </div>
     )
   }
