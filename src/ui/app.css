@@ -116,7 +116,7 @@ div.tabs .tabs__tab--active {
   align-items: center;
   justify-content: center;
   position: absolute;
-  top: -10px;
+  top: -8px;
   cursor: ew-resize;
   z-index: 1
 }
