@@ -22,6 +22,8 @@ div.message {
 }
 
 div.controls {
+  display: flex;
+  flex-direction: column;
   flex: 1;
   overflow: scroll
 }
@@ -34,6 +36,7 @@ div.lightness-scale,
 div.starting-colors {
   padding: var(--size-xsmall) var(--size-small);
   display: flex;
+  flex: 1;
   flex-direction: column;
   justify-content: center;
   gap: var(--size-xxsmall)
