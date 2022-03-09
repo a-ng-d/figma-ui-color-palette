@@ -22,7 +22,7 @@ export default class Input extends React.Component<Props> {
   Color = () => {
     return (
       <div className='input input--with-icon'>
-        <div className='icon'><input id={this.props.id} type='color' value={this.props.value} onChange={this.props.onChange} /></div>
+        <input id={this.props.id} type='color' value={this.props.value} onChange={this.props.onChange} />
         <input id={this.props.id} type='input' className='input__field' value={this.props.value.toUpperCase().substr(1, 6)} onChange={this.props.onChange} readOnly />
       </div>
     )
