@@ -84,8 +84,7 @@ class App extends React.Component {
           onGoingStep: 'color changed'
         });
         (palette as any).colors = colors;
-        this.dispatch.color = true
-        e._reactName === 'onBlur' ? this.dispatch.color = false : '';
+        e._reactName === 'onBlur' ? this.dispatch.status = false : this.dispatch.status = true;
         break;
 
       case 'lightness':
