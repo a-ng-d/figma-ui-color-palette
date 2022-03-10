@@ -12,8 +12,33 @@ declare function require(path: string): any;
 
 class App extends React.Component {
 
+  dispatch: any;
+
   constructor(props) {
     super(props);
+    this.dispatch = {
+      active: null,
+      blocked: false,
+      interval: '',
+      send(type) {
+        this.interval = setInterval(() => parent.postMessage({ pluginMessage: { type: type, palette } }, '*'), 1000)
+        this.blocked = true
+      },
+      stop() {
+        clearInterval(this.interval);
+        this.blocked = false
+      },
+      get color() {
+        return this.active;
+      },
+      set color(bool) {
+        if (!this.blocked)
+          this.send('update-colors')
+        else if (this.blocked && !bool)
+          this.stop();
+        this.active = bool;
+      }
+    };
     this.state = {
       activeTab: 'Create',
       isPaletteSelected: false,
@@ -59,6 +84,8 @@ class App extends React.Component {
           onGoingStep: 'color changed'
         });
         (palette as any).colors = colors;
+        this.dispatch.color = true
+        e._reactName === 'onBlur' ? this.dispatch.color = false : '';
         break;
 
       case 'lightness':
