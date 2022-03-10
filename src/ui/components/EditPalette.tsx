@@ -18,8 +18,37 @@ interface Props {
 
 export default class EditPalette extends React.Component<Props> {
 
+  dispatch: any;
+
+  constructor(props) {
+    super(props);
+    this.dispatch = {
+      active: null,
+      blocked: false,
+      interval: '',
+      send(type) {
+        this.interval = setInterval(() => parent.postMessage({ pluginMessage: { type: type, palette } }, '*'), 1000)
+        this.blocked = true
+      },
+      stop() {
+        clearInterval(this.interval);
+        this.blocked = false
+      },
+      get status() {
+        return this.active;
+      },
+      set status(bool) {
+        if (!this.blocked)
+          this.send('edit-palette')
+        else if (this.blocked && !bool)
+          this.stop();
+        this.active = bool;
+      }
+    }
+  }
+
   // Events
-  slideHandler = () => parent.postMessage({ pluginMessage: { type: 'edit-palette', palette } }, '*')
+  slideHandler = (e: string) => e === 'released' ? this.dispatch.status = false : this.dispatch.status = true
 
   checkHandler = (e: any) => {
     this.props.onCaptionsChange(e.target.checked);
