@@ -81,6 +81,7 @@ class App extends React.Component {
           onGoingStep: 'color changed'
         });
         (palette as any).colors = colors;
+        parent.postMessage({ pluginMessage: { type: 'update-colors', palette } }, '*');
         break;
 
       case 'chroma':
@@ -103,6 +104,7 @@ class App extends React.Component {
           onGoingStep: 'color changed'
         });
         (palette as any).colors = colors;
+        parent.postMessage({ pluginMessage: { type: 'update-colors', palette } }, '*');
         break;
 
       case 'hue':
@@ -125,6 +127,7 @@ class App extends React.Component {
           onGoingStep: 'color changed'
         });
         (palette as any).colors = colors;
+        parent.postMessage({ pluginMessage: { type: 'update-colors', palette } }, '*');
         break;
 
       case 'delete':
@@ -136,7 +139,6 @@ class App extends React.Component {
         (palette as any).colors = colors
 
     }
-    parent.postMessage({ pluginMessage: { type: 'update-colors', palette } }, '*')
   }
 
   render() {
