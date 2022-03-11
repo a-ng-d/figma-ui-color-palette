@@ -146,7 +146,8 @@ class App extends React.Component {
           newColors: JSON.stringify(colors),
           onGoingStep: 'color changed'
         });
-        (palette as any).colors = colors
+        (palette as any).colors = colors;
+        parent.postMessage({ pluginMessage: { type: 'update-colors', palette } }, '*')
 
     }
   }
