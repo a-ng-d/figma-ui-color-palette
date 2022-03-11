@@ -1,10 +1,11 @@
 import * as React from 'react';
-import chroma from 'chroma-js';
+import Dispatcher from '../../modules/Dispatcher';
 import Slider from './Slider';
 import Switch from './Switch';
 import Button from './Button';
 import Message from './Message';
 import ColorItem from './ColorItem';
+import chroma from 'chroma-js';
 import { palette } from '../data';
 
 interface Props {
@@ -23,32 +24,15 @@ export default class EditPalette extends React.Component<Props> {
   constructor(props) {
     super(props);
     this.dispatch = {
-      active: null,
-      blocked: false,
-      interval: '',
-      send(type) {
-        this.interval = setInterval(() => parent.postMessage({ pluginMessage: { type: type, palette } }, '*'), 1000)
-        this.blocked = true
-      },
-      stop() {
-        clearInterval(this.interval);
-        this.blocked = false
-      },
-      get status() {
-        return this.active;
-      },
-      set status(bool) {
-        if (!this.blocked)
-          this.send('edit-palette')
-        else if (this.blocked && !bool)
-          this.stop();
-        this.active = bool;
-      }
+      scale: new Dispatcher(
+        () => parent.postMessage({ pluginMessage: { type: 'edit-palette', palette } }, '*'),
+        1000
+      )
     }
   }
 
   // Events
-  slideHandler = (e: string) => e === 'released' ? this.dispatch.status = false : this.dispatch.status = true
+  slideHandler = (e: string) => e === 'released' ? this.dispatch.scale.on.status = false : this.dispatch.scale.on.status = true
 
   checkHandler = (e: any) => {
     this.props.onCaptionsChange(e.target.checked);

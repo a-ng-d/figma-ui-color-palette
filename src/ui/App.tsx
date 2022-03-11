@@ -1,5 +1,6 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
+import Dispatcher from '../modules/Dispatcher';
 import CreatePalette from './components/CreatePalette';
 import EditPalette from './components/EditPalette';
 import Tabs from './components/Tabs';
@@ -17,27 +18,10 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.dispatch = {
-      active: null,
-      blocked: false,
-      interval: '',
-      send(type) {
-        this.interval = setInterval(() => parent.postMessage({ pluginMessage: { type: type, palette } }, '*'), 1000)
-        this.blocked = true
-      },
-      stop() {
-        clearInterval(this.interval);
-        this.blocked = false
-      },
-      get color() {
-        return this.active;
-      },
-      set color(bool) {
-        if (!this.blocked)
-          this.send('update-colors')
-        else if (this.blocked && !bool)
-          this.stop();
-        this.active = bool;
-      }
+      colors: new Dispatcher(
+        () => parent.postMessage({ pluginMessage: { type: 'update-colors', palette } }, '*'),
+        1000
+      )
     };
     this.state = {
       activeTab: 'Create',
@@ -84,7 +68,7 @@ class App extends React.Component {
           onGoingStep: 'color changed'
         });
         (palette as any).colors = colors;
-        e._reactName === 'onBlur' ? this.dispatch.status = false : this.dispatch.status = true;
+        e._reactName === 'onBlur' ? this.dispatch.colors.on.status = false : this.dispatch.colors.on.status = true;
         break;
 
       case 'lightness':
