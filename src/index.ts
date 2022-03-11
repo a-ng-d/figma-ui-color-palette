@@ -38,7 +38,7 @@ figma.ui.onmessage = msg => {
         palette.remove()
       break;
 
-    case 'edit-palette':
+    case 'update-scale':
       palette = figma.currentPage.selection[0];
       if (palette.children.length == 1) {
         palette.setPluginData('min', msg.palette.min.toString());
