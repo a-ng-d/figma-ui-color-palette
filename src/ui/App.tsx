@@ -8,6 +8,7 @@ import '../../node_modules/figma-plugin-ds/dist/figma-plugin-ds.css';
 import './app.css';
 import chroma from 'chroma-js';
 import { palette } from './data';
+import {v4 as uuidv4} from 'uuid';
 
 declare function require(path: string): any;
 
@@ -165,10 +166,15 @@ class App extends React.Component {
           break;
 
         case 'palette-selected':
+          const putIdsOnColors = JSON.parse(JSON.parse(e.data.pluginMessage).data.colors).map(color => {
+            color.id === undefined ? color.id = uuidv4() : color.id = color.id;
+            return color
+          });
           if (JSON.parse(e.data.pluginMessage).data.captions === 'hasNotCaptions')
-            this.setState({ isPaletteSelected: true, activeTab: 'Edit', isColorSelected: false, newScale: JSON.parse(e.data.pluginMessage).data.scale, hasCaptions: false, newColors: JSON.parse(e.data.pluginMessage).data.colors, onGoingStep: 'palette selected' })
+            this.setState({ isPaletteSelected: true, activeTab: 'Edit', isColorSelected: false, newScale: JSON.parse(e.data.pluginMessage).data.scale, hasCaptions: false, newColors: JSON.stringify(putIdsOnColors), onGoingStep: 'palette selected' })
           else if (JSON.parse(e.data.pluginMessage).data.captions === 'hasCaptions')
-            this.setState({ isPaletteSelected: true, activeTab: 'Edit', isColorSelected: false, newScale: JSON.parse(e.data.pluginMessage).data.scale, hasCaptions: true, newColors: JSON.parse(e.data.pluginMessage).data.colors, onGoingStep: 'palette selected' })
+            this.setState({ isPaletteSelected: true, activeTab: 'Edit', isColorSelected: false, newScale: JSON.parse(e.data.pluginMessage).data.scale, hasCaptions: true, newColors: JSON.stringify(putIdsOnColors), onGoingStep: 'palette selected' });
+          parent.postMessage({ pluginMessage: { type: 'update-infos', data: this.state } }, '*');
 
       }
     };

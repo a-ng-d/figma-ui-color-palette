@@ -1,10 +1,12 @@
 import * as React from 'react';
 import chroma from 'chroma-js';
 import Input from './Input';
+import { v4 as uuidv4 } from 'uuid';
 
 interface Props {
   name: string;
   hex: string;
+  uuid: string;
   onColorChange: any
 };
 
@@ -14,7 +16,7 @@ export default class ColorItem extends React.Component<Props> {
 
   render() {
     return(
-      <li id={this.props.name} className='colors__item'>
+      <li id={this.props.name} data-id={this.props.uuid} className='colors__item'>
         <label className='label'>{this.props.name}</label>
         <div className='colors__parameters'>
           <Input

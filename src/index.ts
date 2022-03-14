@@ -103,6 +103,11 @@ figma.ui.onmessage = msg => {
       } catch { }
       break;
 
+    case 'update-infos':
+      palette = figma.currentPage.selection[0];
+      palette.setPluginData('colors', msg.data.newColors);
+      break;
+
     case 'create-local-styles':
       palette = figma.currentPage.selection[0];
       i = 0;
