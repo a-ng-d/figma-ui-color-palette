@@ -1,4 +1,8 @@
 /* Layout */
+div, ul, li, section, input {
+  cursor: default
+}
+
 div#react-page {
   height: 100%;
   user-select: none;
@@ -164,10 +168,6 @@ div.slider .slider__label {
 }
 
 /* Inputs */
-input {
-  cursor: default
-}
-
 input[type="color" i] {
   width: var(--size-xsmall);
   height: var(--size-xsmall);
@@ -208,7 +208,11 @@ input[type='number']::-webkit-inner-spin-button {
 }
 
 /* Icon buttons */
-.icon {
+div.icon-button {
+  cursor: default
+}
+
+div.icon {
   pointer-events: none
 }
 
