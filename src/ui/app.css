@@ -5,7 +5,7 @@ div, ul, li, section, input {
 
 div#react-page {
   height: 100%;
-  user-select: none;
+  user-select: none
 }
 
 main {
