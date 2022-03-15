@@ -44,10 +44,11 @@ class App extends React.Component {
   captionsHandler = (bool: boolean) => this.setState({ hasCaptions: bool, onGoingStep: 'captions changed' })
 
   colorHandler = (e: any) => {
-    let name, colors;
+    let name, colors, id;
     try {
-      name = e.nativeEvent.path.filter(el => el.className === 'colors__item')[0].id
-    } catch(err) {};
+      name = e.nativeEvent.path.filter(el => el.className === 'colors__item')[0].id;
+      id = e.nativeEvent.path.filter(el => el.className === 'colors__item')[0].getAttribute('data-id')
+    } catch {};
 
     switch (e.target.id) {
 
@@ -144,7 +145,7 @@ class App extends React.Component {
         break;
 
       case 'delete':
-        colors = JSON.parse(this.state['newColors']).filter(item => item.name != name);
+        colors = JSON.parse(this.state['newColors']).filter(item => item.id != id);
         this.setState({
           newColors: JSON.stringify(colors),
           onGoingStep: 'color changed'
