@@ -65,6 +65,10 @@ div.actions .buttons {
   gap: var(--size-xxsmall)
 }
 
+div.title-with-icon {
+  display: flex
+}
+
 /* Tabs */
 div.tabs {
   flex: 0 0 var(--size-large);

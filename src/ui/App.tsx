@@ -44,8 +44,10 @@ class App extends React.Component {
   captionsHandler = (bool: boolean) => this.setState({ hasCaptions: bool, onGoingStep: 'captions changed' })
 
   colorHandler = (e: any) => {
-    const name = e.nativeEvent.path.filter(el => el.className === 'colors__item')[0].id;
-    let colors;
+    let name, colors;
+    try {
+      name = e.nativeEvent.path.filter(el => el.className === 'colors__item')[0].id
+    } catch(err) {};
 
     switch (e.target.id) {
 
@@ -143,6 +145,25 @@ class App extends React.Component {
 
       case 'delete':
         colors = JSON.parse(this.state['newColors']).filter(item => item.name != name);
+        this.setState({
+          newColors: JSON.stringify(colors),
+          onGoingStep: 'color changed'
+        });
+        (palette as any).colors = colors;
+        parent.postMessage({ pluginMessage: { type: 'update-colors', palette } }, '*');
+        break;
+
+      case 'add':
+        colors = JSON.parse(this.state['newColors']);
+        colors.push({
+          name: 'UI Color',
+          rgb: {
+            r: 1,
+            g: 1,
+            b: 1
+          },
+          id: uuidv4()
+        });
         this.setState({
           newColors: JSON.stringify(colors),
           onGoingStep: 'color changed'
