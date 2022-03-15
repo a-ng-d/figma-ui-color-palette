@@ -141,11 +141,11 @@ class App extends React.Component {
       case 'add':
         colors = JSON.parse(this.state['newColors']);
         colors.push({
-          name: 'UI Color',
+          name: 'New UI Color',
           rgb: {
-            r: 1,
-            g: 1,
-            b: 1
+            r: .53,
+            g: .92,
+            b: .97
           },
           id: uuidv4()
         });
