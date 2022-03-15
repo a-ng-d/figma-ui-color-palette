@@ -155,6 +155,21 @@ class App extends React.Component {
         });
         (palette as any).colors = colors;
         parent.postMessage({ pluginMessage: { type: 'update-colors', palette } }, '*')
+        break;
+
+      case 'rename':
+        colors = JSON.parse(this.state['newColors']).map(item => {
+          if (item.id === id)
+            item.name = e.target.value
+          return item
+        });
+        this.setState({
+          newColors: JSON.stringify(colors),
+          onGoingStep: 'color changed'
+        });
+        (palette as any).colors = colors;
+        e._reactName === 'onBlur' ? parent.postMessage({ pluginMessage: { type: 'update-colors', palette } }, '*') : null;
+        e.key === 'Enter' ? parent.postMessage({ pluginMessage: { type: 'update-colors', palette } }, '*') : null
 
     }
   }

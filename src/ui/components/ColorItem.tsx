@@ -17,7 +17,15 @@ export default class ColorItem extends React.Component<Props> {
   render() {
     return(
       <li id={this.props.name} data-id={this.props.uuid} className='colors__item'>
-        <label className='label'>{this.props.name}</label>
+        <Input
+          type='text'
+          id='rename'
+          icon={{type: 'none', value: null}}
+          value={this.props.name}
+          min=''
+          max=''
+          onChange={this.inputHandler}
+        />
         <div className='colors__parameters'>
           <Input
             type='color'

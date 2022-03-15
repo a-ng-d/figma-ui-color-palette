@@ -37,6 +37,15 @@ export default class Input extends React.Component<Props> {
     )
   }
 
+  Text = () => {
+    return (
+      <div className={`input${this.props.icon.type === 'none' ? '' : ' input--with-icon'}`}>
+        <div className={`icon${this.props.icon.type === 'icon' ? ` icon--${this.props.icon.value}` : ''}`}>{this.props.icon.type === 'letter' ? this.props.icon.value : ''}</div>
+        <input id={this.props.id} type='text' className='input__field' value={this.props.value} onKeyPress={this.props.onChange} onChange={this.props.onChange} onBlur={this.props.onChange} />
+      </div>
+    )
+  }
+
   render() {
     return (
       <>
