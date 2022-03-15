@@ -10,9 +10,9 @@ import { palette } from '../data';
 
 interface Props {
   isPaletteSelected: boolean;
-  scale: string;
+  scale: any;
   hasCaptions: boolean;
-  colors: string;
+  colors: any;
   onCaptionsChange: any;
   onColorChange: any
 };
@@ -88,7 +88,7 @@ export default class EditPalette extends React.Component<Props> {
           </div>
         </div>
         <ul className='colors'>
-          {JSON.parse(this.props.colors).map(color =>
+          {this.props.colors.map(color =>
             <ColorItem key={color.id} name={color.name} hex={chroma(color.rgb.r * 255, color.rgb.g * 255, color.rgb.b * 255).hex()} uuid={color.id} onColorChange={this.colorHandler} />
           )}
         </ul>

@@ -182,7 +182,7 @@ export default class Slider extends React.Component<Props> {
   Custom = (props) => {
     return (
       <div className='slider__range'>
-        {Object.entries(JSON.parse(this.props.scale)).map(lightness =>
+        {Object.entries(this.props.scale).map(lightness =>
           <div key={lightness[0]} className={`slider__knob ${lightness[0]}`} style={{left: `${lightness[1]}%`}} onMouseDown={this.onGrab}>
             <div className='type type--inverse slider__tooltip'>{lightness[1]}</div>
             <div className='type slider__label'>{lightness[0].replace('lightness-', '')}</div>

@@ -20,7 +20,7 @@ class App extends React.Component {
     super(props);
     this.dispatch = {
       colors: new Dispatcher(
-        () => parent.postMessage({ pluginMessage: { type: 'update-colors', palette } }, '*'),
+        () => parent.postMessage({ pluginMessage: { type: 'update-colors', data: this.state['newColors'] } }, '*'),
         1000
       )
     };
@@ -53,7 +53,7 @@ class App extends React.Component {
     switch (e.target.id) {
 
       case 'hex':
-        colors = JSON.parse(this.state['newColors']).map(item => {
+        colors = this.state['newColors'].map(item => {
           const rgb = chroma(e.target.value)._rgb;
           if (item.id === id)
             item.rgb = {
@@ -64,15 +64,14 @@ class App extends React.Component {
           return item
         });
         this.setState({
-          newColors: JSON.stringify(colors),
+          newColors: colors,
           onGoingStep: 'color changed'
         });
-        (palette as any).colors = colors;
         e._reactName === 'onBlur' ? this.dispatch.colors.on.status = false : this.dispatch.colors.on.status = true;
         break;
 
       case 'lightness':
-        colors = JSON.parse(this.state['newColors']).map(item => {
+        colors = this.state['newColors'].map(item => {
           const rgb = chroma(item.rgb.r * 255, item.rgb.g * 255, item.rgb.b * 255).set('lch.l', e.target.value)._rgb
           if (item.id === id)
             item.rgb = {
@@ -83,15 +82,14 @@ class App extends React.Component {
           return item
         });
         this.setState({
-          newColors: JSON.stringify(colors),
+          newColors: colors,
           onGoingStep: 'color changed'
         });
-        (palette as any).colors = colors;
-        parent.postMessage({ pluginMessage: { type: 'update-colors', palette } }, '*');
+        parent.postMessage({ pluginMessage: { type: 'update-colors', data: this.state['newColors'] } }, '*');
         break;
 
       case 'chroma':
-        colors = JSON.parse(this.state['newColors']).map(item => {
+        colors = this.state['newColors'].map(item => {
           const rgb = chroma(item.rgb.r * 255, item.rgb.g * 255, item.rgb.b * 255).set('lch.c', e.target.value)._rgb
           if (item.id === id)
             item.rgb = {
@@ -102,15 +100,14 @@ class App extends React.Component {
           return item
         });
         this.setState({
-          newColors: JSON.stringify(colors),
+          newColors: colors,
           onGoingStep: 'color changed'
         });
-        (palette as any).colors = colors;
-        parent.postMessage({ pluginMessage: { type: 'update-colors', palette } }, '*');
+        parent.postMessage({ pluginMessage: { type: 'update-colors', data: this.state['newColors'] } }, '*');
         break;
 
       case 'hue':
-        colors = JSON.parse(this.state['newColors']).map(item => {
+        colors = this.state['newColors'].map(item => {
           const rgb = chroma(item.rgb.r * 255, item.rgb.g * 255, item.rgb.b * 255).set('lch.h', e.target.value)._rgb
           if (item.id === id)
             item.rgb = {
@@ -121,25 +118,23 @@ class App extends React.Component {
           return item
         });
         this.setState({
-          newColors: JSON.stringify(colors),
+          newColors: colors,
           onGoingStep: 'color changed'
         });
-        (palette as any).colors = colors;
-        parent.postMessage({ pluginMessage: { type: 'update-colors', palette } }, '*');
+        parent.postMessage({ pluginMessage: { type: 'update-colors', data: this.state['newColors'] } }, '*');
         break;
 
       case 'remove':
-        colors = JSON.parse(this.state['newColors']).filter(item => item.id != id);
+        colors = this.state['newColors'].filter(item => item.id != id);
         this.setState({
-          newColors: JSON.stringify(colors),
+          newColors: colors,
           onGoingStep: 'color changed'
         });
-        (palette as any).colors = colors;
-        parent.postMessage({ pluginMessage: { type: 'update-colors', palette } }, '*');
+        parent.postMessage({ pluginMessage: { type: 'update-colors', data: colors } }, '*');
         break;
 
       case 'add':
-        colors = JSON.parse(this.state['newColors']);
+        colors = this.state['newColors'];
         colors.push({
           name: 'New UI Color',
           rgb: {
@@ -150,33 +145,31 @@ class App extends React.Component {
           id: uuidv4()
         });
         this.setState({
-          newColors: JSON.stringify(colors),
+          newColors: colors,
           onGoingStep: 'color changed'
         });
-        (palette as any).colors = colors;
-        parent.postMessage({ pluginMessage: { type: 'update-colors', palette } }, '*')
+        parent.postMessage({ pluginMessage: { type: 'update-colors', data: this.state['newColors'] } }, '*')
         break;
 
       case 'rename':
-        colors = JSON.parse(this.state['newColors']).map(item => {
+        colors = this.state['newColors'].map(item => {
           if (item.id === id)
             item.name = e.target.value
           return item
         });
         this.setState({
-          newColors: JSON.stringify(colors),
+          newColors: colors,
           onGoingStep: 'color changed'
         });
-        (palette as any).colors = colors;
-        e._reactName === 'onBlur' ? parent.postMessage({ pluginMessage: { type: 'update-colors', palette } }, '*') : null;
-        e.key === 'Enter' ? parent.postMessage({ pluginMessage: { type: 'update-colors', palette } }, '*') : null
+        e._reactName === 'onBlur' ? parent.postMessage({ pluginMessage: { type: 'update-colors', data: this.state['newColors'] } }, '*') : null;
+        e.key === 'Enter' ? parent.postMessage({ pluginMessage: { type: 'update-colors', data: this.state['newColors'] } }, '*') : null
 
     }
   }
 
   render() {
     onmessage = (e: any) => {
-      switch (JSON.parse(e.data.pluginMessage).type) {
+      switch (e.data.pluginMessage.type) {
 
         case 'empty-selection':
           this.setState({ isPaletteSelected: false, isColorSelected: false, hasCaptions: true, onGoingStep: 'selection empty' });
@@ -187,15 +180,15 @@ class App extends React.Component {
           break;
 
         case 'palette-selected':
-          const putIdsOnColors = JSON.parse(JSON.parse(e.data.pluginMessage).data.colors).map(color => {
+          const putIdsOnColors = e.data.pluginMessage.data.colors.map(color => {
             color.id === undefined ? color.id = uuidv4() : color.id = color.id;
             return color
           });
-          if (JSON.parse(e.data.pluginMessage).data.captions === 'hasNotCaptions')
-            this.setState({ isPaletteSelected: true, activeTab: 'Edit', isColorSelected: false, newScale: JSON.parse(e.data.pluginMessage).data.scale, hasCaptions: false, newColors: JSON.stringify(putIdsOnColors), onGoingStep: 'palette selected' })
-          else if (JSON.parse(e.data.pluginMessage).data.captions === 'hasCaptions')
-            this.setState({ isPaletteSelected: true, activeTab: 'Edit', isColorSelected: false, newScale: JSON.parse(e.data.pluginMessage).data.scale, hasCaptions: true, newColors: JSON.stringify(putIdsOnColors), onGoingStep: 'palette selected' });
-          parent.postMessage({ pluginMessage: { type: 'update-infos', data: this.state } }, '*');
+          if (e.data.pluginMessage.data.captions === 'hasNotCaptions')
+            this.setState({ isPaletteSelected: true, activeTab: 'Edit', isColorSelected: false, newScale: e.data.pluginMessage.data.scale, hasCaptions: false, newColors: putIdsOnColors, onGoingStep: 'palette selected' })
+          else if (e.data.pluginMessage.data.captions === 'hasCaptions')
+            this.setState({ isPaletteSelected: true, activeTab: 'Edit', isColorSelected: false, newScale: e.data.pluginMessage.data.scale, hasCaptions: true, newColors: putIdsOnColors, onGoingStep: 'palette selected' });
+          //parent.postMessage({ pluginMessage: { type: 'update-infos', data: this.state } }, '*');
 
       }
     };

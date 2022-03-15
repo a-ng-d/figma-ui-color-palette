@@ -83,7 +83,7 @@ figma.ui.onmessage = msg => {
 
     case 'update-colors':
       palette = figma.currentPage.selection[0];
-      palette.setPluginData('colors', JSON.stringify(msg.palette.colors));
+      palette.setPluginData('colors', JSON.stringify(msg.data));
       palette.children[0].remove();
       palette.appendChild(new Colors({
         colors: JSON.parse(palette.getPluginData('colors')),
@@ -105,7 +105,9 @@ figma.ui.onmessage = msg => {
 
     case 'update-infos':
       palette = figma.currentPage.selection[0];
-      palette.setPluginData('colors', msg.data.newColors);
+      palette.setPluginData('scale', JSON.stringify(msg.data.newScale));
+      palette.setPluginData('captions', msg.data.hasCaptions.toString());
+      palette.setPluginData('colors', JSON.stringify(msg.data.newColors));
       break;
 
     case 'create-local-styles':
@@ -164,26 +166,26 @@ figma.ui.onmessage = msg => {
 
 const messageToUI = () => {
   if (figma.currentPage.selection.length == 1 && figma.currentPage.selection[0].getPluginData('scale') != '')
-    figma.ui.postMessage(JSON.stringify({
+    figma.ui.postMessage({
       type: 'palette-selected',
       data: {
-        scale: figma.currentPage.selection[0].getPluginData('scale'),
+        scale: JSON.parse(figma.currentPage.selection[0].getPluginData('scale')),
         captions: figma.currentPage.selection[0].getPluginData('captions'),
-        colors: figma.currentPage.selection[0].getPluginData('colors')
+        colors: JSON.parse(figma.currentPage.selection[0].getPluginData('colors'))
       }
-    }))
+    })
   else if (figma.currentPage.selection.length == 0)
-    figma.ui.postMessage(JSON.stringify({
+    figma.ui.postMessage({
       type: 'empty-selection',
       data: {}
-    }));
+    });
 
   figma.currentPage.selection.forEach(element => {
     if (element.type != 'GROUP')
       if (element['fills'].filter(fill => fill.type === 'SOLID').length != 0 && element.getPluginData('scale') === '')
-        figma.ui.postMessage(JSON.stringify({
+        figma.ui.postMessage({
           type: 'color-selected',
           data: {}
-        }))
+        })
   })
 }
