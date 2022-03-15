@@ -6,7 +6,7 @@ interface Props {
   type: string;
   min: string;
   max: string;
-  scale: string;
+  scale: any;
   onChange: any
 };
 

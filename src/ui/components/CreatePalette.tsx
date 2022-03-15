@@ -54,7 +54,7 @@ export default class CreatePalette extends React.Component<Props> {
           knobsList='50 100 200 300 400 500 600 700 800 900'
           min=''
           max=''
-          scale={JSON.stringify(palette.scale)}
+          scale={palette.scale}
           onChange={this.slideHandler}
         />}
         <Message
