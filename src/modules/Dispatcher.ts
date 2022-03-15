@@ -17,8 +17,7 @@ export default class Dispatcher {
       },
       stop() {
         clearInterval(this.interval);
-        this.blocked = false;
-        return callback()
+        this.blocked = false
       },
       get status() {
         return this.active;
