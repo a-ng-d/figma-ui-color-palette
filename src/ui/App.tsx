@@ -176,7 +176,7 @@ class App extends React.Component {
           break;
 
         case 'color-selected':
-          this.setState({ isPaletteSelected: false, isColorSelected: true, activeTab: 'Create', onGoingStep: 'colors selected' });
+          this.setState({ isPaletteSelected: false, isColorSelected: true, hasCaptions: true, activeTab: 'Create', onGoingStep: 'colors selected' });
           break;
 
         case 'palette-selected':
