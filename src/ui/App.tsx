@@ -128,7 +128,7 @@ class App extends React.Component {
         parent.postMessage({ pluginMessage: { type: 'update-colors', palette } }, '*');
         break;
 
-      case 'delete':
+      case 'remove':
         colors = JSON.parse(this.state['newColors']).filter(item => item.id != id);
         this.setState({
           newColors: JSON.stringify(colors),
