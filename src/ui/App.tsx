@@ -85,7 +85,7 @@ class App extends React.Component {
           newColors: colors,
           onGoingStep: 'color changed'
         });
-        parent.postMessage({ pluginMessage: { type: 'update-colors', data: this.state['newColors'] } }, '*');
+        parent.postMessage({ pluginMessage: { type: 'update-colors', data: colors } }, '*');
         break;
 
       case 'chroma':
@@ -103,7 +103,7 @@ class App extends React.Component {
           newColors: colors,
           onGoingStep: 'color changed'
         });
-        parent.postMessage({ pluginMessage: { type: 'update-colors', data: this.state['newColors'] } }, '*');
+        parent.postMessage({ pluginMessage: { type: 'update-colors', data: colors } }, '*');
         break;
 
       case 'hue':
@@ -121,7 +121,7 @@ class App extends React.Component {
           newColors: colors,
           onGoingStep: 'color changed'
         });
-        parent.postMessage({ pluginMessage: { type: 'update-colors', data: this.state['newColors'] } }, '*');
+        parent.postMessage({ pluginMessage: { type: 'update-colors', data: colors } }, '*');
         break;
 
       case 'remove':
@@ -148,7 +148,7 @@ class App extends React.Component {
           newColors: colors,
           onGoingStep: 'color changed'
         });
-        parent.postMessage({ pluginMessage: { type: 'update-colors', data: this.state['newColors'] } }, '*')
+        parent.postMessage({ pluginMessage: { type: 'update-colors', data: colors } }, '*')
         break;
 
       case 'rename':
@@ -161,8 +161,8 @@ class App extends React.Component {
           newColors: colors,
           onGoingStep: 'color changed'
         });
-        e._reactName === 'onBlur' ? parent.postMessage({ pluginMessage: { type: 'update-colors', data: this.state['newColors'] } }, '*') : null;
-        e.key === 'Enter' ? parent.postMessage({ pluginMessage: { type: 'update-colors', data: this.state['newColors'] } }, '*') : null
+        e._reactName === 'onBlur' ? parent.postMessage({ pluginMessage: { type: 'update-colors', data: colors } }, '*') : null;
+        e.key === 'Enter' ? parent.postMessage({ pluginMessage: { type: 'update-colors', data: colors } }, '*') : null
 
     }
   }
