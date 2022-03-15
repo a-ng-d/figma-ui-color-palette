@@ -30,8 +30,8 @@ export default class Input extends React.Component<Props> {
 
   Number = () => {
     return (
-      <div className={`input ${this.props.icon.type === 'none' ? '' : 'input--with-icon'}`}>
-        <div className={`icon ${this.props.icon.type === 'icon' ? `icon--${this.props.icon.value}` : ''}`}>{this.props.icon.type === 'letter' ? this.props.icon.value : ''}</div>
+      <div className={`input${this.props.icon.type === 'none' ? '' : ' input--with-icon'}`}>
+        <div className={`icon${this.props.icon.type === 'icon' ? `icon--${this.props.icon.value}` : ''}`}>{this.props.icon.type === 'letter' ? this.props.icon.value : ''}</div>
         <input id={this.props.id} type='number' className='input__field' value={this.props.value} min={this.props.min} max={this.props.max} step='1' onKeyDown={this.onNudge} onChange={this.props.onChange} onBlur={this.props.onChange} />
       </div>
     )
@@ -51,6 +51,7 @@ export default class Input extends React.Component<Props> {
       <>
       {this.props.type === 'number' ? <this.Number /> : null}
       {this.props.type === 'color' ? <this.Color /> : null}
+      {this.props.type === 'text' ? <this.Text /> : null}
       </>
     )
   }
