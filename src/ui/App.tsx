@@ -55,17 +55,13 @@ class App extends React.Component {
       case 'hex':
         colors = JSON.parse(this.state['newColors']).map(item => {
           const rgb = chroma(e.target.value)._rgb;
-          if (item.name === name)
-            return {
-              name: name,
-              rgb: {
-                r: rgb[0] / 255,
-                g: rgb[1] / 255,
-                b: rgb[2] / 255
-              }
+          if (item.id === id)
+            item.rgb = {
+              r: rgb[0] / 255,
+              g: rgb[1] / 255,
+              b: rgb[2] / 255
             }
-          else
-            return item
+          return item
         });
         this.setState({
           newColors: JSON.stringify(colors),
@@ -78,17 +74,13 @@ class App extends React.Component {
       case 'lightness':
         colors = JSON.parse(this.state['newColors']).map(item => {
           const rgb = chroma(item.rgb.r * 255, item.rgb.g * 255, item.rgb.b * 255).set('lch.l', e.target.value)._rgb
-          if (item.name === name)
-            return {
-              name: name,
-              rgb: {
-                r: rgb[0] / 255,
-                g: rgb[1] / 255,
-                b: rgb[2] / 255
-              }
+          if (item.id === id)
+            item.rgb = {
+              r: rgb[0] / 255,
+              g: rgb[1] / 255,
+              b: rgb[2] / 255
             }
-          else
-            return item
+          return item
         });
         this.setState({
           newColors: JSON.stringify(colors),
@@ -101,17 +93,13 @@ class App extends React.Component {
       case 'chroma':
         colors = JSON.parse(this.state['newColors']).map(item => {
           const rgb = chroma(item.rgb.r * 255, item.rgb.g * 255, item.rgb.b * 255).set('lch.c', e.target.value)._rgb
-          if (item.name === name)
-            return {
-              name: name,
-              rgb: {
-                r: rgb[0] / 255,
-                g: rgb[1] / 255,
-                b: rgb[2] / 255
-              }
+          if (item.id === id)
+            item.rgb = {
+              r: rgb[0] / 255,
+              g: rgb[1] / 255,
+              b: rgb[2] / 255
             }
-          else
-            return item
+          return item
         });
         this.setState({
           newColors: JSON.stringify(colors),
@@ -124,17 +112,13 @@ class App extends React.Component {
       case 'hue':
         colors = JSON.parse(this.state['newColors']).map(item => {
           const rgb = chroma(item.rgb.r * 255, item.rgb.g * 255, item.rgb.b * 255).set('lch.h', e.target.value)._rgb
-          if (item.name === name)
-            return {
-              name: name,
-              rgb: {
-                r: rgb[0] / 255,
-                g: rgb[1] / 255,
-                b: rgb[2] / 255
-              }
+          if (item.id === id)
+            item.rgb = {
+              r: rgb[0] / 255,
+              g: rgb[1] / 255,
+              b: rgb[2] / 255
             }
-          else
-            return item
+          return item
         });
         this.setState({
           newColors: JSON.stringify(colors),
