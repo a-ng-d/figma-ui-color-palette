@@ -6,7 +6,7 @@ UI Color Palette is a Figma plugin that generates consistant and accessible colo
 Every variants from a starting color is created by using the LCH (Lightness-Chroma-Hue) color model. It works like the HSL (Hue-Saturation-Lightness) color model. The HSL is simple to use to build a color system, because the lightness can just be changed to create variants. The LCH too, but the Chroma, and the Hue are automatically adjusted to keep the colors within the [sRGB gamut](https://lea.verou.me/2020/04/lch-colors-in-css-what-why-and-how/#1-we-actually-get-access-to-about-50-more-colors).
 
 ### Create a color palette
-![Create a color palette](./assets/create-colors-palette.gif 'Create a color palette')
+![Create a color palette](./assets/create-color-palette.gif 'Create a color palette')
 - Run the plugin
 - Select some layers in the canvas filled with at least one solid color. It will be use as starting colors to create the color palette.
 - Edit the lightness scale with the multiple knobs slider. There are 10 steps (from 50 to 900), linked with the LCH lightness scale (from 0% to 100%).
@@ -29,7 +29,7 @@ The palette architecture (do not manual edit it) is:
 ### Edit a color palette
 > Note: Editing a color palette only works on those already created with the plugin.
 
-![Edit a color palette](./assets/edit-colors-palette.gif 'Edit a color palette')
+![Edit a color palette](./assets/edit-color-palette.gif 'Edit a color palette')
 - Run the plugin
 - Select a color palette
 - Edit the palette lightness scale with the multiple knobs slider－real time editing.
