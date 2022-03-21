@@ -38,7 +38,6 @@ export default class CreatePalette extends React.Component<Props> {
 
   Scale = () => {
     return (
-      <>
       <div className='lightness-scale'>
         <div className='section-title'>Lightness scale</div>
         {this.props.onGoingStep != 'captions changed' ?
@@ -55,7 +54,7 @@ export default class CreatePalette extends React.Component<Props> {
           knobsList='50 100 200 300 400 500 600 700 800 900'
           min=''
           max=''
-          scale={JSON.stringify(palette.scale)}
+          scale={palette.scale}
           onChange={this.slideHandler}
         />}
         <Message
@@ -63,10 +62,25 @@ export default class CreatePalette extends React.Component<Props> {
           messages= 'Hold Shift ⇧ while dragging 50 or 900 to distribute knobs\' horizontal spacing ; Hold Ctrl ⌃ or Cmd ⌘ while dragging a knob to move them all'
         />
       </div>
+    )
+  }
+
+  Actions = () => {
+    return (
       <div className='actions'>
         <Button type='primary' label='Create a color palette' action={this.onCreate} />
         <Checkbox id='showCaptions' label='Show captions' isChecked={this.props.hasCaptions} onChange={this.checkHandler} />
       </div>
+    )
+  }
+
+  Controls = () => {
+    return (
+      <>
+      <div className='controls'>
+        <this.Scale />
+      </div>
+      <this.Actions />
       </>
     )
   }
@@ -76,7 +90,7 @@ export default class CreatePalette extends React.Component<Props> {
     return (
       <section>
       {!this.props.isColorSelected ? <this.Message /> : null}
-      {this.props.isColorSelected ? <this.Scale /> : null}
+      {this.props.isColorSelected ? <this.Controls /> : null}
       </section>
     )
   }

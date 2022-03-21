@@ -1,27 +1,46 @@
 import * as React from 'react';
+import Dispatcher from '../../modules/Dispatcher';
 import Slider from './Slider';
 import Switch from './Switch';
 import Button from './Button';
 import Message from './Message';
+import ColorItem from './ColorItem';
+import chroma from 'chroma-js';
 import { palette } from '../data';
 
 interface Props {
   isPaletteSelected: boolean;
-  scale: string;
+  scale: any;
   hasCaptions: boolean;
-  onCaptionsChange: any
+  colors: any;
+  onCaptionsChange: any;
+  onColorChange: any
 };
 
 export default class EditPalette extends React.Component<Props> {
 
+  dispatch: any;
+
+  constructor(props) {
+    super(props);
+    this.dispatch = {
+      scale: new Dispatcher(
+        () => parent.postMessage({ pluginMessage: { type: 'update-scale', palette } }, '*'),
+        1000
+      )
+    }
+  }
+
   // Events
-  slideHandler = () => parent.postMessage({ pluginMessage: { type: 'edit-palette', palette } }, '*')
+  slideHandler = (e: string) => e === 'released' ? this.dispatch.scale.on.status = false : this.dispatch.scale.on.status = true
 
   checkHandler = (e: any) => {
     this.props.onCaptionsChange(e.target.checked);
     palette.captions = e.target.checked;
     parent.postMessage({ pluginMessage: { type: 'update-captions', palette } }, '*')
   }
+
+  colorHandler = (e: any) => this.props.onColorChange(e)
 
   onCreate = () => parent.postMessage({ pluginMessage: { type: 'create-local-styles', palette } }, '*')
 
@@ -41,7 +60,6 @@ export default class EditPalette extends React.Component<Props> {
 
   Scale = () => {
     return (
-      <>
       <div className='lightness-scale'>
         <div className='section-title'>Lightness scale</div>
         <Slider
@@ -57,6 +75,29 @@ export default class EditPalette extends React.Component<Props> {
           messages= 'Hold Shift ⇧ while dragging 50 or 900 to distribute knobs\' horizontal spacing ; Hold Ctrl ⌃ or Cmd ⌘ while dragging a knob to move them all'
         />
       </div>
+    )
+  }
+
+  Colors = () => {
+    return (
+      <div className='starting-colors'>
+        <div className='title-with-icon'>
+          <div className='section-title'>Starting colors</div>
+          <div id='add' className='icon-button' onClick={this.colorHandler}>
+            <div className='icon icon--plus'></div>
+          </div>
+        </div>
+        <ul className='colors'>
+          {this.props.colors.map(color =>
+            <ColorItem key={color.id} name={color.name} hex={chroma(color.rgb.r * 255, color.rgb.g * 255, color.rgb.b * 255).hex()} uuid={color.id} onColorChange={this.colorHandler} />
+          )}
+        </ul>
+      </div>
+    )
+  }
+
+  Actions = () => {
+    return (
       <div className='actions'>
         <div className='buttons'>
           <Button type='secondary' label='Update the local styles' action={this.onUpdate} />
@@ -64,6 +105,17 @@ export default class EditPalette extends React.Component<Props> {
         </div>
         <Switch id='showCaptions' label='Show captions' isChecked={this.props.hasCaptions} onChange={this.checkHandler} />
       </div>
+    )
+  }
+
+  Controls = () => {
+    return (
+      <>
+      <div className='controls'>
+        <this.Scale />
+        <this.Colors />
+      </div>
+      <this.Actions />
       </>
     )
   }
@@ -73,7 +125,7 @@ export default class EditPalette extends React.Component<Props> {
     return (
       <section>
         {!this.props.isPaletteSelected ? <this.Message /> : null}
-        {this.props.isPaletteSelected ? <this.Scale /> : null}
+        {this.props.isPaletteSelected ? <this.Controls /> : null}
       </section>
     )
   }

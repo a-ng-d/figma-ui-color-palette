@@ -1,6 +1,11 @@
-#react-page {
+/* Layout */
+div, ul, li, section, input {
+  cursor: default
+}
+
+div#react-page {
   height: 100%;
-  user-select: none;
+  user-select: none
 }
 
 main {
@@ -13,19 +18,36 @@ section {
   flex: 1;
   display: flex;
   flex-direction: column;
+  overflow: hidden
 }
 
 div.message {
   margin: auto
 }
 
-div.lightness-scale {
-  flex: 1;
-  padding: var(--size-small);
+div.controls {
   display: flex;
   flex-direction: column;
+  flex: 1;
+  overflow: scroll
+}
+
+div.actions {
+  flex: 0 0 var(--size-xxlarge)
+}
+
+div.lightness-scale,
+div.starting-colors {
+  padding: var(--size-xsmall) var(--size-small);
+  display: flex;
+  flex: 1;
+  flex-direction: column;
   justify-content: center;
-  gap: var(--size-xsmall)
+  gap: var(--size-xxsmall)
+}
+
+div.starting-colors {
+  border-top: 1px solid var(--silver)
 }
 
 div.actions {
@@ -41,6 +63,10 @@ div.actions {
 div.actions .buttons {
   display: flex;
   gap: var(--size-xxsmall)
+}
+
+div.title-with-icon {
+  display: flex
 }
 
 /* Tabs */
@@ -62,7 +88,7 @@ div.tabs .tabs__tab {
 }
 
 div.tabs .tabs__tab:hover {
-  color: var(--black-8-opaque);
+  color: var(--black-8-opaque)
 }
 
 div.tabs .tabs__tab--active {
@@ -71,22 +97,22 @@ div.tabs .tabs__tab--active {
 }
 
 /* Slider */
-.slider {
+div.slider {
   display: flex;
   align-items: center;
   position: relative
 }
 
-.slider .slider__range {
+div.slider .slider__range {
   flex: 1 1 auto;
   height: var(--size-xlarge);
   background: linear-gradient(-90deg, var(--white) 0%, var(--black) 100%);
   border-radius: var(--border-radius-large);
   box-shadow: inset 0px 0px 0px 1px var(--black3);
-  position: relative;
+  position: relative
 }
 
-.slider .slider__knob {
+div.slider .slider__knob {
   width: var(--size-medium);
   height: var(--size-xxlarge);
   background: var(--white);
@@ -98,22 +124,22 @@ div.tabs .tabs__tab--active {
   align-items: center;
   justify-content: center;
   position: absolute;
-  top: -10px;
+  top: -8px;
   cursor: ew-resize;
   z-index: 1
 }
 
-.slider .slider__knob:hover {
+div.slider .slider__knob:hover {
   background: var(--selection-b);
   box-shadow: 0px 1px 2px var(--black1), inset 0px 0px 0px 1px var(--blue)
 }
 
-.slider .slider__knob:active {
+div.slider .slider__knob:active {
   background: var(--selection-a);
   box-shadow: 0px 1px 2px var(--black1), inset 0px 0px 0px 1px var(--blue)
 }
 
-.slider .slider__tooltip {
+div.slider .slider__tooltip {
   padding: var(--size-xxxsmall);
   background: var(--black);
   color: var(--white);
@@ -125,11 +151,11 @@ div.tabs .tabs__tab--active {
   display: none
 }
 
-.slider .slider__knob:hover .slider__tooltip {
+div.slider .slider__knob:hover .slider__tooltip {
   display: block !important
 }
 
-.slider .slider__tooltip:after {
+div.slider .slider__tooltip:after {
   content: '';
   width: 0;
   height: 0;
@@ -141,6 +167,80 @@ div.tabs .tabs__tab--active {
   left: calc(50% - 8px)
 }
 
-.slider .slider__label {
+div.slider .slider__label {
   pointer-events: none
+}
+
+/* Inputs */
+input[type="color" i] {
+  width: var(--size-xsmall);
+  height: var(--size-xsmall);
+  position: absolute;
+  top: var(--size-xxsmall);
+  left: var(--size-xxsmall);
+  z-index: 1;
+  background-color: transparent;
+  padding: 0;
+  appearance: none;
+  background-color: transparent;
+  appearance: none;
+  border: none
+}
+
+input[type="color" i]::-webkit-color-swatch-wrapper {
+	padding: 0;
+}
+
+input[type="color" i]::-webkit-color-swatch {
+	border: none;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 0px 1px inset
+}
+
+input[type="color" i]:focus {
+  outline: 1px solid var(--blue);
+  outline-offset: -1px
+}
+
+input[type="color" i]:focus ~ input {
+  border: 1px solid var(--blue);
+  outline: 1px solid var(--blue);
+  outline-offset: -2px
+}
+
+input[type='number']::-webkit-inner-spin-button {
+  display: none
+}
+
+/* Icon buttons */
+div.icon-button {
+  cursor: default
+}
+
+div.icon {
+  pointer-events: none
+}
+
+/* Color items */
+ul.colors {
+  padding: 0;
+  margin: 0
+}
+
+li.colors__item {
+  display: flex;
+  gap: var(--size-xsmall)
+}
+
+li.colors__item label {
+  flex: 1
+}
+
+div.colors__parameters {
+  display: flex;
+  flex: 4;
+  gap: var(--size-xxxsmall)
+}
+
+div.colors__parameters div {
+  flex: 0 0 88px
 }

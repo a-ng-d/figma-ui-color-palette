@@ -6,7 +6,7 @@ interface Props {
   type: string;
   min: string;
   max: string;
-  scale: string;
+  scale: any;
   onChange: any
 };
 
@@ -29,12 +29,11 @@ export default class Slider extends React.Component<Props> {
           knobs = Array.from(range.children as HTMLCollectionOf<HTMLElement>);
 
     let offset: number,
-        update = setInterval(() => {
+        update = () => {
           palette.min = parseFloat(this.doMap((range.lastChild as HTMLElement).offsetLeft, 0, rangeWidth, 0, 100).toFixed(1));
           palette.max = parseFloat(this.doMap((range.firstChild as HTMLElement).offsetLeft, 0, rangeWidth, 0, 100).toFixed(1));
           knobs.forEach(knob => this.updateLightnessScaleEntry(knob.classList[1], this.doMap(knob.offsetLeft, 0, rangeWidth, 0, 100).toFixed(1)));
-          this.props.onChange()
-        }, 500);
+        };
 
     knob.style.zIndex = '2';
 
@@ -47,7 +46,8 @@ export default class Slider extends React.Component<Props> {
       tooltip,
       offset,
       shift,
-      rangeWidth
+      rangeWidth,
+      update
     );
 
     document.onmouseup = () => this.onRelease(
@@ -59,7 +59,7 @@ export default class Slider extends React.Component<Props> {
     )
   }
 
-  onSlide = (e: any, slider: HTMLElement, range: HTMLElement, knobs: Array<HTMLElement>, knob: HTMLElement, tooltip: HTMLElement, offset: number, shift: number, rangeWidth: number) => {
+  onSlide = (e: any, slider: HTMLElement, range: HTMLElement, knobs: Array<HTMLElement>, knob: HTMLElement, tooltip: HTMLElement, offset: number, shift: number, rangeWidth: number, update: any) => {
     let limitMin: number, limitMax: number;
     const gap: number = this.doMap(2, 0, 100, 0, rangeWidth);
     offset = e.clientX - slider.offsetLeft - shift;
@@ -105,6 +105,8 @@ export default class Slider extends React.Component<Props> {
     // update lightness scale
     knobs.forEach(knob => this.updateLightnessScaleEntry(knob.classList[1], this.doMap(knob.offsetLeft, 0, rangeWidth, 0, 100).toFixed(1)));
     this.updateKnobTooltip(tooltip, this.doMap(offset, 0, rangeWidth, 0, 100).toFixed(1));
+    update();
+    this.props.onChange()
   }
 
   onRelease = (knobs: Array<HTMLElement>, knob: HTMLElement, offset: number, update: any, rangeWidth: number) => {
@@ -113,7 +115,8 @@ export default class Slider extends React.Component<Props> {
     knob.onmouseup = null;
     knob.style.zIndex = '1';
     knobs.forEach(knob => (knob.children[0] as HTMLElement).style.display = 'none');
-    clearInterval(update)
+    update();
+    this.props.onChange('released')
   }
 
   // Actions
@@ -179,7 +182,7 @@ export default class Slider extends React.Component<Props> {
   Custom = (props) => {
     return (
       <div className='slider__range'>
-        {Object.entries(JSON.parse(this.props.scale)).map(lightness =>
+        {Object.entries(this.props.scale).map(lightness =>
           <div key={lightness[0]} className={`slider__knob ${lightness[0]}`} style={{left: `${lightness[1]}%`}} onMouseDown={this.onGrab}>
             <div className='type type--inverse slider__tooltip'>{lightness[1]}</div>
             <div className='type slider__label'>{lightness[0].replace('lightness-', '')}</div>
