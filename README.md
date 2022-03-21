@@ -34,6 +34,9 @@ The palette architecture (do not manual edit it) is:
 - Select a color palette
 - Edit the palette lightness scale with the multiple knobs slider－real time editing.
 - Choose the caption display－real time editing.
+- Edit the starting colors:
+  - By tweaking both the hexadecimal code and LCH parameters
+  - By renaming the color
 - Click `Create local styles` to create Figma document local styles from every color of the palette
 - Click `Update the local styles` to update every edited colors already declared as local style
 
