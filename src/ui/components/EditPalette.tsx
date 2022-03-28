@@ -26,7 +26,7 @@ export default class EditPalette extends React.Component<Props> {
     this.dispatch = {
       scale: new Dispatcher(
         () => parent.postMessage({ pluginMessage: { type: 'update-scale', palette } }, '*'),
-        1000
+        500
       )
     }
   }
