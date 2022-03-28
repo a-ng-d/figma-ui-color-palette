@@ -187,8 +187,7 @@ class App extends React.Component {
           if (e.data.pluginMessage.data.captions === 'hasNotCaptions')
             this.setState({ isPaletteSelected: true, activeTab: 'Edit', isColorSelected: false, newScale: e.data.pluginMessage.data.scale, hasCaptions: false, newColors: putIdsOnColors, onGoingStep: 'palette selected' })
           else if (e.data.pluginMessage.data.captions === 'hasCaptions')
-            this.setState({ isPaletteSelected: true, activeTab: 'Edit', isColorSelected: false, newScale: e.data.pluginMessage.data.scale, hasCaptions: true, newColors: putIdsOnColors, onGoingStep: 'palette selected' });
-          //parent.postMessage({ pluginMessage: { type: 'update-infos', data: this.state } }, '*');
+            this.setState({ isPaletteSelected: true, activeTab: 'Edit', isColorSelected: false, newScale: e.data.pluginMessage.data.scale, hasCaptions: true, newColors: putIdsOnColors, onGoingStep: 'palette selected' })
 
       }
     };
