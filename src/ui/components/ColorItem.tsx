@@ -58,7 +58,7 @@ export default class ColorItem extends React.Component<Props> {
             type='number'
             id='hue'
             icon={{type: 'letter', value: 'H'}}
-            value={chroma(this.props.hex).lch()[2].toFixed(0)}
+            value={chroma(this.props.hex).lch()[2].toFixed(0) == 'NaN' ? 0 : chroma(this.props.hex).lch()[2].toFixed(0)}
             min='0'
             max='360'
             onChange={this.inputHandler}
