@@ -21,7 +21,7 @@ class App extends React.Component {
     this.dispatch = {
       colors: new Dispatcher(
         () => parent.postMessage({ pluginMessage: { type: 'update-colors', data: this.state['newColors'] } }, '*'),
-        1000
+        500
       )
     };
     this.state = {
