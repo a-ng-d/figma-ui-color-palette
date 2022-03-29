@@ -105,7 +105,7 @@ div.slider {
 
 div.slider .slider__range {
   flex: 1 1 auto;
-  height: var(--size-xlarge);
+  height: var(--size-small);
   background: linear-gradient(-90deg, var(--white) 0%, var(--black) 100%);
   border-radius: var(--border-radius-large);
   box-shadow: inset 0 0 0 1px var(--black3);
@@ -115,28 +115,81 @@ div.slider .slider__range {
 div.slider .slider__knob {
   width: var(--size-medium);
   height: var(--size-xxlarge);
-  background: var(--white);
-  box-shadow: 0px 1px 2px var(--black1), inset 0px 0px 0px 1px var(--black3);
-  border-radius: var(--border-radius-large);
-  transform: translateX(-50%);
+  background: transparent;
+  transform: translateX(-50%) translateY(-50%);
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   position: absolute;
-  top: -8px;
   cursor: ew-resize;
   z-index: 1
 }
 
-div.slider .slider__knob:hover {
-  background: var(--selection-b);
-  box-shadow: 0px 1px 2px var(--black1), inset 0px 0px 0px 1px var(--blue)
+div.slider .slider__label {
+  height: var(--size-small);
+  border-radius: var(--border-radius-small);
+  background: var(--white);
+  box-shadow: 0 0 0 1px var(--black3-opaque);
+  padding: var(--size-xxxsmall);
+  text-align: center;
+  position: relative;
+  pointer-events: none
 }
 
-div.slider .slider__knob:active {
-  background: var(--selection-a);
-  box-shadow: 0px 1px 2px var(--black1), inset 0px 0px 0px 1px var(--blue)
+div.slider .slider__knob:hover .slider__label {
+  background: var(--selection-b);
+  box-shadow: 0 0 0 1px var(--blue)
+}
+
+div.slider .slider__knob:active .slider__label {
+  box-shadow: 0 0 0 2px var(--blue)
+}
+
+div.slider .slider__knob:hover .slider__label:before {
+  border-top-color: var(--blue)
+}
+
+div.slider .slider__knob:active .slider__label:before {
+  border-top-color: var(--blue);
+  border-width: 6px;
+  left: calc(50% - 6px);
+  bottom: -12px
+}
+
+div.slider .slider__knob:hover .slider__label:after,
+div.slider .slider__knob:active .slider__label:after {
+  border-top-color: var(--selection-b)
+}
+
+div.slider .slider__label:before {
+  content: '';
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: var(--size-xxxsmall);
+  border-top-color: var(--black3-opaque);
+  border-right-color: transparent;
+  border-bottom-color: transparent;
+  border-left-color: transparent;
+  position: absolute;
+  bottom: calc(var(--size-xxxsmall) * -2);
+  left: calc(50% - var(--size-xxxsmall))
+}
+
+div.slider .slider__label:after {
+  content: '';
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 3px;
+  border-top-color: var(--white);
+  border-right-color: transparent;
+  border-bottom-color: transparent;
+  border-left-color: transparent;
+  position: absolute;
+  bottom: -6px;
+  left: calc(50% - 3px)
 }
 
 div.slider .slider__tooltip {
@@ -159,15 +212,21 @@ div.slider .slider__tooltip:after {
   content: '';
   width: 0;
   height: 0;
-  border-left: 8px solid transparent;
-  border-right: 8px solid transparent;
-  border-top: 8px solid var(--black);
+  border-style: solid;
+  border-width: var(--size-xxxsmall);
+  border-top-color: var(--black);
+  border-right-color: transparent;
+  border-bottom-color: transparent;
+  border-left-color: transparent;
   position: absolute;
-  bottom: -6px;
-  left: calc(50% - 8px)
+  bottom: -8px;
+  left: calc(50% - var(--size-xxxsmall))
 }
 
-div.slider .slider__label {
+div.slider .slider__graduation {
+  width: 1px;
+  height: var(--size-xxxsmall);
+  background: var(--black3-opaque);
   pointer-events: none
 }
 
