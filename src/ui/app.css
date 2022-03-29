@@ -42,8 +42,11 @@ div.starting-colors {
   display: flex;
   flex: 1;
   flex-direction: column;
-  justify-content: center;
-  gap: var(--size-xxsmall)
+  justify-content: center
+}
+
+div.lightness-scale {
+  gap: var(--size-medium)
 }
 
 div.starting-colors {
