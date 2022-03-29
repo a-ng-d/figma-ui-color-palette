@@ -14,6 +14,7 @@ export default class Knob extends React.Component<Props> {
       <div className={`slider__knob ${this.props.id}`} style={{left: `${this.props.scale}%`}} onMouseDown={this.props.action}>
         <div className='type type--inverse slider__tooltip'>{this.props.scale}</div>
         <div className='type slider__label'>{this.props.number}</div>
+        <div className='slider__graduation'></div>
       </div>
     )
   }
