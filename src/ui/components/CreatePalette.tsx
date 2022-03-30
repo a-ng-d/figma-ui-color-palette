@@ -3,6 +3,7 @@ import Slider from './Slider';
 import Button from './Button';
 import Checkbox from './Checkbox';
 import Message from './Message';
+import Dropdown from './Dropdown';
 import { palette } from '../data';
 
 interface Props {
@@ -39,7 +40,13 @@ export default class CreatePalette extends React.Component<Props> {
   Scale = () => {
     return (
       <div className='lightness-scale'>
-        <div className='section-title'>Lightness scale</div>
+        <div className='title-with-icon'>
+          <div className='section-title'>Lightness scale</div>
+          <Dropdown
+            id='presets'
+            options={['50-900 (Material Design)', 'Custom']}
+          />
+        </div>
         {this.props.onGoingStep != 'captions changed' ?
         <Slider
           type='EQUAL'
