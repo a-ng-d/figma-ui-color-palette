@@ -68,8 +68,10 @@ div.actions .buttons {
   gap: var(--size-xxsmall)
 }
 
-div.title-with-icon {
-  display: flex
+/* Controls */
+div.section-controls {
+  display: flex;
+  gap: var(--size-xxsmall)
 }
 
 /* Tabs */

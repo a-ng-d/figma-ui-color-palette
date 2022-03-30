@@ -86,7 +86,7 @@ export default class EditPalette extends React.Component<Props> {
   Colors = () => {
     return (
       <div className='starting-colors'>
-        <div className='title-with-icon'>
+        <div className='section-controls'>
           <div className='section-title'>Starting colors</div>
           <div id='add' className='icon-button' onClick={this.colorHandler}>
             <div className='icon icon--plus'></div>
