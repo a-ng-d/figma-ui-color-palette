@@ -86,7 +86,13 @@ export default class EditPalette extends React.Component<Props> {
         </div>
         <ul className='colors'>
           {this.props.colors.map(color =>
-            <ColorItem key={color.id} name={color.name} hex={chroma(color.rgb.r * 255, color.rgb.g * 255, color.rgb.b * 255).hex()} uuid={color.id} onColorChange={this.colorHandler} />
+            <ColorItem
+              key={color.id}
+              name={color.name}
+              hex={chroma(color.rgb.r * 255, color.rgb.g * 255, color.rgb.b * 255).hex()}
+              uuid={color.id}
+              onColorChange={this.colorHandler}
+            />
           )}
         </ul>
       </div>
@@ -97,10 +103,23 @@ export default class EditPalette extends React.Component<Props> {
     return (
       <div className='actions'>
         <div className='buttons'>
-          <Button type='secondary' label='Update the local styles' action={this.onUpdate} />
-          <Button type='primary' label='Create local styles' action={this.onCreate} />
+          <Button
+            type='secondary'
+            label='Update the local styles'
+            action={this.onUpdate}
+          />
+          <Button
+            type='primary'
+            label='Create local styles'
+            action={this.onCreate}
+          />
         </div>
-        <Switch id='showCaptions' label='Show captions' isChecked={this.props.hasCaptions} onChange={this.checkHandler} />
+        <Switch
+          id='showCaptions'
+          label='Show captions'
+          isChecked={this.props.hasCaptions}
+          onChange={this.checkHandler}
+        />
       </div>
     )
   }
@@ -121,7 +140,11 @@ export default class EditPalette extends React.Component<Props> {
     palette.captions = this.props.hasCaptions;
     return (
       <>
-        <Tabs tabs={['Scale', 'Colors']} active={this.props.context} onClick={this.navHandler}/>
+        <Tabs
+          tabs={['Scale', 'Colors']}
+          active={this.props.context}
+          onClick={this.navHandler}
+        />
         <section>
           <this.Controls />
         </section>
