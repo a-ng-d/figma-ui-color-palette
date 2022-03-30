@@ -1,7 +1,6 @@
-import chroma from 'chroma-js';
-import Palette from './modules/Palette';
-import Style from './modules/Style';
-import Colors from './modules/Colors';
+import Palette from './canvas/Palette';
+import Style from './canvas/Style';
+import Colors from './canvas/Colors';
 
 figma.showUI(__html__);
 figma.ui.resize(640, 312);

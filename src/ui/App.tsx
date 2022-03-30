@@ -1,15 +1,15 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import Dispatcher from '../modules/Dispatcher';
-import CreatePalette from './components/CreatePalette';
-import EditPalette from './components/EditPalette';
+import Dispatcher from './modules/Dispatcher';
+import CreatePalette from './services/CreatePalette';
+import EditPalette from './services/EditPalette';
 import Tabs from './components/Tabs';
 import 'figma-plugin-ds/dist/figma-plugin-ds.css';
 import { selectMenu } from 'figma-plugin-ds';
 import './app.css';
 import chroma from 'chroma-js';
-import { palette } from './data';
-import {v4 as uuidv4} from 'uuid';
+import { palette } from './modules/data';
+import { v4 as uuidv4 } from 'uuid';
 
 declare function require(path: string): any;
 

@@ -1,10 +1,10 @@
 import * as React from 'react';
-import Slider from './Slider';
-import Button from './Button';
-import Checkbox from './Checkbox';
-import Message from './Message';
-import Dropdown from './Dropdown';
-import { palette } from '../data';
+import Slider from '../components/Slider';
+import Button from '../components/Button';
+import Checkbox from '../components/Checkbox';
+import Message from '../components/Message';
+import Dropdown from '../components/Dropdown';
+import { palette } from '../modules/data';
 
 interface Props {
   hasCaptions: boolean;

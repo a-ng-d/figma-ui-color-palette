@@ -1,12 +1,12 @@
 import * as React from 'react';
-import Dispatcher from '../../modules/Dispatcher';
-import Slider from './Slider';
-import Switch from './Switch';
-import Button from './Button';
-import Message from './Message';
-import ColorItem from './ColorItem';
+import Dispatcher from '../modules/Dispatcher';
+import Slider from '../components/Slider';
+import Switch from '../components/Switch';
+import Button from '../components/Button';
+import Message from '../components/Message';
+import ColorItem from '../components/ColorItem';
 import chroma from 'chroma-js';
-import { palette } from '../data';
+import { palette } from '../modules/data';
 
 interface Props {
   isPaletteSelected: boolean;
