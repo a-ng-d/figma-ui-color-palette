@@ -21,10 +21,6 @@ section {
   overflow: hidden
 }
 
-div.message {
-  margin: auto
-}
-
 div.controls {
   display: flex;
   flex-direction: column;
@@ -37,7 +33,8 @@ div.actions {
 }
 
 div.lightness-scale,
-div.starting-colors {
+div.starting-colors,
+div.onboarding {
   padding: var(--size-xsmall) var(--size-small);
   display: flex;
   flex: 1;
@@ -46,11 +43,16 @@ div.starting-colors {
 }
 
 div.lightness-scale {
-  gap: var(--size-medium)
+  justify-content: space-between
 }
 
-div.starting-colors {
-  border-top: 1px solid var(--silver)
+div.onboarding {
+  gap: var(--size-xxsmall);
+  align-items: center
+}
+
+div.onboarding .label {
+  width: auto
 }
 
 div.actions {

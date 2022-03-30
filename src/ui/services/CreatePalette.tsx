@@ -8,7 +8,6 @@ import { palette } from '../modules/data';
 
 interface Props {
   hasCaptions: boolean;
-  isColorSelected: boolean;
   onCaptionsChange: any;
   onGoingStep: string
 };
@@ -26,19 +25,6 @@ export default class CreatePalette extends React.Component<Props> {
   }
 
   // Templates
-  Message = () => {
-    return (
-      <div className='message'>
-        <Message
-          icon='library'
-          messages= {[
-            'Select your starting colors on the Figma canvas－from the layers filled with a solid color'
-          ]}
-        />
-      </div>
-    )
-  }
-
   Scale = () => {
     return (
       <div className='lightness-scale'>
@@ -101,8 +87,7 @@ export default class CreatePalette extends React.Component<Props> {
     palette.captions = this.props.hasCaptions;
     return (
       <section>
-      {!this.props.isColorSelected ? <this.Message /> : null}
-      {this.props.isColorSelected ? <this.Controls /> : null}
+        <this.Controls />
       </section>
     )
   }

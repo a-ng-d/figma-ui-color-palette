@@ -3,7 +3,7 @@ import * as ReactDOM from 'react-dom';
 import Dispatcher from './modules/Dispatcher';
 import CreatePalette from './services/CreatePalette';
 import EditPalette from './services/EditPalette';
-import Tabs from './components/Tabs';
+import Onboarding from './services/Onboarding';
 import 'figma-plugin-ds/dist/figma-plugin-ds.css';
 import { selectMenu } from 'figma-plugin-ds';
 import './app.css';
@@ -26,19 +26,18 @@ class App extends React.Component {
       )
     };
     this.state = {
-      activeTab: 'Create',
-      isPaletteSelected: false,
-      isColorSelected: false,
+      service: 'None',
       newScale: null,
       hasCaptions: true,
       onGoingStep: '',
-      newColors: null
+      newColors: null,
+      context: 'Scale'
     }
   }
 
   // Events
   navHandler = (e: any) => {
-    this.setState({ activeTab: e.target.innerText, onGoingStep: 'tab changed' });
+    this.setState({ context: e.target.innerText, onGoingStep: 'tab changed' });
     parent.postMessage({ pluginMessage: { type: 'get-infos' } }, '*');
   }
 
@@ -174,11 +173,11 @@ class App extends React.Component {
       switch (e.data.pluginMessage.type) {
 
         case 'empty-selection':
-          this.setState({ isPaletteSelected: false, isColorSelected: false, hasCaptions: true, onGoingStep: 'selection empty' });
+          this.setState({ service: 'None', hasCaptions: true, onGoingStep: 'selection empty' });
           break;
 
         case 'color-selected':
-          this.setState({ isPaletteSelected: false, isColorSelected: true, hasCaptions: true, activeTab: 'Create', onGoingStep: 'colors selected' });
+          this.setState({ service: 'Create', hasCaptions: true, onGoingStep: 'colors selected' });
           break;
 
         case 'palette-selected':
@@ -187,18 +186,18 @@ class App extends React.Component {
             return color
           });
           if (e.data.pluginMessage.data.captions === 'hasNotCaptions')
-            this.setState({ isPaletteSelected: true, activeTab: 'Edit', isColorSelected: false, newScale: e.data.pluginMessage.data.scale, hasCaptions: false, newColors: putIdsOnColors, onGoingStep: 'palette selected' })
+            this.setState({ service: 'Edit', newScale: e.data.pluginMessage.data.scale, hasCaptions: false, newColors: putIdsOnColors, onGoingStep: 'palette selected' })
           else if (e.data.pluginMessage.data.captions === 'hasCaptions')
-            this.setState({ isPaletteSelected: true, activeTab: 'Edit', isColorSelected: false, newScale: e.data.pluginMessage.data.scale, hasCaptions: true, newColors: putIdsOnColors, onGoingStep: 'palette selected' })
+            this.setState({ service: 'Edit', newScale: e.data.pluginMessage.data.scale, hasCaptions: true, newColors: putIdsOnColors, onGoingStep: 'palette selected' })
 
       }
     };
 
     return (
       <main>
-        <Tabs tabs={['Create', 'Edit']} active={this.state['activeTab']} onClick={this.navHandler}/>
-        {this.state['activeTab'] === 'Create' ? <CreatePalette isColorSelected={this.state['isColorSelected']} hasCaptions={this.state['hasCaptions']} onCaptionsChange={this.captionsHandler} onGoingStep={this.state['onGoingStep']} /> : null}
-        {this.state['activeTab'] === 'Edit' ? <EditPalette isPaletteSelected={this.state['isPaletteSelected']} scale={this.state['newScale']} hasCaptions={this.state['hasCaptions']} colors={this.state['newColors']} onCaptionsChange={this.captionsHandler} onColorChange={this.colorHandler} /> : null}
+        {this.state['service'] === 'Create' ? <CreatePalette hasCaptions={this.state['hasCaptions']} onCaptionsChange={this.captionsHandler} onGoingStep={this.state['onGoingStep']} /> : null}
+        {this.state['service'] === 'Edit' ? <EditPalette scale={this.state['newScale']} hasCaptions={this.state['hasCaptions']} colors={this.state['newColors']} onCaptionsChange={this.captionsHandler} onColorChange={this.colorHandler} context={this.state['context']} onContextChange={this.navHandler} /> : null}
+        {this.state['service'] === 'None' ? <Onboarding /> : null}
       </main>
     )
   }

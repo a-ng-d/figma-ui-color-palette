@@ -5,16 +5,18 @@ import Switch from '../components/Switch';
 import Button from '../components/Button';
 import Message from '../components/Message';
 import ColorItem from '../components/ColorItem';
+import Tabs from '../components/Tabs';
 import chroma from 'chroma-js';
 import { palette } from '../modules/data';
 
 interface Props {
-  isPaletteSelected: boolean;
   scale: any;
   hasCaptions: boolean;
   colors: any;
+  context: string;
   onCaptionsChange: any;
-  onColorChange: any
+  onColorChange: any;
+  onContextChange: any
 };
 
 export default class EditPalette extends React.Component<Props> {
@@ -42,24 +44,13 @@ export default class EditPalette extends React.Component<Props> {
 
   colorHandler = (e: any) => this.props.onColorChange(e)
 
+  navHandler = (e: any) => this.props.onContextChange(e)
+
   onCreate = () => parent.postMessage({ pluginMessage: { type: 'create-local-styles', palette } }, '*')
 
   onUpdate = () => parent.postMessage({ pluginMessage: { type: 'update-local-styles', palette } }, '*')
 
   // Templates
-  Message = () => {
-    return (
-      <div className='message'>
-        <Message
-          icon='theme'
-          messages= {[
-            'Select an UI Color Palette to edit it'
-          ]}
-        />
-      </div>
-    )
-  }
-
   Scale = () => {
     return (
       <div className='lightness-scale'>
@@ -117,8 +108,8 @@ export default class EditPalette extends React.Component<Props> {
     return (
       <>
       <div className='controls'>
-        <this.Scale />
-        <this.Colors />
+        {this.props.context === 'Scale' ? <this.Scale /> : null}
+        {this.props.context === 'Colors' ? <this.Colors /> : null}
       </div>
       <this.Actions />
       </>
@@ -128,10 +119,12 @@ export default class EditPalette extends React.Component<Props> {
   render() {
     palette.captions = this.props.hasCaptions;
     return (
-      <section>
-        {!this.props.isPaletteSelected ? <this.Message /> : null}
-        {this.props.isPaletteSelected ? <this.Controls /> : null}
-      </section>
+      <>
+        <Tabs tabs={['Scale', 'Colors']} active={this.props.context} onClick={this.navHandler}/>
+        <section>
+          <this.Controls />
+        </section>
+      </>
     )
   }
 
