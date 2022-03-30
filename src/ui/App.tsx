@@ -193,8 +193,26 @@ class App extends React.Component {
 
     return (
       <main>
-        {this.state['service'] === 'Create' ? <CreatePalette presets={this.state['presets']} hasCaptions={this.state['hasCaptions']} onCaptionsChange={this.captionsHandler} onGoingStep={this.state['onGoingStep']} /> : null}
-        {this.state['service'] === 'Edit' ? <EditPalette scale={this.state['newScale']} hasCaptions={this.state['hasCaptions']} colors={this.state['newColors']} presets={this.state['presets']} onCaptionsChange={this.captionsHandler} onColorChange={this.colorHandler} context={this.state['context']} onContextChange={this.navHandler} /> : null}
+        {this.state['service'] === 'Create' ?
+          <CreatePalette
+            presets={this.state['presets']}
+            hasCaptions={this.state['hasCaptions']}
+            onCaptionsChange={this.captionsHandler}
+            onGoingStep={this.state['onGoingStep']}
+          />
+        : null}
+        {this.state['service'] === 'Edit' ?
+          <EditPalette
+            scale={this.state['newScale']}
+            colors={this.state['newColors']}
+            presets={this.state['presets']}
+            context={this.state['context']}
+            hasCaptions={this.state['hasCaptions']}
+            onCaptionsChange={this.captionsHandler}
+            onColorChange={this.colorHandler}
+            onContextChange={this.navHandler}
+          />
+        : null}
         {this.state['service'] === 'None' ? <Onboarding /> : null}
       </main>
     )
