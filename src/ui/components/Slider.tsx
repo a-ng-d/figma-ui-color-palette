@@ -120,17 +120,6 @@ export default class Slider extends React.Component<Props> {
     this.props.onChange('released')
   }
 
-  onHover = (e: any) => {
-    console.log(e)
-    const snippet =
-      `<div class='slider__ghost'></div>`
-    e.target.className === 'slider__range' ? e.target.insertAdjacentHTML('beforeend', snippet) : null
-  }
-
-  onExit = (e: any) => {
-    console.log(e)
-  }
-
   // Actions
   doLightnessScale = () => {
     let granularity: number = 1;
@@ -180,7 +169,7 @@ export default class Slider extends React.Component<Props> {
     palette.min = parseFloat(this.props.min);
     palette.max = parseFloat(this.props.max);
     return (
-      <div className='slider__range' onMouseOver={this.onHover} onMouseOut={this.onExit}>
+      <div className='slider__range'>
         {Object.entries(this.doLightnessScale()).map(lightness =>
           <Knob
             key={lightness[0]}
