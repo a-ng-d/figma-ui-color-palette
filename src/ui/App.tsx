@@ -32,7 +32,10 @@ class App extends React.Component {
       onGoingStep: '',
       newColors: null,
       context: 'Scale',
-      presets: [50, 100, 200, 300, 400, 500, 600, 700, 800, 900],
+      preset: {
+        name: 'Material Design (50-900)',
+        scale: [50, 100, 200, 300, 400, 500, 600, 700, 800, 900]
+      }
     }
   }
 
@@ -195,7 +198,7 @@ class App extends React.Component {
       <main>
         {this.state['service'] === 'Create' ?
           <CreatePalette
-            presets={this.state['presets']}
+            preset={this.state['preset']}
             hasCaptions={this.state['hasCaptions']}
             onCaptionsChange={this.captionsHandler}
             onGoingStep={this.state['onGoingStep']}
@@ -205,7 +208,7 @@ class App extends React.Component {
           <EditPalette
             scale={this.state['newScale']}
             colors={this.state['newColors']}
-            presets={this.state['presets']}
+            preset={this.state['preset']}
             context={this.state['context']}
             hasCaptions={this.state['hasCaptions']}
             onCaptionsChange={this.captionsHandler}

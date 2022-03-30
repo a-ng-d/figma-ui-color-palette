@@ -8,7 +8,7 @@ import { palette } from '../modules/data';
 
 interface Props {
   hasCaptions: boolean;
-  presets: Array<number>
+  preset: any;
   onCaptionsChange: any;
   onGoingStep: string
 };
@@ -39,7 +39,7 @@ export default class CreatePalette extends React.Component<Props> {
         {this.props.onGoingStep != 'captions changed' ?
         <Slider
           type='EQUAL'
-          knobs={this.props.presets}
+          knobs={this.props.preset.scale}
           min='24'
           max='96'
           scale={null}
@@ -47,7 +47,7 @@ export default class CreatePalette extends React.Component<Props> {
         /> :
         <Slider
           type='CUSTOM'
-          knobs={this.props.presets}
+          knobs={this.props.preset.scale}
           min=''
           max=''
           scale={palette.scale}
