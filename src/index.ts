@@ -92,17 +92,6 @@ figma.ui.onmessage = msg => {
       }).makeNode());
       break;
 
-    case 'get-infos':
-      palette = figma.currentPage.selection[0];
-
-      try {
-        figma.ui.postMessage(JSON.stringify({
-          scale: palette.getPluginData('scale'),
-          captions: palette.getPluginData('captions')
-        }))
-      } catch { }
-      break;
-
     case 'update-infos':
       palette = figma.currentPage.selection[0];
       palette.setPluginData('scale', JSON.stringify(msg.data.newScale));

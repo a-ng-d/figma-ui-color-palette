@@ -36,10 +36,7 @@ class App extends React.Component {
   }
 
   // Events
-  navHandler = (e: any) => {
-    this.setState({ context: e.target.innerText, onGoingStep: 'tab changed' });
-    parent.postMessage({ pluginMessage: { type: 'get-infos' } }, '*');
-  }
+  navHandler = (e: any) => this.setState({ context: e.target.innerText, onGoingStep: 'tab changed' })
 
   captionsHandler = (bool: boolean) => this.setState({ hasCaptions: bool, onGoingStep: 'captions changed' })
 
