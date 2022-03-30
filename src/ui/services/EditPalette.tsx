@@ -14,6 +14,7 @@ interface Props {
   hasCaptions: boolean;
   colors: any;
   context: string;
+  presets: Array<number>
   onCaptionsChange: any;
   onColorChange: any;
   onContextChange: any
@@ -57,7 +58,7 @@ export default class EditPalette extends React.Component<Props> {
         <div className='section-title'>Lightness scale</div>
         <Slider
           type='CUSTOM'
-          knobs={[50, 100, 200, 300, 400, 500, 600, 700, 800, 900]}
+          knobs={this.props.presets}
           min=''
           max=''
           scale={this.props.scale}

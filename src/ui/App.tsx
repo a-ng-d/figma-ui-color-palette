@@ -31,7 +31,8 @@ class App extends React.Component {
       hasCaptions: true,
       onGoingStep: '',
       newColors: null,
-      context: 'Scale'
+      context: 'Scale',
+      presets: [50, 100, 200, 300, 400, 500, 600, 700, 800, 900],
     }
   }
 
@@ -192,8 +193,8 @@ class App extends React.Component {
 
     return (
       <main>
-        {this.state['service'] === 'Create' ? <CreatePalette hasCaptions={this.state['hasCaptions']} onCaptionsChange={this.captionsHandler} onGoingStep={this.state['onGoingStep']} /> : null}
-        {this.state['service'] === 'Edit' ? <EditPalette scale={this.state['newScale']} hasCaptions={this.state['hasCaptions']} colors={this.state['newColors']} onCaptionsChange={this.captionsHandler} onColorChange={this.colorHandler} context={this.state['context']} onContextChange={this.navHandler} /> : null}
+        {this.state['service'] === 'Create' ? <CreatePalette presets={this.state['presets']} hasCaptions={this.state['hasCaptions']} onCaptionsChange={this.captionsHandler} onGoingStep={this.state['onGoingStep']} /> : null}
+        {this.state['service'] === 'Edit' ? <EditPalette scale={this.state['newScale']} hasCaptions={this.state['hasCaptions']} colors={this.state['newColors']} presets={this.state['presets']} onCaptionsChange={this.captionsHandler} onColorChange={this.colorHandler} context={this.state['context']} onContextChange={this.navHandler} /> : null}
         {this.state['service'] === 'None' ? <Onboarding /> : null}
       </main>
     )
