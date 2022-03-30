@@ -4,6 +4,7 @@ import Button from '../components/Button';
 import Checkbox from '../components/Checkbox';
 import Message from '../components/Message';
 import Dropdown from '../components/Dropdown';
+import { selectMenu } from 'figma-plugin-ds';
 import { palette } from '../modules/data';
 
 interface Props {
@@ -27,6 +28,10 @@ export default class CreatePalette extends React.Component<Props> {
 
   // Templates
   Scale = () => {
+    setTimeout(() => {
+      selectMenu.init();
+      document.getElementById('presets').onchange = (e) => this.props.onPresetChange(e)
+    }, 100);
     return (
       <div className='lightness-scale'>
         <div className='section-controls'>

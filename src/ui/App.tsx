@@ -5,7 +5,6 @@ import CreatePalette from './services/CreatePalette';
 import EditPalette from './services/EditPalette';
 import Onboarding from './services/Onboarding';
 import 'figma-plugin-ds/dist/figma-plugin-ds.css';
-import { selectMenu } from 'figma-plugin-ds';
 import './app.css';
 import chroma from 'chroma-js';
 import { palette } from './modules/data';
@@ -169,7 +168,6 @@ class App extends React.Component {
   }
 
   render() {
-    setTimeout(() => selectMenu.init(), 100);
     onmessage = (e: any) => {
       switch (e.data.pluginMessage.type) {
 
