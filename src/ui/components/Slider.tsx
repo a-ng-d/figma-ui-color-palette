@@ -3,7 +3,7 @@ import Knob from './Knob';
 import { palette } from '../modules/data';
 
 interface Props {
-  knobsList: string;
+  knobs: Array<number>;
   type: string;
   min: string;
   max: string;
@@ -124,9 +124,9 @@ export default class Slider extends React.Component<Props> {
   doLightnessScale = () => {
     let granularity: number = 1;
 
-    this.props.knobsList.split(' ').forEach(index => {
+    this.props.knobs.map(index => {
       palette.scale[`lightness-${index}`] = this.doMap(granularity, 0, 1, palette.min, palette.max).toFixed(1);
-      granularity -= 1 / (this.props.knobsList.split(' ').length - 1)
+      granularity -= 1 / (this.props.knobs.length - 1)
     });
 
     return palette.scale

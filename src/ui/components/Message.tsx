@@ -2,7 +2,7 @@ import * as React from 'react';
 
 interface Props {
   icon: string;
-  messages: string;
+  messages: Array<string>;
 };
 
 export default class Message extends React.Component<Props> {
@@ -11,7 +11,7 @@ export default class Message extends React.Component<Props> {
     return(
       <div className='onboarding-tip'>
         <div className={`icon icon--${this.props.icon}`}></div>
-        {this.props.messages.split(' ; ').map((message, index) => <div className='onboarding-tip__msg' key={`message-${index}`}>{message}</div>)}
+        {this.props.messages.map((message, index) => <div className='onboarding-tip__msg' key={`message-${index}`}>{message}</div>)}
       </div>
     )
   }

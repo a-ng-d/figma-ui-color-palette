@@ -52,7 +52,9 @@ export default class EditPalette extends React.Component<Props> {
       <div className='message'>
         <Message
           icon='theme'
-          messages= 'Select an UI Color Palette to edit it'
+          messages= {[
+            'Select an UI Color Palette to edit it'
+          ]}
         />
       </div>
     )
@@ -64,7 +66,7 @@ export default class EditPalette extends React.Component<Props> {
         <div className='section-title'>Lightness scale</div>
         <Slider
           type='CUSTOM'
-          knobsList='50 100 200 300 400 500 600 700 800 900'
+          knobs={[50, 100, 200, 300, 400, 500, 600, 700, 800, 900]}
           min=''
           max=''
           scale={this.props.scale}
@@ -72,7 +74,10 @@ export default class EditPalette extends React.Component<Props> {
         />
         <Message
           icon='library'
-          messages= 'Hold Shift ⇧ while dragging 50 or 900 to distribute knobs\' horizontal spacing ; Hold Ctrl ⌃ or Cmd ⌘ while dragging a knob to move them all'
+          messages= {[
+            'Hold Shift ⇧ while dragging 50 or 900 to distribute knobs\' horizontal spacing',
+            'Hold Ctrl ⌃ or Cmd ⌘ while dragging a knob to move them all'
+          ]}
         />
       </div>
     )

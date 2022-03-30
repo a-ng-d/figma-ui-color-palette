@@ -31,7 +31,9 @@ export default class CreatePalette extends React.Component<Props> {
       <div className='message'>
         <Message
           icon='library'
-          messages= 'Select your starting colors on the Figma canvas－from the layers filled with a solid color'
+          messages= {[
+            'Select your starting colors on the Figma canvas－from the layers filled with a solid color'
+          ]}
         />
       </div>
     )
@@ -50,7 +52,7 @@ export default class CreatePalette extends React.Component<Props> {
         {this.props.onGoingStep != 'captions changed' ?
         <Slider
           type='EQUAL'
-          knobsList='50 100 200 300 400 500 600 700 800 900'
+          knobs={[50, 100, 200, 300, 400, 500, 600, 700, 800, 900]}
           min='24'
           max='96'
           scale={null}
@@ -58,7 +60,7 @@ export default class CreatePalette extends React.Component<Props> {
         /> :
         <Slider
           type='CUSTOM'
-          knobsList='50 100 200 300 400 500 600 700 800 900'
+          knobs={[50, 100, 200, 300, 400, 500, 600, 700, 800, 900]}
           min=''
           max=''
           scale={palette.scale}
@@ -66,7 +68,10 @@ export default class CreatePalette extends React.Component<Props> {
         />}
         <Message
           icon='library'
-          messages= 'Hold Shift ⇧ while dragging 50 or 900 to distribute knobs\' horizontal spacing ; Hold Ctrl ⌃ or Cmd ⌘ while dragging a knob to move them all'
+          messages= {[
+            'Hold Shift ⇧ while dragging 50 or 900 to distribute knobs\' horizontal spacing',
+            'Hold Ctrl ⌃ or Cmd ⌘ while dragging a knob to move them all'
+          ]}
         />
       </div>
     )
