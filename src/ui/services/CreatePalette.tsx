@@ -44,7 +44,7 @@ export default class CreatePalette extends React.Component<Props> {
           <div className='section-title'>Lightness scale</div>
           <Dropdown
             id='presets'
-            options={['50-900 (Material Design)', 'Custom']}
+            options={['Material Design (50-900)', 'Ant Design (1-13)', 'Custom']}
           />
         </div>
         {this.props.onGoingStep != 'captions changed' ?
