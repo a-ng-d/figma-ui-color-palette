@@ -11,7 +11,8 @@ interface Props {
   hasCaptions: boolean;
   preset: any;
   onCaptionsChange: any;
-  onGoingStep: string
+  onGoingStep: string;
+  onPresetChange: any
 };
 
 export default class CreatePalette extends React.Component<Props> {

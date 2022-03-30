@@ -167,6 +167,30 @@ class App extends React.Component {
     }
   }
 
+  presetHandler = (e: any) => {
+    switch((e.target as HTMLInputElement).value) {
+
+      case 'Material Design (50-900)':
+        this.setState({ preset: {
+          name: (e.target as HTMLInputElement).value,
+          scale: [50, 100, 200, 300, 400, 500, 600, 700, 800, 900]
+        } })
+        break;
+
+      case 'Ant Design (1-13)':
+        this.setState({ preset: {
+          name: (e.target as HTMLInputElement).value,
+          scale: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
+        } })
+        break;
+
+      case 'Custom':
+        console.log('3')
+        break;
+
+    }
+  }
+
   render() {
     onmessage = (e: any) => {
       switch (e.data.pluginMessage.type) {
@@ -200,6 +224,7 @@ class App extends React.Component {
             hasCaptions={this.state['hasCaptions']}
             onCaptionsChange={this.captionsHandler}
             onGoingStep={this.state['onGoingStep']}
+            onPresetChange={this.presetHandler}
           />
         : null}
         {this.state['service'] === 'Edit' ?
