@@ -108,6 +108,7 @@ export default class EditPalette extends React.Component<Props> {
             icon={null}
             type='secondary'
             label='Update the local styles'
+            state=''
             action={this.onUpdate}
           />
           <Button
@@ -115,6 +116,7 @@ export default class EditPalette extends React.Component<Props> {
             icon={null}
             type='primary'
             label='Create local styles'
+            state=''
             action={this.onCreate}
           />
         </div>

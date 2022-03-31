@@ -5,6 +5,7 @@ interface Props {
   icon: string;
   type: string;
   label: string;
+  state: string;
   action: any
 };
 
@@ -21,8 +22,8 @@ export default class Button extends React.Component<Props> {
 
   Icon = () => {
     return (
-      <div id={this.props.id} className='icon-button' onClick={this.props.action}>
-        <div className={`icon icon--${this.props.icon}${this.state != null ? ' ' + this.state : ''}`}></div>
+      <div id={this.props.id} className={`icon-button${this.props.state != '' ? ` icon-button--${this.props.state}` : ''}`} onClick={this.props.action}>
+        <div className={`icon icon--${this.props.icon}`}></div>
       </div>
     )
   }

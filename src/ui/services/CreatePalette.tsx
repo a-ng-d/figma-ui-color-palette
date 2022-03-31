@@ -95,6 +95,7 @@ export default class CreatePalette extends React.Component<Props> {
           icon={null}
           type='primary'
           label='Create a color palette'
+          state=''
           action={this.onCreate}
         />
         <Checkbox

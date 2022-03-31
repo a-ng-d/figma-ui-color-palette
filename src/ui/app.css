@@ -290,7 +290,7 @@ div.icon-button {
   cursor: default
 }
 
-div.icon-button.disabled {
+div.icon-button--disabled {
   pointer-events: none;
   opacity: .3
 }
