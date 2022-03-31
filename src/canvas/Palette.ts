@@ -4,8 +4,6 @@ import Colors from './Colors';
 export default class Palette {
 
   name: string;
-  min: number;
-  max: number;
   scale: string;
   colors: Array<Object>;
   captions: boolean;
@@ -15,8 +13,6 @@ export default class Palette {
 
   constructor(min, max, scale, captions, preset) {
     this.name = 'UI Color Palette';
-    this.min = min;
-    this.max = max;
     this.scale = scale;
     this.colors = [];
     this.captions = captions;
@@ -38,8 +34,6 @@ export default class Palette {
     this.node.paddingTop = this.node.paddingRight = this.node.paddingBottom = this.node.paddingLeft = 32;
 
     // data
-    this.node.setPluginData('min', this.min.toString());
-    this.node.setPluginData('max', this.max.toString());
     this.node.setRelaunchData({ edit: '' });
     this.node.setPluginData('scale', JSON.stringify(this.scale));
     this.node.setPluginData('preset', JSON.stringify(this.preset));

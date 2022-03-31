@@ -23,8 +23,6 @@ figma.ui.onmessage = msg => {
       const scene: SceneNode[] = [];
 
       palette = new Palette(
-        msg.palette.min,
-        msg.palette.max,
         msg.palette.scale,
         msg.palette.captions,
         msg.palette.preset
@@ -42,8 +40,6 @@ figma.ui.onmessage = msg => {
     case 'update-scale':
       palette = figma.currentPage.selection[0];
       if (palette.children.length == 1) {
-        palette.setPluginData('min', msg.palette.min.toString());
-        palette.setPluginData('max', msg.palette.max.toString());
         palette.setPluginData('scale', JSON.stringify(msg.palette.scale));
 
         palette.children[0].remove();
