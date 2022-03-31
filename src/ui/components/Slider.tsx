@@ -166,7 +166,7 @@ export default class Slider extends React.Component<Props> {
   }
 
   // Templates
-  Equal = (props) => {
+  Equal = () => {
     palette.min = parseFloat(this.props.min);
     palette.max = parseFloat(this.props.max);
     return (
@@ -184,7 +184,7 @@ export default class Slider extends React.Component<Props> {
     )
   }
 
-  Custom = (props) => {
+  Custom = () => {
     return (
       <div className='slider__range'>
         {Object.entries(this.props.scale).map(lightness =>
