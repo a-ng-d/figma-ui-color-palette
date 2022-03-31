@@ -30,7 +30,7 @@ export default class Palette {
     // layout
     this.node.layoutMode = 'VERTICAL';
     this.node.primaryAxisSizingMode = 'AUTO';
-    this.node.counterAxisSizingMode = 'FIXED';
+    this.node.counterAxisSizingMode = 'AUTO';
     this.node.paddingTop = this.node.paddingRight = this.node.paddingBottom = this.node.paddingLeft = 32;
 
     // data
