@@ -189,6 +189,7 @@ class App extends React.Component {
         break;
 
       case presets.custom.name:
+        presets.custom.scale = [1, 2];
         this.setState({
           preset: presets.custom,
           onGoingStep: 'preset changed'
