@@ -33,7 +33,9 @@ class App extends React.Component {
       context: 'Scale',
       preset: {
         name: 'Material Design (50-900)',
-        scale: [50, 100, 200, 300, 400, 500, 600, 700, 800, 900]
+        scale: [50, 100, 200, 300, 400, 500, 600, 700, 800, 900],
+        min: 24,
+        max: 96
       }
     }
   }
@@ -175,7 +177,9 @@ class App extends React.Component {
         this.setState({
           preset: {
             name: (e.target as HTMLInputElement).value,
-            scale: [50, 100, 200, 300, 400, 500, 600, 700, 800, 900]
+            scale: [50, 100, 200, 300, 400, 500, 600, 700, 800, 900],
+            min: 24,
+            max: 96
           },
           onGoingStep: 'preset changed'
         })
@@ -186,7 +190,13 @@ class App extends React.Component {
         this.setState({
           preset: {
             name: (e.target as HTMLInputElement).value,
-            scale: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
+            scale: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13],
+            min: 16,
+            max: 100
+          },
+          onGoingStep: 'preset changed'
+        })
+        break;
           },
           onGoingStep: 'preset changed'
         })

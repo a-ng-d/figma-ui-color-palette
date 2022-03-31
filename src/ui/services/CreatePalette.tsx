@@ -46,8 +46,8 @@ export default class CreatePalette extends React.Component<Props> {
         <Slider
           type='EQUAL'
           knobs={this.props.preset.scale}
-          min='24'
-          max='96'
+          min={this.props.preset.min}
+          max={this.props.preset.max}
           scale={null}
           onChange={this.slideHandler}
         /> :
