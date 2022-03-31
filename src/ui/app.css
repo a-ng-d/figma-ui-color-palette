@@ -73,7 +73,15 @@ div.actions .buttons {
 /* Controls */
 div.section-controls {
   display: flex;
-  gap: var(--size-xxsmall)
+  justify-content: space-between
+}
+
+div.section-controls .section-title {
+  width: auto
+}
+
+div.section-controls .select-menu {
+  flex: 1
 }
 
 /* Tabs */
