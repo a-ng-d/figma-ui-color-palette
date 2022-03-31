@@ -55,7 +55,10 @@ export default class EditPalette extends React.Component<Props> {
   Scale = () => {
     return (
       <div className='lightness-scale'>
+      <div className='section-controls'>
         <div className='section-title'>Lightness scale</div>
+        <div className='label'>{this.props.preset.name}</div>
+      </div>
         <Slider
           type='CUSTOM'
           knobs={this.props.preset.scale}

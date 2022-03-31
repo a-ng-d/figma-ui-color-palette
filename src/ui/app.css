@@ -85,7 +85,8 @@ div.section-controls {
   justify-content: space-between
 }
 
-div.section-controls .section-title {
+div.section-controls .section-title,
+div.section-controls .label {
   width: auto
 }
 
@@ -151,6 +152,7 @@ div.slider .slider__knob {
 }
 
 div.slider .slider__label {
+  width: 100%;
   height: var(--size-small);
   border-radius: var(--border-radius-small);
   background: var(--white);
