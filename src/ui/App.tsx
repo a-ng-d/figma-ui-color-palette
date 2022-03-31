@@ -196,11 +196,19 @@ class App extends React.Component {
       switch (e.data.pluginMessage.type) {
 
         case 'empty-selection':
-          this.setState({ service: 'None', hasCaptions: true, onGoingStep: 'selection empty' });
+          this.setState({
+            service: 'None',
+            hasCaptions: true,
+            onGoingStep: 'selection empty'
+          });
           break;
 
         case 'color-selected':
-          this.setState({ service: 'Create', hasCaptions: true, onGoingStep: 'colors selected' });
+          this.setState({
+            service: 'Create',
+            hasCaptions: true,
+            onGoingStep: 'colors selected'
+          });
           break;
 
         case 'palette-selected':
@@ -209,9 +217,21 @@ class App extends React.Component {
             return color
           });
           if (e.data.pluginMessage.data.captions === 'hasNotCaptions')
-            this.setState({ service: 'Edit', newScale: e.data.pluginMessage.data.scale, hasCaptions: false, newColors: putIdsOnColors, onGoingStep: 'palette selected' })
+            this.setState({
+              service: 'Edit',
+              newScale: e.data.pluginMessage.data.scale,
+              hasCaptions: false,
+              newColors: putIdsOnColors,
+              onGoingStep: 'palette selected'
+            })
           else if (e.data.pluginMessage.data.captions === 'hasCaptions')
-            this.setState({ service: 'Edit', newScale: e.data.pluginMessage.data.scale, hasCaptions: true, newColors: putIdsOnColors, onGoingStep: 'palette selected' })
+            this.setState({
+              service: 'Edit',
+              newScale: e.data.pluginMessage.data.scale,
+              hasCaptions: true,
+              newColors: putIdsOnColors,
+              onGoingStep: 'palette selected'
+            })
 
       }
     };
