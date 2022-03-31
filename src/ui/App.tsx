@@ -213,7 +213,7 @@ class App extends React.Component {
           preset: {
             name: (e.target as HTMLInputElement).value,
             scale: [1, 2],
-            min: 90,
+            min: 0,
             max: 100
           },
           onGoingStep: 'preset changed'
