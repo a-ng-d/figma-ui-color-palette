@@ -50,7 +50,8 @@ figma.ui.onmessage = msg => {
         palette.appendChild(new Colors({
           colors: JSON.parse(palette.getPluginData('colors')),
           scale: JSON.parse(palette.getPluginData('scale')),
-          captions: palette.getPluginData('captions') == 'hasCaptions' ? true : false
+          captions: palette.getPluginData('captions') == 'hasCaptions' ? true : false,
+          preset: JSON.parse(palette.getPluginData('preset'))
         }).makeNode());
 
         figma.ui.postMessage(palette.getPluginData('scale'));
@@ -67,7 +68,8 @@ figma.ui.onmessage = msg => {
           palette.appendChild(new Colors({
             colors: JSON.parse(palette.getPluginData('colors')),
             scale: JSON.parse(palette.getPluginData('scale')),
-            captions: palette.getPluginData('captions') == 'hasCaptions' ? true : false
+            captions: palette.getPluginData('captions') == 'hasCaptions' ? true : false,
+            preset: JSON.parse(palette.getPluginData('preset'))
           }).makeNode());
         } else {
           palette.setPluginData('captions', 'hasNotCaptions');
@@ -75,7 +77,8 @@ figma.ui.onmessage = msg => {
           palette.appendChild(new Colors({
             colors: JSON.parse(palette.getPluginData('colors')),
             scale: JSON.parse(palette.getPluginData('scale')),
-            captions: palette.getPluginData('captions') == 'hasCaptions' ? true : false
+            captions: palette.getPluginData('captions') == 'hasCaptions' ? true : false,
+            preset: JSON.parse(palette.getPluginData('preset'))
           }).makeNode());
         }
       } else
@@ -89,7 +92,8 @@ figma.ui.onmessage = msg => {
       palette.appendChild(new Colors({
         colors: JSON.parse(palette.getPluginData('colors')),
         scale: JSON.parse(palette.getPluginData('scale')),
-        captions: palette.getPluginData('captions') == 'hasCaptions' ? true : false
+        captions: palette.getPluginData('captions') == 'hasCaptions' ? true : false,
+        preset: JSON.parse(palette.getPluginData('preset'))
       }).makeNode());
       break;
 
@@ -161,7 +165,8 @@ const messageToUI = () => {
       data: {
         scale: JSON.parse(figma.currentPage.selection[0].getPluginData('scale')),
         captions: figma.currentPage.selection[0].getPluginData('captions'),
-        colors: JSON.parse(figma.currentPage.selection[0].getPluginData('colors'))
+        colors: JSON.parse(figma.currentPage.selection[0].getPluginData('colors')),
+        preset: JSON.parse(figma.currentPage.selection[0].getPluginData('preset'))
       }
     })
   else if (figma.currentPage.selection.length == 0)
