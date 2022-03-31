@@ -206,10 +206,10 @@ class App extends React.Component {
           scale.push(scale.length + 1)
           this.setState({
             preset: {
-              name: 'Custom',
+              name: presets.custom.name,
               scale: scale,
-              min: 0,
-              max: 100
+              min: palette.min,
+              max: palette.max
             }
           })
         }
@@ -220,10 +220,10 @@ class App extends React.Component {
           scale.pop()
           this.setState({
             preset: {
-              name: 'Custom',
+              name: presets.custom.name,
               scale: scale,
-              min: 0,
-              max: 100
+              min: palette.min,
+              max: palette.max
             }
           })
         }
