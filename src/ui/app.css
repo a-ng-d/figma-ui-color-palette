@@ -48,7 +48,8 @@ div.lightness-scale {
 
 div.onboarding {
   gap: var(--size-xxsmall);
-  align-items: center
+  align-items: center;
+  justify-content: center
 }
 
 div.onboarding .label {
