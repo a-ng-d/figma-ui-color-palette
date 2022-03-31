@@ -18,7 +18,7 @@ export default class Sample {
     this.children = null
   }
 
-  makeName() {
+  makeName(size) {
     // base
     this.node.name = this.name;
     this.node.fills = [{
@@ -38,13 +38,13 @@ export default class Sample {
     this.node.layoutGrow = 1;
 
     // insert
-    this.children = new Caption(this.name, this.rgb).makeNode('NAME');
+    this.children = new Caption(this.name, this.rgb).makeNode('NAME', size);
     this.node.appendChild(this.children);
 
     return this.node
   }
 
-  makeScale() {
+  makeScale(size) {
     // base
     this.node.name = this.scale;
     this.node.fills = [{
@@ -64,7 +64,7 @@ export default class Sample {
     this.node.layoutAlign = 'STRETCH';
 
     // insert
-    this.children = new Caption(this.scale, this.rgb).makeNode('SAMPLE');
+    this.children = new Caption(this.scale, this.rgb).makeNode('SAMPLE', size);
     this.node.appendChild(this.children);
 
     if (!this.captions)
