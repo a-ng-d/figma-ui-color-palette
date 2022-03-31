@@ -1,6 +1,7 @@
 import Palette from './canvas/Palette';
 import Style from './canvas/Style';
 import Colors from './canvas/Colors';
+import { presets } from './ui/modules/data';
 
 figma.showUI(__html__);
 figma.ui.resize(640, 312);
@@ -148,7 +149,8 @@ figma.ui.onmessage = msg => {
 };
 
 const messageToUI = () => {
-  if (figma.currentPage.selection.length == 1 && figma.currentPage.selection[0].getPluginData('scale') != '')
+  if (figma.currentPage.selection.length == 1 && figma.currentPage.selection[0].getPluginData('scale') != '') {
+    figma.currentPage.selection[0].getPluginData('preset') === '' ? figma.currentPage.selection[0].setPluginData('preset', JSON.stringify(presets.material)) : null;
     figma.ui.postMessage({
       type: 'palette-selected',
       data: {
@@ -158,6 +160,7 @@ const messageToUI = () => {
         preset: JSON.parse(figma.currentPage.selection[0].getPluginData('preset'))
       }
     })
+  }
   else if (figma.currentPage.selection.length == 0)
     figma.ui.postMessage({
       type: 'empty-selection',
