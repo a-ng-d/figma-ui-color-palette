@@ -104,11 +104,15 @@ export default class EditPalette extends React.Component<Props> {
       <div className='actions'>
         <div className='buttons'>
           <Button
+            id={null}
+            icon={null}
             type='secondary'
             label='Update the local styles'
             action={this.onUpdate}
           />
           <Button
+            id={null}
+            icon={null}
             type='primary'
             label='Create local styles'
             action={this.onCreate}

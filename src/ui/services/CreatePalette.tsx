@@ -91,6 +91,8 @@ export default class CreatePalette extends React.Component<Props> {
     return (
       <div className='actions'>
         <Button
+          id={null}
+          icon={null}
           type='primary'
           label='Create a color palette'
           action={this.onCreate}
