@@ -97,8 +97,8 @@ figma.ui.onmessage = msg => {
       palette = figma.currentPage.selection[0];
       i = 0;
       if (palette.children.length == 1) {
-        palette.children[0].children.forEach((row, index) => {
-          if (index != 0)
+        palette.children[0].children.forEach(row => {
+          if (row.name != '_header' && row.name != '_title')
             row.children.forEach((sample, index) => {
               if (index != 0) {
                 const style = new Style(
