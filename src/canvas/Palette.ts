@@ -11,8 +11,8 @@ export default class Palette {
   children: any;
   node: FrameNode;
 
-  constructor(min, max, scale, captions, preset) {
-    this.name = 'UI Color Palette';
+  constructor(scale, captions, preset) {
+    this.name = `UI Color Palette • ${preset.name}`;
     this.scale = scale;
     this.colors = [];
     this.captions = captions;
