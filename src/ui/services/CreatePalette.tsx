@@ -13,6 +13,7 @@ interface Props {
   onCaptionsChange: any;
   onGoingStep: string;
   onPresetChange: any
+  onCustomPreset: any
 };
 
 export default class CreatePalette extends React.Component<Props> {
@@ -26,6 +27,8 @@ export default class CreatePalette extends React.Component<Props> {
     this.props.onCaptionsChange(e.target.checked);
     palette.captions = e.target.checked;
   }
+
+  scaleHandler = (e: any) => this.props.onCustomPreset()
 
   // Templates
   Scale = () => {
@@ -42,6 +45,11 @@ export default class CreatePalette extends React.Component<Props> {
             options={['Material Design (50-900)', 'Ant Design (1-13)', 'Atlassian (0-900)', 'Custom']}
             onChange={this.selectHandler}
           />
+          {this.props.preset.name === 'Custom' ?
+            <div id='add' className='icon-button' onClick={this.scaleHandler}>
+              <div className='icon icon--plus'></div>
+            </div>
+          : null}
         </div>
         {this.props.onGoingStep != 'captions changed' ?
         <Slider

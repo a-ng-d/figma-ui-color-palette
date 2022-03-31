@@ -222,6 +222,8 @@ class App extends React.Component {
     }
   }
 
+  customHandler = (e: any) => console.log('ok')
+
   render() {
     onmessage = (e: any) => {
       switch (e.data.pluginMessage.type) {
@@ -276,6 +278,7 @@ class App extends React.Component {
             onCaptionsChange={this.captionsHandler}
             onGoingStep={this.state['onGoingStep']}
             onPresetChange={this.presetHandler}
+            onCustomPreset={this.customHandler}
           />
         : null}
         {this.state['service'] === 'Edit' ?
