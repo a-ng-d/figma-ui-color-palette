@@ -26,7 +26,8 @@ figma.ui.onmessage = msg => {
         msg.palette.min,
         msg.palette.max,
         msg.palette.scale,
-        msg.palette.captions
+        msg.palette.captions,
+        msg.palette.preset
       ).makeNode();
 
       if (palette.children.length != 0) {

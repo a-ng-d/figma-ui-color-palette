@@ -2,7 +2,8 @@ export const palette = {
   scale: {},
   min: null,
   max: null,
-  captions: true
+  captions: true,
+  preset: {}
 };
 
 export const presets = {

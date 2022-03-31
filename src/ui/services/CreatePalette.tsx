@@ -136,6 +136,7 @@ export default class CreatePalette extends React.Component<Props> {
 
   render() {
     palette.captions = this.props.hasCaptions;
+    palette.preset = this.props.preset;
     return (
       <section>
         <this.Controls />

@@ -9,16 +9,18 @@ export default class Palette {
   scale: string;
   colors: Array<Object>;
   captions: boolean;
+  preset: string;
   children: any;
   node: FrameNode;
 
-  constructor(min, max, scale, captions) {
+  constructor(min, max, scale, captions, preset) {
     this.name = 'UI Color Palette';
     this.min = min;
     this.max = max;
     this.scale = scale;
     this.colors = [];
     this.captions = captions;
+    this.preset = preset;
     this.children = null;
     this.node = figma.createFrame()
   }
@@ -40,6 +42,7 @@ export default class Palette {
     this.node.setPluginData('max', this.max.toString());
     this.node.setRelaunchData({ edit: '' });
     this.node.setPluginData('scale', JSON.stringify(this.scale));
+    this.node.setPluginData('preset', JSON.stringify(this.preset));
     if (this.captions)
       this.node.setPluginData('captions', 'hasCaptions')
     else
