@@ -97,13 +97,6 @@ figma.ui.onmessage = msg => {
       }).makeNode());
       break;
 
-    case 'update-infos':
-      palette = figma.currentPage.selection[0];
-      palette.setPluginData('scale', JSON.stringify(msg.data.newScale));
-      palette.setPluginData('captions', msg.data.hasCaptions.toString());
-      palette.setPluginData('colors', JSON.stringify(msg.data.newColors));
-      break;
-
     case 'create-local-styles':
       palette = figma.currentPage.selection[0];
       i = 0;
