@@ -33,6 +33,7 @@ export default class CreatePalette extends React.Component<Props> {
 
   // Templates
   Scale = () => {
+    palette.scale = {};
     return (
       <div className='lightness-scale'>
         <div className='section-controls'>
