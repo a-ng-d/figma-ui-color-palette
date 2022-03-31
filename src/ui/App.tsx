@@ -171,17 +171,25 @@ class App extends React.Component {
     switch((e.target as HTMLInputElement).value) {
 
       case 'Material Design (50-900)':
-        this.setState({ preset: {
-          name: (e.target as HTMLInputElement).value,
-          scale: [50, 100, 200, 300, 400, 500, 600, 700, 800, 900]
-        } })
+        //document.getElementsByClassName('slider__knob'))
+        this.setState({
+          preset: {
+            name: (e.target as HTMLInputElement).value,
+            scale: [50, 100, 200, 300, 400, 500, 600, 700, 800, 900]
+          },
+          onGoingStep: 'preset changed'
+        })
         break;
 
       case 'Ant Design (1-13)':
-        this.setState({ preset: {
-          name: (e.target as HTMLInputElement).value,
-          scale: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
-        } })
+        //Array.from(document.getElementsByClassName('slider__knob')).forEach(knob => knob.remove())
+        this.setState({
+          preset: {
+            name: (e.target as HTMLInputElement).value,
+            scale: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
+          },
+          onGoingStep: 'preset changed'
+        })
         break;
 
       case 'Custom':
