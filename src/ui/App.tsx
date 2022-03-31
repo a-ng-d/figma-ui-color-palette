@@ -209,8 +209,15 @@ class App extends React.Component {
         break;
 
       case 'Custom':
-        console.log('3')
-        break;
+        this.setState({
+          preset: {
+            name: (e.target as HTMLInputElement).value,
+            scale: [1, 2],
+            min: 90,
+            max: 100
+          },
+          onGoingStep: 'preset changed'
+        })
 
     }
   }
