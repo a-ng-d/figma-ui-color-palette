@@ -173,7 +173,6 @@ class App extends React.Component {
     switch((e.target as HTMLInputElement).value) {
 
       case 'Material Design (50-900)':
-        //document.getElementsByClassName('slider__knob'))
         this.setState({
           preset: {
             name: (e.target as HTMLInputElement).value,
@@ -186,7 +185,6 @@ class App extends React.Component {
         break;
 
       case 'Ant Design (1-13)':
-        //Array.from(document.getElementsByClassName('slider__knob')).forEach(knob => knob.remove())
         this.setState({
           preset: {
             name: (e.target as HTMLInputElement).value,
