@@ -276,6 +276,7 @@ class App extends React.Component {
               newScale: e.data.pluginMessage.data.scale,
               hasCaptions: false,
               newColors: putIdsOnColors,
+              preset: e.data.pluginMessage.data.preset,
               onGoingStep: 'palette selected'
             })
           else if (e.data.pluginMessage.data.captions === 'hasCaptions')
@@ -284,6 +285,7 @@ class App extends React.Component {
               newScale: e.data.pluginMessage.data.scale,
               hasCaptions: true,
               newColors: putIdsOnColors,
+              preset: e.data.pluginMessage.data.preset,
               onGoingStep: 'palette selected'
             })
 
