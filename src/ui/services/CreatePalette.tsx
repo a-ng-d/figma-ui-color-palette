@@ -29,7 +29,7 @@ export default class CreatePalette extends React.Component<Props> {
 
   presetHandler = (e: any) => this.props.onPresetChange(e)
 
-  scaleHandler = (e: any) => this.props.onCustomPreset()
+  scaleHandler = (e: any) => this.props.onCustomPreset(e)
 
   // Templates
   Scale = () => {
@@ -42,8 +42,18 @@ export default class CreatePalette extends React.Component<Props> {
             options={['Material Design (50-900)', 'Ant Design (1-13)', 'Atlassian (0-900)', 'Custom']}
             onChange={this.presetHandler}
           />
+          {this.props.onGoingStep === 'scale item edited' ?
+            <div id='remove' className='icon-button' onClick={this.scaleHandler}>
+              <div className='icon icon--minus'></div>
+            </div>
+          : null}
+          {this.props.onGoingStep === 'scale item max limit' ?
+            <div id='remove' className='icon-button' onClick={this.scaleHandler}>
+              <div className='icon icon--minus'></div>
+            </div>
+          : null}
           {this.props.preset.name === 'Custom' ?
-            <div id='add' className='icon-button' onClick={this.scaleHandler}>
+            <div id='add' className={`icon-button${this.props.onGoingStep === 'scale item max limit' ? ' disabled' : ''}`} onClick={this.scaleHandler}>
               <div className='icon icon--plus'></div>
             </div>
           : null}

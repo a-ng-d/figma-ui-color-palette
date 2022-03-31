@@ -222,7 +222,51 @@ class App extends React.Component {
     }
   }
 
-  customHandler = (e: any) => console.log('ok')
+  customHandler = (e: any) => {
+    let scale = this.state['preset']['scale'];
+    switch(e.target.id) {
+
+      case 'add':
+        if (scale.length < 24) {
+          scale.push(scale.length + 1)
+          this.setState({
+            preset: {
+              name: 'Custom',
+              scale: scale,
+              min: 0,
+              max: 100
+            }
+          })
+        }
+        break;
+
+      case 'remove':
+        if (scale.length > 2) {
+          scale.pop()
+          this.setState({
+            preset: {
+              name: 'Custom',
+              scale: scale,
+              min: 0,
+              max: 100
+            }
+          })
+        }
+
+    }
+    if (scale.length == 2)
+      this.setState({
+        onGoingStep: 'scale item min limit'
+      })
+    else if (scale.length == 24)
+      this.setState({
+        onGoingStep: 'scale item max limit'
+      })
+    else
+      this.setState({
+        onGoingStep: 'scale item edited'
+      })
+  }
 
   render() {
     onmessage = (e: any) => {
