@@ -26,17 +26,12 @@ class App extends React.Component {
     };
     this.state = {
       service: 'None',
-      newScale: null,
+      newScale: {},
       hasCaptions: true,
       onGoingStep: '',
-      newColors: null,
+      newColors: {},
       context: 'Scale',
-      preset: {
-        name: 'Material Design (50-900)',
-        scale: [50, 100, 200, 300, 400, 500, 600, 700, 800, 900],
-        min: 24,
-        max: 96
-      }
+      preset: {}
     }
   }
 
