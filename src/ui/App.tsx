@@ -197,6 +197,14 @@ class App extends React.Component {
           onGoingStep: 'preset changed'
         })
         break;
+
+      case 'Atlassian (0-900)':
+        this.setState({
+          preset: {
+            name: (e.target as HTMLInputElement).value,
+            scale: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 200, 300, 400, 500, 600, 700, 800, 900],
+            min: 8,
+            max: 100
           },
           onGoingStep: 'preset changed'
         })
