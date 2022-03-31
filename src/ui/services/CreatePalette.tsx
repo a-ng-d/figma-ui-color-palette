@@ -4,7 +4,6 @@ import Button from '../components/Button';
 import Checkbox from '../components/Checkbox';
 import Message from '../components/Message';
 import Dropdown from '../components/Dropdown';
-import { selectMenu } from 'figma-plugin-ds';
 import { palette } from '../modules/data';
 
 interface Props {
@@ -12,7 +11,7 @@ interface Props {
   preset: any;
   onCaptionsChange: any;
   onGoingStep: string;
-  onPresetChange: any
+  onPresetChange: any;
   onCustomPreset: any
 };
 
@@ -28,14 +27,12 @@ export default class CreatePalette extends React.Component<Props> {
     palette.captions = e.target.checked;
   }
 
+  presetHandler = (e: any) => this.props.onPresetChange(e)
+
   scaleHandler = (e: any) => this.props.onCustomPreset()
 
   // Templates
   Scale = () => {
-    setTimeout(() => {
-      selectMenu.init();
-      document.getElementById('presets').onchange = (e) => this.props.onPresetChange(e)
-    }, 100);
     return (
       <div className='lightness-scale'>
         <div className='section-controls'>
@@ -43,7 +40,7 @@ export default class CreatePalette extends React.Component<Props> {
           <Dropdown
             id='presets'
             options={['Material Design (50-900)', 'Ant Design (1-13)', 'Atlassian (0-900)', 'Custom']}
-            onChange={this.selectHandler}
+            onChange={this.presetHandler}
           />
           {this.props.preset.name === 'Custom' ?
             <div id='add' className='icon-button' onClick={this.scaleHandler}>
