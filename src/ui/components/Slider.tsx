@@ -122,6 +122,7 @@ export default class Slider extends React.Component<Props> {
 
   // Actions
   doLightnessScale = () => {
+    palette.scale = {};
     let granularity: number = 1;
 
     this.props.knobs.map(index => {
