@@ -44,19 +44,34 @@ export default class CreatePalette extends React.Component<Props> {
             onChange={this.presetHandler}
           />
           {this.props.onGoingStep === 'scale item edited' ?
-            <div id='remove' className='icon-button' onClick={this.scaleHandler}>
-              <div className='icon icon--minus'></div>
-            </div>
+            <Button
+              id='remove'
+              icon='minus'
+              type='icon'
+              label={null}
+              state=''
+              action={this.scaleHandler}
+            />
           : null}
           {this.props.onGoingStep === 'scale item max limit' ?
-            <div id='remove' className='icon-button' onClick={this.scaleHandler}>
-              <div className='icon icon--minus'></div>
-            </div>
+            <Button
+              id='remove'
+              icon='minus'
+              type='icon'
+              label={null}
+              state=''
+              action={this.scaleHandler}
+            />
           : null}
           {this.props.preset.name === 'Custom' ?
-            <div id='add' className={`icon-button${this.props.onGoingStep === 'scale item max limit' ? ' disabled' : ''}`} onClick={this.scaleHandler}>
-              <div className='icon icon--plus'></div>
-            </div>
+            <Button
+              id='add'
+              icon='plus'
+              type='icon'
+              label={null}
+              state={this.props.onGoingStep === 'scale item max limit' ? 'disabled' : ''}
+              action={this.scaleHandler}
+            />
           : null}
         </div>
         {this.props.onGoingStep != 'captions changed' ?

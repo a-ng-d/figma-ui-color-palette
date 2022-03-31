@@ -80,9 +80,14 @@ export default class EditPalette extends React.Component<Props> {
       <div className='starting-colors'>
         <div className='section-controls'>
           <div className='section-title'>Starting colors</div>
-          <div id='add' className='icon-button' onClick={this.colorHandler}>
-            <div className='icon icon--plus'></div>
-          </div>
+          <Button
+            id='add'
+            icon='plus'
+            type='icon'
+            label={null}
+            state=''
+            action={this.colorHandler}
+          />
         </div>
         <ul className='colors'>
           {this.props.colors.map(color =>

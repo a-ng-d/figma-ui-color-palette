@@ -1,6 +1,7 @@
 import * as React from 'react';
 import chroma from 'chroma-js';
 import Input from './Input';
+import Button from './Button';
 import { v4 as uuidv4 } from 'uuid';
 
 interface Props {
@@ -64,9 +65,14 @@ export default class ColorItem extends React.Component<Props> {
             onChange={this.inputHandler}
           />
         </div>
-        <div id='remove' className='icon-button' onClick={this.inputHandler}>
-          <div className='icon icon--minus'></div>
-        </div>
+        <Button
+          id='remove'
+          icon='minus'
+          type='icon'
+          label={null}
+          state=''
+          action={this.inputHandler}
+        />
       </li>
     )
   }
