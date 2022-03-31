@@ -1,6 +1,7 @@
 import chroma from 'chroma-js';
 import Sample from './Sample';
 import Header from './Header';
+import Title from './Title';
 
 export default class Colors {
 
@@ -26,6 +27,7 @@ export default class Colors {
     this.node.layoutAlign = 'STRETCH';
 
     // insert
+    this.node.appendChild(new Title(`UI Color Palette • ${this.parent.preset.name}`,this.parent).makeNode());
     this.node.appendChild(new Header(this.parent).makeNode());
     this.parent.colors.forEach(color => {
 
