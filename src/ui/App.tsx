@@ -7,7 +7,7 @@ import Onboarding from './services/Onboarding';
 import 'figma-plugin-ds/dist/figma-plugin-ds.css';
 import './app.css';
 import chroma from 'chroma-js';
-import { palette } from './modules/data';
+import { palette, presets } from './modules/data';
 import { v4 as uuidv4 } from 'uuid';
 
 declare function require(path: string): any;
@@ -167,50 +167,30 @@ class App extends React.Component {
   presetHandler = (e: any) => {
     switch((e.target as HTMLInputElement).value) {
 
-      case 'Material Design (50-900)':
+      case presets.material.name:
         this.setState({
-          preset: {
-            name: (e.target as HTMLInputElement).value,
-            scale: [50, 100, 200, 300, 400, 500, 600, 700, 800, 900],
-            min: 24,
-            max: 96
-          },
+          preset: presets.material,
           onGoingStep: 'preset changed'
         })
         break;
 
-      case 'Ant Design (1-13)':
+      case presets.ant.name:
         this.setState({
-          preset: {
-            name: (e.target as HTMLInputElement).value,
-            scale: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13],
-            min: 16,
-            max: 100
-          },
+          preset: presets.ant,
           onGoingStep: 'preset changed'
         })
         break;
 
-      case 'Atlassian (0-900)':
+      case presets.atlassian.name:
         this.setState({
-          preset: {
-            name: (e.target as HTMLInputElement).value,
-            scale: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 200, 300, 400, 500, 600, 700, 800, 900],
-            min: 8,
-            max: 100
-          },
+          preset: presets.atlassian,
           onGoingStep: 'preset changed'
         })
         break;
 
-      case 'Custom':
+      case presets.custom.name:
         this.setState({
-          preset: {
-            name: (e.target as HTMLInputElement).value,
-            scale: [1, 2],
-            min: 0,
-            max: 100
-          },
+          preset: presets.custom,
           onGoingStep: 'preset changed'
         })
 
@@ -280,12 +260,7 @@ class App extends React.Component {
             service: 'Create',
             hasCaptions: true,
             onGoingStep: 'colors selected',
-            preset: {
-              name: 'Material Design (50-900)',
-              scale: [50, 100, 200, 300, 400, 500, 600, 700, 800, 900],
-              min: 24,
-              max: 96
-            }
+            preset: presets.material
           });
           break;
 

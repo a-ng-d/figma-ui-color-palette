@@ -4,7 +4,7 @@ import Button from '../components/Button';
 import Checkbox from '../components/Checkbox';
 import Message from '../components/Message';
 import Dropdown from '../components/Dropdown';
-import { palette } from '../modules/data';
+import { palette, presets } from '../modules/data';
 
 interface Props {
   hasCaptions: boolean;
@@ -40,7 +40,7 @@ export default class CreatePalette extends React.Component<Props> {
           <div className='section-title'>Lightness scale</div>
           <Dropdown
             id='presets'
-            options={['Material Design (50-900)', 'Ant Design (1-13)', 'Atlassian (0-900)', 'Custom']}
+            options={Object.entries(presets).map(entry => entry[1].name)}
             onChange={this.presetHandler}
           />
           {this.props.onGoingStep === 'scale item edited' ?
