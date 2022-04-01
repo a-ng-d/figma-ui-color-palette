@@ -53,6 +53,7 @@ export default class EditPalette extends React.Component<Props> {
 
   // Templates
   Scale = () => {
+    palette.scale = {};
     return (
       <div className='lightness-scale'>
       <div className='section-controls'>
