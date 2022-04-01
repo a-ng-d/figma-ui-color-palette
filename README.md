@@ -9,7 +9,11 @@ Every variants from a starting color is created by using the LCH (Lightness-Chro
 ![Create a color palette](./assets/create-color-palette.gif 'Create a color palette')
 - Run the plugin
 - Select some layers in the canvas filled with at least one solid color. It will be use as starting colors to create the color palette.
-- Edit the lightness scale with the multiple knobs slider. There are 10 steps (from 50 to 900), linked with the LCH lightness scale (from 0% to 100%).
+- Edit the lightness scale with the multiple knobs slider, linked with the LCH lightness scale (from 0% to 100%). You can choose the preset you need to configure the number of steps:
+  - Material Design, from 50 to 900 (10 steps)
+  - Ant Design, from 1 to 13 (13 steps)
+  - Atlassian, from 0 to 900 (19 steps)
+  - Custom, from 2 to 24 (24 steps)
 - Choose the captions display. It indicates the color name, the hexadecimal code, the RGB and LCH values, the contrast ratio, and the WCAG score.
 - Click `Create a color palette` to generate directly the palette on the Figma canvas. The palette is automatically selected and the view is centered on it. Its default name is `UI Color Palette`.
 
