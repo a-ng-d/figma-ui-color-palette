@@ -125,7 +125,7 @@ export default class Slider extends React.Component<Props> {
     let granularity: number = 1;
 
     this.props.knobs.map(index => {
-      palette.scale[`lightness-${index}`] = this.doMap(granularity, 0, 1, palette.min, palette.max).toFixed(1);
+      palette.scale[`lightness-${index}`] = this.doMap(granularity, 0, 1, palette.min, palette.max).toFixed(1).replace('-', '');
       granularity -= 1 / (this.props.knobs.length - 1)
     });
 
