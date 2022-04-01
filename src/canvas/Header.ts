@@ -22,9 +22,9 @@ export default class Header {
     this.node.counterAxisSizingMode = 'AUTO';
 
     // insert
-    this.node.appendChild(new Sample('Colors', null, [255, 255, 255], this.parent.captions).makeName('absolute', 140, 48, 10))
+    this.node.appendChild(new Sample('Colors', null, [255, 255, 255], this.parent.captions).makeName('absolute', 150, 48, 10))
     Object.values(this.parent.scale).reverse().forEach(lightness => {
-      this.node.appendChild(new Sample(Object.keys(this.parent.scale).find(key => this.parent.scale[key] === lightness).substr(10), null, [255, 255, 255], this.parent.captions).makeName('absolute', 140, 48, 10))
+      this.node.appendChild(new Sample(Object.keys(this.parent.scale).find(key => this.parent.scale[key] === lightness).substr(10), null, [255, 255, 255], this.parent.captions).makeName('absolute', 150, 48, 10))
     });
 
     return this.node
