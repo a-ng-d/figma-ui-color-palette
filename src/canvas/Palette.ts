@@ -4,21 +4,19 @@ import Colors from './Colors';
 export default class Palette {
 
   name: string;
-  min: number;
-  max: number;
   scale: string;
   colors: Array<Object>;
   captions: boolean;
+  preset: string;
   children: any;
   node: FrameNode;
 
-  constructor(min, max, scale, captions) {
-    this.name = 'UI Color Palette';
-    this.min = min;
-    this.max = max;
+  constructor(scale, captions, preset) {
+    this.name = `UI Color Palette﹒${preset.name}`;
     this.scale = scale;
     this.colors = [];
     this.captions = captions;
+    this.preset = preset;
     this.children = null;
     this.node = figma.createFrame()
   }
@@ -32,14 +30,13 @@ export default class Palette {
     // layout
     this.node.layoutMode = 'VERTICAL';
     this.node.primaryAxisSizingMode = 'AUTO';
-    this.node.counterAxisSizingMode = 'FIXED';
+    this.node.counterAxisSizingMode = 'AUTO';
     this.node.paddingTop = this.node.paddingRight = this.node.paddingBottom = this.node.paddingLeft = 32;
 
     // data
-    this.node.setPluginData('min', this.min.toString());
-    this.node.setPluginData('max', this.max.toString());
     this.node.setRelaunchData({ edit: '' });
     this.node.setPluginData('scale', JSON.stringify(this.scale));
+    this.node.setPluginData('preset', JSON.stringify(this.preset));
     if (this.captions)
       this.node.setPluginData('captions', 'hasCaptions')
     else

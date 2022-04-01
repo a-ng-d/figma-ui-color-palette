@@ -1,10 +1,10 @@
-import chroma from 'chroma-js';
-import Palette from './modules/Palette';
-import Style from './modules/Style';
-import Colors from './modules/Colors';
+import Palette from './canvas/Palette';
+import Style from './canvas/Style';
+import Colors from './canvas/Colors';
+import { presets } from './palette-package';
 
 figma.showUI(__html__);
-figma.ui.resize(640, 312);
+figma.ui.resize(680, 280);
 figma.loadFontAsync({ family: 'Inter', style: 'Regular' });
 figma.loadFontAsync({ family: 'Roboto', style: 'Regular' });
 figma.loadFontAsync({ family: 'Roboto Mono', style: 'Regular' });
@@ -24,10 +24,9 @@ figma.ui.onmessage = msg => {
       const scene: SceneNode[] = [];
 
       palette = new Palette(
-        msg.palette.min,
-        msg.palette.max,
         msg.palette.scale,
-        msg.palette.captions
+        msg.palette.captions,
+        msg.palette.preset
       ).makeNode();
 
       if (palette.children.length != 0) {
@@ -42,18 +41,19 @@ figma.ui.onmessage = msg => {
     case 'update-scale':
       palette = figma.currentPage.selection[0];
       if (palette.children.length == 1) {
-        palette.setPluginData('min', msg.palette.min.toString());
-        palette.setPluginData('max', msg.palette.max.toString());
         palette.setPluginData('scale', JSON.stringify(msg.palette.scale));
 
         palette.children[0].remove();
         palette.appendChild(new Colors({
           colors: JSON.parse(palette.getPluginData('colors')),
           scale: JSON.parse(palette.getPluginData('scale')),
-          captions: palette.getPluginData('captions') == 'hasCaptions' ? true : false
+          captions: palette.getPluginData('captions') == 'hasCaptions' ? true : false,
+          preset: JSON.parse(palette.getPluginData('preset'))
         }).makeNode());
 
-        figma.ui.postMessage(palette.getPluginData('scale'));
+        // palette migration
+        palette.counterAxisSizingMode = 'AUTO';
+        palette.name = `UI Color Palette﹒${JSON.parse(palette.getPluginData('preset')).name}`
       } else
         figma.notify('Your UI Color Palette seems corrupted. Do not edit any layer within it.')
       break;
@@ -67,17 +67,23 @@ figma.ui.onmessage = msg => {
           palette.appendChild(new Colors({
             colors: JSON.parse(palette.getPluginData('colors')),
             scale: JSON.parse(palette.getPluginData('scale')),
-            captions: palette.getPluginData('captions') == 'hasCaptions' ? true : false
-          }).makeNode());
+            captions: palette.getPluginData('captions') == 'hasCaptions' ? true : false,
+            preset: JSON.parse(palette.getPluginData('preset'))
+          }).makeNode())
         } else {
           palette.setPluginData('captions', 'hasNotCaptions');
           palette.children[0].remove();
           palette.appendChild(new Colors({
             colors: JSON.parse(palette.getPluginData('colors')),
             scale: JSON.parse(palette.getPluginData('scale')),
-            captions: palette.getPluginData('captions') == 'hasCaptions' ? true : false
-          }).makeNode());
+            captions: palette.getPluginData('captions') == 'hasCaptions' ? true : false,
+            preset: JSON.parse(palette.getPluginData('preset'))
+          }).makeNode())
         }
+
+        // palette migration
+        palette.counterAxisSizingMode = 'AUTO';
+        palette.name = `UI Color Palette﹒${JSON.parse(palette.getPluginData('preset')).name}`
       } else
         figma.notify('Your UI Color Palette seems corrupted. Do not edit any layer within it.')
       break;
@@ -89,34 +95,21 @@ figma.ui.onmessage = msg => {
       palette.appendChild(new Colors({
         colors: JSON.parse(palette.getPluginData('colors')),
         scale: JSON.parse(palette.getPluginData('scale')),
-        captions: palette.getPluginData('captions') == 'hasCaptions' ? true : false
+        captions: palette.getPluginData('captions') == 'hasCaptions' ? true : false,
+        preset: JSON.parse(palette.getPluginData('preset'))
       }).makeNode());
-      break;
 
-    case 'get-infos':
-      palette = figma.currentPage.selection[0];
-
-      try {
-        figma.ui.postMessage(JSON.stringify({
-          scale: palette.getPluginData('scale'),
-          captions: palette.getPluginData('captions')
-        }))
-      } catch { }
-      break;
-
-    case 'update-infos':
-      palette = figma.currentPage.selection[0];
-      palette.setPluginData('scale', JSON.stringify(msg.data.newScale));
-      palette.setPluginData('captions', msg.data.hasCaptions.toString());
-      palette.setPluginData('colors', JSON.stringify(msg.data.newColors));
+      // palette migration
+      palette.counterAxisSizingMode = 'AUTO';
+      palette.name = `UI Color Palette﹒${JSON.parse(palette.getPluginData('preset')).name}`
       break;
 
     case 'create-local-styles':
       palette = figma.currentPage.selection[0];
       i = 0;
       if (palette.children.length == 1) {
-        palette.children[0].children.forEach((row, index) => {
-          if (index != 0)
+        palette.children[0].children.forEach(row => {
+          if (row.name != '_header' && row.name != '_title')
             row.children.forEach((sample, index) => {
               if (index != 0) {
                 const style = new Style(
@@ -166,15 +159,18 @@ figma.ui.onmessage = msg => {
 };
 
 const messageToUI = () => {
-  if (figma.currentPage.selection.length == 1 && figma.currentPage.selection[0].getPluginData('scale') != '')
+  if (figma.currentPage.selection.length == 1 && figma.currentPage.selection[0].getPluginData('scale') != '') {
+    figma.currentPage.selection[0].getPluginData('preset') === '' ? figma.currentPage.selection[0].setPluginData('preset', JSON.stringify(presets.material)) : null;
     figma.ui.postMessage({
       type: 'palette-selected',
       data: {
         scale: JSON.parse(figma.currentPage.selection[0].getPluginData('scale')),
         captions: figma.currentPage.selection[0].getPluginData('captions'),
-        colors: JSON.parse(figma.currentPage.selection[0].getPluginData('colors'))
+        colors: JSON.parse(figma.currentPage.selection[0].getPluginData('colors')),
+        preset: JSON.parse(figma.currentPage.selection[0].getPluginData('preset'))
       }
     })
+  }
   else if (figma.currentPage.selection.length == 0)
     figma.ui.postMessage({
       type: 'empty-selection',

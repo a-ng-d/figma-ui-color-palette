@@ -1,8 +1,9 @@
 import * as React from 'react';
-import { palette } from '../data';
+import Knob from './Knob';
+import { palette } from '../../palette-package';
 
 interface Props {
-  knobsList: string;
+  knobs: Array<number>;
   type: string;
   min: string;
   max: string;
@@ -123,9 +124,9 @@ export default class Slider extends React.Component<Props> {
   doLightnessScale = () => {
     let granularity: number = 1;
 
-    this.props.knobsList.split(' ').forEach(index => {
-      palette.scale[`lightness-${index}`] = this.doMap(granularity, 0, 1, palette.min, palette.max).toFixed(1);
-      granularity -= 1 / (this.props.knobsList.split(' ').length - 1)
+    this.props.knobs.map(index => {
+      palette.scale[`lightness-${index}`] = this.doMap(granularity, 0, 1, palette.min, palette.max).toFixed(1).replace('-', '');
+      granularity -= 1 / (this.props.knobs.length - 1)
     });
 
     return palette.scale
@@ -164,29 +165,35 @@ export default class Slider extends React.Component<Props> {
   }
 
   // Templates
-  Equal = (props) => {
+  Equal = () => {
     palette.min = parseFloat(this.props.min);
     palette.max = parseFloat(this.props.max);
     return (
       <div className='slider__range'>
         {Object.entries(this.doLightnessScale()).map(lightness =>
-          <div key={lightness[0]} className={`slider__knob ${lightness[0]}`} style={{left: `${lightness[1]}%`}} onMouseDown={this.onGrab}>
-            <div className='type type--inverse slider__tooltip'>{lightness[1]}</div>
-            <div className='type slider__label'>{lightness[0].replace('lightness-', '')}</div>
-          </div>
+          <Knob
+            key={lightness[0]}
+            id={lightness[0]}
+            scale={lightness[1]}
+            number={lightness[0].replace('lightness-', '')}
+            action={this.onGrab}
+          />
         )}
       </div>
     )
   }
 
-  Custom = (props) => {
+  Custom = () => {
     return (
       <div className='slider__range'>
         {Object.entries(this.props.scale).map(lightness =>
-          <div key={lightness[0]} className={`slider__knob ${lightness[0]}`} style={{left: `${lightness[1]}%`}} onMouseDown={this.onGrab}>
-            <div className='type type--inverse slider__tooltip'>{lightness[1]}</div>
-            <div className='type slider__label'>{lightness[0].replace('lightness-', '')}</div>
-          </div>
+          <Knob
+            key={lightness[0]}
+            id={lightness[0]}
+            scale={lightness[1]}
+            number={lightness[0].replace('lightness-', '')}
+            action={this.onGrab}
+          />
         )}
       </div>
     )
@@ -195,8 +202,8 @@ export default class Slider extends React.Component<Props> {
   render() {
     return (
       <div className='slider'>
-        {this.props.type == 'EQUAL' ? <this.Equal /> : null}
-        {this.props.type == 'CUSTOM' ? <this.Custom /> : null}
+        {this.props.type === 'EQUAL' ? <this.Equal /> : null}
+        {this.props.type === 'CUSTOM' ? <this.Custom /> : null}
       </div>
     )
   }

@@ -1,6 +1,7 @@
 import chroma from 'chroma-js';
 import Sample from './Sample';
 import Header from './Header';
+import Title from './Title';
 
 export default class Colors {
 
@@ -23,9 +24,9 @@ export default class Colors {
     this.node.layoutMode = 'VERTICAL';
     this.node.primaryAxisSizingMode = 'AUTO';
     this.node.counterAxisSizingMode = 'AUTO';
-    this.node.layoutAlign = 'STRETCH';
 
     // insert
+    this.node.appendChild(new Title(`UI Color Palette • ${this.parent.preset.name}`,this.parent).makeNode());
     this.node.appendChild(new Header(this.parent).makeNode());
     this.parent.colors.forEach(color => {
 
@@ -38,17 +39,16 @@ export default class Colors {
 
       // layout
       row.layoutMode = 'HORIZONTAL';
-      row.primaryAxisSizingMode = 'FIXED';
+      row.primaryAxisSizingMode = 'AUTO';
       row.counterAxisSizingMode = 'AUTO';
-      row.layoutAlign = 'STRETCH';
 
       // insert
-      const rowName = new Sample(color.name, null, [color.rgb.r * 255, color.rgb.g * 255, color.rgb.b * 255], this.parent.captions).makeName();
+      const rowName = new Sample(color.name, null, [color.rgb.r * 255, color.rgb.g * 255, color.rgb.b * 255], this.parent.captions).makeName('absolute', 150, 200, 10);
       row.appendChild(rowName);
 
       Object.values(this.parent.scale).reverse().forEach(lightness => {
         let newColor = chroma([color.rgb.r * 255, color.rgb.g * 255, color.rgb.b * 255]).set('lch.l', lightness);
-        const sample = new Sample(color.name, Object.keys(this.parent.scale).find(key => this.parent.scale[key] === lightness).substr(10), newColor._rgb, this.parent.captions).makeScale();
+        const sample = new Sample(color.name, Object.keys(this.parent.scale).find(key => this.parent.scale[key] === lightness).substr(10), newColor._rgb, this.parent.captions).makeScale(150, 200, 10);
         row.name = color.name;
         row.appendChild(sample)
       });
