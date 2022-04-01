@@ -4,7 +4,7 @@ import Button from '../components/Button';
 import Checkbox from '../components/Checkbox';
 import Message from '../components/Message';
 import Dropdown from '../components/Dropdown';
-import { palette, presets } from '../modules/data';
+import { palette, presets } from '../../palette-package';
 
 interface Props {
   hasCaptions: boolean;

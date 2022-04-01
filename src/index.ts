@@ -1,7 +1,7 @@
 import Palette from './canvas/Palette';
 import Style from './canvas/Style';
 import Colors from './canvas/Colors';
-import { presets } from './ui/modules/data';
+import { presets } from './palette-package';
 
 figma.showUI(__html__);
 figma.ui.resize(680, 280);

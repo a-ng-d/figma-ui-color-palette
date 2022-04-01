@@ -7,7 +7,7 @@ import Onboarding from './services/Onboarding';
 import 'figma-plugin-ds/dist/figma-plugin-ds.css';
 import './app.css';
 import chroma from 'chroma-js';
-import { palette, presets } from './modules/data';
+import { palette, presets } from '../palette-package';
 import { v4 as uuidv4 } from 'uuid';
 
 declare function require(path: string): any;

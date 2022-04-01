@@ -7,7 +7,7 @@ import Message from '../components/Message';
 import ColorItem from '../components/ColorItem';
 import Tabs from '../components/Tabs';
 import chroma from 'chroma-js';
-import { palette } from '../modules/data';
+import { palette } from '../../palette-package';
 
 interface Props {
   scale: any;
