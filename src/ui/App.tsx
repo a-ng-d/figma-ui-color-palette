@@ -273,6 +273,7 @@ class App extends React.Component {
           if (e.data.pluginMessage.data.captions === 'hasNotCaptions')
             this.setState({
               service: 'Edit',
+              context: 'Scale',
               newScale: e.data.pluginMessage.data.scale,
               hasCaptions: false,
               newColors: putIdsOnColors,
@@ -282,6 +283,7 @@ class App extends React.Component {
           else if (e.data.pluginMessage.data.captions === 'hasCaptions')
             this.setState({
               service: 'Edit',
+              context: 'Scale',
               newScale: e.data.pluginMessage.data.scale,
               hasCaptions: true,
               newColors: putIdsOnColors,
