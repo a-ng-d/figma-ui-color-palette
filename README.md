@@ -55,6 +55,7 @@ The palette architecture (do not manual edit it) is:
 ### Troubleshooting
 - `Your UI Color Palette seems corrupted. Do not edit any layer within it.`: The palette has been manually edited, and it may occur troubles and errors. So the plugins avoids executing editing while the palette does not seem compliant with the architecture.
 - `The layer 'foo' must get at least one solid color`: You have selected a layer without any solid color.
+- The real-time edit is quite slow: It depends of the number of color samples in the palette. Dealing with hundreds of samples may slow your Figma and cause UI freezes.
 
 ## Contribution
 - Clone this repository (or fork it)
