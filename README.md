@@ -22,13 +22,20 @@ The UI Color Palette is composed of a frame called `colors`, gathering every var
 > Note: The variant color's Chroma/Hue values may change (compared to the starting color's one) to be inside the sRBG gamut.
 
 The palette architecture (do not manual edit it) is:
-- UI Color Palette
-  - colors
-    - layerName
-      - layerName-50
+- UI Color Palette・Preset name
+  - _colors
+      - layerName
+        - scale-0
+        - …
+        - scale-N
       - …
-      - layerName-900
-    - …
+      - _header
+        - scale-0
+        - …
+        - scale-N
+        - Colors
+      - _title
+
 
 ### Edit a color palette
 > Note: Editing a color palette only works on those already created with the plugin.
