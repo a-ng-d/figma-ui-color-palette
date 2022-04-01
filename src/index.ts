@@ -51,7 +51,6 @@ figma.ui.onmessage = msg => {
           preset: JSON.parse(palette.getPluginData('preset'))
         }).makeNode());
 
-        figma.ui.postMessage(palette.getPluginData('scale'));
       } else
         figma.notify('Your UI Color Palette seems corrupted. Do not edit any layer within it.')
       break;
