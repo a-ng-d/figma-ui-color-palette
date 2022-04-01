@@ -53,7 +53,7 @@ figma.ui.onmessage = msg => {
 
         // palette migration
         palette.counterAxisSizingMode = 'AUTO';
-        palette.name = `UI Color Palette • ${JSON.parse(palette.getPluginData('preset')).name}`
+        palette.name = `UI Color Palette﹒${JSON.parse(palette.getPluginData('preset')).name}`
       } else
         figma.notify('Your UI Color Palette seems corrupted. Do not edit any layer within it.')
       break;
@@ -83,7 +83,7 @@ figma.ui.onmessage = msg => {
 
         // palette migration
         palette.counterAxisSizingMode = 'AUTO';
-        palette.name = `UI Color Palette • ${JSON.parse(palette.getPluginData('preset')).name}`
+        palette.name = `UI Color Palette﹒${JSON.parse(palette.getPluginData('preset')).name}`
       } else
         figma.notify('Your UI Color Palette seems corrupted. Do not edit any layer within it.')
       break;
@@ -101,7 +101,7 @@ figma.ui.onmessage = msg => {
 
       // palette migration
       palette.counterAxisSizingMode = 'AUTO';
-      palette.name = `UI Color Palette • ${JSON.parse(palette.getPluginData('preset')).name}`
+      palette.name = `UI Color Palette﹒${JSON.parse(palette.getPluginData('preset')).name}`
       break;
 
     case 'create-local-styles':

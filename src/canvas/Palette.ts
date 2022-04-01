@@ -12,7 +12,7 @@ export default class Palette {
   node: FrameNode;
 
   constructor(scale, captions, preset) {
-    this.name = `UI Color Palette • ${preset.name}`;
+    this.name = `UI Color Palette﹒${preset.name}`;
     this.scale = scale;
     this.colors = [];
     this.captions = captions;
