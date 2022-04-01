@@ -4,7 +4,7 @@ import Colors from './canvas/Colors';
 import { presets } from './ui/modules/data';
 
 figma.showUI(__html__);
-figma.ui.resize(640, 312);
+figma.ui.resize(680, 280);
 figma.loadFontAsync({ family: 'Inter', style: 'Regular' });
 figma.loadFontAsync({ family: 'Roboto', style: 'Regular' });
 figma.loadFontAsync({ family: 'Roboto Mono', style: 'Regular' });

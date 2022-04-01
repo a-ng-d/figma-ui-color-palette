@@ -125,7 +125,8 @@ div.tabs .tabs__tab--active {
 div.slider {
   display: flex;
   align-items: center;
-  position: relative
+  position: relative;
+  margin-top: var(--size-small)
 }
 
 div.slider .slider__range {
