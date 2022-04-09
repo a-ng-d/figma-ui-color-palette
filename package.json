@@ -9,7 +9,7 @@
     "start": "npx webpack --mode=development --watch"
   },
   "author": "Aurélien Grimaud",
-  "license": "CC BY 4.0",
+  "license": "CC-BY 4.0",
   "repository": "https://github.com/inVoltag/figma-ui-color-palette",
   "devDependencies": {
     "@figma/plugin-typings": "^1.39.1",
