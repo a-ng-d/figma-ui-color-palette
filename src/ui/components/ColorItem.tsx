@@ -2,6 +2,7 @@ import * as React from 'react';
 import chroma from 'chroma-js';
 import Input from './Input';
 import Button from './Button';
+import Switch from './Switch';
 import { v4 as uuidv4 } from 'uuid';
 
 interface Props {
@@ -13,7 +14,16 @@ interface Props {
 
 export default class ColorItem extends React.Component<Props> {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      hasMoreOptions: false
+    }
+  }
+
   inputHandler = (e: any) => this.props.onColorChange(e)
+
+  getSecondaryOptions = () => this.setState({ hasMoreOptions: !this.state['hasMoreOptions'] })
 
   render() {
     return(
@@ -82,17 +92,16 @@ export default class ColorItem extends React.Component<Props> {
             state=''
             action={this.inputHandler}
           />
+        </div>
+        {this.state['hasMoreOptions'] ?
+        <div className="colors__secondary-options">
+          <Switch
+            id='cielab'
+            label='CIELAB'
+            isChecked={false}
             onChange={this.inputHandler}
           />
-        </div>
-        <Button
-          id='remove'
-          icon='minus'
-          type='icon'
-          label={null}
-          state=''
-          action={this.inputHandler}
-        />
+        </div> : null}
       </li>
     )
   }

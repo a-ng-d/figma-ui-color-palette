@@ -323,11 +323,13 @@ ul.colors {
 
 li.colors__item {
   display: flex;
-  gap: var(--size-xsmall)
+  flex-flow: column nowrap
 }
 
-li.colors__item label {
-  flex: 1
+li div.colors__primary-options,
+li div.colors__secondary-options {
+  display: flex;
+  gap: var(--size-xsmall)
 }
 
 div.colors__parameters {
