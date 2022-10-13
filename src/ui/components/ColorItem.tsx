@@ -81,7 +81,7 @@ export default class ColorItem extends React.Component<Props> {
             icon='ellipses'
             type='icon'
             label={null}
-            state=''
+            state={this.state['hasMoreOptions'] ? 'selected' : ''}
             action={this.getSecondaryOptions}
           />
           <Button
