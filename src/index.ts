@@ -161,6 +161,8 @@ figma.ui.onmessage = msg => {
 const messageToUI = () => {
   if (figma.currentPage.selection.length == 1 && figma.currentPage.selection[0].getPluginData('scale') != '') {
     figma.currentPage.selection[0].getPluginData('preset') === '' ? figma.currentPage.selection[0].setPluginData('preset', JSON.stringify(presets.material)) : null;
+    !figma.currentPage.selection[0].getPluginData('colors').includes('cielab') ? figma.currentPage.selection[0].setPluginData('colors', addCielab(figma.currentPage.selection[0].getPluginData('colors'))) : null
+
     figma.ui.postMessage({
       type: 'palette-selected',
       data: {
@@ -185,4 +187,10 @@ const messageToUI = () => {
           data: {}
         })
   })
+};
+
+const addCielab = (data: string): string => {
+  let colors = JSON.parse(data);
+  colors.forEach(color => color.cielab = false)
+  return JSON.stringify(colors)
 }
