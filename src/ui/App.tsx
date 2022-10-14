@@ -145,7 +145,7 @@ class App extends React.Component {
           newColors: colors,
           onGoingStep: 'color changed'
         });
-        parent.postMessage({ pluginMessage: { type: 'update-colors', data: colors } }, '*')
+        parent.postMessage({ pluginMessage: { type: 'update-colors', data: colors } }, '*');
         break;
 
       case 'rename':
