@@ -159,27 +159,29 @@ figma.ui.onmessage = msg => {
 };
 
 const messageToUI = () => {
-  if (figma.currentPage.selection.length == 1 && figma.currentPage.selection[0].getPluginData('scale') != '') {
-    figma.currentPage.selection[0].getPluginData('preset') === '' ? figma.currentPage.selection[0].setPluginData('preset', JSON.stringify(presets.material)) : null;
-    !figma.currentPage.selection[0].getPluginData('colors').includes('cielab') ? figma.currentPage.selection[0].setPluginData('colors', addCielab(figma.currentPage.selection[0].getPluginData('colors'))) : null
+  const selection: ReadonlyArray<BaseNode> = figma.currentPage.selection
+  
+  if (selection.length == 1 && selection[0].getPluginData('scale') != '') {
+    selection[0].getPluginData('preset') === '' ? selection[0].setPluginData('preset', JSON.stringify(presets.material)) : null;
+    !selection[0].getPluginData('colors').includes('cielab') ? selection[0].setPluginData('colors', addCielab(selection[0].getPluginData('colors'))) : null
 
     figma.ui.postMessage({
       type: 'palette-selected',
       data: {
-        scale: JSON.parse(figma.currentPage.selection[0].getPluginData('scale')),
-        captions: figma.currentPage.selection[0].getPluginData('captions'),
-        colors: JSON.parse(figma.currentPage.selection[0].getPluginData('colors')),
-        preset: JSON.parse(figma.currentPage.selection[0].getPluginData('preset'))
+        scale: JSON.parse(selection[0].getPluginData('scale')),
+        captions: selection[0].getPluginData('captions'),
+        colors: JSON.parse(selection[0].getPluginData('colors')),
+        preset: JSON.parse(selection[0].getPluginData('preset'))
       }
     })
   }
-  else if (figma.currentPage.selection.length == 0)
+  else if (selection.length == 0)
     figma.ui.postMessage({
       type: 'empty-selection',
       data: {}
     });
 
-  figma.currentPage.selection.forEach(element => {
+  selection.forEach(element => {
     if (element.type != 'GROUP')
       if (element['fills'].filter(fill => fill.type === 'SOLID').length != 0 && element.getPluginData('scale') === '')
         figma.ui.postMessage({
