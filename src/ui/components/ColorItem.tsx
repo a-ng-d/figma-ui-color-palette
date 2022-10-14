@@ -8,6 +8,7 @@ import { v4 as uuidv4 } from 'uuid';
 interface Props {
   name: string;
   hex: string;
+  cielab: boolean
   uuid: string;
   onColorChange: any
 };
@@ -98,7 +99,7 @@ export default class ColorItem extends React.Component<Props> {
           <Switch
             id='cielab'
             label='CIELAB'
-            isChecked={false}
+            isChecked={this.props.cielab}
             onChange={this.inputHandler}
           />
         </div> : null}

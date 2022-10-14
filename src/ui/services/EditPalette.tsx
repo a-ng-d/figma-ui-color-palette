@@ -99,6 +99,7 @@ export default class EditPalette extends React.Component<Props> {
               key={color.id}
               name={color.name}
               hex={chroma(color.rgb.r * 255, color.rgb.g * 255, color.rgb.b * 255).hex()}
+              cielab={color.cielab}
               uuid={color.id}
               onColorChange={this.colorHandler}
             />
