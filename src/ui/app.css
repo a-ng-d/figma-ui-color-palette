@@ -339,3 +339,8 @@ div.colors__parameters {
 div.colors__parameters div {
   flex: 0 0 88px
 }
+
+/* Onboarding */
+.onboarding-tip {
+  gap: var(--size-xxsmall)
+}
