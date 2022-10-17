@@ -35,7 +35,7 @@ div.actions {
 div.lightness-scale,
 div.starting-colors,
 div.onboarding {
-  padding: var(--size-xsmall) var(--size-small);
+  padding: var(--size-xsmall) 0;
   display: flex;
   flex: 1;
   flex-direction: column;
@@ -44,6 +44,10 @@ div.onboarding {
 
 div.lightness-scale {
   justify-content: space-between
+}
+
+div.lightness-scale > div {
+  padding: 0 var(--size-small)
 }
 
 div.onboarding {
@@ -82,7 +86,8 @@ div.actions .buttons {
 /* Controls */
 div.section-controls {
   display: flex;
-  justify-content: space-between
+  justify-content: space-between;
+  padding: 0 var(--size-small)
 }
 
 div.section-controls .section-title,
@@ -323,7 +328,8 @@ ul.colors {
 
 li.colors__item {
   display: flex;
-  gap: var(--size-xsmall)
+  gap: var(--size-xsmall);
+  padding: 0 var(--size-small)
 }
 
 li.colors__item label {
