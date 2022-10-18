@@ -34,7 +34,7 @@ export default class ColorItem extends React.Component<Props> {
   render() {
     return(
       <li
-        id={this.props.name}
+        id={this.props.name.split(' ').join('-').toLowerCase()}
         data-id={this.props.uuid}
         className={this.state['isDragged'] ? 'colors__item--dragged colors__item' : 'colors__item'}
         draggable={this.props.dragged}

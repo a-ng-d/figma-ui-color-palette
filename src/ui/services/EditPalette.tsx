@@ -141,7 +141,7 @@ export default class EditPalette extends React.Component<Props> {
               name={color.name}
               hex={chroma(color.rgb.r * 255, color.rgb.g * 255, color.rgb.b * 255).hex()}
               uuid={color.id}
-              dragged={this.state['draggableElement'] === color.name ? true : false}
+              dragged={this.state['draggableElement'] === color.name.split(' ').join('-').toLowerCase() ? true : false}
               onColorChange={this.colorHandler}
               onReorder={this.orderHandler}
             />
