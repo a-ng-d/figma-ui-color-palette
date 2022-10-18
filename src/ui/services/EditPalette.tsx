@@ -44,25 +44,53 @@ export default class EditPalette extends React.Component<Props> {
     this.props.onCaptionsChange(e.target.checked);
     palette.captions = e.target.checked;
     parent.postMessage({ pluginMessage: { type: 'update-captions', palette } }, '*')
+    this.setState({
+      draggableElement: ''
+    })
   }
 
-  colorHandler = (e: any) => this.props.onColorChange(e)
+  colorHandler = (e: any) => {
+    this.props.onColorChange(e)
+    this.setState({
+      draggableElement: ''
+    })
+  }
 
-  navHandler = (e: any) => this.props.onContextChange(e)
+  navHandler = (e: any) => {
+    this.props.onContextChange(e)
+    this.setState({
+      draggableElement: ''
+    })
+  }
 
   orderHandler = (e: any) => {
     const target: HTMLElement = e.currentTarget,
           neighbours: Array<Element> = Array.from(target.parentElement.children)
     if (target !== e.target) return;
-
     this.setState({
       draggableElement: target.id
     })
   }
 
-  onCreate = () => parent.postMessage({ pluginMessage: { type: 'create-local-styles', palette } }, '*')
+  unSelectColor = (e: any) => {
+    e.target.closest(`#${this.state['draggableElement']}`) == null ? this.setState({
+      draggableElement: ''
+    }) : null
+  }
 
-  onUpdate = () => parent.postMessage({ pluginMessage: { type: 'update-local-styles', palette } }, '*')
+  onCreate = () => {
+    parent.postMessage({ pluginMessage: { type: 'create-local-styles', palette } }, '*')
+    this.setState({
+      draggableElement: ''
+    })
+  }
+
+  onUpdate = () => {
+    parent.postMessage({ pluginMessage: { type: 'update-local-styles', palette } }, '*')
+    this.setState({
+      draggableElement: ''
+    })
+  }
 
   // Templates
   Scale = () => {
@@ -175,7 +203,7 @@ export default class EditPalette extends React.Component<Props> {
           active={this.props.context}
           onClick={this.navHandler}
         />
-        <section>
+        <section onClick={this.unSelectColor}>
           <this.Controls />
         </section>
       </>
