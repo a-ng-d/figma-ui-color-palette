@@ -329,16 +329,17 @@ ul.colors {
 li.colors__item {
   display: flex;
   gap: var(--size-xsmall);
-  padding: 0 var(--size-small)
+  padding: 0 var(--size-small);
+  justify-content: space-between
 }
 
-li.colors__item label {
-  flex: 1
+div.colors__left-options {
+  display: flex;
+  gap: var(--size-xsmall);
 }
 
 div.colors__parameters {
   display: flex;
-  flex: 4;
   gap: var(--size-xxxsmall)
 }
 
