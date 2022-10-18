@@ -31,6 +31,9 @@ export default class EditPalette extends React.Component<Props> {
         () => parent.postMessage({ pluginMessage: { type: 'update-scale', palette } }, '*'),
         500
       )
+    };
+    this.state = {
+      draggableElement: ''
     }
   }
 
@@ -46,6 +49,16 @@ export default class EditPalette extends React.Component<Props> {
   colorHandler = (e: any) => this.props.onColorChange(e)
 
   navHandler = (e: any) => this.props.onContextChange(e)
+
+  orderHandler = (e: any) => {
+    const target: HTMLElement = e.currentTarget,
+          neighbours: Array<Element> = Array.from(target.parentElement.children)
+    if (target !== e.target) return;
+
+    this.setState({
+      draggableElement: target.id
+    })
+  }
 
   onCreate = () => parent.postMessage({ pluginMessage: { type: 'create-local-styles', palette } }, '*')
 
@@ -100,7 +113,9 @@ export default class EditPalette extends React.Component<Props> {
               name={color.name}
               hex={chroma(color.rgb.r * 255, color.rgb.g * 255, color.rgb.b * 255).hex()}
               uuid={color.id}
+              dragged={this.state['draggableElement'] === color.name ? true : false}
               onColorChange={this.colorHandler}
+              onReorder={this.orderHandler}
             />
           )}
         </ul>

@@ -8,16 +8,40 @@ interface Props {
   name: string;
   hex: string;
   uuid: string;
-  onColorChange: any
+  dragged: boolean;
+  onColorChange: any;
+  onReorder: any
 };
 
 export default class ColorItem extends React.Component<Props> {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      isDragged: false
+    }
+  }
+
+  // Events
   inputHandler = (e: any) => this.props.onColorChange(e)
+
+  reorderHandler = (e: any) => this.props.onReorder(e)
+
+  onDrag = (e: any) => this.setState({ isDragged: true })
+
+  onDragEnd = (e: any) => this.setState({ isDragged: false })
 
   render() {
     return(
-      <li id={this.props.name} data-id={this.props.uuid} className='colors__item' onMouseDown={this.activeReorder}>
+      <li
+        id={this.props.name}
+        data-id={this.props.uuid}
+        className={this.state['isDragged'] ? 'colors__item--dragged colors__item' : 'colors__item'}
+        draggable={this.props.dragged}
+        onMouseDown={this.reorderHandler}
+        onDrag={this.onDrag}
+        onDragEnd={this.onDragEnd}
+      >
         <div className="colors__left-options">
           <Input
             type='text'

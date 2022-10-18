@@ -333,6 +333,15 @@ li.colors__item {
   justify-content: space-between
 }
 
+li.colors__item[draggable="true"] {
+  background-color: var(--blue3);
+  cursor: grab
+}
+
+li.colors__item--dragged[draggable="true"] {
+  cursor: grabbing
+}
+
 div.colors__left-options {
   display: flex;
   gap: var(--size-xsmall);
