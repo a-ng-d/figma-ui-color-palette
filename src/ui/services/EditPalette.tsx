@@ -135,10 +135,11 @@ export default class EditPalette extends React.Component<Props> {
           />
         </div>
         <ul className='colors'>
-          {this.props.colors.map(color =>
+          {this.props.colors.map((color, index) =>
             <ColorItem
               key={color.id}
               name={color.name}
+              index={index}
               hex={chroma(color.rgb.r * 255, color.rgb.g * 255, color.rgb.b * 255).hex()}
               uuid={color.id}
               dragged={this.state['selectedElement'] === color.name.split(' ').join('-').toLowerCase() ? true : false}

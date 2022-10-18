@@ -8,6 +8,7 @@ interface Props {
   name: string;
   hex: string;
   uuid: string;
+  index: number;
   dragged: boolean;
   onColorChange: any;
   onSelection: any
@@ -36,6 +37,8 @@ export default class ColorItem extends React.Component<Props> {
       <li
         id={this.props.name.split(' ').join('-').toLowerCase()}
         data-id={this.props.uuid}
+        data-color={this.props.name.split(' ').join('-').toLowerCase()}
+        data-position={this.props.index}
         className={this.state['isDragged'] ? 'colors__item--dragged colors__item' : 'colors__item'}
         draggable={this.props.dragged}
         onMouseDown={this.onMouseDown}
