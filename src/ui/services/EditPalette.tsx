@@ -73,7 +73,7 @@ export default class EditPalette extends React.Component<Props> {
   }
 
   unSelectColor = (e: any) => {
-    e.target.closest(`#${this.state['draggableElement']}`) == null ? this.setState({
+    e.target.closest('li.colors__item') == null ? this.setState({
       draggableElement: ''
     }) : null
   }
