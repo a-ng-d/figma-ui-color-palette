@@ -10,7 +10,7 @@ interface Props {
   uuid: string;
   dragged: boolean;
   onColorChange: any;
-  onReorder: any
+  onSelection: any
 };
 
 export default class ColorItem extends React.Component<Props> {
@@ -25,7 +25,7 @@ export default class ColorItem extends React.Component<Props> {
   // Events
   inputHandler = (e: any) => this.props.onColorChange(e)
 
-  reorderHandler = (e: any) => this.props.onReorder(e)
+  onMouseDown = (e: any) => this.props.onSelection(e)
 
   onDrag = (e: any) => this.setState({ isDragged: true })
 
@@ -38,7 +38,7 @@ export default class ColorItem extends React.Component<Props> {
         data-id={this.props.uuid}
         className={this.state['isDragged'] ? 'colors__item--dragged colors__item' : 'colors__item'}
         draggable={this.props.dragged}
-        onMouseDown={this.reorderHandler}
+        onMouseDown={this.onMouseDown}
         onDrag={this.onDrag}
         onDragEnd={this.onDragEnd}
       >
