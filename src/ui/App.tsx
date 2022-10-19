@@ -44,7 +44,10 @@ class App extends React.Component {
     let name, colors, id;
     try {
       name = e.nativeEvent.path.filter(el => el.className === 'colors__item')[0].id;
-      id = e.nativeEvent.path.filter(el => el.className === 'colors__item')[0].getAttribute('data-id')
+      id = e.nativeEvent.path.filter(el => {
+        try { return el.classList.contains('colors__item') }
+        catch {}
+      })[0].getAttribute('data-id')
     } catch {};
 
     switch (e.target.id) {
