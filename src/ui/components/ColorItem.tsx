@@ -9,7 +9,7 @@ interface Props {
   hex: string;
   uuid: string;
   index: number;
-  dragged: boolean;
+  selected: boolean;
   onColorChange: any;
   onSelection: any
 };
@@ -47,6 +47,7 @@ export default class ColorItem extends React.Component<Props> {
         data-position={this.props.index}
         className={`colors__item${this.state['isDragged'] ? ' colors__item--dragged' : ''}${this.state['isAbove'] ? ' colors__item--above' : ''}${this.state['isBelow'] ? ' colors__item--below' : ''}`}
         draggable={this.props.dragged}
+        draggable={this.props.selected}
         onMouseDown={this.onMouseDown}
         onDragStart={this.onDragStart}
         onDragEnd={this.onDragEnd}

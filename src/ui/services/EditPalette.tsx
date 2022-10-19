@@ -142,7 +142,7 @@ export default class EditPalette extends React.Component<Props> {
               index={index}
               hex={chroma(color.rgb.r * 255, color.rgb.g * 255, color.rgb.b * 255).hex()}
               uuid={color.id}
-              dragged={this.state['selectedElementId'] === color.id ? true : false}
+              selected={this.state['selectedElementId'] === color.id ? true : false}
               onColorChange={this.colorHandler}
               onSelection={this.selectionHandler}
             />
