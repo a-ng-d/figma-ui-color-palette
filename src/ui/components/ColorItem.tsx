@@ -47,7 +47,7 @@ export default class ColorItem extends React.Component<Props> {
 
   onDragEnd = (e: any) => {
     this.setState({ isDragged: false })
-    this.props.onDragChange('', false, false)
+    this.props.onDragChange('', false, false, undefined)
   }
 
   onDragOver = (e: any) => {
@@ -67,9 +67,9 @@ export default class ColorItem extends React.Component<Props> {
     refY = this.doMap(y, refTop, refBottom, 0, height)
 
     if (refY >= -1 && refY <= height / 2)
-      this.props.onDragChange(target.dataset.id, true, false)
+      this.props.onDragChange(target.dataset.id, true, false, target.dataset.position)
     else if (refY > height / 2 && refY <= height)
-      this.props.onDragChange(target.dataset.id, false, true)
+      this.props.onDragChange(target.dataset.id, false, true, target.dataset.position)
   }
 
   render() {

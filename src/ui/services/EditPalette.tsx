@@ -33,11 +33,15 @@ export default class EditPalette extends React.Component<Props> {
       )
     };
     this.state = {
-      selectedElementId: '',
+      selectedElement: {
+        id: '',
+        position: null
+      },
       hoveredElement: {
         id: '',
         hasGuideAbove: false,
-        hasGuideBelow: false
+        hasGuideBelow: false,
+        position: null
       }
     }
   }
@@ -50,21 +54,30 @@ export default class EditPalette extends React.Component<Props> {
     palette.captions = e.target.checked;
     parent.postMessage({ pluginMessage: { type: 'update-captions', palette } }, '*')
     this.setState({
-      selectedElementId: ''
+      selectedElement: {
+        id: '',
+        position: null
+      }
     })
   }
 
   colorHandler = (e: any) => {
     this.props.onColorChange(e)
     this.setState({
-      selectedElementId: ''
+      selectedElement: {
+        id: '',
+        position: null
+      }
     })
   }
 
   navHandler = (e: any) => {
     this.props.onContextChange(e)
     this.setState({
-      selectedElementId: ''
+      selectedElement: {
+        id: '',
+        position: null
+      }
     })
   }
 
@@ -73,16 +86,20 @@ export default class EditPalette extends React.Component<Props> {
           neighbours: Array<Element> = Array.from(target.parentElement.children)
     if (target !== e.target) return;
     this.setState({
-      selectedElementId: target.dataset.id
+      selectedElement: {
+        id: target.dataset.id,
+        position: target.dataset.position
+      }
     })
   }
 
-  dragHandler = (id: string, hasGuideAbove: boolean, hasGuideBelow: boolean) => {
+  dragHandler = (id: string, hasGuideAbove: boolean, hasGuideBelow: boolean, position: number) => {
     this.setState({
       hoveredElement: {
         id: id,
         hasGuideAbove: hasGuideAbove,
-        hasGuideBelow: hasGuideBelow
+        hasGuideBelow: hasGuideBelow,
+        position: position
       }
     })
   }
@@ -96,14 +113,20 @@ export default class EditPalette extends React.Component<Props> {
   onCreate = () => {
     parent.postMessage({ pluginMessage: { type: 'create-local-styles', palette } }, '*')
     this.setState({
-      selectedElementId: ''
+      selectedElement: {
+        id: '',
+        position: null
+      }
     })
   }
 
   onUpdate = () => {
     parent.postMessage({ pluginMessage: { type: 'update-local-styles', palette } }, '*')
     this.setState({
-      selectedElementId: ''
+      selectedElement: {
+        id: '',
+        position: null
+      }
     })
   }
 
@@ -157,7 +180,7 @@ export default class EditPalette extends React.Component<Props> {
               index={index}
               hex={chroma(color.rgb.r * 255, color.rgb.g * 255, color.rgb.b * 255).hex()}
               uuid={color.id}
-              selected={this.state['selectedElementId'] === color.id ? true : false}
+              selected={this.state['selectedElement']['id'] === color.id ? true : false}
               guideAbove={this.state['hoveredElement']['id'] === color.id ? this.state['hoveredElement']['hasGuideAbove'] : false}
               guideBelow={this.state['hoveredElement']['id'] === color.id ? this.state['hoveredElement']['hasGuideBelow'] : false}
               onColorChange={this.colorHandler}
