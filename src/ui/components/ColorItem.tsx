@@ -10,8 +10,11 @@ interface Props {
   uuid: string;
   index: number;
   selected: boolean;
+  guideAbove: boolean;
+  guideBelow: boolean;
   onColorChange: any;
   onSelectionChange: any;
+  onDragChange: any
 };
 
 export default class ColorItem extends React.Component<Props> {
@@ -36,7 +39,10 @@ export default class ColorItem extends React.Component<Props> {
     console.log(e.currentTarget.dataset)
   }
 
-  onDragEnd = (e: any) => this.setState({ isDragged: false, isAbove: false, isBelow: false })
+  onDragEnd = (e: any) => {
+    this.setState({ isDragged: false })
+    this.props.onDragChange('', false, false)
+  }
 
   render() {
     return(
@@ -45,8 +51,7 @@ export default class ColorItem extends React.Component<Props> {
         data-id={this.props.uuid}
         data-color={this.props.name.split(' ').join('-').toLowerCase()}
         data-position={this.props.index}
-        className={`colors__item${this.state['isDragged'] ? ' colors__item--dragged' : ''}${this.state['isAbove'] ? ' colors__item--above' : ''}${this.state['isBelow'] ? ' colors__item--below' : ''}`}
-        draggable={this.props.dragged}
+        className={`colors__item${this.state['isDragged'] ? ' colors__item--dragged' : ''}${this.props.guideAbove ? ' colors__item--above' : ''}${this.props.guideBelow ? ' colors__item--below' : ''}`}
         draggable={this.props.selected}
         onMouseDown={this.onMouseDown}
         onDragStart={this.onDragStart}

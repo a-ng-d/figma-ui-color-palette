@@ -33,7 +33,12 @@ export default class EditPalette extends React.Component<Props> {
       )
     };
     this.state = {
-      selectedElementId: ''
+      selectedElementId: '',
+      hoveredElement: {
+        id: '',
+        hasGuideAbove: false,
+        hasGuideBelow: false
+      }
     }
   }
 
@@ -69,6 +74,16 @@ export default class EditPalette extends React.Component<Props> {
     if (target !== e.target) return;
     this.setState({
       selectedElementId: target.dataset.id
+    })
+  }
+
+  dragHandler = (id: string, hasGuideAbove: boolean, hasGuideBelow: boolean) => {
+    this.setState({
+      hoveredElement: {
+        id: id,
+        hasGuideAbove: hasGuideAbove,
+        hasGuideBelow: hasGuideBelow
+      }
     })
   }
 
@@ -143,8 +158,11 @@ export default class EditPalette extends React.Component<Props> {
               hex={chroma(color.rgb.r * 255, color.rgb.g * 255, color.rgb.b * 255).hex()}
               uuid={color.id}
               selected={this.state['selectedElementId'] === color.id ? true : false}
+              guideAbove={this.state['hoveredElement']['id'] === color.id ? this.state['hoveredElement']['hasGuideAbove'] : false}
+              guideBelow={this.state['hoveredElement']['id'] === color.id ? this.state['hoveredElement']['hasGuideBelow'] : false}
               onColorChange={this.colorHandler}
               onSelectionChange={this.selectionHandler}
+              onDragChange={this.dragHandler}
             />
           )}
         </ul>
