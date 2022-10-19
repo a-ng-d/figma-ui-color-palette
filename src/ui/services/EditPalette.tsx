@@ -144,7 +144,7 @@ export default class EditPalette extends React.Component<Props> {
               uuid={color.id}
               selected={this.state['selectedElementId'] === color.id ? true : false}
               onColorChange={this.colorHandler}
-              onSelection={this.selectionHandler}
+              onSelectionChange={this.selectionHandler}
             />
           )}
         </ul>

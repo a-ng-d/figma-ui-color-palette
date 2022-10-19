@@ -11,7 +11,7 @@ interface Props {
   index: number;
   selected: boolean;
   onColorChange: any;
-  onSelection: any
+  onSelectionChange: any;
 };
 
 export default class ColorItem extends React.Component<Props> {
