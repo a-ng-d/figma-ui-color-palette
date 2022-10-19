@@ -33,7 +33,7 @@ export default class EditPalette extends React.Component<Props> {
       )
     };
     this.state = {
-      selectedElement: ''
+      selectedElementId: ''
     }
   }
 
@@ -45,21 +45,21 @@ export default class EditPalette extends React.Component<Props> {
     palette.captions = e.target.checked;
     parent.postMessage({ pluginMessage: { type: 'update-captions', palette } }, '*')
     this.setState({
-      selectedElement: ''
+      selectedElementId: ''
     })
   }
 
   colorHandler = (e: any) => {
     this.props.onColorChange(e)
     this.setState({
-      selectedElement: ''
+      selectedElementId: ''
     })
   }
 
   navHandler = (e: any) => {
     this.props.onContextChange(e)
     this.setState({
-      selectedElement: ''
+      selectedElementId: ''
     })
   }
 
@@ -68,27 +68,27 @@ export default class EditPalette extends React.Component<Props> {
           neighbours: Array<Element> = Array.from(target.parentElement.children)
     if (target !== e.target) return;
     this.setState({
-      selectedElement: target.id
+      selectedElementId: target.dataset.id
     })
   }
 
   unSelectColor = (e: any) => {
     e.target.closest('li.colors__item') == null ? this.setState({
-      selectedElement: ''
+      selectedElementId: ''
     }) : null
   }
 
   onCreate = () => {
     parent.postMessage({ pluginMessage: { type: 'create-local-styles', palette } }, '*')
     this.setState({
-      selectedElement: ''
+      selectedElementId: ''
     })
   }
 
   onUpdate = () => {
     parent.postMessage({ pluginMessage: { type: 'update-local-styles', palette } }, '*')
     this.setState({
-      selectedElement: ''
+      selectedElementId: ''
     })
   }
 
@@ -142,7 +142,7 @@ export default class EditPalette extends React.Component<Props> {
               index={index}
               hex={chroma(color.rgb.r * 255, color.rgb.g * 255, color.rgb.b * 255).hex()}
               uuid={color.id}
-              dragged={this.state['selectedElement'] === color.name.split(' ').join('-').toLowerCase() ? true : false}
+              dragged={this.state['selectedElementId'] === color.id ? true : false}
               onColorChange={this.colorHandler}
               onSelection={this.selectionHandler}
             />
