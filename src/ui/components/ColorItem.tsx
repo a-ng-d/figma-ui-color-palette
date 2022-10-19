@@ -41,8 +41,7 @@ export default class ColorItem extends React.Component<Props> {
     this.setState({ isDragged: true })
     var img = new Image();
     img.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=';
-    e.dataTransfer.setDragImage(img, 0, 0);
-    console.log(e.currentTarget.dataset)
+    e.dataTransfer.setDragImage(img, 0, 0)
   }
 
   onDragEnd = (e: any) => {
