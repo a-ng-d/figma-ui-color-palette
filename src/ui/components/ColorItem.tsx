@@ -28,7 +28,13 @@ export default class ColorItem extends React.Component<Props> {
 
   onMouseDown = (e: any) => this.props.onSelection(e)
 
-  onDrag = (e: any) => this.setState({ isDragged: true })
+  onDragStart = (e: any) => {
+    this.setState({ isDragged: true })
+    var img = new Image();
+    img.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=';
+    e.dataTransfer.setDragImage(img, 0, 0);
+    console.log(e.currentTarget.dataset)
+  }
 
   onDragEnd = (e: any) => this.setState({ isDragged: false })
 
@@ -42,7 +48,7 @@ export default class ColorItem extends React.Component<Props> {
         className={`colors__item${this.state['isDragged'] ? ' colors__item--dragged' : ''}${this.state['isAbove'] ? ' colors__item--above' : ''}${this.state['isBelow'] ? ' colors__item--below' : ''}`}
         draggable={this.props.dragged}
         onMouseDown={this.onMouseDown}
-        onDrag={this.onDrag}
+        onDragStart={this.onDragStart}
         onDragEnd={this.onDragEnd}
       >
         <div className="colors__left-options">
