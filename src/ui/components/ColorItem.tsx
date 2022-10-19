@@ -36,7 +36,7 @@ export default class ColorItem extends React.Component<Props> {
     console.log(e.currentTarget.dataset)
   }
 
-  onDragEnd = (e: any) => this.setState({ isDragged: false })
+  onDragEnd = (e: any) => this.setState({ isDragged: false, sAbove: false, isBelow: true })
 
   render() {
     return(
