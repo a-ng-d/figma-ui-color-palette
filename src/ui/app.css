@@ -1,4 +1,8 @@
 /* Layout */
+html {
+  overflow: hidden
+}
+
 div, ul, li, section, input {
   cursor: default
 }
