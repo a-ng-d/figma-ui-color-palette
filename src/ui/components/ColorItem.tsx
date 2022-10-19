@@ -87,7 +87,6 @@ export default class ColorItem extends React.Component<Props> {
         onDragOver={this.onDragOver}
       >
         <div className="colors__left-options">
-          <div id="reorder" className="icon icon--list"></div>
           <Input
             type='text'
             id='rename'
