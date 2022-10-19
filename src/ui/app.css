@@ -334,7 +334,8 @@ li.colors__item {
   display: flex;
   gap: var(--size-xsmall);
   padding: 0 var(--size-small);
-  justify-content: space-between
+  justify-content: space-between;
+  position: relative
 }
 
 li.colors__item[draggable="true"] {
@@ -353,9 +354,13 @@ li.colors__item--below {
   box-shadow: 0 -1px 0 var(--blue) inset, 0 1px 0 var(--blue)
 }
 
+li.colors__item .input__field {
+  background-color: transparent
+}
+
 div.colors__left-options {
   display: flex;
-  gap: var(--size-xsmall);
+  gap: var(--size-xsmall)
 }
 
 div.colors__parameters {
