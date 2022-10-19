@@ -29,7 +29,7 @@ export default class ColorItem extends React.Component<Props> {
   // Events
   inputHandler = (e: any) => this.props.onColorChange(e)
 
-  onMouseDown = (e: any) => this.props.onSelection(e)
+  onMouseDown = (e: any) => this.props.onSelectionChange(e)
 
   onDragStart = (e: any) => {
     this.setState({ isDragged: true })
