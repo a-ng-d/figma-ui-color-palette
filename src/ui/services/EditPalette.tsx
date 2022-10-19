@@ -17,7 +17,8 @@ interface Props {
   preset: any;
   onCaptionsChange: any;
   onColorChange: any;
-  onContextChange: any
+  onContextChange: any;
+  onOrderChange: any
 };
 
 export default class EditPalette extends React.Component<Props> {
@@ -104,6 +105,10 @@ export default class EditPalette extends React.Component<Props> {
     })
   }
 
+  dropHandler = (e: any) => {
+    this.props.onOrderChange(this.state['selectedElement'], this.state['hoveredElement'])
+  }
+
   unSelectColor = (e: any) => {
     e.target.closest('li.colors__item') == null ? this.setState({
       selectedElementId: ''
@@ -186,6 +191,7 @@ export default class EditPalette extends React.Component<Props> {
               onColorChange={this.colorHandler}
               onSelectionChange={this.selectionHandler}
               onDragChange={this.dragHandler}
+              onOrderChange={this.dropHandler}
             />
           )}
         </ul>

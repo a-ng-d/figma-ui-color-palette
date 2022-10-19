@@ -14,7 +14,8 @@ interface Props {
   guideBelow: boolean;
   onColorChange: any;
   onSelectionChange: any;
-  onDragChange: any
+  onDragChange: any;
+  onOrderChange: any
 };
 
 export default class ColorItem extends React.Component<Props> {
@@ -71,6 +72,8 @@ export default class ColorItem extends React.Component<Props> {
       this.props.onDragChange(target.dataset.id, false, true, target.dataset.position)
   }
 
+  onDrop = (e: any) => this.props.onOrderChange(e)
+
   render() {
     return(
       <li
@@ -84,6 +87,7 @@ export default class ColorItem extends React.Component<Props> {
         onDragStart={this.onDragStart}
         onDragEnd={this.onDragEnd}
         onDragOver={this.onDragOver}
+        onDrop={this.onDrop}
       >
         <div className="colors__left-options">
           <Input

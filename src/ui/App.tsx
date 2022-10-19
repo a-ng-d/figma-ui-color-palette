@@ -167,6 +167,10 @@ class App extends React.Component {
     }
   }
 
+  orderHandler = (source: any, target: any) => {
+    console.log(source, target)
+  }
+
   presetHandler = (e: any) => {
     switch((e.target as HTMLInputElement).value) {
 
@@ -319,6 +323,7 @@ class App extends React.Component {
             onCaptionsChange={this.captionsHandler}
             onColorChange={this.colorHandler}
             onContextChange={this.navHandler}
+            onOrderChange={this.orderHandler}
           />
         : null}
         {this.state['service'] === 'None' ? <Onboarding /> : null}
