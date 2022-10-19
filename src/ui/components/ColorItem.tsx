@@ -26,6 +26,12 @@ export default class ColorItem extends React.Component<Props> {
     }
   }
 
+  doMap = (value: number, oldMin: number, oldMax: number, newMin: number, newMax: number) => {
+    const oldRange = oldMax - oldMin,
+        newRange = newMax - newMin
+    return ((value - oldMin) * newRange / oldRange) + newMin
+  }
+
   // Events
   inputHandler = (e: any) => this.props.onColorChange(e)
 
@@ -44,6 +50,28 @@ export default class ColorItem extends React.Component<Props> {
     this.props.onDragChange('', false, false)
   }
 
+  onDragOver = (e: any) => {
+    const target: any = e.target,
+          height: number = target.clientHeight,
+          parentY: number = target.parentNode.offsetTop,
+          scrollY: number = target.parentNode.parentNode.parentNode.scrollTop,
+          refTop: number = target.offsetTop - parentY,
+          refBottom: number = refTop + height,
+          breakpoint: number = refTop + (height / 2),
+          y: number = e.pageY - parentY + scrollY;
+
+    let refY: number;
+
+    e.preventDefault()
+
+    refY = this.doMap(y, refTop, refBottom, 0, height)
+
+    if (refY >= -1 && refY <= height / 2)
+      this.props.onDragChange(target.dataset.id, true, false)
+    else if (refY > height / 2 && refY <= height)
+      this.props.onDragChange(target.dataset.id, false, true)
+  }
+
   render() {
     return(
       <li
@@ -56,8 +84,10 @@ export default class ColorItem extends React.Component<Props> {
         onMouseDown={this.onMouseDown}
         onDragStart={this.onDragStart}
         onDragEnd={this.onDragEnd}
+        onDragOver={this.onDragOver}
       >
         <div className="colors__left-options">
+          <div id="reorder" className="icon icon--list"></div>
           <Input
             type='text'
             id='rename'
