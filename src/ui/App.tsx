@@ -168,7 +168,15 @@ class App extends React.Component {
   }
 
   orderHandler = (source: any, target: any) => {
-    console.log(source, target)
+    const colors = this.state['newColors'].map(el => el),
+          colorsWithoutSource = colors.splice(source.position, 1)[0]
+
+    colors.splice(source.position, 0);
+    colors.splice(parseFloat(target.position), 0, colorsWithoutSource);
+    this.setState({
+      newColors: colors,
+      onGoingStep: 'color changed'
+    })
   }
 
   presetHandler = (e: any) => {
