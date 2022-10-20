@@ -94,7 +94,7 @@ export default class CreatePalette extends React.Component<Props> {
         <Message
           icon='library'
           messages= {[
-            'Hold Shift ⇧ while dragging 50 or 900 to distribute knobs\' horizontal spacing',
+            'Hold Shift ⇧ while dragging the first or the last knob to distribute knobs\' horizontal spacing',
             'Hold Ctrl ⌃ or Cmd ⌘ while dragging a knob to move them all'
           ]}
         />
