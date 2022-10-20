@@ -15,6 +15,7 @@ interface Props {
   colors: any;
   context: string;
   preset: any;
+  onScaleChange: any;
   onCaptionsChange: any;
   onColorChange: any;
   onContextChange: any;
@@ -48,7 +49,14 @@ export default class EditPalette extends React.Component<Props> {
   }
 
   // Events
-  slideHandler = (e: string) => e === 'released' ? this.dispatch.scale.on.status = false : this.dispatch.scale.on.status = true
+  slideHandler = (e: string) => {
+    if (e === 'released') {
+      this.dispatch.scale.on.status = false
+      this.props.onScaleChange(palette)
+    }
+    else
+      this.dispatch.scale.on.status = true
+  }
 
   checkHandler = (e: any) => {
     this.props.onCaptionsChange(e.target.checked);

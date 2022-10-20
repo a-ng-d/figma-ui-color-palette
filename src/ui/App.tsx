@@ -272,6 +272,8 @@ class App extends React.Component {
       })
   }
 
+  slideHandler = (palette: any) => this.setState({ newScale: palette.scale })
+
   render() {
     onmessage = (e: any) => {
       switch (e.data.pluginMessage.type) {
@@ -341,6 +343,7 @@ class App extends React.Component {
             preset={this.state['preset']}
             context={this.state['context']}
             hasCaptions={this.state['hasCaptions']}
+            onScaleChange={this.slideHandler}
             onCaptionsChange={this.captionsHandler}
             onColorChange={this.colorHandler}
             onContextChange={this.navHandler}
