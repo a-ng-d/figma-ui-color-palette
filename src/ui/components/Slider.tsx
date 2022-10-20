@@ -25,7 +25,7 @@ export default class Slider extends React.Component<Props> {
           range = knob.parentElement as HTMLElement,
           shift = e.nativeEvent.layerX as number,
           tooltip = knob.children[0] as HTMLElement,
-          rangeWidth = range.offsetWidth as number ,
+          rangeWidth = range.offsetWidth as number,
           slider = range.parentElement as HTMLElement,
           knobs = Array.from(range.children as HTMLCollectionOf<HTMLElement>);
 
