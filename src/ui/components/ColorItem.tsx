@@ -2,7 +2,6 @@ import * as React from 'react';
 import chroma from 'chroma-js';
 import Input from './Input';
 import Button from './Button';
-import { v4 as uuidv4 } from 'uuid';
 
 interface Props {
   name: string;
