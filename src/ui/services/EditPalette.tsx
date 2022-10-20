@@ -17,7 +17,8 @@ interface Props {
   preset: any;
   onCaptionsChange: any;
   onColorChange: any;
-  onContextChange: any
+  onContextChange: any;
+  onOrderChange: any
 };
 
 export default class EditPalette extends React.Component<Props> {
@@ -31,6 +32,18 @@ export default class EditPalette extends React.Component<Props> {
         () => parent.postMessage({ pluginMessage: { type: 'update-scale', palette } }, '*'),
         500
       )
+    };
+    this.state = {
+      selectedElement: {
+        id: '',
+        position: null
+      },
+      hoveredElement: {
+        id: '',
+        hasGuideAbove: false,
+        hasGuideBelow: false,
+        position: null
+      }
     }
   }
 
@@ -41,15 +54,89 @@ export default class EditPalette extends React.Component<Props> {
     this.props.onCaptionsChange(e.target.checked);
     palette.captions = e.target.checked;
     parent.postMessage({ pluginMessage: { type: 'update-captions', palette } }, '*')
+    this.setState({
+      selectedElement: {
+        id: '',
+        position: null
+      }
+    })
   }
 
-  colorHandler = (e: any) => this.props.onColorChange(e)
+  colorHandler = (e: any) => {
+    this.props.onColorChange(e)
+    this.setState({
+      selectedElement: {
+        id: '',
+        position: null
+      }
+    })
+  }
 
-  navHandler = (e: any) => this.props.onContextChange(e)
+  navHandler = (e: any) => {
+    this.props.onContextChange(e)
+    this.setState({
+      selectedElement: {
+        id: '',
+        position: null
+      }
+    })
+  }
 
-  onCreate = () => parent.postMessage({ pluginMessage: { type: 'create-local-styles', palette } }, '*')
+  selectionHandler = (e: any) => {
+    const target: HTMLElement = e.currentTarget,
+          neighbours: Array<Element> = Array.from(target.parentElement.children)
+    if (target !== e.target) return;
+    this.setState({
+      selectedElement: {
+        id: target.dataset.id,
+        position: target.dataset.position
+      }
+    })
+  }
 
-  onUpdate = () => parent.postMessage({ pluginMessage: { type: 'update-local-styles', palette } }, '*')
+  dragHandler = (id: string, hasGuideAbove: boolean, hasGuideBelow: boolean, position: number) => {
+    this.setState({
+      hoveredElement: {
+        id: id,
+        hasGuideAbove: hasGuideAbove,
+        hasGuideBelow: hasGuideBelow,
+        position: position
+      }
+    })
+  }
+
+  dropHandler = (e: any) => {
+    this.props.onOrderChange(this.state['selectedElement'], this.state['hoveredElement'])
+  }
+
+  unSelectColor = (e: any) => {
+    e.target.closest('li.colors__item') == null ? this.setState({
+      selectedElement: {
+        id: '',
+        position: null
+      }
+    }) : null
+  }
+
+  onCreate = () => {
+    parent.postMessage({ pluginMessage: { type: 'create-local-styles', palette } }, '*')
+    this.setState({
+      selectedElement: {
+        id: '',
+        position: null
+      }
+    })
+  }
+
+  onUpdate = () => {
+    parent.postMessage({ pluginMessage: { type: 'update-local-styles', palette } }, '*')
+    this.setState({
+      selectedElement: {
+        id: '',
+        position: null
+      }
+    })
+  }
 
   // Templates
   Scale = () => {
@@ -94,13 +181,20 @@ export default class EditPalette extends React.Component<Props> {
           />
         </div>
         <ul className='colors'>
-          {this.props.colors.map(color =>
+          {this.props.colors.map((color, index) =>
             <ColorItem
               key={color.id}
               name={color.name}
+              index={index}
               hex={chroma(color.rgb.r * 255, color.rgb.g * 255, color.rgb.b * 255).hex()}
               uuid={color.id}
+              selected={this.state['selectedElement']['id'] === color.id ? true : false}
+              guideAbove={this.state['hoveredElement']['id'] === color.id ? this.state['hoveredElement']['hasGuideAbove'] : false}
+              guideBelow={this.state['hoveredElement']['id'] === color.id ? this.state['hoveredElement']['hasGuideBelow'] : false}
               onColorChange={this.colorHandler}
+              onSelectionChange={this.selectionHandler}
+              onDragChange={this.dragHandler}
+              onOrderChange={this.dropHandler}
             />
           )}
         </ul>
@@ -160,7 +254,7 @@ export default class EditPalette extends React.Component<Props> {
           active={this.props.context}
           onClick={this.navHandler}
         />
-        <section>
+        <section onClick={this.unSelectColor}>
           <this.Controls />
         </section>
       </>

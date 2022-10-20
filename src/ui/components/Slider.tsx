@@ -62,8 +62,9 @@ export default class Slider extends React.Component<Props> {
 
   onSlide = (e: any, slider: HTMLElement, range: HTMLElement, knobs: Array<HTMLElement>, knob: HTMLElement, tooltip: HTMLElement, offset: number, shift: number, rangeWidth: number, update: any) => {
     let limitMin: number, limitMax: number;
-    const gap: number = this.doMap(2, 0, 100, 0, rangeWidth);
-    offset = e.clientX - slider.offsetLeft - shift;
+    const gap: number = this.doMap(2, 0, 100, 0, rangeWidth),
+          sliderPadding: number = parseFloat(window.getComputedStyle(slider, null).getPropertyValue('padding-left'));
+    offset = e.clientX - slider.offsetLeft - sliderPadding - shift;
 
     palette.min = parseFloat(this.doMap((range.lastChild as HTMLElement).offsetLeft, 0, rangeWidth, 0, 100).toFixed(1));
     palette.max = parseFloat(this.doMap((range.firstChild as HTMLElement).offsetLeft, 0, rangeWidth, 0, 100).toFixed(1));
