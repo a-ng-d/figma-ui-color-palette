@@ -272,7 +272,7 @@ class App extends React.Component {
       })
   }
 
-  slideHandler = (palette: any) => this.setState({ newScale: palette.scale })
+  slideHandler = (palette) => this.setState({ newScale: palette.scale })
 
   render() {
     onmessage = (e: any) => {
