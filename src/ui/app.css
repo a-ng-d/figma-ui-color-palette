@@ -342,7 +342,7 @@ li.colors__item[draggable="true"] {
   background-color: var(--blue3)
 }
 
-li.colors__item--dragged:active {
+li.colors__item[draggable="true"]:active {
   cursor: grabbing
 }
 
