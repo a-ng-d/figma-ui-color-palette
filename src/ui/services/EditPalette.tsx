@@ -111,7 +111,10 @@ export default class EditPalette extends React.Component<Props> {
 
   unSelectColor = (e: any) => {
     e.target.closest('li.colors__item') == null ? this.setState({
-      selectedElementId: ''
+      selectedElement: {
+        id: '',
+        position: null
+      }
     }) : null
   }
 
