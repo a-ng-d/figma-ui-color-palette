@@ -168,15 +168,26 @@ class App extends React.Component {
   }
 
   orderHandler = (source: any, target: any) => {
-    const colors = this.state['newColors'].map(el => el),
-          colorsWithoutSource = colors.splice(source.position, 1)[0]
+    let colors = this.state['newColors'].map(el => el),
+        position;
+
+    const colorsWithoutSource = colors.splice(source.position, 1)[0];
+
+    if (source.id === target.id)
+      position = parseFloat(target.position)
+    else if (target.hasGuideAbove)
+      position = parseFloat(target.position)
+    else if (target.hasGuideBelow)
+      position = parseFloat(target.position)
+
 
     colors.splice(source.position, 0);
-    colors.splice(parseFloat(target.position), 0, colorsWithoutSource);
+    colors.splice(position, 0, colorsWithoutSource);
     this.setState({
       newColors: colors,
       onGoingStep: 'color changed'
     })
+    parent.postMessage({ pluginMessage: { type: 'update-colors', data: colors } }, '*')
   }
 
   presetHandler = (e: any) => {
