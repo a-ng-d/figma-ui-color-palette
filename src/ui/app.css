@@ -342,8 +342,12 @@ li.colors__item[draggable="true"] {
   background-color: var(--blue3)
 }
 
-li.colors__item--dragged[draggable="true"] {
+li.colors__item--dragged:active {
   cursor: grabbing
+}
+
+li.colors__item--dragged:active > div {
+  pointer-events: none
 }
 
 li.colors__item--above {
