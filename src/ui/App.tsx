@@ -173,20 +173,22 @@ class App extends React.Component {
 
     const colorsWithoutSource = colors.splice(source.position, 1)[0];
 
-    if (source.id === target.id)
+    if (target.hasGuideAbove && target.position > source.position)
+      position = parseFloat(target.position) - 1
+    else if (target.hasGuideBelow && target.position > source.position)
       position = parseFloat(target.position)
-    else if (target.hasGuideAbove)
+    else if (target.hasGuideAbove && target.position < source.position)
       position = parseFloat(target.position)
-    else if (target.hasGuideBelow)
-      position = parseFloat(target.position)
+    else if (target.hasGuideBelow && target.position < source.position)
+      position = parseFloat(target.position) + 1
+    else
+      position = parseFloat(target.position);
 
-
-    colors.splice(source.position, 0);
     colors.splice(position, 0, colorsWithoutSource);
     this.setState({
       newColors: colors,
       onGoingStep: 'color changed'
-    })
+    });
     parent.postMessage({ pluginMessage: { type: 'update-colors', data: colors } }, '*')
   }
 
