@@ -1,11 +1,21 @@
 import chroma from 'chroma-js';
 import Colors from './Colors';
 
+interface UIColors {
+  name: string,
+  rgb: {
+    r: number,
+    g: number,
+    b: number
+  },
+  id: string | undefined
+}
+
 export default class Palette {
 
   name: string;
   scale: string;
-  colors: Array<Object>;
+  colors: Array<UIColors>;
   captions: boolean;
   preset: string;
   children: any;
@@ -48,12 +58,13 @@ export default class Palette {
       let fills = element['fills'].filter(fill => fill.type === 'SOLID');
 
       if (fills.length != 0) {
-        fills.forEach(fill => {
-          const obj = {};
-          obj['name'] = element.name;
-          obj['rgb'] = fill.color;
-          this.colors.push(obj)
-        })
+        fills.forEach(fill =>
+          this.colors.push({
+            name: element.name,
+            rgb: fill.color,
+            id: undefined
+          })
+        )
       } else
         figma.notify(`The layer '${element.name}' must get at least one solid color`)
 
