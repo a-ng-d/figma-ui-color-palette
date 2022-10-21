@@ -229,6 +229,7 @@ div.slider .slider__label:after {
 }
 
 div.slider .slider__tooltip {
+  width: var(--size-medium);
   padding: var(--size-xxxsmall);
   background: var(--black);
   color: var(--white);
@@ -236,6 +237,7 @@ div.slider .slider__tooltip {
   transform: translateX(-50%) translateY(-100%);
   left: 50%;
   top: calc(var(--size-xsmall) * -1);
+  text-align: center;
   user-select: none;
   display: none
 }
