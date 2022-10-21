@@ -93,7 +93,7 @@ export default class Slider extends React.Component<Props> {
 
     // link every knob
     if (e.ctrlKey || e.metaKey) {
-      if (offset <= (knob.offsetLeft - (range.lastChild as HTMLElement).offsetLeft) || offset > (rangeWidth - (range.firstChild as HTMLElement).offsetLeft + knob.offsetLeft))
+      if (offset < (knob.offsetLeft - (range.lastChild as HTMLElement).offsetLeft) || offset > (rangeWidth - (range.firstChild as HTMLElement).offsetLeft + knob.offsetLeft))
         offset = knob.offsetLeft
       else
         this.linkKnobs(offset, knob, knobs, rangeWidth)
