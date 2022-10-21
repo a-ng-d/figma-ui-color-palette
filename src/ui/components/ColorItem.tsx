@@ -14,6 +14,7 @@ interface Props {
   onColorChange: any;
   onSelectionChange: any;
   onDragChange: any;
+  onDropOutside: any
   onOrderChange: any
 };
 
@@ -47,6 +48,7 @@ export default class ColorItem extends React.Component<Props> {
   onDragEnd = (e: any) => {
     this.setState({ isDragged: false })
     this.props.onDragChange('', false, false, undefined)
+    this.props.onDropOutside(e)
   }
 
   onDragOver = (e: any) => {

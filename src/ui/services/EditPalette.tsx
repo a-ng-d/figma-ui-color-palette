@@ -113,6 +113,19 @@ export default class EditPalette extends React.Component<Props> {
     })
   }
 
+  dropOutsideHandler = (e: any) => {
+    const target: any = e.target,
+          parent: any = target.parentNode,
+          scrollY: any = parent.parentNode.parentNode.scrollTop,
+          parentRefTop: number = parent.offsetTop,
+          parentRefBottom: number = parentRefTop + parent.clientHeight;
+
+    if (e.pageY + scrollY < parentRefTop)
+      this.props.onOrderChange(this.state['selectedElement'], this.state['hoveredElement'])
+    else if (e.pageY + scrollY > parentRefBottom)
+      this.props.onOrderChange(this.state['selectedElement'], this.state['hoveredElement'])
+  }
+
   dropHandler = (e: any) => {
     this.props.onOrderChange(this.state['selectedElement'], this.state['hoveredElement'])
   }
@@ -202,6 +215,7 @@ export default class EditPalette extends React.Component<Props> {
               onColorChange={this.colorHandler}
               onSelectionChange={this.selectionHandler}
               onDragChange={this.dragHandler}
+              onDropOutside={this.dropOutsideHandler}
               onOrderChange={this.dropHandler}
             />
           )}
@@ -262,7 +276,9 @@ export default class EditPalette extends React.Component<Props> {
           active={this.props.context}
           onClick={this.navHandler}
         />
-        <section onClick={this.unSelectColor}>
+        <section
+          onClick={this.unSelectColor}
+        >
           <this.Controls />
         </section>
       </>
