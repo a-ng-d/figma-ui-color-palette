@@ -139,7 +139,7 @@ export default class Slider extends React.Component<Props> {
 
   updateKnobTooltip = (tooltip: HTMLElement, value: string) => {
     tooltip.style.display = 'block';
-    tooltip.textContent = value
+    tooltip.textContent = value === '100.0' ? '100' : value
   }
 
   distributeKnobs = (type: string, value: string, knobs: Array<HTMLElement>) => {
