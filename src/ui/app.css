@@ -1,15 +1,19 @@
 /* Layout */
-html {
+html, body {
   overflow: hidden
 }
 
-div, ul, li, section, input {
+input {
   cursor: default
 }
 
 div#react-page {
   height: 100%;
   user-select: none
+}
+
+div#react-page.dragged-ghost {
+  cursor: grabbing
 }
 
 main {

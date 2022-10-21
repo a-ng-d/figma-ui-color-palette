@@ -40,15 +40,21 @@ export default class ColorItem extends React.Component<Props> {
 
   onDragStart = (e: any) => {
     this.setState({ isDragged: true })
-    var img = new Image();
-    img.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=';
-    e.dataTransfer.setDragImage(img, 0, 0)
+    const clone = e.currentTarget.cloneNode(true)
+    clone.style.opacity = 0;
+    clone.id = "ghost";
+    document.body.appendChild(clone);
+    e.dataTransfer.setDragImage(clone, 0, 0);
+    e.dataTransfer.effectAllowed = 'move';
+    document.querySelector('#react-page').classList.add('dragged-ghost')
   }
 
   onDragEnd = (e: any) => {
-    this.setState({ isDragged: false })
-    this.props.onDragChange('', false, false, undefined)
-    this.props.onDropOutside(e)
+    this.setState({ isDragged: false });
+    this.props.onDragChange('', false, false, undefined);
+    this.props.onDropOutside(e);
+    document.querySelector('#react-page').classList.remove('dragged-ghost')
+    document.querySelector('#ghost').remove()
   }
 
   onDragOver = (e: any) => {
