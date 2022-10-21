@@ -69,9 +69,9 @@ export default class ColorItem extends React.Component<Props> {
 
     let refY: number;
 
-    e.preventDefault()
+    e.preventDefault();
 
-    refY = this.doMap(y, refTop, refBottom, 0, height)
+    refY = this.doMap(y, refTop, refBottom, 0, height);
 
     if (refY >= -1 && refY <= height / 2)
       this.props.onDragChange(target.dataset.id, true, false, target.dataset.position)
