@@ -172,7 +172,7 @@ export default class ColorItem extends React.Component<Props> {
         <div className="colors__others-options">
           <Switch
             id='cielab'
-            label='CIELAB'
+            label='CIELAB space'
             isChecked={this.props.cielab}
             onChange={this.inputHandler}
           />

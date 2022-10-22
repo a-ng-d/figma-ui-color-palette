@@ -344,8 +344,11 @@ li.colors__item {
 }
 
 li.colors__item[draggable="true"] {
-  --white: transparent;
   background-color: var(--blue3)
+}
+
+li.colors__item[draggable="true"] .input {
+  --white: transparent
 }
 
 li.colors__item[draggable="true"]:active {
@@ -387,7 +390,7 @@ li .colors__buttons {
 }
 
 li .colors__others-options {
-  grid-column: start / span 8;
+  grid-column: start / span 16;
   grid-row: 2 / 2
 }
 
