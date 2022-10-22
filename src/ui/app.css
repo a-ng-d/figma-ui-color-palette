@@ -1,11 +1,19 @@
 /* Layout */
-div, ul, li, section, input {
+html, body {
+  overflow: hidden
+}
+
+input {
   cursor: default
 }
 
 div#react-page {
   height: 100%;
   user-select: none
+}
+
+div#react-page.dragged-ghost {
+  cursor: grabbing
 }
 
 main {
@@ -35,7 +43,7 @@ div.actions {
 div.lightness-scale,
 div.starting-colors,
 div.onboarding {
-  padding: var(--size-xsmall) var(--size-small);
+  padding: var(--size-xsmall) 0;
   display: flex;
   flex: 1;
   flex-direction: column;
@@ -44,6 +52,10 @@ div.onboarding {
 
 div.lightness-scale {
   justify-content: space-between
+}
+
+div.lightness-scale > div {
+  padding: 0 var(--size-small)
 }
 
 div.onboarding {
@@ -82,7 +94,8 @@ div.actions .buttons {
 /* Controls */
 div.section-controls {
   display: flex;
-  justify-content: space-between
+  justify-content: space-between;
+  padding: 0 var(--size-small)
 }
 
 div.section-controls .section-title,
@@ -220,6 +233,7 @@ div.slider .slider__label:after {
 }
 
 div.slider .slider__tooltip {
+  width: var(--size-medium);
   padding: var(--size-xxxsmall);
   background: var(--black);
   color: var(--white);
@@ -227,6 +241,7 @@ div.slider .slider__tooltip {
   transform: translateX(-50%) translateY(-100%);
   left: 50%;
   top: calc(var(--size-xsmall) * -1);
+  text-align: center;
   user-select: none;
   display: none
 }
@@ -323,19 +338,55 @@ ul.colors {
 
 li.colors__item {
   display: flex;
-  gap: var(--size-xsmall)
+  gap: var(--size-xsmall);
+  padding: 0 var(--size-small);
+  justify-content: space-between;
+  position: relative
 }
 
-li.colors__item label {
-  flex: 1
+li.colors__item[draggable="true"] {
+  background-color: var(--blue3)
+}
+
+li.colors__item[draggable="true"]:active {
+  cursor: grabbing
+}
+
+li.colors__item--dragged:active > div {
+  pointer-events: none
+}
+
+li.colors__item--above {
+  box-shadow: 0 1px 0 var(--blue) inset, 0 -1px 0 var(--blue)
+}
+
+li.colors__item--below {
+  box-shadow: 0 -1px 0 var(--blue) inset, 0 1px 0 var(--blue)
+}
+
+li.colors__item .input__field {
+  background-color: transparent
+}
+
+div.colors__left-options {
+  display: flex;
+  gap: var(--size-xsmall)
 }
 
 div.colors__parameters {
   display: flex;
-  flex: 4;
   gap: var(--size-xxxsmall)
 }
 
 div.colors__parameters div {
   flex: 0 0 88px
+}
+
+/* Onboarding */
+.onboarding-tip {
+  gap: var(--size-xxsmall)
+}
+
+.onboarding-tip__msg {
+  flex: 1
 }
