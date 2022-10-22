@@ -142,7 +142,8 @@ class App extends React.Component {
             g: .92,
             b: .97
           },
-          id: uuidv4()
+          id: uuidv4(),
+          oklch: false
         });
         this.setState({
           newColors: colors,
@@ -165,10 +166,10 @@ class App extends React.Component {
         e.key === 'Enter' ? parent.postMessage({ pluginMessage: { type: 'update-colors', data: colors } }, '*') : null;
         break;
 
-      case 'cielab':
+      case 'oklch':
         colors = this.state['newColors'].map(item => {
           if (item.id === id)
-            item.cielab = e.target.checked
+            item.oklch = e.target.checked
           return item
         });
         this.setState({

@@ -208,7 +208,7 @@ export default class EditPalette extends React.Component<Props> {
               name={color.name}
               index={index}
               hex={chroma(color.rgb.r * 255, color.rgb.g * 255, color.rgb.b * 255).hex()}
-              cielab={color.cielab}
+              oklch={color.oklch}
               uuid={color.id}
               selected={this.state['selectedElement']['id'] === color.id ? true : false}
               guideAbove={this.state['hoveredElement']['id'] === color.id ? this.state['hoveredElement']['hasGuideAbove'] : false}

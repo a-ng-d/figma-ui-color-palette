@@ -7,7 +7,7 @@ import Switch from './Switch';
 interface Props {
   name: string;
   hex: string;
-  cielab: boolean
+  oklch: boolean
   uuid: string;
   index: number;
   selected: boolean;
@@ -171,9 +171,9 @@ export default class ColorItem extends React.Component<Props> {
         {this.state['hasMoreOptions'] ?
         <div className="colors__others-options">
           <Switch
-            id='cielab'
-            label='CIELAB space'
-            isChecked={this.props.cielab}
+            id='oklch'
+            label='Enable OKLCH'
+            isChecked={this.props.oklch}
             onChange={this.inputHandler}
           />
         </div> : null}

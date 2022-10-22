@@ -160,10 +160,10 @@ figma.ui.onmessage = msg => {
 
 const messageToUI = () => {
   const selection: ReadonlyArray<BaseNode> = figma.currentPage.selection
-  
+
   if (selection.length == 1 && selection[0].getPluginData('scale') != '') {
     selection[0].getPluginData('preset') === '' ? selection[0].setPluginData('preset', JSON.stringify(presets.material)) : null;
-    !selection[0].getPluginData('colors').includes('cielab') ? selection[0].setPluginData('colors', addCielab(selection[0].getPluginData('colors'))) : null
+    !selection[0].getPluginData('colors').includes('oklch') ? selection[0].setPluginData('colors', addOklch(selection[0].getPluginData('colors'))) : null
 
     figma.ui.postMessage({
       type: 'palette-selected',
@@ -191,8 +191,8 @@ const messageToUI = () => {
   })
 };
 
-const addCielab = (data: string): string => {
+const addOklch = (data: string): string => {
   let colors = JSON.parse(data);
-  colors.forEach(color => color.cielab = false)
+  colors.forEach(color => color.oklch = false)
   return JSON.stringify(colors)
 }

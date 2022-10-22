@@ -48,7 +48,7 @@ export default class Colors {
 
       Object.values(this.parent.scale).reverse().forEach((lightness: any) => {
         let newColor;
-        if (!color.cielab)
+        if (color.oklch)
           newColor = chroma([color.rgb.r * 255, color.rgb.g * 255, color.rgb.b * 255]).set('oklch.l', lightness / 100)
         else
           newColor = chroma([color.rgb.r * 255, color.rgb.g * 255, color.rgb.b * 255]).set('lch.l', lightness);
