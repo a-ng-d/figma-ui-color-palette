@@ -344,6 +344,7 @@ li.colors__item {
 }
 
 li.colors__item[draggable="true"] {
+  --white: transparent;
   background-color: var(--blue3)
 }
 
@@ -361,10 +362,6 @@ li.colors__item--above {
 
 li.colors__item--below {
   box-shadow: 0 -1px 0 var(--blue) inset, 0 1px 0 var(--blue)
-}
-
-li.colors__item .input__field {
-  background-color: transparent
 }
 
 li .colors__name {
