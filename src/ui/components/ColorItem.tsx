@@ -3,7 +3,6 @@ import chroma from 'chroma-js';
 import Input from './Input';
 import Button from './Button';
 import Switch from './Switch';
-import { v4 as uuidv4 } from 'uuid';
 
 interface Props {
   name: string;
