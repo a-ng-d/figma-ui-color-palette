@@ -388,6 +388,12 @@ li .colors__buttons {
   display: flex;
   justify-content: flex-end
 }
+
+li .colors__others-options {
+  grid-column: start / span 8;
+  grid-row: 2 / 2
+}
+
 /* Onboarding */
 .onboarding-tip {
   gap: var(--size-xxsmall)

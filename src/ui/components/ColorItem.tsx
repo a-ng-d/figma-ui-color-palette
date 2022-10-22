@@ -25,7 +25,8 @@ export default class ColorItem extends React.Component<Props> {
   constructor(props) {
     super(props);
     this.state = {
-      isDragged: false
+      isDragged: false,
+      hasMoreOptions: false
     }
   }
 
@@ -37,6 +38,8 @@ export default class ColorItem extends React.Component<Props> {
 
   // Events
   inputHandler = (e: any) => this.props.onColorChange(e)
+
+  optionsHandler = () => this.setState({ hasMoreOptions: !this.state['hasMoreOptions'] })
 
   onMouseDown = (e: any) => this.props.onSelectionChange(e)
 
@@ -98,7 +101,6 @@ export default class ColorItem extends React.Component<Props> {
         onDragOver={this.onDragOver}
         onDrop={this.onDrop}
       >
-        <div className="colors__left-options">
         <div className="colors__name">
           <Input
             type='text'
@@ -150,6 +152,14 @@ export default class ColorItem extends React.Component<Props> {
         </div>
         <div className="colors__buttons">
           <Button
+            id='more'
+            icon='ellipses'
+            type='icon'
+            label={null}
+            state={this.state['hasMoreOptions'] ? 'selected' : ''}
+            action={this.optionsHandler}
+          />
+          <Button
             id='remove'
             icon='minus'
             type='icon'
@@ -159,7 +169,7 @@ export default class ColorItem extends React.Component<Props> {
           />
         </div>
         {this.state['hasMoreOptions'] ?
-        <div className="colors__secondary-options">
+        <div className="colors__others-options">
           <Switch
             id='cielab'
             label='CIELAB'
