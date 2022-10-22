@@ -44,7 +44,10 @@ class App extends React.Component {
     let name, colors, id;
     try {
       name = e.nativeEvent.path.filter(el => el.className === 'colors__item')[0].id;
-      id = e.nativeEvent.path.filter(el => el.className === 'colors__item')[0].getAttribute('data-id')
+      id = e.nativeEvent.path.filter(el => {
+        try { return el.classList.contains('colors__item') }
+        catch {}
+      })[0].getAttribute('data-id')
     } catch {};
 
     switch (e.target.id) {
@@ -177,6 +180,31 @@ class App extends React.Component {
     }
   }
 
+  orderHandler = (source: any, target: any) => {
+    let colors = this.state['newColors'].map(el => el),
+        position;
+
+    const colorsWithoutSource = colors.splice(source.position, 1)[0];
+
+    if (target.hasGuideAbove && target.position > source.position)
+      position = parseFloat(target.position) - 1
+    else if (target.hasGuideBelow && target.position > source.position)
+      position = parseFloat(target.position)
+    else if (target.hasGuideAbove && target.position < source.position)
+      position = parseFloat(target.position)
+    else if (target.hasGuideBelow && target.position < source.position)
+      position = parseFloat(target.position) + 1
+    else
+      position = parseFloat(target.position);
+
+    colors.splice(position, 0, colorsWithoutSource);
+    this.setState({
+      newColors: colors,
+      onGoingStep: 'color changed'
+    });
+    parent.postMessage({ pluginMessage: { type: 'update-colors', data: colors } }, '*')
+  }
+
   presetHandler = (e: any) => {
     switch((e.target as HTMLInputElement).value) {
 
@@ -257,6 +285,8 @@ class App extends React.Component {
       })
   }
 
+  slideHandler = (palette) => this.setState({ newScale: palette.scale })
+
   render() {
     onmessage = (e: any) => {
       switch (e.data.pluginMessage.type) {
@@ -326,9 +356,11 @@ class App extends React.Component {
             preset={this.state['preset']}
             context={this.state['context']}
             hasCaptions={this.state['hasCaptions']}
+            onScaleChange={this.slideHandler}
             onCaptionsChange={this.captionsHandler}
             onColorChange={this.colorHandler}
             onContextChange={this.navHandler}
+            onOrderChange={this.orderHandler}
           />
         : null}
         {this.state['service'] === 'None' ? <Onboarding /> : null}

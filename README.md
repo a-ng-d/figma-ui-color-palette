@@ -48,6 +48,7 @@ The palette architecture (do not manual edit it) is:
 - Edit the starting colors:
   - By tweaking both the hexadecimal code and LCH parameters
   - By renaming or removing a color
+  - By reordering the colors
   - By adding a new color to the palette
 - Click `Create local styles` to create Figma document local styles from every color of the palette
 - Click `Update the local styles` to update every edited colors already declared as local style
