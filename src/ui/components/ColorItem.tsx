@@ -100,6 +100,7 @@ export default class ColorItem extends React.Component<Props> {
         onDrop={this.onDrop}
       >
         <div className="colors__left-options">
+        <div className="colors__name">
           <Input
             type='text'
             id='rename'
@@ -109,46 +110,46 @@ export default class ColorItem extends React.Component<Props> {
             max=''
             onChange={this.inputHandler}
           />
-          <div className='colors__parameters'>
-            <Input
-              type='color'
-              id='hex'
-              icon={{type: 'none', value: null}}
-              value={this.props.hex}
-              min=''
-              max=''
-              onChange={this.inputHandler}
-            />
-            <Input
-              type='number'
-              id='lightness'
-              icon={{type: 'letter', value: 'L'}}
-              value={chroma(this.props.hex).lch()[0].toFixed(0)}
-              min='0'
-              max='100'
-              onChange={this.inputHandler}
-            />
-            <Input
-              type='number'
-              id='chroma'
-              icon={{type: 'letter', value: 'C'}}
-              value={chroma(this.props.hex).lch()[1].toFixed(0)}
-              min='0'
-              max='100'
-              onChange={this.inputHandler}
-            />
-            <Input
-              type='number'
-              id='hue'
-              icon={{type: 'letter', value: 'H'}}
-              value={chroma(this.props.hex).lch()[2].toFixed(0) == 'NaN' ? 0 : chroma(this.props.hex).lch()[2].toFixed(0)}
-              min='0'
-              max='360'
-              onChange={this.inputHandler}
-            />
-          </div>
         </div>
-        <div className="colors__right-options">
+        <div className="colors__parameters">
+          <Input
+            type='color'
+            id='hex'
+            icon={{type: 'none', value: null}}
+            value={this.props.hex}
+            min=''
+            max=''
+            onChange={this.inputHandler}
+          />
+          <Input
+            type='number'
+            id='lightness'
+            icon={{type: 'letter', value: 'L'}}
+            value={chroma(this.props.hex).lch()[0].toFixed(0)}
+            min='0'
+            max='100'
+            onChange={this.inputHandler}
+          />
+          <Input
+            type='number'
+            id='chroma'
+            icon={{type: 'letter', value: 'C'}}
+            value={chroma(this.props.hex).lch()[1].toFixed(0)}
+            min='0'
+            max='100'
+            onChange={this.inputHandler}
+          />
+          <Input
+            type='number'
+            id='hue'
+            icon={{type: 'letter', value: 'H'}}
+            value={chroma(this.props.hex).lch()[2].toFixed(0) == 'NaN' ? 0 : chroma(this.props.hex).lch()[2].toFixed(0)}
+            min='0'
+            max='360'
+            onChange={this.inputHandler}
+          />
+        </div>
+        <div className="colors__buttons">
           <Button
             id='remove'
             icon='minus'

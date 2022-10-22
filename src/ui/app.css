@@ -337,10 +337,9 @@ ul.colors {
 }
 
 li.colors__item {
-  display: flex;
-  gap: var(--size-xsmall);
+  display: grid;
+  grid-template-columns: [start] repeat(62, 1fr) [end];
   padding: 0 var(--size-small);
-  justify-content: space-between;
   position: relative
 }
 
@@ -368,20 +367,27 @@ li.colors__item .input__field {
   background-color: transparent
 }
 
-div.colors__left-options {
-  display: flex;
-  gap: var(--size-xsmall)
+li .colors__name {
+  grid-column: start / 12;
+  grid-row: 1 / 1
 }
 
-div.colors__parameters {
-  display: flex;
-  gap: var(--size-xxxsmall)
+li .colors__parameters {
+  grid-column: 12 / span 24;
+  grid-row: 1 / 1;
+  display: flex
 }
 
-div.colors__parameters div {
+li .input {
   flex: 0 0 88px
 }
 
+li .colors__buttons {
+  grid-area: span 8 / end;
+  grid-row: 1 / 1;
+  display: flex;
+  justify-content: flex-end
+}
 /* Onboarding */
 .onboarding-tip {
   gap: var(--size-xxsmall)
