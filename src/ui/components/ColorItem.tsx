@@ -59,7 +59,8 @@ export default class ColorItem extends React.Component<Props> {
   }
 
   onDragOver = (e: any) => {
-    const target: any = e.target,
+    e.preventDefault();
+    const target: any = e.currentTarget,
           height: number = target.clientHeight,
           parentY: number = target.parentNode.offsetTop,
           scrollY: number = target.parentNode.parentNode.parentNode.scrollTop,
@@ -70,8 +71,6 @@ export default class ColorItem extends React.Component<Props> {
 
     let refY: number;
 
-    e.preventDefault();
-
     refY = doMap(y, refTop, refBottom, 0, height);
 
     if (refY >= -1 && refY <= height / 2)
@@ -80,7 +79,10 @@ export default class ColorItem extends React.Component<Props> {
       this.props.onDragChange(target.dataset.id, false, true, target.dataset.position)
   }
 
-  onDrop = (e: any) => this.props.onOrderChange(e)
+  onDrop = (e: any) => {
+    e.preventDefault();
+    this.props.onOrderChange(e)
+  }
 
   render() {
     return(

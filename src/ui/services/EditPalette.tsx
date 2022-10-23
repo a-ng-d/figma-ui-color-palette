@@ -126,9 +126,7 @@ export default class EditPalette extends React.Component<Props> {
       this.props.onOrderChange(this.state['selectedElement'], this.state['hoveredElement'])
   }
 
-  dropHandler = (e: any) => {
-    this.props.onOrderChange(this.state['selectedElement'], this.state['hoveredElement'])
-  }
+  dropHandler = (e: any) => this.props.onOrderChange(this.state['selectedElement'], this.state['hoveredElement'])
 
   unSelectColor = (e: any) => {
     e.target.closest('li.colors__item') == null ? this.setState({
