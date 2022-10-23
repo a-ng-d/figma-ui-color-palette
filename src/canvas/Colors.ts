@@ -46,9 +46,19 @@ export default class Colors {
       const rowName = new Sample(color.name, null, [color.rgb.r * 255, color.rgb.g * 255, color.rgb.b * 255], this.parent.captions).makeName('absolute', 150, 200, 10);
       row.appendChild(rowName);
 
-      Object.values(this.parent.scale).reverse().forEach(lightness => {
-        let newColor = chroma([color.rgb.r * 255, color.rgb.g * 255, color.rgb.b * 255]).set('lch.l', lightness);
-        const sample = new Sample(color.name, Object.keys(this.parent.scale).find(key => this.parent.scale[key] === lightness).substr(10), newColor._rgb, this.parent.captions).makeScale(150, 200, 10);
+      Object.values(this.parent.scale).reverse().forEach((lightness: any) => {
+        let newColor;
+        if (color.oklch)
+          newColor = chroma([color.rgb.r * 255, color.rgb.g * 255, color.rgb.b * 255]).set('oklch.l', lightness / 100)
+        else
+          newColor = chroma([color.rgb.r * 255, color.rgb.g * 255, color.rgb.b * 255]).set('lch.l', lightness);
+
+        const sample = new Sample(
+          color.name,
+          Object.keys(this.parent.scale).find(key => this.parent.scale[key] === lightness).substr(10),
+          newColor._rgb,
+          this.parent.captions
+        ).makeScale(150, 200, 10);
         row.name = color.name;
         row.appendChild(sample)
       });

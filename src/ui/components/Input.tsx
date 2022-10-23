@@ -2,11 +2,11 @@ import * as React from 'react';
 
 interface Props {
   type: string;
-  id: string;
   icon: any;
   value: string;
   min: string;
   max: string;
+  feature: string;
   onChange: any
 };
 
@@ -22,8 +22,8 @@ export default class Input extends React.Component<Props> {
   Color = () => {
     return (
       <div className='input input--with-icon'>
-        <input id={this.props.id} type='color' value={this.props.value} onChange={this.props.onChange} onBlur={this.props.onChange} />
-        <input id={this.props.id} type='input' className='input__field' value={this.props.value.toUpperCase().substr(1, 6)} onChange={this.props.onChange} readOnly />
+        <input data-feature={this.props.feature} type='color' value={this.props.value} onChange={this.props.onChange} onBlur={this.props.onChange} />
+        <input type='input' className='input__field' value={this.props.value.toUpperCase().substr(1, 6)} onChange={this.props.onChange} readOnly />
       </div>
     )
   }
@@ -32,7 +32,7 @@ export default class Input extends React.Component<Props> {
     return (
       <div className={`input${this.props.icon.type === 'none' ? '' : ' input--with-icon'}`}>
         <div className={`icon${this.props.icon.type === 'icon' ? `icon--${this.props.icon.value}` : ''}`}>{this.props.icon.type === 'letter' ? this.props.icon.value : ''}</div>
-        <input id={this.props.id} type='number' className='input__field' value={this.props.value} min={this.props.min} max={this.props.max} step='1' onKeyDown={this.onNudge} onChange={this.props.onChange} />
+        <input data-feature={this.props.feature} type='number' className='input__field' value={this.props.value} min={this.props.min} max={this.props.max} step='1' onKeyDown={this.onNudge} onChange={this.props.onChange} />
       </div>
     )
   }
@@ -41,7 +41,7 @@ export default class Input extends React.Component<Props> {
     return (
       <div className={`input${this.props.icon.type === 'none' ? '' : ' input--with-icon'}`}>
         <div className={`icon${this.props.icon.type === 'icon' ? ` icon--${this.props.icon.value}` : ''}`}>{this.props.icon.type === 'letter' ? this.props.icon.value : ''}</div>
-        <input id={this.props.id} type='text' className='input__field' value={this.props.value} onKeyPress={this.props.onChange} onChange={this.props.onChange} onBlur={this.props.onChange} />
+        <input data-feature={this.props.feature} type='text' className='input__field' value={this.props.value} onKeyPress={this.props.onChange} onChange={this.props.onChange} onBlur={this.props.onChange} />
       </div>
     )
   }

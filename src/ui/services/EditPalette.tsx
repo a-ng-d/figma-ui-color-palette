@@ -193,11 +193,11 @@ export default class EditPalette extends React.Component<Props> {
         <div className='section-controls'>
           <div className='section-title'>Starting colors</div>
           <Button
-            id='add'
             icon='plus'
             type='icon'
             label={null}
             state=''
+            feature='add'
             action={this.colorHandler}
           />
         </div>
@@ -208,6 +208,7 @@ export default class EditPalette extends React.Component<Props> {
               name={color.name}
               index={index}
               hex={chroma(color.rgb.r * 255, color.rgb.g * 255, color.rgb.b * 255).hex()}
+              oklch={color.oklch}
               uuid={color.id}
               selected={this.state['selectedElement']['id'] === color.id ? true : false}
               guideAbove={this.state['hoveredElement']['id'] === color.id ? this.state['hoveredElement']['hasGuideAbove'] : false}
@@ -229,19 +230,19 @@ export default class EditPalette extends React.Component<Props> {
       <div className='actions'>
         <div className='buttons'>
           <Button
-            id={null}
             icon={null}
             type='secondary'
             label='Update the local styles'
             state=''
+            feature='update'
             action={this.onUpdate}
           />
           <Button
-            id={null}
             icon={null}
             type='primary'
             label='Create local styles'
             state=''
+            feature='create'
             action={this.onCreate}
           />
         </div>
@@ -249,6 +250,7 @@ export default class EditPalette extends React.Component<Props> {
           id='showCaptions'
           label='Show captions'
           isChecked={this.props.hasCaptions}
+          feature="caption"
           onChange={this.checkHandler}
         />
       </div>

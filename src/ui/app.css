@@ -337,15 +337,18 @@ ul.colors {
 }
 
 li.colors__item {
-  display: flex;
-  gap: var(--size-xsmall);
+  display: grid;
+  grid-template-columns: [start] repeat(62, 1fr) [end];
   padding: 0 var(--size-small);
-  justify-content: space-between;
   position: relative
 }
 
 li.colors__item[draggable="true"] {
   background-color: var(--blue3)
+}
+
+li.colors__item[draggable="true"] .input {
+  --white: transparent
 }
 
 li.colors__item[draggable="true"]:active {
@@ -364,22 +367,31 @@ li.colors__item--below {
   box-shadow: 0 -1px 0 var(--blue) inset, 0 1px 0 var(--blue)
 }
 
-li.colors__item .input__field {
-  background-color: transparent
+li .colors__name {
+  grid-column: start / 12;
+  grid-row: 1 / 1
 }
 
-div.colors__left-options {
-  display: flex;
-  gap: var(--size-xsmall)
+li .colors__parameters {
+  grid-column: 12 / span 24;
+  grid-row: 1 / 1;
+  display: flex
 }
 
-div.colors__parameters {
-  display: flex;
-  gap: var(--size-xxxsmall)
-}
-
-div.colors__parameters div {
+li .input {
   flex: 0 0 88px
+}
+
+li .colors__buttons {
+  grid-area: span 8 / end;
+  grid-row: 1 / 1;
+  display: flex;
+  justify-content: flex-end
+}
+
+li .colors__others-options {
+  grid-column: start / span 16;
+  grid-row: 2 / 2
 }
 
 /* Onboarding */
