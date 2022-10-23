@@ -164,6 +164,7 @@ const messageToUI = () => {
   if (selection.length == 1 && selection[0].getPluginData('scale') != '') {
     selection[0].getPluginData('preset') === '' ? selection[0].setPluginData('preset', JSON.stringify(presets.material)) : null;
     !selection[0].getPluginData('colors').includes('oklch') ? selection[0].setPluginData('colors', addOklch(selection[0].getPluginData('colors'))) : null
+    !selection[0].getPluginData('colors').includes('hueShifting') ? selection[0].setPluginData('colors', setData(selection[0].getPluginData('colors'), 'hueShifting', 0)) : null
 
     figma.ui.postMessage({
       type: 'palette-selected',
