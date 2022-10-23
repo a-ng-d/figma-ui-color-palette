@@ -172,7 +172,7 @@ export default class ColorItem extends React.Component<Props> {
         <div className="colors__space">
           <Switch
             id={'oklch-' + this.props.uuid}
-            label='Enable OKLCH'
+            label='Use OKLCH'
             isChecked={this.props.oklch}
             feature="oklch"
             onChange={this.inputHandler}
