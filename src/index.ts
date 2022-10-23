@@ -162,9 +162,14 @@ const messageToUI = () => {
   const selection: ReadonlyArray<BaseNode> = figma.currentPage.selection
 
   if (selection.length == 1 && selection[0].getPluginData('scale') != '') {
-    selection[0].getPluginData('preset') === '' ? selection[0].setPluginData('preset', JSON.stringify(presets.material)) : null;
-    !selection[0].getPluginData('colors').includes('oklch') ? selection[0].setPluginData('colors', addOklch(selection[0].getPluginData('colors'))) : null
-    !selection[0].getPluginData('colors').includes('hueShifting') ? selection[0].setPluginData('colors', setData(selection[0].getPluginData('colors'), 'hueShifting', 0)) : null
+    if (selection[0].getPluginData('preset') === '')
+      selection[0].setPluginData('preset', JSON.stringify(presets.material));
+
+    if (!selection[0].getPluginData('colors').includes('oklch'))
+      selection[0].setPluginData('colors', setData(selection[0].getPluginData('colors'), 'oklch', false));
+
+    if (!selection[0].getPluginData('colors').includes('hueShifting'))
+      selection[0].setPluginData('colors', setData(selection[0].getPluginData('colors'), 'hueShifting', 0));
 
     figma.ui.postMessage({
       type: 'palette-selected',
@@ -191,12 +196,6 @@ const messageToUI = () => {
         })
   })
 };
-
-const addOklch = (data: string): string => {
-  let colors = JSON.parse(data);
-  colors.forEach(color => color.oklch = false)
-  return JSON.stringify(colors)
-}
 
 const setData = (data: string, entry: string, value: boolean | string | number): string => {
   let parsedData = JSON.parse(data);
