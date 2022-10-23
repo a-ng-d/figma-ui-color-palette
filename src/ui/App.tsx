@@ -182,7 +182,7 @@ class App extends React.Component {
       case 'shift-hue':
         colors = this.state['newColors'].map(item => {
           if (item.id === id)
-            item.hueShifting = e.target.value
+            item.hueShifting = parseFloat(e.target.value)
           return item
         });
         this.setState({
