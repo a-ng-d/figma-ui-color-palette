@@ -110,14 +110,14 @@ export default class CreatePalette extends React.Component<Props> {
           type='primary'
           label='Create a color palette'
           state=''
-          feature="create"
+          feature='create'
           action={this.onCreate}
         />
         <Checkbox
           id='showCaptions'
           label='Show captions'
           isChecked={this.props.hasCaptions}
-          feature="show-caption"
+          feature='show-caption'
           onChange={this.checkHandler}
         />
       </div>

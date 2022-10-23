@@ -43,7 +43,7 @@ export default class ColorItem extends React.Component<Props> {
     this.setState({ isDragged: true })
     const clone = e.currentTarget.cloneNode(true)
     clone.style.opacity = 0;
-    clone.id = "ghost";
+    clone.id = 'ghost';
     document.body.appendChild(clone);
     e.dataTransfer.setDragImage(clone, 0, 0);
     e.dataTransfer.effectAllowed = 'move';
@@ -99,7 +99,7 @@ export default class ColorItem extends React.Component<Props> {
         onDragOver={this.onDragOver}
         onDrop={this.onDrop}
       >
-        <div className="colors__name">
+        <div className='colors__name'>
           <Input
             type='text'
             icon={{type: 'none', value: null}}
@@ -110,7 +110,7 @@ export default class ColorItem extends React.Component<Props> {
             onChange={this.inputHandler}
           />
         </div>
-        <div className="colors__parameters">
+        <div className='colors__parameters'>
           <Input
             type='color'
             icon={{type: 'none', value: null}}
@@ -148,7 +148,7 @@ export default class ColorItem extends React.Component<Props> {
             onChange={this.inputHandler}
           />
         </div>
-        <div className="colors__buttons">
+        <div className='colors__buttons'>
           <Button
             icon='ellipses'
             type='icon'
@@ -167,17 +167,17 @@ export default class ColorItem extends React.Component<Props> {
           />
         </div>
         {this.state['hasMoreOptions'] ?
-        <div className="colors__space">
+        <div className='colors__space'>
           <Switch
             id={'oklch-' + this.props.uuid}
             label='Use OKLCH'
             isChecked={this.props.oklch}
-            feature="oklch"
+            feature='oklch'
             onChange={this.inputHandler}
           />
         </div> : null}
         {this.state['hasMoreOptions'] ?
-        <div className="colors__shift">
+        <div className='colors__shift'>
           <Input
             type='number'
             icon={{type: 'icon', value: 'arrow-left-right'}}

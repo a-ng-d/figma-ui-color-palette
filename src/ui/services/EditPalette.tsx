@@ -249,7 +249,7 @@ export default class EditPalette extends React.Component<Props> {
           id='showCaptions'
           label='Show captions'
           isChecked={this.props.hasCaptions}
-          feature="caption"
+          feature='caption'
           onChange={this.checkHandler}
         />
       </div>
