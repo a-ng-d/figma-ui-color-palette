@@ -177,6 +177,19 @@ class App extends React.Component {
           onGoingStep: 'color changed'
         });
         parent.postMessage({ pluginMessage: { type: 'update-colors', data: colors } }, '*');
+        break;
+
+      case 'shift-hue':
+        colors = this.state['newColors'].map(item => {
+          if (item.id === id)
+            item.hueShifting = e.target.value
+          return item
+        });
+        this.setState({
+          newColors: colors,
+          onGoingStep: 'color changed'
+        });
+        parent.postMessage({ pluginMessage: { type: 'update-colors', data: colors } }, '*')
 
     }
   }
