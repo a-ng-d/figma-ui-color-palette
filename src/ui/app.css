@@ -368,18 +368,18 @@ li.colors__item--below {
 }
 
 li .colors__name {
-  grid-column: start / 12;
+  grid-column: start / span 16;
   grid-row: 1 / 1
 }
 
 li .colors__parameters {
-  grid-column: 12 / span 24;
+  grid-column: 17 / span 40;
   grid-row: 1 / 1;
   display: flex
 }
 
-li .input {
-  flex: 0 0 88px
+li .colors__parameters > .input {
+  width: 88px
 }
 
 li .colors__buttons {
@@ -389,9 +389,18 @@ li .colors__buttons {
   justify-content: flex-end
 }
 
-li .colors__others-options {
+li .colors__space {
   grid-column: start / span 16;
   grid-row: 2 / 2
+}
+
+li .colors__shift {
+  grid-column: 17 / span 16;
+  grid-row: 2 / 2
+}
+
+li .colors__shift > .input {
+  width: 88px
 }
 
 /* Onboarding */

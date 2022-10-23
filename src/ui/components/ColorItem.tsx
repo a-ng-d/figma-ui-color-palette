@@ -169,7 +169,7 @@ export default class ColorItem extends React.Component<Props> {
           />
         </div>
         {this.state['hasMoreOptions'] ?
-        <div className="colors__others-options">
+        <div className="colors__space">
           <Switch
             id={'oklch-' + this.props.uuid}
             label='Enable OKLCH'
@@ -178,6 +178,18 @@ export default class ColorItem extends React.Component<Props> {
             onChange={this.inputHandler}
           />
         </div> : null}
+        {this.state['hasMoreOptions'] ?
+        <div className="colors__shift">
+          <Input
+            type='number'
+            icon={{type: 'icon', value: 'arrow-left-right'}}
+            value={'0'}
+            min='-360'
+            max='360'
+            feature='shift-hue'
+            onChange={this.inputHandler}
+          />
+        </div> : null }
       </li>
     )
   }
