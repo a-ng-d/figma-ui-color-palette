@@ -50,7 +50,7 @@ class App extends React.Component {
       })[0].getAttribute('data-id')
     } catch {};
 
-    switch (e.target.id) {
+    switch (e.target.dataset.feature) {
 
       case 'hex':
         colors = this.state['newColors'].map(item => {
@@ -242,7 +242,7 @@ class App extends React.Component {
 
   customHandler = (e: any) => {
     let scale = this.state['preset']['scale'];
-    switch(e.target.id) {
+    switch(e.target.dataset.feature) {
 
       case 'add':
         if (scale.length < 24) {

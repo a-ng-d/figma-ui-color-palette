@@ -104,76 +104,77 @@ export default class ColorItem extends React.Component<Props> {
         <div className="colors__name">
           <Input
             type='text'
-            id='rename'
             icon={{type: 'none', value: null}}
             value={this.props.name}
             min=''
             max=''
+            feature='rename'
             onChange={this.inputHandler}
           />
         </div>
         <div className="colors__parameters">
           <Input
             type='color'
-            id='hex'
             icon={{type: 'none', value: null}}
             value={this.props.hex}
             min=''
             max=''
+            feature='hex'
             onChange={this.inputHandler}
           />
           <Input
             type='number'
-            id='lightness'
             icon={{type: 'letter', value: 'L'}}
             value={chroma(this.props.hex).lch()[0].toFixed(0)}
             min='0'
             max='100'
+            feature='lightness'
             onChange={this.inputHandler}
           />
           <Input
             type='number'
-            id='chroma'
             icon={{type: 'letter', value: 'C'}}
             value={chroma(this.props.hex).lch()[1].toFixed(0)}
             min='0'
             max='100'
+            feature='chroma'
             onChange={this.inputHandler}
           />
           <Input
             type='number'
-            id='hue'
             icon={{type: 'letter', value: 'H'}}
             value={chroma(this.props.hex).lch()[2].toFixed(0) == 'NaN' ? 0 : chroma(this.props.hex).lch()[2].toFixed(0)}
             min='0'
             max='360'
+            feature='hue'
             onChange={this.inputHandler}
           />
         </div>
         <div className="colors__buttons">
           <Button
-            id='more'
             icon='ellipses'
             type='icon'
             label={null}
             state={this.state['hasMoreOptions'] ? 'selected' : ''}
+            feature='more'
             action={this.optionsHandler}
           />
           <Button
-            id='remove'
             icon='minus'
             type='icon'
             label={null}
             state=''
+            feature='remove'
             action={this.inputHandler}
           />
         </div>
         {this.state['hasMoreOptions'] ?
         <div className="colors__others-options">
           <Switch
-            id='oklch'
+            id={'oklch-' + this.props.uuid}
             label='Enable OKLCH'
             isChecked={this.props.oklch}
+            feature="oklch"
             onChange={this.inputHandler}
           />
         </div> : null}

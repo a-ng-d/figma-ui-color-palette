@@ -45,31 +45,31 @@ export default class CreatePalette extends React.Component<Props> {
           />
           {this.props.onGoingStep === 'scale item edited' ?
             <Button
-              id='remove'
               icon='minus'
               type='icon'
               label={null}
               state=''
+              feature='remove'
               action={this.scaleHandler}
             />
           : null}
           {this.props.onGoingStep === 'scale item max limit' ?
             <Button
-              id='remove'
               icon='minus'
               type='icon'
               label={null}
               state=''
+              feature='remove'
               action={this.scaleHandler}
             />
           : null}
           {this.props.preset.name === 'Custom' ?
             <Button
-              id='add'
               icon='plus'
               type='icon'
               label={null}
               state={this.props.onGoingStep === 'scale item max limit' ? 'disabled' : ''}
+              feature='add'
               action={this.scaleHandler}
             />
           : null}
@@ -106,17 +106,18 @@ export default class CreatePalette extends React.Component<Props> {
     return (
       <div className='actions'>
         <Button
-          id={null}
           icon={null}
           type='primary'
           label='Create a color palette'
           state=''
+          feature="create"
           action={this.onCreate}
         />
         <Checkbox
           id='showCaptions'
           label='Show captions'
           isChecked={this.props.hasCaptions}
+          feature="show-caption"
           onChange={this.checkHandler}
         />
       </div>

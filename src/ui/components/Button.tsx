@@ -1,11 +1,11 @@
 import * as React from 'react';
 
 interface Props {
-  id: string;
   icon: string;
   type: string;
   label: string;
   state: string;
+  feature: string;
   action: any
 };
 
@@ -22,7 +22,7 @@ export default class Button extends React.Component<Props> {
 
   Icon = () => {
     return (
-      <div id={this.props.id} className={`icon-button${this.props.state != '' ? ` icon-button--${this.props.state}` : ''}`} onClick={this.props.action}>
+      <div data-feature={this.props.feature} className={`icon-button${this.props.state != '' ? ` icon-button--${this.props.state}` : ''}`} onClick={this.props.action}>
         <div className={`icon icon--${this.props.icon}`}></div>
       </div>
     )
