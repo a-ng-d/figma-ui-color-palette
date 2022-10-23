@@ -143,7 +143,8 @@ class App extends React.Component {
             b: .97
           },
           id: uuidv4(),
-          oklch: false
+          oklch: false,
+          hueShifting: 0
         });
         this.setState({
           newColors: colors,
