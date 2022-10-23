@@ -116,7 +116,6 @@ figma.ui.onmessage = msg => {
           if (row.name != '_header' && row.name != '_title')
             row.children.forEach((sample, index) => {
               if (index != 0) {
-                console.log(localStyles.filter(e => e.name === row.name).length)
                 if (localStyles.filter(e => e.name === `${row.name}/${sample.name.replace(row.name + '-', '')}`).length == 0) {
                   const style = new Style(
                     `${row.name}/${sample.name.replace(row.name + '-', '')}`,
