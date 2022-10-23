@@ -8,7 +8,8 @@ import { doMap } from './../../utils';
 interface Props {
   name: string;
   hex: string;
-  oklch: boolean
+  oklch: boolean;
+  shift: number;
   uuid: string;
   index: number;
   selected: boolean;
@@ -178,7 +179,7 @@ export default class ColorItem extends React.Component<Props> {
           <Input
             type='number'
             icon={{type: 'icon', value: 'arrow-left-right'}}
-            value={'0'}
+            value={this.props.shift.toString()}
             min='-360'
             max='360'
             feature='shift-hue'
