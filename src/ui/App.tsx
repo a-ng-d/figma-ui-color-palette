@@ -143,7 +143,8 @@ class App extends React.Component {
             b: .97
           },
           id: uuidv4(),
-          oklch: false
+          oklch: false,
+          hueShifting: 0
         });
         this.setState({
           newColors: colors,
@@ -177,6 +178,19 @@ class App extends React.Component {
           onGoingStep: 'color changed'
         });
         parent.postMessage({ pluginMessage: { type: 'update-colors', data: colors } }, '*');
+        break;
+
+      case 'shift-hue':
+        colors = this.state['newColors'].map(item => {
+          if (item.id === id)
+            item.hueShifting = parseFloat(e.target.value)
+          return item
+        });
+        this.setState({
+          newColors: colors,
+          onGoingStep: 'color changed'
+        });
+        parent.postMessage({ pluginMessage: { type: 'update-colors', data: colors } }, '*')
 
     }
   }

@@ -3,11 +3,13 @@ import chroma from 'chroma-js';
 import Input from './Input';
 import Button from './Button';
 import Switch from './Switch';
+import { doMap } from './../../utils';
 
 interface Props {
   name: string;
   hex: string;
-  oklch: boolean
+  oklch: boolean;
+  shift: number;
   uuid: string;
   index: number;
   selected: boolean;
@@ -28,12 +30,6 @@ export default class ColorItem extends React.Component<Props> {
       isDragged: false,
       hasMoreOptions: false
     }
-  }
-
-  doMap = (value: number, oldMin: number, oldMax: number, newMin: number, newMax: number) => {
-    const oldRange = oldMax - oldMin,
-        newRange = newMax - newMin
-    return ((value - oldMin) * newRange / oldRange) + newMin
   }
 
   // Events
@@ -76,7 +72,7 @@ export default class ColorItem extends React.Component<Props> {
 
     e.preventDefault();
 
-    refY = this.doMap(y, refTop, refBottom, 0, height);
+    refY = doMap(y, refTop, refBottom, 0, height);
 
     if (refY >= -1 && refY <= height / 2)
       this.props.onDragChange(target.dataset.id, true, false, target.dataset.position)
@@ -169,15 +165,27 @@ export default class ColorItem extends React.Component<Props> {
           />
         </div>
         {this.state['hasMoreOptions'] ?
-        <div className="colors__others-options">
+        <div className="colors__space">
           <Switch
             id={'oklch-' + this.props.uuid}
-            label='Enable OKLCH'
+            label='Use OKLCH'
             isChecked={this.props.oklch}
             feature="oklch"
             onChange={this.inputHandler}
           />
         </div> : null}
+        {this.state['hasMoreOptions'] ?
+        <div className="colors__shift">
+          <Input
+            type='number'
+            icon={{type: 'icon', value: 'arrow-left-right'}}
+            value={this.props.shift.toString()}
+            min='-360'
+            max='360'
+            feature='shift-hue'
+            onChange={this.inputHandler}
+          />
+        </div> : null }
       </li>
     )
   }

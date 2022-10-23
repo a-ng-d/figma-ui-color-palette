@@ -2,9 +2,10 @@ import Palette from './canvas/Palette';
 import Style from './canvas/Style';
 import Colors from './canvas/Colors';
 import { presets } from './palette-package';
+import { setData } from './utils';
 
 figma.showUI(__html__);
-figma.ui.resize(680, 280);
+figma.ui.resize(640, 280);
 figma.loadFontAsync({ family: 'Inter', style: 'Regular' });
 figma.loadFontAsync({ family: 'Roboto', style: 'Regular' });
 figma.loadFontAsync({ family: 'Roboto Mono', style: 'Regular' });
@@ -162,8 +163,14 @@ const messageToUI = () => {
   const selection: ReadonlyArray<BaseNode> = figma.currentPage.selection
 
   if (selection.length == 1 && selection[0].getPluginData('scale') != '') {
-    selection[0].getPluginData('preset') === '' ? selection[0].setPluginData('preset', JSON.stringify(presets.material)) : null;
-    !selection[0].getPluginData('colors').includes('oklch') ? selection[0].setPluginData('colors', addOklch(selection[0].getPluginData('colors'))) : null
+    if (selection[0].getPluginData('preset') === '')
+      selection[0].setPluginData('preset', JSON.stringify(presets.material));
+
+    if (!selection[0].getPluginData('colors').includes('oklch'))
+      selection[0].setPluginData('colors', setData(selection[0].getPluginData('colors'), 'oklch', false));
+
+    if (!selection[0].getPluginData('colors').includes('hueShifting'))
+      selection[0].setPluginData('colors', setData(selection[0].getPluginData('colors'), 'hueShifting', 0));
 
     figma.ui.postMessage({
       type: 'palette-selected',
@@ -190,9 +197,3 @@ const messageToUI = () => {
         })
   })
 };
-
-const addOklch = (data: string): string => {
-  let colors = JSON.parse(data);
-  colors.forEach(color => color.oklch = false)
-  return JSON.stringify(colors)
-}
