@@ -47,11 +47,22 @@ export default class Colors {
       row.appendChild(rowName);
 
       Object.values(this.parent.scale).reverse().forEach((lightness: any) => {
-        let newColor;
-        if (color.oklch)
-          newColor = chroma([color.rgb.r * 255, color.rgb.g * 255, color.rgb.b * 255]).set('oklch.l', lightness / 100)
-        else
-          newColor = chroma([color.rgb.r * 255, color.rgb.g * 255, color.rgb.b * 255]).set('lch.l', lightness);
+        let newColor, lch, oklch;
+        if (color.oklch) {
+          oklch = chroma([color.rgb.r * 255, color.rgb.g * 255, color.rgb.b * 255]).oklch()
+          newColor = chroma.oklch(
+            parseFloat(lightness) / 100,
+            oklch[1],
+            oklch[2] + color.hueShifting < 0 ? 0 : oklch[2] + color.hueShifting > 360 ? 360 : oklch[2] + color.hueShifting
+          )
+        } else {
+          lch = chroma([color.rgb.r * 255, color.rgb.g * 255, color.rgb.b * 255]).lch()
+          newColor = chroma.lch(
+            parseFloat(lightness),
+            lch[1],
+            lch[2] + color.hueShifting < 0 ? 0 : lch[2] + color.hueShifting > 360 ? 360 : lch[2] + color.hueShifting
+          )
+        }
 
         const sample = new Sample(
           color.name,
