@@ -3,6 +3,7 @@ import chroma from 'chroma-js';
 import Input from './Input';
 import Button from './Button';
 import Switch from './Switch';
+import { doMap } from './../../utils';
 
 interface Props {
   name: string;
@@ -28,12 +29,6 @@ export default class ColorItem extends React.Component<Props> {
       isDragged: false,
       hasMoreOptions: false
     }
-  }
-
-  doMap = (value: number, oldMin: number, oldMax: number, newMin: number, newMax: number) => {
-    const oldRange = oldMax - oldMin,
-        newRange = newMax - newMin
-    return ((value - oldMin) * newRange / oldRange) + newMin
   }
 
   // Events
@@ -76,7 +71,7 @@ export default class ColorItem extends React.Component<Props> {
 
     e.preventDefault();
 
-    refY = this.doMap(y, refTop, refBottom, 0, height);
+    refY = doMap(y, refTop, refBottom, 0, height);
 
     if (refY >= -1 && refY <= height / 2)
       this.props.onDragChange(target.dataset.id, true, false, target.dataset.position)

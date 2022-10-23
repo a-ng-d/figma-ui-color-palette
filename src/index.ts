@@ -2,6 +2,7 @@ import Palette from './canvas/Palette';
 import Style from './canvas/Style';
 import Colors from './canvas/Colors';
 import { presets } from './palette-package';
+import { setData } from './utils';
 
 figma.showUI(__html__);
 figma.ui.resize(640, 280);
@@ -196,9 +197,3 @@ const messageToUI = () => {
         })
   })
 };
-
-const setData = (data: string, entry: string, value: boolean | string | number): string => {
-  let parsedData = JSON.parse(data);
-  parsedData.forEach(record => record[entry] = value)
-  return JSON.stringify(parsedData)
-}
