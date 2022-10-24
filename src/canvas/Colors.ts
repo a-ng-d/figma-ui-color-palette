@@ -46,9 +46,30 @@ export default class Colors {
       const rowName = new Sample(color.name, null, [color.rgb.r * 255, color.rgb.g * 255, color.rgb.b * 255], this.parent.captions).makeName('absolute', 150, 200, 10);
       row.appendChild(rowName);
 
-      Object.values(this.parent.scale).reverse().forEach(lightness => {
-        let newColor = chroma([color.rgb.r * 255, color.rgb.g * 255, color.rgb.b * 255]).set('lch.l', lightness);
-        const sample = new Sample(color.name, Object.keys(this.parent.scale).find(key => this.parent.scale[key] === lightness).substr(10), newColor._rgb, this.parent.captions).makeScale(150, 200, 10);
+      Object.values(this.parent.scale).reverse().forEach((lightness: any) => {
+        let newColor, lch, oklch;
+        if (color.oklch) {
+          oklch = chroma([color.rgb.r * 255, color.rgb.g * 255, color.rgb.b * 255]).oklch()
+          newColor = chroma.oklch(
+            parseFloat(lightness) / 100,
+            oklch[1],
+            oklch[2] + color.hueShifting < 0 ? 0 : oklch[2] + color.hueShifting > 360 ? 360 : oklch[2] + color.hueShifting
+          )
+        } else {
+          lch = chroma([color.rgb.r * 255, color.rgb.g * 255, color.rgb.b * 255]).lch()
+          newColor = chroma.lch(
+            parseFloat(lightness),
+            lch[1],
+            lch[2] + color.hueShifting < 0 ? 0 : lch[2] + color.hueShifting > 360 ? 360 : lch[2] + color.hueShifting
+          )
+        }
+
+        const sample = new Sample(
+          color.name,
+          Object.keys(this.parent.scale).find(key => this.parent.scale[key] === lightness).substr(10),
+          newColor._rgb,
+          this.parent.captions
+        ).makeScale(150, 200, 10);
         row.name = color.name;
         row.appendChild(sample)
       });

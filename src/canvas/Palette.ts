@@ -8,7 +8,9 @@ interface UIColors {
     g: number,
     b: number
   },
-  id: string | undefined
+  id: string | undefined,
+  oklch: boolean,
+  hueShifting: number
 }
 
 export default class Palette {
@@ -62,7 +64,9 @@ export default class Palette {
           this.colors.push({
             name: element.name,
             rgb: fill.color,
-            id: undefined
+            id: undefined,
+            oklch: false,
+            hueShifting: 0
           })
         )
       } else

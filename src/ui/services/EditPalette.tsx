@@ -70,15 +70,7 @@ export default class EditPalette extends React.Component<Props> {
     })
   }
 
-  colorHandler = (e: any) => {
-    this.props.onColorChange(e)
-    this.setState({
-      selectedElement: {
-        id: '',
-        position: null
-      }
-    })
-  }
+  colorHandler = (e: any) => this.props.onColorChange(e)
 
   navHandler = (e: any) => {
     this.props.onContextChange(e)
@@ -126,9 +118,7 @@ export default class EditPalette extends React.Component<Props> {
       this.props.onOrderChange(this.state['selectedElement'], this.state['hoveredElement'])
   }
 
-  dropHandler = (e: any) => {
-    this.props.onOrderChange(this.state['selectedElement'], this.state['hoveredElement'])
-  }
+  dropHandler = (e: any) => this.props.onOrderChange(this.state['selectedElement'], this.state['hoveredElement'])
 
   unSelectColor = (e: any) => {
     e.target.closest('li.colors__item') == null ? this.setState({
@@ -193,11 +183,11 @@ export default class EditPalette extends React.Component<Props> {
         <div className='section-controls'>
           <div className='section-title'>Starting colors</div>
           <Button
-            id='add'
             icon='plus'
             type='icon'
             label={null}
             state=''
+            feature='add'
             action={this.colorHandler}
           />
         </div>
@@ -208,12 +198,15 @@ export default class EditPalette extends React.Component<Props> {
               name={color.name}
               index={index}
               hex={chroma(color.rgb.r * 255, color.rgb.g * 255, color.rgb.b * 255).hex()}
+              oklch={color.oklch}
+              shift={color.hueShifting}
               uuid={color.id}
               selected={this.state['selectedElement']['id'] === color.id ? true : false}
               guideAbove={this.state['hoveredElement']['id'] === color.id ? this.state['hoveredElement']['hasGuideAbove'] : false}
               guideBelow={this.state['hoveredElement']['id'] === color.id ? this.state['hoveredElement']['hasGuideBelow'] : false}
               onColorChange={this.colorHandler}
               onSelectionChange={this.selectionHandler}
+              onSelectionCancellation={this.selectionHandler}
               onDragChange={this.dragHandler}
               onDropOutside={this.dropOutsideHandler}
               onOrderChange={this.dropHandler}
@@ -229,19 +222,19 @@ export default class EditPalette extends React.Component<Props> {
       <div className='actions'>
         <div className='buttons'>
           <Button
-            id={null}
             icon={null}
             type='secondary'
             label='Update the local styles'
             state=''
+            feature='update'
             action={this.onUpdate}
           />
           <Button
-            id={null}
             icon={null}
             type='primary'
             label='Create local styles'
             state=''
+            feature='create'
             action={this.onCreate}
           />
         </div>
@@ -249,6 +242,7 @@ export default class EditPalette extends React.Component<Props> {
           id='showCaptions'
           label='Show captions'
           isChecked={this.props.hasCaptions}
+          feature='caption'
           onChange={this.checkHandler}
         />
       </div>

@@ -2,10 +2,14 @@ import * as React from 'react';
 import chroma from 'chroma-js';
 import Input from './Input';
 import Button from './Button';
+import Switch from './Switch';
+import { doMap } from './../../utils';
 
 interface Props {
   name: string;
   hex: string;
+  oklch: boolean;
+  shift: number;
   uuid: string;
   index: number;
   selected: boolean;
@@ -13,6 +17,7 @@ interface Props {
   guideBelow: boolean;
   onColorChange: any;
   onSelectionChange: any;
+  onSelectionCancellation: any;
   onDragChange: any;
   onDropOutside: any
   onOrderChange: any
@@ -23,18 +28,20 @@ export default class ColorItem extends React.Component<Props> {
   constructor(props) {
     super(props);
     this.state = {
-      isDragged: false
+      isDragged: false,
+      hasMoreOptions: false
     }
-  }
-
-  doMap = (value: number, oldMin: number, oldMax: number, newMin: number, newMax: number) => {
-    const oldRange = oldMax - oldMin,
-        newRange = newMax - newMin
-    return ((value - oldMin) * newRange / oldRange) + newMin
   }
 
   // Events
   inputHandler = (e: any) => this.props.onColorChange(e)
+
+  optionsHandler = (e: any) => {
+    this.props.onSelectionCancellation(e)
+    this.setState({ hasMoreOptions: !this.state['hasMoreOptions'] })
+  }
+
+  selectionHandler = (e: any) => this.props.onSelectionCancellation(e)
 
   onMouseDown = (e: any) => this.props.onSelectionChange(e)
 
@@ -42,7 +49,7 @@ export default class ColorItem extends React.Component<Props> {
     this.setState({ isDragged: true })
     const clone = e.currentTarget.cloneNode(true)
     clone.style.opacity = 0;
-    clone.id = "ghost";
+    clone.id = 'ghost';
     document.body.appendChild(clone);
     e.dataTransfer.setDragImage(clone, 0, 0);
     e.dataTransfer.effectAllowed = 'move';
@@ -58,7 +65,8 @@ export default class ColorItem extends React.Component<Props> {
   }
 
   onDragOver = (e: any) => {
-    const target: any = e.target,
+    e.preventDefault();
+    const target: any = e.currentTarget,
           height: number = target.clientHeight,
           parentY: number = target.parentNode.offsetTop,
           scrollY: number = target.parentNode.parentNode.parentNode.scrollTop,
@@ -69,9 +77,7 @@ export default class ColorItem extends React.Component<Props> {
 
     let refY: number;
 
-    e.preventDefault();
-
-    refY = this.doMap(y, refTop, refBottom, 0, height);
+    refY = doMap(y, refTop, refBottom, 0, height);
 
     if (refY >= -1 && refY <= height / 2)
       this.props.onDragChange(target.dataset.id, true, false, target.dataset.position)
@@ -79,7 +85,10 @@ export default class ColorItem extends React.Component<Props> {
       this.props.onDragChange(target.dataset.id, false, true, target.dataset.position)
   }
 
-  onDrop = (e: any) => this.props.onOrderChange(e)
+  onDrop = (e: any) => {
+    e.preventDefault();
+    this.props.onOrderChange(e)
+  }
 
   render() {
     return(
@@ -96,65 +105,101 @@ export default class ColorItem extends React.Component<Props> {
         onDragOver={this.onDragOver}
         onDrop={this.onDrop}
       >
-        <div className="colors__left-options">
+        <div className='colors__name'>
           <Input
             type='text'
-            id='rename'
             icon={{type: 'none', value: null}}
             value={this.props.name}
             min=''
             max=''
+            feature='rename'
             onChange={this.inputHandler}
+            onFocus={this.selectionHandler}
           />
-          <div className='colors__parameters'>
-            <Input
-              type='color'
-              id='hex'
-              icon={{type: 'none', value: null}}
-              value={this.props.hex}
-              min=''
-              max=''
-              onChange={this.inputHandler}
-            />
-            <Input
-              type='number'
-              id='lightness'
-              icon={{type: 'letter', value: 'L'}}
-              value={chroma(this.props.hex).lch()[0].toFixed(0)}
-              min='0'
-              max='100'
-              onChange={this.inputHandler}
-            />
-            <Input
-              type='number'
-              id='chroma'
-              icon={{type: 'letter', value: 'C'}}
-              value={chroma(this.props.hex).lch()[1].toFixed(0)}
-              min='0'
-              max='100'
-              onChange={this.inputHandler}
-            />
-            <Input
-              type='number'
-              id='hue'
-              icon={{type: 'letter', value: 'H'}}
-              value={chroma(this.props.hex).lch()[2].toFixed(0) == 'NaN' ? 0 : chroma(this.props.hex).lch()[2].toFixed(0)}
-              min='0'
-              max='360'
-              onChange={this.inputHandler}
-            />
-          </div>
         </div>
-        <div className="colors__right-options">
+        <div className='colors__parameters'>
+          <Input
+            type='color'
+            icon={{type: 'none', value: null}}
+            value={this.props.hex}
+            min=''
+            max=''
+            feature='hex'
+            onChange={this.inputHandler}
+            onFocus={this.selectionHandler}
+          />
+          <Input
+            type='number'
+            icon={{type: 'letter', value: 'L'}}
+            value={chroma(this.props.hex).lch()[0].toFixed(0)}
+            min='0'
+            max='100'
+            feature='lightness'
+            onChange={this.inputHandler}
+            onFocus={this.selectionHandler}
+          />
+          <Input
+            type='number'
+            icon={{type: 'letter', value: 'C'}}
+            value={chroma(this.props.hex).lch()[1].toFixed(0)}
+            min='0'
+            max='100'
+            feature='chroma'
+            onChange={this.inputHandler}
+            onFocus={this.selectionHandler}
+          />
+          <Input
+            type='number'
+            icon={{type: 'letter', value: 'H'}}
+            value={chroma(this.props.hex).lch()[2].toFixed(0) == 'NaN' ? 0 : chroma(this.props.hex).lch()[2].toFixed(0)}
+            min='0'
+            max='360'
+            feature='hue'
+            onChange={this.inputHandler}
+            onFocus={this.selectionHandler}
+          />
+        </div>
+        <div className='colors__buttons'>
           <Button
-            id='remove'
+            icon='ellipses'
+            type='icon'
+            label={null}
+            state={this.state['hasMoreOptions'] ? 'selected' : ''}
+            feature='more'
+            action={this.optionsHandler}
+          />
+          <Button
             icon='minus'
             type='icon'
             label={null}
             state=''
+            feature='remove'
             action={this.inputHandler}
           />
         </div>
+        {this.state['hasMoreOptions'] ?
+        <div className='colors__space'>
+          <Switch
+            id={'oklch-' + this.props.uuid}
+            label='Use OKLCH'
+            isChecked={this.props.oklch}
+            feature='oklch'
+            onChange={this.inputHandler}
+          />
+        </div> : null}
+        {this.state['hasMoreOptions'] ?
+        <div className='colors__shift'>
+          <Input
+            type='number'
+            icon={{type: 'icon', value: 'arrow-left-right'}}
+            value={this.props.shift.toString()}
+            min='-360'
+            max='360'
+            feature='shift-hue'
+            onChange={this.inputHandler}
+            onFocus={this.selectionHandler}
+          />
+        </div> : null }
       </li>
     )
   }

@@ -1,6 +1,6 @@
 {
   "name": "figma-ui-color-palette",
-  "version": "9.0.0",
+  "version": "10.0.0",
   "description": "Create accessible UI color palettes with consistant lightness and contrast",
   "main": "code.js",
   "scripts": {

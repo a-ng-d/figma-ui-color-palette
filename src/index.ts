@@ -2,9 +2,10 @@ import Palette from './canvas/Palette';
 import Style from './canvas/Style';
 import Colors from './canvas/Colors';
 import { presets } from './palette-package';
+import { setData } from './utils';
 
 figma.showUI(__html__);
-figma.ui.resize(680, 280);
+figma.ui.resize(640, 280);
 figma.loadFontAsync({ family: 'Inter', style: 'Regular' });
 figma.loadFontAsync({ family: 'Roboto', style: 'Regular' });
 figma.loadFontAsync({ family: 'Roboto Mono', style: 'Regular' });
@@ -106,22 +107,32 @@ figma.ui.onmessage = msg => {
 
     case 'create-local-styles':
       palette = figma.currentPage.selection[0];
-      i = 0;
+
       if (palette.children.length == 1) {
+        const localStyles = figma.getLocalPaintStyles();
+        i = 0;
+
         palette.children[0].children.forEach(row => {
           if (row.name != '_header' && row.name != '_title')
             row.children.forEach((sample, index) => {
               if (index != 0) {
-                const style = new Style(
-                  `${row.name}/${sample.name.replace(row.name + '-', '')}`,
-                  sample.fills[0].color
-                ).makeNode();
-                figma.moveLocalPaintStyleAfter(style, null);
-                i++
+                if (localStyles.filter(e => e.name === `${row.name}/${sample.name.replace(row.name + '-', '')}`).length == 0) {
+                  const style = new Style(
+                    `${row.name}/${sample.name.replace(row.name + '-', '')}`,
+                    sample.fills[0].color
+                  ).makeNode();
+                  figma.moveLocalPaintStyleAfter(style, null);
+                  i++
+                }
               }
             })
         })
-        figma.notify(`${i} local color styles have been created 🙌`)
+        if (i > 1)
+          figma.notify(`${i} local color styles have been created 🙌`)
+        else if (i == 1)
+          figma.notify(`${i} local color style has been created 🙌`)
+        else
+          figma.notify(`No local color style has been created`)
       } else
         figma.notify('Your UI Color Palette seems corrupted. Do not edit any layer within it.')
       break;
@@ -159,25 +170,35 @@ figma.ui.onmessage = msg => {
 };
 
 const messageToUI = () => {
-  if (figma.currentPage.selection.length == 1 && figma.currentPage.selection[0].getPluginData('scale') != '') {
-    figma.currentPage.selection[0].getPluginData('preset') === '' ? figma.currentPage.selection[0].setPluginData('preset', JSON.stringify(presets.material)) : null;
+  const selection: ReadonlyArray<BaseNode> = figma.currentPage.selection
+
+  if (selection.length == 1 && selection[0].getPluginData('scale') != '') {
+    if (selection[0].getPluginData('preset') === '')
+      selection[0].setPluginData('preset', JSON.stringify(presets.material));
+
+    if (!selection[0].getPluginData('colors').includes('oklch'))
+      selection[0].setPluginData('colors', setData(selection[0].getPluginData('colors'), 'oklch', false));
+
+    if (!selection[0].getPluginData('colors').includes('hueShifting'))
+      selection[0].setPluginData('colors', setData(selection[0].getPluginData('colors'), 'hueShifting', 0));
+
     figma.ui.postMessage({
       type: 'palette-selected',
       data: {
-        scale: JSON.parse(figma.currentPage.selection[0].getPluginData('scale')),
-        captions: figma.currentPage.selection[0].getPluginData('captions'),
-        colors: JSON.parse(figma.currentPage.selection[0].getPluginData('colors')),
-        preset: JSON.parse(figma.currentPage.selection[0].getPluginData('preset'))
+        scale: JSON.parse(selection[0].getPluginData('scale')),
+        captions: selection[0].getPluginData('captions'),
+        colors: JSON.parse(selection[0].getPluginData('colors')),
+        preset: JSON.parse(selection[0].getPluginData('preset'))
       }
     })
   }
-  else if (figma.currentPage.selection.length == 0)
+  else if (selection.length == 0)
     figma.ui.postMessage({
       type: 'empty-selection',
       data: {}
     });
 
-  figma.currentPage.selection.forEach(element => {
+  selection.forEach(element => {
     if (element.type != 'GROUP')
       if (element['fills'].filter(fill => fill.type === 'SOLID').length != 0 && element.getPluginData('scale') === '')
         figma.ui.postMessage({
@@ -185,4 +206,4 @@ const messageToUI = () => {
           data: {}
         })
   })
-}
+};
