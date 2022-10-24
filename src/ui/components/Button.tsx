@@ -15,14 +15,20 @@ export default class Button extends React.Component<Props> {
     return (
       <button
         className={`button button--${this.props.type}`}
-        onClick={this.props.action}>{this.props.label}
+        onMouseDown={this.props.action}
+      >
+        {this.props.label}
       </button>
     )
   }
 
   Icon = () => {
     return (
-      <div data-feature={this.props.feature} className={`icon-button${this.props.state != '' ? ` icon-button--${this.props.state}` : ''}`} onClick={this.props.action}>
+      <div
+        data-feature={this.props.feature}
+        className={`icon-button${this.props.state != '' ? ` icon-button--${this.props.state}` : ''}`}
+        onMouseDown={this.props.action}
+      >
         <div className={`icon icon--${this.props.icon}`}></div>
       </div>
     )
