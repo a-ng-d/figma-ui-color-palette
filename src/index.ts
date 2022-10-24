@@ -132,7 +132,7 @@ figma.ui.onmessage = msg => {
         else if (i == 1)
           figma.notify(`${i} local color style has been created 🙌`)
         else
-          figma.notify(`No local color style has been created 🙌`)
+          figma.notify(`No local color style has been created`)
       } else
         figma.notify('Your UI Color Palette seems corrupted. Do not edit any layer within it.')
       break;
