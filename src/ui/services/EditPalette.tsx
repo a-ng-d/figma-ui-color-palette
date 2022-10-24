@@ -70,15 +70,7 @@ export default class EditPalette extends React.Component<Props> {
     })
   }
 
-  colorHandler = (e: any) => {
-    this.props.onColorChange(e)
-    this.setState({
-      selectedElement: {
-        id: '',
-        position: null
-      }
-    })
-  }
+  colorHandler = (e: any) => this.props.onColorChange(e)
 
   navHandler = (e: any) => {
     this.props.onContextChange(e)
@@ -214,6 +206,7 @@ export default class EditPalette extends React.Component<Props> {
               guideBelow={this.state['hoveredElement']['id'] === color.id ? this.state['hoveredElement']['hasGuideBelow'] : false}
               onColorChange={this.colorHandler}
               onSelectionChange={this.selectionHandler}
+              onSelectionCancellation={this.selectionHandler}
               onDragChange={this.dragHandler}
               onDropOutside={this.dropOutsideHandler}
               onOrderChange={this.dropHandler}

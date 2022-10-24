@@ -17,6 +17,7 @@ interface Props {
   guideBelow: boolean;
   onColorChange: any;
   onSelectionChange: any;
+  onSelectionCancellation: any;
   onDragChange: any;
   onDropOutside: any
   onOrderChange: any
@@ -35,7 +36,12 @@ export default class ColorItem extends React.Component<Props> {
   // Events
   inputHandler = (e: any) => this.props.onColorChange(e)
 
-  optionsHandler = () => this.setState({ hasMoreOptions: !this.state['hasMoreOptions'] })
+  optionsHandler = (e: any) => {
+    this.props.onSelectionCancellation(e)
+    this.setState({ hasMoreOptions: !this.state['hasMoreOptions'] })
+  }
+
+  selectionHandler = (e: any) => this.props.onSelectionCancellation(e)
 
   onMouseDown = (e: any) => this.props.onSelectionChange(e)
 
@@ -108,6 +114,7 @@ export default class ColorItem extends React.Component<Props> {
             max=''
             feature='rename'
             onChange={this.inputHandler}
+            onFocus={this.selectionHandler}
           />
         </div>
         <div className='colors__parameters'>
@@ -119,6 +126,7 @@ export default class ColorItem extends React.Component<Props> {
             max=''
             feature='hex'
             onChange={this.inputHandler}
+            onFocus={this.selectionHandler}
           />
           <Input
             type='number'
@@ -128,6 +136,7 @@ export default class ColorItem extends React.Component<Props> {
             max='100'
             feature='lightness'
             onChange={this.inputHandler}
+            onFocus={this.selectionHandler}
           />
           <Input
             type='number'
@@ -137,6 +146,7 @@ export default class ColorItem extends React.Component<Props> {
             max='100'
             feature='chroma'
             onChange={this.inputHandler}
+            onFocus={this.selectionHandler}
           />
           <Input
             type='number'
@@ -146,6 +156,7 @@ export default class ColorItem extends React.Component<Props> {
             max='360'
             feature='hue'
             onChange={this.inputHandler}
+            onFocus={this.selectionHandler}
           />
         </div>
         <div className='colors__buttons'>
@@ -186,6 +197,7 @@ export default class ColorItem extends React.Component<Props> {
             max='360'
             feature='shift-hue'
             onChange={this.inputHandler}
+            onFocus={this.selectionHandler}
           />
         </div> : null }
       </li>
