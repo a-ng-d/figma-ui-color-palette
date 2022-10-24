@@ -404,10 +404,6 @@ li .colors__shift > .input {
 }
 
 /* Onboarding */
-.onboarding-tip {
-  gap: var(--size-xxsmall)
-}
-
 .onboarding-tip__msg {
   flex: 1
 }
