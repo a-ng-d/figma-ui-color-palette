@@ -161,7 +161,7 @@ export default class ColorItem extends React.Component<Props> {
         </div>
         <div className='colors__buttons'>
           <Button
-            icon='ellipses'
+            icon='adjust'
             type='icon'
             label={null}
             state={this.state['hasMoreOptions'] ? 'selected' : ''}
