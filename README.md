@@ -40,16 +40,26 @@ The palette architecture (do not manual edit it) is:
 ### Edit a color palette
 > Note: Editing a color palette only works on those already created with the plugin.
 
-![Edit a color palette](./assets/edit-color-palette.gif 'Edit a color palette')
 - Run the plugin
 - Select a color palette
+---
+![Edit lightness scale from the palette](./assets/edit-lightness-scale.gif 'Edit lightness scale from the palette')
 - Edit the palette lightness scale with the multiple knobs slider－real time editing.
+---
+![Edit starting colors from the palette](./assets/edit-starting-colors.gif 'Edit starting colors from the palette')
+
+![Add a starting color to the palette](./assets/add-starting-color.gif 'Add a starting color to the palette')
+- Edit the starting colors－real time editing:
+  - Tweak:
+    - the hexadecimal code
+    - the LCH parameters
+    - the color model (LCH/OKLCH)
+    - the hue range shifting
+  - Rename or remove a color
+  - Reorder the colors
+  - Adding a new color to the palette
+---
 - Choose the caption display－real time editing.
-- Edit the starting colors:
-  - By tweaking both the hexadecimal code and LCH parameters
-  - By renaming or removing a color
-  - By reordering the colors
-  - By adding a new color to the palette
 - Click `Create local styles` to create Figma document local styles from every color of the palette
 - Click `Update the local styles` to update every edited colors already declared as local style
 
