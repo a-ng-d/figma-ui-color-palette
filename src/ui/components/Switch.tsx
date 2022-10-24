@@ -13,7 +13,14 @@ export default class Switch extends React.Component<Props> {
   render() {
     return(
       <div className='switch'>
-        <input data-feature={this.props.feature} id={this.props.id} className='switch__toggle' type='checkbox' checked={this.props.isChecked} onChange={this.props.onChange} />
+        <input
+          data-feature={this.props.feature}
+          id={this.props.id}
+          className='switch__toggle'
+          type='checkbox'
+          checked={this.props.isChecked}
+          onChange={this.props.onChange}
+        />
         <label className='switch__label' htmlFor={this.props.id}>{this.props.label}</label>
       </div>
     )

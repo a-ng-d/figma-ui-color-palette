@@ -12,7 +12,11 @@ export default class Tabs extends React.Component<Props> {
     return(
       <div className='tabs'>
         {this.props.tabs.map(tab =>
-          <div key={tab.toLowerCase()} className={`tabs__tab type${this.props.active === tab ? ' tabs__tab--active' : ''}`} onClick={this.props.onClick}>{tab}</div>
+          <div
+            key={tab.toLowerCase()}
+            className={`tabs__tab type${this.props.active === tab ? ' tabs__tab--active' : ''}`}
+            onClick={this.props.onClick}>{tab}
+          </div>
         )}
       </div>
     )
