@@ -5,6 +5,7 @@ import Checkbox from '../components/Checkbox';
 import Message from '../components/Message';
 import Dropdown from '../components/Dropdown';
 import { palette, presets } from '../../palette-package';
+import Actions from '../modules/Actions';
 
 interface Props {
   hasCaptions: boolean;
@@ -102,35 +103,20 @@ export default class CreatePalette extends React.Component<Props> {
     )
   }
 
-  Actions = () => {
-    return (
-      <div className='actions'>
-        <Button
-          icon={null}
-          type='primary'
-          label='Create a color palette'
-          state=''
-          feature='create'
-          action={this.onCreate}
-        />
-        <Checkbox
-          id='showCaptions'
-          label='Show captions'
-          isChecked={this.props.hasCaptions}
-          feature='show-caption'
-          onChange={this.checkHandler}
-        />
-      </div>
-    )
-  }
-
   Controls = () => {
     return (
       <>
-      <div className='controls'>
-        <this.Scale />
-      </div>
-      <this.Actions />
+        <div className='controls'>
+          <this.Scale />
+        </div>
+        <Actions
+          context='create'
+          hasCaptions={this.props.hasCaptions}
+          onCreatePalette={this.onCreate}
+          onCreateLocalColors={null}
+          onUpdateLocalColors={null}
+          onChangeCaptions={this.checkHandler}
+        />
       </>
     )
   }

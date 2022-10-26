@@ -6,6 +6,7 @@ import Button from '../components/Button';
 import Message from '../components/Message';
 import ColorItem from '../components/ColorItem';
 import Tabs from '../components/Tabs';
+import Actions from '../modules/Actions';
 import chroma from 'chroma-js';
 import { palette } from '../../palette-package';
 
@@ -217,46 +218,21 @@ export default class EditPalette extends React.Component<Props> {
     )
   }
 
-  Actions = () => {
-    return (
-      <div className='actions'>
-        <div className='buttons'>
-          <Button
-            icon={null}
-            type='secondary'
-            label='Update the local styles'
-            state=''
-            feature='update'
-            action={this.onUpdate}
-          />
-          <Button
-            icon={null}
-            type='primary'
-            label='Create local styles'
-            state=''
-            feature='create'
-            action={this.onCreate}
-          />
-        </div>
-        <Switch
-          id='showCaptions'
-          label='Show captions'
-          isChecked={this.props.hasCaptions}
-          feature='caption'
-          onChange={this.checkHandler}
-        />
-      </div>
-    )
-  }
-
   Controls = () => {
     return (
       <>
-      <div className='controls'>
-        {this.props.context === 'Scale' ? <this.Scale /> : null}
-        {this.props.context === 'Colors' ? <this.Colors /> : null}
-      </div>
-      <this.Actions />
+        <div className='controls'>
+          {this.props.context === 'Scale' ? <this.Scale /> : null}
+          {this.props.context === 'Colors' ? <this.Colors /> : null}
+        </div>
+        <Actions
+          context='edit'
+          hasCaptions={this.props.hasCaptions}
+          onCreatePalette={null}
+          onCreateLocalColors={this.onCreate}
+          onUpdateLocalColors={this.onUpdate}
+          onChangeCaptions={this.checkHandler}
+        />
       </>
     )
   }
