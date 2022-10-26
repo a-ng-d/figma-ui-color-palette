@@ -8,6 +8,7 @@ import ColorItem from '../components/ColorItem';
 import Tabs from '../components/Tabs';
 import Actions from '../modules/Actions';
 import Scale from '../modules/Scale';
+import Colors from '../modules/Colors';
 import chroma from 'chroma-js';
 import { palette } from '../../palette-package';
 
@@ -151,47 +152,6 @@ export default class EditPalette extends React.Component<Props> {
     })
   }
 
-  // Templates
-  Colors = () => {
-    return (
-      <div className='starting-colors'>
-        <div className='section-controls'>
-          <div className='section-title'>Starting colors</div>
-          <Button
-            icon='plus'
-            type='icon'
-            label={null}
-            state=''
-            feature='add'
-            action={this.colorHandler}
-          />
-        </div>
-        <ul className='colors'>
-          {this.props.colors.map((color, index) =>
-            <ColorItem
-              key={color.id}
-              name={color.name}
-              index={index}
-              hex={chroma(color.rgb.r * 255, color.rgb.g * 255, color.rgb.b * 255).hex()}
-              oklch={color.oklch}
-              shift={color.hueShifting}
-              uuid={color.id}
-              selected={this.state['selectedElement']['id'] === color.id ? true : false}
-              guideAbove={this.state['hoveredElement']['id'] === color.id ? this.state['hoveredElement']['hasGuideAbove'] : false}
-              guideBelow={this.state['hoveredElement']['id'] === color.id ? this.state['hoveredElement']['hasGuideBelow'] : false}
-              onColorChange={this.colorHandler}
-              onSelectionChange={this.selectionHandler}
-              onSelectionCancellation={this.selectionHandler}
-              onDragChange={this.dragHandler}
-              onDropOutside={this.dropOutsideHandler}
-              onOrderChange={this.dropHandler}
-            />
-          )}
-        </ul>
-      </div>
-    )
-  }
-
   Controls = () => {
     return (
       <>
@@ -207,7 +167,18 @@ export default class EditPalette extends React.Component<Props> {
             onRemoveScale={null}
             onGoingStep={null}
           /> : null}
-          {this.props.context === 'Colors' ? <this.Colors /> : null}
+          {this.props.context === 'Colors' ?
+          <Colors
+            colors={this.props.colors}
+            selectedElement={this.state['selectedElement']}
+            hoveredElement={this.state['hoveredElement']}
+            onColorChange={this.colorHandler}
+            onAddColor={this.colorHandler}
+            onSelectionChange={this.selectionHandler}
+            onDragChange={this.dragHandler}
+            onDropOutside={this.dropOutsideHandler}
+            onOrderChange={this.dropHandler}
+          /> : null}
         </div>
         <Actions
           context='edit'
