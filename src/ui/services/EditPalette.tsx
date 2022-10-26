@@ -7,6 +7,7 @@ import Message from '../components/Message';
 import ColorItem from '../components/ColorItem';
 import Tabs from '../components/Tabs';
 import Actions from '../modules/Actions';
+import Scale from '../modules/Scale';
 import chroma from 'chroma-js';
 import { palette } from '../../palette-package';
 
@@ -151,33 +152,6 @@ export default class EditPalette extends React.Component<Props> {
   }
 
   // Templates
-  Scale = () => {
-    palette.scale = {};
-    return (
-      <div className='lightness-scale'>
-      <div className='section-controls'>
-        <div className='section-title'>Lightness scale</div>
-        <div className='label'>{this.props.preset.name}</div>
-      </div>
-        <Slider
-          type='CUSTOM'
-          knobs={this.props.preset.scale}
-          min=''
-          max=''
-          scale={this.props.scale}
-          onChange={this.slideHandler}
-        />
-        <Message
-          icon='library'
-          messages= {[
-            'Hold Shift ⇧ while dragging the first or the last knob to distribute knobs\' horizontal spacing',
-            'Hold Ctrl ⌃ or Cmd ⌘ while dragging a knob to move them all'
-          ]}
-        />
-      </div>
-    )
-  }
-
   Colors = () => {
     return (
       <div className='starting-colors'>
@@ -222,7 +196,17 @@ export default class EditPalette extends React.Component<Props> {
     return (
       <>
         <div className='controls'>
-          {this.props.context === 'Scale' ? <this.Scale /> : null}
+          {this.props.context === 'Scale' ?
+          <Scale
+            hasPreset={false}
+            preset={this.props.preset}
+            scale={this.props.scale}
+            onChangePreset={null}
+            onScaleChange={this.slideHandler}
+            onAddScale={null}
+            onRemoveScale={null}
+            onGoingStep={null}
+          /> : null}
           {this.props.context === 'Colors' ? <this.Colors /> : null}
         </div>
         <Actions
