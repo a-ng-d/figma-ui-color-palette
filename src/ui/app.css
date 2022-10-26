@@ -348,7 +348,8 @@ li.colors__item[draggable="true"] {
   background-color: var(--blue3)
 }
 
-li.colors__item[draggable="true"] .input {
+li.colors__item[draggable="true"] .input,
+li.colors__item--emphasis .input {
   --white: transparent
 }
 
@@ -358,6 +359,10 @@ li.colors__item[draggable="true"]:active {
 
 li.colors__item--dragged:active > div {
   pointer-events: none
+}
+
+li.colors__item--emphasis {
+  background-color: var(--grey)
 }
 
 li.colors__item--above {
