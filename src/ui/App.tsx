@@ -41,13 +41,14 @@ class App extends React.Component {
   captionsHandler = (bool: boolean) => this.setState({ hasCaptions: bool, onGoingStep: 'captions changed' })
 
   colorHandler = (e: any) => {
-    let name, colors, id;
+    let name, colors, id, element;
     try {
-      name = e.nativeEvent.path.filter(el => el.className === 'colors__item')[0].id;
-      id = e.nativeEvent.path.filter(el => {
+      element = e.nativeEvent.path.filter(el => {
         try { return el.classList.contains('colors__item') }
         catch {}
-      })[0].getAttribute('data-id')
+      })[0];
+      name = element.id;
+      id = element.getAttribute('data-id')
     } catch {};
 
     switch (e.target.dataset.feature) {
