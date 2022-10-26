@@ -1,5 +1,4 @@
 import * as React from 'react';
-import type { Preset } from '../../palette-package';
 import Button from '../components/Button';
 import Dropdown from '../components/Dropdown';
 import Slider from '../components/Slider';
