@@ -312,6 +312,47 @@ input[type='number']::-webkit-inner-spin-button {
   display: none
 }
 
+.inputs {
+  display: flex;
+  gap: var(--size-xxsmall)
+}
+
+.inputs .label {
+  flex: 0
+}
+
+.inputs__bar {
+  display: flex
+}
+
+.inputs__bar .input {
+  width: 40px;
+  margin: 0 -.5px
+}
+
+.inputs__bar input {
+  background-color: transparent
+}
+
+.inputs__bar input:focus {
+  border: 1px solid var(--black1)
+}
+
+.inputs__bar:hover input {
+  border: 1px solid var(--black1)
+}
+
+.inputs__bar:focus-within {
+  outline: 2px solid var(--blue);
+  outline-offset: -2px
+}
+
+.inputs__bar:focus-within input {
+  border: 1px solid var(--black1);
+  outline: 1px solid transparent;
+  outline-offset: -2px
+}
+
 .select-menu__label {
   margin-top: 0
 }
@@ -379,9 +420,10 @@ li .colors__name {
 }
 
 li .colors__parameters {
-  grid-column: 17 / span 44;
+  grid-column: 17 / span 33;
   grid-row: 1 / 1;
-  display: flex
+  display: flex;
+  gap: var(--size-xsmall)
 }
 
 li .colors__parameters > .input {

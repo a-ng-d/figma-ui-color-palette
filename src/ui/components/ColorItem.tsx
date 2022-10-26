@@ -128,36 +128,41 @@ export default class ColorItem extends React.Component<Props> {
             onChange={this.inputHandler}
             onFocus={this.selectionHandler}
           />
-          <Input
-            type='number'
-            icon={{type: 'letter', value: 'L'}}
-            value={chroma(this.props.hex).lch()[0].toFixed(0)}
-            min='0'
-            max='100'
-            feature='lightness'
-            onChange={this.inputHandler}
-            onFocus={this.selectionHandler}
-          />
-          <Input
-            type='number'
-            icon={{type: 'letter', value: 'C'}}
-            value={chroma(this.props.hex).lch()[1].toFixed(0)}
-            min='0'
-            max='100'
-            feature='chroma'
-            onChange={this.inputHandler}
-            onFocus={this.selectionHandler}
-          />
-          <Input
-            type='number'
-            icon={{type: 'letter', value: 'H'}}
-            value={chroma(this.props.hex).lch()[2].toFixed(0) == 'NaN' ? 0 : chroma(this.props.hex).lch()[2].toFixed(0)}
-            min='0'
-            max='360'
-            feature='hue'
-            onChange={this.inputHandler}
-            onFocus={this.selectionHandler}
-          />
+          <div className='inputs'>
+            <div className='label'>LCH</div>
+            <div className='inputs__bar'>
+              <Input
+                type='number'
+                icon={{type: 'none', value: null}}
+                value={chroma(this.props.hex).lch()[0].toFixed(0)}
+                min='0'
+                max='100'
+                feature='lightness'
+                onChange={this.inputHandler}
+                onFocus={this.selectionHandler}
+              />
+              <Input
+                type='number'
+                icon={{type: 'none', value: null}}
+                value={chroma(this.props.hex).lch()[1].toFixed(0)}
+                min='0'
+                max='100'
+                feature='chroma'
+                onChange={this.inputHandler}
+                onFocus={this.selectionHandler}
+              />
+              <Input
+                type='number'
+                icon={{type: 'none', value: null}}
+                value={chroma(this.props.hex).lch()[2].toFixed(0) == 'NaN' ? 0 : chroma(this.props.hex).lch()[2].toFixed(0)}
+                min='0'
+                max='360'
+                feature='hue'
+                onChange={this.inputHandler}
+                onFocus={this.selectionHandler}
+              />
+            </div>
+          </div>
         </div>
         <div className='colors__buttons'>
           <Button
