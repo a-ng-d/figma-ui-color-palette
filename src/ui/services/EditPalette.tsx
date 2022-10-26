@@ -152,46 +152,6 @@ export default class EditPalette extends React.Component<Props> {
     })
   }
 
-  Controls = () => {
-    return (
-      <>
-        <div className='controls'>
-          {this.props.context === 'Scale' ?
-          <Scale
-            hasPreset={false}
-            preset={this.props.preset}
-            scale={this.props.scale}
-            onChangePreset={null}
-            onScaleChange={this.slideHandler}
-            onAddScale={null}
-            onRemoveScale={null}
-            onGoingStep={null}
-          /> : null}
-          {this.props.context === 'Colors' ?
-          <Colors
-            colors={this.props.colors}
-            selectedElement={this.state['selectedElement']}
-            hoveredElement={this.state['hoveredElement']}
-            onColorChange={this.colorHandler}
-            onAddColor={this.colorHandler}
-            onSelectionChange={this.selectionHandler}
-            onDragChange={this.dragHandler}
-            onDropOutside={this.dropOutsideHandler}
-            onOrderChange={this.dropHandler}
-          /> : null}
-        </div>
-        <Actions
-          context='edit'
-          hasCaptions={this.props.hasCaptions}
-          onCreatePalette={null}
-          onCreateLocalColors={this.onCreate}
-          onUpdateLocalColors={this.onUpdate}
-          onChangeCaptions={this.checkHandler}
-        />
-      </>
-    )
-  }
-
   render() {
     palette.captions = this.props.hasCaptions;
     return (
@@ -204,7 +164,39 @@ export default class EditPalette extends React.Component<Props> {
         <section
           onClick={this.unSelectColor}
         >
-          <this.Controls />
+          <div className='controls'>
+            {this.props.context === 'Scale' ?
+            <Scale
+              hasPreset={false}
+              preset={this.props.preset}
+              scale={this.props.scale}
+              onChangePreset={null}
+              onScaleChange={this.slideHandler}
+              onAddScale={null}
+              onRemoveScale={null}
+              onGoingStep={null}
+            /> : null}
+            {this.props.context === 'Colors' ?
+            <Colors
+              colors={this.props.colors}
+              selectedElement={this.state['selectedElement']}
+              hoveredElement={this.state['hoveredElement']}
+              onColorChange={this.colorHandler}
+              onAddColor={this.colorHandler}
+              onSelectionChange={this.selectionHandler}
+              onDragChange={this.dragHandler}
+              onDropOutside={this.dropOutsideHandler}
+              onOrderChange={this.dropHandler}
+            /> : null}
+          </div>
+          <Actions
+            context='edit'
+            hasCaptions={this.props.hasCaptions}
+            onCreatePalette={null}
+            onCreateLocalColors={this.onCreate}
+            onUpdateLocalColors={this.onUpdate}
+            onChangeCaptions={this.checkHandler}
+          />
         </section>
       </>
     )

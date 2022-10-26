@@ -33,9 +33,11 @@ export default class CreatePalette extends React.Component<Props> {
 
   scaleHandler = (e: any) => this.props.onCustomPreset(e)
 
-  Controls = () => {
+  render() {
+    palette.captions = this.props.hasCaptions;
+    palette.preset = this.props.preset;
     return (
-      <>
+      <section>
         <div className='controls'>
           <Scale
             hasPreset={true}
@@ -56,16 +58,6 @@ export default class CreatePalette extends React.Component<Props> {
           onUpdateLocalColors={null}
           onChangeCaptions={this.checkHandler}
         />
-      </>
-    )
-  }
-
-  render() {
-    palette.captions = this.props.hasCaptions;
-    palette.preset = this.props.preset;
-    return (
-      <section>
-        <this.Controls />
       </section>
     )
   }
