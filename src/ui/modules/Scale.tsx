@@ -93,10 +93,10 @@ export default class Actions extends React.Component<Props> {
     palette.scale = {};
     return (
       <div className='lightness-scale'>
-      <div className='section-controls'>
-        <div className='section-title'>Lightness scale</div>
-        <div className='label'>{this.props.preset.name}</div>
-      </div>
+        <div className='section-controls'>
+          <div className='section-title'>Lightness scale</div>
+          <div className='label'>{this.props.preset.name}</div>
+        </div>
         <Slider
           type='CUSTOM'
           knobs={this.props.preset.scale}
