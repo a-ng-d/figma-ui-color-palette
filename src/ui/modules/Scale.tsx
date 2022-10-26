@@ -17,7 +17,7 @@ interface Props {
   onGoingStep: any
 };
 
-export default class Actions extends React.Component<Props> {
+export default class Scale extends React.Component<Props> {
 
   Create = () => {
     this.props.onGoingStep != 'captions changed' ? palette.scale = {} : '';
