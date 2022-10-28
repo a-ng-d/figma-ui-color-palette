@@ -1,11 +1,10 @@
 import * as React from 'react';
 import Dispatcher from '../modules/Dispatcher';
-import Slider from '../components/Slider';
-import Switch from '../components/Switch';
-import Button from '../components/Button';
-import Message from '../components/Message';
-import ColorItem from '../components/ColorItem';
 import Tabs from '../components/Tabs';
+import Scale from '../modules/Scale';
+import Colors from '../modules/Colors';
+import About from '../modules/About';
+import Actions from '../modules/Actions';
 import chroma from 'chroma-js';
 import { palette } from '../../palette-package';
 
@@ -149,131 +148,55 @@ export default class EditPalette extends React.Component<Props> {
     })
   }
 
-  // Templates
-  Scale = () => {
-    palette.scale = {};
-    return (
-      <div className='lightness-scale'>
-      <div className='section-controls'>
-        <div className='section-title'>Lightness scale</div>
-        <div className='label'>{this.props.preset.name}</div>
-      </div>
-        <Slider
-          type='CUSTOM'
-          knobs={this.props.preset.scale}
-          min=''
-          max=''
-          scale={this.props.scale}
-          onChange={this.slideHandler}
-        />
-        <Message
-          icon='library'
-          messages= {[
-            'Hold Shift ⇧ while dragging the first or the last knob to distribute knobs\' horizontal spacing',
-            'Hold Ctrl ⌃ or Cmd ⌘ while dragging a knob to move them all'
-          ]}
-        />
-      </div>
-    )
-  }
-
-  Colors = () => {
-    return (
-      <div className='starting-colors'>
-        <div className='section-controls'>
-          <div className='section-title'>Starting colors</div>
-          <Button
-            icon='plus'
-            type='icon'
-            label={null}
-            state=''
-            feature='add'
-            action={this.colorHandler}
-          />
-        </div>
-        <ul className='colors'>
-          {this.props.colors.map((color, index) =>
-            <ColorItem
-              key={color.id}
-              name={color.name}
-              index={index}
-              hex={chroma(color.rgb.r * 255, color.rgb.g * 255, color.rgb.b * 255).hex()}
-              oklch={color.oklch}
-              shift={color.hueShifting}
-              uuid={color.id}
-              selected={this.state['selectedElement']['id'] === color.id ? true : false}
-              guideAbove={this.state['hoveredElement']['id'] === color.id ? this.state['hoveredElement']['hasGuideAbove'] : false}
-              guideBelow={this.state['hoveredElement']['id'] === color.id ? this.state['hoveredElement']['hasGuideBelow'] : false}
-              onColorChange={this.colorHandler}
-              onSelectionChange={this.selectionHandler}
-              onSelectionCancellation={this.selectionHandler}
-              onDragChange={this.dragHandler}
-              onDropOutside={this.dropOutsideHandler}
-              onOrderChange={this.dropHandler}
-            />
-          )}
-        </ul>
-      </div>
-    )
-  }
-
-  Actions = () => {
-    return (
-      <div className='actions'>
-        <div className='buttons'>
-          <Button
-            icon={null}
-            type='secondary'
-            label='Update the local styles'
-            state=''
-            feature='update'
-            action={this.onUpdate}
-          />
-          <Button
-            icon={null}
-            type='primary'
-            label='Create local styles'
-            state=''
-            feature='create'
-            action={this.onCreate}
-          />
-        </div>
-        <Switch
-          id='showCaptions'
-          label='Show captions'
-          isChecked={this.props.hasCaptions}
-          feature='caption'
-          onChange={this.checkHandler}
-        />
-      </div>
-    )
-  }
-
-  Controls = () => {
-    return (
-      <>
-      <div className='controls'>
-        {this.props.context === 'Scale' ? <this.Scale /> : null}
-        {this.props.context === 'Colors' ? <this.Colors /> : null}
-      </div>
-      <this.Actions />
-      </>
-    )
-  }
-
   render() {
     palette.captions = this.props.hasCaptions;
     return (
       <>
         <Tabs
-          tabs={['Scale', 'Colors']}
+          primaryTabs={['Scale', 'Colors']}
+          secondaryTabs={['About']}
           active={this.props.context}
           onClick={this.navHandler}
         />
         <section
           onClick={this.unSelectColor}
+          className={this.props.context === 'Colors' ? 'section--scrollable' : ''}
         >
-          <this.Controls />
+          <div className='controls'>
+            {this.props.context === 'Scale' ?
+            <Scale
+              hasPreset={false}
+              preset={this.props.preset}
+              scale={this.props.scale}
+              onChangePreset={null}
+              onScaleChange={this.slideHandler}
+              onAddScale={null}
+              onRemoveScale={null}
+              onGoingStep={null}
+            /> : null}
+            {this.props.context === 'Colors' ?
+            <Colors
+              colors={this.props.colors}
+              selectedElement={this.state['selectedElement']}
+              hoveredElement={this.state['hoveredElement']}
+              onColorChange={this.colorHandler}
+              onAddColor={this.colorHandler}
+              onSelectionChange={this.selectionHandler}
+              onDragChange={this.dragHandler}
+              onDropOutside={this.dropOutsideHandler}
+              onOrderChange={this.dropHandler}
+            /> : null}
+            {this.props.context === 'About' ? <About/> : null}
+          </div>
+          {this.props.context != 'About' ?
+          <Actions
+            context='edit'
+            hasCaptions={this.props.hasCaptions}
+            onCreatePalette={null}
+            onCreateLocalColors={this.onCreate}
+            onUpdateLocalColors={this.onUpdate}
+            onChangeCaptions={this.checkHandler}
+          /> : null}
         </section>
       </>
     )

@@ -41,13 +41,14 @@ class App extends React.Component {
   captionsHandler = (bool: boolean) => this.setState({ hasCaptions: bool, onGoingStep: 'captions changed' })
 
   colorHandler = (e: any) => {
-    let name, colors, id;
+    let name, colors, id, element;
     try {
-      name = e.nativeEvent.path.filter(el => el.className === 'colors__item')[0].id;
-      id = e.nativeEvent.path.filter(el => {
+      element = e.nativeEvent.path.filter(el => {
         try { return el.classList.contains('colors__item') }
         catch {}
-      })[0].getAttribute('data-id')
+      })[0];
+      name = element.id;
+      id = element.getAttribute('data-id')
     } catch {};
 
     switch (e.target.dataset.feature) {
@@ -317,6 +318,7 @@ class App extends React.Component {
         case 'color-selected':
           this.setState({
             service: 'Create',
+            context: 'Scale',
             hasCaptions: true,
             onGoingStep: 'colors selected',
             preset: presets.material
@@ -358,10 +360,12 @@ class App extends React.Component {
           <CreatePalette
             preset={this.state['preset']}
             hasCaptions={this.state['hasCaptions']}
+            context={this.state['context']}
             onCaptionsChange={this.captionsHandler}
             onGoingStep={this.state['onGoingStep']}
             onPresetChange={this.presetHandler}
             onCustomPreset={this.customHandler}
+            onContextChange={this.navHandler}
           />
         : null}
         {this.state['service'] === 'Edit' ?

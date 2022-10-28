@@ -129,7 +129,7 @@ export default class Slider extends React.Component<Props> {
   }
 
   updateLightnessScaleEntry = (key: string, value: string) => {
-    palette.scale[key] = value;
+    palette.scale[key] = value === '100.0' ? '100' : value
   }
 
   updateKnobTooltip = (tooltip: HTMLElement, value: string) => {
