@@ -19,7 +19,7 @@ export default class Colors extends React.Component<Props> {
 
   render() {
     return (
-      <div className='starting-colors'>
+      <div className='starting-colors controls__control'>
         <div className='section-controls'>
           <div className='section-title'>Starting colors</div>
           <Button

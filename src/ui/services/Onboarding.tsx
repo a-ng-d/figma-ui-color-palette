@@ -7,7 +7,7 @@ export default class Onboarding extends React.Component {
   render() {
     return (
       <section>
-        <div className='onboarding'>
+        <div className='onboarding controls__control'>
           <Icon size={48} />
           <Message
             icon='list-tile'

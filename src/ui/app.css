@@ -33,6 +33,7 @@ div.controls {
   display: flex;
   flex-direction: column;
   flex: 1;
+  padding: var(--size-xsmall) 0;
   overflow: scroll
 }
 
@@ -40,10 +41,7 @@ div.actions {
   flex: 0 0 var(--size-xxlarge)
 }
 
-div.lightness-scale,
-div.starting-colors,
-div.onboarding {
-  padding: var(--size-xsmall) 0;
+div.controls__control {
   display: flex;
   flex: 1;
   flex-direction: column;

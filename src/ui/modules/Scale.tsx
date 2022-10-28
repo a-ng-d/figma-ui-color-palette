@@ -21,7 +21,7 @@ export default class Scale extends React.Component<Props> {
   Create = () => {
     this.props.onGoingStep != 'captions changed' ? palette.scale = {} : '';
     return (
-      <div className='lightness-scale'>
+      <div className='lightness-scale controls__control'>
         <div className='section-controls'>
           <div className='section-title'>Lightness scale</div>
           <Dropdown
@@ -91,7 +91,7 @@ export default class Scale extends React.Component<Props> {
   Edit = () => {
     palette.scale = {};
     return (
-      <div className='lightness-scale'>
+      <div className='lightness-scale controls__control'>
         <div className='section-controls'>
           <div className='section-title'>Lightness scale</div>
           <div className='label'>{this.props.preset.name}</div>
