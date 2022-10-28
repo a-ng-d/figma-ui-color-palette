@@ -78,5 +78,5 @@ The palette architecture (do not manual edit it) is:
 - The colors are managed thanks to the [chroma.js](https://github.com/gka/chroma.js) library by [Gregor Aisch](https://github.com/gka)
 
 ## Support
-- [Follow me on Twitter 🐦](https://twitter.com/inVoltag)
-- [Shoot me a coffee ☕️](https://www.buymeacoffee.com/inVoltag)
+- [Follow me on Twitter 🐦](https://twitter.com/a_ng_d)
+- [Buy me a coffee ☕️](https://www.buymeacoffee.com/a_ng_d)
