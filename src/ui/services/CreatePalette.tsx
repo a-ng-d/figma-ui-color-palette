@@ -1,9 +1,4 @@
 import * as React from 'react';
-import Slider from '../components/Slider';
-import Button from '../components/Button';
-import Checkbox from '../components/Checkbox';
-import Message from '../components/Message';
-import Dropdown from '../components/Dropdown';
 import Actions from '../modules/Actions';
 import Scale from '../modules/Scale';
 import { palette, presets } from '../../palette-package';

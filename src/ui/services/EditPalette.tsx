@@ -1,10 +1,5 @@
 import * as React from 'react';
 import Dispatcher from '../modules/Dispatcher';
-import Slider from '../components/Slider';
-import Switch from '../components/Switch';
-import Button from '../components/Button';
-import Message from '../components/Message';
-import ColorItem from '../components/ColorItem';
 import Tabs from '../components/Tabs';
 import Actions from '../modules/Actions';
 import Scale from '../modules/Scale';
