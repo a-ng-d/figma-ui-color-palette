@@ -13,10 +13,12 @@ export default class About extends React.Component<Props> {
     return (
       <div className='about controls__control'>
         <div>
-          <Icon size={32} />
-          <div className='type type--xlarge'>UI Color Palette</div>
-          <div className='type'>{`Version ${package_json.version}`}</div>
-          <p className='type'>Created and maintained by <a href='https://an.gd' target='_blank'>Aurélien Grimaud</a>.</p>
+            <Icon size={32} />
+            <div>
+              <div className='type type--xlarge'>UI Color Palette</div>
+              <div className='type'>{`Version ${package_json.version}`}</div>
+            </div>
+            <p className='type'>Created and maintained by <a href='https://an.gd' target='_blank'>Aurélien Grimaud</a>.</p>
         </div>
         <div>
           <div>

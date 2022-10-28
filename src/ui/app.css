@@ -427,7 +427,7 @@ li .colors__parameters > .input {
 li .colors__buttons {
   grid-column: span 8 / 75;
   grid-row: 1 / 1;
-  display: flex;
+  display: flex
 }
 
 li .colors__space {
