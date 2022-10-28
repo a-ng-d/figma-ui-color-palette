@@ -1,4 +1,5 @@
 import * as React from 'react';
+import Icon from './../modules/Icon'
 import Message from '../components/Message';
 
 export default class Onboarding extends React.Component {
@@ -7,7 +8,7 @@ export default class Onboarding extends React.Component {
     return (
       <section>
         <div className='onboarding'>
-          <div className='plugin-icon'></div>
+          <Icon size={48} />
           <Message
             icon='list-tile'
             messages= {[
