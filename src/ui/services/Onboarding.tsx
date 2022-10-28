@@ -15,7 +15,7 @@ export default class Onboarding extends React.Component {
               'Select your colors (layers filled with a solid color) on the Figma canvas to create an UI Color Palette',
             ]}
           />
-          <div className='label'>or</div>
+          <div className='type'>－ or －</div>
           <Message
             icon='theme'
             messages= {[
