@@ -4,6 +4,7 @@ import Tabs from '../components/Tabs';
 import Actions from '../modules/Actions';
 import Scale from '../modules/Scale';
 import Colors from '../modules/Colors';
+import About from '../modules/About';
 import chroma from 'chroma-js';
 import { palette } from '../../palette-package';
 
@@ -184,6 +185,7 @@ export default class EditPalette extends React.Component<Props> {
               onDropOutside={this.dropOutsideHandler}
               onOrderChange={this.dropHandler}
             /> : null}
+            {this.props.context === 'About' ? <About/> : null}
           </div>
           <Actions
             context='edit'

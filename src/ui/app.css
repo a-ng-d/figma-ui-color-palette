@@ -448,3 +448,21 @@ li .colors__shift > .input {
 div.onboarding-tip__msg {
   flex: 1
 }
+
+/* About */
+div.about {
+  flex-direction: row;
+  padding: 0 var(--size-small);
+}
+
+div.about > div {
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-xxsmall);
+  flex: 1
+}
+
+div.about .about__links {
+  display: flex;
+  align-items: center
+}
