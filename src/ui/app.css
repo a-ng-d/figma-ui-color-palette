@@ -54,10 +54,6 @@ div.lightness-scale {
   justify-content: space-between
 }
 
-div.lightness-scale > div {
-  padding: 0 var(--size-small)
-}
-
 div.onboarding {
   gap: var(--size-xxsmall);
   align-items: center;
@@ -68,10 +64,25 @@ div.onboarding .label {
   width: auto
 }
 
+div.onboarding-tip {
+  padding: 0 var(--size-xsmall)
+}
+
+div.onboarding-tip .onboarding-tip__msg {
+  flex: 1
+}
+
+div.onboarding-tip__separator {
+  width: 1px;
+  height: 100%;
+  margin: 0 var(--size-xsmall);
+  background-color: var(--silver)
+}
+
 div.actions {
   width: 100%;
   height: var(--size-xxlarge);
-  padding: var(--size-xsmall) var(--size-small);
+  padding: var(--size-xsmall);
   border-top: 1px solid var(--silver);
   display: flex;
   flex-direction: row-reverse;
@@ -88,7 +99,7 @@ div.actions .buttons {
 div.section-controls {
   display: flex;
   justify-content: space-between;
-  padding: 0 var(--size-small)
+  padding: 0 var(--size-xsmall)
 }
 
 div.section-controls .section-title,
@@ -137,7 +148,8 @@ div.slider {
   display: flex;
   align-items: center;
   position: relative;
-  margin-top: var(--size-small)
+  margin-top: var(--size-small);
+  padding: 0 var(--size-medium)
 }
 
 div.slider .slider__range {
@@ -379,7 +391,7 @@ li.colors__item {
   display: grid;
   grid-template-columns: repeat(74, 1fr);
   grid-template-rows: var(--size-medium);
-  padding: 0 var(--size-small);
+  padding: 0 var(--size-xsmall);
   position: relative
 }
 
@@ -446,11 +458,6 @@ li .colors__shift {
 
 li .colors__shift > .input {
   width: 88px
-}
-
-/* Onboarding */
-div.onboarding-tip__msg {
-  flex: 1
 }
 
 /* About */
