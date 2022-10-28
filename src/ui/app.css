@@ -40,11 +40,7 @@ div.controls {
   display: flex;
   flex-direction: column;
   flex: 1;
-  padding: var(--size-xsmall) 0
-}
-
-div.actions {
-  flex: 0 0 var(--size-xxlarge)
+  padding: var(--size-xxsmall) 0
 }
 
 div.controls__control {
@@ -74,6 +70,7 @@ div.onboarding .label {
 
 div.actions {
   width: 100%;
+  height: var(--size-xxlarge);
   padding: var(--size-xsmall) var(--size-small);
   border-top: 1px solid var(--silver);
   display: flex;
@@ -108,6 +105,7 @@ div.tabs {
   display: flex;
   justify-content: space-between;
   align-items: stretch;
+  height: var(--size-large);
   padding: 0 var(--size-xsmall);
   border-bottom: 1px solid var(--silver);
   user-select: none
