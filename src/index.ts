@@ -5,7 +5,7 @@ import { presets } from './palette-package';
 import { setData } from './utils';
 
 figma.showUI(__html__);
-figma.ui.resize(640, 280);
+figma.ui.resize(640, 320);
 figma.loadFontAsync({ family: 'Inter', style: 'Regular' });
 figma.loadFontAsync({ family: 'Roboto', style: 'Regular' });
 figma.loadFontAsync({ family: 'Roboto Mono', style: 'Regular' });
