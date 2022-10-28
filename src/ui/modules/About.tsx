@@ -18,7 +18,7 @@ export default class About extends React.Component<Props> {
               <div className='type type--xlarge'>UI Color Palette</div>
               <div className='type'>{`Version ${package_json.version}`}</div>
             </div>
-            <p className='type'>Created and maintained by <a href='https://an.gd' target='_blank'>Aurélien Grimaud</a>.</p>
+            <p className='type'>Created and maintained by <a href='https://an.gd' target='_blank'>Aurélien Grimaud</a></p>
         </div>
         <div>
           <div>
