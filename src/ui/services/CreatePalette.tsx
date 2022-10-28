@@ -1,6 +1,7 @@
 import * as React from 'react';
-import Actions from '../modules/Actions';
+import Tabs from '../components/Tabs';
 import Scale from '../modules/Scale';
+import Actions from '../modules/Actions';
 import { palette, presets } from '../../palette-package';
 
 interface Props {

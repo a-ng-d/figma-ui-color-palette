@@ -1,10 +1,10 @@
 import * as React from 'react';
 import Dispatcher from '../modules/Dispatcher';
 import Tabs from '../components/Tabs';
-import Actions from '../modules/Actions';
 import Scale from '../modules/Scale';
 import Colors from '../modules/Colors';
 import About from '../modules/About';
+import Actions from '../modules/Actions';
 import chroma from 'chroma-js';
 import { palette } from '../../palette-package';
 
