@@ -25,16 +25,22 @@ main {
 section {
   flex: 1;
   display: flex;
-  flex-direction: column;
+  flex-direction: column
+}
+
+section.section--scrollable {
   overflow: hidden
+}
+
+section.section--scrollable div.controls {
+  overflow: scroll
 }
 
 div.controls {
   display: flex;
   flex-direction: column;
   flex: 1;
-  padding: var(--size-xsmall) 0;
-  overflow: scroll
+  padding: var(--size-xsmall) 0
 }
 
 div.actions {
