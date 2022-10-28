@@ -318,6 +318,7 @@ class App extends React.Component {
         case 'color-selected':
           this.setState({
             service: 'Create',
+            context: 'Scale',
             hasCaptions: true,
             onGoingStep: 'colors selected',
             preset: presets.material
@@ -359,10 +360,12 @@ class App extends React.Component {
           <CreatePalette
             preset={this.state['preset']}
             hasCaptions={this.state['hasCaptions']}
+            context={this.state['context']}
             onCaptionsChange={this.captionsHandler}
             onGoingStep={this.state['onGoingStep']}
             onPresetChange={this.presetHandler}
             onCustomPreset={this.customHandler}
+            onContextChange={this.navHandler}
           />
         : null}
         {this.state['service'] === 'Edit' ?

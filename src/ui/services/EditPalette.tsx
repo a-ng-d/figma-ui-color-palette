@@ -187,7 +187,7 @@ export default class EditPalette extends React.Component<Props> {
             /> : null}
             {this.props.context === 'About' ? <About/> : null}
           </div>
-          {this.props.context!== 'About' ?
+          {this.props.context != 'About' ?
           <Actions
             context='edit'
             hasCaptions={this.props.hasCaptions}
@@ -196,7 +196,6 @@ export default class EditPalette extends React.Component<Props> {
             onUpdateLocalColors={this.onUpdate}
             onChangeCaptions={this.checkHandler}
           /> : null}
-
         </section>
       </>
     )
