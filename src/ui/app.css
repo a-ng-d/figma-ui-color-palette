@@ -109,13 +109,17 @@ div.section-controls .select-menu {
 
 /* Tabs */
 div.tabs {
-  flex: 0 0 var(--size-large);
   display: flex;
-  flex-direction: row;
+  justify-content: space-between;
   align-items: stretch;
   padding: 0 var(--size-xsmall);
   border-bottom: 1px solid var(--silver);
   user-select: none
+}
+
+div.tabs .tabs__primary,
+div.tabs .tabs__secondary {
+  display: flex
 }
 
 div.tabs .tabs__tab {

@@ -157,7 +157,8 @@ export default class EditPalette extends React.Component<Props> {
     return (
       <>
         <Tabs
-          tabs={['Scale', 'Colors']}
+          primaryTabs={['Scale', 'Colors']}
+          secondaryTabs={['About']}
           active={this.props.context}
           onClick={this.navHandler}
         />
