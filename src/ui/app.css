@@ -389,7 +389,7 @@ ul.colors {
 
 li.colors__item {
   display: grid;
-  grid-template-columns: repeat(74, 1fr);
+  grid-template-columns: repeat(76, 1fr);
   grid-template-rows: var(--size-medium);
   padding: 0 var(--size-xsmall);
   position: relative
@@ -441,7 +441,7 @@ li .colors__parameters > .input {
 }
 
 li .colors__buttons {
-  grid-column: span 8 / 75;
+  grid-column: span 8 / 77;
   grid-row: 1 / 1;
   display: flex
 }
