@@ -187,9 +187,9 @@ export default class EditPalette extends React.Component<Props> {
               onDropOutside={this.dropOutsideHandler}
               onOrderChange={this.dropHandler}
             /> : null}
-            {this.props.context === 'About' ? <About/> : null}
             {this.props.context === 'Export' ?
             <Export /> : null}
+            {this.props.context === 'About' ? <About /> : null}
           </div>
           {this.props.context != 'About' ?
           <Actions

@@ -66,7 +66,7 @@ export default class CreatePalette extends React.Component<Props> {
               onRemoveScale={this.scaleHandler}
               onGoingStep={this.props.onGoingStep}
             /> : null}
-            {this.props.context === 'About' ? <About/> : null}
+            {this.props.context === 'About' ? <About /> : null}
           </div>
           {this.props.context != 'About' ?
           <Actions
