@@ -3,6 +3,7 @@ import Dispatcher from '../modules/Dispatcher';
 import Tabs from '../components/Tabs';
 import Scale from '../modules/Scale';
 import Colors from '../modules/Colors';
+import Export from '../modules/Export';
 import About from '../modules/About';
 import Actions from '../modules/Actions';
 import chroma from 'chroma-js';
@@ -153,7 +154,7 @@ export default class EditPalette extends React.Component<Props> {
     return (
       <>
         <Tabs
-          primaryTabs={['Scale', 'Colors']}
+          primaryTabs={['Scale', 'Colors', 'Export']}
           secondaryTabs={['About']}
           active={this.props.context}
           onClick={this.navHandler}
@@ -187,6 +188,8 @@ export default class EditPalette extends React.Component<Props> {
               onOrderChange={this.dropHandler}
             /> : null}
             {this.props.context === 'About' ? <About/> : null}
+            {this.props.context === 'Export' ?
+            <Export /> : null}
           </div>
           {this.props.context != 'About' ?
           <Actions
