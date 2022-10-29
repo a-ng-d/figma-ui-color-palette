@@ -3,7 +3,7 @@ import Button from '../components/Button';
 import Dropdown from '../components/Dropdown';
 import Slider from '../components/Slider';
 import Message from '../components/Message';
-import { palette, presets } from '../../palette-package';
+import { palette, presets } from '../../utils/palette-package';
 
 interface Props {
   hasPreset: boolean;

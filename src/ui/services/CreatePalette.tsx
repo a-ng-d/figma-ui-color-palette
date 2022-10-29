@@ -3,7 +3,7 @@ import Tabs from '../components/Tabs';
 import Scale from '../modules/Scale';
 import About from '../modules/About';
 import Actions from '../modules/Actions';
-import { palette, presets } from '../../palette-package';
+import { palette, presets } from '../../utils/palette-package';
 
 interface Props {
   hasCaptions: boolean;
