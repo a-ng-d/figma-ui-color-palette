@@ -1,4 +1,4 @@
-export const updateLocalStyles = (palette, i) => {
+const updateLocalStyles = (palette, i) => {
 
   palette = figma.currentPage.selection[0];
 
@@ -27,4 +27,6 @@ export const updateLocalStyles = (palette, i) => {
   } else
     figma.notify('Your UI Color Palette seems corrupted. Do not edit any layer within it.')
 
-}
+};
+
+export default updateLocalStyles

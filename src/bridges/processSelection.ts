@@ -1,7 +1,7 @@
 import { setData } from './../utils/setData';
 import { presets } from './../utils/palettePackage';
 
-export const processSelection = () => {
+const processSelection = () => {
 
   const selection: ReadonlyArray<BaseNode> = figma.currentPage.selection
 
@@ -41,3 +41,5 @@ export const processSelection = () => {
   })
 
 };
+
+export default processSelection

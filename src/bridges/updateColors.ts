@@ -1,6 +1,6 @@
 import Colors from './../canvas/Colors';
 
-export const updateColors = (msg, palette) => {
+const updateColors = (msg, palette) => {
 
   palette = figma.currentPage.selection[0];
   palette.setPluginData('colors', JSON.stringify(msg.data));
@@ -16,4 +16,6 @@ export const updateColors = (msg, palette) => {
   palette.counterAxisSizingMode = 'AUTO';
   palette.name = `UI Color Palette﹒${JSON.parse(palette.getPluginData('preset')).name}`
 
-}
+};
+
+export default updateColors

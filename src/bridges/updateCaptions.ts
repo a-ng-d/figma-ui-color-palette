@@ -1,6 +1,6 @@
 import Colors from './../canvas/Colors';
 
-export const updateCaptions = (msg, palette) => {
+const updateCaptions = (msg, palette) => {
 
   palette = figma.currentPage.selection[0];
   if (palette.children.length == 1) {
@@ -30,4 +30,6 @@ export const updateCaptions = (msg, palette) => {
   } else
     figma.notify('Your UI Color Palette seems corrupted. Do not edit any layer within it.')
 
-}
+};
+
+export default updateCaptions

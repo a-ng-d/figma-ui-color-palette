@@ -1,6 +1,6 @@
 import Colors from './../canvas/Colors';
 
-export const updateScale = (msg, palette) => {
+const updateScale = (msg, palette) => {
 
   palette = figma.currentPage.selection[0];
   if (palette.children.length == 1) {
@@ -20,4 +20,6 @@ export const updateScale = (msg, palette) => {
   } else
     figma.notify('Your UI Color Palette seems corrupted. Do not edit any layer within it.')
 
-}
+};
+
+export default updateScale

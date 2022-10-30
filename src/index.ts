@@ -1,10 +1,10 @@
-import { createPalette } from './bridges/createPalette';
-import { updateScale } from './bridges/updateScale';
-import { updateCaptions } from './bridges/updateCaptions';
-import { updateColors } from './bridges/updateColors';
-import { createLocalStyles } from './bridges/createLocalStyles';
-import { updateLocalStyles } from './bridges/updateLocalStyles';
-import { processSelection } from './bridges/processSelection';
+import createPalette from './bridges/createPalette';
+import updateScale from './bridges/updateScale';
+import updateCaptions from './bridges/updateCaptions';
+import updateColors from './bridges/updateColors';
+import createLocalStyles from './bridges/createLocalStyles';
+import updateLocalStyles from './bridges/updateLocalStyles';
+import processSelection from './bridges/processSelection';
 
 figma.showUI(__html__);
 figma.ui.resize(640, 320);

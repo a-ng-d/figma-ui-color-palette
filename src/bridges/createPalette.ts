@@ -1,6 +1,6 @@
 import Palette from './../canvas/Palette';
 
-export const createPalette = (msg, palette) => {
+const createPalette = (msg, palette) => {
 
   const scene: SceneNode[] = [];
 
@@ -18,4 +18,6 @@ export const createPalette = (msg, palette) => {
   } else
     palette.remove()
 
-}
+};
+
+export default createPalette
