@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Knob from './Knob';
-import { palette } from '../../utils/palette-package';
+import { palette } from '../../utils/palettePackage';
 import { doMap } from './../../utils/doMap';
 
 interface Props {

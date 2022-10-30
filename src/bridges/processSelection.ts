@@ -1,5 +1,5 @@
 import { setData } from './../utils/setData';
-import { presets } from './../utils/palette-package';
+import { presets } from './../utils/palettePackage';
 
 export const processSelection = () => {
 

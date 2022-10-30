@@ -1,5 +1,5 @@
 import Palette from './../canvas/Palette';
-import { palette, presets } from './../utils/palette-package';
+import { palette, presets } from './../utils/palettePackage';
 
 export const createPalette = (msg, palette) => {
 

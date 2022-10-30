@@ -8,7 +8,7 @@ import { updateColors } from './bridges/updateColors';
 import { createLocalStyles } from './bridges/createLocalStyles';
 import { updateLocalStyles } from './bridges/updateLocalStyles';
 import { processSelection } from './bridges/processSelection';
-import { presets } from './utils/palette-package';
+import { presets } from './utils/palettePackage';
 
 figma.showUI(__html__);
 figma.ui.resize(640, 320);

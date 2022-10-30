@@ -7,7 +7,7 @@ import Export from '../modules/Export';
 import About from '../modules/About';
 import Actions from '../modules/Actions';
 import chroma from 'chroma-js';
-import { palette } from '../../utils/palette-package';
+import { palette } from '../../utils/palettePackage';
 
 interface Props {
   scale: any;
