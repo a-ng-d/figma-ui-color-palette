@@ -1,7 +1,8 @@
 import { setData } from './../utils/setData';
 import { presets } from './../utils/palette-package';
 
-export const messageToUI = () => {
+export const processSelection = () => {
+
   const selection: ReadonlyArray<BaseNode> = figma.currentPage.selection
 
   if (selection.length == 1 && selection[0].getPluginData('scale') != '') {
@@ -38,4 +39,5 @@ export const messageToUI = () => {
           data: {}
         })
   })
+
 };

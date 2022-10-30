@@ -7,7 +7,7 @@ import { updateCaptions } from './bridges/updateCaptions';
 import { updateColors } from './bridges/updateColors';
 import { createLocalStyles } from './bridges/createLocalStyles';
 import { updateLocalStyles } from './bridges/updateLocalStyles';
-import { messageToUI } from './bridges/messageToUI';
+import { processSelection } from './bridges/processSelection';
 import { presets } from './utils/palette-package';
 
 figma.showUI(__html__);
@@ -17,8 +17,8 @@ figma.loadFontAsync({ family: 'Roboto', style: 'Regular' });
 figma.loadFontAsync({ family: 'Roboto Mono', style: 'Regular' });
 figma.loadFontAsync({ family: 'Roboto Mono', style: 'Medium' });
 
-figma.on('run', () => messageToUI());
-figma.on('selectionchange', () => messageToUI());
+figma.on('run', () => processSelection());
+figma.on('selectionchange', () => processSelection());
 
 figma.ui.onmessage = msg => {
 
