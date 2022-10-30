@@ -4,6 +4,7 @@ import Colors from './canvas/Colors';
 import { createPalette } from './bridges/createPalette';
 import { updateScale } from './bridges/updateScale';
 import { updateCaptions } from './bridges/updateCaptions';
+import { updateColors } from './bridges/updateColors';
 import { messageToUI } from './bridges/messageToUI';
 import { presets } from './utils/palette-package';
 
@@ -30,21 +31,8 @@ figma.ui.onmessage = msg => {
 
     case 'update-captions': updateCaptions(msg, palette); break;
 
-    case 'update-colors':
-      palette = figma.currentPage.selection[0];
-      palette.setPluginData('colors', JSON.stringify(msg.data));
-      palette.children[0].remove();
-      palette.appendChild(new Colors({
-        colors: JSON.parse(palette.getPluginData('colors')),
-        scale: JSON.parse(palette.getPluginData('scale')),
-        captions: palette.getPluginData('captions') == 'hasCaptions' ? true : false,
-        preset: JSON.parse(palette.getPluginData('preset'))
-      }).makeNode());
+    case 'update-colors': updateColors(msg, palette); break;
 
-      // palette migration
-      palette.counterAxisSizingMode = 'AUTO';
-      palette.name = `UI Color Palette﹒${JSON.parse(palette.getPluginData('preset')).name}`
-      break;
 
     case 'create-local-styles':
       palette = figma.currentPage.selection[0];
