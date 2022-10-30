@@ -1,6 +1,3 @@
-import Palette from './canvas/Palette';
-import Style from './canvas/Style';
-import Colors from './canvas/Colors';
 import { createPalette } from './bridges/createPalette';
 import { updateScale } from './bridges/updateScale';
 import { updateCaptions } from './bridges/updateCaptions';
@@ -8,7 +5,6 @@ import { updateColors } from './bridges/updateColors';
 import { createLocalStyles } from './bridges/createLocalStyles';
 import { updateLocalStyles } from './bridges/updateLocalStyles';
 import { processSelection } from './bridges/processSelection';
-import { presets } from './utils/palettePackage';
 
 figma.showUI(__html__);
 figma.ui.resize(640, 320);
