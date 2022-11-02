@@ -6,10 +6,12 @@ import Switch from '../components/Switch';
 interface Props {
   context: string;
   hasCaptions: boolean;
+  fileType: string | null;
   onCreatePalette: any;
   onCreateLocalColors: any;
   onUpdateLocalColors: any;
   onChangeCaptions: any;
+  onExportPalette: any
 };
 
 export default class Actions extends React.Component<Props> {
@@ -66,6 +68,25 @@ export default class Actions extends React.Component<Props> {
           feature='caption'
           onChange={this.props.onChangeCaptions}
         />
+      </div>
+    )
+  }
+
+  Export = () => {
+    return (
+      <div className='actions'>
+        <div className='buttons'>
+          <Button
+            icon={null}
+            type='primary'
+            label={`Export to ${this.props.fileType}`}
+            state=''
+            feature='export'
+            action={this.props.onExportPalette}
+          >
+            <a></a>
+          </Button>
+        </div>
       </div>
     )
   }
