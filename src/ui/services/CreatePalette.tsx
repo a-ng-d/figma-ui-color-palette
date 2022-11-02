@@ -45,7 +45,8 @@ export default class CreatePalette extends React.Component<Props> {
   render() {
     palette.captions = this.props.hasCaptions;
     palette.preset = this.props.preset;
-    let actions;
+    let actions, controls;
+
     if (this.props.context === 'About')
       actions = null
     else
@@ -61,6 +62,25 @@ export default class CreatePalette extends React.Component<Props> {
           onExportPalette={null}
         />
 
+    switch (this.props.context) {
+      case 'Scale':
+        controls =
+          <Scale
+            hasPreset={true}
+            preset={this.props.preset}
+            scale={null}
+            onChangePreset={this.presetHandler}
+            onScaleChange={this.slideHandler}
+            onAddScale={this.scaleHandler}
+            onRemoveScale={this.scaleHandler}
+            onGoingStep={this.props.onGoingStep}
+          />;
+        break;
+
+        case 'About':
+          controls = <About />
+      }
+
     return (
       <>
         <Tabs
@@ -71,18 +91,7 @@ export default class CreatePalette extends React.Component<Props> {
         />
         <section>
           <div className='controls'>
-            {this.props.context === 'Scale' ?
-            <Scale
-              hasPreset={true}
-              preset={this.props.preset}
-              scale={null}
-              onChangePreset={this.presetHandler}
-              onScaleChange={this.slideHandler}
-              onAddScale={this.scaleHandler}
-              onRemoveScale={this.scaleHandler}
-              onGoingStep={this.props.onGoingStep}
-            /> : null}
-            {this.props.context === 'About' ? <About /> : null}
+            {controls}
           </div>
           {actions}
         </section>
