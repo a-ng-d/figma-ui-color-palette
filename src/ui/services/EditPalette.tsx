@@ -48,7 +48,7 @@ export default class EditPalette extends React.Component<Props> {
     }
   }
 
-  // Events
+  // Handlers
   slideHandler = (e: string) => {
     if (e === 'released') {
       this.dispatch.scale.on.status = false
@@ -129,6 +129,7 @@ export default class EditPalette extends React.Component<Props> {
     }) : null
   }
 
+  // Direct actions
   onCreate = () => {
     parent.postMessage({ pluginMessage: { type: 'create-local-styles', palette } }, '*')
     this.setState({

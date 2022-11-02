@@ -18,9 +18,7 @@ interface Props {
 
 export default class CreatePalette extends React.Component<Props> {
 
-  // Events
-  onCreate = () => parent.postMessage({ pluginMessage: { type: 'create-palette', palette } }, '*')
-
+  // Handlers
   slideHandler = () => { }
 
   checkHandler = (e: any) => {
@@ -41,6 +39,9 @@ export default class CreatePalette extends React.Component<Props> {
   presetHandler = (e: any) => this.props.onPresetChange(e)
 
   scaleHandler = (e: any) => this.props.onCustomPreset(e)
+
+  // Direct actions
+  onCreate = () => parent.postMessage({ pluginMessage: { type: 'create-palette', palette } }, '*')
 
   render() {
     palette.captions = this.props.hasCaptions;
