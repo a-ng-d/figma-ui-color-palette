@@ -96,6 +96,7 @@ export default class Actions extends React.Component<Props> {
       <>
         {this.props.context === 'create' ? <this.Create /> : null}
         {this.props.context === 'edit' ? <this.Edit /> : null}
+        {this.props.context === 'export' ? <this.Export /> : null}
       </>
     )
   }
