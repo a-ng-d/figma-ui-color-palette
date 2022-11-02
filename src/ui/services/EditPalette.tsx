@@ -151,7 +151,8 @@ export default class EditPalette extends React.Component<Props> {
 
   render() {
     palette.captions = this.props.hasCaptions;
-    let actions;
+    let actions, controls;
+
     if (this.props.context === 'Export')
       actions =
         <Actions
@@ -179,6 +180,44 @@ export default class EditPalette extends React.Component<Props> {
             onExportPalette={null}
           />
 
+    switch (this.props.context) {
+      case 'Scale':
+        controls =
+          <Scale
+            hasPreset={false}
+            preset={this.props.preset}
+            scale={this.props.scale}
+            onChangePreset={null}
+            onScaleChange={this.slideHandler}
+            onAddScale={null}
+            onRemoveScale={null}
+            onGoingStep={null}
+          />;
+        break;
+
+      case 'Colors':
+        controls =
+          <Colors
+            colors={this.props.colors}
+            selectedElement={this.state['selectedElement']}
+            hoveredElement={this.state['hoveredElement']}
+            onColorChange={this.colorHandler}
+            onAddColor={this.colorHandler}
+            onSelectionChange={this.selectionHandler}
+            onDragChange={this.dragHandler}
+            onDropOutside={this.dropOutsideHandler}
+            onOrderChange={this.dropHandler}
+          />;
+        break;
+
+      case 'Export':
+        controls = <Export />;
+        break;
+
+      case 'About':
+        controls = <About />
+    }
+
     return (
       <>
         <Tabs
@@ -192,32 +231,7 @@ export default class EditPalette extends React.Component<Props> {
           className={this.props.context === 'Colors' ? 'section--scrollable' : ''}
         >
           <div className='controls'>
-            {this.props.context === 'Scale' ?
-            <Scale
-              hasPreset={false}
-              preset={this.props.preset}
-              scale={this.props.scale}
-              onChangePreset={null}
-              onScaleChange={this.slideHandler}
-              onAddScale={null}
-              onRemoveScale={null}
-              onGoingStep={null}
-            /> : null}
-            {this.props.context === 'Colors' ?
-            <Colors
-              colors={this.props.colors}
-              selectedElement={this.state['selectedElement']}
-              hoveredElement={this.state['hoveredElement']}
-              onColorChange={this.colorHandler}
-              onAddColor={this.colorHandler}
-              onSelectionChange={this.selectionHandler}
-              onDragChange={this.dragHandler}
-              onDropOutside={this.dropOutsideHandler}
-              onOrderChange={this.dropHandler}
-            /> : null}
-            {this.props.context === 'Export' ?
-            <Export /> : null}
-            {this.props.context === 'About' ? <About /> : null}
+            {controls}
           </div>
           {actions}
         </section>
