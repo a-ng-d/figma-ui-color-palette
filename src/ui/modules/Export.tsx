@@ -2,7 +2,8 @@ import * as React from 'react';
 import RadioButton from './../components/RadioButton'
 
 interface Props {
-
+  exportType: string;
+  onFileFormatChange: any
 };
 
 export default class Export extends React.Component<Props> {
@@ -19,11 +20,11 @@ export default class Export extends React.Component<Props> {
               <RadioButton
                 id='options__json'
                 label='JSON'
-                isChecked={true}
+                isChecked={this.props.exportType === 'JSON' ? true : false}
                 isDisabled={false}
                 feature='export-to-json'
                 group='fileFormat'
-                onChange={null}
+                onChange={this.props.onFileFormatChange}
               />
             </li>
           </ul>

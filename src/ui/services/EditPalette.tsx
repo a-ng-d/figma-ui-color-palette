@@ -44,6 +44,10 @@ export default class EditPalette extends React.Component<Props> {
         hasGuideAbove: false,
         hasGuideBelow: false,
         position: null
+      },
+      export: {
+        type: 'JSON',
+        feature: 'export-to-json'
       }
     }
   }
@@ -119,6 +123,33 @@ export default class EditPalette extends React.Component<Props> {
   }
 
   dropHandler = (e: any) => this.props.onOrderChange(this.state['selectedElement'], this.state['hoveredElement'])
+
+  exportHandler = (e: any) => {
+    switch (e.target.dataset.feature) {
+      case 'export-to-json':
+        this.setState({
+          export: {
+            type: 'JSON'
+          }
+        });
+        break;
+
+      case 'export-to-css':
+        this.setState({
+          export: {
+            type: 'CSS'
+          }
+        });
+        break;
+
+      case 'export-to-sass':
+        this.setState({
+          export: {
+            type: 'SASS'
+          }
+        })
+    }
+  }
 
   unSelectColor = (e: any) => {
     e.target.closest('li.colors__item') == null ? this.setState({
@@ -212,7 +243,11 @@ export default class EditPalette extends React.Component<Props> {
         break;
 
       case 'Export':
-        controls = <Export />;
+        controls =
+          <Export
+            exportType={this.state['export']['type']}
+            onFileFormatChange={this.exportHandler}
+          />;
         break;
 
       case 'About':
