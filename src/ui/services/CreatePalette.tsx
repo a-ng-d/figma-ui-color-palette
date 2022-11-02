@@ -55,7 +55,7 @@ export default class CreatePalette extends React.Component<Props> {
         <Actions
           context='create'
           hasCaptions={this.props.hasCaptions}
-          fileType= {null}
+          exportType= {null}
           onCreatePalette={this.onCreate}
           onCreateLocalColors={null}
           onUpdateLocalColors={null}

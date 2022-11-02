@@ -159,7 +159,7 @@ export default class EditPalette extends React.Component<Props> {
         <Actions
           context='export'
           hasCaptions={null}
-          fileType= {'file'}
+          exportType= {this.state['export']['type']}
           onCreatePalette={null}
           onCreateLocalColors={null}
           onUpdateLocalColors={null}
@@ -173,7 +173,7 @@ export default class EditPalette extends React.Component<Props> {
           <Actions
             context='edit'
             hasCaptions={this.props.hasCaptions}
-            fileType= {null}
+            exportType= {null}
             onCreatePalette={null}
             onCreateLocalColors={this.onCreate}
             onUpdateLocalColors={this.onUpdate}
