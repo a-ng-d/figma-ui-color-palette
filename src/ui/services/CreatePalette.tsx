@@ -45,6 +45,22 @@ export default class CreatePalette extends React.Component<Props> {
   render() {
     palette.captions = this.props.hasCaptions;
     palette.preset = this.props.preset;
+    let actions;
+    if (this.props.context === 'About')
+      actions = null
+    else
+      actions =
+        <Actions
+          context='create'
+          hasCaptions={this.props.hasCaptions}
+          fileType= {null}
+          onCreatePalette={this.onCreate}
+          onCreateLocalColors={null}
+          onUpdateLocalColors={null}
+          onChangeCaptions={this.checkHandler}
+          onExportPalette={null}
+        />
+
     return (
       <>
         <Tabs
@@ -68,15 +84,7 @@ export default class CreatePalette extends React.Component<Props> {
             /> : null}
             {this.props.context === 'About' ? <About /> : null}
           </div>
-          {this.props.context != 'About' ?
-          <Actions
-            context='create'
-            hasCaptions={this.props.hasCaptions}
-            onCreatePalette={this.onCreate}
-            onCreateLocalColors={null}
-            onUpdateLocalColors={null}
-            onChangeCaptions={this.checkHandler}
-          /> : null}
+          {actions}
         </section>
       </>
     )

@@ -151,6 +151,34 @@ export default class EditPalette extends React.Component<Props> {
 
   render() {
     palette.captions = this.props.hasCaptions;
+    let actions;
+    if (this.props.context === 'Export')
+      actions =
+        <Actions
+          context='export'
+          hasCaptions={null}
+          fileType= {'file'}
+          onCreatePalette={null}
+          onCreateLocalColors={null}
+          onUpdateLocalColors={null}
+          onChangeCaptions={null}
+          onExportPalette={null}
+        />
+      else if (this.props.context === 'About')
+        actions = null
+      else
+        actions =
+          <Actions
+            context='edit'
+            hasCaptions={this.props.hasCaptions}
+            fileType= {null}
+            onCreatePalette={null}
+            onCreateLocalColors={this.onCreate}
+            onUpdateLocalColors={this.onUpdate}
+            onChangeCaptions={this.checkHandler}
+            onExportPalette={null}
+          />
+
     return (
       <>
         <Tabs
@@ -191,15 +219,7 @@ export default class EditPalette extends React.Component<Props> {
             <Export /> : null}
             {this.props.context === 'About' ? <About /> : null}
           </div>
-          {this.props.context != 'About' ?
-          <Actions
-            context='edit'
-            hasCaptions={this.props.hasCaptions}
-            onCreatePalette={null}
-            onCreateLocalColors={this.onCreate}
-            onUpdateLocalColors={this.onUpdate}
-            onChangeCaptions={this.checkHandler}
-          /> : null}
+          {actions}
         </section>
       </>
     )
