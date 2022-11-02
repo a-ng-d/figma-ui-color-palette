@@ -33,6 +33,7 @@ export default class Actions extends React.Component<Props> {
           id='showCaptions'
           label='Show captions'
           isChecked={this.props.hasCaptions}
+          isDisabled={false}
           feature='show-caption'
           onChange={this.props.onChangeCaptions}
         />
