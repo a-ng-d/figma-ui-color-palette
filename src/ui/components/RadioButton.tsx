@@ -6,6 +6,7 @@ interface Props {
   isChecked: boolean;
   isDisabled: boolean;
   feature: string;
+  group: string;
   onChange: any
 };
 
@@ -22,7 +23,7 @@ export default class RadioButton extends React.Component<Props> {
           checked={this.props.isChecked}
           disabled={this.props.isDisabled}
           onChange={this.props.onChange}
-          name='radioGroup'
+          name={this.props.group}
         />
         <label className='radio__label' htmlFor={this.props.id}>{this.props.label}</label>
       </div>

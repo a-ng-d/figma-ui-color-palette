@@ -7,6 +7,11 @@ input {
   cursor: default
 }
 
+ul {
+  padding: 0;
+  margin: 0
+}
+
 div#react-page {
   height: 100%;
   user-select: none
@@ -382,11 +387,6 @@ div.icon {
 }
 
 /* Color items */
-ul.colors {
-  padding: 0;
-  margin: 0
-}
-
 li.colors__item {
   display: grid;
   grid-template-columns: repeat(76, 1fr);
@@ -458,6 +458,16 @@ li .colors__shift {
 
 li .colors__shift > .input {
   width: 88px
+}
+
+/* Export */
+ul.options {
+  display: flex;
+  padding: 0 var(--size-xsmall)
+}
+
+ul.options li {
+  display: block
 }
 
 /* About */

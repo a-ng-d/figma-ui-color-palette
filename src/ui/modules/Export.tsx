@@ -10,21 +10,24 @@ export default class Export extends React.Component<Props> {
   render() {
     return (
       <div className='export-palette controls__control'>
-        <div className='section-controls'>
-          <div className='section-title'>File format</div>
+        <div>
+          <div className='section-controls'>
+            <div className='section-title'>File format</div>
+          </div>
+          <ul className="options">
+            <li>
+              <RadioButton
+                id='options__json'
+                label='JSON'
+                isChecked={true}
+                isDisabled={false}
+                feature='export-to-json'
+                group='fileFormat'
+                onChange={null}
+              />
+            </li>
+          </ul>
         </div>
-        <ul className="options">
-          <li>
-            <RadioButton
-              id='options__json'
-              label='JSON'
-              isChecked={true}
-              isDisabled={false}
-              feature='export-to-json'
-              onChange={null}
-            />
-          </li>
-        </ul>
       </div>
     )
   }
