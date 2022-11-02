@@ -188,6 +188,7 @@ export default class ColorItem extends React.Component<Props> {
             id={'oklch-' + this.props.uuid}
             label='Use OKLCH'
             isChecked={this.props.oklch}
+            isDisabled={false}
             feature='oklch'
             onChange={this.inputHandler}
           />
