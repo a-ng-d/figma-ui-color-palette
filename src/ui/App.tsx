@@ -353,8 +353,10 @@ class App extends React.Component {
           break;
 
         case 'export-palette':
+          let file;
           const a = document.createElement('a');
-          const file = new Blob([JSON.stringify(e.data.pluginMessage.data, null, '  ')], { type: e.data.pluginMessage.mimeType });
+          if (e.data.pluginMessage.export === 'JSON')
+            file = new Blob([JSON.stringify(e.data.pluginMessage.data, null, '  ')], { type: e.data.pluginMessage.mimeType });
           a.href = URL.createObjectURL(file);
           a.download = 'colors';
           a.click()
