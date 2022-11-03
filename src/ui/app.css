@@ -461,8 +461,15 @@ li .colors__shift > .input {
 }
 
 /* Export */
+div.export-palette {
+  flex-direction: row
+}
+
+div.export-palette > div {
+  flex: 0 1 50%
+}
+
 ul.options {
-  display: flex;
   padding: 0 var(--size-xsmall)
 }
 
