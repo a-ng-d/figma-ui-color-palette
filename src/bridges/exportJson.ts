@@ -2,7 +2,7 @@ import chroma from 'chroma-js';
 
 let json = {};
 
-const exportPalette = (msg, palette) => {
+const exportJson = (msg, palette) => {
 
   palette = figma.currentPage.selection[0];
 
@@ -31,10 +31,15 @@ const exportPalette = (msg, palette) => {
             json[row.name] = {}
         })
     })
-    console.log(json)
+    figma.ui.postMessage({
+      type: 'export-palette',
+      export: 'JSON',
+      mimeType: 'application/json',
+      data: json
+    })
   } else
     figma.notify('Your UI Color Palette seems corrupted. Do not edit any layer within it.')
 
 };
 
-export default exportPalette
+export default exportJson

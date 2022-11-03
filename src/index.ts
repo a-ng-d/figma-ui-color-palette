@@ -5,7 +5,7 @@ import updateColors from './bridges/updateColors';
 import createLocalStyles from './bridges/createLocalStyles';
 import updateLocalStyles from './bridges/updateLocalStyles';
 import processSelection from './bridges/processSelection';
-import exportPalette from './bridges/exportPalette';
+import exportJson from './bridges/exportJson';
 
 figma.showUI(__html__);
 figma.ui.resize(640, 320);
@@ -36,7 +36,8 @@ figma.ui.onmessage = msg => {
 
     case 'update-local-styles': updateLocalStyles(palette, i); break;
 
-    case 'export-palette': exportPalette(msg, palette)
+    case 'export-palette':
+      msg.export === 'JSON' ? exportJson(msg, palette) : null
 
   }
 
