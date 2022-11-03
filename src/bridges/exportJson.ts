@@ -15,14 +15,14 @@ const exportJson = (msg, palette) => {
             json[row.name][sample.name] = {};
             json[row.name][sample.name] = {
               rgb: {
-                r: color.r * 255,
-                g: color.g * 255,
-                b: color.b * 255
+                r: Math.floor(color.r * 255),
+                g: Math.floor(color.g * 255),
+                b: Math.floor(color.b * 255)
               },
               lch: {
-                l: chroma(color.r * 255, color.g * 255, color.b * 255).lch()[0],
-                c: chroma(color.r * 255, color.g * 255, color.b * 255).lch()[1],
-                h: chroma(color.r * 255, color.g * 255, color.b * 255).lch()[2]
+                l: Math.floor(chroma(color.r * 255, color.g * 255, color.b * 255).lch()[0]),
+                c: Math.floor(chroma(color.r * 255, color.g * 255, color.b * 255).lch()[1]),
+                h: Math.floor(chroma(color.r * 255, color.g * 255, color.b * 255).lch()[2])
               },
               hex: chroma(color.r * 255, color.g * 255, color.b * 255).hex(),
               type: 'color'
