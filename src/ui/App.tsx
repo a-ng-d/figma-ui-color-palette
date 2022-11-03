@@ -355,7 +355,7 @@ class App extends React.Component {
 
         case 'export-palette':
           const a = document.createElement('a');
-          const file = new Blob([JSON.stringify(e.data.pluginMessage.data)], { type: e.data.pluginMessage.mimeType });
+          const file = new Blob([json5.stringify(e.data.pluginMessage.data, { space: 2, quote: '"' })], { type: e.data.pluginMessage.mimeType });
           a.href = URL.createObjectURL(file);
           a.download = 'export';
           a.click()
