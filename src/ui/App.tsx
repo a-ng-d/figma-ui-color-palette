@@ -9,7 +9,6 @@ import './app.css';
 import chroma from 'chroma-js';
 import { palette, presets } from '../utils/palettePackage';
 import { v4 as uuidv4 } from 'uuid';
-import json5 from 'json5/dist/index.mjs';
 
 declare function require(path: string): any;
 
