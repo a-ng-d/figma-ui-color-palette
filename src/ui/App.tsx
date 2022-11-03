@@ -350,6 +350,14 @@ class App extends React.Component {
               preset: e.data.pluginMessage.data.preset,
               onGoingStep: 'palette selected'
             })
+          break;
+
+        case 'export-palette':
+          const a = document.createElement('a');
+          const file = new Blob([JSON.stringify(e.data.pluginMessage.data)], { type: e.data.pluginMessage.mimeType });
+          a.href = URL.createObjectURL(file);
+          a.download = 'export';
+          a.click()
 
       }
     };
