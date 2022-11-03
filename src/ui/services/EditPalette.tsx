@@ -181,6 +181,8 @@ export default class EditPalette extends React.Component<Props> {
     })
   }
 
+  onExport = () => parent.postMessage({ pluginMessage: { type: 'export-palette', export: this.state['export']['type'] } }, '*')
+
   render() {
     palette.captions = this.props.hasCaptions;
     let actions, controls;
@@ -195,7 +197,7 @@ export default class EditPalette extends React.Component<Props> {
           onCreateLocalColors={null}
           onUpdateLocalColors={null}
           onChangeCaptions={null}
-          onExportPalette={null}
+          onExportPalette={this.onExport}
         />
       else if (this.props.context === 'About')
         actions = null
