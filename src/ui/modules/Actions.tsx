@@ -81,7 +81,7 @@ export default class Actions extends React.Component<Props> {
           <Button
             icon={null}
             type='primary'
-            label={`Export the palette to ${this.props.exportType} file`}
+            label={`Export the palette to ${this.props.exportType}`}
             state=''
             feature='export'
             action={this.props.onExportPalette}
