@@ -34,7 +34,6 @@ const exportJson = (msg, palette) => {
     figma.ui.postMessage({
       type: 'export-palette',
       export: 'JSON',
-      mimeType: 'application/json',
       data: json
     })
   } else
