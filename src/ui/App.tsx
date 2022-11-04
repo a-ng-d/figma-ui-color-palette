@@ -362,6 +362,11 @@ class App extends React.Component {
               exportPreview: JSON.stringify(e.data.pluginMessage.data, null, '  '),
               onGoingStep: 'export previewed'
             })
+          if (e.data.pluginMessage.export === 'CSS')
+            this.setState({
+              exportPreview: e.data.pluginMessage.data.join('  '),
+              onGoingStep: 'export previewed'
+            })
 
       }
     };
