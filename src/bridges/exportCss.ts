@@ -7,14 +7,17 @@ const exportCss = (msg, palette) => {
 
   if (palette.children.length == 1) {
     palette.children[0].children.forEach(row => {
-      if (row.name != '_header' && row.name != '_title')
+      let rowCss: Array<string> = [];
+      if (row.name != '_header' && row.name != '_title') {
         row.children.forEach((sample, index) => {
           if (index != 0) {
             const color = sample.fills[0].color;
-            css.push(`--${row.name.toLowerCase()}-${sample.name}: rgb(${Math.floor(color.r * 255)}, ${Math.floor(color.g * 255)}, ${Math.floor(color.b * 255)})`)
+            rowCss.unshift(`--${row.name.toLowerCase().split(' ').join('-')}-${sample.name}: rgb(${Math.floor(color.r * 255)}, ${Math.floor(color.g * 255)}, ${Math.floor(color.b * 255)})`)
           }
         })
-    })
+        rowCss.forEach(sampleCss => css.push(sampleCss))
+      }
+    });
     figma.ui.postMessage({
       type: 'export-palette-css',
       data: css

@@ -29,7 +29,7 @@ const exportJson = (msg, palette) => {
           } else
             json[row.name] = {}
         })
-    })
+    });
     figma.ui.postMessage({
       type: 'export-palette-json',
       data: json
