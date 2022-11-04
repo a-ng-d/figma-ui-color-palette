@@ -376,7 +376,7 @@ class App extends React.Component {
             export: {
               format: 'CSS',
               mimeType: 'text/css',
-              data: e.data.pluginMessage.data.join('  '),
+              data: `:root {\n  ${e.data.pluginMessage.data.join(';\n  ')}\n}`
             },
             onGoingStep: 'export previewed'
           })
