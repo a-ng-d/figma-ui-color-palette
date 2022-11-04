@@ -154,7 +154,7 @@ export default class EditPalette extends React.Component<Props> {
 
   onExport = () => {
     const a = document.createElement('a'),
-    file = new Blob([this.props.export], { type: this.props.export.mimeType });
+    file = new Blob([this.props.export.data], { type: this.props.export.mimeType });
     a.href = URL.createObjectURL(file);
     a.download = 'colors';
     a.click()
