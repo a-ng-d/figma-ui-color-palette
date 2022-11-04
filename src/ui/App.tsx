@@ -31,7 +31,8 @@ class App extends React.Component {
       onGoingStep: '',
       newColors: {},
       context: 'Scale',
-      preset: {}
+      preset: {},
+      exportPreview: ''
     }
   }
 
@@ -353,13 +354,8 @@ class App extends React.Component {
           break;
 
         case 'export-palette':
-          let file;
-          const a = document.createElement('a');
           if (e.data.pluginMessage.export === 'JSON')
-            file = new Blob([JSON.stringify(e.data.pluginMessage.data, null, '  ')], { type: e.data.pluginMessage.mimeType });
-          a.href = URL.createObjectURL(file);
-          a.download = 'colors';
-          a.click()
+            this.setState({ exportPreview: JSON.stringify(e.data.pluginMessage.data, null, '  ') })
 
       }
     };
@@ -385,6 +381,7 @@ class App extends React.Component {
             preset={this.state['preset']}
             context={this.state['context']}
             hasCaptions={this.state['hasCaptions']}
+            exportPreview={this.state['exportPreview']}
             onScaleChange={this.slideHandler}
             onCaptionsChange={this.captionsHandler}
             onColorChange={this.colorHandler}

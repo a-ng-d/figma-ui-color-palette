@@ -3,6 +3,7 @@ import RadioButton from './../components/RadioButton'
 
 interface Props {
   exportType: string;
+  exportPreview: string;
   onFileFormatChange: any
 };
 
@@ -29,6 +30,14 @@ export default class Export extends React.Component<Props> {
             </li>
           </ul>
         </div>
+        {this.props.exportType === 'JSON' ?
+        <div>
+          <div className='section-controls'>
+            <div className='section-title'>Preview</div>
+          </div>
+          <textarea className='textarea' defaultValue={this.props.exportPreview} onChange={null}></textarea>
+        </div>
+        : null }
       </div>
     )
   }

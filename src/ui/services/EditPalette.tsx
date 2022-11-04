@@ -15,6 +15,7 @@ interface Props {
   colors: any;
   context: string;
   preset: any;
+  exportPreview: string;
   onScaleChange: any;
   onCaptionsChange: any;
   onColorChange: any;
@@ -47,7 +48,8 @@ export default class EditPalette extends React.Component<Props> {
       },
       export: {
         type: 'JSON',
-        feature: 'export-to-json'
+        feature: 'export-to-json',
+        mimeType: 'application/json'
       }
     }
   }
@@ -129,25 +131,10 @@ export default class EditPalette extends React.Component<Props> {
       case 'export-to-json':
         this.setState({
           export: {
-            type: 'JSON'
+            type: 'JSON',
+            mimeType: 'application/json'
           }
         });
-        break;
-
-      case 'export-to-css':
-        this.setState({
-          export: {
-            type: 'CSS'
-          }
-        });
-        break;
-
-      case 'export-to-sass':
-        this.setState({
-          export: {
-            type: 'SASS'
-          }
-        })
     }
   }
 
@@ -159,6 +146,8 @@ export default class EditPalette extends React.Component<Props> {
       }
     }) : null
   }
+
+  getPreview = () => parent.postMessage({ pluginMessage: { type: 'export-palette', export: this.state['export']['type'] } }, '*')
 
   // Direct actions
   onCreate = () => {
@@ -181,7 +170,13 @@ export default class EditPalette extends React.Component<Props> {
     })
   }
 
-  onExport = () => parent.postMessage({ pluginMessage: { type: 'export-palette', export: this.state['export']['type'] } }, '*')
+  onExport = () => {
+    const a = document.createElement('a'),
+    file = new Blob([this.props.exportPreview], { type: this.state['export']['mimeType'] });
+    a.href = URL.createObjectURL(file);
+    a.download = 'colors';
+    a.click()
+  }
 
   render() {
     palette.captions = this.props.hasCaptions;
@@ -245,9 +240,11 @@ export default class EditPalette extends React.Component<Props> {
         break;
 
       case 'Export':
+        this.getPreview()
         controls =
           <Export
             exportType={this.state['export']['type']}
+            exportPreview={this.props.exportPreview}
             onFileFormatChange={this.exportHandler}
           />;
         break;
