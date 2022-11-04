@@ -368,7 +368,7 @@ class App extends React.Component {
               data: JSON.stringify(e.data.pluginMessage.data, null, '  '),
             },
             onGoingStep: 'export previewed'
-          })
+          });
           break;
 
         case 'export-palette-css':
