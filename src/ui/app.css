@@ -12,6 +12,10 @@ ul {
   margin: 0
 }
 
+li {
+  display: block
+}
+
 div#react-page {
   height: 100%;
   user-select: none
@@ -469,7 +473,7 @@ div.export-palette > div {
   flex: 0 1 50%
 }
 
-ul.options {
+div.export-palette__options {
   padding: 0 var(--size-xsmall)
 }
 
