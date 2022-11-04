@@ -127,27 +127,6 @@ export default class EditPalette extends React.Component<Props> {
 
   dropHandler = (e: any) => this.props.onOrderChange(this.state['selectedElement'], this.state['hoveredElement'])
 
-  exportHandler = (e: any) => {
-    switch (e.target.dataset.feature) {
-      case 'export-to-json':
-        this.setState({
-          export: {
-            type: 'JSON',
-            mimeType: 'application/json'
-          }
-        });
-        break;
-
-      case 'export-to-css':
-        this.setState({
-          export: {
-            type: 'CSS',
-            mimeType: 'text/css'
-          }
-        });
-    }
-  }
-
   unSelectColor = (e: any) => {
     e.target.closest('li.colors__item') == null ? this.setState({
       selectedElement: {
@@ -156,8 +135,6 @@ export default class EditPalette extends React.Component<Props> {
       }
     }) : null
   }
-
-  getPreview = () => parent.postMessage({ pluginMessage: { type: 'export-palette', export: this.state['export']['type'] } }, '*')
 
   // Direct actions
   onCreate = () => {
@@ -191,7 +168,6 @@ export default class EditPalette extends React.Component<Props> {
   render() {
     palette.captions = this.props.hasCaptions;
     let actions, controls;
-    this.props.onGoingStep != 'export previewed' ? this.getPreview() : null
 
     if (this.props.context === 'Export')
       actions =
@@ -253,9 +229,7 @@ export default class EditPalette extends React.Component<Props> {
       case 'Export':
         controls =
           <Export
-            exportType={this.state['export']['type']}
             exportPreview={this.props.exportPreview}
-            onFileFormatChange={this.exportHandler}
           />;
         break;
 
