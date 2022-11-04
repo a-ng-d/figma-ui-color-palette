@@ -240,7 +240,7 @@ export default class EditPalette extends React.Component<Props> {
         break;
 
       case 'Export':
-        this.getPreview()
+        this.props.exportPreview === '' ? this.getPreview() : null
         controls =
           <Export
             exportType={this.state['export']['type']}
