@@ -32,7 +32,11 @@ class App extends React.Component {
       newColors: {},
       context: 'Scale',
       preset: {},
-      exportPreview: ''
+      exportPreview: {
+        format: '',
+        mimeType: '',
+        data: ''
+      }
     }
   }
 
@@ -359,12 +363,20 @@ class App extends React.Component {
         case 'export-palette':
           if (e.data.pluginMessage.export === 'JSON')
             this.setState({
-              exportPreview: JSON.stringify(e.data.pluginMessage.data, null, '  '),
+              exportPreview: {
+                format: 'JSON',
+                mimeType: 'application/json',
+                data: JSON.stringify(e.data.pluginMessage.data, null, '  '),
+              },
               onGoingStep: 'export previewed'
             })
           if (e.data.pluginMessage.export === 'CSS')
             this.setState({
-              exportPreview: e.data.pluginMessage.data.join('  '),
+              exportPreview: {
+                format: 'CSS',
+                mimeType: 'text/css',
+                data: e.data.pluginMessage.data.join('  '),
+              },
               onGoingStep: 'export previewed'
             })
 

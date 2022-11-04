@@ -15,7 +15,7 @@ interface Props {
   colors: any;
   context: string;
   preset: any;
-  exportPreview: string;
+  exportPreview: any;
   onScaleChange: any;
   onCaptionsChange: any;
   onColorChange: any;
@@ -46,11 +46,6 @@ export default class EditPalette extends React.Component<Props> {
         hasGuideAbove: false,
         hasGuideBelow: false,
         position: null
-      },
-      export: {
-        type: 'JSON',
-        feature: 'export-to-json',
-        mimeType: 'application/json'
       }
     }
   }
@@ -159,7 +154,7 @@ export default class EditPalette extends React.Component<Props> {
 
   onExport = () => {
     const a = document.createElement('a'),
-    file = new Blob([this.props.exportPreview], { type: this.state['export']['mimeType'] });
+    file = new Blob([this.props.exportPreview], { type: this.props.exportPreview.mimeType });
     a.href = URL.createObjectURL(file);
     a.download = 'colors';
     a.click()
@@ -174,7 +169,7 @@ export default class EditPalette extends React.Component<Props> {
         <Actions
           context='export'
           hasCaptions={null}
-          exportType= {this.state['export']['type']}
+          exportType= {this.props.exportPreview.format}
           onCreatePalette={null}
           onCreateLocalColors={null}
           onUpdateLocalColors={null}
@@ -229,7 +224,7 @@ export default class EditPalette extends React.Component<Props> {
       case 'Export':
         controls =
           <Export
-            exportPreview={this.props.exportPreview}
+            exportPreview={this.props.exportPreview.data}
           />;
         break;
 
