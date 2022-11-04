@@ -360,25 +360,26 @@ class App extends React.Component {
             })
           break;
 
-        case 'export-palette':
-          if (e.data.pluginMessage.export === 'JSON')
-            this.setState({
-              export: {
-                format: 'JSON',
-                mimeType: 'application/json',
-                data: JSON.stringify(e.data.pluginMessage.data, null, '  '),
-              },
-              onGoingStep: 'export previewed'
-            })
-          if (e.data.pluginMessage.export === 'CSS')
-            this.setState({
-              export: {
-                format: 'CSS',
-                mimeType: 'text/css',
-                data: e.data.pluginMessage.data.join('  '),
-              },
-              onGoingStep: 'export previewed'
-            })
+        case 'export-palette-json':
+          this.setState({
+            export: {
+              format: 'JSON',
+              mimeType: 'application/json',
+              data: JSON.stringify(e.data.pluginMessage.data, null, '  '),
+            },
+            onGoingStep: 'export previewed'
+          })
+          break;
+
+        case 'export-palette-css':
+          this.setState({
+            export: {
+              format: 'CSS',
+              mimeType: 'text/css',
+              data: e.data.pluginMessage.data.join('  '),
+            },
+            onGoingStep: 'export previewed'
+          })
 
       }
     };

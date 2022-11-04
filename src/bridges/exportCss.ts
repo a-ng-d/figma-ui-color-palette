@@ -17,8 +17,7 @@ const exportCss = (msg, palette) => {
         })
     })
     figma.ui.postMessage({
-      type: 'export-palette',
-      export: 'CSS',
+      type: 'export-palette-css',
       data: css
     })
   } else
