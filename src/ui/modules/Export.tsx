@@ -7,8 +7,11 @@ interface Props {
 
 export default class Export extends React.Component<Props> {
 
+  counter: number;
+
   constructor(props) {
     super(props);
+    this.counter = 0;
     this.state = {
       format: 'JSON'
     }
@@ -32,9 +35,13 @@ export default class Export extends React.Component<Props> {
     }
   }
 
-  render() {
-    parent.postMessage({ pluginMessage: { type: 'export-palette', export: this.state['format'] } }, '*')
+  setFirstPreview = () => {
+    this.counter == 0 ? parent.postMessage({ pluginMessage: { type: 'export-palette', export: this.state['format'] } }, '*') : null
+    this.counter = 1
+  }
 
+  render() {
+    this.setFirstPreview()
     return (
       <div className='export-palette controls__control'>
         <div>
