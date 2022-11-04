@@ -6,6 +6,7 @@ import createLocalStyles from './bridges/createLocalStyles';
 import updateLocalStyles from './bridges/updateLocalStyles';
 import processSelection from './bridges/processSelection';
 import exportJson from './bridges/exportJson';
+import exportCss from './bridges/exportCss';
 
 figma.showUI(__html__);
 figma.ui.resize(640, 320);
@@ -38,6 +39,7 @@ figma.ui.onmessage = msg => {
 
     case 'export-palette':
       msg.export === 'JSON' ? exportJson(msg, palette) : null
+      msg.export === 'CSS' ? exportCss(msg, palette) : null
 
   }
 
