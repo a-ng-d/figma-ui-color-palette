@@ -470,11 +470,25 @@ div.export-palette {
 }
 
 div.export-palette > div {
-  flex: 0 1 50%
+  display: flex;
+  flex-direction: column
+}
+
+div.export-palette > div:first-child {
+  flex: 0 1 25%
+}
+
+div.export-palette > div:last-child {
+  flex: 0 1 75%
 }
 
 div.export-palette__options {
-  padding: 0 var(--size-xsmall)
+  padding: 0 var(--size-xsmall);
+  flex: 1
+}
+
+.export-palette__preview {
+  height: 100%
 }
 
 ul.options li {
