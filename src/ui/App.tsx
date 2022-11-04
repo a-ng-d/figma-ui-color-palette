@@ -355,7 +355,10 @@ class App extends React.Component {
 
         case 'export-palette':
           if (e.data.pluginMessage.export === 'JSON')
-            this.setState({ exportPreview: JSON.stringify(e.data.pluginMessage.data, null, '  ') })
+            this.setState({
+              exportPreview: JSON.stringify(e.data.pluginMessage.data, null, '  '),
+              onGoingStep: 'export previewed'
+            })
 
       }
     };
@@ -387,6 +390,7 @@ class App extends React.Component {
             onColorChange={this.colorHandler}
             onContextChange={this.navHandler}
             onOrderChange={this.orderHandler}
+            onGoingStep={this.state['onGoingStep']}
           />
         : null}
         {this.state['service'] === 'None' ? <Onboarding /> : null}

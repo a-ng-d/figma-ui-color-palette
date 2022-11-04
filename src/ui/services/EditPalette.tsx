@@ -20,7 +20,8 @@ interface Props {
   onCaptionsChange: any;
   onColorChange: any;
   onContextChange: any;
-  onOrderChange: any
+  onOrderChange: any;
+  onGoingStep: any
 };
 
 export default class EditPalette extends React.Component<Props> {
@@ -181,6 +182,7 @@ export default class EditPalette extends React.Component<Props> {
   render() {
     palette.captions = this.props.hasCaptions;
     let actions, controls;
+    this.props.onGoingStep != 'export previewed' ? this.getPreview() : null
 
     if (this.props.context === 'Export')
       actions =
@@ -240,7 +242,6 @@ export default class EditPalette extends React.Component<Props> {
         break;
 
       case 'Export':
-        this.props.exportPreview === '' ? this.getPreview() : null
         controls =
           <Export
             exportType={this.state['export']['type']}
