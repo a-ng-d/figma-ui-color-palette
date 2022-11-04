@@ -136,6 +136,15 @@ export default class EditPalette extends React.Component<Props> {
             mimeType: 'application/json'
           }
         });
+        break;
+
+      case 'export-to-css':
+        this.setState({
+          export: {
+            type: 'CSS',
+            mimeType: 'text/css'
+          }
+        });
     }
   }
 

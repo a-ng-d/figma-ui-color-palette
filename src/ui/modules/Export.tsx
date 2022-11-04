@@ -29,6 +29,17 @@ export default class Export extends React.Component<Props> {
                   onChange={this.props.onFileFormatChange}
                 />
               </li>
+              <li>
+                <RadioButton
+                  id='options__css'
+                  label='CSS Custom Properties'
+                  isChecked={this.props.exportType === 'CSS' ? true : false}
+                  isDisabled={false}
+                  feature='export-to-css'
+                  group='fileFormat'
+                  onChange={this.props.onFileFormatChange}
+                />
+              </li>
             </ul>
           </div>
         </div>
