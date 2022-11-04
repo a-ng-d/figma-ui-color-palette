@@ -38,7 +38,7 @@ export default class Export extends React.Component<Props> {
             <div className='section-title'>Preview</div>
           </div>
           <div className='export-palette__options'>
-            <textarea className='export-palette__preview textarea' defaultValue={this.props.exportPreview}></textarea>
+            <textarea className='export-palette__preview textarea' defaultValue={this.props.exportPreview} readOnly></textarea>
           </div>
         </div>
         : null }
