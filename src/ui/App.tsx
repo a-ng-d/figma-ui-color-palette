@@ -161,9 +161,10 @@ class App extends React.Component {
         break;
 
       case 'rename':
+        const hasSameName = this.state['newColors'].filter(color => color.name === e.target.value);
         colors = this.state['newColors'].map(item => {
           if (item.id === id)
-            item.name = e.target.value
+            item.name = hasSameName.length > 1 ? e.target.value + ' 2' : e.target.value
           return item
         });
         this.setState({
