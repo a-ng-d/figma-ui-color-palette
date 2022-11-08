@@ -15,11 +15,13 @@ interface Props {
   colors: any;
   context: string;
   preset: any;
+  exportPreview: string;
   onScaleChange: any;
   onCaptionsChange: any;
   onColorChange: any;
   onContextChange: any;
-  onOrderChange: any
+  onOrderChange: any;
+  onGoingStep: any
 };
 
 export default class EditPalette extends React.Component<Props> {
@@ -44,11 +46,16 @@ export default class EditPalette extends React.Component<Props> {
         hasGuideAbove: false,
         hasGuideBelow: false,
         position: null
+      },
+      export: {
+        type: 'JSON',
+        feature: 'export-to-json',
+        mimeType: 'application/json'
       }
     }
   }
 
-  // Events
+  // Handlers
   slideHandler = (e: string) => {
     if (e === 'released') {
       this.dispatch.scale.on.status = false
@@ -120,6 +127,18 @@ export default class EditPalette extends React.Component<Props> {
 
   dropHandler = (e: any) => this.props.onOrderChange(this.state['selectedElement'], this.state['hoveredElement'])
 
+  exportHandler = (e: any) => {
+    switch (e.target.dataset.feature) {
+      case 'export-to-json':
+        this.setState({
+          export: {
+            type: 'JSON',
+            mimeType: 'application/json'
+          }
+        });
+    }
+  }
+
   unSelectColor = (e: any) => {
     e.target.closest('li.colors__item') == null ? this.setState({
       selectedElement: {
@@ -129,6 +148,9 @@ export default class EditPalette extends React.Component<Props> {
     }) : null
   }
 
+  getPreview = () => parent.postMessage({ pluginMessage: { type: 'export-palette', export: this.state['export']['type'] } }, '*')
+
+  // Direct actions
   onCreate = () => {
     parent.postMessage({ pluginMessage: { type: 'create-local-styles', palette } }, '*')
     this.setState({
@@ -149,8 +171,89 @@ export default class EditPalette extends React.Component<Props> {
     })
   }
 
+  onExport = () => {
+    const a = document.createElement('a'),
+    file = new Blob([this.props.exportPreview], { type: this.state['export']['mimeType'] });
+    a.href = URL.createObjectURL(file);
+    a.download = 'colors';
+    a.click()
+  }
+
   render() {
     palette.captions = this.props.hasCaptions;
+    let actions, controls;
+    this.props.onGoingStep != 'export previewed' ? this.getPreview() : null
+
+    if (this.props.context === 'Export')
+      actions =
+        <Actions
+          context='export'
+          hasCaptions={null}
+          exportType= {this.state['export']['type']}
+          onCreatePalette={null}
+          onCreateLocalColors={null}
+          onUpdateLocalColors={null}
+          onChangeCaptions={null}
+          onExportPalette={this.onExport}
+        />
+      else if (this.props.context === 'About')
+        actions = null
+      else
+        actions =
+          <Actions
+            context='edit'
+            hasCaptions={this.props.hasCaptions}
+            exportType= {null}
+            onCreatePalette={null}
+            onCreateLocalColors={this.onCreate}
+            onUpdateLocalColors={this.onUpdate}
+            onChangeCaptions={this.checkHandler}
+            onExportPalette={null}
+          />
+
+    switch (this.props.context) {
+      case 'Scale':
+        controls =
+          <Scale
+            hasPreset={false}
+            preset={this.props.preset}
+            scale={this.props.scale}
+            onChangePreset={null}
+            onScaleChange={this.slideHandler}
+            onAddScale={null}
+            onRemoveScale={null}
+            onGoingStep={null}
+          />;
+        break;
+
+      case 'Colors':
+        controls =
+          <Colors
+            colors={this.props.colors}
+            selectedElement={this.state['selectedElement']}
+            hoveredElement={this.state['hoveredElement']}
+            onColorChange={this.colorHandler}
+            onAddColor={this.colorHandler}
+            onSelectionChange={this.selectionHandler}
+            onDragChange={this.dragHandler}
+            onDropOutside={this.dropOutsideHandler}
+            onOrderChange={this.dropHandler}
+          />;
+        break;
+
+      case 'Export':
+        controls =
+          <Export
+            exportType={this.state['export']['type']}
+            exportPreview={this.props.exportPreview}
+            onFileFormatChange={this.exportHandler}
+          />;
+        break;
+
+      case 'About':
+        controls = <About />
+    }
+
     return (
       <>
         <Tabs
@@ -164,42 +267,9 @@ export default class EditPalette extends React.Component<Props> {
           className={this.props.context === 'Colors' ? 'section--scrollable' : ''}
         >
           <div className='controls'>
-            {this.props.context === 'Scale' ?
-            <Scale
-              hasPreset={false}
-              preset={this.props.preset}
-              scale={this.props.scale}
-              onChangePreset={null}
-              onScaleChange={this.slideHandler}
-              onAddScale={null}
-              onRemoveScale={null}
-              onGoingStep={null}
-            /> : null}
-            {this.props.context === 'Colors' ?
-            <Colors
-              colors={this.props.colors}
-              selectedElement={this.state['selectedElement']}
-              hoveredElement={this.state['hoveredElement']}
-              onColorChange={this.colorHandler}
-              onAddColor={this.colorHandler}
-              onSelectionChange={this.selectionHandler}
-              onDragChange={this.dragHandler}
-              onDropOutside={this.dropOutsideHandler}
-              onOrderChange={this.dropHandler}
-            /> : null}
-            {this.props.context === 'Export' ?
-            <Export /> : null}
-            {this.props.context === 'About' ? <About /> : null}
+            {controls}
           </div>
-          {this.props.context != 'About' ?
-          <Actions
-            context='edit'
-            hasCaptions={this.props.hasCaptions}
-            onCreatePalette={null}
-            onCreateLocalColors={this.onCreate}
-            onUpdateLocalColors={this.onUpdate}
-            onChangeCaptions={this.checkHandler}
-          /> : null}
+          {actions}
         </section>
       </>
     )

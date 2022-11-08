@@ -31,7 +31,8 @@ class App extends React.Component {
       onGoingStep: '',
       newColors: {},
       context: 'Scale',
-      preset: {}
+      preset: {},
+      exportPreview: ''
     }
   }
 
@@ -301,7 +302,10 @@ class App extends React.Component {
       })
   }
 
-  slideHandler = (palette) => this.setState({ newScale: palette.scale })
+  slideHandler = (palette) => this.setState({
+    newScale: palette.scale,
+    onGoingStep: 'scale changed'
+  })
 
   render() {
     onmessage = (e: any) => {
@@ -350,6 +354,14 @@ class App extends React.Component {
               preset: e.data.pluginMessage.data.preset,
               onGoingStep: 'palette selected'
             })
+          break;
+
+        case 'export-palette':
+          if (e.data.pluginMessage.export === 'JSON')
+            this.setState({
+              exportPreview: JSON.stringify(e.data.pluginMessage.data, null, '  '),
+              onGoingStep: 'export previewed'
+            })
 
       }
     };
@@ -375,11 +387,13 @@ class App extends React.Component {
             preset={this.state['preset']}
             context={this.state['context']}
             hasCaptions={this.state['hasCaptions']}
+            exportPreview={this.state['exportPreview']}
             onScaleChange={this.slideHandler}
             onCaptionsChange={this.captionsHandler}
             onColorChange={this.colorHandler}
             onContextChange={this.navHandler}
             onOrderChange={this.orderHandler}
+            onGoingStep={this.state['onGoingStep']}
           />
         : null}
         {this.state['service'] === 'None' ? <Onboarding /> : null}
