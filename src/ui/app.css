@@ -475,11 +475,11 @@ div.export-palette > div {
 }
 
 div.export-palette > div:first-child {
-  flex: 0 1 25%
+  flex: 0 1 33%
 }
 
 div.export-palette > div:last-child {
-  flex: 0 1 75%
+  flex: 0 1 66%
 }
 
 div.export-palette__options {

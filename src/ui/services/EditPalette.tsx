@@ -15,7 +15,7 @@ interface Props {
   colors: any;
   context: string;
   preset: any;
-  exportPreview: string;
+  export: any;
   onScaleChange: any;
   onCaptionsChange: any;
   onColorChange: any;
@@ -46,11 +46,6 @@ export default class EditPalette extends React.Component<Props> {
         hasGuideAbove: false,
         hasGuideBelow: false,
         position: null
-      },
-      export: {
-        type: 'JSON',
-        feature: 'export-to-json',
-        mimeType: 'application/json'
       }
     }
   }
@@ -127,18 +122,6 @@ export default class EditPalette extends React.Component<Props> {
 
   dropHandler = (e: any) => this.props.onOrderChange(this.state['selectedElement'], this.state['hoveredElement'])
 
-  exportHandler = (e: any) => {
-    switch (e.target.dataset.feature) {
-      case 'export-to-json':
-        this.setState({
-          export: {
-            type: 'JSON',
-            mimeType: 'application/json'
-          }
-        });
-    }
-  }
-
   unSelectColor = (e: any) => {
     e.target.closest('li.colors__item') == null ? this.setState({
       selectedElement: {
@@ -147,8 +130,6 @@ export default class EditPalette extends React.Component<Props> {
       }
     }) : null
   }
-
-  getPreview = () => parent.postMessage({ pluginMessage: { type: 'export-palette', export: this.state['export']['type'] } }, '*')
 
   // Direct actions
   onCreate = () => {
@@ -173,7 +154,7 @@ export default class EditPalette extends React.Component<Props> {
 
   onExport = () => {
     const a = document.createElement('a'),
-    file = new Blob([this.props.exportPreview], { type: this.state['export']['mimeType'] });
+    file = new Blob([this.props.export.data], { type: this.props.export.mimeType });
     a.href = URL.createObjectURL(file);
     a.download = 'colors';
     a.click()
@@ -182,14 +163,13 @@ export default class EditPalette extends React.Component<Props> {
   render() {
     palette.captions = this.props.hasCaptions;
     let actions, controls;
-    this.props.onGoingStep != 'export previewed' ? this.getPreview() : null
 
     if (this.props.context === 'Export')
       actions =
         <Actions
           context='export'
           hasCaptions={null}
-          exportType= {this.state['export']['type']}
+          exportType= {this.props.export.format}
           onCreatePalette={null}
           onCreateLocalColors={null}
           onUpdateLocalColors={null}
@@ -244,9 +224,7 @@ export default class EditPalette extends React.Component<Props> {
       case 'Export':
         controls =
           <Export
-            exportType={this.state['export']['type']}
-            exportPreview={this.props.exportPreview}
-            onFileFormatChange={this.exportHandler}
+            exportPreview={this.props.export.data}
           />;
         break;
 
