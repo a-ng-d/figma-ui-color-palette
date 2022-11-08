@@ -7,7 +7,7 @@ import Onboarding from './services/Onboarding';
 import 'figma-plugin-ds/dist/figma-plugin-ds.css';
 import './app.css';
 import chroma from 'chroma-js';
-import { palette, presets } from '../palette-package';
+import { palette, presets } from '../utils/palettePackage';
 import { v4 as uuidv4 } from 'uuid';
 
 declare function require(path: string): any;
@@ -31,7 +31,12 @@ class App extends React.Component {
       onGoingStep: '',
       newColors: {},
       context: 'Scale',
-      preset: {}
+      preset: {},
+      export: {
+        format: '',
+        mimeType: '',
+        data: ''
+      }
     }
   }
 
@@ -136,8 +141,9 @@ class App extends React.Component {
 
       case 'add':
         colors = this.state['newColors'];
+        const hasAlreadyNewUIColor = colors.filter(color => color.name.includes('New UI Color'));
         colors.push({
-          name: 'New UI Color',
+          name: `New UI Color ${hasAlreadyNewUIColor.length + 1}`,
           rgb: {
             r: .53,
             g: .92,
@@ -155,9 +161,10 @@ class App extends React.Component {
         break;
 
       case 'rename':
+        const hasSameName = this.state['newColors'].filter(color => color.name === e.target.value);
         colors = this.state['newColors'].map(item => {
           if (item.id === id)
-            item.name = e.target.value
+            item.name = hasSameName.length > 1 ? e.target.value + ' 2' : e.target.value
           return item
         });
         this.setState({
@@ -301,7 +308,10 @@ class App extends React.Component {
       })
   }
 
-  slideHandler = (palette) => this.setState({ newScale: palette.scale })
+  slideHandler = (palette) => this.setState({
+    newScale: palette.scale,
+    onGoingStep: 'scale changed'
+  })
 
   render() {
     onmessage = (e: any) => {
@@ -350,6 +360,28 @@ class App extends React.Component {
               preset: e.data.pluginMessage.data.preset,
               onGoingStep: 'palette selected'
             })
+          break;
+
+        case 'export-palette-json':
+          this.setState({
+            export: {
+              format: 'JSON',
+              mimeType: 'application/json',
+              data: JSON.stringify(e.data.pluginMessage.data, null, '  '),
+            },
+            onGoingStep: 'export previewed'
+          });
+          break;
+
+        case 'export-palette-css':
+          this.setState({
+            export: {
+              format: 'CSS',
+              mimeType: 'text/css',
+              data: `:root {\n  ${e.data.pluginMessage.data.join(';\n  ')}\n}`
+            },
+            onGoingStep: 'export previewed'
+          })
 
       }
     };
@@ -375,11 +407,13 @@ class App extends React.Component {
             preset={this.state['preset']}
             context={this.state['context']}
             hasCaptions={this.state['hasCaptions']}
+            export={this.state['export']}
             onScaleChange={this.slideHandler}
             onCaptionsChange={this.captionsHandler}
             onColorChange={this.colorHandler}
             onContextChange={this.navHandler}
             onOrderChange={this.orderHandler}
+            onGoingStep={this.state['onGoingStep']}
           />
         : null}
         {this.state['service'] === 'None' ? <Onboarding /> : null}

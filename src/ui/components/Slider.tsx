@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Knob from './Knob';
-import { palette } from '../../palette-package';
-import { doMap } from './../../utils';
+import { palette } from '../../utils/palettePackage';
+import { doMap } from './../../utils/doMap';
 
 interface Props {
   knobs: Array<number>;

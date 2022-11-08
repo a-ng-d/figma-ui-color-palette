@@ -3,7 +3,7 @@ import Tabs from '../components/Tabs';
 import Scale from '../modules/Scale';
 import About from '../modules/About';
 import Actions from '../modules/Actions';
-import { palette, presets } from '../../palette-package';
+import { palette, presets } from '../../utils/palettePackage';
 
 interface Props {
   hasCaptions: boolean;
@@ -18,9 +18,7 @@ interface Props {
 
 export default class CreatePalette extends React.Component<Props> {
 
-  // Events
-  onCreate = () => parent.postMessage({ pluginMessage: { type: 'create-palette', palette } }, '*')
-
+  // Handlers
   slideHandler = () => { }
 
   checkHandler = (e: any) => {
@@ -42,9 +40,48 @@ export default class CreatePalette extends React.Component<Props> {
 
   scaleHandler = (e: any) => this.props.onCustomPreset(e)
 
+  // Direct actions
+  onCreate = () => parent.postMessage({ pluginMessage: { type: 'create-palette', palette } }, '*')
+
   render() {
     palette.captions = this.props.hasCaptions;
     palette.preset = this.props.preset;
+    let actions, controls;
+
+    if (this.props.context === 'About')
+      actions = null
+    else
+      actions =
+        <Actions
+          context='create'
+          hasCaptions={this.props.hasCaptions}
+          exportType= {null}
+          onCreatePalette={this.onCreate}
+          onCreateLocalColors={null}
+          onUpdateLocalColors={null}
+          onChangeCaptions={this.checkHandler}
+          onExportPalette={null}
+        />
+
+    switch (this.props.context) {
+      case 'Scale':
+        controls =
+          <Scale
+            hasPreset={true}
+            preset={this.props.preset}
+            scale={null}
+            onChangePreset={this.presetHandler}
+            onScaleChange={this.slideHandler}
+            onAddScale={this.scaleHandler}
+            onRemoveScale={this.scaleHandler}
+            onGoingStep={this.props.onGoingStep}
+          />;
+        break;
+
+        case 'About':
+          controls = <About />
+      }
+
     return (
       <>
         <Tabs
@@ -55,28 +92,9 @@ export default class CreatePalette extends React.Component<Props> {
         />
         <section>
           <div className='controls'>
-            {this.props.context === 'Scale' ?
-            <Scale
-              hasPreset={true}
-              preset={this.props.preset}
-              scale={null}
-              onChangePreset={this.presetHandler}
-              onScaleChange={this.slideHandler}
-              onAddScale={this.scaleHandler}
-              onRemoveScale={this.scaleHandler}
-              onGoingStep={this.props.onGoingStep}
-            /> : null}
-            {this.props.context === 'About' ? <About/> : null}
+            {controls}
           </div>
-          {this.props.context != 'About' ?
-          <Actions
-            context='create'
-            hasCaptions={this.props.hasCaptions}
-            onCreatePalette={this.onCreate}
-            onCreateLocalColors={null}
-            onUpdateLocalColors={null}
-            onChangeCaptions={this.checkHandler}
-          /> : null}
+          {actions}
         </section>
       </>
     )

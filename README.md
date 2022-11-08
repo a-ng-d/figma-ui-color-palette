@@ -62,6 +62,9 @@ The palette architecture (do not manual edit it) is:
 - Choose the caption display－real time editing.
 - Click `Create local styles` to create Figma document local styles from every color of the palette
 - Click `Update the local styles` to update every edited colors already declared as local style
+- Export every color of the palette to:
+  - JSON (color tokens)
+  - CSS Custom Properties
 
 ### Troubleshooting
 - `Your UI Color Palette seems corrupted. Do not edit any layer within it.`: The palette has been manually edited, and it may occur troubles and errors. So the plugins avoids executing editing while the palette does not seem compliant with the architecture.

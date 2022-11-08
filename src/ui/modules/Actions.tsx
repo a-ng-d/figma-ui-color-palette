@@ -6,10 +6,12 @@ import Switch from '../components/Switch';
 interface Props {
   context: string;
   hasCaptions: boolean;
+  exportType: string | null;
   onCreatePalette: any;
   onCreateLocalColors: any;
   onUpdateLocalColors: any;
   onChangeCaptions: any;
+  onExportPalette: any
 };
 
 export default class Actions extends React.Component<Props> {
@@ -31,6 +33,7 @@ export default class Actions extends React.Component<Props> {
           id='showCaptions'
           label='Show captions'
           isChecked={this.props.hasCaptions}
+          isDisabled={false}
           feature='show-caption'
           onChange={this.props.onChangeCaptions}
         />
@@ -63,9 +66,29 @@ export default class Actions extends React.Component<Props> {
           id='showCaptions'
           label='Show captions'
           isChecked={this.props.hasCaptions}
+          isDisabled={false}
           feature='caption'
           onChange={this.props.onChangeCaptions}
         />
+      </div>
+    )
+  }
+
+  Export = () => {
+    return (
+      <div className='actions'>
+        <div className='buttons'>
+          <Button
+            icon={null}
+            type='primary'
+            label={`Export the palette to ${this.props.exportType}`}
+            state=''
+            feature='export'
+            action={this.props.onExportPalette}
+          >
+            <a></a>
+          </Button>
+        </div>
       </div>
     )
   }
@@ -75,6 +98,7 @@ export default class Actions extends React.Component<Props> {
       <>
         {this.props.context === 'create' ? <this.Create /> : null}
         {this.props.context === 'edit' ? <this.Edit /> : null}
+        {this.props.context === 'export' ? <this.Export /> : null}
       </>
     )
   }

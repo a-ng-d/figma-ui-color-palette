@@ -7,6 +7,15 @@ input {
   cursor: default
 }
 
+ul {
+  padding: 0;
+  margin: 0
+}
+
+li {
+  display: block
+}
+
 div#react-page {
   height: 100%;
   user-select: none
@@ -382,14 +391,9 @@ div.icon {
 }
 
 /* Color items */
-ul.colors {
-  padding: 0;
-  margin: 0
-}
-
 li.colors__item {
   display: grid;
-  grid-template-columns: repeat(74, 1fr);
+  grid-template-columns: repeat(76, 1fr);
   grid-template-rows: var(--size-medium);
   padding: 0 var(--size-xsmall);
   position: relative
@@ -441,7 +445,7 @@ li .colors__parameters > .input {
 }
 
 li .colors__buttons {
-  grid-column: span 8 / 75;
+  grid-column: span 8 / 77;
   grid-row: 1 / 1;
   display: flex
 }
@@ -458,6 +462,37 @@ li .colors__shift {
 
 li .colors__shift > .input {
   width: 88px
+}
+
+/* Export */
+div.export-palette {
+  flex-direction: row
+}
+
+div.export-palette > div {
+  display: flex;
+  flex-direction: column
+}
+
+div.export-palette > div:first-child {
+  flex: 0 1 33%
+}
+
+div.export-palette > div:last-child {
+  flex: 0 1 66%
+}
+
+div.export-palette__options {
+  padding: 0 var(--size-xsmall);
+  flex: 1
+}
+
+.export-palette__preview {
+  height: 100%
+}
+
+ul.options li {
+  display: block
 }
 
 /* About */

@@ -3,7 +3,7 @@ import chroma from 'chroma-js';
 import Input from './Input';
 import Button from './Button';
 import Switch from './Switch';
-import { doMap } from './../../utils';
+import { doMap } from './../../utils/doMap';
 
 interface Props {
   name: string;
@@ -188,6 +188,7 @@ export default class ColorItem extends React.Component<Props> {
             id={'oklch-' + this.props.uuid}
             label='Use OKLCH'
             isChecked={this.props.oklch}
+            isDisabled={false}
             feature='oklch'
             onChange={this.inputHandler}
           />
