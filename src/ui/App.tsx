@@ -141,8 +141,9 @@ class App extends React.Component {
 
       case 'add':
         colors = this.state['newColors'];
+        const hasAlreadyNewUIColor = colors.filter(color => color.name.includes('New UI Color'));
         colors.push({
-          name: 'New UI Color',
+          name: `New UI Color ${hasAlreadyNewUIColor.length + 1}`,
           rgb: {
             r: .53,
             g: .92,
