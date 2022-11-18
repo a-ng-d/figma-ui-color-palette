@@ -139,17 +139,17 @@ div.tabs .tabs__secondary {
 div.tabs .tabs__tab {
   padding: 0 var(--size-xxsmall);
   font-weight: var(--font-weight-medium);
-  color: var(--black3-opaque);
+  color: var(--figma-color-text-disabled);
   line-height: var(--size-large)
 }
 
 div.tabs .tabs__tab:hover {
-  color: var(--black-8-opaque)
+  color: var(--figma-color-text-hover)
 }
 
 div.tabs .tabs__tab--active {
   font-weight: var(--font-weight-bold);
-  color: var(--black-8-opaque)
+  color: var(--figma-color-text)
 }
 
 /* Slider */
