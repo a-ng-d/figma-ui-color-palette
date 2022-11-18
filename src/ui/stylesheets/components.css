@@ -1,3 +1,4 @@
-.onboarding-tip__msg {
+.onboarding-tip__msg,
+.type {
   color: var(--figma-color-text)
 }
