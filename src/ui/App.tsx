@@ -5,7 +5,7 @@ import CreatePalette from './services/CreatePalette';
 import EditPalette from './services/EditPalette';
 import Onboarding from './services/Onboarding';
 import 'figma-plugin-ds/dist/figma-plugin-ds.css';
-import './app.css';
+import './stylesheets/app.css';
 import chroma from 'chroma-js';
 import { palette, presets } from '../utils/palettePackage';
 import { v4 as uuidv4 } from 'uuid';
