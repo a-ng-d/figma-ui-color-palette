@@ -15,6 +15,7 @@ export default class Icon extends React.Component<Props> {
         fill='none'
         xmlns='http://www.w3.org/2000/svg'
       >
+        <circle cx='64' cy='64' r='56' stroke='white' strokeWidth='16'/>
         <mask id='path-1-inside-1_41_1896' fill='white'>
           <path d='M64 8C75.826 8 87.3485 11.7439 96.916 18.695L64 64L64 8Z'/>
         </mask>
