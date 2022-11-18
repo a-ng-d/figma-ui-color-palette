@@ -92,7 +92,7 @@ div.actions {
   width: 100%;
   height: var(--size-xxlarge);
   padding: var(--size-xsmall);
-  border-top: 1px solid var(--silver);
+  border-top: 1px solid var(--figma-color-border);
   display: flex;
   flex-direction: row-reverse;
   justify-content: space-between;
@@ -127,7 +127,7 @@ div.tabs {
   align-items: stretch;
   height: var(--size-large);
   padding: 0 var(--size-xsmall);
-  border-bottom: 1px solid var(--silver);
+  border-bottom: 1px solid var(--figma-color-border);
   user-select: none
 }
 
