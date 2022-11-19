@@ -244,3 +244,17 @@
   --blue: var(--figma-color-border-selected);
   --black: var(--figma-color-text)
 }
+
+/* Text area */
+.textarea {
+  --black8: var(--figma-color-text);
+  --white: var(--figma-color-bg);
+  --black1: var(--figma-color-border)
+}
+
+
+.textarea:active,
+.textarea:focus {
+  --black: var(--figma-color-text);
+  --blue: var(--figma-color-border-selected)
+}
