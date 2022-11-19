@@ -506,5 +506,6 @@ div.about > div {
 
 div.about .about__links {
   display: flex;
-  align-items: center
+  align-items: center;
+  color: var(--figma-color-text)
 }

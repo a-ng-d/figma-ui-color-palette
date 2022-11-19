@@ -7,6 +7,11 @@
   color: var(--figma-color-text)
 }
 
+.type a {
+  color: var(--figma-color-text-brand);
+  text-decoration: none
+}
+
 /* Icon */
 .icon {
   background: var(--figma-color-icon);
@@ -67,6 +72,11 @@
 .button--primary:enabled:focus {
   border: 2px solid var(--figma-color-border-brand-strong);
   background-color: var(--figma-color-bg-brand-pressed)
+}
+
+.button--tertiary a {
+  color: var(--figma-color-text-brand);
+  text-decoration: none
 }
 
 .icon-button * {
