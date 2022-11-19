@@ -132,12 +132,19 @@
   text-decoration: none
 }
 
+.icon-button {
+  background-clip: padding-box !important;
+  border-radius: 3px;
+  border: 1px solid transparent
+}
+
 .icon-button * {
   filter: none
 }
 
 .icon-button:hover {
-  --hover-fill: var(--figma-color-bg-hover)
+  background: transparent;
+  background-color: var(--figma-color-bg-hover)
 }
 
 .icon-button:focus {
@@ -146,7 +153,7 @@
 
 .icon-button:active {
   background: transparent;
-  border: 2px solid transparent
+  border: 1px solid transparent
 }
 
 .icon-button--selected {
@@ -154,7 +161,7 @@
 }
 
 .icon-button--selected:hover {
-  --hover-fill: var(--figma-color-bg-brand)
+  background-color: var(--figma-color-bg-brand)
 }
 
 /* Select menu */
