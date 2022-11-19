@@ -37,6 +37,20 @@
   color: var(--figma-color-text-onbrand)
 }
 
+.button--primary:enabled:hover {
+  background-color: var(--figma-color-bg-brand-hover)
+}
+
+.button--primary:enabled:active {
+  border: 2px solid var(--figma-color-bg-brand-pressed);
+  background-color: var(--figma-color-bg-brand-pressed)
+}
+
+.button--primary:enabled:focus {
+  border: 2px solid var(--figma-color-border-brand-strong);
+  background-color: var(--figma-color-bg-brand-pressed)
+}
+
 /* Select menu */
 .select-menu__button {
   background-color: var(--figma-color-bg);
