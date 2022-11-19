@@ -422,11 +422,11 @@ li.colors__item--emphasis .input__field {
 }
 
 li.colors__item--above {
-  box-shadow: 0 1px 0 var(--blue) inset, 0 -1px 0 var(--blue)
+  box-shadow: 0 1px 0 var(--figma-color-border-selected) inset, 0 -1px 0 var(--figma-color-border-selected)
 }
 
 li.colors__item--below {
-  box-shadow: 0 -1px 0 var(--blue) inset, 0 1px 0 var(--blue)
+  box-shadow: 0 -1px 0 var(--figma-color-border-selected) inset, 0 1px 0 var(--figma-color-border-selected)
 }
 
 li .colors__name {
