@@ -26,3 +26,7 @@
 .checkbox__box:checked + .checkbox__label:before {
   background-color: var(--figma-color-bg-brand)
 }
+.button--primary {
+  background-color: var(--figma-color-bg-brand);
+  color: var(--figma-color-text-onbrand)
+}
