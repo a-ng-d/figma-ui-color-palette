@@ -9,7 +9,7 @@
 }
 
 .label {
-  color: var(--figma-color-text-secondary)
+  color: var(--figma-color-text-tertiary)
 }
 
 .type a {
@@ -96,6 +96,25 @@
 .button--primary:enabled:focus {
   border: 2px solid var(--figma-color-border-brand-strong);
   background-color: var(--figma-color-bg-brand-pressed)
+}
+
+.button--secondary {
+  background-color: var(--figma-color-bg);
+  color: var(--figma-color-text);
+  border: 1px solid var(--figma-color-border-strong)
+}
+
+.button--secondary:hover {
+  background-color: var(--figma-color-bg-hover)
+}
+
+.button--secondary:enabled:focus {
+  border: 2px solid var(--figma-color-border-selected)
+}
+
+.button--secondary:enabled:active {
+  background-color: var(--figma-color-bg-hover);
+  border: 2px solid var(--figma-color-border-selected)
 }
 
 .button--tertiary a {
