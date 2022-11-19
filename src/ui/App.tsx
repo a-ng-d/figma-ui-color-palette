@@ -229,7 +229,7 @@ class App extends React.Component {
   }
 
   presetHandler = (e: any) => {
-    switch((e.target as HTMLInputElement).value) {
+    switch ((e.target as HTMLInputElement).value) {
 
       case presets.material.name:
         this.setState({
@@ -264,7 +264,7 @@ class App extends React.Component {
 
   customHandler = (e: any) => {
     let scale = this.state['preset']['scale'];
-    switch(e.target.dataset.feature) {
+    switch (e.target.dataset.feature) {
 
       case 'add':
         if (scale.length < 24) {
