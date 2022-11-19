@@ -160,6 +160,10 @@
   --blue: var(--figma-color-bg-brand)
 }
 
+.icon-button--selected .icon {
+  background: var(--figma-color-icon-onbrand)
+}
+
 .icon-button--selected:hover {
   background-color: var(--figma-color-bg-brand)
 }
