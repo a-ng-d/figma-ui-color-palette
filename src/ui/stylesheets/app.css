@@ -392,8 +392,7 @@ li.colors__item {
   grid-template-columns: repeat(76, 1fr);
   grid-template-rows: var(--size-medium);
   padding: 0 var(--size-xsmall);
-  position: relative;
-  background-color: var(--figma-color-bg)
+  position: relative
 }
 
 li.colors__item[draggable="true"] {
