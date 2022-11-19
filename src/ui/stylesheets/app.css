@@ -85,7 +85,7 @@ div.onboarding-tip__separator {
   width: 1px;
   height: 100%;
   margin: 0 var(--size-xsmall);
-  background-color: var(--silver)
+  background-color: var(--figma-color-border)
 }
 
 div.actions {
