@@ -312,13 +312,13 @@ input[type="color" i]::-webkit-color-swatch {
 }
 
 input[type="color" i]:focus {
-  outline: 1px solid var(--blue);
+  outline: 1px solid var(--figma-color-border-selected);
   outline-offset: -1px
 }
 
 input[type="color" i]:focus ~ input {
-  border: 1px solid var(--blue);
-  outline: 1px solid var(--blue);
+  border: 1px solid var(--figma-color-border-selected);
+  outline: 1px solid var(--figma-color-border-selected);
   outline-offset: -2px
 }
 
@@ -391,16 +391,17 @@ li.colors__item {
   grid-template-columns: repeat(76, 1fr);
   grid-template-rows: var(--size-medium);
   padding: 0 var(--size-xsmall);
-  position: relative
+  position: relative;
+  background-color: var(--figma-color-bg)
 }
 
 li.colors__item[draggable="true"] {
-  background-color: var(--blue3)
+  background-color: var(--figma-color-bg-selected)
 }
 
-li.colors__item[draggable="true"] .input,
-li.colors__item--emphasis .input {
-  --white: transparent
+li.colors__item[draggable="true"] .input__field,
+li.colors__item--emphasis .input__field {
+  --white: var(--figma-color-bg-selected)
 }
 
 li.colors__item[draggable="true"]:active {
@@ -412,7 +413,11 @@ li.colors__item--dragged:active > div {
 }
 
 li.colors__item--emphasis {
-  background-color: var(--grey)
+  background-color: var(--figma-color-bg-pressed)
+}
+
+li.colors__item--emphasis .input__field {
+  --white: var(--figma-color-bg-pressed)
 }
 
 li.colors__item--above {
