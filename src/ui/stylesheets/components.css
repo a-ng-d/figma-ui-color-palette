@@ -30,7 +30,8 @@
 }
 
 .checkbox__box:checked + .checkbox__label:before {
-  background-color: var(--figma-color-bg-brand)
+  background-color: var(--figma-color-bg-brand);
+  border: 1px solid var(--figma-color-bg-brand)
 }
 
 /* Button */
