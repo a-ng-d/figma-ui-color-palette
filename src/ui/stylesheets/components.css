@@ -9,7 +9,9 @@
 
 /* Icon */
 .icon {
-  background: var(--figma-color-icon)
+  background: var(--figma-color-icon);
+  mask-position: center;
+  -webkit-mask-position: center
 }
 
 .icon--list-tile {
@@ -49,6 +51,23 @@
 .button--primary:enabled:focus {
   border: 2px solid var(--figma-color-border-brand-strong);
   background-color: var(--figma-color-bg-brand-pressed)
+}
+
+.icon-button * {
+  filter: none
+}
+
+.icon-button:hover {
+  background: var(--figma-color-bg-hover)
+}
+
+.icon-button:focus {
+  border: 2px solid var(--figma-color-border-selected)
+}
+
+.icon-button:active {
+  background: transparent;
+  border: 2px solid transparent
 }
 
 /* Select menu */
