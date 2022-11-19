@@ -2,7 +2,8 @@
 .onboarding-tip__msg,
 .type,
 .section-title,
-.checkbox__label {
+.checkbox__label,
+.select-menu__label {
   color: var(--figma-color-text)
 }
 
@@ -34,4 +35,42 @@
 .button--primary {
   background-color: var(--figma-color-bg-brand);
   color: var(--figma-color-text-onbrand)
+}
+
+/* Select menu */
+.select-menu__button {
+  background-color: var(--figma-color-bg);
+  padding: 0 0 0 var(--size-xxsmall)
+}
+
+.select-menu__button:hover {
+  border-color: var(--figma-color-border)
+}
+
+.select-menu__button:focus {
+  border: 1px solid var(--figma-color-border-selected);
+  outline: 1px solid var(--figma-color-border-selected)
+}
+
+.select-menu__caret {
+  mask-image: url(data:image/svg+xml;utf8,%3Csvg%20fill%3D%22none%22%20height%3D%2230%22%20viewBox%3D%220%200%2030%2030%22%20width%3D%2230%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20clip-rule%3D%22evenodd%22%20d%3D%22m15%2016.7071-3-3%20.7071-.7071%202.6465%202.6464%202.6464-2.6464.7071.7071-3%203-.3535.3536z%22%20fill%3D%22%23000%22%20fill-rule%3D%22evenodd%22%2F%3E%3C%2Fsvg%3E);
+  -webkit-mask-image: url(data:image/svg+xml;utf8,%3Csvg%20fill%3D%22none%22%20height%3D%2230%22%20viewBox%3D%220%200%2030%2030%22%20width%3D%2230%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20clip-rule%3D%22evenodd%22%20d%3D%22m15%2016.7071-3-3%20.7071-.7071%202.6465%202.6464%202.6464-2.6464.7071.7071-3%203-.3535.3536z%22%20fill%3D%22%23000%22%20fill-rule%3D%22evenodd%22%2F%3E%3C%2Fsvg%3E);
+  background: var(--figma-color-icon-disabled);
+  opacity: 1
+}
+
+.select-menu__button:hover .select-menu__caret,
+.select-menu__button:focus .select-menu__caret {
+  background: var(--figma-color-icon)
+}
+
+.select-menu__menu {
+  outline: 1px solid rgba(255, 255, 255, .1);
+  outline-offset: -1px
+}
+
+.select-menu--highlight,
+.select-menu__item:hover,
+.select-menu__item:focus {
+    background-color: var(--figma-color-bg-brand)
 }
