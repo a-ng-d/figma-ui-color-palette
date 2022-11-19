@@ -7,6 +7,10 @@
   color: var(--figma-color-text)
 }
 
+.label {
+  color: var(--figma-color-text-secondary)
+}
+
 .type a {
   color: var(--figma-color-text-brand);
   text-decoration: none
