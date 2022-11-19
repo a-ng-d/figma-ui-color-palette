@@ -187,6 +187,14 @@
   background-color: var(--figma-color-bg-brand)
 }
 
+div.icon-button--disabled {
+  opacity: 1
+}
+
+.icon-button--disabled .icon {
+  background: var(--figma-color-icon-disabled)
+}
+
 /* Select menu */
 .select-menu__button {
   --white: var(--figma-color-bg);
