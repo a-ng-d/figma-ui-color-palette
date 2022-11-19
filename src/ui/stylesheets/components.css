@@ -181,3 +181,21 @@
 .select-menu__item:focus {
   background-color: var(--figma-color-bg-brand)
 }
+
+/* Input */
+.input__field {
+  --black8: var(--figma-color-text);
+  --white: var(--figma-color-bg)
+}
+
+.input__field:hover,
+.input__field:placeholder-shown:hover {
+  --black8: var(--figma-color-text);
+  --black1: var(--figma-color-border)
+}
+
+.input__field:active,
+.input__field:focus {
+  --blue: var(--figma-color-border-selected);
+  --black: var(--figma-color-text)
+}
