@@ -24,7 +24,7 @@
 
 /* Checkbox */
 .checkbox__label:before {
-  border: 1px solid var(--figma-color-border-onbrand-strong)
+  border: 1px solid var(--figma-color-border-strong)
 }
 
 .checkbox__box:checked + .checkbox__label:before {
@@ -86,5 +86,5 @@
 .select-menu--highlight,
 .select-menu__item:hover,
 .select-menu__item:focus {
-    background-color: var(--figma-color-bg-brand)
+  background-color: var(--figma-color-bg-brand)
 }
