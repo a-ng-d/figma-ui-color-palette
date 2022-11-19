@@ -46,7 +46,9 @@ export default class Input extends React.Component<Props> {
   Number = () => {
     return (
       <div className={`input${this.props.icon.type === 'none' ? '' : ' input--with-icon'}`}>
-        <div className={`icon${this.props.icon.type === 'icon' ? ` icon--${this.props.icon.value}` : ''}`}>{this.props.icon.type === 'letter' ? this.props.icon.value : ''}</div>
+        {this.props.icon.type != 'none' ?
+          <div className={`icon${this.props.icon.type === 'icon' ? ` icon--${this.props.icon.value}` : ''}`}>{this.props.icon.type === 'letter' ? this.props.icon.value : ''}</div>
+        : null}
         <input
           data-feature={this.props.feature}
           type='number'
@@ -66,7 +68,9 @@ export default class Input extends React.Component<Props> {
   Text = () => {
     return (
       <div className={`input${this.props.icon.type === 'none' ? '' : ' input--with-icon'}`}>
-        <div className={`icon${this.props.icon.type === 'icon' ? ` icon--${this.props.icon.value}` : ''}`}>{this.props.icon.type === 'letter' ? this.props.icon.value : ''}</div>
+        {this.props.icon.type != 'none' ?
+          <div className={`icon${this.props.icon.type === 'icon' ? ` icon--${this.props.icon.value}` : ''}`}>{this.props.icon.type === 'letter' ? this.props.icon.value : ''}</div>
+        : null}
         <input
           data-feature={this.props.feature}
           type='text'
