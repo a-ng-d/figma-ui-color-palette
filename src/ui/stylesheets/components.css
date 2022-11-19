@@ -4,6 +4,7 @@
 .section-title,
 .checkbox__label,
 .switch__label,
+.radio__label,
 .select-menu__label {
   color: var(--figma-color-text)
 }
@@ -86,6 +87,26 @@
 .switch__toggle:checked + .switch__label:before,
 .switch__toggle:checked + .switch__label:after {
   border: 1px solid var(--figma-color-bg-brand)
+}
+
+/* Radio */
+.radio__label:before {
+  --black8: var(--figma-color-border-strong)
+}
+
+.radio__button:checked + .radio__label:before {
+  background-image: none
+}
+
+.radio__button:checked + .radio__label:after {
+  content: '';
+  width: 6px;
+  height: 6px;
+  background-color: var(--figma-color-icon);
+  position: absolute;
+  left: 13px;
+  border-radius: 50%;
+  top: 14px;
 }
 
 /* Button */
