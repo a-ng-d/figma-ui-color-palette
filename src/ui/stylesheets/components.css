@@ -3,6 +3,7 @@
 .type,
 .section-title,
 .checkbox__label,
+.switch__label,
 .select-menu__label {
   color: var(--figma-color-text)
 }
@@ -55,6 +56,25 @@
 
 .checkbox__box:checked + .checkbox__label:before {
   background-color: var(--figma-color-bg-brand);
+  border: 1px solid var(--figma-color-bg-brand)
+}
+
+/* Switch */
+.switch__label:before {
+  background-color: var(--figma-color-bg-disabled)
+}
+
+.switch__label:before,
+.switch__label:after {
+  border: 1px solid var(--figma-color-bg-disabled)
+}
+
+.switch__toggle:checked + .switch__label:before {
+  background-color: var(--figma-color-bg-brand)
+}
+
+.switch__toggle:checked + .switch__label:before,
+.switch__toggle:checked + .switch__label:after {
   border: 1px solid var(--figma-color-bg-brand)
 }
 
