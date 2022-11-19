@@ -137,7 +137,7 @@
 }
 
 .icon-button:hover {
-  background: var(--figma-color-bg-hover)
+  --hover-fill: var(--figma-color-bg-hover)
 }
 
 .icon-button:focus {
@@ -147,6 +147,14 @@
 .icon-button:active {
   background: transparent;
   border: 2px solid transparent
+}
+
+.icon-button--selected {
+  --blue: var(--figma-color-bg-brand)
+}
+
+.icon-button--selected:hover {
+  --hover-fill: var(--figma-color-bg-brand)
 }
 
 /* Select menu */
