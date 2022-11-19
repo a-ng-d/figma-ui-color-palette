@@ -139,7 +139,7 @@ div.tabs .tabs__secondary {
 div.tabs .tabs__tab {
   padding: 0 var(--size-xxsmall);
   font-weight: var(--font-weight-medium);
-  color: var(--figma-color-text-disabled);
+  color: var(--figma-color-text-secondary);
   line-height: var(--size-large)
 }
 
