@@ -1,5 +1,7 @@
 .onboarding-tip__msg,
-.type {
+.type,
+.section-title,
+.checkbox__label {
   color: var(--figma-color-text)
 }
 
