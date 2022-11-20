@@ -71,12 +71,12 @@
 
 /* Switch */
 .switch__label:before {
-  --white: var(--figma-color-bg-disabled)
+  --white: var(--figma-color-bg-disabled-secondary)
 }
 
 .switch__label:before,
 .switch__label:after {
-  --black8-opaque: var(--figma-color-bg-disabled)
+  --black8-opaque: var(--figma-color-bg-disabled-secondary)
 }
 
 .switch__toggle:checked + .switch__label:before {
