@@ -5,10 +5,9 @@ export default class Dispatcher {
   on: any;
 
   constructor(callback, time) {
-    this.callback = callback;
     this.time = time;
     this.on = {
-      active: null,
+      active: false,
       blocked: false,
       interval: '',
       send() {
@@ -16,6 +15,7 @@ export default class Dispatcher {
         this.blocked = true
       },
       stop() {
+        callback();
         clearInterval(this.interval);
         this.blocked = false
       },
@@ -23,7 +23,7 @@ export default class Dispatcher {
         return this.active;
       },
       set status(bool) {
-        if (!this.blocked)
+        if (!this.blocked && bool)
           this.send()
         else if (this.blocked && !bool)
           this.stop();
