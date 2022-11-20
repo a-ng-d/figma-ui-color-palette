@@ -32,12 +32,13 @@ export default class Input extends React.Component<Props> {
           onFocus={this.props.onFocus}
         />
         <input
+          data-feature={this.props.feature}
           type='input'
           className='input__field'
           value={this.props.value.toUpperCase().substr(1, 6)}
           onChange={this.props.onChange}
+          onBlur={this.props.onChange}
           onFocus={this.props.onFocus}
-          readOnly
         />
       </div>
     )

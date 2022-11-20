@@ -59,20 +59,23 @@ class App extends React.Component {
     switch (e.target.dataset.feature) {
 
       case 'hex':
-        colors = this.state['newColors'].map(item => {
-          const rgb = chroma(e.target.value)._rgb;
-          if (item.id === id)
-            item.rgb = {
-              r: rgb[0] / 255,
-              g: rgb[1] / 255,
-              b: rgb[2] / 255
-            }
-          return item
-        });
-        this.setState({
-          newColors: colors,
-          onGoingStep: 'color changed'
-        });
+        const code = e.target.value.indexOf('#') == -1 ? '#' + e.target.value : e.target.value
+        if (/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/i.test(code)) {
+          colors = this.state['newColors'].map(item => {
+            const rgb = chroma(e.target.value.indexOf('#') == -1 ? '#' + e.target.value : e.target.value)._rgb;
+            if (item.id === id)
+              item.rgb = {
+                r: rgb[0] / 255,
+                g: rgb[1] / 255,
+                b: rgb[2] / 255
+              }
+            return item
+          });
+          this.setState({
+            newColors: colors,
+            onGoingStep: 'color changed'
+          })
+        };
         e._reactName === 'onBlur' ? this.dispatch.colors.on.status = false : this.dispatch.colors.on.status = true;
         break;
 
