@@ -5,7 +5,8 @@ import CreatePalette from './services/CreatePalette';
 import EditPalette from './services/EditPalette';
 import Onboarding from './services/Onboarding';
 import 'figma-plugin-ds/dist/figma-plugin-ds.css';
-import './app.css';
+import './stylesheets/app.css';
+import './stylesheets/components.css';
 import chroma from 'chroma-js';
 import { palette, presets } from '../utils/palettePackage';
 import { v4 as uuidv4 } from 'uuid';
@@ -59,20 +60,23 @@ class App extends React.Component {
     switch (e.target.dataset.feature) {
 
       case 'hex':
-        colors = this.state['newColors'].map(item => {
-          const rgb = chroma(e.target.value)._rgb;
-          if (item.id === id)
-            item.rgb = {
-              r: rgb[0] / 255,
-              g: rgb[1] / 255,
-              b: rgb[2] / 255
-            }
-          return item
-        });
-        this.setState({
-          newColors: colors,
-          onGoingStep: 'color changed'
-        });
+        const code = e.target.value.indexOf('#') == -1 ? '#' + e.target.value : e.target.value
+        if (/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/i.test(code)) {
+          colors = this.state['newColors'].map(item => {
+            const rgb = chroma(e.target.value.indexOf('#') == -1 ? '#' + e.target.value : e.target.value)._rgb;
+            if (item.id === id)
+              item.rgb = {
+                r: rgb[0] / 255,
+                g: rgb[1] / 255,
+                b: rgb[2] / 255
+              }
+            return item
+          });
+          this.setState({
+            newColors: colors,
+            onGoingStep: 'color changed'
+          })
+        };
         e._reactName === 'onBlur' ? this.dispatch.colors.on.status = false : this.dispatch.colors.on.status = true;
         break;
 
@@ -229,7 +233,7 @@ class App extends React.Component {
   }
 
   presetHandler = (e: any) => {
-    switch((e.target as HTMLInputElement).value) {
+    switch ((e.target as HTMLInputElement).value) {
 
       case presets.material.name:
         this.setState({
@@ -264,7 +268,7 @@ class App extends React.Component {
 
   customHandler = (e: any) => {
     let scale = this.state['preset']['scale'];
-    switch(e.target.dataset.feature) {
+    switch (e.target.dataset.feature) {
 
       case 'add':
         if (scale.length < 24) {
@@ -308,8 +312,7 @@ class App extends React.Component {
       })
   }
 
-  slideHandler = (palette) => this.setState({
-    newScale: palette.scale,
+  slideHandler = () => this.setState({
     onGoingStep: 'scale changed'
   })
 

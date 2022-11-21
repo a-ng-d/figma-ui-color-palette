@@ -1,6 +1,6 @@
 {
   "name": "figma-ui-color-palette",
-  "version": "12.0.0",
+  "version": "13.0.0",
   "description": "Create accessible UI color palettes with consistant lightness and contrast",
   "main": "code.js",
   "scripts": {
@@ -20,7 +20,7 @@
   "license": "CC-BY 4.0",
   "repository": "https://github.com/inVoltag/figma-ui-color-palette",
   "devDependencies": {
-    "@figma/plugin-typings": "^1.39.1",
+    "@figma/plugin-typings": "^1.55.0",
     "@types/react": "^17.0.37",
     "@types/react-dom": "^17.0.11",
     "css-loader": "^6.5.1",

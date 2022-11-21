@@ -85,14 +85,14 @@ div.onboarding-tip__separator {
   width: 1px;
   height: 100%;
   margin: 0 var(--size-xsmall);
-  background-color: var(--silver)
+  background-color: var(--figma-color-border)
 }
 
 div.actions {
   width: 100%;
   height: var(--size-xxlarge);
   padding: var(--size-xsmall);
-  border-top: 1px solid var(--silver);
+  border-top: 1px solid var(--figma-color-border);
   display: flex;
   flex-direction: row-reverse;
   justify-content: space-between;
@@ -127,7 +127,7 @@ div.tabs {
   align-items: stretch;
   height: var(--size-large);
   padding: 0 var(--size-xsmall);
-  border-bottom: 1px solid var(--silver);
+  border-bottom: 1px solid var(--figma-color-border);
   user-select: none
 }
 
@@ -139,17 +139,17 @@ div.tabs .tabs__secondary {
 div.tabs .tabs__tab {
   padding: 0 var(--size-xxsmall);
   font-weight: var(--font-weight-medium);
-  color: var(--black3-opaque);
+  color: var(--figma-color-text-secondary);
   line-height: var(--size-large)
 }
 
 div.tabs .tabs__tab:hover {
-  color: var(--black-8-opaque)
+  color: var(--figma-color-text-hover)
 }
 
 div.tabs .tabs__tab--active {
   font-weight: var(--font-weight-bold);
-  color: var(--black-8-opaque)
+  color: var(--figma-color-text)
 }
 
 /* Slider */
@@ -166,7 +166,7 @@ div.slider .slider__range {
   height: var(--size-small);
   background: linear-gradient(-90deg, var(--white) 0%, var(--black) 100%);
   border-radius: var(--border-radius-large);
-  box-shadow: inset 0 0 0 1px var(--black3);
+  box-shadow: inset 0 0 0 1px var(--figma-color-border-disabled-strong);
   position: relative
 }
 
@@ -188,7 +188,7 @@ div.slider .slider__label {
   width: 100%;
   height: var(--size-small);
   border-radius: var(--border-radius-small);
-  background: var(--white);
+  background: var(--figma-color-bg);
   box-shadow: 0 0 0 1px var(--black3-opaque);
   padding: var(--size-xxxsmall);
   text-align: center;
@@ -197,20 +197,15 @@ div.slider .slider__label {
 }
 
 div.slider .slider__knob:hover .slider__label {
-  background: var(--selection-b);
-  box-shadow: 0 0 0 1px var(--blue)
+  background: var(--figma-color-bg-hover)
 }
 
 div.slider .slider__knob:active .slider__label {
-  box-shadow: 0 0 0 2px var(--blue)
-}
-
-div.slider .slider__knob:hover .slider__label:before {
-  border-top-color: var(--blue)
+  box-shadow: 0 0 0 2px var(--figma-color-border-selected)
 }
 
 div.slider .slider__knob:active .slider__label:before {
-  border-top-color: var(--blue);
+  border-top-color: var(--figma-color-border-selected);
   border-width: 6px;
   left: calc(50% - 6px);
   bottom: -12px
@@ -218,7 +213,7 @@ div.slider .slider__knob:active .slider__label:before {
 
 div.slider .slider__knob:hover .slider__label:after,
 div.slider .slider__knob:active .slider__label:after {
-  border-top-color: var(--selection-b)
+  border-top-color: var(--figma-color-bg-hover)
 }
 
 div.slider .slider__label:before {
@@ -242,7 +237,7 @@ div.slider .slider__label:after {
   height: 0;
   border-style: solid;
   border-width: 3px;
-  border-top-color: var(--white);
+  border-top-color: var(--figma-color-bg);
   border-right-color: transparent;
   border-bottom-color: transparent;
   border-left-color: transparent;
@@ -254,8 +249,8 @@ div.slider .slider__label:after {
 div.slider .slider__tooltip {
   width: var(--size-medium);
   padding: var(--size-xxxsmall);
-  background: var(--black);
-  color: var(--white);
+  background: var(--figma-color-bg-inverse);
+  color: var(--figma-color-text-oninverse);
   position: absolute;
   transform: translateX(-50%) translateY(-100%);
   left: 50%;
@@ -275,7 +270,7 @@ div.slider .slider__tooltip:after {
   height: 0;
   border-style: solid;
   border-width: var(--size-xxxsmall);
-  border-top-color: var(--black);
+  border-top-color: var(--figma-color-bg-inverse);
   border-right-color: transparent;
   border-bottom-color: transparent;
   border-left-color: transparent;
@@ -287,7 +282,7 @@ div.slider .slider__tooltip:after {
 div.slider .slider__graduation {
   width: 1px;
   height: var(--size-xxxsmall);
-  background: var(--black3-opaque);
+  background: var(--figma-color-border-disabled-strong);
   pointer-events: none
 }
 
@@ -317,13 +312,13 @@ input[type="color" i]::-webkit-color-swatch {
 }
 
 input[type="color" i]:focus {
-  outline: 1px solid var(--blue);
+  outline: 1px solid var(--figma-color-border-selected);
   outline-offset: -1px
 }
 
 input[type="color" i]:focus ~ input {
-  border: 1px solid var(--blue);
-  outline: 1px solid var(--blue);
+  border: 1px solid var(--figma-color-border-selected);
+  outline: 1px solid var(--figma-color-border-selected);
   outline-offset: -2px
 }
 
@@ -341,7 +336,9 @@ input[type='number']::-webkit-inner-spin-button {
 }
 
 .inputs__bar {
-  display: flex
+  display: flex;
+  padding: 0 1px;
+  position: relative
 }
 
 .inputs__bar .input {
@@ -354,20 +351,26 @@ input[type='number']::-webkit-inner-spin-button {
 }
 
 .inputs__bar input:focus {
-  border: 1px solid var(--black1)
+  border: 1px solid var(--figma-color-border)
 }
 
 .inputs__bar:hover input {
-  border: 1px solid var(--black1)
+  border: 1px solid var(--figma-color-border)
 }
 
-.inputs__bar:focus-within {
-  outline: 2px solid var(--blue);
-  outline-offset: -2px
+.inputs__bar:focus-within:before {
+  content: '';
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  box-shadow: inset 0 0 0 2px var(--figma-color-border-selected);
+  z-index: 2;
+  pointer-events: none;
+  border-radius: var(--border-radius-small)
 }
 
 .inputs__bar:focus-within input {
-  border: 1px solid var(--black1);
+  border: 1px solid var(--figma-color-border);
   outline: 1px solid transparent;
   outline-offset: -2px
 }
@@ -400,12 +403,12 @@ li.colors__item {
 }
 
 li.colors__item[draggable="true"] {
-  background-color: var(--blue3)
+  background-color: var(--figma-color-bg-selected)
 }
 
-li.colors__item[draggable="true"] .input,
-li.colors__item--emphasis .input {
-  --white: transparent
+li.colors__item[draggable="true"] .input__field,
+li.colors__item--emphasis .input__field {
+  --white: var(--figma-color-bg-selected)
 }
 
 li.colors__item[draggable="true"]:active {
@@ -417,15 +420,19 @@ li.colors__item--dragged:active > div {
 }
 
 li.colors__item--emphasis {
-  background-color: var(--grey)
+  background-color: var(--figma-color-bg-pressed)
+}
+
+li.colors__item--emphasis .input__field {
+  --white: var(--figma-color-bg-pressed)
 }
 
 li.colors__item--above {
-  box-shadow: 0 1px 0 var(--blue) inset, 0 -1px 0 var(--blue)
+  box-shadow: 0 1px 0 var(--figma-color-border-selected) inset, 0 -1px 0 var(--figma-color-border-selected)
 }
 
 li.colors__item--below {
-  box-shadow: 0 -1px 0 var(--blue) inset, 0 1px 0 var(--blue)
+  box-shadow: 0 -1px 0 var(--figma-color-border-selected) inset, 0 1px 0 var(--figma-color-border-selected)
 }
 
 li .colors__name {
@@ -511,5 +518,6 @@ div.about > div {
 
 div.about .about__links {
   display: flex;
-  align-items: center
+  align-items: center;
+  color: var(--figma-color-text)
 }
