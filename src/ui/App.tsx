@@ -325,7 +325,7 @@ class App extends React.Component {
       min: 0,
       max: 100
     },
-    onGoingStep: 'stop added'
+    onGoingStep: 'stop changed'
   })
 
   render() {
@@ -424,7 +424,7 @@ class App extends React.Component {
             hasCaptions={this.state['hasCaptions']}
             export={this.state['export']}
             onScaleChange={this.slideHandler}
-            onAddStop={this.customSlideHandler}
+            onChangeStop={this.customSlideHandler}
             onCaptionsChange={this.captionsHandler}
             onColorChange={this.colorHandler}
             onContextChange={this.navHandler}
