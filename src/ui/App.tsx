@@ -313,6 +313,7 @@ class App extends React.Component {
   }
 
   slideHandler = () => this.setState({
+    newScale: palette.scale,
     onGoingStep: 'scale changed'
   })
 

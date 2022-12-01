@@ -116,6 +116,23 @@ export default class Slider extends React.Component<Props> {
     this.props.onChange('released')
   }
 
+  onClick = (e: any) => {
+    const rangeWidth: number = e.currentTarget.offsetWidth,
+          sliderPadding: number = parseFloat(window.getComputedStyle(e.currentTarget.parentNode, null).getPropertyValue('padding-left')),
+          offset: number = doMap(e.clientX - sliderPadding, 0, rangeWidth, 0, 100);
+
+    let newScale = [],
+        newLightnessScale = {};
+
+    newScale = Object.values(this.props.scale);
+    newScale.push(offset.toFixed(1));
+    newScale.sort((a, b) => b - a);
+    newScale.forEach((scale, index) => newLightnessScale[`lightness-${index + 1}`] = scale)
+    palette.scale = newLightnessScale
+
+    this.props.onChange('released')
+  }
+
   // Actions
   doLightnessScale = () => {
     let granularity: number = 1;
@@ -181,7 +198,10 @@ export default class Slider extends React.Component<Props> {
 
   Custom = () => {
     return (
-      <div className='slider__range'>
+      <div
+        className='slider__range'
+        onClick={this.onClick}
+      >
         {Object.entries(this.props.scale).map(lightness =>
           <Knob
             key={lightness[0]}
