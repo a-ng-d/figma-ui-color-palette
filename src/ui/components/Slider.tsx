@@ -131,7 +131,13 @@ export default class Slider extends React.Component<Props> {
 
     if (e.target.classList[0] === 'slider__range' && newScale.length < 25) {
       palette.scale = newLightnessScale;
-      this.props.onChange('shot')
+      palette.preset = {
+        name: 'Custom',
+        scale: Object.keys(palette.scale).map(key => parseFloat(key.replace('lightness-', ''))),
+        min: 0,
+        max: 100
+      };
+      this.props.onChange('added')
     }
   }
 

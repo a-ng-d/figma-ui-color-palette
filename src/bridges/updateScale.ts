@@ -5,6 +5,7 @@ const updateScale = (msg, palette) => {
   palette = figma.currentPage.selection[0];
   if (palette.children.length == 1) {
     palette.setPluginData('scale', JSON.stringify(msg.palette.scale));
+    palette.setPluginData('preset', JSON.stringify(msg.palette.preset));
 
     palette.children[0].remove();
     palette.appendChild(new Colors({

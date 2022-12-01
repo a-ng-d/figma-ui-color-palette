@@ -317,6 +317,17 @@ class App extends React.Component {
     onGoingStep: 'scale changed'
   })
 
+  customSlideHandler = () => this.setState({
+    newScale: palette.scale,
+    preset: {
+      name: 'Custom',
+      scale: Object.keys(palette.scale).map(key => parseFloat(key.replace('lightness-', ''))),
+      min: 0,
+      max: 100
+    },
+    onGoingStep: 'stop added'
+  })
+
   render() {
     onmessage = (e: any) => {
       switch (e.data.pluginMessage.type) {
@@ -413,6 +424,7 @@ class App extends React.Component {
             hasCaptions={this.state['hasCaptions']}
             export={this.state['export']}
             onScaleChange={this.slideHandler}
+            onAddStop={this.customSlideHandler}
             onCaptionsChange={this.captionsHandler}
             onColorChange={this.colorHandler}
             onContextChange={this.navHandler}

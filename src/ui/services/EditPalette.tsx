@@ -17,6 +17,7 @@ interface Props {
   preset: any;
   export: any;
   onScaleChange: any;
+  onAddStop: any;
   onCaptionsChange: any;
   onColorChange: any;
   onContextChange: any;
@@ -55,10 +56,10 @@ export default class EditPalette extends React.Component<Props> {
     if (e === 'released') {
       this.dispatch.scale.on.status = false;
       parent.postMessage({ pluginMessage: { type: 'update-scale', palette } }, '*');
-      this.props.onScaleChange(palette)
-    } else if (e === 'shot') {
+      this.props.onScaleChange()
+    } else if (e === 'added') {
       parent.postMessage({ pluginMessage: { type: 'update-scale', palette } }, '*');
-      this.props.onScaleChange(palette)
+      this.props.onAddStop()
     } else
       this.dispatch.scale.on.status = true
   }
