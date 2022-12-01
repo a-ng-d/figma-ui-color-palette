@@ -168,7 +168,7 @@ export default class Slider extends React.Component<Props> {
         newLightnessScale = {};
 
     Object.values(this.props.scale).forEach(scale => {
-      scale === this.state['selectedKnob'].style.left.replace('%', '') ? null : newScale.push(scale)
+      scale === parseFloat(this.state['selectedKnob'].style.left).toFixed(1) ? null : newScale.push(scale)
     });
     newScale.forEach((scale, index) => newLightnessScale[`lightness-${index + 1}`] = scale);
     this.state['selectedKnob'].classList.remove('slider__knob--selected')
