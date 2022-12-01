@@ -53,10 +53,13 @@ export default class EditPalette extends React.Component<Props> {
   // Handlers
   slideHandler = (e: string) => {
     if (e === 'released') {
-      this.dispatch.scale.on.status = false
+      this.dispatch.scale.on.status = false;
+      parent.postMessage({ pluginMessage: { type: 'update-scale', palette } }, '*');
       this.props.onScaleChange(palette)
-    }
-    else
+    } else if (e === 'shot') {
+      parent.postMessage({ pluginMessage: { type: 'update-scale', palette } }, '*');
+      this.props.onScaleChange(palette)
+    } else
       this.dispatch.scale.on.status = true
   }
 
