@@ -333,6 +333,7 @@ class App extends React.Component {
             hasCaptions: true,
             onGoingStep: 'selection empty'
           });
+          palette.preset = {}
           break;
 
         case 'color-selected':
@@ -350,6 +351,7 @@ class App extends React.Component {
             color.id === undefined ? color.id = uuidv4() : color.id = color.id;
             return color
           });
+          palette.preset = {};
           if (e.data.pluginMessage.data.captions === 'hasNotCaptions')
             this.setState({
               service: 'Edit',
