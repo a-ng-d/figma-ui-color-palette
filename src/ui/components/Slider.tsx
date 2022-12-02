@@ -150,13 +150,13 @@ export default class Slider extends React.Component<Props> {
     newScale = Object.values(this.props.scale);
     newScale.length < 25 ? newScale.push(offset.toFixed(1)) : null;
     newScale.sort((a, b) => b - a);
-    newScale.forEach((scale, index) => newLightnessScale[`lightness-${index + 1}`] = scale)
+    newScale.forEach((scale, index) => newLightnessScale[`lightness-${index + 1}`] = scale);
 
     if (e.target.classList[0] === 'slider__range' && newScale.length < 25 && this.props.presetName === 'Custom') {
       palette.scale = newLightnessScale;
       palette.preset = {
         name: 'Custom',
-        scale: Object.keys(palette.scale).map(key => parseFloat(key.replace('lightness-', ''))),
+        scale: newScale.map((scale, index) => index + 1),
         min: 0,
         max: 100
       };

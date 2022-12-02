@@ -319,12 +319,7 @@ class App extends React.Component {
 
   customSlideHandler = () => this.setState({
     newScale: palette.scale,
-    preset: {
-      name: 'Custom',
-      scale: Object.keys(palette.scale).map(key => parseFloat(key.replace('lightness-', ''))),
-      min: 0,
-      max: 100
-    },
+    preset: palette.preset,
     onGoingStep: 'stop changed'
   })
 
