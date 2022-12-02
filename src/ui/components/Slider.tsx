@@ -257,6 +257,11 @@ export default class Slider extends React.Component<Props> {
     }
   }
 
+  componentWillUnmount() {
+    window.onkeydown = null;
+    document.onmousedown = null
+  }
+
   // Templates
   Equal = () => {
     palette.min = parseFloat(this.props.min);
