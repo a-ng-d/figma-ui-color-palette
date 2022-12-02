@@ -248,6 +248,12 @@ export default class Slider extends React.Component<Props> {
     window.onkeydown = (e: any) => {
       if (e.key === 'Backspace' && this.state['selectedKnob'] != null && this.props.knobs.length > 2)
         this.onDelete()
+    };
+    document.onmousedown = (e: any) => {
+      if (e.target.closest('.slider__knob') == null)
+        this.setState({
+          selectedKnob: null
+        })
     }
   }
 
