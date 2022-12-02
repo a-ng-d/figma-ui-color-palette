@@ -232,6 +232,16 @@ export default class Slider extends React.Component<Props> {
     })
   }
 
+  isSelected = (lightness) => {
+    let state: string;
+    if (this.state['selectedKnob'] != null)
+      state = this.state['selectedKnob'].classList[1] === lightness ? 'selected' : 'normal'
+    else
+      state = 'normal'
+
+    return state
+  }
+
   componentDidMount() {
     window.onkeydown = (e: any) => {
       if (e.key === 'Backspace' && this.state['selectedKnob'] != null && this.props.knobs.length > 2)
@@ -250,6 +260,7 @@ export default class Slider extends React.Component<Props> {
             key={lightness[0]}
             id={lightness[0]}
             scale={lightness[1]}
+            state={this.isSelected(lightness[0])}
             number={lightness[0].replace('lightness-', '')}
             action={this.onGrab}
           />
@@ -269,6 +280,7 @@ export default class Slider extends React.Component<Props> {
             key={lightness[0]}
             id={lightness[0]}
             scale={lightness[1]}
+            state={this.isSelected(lightness[0])}
             number={lightness[0].replace('lightness-', '')}
             action={this.onGrab}
           />
