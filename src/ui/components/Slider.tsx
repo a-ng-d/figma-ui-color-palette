@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { useEffect } from 'react';
 import Knob from './Knob';
 import { palette } from '../../utils/palettePackage';
 import { doMap } from './../../utils/doMap';
