@@ -43,7 +43,6 @@ export default class Slider extends React.Component<Props> {
         };
 
     knob.style.zIndex = '2';
-    knobs.forEach(knob => knob.classList.remove('slider__knob--selected'));
     this.setState({
       selectedKnob: null,
       knobs: knobs
@@ -133,8 +132,7 @@ export default class Slider extends React.Component<Props> {
     if (Date.now() - startTime < 200 && this.props.presetName === 'Custom' && this.props.service === 'EDIT') {
       this.setState({
         selectedKnob: knob
-      });
-      knob.classList.add('slider__knob--selected')
+      })
     }
     this.props.onChange('released')
   }
@@ -153,6 +151,9 @@ export default class Slider extends React.Component<Props> {
     newScale.forEach((scale, index) => newLightnessScale[`lightness-${index + 1}`] = scale);
 
     if (e.target.classList[0] === 'slider__range' && newScale.length < 25 && this.props.presetName === 'Custom') {
+      this.setState({
+        selectedKnob: null
+      });
       palette.scale = newLightnessScale;
       palette.preset = {
         name: 'Custom',
@@ -172,12 +173,13 @@ export default class Slider extends React.Component<Props> {
       scale === parseFloat(this.state['selectedKnob'].style.left).toFixed(1) ? null : newScale.push(scale)
     });
     newScale.forEach((scale, index) => newLightnessScale[`lightness-${index + 1}`] = scale);
-    this.state['selectedKnob'].classList.remove('slider__knob--selected')
     this.setState({
       selectedKnob: null
     });
-    this.state['knobs'].forEach(knob => knob.classList.remove('slider__knob--selected'));
 
+    this.setState({
+      selectedKnob: null
+    });
     palette.scale = newLightnessScale;
     palette.preset = {
       name: 'Custom',
