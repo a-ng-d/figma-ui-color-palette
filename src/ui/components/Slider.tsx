@@ -6,6 +6,8 @@ import { doMap } from './../../utils/doMap';
 
 interface Props {
   knobs: Array<number>;
+  service: string;
+  presetName: string;
   type: string;
   min: string;
   max: string;
@@ -129,7 +131,7 @@ export default class Slider extends React.Component<Props> {
     knob.style.zIndex = '1';
     knobs.forEach(knob => (knob.children[0] as HTMLElement).style.display = 'none');
     update();
-    if (Date.now() - startTime < 200) {
+    if (Date.now() - startTime < 200 && this.props.presetName === 'Custom' && this.props.service === 'EDIT') {
       this.setState({
         selectedKnob: knob
       });
@@ -151,7 +153,7 @@ export default class Slider extends React.Component<Props> {
     newScale.sort((a, b) => b - a);
     newScale.forEach((scale, index) => newLightnessScale[`lightness-${index + 1}`] = scale)
 
-    if (e.target.classList[0] === 'slider__range' && newScale.length < 25) {
+    if (e.target.classList[0] === 'slider__range' && newScale.length < 25 && this.props.presetName === 'Custom') {
       palette.scale = newLightnessScale;
       palette.preset = {
         name: 'Custom',
