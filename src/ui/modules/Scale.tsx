@@ -64,7 +64,7 @@ export default class Scale extends React.Component<Props> {
         {this.props.onGoingStep != 'captions changed' ?
         <Slider
           type='EQUAL'
-          service='CREATE'
+          hasPreset={this.props.hasPreset}
           presetName={this.props.preset.name}
           knobs={this.props.preset.scale}
           min={this.props.preset.min}
@@ -74,7 +74,7 @@ export default class Scale extends React.Component<Props> {
         /> :
         <Slider
           type='CUSTOM'
-          service='CREATE'
+          hasPreset={this.props.hasPreset}
           presetName={this.props.preset.name}
           knobs={this.props.preset.scale}
           min=''
@@ -103,7 +103,7 @@ export default class Scale extends React.Component<Props> {
         </div>
         <Slider
           type='CUSTOM'
-          service='EDIT'
+          hasPreset={this.props.hasPreset}
           presetName={this.props.preset.name}
           knobs={this.props.preset.scale}
           min=''
