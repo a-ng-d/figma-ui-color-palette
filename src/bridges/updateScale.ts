@@ -6,7 +6,7 @@ const updateScale = (msg, palette) => {
   if (palette.children.length == 1) {
     palette.setPluginData('scale', JSON.stringify(msg.palette.scale));
 
-    if (msg.palette.preset != undefined)
+    if (msg.palette.preset != {})
       palette.setPluginData('preset', JSON.stringify(msg.palette.preset))
 
     palette.children[0].remove();
