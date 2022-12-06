@@ -77,17 +77,6 @@ div.onboarding-tip {
   padding: 0 var(--size-xsmall)
 }
 
-div.onboarding-tip .onboarding-tip__msg {
-  flex: 1
-}
-
-div.onboarding-tip__separator {
-  width: 1px;
-  height: 100%;
-  margin: 0 var(--size-xsmall);
-  background-color: var(--figma-color-border)
-}
-
 div.actions {
   width: 100%;
   height: var(--size-xxlarge);
