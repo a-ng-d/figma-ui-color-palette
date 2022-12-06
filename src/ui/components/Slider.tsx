@@ -198,10 +198,15 @@ export default class Slider extends React.Component<Props> {
     selectedKnobIndex = stopsList.indexOf(this.state['selectedKnob'].classList[1])
     newLightnessScale = this.props.scale;
 
-    if (newLightnessScale[stopsList[selectedKnobIndex]] >= newLightnessScale[stopsList[selectedKnobIndex - 1]] - 2)
-      newLightnessScale[stopsList[selectedKnobIndex]] = newLightnessScale[stopsList[selectedKnobIndex - 1]] - 2
-    else if (newLightnessScale[stopsList[selectedKnobIndex]] >= 100)
-      newLightnessScale[stopsList[selectedKnobIndex]] = 100;
+    const currentStopValue: number = parseFloat(newLightnessScale[stopsList[selectedKnobIndex]]),
+          nextStopValue: number = parseFloat(newLightnessScale[stopsList[selectedKnobIndex - 1]]) - 2
+
+    if (currentStopValue >= nextStopValue)
+      null
+    else if (currentStopValue >= 99 && (!e.metaKey || e.ctrlKey))
+      newLightnessScale[stopsList[selectedKnobIndex]] = 100
+    else if (currentStopValue === 100 && (e.metaKey || e.ctrlKey))
+      newLightnessScale[stopsList[selectedKnobIndex]] = 100
     else {
       e.metaKey || e.ctrlKey ? newLightnessScale[stopsList[selectedKnobIndex]] = parseFloat(newLightnessScale[stopsList[selectedKnobIndex]]) + .1 : newLightnessScale[stopsList[selectedKnobIndex]]++
       newLightnessScale[stopsList[selectedKnobIndex]] = newLightnessScale[stopsList[selectedKnobIndex]].toFixed(1)
@@ -233,8 +238,10 @@ export default class Slider extends React.Component<Props> {
 
     if (currentStopValue <= nextStopValue)
       null
-    else if (currentStopValue <= 0)
-      newLightnessScale[stopsList[selectedKnobIndex]] = 0;
+    else if (currentStopValue <= 1 && (!e.metaKey || e.ctrlKey))
+      newLightnessScale[stopsList[selectedKnobIndex]] = 0
+    else if (currentStopValue === 0 && (e.metaKey || e.ctrlKey))
+      newLightnessScale[stopsList[selectedKnobIndex]] = 0
     else {
       e.metaKey || e.ctrlKey ? newLightnessScale[stopsList[selectedKnobIndex]] = parseFloat(newLightnessScale[stopsList[selectedKnobIndex]]) - .1 : newLightnessScale[stopsList[selectedKnobIndex]]--
       newLightnessScale[stopsList[selectedKnobIndex]] = newLightnessScale[stopsList[selectedKnobIndex]].toFixed(1)
