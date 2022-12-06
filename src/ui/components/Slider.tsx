@@ -177,9 +177,36 @@ export default class Slider extends React.Component<Props> {
       selectedKnob: null
     });
 
-    this.setState({
-      selectedKnob: null
+    palette.scale = newLightnessScale;
+    palette.preset = {
+      name: 'Custom',
+      scale: Object.keys(palette.scale).map(key => parseFloat(key.replace('lightness-', ''))),
+      min: 0,
+      max: 100
+    };
+    this.props.onChange('customized')
+  }
+
+  onShiftRight = (e: any) => {
+    let stopsList = [],
+        newLightnessScale = {},
+        selectedKnobIndex;
+
+    Object.keys(this.props.scale).forEach(stop => {
+      stopsList.push(stop)
     });
+    selectedKnobIndex = stopsList.indexOf(this.state['selectedKnob'].classList[1])
+    newLightnessScale = this.props.scale;
+
+    if (newLightnessScale[stopsList[selectedKnobIndex]] >= newLightnessScale[stopsList[selectedKnobIndex - 1]] - 2)
+      newLightnessScale[stopsList[selectedKnobIndex]] = newLightnessScale[stopsList[selectedKnobIndex - 1]] - 2
+    else if (newLightnessScale[stopsList[selectedKnobIndex]] >= 100)
+      newLightnessScale[stopsList[selectedKnobIndex]] = 100;
+    else {
+      e.metaKey || e.ctrlKey ? newLightnessScale[stopsList[selectedKnobIndex]] = parseFloat(newLightnessScale[stopsList[selectedKnobIndex]]) + .1 : newLightnessScale[stopsList[selectedKnobIndex]]++
+      newLightnessScale[stopsList[selectedKnobIndex]] = newLightnessScale[stopsList[selectedKnobIndex]].toFixed(1)
+    }
+
     palette.scale = newLightnessScale;
     palette.preset = {
       name: 'Custom',
@@ -248,6 +275,8 @@ export default class Slider extends React.Component<Props> {
     window.onkeydown = (e: any) => {
       if (e.key === 'Backspace' && this.state['selectedKnob'] != null && this.props.knobs.length > 2)
         this.onDelete()
+      else if (e.key === 'ArrowRight' && this.state['selectedKnob'] != null)
+        this.onShiftRight(e)
     };
     document.onmousedown = (e: any) => {
       if (e.target.closest('.slider__knob') == null)
