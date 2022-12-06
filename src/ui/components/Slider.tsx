@@ -3,6 +3,7 @@ import Knob from './Knob';
 import { palette } from '../../utils/palettePackage';
 import { doMap } from './../../utils/doMap';
 import addStop from './../handlers/addStop';
+import deleteStop from './../handlers/deleteStop';
 import shiftLeftStop from './../handlers/shiftLeftStop';
 import shiftRightStop from './../handlers/shiftRightStop';
 
@@ -158,24 +159,16 @@ export default class Slider extends React.Component<Props> {
   }
 
   onDelete = () => {
-    let newScale = [],
-        newLightnessScale = {};
-
-    Object.values(this.props.scale).forEach(scale => {
-      scale === parseFloat(this.state['selectedKnob'].style.left).toFixed(1) ? null : newScale.push(scale)
-    });
-    newScale.forEach((scale, index) => newLightnessScale[`lightness-${index + 1}`] = scale);
+    deleteStop(
+      this.props.scale,
+      this.state['selectedKnob'],
+      this.props.presetName,
+      this.props.min,
+      this.props.max
+    );
     this.setState({
       selectedKnob: null
     });
-
-    palette.scale = newLightnessScale;
-    palette.preset = {
-      name: 'Custom',
-      scale: Object.keys(palette.scale).map(key => parseFloat(key.replace('lightness-', ''))),
-      min: 0,
-      max: 100
-    };
     this.props.onChange('customized')
   }
 
