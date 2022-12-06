@@ -217,6 +217,39 @@ export default class Slider extends React.Component<Props> {
     this.props.onChange('customized')
   }
 
+  onShiftLeft = (e: any) => {
+    let stopsList = [],
+        newLightnessScale = {},
+        selectedKnobIndex;
+
+    Object.keys(this.props.scale).forEach(stop => {
+      stopsList.push(stop)
+    });
+    selectedKnobIndex = stopsList.indexOf(this.state['selectedKnob'].classList[1])
+    newLightnessScale = this.props.scale;
+
+    const currentStopValue: number = parseFloat(newLightnessScale[stopsList[selectedKnobIndex]]),
+          nextStopValue: number = parseFloat(newLightnessScale[stopsList[selectedKnobIndex + 1]]) + 2
+
+    if (currentStopValue <= nextStopValue)
+      null
+    else if (currentStopValue <= 0)
+      newLightnessScale[stopsList[selectedKnobIndex]] = 0;
+    else {
+      e.metaKey || e.ctrlKey ? newLightnessScale[stopsList[selectedKnobIndex]] = parseFloat(newLightnessScale[stopsList[selectedKnobIndex]]) - .1 : newLightnessScale[stopsList[selectedKnobIndex]]--
+      newLightnessScale[stopsList[selectedKnobIndex]] = newLightnessScale[stopsList[selectedKnobIndex]].toFixed(1)
+    }
+
+    palette.scale = newLightnessScale;
+    palette.preset = {
+      name: 'Custom',
+      scale: Object.keys(palette.scale).map(key => parseFloat(key.replace('lightness-', ''))),
+      min: 0,
+      max: 100
+    };
+    this.props.onChange('customized')
+  }
+
   // Actions
   doLightnessScale = () => {
     let granularity: number = 1;
@@ -277,6 +310,8 @@ export default class Slider extends React.Component<Props> {
         this.onDelete()
       else if (e.key === 'ArrowRight' && this.state['selectedKnob'] != null)
         this.onShiftRight(e)
+      else if (e.key === 'ArrowLeft' && this.state['selectedKnob'] != null)
+        this.onShiftLeft(e)
     };
     document.onmousedown = (e: any) => {
       if (e.target.closest('.slider__knob') == null)
