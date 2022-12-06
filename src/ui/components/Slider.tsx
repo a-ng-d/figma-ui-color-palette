@@ -207,10 +207,12 @@ export default class Slider extends React.Component<Props> {
       newLightnessScale[stopsList[selectedKnobIndex]] = 100
     else if (currentStopValue === 100 && (e.metaKey || e.ctrlKey))
       newLightnessScale[stopsList[selectedKnobIndex]] = 100
-    else {
-      e.metaKey || e.ctrlKey ? newLightnessScale[stopsList[selectedKnobIndex]] = parseFloat(newLightnessScale[stopsList[selectedKnobIndex]]) + .1 : newLightnessScale[stopsList[selectedKnobIndex]]++
-      newLightnessScale[stopsList[selectedKnobIndex]] = newLightnessScale[stopsList[selectedKnobIndex]].toFixed(1)
-    }
+    else
+      e.metaKey || e.ctrlKey ?
+      newLightnessScale[stopsList[selectedKnobIndex]] = parseFloat(newLightnessScale[stopsList[selectedKnobIndex]]) + .1 :
+      newLightnessScale[stopsList[selectedKnobIndex]]++;
+
+    newLightnessScale[stopsList[selectedKnobIndex]] = newLightnessScale[stopsList[selectedKnobIndex]].toFixed(1);
 
     palette.scale = newLightnessScale;
     palette.preset = {
@@ -242,10 +244,12 @@ export default class Slider extends React.Component<Props> {
       newLightnessScale[stopsList[selectedKnobIndex]] = 0
     else if (currentStopValue === 0 && (e.metaKey || e.ctrlKey))
       newLightnessScale[stopsList[selectedKnobIndex]] = 0
-    else {
-      e.metaKey || e.ctrlKey ? newLightnessScale[stopsList[selectedKnobIndex]] = parseFloat(newLightnessScale[stopsList[selectedKnobIndex]]) - .1 : newLightnessScale[stopsList[selectedKnobIndex]]--
-      newLightnessScale[stopsList[selectedKnobIndex]] = newLightnessScale[stopsList[selectedKnobIndex]].toFixed(1)
-    }
+    else
+      e.metaKey || e.ctrlKey ?
+      newLightnessScale[stopsList[selectedKnobIndex]] = parseFloat(newLightnessScale[stopsList[selectedKnobIndex]]) - .1 :
+      newLightnessScale[stopsList[selectedKnobIndex]]--;
+
+    newLightnessScale[stopsList[selectedKnobIndex]] = newLightnessScale[stopsList[selectedKnobIndex]].toFixed(1);
 
     palette.scale = newLightnessScale;
     palette.preset = {
