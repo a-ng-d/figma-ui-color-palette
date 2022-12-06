@@ -313,7 +313,14 @@ class App extends React.Component {
   }
 
   slideHandler = () => this.setState({
+    newScale: palette.scale,
     onGoingStep: 'scale changed'
+  })
+
+  customSlideHandler = () => this.setState({
+    newScale: palette.scale,
+    preset: palette.preset,
+    onGoingStep: 'stop changed'
   })
 
   render() {
@@ -326,6 +333,7 @@ class App extends React.Component {
             hasCaptions: true,
             onGoingStep: 'selection empty'
           });
+          palette.preset = {}
           break;
 
         case 'color-selected':
@@ -343,6 +351,7 @@ class App extends React.Component {
             color.id === undefined ? color.id = uuidv4() : color.id = color.id;
             return color
           });
+          palette.preset = {};
           if (e.data.pluginMessage.data.captions === 'hasNotCaptions')
             this.setState({
               service: 'Edit',
@@ -412,6 +421,7 @@ class App extends React.Component {
             hasCaptions={this.state['hasCaptions']}
             export={this.state['export']}
             onScaleChange={this.slideHandler}
+            onChangeStop={this.customSlideHandler}
             onCaptionsChange={this.captionsHandler}
             onColorChange={this.colorHandler}
             onContextChange={this.navHandler}

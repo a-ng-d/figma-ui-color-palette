@@ -18,6 +18,23 @@ interface Props {
 
 export default class Scale extends React.Component<Props> {
 
+  setOnboardingMessages = () => {
+    let messages: Array<string> = []
+
+    if (this.props.preset.name === 'Custom' && !this.props.hasPreset)
+      messages.push(
+        'Click on the slider range to add a stop',
+        'Select a stop and press ⌫ to remove it'
+      )
+    else
+      messages.push(
+        'Hold Shift ⇧ while dragging the first or the last knob to distribute knobs\' horizontal spacing',
+        'Hold Ctrl ⌃ or Cmd ⌘ while dragging a knob to move them all'
+      )
+
+    return messages
+  }
+
   Create = () => {
     this.props.onGoingStep != 'captions changed' ? palette.scale = {} : '';
     return (
@@ -64,6 +81,8 @@ export default class Scale extends React.Component<Props> {
         {this.props.onGoingStep != 'captions changed' ?
         <Slider
           type='EQUAL'
+          hasPreset={this.props.hasPreset}
+          presetName={this.props.preset.name}
           knobs={this.props.preset.scale}
           min={this.props.preset.min}
           max={this.props.preset.max}
@@ -72,6 +91,8 @@ export default class Scale extends React.Component<Props> {
         /> :
         <Slider
           type='CUSTOM'
+          hasPreset={this.props.hasPreset}
+          presetName={this.props.preset.name}
           knobs={this.props.preset.scale}
           min=''
           max=''
@@ -80,10 +101,7 @@ export default class Scale extends React.Component<Props> {
         />}
         <Message
           icon='library'
-          messages= {[
-            'Hold Shift ⇧ while dragging the first or the last knob to distribute knobs\' horizontal spacing',
-            'Hold Ctrl ⌃ or Cmd ⌘ while dragging a knob to move them all'
-          ]}
+          messages= {this.setOnboardingMessages()}
         />
       </div>
     )
@@ -99,6 +117,8 @@ export default class Scale extends React.Component<Props> {
         </div>
         <Slider
           type='CUSTOM'
+          hasPreset={this.props.hasPreset}
+          presetName={this.props.preset.name}
           knobs={this.props.preset.scale}
           min=''
           max=''
@@ -107,10 +127,7 @@ export default class Scale extends React.Component<Props> {
         />
         <Message
           icon='library'
-          messages= {[
-            'Hold Shift ⇧ while dragging the first or the last knob to distribute knobs\' horizontal spacing',
-            'Hold Ctrl ⌃ or Cmd ⌘ while dragging a knob to move them all'
-          ]}
+          messages= {this.setOnboardingMessages()}
         />
       </div>
     )

@@ -189,11 +189,13 @@ div.slider .slider__knob:hover .slider__label {
   background: var(--figma-color-bg-hover)
 }
 
-div.slider .slider__knob:active .slider__label {
+div.slider .slider__knob:active .slider__label,
+div.slider .slider__knob--selected .slider__label {
   box-shadow: 0 0 0 2px var(--figma-color-border-selected)
 }
 
-div.slider .slider__knob:active .slider__label:before {
+div.slider .slider__knob:active .slider__label:before,
+div.slider .slider__knob--selected .slider__label:before  {
   border-top-color: var(--figma-color-border-selected);
   border-width: 6px;
   left: calc(50% - 6px);
@@ -201,7 +203,8 @@ div.slider .slider__knob:active .slider__label:before {
 }
 
 div.slider .slider__knob:hover .slider__label:after,
-div.slider .slider__knob:active .slider__label:after {
+div.slider .slider__knob:active .slider__label:after,
+div.slider .slider__knob--selected .slider__label:after,  {
   border-top-color: var(--figma-color-bg-hover)
 }
 

@@ -5,6 +5,8 @@ import { doMap } from './../../utils/doMap';
 
 interface Props {
   knobs: Array<number>;
+  hasPreset: boolean;
+  presetName: string;
   type: string;
   min: string;
   max: string;
@@ -14,6 +16,14 @@ interface Props {
 
 export default class Slider extends React.Component<Props> {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      selectedKnob: null,
+      knobs: []
+    }
+  }
+
   // Events
   onGrab = (e: any) => {
     const knob = e.target as HTMLElement,
@@ -22,7 +32,8 @@ export default class Slider extends React.Component<Props> {
           tooltip = knob.children[0] as HTMLElement,
           rangeWidth = range.offsetWidth as number,
           slider = range.parentElement as HTMLElement,
-          knobs = Array.from(range.children as HTMLCollectionOf<HTMLElement>);
+          knobs = Array.from(range.children as HTMLCollectionOf<HTMLElement>),
+          startTime: number = Date.now();
 
     let offset: number,
         update = () => {
@@ -32,6 +43,10 @@ export default class Slider extends React.Component<Props> {
         };
 
     knob.style.zIndex = '2';
+    this.setState({
+      selectedKnob: null,
+      knobs: knobs
+    });
 
     document.onmousemove = (e) => this.onSlide(
       e,
@@ -51,7 +66,8 @@ export default class Slider extends React.Component<Props> {
       knob,
       offset,
       update,
-      rangeWidth
+      rangeWidth,
+      startTime
     )
   }
 
@@ -106,14 +122,72 @@ export default class Slider extends React.Component<Props> {
     this.props.onChange()
   }
 
-  onRelease = (knobs: Array<HTMLElement>, knob: HTMLElement, offset: number, update: any, rangeWidth: number) => {
+  onRelease = (knobs: Array<HTMLElement>, knob: HTMLElement, offset: number, update: any, rangeWidth: number, startTime: number) => {
     document.onmousemove = null;
     document.onmouseup = null;
     knob.onmouseup = null;
     knob.style.zIndex = '1';
     knobs.forEach(knob => (knob.children[0] as HTMLElement).style.display = 'none');
     update();
+    if (Date.now() - startTime < 200 && this.props.presetName === 'Custom' && !this.props.hasPreset) {
+      this.setState({
+        selectedKnob: knob
+      })
+    }
     this.props.onChange('released')
+  }
+
+  onAdd = (e: any) => {
+    const rangeWidth: number = e.currentTarget.offsetWidth,
+          sliderPadding: number = parseFloat(window.getComputedStyle(e.currentTarget.parentNode, null).getPropertyValue('padding-left')),
+          offset: number = doMap(e.clientX - sliderPadding, 0, rangeWidth, 0, 100);
+
+    let newScale = [],
+        newLightnessScale = {};
+
+    newScale = Object.values(this.props.scale);
+    newScale.length < 25 ? newScale.push(offset.toFixed(1)) : null;
+    newScale.sort((a, b) => b - a);
+    newScale.forEach((scale, index) => newLightnessScale[`lightness-${index + 1}`] = scale);
+
+    if (e.target.classList[0] === 'slider__range' && newScale.length < 25 && this.props.presetName === 'Custom' && !this.props.hasPreset) {
+      this.setState({
+        selectedKnob: null
+      });
+      palette.scale = newLightnessScale;
+      palette.preset = {
+        name: 'Custom',
+        scale: newScale.map((scale, index) => index + 1),
+        min: 0,
+        max: 100
+      };
+      this.props.onChange('customized')
+    }
+  }
+
+  onDelete = () => {
+    let newScale = [],
+        newLightnessScale = {};
+
+    Object.values(this.props.scale).forEach(scale => {
+      scale === parseFloat(this.state['selectedKnob'].style.left).toFixed(1) ? null : newScale.push(scale)
+    });
+    newScale.forEach((scale, index) => newLightnessScale[`lightness-${index + 1}`] = scale);
+    this.setState({
+      selectedKnob: null
+    });
+
+    this.setState({
+      selectedKnob: null
+    });
+    palette.scale = newLightnessScale;
+    palette.preset = {
+      name: 'Custom',
+      scale: Object.keys(palette.scale).map(key => parseFloat(key.replace('lightness-', ''))),
+      min: 0,
+      max: 100
+    };
+    this.props.onChange('customized')
   }
 
   // Actions
@@ -129,7 +203,7 @@ export default class Slider extends React.Component<Props> {
   }
 
   updateLightnessScaleEntry = (key: string, value: string) => {
-    palette.scale[key] = value === '100.0' ? '100' : value
+    palette.scale[key] = value
   }
 
   updateKnobTooltip = (tooltip: HTMLElement, value: string) => {
@@ -160,6 +234,34 @@ export default class Slider extends React.Component<Props> {
     })
   }
 
+  isSelected = (lightness) => {
+    let state: string;
+    if (this.state['selectedKnob'] != null)
+      state = this.state['selectedKnob'].classList[1] === lightness ? 'selected' : 'normal'
+    else
+      state = 'normal'
+
+    return state
+  }
+
+  componentDidMount() {
+    window.onkeydown = (e: any) => {
+      if (e.key === 'Backspace' && this.state['selectedKnob'] != null && this.props.knobs.length > 2)
+        this.onDelete()
+    };
+    document.onmousedown = (e: any) => {
+      if (e.target.closest('.slider__knob') == null)
+        this.setState({
+          selectedKnob: null
+        })
+    }
+  }
+
+  componentWillUnmount() {
+    window.onkeydown = null;
+    document.onmousedown = null
+  }
+
   // Templates
   Equal = () => {
     palette.min = parseFloat(this.props.min);
@@ -171,6 +273,7 @@ export default class Slider extends React.Component<Props> {
             key={lightness[0]}
             id={lightness[0]}
             scale={lightness[1]}
+            state={this.isSelected(lightness[0])}
             number={lightness[0].replace('lightness-', '')}
             action={this.onGrab}
           />
@@ -181,12 +284,16 @@ export default class Slider extends React.Component<Props> {
 
   Custom = () => {
     return (
-      <div className='slider__range'>
+      <div
+        className='slider__range'
+        onClick={this.onAdd}
+      >
         {Object.entries(this.props.scale).map(lightness =>
           <Knob
             key={lightness[0]}
             id={lightness[0]}
             scale={lightness[1]}
+            state={this.isSelected(lightness[0])}
             number={lightness[0].replace('lightness-', '')}
             action={this.onGrab}
           />
