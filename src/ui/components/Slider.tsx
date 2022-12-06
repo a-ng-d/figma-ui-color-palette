@@ -2,6 +2,8 @@ import * as React from 'react';
 import Knob from './Knob';
 import { palette } from '../../utils/palettePackage';
 import { doMap } from './../../utils/doMap';
+import shiftLeftStop from './../handlers/shiftLeftStop';
+import shiftRightStop from './../handlers/shiftRightStop';
 
 interface Props {
   knobs: Array<number>;
@@ -187,80 +189,6 @@ export default class Slider extends React.Component<Props> {
     this.props.onChange('customized')
   }
 
-  onShiftRight = (e: any) => {
-    let stopsList = [],
-        newLightnessScale = {},
-        selectedKnobIndex;
-
-    Object.keys(this.props.scale).forEach(stop => {
-      stopsList.push(stop)
-    });
-    selectedKnobIndex = stopsList.indexOf(this.state['selectedKnob'].classList[1])
-    newLightnessScale = this.props.scale;
-
-    const currentStopValue: number = parseFloat(newLightnessScale[stopsList[selectedKnobIndex]]),
-          nextStopValue: number = parseFloat(newLightnessScale[stopsList[selectedKnobIndex - 1]]) - 2
-
-    if (currentStopValue >= nextStopValue)
-      null
-    else if (currentStopValue >= 99 && (!e.metaKey || e.ctrlKey))
-      newLightnessScale[stopsList[selectedKnobIndex]] = 100
-    else if (currentStopValue === 100 && (e.metaKey || e.ctrlKey))
-      newLightnessScale[stopsList[selectedKnobIndex]] = 100
-    else
-      e.metaKey || e.ctrlKey ?
-      newLightnessScale[stopsList[selectedKnobIndex]] = parseFloat(newLightnessScale[stopsList[selectedKnobIndex]]) + .1 :
-      newLightnessScale[stopsList[selectedKnobIndex]]++;
-
-    newLightnessScale[stopsList[selectedKnobIndex]] = parseFloat(newLightnessScale[stopsList[selectedKnobIndex]]).toFixed(1);
-
-    palette.scale = newLightnessScale;
-    palette.preset = {
-      name: this.props.presetName,
-      scale: Object.keys(palette.scale).map(key => parseFloat(key.replace('lightness-', ''))),
-      min: this.props.min,
-      max: this.props.max
-    };
-    this.props.onChange('customized')
-  }
-
-  onShiftLeft = (e: any) => {
-    let stopsList = [],
-        newLightnessScale = {},
-        selectedKnobIndex;
-
-    Object.keys(this.props.scale).forEach(stop => {
-      stopsList.push(stop)
-    });
-    selectedKnobIndex = stopsList.indexOf(this.state['selectedKnob'].classList[1])
-    newLightnessScale = this.props.scale;
-
-    const currentStopValue: number = parseFloat(newLightnessScale[stopsList[selectedKnobIndex]]),
-          nextStopValue: number = parseFloat(newLightnessScale[stopsList[selectedKnobIndex + 1]]) + 2
-
-    if (currentStopValue <= nextStopValue)
-      null
-    else if (currentStopValue <= 1 && (!e.metaKey || e.ctrlKey))
-      newLightnessScale[stopsList[selectedKnobIndex]] = 0
-    else if (currentStopValue === 0 && (e.metaKey || e.ctrlKey))
-      newLightnessScale[stopsList[selectedKnobIndex]] = 0
-    else
-      e.metaKey || e.ctrlKey ?
-      newLightnessScale[stopsList[selectedKnobIndex]] = parseFloat(newLightnessScale[stopsList[selectedKnobIndex]]) - .1 :
-      newLightnessScale[stopsList[selectedKnobIndex]]--;
-
-    newLightnessScale[stopsList[selectedKnobIndex]] = parseFloat(newLightnessScale[stopsList[selectedKnobIndex]]).toFixed(1);
-
-    palette.scale = newLightnessScale;
-    palette.preset = {
-      name: this.props.presetName,
-      scale: Object.keys(palette.scale).map(key => parseFloat(key.replace('lightness-', ''))),
-      min: this.props.min,
-      max: this.props.max
-    };
-    this.props.onChange('customized')
-  }
-
   // Actions
   doLightnessScale = () => {
     let granularity: number = 1;
@@ -319,10 +247,29 @@ export default class Slider extends React.Component<Props> {
     window.onkeydown = (e: any) => {
       if (e.key === 'Backspace' && this.state['selectedKnob'] != null && this.props.knobs.length > 2)
         this.props.presetName === 'Custom' && !this.props.hasPreset ? this.onDelete() : null
-      else if (e.key === 'ArrowRight' && this.state['selectedKnob'] != null)
-        this.onShiftRight(e)
-      else if (e.key === 'ArrowLeft' && this.state['selectedKnob'] != null)
-        this.onShiftLeft(e)
+      else if (e.key === 'ArrowRight' && this.state['selectedKnob'] != null) {
+        shiftRightStop(
+          this.props.scale,
+          this.state['selectedKnob'],
+          e.metaKey,
+          e.ctrlKey,
+          this.props.presetName,
+          this.props.min,
+          this.props.max
+        );
+        this.props.onChange('customized')
+      } else if (e.key === 'ArrowLeft' && this.state['selectedKnob'] != null) {
+        shiftLeftStop(
+          this.props.scale,
+          this.state['selectedKnob'],
+          e.metaKey,
+          e.ctrlKey,
+          this.props.presetName,
+          this.props.min,
+          this.props.max
+        );
+        this.props.onChange('customized')
+      }
     };
     document.onmousedown = (e: any) => {
       if (e.target.closest('.slider__knob') == null)
