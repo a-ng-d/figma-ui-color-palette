@@ -272,6 +272,25 @@ div.icon-button--disabled {
   overflow: hidden
 }
 
+.onboarding-tip__slider:before,
+.onboarding-tip__slider:after {
+  content: '';
+  position: absolute;
+  width: var(--size-xsmall);
+  height: 100%;
+  z-index: 2
+}
+
+.onboarding-tip__slider:before {
+  left: 0;
+  background: linear-gradient(90deg, var(--figma-color-bg) 0%, transparent 100%)
+}
+
+.onboarding-tip__slider:after {
+  right: 0;
+  background: linear-gradient(90deg, transparent 0%, var(--figma-color-bg) 100%)
+}
+
 .onboarding-tip__slides {
   display: inline-flex;
   gap: 0 var(--size-medium);
