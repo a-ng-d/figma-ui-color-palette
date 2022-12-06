@@ -149,7 +149,7 @@ export default class Slider extends React.Component<Props> {
       this.props.min,
       this.props.max
     );
-    if (e.target.classList[0] === 'slider__range' && Object.keys(this.props.scale).length < 25 && this.props.presetName === 'Custom' && !this.props.hasPreset) {
+    if (e.target.classList[0] === 'slider__range' && Object.keys(this.props.scale).length < 24 && this.props.presetName === 'Custom' && !this.props.hasPreset) {
       this.setState({
         selectedKnob: null
       });
@@ -176,6 +176,32 @@ export default class Slider extends React.Component<Props> {
       min: 0,
       max: 100
     };
+    this.props.onChange('customized')
+  }
+
+  onShiftRight = (e: any) => {
+    shiftRightStop(
+      this.props.scale,
+      this.state['selectedKnob'],
+      e.metaKey,
+      e.ctrlKey,
+      this.props.presetName,
+      this.props.min,
+      this.props.max
+    );
+    this.props.onChange('customized')
+  }
+
+  onShiftLeft = (e: any) => {
+    shiftLeftStop(
+      this.props.scale,
+      this.state['selectedKnob'],
+      e.metaKey,
+      e.ctrlKey,
+      this.props.presetName,
+      this.props.min,
+      this.props.max
+    );
     this.props.onChange('customized')
   }
 
@@ -237,29 +263,10 @@ export default class Slider extends React.Component<Props> {
     window.onkeydown = (e: any) => {
       if (e.key === 'Backspace' && this.state['selectedKnob'] != null && this.props.knobs.length > 2)
         this.props.presetName === 'Custom' && !this.props.hasPreset ? this.onDelete() : null
-      else if (e.key === 'ArrowRight' && this.state['selectedKnob'] != null) {
-        shiftRightStop(
-          this.props.scale,
-          this.state['selectedKnob'],
-          e.metaKey,
-          e.ctrlKey,
-          this.props.presetName,
-          this.props.min,
-          this.props.max
-        );
-        this.props.onChange('customized')
-      } else if (e.key === 'ArrowLeft' && this.state['selectedKnob'] != null) {
-        shiftLeftStop(
-          this.props.scale,
-          this.state['selectedKnob'],
-          e.metaKey,
-          e.ctrlKey,
-          this.props.presetName,
-          this.props.min,
-          this.props.max
-        );
-        this.props.onChange('customized')
-      }
+      else if (e.key === 'ArrowRight' && this.state['selectedKnob'] != null)
+        this.onShiftRight(e)
+      else if (e.key === 'ArrowLeft' && this.state['selectedKnob'] != null)
+        this.onShiftLeft(e)
     };
     document.onmousedown = (e: any) => {
       if (e.target.closest('.slider__knob') == null)
