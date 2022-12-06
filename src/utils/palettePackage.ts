@@ -27,7 +27,7 @@ export const palette: Palette = {
 
 export const presets = {
   material: {
-    name: 'Material Design (50-900)',
+    name: 'Material Design﹒Google (50-900)',
     scale: [50, 100, 200, 300, 400, 500, 600, 700, 800, 900],
     min: 24,
     max: 96
@@ -39,7 +39,7 @@ export const presets = {
     max: 100
   } as Preset,
   atlassian: {
-    name: 'Atlassian (0-900)',
+    name: 'ADS Foundations﹒Atlassian (0-900)',
     scale: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 200, 300, 400, 500, 600, 700, 800, 900],
     min: 8,
     max: 100
