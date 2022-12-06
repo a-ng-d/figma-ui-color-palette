@@ -298,18 +298,6 @@ class App extends React.Component {
         }
 
     }
-    if (scale.length == 2)
-      this.setState({
-        onGoingStep: 'scale item min limit'
-      })
-    else if (scale.length == 24)
-      this.setState({
-        onGoingStep: 'scale item max limit'
-      })
-    else
-      this.setState({
-        onGoingStep: 'scale item edited'
-      })
   }
 
   slideHandler = () => this.setState({

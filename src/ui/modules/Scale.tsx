@@ -52,17 +52,7 @@ export default class Scale extends React.Component<Props> {
             selected={this.props.preset.name}
             onChange={this.props.onChangePreset}
           />
-          {this.props.onGoingStep === 'scale item edited' ?
-            <Button
-              icon='minus'
-              type='icon'
-              label={null}
-              state=''
-              feature='remove'
-              action={this.props.onRemoveScale}
-            />
-          : null}
-          {this.props.onGoingStep === 'scale item max limit' ?
+          {this.props.preset.scale.length > 2 && this.props.preset.name === 'Custom' ?
             <Button
               icon='minus'
               type='icon'
@@ -77,7 +67,7 @@ export default class Scale extends React.Component<Props> {
               icon='plus'
               type='icon'
               label={null}
-              state={this.props.onGoingStep === 'scale item max limit' ? 'disabled' : ''}
+              state={this.props.preset.scale.length == 24 ? 'disabled' : ''}
               feature='add'
               action={this.props.onAddScale}
             />
