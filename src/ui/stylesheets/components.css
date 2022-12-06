@@ -263,3 +263,34 @@ div.icon-button--disabled {
   --black: var(--figma-color-text);
   --blue: var(--figma-color-border-selected)
 }
+
+/* On boarding callout */
+.onboarding-tip__slider {
+  flex: 1;
+  display: flex;
+  position: relative;
+  overflow: hidden
+}
+
+.onboarding-tip__slides {
+  display: inline-flex;
+  gap: 0 var(--size-medium);
+  padding: 0 var(--size-xsmall);
+  position: relative;
+  width: max-content;
+  animation: sliding-text 10000ms 0ms linear infinite
+}
+
+.callout .onboarding-tip__msg {
+  white-space: nowrap
+}
+
+@keyframes sliding-text {
+  0% {
+    transform: translateX(0%)
+  }
+
+  100% {
+    transform: translateX(-100%)
+  }
+}
