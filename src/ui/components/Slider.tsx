@@ -2,6 +2,8 @@ import * as React from 'react';
 import Knob from './Knob';
 import { palette } from '../../utils/palettePackage';
 import { doMap } from './../../utils/doMap';
+import shiftLeftStop from './../handlers/shiftLeftStop';
+import shiftRightStop from './../handlers/shiftRightStop';
 
 interface Props {
   knobs: Array<number>;
@@ -129,7 +131,7 @@ export default class Slider extends React.Component<Props> {
     knob.style.zIndex = '1';
     knobs.forEach(knob => (knob.children[0] as HTMLElement).style.display = 'none');
     update();
-    if (Date.now() - startTime < 200 && this.props.presetName === 'Custom' && !this.props.hasPreset) {
+    if (Date.now() - startTime < 200 && !this.props.hasPreset) {
       this.setState({
         selectedKnob: knob
       })
@@ -177,9 +179,6 @@ export default class Slider extends React.Component<Props> {
       selectedKnob: null
     });
 
-    this.setState({
-      selectedKnob: null
-    });
     palette.scale = newLightnessScale;
     palette.preset = {
       name: 'Custom',
@@ -247,7 +246,30 @@ export default class Slider extends React.Component<Props> {
   componentDidMount() {
     window.onkeydown = (e: any) => {
       if (e.key === 'Backspace' && this.state['selectedKnob'] != null && this.props.knobs.length > 2)
-        this.onDelete()
+        this.props.presetName === 'Custom' && !this.props.hasPreset ? this.onDelete() : null
+      else if (e.key === 'ArrowRight' && this.state['selectedKnob'] != null) {
+        shiftRightStop(
+          this.props.scale,
+          this.state['selectedKnob'],
+          e.metaKey,
+          e.ctrlKey,
+          this.props.presetName,
+          this.props.min,
+          this.props.max
+        );
+        this.props.onChange('customized')
+      } else if (e.key === 'ArrowLeft' && this.state['selectedKnob'] != null) {
+        shiftLeftStop(
+          this.props.scale,
+          this.state['selectedKnob'],
+          e.metaKey,
+          e.ctrlKey,
+          this.props.presetName,
+          this.props.min,
+          this.props.max
+        );
+        this.props.onChange('customized')
+      }
     };
     document.onmousedown = (e: any) => {
       if (e.target.closest('.slider__knob') == null)

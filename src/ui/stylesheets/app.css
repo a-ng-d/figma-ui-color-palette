@@ -189,6 +189,14 @@ div.slider .slider__knob:hover .slider__label {
   background: var(--figma-color-bg-hover)
 }
 
+div.slider .slider__knob--selected {
+  z-index: 2 !important
+}
+
+div.slider .slider__knob--selected .slider__tooltip {
+  display: block !important
+}
+
 div.slider .slider__knob:active .slider__label,
 div.slider .slider__knob--selected .slider__label {
   box-shadow: 0 0 0 2px var(--figma-color-border-selected)
