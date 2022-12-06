@@ -256,6 +256,20 @@ class App extends React.Component {
         })
         break;
 
+      case presets.carbon.name:
+        this.setState({
+          preset: presets.carbon,
+          onGoingStep: 'preset changed'
+        })
+        break;
+
+      case presets.base.name:
+        this.setState({
+          preset: presets.base,
+          onGoingStep: 'preset changed'
+        })
+        break;
+
       case presets.custom.name:
         presets.custom.scale = [1, 2];
         this.setState({
