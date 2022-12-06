@@ -2,6 +2,7 @@ import * as React from 'react';
 import Knob from './Knob';
 import { palette } from '../../utils/palettePackage';
 import { doMap } from './../../utils/doMap';
+import addStop from './../handlers/addStop';
 import shiftLeftStop from './../handlers/shiftLeftStop';
 import shiftRightStop from './../handlers/shiftRightStop';
 
@@ -140,29 +141,18 @@ export default class Slider extends React.Component<Props> {
   }
 
   onAdd = (e: any) => {
-    const rangeWidth: number = e.currentTarget.offsetWidth,
-          sliderPadding: number = parseFloat(window.getComputedStyle(e.currentTarget.parentNode, null).getPropertyValue('padding-left')),
-          offset: number = doMap(e.clientX - sliderPadding, 0, rangeWidth, 0, 100);
-
-    let newScale = [],
-        newLightnessScale = {};
-
-    newScale = Object.values(this.props.scale);
-    newScale.length < 25 ? newScale.push(offset.toFixed(1)) : null;
-    newScale.sort((a, b) => b - a);
-    newScale.forEach((scale, index) => newLightnessScale[`lightness-${index + 1}`] = scale);
-
-    if (e.target.classList[0] === 'slider__range' && newScale.length < 25 && this.props.presetName === 'Custom' && !this.props.hasPreset) {
+    addStop(
+      e,
+      this.props.scale,
+      this.props.hasPreset,
+      this.props.presetName,
+      this.props.min,
+      this.props.max
+    );
+    if (e.target.classList[0] === 'slider__range' && Object.keys(this.props.scale).length < 25 && this.props.presetName === 'Custom' && !this.props.hasPreset) {
       this.setState({
         selectedKnob: null
       });
-      palette.scale = newLightnessScale;
-      palette.preset = {
-        name: 'Custom',
-        scale: newScale.map((scale, index) => index + 1),
-        min: 0,
-        max: 100
-      };
       this.props.onChange('customized')
     }
   }
