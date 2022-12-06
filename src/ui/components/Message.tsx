@@ -25,12 +25,22 @@ export default class Message extends React.Component<Props> {
             <div className='onboarding-tip__slider'>
               <div className='onboarding-tip__slides'>
                 {this.props.messages.map((message, index) => {
-                  return <div className='onboarding-tip__msg' key={`message-${index}`}>{message}</div>
+                  return (
+                    <React.Fragment key={`message-${index}`}>
+                      <div className='onboarding-tip__msg'>{message}</div>
+                      <div className='type'>﹒</div>
+                    </React.Fragment>
+                  )
                 })}
               </div>
               <div className='onboarding-tip__slides'>
                 {this.props.messages.map((message, index) => {
-                  return <div className='onboarding-tip__msg' key={`message-${index}`}>{message}</div>
+                  return (
+                    <React.Fragment key={`message-${index}`}>
+                      <div className='onboarding-tip__msg'>{message}</div>
+                      <div className='type'>﹒</div>
+                    </React.Fragment>
+                  )
                 })}
               </div>
           </div>

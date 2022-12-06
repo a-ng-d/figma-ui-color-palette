@@ -293,6 +293,7 @@ div.icon-button--disabled {
 
 .onboarding-tip__slides {
   display: inline-flex;
+  align-items: center;
   gap: 0 var(--size-medium);
   padding: 0 var(--size-xsmall);
   position: relative;
