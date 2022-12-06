@@ -24,13 +24,18 @@ export default class Scale extends React.Component<Props> {
     if (this.props.preset.name === 'Custom' && !this.props.hasPreset)
       messages.push(
         'Click on the slider range to add a stop',
-        'Select a stop and press ⌫ to remove it'
+        'Press ⌫ after selecting a stop to remove it'
       )
-    else
+
+    if (!this.props.hasPreset)
       messages.push(
-        'Hold Shift ⇧ while dragging the first or the last knob to distribute knobs\' horizontal spacing',
-        'Hold Ctrl ⌃ or Cmd ⌘ while dragging a knob to move them all'
+        'Press ← or → to shift the stops with accuracy'
       )
+
+    messages.push(
+      'Hold Shift ⇧ while dragging the first or the last stop to distribute stops\' horizontal spacing',
+      'Hold Ctrl ⌃ or Cmd ⌘ while dragging a stop to move them all'
+    )
 
     return messages
   }
