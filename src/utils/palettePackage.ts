@@ -59,7 +59,7 @@ export const presets = {
   custom: {
     name: 'Custom',
     scale: [1, 2],
-    min: 0,
-    max: 100
+    min: 10,
+    max: 90
   } as Preset
 }
