@@ -129,7 +129,7 @@ export default class Slider extends React.Component<Props> {
     knob.style.zIndex = '1';
     knobs.forEach(knob => (knob.children[0] as HTMLElement).style.display = 'none');
     update();
-    if (Date.now() - startTime < 200 && this.props.presetName === 'Custom' && !this.props.hasPreset) {
+    if (Date.now() - startTime < 200) {
       this.setState({
         selectedKnob: knob
       })
@@ -216,10 +216,10 @@ export default class Slider extends React.Component<Props> {
 
     palette.scale = newLightnessScale;
     palette.preset = {
-      name: 'Custom',
+      name: this.props.presetName,
       scale: Object.keys(palette.scale).map(key => parseFloat(key.replace('lightness-', ''))),
-      min: 0,
-      max: 100
+      min: this.props.min,
+      max: this.props.max
     };
     this.props.onChange('customized')
   }
@@ -253,10 +253,10 @@ export default class Slider extends React.Component<Props> {
 
     palette.scale = newLightnessScale;
     palette.preset = {
-      name: 'Custom',
+      name: this.props.presetName,
       scale: Object.keys(palette.scale).map(key => parseFloat(key.replace('lightness-', ''))),
-      min: 0,
-      max: 100
+      min: this.props.min,
+      max: this.props.max
     };
     this.props.onChange('customized')
   }
@@ -318,7 +318,7 @@ export default class Slider extends React.Component<Props> {
   componentDidMount() {
     window.onkeydown = (e: any) => {
       if (e.key === 'Backspace' && this.state['selectedKnob'] != null && this.props.knobs.length > 2)
-        this.onDelete()
+        this.props.presetName === 'Custom' && !this.props.hasPreset ? this.onDelete() : null
       else if (e.key === 'ArrowRight' && this.state['selectedKnob'] != null)
         this.onShiftRight(e)
       else if (e.key === 'ArrowLeft' && this.state['selectedKnob'] != null)
