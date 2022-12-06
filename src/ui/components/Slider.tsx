@@ -129,7 +129,7 @@ export default class Slider extends React.Component<Props> {
     knob.style.zIndex = '1';
     knobs.forEach(knob => (knob.children[0] as HTMLElement).style.display = 'none');
     update();
-    if (Date.now() - startTime < 200) {
+    if (Date.now() - startTime < 200 && !this.props.hasPreset) {
       this.setState({
         selectedKnob: knob
       })
@@ -212,7 +212,7 @@ export default class Slider extends React.Component<Props> {
       newLightnessScale[stopsList[selectedKnobIndex]] = parseFloat(newLightnessScale[stopsList[selectedKnobIndex]]) + .1 :
       newLightnessScale[stopsList[selectedKnobIndex]]++;
 
-    newLightnessScale[stopsList[selectedKnobIndex]] = newLightnessScale[stopsList[selectedKnobIndex]].toFixed(1);
+    newLightnessScale[stopsList[selectedKnobIndex]] = parseFloat(newLightnessScale[stopsList[selectedKnobIndex]]).toFixed(1);
 
     palette.scale = newLightnessScale;
     palette.preset = {
@@ -249,7 +249,7 @@ export default class Slider extends React.Component<Props> {
       newLightnessScale[stopsList[selectedKnobIndex]] = parseFloat(newLightnessScale[stopsList[selectedKnobIndex]]) - .1 :
       newLightnessScale[stopsList[selectedKnobIndex]]--;
 
-    newLightnessScale[stopsList[selectedKnobIndex]] = newLightnessScale[stopsList[selectedKnobIndex]].toFixed(1);
+    newLightnessScale[stopsList[selectedKnobIndex]] = parseFloat(newLightnessScale[stopsList[selectedKnobIndex]]).toFixed(1);
 
     palette.scale = newLightnessScale;
     palette.preset = {
