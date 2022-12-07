@@ -349,6 +349,7 @@ class App extends React.Component {
               hasCaptions: false,
               newColors: putIdsOnColors,
               preset: e.data.pluginMessage.data.preset,
+              paletteName: e.data.pluginMessage.data.name,
               onGoingStep: 'palette selected'
             })
           else if (e.data.pluginMessage.data.captions === 'hasCaptions')
@@ -359,6 +360,7 @@ class App extends React.Component {
               hasCaptions: true,
               newColors: putIdsOnColors,
               preset: e.data.pluginMessage.data.preset,
+              paletteName: e.data.pluginMessage.data.name,
               onGoingStep: 'palette selected'
             })
           break;
