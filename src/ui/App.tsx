@@ -312,6 +312,10 @@ class App extends React.Component {
     onGoingStep: 'stop changed'
   })
 
+  settingsHandler = (e: any) => {
+    console.log(e)
+  }
+
   render() {
     onmessage = (e: any) => {
       switch (e.data.pluginMessage.type) {
@@ -402,6 +406,7 @@ class App extends React.Component {
             onPresetChange={this.presetHandler}
             onCustomPreset={this.customHandler}
             onContextChange={this.navHandler}
+            onSettingsChange={this.settingsHandler}
           />
         : null}
         {this.state['service'] === 'Edit' ?
@@ -417,6 +422,7 @@ class App extends React.Component {
             onChangeStop={this.customSlideHandler}
             onCaptionsChange={this.captionsHandler}
             onColorChange={this.colorHandler}
+            onSettingsChange={this.settingsHandler}
             onContextChange={this.navHandler}
             onOrderChange={this.orderHandler}
             onGoingStep={this.state['onGoingStep']}

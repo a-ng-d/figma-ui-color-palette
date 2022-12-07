@@ -15,7 +15,8 @@ interface Props {
   onGoingStep: string;
   onContextChange: any;
   onPresetChange: any;
-  onCustomPreset: any
+  onCustomPreset: any;
+  onSettingsChange: any
 };
 
 export default class CreatePalette extends React.Component<Props> {
@@ -41,6 +42,8 @@ export default class CreatePalette extends React.Component<Props> {
   presetHandler = (e: any) => this.props.onPresetChange(e)
 
   scaleHandler = (e: any) => this.props.onCustomPreset(e)
+
+  settingsHandler = (e: any) => this.props.onSettingsChange(e)
 
   // Direct actions
   onCreate = () => parent.postMessage({ pluginMessage: { type: 'create-palette', palette } }, '*')
@@ -84,6 +87,7 @@ export default class CreatePalette extends React.Component<Props> {
         controls =
             <Settings
               paletteName={this.props.paletteName}
+              onSettingsChange={this.settingsHandler}
             />;
           break;
 

@@ -3,10 +3,13 @@ import FormItem from './../components/FormItem';
 import Input from './../components/Input';
 
 interface Props {
-  paletteName: string
+  paletteName: string;
+  onSettingsChange: any
 };
 
 export default class Settings extends React.Component<Props> {
+
+  inputHandler = (e: any) => this.props.onSettingsChange(e)
 
   render() {
     return (
@@ -28,8 +31,8 @@ export default class Settings extends React.Component<Props> {
                 min=''
                 max=''
                 feature='rename-palette'
-                onChange={null}
-                onFocus={null}
+                onChange={this.inputHandler}
+                onFocus={this.inputHandler}
               />
             </FormItem>
           </div>
