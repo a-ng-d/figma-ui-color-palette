@@ -39,10 +39,10 @@ export const presets = {
     max: 100
   } as Preset,
   atlassian: {
-    name: 'ADS Foundations﹒Atlassian (0-900)',
-    scale: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 200, 300, 400, 500, 600, 700, 800, 900],
-    min: 8,
-    max: 100
+    name: 'ADS Foundations﹒Atlassian (50-500)',
+    scale: [50, 75, 100, 200, 300, 400, 500],
+    min: 24,
+    max: 96
   } as Preset,
   carbon: {
     name: 'Carbon﹒IBM (10-100)',
