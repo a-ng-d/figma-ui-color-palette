@@ -17,6 +17,7 @@ interface Props {
   context: string;
   preset: any;
   export: any;
+  paletteName: string;
   onScaleChange: any;
   onChangeStop: any;
   onCaptionsChange: any;
@@ -234,7 +235,10 @@ export default class EditPalette extends React.Component<Props> {
         break;
 
       case 'Settings':
-        controls = <Settings />;
+        controls =
+          <Settings
+            paletteName={this.props.paletteName}
+          />;
         break;
 
       case 'About':

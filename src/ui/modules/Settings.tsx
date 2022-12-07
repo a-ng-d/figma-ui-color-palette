@@ -3,7 +3,7 @@ import FormItem from './../components/FormItem';
 import Input from './../components/Input';
 
 interface Props {
-
+  paletteName: string
 };
 
 export default class Settings extends React.Component<Props> {
@@ -23,7 +23,8 @@ export default class Settings extends React.Component<Props> {
               <Input
                 type='text'
                 icon={{type: 'none', value: null}}
-                value={'test'}
+                placeholder={this.props.paletteName != '' ? 'UI Color Palette' : null}
+                value={this.props.paletteName != '' ? this.props.paletteName : null}
                 min=''
                 max=''
                 feature='rename-palette'

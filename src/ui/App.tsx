@@ -37,7 +37,8 @@ class App extends React.Component {
         format: '',
         mimeType: '',
         data: ''
-      }
+      },
+      paletteName: ''
     }
   }
 
@@ -393,6 +394,7 @@ class App extends React.Component {
             preset={this.state['preset']}
             hasCaptions={this.state['hasCaptions']}
             context={this.state['context']}
+            paletteName={this.state['paletteName']}
             onCaptionsChange={this.captionsHandler}
             onGoingStep={this.state['onGoingStep']}
             onPresetChange={this.presetHandler}
@@ -408,6 +410,7 @@ class App extends React.Component {
             context={this.state['context']}
             hasCaptions={this.state['hasCaptions']}
             export={this.state['export']}
+            paletteName={this.state['paletteName']}
             onScaleChange={this.slideHandler}
             onChangeStop={this.customSlideHandler}
             onCaptionsChange={this.captionsHandler}

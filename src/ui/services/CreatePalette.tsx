@@ -10,6 +10,7 @@ interface Props {
   hasCaptions: boolean;
   preset: any;
   context: string;
+  paletteName: string;
   onCaptionsChange: any;
   onGoingStep: string;
   onContextChange: any;
@@ -80,7 +81,10 @@ export default class CreatePalette extends React.Component<Props> {
         break;
 
         case 'Settings':
-          controls = <Settings />;
+        controls =
+            <Settings
+              paletteName={this.props.paletteName}
+            />;
           break;
 
         case 'About':
