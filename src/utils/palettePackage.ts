@@ -60,7 +60,7 @@ export const presets = {
     name: 'Base﹒Uber (50-700)',
     scale: [50, 100, 200, 300, 400, 500, 600, 700, 800, 900],
     min: 24,
-    max: 100
+    max: 96
   } as Preset,
   custom: {
     name: 'Custom',
