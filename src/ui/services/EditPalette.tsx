@@ -4,6 +4,7 @@ import Tabs from '../components/Tabs';
 import Scale from '../modules/Scale';
 import Colors from '../modules/Colors';
 import Export from '../modules/Export';
+import Settings from '../modules/Settings';
 import About from '../modules/About';
 import Actions from '../modules/Actions';
 import chroma from 'chroma-js';
@@ -232,6 +233,10 @@ export default class EditPalette extends React.Component<Props> {
           />;
         break;
 
+      case 'Settings':
+        controls = <Settings />;
+        break;
+
       case 'About':
         controls = <About />
     }
@@ -239,7 +244,7 @@ export default class EditPalette extends React.Component<Props> {
     return (
       <>
         <Tabs
-          primaryTabs={['Scale', 'Colors', 'Export']}
+          primaryTabs={['Scale', 'Colors', 'Export', 'Settings']}
           secondaryTabs={['About']}
           active={this.props.context}
           onClick={this.navHandler}

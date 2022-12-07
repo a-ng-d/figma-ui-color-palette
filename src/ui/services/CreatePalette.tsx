@@ -1,6 +1,7 @@
 import * as React from 'react';
 import Tabs from '../components/Tabs';
 import Scale from '../modules/Scale';
+import Settings from '../modules/Settings';
 import About from '../modules/About';
 import Actions from '../modules/Actions';
 import { palette, presets } from '../../utils/palettePackage';
@@ -78,6 +79,10 @@ export default class CreatePalette extends React.Component<Props> {
           />;
         break;
 
+        case 'Settings':
+          controls = <Settings />;
+          break;
+
         case 'About':
           controls = <About />
       }
@@ -85,7 +90,7 @@ export default class CreatePalette extends React.Component<Props> {
     return (
       <>
         <Tabs
-          primaryTabs={['Scale']}
+          primaryTabs={['Scale', 'Settings']}
           secondaryTabs={['About']}
           active={this.props.context}
           onClick={this.navHandler}
