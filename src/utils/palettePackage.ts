@@ -33,10 +33,10 @@ export const presets = {
     max: 96
   } as Preset,
   ant: {
-    name: 'Ant Design (1-13)',
-    scale: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13],
-    min: 16,
-    max: 100
+    name: 'Ant Design (1-10)',
+    scale: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+    min: 24,
+    max: 96
   } as Preset,
   atlassian: {
     name: 'ADS Foundations﹒Atlassian (50-500)',
