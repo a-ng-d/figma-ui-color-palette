@@ -73,6 +73,7 @@ export default class Input extends React.Component<Props> {
           <div className={`icon${this.props.icon.type === 'icon' ? ` icon--${this.props.icon.value}` : ''}`}>{this.props.icon.type === 'letter' ? this.props.icon.value : ''}</div>
         : null}
         <input
+          id={this.props.feature}
           data-feature={this.props.feature}
           type='text'
           className='input__field'
