@@ -256,6 +256,13 @@ class App extends React.Component {
         })
         break;
 
+      case presets.atlassianNeutral.name:
+        this.setState({
+          preset: presets.atlassianNeutral,
+          onGoingStep: 'preset changed'
+        })
+        break;
+
       case presets.carbon.name:
         this.setState({
           preset: presets.carbon,
