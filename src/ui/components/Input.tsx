@@ -3,6 +3,7 @@ import * as React from 'react';
 interface Props {
   type: string;
   icon: any;
+  placeholder: string;
   value: string;
   min: string;
   max: string;
@@ -77,6 +78,7 @@ export default class Input extends React.Component<Props> {
           data-feature={this.props.feature}
           type='text'
           className='input__field'
+          placeholder={this.props.placeholder}
           value={this.props.value}
           onKeyPress={this.props.onChange}
           onChange={this.props.onChange}
