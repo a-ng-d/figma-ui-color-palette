@@ -1,13 +1,11 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import Dispatcher from './modules/Dispatcher';
 import CreatePalette from './services/CreatePalette';
 import EditPalette from './services/EditPalette';
 import Onboarding from './services/Onboarding';
 import 'figma-plugin-ds/dist/figma-plugin-ds.css';
 import './stylesheets/app.css';
 import './stylesheets/components.css';
-import chroma from 'chroma-js';
 import { palette, presets } from '../utils/palettePackage';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -17,23 +15,14 @@ declare function require(path: string): any;
 
 class App extends React.Component {
 
-  dispatch: any;
-
   constructor(props) {
     super(props);
-    this.dispatch = {
-      colors: new Dispatcher(
-        () => parent.postMessage({ pluginMessage: { type: 'update-colors', data: this.state['newColors'] } }, '*'),
-        500
-      )
-    };
     this.state = {
       service: 'None',
       newScale: {},
+      newColors: {},
       hasCaptions: true,
       onGoingStep: '',
-      newColors: {},
-      context: 'Scale',
       preset: {},
       export: {
         format: '',
@@ -45,195 +34,7 @@ class App extends React.Component {
   }
 
   // Events
-  navHandler = (e: any) => this.setState({ context: e.target.innerText, onGoingStep: 'tab changed' })
-
   captionsHandler = (bool: boolean) => this.setState({ hasCaptions: bool, onGoingStep: 'captions changed' })
-
-  colorHandler = (e: any) => {
-    let name, colors, id, element;
-    try {
-      element = e.nativeEvent.path.filter(el => {
-        try { return el.classList.contains('colors__item') }
-        catch {}
-      })[0];
-      name = element.id;
-      id = element.getAttribute('data-id')
-    } catch {};
-
-    switch (e.target.dataset.feature) {
-
-      case 'hex':
-        const code = e.target.value.indexOf('#') == -1 ? '#' + e.target.value : e.target.value
-        if (/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/i.test(code)) {
-          colors = this.state['newColors'].map(item => {
-            const rgb = chroma(e.target.value.indexOf('#') == -1 ? '#' + e.target.value : e.target.value)._rgb;
-            if (item.id === id)
-              item.rgb = {
-                r: rgb[0] / 255,
-                g: rgb[1] / 255,
-                b: rgb[2] / 255
-              }
-            return item
-          });
-          this.setState({
-            newColors: colors,
-            onGoingStep: 'color changed'
-          })
-        };
-        e._reactName === 'onBlur' ? this.dispatch.colors.on.status = false : this.dispatch.colors.on.status = true;
-        break;
-
-      case 'lightness':
-        colors = this.state['newColors'].map(item => {
-          const rgb = chroma(item.rgb.r * 255, item.rgb.g * 255, item.rgb.b * 255).set('lch.l', e.target.value)._rgb
-          if (item.id === id)
-            item.rgb = {
-              r: rgb[0] / 255,
-              g: rgb[1] / 255,
-              b: rgb[2] / 255
-            }
-          return item
-        });
-        this.setState({
-          newColors: colors,
-          onGoingStep: 'color changed'
-        });
-        parent.postMessage({ pluginMessage: { type: 'update-colors', data: colors } }, '*');
-        break;
-
-      case 'chroma':
-        colors = this.state['newColors'].map(item => {
-          const rgb = chroma(item.rgb.r * 255, item.rgb.g * 255, item.rgb.b * 255).set('lch.c', e.target.value)._rgb
-          if (item.id === id)
-            item.rgb = {
-              r: rgb[0] / 255,
-              g: rgb[1] / 255,
-              b: rgb[2] / 255
-            }
-          return item
-        });
-        this.setState({
-          newColors: colors,
-          onGoingStep: 'color changed'
-        });
-        parent.postMessage({ pluginMessage: { type: 'update-colors', data: colors } }, '*');
-        break;
-
-      case 'hue':
-        colors = this.state['newColors'].map(item => {
-          const rgb = chroma(item.rgb.r * 255, item.rgb.g * 255, item.rgb.b * 255).set('lch.h', e.target.value)._rgb
-          if (item.id === id)
-            item.rgb = {
-              r: rgb[0] / 255,
-              g: rgb[1] / 255,
-              b: rgb[2] / 255
-            }
-          return item
-        });
-        this.setState({
-          newColors: colors,
-          onGoingStep: 'color changed'
-        });
-        parent.postMessage({ pluginMessage: { type: 'update-colors', data: colors } }, '*');
-        break;
-
-      case 'remove':
-        colors = this.state['newColors'].filter(item => item.id != id);
-        this.setState({
-          newColors: colors,
-          onGoingStep: 'color changed'
-        });
-        parent.postMessage({ pluginMessage: { type: 'update-colors', data: colors } }, '*');
-        break;
-
-      case 'add':
-        colors = this.state['newColors'];
-        const hasAlreadyNewUIColor = colors.filter(color => color.name.includes('New UI Color'));
-        colors.push({
-          name: `New UI Color ${hasAlreadyNewUIColor.length + 1}`,
-          rgb: {
-            r: .53,
-            g: .92,
-            b: .97
-          },
-          id: uuidv4(),
-          oklch: false,
-          hueShifting: 0
-        });
-        this.setState({
-          newColors: colors,
-          onGoingStep: 'color changed'
-        });
-        parent.postMessage({ pluginMessage: { type: 'update-colors', data: colors } }, '*');
-        break;
-
-      case 'rename':
-        const hasSameName = this.state['newColors'].filter(color => color.name === e.target.value);
-        colors = this.state['newColors'].map(item => {
-          if (item.id === id)
-            item.name = hasSameName.length > 1 ? e.target.value + ' 2' : e.target.value
-          return item
-        });
-        this.setState({
-          newColors: colors,
-          onGoingStep: 'color changed'
-        });
-        e._reactName === 'onBlur' ? setTimeout(() => this.state['onGoingStep'] === 'color changed' ? parent.postMessage({ pluginMessage: { type: 'update-colors', data: colors } }, '*') : null, 500) : null;
-        e.key === 'Enter' ? parent.postMessage({ pluginMessage: { type: 'update-colors', data: colors } }, '*') : null;
-        break;
-
-      case 'oklch':
-        colors = this.state['newColors'].map(item => {
-          if (item.id === id)
-            item.oklch = e.target.checked
-          return item
-        });
-        this.setState({
-          newColors: colors,
-          onGoingStep: 'color changed'
-        });
-        parent.postMessage({ pluginMessage: { type: 'update-colors', data: colors } }, '*');
-        break;
-
-      case 'shift-hue':
-        colors = this.state['newColors'].map(item => {
-          if (item.id === id)
-            item.hueShifting = parseFloat(e.target.value)
-          return item
-        });
-        this.setState({
-          newColors: colors,
-          onGoingStep: 'color changed'
-        });
-        parent.postMessage({ pluginMessage: { type: 'update-colors', data: colors } }, '*')
-
-    }
-  }
-
-  orderHandler = (source: any, target: any) => {
-    let colors = this.state['newColors'].map(el => el),
-        position;
-
-    const colorsWithoutSource = colors.splice(source.position, 1)[0];
-
-    if (target.hasGuideAbove && target.position > source.position)
-      position = parseFloat(target.position) - 1
-    else if (target.hasGuideBelow && target.position > source.position)
-      position = parseFloat(target.position)
-    else if (target.hasGuideAbove && target.position < source.position)
-      position = parseFloat(target.position)
-    else if (target.hasGuideBelow && target.position < source.position)
-      position = parseFloat(target.position) + 1
-    else
-      position = parseFloat(target.position);
-
-    colors.splice(position, 0, colorsWithoutSource);
-    this.setState({
-      newColors: colors,
-      onGoingStep: 'color changed'
-    });
-    parent.postMessage({ pluginMessage: { type: 'update-colors', data: colors } }, '*')
-  }
 
   presetHandler = (e: any) => {
     switch ((e.target as HTMLInputElement).value) {
@@ -449,7 +250,6 @@ class App extends React.Component {
             preset={this.state['preset']}
             hasCaptions={this.state['hasCaptions']}
             paletteName={this.state['paletteName']}
-            onGoingStep={this.state['onGoingStep']}
             onPresetChange={this.presetHandler}
             onCustomPreset={this.customHandler}
             onSettingsChange={this.settingsHandler}
@@ -466,10 +266,7 @@ class App extends React.Component {
             onScaleChange={this.slideHandler}
             onChangeStop={this.customSlideHandler}
             onCaptionsChange={this.captionsHandler}
-            onColorChange={this.colorHandler}
             onSettingsChange={this.settingsHandler}
-            onOrderChange={this.orderHandler}
-            onGoingStep={this.state['onGoingStep']}
           />
         : null}
         {this.state['service'] === 'None' ? <Onboarding /> : null}

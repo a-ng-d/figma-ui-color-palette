@@ -10,7 +10,6 @@ interface Props {
   hasCaptions: boolean;
   preset: any;
   paletteName: string;
-  onGoingStep: string;
   onPresetChange: any;
   onCustomPreset: any;
   onSettingsChange: any
@@ -30,11 +29,17 @@ export default class CreatePalette extends React.Component<Props> {
   slideHandler = () => { }
 
   checkHandler = (e: any) => {
-    this.setState({ hasCaptions: e.target.checked });
+    this.setState({
+      hasCaptions: e.target.checked,
+      onGoingStep: 'captions changed'
+    });
     palette.captions = e.target.checked
   }
 
-  navHandler = (e: any) => this.setState({ context: e.target.innerText })
+  navHandler = (e: any) => this.setState({
+    context: e.target.innerText,
+    onGoingStep: 'tab changed'
+  })
 
   presetHandler = (e: any) => this.props.onPresetChange(e)
 
@@ -71,7 +76,7 @@ export default class CreatePalette extends React.Component<Props> {
             onScaleChange={this.slideHandler}
             onAddScale={this.scaleHandler}
             onRemoveScale={this.scaleHandler}
-            onGoingStep={this.props.onGoingStep}
+            onGoingStep={this.state['onGoingStep']}
           />;
         break;
 

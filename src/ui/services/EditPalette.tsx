@@ -9,6 +9,7 @@ import About from '../modules/About';
 import Actions from '../modules/Actions';
 import chroma from 'chroma-js';
 import { palette } from '../../utils/palettePackage';
+import { v4 as uuidv4 } from 'uuid';
 
 interface Props {
   scale: any;
@@ -20,10 +21,7 @@ interface Props {
   onScaleChange: any;
   onChangeStop: any;
   onCaptionsChange: any;
-  onColorChange: any;
-  onSettingsChange: any;
-  onOrderChange: any;
-  onGoingStep: any
+  onSettingsChange: any
 };
 
 export default class EditPalette extends React.Component<Props> {
@@ -35,6 +33,10 @@ export default class EditPalette extends React.Component<Props> {
     this.dispatch = {
       scale: new Dispatcher(
         () => parent.postMessage({ pluginMessage: { type: 'update-scale', palette } }, '*'),
+        500
+      ),
+      colors: new Dispatcher(
+        () => parent.postMessage({ pluginMessage: { type: 'update-colors', data: this.state['newColors'] } }, '*'),
         500
       )
     };
@@ -49,7 +51,8 @@ export default class EditPalette extends React.Component<Props> {
         hasGuideBelow: false,
         position: null
       },
-      context: 'Scale'
+      context: 'Scale',
+      newColors: this.props.colors,
     }
   }
 
@@ -78,9 +81,199 @@ export default class EditPalette extends React.Component<Props> {
     })
   }
 
-  colorHandler = (e: any) => this.props.onColorChange(e)
+  colorHandler = (e: any) => {
+    let name, colors, id, element;
+    try {
+      element = e.nativeEvent.path.filter(el => {
+        try { return el.classList.contains('colors__item') }
+        catch {}
+      })[0];
+      name = element.id;
+      id = element.getAttribute('data-id')
+    } catch {};
 
-  navHandler = (e: any) => this.setState({ context: e.target.innerText })
+    switch (e.target.dataset.feature) {
+
+      case 'hex':
+        const code = e.target.value.indexOf('#') == -1 ? '#' + e.target.value : e.target.value
+        if (/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/i.test(code)) {
+          colors = this.state['newColors'].map(item => {
+            const rgb = chroma(e.target.value.indexOf('#') == -1 ? '#' + e.target.value : e.target.value)._rgb;
+            if (item.id === id)
+              item.rgb = {
+                r: rgb[0] / 255,
+                g: rgb[1] / 255,
+                b: rgb[2] / 255
+              }
+            return item
+          });
+          this.setState({
+            newColors: colors,
+            onGoingStep: 'color changed'
+          })
+        };
+        e._reactName === 'onBlur' ? this.dispatch.colors.on.status = false : this.dispatch.colors.on.status = true;
+        break;
+
+      case 'lightness':
+        colors = this.state['newColors'].map(item => {
+          const rgb = chroma(item.rgb.r * 255, item.rgb.g * 255, item.rgb.b * 255).set('lch.l', e.target.value)._rgb
+          if (item.id === id)
+            item.rgb = {
+              r: rgb[0] / 255,
+              g: rgb[1] / 255,
+              b: rgb[2] / 255
+            }
+          return item
+        });
+        this.setState({
+          newColors: colors,
+          onGoingStep: 'color changed'
+        });
+        parent.postMessage({ pluginMessage: { type: 'update-colors', data: colors } }, '*');
+        break;
+
+      case 'chroma':
+        colors = this.state['newColors'].map(item => {
+          const rgb = chroma(item.rgb.r * 255, item.rgb.g * 255, item.rgb.b * 255).set('lch.c', e.target.value)._rgb
+          if (item.id === id)
+            item.rgb = {
+              r: rgb[0] / 255,
+              g: rgb[1] / 255,
+              b: rgb[2] / 255
+            }
+          return item
+        });
+        this.setState({
+          newColors: colors,
+          onGoingStep: 'color changed'
+        });
+        parent.postMessage({ pluginMessage: { type: 'update-colors', data: colors } }, '*');
+        break;
+
+      case 'hue':
+        colors = this.state['newColors'].map(item => {
+          const rgb = chroma(item.rgb.r * 255, item.rgb.g * 255, item.rgb.b * 255).set('lch.h', e.target.value)._rgb
+          if (item.id === id)
+            item.rgb = {
+              r: rgb[0] / 255,
+              g: rgb[1] / 255,
+              b: rgb[2] / 255
+            }
+          return item
+        });
+        this.setState({
+          newColors: colors,
+          onGoingStep: 'color changed'
+        });
+        parent.postMessage({ pluginMessage: { type: 'update-colors', data: colors } }, '*');
+        break;
+
+      case 'remove':
+        colors = this.state['newColors'].filter(item => item.id != id);
+        this.setState({
+          newColors: colors,
+          onGoingStep: 'color changed'
+        });
+        parent.postMessage({ pluginMessage: { type: 'update-colors', data: colors } }, '*');
+        break;
+
+      case 'add':
+        colors = this.state['newColors'];
+        const hasAlreadyNewUIColor = colors.filter(color => color.name.includes('New UI Color'));
+        colors.push({
+          name: `New UI Color ${hasAlreadyNewUIColor.length + 1}`,
+          rgb: {
+            r: .53,
+            g: .92,
+            b: .97
+          },
+          id: uuidv4(),
+          oklch: false,
+          hueShifting: 0
+        });
+        this.setState({
+          newColors: colors,
+          onGoingStep: 'color changed'
+        });
+        parent.postMessage({ pluginMessage: { type: 'update-colors', data: colors } }, '*');
+        break;
+
+      case 'rename':
+        const hasSameName = this.state['newColors'].filter(color => color.name === e.target.value);
+        colors = this.state['newColors'].map(item => {
+          if (item.id === id)
+            item.name = hasSameName.length > 1 ? e.target.value + ' 2' : e.target.value
+          return item
+        });
+        this.setState({
+          newColors: colors,
+          onGoingStep: 'color changed'
+        });
+        e._reactName === 'onBlur' ? setTimeout(() => this.state['onGoingStep'] === 'color changed' ? parent.postMessage({ pluginMessage: { type: 'update-colors', data: colors } }, '*') : null, 500) : null;
+        e.key === 'Enter' ? parent.postMessage({ pluginMessage: { type: 'update-colors', data: colors } }, '*') : null;
+        break;
+
+      case 'oklch':
+        colors = this.state['newColors'].map(item => {
+          if (item.id === id)
+            item.oklch = e.target.checked
+          return item
+        });
+        this.setState({
+          newColors: colors,
+          onGoingStep: 'color changed'
+        });
+        parent.postMessage({ pluginMessage: { type: 'update-colors', data: colors } }, '*');
+        break;
+
+      case 'shift-hue':
+        colors = this.state['newColors'].map(item => {
+          if (item.id === id)
+            item.hueShifting = parseFloat(e.target.value)
+          return item
+        });
+        this.setState({
+          newColors: colors,
+          onGoingStep: 'color changed'
+        });
+        parent.postMessage({ pluginMessage: { type: 'update-colors', data: colors } }, '*')
+
+    }
+  }
+
+  orderHandler = () => {
+    const source: any = this.state['selectedElement'],
+          target: any = this.state['hoveredElement'];
+
+    let colors = this.state['newColors'].map(el => el),
+        position;
+
+    const colorsWithoutSource = colors.splice(source.position, 1)[0];
+
+    if (target.hasGuideAbove && target.position > source.position)
+      position = parseFloat(target.position) - 1
+    else if (target.hasGuideBelow && target.position > source.position)
+      position = parseFloat(target.position)
+    else if (target.hasGuideAbove && target.position < source.position)
+      position = parseFloat(target.position)
+    else if (target.hasGuideBelow && target.position < source.position)
+      position = parseFloat(target.position) + 1
+    else
+      position = parseFloat(target.position);
+
+    colors.splice(position, 0, colorsWithoutSource);
+    this.setState({
+      newColors: colors,
+      onGoingStep: 'color changed'
+    });
+    parent.postMessage({ pluginMessage: { type: 'update-colors', data: colors } }, '*')
+  }
+
+  navHandler = (e: any) => this.setState({
+    context: e.target.innerText,
+    onGoingStep: 'tab changed'
+  })
 
   selectionHandler = (e: any) => {
     const target: HTMLElement = e.currentTarget,
@@ -113,12 +306,10 @@ export default class EditPalette extends React.Component<Props> {
           parentRefBottom: number = parentRefTop + parent.clientHeight;
 
     if (e.pageY + scrollY < parentRefTop)
-      this.props.onOrderChange(this.state['selectedElement'], this.state['hoveredElement'])
+      this.orderHandler()
     else if (e.pageY + scrollY > parentRefBottom)
-      this.props.onOrderChange(this.state['selectedElement'], this.state['hoveredElement'])
+      this.orderHandler()
   }
-
-  dropHandler = (e: any) => this.props.onOrderChange(this.state['selectedElement'], this.state['hoveredElement'])
 
   settingsHandler = (e: any) => this.props.onSettingsChange(e)
 
@@ -197,7 +388,7 @@ export default class EditPalette extends React.Component<Props> {
       case 'Colors':
         controls =
           <Colors
-            colors={this.props.colors}
+            colors={this.state['newColors']}
             selectedElement={this.state['selectedElement']}
             hoveredElement={this.state['hoveredElement']}
             onColorChange={this.colorHandler}
@@ -205,7 +396,7 @@ export default class EditPalette extends React.Component<Props> {
             onSelectionChange={this.selectionHandler}
             onDragChange={this.dragHandler}
             onDropOutside={this.dropOutsideHandler}
-            onOrderChange={this.dropHandler}
+            onOrderChange={this.orderHandler}
           />;
         break;
 
