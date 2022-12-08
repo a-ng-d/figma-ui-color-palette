@@ -449,7 +449,6 @@ class App extends React.Component {
             preset={this.state['preset']}
             hasCaptions={this.state['hasCaptions']}
             paletteName={this.state['paletteName']}
-            onCaptionsChange={this.captionsHandler}
             onGoingStep={this.state['onGoingStep']}
             onPresetChange={this.presetHandler}
             onCustomPreset={this.customHandler}

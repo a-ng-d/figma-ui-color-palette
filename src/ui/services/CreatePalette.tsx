@@ -10,7 +10,6 @@ interface Props {
   hasCaptions: boolean;
   preset: any;
   paletteName: string;
-  onCaptionsChange: any;
   onGoingStep: string;
   onPresetChange: any;
   onCustomPreset: any;
@@ -22,7 +21,8 @@ export default class CreatePalette extends React.Component<Props> {
   constructor(props) {
     super(props);
     this.state = {
-      context: 'Scale'
+      context: 'Scale',
+      hasCaptions: true
     }
   }
 
@@ -30,7 +30,7 @@ export default class CreatePalette extends React.Component<Props> {
   slideHandler = () => { }
 
   checkHandler = (e: any) => {
-    this.props.onCaptionsChange(e.target.checked);
+    this.setState({ hasCaptions: e.target.checked });
     palette.captions = e.target.checked
   }
 
@@ -46,7 +46,7 @@ export default class CreatePalette extends React.Component<Props> {
   onCreate = () => parent.postMessage({ pluginMessage: { type: 'create-palette', palette } }, '*')
 
   render() {
-    palette.captions = this.props.hasCaptions;
+    palette.captions = this.state['hasCaptions'];
     palette.preset = this.props.preset;
     let actions, controls;
 
@@ -56,7 +56,7 @@ export default class CreatePalette extends React.Component<Props> {
       actions =
         <Actions
           context='create'
-          hasCaptions={this.props.hasCaptions}
+          hasCaptions={this.state['hasCaptions']}
           onCreatePalette={this.onCreate}
           onChangeCaptions={this.checkHandler}
         />
