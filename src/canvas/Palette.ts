@@ -51,7 +51,7 @@ export default class Palette {
     this.node.setRelaunchData({ edit: '' });
     this.node.setPluginData('scale', JSON.stringify(this.scale));
     this.node.setPluginData('preset', JSON.stringify(this.preset));
-    this.paletteName != '' ? this.node.setPluginData('name', this.paletteName) : this.node.setPluginData('name', '');
+    this.node.setPluginData('name', this.paletteName);
     this.captions ? this.node.setPluginData('captions', 'hasCaptions') : this.node.setPluginData('captions', 'hasNotCaptions');
 
     // insert
