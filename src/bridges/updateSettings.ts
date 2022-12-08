@@ -15,7 +15,7 @@ const updateSettings = (msg, palette) => {
     palette.setPluginData('name', msg.data);
     paletteName = palette.getPluginData('name') === ''  || palette.getPluginData('name') == undefined  ? 'UI Color Palette' : palette.getPluginData('name'),
     
-    palette.name = `${msg.data}﹒${preset.name}`
+    palette.name = `${msg.data === '' ? 'UI Color Palette' : msg.data}﹒${preset.name}`
 
     palette.children[0].remove();
     palette.appendChild(new Colors({
