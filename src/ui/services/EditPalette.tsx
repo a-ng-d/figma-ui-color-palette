@@ -190,11 +190,7 @@ export default class EditPalette extends React.Component<Props> {
             hasPreset={false}
             preset={this.props.preset}
             scale={this.props.scale}
-            onChangePreset={null}
             onScaleChange={this.slideHandler}
-            onAddScale={null}
-            onRemoveScale={null}
-            onGoingStep={null}
           />;
         break;
 

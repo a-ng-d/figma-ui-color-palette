@@ -8,12 +8,12 @@ import { palette, presets } from '../../utils/palettePackage';
 interface Props {
   hasPreset: boolean;
   preset: any;
-  scale: any;
-  onChangePreset: any;
+  scale?: any;
+  onChangePreset?: any;
   onScaleChange: any;
-  onAddScale: any;
-  onRemoveScale: any;
-  onGoingStep: any
+  onAddScale?: any;
+  onRemoveScale?: any;
+  onGoingStep?: any
 };
 
 export default class Scale extends React.Component<Props> {
