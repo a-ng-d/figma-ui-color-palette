@@ -12,9 +12,9 @@ interface Props {
   hasPreset: boolean;
   presetName: string;
   type: string;
-  min: string;
-  max: string;
-  scale: any;
+  min?: string;
+  max?: string;
+  scale?: any;
   onChange: any
 };
 

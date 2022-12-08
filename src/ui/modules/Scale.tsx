@@ -78,7 +78,6 @@ export default class Scale extends React.Component<Props> {
           knobs={this.props.preset.scale}
           min={this.props.preset.min}
           max={this.props.preset.max}
-          scale={null}
           onChange={this.props.onScaleChange}
         /> :
         <Slider
@@ -86,8 +85,6 @@ export default class Scale extends React.Component<Props> {
           hasPreset={this.props.hasPreset}
           presetName={this.props.preset.name}
           knobs={this.props.preset.scale}
-          min=''
-          max=''
           scale={palette.scale}
           onChange={this.props.onScaleChange}
         />}
