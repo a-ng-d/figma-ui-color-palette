@@ -370,10 +370,8 @@ class App extends React.Component {
             service: 'Create',
             context: 'Scale',
             hasCaptions: true,
-            onGoingStep: 'colors selected',
-            paletteName: '',
+            onGoingStep: 'colors selected'
           });
-          palette.name = '';
           break;
 
         case 'palette-selected':
