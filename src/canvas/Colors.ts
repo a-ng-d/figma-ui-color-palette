@@ -26,7 +26,7 @@ export default class Colors {
     this.node.counterAxisSizingMode = 'AUTO';
 
     // insert
-    this.node.appendChild(new Title(`UI Color Palette • ${this.parent.preset.name}`,this.parent).makeNode());
+    this.node.appendChild(new Title(`${this.parent.paletteName === '' ? 'UI Color Palette' : this.parent.paletteName} • ${this.parent.preset.name}`, this.parent).makeNode());
     this.node.appendChild(new Header(this.parent).makeNode());
     this.parent.colors.forEach(color => {
 
