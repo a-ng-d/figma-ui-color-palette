@@ -89,4 +89,8 @@ export default class Palette {
     return this.node
   }
 
+  changeName(name) {
+    this.node.name = name
+  }
+
 }

@@ -27,7 +27,7 @@ export default class Settings extends React.Component<Props> {
                 type='text'
                 icon={{type: 'none', value: null}}
                 placeholder='UI Color Palette'
-                value={this.props.paletteName != '' ? this.props.paletteName : null}
+                value={this.props.paletteName != '' ? this.props.paletteName : ''}
                 min=''
                 max=''
                 feature='rename-palette'
