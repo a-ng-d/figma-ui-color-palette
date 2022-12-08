@@ -109,10 +109,7 @@ export default class ColorItem extends React.Component<Props> {
           <Input
             type='text'
             icon={{type: 'none', value: null}}
-            placeholder=''
             value={this.props.name}
-            min=''
-            max=''
             feature='rename'
             onChange={this.inputHandler}
             onFocus={this.selectionHandler}
@@ -122,10 +119,7 @@ export default class ColorItem extends React.Component<Props> {
           <Input
             type='color'
             icon={{type: 'none', value: null}}
-            placeholder=''
             value={this.props.hex}
-            min=''
-            max=''
             feature='hex'
             onChange={this.inputHandler}
             onFocus={this.selectionHandler}
@@ -136,7 +130,6 @@ export default class ColorItem extends React.Component<Props> {
               <Input
                 type='number'
                 icon={{type: 'none', value: null}}
-                placeholder=''
                 value={chroma(this.props.hex).lch()[0].toFixed(0)}
                 min='0'
                 max='100'
@@ -147,7 +140,6 @@ export default class ColorItem extends React.Component<Props> {
               <Input
                 type='number'
                 icon={{type: 'none', value: null}}
-                placeholder=''
                 value={chroma(this.props.hex).lch()[1].toFixed(0)}
                 min='0'
                 max='100'
@@ -158,7 +150,6 @@ export default class ColorItem extends React.Component<Props> {
               <Input
                 type='number'
                 icon={{type: 'none', value: null}}
-                placeholder=''
                 value={chroma(this.props.hex).lch()[2].toFixed(0) == 'NaN' ? 0 : chroma(this.props.hex).lch()[2].toFixed(0)}
                 min='0'
                 max='360'
@@ -203,7 +194,6 @@ export default class ColorItem extends React.Component<Props> {
           <Input
             type='number'
             icon={{type: 'icon', value: 'arrow-left-right'}}
-            placeholder=''
             value={this.props.shift.toString()}
             min='-360'
             max='360'

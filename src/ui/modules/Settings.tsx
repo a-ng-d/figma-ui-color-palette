@@ -29,8 +29,6 @@ export default class Settings extends React.Component<Props> {
                 placeholder='UI Color Palette'
                 value={this.props.paletteName != '' ? this.props.paletteName : ''}
                 charactersLimit={64}
-                min=''
-                max=''
                 feature='rename-palette'
                 onChange={this.inputHandler}
                 onFocus={this.inputHandler}

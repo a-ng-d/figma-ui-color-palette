@@ -3,11 +3,11 @@ import * as React from 'react';
 interface Props {
   type: string;
   icon: any;
-  placeholder: string;
+  placeholder?: string;
   value: string;
   charactersLimit?: number;
-  min: string;
-  max: string;
+  min?: string;
+  max?: string;
   feature: string;
   onChange: any;
   onFocus: any
