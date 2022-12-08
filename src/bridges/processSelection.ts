@@ -18,6 +18,7 @@ const processSelection = () => {
     figma.ui.postMessage({
       type: 'palette-selected',
       data: {
+        name: selection[0].getPluginData('name'),
         scale: JSON.parse(selection[0].getPluginData('scale')),
         captions: selection[0].getPluginData('captions'),
         colors: JSON.parse(selection[0].getPluginData('colors')),

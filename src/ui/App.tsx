@@ -37,7 +37,8 @@ class App extends React.Component {
         format: '',
         mimeType: '',
         data: ''
-      }
+      },
+      paletteName: ''
     }
   }
 
@@ -311,6 +312,21 @@ class App extends React.Component {
     onGoingStep: 'stop changed'
   })
 
+  settingsHandler = (e: any) => {
+    switch (e.target.dataset.feature) {
+
+      case 'rename-palette':
+        palette.name = e.target.value,
+        this.setState({
+          paletteName: e.target.value,
+          onGoingStep: 'settings changed'
+        });
+        e._reactName === 'onBlur' && this.state['service'] === 'Edit' ? setTimeout(() => this.state['onGoingStep'] === 'settings changed' ? parent.postMessage({ pluginMessage: { type: 'update-settings', data: this.state['paletteName'] } }, '*') : null, 500) : null;
+        e.key === 'Enter' && this.state['service'] === 'Edit' ? parent.postMessage({ pluginMessage: { type: 'update-settings', data: this.state['paletteName'] } }, '*') : null;
+
+    }
+  }
+
   render() {
     onmessage = (e: any) => {
       switch (e.data.pluginMessage.type) {
@@ -319,9 +335,11 @@ class App extends React.Component {
           this.setState({
             service: 'None',
             hasCaptions: true,
+            paletteName: '',
             onGoingStep: 'selection empty'
           });
-          palette.preset = {}
+          palette.name = '';
+          palette.preset = {};
           break;
 
         case 'color-selected':
@@ -348,6 +366,7 @@ class App extends React.Component {
               hasCaptions: false,
               newColors: putIdsOnColors,
               preset: e.data.pluginMessage.data.preset,
+              paletteName: e.data.pluginMessage.data.name,
               onGoingStep: 'palette selected'
             })
           else if (e.data.pluginMessage.data.captions === 'hasCaptions')
@@ -358,6 +377,7 @@ class App extends React.Component {
               hasCaptions: true,
               newColors: putIdsOnColors,
               preset: e.data.pluginMessage.data.preset,
+              paletteName: e.data.pluginMessage.data.name,
               onGoingStep: 'palette selected'
             })
           break;
@@ -393,11 +413,13 @@ class App extends React.Component {
             preset={this.state['preset']}
             hasCaptions={this.state['hasCaptions']}
             context={this.state['context']}
+            paletteName={this.state['paletteName']}
             onCaptionsChange={this.captionsHandler}
             onGoingStep={this.state['onGoingStep']}
             onPresetChange={this.presetHandler}
             onCustomPreset={this.customHandler}
             onContextChange={this.navHandler}
+            onSettingsChange={this.settingsHandler}
           />
         : null}
         {this.state['service'] === 'Edit' ?
@@ -408,10 +430,12 @@ class App extends React.Component {
             context={this.state['context']}
             hasCaptions={this.state['hasCaptions']}
             export={this.state['export']}
+            paletteName={this.state['paletteName']}
             onScaleChange={this.slideHandler}
             onChangeStop={this.customSlideHandler}
             onCaptionsChange={this.captionsHandler}
             onColorChange={this.colorHandler}
+            onSettingsChange={this.settingsHandler}
             onContextChange={this.navHandler}
             onOrderChange={this.orderHandler}
             onGoingStep={this.state['onGoingStep']}

@@ -1,6 +1,7 @@
 import * as React from 'react';
 import Tabs from '../components/Tabs';
 import Scale from '../modules/Scale';
+import Settings from '../modules/Settings';
 import About from '../modules/About';
 import Actions from '../modules/Actions';
 import { palette, presets } from '../../utils/palettePackage';
@@ -9,11 +10,13 @@ interface Props {
   hasCaptions: boolean;
   preset: any;
   context: string;
+  paletteName: string;
   onCaptionsChange: any;
   onGoingStep: string;
   onContextChange: any;
   onPresetChange: any;
-  onCustomPreset: any
+  onCustomPreset: any;
+  onSettingsChange: any
 };
 
 export default class CreatePalette extends React.Component<Props> {
@@ -39,6 +42,8 @@ export default class CreatePalette extends React.Component<Props> {
   presetHandler = (e: any) => this.props.onPresetChange(e)
 
   scaleHandler = (e: any) => this.props.onCustomPreset(e)
+
+  settingsHandler = (e: any) => this.props.onSettingsChange(e)
 
   // Direct actions
   onCreate = () => parent.postMessage({ pluginMessage: { type: 'create-palette', palette } }, '*')
@@ -78,6 +83,14 @@ export default class CreatePalette extends React.Component<Props> {
           />;
         break;
 
+        case 'Settings':
+        controls =
+            <Settings
+              paletteName={this.props.paletteName}
+              onSettingsChange={this.settingsHandler}
+            />;
+          break;
+
         case 'About':
           controls = <About />
       }
@@ -85,7 +98,7 @@ export default class CreatePalette extends React.Component<Props> {
     return (
       <>
         <Tabs
-          primaryTabs={['Scale']}
+          primaryTabs={['Scale', 'Settings']}
           secondaryTabs={['About']}
           active={this.props.context}
           onClick={this.navHandler}

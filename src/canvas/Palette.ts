@@ -15,6 +15,7 @@ interface UIColors {
 
 export default class Palette {
 
+  paletteName: string;
   name: string;
   scale: string;
   colors: Array<UIColors>;
@@ -23,8 +24,9 @@ export default class Palette {
   children: any;
   node: FrameNode;
 
-  constructor(scale, captions, preset) {
-    this.name = `UI Color Palette﹒${preset.name}`;
+  constructor(name, scale, captions, preset) {
+    this.paletteName = name;
+    this.name = `${name === '' ? 'UI Color Palette' : name}﹒${preset.name}`;
     this.scale = scale;
     this.colors = [];
     this.captions = captions;
@@ -47,12 +49,10 @@ export default class Palette {
 
     // data
     this.node.setRelaunchData({ edit: '' });
+    this.node.setPluginData('name', this.paletteName);
     this.node.setPluginData('scale', JSON.stringify(this.scale));
     this.node.setPluginData('preset', JSON.stringify(this.preset));
-    if (this.captions)
-      this.node.setPluginData('captions', 'hasCaptions')
-    else
-      this.node.setPluginData('captions', 'hasNotCaptions');
+    this.captions ? this.node.setPluginData('captions', 'hasCaptions') : this.node.setPluginData('captions', 'hasNotCaptions');
 
     // insert
     figma.currentPage.selection.forEach(element => {
@@ -87,6 +87,10 @@ export default class Palette {
 
     this.node.setPluginData('colors', JSON.stringify(this.colors));
     return this.node
+  }
+
+  changeName(name) {
+    this.node.name = name
   }
 
 }

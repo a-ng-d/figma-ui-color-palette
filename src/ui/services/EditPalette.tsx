@@ -4,6 +4,7 @@ import Tabs from '../components/Tabs';
 import Scale from '../modules/Scale';
 import Colors from '../modules/Colors';
 import Export from '../modules/Export';
+import Settings from '../modules/Settings';
 import About from '../modules/About';
 import Actions from '../modules/Actions';
 import chroma from 'chroma-js';
@@ -16,10 +17,12 @@ interface Props {
   context: string;
   preset: any;
   export: any;
+  paletteName: string;
   onScaleChange: any;
   onChangeStop: any;
   onCaptionsChange: any;
   onColorChange: any;
+  onSettingsChange: any;
   onContextChange: any;
   onOrderChange: any;
   onGoingStep: any
@@ -125,6 +128,8 @@ export default class EditPalette extends React.Component<Props> {
   }
 
   dropHandler = (e: any) => this.props.onOrderChange(this.state['selectedElement'], this.state['hoveredElement'])
+
+  settingsHandler = (e: any) => this.props.onSettingsChange(e)
 
   unSelectColor = (e: any) => {
     e.target.closest('li.colors__item') == null ? this.setState({
@@ -232,6 +237,14 @@ export default class EditPalette extends React.Component<Props> {
           />;
         break;
 
+      case 'Settings':
+        controls =
+          <Settings
+            paletteName={this.props.paletteName}
+            onSettingsChange={this.settingsHandler}
+          />;
+        break;
+
       case 'About':
         controls = <About />
     }
@@ -239,7 +252,7 @@ export default class EditPalette extends React.Component<Props> {
     return (
       <>
         <Tabs
-          primaryTabs={['Scale', 'Colors', 'Export']}
+          primaryTabs={['Scale', 'Colors', 'Export', 'Settings']}
           secondaryTabs={['About']}
           active={this.props.context}
           onClick={this.navHandler}

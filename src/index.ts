@@ -7,6 +7,7 @@ import updateLocalStyles from './bridges/updateLocalStyles';
 import processSelection from './bridges/processSelection';
 import exportJson from './bridges/exportJson';
 import exportCss from './bridges/exportCss';
+import updateSettings from './bridges/updateSettings';
 
 figma.showUI(__html__, {
   width: 640,
@@ -44,6 +45,10 @@ figma.ui.onmessage = msg => {
     case 'export-palette':
       msg.export === 'JSON' ? exportJson(msg, palette) : null
       msg.export === 'CSS' ? exportCss(msg, palette) : null
+      break;
+    
+    case 'update-settings':
+      updateSettings(msg, palette)
 
   }
 

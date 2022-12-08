@@ -379,6 +379,21 @@ input[type='number']::-webkit-inner-spin-button {
   margin-top: 0
 }
 
+.form-item {
+  display: flex;
+  align-items: center;
+  gap: var(--size-xxsmall)
+}
+
+.form-item label {
+  flex: 1
+}
+
+.form-item .input,
+.form-item .textarea {
+  flex: 2
+}
+
 /* Icon buttons */
 div.icon-button {
   cursor: default
@@ -494,12 +509,23 @@ div.export-palette__options {
   flex: 1
 }
 
-.export-palette__preview {
+textarea.export-palette__preview {
   height: 100%
 }
 
 ul.options li {
   display: block
+}
+
+/* Settings */
+div.settings {
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-small) 0
+}
+
+div.settings__item {
+  padding: 0 var(--size-small)
 }
 
 /* About */

@@ -249,6 +249,14 @@ div.icon-button--disabled {
   --black: var(--figma-color-text)
 }
 
+.input__field:placeholder-shown {
+  --black1: var(--figma-color-border)
+}
+
+.input__field::placeholder {
+  color: var(--figma-color-text-secondary)
+}
+
 /* Text area */
 .textarea {
   --black8: var(--figma-color-text);
