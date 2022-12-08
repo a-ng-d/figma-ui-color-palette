@@ -10,6 +10,7 @@ interface Scale {
 }
 
 interface Palette {
+  name: string,
   scale: Scale,
   min: number,
   max: number,
@@ -18,6 +19,7 @@ interface Palette {
 }
 
 export const palette: Palette = {
+  name: '',
   scale: {},
   min: null,
   max: null,
