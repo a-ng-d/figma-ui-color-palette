@@ -26,7 +26,7 @@ export default class Palette {
 
   constructor(name, scale, captions, preset) {
     this.paletteName = name;
-    this.name = name == undefined ? `UI Color Palette﹒${preset.name}` : `${name}﹒${preset.name}`;
+    this.name = name == '' ? `UI Color Palette﹒${preset.name}` : `${name}﹒${preset.name}`;
     this.scale = scale;
     this.colors = [];
     this.captions = captions;
@@ -51,7 +51,7 @@ export default class Palette {
     this.node.setRelaunchData({ edit: '' });
     this.node.setPluginData('scale', JSON.stringify(this.scale));
     this.node.setPluginData('preset', JSON.stringify(this.preset));
-    this.paletteName != undefined ? this.node.setPluginData('name', this.paletteName) : this.node.setPluginData('name', '');
+    this.paletteName != '' ? this.node.setPluginData('name', this.paletteName) : this.node.setPluginData('name', '');
     this.captions ? this.node.setPluginData('captions', 'hasCaptions') : this.node.setPluginData('captions', 'hasNotCaptions');
 
     // insert
