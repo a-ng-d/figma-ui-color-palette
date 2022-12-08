@@ -5,6 +5,7 @@ interface Props {
   icon: any;
   placeholder: string;
   value: string;
+  charactersLimit?: number;
   min: string;
   max: string;
   feature: string;
@@ -80,6 +81,7 @@ export default class Input extends React.Component<Props> {
           className='input__field'
           placeholder={this.props.placeholder}
           value={this.props.value}
+          maxLength={this.props.charactersLimit}
           onKeyPress={this.props.onChange}
           onChange={this.props.onChange}
           onBlur={this.props.onChange}
