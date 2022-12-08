@@ -350,6 +350,7 @@ class App extends React.Component {
 
   render() {
     onmessage = (e: any) => {
+      Object.keys(this.state['preset']).length == 0 ? this.setState({ preset: presets.material }) : null;
       switch (e.data.pluginMessage.type) {
 
         case 'empty-selection':
@@ -357,6 +358,7 @@ class App extends React.Component {
             service: 'None',
             hasCaptions: true,
             paletteName: '',
+            preset: {},
             onGoingStep: 'selection empty'
           });
           palette.name = '';
@@ -369,8 +371,9 @@ class App extends React.Component {
             context: 'Scale',
             hasCaptions: true,
             onGoingStep: 'colors selected',
-            preset: presets.material
+            paletteName: '',
           });
+          palette.name = '';
           break;
 
         case 'palette-selected':
