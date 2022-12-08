@@ -316,6 +316,7 @@ class App extends React.Component {
     switch (e.target.dataset.feature) {
 
       case 'rename-palette':
+        palette.name = e.target.value,
         this.setState({
           paletteName: e.target.value,
           onGoingStep: 'settings changed'
