@@ -313,7 +313,14 @@ class App extends React.Component {
   })
 
   settingsHandler = (e: any) => {
-    console.log(e)
+    switch (e.target.dataset.feature) {
+
+      case 'rename-palette':
+        this.setState({
+          paletteName: e.target.value,
+          onGoingStep: 'settings changed'
+        })
+    }
   }
 
   render() {
