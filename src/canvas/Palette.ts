@@ -26,7 +26,7 @@ export default class Palette {
 
   constructor(name, scale, captions, preset) {
     this.paletteName = name;
-    this.name = name == '' ? `UI Color Palette﹒${preset.name}` : `${name}﹒${preset.name}`;
+    this.name = `${name === '' ? 'UI Color Palette' : name}﹒${preset.name}`;
     this.scale = scale;
     this.colors = [];
     this.captions = captions;
