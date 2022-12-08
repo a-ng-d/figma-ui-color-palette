@@ -164,7 +164,6 @@ export default class ColorItem extends React.Component<Props> {
           <Button
             icon='adjust'
             type='icon'
-            label={null}
             state={this.state['hasMoreOptions'] ? 'selected' : ''}
             feature='more'
             action={this.optionsHandler}
@@ -172,8 +171,6 @@ export default class ColorItem extends React.Component<Props> {
           <Button
             icon='minus'
             type='icon'
-            label={null}
-            state=''
             feature='remove'
             action={this.inputHandler}
           />

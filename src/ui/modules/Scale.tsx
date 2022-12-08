@@ -56,8 +56,6 @@ export default class Scale extends React.Component<Props> {
             <Button
               icon='minus'
               type='icon'
-              label={null}
-              state=''
               feature='remove'
               action={this.props.onRemoveScale}
             />
@@ -66,7 +64,6 @@ export default class Scale extends React.Component<Props> {
             <Button
               icon='plus'
               type='icon'
-              label={null}
               state={this.props.preset.scale.length == 24 ? 'disabled' : ''}
               feature='add'
               action={this.props.onAddScale}

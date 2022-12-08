@@ -21,10 +21,8 @@ export default class Actions extends React.Component<Props> {
       <div className='actions'>
         <div className='buttons'>
           <Button
-            icon={null}
             type='primary'
             label='Create a color palette'
-            state=''
             feature='create'
             action={this.props.onCreatePalette}
           />
@@ -46,18 +44,14 @@ export default class Actions extends React.Component<Props> {
       <div className='actions'>
         <div className='buttons'>
           <Button
-            icon={null}
             type='secondary'
             label='Update the local styles'
-            state=''
             feature='update'
             action={this.props.onUpdateLocalColors}
           />
           <Button
-            icon={null}
             type='primary'
             label='Create local styles'
-            state=''
             feature='create'
             action={this.props.onCreateLocalColors}
           />
@@ -79,10 +73,8 @@ export default class Actions extends React.Component<Props> {
       <div className='actions'>
         <div className='buttons'>
           <Button
-            icon={null}
             type='primary'
             label={`Export the palette to ${this.props.exportType}`}
-            state=''
             feature='export'
             action={this.props.onExportPalette}
           >
