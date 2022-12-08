@@ -12,7 +12,7 @@ export default class Dropdown extends React.Component<Props> {
 
   componentDidMount = () => {
     selectMenu.init();
-    document.getElementById('presets').onchange = (e) => this.props.onChange(e)
+    document.getElementById(this.props.id).onchange = (e) => this.props.onChange(e)
   }
 
   render() {
