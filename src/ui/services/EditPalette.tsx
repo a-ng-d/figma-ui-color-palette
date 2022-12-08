@@ -168,12 +168,7 @@ export default class EditPalette extends React.Component<Props> {
       actions =
         <Actions
           context='export'
-          hasCaptions={null}
           exportType= {this.props.export.format}
-          onCreatePalette={null}
-          onCreateLocalColors={null}
-          onUpdateLocalColors={null}
-          onChangeCaptions={null}
           onExportPalette={this.onExport}
         />
       else if (this.state['context'] === 'About')
@@ -183,12 +178,9 @@ export default class EditPalette extends React.Component<Props> {
           <Actions
             context='edit'
             hasCaptions={this.props.hasCaptions}
-            exportType= {null}
-            onCreatePalette={null}
             onCreateLocalColors={this.onCreate}
             onUpdateLocalColors={this.onUpdate}
             onChangeCaptions={this.checkHandler}
-            onExportPalette={null}
           />
 
     switch (this.state['context']) {

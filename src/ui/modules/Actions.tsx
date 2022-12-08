@@ -5,13 +5,13 @@ import Switch from '../components/Switch';
 
 interface Props {
   context: string;
-  hasCaptions: boolean;
-  exportType: string | null;
-  onCreatePalette: any;
-  onCreateLocalColors: any;
-  onUpdateLocalColors: any;
-  onChangeCaptions: any;
-  onExportPalette: any
+  hasCaptions?: boolean;
+  exportType?: string | null;
+  onCreatePalette?: any;
+  onCreateLocalColors?: any;
+  onUpdateLocalColors?: any;
+  onChangeCaptions?: any;
+  onExportPalette?: any
 };
 
 export default class Actions extends React.Component<Props> {
