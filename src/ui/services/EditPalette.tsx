@@ -14,7 +14,6 @@ interface Props {
   scale: any;
   hasCaptions: boolean;
   colors: any;
-  context: string;
   preset: any;
   export: any;
   paletteName: string;
@@ -23,7 +22,6 @@ interface Props {
   onCaptionsChange: any;
   onColorChange: any;
   onSettingsChange: any;
-  onContextChange: any;
   onOrderChange: any;
   onGoingStep: any
 };
@@ -50,7 +48,8 @@ export default class EditPalette extends React.Component<Props> {
         hasGuideAbove: false,
         hasGuideBelow: false,
         position: null
-      }
+      },
+      context: 'Scale'
     }
   }
 
@@ -81,15 +80,7 @@ export default class EditPalette extends React.Component<Props> {
 
   colorHandler = (e: any) => this.props.onColorChange(e)
 
-  navHandler = (e: any) => {
-    this.props.onContextChange(e)
-    this.setState({
-      selectedElement: {
-        id: '',
-        position: null
-      }
-    })
-  }
+  navHandler = (e: any) => this.setState({ context: e.target.innerText })
 
   selectionHandler = (e: any) => {
     const target: HTMLElement = e.currentTarget,
@@ -173,7 +164,7 @@ export default class EditPalette extends React.Component<Props> {
     palette.captions = this.props.hasCaptions;
     let actions, controls;
 
-    if (this.props.context === 'Export')
+    if (this.state['context'] === 'Export')
       actions =
         <Actions
           context='export'
@@ -185,7 +176,7 @@ export default class EditPalette extends React.Component<Props> {
           onChangeCaptions={null}
           onExportPalette={this.onExport}
         />
-      else if (this.props.context === 'About')
+      else if (this.state['context'] === 'About')
         actions = null
       else
         actions =
@@ -200,7 +191,7 @@ export default class EditPalette extends React.Component<Props> {
             onExportPalette={null}
           />
 
-    switch (this.props.context) {
+    switch (this.state['context']) {
       case 'Scale':
         controls =
           <Scale
@@ -254,12 +245,12 @@ export default class EditPalette extends React.Component<Props> {
         <Tabs
           primaryTabs={['Scale', 'Colors', 'Export', 'Settings']}
           secondaryTabs={['About']}
-          active={this.props.context}
+          active={this.state['context']}
           onClick={this.navHandler}
         />
         <section
           onClick={this.unSelectColor}
-          className={this.props.context === 'Colors' ? 'section--scrollable' : ''}
+          className={this.state['context'] === 'Colors' ? 'section--scrollable' : ''}
         >
           <div className='controls'>
             {controls}

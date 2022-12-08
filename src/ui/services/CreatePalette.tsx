@@ -9,17 +9,22 @@ import { palette, presets } from '../../utils/palettePackage';
 interface Props {
   hasCaptions: boolean;
   preset: any;
-  context: string;
   paletteName: string;
   onCaptionsChange: any;
   onGoingStep: string;
-  onContextChange: any;
   onPresetChange: any;
   onCustomPreset: any;
   onSettingsChange: any
 };
 
 export default class CreatePalette extends React.Component<Props> {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      context: 'Scale'
+    }
+  }
 
   // Handlers
   slideHandler = () => { }
@@ -29,15 +34,7 @@ export default class CreatePalette extends React.Component<Props> {
     palette.captions = e.target.checked
   }
 
-  navHandler = (e: any) => {
-    this.props.onContextChange(e)
-    this.setState({
-      selectedElement: {
-        id: '',
-        position: null
-      }
-    })
-  }
+  navHandler = (e: any) => this.setState({ context: e.target.innerText })
 
   presetHandler = (e: any) => this.props.onPresetChange(e)
 
@@ -53,7 +50,7 @@ export default class CreatePalette extends React.Component<Props> {
     palette.preset = this.props.preset;
     let actions, controls;
 
-    if (this.props.context === 'About')
+    if (this.state['context'] === 'About')
       actions = null
     else
       actions =
@@ -68,7 +65,7 @@ export default class CreatePalette extends React.Component<Props> {
           onExportPalette={null}
         />
 
-    switch (this.props.context) {
+    switch (this.state['context']) {
       case 'Scale':
         controls =
           <Scale
@@ -84,12 +81,12 @@ export default class CreatePalette extends React.Component<Props> {
         break;
 
         case 'Settings':
-        controls =
-            <Settings
-              paletteName={this.props.paletteName}
-              onSettingsChange={this.settingsHandler}
-            />;
-          break;
+          controls =
+              <Settings
+                paletteName={this.props.paletteName}
+                onSettingsChange={this.settingsHandler}
+              />;
+            break;
 
         case 'About':
           controls = <About />
@@ -100,7 +97,7 @@ export default class CreatePalette extends React.Component<Props> {
         <Tabs
           primaryTabs={['Scale', 'Settings']}
           secondaryTabs={['About']}
-          active={this.props.context}
+          active={this.state['context']}
           onClick={this.navHandler}
         />
         <section>

@@ -368,7 +368,6 @@ class App extends React.Component {
         case 'color-selected':
           this.setState({
             service: 'Create',
-            context: 'Scale',
             hasCaptions: true,
             onGoingStep: 'colors selected'
           });
@@ -383,7 +382,6 @@ class App extends React.Component {
           if (e.data.pluginMessage.data.captions === 'hasNotCaptions')
             this.setState({
               service: 'Edit',
-              context: 'Scale',
               newScale: e.data.pluginMessage.data.scale,
               hasCaptions: false,
               newColors: putIdsOnColors,
@@ -394,7 +392,6 @@ class App extends React.Component {
           else if (e.data.pluginMessage.data.captions === 'hasCaptions')
             this.setState({
               service: 'Edit',
-              context: 'Scale',
               newScale: e.data.pluginMessage.data.scale,
               hasCaptions: true,
               newColors: putIdsOnColors,
@@ -434,13 +431,11 @@ class App extends React.Component {
           <CreatePalette
             preset={this.state['preset']}
             hasCaptions={this.state['hasCaptions']}
-            context={this.state['context']}
             paletteName={this.state['paletteName']}
             onCaptionsChange={this.captionsHandler}
             onGoingStep={this.state['onGoingStep']}
             onPresetChange={this.presetHandler}
             onCustomPreset={this.customHandler}
-            onContextChange={this.navHandler}
             onSettingsChange={this.settingsHandler}
           />
         : null}
@@ -449,7 +444,6 @@ class App extends React.Component {
             scale={this.state['newScale']}
             colors={this.state['newColors']}
             preset={this.state['preset']}
-            context={this.state['context']}
             hasCaptions={this.state['hasCaptions']}
             export={this.state['export']}
             paletteName={this.state['paletteName']}
@@ -458,7 +452,6 @@ class App extends React.Component {
             onCaptionsChange={this.captionsHandler}
             onColorChange={this.colorHandler}
             onSettingsChange={this.settingsHandler}
-            onContextChange={this.navHandler}
             onOrderChange={this.orderHandler}
             onGoingStep={this.state['onGoingStep']}
           />
