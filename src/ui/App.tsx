@@ -11,6 +11,8 @@ import chroma from 'chroma-js';
 import { palette, presets } from '../utils/palettePackage';
 import { v4 as uuidv4 } from 'uuid';
 
+let isPaletteSelected: boolean = false;
+
 declare function require(path: string): any;
 
 class App extends React.Component {
@@ -363,14 +365,28 @@ class App extends React.Component {
           });
           palette.name = '';
           palette.preset = {};
+          isPaletteSelected = false;
           break;
 
         case 'color-selected':
-          this.setState({
-            service: 'Create',
-            hasCaptions: true,
-            onGoingStep: 'colors selected'
-          });
+          if (isPaletteSelected) {
+            this.setState({
+              service: 'Create',
+              hasCaptions: true,
+              onGoingStep: 'colors selected',
+              preset: presets.material,
+              paletteName: ''
+            });
+            palette.name = '';
+            palette.preset = presets.material
+          }  
+          else
+            this.setState({
+              service: 'Create',
+              hasCaptions: true,
+              onGoingStep: 'colors selected',
+            })
+          isPaletteSelected = false;
           break;
 
         case 'palette-selected':
@@ -378,6 +394,7 @@ class App extends React.Component {
             color.id === undefined ? color.id = uuidv4() : color.id = color.id;
             return color
           });
+          isPaletteSelected = true;
           palette.preset = {};
           if (e.data.pluginMessage.data.captions === 'hasNotCaptions')
             this.setState({
