@@ -335,9 +335,11 @@ class App extends React.Component {
           this.setState({
             service: 'None',
             hasCaptions: true,
+            paletteName: '',
             onGoingStep: 'selection empty'
           });
-          palette.preset = {}
+          palette.name = '';
+          palette.preset = {};
           break;
 
         case 'color-selected':
