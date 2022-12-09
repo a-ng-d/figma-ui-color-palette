@@ -26,7 +26,7 @@ const processSelection = () => {
       }
     })
   }
-  else if (selection.length == 0)
+  else if (selection.length == 0 || (selection.length > 1 && selection[0].getPluginData('scale') != ''))
     figma.ui.postMessage({
       type: 'empty-selection',
       data: {}
