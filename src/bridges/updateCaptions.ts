@@ -25,7 +25,8 @@ const updateCaptions = (msg, palette) => {
           captions: captions,
           preset: preset
         }).makeNode())
-      } else {
+      }
+      else {
         palette.setPluginData('captions', 'hasNotCaptions');
         captions = palette.getPluginData('captions') == 'hasCaptions' ? true : false;
         

@@ -69,7 +69,8 @@ export default class Palette {
             hueShifting: 0
           })
         )
-      } else
+      }
+      else
         figma.notify(`The layer '${element.name}' must get at least one solid color`)
 
     });

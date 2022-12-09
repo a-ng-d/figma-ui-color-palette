@@ -55,7 +55,8 @@ export default class Colors {
             oklch[1],
             oklch[2] + color.hueShifting < 0 ? 0 : oklch[2] + color.hueShifting > 360 ? 360 : oklch[2] + color.hueShifting
           )
-        } else {
+        }
+        else {
           lch = chroma([color.rgb.r * 255, color.rgb.g * 255, color.rgb.b * 255]).lch()
           newColor = chroma.lch(
             parseFloat(lightness),

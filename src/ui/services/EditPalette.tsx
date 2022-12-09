@@ -62,10 +62,12 @@ export default class EditPalette extends React.Component<Props> {
       this.dispatch.scale.on.status = false;
       parent.postMessage({ pluginMessage: { type: 'update-scale', palette } }, '*');
       this.props.onScaleChange()
-    } else if (e === 'customized') {
+    }
+    else if (e === 'customized') {
       parent.postMessage({ pluginMessage: { type: 'update-scale', palette } }, '*');
       this.props.onChangeStop()
-    } else
+    }
+    else
       this.dispatch.scale.on.status = true
   }
 

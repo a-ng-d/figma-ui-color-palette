@@ -87,10 +87,12 @@ export default class Slider extends React.Component<Props> {
     if (knob == range.lastChild) { // 900
       limitMin = 0;
       limitMax = (knob.previousElementSibling as HTMLElement).offsetLeft - gap
-    } else if (knob == range.firstChild) { // 50
+    }
+    else if (knob == range.firstChild) { // 50
       limitMin = (knob.nextElementSibling as HTMLElement).offsetLeft + gap;
       limitMax = rangeWidth
-    } else {
+    }
+    else {
       limitMin = (knob.nextElementSibling as HTMLElement).offsetLeft + gap;
       limitMax = (knob.previousElementSibling as HTMLElement).offsetLeft - gap
     }

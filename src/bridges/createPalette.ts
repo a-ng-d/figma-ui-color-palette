@@ -16,7 +16,8 @@ const createPalette = (msg, palette) => {
     scene.push(palette);
     figma.currentPage.selection = scene;
     figma.viewport.scrollAndZoomIntoView(scene)
-  } else
+  }
+  else
     palette.remove()
 
 };

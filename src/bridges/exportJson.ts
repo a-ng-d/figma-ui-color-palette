@@ -34,7 +34,8 @@ const exportJson = (msg, palette) => {
       type: 'export-palette-json',
       data: json
     })
-  } else
+  }
+  else
     figma.notify('Your UI Color Palette seems corrupted. Do not edit any layer within it.')
 
 };
