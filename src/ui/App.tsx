@@ -145,7 +145,7 @@ class App extends React.Component {
           paletteName: e.target.value,
           onGoingStep: 'settings changed'
         });
-        e._reactName === 'onBlur' && this.state['service'] === 'Edit' ? setTimeout(() => this.state['onGoingStep'] === 'settings changed' ? parent.postMessage({ pluginMessage: { type: 'update-settings', data: this.state['paletteName'] } }, '*') : null, 500) : null;
+        e._reactName === 'onBlur' && this.state['service'] === 'Edit' ? parent.postMessage({ pluginMessage: { type: 'update-settings', data: this.state['paletteName'] } }, '*') : null;
         e.key === 'Enter' && this.state['service'] === 'Edit' ? parent.postMessage({ pluginMessage: { type: 'update-settings', data: this.state['paletteName'] } }, '*') : null;
 
     }

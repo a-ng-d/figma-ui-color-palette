@@ -212,7 +212,7 @@ export default class EditPalette extends React.Component<Props> {
           newColors: colors,
           onGoingStep: 'color changed'
         });
-        e._reactName === 'onBlur' ? setTimeout(() => this.state['onGoingStep'] === 'color changed' ? parent.postMessage({ pluginMessage: { type: 'update-colors', data: colors } }, '*') : null, 500) : null;
+        e._reactName === 'onBlur' ? parent.postMessage({ pluginMessage: { type: 'update-colors', data: colors } }, '*') : null;
         e.key === 'Enter' ? parent.postMessage({ pluginMessage: { type: 'update-colors', data: colors } }, '*') : null;
         break;
 
