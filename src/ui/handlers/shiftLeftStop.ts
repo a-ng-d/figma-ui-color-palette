@@ -27,13 +27,7 @@ const shiftLeftStop = (scale, selectedKnob, meta, ctrl, presetName, presetMin, p
 
   newLightnessScale[stopsList[selectedKnobIndex]] = parseFloat(newLightnessScale[stopsList[selectedKnobIndex]]).toFixed(1);
 
-  palette.scale = newLightnessScale;
-  palette.preset = {
-    name: presetName,
-    scale: Object.keys(palette.scale).map(key => parseFloat(key.replace('lightness-', ''))),
-    min: presetMin,
-    max: presetMax
-  }
+  palette.scale = newLightnessScale
 };
 
 export default shiftLeftStop
