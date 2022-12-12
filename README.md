@@ -47,6 +47,7 @@ The palette architecture (do not manual edit it) is:
 - Select a color palette
 ---
 ![Edit lightness scale from the palette](./assets/edit-lightness-scale.gif 'Edit lightness scale from the palette')
+- Edit the palette lightness scale with the multiple stops slider－real time editing
 - Select a knob and use the left and right arrow with your keyboard to shift it with more accuracy (press Alt ⌥ to shift it with a reduced step)
 - In custom mode, select a stop and press Backspace ⌫ to remove it (up to 2 minimum)
 - In custom mode, click on the slider range to add a stop (up to 24 maximum)
@@ -64,7 +65,7 @@ The palette architecture (do not manual edit it) is:
   - Reorder the colors
   - Adding a new color to the palette
 ---
-- Choose the caption display－real time editing.
+- Choose the caption display－real time editing
 - Click `Create local styles` to create Figma document local styles from every color of the palette
 - Click `Update the local styles` to update every edited colors already declared as local style
 - Export every color of the palette to:
@@ -72,7 +73,7 @@ The palette architecture (do not manual edit it) is:
   - CSS Custom Properties
 
 ### Troubleshooting
-- `Your UI Color Palette seems corrupted. Do not edit any layer within it.`: The palette has been manually edited, and it may occur troubles and errors. So the plugins avoids executing editing while the palette does not seem compliant with the architecture.
+- `Your UI Color Palette seems corrupted. Do not edit any layer within it`: The palette has been manually edited, and it may occur troubles and errors. So the plugins avoids executing editing while the palette does not seem compliant with the architecture.
 - `The layer 'foo' must get at least one solid color`: You have selected a layer without any solid color.
 - The real-time edit is quite slow: It depends of the number of color samples in the palette. Dealing with hundreds of samples may slow your Figma and cause UI freezes.
 
