@@ -15,7 +15,7 @@ Every variants from a starting color is created by using the LCH (Lightness-Chro
   - ADS Foundations (Atlassian), from 50 to 500 (7 stops)
   - ADS Foundations Neutrals (Atlassian), from 0 to 900 (19 stops)
   - Carbon (IBM), from 10 to 100 (10 stops)
-  - Base (Uber), from 10 to 700 (7 stops)
+  - Base (Uber), from 10 to 700 (8 stops)
   - Custom, from 2 to 24 (24 stops)
 - Choose the captions display. It indicates the color name, the hexadecimal code, the RGB and LCH values, the contrast ratio, and the WCAG score.
 - Click `Create a color palette` to generate directly the palette on the Figma canvas. The palette is automatically selected and the view is centered on it. Its default name is `UI Color Palette`.
