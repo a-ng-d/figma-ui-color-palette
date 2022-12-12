@@ -24,7 +24,7 @@ export default class Scale extends React.Component<Props> {
     if (this.props.preset.name === 'Custom' && !this.props.hasPreset)
       messages.push(
         'Click on the slider range to add a stop',
-        'Press ⌫ after selecting a stop to remove it'
+        'Press Backspace ⌫ after selecting a stop to remove it'
       )
 
     if (!this.props.hasPreset)
