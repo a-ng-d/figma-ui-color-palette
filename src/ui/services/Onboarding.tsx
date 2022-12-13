@@ -19,7 +19,7 @@ export default class Onboarding extends React.Component {
           <Message
             icon='theme'
             messages= {[
-              'Select an UI Color Palette to edit it'
+              'Select a UI Color Palette to edit it'
             ]}
           />
         </div>
