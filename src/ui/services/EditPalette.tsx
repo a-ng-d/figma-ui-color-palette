@@ -20,6 +20,7 @@ interface Props {
   paletteName: string;
   onScaleChange: any;
   onChangeStop: any;
+  onColorChange: any;
   onCaptionsChange: any;
   onSettingsChange: any
 };
@@ -112,7 +113,8 @@ export default class EditPalette extends React.Component<Props> {
           this.setState({
             newColors: colors,
             onGoingStep: 'color changed'
-          })
+          });
+          this.props.onColorChange(colors)
         };
         e._reactName === 'onBlur' ? this.dispatch.colors.on.status = false : this.dispatch.colors.on.status = true;
         break;
@@ -132,6 +134,7 @@ export default class EditPalette extends React.Component<Props> {
           newColors: colors,
           onGoingStep: 'color changed'
         });
+        this.props.onColorChange(colors);
         parent.postMessage({ pluginMessage: { type: 'update-colors', data: colors } }, '*');
         break;
 
@@ -150,6 +153,7 @@ export default class EditPalette extends React.Component<Props> {
           newColors: colors,
           onGoingStep: 'color changed'
         });
+        this.props.onColorChange(colors);
         parent.postMessage({ pluginMessage: { type: 'update-colors', data: colors } }, '*');
         break;
 
@@ -168,6 +172,7 @@ export default class EditPalette extends React.Component<Props> {
           newColors: colors,
           onGoingStep: 'color changed'
         });
+        this.props.onColorChange(colors);
         parent.postMessage({ pluginMessage: { type: 'update-colors', data: colors } }, '*');
         break;
 
@@ -177,6 +182,7 @@ export default class EditPalette extends React.Component<Props> {
           newColors: colors,
           onGoingStep: 'color changed'
         });
+        this.props.onColorChange(colors);
         parent.postMessage({ pluginMessage: { type: 'update-colors', data: colors } }, '*');
         break;
 
@@ -198,6 +204,7 @@ export default class EditPalette extends React.Component<Props> {
           newColors: colors,
           onGoingStep: 'color changed'
         });
+        this.props.onColorChange(colors);
         parent.postMessage({ pluginMessage: { type: 'update-colors', data: colors } }, '*');
         break;
 
@@ -212,6 +219,7 @@ export default class EditPalette extends React.Component<Props> {
           newColors: colors,
           onGoingStep: 'color changed'
         });
+        this.props.onColorChange(colors);
         e._reactName === 'onBlur' ? parent.postMessage({ pluginMessage: { type: 'update-colors', data: colors } }, '*') : null;
         e.key === 'Enter' ? parent.postMessage({ pluginMessage: { type: 'update-colors', data: colors } }, '*') : null;
         break;
@@ -226,6 +234,7 @@ export default class EditPalette extends React.Component<Props> {
           newColors: colors,
           onGoingStep: 'color changed'
         });
+        this.props.onColorChange(colors);
         parent.postMessage({ pluginMessage: { type: 'update-colors', data: colors } }, '*');
         break;
 
@@ -239,6 +248,7 @@ export default class EditPalette extends React.Component<Props> {
           newColors: colors,
           onGoingStep: 'color changed'
         });
+        this.props.onColorChange(colors);
         parent.postMessage({ pluginMessage: { type: 'update-colors', data: colors } }, '*')
 
     }
@@ -269,6 +279,7 @@ export default class EditPalette extends React.Component<Props> {
       newColors: colors,
       onGoingStep: 'color changed'
     });
+    this.props.onColorChange(colors);
     parent.postMessage({ pluginMessage: { type: 'update-colors', data: colors } }, '*')
   }
 
@@ -390,7 +401,7 @@ export default class EditPalette extends React.Component<Props> {
       case 'Colors':
         controls =
           <Colors
-            colors={this.state['newColors']}
+            colors={this.props.colors}
             selectedElement={this.state['selectedElement']}
             hoveredElement={this.state['hoveredElement']}
             onColorChange={this.colorHandler}

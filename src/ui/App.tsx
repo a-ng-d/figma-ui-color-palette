@@ -136,6 +136,11 @@ class App extends React.Component {
     onGoingStep: 'stop changed'
   })
 
+  colorHandler = (colors) => this.setState({
+    newColors: colors,
+    onGoingStep: 'color changed'
+  })
+
   settingsHandler = (e: any) => {
     switch (e.target.dataset.feature) {
 
@@ -265,6 +270,7 @@ class App extends React.Component {
             paletteName={this.state['paletteName']}
             onScaleChange={this.slideHandler}
             onChangeStop={this.customSlideHandler}
+            onColorChange={this.colorHandler}
             onCaptionsChange={this.captionsHandler}
             onSettingsChange={this.settingsHandler}
           />
