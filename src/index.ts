@@ -47,8 +47,7 @@ figma.ui.onmessage = msg => {
       msg.export === 'CSS' ? exportCss(msg, palette) : null
       break;
     
-    case 'update-settings':
-      updateSettings(msg, palette)
+    case 'update-settings': updateSettings(msg, palette)
 
   }
 

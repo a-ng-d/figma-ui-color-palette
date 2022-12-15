@@ -202,6 +202,7 @@ class App extends React.Component {
           });
           isPaletteSelected = true;
           palette.preset = {};
+          parent.postMessage({ pluginMessage: { type: 'export-palette', export: this.state['export'].format } }, '*');
           if (e.data.pluginMessage.data.captions === 'hasNotCaptions')
             this.setState({
               service: 'Edit',
