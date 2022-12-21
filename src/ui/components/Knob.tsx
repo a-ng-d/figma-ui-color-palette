@@ -3,6 +3,7 @@ import * as React from 'react';
 interface Props {
   id: string;
   scale: any;
+  state: string;
   number: any;
   action: any
 };
@@ -12,7 +13,7 @@ export default class Knob extends React.Component<Props> {
   render() {
     return(
       <div
-        className={`slider__knob ${this.props.id}`}
+        className={`slider__knob ${this.props.id}${this.props.state === 'selected' ? ' slider__knob--selected' : ''}`}
         style={{left: `${this.props.scale}%`}}
         onMouseDown={this.props.action}
       >

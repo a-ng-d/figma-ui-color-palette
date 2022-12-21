@@ -26,7 +26,7 @@ export default class Colors {
     this.node.counterAxisSizingMode = 'AUTO';
 
     // insert
-    this.node.appendChild(new Title(`UI Color Palette • ${this.parent.preset.name}`,this.parent).makeNode());
+    this.node.appendChild(new Title(`${this.parent.paletteName === '' ? 'UI Color Palette' : this.parent.paletteName} • ${this.parent.preset.name}`, this.parent).makeNode());
     this.node.appendChild(new Header(this.parent).makeNode());
     this.parent.colors.forEach(color => {
 
@@ -55,7 +55,8 @@ export default class Colors {
             oklch[1],
             oklch[2] + color.hueShifting < 0 ? 0 : oklch[2] + color.hueShifting > 360 ? 360 : oklch[2] + color.hueShifting
           )
-        } else {
+        }
+        else {
           lch = chroma([color.rgb.r * 255, color.rgb.g * 255, color.rgb.b * 255]).lch()
           newColor = chroma.lch(
             parseFloat(lightness),

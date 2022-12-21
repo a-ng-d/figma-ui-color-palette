@@ -77,17 +77,6 @@ div.onboarding-tip {
   padding: 0 var(--size-xsmall)
 }
 
-div.onboarding-tip .onboarding-tip__msg {
-  flex: 1
-}
-
-div.onboarding-tip__separator {
-  width: 1px;
-  height: 100%;
-  margin: 0 var(--size-xsmall);
-  background-color: var(--figma-color-border)
-}
-
 div.actions {
   width: 100%;
   height: var(--size-xxlarge);
@@ -200,11 +189,21 @@ div.slider .slider__knob:hover .slider__label {
   background: var(--figma-color-bg-hover)
 }
 
-div.slider .slider__knob:active .slider__label {
+div.slider .slider__knob--selected {
+  z-index: 2 !important
+}
+
+div.slider .slider__knob--selected .slider__tooltip {
+  display: block !important
+}
+
+div.slider .slider__knob:active .slider__label,
+div.slider .slider__knob--selected .slider__label {
   box-shadow: 0 0 0 2px var(--figma-color-border-selected)
 }
 
-div.slider .slider__knob:active .slider__label:before {
+div.slider .slider__knob:active .slider__label:before,
+div.slider .slider__knob--selected .slider__label:before  {
   border-top-color: var(--figma-color-border-selected);
   border-width: 6px;
   left: calc(50% - 6px);
@@ -212,7 +211,8 @@ div.slider .slider__knob:active .slider__label:before {
 }
 
 div.slider .slider__knob:hover .slider__label:after,
-div.slider .slider__knob:active .slider__label:after {
+div.slider .slider__knob:active .slider__label:after,
+div.slider .slider__knob--selected .slider__label:after,  {
   border-top-color: var(--figma-color-bg-hover)
 }
 
@@ -379,6 +379,21 @@ input[type='number']::-webkit-inner-spin-button {
   margin-top: 0
 }
 
+.form-item {
+  display: flex;
+  align-items: center;
+  gap: var(--size-xxsmall)
+}
+
+.form-item label {
+  flex: 1
+}
+
+.form-item .input,
+.form-item .textarea {
+  flex: 2
+}
+
 /* Icon buttons */
 div.icon-button {
   cursor: default
@@ -494,12 +509,23 @@ div.export-palette__options {
   flex: 1
 }
 
-.export-palette__preview {
+textarea.export-palette__preview {
   height: 100%
 }
 
 ul.options li {
   display: block
+}
+
+/* Settings */
+div.settings {
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-small) 0
+}
+
+div.settings__item {
+  padding: 0 var(--size-small)
 }
 
 /* About */

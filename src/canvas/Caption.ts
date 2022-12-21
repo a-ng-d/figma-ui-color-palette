@@ -127,7 +127,8 @@ export default class Caption {
       this.nodeName.remove();
       this.node.appendChild(this.makeNodeScale());
       this.node.appendChild(this.makeNodeProperties());
-    } else if (type === 'NAME') {
+    }
+    else if (type === 'NAME') {
       this.nodeScale.remove();
       this.nodeProperties.remove();
       this.node.appendChild(this.makeName(fontSize))

@@ -5,6 +5,7 @@ const createPalette = (msg, palette) => {
   const scene: SceneNode[] = [];
 
   palette = new Palette (
+    msg.palette.name,
     msg.palette.scale,
     msg.palette.captions,
     msg.palette.preset
@@ -15,7 +16,8 @@ const createPalette = (msg, palette) => {
     scene.push(palette);
     figma.currentPage.selection = scene;
     figma.viewport.scrollAndZoomIntoView(scene)
-  } else
+  }
+  else
     palette.remove()
 
 };

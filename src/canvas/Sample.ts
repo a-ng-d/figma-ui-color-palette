@@ -38,7 +38,8 @@ export default class Sample {
       this.node.primaryAxisSizingMode = 'AUTO';
       this.node.layoutAlign = 'STRETCH';
       this.node.layoutGrow = 1;
-    } else if (mode === 'absolute') {
+    }
+    else if (mode === 'absolute') {
       this.node.resize(width, height);
       this.node.primaryAxisSizingMode = 'FIXED';
     }

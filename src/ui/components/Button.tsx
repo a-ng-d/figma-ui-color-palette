@@ -1,10 +1,10 @@
 import * as React from 'react';
 
 interface Props {
-  icon: string;
+  icon?: string;
   type: string;
-  label: string;
-  state: string;
+  label?: string;
+  state?: string;
   feature: string;
   action: any
 };
@@ -26,7 +26,7 @@ export default class Button extends React.Component<Props> {
     return (
       <div
         data-feature={this.props.feature}
-        className={`icon-button${this.props.state != '' ? ` icon-button--${this.props.state}` : ''}`}
+        className={`icon-button${this.props.state != undefined ? ` icon-button--${this.props.state}` : ''}`}
         onMouseDown={this.props.action}
       >
         <div className={`icon icon--${this.props.icon}`}></div>

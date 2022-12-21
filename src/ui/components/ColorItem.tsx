@@ -110,8 +110,6 @@ export default class ColorItem extends React.Component<Props> {
             type='text'
             icon={{type: 'none', value: null}}
             value={this.props.name}
-            min=''
-            max=''
             feature='rename'
             onChange={this.inputHandler}
             onFocus={this.selectionHandler}
@@ -122,8 +120,6 @@ export default class ColorItem extends React.Component<Props> {
             type='color'
             icon={{type: 'none', value: null}}
             value={this.props.hex}
-            min=''
-            max=''
             feature='hex'
             onChange={this.inputHandler}
             onFocus={this.selectionHandler}
@@ -168,7 +164,6 @@ export default class ColorItem extends React.Component<Props> {
           <Button
             icon='adjust'
             type='icon'
-            label={null}
             state={this.state['hasMoreOptions'] ? 'selected' : ''}
             feature='more'
             action={this.optionsHandler}
@@ -176,8 +171,6 @@ export default class ColorItem extends React.Component<Props> {
           <Button
             icon='minus'
             type='icon'
-            label={null}
-            state=''
             feature='remove'
             action={this.inputHandler}
           />

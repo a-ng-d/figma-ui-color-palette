@@ -9,11 +9,14 @@ Every variants from a starting color is created by using the LCH (Lightness-Chro
 ![Create a color palette](./assets/create-color-palette.gif 'Create a color palette')
 - Run the plugin
 - Select some layers in the canvas filled with at least one solid color. It will be use as starting colors to create the color palette.
-- Edit the lightness scale with the multiple knobs slider, linked with the LCH lightness scale (from 0% to 100%). You can choose the preset you need to configure the number of steps:
-  - Material Design, from 50 to 900 (10 steps)
-  - Ant Design, from 1 to 13 (13 steps)
-  - Atlassian, from 0 to 900 (19 steps)
-  - Custom, from 2 to 24 (24 steps)
+- Edit the lightness scale with the multiple stops slider, linked with the LCH lightness scale (from 0% to 100%). You can choose the preset you need to configure the number of stops:
+  - Material Design, from 50 to 900 (10 stops)
+  - Ant Design, from 1 to 10 (10 stops)
+  - ADS Foundations (Atlassian), from 50 to 500 (7 stops)
+  - ADS Foundations Neutrals (Atlassian), from 0 to 900 (19 stops)
+  - Carbon (IBM), from 10 to 100 (10 stops)
+  - Base (Uber), from 10 to 700 (8 stops)
+  - Custom, from 2 to 24 (24 stops)
 - Choose the captions display. It indicates the color name, the hexadecimal code, the RGB and LCH values, the contrast ratio, and the WCAG score.
 - Click `Create a color palette` to generate directly the palette on the Figma canvas. The palette is automatically selected and the view is centered on it. Its default name is `UI Color Palette`.
 
@@ -44,7 +47,10 @@ The palette architecture (do not manual edit it) is:
 - Select a color palette
 ---
 ![Edit lightness scale from the palette](./assets/edit-lightness-scale.gif 'Edit lightness scale from the palette')
-- Edit the palette lightness scale with the multiple knobs slider－real time editing.
+- Edit the palette lightness scale with the multiple stops slider－real time editing
+- Select a stop and use the left and right arrow with your keyboard to shift it with more accuracy (press Alt ⌥ to shift it with a reduced step)
+- In custom mode, select a stop and press Backspace ⌫ to remove it (up to 2 minimum)
+- In custom mode, click on the slider range to add a stop (up to 24 maximum)
 ---
 ![Edit starting colors from the palette](./assets/edit-starting-colors.gif 'Edit starting colors from the palette')
 
@@ -59,7 +65,7 @@ The palette architecture (do not manual edit it) is:
   - Reorder the colors
   - Adding a new color to the palette
 ---
-- Choose the caption display－real time editing.
+- Choose the caption display－real time editing
 - Click `Create local styles` to create Figma document local styles from every color of the palette
 - Click `Update the local styles` to update every edited colors already declared as local style
 - Export every color of the palette to:
@@ -67,7 +73,7 @@ The palette architecture (do not manual edit it) is:
   - CSS Custom Properties
 
 ### Troubleshooting
-- `Your UI Color Palette seems corrupted. Do not edit any layer within it.`: The palette has been manually edited, and it may occur troubles and errors. So the plugins avoids executing editing while the palette does not seem compliant with the architecture.
+- `Your UI Color Palette seems corrupted. Do not edit any layer within it`: The palette has been manually edited, and it may occur troubles and errors. So the plugins avoids executing editing while the palette does not seem compliant with the architecture.
 - `The layer 'foo' must get at least one solid color`: You have selected a layer without any solid color.
 - The real-time edit is quite slow: It depends of the number of color samples in the palette. Dealing with hundreds of samples may slow your Figma and cause UI freezes.
 

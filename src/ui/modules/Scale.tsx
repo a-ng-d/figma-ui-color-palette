@@ -8,15 +8,37 @@ import { palette, presets } from '../../utils/palettePackage';
 interface Props {
   hasPreset: boolean;
   preset: any;
-  scale: any;
-  onChangePreset: any;
+  scale?: any;
+  onChangePreset?: any;
   onScaleChange: any;
-  onAddScale: any;
-  onRemoveScale: any;
-  onGoingStep: any
+  onAddScale?: any;
+  onRemoveScale?: any;
+  onGoingStep?: any
 };
 
 export default class Scale extends React.Component<Props> {
+
+  setOnboardingMessages = () => {
+    let messages: Array<string> = []
+
+    if (this.props.preset.name === 'Custom' && !this.props.hasPreset)
+      messages.push(
+        'Click on the slider range to add a stop',
+        'Press Backspace ⌫ after selecting a stop to remove it'
+      )
+
+    if (!this.props.hasPreset)
+      messages.push(
+        'Press ← or → to shift the stops with accuracy'
+      )
+
+    messages.push(
+      'Hold Shift ⇧ while dragging the first or the last stop to distribute stops\' horizontal spacing',
+      'Hold Ctrl ⌃ or Cmd ⌘ while dragging a stop to move them all'
+    )
+
+    return messages
+  }
 
   Create = () => {
     this.props.onGoingStep != 'captions changed' ? palette.scale = {} : '';
@@ -30,22 +52,10 @@ export default class Scale extends React.Component<Props> {
             selected={this.props.preset.name}
             onChange={this.props.onChangePreset}
           />
-          {this.props.onGoingStep === 'scale item edited' ?
+          {this.props.preset.scale.length > 2 && this.props.preset.name === 'Custom' ?
             <Button
               icon='minus'
               type='icon'
-              label={null}
-              state=''
-              feature='remove'
-              action={this.props.onRemoveScale}
-            />
-          : null}
-          {this.props.onGoingStep === 'scale item max limit' ?
-            <Button
-              icon='minus'
-              type='icon'
-              label={null}
-              state=''
               feature='remove'
               action={this.props.onRemoveScale}
             />
@@ -54,8 +64,7 @@ export default class Scale extends React.Component<Props> {
             <Button
               icon='plus'
               type='icon'
-              label={null}
-              state={this.props.onGoingStep === 'scale item max limit' ? 'disabled' : ''}
+              state={this.props.preset.scale.length == 24 ? 'disabled' : ''}
               feature='add'
               action={this.props.onAddScale}
             />
@@ -64,26 +73,24 @@ export default class Scale extends React.Component<Props> {
         {this.props.onGoingStep != 'captions changed' ?
         <Slider
           type='EQUAL'
+          hasPreset={this.props.hasPreset}
+          presetName={this.props.preset.name}
           knobs={this.props.preset.scale}
           min={this.props.preset.min}
           max={this.props.preset.max}
-          scale={null}
           onChange={this.props.onScaleChange}
         /> :
         <Slider
           type='CUSTOM'
+          hasPreset={this.props.hasPreset}
+          presetName={this.props.preset.name}
           knobs={this.props.preset.scale}
-          min=''
-          max=''
           scale={palette.scale}
           onChange={this.props.onScaleChange}
         />}
         <Message
           icon='library'
-          messages= {[
-            'Hold Shift ⇧ while dragging the first or the last knob to distribute knobs\' horizontal spacing',
-            'Hold Ctrl ⌃ or Cmd ⌘ while dragging a knob to move them all'
-          ]}
+          messages= {this.setOnboardingMessages()}
         />
       </div>
     )
@@ -99,18 +106,15 @@ export default class Scale extends React.Component<Props> {
         </div>
         <Slider
           type='CUSTOM'
+          hasPreset={this.props.hasPreset}
+          presetName={this.props.preset.name}
           knobs={this.props.preset.scale}
-          min=''
-          max=''
           scale={this.props.scale}
           onChange={this.props.onScaleChange}
         />
         <Message
           icon='library'
-          messages= {[
-            'Hold Shift ⇧ while dragging the first or the last knob to distribute knobs\' horizontal spacing',
-            'Hold Ctrl ⌃ or Cmd ⌘ while dragging a knob to move them all'
-          ]}
+          messages= {this.setOnboardingMessages()}
         />
       </div>
     )

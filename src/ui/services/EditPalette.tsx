@@ -4,24 +4,25 @@ import Tabs from '../components/Tabs';
 import Scale from '../modules/Scale';
 import Colors from '../modules/Colors';
 import Export from '../modules/Export';
+import Settings from '../modules/Settings';
 import About from '../modules/About';
 import Actions from '../modules/Actions';
 import chroma from 'chroma-js';
 import { palette } from '../../utils/palettePackage';
+import { v4 as uuidv4 } from 'uuid';
 
 interface Props {
   scale: any;
   hasCaptions: boolean;
   colors: any;
-  context: string;
   preset: any;
   export: any;
+  paletteName: string;
   onScaleChange: any;
-  onCaptionsChange: any;
+  onChangeStop: any;
   onColorChange: any;
-  onContextChange: any;
-  onOrderChange: any;
-  onGoingStep: any
+  onCaptionsChange: any;
+  onSettingsChange: any
 };
 
 export default class EditPalette extends React.Component<Props> {
@@ -33,6 +34,10 @@ export default class EditPalette extends React.Component<Props> {
     this.dispatch = {
       scale: new Dispatcher(
         () => parent.postMessage({ pluginMessage: { type: 'update-scale', palette } }, '*'),
+        500
+      ),
+      colors: new Dispatcher(
+        () => parent.postMessage({ pluginMessage: { type: 'update-colors', data: this.state['newColors'] } }, '*'),
         500
       )
     };
@@ -46,15 +51,22 @@ export default class EditPalette extends React.Component<Props> {
         hasGuideAbove: false,
         hasGuideBelow: false,
         position: null
-      }
+      },
+      context: 'Scale',
+      newColors: this.props.colors,
     }
   }
 
   // Handlers
   slideHandler = (e: string) => {
     if (e === 'released') {
-      this.dispatch.scale.on.status = false
-      this.props.onScaleChange(palette)
+      this.dispatch.scale.on.status = false;
+      parent.postMessage({ pluginMessage: { type: 'update-scale', palette } }, '*');
+      this.props.onScaleChange()
+    }
+    else if (e === 'customized') {
+      parent.postMessage({ pluginMessage: { type: 'update-scale', palette } }, '*');
+      this.props.onChangeStop()
     }
     else
       this.dispatch.scale.on.status = true
@@ -72,17 +84,209 @@ export default class EditPalette extends React.Component<Props> {
     })
   }
 
-  colorHandler = (e: any) => this.props.onColorChange(e)
+  colorHandler = (e: any) => {
+    let name, colors, id, element;
+    try {
+      element = e.nativeEvent.path.filter(el => {
+        try { return el.classList.contains('colors__item') }
+        catch {}
+      })[0];
+      name = element.id;
+      id = element.getAttribute('data-id')
+    } catch {};
 
-  navHandler = (e: any) => {
-    this.props.onContextChange(e)
-    this.setState({
-      selectedElement: {
-        id: '',
-        position: null
-      }
-    })
+    switch (e.target.dataset.feature) {
+
+      case 'hex':
+        const code = e.target.value.indexOf('#') == -1 ? '#' + e.target.value : e.target.value
+        if (/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/i.test(code)) {
+          colors = this.state['newColors'].map(item => {
+            const rgb = chroma(e.target.value.indexOf('#') == -1 ? '#' + e.target.value : e.target.value)._rgb;
+            if (item.id === id)
+              item.rgb = {
+                r: rgb[0] / 255,
+                g: rgb[1] / 255,
+                b: rgb[2] / 255
+              }
+            return item
+          });
+          this.setState({
+            newColors: colors,
+            onGoingStep: 'color changed'
+          });
+          this.props.onColorChange(colors)
+        };
+        e._reactName === 'onBlur' ? this.dispatch.colors.on.status = false : this.dispatch.colors.on.status = true;
+        break;
+
+      case 'lightness':
+        colors = this.state['newColors'].map(item => {
+          const rgb = chroma(item.rgb.r * 255, item.rgb.g * 255, item.rgb.b * 255).set('lch.l', e.target.value)._rgb
+          if (item.id === id)
+            item.rgb = {
+              r: rgb[0] / 255,
+              g: rgb[1] / 255,
+              b: rgb[2] / 255
+            }
+          return item
+        });
+        this.setState({
+          newColors: colors,
+          onGoingStep: 'color changed'
+        });
+        this.props.onColorChange(colors);
+        parent.postMessage({ pluginMessage: { type: 'update-colors', data: colors } }, '*');
+        break;
+
+      case 'chroma':
+        colors = this.state['newColors'].map(item => {
+          const rgb = chroma(item.rgb.r * 255, item.rgb.g * 255, item.rgb.b * 255).set('lch.c', e.target.value)._rgb
+          if (item.id === id)
+            item.rgb = {
+              r: rgb[0] / 255,
+              g: rgb[1] / 255,
+              b: rgb[2] / 255
+            }
+          return item
+        });
+        this.setState({
+          newColors: colors,
+          onGoingStep: 'color changed'
+        });
+        this.props.onColorChange(colors);
+        parent.postMessage({ pluginMessage: { type: 'update-colors', data: colors } }, '*');
+        break;
+
+      case 'hue':
+        colors = this.state['newColors'].map(item => {
+          const rgb = chroma(item.rgb.r * 255, item.rgb.g * 255, item.rgb.b * 255).set('lch.h', e.target.value)._rgb
+          if (item.id === id)
+            item.rgb = {
+              r: rgb[0] / 255,
+              g: rgb[1] / 255,
+              b: rgb[2] / 255
+            }
+          return item
+        });
+        this.setState({
+          newColors: colors,
+          onGoingStep: 'color changed'
+        });
+        this.props.onColorChange(colors);
+        parent.postMessage({ pluginMessage: { type: 'update-colors', data: colors } }, '*');
+        break;
+
+      case 'remove':
+        colors = this.state['newColors'].filter(item => item.id != id);
+        this.setState({
+          newColors: colors,
+          onGoingStep: 'color changed'
+        });
+        this.props.onColorChange(colors);
+        parent.postMessage({ pluginMessage: { type: 'update-colors', data: colors } }, '*');
+        break;
+
+      case 'add':
+        colors = this.state['newColors'];
+        const hasAlreadyNewUIColor = colors.filter(color => color.name.includes('New UI Color'));
+        colors.push({
+          name: `New UI Color ${hasAlreadyNewUIColor.length + 1}`,
+          rgb: {
+            r: .53,
+            g: .92,
+            b: .97
+          },
+          id: uuidv4(),
+          oklch: false,
+          hueShifting: 0
+        });
+        this.setState({
+          newColors: colors,
+          onGoingStep: 'color changed'
+        });
+        this.props.onColorChange(colors);
+        parent.postMessage({ pluginMessage: { type: 'update-colors', data: colors } }, '*');
+        break;
+
+      case 'rename':
+        const hasSameName = this.state['newColors'].filter(color => color.name === e.target.value);
+        colors = this.state['newColors'].map(item => {
+          if (item.id === id)
+            item.name = hasSameName.length > 1 ? e.target.value + ' 2' : e.target.value
+          return item
+        });
+        this.setState({
+          newColors: colors,
+          onGoingStep: 'color changed'
+        });
+        this.props.onColorChange(colors);
+        e._reactName === 'onBlur' ? parent.postMessage({ pluginMessage: { type: 'update-colors', data: colors } }, '*') : null;
+        e.key === 'Enter' ? parent.postMessage({ pluginMessage: { type: 'update-colors', data: colors } }, '*') : null;
+        break;
+
+      case 'oklch':
+        colors = this.state['newColors'].map(item => {
+          if (item.id === id)
+            item.oklch = e.target.checked
+          return item
+        });
+        this.setState({
+          newColors: colors,
+          onGoingStep: 'color changed'
+        });
+        this.props.onColorChange(colors);
+        parent.postMessage({ pluginMessage: { type: 'update-colors', data: colors } }, '*');
+        break;
+
+      case 'shift-hue':
+        colors = this.state['newColors'].map(item => {
+          if (item.id === id)
+            item.hueShifting = parseFloat(e.target.value)
+          return item
+        });
+        this.setState({
+          newColors: colors,
+          onGoingStep: 'color changed'
+        });
+        this.props.onColorChange(colors);
+        parent.postMessage({ pluginMessage: { type: 'update-colors', data: colors } }, '*')
+
+    }
   }
+
+  orderHandler = () => {
+    const source: any = this.state['selectedElement'],
+          target: any = this.state['hoveredElement'];
+
+    let colors = this.state['newColors'].map(el => el),
+        position;
+
+    const colorsWithoutSource = colors.splice(source.position, 1)[0];
+
+    if (target.hasGuideAbove && target.position > source.position)
+      position = parseFloat(target.position) - 1
+    else if (target.hasGuideBelow && target.position > source.position)
+      position = parseFloat(target.position)
+    else if (target.hasGuideAbove && target.position < source.position)
+      position = parseFloat(target.position)
+    else if (target.hasGuideBelow && target.position < source.position)
+      position = parseFloat(target.position) + 1
+    else
+      position = parseFloat(target.position);
+
+    colors.splice(position, 0, colorsWithoutSource);
+    this.setState({
+      newColors: colors,
+      onGoingStep: 'color changed'
+    });
+    this.props.onColorChange(colors);
+    parent.postMessage({ pluginMessage: { type: 'update-colors', data: colors } }, '*')
+  }
+
+  navHandler = (e: any) => this.setState({
+    context: e.target.innerText,
+    onGoingStep: 'tab changed'
+  })
 
   selectionHandler = (e: any) => {
     const target: HTMLElement = e.currentTarget,
@@ -115,12 +319,12 @@ export default class EditPalette extends React.Component<Props> {
           parentRefBottom: number = parentRefTop + parent.clientHeight;
 
     if (e.pageY + scrollY < parentRefTop)
-      this.props.onOrderChange(this.state['selectedElement'], this.state['hoveredElement'])
+      this.orderHandler()
     else if (e.pageY + scrollY > parentRefBottom)
-      this.props.onOrderChange(this.state['selectedElement'], this.state['hoveredElement'])
+      this.orderHandler()
   }
 
-  dropHandler = (e: any) => this.props.onOrderChange(this.state['selectedElement'], this.state['hoveredElement'])
+  settingsHandler = (e: any) => this.props.onSettingsChange(e)
 
   unSelectColor = (e: any) => {
     e.target.closest('li.colors__item') == null ? this.setState({
@@ -164,45 +368,33 @@ export default class EditPalette extends React.Component<Props> {
     palette.captions = this.props.hasCaptions;
     let actions, controls;
 
-    if (this.props.context === 'Export')
+    if (this.state['context'] === 'Export')
       actions =
         <Actions
           context='export'
-          hasCaptions={null}
           exportType= {this.props.export.format}
-          onCreatePalette={null}
-          onCreateLocalColors={null}
-          onUpdateLocalColors={null}
-          onChangeCaptions={null}
           onExportPalette={this.onExport}
         />
-      else if (this.props.context === 'About')
+      else if (this.state['context'] === 'About')
         actions = null
       else
         actions =
           <Actions
             context='edit'
             hasCaptions={this.props.hasCaptions}
-            exportType= {null}
-            onCreatePalette={null}
             onCreateLocalColors={this.onCreate}
             onUpdateLocalColors={this.onUpdate}
             onChangeCaptions={this.checkHandler}
-            onExportPalette={null}
           />
 
-    switch (this.props.context) {
+    switch (this.state['context']) {
       case 'Scale':
         controls =
           <Scale
             hasPreset={false}
             preset={this.props.preset}
             scale={this.props.scale}
-            onChangePreset={null}
             onScaleChange={this.slideHandler}
-            onAddScale={null}
-            onRemoveScale={null}
-            onGoingStep={null}
           />;
         break;
 
@@ -217,7 +409,7 @@ export default class EditPalette extends React.Component<Props> {
             onSelectionChange={this.selectionHandler}
             onDragChange={this.dragHandler}
             onDropOutside={this.dropOutsideHandler}
-            onOrderChange={this.dropHandler}
+            onOrderChange={this.orderHandler}
           />;
         break;
 
@@ -228,6 +420,14 @@ export default class EditPalette extends React.Component<Props> {
           />;
         break;
 
+      case 'Settings':
+        controls =
+          <Settings
+            paletteName={this.props.paletteName}
+            onSettingsChange={this.settingsHandler}
+          />;
+        break;
+
       case 'About':
         controls = <About />
     }
@@ -235,14 +435,14 @@ export default class EditPalette extends React.Component<Props> {
     return (
       <>
         <Tabs
-          primaryTabs={['Scale', 'Colors', 'Export']}
+          primaryTabs={['Scale', 'Colors', 'Export', 'Settings']}
           secondaryTabs={['About']}
-          active={this.props.context}
+          active={this.state['context']}
           onClick={this.navHandler}
         />
         <section
           onClick={this.unSelectColor}
-          className={this.props.context === 'Colors' ? 'section--scrollable' : ''}
+          className={this.state['context'] === 'Colors' ? 'section--scrollable' : ''}
         >
           <div className='controls'>
             {controls}
