@@ -26,7 +26,7 @@ export default class About extends React.Component<Props> {
             <div className='about__links'>
               <button className='button button--tertiary'><a href='https://github.com/inVoltag/figma-ui-color-palette#readme' target='_blank'>Read the documentation</a></button>
               ﹒
-              <button className='button button--tertiary'><a href='mailto:a.grimaud@involt.io' target='_blank'>Send an email</a></button>
+              <button className='button button--tertiary'><a href='mailto:hello@ui-color-palette.com' target='_blank'>Send an email</a></button>
             </div>
           </div>
           <div>
@@ -38,7 +38,7 @@ export default class About extends React.Component<Props> {
           <div>
             <div className='type type--bold'>Give support</div>
             <div className='about__links'>
-              <button className='button button--tertiary'><a href='https://twitter.com/a_ng_d' target='_blank'>Follow my thoughts</a></button>
+              <button className='button button--tertiary'><a href='https://twitter.com/a_ng_d' target='_blank'>Follow my activity</a></button>
               ﹒
               <button className='button button--tertiary'><a href='https://www.buymeacoffee.com/a_ng_d' target='_blank'>Buy me a coffee</a></button>
             </div>
