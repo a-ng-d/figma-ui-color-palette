@@ -16,7 +16,7 @@ export default class About extends React.Component<Props> {
             <Icon size={32} />
             <div>
               <div className='type type--xlarge'>UI Color Palette</div>
-              <div className='type'>{`Version ${package_json.version.slice(0, 2)}`}</div>
+              <div className='type'>{`Version ${package_json.version.slice(0, 1) + package_json.version.slice(2, 3)}`}</div>
             </div>
             <p className='type'>Created and maintained by <a href='https://an.gd' target='_blank'>Aurélien Grimaud</a></p>
         </div>
