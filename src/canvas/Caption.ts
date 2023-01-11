@@ -27,6 +27,10 @@ export default class Caption {
     return Math.max(chroma.contrast(this.rgb, '#FFF'), chroma.contrast(this.rgb, '#000'))
   }
 
+  getAPCAConstrast() {
+    return chroma.contrast(this.rgb, '#FFF') < chroma.contrast(this.rgb, '#000') ? APCAcontrast(sRGBtoY([0, 0, 0, 1]), sRGBtoY(this.rgb)) : APCAcontrast(sRGBtoY([255, 255, 255, 1]), sRGBtoY(this.rgb))
+  }
+
   getLevel() {
     return this.getContrast() < 4.5 ? 'A'
          : this.getContrast() >= 4.5 && this.getContrast() < 7 ? 'AA'
