@@ -38,7 +38,7 @@ export default class Caption {
   }
 
   getCaptionColor() {
-    return chroma.contrast(this.rgb, '#FFF') < chroma.contrast(this.rgb, '#000') ? [0, 0, 0] : [1, 1, 1];
+    return chroma.contrast(this.rgb, '#FFF') < chroma.contrast(this.rgb, '#000') ? [0, 0, 0] : [1, 1, 1]
   }
 
   doContent() {
