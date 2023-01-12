@@ -113,6 +113,8 @@ export default class Caption {
     this.nodeBasics.layoutAlign = 'STRETCH';
     this.nodeBasics.itemSpacing = 4;
 
+    this.nodeBasics.appendChild(this.makeNodeTag('_hex', this.hex.toUpperCase(), 8));
+
     return this.nodeBasics
   }
 
