@@ -16,7 +16,7 @@ export default class Caption {
   nodeProperties: TextNode;
   node: FrameNode;
 
-  constructor(name, rgb) {
+  constructor(name: string, rgb: Array<number>) {
     this.name = name;
     this.rgb = rgb;
     this.hex = chroma(rgb).hex();
@@ -134,7 +134,7 @@ export default class Caption {
     return this.nodeContrastScores
   }
 
-  makeNode(type) {
+  makeNode(type: string) {
     // base
     this.node.name = '_captions';
     this.node.fills = [];
