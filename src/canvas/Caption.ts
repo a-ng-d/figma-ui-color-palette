@@ -59,9 +59,6 @@ export default class Caption {
     this.nodeTop.counterAxisSizingMode = 'AUTO';
     this.nodeTop.layoutAlign = 'STRETCH';
 
-    this.nodeTop.appendChild(this.makeNodeScale());
-    this.nodeTop.appendChild(this.makeNodeBasics());
-
     return this.nodeTop
   }
 
@@ -151,14 +148,18 @@ export default class Caption {
     this.node.layoutGrow = 1;
 
     if (type === 'SAMPLE') {
-      this.nodeName.remove();
-      this.node.appendChild(this.makeNodeScale());
-      this.node.appendChild(this.makeNodeProperties());
+      this.node.appendChild(this.makeNodeTop());
+        this.nodeTop.appendChild(this.makeNodeScale());
+        this.nodeTop.appendChild(this.makeNodeBasics());
+      this.node.appendChild(this.makeNodeBottom());
     }
     else if (type === 'NAME') {
-      this.nodeScale.remove();
-      this.nodeProperties.remove();
-      this.node.appendChild(this.makeName(fontSize))
+      this.node.appendChild(this.makeNodeTop());
+        this.nodeTop.appendChild(new Tag('_color-name', this.name, 10).makeNodeTag())
+    }
+    else if (type === 'TITLE') {
+      this.node.appendChild(this.makeNodeTop());
+        this.nodeTop.appendChild(new Tag('_title', this.name, 16).makeNodeTag())
     };
 
     return this.node
