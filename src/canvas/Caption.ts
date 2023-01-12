@@ -67,7 +67,7 @@ export default class Caption {
     this.nodeTop.layoutAlign = 'STRETCH';
 
     this.nodeTop.appendChild(this.makeNodeScale());
-    this.nodeTop.appendChild(this.makeNodeBasics())
+    this.nodeTop.appendChild(this.makeNodeBasics());
 
     return this.nodeTop
   }
