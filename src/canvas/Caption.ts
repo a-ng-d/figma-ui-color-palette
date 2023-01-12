@@ -10,7 +10,6 @@ export default class Caption {
   lch: Array<number>;
   nodeTop: FrameNode;
   nodeBottom: FrameNode;
-  nodeScale: FrameNode;
   nodeBasics: FrameNode;
   nodeContrastScores: FrameNode;
   nodeProperties: TextNode;
@@ -23,7 +22,6 @@ export default class Caption {
     this.lch = chroma(rgb).lch();
     this.nodeTop = figma.createFrame();
     this.nodeBottom = figma.createFrame();
-    this.nodeScale = figma.createFrame();
     this.nodeBasics = figma.createFrame();
     this.nodeContrastScores = figma.createFrame();
     this.nodeProperties = figma.createText();
@@ -77,23 +75,6 @@ export default class Caption {
     this.nodeBottom.appendChild(this.makeNodeContrastScores());
 
     return this.nodeBottom
-  }
-
-  makeNodeScale() {
-    // base
-    this.nodeScale.name = '_scale';
-    this.nodeScale.fills = [];
-
-    // layout
-    this.nodeScale.layoutMode = 'VERTICAL';
-    this.nodeScale.primaryAxisSizingMode = 'AUTO';
-    this.nodeScale.counterAxisSizingMode = 'AUTO';
-    this.nodeScale.layoutAlign = 'STRETCH';
-
-    // insert
-    this.nodeScale.appendChild(new Tag('_scale', this.name, 10).makeNodeTag());
-
-    return this.nodeScale
   }
 
   makeNodeBasics() {
@@ -154,7 +135,7 @@ export default class Caption {
     // insert
     if (type === 'SAMPLE') {
       this.node.appendChild(this.makeNodeTop());
-        this.nodeTop.appendChild(this.makeNodeScale());
+        this.nodeTop.appendChild(new Tag('_scale', this.name, 10).makeNodeTag());
         this.nodeTop.appendChild(this.makeNodeBasics());
       this.node.appendChild(this.makeNodeBottom());
     }
