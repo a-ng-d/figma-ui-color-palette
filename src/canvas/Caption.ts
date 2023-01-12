@@ -68,12 +68,12 @@ export default class Caption {
     this.nodeTag.verticalPadding = 4;
     this.nodeTag.itemSpacing = 4;
 
-    this.node.appendChild(this.makeText(content, fontSize));
+    this.node.appendChild(this.makeNodeText(content, fontSize));
 
     return this.nodeTag
   }
 
-  makeText(content, fontSize) {
+  makeNodeText(content, fontSize) {
     // base
     this.nodeText.name = '_text';
     this.nodeText.characters = content;
