@@ -73,6 +73,7 @@ export default class Caption {
     this.nodeBottom.counterAxisSizingMode = 'FIXED';
     this.nodeBottom.layoutAlign = 'STRETCH';
 
+    // insert
     this.nodeBottom.appendChild(this.makeNodeContrastScores());
 
     return this.nodeBottom
@@ -89,6 +90,7 @@ export default class Caption {
     this.nodeScale.counterAxisSizingMode = 'AUTO';
     this.nodeScale.layoutAlign = 'STRETCH';
 
+    // insert
     this.nodeScale.appendChild(new Tag('_scale', this.name, 10).makeNodeTag());
 
     return this.nodeScale
@@ -107,6 +109,7 @@ export default class Caption {
     this.nodeBasics.layoutAlign = 'STRETCH';
     this.nodeBasics.itemSpacing = 4;
 
+    // insert
     this.nodeBasics.appendChild(new Tag('_hex', this.hex.toUpperCase(), 8).makeNodeTag());
     this.nodeBasics.appendChild(new Tag('_rgb', `R ${Math.floor(this.rgb[0])} • G ${Math.floor(this.rgb[1])} • B ${Math.floor(this.rgb[2])}`, 8).makeNodeTag());
     this.nodeBasics.appendChild(new Tag('_lch', `L ${Math.floor(this.lch[0])} • C ${Math.floor(this.lch[1])} • H ${Math.floor(this.lch[2])}`, 8).makeNodeTag());
@@ -126,6 +129,7 @@ export default class Caption {
     this.nodeContrastScores.layoutAlign = 'STRETCH';
     this.nodeContrastScores.itemSpacing = 4;
 
+    // insert
     this.nodeContrastScores.appendChild(new Tag('_wcag21-black', `${this.getContrast('BLACK').toFixed(2)} • ${this.getLevel('BLACK')}`, 8).makeNodeTag('BLACK'));
     this.nodeContrastScores.appendChild(new Tag('_wcag21-white', `${this.getContrast('WHITE').toFixed(2)} • ${this.getLevel('WHITE')}`, 8).makeNodeTag('WHITE'));
     this.nodeContrastScores.appendChild(new Tag('_apca-black', `Lc ${this.getAPCAContrast('BLACK').toFixed(1)} • ${this.getMinFontSizes('BLACK')[4]}pt (400)`, 8).makeNodeTag('BLACK'));
@@ -147,6 +151,7 @@ export default class Caption {
     this.node.layoutAlign = 'STRETCH';
     this.node.layoutGrow = 1;
 
+    // insert
     if (type === 'SAMPLE') {
       this.node.appendChild(this.makeNodeTop());
         this.nodeTop.appendChild(this.makeNodeScale());
