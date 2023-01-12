@@ -116,7 +116,7 @@ export default class Caption {
     return this.nodeBasics
   }
 
-  makeNodeTag(property, content, fontSize) {
+  makeNodeTag(property: string, content: string, fontSize: number) {
     // base
     this.nodeTag.name = property;
     this.nodeTag.fills = [{
@@ -140,7 +140,7 @@ export default class Caption {
     return this.nodeTag
   }
 
-  makeNodeText(content, fontSize) {
+  makeNodeText(content: string, fontSize: number) {
     // base
     this.nodeText.name = '_text';
     this.nodeText.characters = content;
@@ -161,7 +161,7 @@ export default class Caption {
     return this.nodeText
   }
 
-  makeName(fontSize) {
+  makeName(fontSize: number) {
     this.nodeName.name = '_color-name';
     this.nodeName.characters = this.name;
     this.nodeName.fontName = {
