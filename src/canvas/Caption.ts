@@ -1,5 +1,5 @@
 import chroma from 'chroma-js';
-import { APCAcontrast, sRGBtoY } from 'apca-w3';
+import { APCAcontrast, sRGBtoY, fontLookupAPCA } from 'apca-w3';
 import Tag from './Tag';
 
 export default class Caption {
@@ -33,11 +33,11 @@ export default class Caption {
   }
 
   getContrast(textColor: string) {
-    return chroma.contrast(this.rgb, textColor === 'BLACK' ? '#000' : '#FFF').toFixed(2)
+    return chroma.contrast(this.rgb, textColor === 'BLACK' ? '#000' : '#FFF')
   }
 
-  getAPCAConstrast(textColor: string) {
-    return APCAcontrast(sRGBtoY(textColor === 'BLACK' ? [0, 0, 0, 1] : [255, 255, 255, 1]), sRGBtoY(this.rgb)).toFixed(1)
+  getAPCAContrast(textColor: string) {
+    return APCAcontrast(sRGBtoY(textColor === 'BLACK' ? [0, 0, 0, 1] : [255, 255, 255, 1]), sRGBtoY(this.rgb))
   }
 
   getLevel(textColor: string) {
@@ -46,12 +46,8 @@ export default class Caption {
          : 'AAA'
   }
 
-  getCaptionColor() {
-    return chroma.contrast(this.rgb, '#FFF') < chroma.contrast(this.rgb, '#000') ? [0, 0, 0] : [1, 1, 1]
-  }
-
-  doContent() {
-    return `${this.hex.toUpperCase()}\nR ${Math.floor(this.rgb[0])} • G ${Math.floor(this.rgb[1])} • B ${Math.floor(this.rgb[2])}\nL ${Math.floor(this.lch[0])} • C ${Math.floor(this.lch[1])} • H ${Math.floor(this.lch[2])}\n${this.getLevel()} • ${this.getContrast().toFixed(2)} : 1\nLc ${this.getAPCAConstrast().toFixed(1)}`
+  getMinFontSizes(textColor: string) {
+    return fontLookupAPCA(this.getAPCAContrast(textColor))
   }
 
   makeNodeTop() {
@@ -135,15 +131,15 @@ export default class Caption {
     this.nodeContrastScores.layoutAlign = 'STRETCH';
     this.nodeContrastScores.itemSpacing = 4;
 
-    this.nodeContrastScores.appendChild(new Tag('_wcag21-black', `${this.getContrast('BLACK')} • ${this.getLevel('BLACK')}`, 8).makeNodeTag('BLACK'));
-    this.nodeContrastScores.appendChild(new Tag('_wcag21-white', `${this.getContrast('WHITE')} • ${this.getLevel('WHITE')}`, 8).makeNodeTag('WHITE'));
-    this.nodeContrastScores.appendChild(new Tag('_apca-black', `Lc ${this.getAPCAConstrast('BLACK')}`, 8).makeNodeTag('BLACK'));
-    this.nodeContrastScores.appendChild(new Tag('_apca-white', `Lc ${this.getAPCAConstrast('WHITE')}`, 8).makeNodeTag('WHITE'));
+    this.nodeContrastScores.appendChild(new Tag('_wcag21-black', `${this.getContrast('BLACK').toFixed(2)} • ${this.getLevel('BLACK')}`, 8).makeNodeTag('BLACK'));
+    this.nodeContrastScores.appendChild(new Tag('_wcag21-white', `${this.getContrast('WHITE').toFixed(2)} • ${this.getLevel('WHITE')}`, 8).makeNodeTag('WHITE'));
+    this.nodeContrastScores.appendChild(new Tag('_apca-black', `Lc ${this.getAPCAContrast('BLACK').toFixed(1)} • ${this.getMinFontSizes('BLACK')[4]}pt (400)`, 8).makeNodeTag('BLACK'));
+    this.nodeContrastScores.appendChild(new Tag('_apca-white', `Lc ${this.getAPCAContrast('WHITE').toFixed(1)} • ${this.getMinFontSizes('WHITE')[4]}pt (400)`, 8).makeNodeTag('WHITE'));
 
     return this.nodeContrastScores
   }
 
-  makeName(fontSize: number) {
+  /*makeName(fontSize: number) {
     this.nodeName.name = '_color-name';
     this.nodeName.characters = this.name;
     this.nodeName.fontName = {
@@ -163,7 +159,7 @@ export default class Caption {
     this.nodeName.layoutGrow = 1;
 
     return this.nodeName
-  }
+  }*/
 
   /*makeNodeScale() {
     // base
