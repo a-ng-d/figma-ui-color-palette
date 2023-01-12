@@ -25,22 +25,23 @@ export default class Caption {
     this.nodeBottom = figma.createFrame();
     this.nodeScale = figma.createFrame();
     this.nodeBasics = figma.createFrame();
+    this.nodeContrastScores = figma.createFrame();
     this.nodeProperties = figma.createText();
     this.nodeName = figma.createText();
     this.node = figma.createFrame()
   }
 
-  getContrast() {
-    return Math.max(chroma.contrast(this.rgb, '#FFF'), chroma.contrast(this.rgb, '#000'))
+  getContrast(textColor: string) {
+    return chroma.contrast(this.rgb, textColor === 'BLACK' ? '#000' : '#FFF').toFixed(2)
   }
 
-  getAPCAConstrast() {
-    return chroma.contrast(this.rgb, '#FFF') < chroma.contrast(this.rgb, '#000') ? APCAcontrast(sRGBtoY([0, 0, 0, 1]), sRGBtoY(this.rgb)) : APCAcontrast(sRGBtoY([255, 255, 255, 1]), sRGBtoY(this.rgb))
+  getAPCAConstrast(textColor: string) {
+    return APCAcontrast(sRGBtoY(textColor === 'BLACK' ? [0, 0, 0, 1] : [1, 1, 1, 1]), sRGBtoY(this.rgb)).toFixed(1)
   }
 
-  getLevel() {
-    return this.getContrast() < 4.5 ? 'A'
-         : this.getContrast() >= 4.5 && this.getContrast() < 7 ? 'AA'
+  getLevel(textColor: string) {
+    return this.getContrast(textColor) < 4.5 ? 'A'
+         : this.getContrast(textColor) >= 4.5 && this.getContrast(textColor) < 7 ? 'AA'
          : 'AAA'
   }
 
@@ -80,6 +81,8 @@ export default class Caption {
     this.nodeBottom.counterAxisSizingMode = 'FIXED';
     this.nodeBottom.layoutAlign = 'STRETCH';
 
+    this.nodeBottom.appendChild(this.makeNodeContrastScores());
+
     return this.nodeBottom
   }
 
@@ -117,6 +120,26 @@ export default class Caption {
     this.nodeBasics.appendChild(new Tag('_lch', `L ${Math.floor(this.lch[0])} • C ${Math.floor(this.lch[1])} • H ${Math.floor(this.lch[2])}`, 8).makeNodeTag());
 
     return this.nodeBasics
+  }
+
+  makeNodeContrastScores() {
+    // base
+    this.nodeContrastScores.name = '_contrast-scores';
+    this.nodeContrastScores.fills = [];
+
+    // layout
+    this.nodeContrastScores.layoutMode = 'VERTICAL';
+    this.nodeContrastScores.primaryAxisSizingMode = 'AUTO';
+    this.nodeContrastScores.counterAxisSizingMode = 'FIXED';
+    this.nodeContrastScores.layoutAlign = 'STRETCH';
+    this.nodeContrastScores.itemSpacing = 4;
+
+    this.nodeContrastScores.appendChild(new Tag('_wcag21-black', `${this.getContrast('BLACK')} • ${this.getLevel('BLACK')}`, 8).makeNodeTag(true, false));
+    this.nodeContrastScores.appendChild(new Tag('_wcag21-white', `${this.getContrast('WHITE')} • ${this.getLevel('WHITE')}`, 8).makeNodeTag(false, true));
+    this.nodeContrastScores.appendChild(new Tag('_apca-black', `Lc ${this.getAPCAConstrast('BLACK')}`, 8).makeNodeTag(true, false));
+    this.nodeContrastScores.appendChild(new Tag('_apca-white', `Lc ${this.getAPCAConstrast('WHITE')}`, 8).makeNodeTag(false, true));
+
+    return this.nodeContrastScores
   }
 
   makeName(fontSize: number) {
