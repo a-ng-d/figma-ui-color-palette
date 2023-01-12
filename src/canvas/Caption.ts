@@ -37,7 +37,7 @@ export default class Caption {
   }
 
   getAPCAConstrast(textColor: string) {
-    return APCAcontrast(sRGBtoY(textColor === 'BLACK' ? [0, 0, 0, 1] : [1, 1, 1, 1]), sRGBtoY(this.rgb)).toFixed(1)
+    return APCAcontrast(sRGBtoY(textColor === 'BLACK' ? [0, 0, 0, 1] : [255, 255, 255, 1]), sRGBtoY(this.rgb)).toFixed(1)
   }
 
   getLevel(textColor: string) {
