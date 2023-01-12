@@ -128,14 +128,17 @@ export default class Caption {
         b: 1
       }
     }];
+    this.nodeTag.cornerRadius = 16;
 
     // layout
     this.nodeTag.layoutMode = 'HORIZONTAL';
-    this.nodeTag.horizontalPadding = 2;
-    this.nodeTag.verticalPadding = 4;
+    this.nodeTag.primaryAxisSizingMode = 'AUTO';
+    this.nodeTag.counterAxisSizingMode = 'AUTO';
+    this.nodeTag.horizontalPadding = 4;
+    this.nodeTag.verticalPadding = 2;
     this.nodeTag.itemSpacing = 4;
 
-    this.node.appendChild(this.makeNodeText(content, fontSize));
+    this.nodeTag.appendChild(this.makeNodeText(content, fontSize));
 
     return this.nodeTag
   }
