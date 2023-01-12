@@ -7,6 +7,8 @@ export default class Caption {
   rgb: Array<number>;
   hex: string;
   lch: Array<number>;
+  nodeTop: FrameNode;
+  nodeBottom: FrameNode;
   nodeScale: TextNode;
   nodeProperties: TextNode;
   nodeName: TextNode;
@@ -19,6 +21,8 @@ export default class Caption {
     this.rgb = rgb;
     this.hex = chroma(rgb).hex();
     this.lch = chroma(rgb).lch();
+    this.nodeTop = figma.createFrame();
+    this.nodeBottom = figma.createFrame();
     this.nodeScale = figma.createText();
     this.nodeProperties = figma.createText();
     this.nodeName = figma.createText();
@@ -49,7 +53,35 @@ export default class Caption {
     return `${this.hex.toUpperCase()}\nR ${Math.floor(this.rgb[0])} • G ${Math.floor(this.rgb[1])} • B ${Math.floor(this.rgb[2])}\nL ${Math.floor(this.lch[0])} • C ${Math.floor(this.lch[1])} • H ${Math.floor(this.lch[2])}\n${this.getLevel()} • ${this.getContrast().toFixed(2)} : 1\nLc ${this.getAPCAConstrast().toFixed(1)}`
   }
 
-  makeTag(property, content, fontSize) {
+  makeNodeTop() {
+    // base
+    this.nodeTop.name = '_top';
+    this.nodeTop.fills = [];
+
+    // layout
+    this.nodeTop.layoutMode = 'HORIZONTAL';
+    this.nodeTop.primaryAxisSizingMode = 'FIXED';
+    this.nodeTop.counterAxisSizingMode = 'AUTO';
+    this.nodeTop.layoutAlign = 'STRETCH';
+
+    return this.nodeTop
+  }
+
+  makeNodeBottom() {
+    // base
+    this.nodeBottom.name = '_bottom';
+    this.nodeBottom.fills = [];
+
+    // layout
+    this.nodeBottom.layoutMode = 'VERTICAL';
+    this.nodeBottom.primaryAxisSizingMode = 'AUTO';
+    this.nodeBottom.counterAxisSizingMode = 'FIXED';
+    this.nodeBottom.layoutAlign = 'STRETCH';
+
+    return this.nodeBottom
+  }
+
+  makeNodeTag(property, content, fontSize) {
     // base
     this.nodeTag.name = property;
     this.nodeTag.fills = [{
