@@ -34,6 +34,7 @@ export default class Tag {
     this.nodeTag.layoutMode = 'HORIZONTAL';
     this.nodeTag.primaryAxisSizingMode = 'AUTO';
     this.nodeTag.counterAxisSizingMode = 'AUTO';
+    this.nodeTag.counterAxisAlignItems = 'CENTER';
     this.nodeTag.horizontalPadding = 4;
     this.nodeTag.verticalPadding = 2;
     this.nodeTag.itemSpacing = 4;
