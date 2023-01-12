@@ -10,6 +10,8 @@ export default class Caption {
   nodeScale: TextNode;
   nodeProperties: TextNode;
   nodeName: TextNode;
+  nodeTag: FrameNode;
+  nodeText: TextNode;
   node: FrameNode;
 
   constructor(name, rgb) {
@@ -20,6 +22,8 @@ export default class Caption {
     this.nodeScale = figma.createText();
     this.nodeProperties = figma.createText();
     this.nodeName = figma.createText();
+    this.nodeTag = figma.createFrame();
+    this.nodeText = figma.createText();
     this.node = figma.createFrame()
   }
 
@@ -43,6 +47,51 @@ export default class Caption {
 
   doContent() {
     return `${this.hex.toUpperCase()}\nR ${Math.floor(this.rgb[0])} • G ${Math.floor(this.rgb[1])} • B ${Math.floor(this.rgb[2])}\nL ${Math.floor(this.lch[0])} • C ${Math.floor(this.lch[1])} • H ${Math.floor(this.lch[2])}\n${this.getLevel()} • ${this.getContrast().toFixed(2)} : 1\nLc ${this.getAPCAConstrast().toFixed(1)}`
+  }
+
+  makeTag(property, content, fontSize) {
+    // base
+    this.nodeTag.name = property;
+    this.nodeTag.fills = [{
+      type: 'SOLID',
+      opacity: .5,
+      color: {
+        r: 1,
+        g: 1,
+        b: 1
+      }
+    }];
+
+    // layout
+    this.nodeTag.layoutMode = 'HORIZONTAL';
+    this.nodeTag.paddingTop = this.nodeTag.paddingBottom = 2;
+    this.nodeTag.paddingRight = this.nodeTag.paddingLeft = 4;
+    this.nodeTag.itemSpacing = 4;
+
+    this.node.appendChild(this.makeText(content, fontSize));
+
+    return this.nodeTag
+  }
+
+  makeText(content, fontSize) {
+    // base
+    this.nodeText.name = '_text';
+    this.nodeText.characters = content;
+    this.nodeText.fontName = {
+      family: 'Roboto Mono',
+      style: 'Medium'
+    };
+    this.nodeText.fontSize = fontSize;
+    this.nodeText.fills = [{
+      type: 'SOLID',
+      color: {
+        r: 0,
+        g: 0,
+        b: 0
+      }
+    }];
+
+    return this.nodeText
   }
 
   makeName(fontSize) {
