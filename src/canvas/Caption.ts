@@ -12,6 +12,7 @@ export default class Caption {
   nodeBottom: FrameNode;
   nodeScale: FrameNode;
   nodeBasics: FrameNode;
+  nodeContrastScores: FrameNode;
   nodeProperties: TextNode;
   nodeName: TextNode;
   node: FrameNode;
@@ -94,7 +95,7 @@ export default class Caption {
     // layout
     this.nodeScale.layoutMode = 'VERTICAL';
     this.nodeScale.primaryAxisSizingMode = 'AUTO';
-    this.nodeScale.counterAxisSizingMode = 'FIXED';
+    this.nodeScale.counterAxisSizingMode = 'AUTO';
     this.nodeScale.layoutAlign = 'STRETCH';
 
     this.nodeScale.appendChild(new Tag('_scale', this.name, 10).makeNodeTag());
@@ -134,10 +135,10 @@ export default class Caption {
     this.nodeContrastScores.layoutAlign = 'STRETCH';
     this.nodeContrastScores.itemSpacing = 4;
 
-    this.nodeContrastScores.appendChild(new Tag('_wcag21-black', `${this.getContrast('BLACK')} • ${this.getLevel('BLACK')}`, 8).makeNodeTag(true, false));
-    this.nodeContrastScores.appendChild(new Tag('_wcag21-white', `${this.getContrast('WHITE')} • ${this.getLevel('WHITE')}`, 8).makeNodeTag(false, true));
-    this.nodeContrastScores.appendChild(new Tag('_apca-black', `Lc ${this.getAPCAConstrast('BLACK')}`, 8).makeNodeTag(true, false));
-    this.nodeContrastScores.appendChild(new Tag('_apca-white', `Lc ${this.getAPCAConstrast('WHITE')}`, 8).makeNodeTag(false, true));
+    this.nodeContrastScores.appendChild(new Tag('_wcag21-black', `${this.getContrast('BLACK')} • ${this.getLevel('BLACK')}`, 8).makeNodeTag('BLACK'));
+    this.nodeContrastScores.appendChild(new Tag('_wcag21-white', `${this.getContrast('WHITE')} • ${this.getLevel('WHITE')}`, 8).makeNodeTag('WHITE'));
+    this.nodeContrastScores.appendChild(new Tag('_apca-black', `Lc ${this.getAPCAConstrast('BLACK')}`, 8).makeNodeTag('BLACK'));
+    this.nodeContrastScores.appendChild(new Tag('_apca-white', `Lc ${this.getAPCAConstrast('WHITE')}`, 8).makeNodeTag('WHITE'));
 
     return this.nodeContrastScores
   }

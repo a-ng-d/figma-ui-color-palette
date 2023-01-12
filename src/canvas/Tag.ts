@@ -16,7 +16,7 @@ export default class Tag {
     this.nodeIndicator = figma.createEllipse()
   }
 
-  makeNodeTag(hasBlackIndicator: boolean = false, hasWhiteIndicator: boolean = false) {
+  makeNodeTag(textColor: string | null = null) {
     // base
     this.nodeTag.name = this.name;
     this.nodeTag.fills = [{
@@ -39,8 +39,8 @@ export default class Tag {
     this.nodeTag.verticalPadding = 2;
     this.nodeTag.itemSpacing = 4;
 
-    hasBlackIndicator ? this.nodeTag.appendChild(this.makeNodeIndicator('BLACK')) : null;
-    hasWhiteIndicator ? this.nodeTag.appendChild(this.makeNodeIndicator('WHITE')) : null;
+    textColor === 'BLACK' ? this.nodeTag.appendChild(this.makeNodeIndicator('BLACK')) : null;
+    textColor === 'WHITE' ? this.nodeTag.appendChild(this.makeNodeIndicator('WHITE')) : null;
     this.nodeTag.appendChild(this.makeNodeText());
 
     return this.nodeTag
