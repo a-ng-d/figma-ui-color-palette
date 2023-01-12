@@ -94,6 +94,8 @@ export default class Caption {
     this.nodeScale.counterAxisSizingMode = 'FIXED';
     this.nodeScale.layoutAlign = 'STRETCH';
 
+    this.nodeScale.appendChild(new Tag('_scale', this.name, 10).makeNodeTag());
+
     return this.nodeScale
   }
 
