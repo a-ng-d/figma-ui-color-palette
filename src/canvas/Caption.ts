@@ -1,5 +1,6 @@
 import chroma from 'chroma-js';
 import { APCAcontrast, sRGBtoY } from 'apca-w3';
+import Tag from './Tag';
 
 export default class Caption {
 
@@ -13,8 +14,6 @@ export default class Caption {
   nodeBasics: FrameNode;
   nodeProperties: TextNode;
   nodeName: TextNode;
-  nodeTag: FrameNode;
-  nodeText: TextNode;
   node: FrameNode;
 
   constructor(name, rgb) {
@@ -28,8 +27,6 @@ export default class Caption {
     this.nodeBasics = figma.createFrame();
     this.nodeProperties = figma.createText();
     this.nodeName = figma.createText();
-    this.nodeTag = figma.createFrame();
-    this.nodeText = figma.createText();
     this.node = figma.createFrame()
   }
 
@@ -113,59 +110,11 @@ export default class Caption {
     this.nodeBasics.layoutAlign = 'STRETCH';
     this.nodeBasics.itemSpacing = 4;
 
-    this.nodeBasics.appendChild(this.makeNodeTag('_hex', this.hex.toUpperCase(), 8));
-    this.nodeBasics.appendChild(this.makeNodeTag('_rgb', `R ${Math.floor(this.rgb[0])} • G ${Math.floor(this.rgb[1])} • B ${Math.floor(this.rgb[2])}`, 8));
-    this.nodeBasics.appendChild(this.makeNodeTag('_lch', `L ${Math.floor(this.lch[0])} • C ${Math.floor(this.lch[1])} • H ${Math.floor(this.lch[2])}`, 8));
+    this.nodeBasics.appendChild(new Tag('_hex', this.hex.toUpperCase(), 8).makeNodeTag());
+    this.nodeBasics.appendChild(new Tag('_rgb', `R ${Math.floor(this.rgb[0])} • G ${Math.floor(this.rgb[1])} • B ${Math.floor(this.rgb[2])}`, 8).makeNodeTag());
+    this.nodeBasics.appendChild(new Tag('_lch', `L ${Math.floor(this.lch[0])} • C ${Math.floor(this.lch[1])} • H ${Math.floor(this.lch[2])}`, 8).makeNodeTag());
 
     return this.nodeBasics
-  }
-
-  makeNodeTag(property: string, content: string, fontSize: number) {
-    // base
-    this.nodeTag.name = property;
-    this.nodeTag.fills = [{
-      type: 'SOLID',
-      opacity: .5,
-      color: {
-        r: 1,
-        g: 1,
-        b: 1
-      }
-    }];
-    this.nodeTag.cornerRadius = 16;
-
-    // layout
-    this.nodeTag.layoutMode = 'HORIZONTAL';
-    this.nodeTag.primaryAxisSizingMode = 'AUTO';
-    this.nodeTag.counterAxisSizingMode = 'AUTO';
-    this.nodeTag.horizontalPadding = 4;
-    this.nodeTag.verticalPadding = 2;
-    this.nodeTag.itemSpacing = 4;
-
-    this.nodeTag.appendChild(this.makeNodeText(content, fontSize));
-
-    return this.nodeTag
-  }
-
-  makeNodeText(content: string, fontSize: number) {
-    // base
-    this.nodeText.name = '_text';
-    this.nodeText.characters = content;
-    this.nodeText.fontName = {
-      family: 'Roboto Mono',
-      style: 'Medium'
-    };
-    this.nodeText.fontSize = fontSize;
-    this.nodeText.fills = [{
-      type: 'SOLID',
-      color: {
-        r: 0,
-        g: 0,
-        b: 0
-      }
-    }];
-
-    return this.nodeText
   }
 
   makeName(fontSize: number) {
