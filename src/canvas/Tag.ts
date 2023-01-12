@@ -7,7 +7,7 @@ export default class Tag {
   nodeText: TextNode;
   nodeIndicator: EllipseNode;
 
-  constructor(name, content, fontSize) {
+  constructor(name: string, content: string, fontSize: number) {
     this.name = name;
     this.content = content;
     this.fontSize = fontSize;
