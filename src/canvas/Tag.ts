@@ -5,17 +5,18 @@ export default class Tag {
   fontSize: number;
   nodeTag: FrameNode;
   nodeText: TextNode;
+  nodeIndicator: EllipseNode;
 
   constructor(name, content, fontSize) {
     this.name = name;
     this.content = content;
     this.fontSize = fontSize;
     this.nodeTag = figma.createFrame();
-    this.nodeText = figma.createText()
+    this.nodeText = figma.createText();
+    this.nodeIndicator = figma.createEllipse()
   }
 
-
-  makeNodeTag() {
+  makeNodeTag(hasBlackIndicator: boolean = false, hasWhiteIndicator: boolean = false) {
     // base
     this.nodeTag.name = this.name;
     this.nodeTag.fills = [{
@@ -37,6 +38,8 @@ export default class Tag {
     this.nodeTag.verticalPadding = 2;
     this.nodeTag.itemSpacing = 4;
 
+    hasBlackIndicator ? this.nodeTag.appendChild(this.makeNodeIndicator('BLACK')) : null;
+    hasWhiteIndicator ? this.nodeTag.appendChild(this.makeNodeIndicator('WHITE')) : null;
     this.nodeTag.appendChild(this.makeNodeText());
 
     return this.nodeTag
@@ -61,6 +64,22 @@ export default class Tag {
     }];
 
     return this.nodeText
+  }
+
+  makeNodeIndicator(textColor: string) {
+    // base
+    this.nodeIndicator.name = '_indicator';
+    this.nodeIndicator.resize(8, 8);
+    this.nodeIndicator.fills = [{
+      type: 'SOLID',
+      color: {
+        r: textColor === 'WHITE' ? 1 : 0,
+        g: textColor === 'WHITE' ? 1 : 0,
+        b: textColor === 'WHITE' ? 1 : 0
+      }
+    }];
+
+    return this.nodeIndicator
   }
 
 }
