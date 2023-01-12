@@ -14,7 +14,6 @@ export default class Caption {
   nodeBasics: FrameNode;
   nodeContrastScores: FrameNode;
   nodeProperties: TextNode;
-  nodeName: TextNode;
   node: FrameNode;
 
   constructor(name, rgb) {
@@ -28,7 +27,6 @@ export default class Caption {
     this.nodeBasics = figma.createFrame();
     this.nodeContrastScores = figma.createFrame();
     this.nodeProperties = figma.createText();
-    this.nodeName = figma.createText();
     this.node = figma.createFrame()
   }
 
@@ -139,77 +137,7 @@ export default class Caption {
     return this.nodeContrastScores
   }
 
-  /*makeName(fontSize: number) {
-    this.nodeName.name = '_color-name';
-    this.nodeName.characters = this.name;
-    this.nodeName.fontName = {
-      family: 'Roboto Mono',
-      style: 'Medium'
-    };
-    this.nodeName.fontSize = fontSize;
-    this.nodeName.fills = [{
-      type: 'SOLID',
-      color: {
-        r: this.getCaptionColor()[0],
-        g: this.getCaptionColor()[1],
-        b: this.getCaptionColor()[2]
-      }
-    }];
-    this.nodeName.layoutAlign = 'STRETCH';
-    this.nodeName.layoutGrow = 1;
-
-    return this.nodeName
-  }*/
-
-  /*makeNodeScale() {
-    // base
-    this.nodeScale.name = '_lightness-scale';
-    this.nodeScale.characters = this.name;
-    this.nodeScale.fontName = {
-      family: 'Roboto Mono',
-      style: 'Medium'
-    };
-    this.nodeScale.fontSize = 10;
-    this.nodeScale.fills = [{
-      type: 'SOLID',
-      color: {
-        r: this.getCaptionColor()[0],
-        g: this.getCaptionColor()[1],
-        b: this.getCaptionColor()[2]
-      }
-    }];
-
-    // layout
-    this.nodeScale.layoutAlign = 'STRETCH';
-
-    return this.nodeScale
-  }
-
-  makeNodeProperties() {
-    // base
-    this.nodeProperties.name = '_properties';
-    this.nodeProperties.characters = this.doContent();
-    this.nodeProperties.fontName = {
-      family: 'Roboto Mono',
-      style: 'Regular'
-    };
-    this.nodeProperties.fontSize = 10;
-    this.nodeProperties.fills = [{
-      type: 'SOLID',
-      color: {
-        r: this.getCaptionColor()[0],
-        g: this.getCaptionColor()[1],
-        b: this.getCaptionColor()[2]
-      }
-    }];
-
-    // layout
-    this.nodeProperties.layoutAlign = 'STRETCH';
-
-    return this.nodeProperties
-  }*/
-
-  makeNode(type, fontSize) {
+  makeNode(type) {
     // base
     this.node.name = '_captions';
     this.node.fills = [];
