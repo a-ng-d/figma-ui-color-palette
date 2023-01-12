@@ -64,8 +64,8 @@ export default class Caption {
 
     // layout
     this.nodeTag.layoutMode = 'HORIZONTAL';
-    this.nodeTag.paddingTop = this.nodeTag.paddingBottom = 2;
-    this.nodeTag.paddingRight = this.nodeTag.paddingLeft = 4;
+    this.nodeTag.horizontalPadding = 2;
+    this.nodeTag.verticalPadding = 4;
     this.nodeTag.itemSpacing = 4;
 
     this.node.appendChild(this.makeText(content, fontSize));
