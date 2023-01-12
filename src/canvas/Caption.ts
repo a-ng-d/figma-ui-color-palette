@@ -9,7 +9,8 @@ export default class Caption {
   lch: Array<number>;
   nodeTop: FrameNode;
   nodeBottom: FrameNode;
-  nodeScale: TextNode;
+  nodeScale: FrameNode;
+  nodeBasics: FrameNode;
   nodeProperties: TextNode;
   nodeName: TextNode;
   nodeTag: FrameNode;
@@ -23,7 +24,8 @@ export default class Caption {
     this.lch = chroma(rgb).lch();
     this.nodeTop = figma.createFrame();
     this.nodeBottom = figma.createFrame();
-    this.nodeScale = figma.createText();
+    this.nodeScale = figma.createFrame();
+    this.nodeBasics = figma.createFrame();
     this.nodeProperties = figma.createText();
     this.nodeName = figma.createText();
     this.nodeTag = figma.createFrame();
@@ -64,6 +66,9 @@ export default class Caption {
     this.nodeTop.counterAxisSizingMode = 'AUTO';
     this.nodeTop.layoutAlign = 'STRETCH';
 
+    this.nodeTop.appendChild(this.makeNodeScale());
+    this.nodeTop.appendChild(this.makeNodeBasics())
+
     return this.nodeTop
   }
 
@@ -79,6 +84,36 @@ export default class Caption {
     this.nodeBottom.layoutAlign = 'STRETCH';
 
     return this.nodeBottom
+  }
+
+  makeNodeScale() {
+    // base
+    this.nodeScale.name = '_scale';
+    this.nodeScale.fills = [];
+
+    // layout
+    this.nodeScale.layoutMode = 'VERTICAL';
+    this.nodeScale.primaryAxisSizingMode = 'AUTO';
+    this.nodeScale.counterAxisSizingMode = 'FIXED';
+    this.nodeScale.layoutAlign = 'STRETCH';
+
+    return this.nodeScale
+  }
+
+  makeNodeBasics() {
+    // base
+    this.nodeBasics.name = '_basics';
+    this.nodeBasics.fills = [];
+
+    // layout
+    this.nodeBasics.layoutMode = 'VERTICAL';
+    this.nodeBasics.primaryAxisSizingMode = 'AUTO';
+    this.nodeBasics.counterAxisSizingMode = 'FIXED';
+    this.nodeBasics.counterAxisAlignItems = 'MAX';
+    this.nodeBasics.layoutAlign = 'STRETCH';
+    this.nodeBasics.itemSpacing = 4;
+
+    return this.nodeBasics
   }
 
   makeNodeTag(property, content, fontSize) {
@@ -148,7 +183,7 @@ export default class Caption {
     return this.nodeName
   }
 
-  makeNodeScale() {
+  /*makeNodeScale() {
     // base
     this.nodeScale.name = '_lightness-scale';
     this.nodeScale.characters = this.name;
@@ -194,7 +229,7 @@ export default class Caption {
     this.nodeProperties.layoutAlign = 'STRETCH';
 
     return this.nodeProperties
-  }
+  }*/
 
   makeNode(type, fontSize) {
     // base
