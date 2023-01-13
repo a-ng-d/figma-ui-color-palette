@@ -1,4 +1,5 @@
 import chroma from 'chroma-js';
+import { APCAcontrast, sRGBtoY } from 'apca-w3';
 
 export default class Caption {
 
@@ -26,6 +27,10 @@ export default class Caption {
     return Math.max(chroma.contrast(this.rgb, '#FFF'), chroma.contrast(this.rgb, '#000'))
   }
 
+  getAPCAConstrast() {
+    return chroma.contrast(this.rgb, '#FFF') < chroma.contrast(this.rgb, '#000') ? APCAcontrast(sRGBtoY([0, 0, 0, 1]), sRGBtoY(this.rgb)) : APCAcontrast(sRGBtoY([255, 255, 255, 1]), sRGBtoY(this.rgb))
+  }
+
   getLevel() {
     return this.getContrast() < 4.5 ? 'A'
          : this.getContrast() >= 4.5 && this.getContrast() < 7 ? 'AA'
@@ -33,11 +38,11 @@ export default class Caption {
   }
 
   getCaptionColor() {
-    return chroma.contrast(this.rgb, '#FFF') < chroma.contrast(this.rgb, '#000') ? [0, 0, 0] : [1, 1, 1];
+    return chroma.contrast(this.rgb, '#FFF') < chroma.contrast(this.rgb, '#000') ? [0, 0, 0] : [1, 1, 1]
   }
 
   doContent() {
-    return `${this.hex.toUpperCase()}\nR ${Math.floor(this.rgb[0])} • G ${Math.floor(this.rgb[1])} • B ${Math.floor(this.rgb[2])}\nL ${Math.floor(this.lch[0])} • C ${Math.floor(this.lch[1])} • H ${Math.floor(this.lch[2])}\n${this.getLevel()} • ${this.getContrast().toFixed(2)} : 1`
+    return `${this.hex.toUpperCase()}\nR ${Math.floor(this.rgb[0])} • G ${Math.floor(this.rgb[1])} • B ${Math.floor(this.rgb[2])}\nL ${Math.floor(this.lch[0])} • C ${Math.floor(this.lch[1])} • H ${Math.floor(this.lch[2])}\n${this.getLevel()} • ${this.getContrast().toFixed(2)} : 1\nLc ${this.getAPCAConstrast().toFixed(1)}`
   }
 
   makeName(fontSize) {
