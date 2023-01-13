@@ -55,6 +55,7 @@ export default class Tag {
       style: 'Medium'
     };
     this.nodeText.fontSize = this.fontSize;
+    this.nodeText.textAlignHorizontal = 'CENTER';
     this.nodeText.fills = [{
       type: 'SOLID',
       color: {
