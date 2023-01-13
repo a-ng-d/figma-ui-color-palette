@@ -29,7 +29,7 @@ export default class Actions extends React.Component<Props> {
         </div>
         <Checkbox
           id='showCaptions'
-          label='Show properties'
+          label='Show captions'
           isChecked={this.props.hasCaptions}
           isDisabled={false}
           feature='show-caption'
@@ -58,7 +58,7 @@ export default class Actions extends React.Component<Props> {
         </div>
         <Switch
           id='showCaptions'
-          label='Show properties'
+          label='Show captions'
           isChecked={this.props.hasCaptions}
           isDisabled={false}
           feature='caption'

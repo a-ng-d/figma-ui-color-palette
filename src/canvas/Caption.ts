@@ -1,6 +1,4 @@
 import chroma from 'chroma-js';
-import { APCAcontrast, sRGBtoY, fontLookupAPCA } from 'apca-w3';
-import Tag from './Tag';
 
 export default class Caption {
 
@@ -8,117 +6,111 @@ export default class Caption {
   rgb: Array<number>;
   hex: string;
   lch: Array<number>;
-  nodeTop: FrameNode;
-  nodeBottom: FrameNode;
-  nodeBasics: FrameNode;
-  nodeContrastScores: FrameNode;
+  nodeScale: TextNode;
   nodeProperties: TextNode;
+  nodeName: TextNode;
   node: FrameNode;
 
-  constructor(name: string, rgb: Array<number>) {
+  constructor(name, rgb) {
     this.name = name;
     this.rgb = rgb;
     this.hex = chroma(rgb).hex();
     this.lch = chroma(rgb).lch();
+    this.nodeScale = figma.createText();
+    this.nodeProperties = figma.createText();
+    this.nodeName = figma.createText();
     this.node = figma.createFrame()
   }
 
-  getContrast(textColor: string) {
-    return chroma.contrast(this.rgb, textColor === 'BLACK' ? '#000' : '#FFF')
+  getContrast() {
+    return Math.max(chroma.contrast(this.rgb, '#FFF'), chroma.contrast(this.rgb, '#000'))
   }
 
-  getAPCAContrast(textColor: string) {
-    return APCAcontrast(sRGBtoY(textColor === 'BLACK' ? [0, 0, 0, 1] : [255, 255, 255, 1]), sRGBtoY(this.rgb))
-  }
-
-  getLevel(textColor: string) {
-    return this.getContrast(textColor) < 4.5 ? 'A'
-         : this.getContrast(textColor) >= 4.5 && this.getContrast(textColor) < 7 ? 'AA'
+  getLevel() {
+    return this.getContrast() < 4.5 ? 'A'
+         : this.getContrast() >= 4.5 && this.getContrast() < 7 ? 'AA'
          : 'AAA'
   }
 
-  getMinFontSizes(textColor: string) {
-    return fontLookupAPCA(this.getAPCAContrast(textColor))
+  getCaptionColor() {
+    return chroma.contrast(this.rgb, '#FFF') < chroma.contrast(this.rgb, '#000') ? [0, 0, 0] : [1, 1, 1];
   }
 
-  makeNodeTop() {
+  doContent() {
+    return `${this.hex.toUpperCase()}\nR ${Math.floor(this.rgb[0])} • G ${Math.floor(this.rgb[1])} • B ${Math.floor(this.rgb[2])}\nL ${Math.floor(this.lch[0])} • C ${Math.floor(this.lch[1])} • H ${Math.floor(this.lch[2])}\n${this.getLevel()} • ${this.getContrast().toFixed(2)} : 1`
+  }
+
+  makeName(fontSize) {
+    this.nodeName.name = '_color-name';
+    this.nodeName.characters = this.name;
+    this.nodeName.fontName = {
+      family: 'Roboto Mono',
+      style: 'Medium'
+    };
+    this.nodeName.fontSize = fontSize;
+    this.nodeName.fills = [{
+      type: 'SOLID',
+      color: {
+        r: this.getCaptionColor()[0],
+        g: this.getCaptionColor()[1],
+        b: this.getCaptionColor()[2]
+      }
+    }];
+    this.nodeName.layoutAlign = 'STRETCH';
+    this.nodeName.layoutGrow = 1;
+
+    return this.nodeName
+  }
+
+  makeNodeScale() {
     // base
-    this.nodeTop = figma.createFrame();
-    this.nodeTop.name = '_top';
-    this.nodeTop.fills = [];
+    this.nodeScale.name = '_lightness-scale';
+    this.nodeScale.characters = this.name;
+    this.nodeScale.fontName = {
+      family: 'Roboto Mono',
+      style: 'Medium'
+    };
+    this.nodeScale.fontSize = 10;
+    this.nodeScale.fills = [{
+      type: 'SOLID',
+      color: {
+        r: this.getCaptionColor()[0],
+        g: this.getCaptionColor()[1],
+        b: this.getCaptionColor()[2]
+      }
+    }];
 
     // layout
-    this.nodeTop.layoutMode = 'HORIZONTAL';
-    this.nodeTop.primaryAxisSizingMode = 'FIXED';
-    this.nodeTop.counterAxisSizingMode = 'AUTO';
-    this.nodeTop.layoutAlign = 'STRETCH';
+    this.nodeScale.layoutAlign = 'STRETCH';
 
-    return this.nodeTop
+    return this.nodeScale
   }
 
-  makeNodeBottom() {
+  makeNodeProperties() {
     // base
-    this.nodeBottom = figma.createFrame();
-    this.nodeBottom.name = '_bottom';
-    this.nodeBottom.fills = [];
+    this.nodeProperties.name = '_properties';
+    this.nodeProperties.characters = this.doContent();
+    this.nodeProperties.fontName = {
+      family: 'Roboto Mono',
+      style: 'Regular'
+    };
+    this.nodeProperties.fontSize = 10;
+    this.nodeProperties.fills = [{
+      type: 'SOLID',
+      color: {
+        r: this.getCaptionColor()[0],
+        g: this.getCaptionColor()[1],
+        b: this.getCaptionColor()[2]
+      }
+    }];
 
     // layout
-    this.nodeBottom.layoutMode = 'VERTICAL';
-    this.nodeBottom.primaryAxisSizingMode = 'AUTO';
-    this.nodeBottom.counterAxisSizingMode = 'FIXED';
-    this.nodeBottom.layoutAlign = 'STRETCH';
+    this.nodeProperties.layoutAlign = 'STRETCH';
 
-    // insert
-    this.nodeBottom.appendChild(this.makeNodeContrastScores());
-
-    return this.nodeBottom
+    return this.nodeProperties
   }
 
-  makeNodeBasics() {
-    // base
-    this.nodeBasics = figma.createFrame();
-    this.nodeBasics.name = '_basics';
-    this.nodeBasics.fills = [];
-
-    // layout
-    this.nodeBasics.layoutMode = 'VERTICAL';
-    this.nodeBasics.primaryAxisSizingMode = 'AUTO';
-    this.nodeBasics.counterAxisSizingMode = 'FIXED';
-    this.nodeBasics.counterAxisAlignItems = 'MAX';
-    this.nodeBasics.layoutGrow = 1;
-    this.nodeBasics.itemSpacing = 4;
-
-    // insert
-    this.nodeBasics.appendChild(new Tag('_hex', this.hex.toUpperCase(), 8).makeNodeTag());
-    this.nodeBasics.appendChild(new Tag('_rgb', `R ${Math.floor(this.rgb[0])} • G ${Math.floor(this.rgb[1])} • B ${Math.floor(this.rgb[2])}`, 8).makeNodeTag());
-    this.nodeBasics.appendChild(new Tag('_lch', `L ${Math.floor(this.lch[0])} • C ${Math.floor(this.lch[1])} • H ${Math.floor(this.lch[2])}`, 8).makeNodeTag());
-
-    return this.nodeBasics
-  }
-
-  makeNodeContrastScores() {
-    // base
-    this.nodeContrastScores = figma.createFrame();
-    this.nodeContrastScores.name = '_contrast-scores';
-    this.nodeContrastScores.fills = [];
-
-    // layout
-    this.nodeContrastScores.layoutMode = 'VERTICAL';
-    this.nodeContrastScores.primaryAxisSizingMode = 'AUTO';
-    this.nodeContrastScores.counterAxisSizingMode = 'FIXED';
-    this.nodeContrastScores.layoutAlign = 'STRETCH';
-    this.nodeContrastScores.itemSpacing = 4;
-
-    // insert
-    this.nodeContrastScores.appendChild(new Tag('_wcag21-black', `${this.getContrast('BLACK').toFixed(2)} • ${this.getLevel('BLACK')}`, 8).makeNodeTag('BLACK'));
-    this.nodeContrastScores.appendChild(new Tag('_wcag21-white', `${this.getContrast('WHITE').toFixed(2)} • ${this.getLevel('WHITE')}`, 8).makeNodeTag('WHITE'));
-    this.nodeContrastScores.appendChild(new Tag('_apca-black', `Lc ${this.getAPCAContrast('BLACK').toFixed(1)} • ${this.getMinFontSizes('BLACK')[4]}pt (400)`, 8).makeNodeTag('BLACK'));
-    this.nodeContrastScores.appendChild(new Tag('_apca-white', `Lc ${this.getAPCAContrast('WHITE').toFixed(1)} • ${this.getMinFontSizes('WHITE')[4]}pt (400)`, 8).makeNodeTag('WHITE'));
-
-    return this.nodeContrastScores
-  }
-
-  makeNode(type: string) {
+  makeNode(type, fontSize) {
     // base
     this.node.name = '_captions';
     this.node.fills = [];
@@ -131,18 +123,15 @@ export default class Caption {
     this.node.layoutAlign = 'STRETCH';
     this.node.layoutGrow = 1;
 
-    // insert
     if (type === 'SAMPLE') {
-      this.node.appendChild(this.makeNodeTop());
-        this.nodeTop.appendChild(new Tag('_scale', this.name, 10).makeNodeTag());
-        this.nodeTop.appendChild(this.makeNodeBasics());
-      this.node.appendChild(this.makeNodeBottom());
+      this.nodeName.remove();
+      this.node.appendChild(this.makeNodeScale());
+      this.node.appendChild(this.makeNodeProperties());
     }
     else if (type === 'NAME') {
-      this.node.appendChild(new Tag('_color-name', this.name, 10).makeNodeTag())
-    }
-    else if (type === 'TITLE') {
-      this.node.appendChild(new Tag('_title', this.name, 16).makeNodeTag())
+      this.nodeScale.remove();
+      this.nodeProperties.remove();
+      this.node.appendChild(this.makeName(fontSize))
     };
 
     return this.node
