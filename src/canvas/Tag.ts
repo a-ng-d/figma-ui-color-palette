@@ -20,7 +20,7 @@ export default class Tag {
     this.nodeTag.name = this.name;
     this.nodeTag.fills = [{
       type: 'SOLID',
-      opacity: .5,
+      opacity: .4,
       color: {
         r: 1,
         g: 1,
