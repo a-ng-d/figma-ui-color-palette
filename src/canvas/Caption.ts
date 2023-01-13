@@ -87,7 +87,7 @@ export default class Caption {
     this.nodeBasics.primaryAxisSizingMode = 'AUTO';
     this.nodeBasics.counterAxisSizingMode = 'FIXED';
     this.nodeBasics.counterAxisAlignItems = 'MAX';
-    this.nodeBasics.layoutAlign = 'STRETCH';
+    this.nodeBasics.layoutGrow = 1;
     this.nodeBasics.itemSpacing = 4;
 
     // insert
