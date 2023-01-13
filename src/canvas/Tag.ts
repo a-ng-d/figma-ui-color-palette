@@ -38,6 +38,7 @@ export default class Tag {
     this.nodeTag.verticalPadding = 2;
     this.nodeTag.itemSpacing = 4;
 
+    // insert
     textColor === 'BLACK' ? this.nodeTag.appendChild(this.makeNodeIndicator('BLACK')) : null;
     textColor === 'WHITE' ? this.nodeTag.appendChild(this.makeNodeIndicator('WHITE')) : null;
     this.nodeTag.appendChild(this.makeNodeText());
