@@ -20,11 +20,6 @@ export default class Caption {
     this.rgb = rgb;
     this.hex = chroma(rgb).hex();
     this.lch = chroma(rgb).lch();
-    this.nodeTop = figma.createFrame();
-    this.nodeBottom = figma.createFrame();
-    this.nodeBasics = figma.createFrame();
-    this.nodeContrastScores = figma.createFrame();
-    this.nodeProperties = figma.createText();
     this.node = figma.createFrame()
   }
 
@@ -48,6 +43,7 @@ export default class Caption {
 
   makeNodeTop() {
     // base
+    this.nodeTop = figma.createFrame();
     this.nodeTop.name = '_top';
     this.nodeTop.fills = [];
 
@@ -62,6 +58,7 @@ export default class Caption {
 
   makeNodeBottom() {
     // base
+    this.nodeBottom = figma.createFrame();
     this.nodeBottom.name = '_bottom';
     this.nodeBottom.fills = [];
 
@@ -79,6 +76,7 @@ export default class Caption {
 
   makeNodeBasics() {
     // base
+    this.nodeBasics = figma.createFrame();
     this.nodeBasics.name = '_basics';
     this.nodeBasics.fills = [];
 
@@ -100,6 +98,7 @@ export default class Caption {
 
   makeNodeContrastScores() {
     // base
+    this.nodeContrastScores = figma.createFrame();
     this.nodeContrastScores.name = '_contrast-scores';
     this.nodeContrastScores.fills = [];
 
