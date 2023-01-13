@@ -12,8 +12,7 @@ export default class Tag {
     this.content = content;
     this.fontSize = fontSize;
     this.nodeTag = figma.createFrame();
-    this.nodeText = figma.createText();
-    this.nodeIndicator = figma.createEllipse()
+    this.nodeText = figma.createText()
   }
 
   makeNodeTag(textColor: string | null = null) {
@@ -69,6 +68,7 @@ export default class Tag {
 
   makeNodeIndicator(textColor: string) {
     // base
+    this.nodeIndicator = figma.createEllipse();
     this.nodeIndicator.name = '_indicator';
     this.nodeIndicator.resize(8, 8);
     this.nodeIndicator.fills = [{
