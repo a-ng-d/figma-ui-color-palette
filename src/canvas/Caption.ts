@@ -140,12 +140,10 @@ export default class Caption {
       this.node.appendChild(this.makeNodeBottom());
     }
     else if (type === 'NAME') {
-      this.node.appendChild(this.makeNodeTop());
-        this.nodeTop.appendChild(new Tag('_color-name', this.name, 10).makeNodeTag())
+      this.node.appendChild(new Tag('_color-name', this.name, 10).makeNodeTag())
     }
     else if (type === 'TITLE') {
-      this.node.appendChild(this.makeNodeTop());
-        this.nodeTop.appendChild(new Tag('_title', this.name, 16).makeNodeTag())
+      this.node.appendChild(new Tag('_title', this.name, 16).makeNodeTag())
     };
 
     return this.node
