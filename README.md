@@ -87,6 +87,7 @@ The palette architecture (do not manual edit it) is:
 
 ## Attribution
 - The colors are managed thanks to the [chroma.js](https://github.com/gka/chroma.js) library by [Gregor Aisch](https://github.com/gka)
+- The APCA algorithm is provided thanks to the [apca-w3](https://www.npmjs.com/package/apca-w3) module by [Andrew Somers](https://github.com/Myndex)
 
 ## Support
 - [Follow me on Twitter 🐦](https://twitter.com/a_ng_d)
