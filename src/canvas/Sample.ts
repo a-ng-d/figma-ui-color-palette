@@ -73,13 +73,10 @@ export default class Sample {
     this.node.counterAxisSizingMode = 'FIXED';
 
     // insert
-    this.children = new Caption(this.scale, this.rgb).makeNode('SAMPLE');
-    this.node.appendChild(this.children);
-
-    if (!this.captions)
-      this.children.visible = false
-    else
-      this.children.visible = true
+    if (this.captions) {
+      this.children = new Caption(this.scale, this.rgb).makeNode('SAMPLE');
+      this.node.appendChild(this.children);
+    }
 
     return this.node
   }
