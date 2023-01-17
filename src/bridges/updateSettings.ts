@@ -1,8 +1,9 @@
 import Colors from '../canvas/Colors';
+import { previousSelection, currentSelection, isSelectionChanged } from './processSelection';
 
 const updateSettings = (msg, palette) => {
 
-  palette = figma.currentPage.selection[0];
+  palette = isSelectionChanged ? previousSelection[0] : currentSelection[0];
 
   try {
     if (palette.children.length == 1) {
