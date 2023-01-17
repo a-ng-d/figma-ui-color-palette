@@ -1,9 +1,15 @@
 import { setData } from './../utils/setData';
 import { presets } from './../utils/palettePackage';
 
+export let currentSelection: ReadonlyArray<SceneNode>;
+export let previousSelection: ReadonlyArray<SceneNode>;
+
 const processSelection = () => {
 
+  previousSelection = currentSelection == undefined ? undefined : currentSelection;
+
   const selection: ReadonlyArray<BaseNode> = figma.currentPage.selection
+  currentSelection = figma.currentPage.selection
 
   if (selection.length == 1 && selection[0].getPluginData('scale') != '') {
     if (selection[0].getPluginData('preset') === '')
