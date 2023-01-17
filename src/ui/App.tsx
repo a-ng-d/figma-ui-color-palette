@@ -203,26 +203,15 @@ class App extends React.Component {
           isPaletteSelected = true;
           palette.preset = {};
           parent.postMessage({ pluginMessage: { type: 'export-palette', export: this.state['export'].format } }, '*');
-          if (e.data.pluginMessage.data.captions === 'hasNotCaptions')
-            this.setState({
-              service: 'Edit',
-              newScale: e.data.pluginMessage.data.scale,
-              hasCaptions: false,
-              newColors: putIdsOnColors,
-              preset: e.data.pluginMessage.data.preset,
-              paletteName: e.data.pluginMessage.data.name,
-              onGoingStep: 'palette selected'
-            })
-          else if (e.data.pluginMessage.data.captions === 'hasCaptions')
-            this.setState({
-              service: 'Edit',
-              newScale: e.data.pluginMessage.data.scale,
-              hasCaptions: true,
-              newColors: putIdsOnColors,
-              preset: e.data.pluginMessage.data.preset,
-              paletteName: e.data.pluginMessage.data.name,
-              onGoingStep: 'palette selected'
-            })
+          this.setState({
+            service: 'Edit',
+            newScale: e.data.pluginMessage.data.scale,
+            hasCaptions: e.data.pluginMessage.data.captions === 'hasCaptions' ? true : false,
+            newColors: putIdsOnColors,
+            preset: e.data.pluginMessage.data.preset,
+            paletteName: e.data.pluginMessage.data.name,
+            onGoingStep: 'palette selected'
+          });
           break;
 
         case 'export-palette-json':
