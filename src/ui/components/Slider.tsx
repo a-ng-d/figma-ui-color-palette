@@ -144,18 +144,18 @@ export default class Slider extends React.Component<Props> {
   }
 
   onAdd = (e: any) => {
-    addStop(
-      e,
-      this.props.scale,
-      this.props.hasPreset,
-      this.props.presetName,
-      this.props.min,
-      this.props.max
-    );
     if (e.target.classList[0] === 'slider__range' && Object.keys(this.props.scale).length < 24 && this.props.presetName === 'Custom' && !this.props.hasPreset) {
       this.setState({
         selectedKnob: null
       });
+      addStop(
+        e,
+        this.props.scale,
+        this.props.hasPreset,
+        this.props.presetName,
+        this.props.min,
+        this.props.max
+      );
       this.props.onChange('customized')
     }
   }
