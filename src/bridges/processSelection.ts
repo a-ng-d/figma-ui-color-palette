@@ -3,10 +3,12 @@ import { presets } from './../utils/palettePackage';
 
 export let currentSelection: ReadonlyArray<SceneNode>;
 export let previousSelection: ReadonlyArray<SceneNode>;
+export let isSelectionChanged: boolean = false;
 
 const processSelection = () => {
 
   previousSelection = currentSelection == undefined ? undefined : currentSelection;
+  isSelectionChanged = true;
 
   const selection: ReadonlyArray<BaseNode> = figma.currentPage.selection
   currentSelection = figma.currentPage.selection
@@ -46,6 +48,8 @@ const processSelection = () => {
           data: {}
         })
   })
+
+  setTimeout(() => isSelectionChanged = false, 1000)
 
 };
 
