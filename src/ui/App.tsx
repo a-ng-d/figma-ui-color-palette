@@ -132,7 +132,7 @@ class App extends React.Component {
 
   customSlideHandler = () => this.setState({
     newScale: palette.scale,
-    preset: palette.preset,
+    preset: Object.keys(palette.preset).length == 0 ? this.state['preset'] : palette.preset,
     onGoingStep: 'stop changed'
   })
 
