@@ -17,7 +17,10 @@
     "figma-plugin"
   ],
   "author": "Aurélien Grimaud",
-  "license": "CC BY 4.0",
+  "licence": {
+    "type": "CC-BY-4.0",
+    "url": "https://creativecommons.org/licenses/by/4.0/"
+  },
   "repository": "https://github.com/inVoltag/figma-ui-color-palette",
   "devDependencies": {
     "@figma/plugin-typings": "^1.55.0",
