@@ -1,146 +1,112 @@
 import * as React from 'react';
-import Slider from '../components/Slider';
-import Button from '../components/Button';
-import Checkbox from '../components/Checkbox';
-import Message from '../components/Message';
-import Dropdown from '../components/Dropdown';
-import { palette, presets } from '../../palette-package';
+import Tabs from '../components/Tabs';
+import Scale from '../modules/Scale';
+import Settings from '../modules/Settings';
+import About from '../modules/About';
+import Actions from '../modules/Actions';
+import { palette, presets } from '../../utils/palettePackage';
 
 interface Props {
   hasCaptions: boolean;
   preset: any;
-  onCaptionsChange: any;
-  onGoingStep: string;
+  paletteName: string;
   onPresetChange: any;
-  onCustomPreset: any
+  onCustomPreset: any;
+  onSettingsChange: any
 };
 
 export default class CreatePalette extends React.Component<Props> {
 
-  // Events
-  onCreate = () => parent.postMessage({ pluginMessage: { type: 'create-palette', palette } }, '*')
+  constructor(props) {
+    super(props);
+    this.state = {
+      context: 'Scale',
+      hasCaptions: true
+    }
+  }
 
+  // Handlers
   slideHandler = () => { }
 
   checkHandler = (e: any) => {
-    this.props.onCaptionsChange(e.target.checked);
-    palette.captions = e.target.checked;
+    this.setState({
+      hasCaptions: e.target.checked,
+      onGoingStep: 'captions changed'
+    });
+    palette.captions = e.target.checked
   }
+
+  navHandler = (e: any) => this.setState({
+    context: e.target.innerText,
+    onGoingStep: 'tab changed'
+  })
 
   presetHandler = (e: any) => this.props.onPresetChange(e)
 
   scaleHandler = (e: any) => this.props.onCustomPreset(e)
 
-  // Templates
-  Scale = () => {
-    this.props.onGoingStep != 'captions changed' ? palette.scale = {} : '';
-    return (
-      <div className='lightness-scale'>
-        <div className='section-controls'>
-          <div className='section-title'>Lightness scale</div>
-          <Dropdown
-            id='presets'
-            options={Object.entries(presets).map(entry => entry[1].name)}
-            onChange={this.presetHandler}
-          />
-          {this.props.onGoingStep === 'scale item edited' ?
-            <Button
-              id='remove'
-              icon='minus'
-              type='icon'
-              label={null}
-              state=''
-              action={this.scaleHandler}
-            />
-          : null}
-          {this.props.onGoingStep === 'scale item max limit' ?
-            <Button
-              id='remove'
-              icon='minus'
-              type='icon'
-              label={null}
-              state=''
-              action={this.scaleHandler}
-            />
-          : null}
-          {this.props.preset.name === 'Custom' ?
-            <Button
-              id='add'
-              icon='plus'
-              type='icon'
-              label={null}
-              state={this.props.onGoingStep === 'scale item max limit' ? 'disabled' : ''}
-              action={this.scaleHandler}
-            />
-          : null}
-        </div>
-        {this.props.onGoingStep != 'captions changed' ?
-        <Slider
-          type='EQUAL'
-          knobs={this.props.preset.scale}
-          min={this.props.preset.min}
-          max={this.props.preset.max}
-          scale={null}
-          onChange={this.slideHandler}
-        /> :
-        <Slider
-          type='CUSTOM'
-          knobs={this.props.preset.scale}
-          min=''
-          max=''
-          scale={palette.scale}
-          onChange={this.slideHandler}
-        />}
-        <Message
-          icon='library'
-          messages= {[
-            'Hold Shift ⇧ while dragging 50 or 900 to distribute knobs\' horizontal spacing',
-            'Hold Ctrl ⌃ or Cmd ⌘ while dragging a knob to move them all'
-          ]}
-        />
-      </div>
-    )
-  }
+  settingsHandler = (e: any) => this.props.onSettingsChange(e)
 
-  Actions = () => {
-    return (
-      <div className='actions'>
-        <Button
-          id={null}
-          icon={null}
-          type='primary'
-          label='Create a color palette'
-          state=''
-          action={this.onCreate}
-        />
-        <Checkbox
-          id='showCaptions'
-          label='Show captions'
-          isChecked={this.props.hasCaptions}
-          onChange={this.checkHandler}
-        />
-      </div>
-    )
-  }
-
-  Controls = () => {
-    return (
-      <>
-      <div className='controls'>
-        <this.Scale />
-      </div>
-      <this.Actions />
-      </>
-    )
-  }
+  // Direct actions
+  onCreate = () => parent.postMessage({ pluginMessage: { type: 'create-palette', palette } }, '*')
 
   render() {
-    palette.captions = this.props.hasCaptions;
+    palette.captions = this.state['hasCaptions'];
     palette.preset = this.props.preset;
+    let actions, controls;
+
+    if (this.state['context'] === 'About')
+      actions = null
+    else
+      actions =
+        <Actions
+          context='create'
+          hasCaptions={this.state['hasCaptions']}
+          onCreatePalette={this.onCreate}
+          onChangeCaptions={this.checkHandler}
+        />
+
+    switch (this.state['context']) {
+      case 'Scale':
+        controls =
+          <Scale
+            hasPreset={true}
+            preset={this.props.preset}
+            onChangePreset={this.presetHandler}
+            onScaleChange={this.slideHandler}
+            onAddScale={this.scaleHandler}
+            onRemoveScale={this.scaleHandler}
+            onGoingStep={this.state['onGoingStep']}
+          />;
+        break;
+
+        case 'Settings':
+          controls =
+              <Settings
+                paletteName={this.props.paletteName}
+                onSettingsChange={this.settingsHandler}
+              />;
+            break;
+
+        case 'About':
+          controls = <About />
+      }
+
     return (
-      <section>
-        <this.Controls />
-      </section>
+      <>
+        <Tabs
+          primaryTabs={['Scale', 'Settings']}
+          secondaryTabs={['About']}
+          active={this.state['context']}
+          onClick={this.navHandler}
+        />
+        <section>
+          <div className='controls'>
+            {controls}
+          </div>
+          {actions}
+        </section>
+      </>
     )
   }
 

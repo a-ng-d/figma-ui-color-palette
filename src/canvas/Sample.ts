@@ -38,14 +38,16 @@ export default class Sample {
       this.node.primaryAxisSizingMode = 'AUTO';
       this.node.layoutAlign = 'STRETCH';
       this.node.layoutGrow = 1;
-    } else if (mode === 'absolute') {
+      this.children = new Caption(this.name, this.rgb).makeNode('TITLE');
+    }
+    else if (mode === 'absolute') {
       this.node.resize(width, height);
       this.node.primaryAxisSizingMode = 'FIXED';
+      this.children = new Caption(this.name, this.rgb).makeNode('NAME');
     }
 
 
     // insert
-    this.children = new Caption(this.name, this.rgb).makeNode('NAME', fontSize);
     this.node.appendChild(this.children);
 
     return this.node
@@ -71,13 +73,10 @@ export default class Sample {
     this.node.counterAxisSizingMode = 'FIXED';
 
     // insert
-    this.children = new Caption(this.scale, this.rgb).makeNode('SAMPLE', fontSize);
-    this.node.appendChild(this.children);
-
-    if (!this.captions)
-      this.children.visible = false
-    else
-      this.children.visible = true
+    if (this.captions) {
+      this.children = new Caption(this.scale, this.rgb).makeNode('SAMPLE');
+      this.node.appendChild(this.children);
+    }
 
     return this.node
   }

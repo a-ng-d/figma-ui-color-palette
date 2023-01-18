@@ -1,0 +1,549 @@
+/* Layout */
+html, body {
+  overflow: hidden
+}
+
+input {
+  cursor: default
+}
+
+ul {
+  padding: 0;
+  margin: 0
+}
+
+li {
+  display: block
+}
+
+div#react-page {
+  height: 100%;
+  user-select: none
+}
+
+div#react-page.dragged-ghost {
+  cursor: grabbing
+}
+
+main {
+  height: inherit;
+  display: flex;
+  flex-direction: column;
+}
+
+section {
+  flex: 1;
+  display: flex;
+  flex-direction: column
+}
+
+section.section--scrollable {
+  overflow: hidden
+}
+
+section.section--scrollable div.controls {
+  overflow: scroll
+}
+
+div.controls {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: var(--size-xxsmall) 0
+}
+
+div.controls__control {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: flex-start
+}
+
+div.lightness-scale {
+  justify-content: space-between
+}
+
+div.onboarding {
+  gap: var(--size-xxsmall);
+  align-items: center;
+  justify-content: center
+}
+
+div.onboarding .label {
+  width: auto
+}
+
+div.onboarding-tip {
+  padding: 0 var(--size-xsmall)
+}
+
+div.actions {
+  width: 100%;
+  height: var(--size-xxlarge);
+  padding: var(--size-xsmall);
+  border-top: 1px solid var(--figma-color-border);
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  gap: var(--size-xxsmall)
+}
+
+div.actions .buttons {
+  display: flex;
+  gap: var(--size-xxsmall)
+}
+
+/* Controls */
+div.section-controls {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 var(--size-xsmall)
+}
+
+div.section-controls .section-title,
+div.section-controls .label {
+  width: auto
+}
+
+div.section-controls .select-menu {
+  flex: 1
+}
+
+/* Tabs */
+div.tabs {
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  height: var(--size-large);
+  padding: 0 var(--size-xsmall);
+  border-bottom: 1px solid var(--figma-color-border);
+  user-select: none
+}
+
+div.tabs .tabs__primary,
+div.tabs .tabs__secondary {
+  display: flex
+}
+
+div.tabs .tabs__tab {
+  padding: 0 var(--size-xxsmall);
+  font-weight: var(--font-weight-medium);
+  color: var(--figma-color-text-secondary);
+  line-height: var(--size-large)
+}
+
+div.tabs .tabs__tab:hover {
+  color: var(--figma-color-text-hover)
+}
+
+div.tabs .tabs__tab--active {
+  font-weight: var(--font-weight-bold);
+  color: var(--figma-color-text)
+}
+
+/* Slider */
+div.slider {
+  display: flex;
+  align-items: center;
+  position: relative;
+  margin-top: var(--size-small);
+  padding: 0 var(--size-medium)
+}
+
+div.slider .slider__range {
+  flex: 1 1 auto;
+  height: var(--size-small);
+  background: linear-gradient(-90deg, var(--white) 0%, var(--black) 100%);
+  border-radius: var(--border-radius-large);
+  box-shadow: inset 0 0 0 1px var(--figma-color-border-disabled-strong);
+  position: relative
+}
+
+div.slider .slider__knob {
+  width: var(--size-medium);
+  height: var(--size-xxlarge);
+  background: transparent;
+  transform: translateX(-50%) translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  position: absolute;
+  cursor: ew-resize;
+  z-index: 1
+}
+
+div.slider .slider__label {
+  width: 100%;
+  height: var(--size-small);
+  border-radius: var(--border-radius-small);
+  background: var(--figma-color-bg);
+  box-shadow: 0 0 0 1px var(--black3-opaque);
+  padding: var(--size-xxxsmall);
+  text-align: center;
+  position: relative;
+  pointer-events: none
+}
+
+div.slider .slider__knob:hover .slider__label {
+  background: var(--figma-color-bg-hover)
+}
+
+div.slider .slider__knob--selected {
+  z-index: 2 !important
+}
+
+div.slider .slider__knob--selected .slider__tooltip {
+  display: block !important
+}
+
+div.slider .slider__knob:active .slider__label,
+div.slider .slider__knob--selected .slider__label {
+  box-shadow: 0 0 0 2px var(--figma-color-border-selected)
+}
+
+div.slider .slider__knob:active .slider__label:before,
+div.slider .slider__knob--selected .slider__label:before  {
+  border-top-color: var(--figma-color-border-selected);
+  border-width: 6px;
+  left: calc(50% - 6px);
+  bottom: -12px
+}
+
+div.slider .slider__knob:hover .slider__label:after,
+div.slider .slider__knob:active .slider__label:after,
+div.slider .slider__knob--selected .slider__label:after,  {
+  border-top-color: var(--figma-color-bg-hover)
+}
+
+div.slider .slider__label:before {
+  content: '';
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: var(--size-xxxsmall);
+  border-top-color: var(--black3-opaque);
+  border-right-color: transparent;
+  border-bottom-color: transparent;
+  border-left-color: transparent;
+  position: absolute;
+  bottom: calc(var(--size-xxxsmall) * -2);
+  left: calc(50% - var(--size-xxxsmall))
+}
+
+div.slider .slider__label:after {
+  content: '';
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 3px;
+  border-top-color: var(--figma-color-bg);
+  border-right-color: transparent;
+  border-bottom-color: transparent;
+  border-left-color: transparent;
+  position: absolute;
+  bottom: -6px;
+  left: calc(50% - 3px)
+}
+
+div.slider .slider__tooltip {
+  width: var(--size-medium);
+  padding: var(--size-xxxsmall);
+  background: var(--figma-color-bg-inverse);
+  color: var(--figma-color-text-oninverse);
+  position: absolute;
+  transform: translateX(-50%) translateY(-100%);
+  left: 50%;
+  top: calc(var(--size-xsmall) * -1);
+  text-align: center;
+  user-select: none;
+  display: none
+}
+
+div.slider .slider__knob:hover .slider__tooltip {
+  display: block !important
+}
+
+div.slider .slider__tooltip:after {
+  content: '';
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: var(--size-xxxsmall);
+  border-top-color: var(--figma-color-bg-inverse);
+  border-right-color: transparent;
+  border-bottom-color: transparent;
+  border-left-color: transparent;
+  position: absolute;
+  bottom: -8px;
+  left: calc(50% - var(--size-xxxsmall))
+}
+
+div.slider .slider__graduation {
+  width: 1px;
+  height: var(--size-xxxsmall);
+  background: var(--figma-color-border-disabled-strong);
+  pointer-events: none
+}
+
+/* Inputs */
+input[type="color" i] {
+  width: var(--size-xsmall);
+  height: var(--size-xsmall);
+  position: absolute;
+  top: var(--size-xxsmall);
+  left: var(--size-xxsmall);
+  z-index: 1;
+  background-color: transparent;
+  padding: 0;
+  appearance: none;
+  background-color: transparent;
+  appearance: none;
+  border: none
+}
+
+input[type="color" i]::-webkit-color-swatch-wrapper {
+	padding: 0;
+}
+
+input[type="color" i]::-webkit-color-swatch {
+	border: none;
+  box-shadow: rgba(0, 0, 0, 0.1) 0 0 0 1px inset
+}
+
+input[type="color" i]:focus {
+  outline: 1px solid var(--figma-color-border-selected);
+  outline-offset: -1px
+}
+
+input[type="color" i]:focus ~ input {
+  border: 1px solid var(--figma-color-border-selected);
+  outline: 1px solid var(--figma-color-border-selected);
+  outline-offset: -2px
+}
+
+input[type='number']::-webkit-inner-spin-button {
+  display: none
+}
+
+.inputs {
+  display: flex;
+  gap: var(--size-xxsmall)
+}
+
+.inputs .label {
+  flex: 0
+}
+
+.inputs__bar {
+  display: flex;
+  padding: 0 1px;
+  position: relative
+}
+
+.inputs__bar .input {
+  width: 40px;
+  margin: 0 -.5px
+}
+
+.inputs__bar input {
+  background-color: transparent
+}
+
+.inputs__bar input:focus {
+  border: 1px solid var(--figma-color-border)
+}
+
+.inputs__bar:hover input {
+  border: 1px solid var(--figma-color-border)
+}
+
+.inputs__bar:focus-within:before {
+  content: '';
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  box-shadow: inset 0 0 0 2px var(--figma-color-border-selected);
+  z-index: 2;
+  pointer-events: none;
+  border-radius: var(--border-radius-small)
+}
+
+.inputs__bar:focus-within input {
+  border: 1px solid var(--figma-color-border);
+  outline: 1px solid transparent;
+  outline-offset: -2px
+}
+
+.select-menu__label {
+  margin-top: 0
+}
+
+.form-item {
+  display: flex;
+  align-items: center;
+  gap: var(--size-xxsmall)
+}
+
+.form-item label {
+  flex: 1
+}
+
+.form-item .input,
+.form-item .textarea {
+  flex: 2
+}
+
+/* Icon buttons */
+div.icon-button {
+  cursor: default
+}
+
+div.icon-button--disabled {
+  pointer-events: none;
+  opacity: .3
+}
+
+div.icon {
+  pointer-events: none
+}
+
+/* Color items */
+li.colors__item {
+  display: grid;
+  grid-template-columns: repeat(76, 1fr);
+  grid-template-rows: var(--size-medium);
+  padding: 0 var(--size-xsmall);
+  position: relative
+}
+
+li.colors__item[draggable="true"] {
+  background-color: var(--figma-color-bg-selected)
+}
+
+li.colors__item[draggable="true"] .input__field,
+li.colors__item--emphasis .input__field {
+  --white: var(--figma-color-bg-selected)
+}
+
+li.colors__item[draggable="true"]:active {
+  cursor: grabbing
+}
+
+li.colors__item--dragged:active > div {
+  pointer-events: none
+}
+
+li.colors__item--emphasis {
+  background-color: var(--figma-color-bg-pressed)
+}
+
+li.colors__item--emphasis .input__field {
+  --white: var(--figma-color-bg-pressed)
+}
+
+li.colors__item--above {
+  box-shadow: 0 1px 0 var(--figma-color-border-selected) inset, 0 -1px 0 var(--figma-color-border-selected)
+}
+
+li.colors__item--below {
+  box-shadow: 0 -1px 0 var(--figma-color-border-selected) inset, 0 1px 0 var(--figma-color-border-selected)
+}
+
+li .colors__name {
+  grid-column: 1 / span 16;
+  grid-row: 1 / 1
+}
+
+li .colors__parameters {
+  grid-column: 17 / span 33;
+  grid-row: 1 / 1;
+  display: flex;
+  gap: var(--size-xsmall)
+}
+
+li .colors__parameters > .input {
+  width: 88px
+}
+
+li .colors__buttons {
+  grid-column: span 8 / 77;
+  grid-row: 1 / 1;
+  display: flex
+}
+
+li .colors__space {
+  grid-column: 1 / span 16;
+  grid-row: 2 / 2
+}
+
+li .colors__shift {
+  grid-column: 17 / span 11;
+  grid-row: 2 / 2
+}
+
+li .colors__shift > .input {
+  width: 88px
+}
+
+/* Export */
+div.export-palette {
+  flex-direction: row
+}
+
+div.export-palette > div {
+  display: flex;
+  flex-direction: column
+}
+
+div.export-palette > div:first-child {
+  flex: 0 1 33%
+}
+
+div.export-palette > div:last-child {
+  flex: 0 1 66%
+}
+
+div.export-palette__options {
+  padding: 0 var(--size-xsmall);
+  flex: 1
+}
+
+textarea.export-palette__preview {
+  height: 100%
+}
+
+ul.options li {
+  display: block
+}
+
+/* Settings */
+div.settings {
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-small) 0
+}
+
+div.settings__item {
+  padding: 0 var(--size-small)
+}
+
+/* About */
+div.about {
+  flex-direction: row;
+  align-items: baseline;
+  padding: 0 var(--size-small)
+}
+
+div.about > div {
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-xsmall);
+  flex: 1
+}
+
+div.about .about__links {
+  display: flex;
+  align-items: center;
+  color: var(--figma-color-text)
+}

@@ -1,17 +1,27 @@
-import Palette from './canvas/Palette';
-import Style from './canvas/Style';
-import Colors from './canvas/Colors';
-import { presets } from './palette-package';
+import createPalette from './bridges/createPalette';
+import updateScale from './bridges/updateScale';
+import updateCaptions from './bridges/updateCaptions';
+import updateColors from './bridges/updateColors';
+import createLocalStyles from './bridges/createLocalStyles';
+import updateLocalStyles from './bridges/updateLocalStyles';
+import processSelection from './bridges/processSelection';
+import exportJson from './bridges/exportJson';
+import exportCss from './bridges/exportCss';
+import updateSettings from './bridges/updateSettings';
 
-figma.showUI(__html__);
-figma.ui.resize(680, 280);
+figma.showUI(__html__, {
+  width: 640,
+  height: 320,
+  title: 'UI Color Palette',
+  themeColors: true
+});
 figma.loadFontAsync({ family: 'Inter', style: 'Regular' });
 figma.loadFontAsync({ family: 'Roboto', style: 'Regular' });
 figma.loadFontAsync({ family: 'Roboto Mono', style: 'Regular' });
 figma.loadFontAsync({ family: 'Roboto Mono', style: 'Medium' });
 
-figma.on('run', () => messageToUI());
-figma.on('selectionchange', () => messageToUI());
+figma.on('run', () => processSelection());
+figma.on('selectionchange', () => processSelection());
 
 figma.ui.onmessage = msg => {
 
@@ -20,169 +30,25 @@ figma.ui.onmessage = msg => {
 
   switch (msg.type) {
 
-    case 'create-palette':
-      const scene: SceneNode[] = [];
+    case 'create-palette': createPalette(msg, palette); break;
 
-      palette = new Palette(
-        msg.palette.scale,
-        msg.palette.captions,
-        msg.palette.preset
-      ).makeNode();
+    case 'update-scale': updateScale(msg, palette); break;
 
-      if (palette.children.length != 0) {
-        figma.currentPage.appendChild(palette);
-        scene.push(palette);
-        figma.currentPage.selection = scene;
-        figma.viewport.scrollAndZoomIntoView(scene)
-      } else
-        palette.remove()
+    case 'update-captions': updateCaptions(msg, palette); break;
+
+    case 'update-colors': updateColors(msg, palette); break;
+
+    case 'create-local-styles': createLocalStyles(palette, i); break;
+
+    case 'update-local-styles': updateLocalStyles(palette, i); break;
+
+    case 'export-palette':
+      msg.export === 'JSON' ? exportJson(msg, palette) : null
+      msg.export === 'CSS' ? exportCss(msg, palette) : null
       break;
-
-    case 'update-scale':
-      palette = figma.currentPage.selection[0];
-      if (palette.children.length == 1) {
-        palette.setPluginData('scale', JSON.stringify(msg.palette.scale));
-
-        palette.children[0].remove();
-        palette.appendChild(new Colors({
-          colors: JSON.parse(palette.getPluginData('colors')),
-          scale: JSON.parse(palette.getPluginData('scale')),
-          captions: palette.getPluginData('captions') == 'hasCaptions' ? true : false,
-          preset: JSON.parse(palette.getPluginData('preset'))
-        }).makeNode());
-
-        // palette migration
-        palette.counterAxisSizingMode = 'AUTO';
-        palette.name = `UI Color Palette﹒${JSON.parse(palette.getPluginData('preset')).name}`
-      } else
-        figma.notify('Your UI Color Palette seems corrupted. Do not edit any layer within it.')
-      break;
-
-    case 'update-captions':
-      palette = figma.currentPage.selection[0];
-      if (palette.children.length == 1) {
-        if (msg.palette.captions) {
-          palette.setPluginData('captions', 'hasCaptions');
-          palette.children[0].remove();
-          palette.appendChild(new Colors({
-            colors: JSON.parse(palette.getPluginData('colors')),
-            scale: JSON.parse(palette.getPluginData('scale')),
-            captions: palette.getPluginData('captions') == 'hasCaptions' ? true : false,
-            preset: JSON.parse(palette.getPluginData('preset'))
-          }).makeNode())
-        } else {
-          palette.setPluginData('captions', 'hasNotCaptions');
-          palette.children[0].remove();
-          palette.appendChild(new Colors({
-            colors: JSON.parse(palette.getPluginData('colors')),
-            scale: JSON.parse(palette.getPluginData('scale')),
-            captions: palette.getPluginData('captions') == 'hasCaptions' ? true : false,
-            preset: JSON.parse(palette.getPluginData('preset'))
-          }).makeNode())
-        }
-
-        // palette migration
-        palette.counterAxisSizingMode = 'AUTO';
-        palette.name = `UI Color Palette﹒${JSON.parse(palette.getPluginData('preset')).name}`
-      } else
-        figma.notify('Your UI Color Palette seems corrupted. Do not edit any layer within it.')
-      break;
-
-    case 'update-colors':
-      palette = figma.currentPage.selection[0];
-      palette.setPluginData('colors', JSON.stringify(msg.data));
-      palette.children[0].remove();
-      palette.appendChild(new Colors({
-        colors: JSON.parse(palette.getPluginData('colors')),
-        scale: JSON.parse(palette.getPluginData('scale')),
-        captions: palette.getPluginData('captions') == 'hasCaptions' ? true : false,
-        preset: JSON.parse(palette.getPluginData('preset'))
-      }).makeNode());
-
-      // palette migration
-      palette.counterAxisSizingMode = 'AUTO';
-      palette.name = `UI Color Palette﹒${JSON.parse(palette.getPluginData('preset')).name}`
-      break;
-
-    case 'create-local-styles':
-      palette = figma.currentPage.selection[0];
-      i = 0;
-      if (palette.children.length == 1) {
-        palette.children[0].children.forEach(row => {
-          if (row.name != '_header' && row.name != '_title')
-            row.children.forEach((sample, index) => {
-              if (index != 0) {
-                const style = new Style(
-                  `${row.name}/${sample.name.replace(row.name + '-', '')}`,
-                  sample.fills[0].color
-                ).makeNode();
-                figma.moveLocalPaintStyleAfter(style, null);
-                i++
-              }
-            })
-        })
-        figma.notify(`${i} local color styles have been created 🙌`)
-      } else
-        figma.notify('Your UI Color Palette seems corrupted. Do not edit any layer within it.')
-      break;
-
-    case 'update-local-styles':
-      palette = figma.currentPage.selection[0];
-
-      if (palette.children.length == 1) {
-        const localStyles = figma.getLocalPaintStyles();
-        i = 0;
-
-        palette.children[0].children.forEach(row => {
-          row.children.forEach(sample => {
-            localStyles.forEach(localStyle => {
-              if (`${row.name}/${sample.name}` === localStyle.name) {
-                if (JSON.stringify(localStyle.paints[0]['color']) != JSON.stringify(sample.fills[0]['color'])) {
-                  localStyle.paints = sample.fills;
-                  i++
-                }
-              }
-            })
-          })
-        });
-        if (i > 1)
-          figma.notify(`${i} local color styles have been updated 🙌`)
-        else if (i == 1)
-          figma.notify(`${i} local color style has been updated 🙌`)
-        else
-          figma.notify(`No local color style has been updated`)
-      } else
-        figma.notify('Your UI Color Palette seems corrupted. Do not edit any layer within it.')
+    
+    case 'update-settings': updateSettings(msg, palette)
 
   }
 
 };
-
-const messageToUI = () => {
-  if (figma.currentPage.selection.length == 1 && figma.currentPage.selection[0].getPluginData('scale') != '') {
-    figma.currentPage.selection[0].getPluginData('preset') === '' ? figma.currentPage.selection[0].setPluginData('preset', JSON.stringify(presets.material)) : null;
-    figma.ui.postMessage({
-      type: 'palette-selected',
-      data: {
-        scale: JSON.parse(figma.currentPage.selection[0].getPluginData('scale')),
-        captions: figma.currentPage.selection[0].getPluginData('captions'),
-        colors: JSON.parse(figma.currentPage.selection[0].getPluginData('colors')),
-        preset: JSON.parse(figma.currentPage.selection[0].getPluginData('preset'))
-      }
-    })
-  }
-  else if (figma.currentPage.selection.length == 0)
-    figma.ui.postMessage({
-      type: 'empty-selection',
-      data: {}
-    });
-
-  figma.currentPage.selection.forEach(element => {
-    if (element.type != 'GROUP')
-      if (element['fills'].filter(fill => fill.type === 'SOLID').length != 0 && element.getPluginData('scale') === '')
-        figma.ui.postMessage({
-          type: 'color-selected',
-          data: {}
-        })
-  })
-}

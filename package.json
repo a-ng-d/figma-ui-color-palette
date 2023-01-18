@@ -1,21 +1,31 @@
 {
   "name": "figma-ui-color-palette",
-  "version": "1.0.0",
+  "version": "1.5.0",
   "description": "Create accessible UI color palettes with consistant lightness and contrast",
   "main": "code.js",
   "scripts": {
-    "build": "tsc -p tsconfig.json",
+    "build": "npx webpack --mode=development",
     "build:prod": "npx webpack --mode=production",
     "start": "npx webpack --mode=development --watch"
   },
+  "keywords": [
+    "color",
+    "color-scheme",
+    "lch",
+    "color-system",
+    "ui-color",
+    "figma-plugin"
+  ],
   "author": "Aurélien Grimaud",
-  "license": "CC BY 4.0",
+  "licence": {
+    "type": "CC-BY-4.0",
+    "url": "https://creativecommons.org/licenses/by/4.0/"
+  },
   "repository": "https://github.com/inVoltag/figma-ui-color-palette",
   "devDependencies": {
-    "@figma/plugin-typings": "^1.39.1",
+    "@figma/plugin-typings": "^1.55.0",
     "@types/react": "^17.0.37",
     "@types/react-dom": "^17.0.11",
-    "chroma-js": "^2.1.2",
     "css-loader": "^6.5.1",
     "figma-plugin-ds": "^1.0.1",
     "html-webpack-inline-source-plugin": "^1.0.0-beta.2",
@@ -29,6 +39,8 @@
     "webpack-cli": "^4.9.1"
   },
   "dependencies": {
+    "apca-w3": "^0.1.9",
+    "chroma-js": "^2.4.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "uuid": "^8.3.2"
