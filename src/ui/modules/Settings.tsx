@@ -5,7 +5,7 @@ import Input from './../components/Input';
 interface Props {
   paletteName: string;
   onSettingsChange: any
-};
+}
 
 export default class Settings extends React.Component<Props> {
 

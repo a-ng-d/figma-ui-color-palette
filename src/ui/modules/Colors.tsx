@@ -13,7 +13,7 @@ interface Props {
   onDragChange: any;
   onDropOutside: any;
   onOrderChange: any
-};
+}
 
 export default class Colors extends React.Component<Props> {
 

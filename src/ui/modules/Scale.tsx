@@ -14,7 +14,7 @@ interface Props {
   onAddScale?: any;
   onRemoveScale?: any;
   onGoingStep?: any
-};
+}
 
 export default class Scale extends React.Component<Props> {
 

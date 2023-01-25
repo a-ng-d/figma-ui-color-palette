@@ -13,7 +13,7 @@ interface Props {
   onPresetChange: any;
   onCustomPreset: any;
   onSettingsChange: any
-};
+}
 
 export default class CreatePalette extends React.Component<Props> {
 

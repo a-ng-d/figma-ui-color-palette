@@ -6,7 +6,7 @@ interface Props {
   state: string;
   number: any;
   action: any
-};
+}
 
 export default class Knob extends React.Component<Props> {
 

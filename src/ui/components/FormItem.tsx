@@ -4,7 +4,7 @@ interface Props {
   id: string;
   label: string;
   children: any
-};
+}
 
 export default class FormItem extends React.Component<Props> {
 

@@ -5,7 +5,7 @@ interface Props {
   secondaryTabs: Array<string>;
   active: string;
   onClick: any
-};
+}
 
 export default class Tabs extends React.Component<Props> {
 

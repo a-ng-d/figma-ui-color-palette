@@ -3,7 +3,7 @@ import RadioButton from './../components/RadioButton'
 
 interface Props {
   exportPreview: string
-};
+}
 
 export default class Export extends React.Component<Props> {
 

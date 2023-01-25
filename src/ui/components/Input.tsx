@@ -11,7 +11,7 @@ interface Props {
   feature: string;
   onChange: any;
   onFocus: any
-};
+}
 
 export default class Input extends React.Component<Props> {
 

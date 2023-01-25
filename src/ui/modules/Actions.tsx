@@ -12,7 +12,7 @@ interface Props {
   onUpdateLocalColors?: any;
   onChangeCaptions?: any;
   onExportPalette?: any
-};
+}
 
 export default class Actions extends React.Component<Props> {
 

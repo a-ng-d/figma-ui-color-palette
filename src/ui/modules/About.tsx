@@ -5,7 +5,7 @@ const package_json = require('./../../../package.json')
 
 interface Props {
 
-};
+}
 
 export default class About extends React.Component<Props> {
 

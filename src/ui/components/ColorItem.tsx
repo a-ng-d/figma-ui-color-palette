@@ -21,7 +21,7 @@ interface Props {
   onDragChange: any;
   onDropOutside: any
   onOrderChange: any
-};
+}
 
 export default class ColorItem extends React.Component<Props> {
 

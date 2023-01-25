@@ -6,7 +6,7 @@ interface Props {
   options: Array<string>;
   selected: string;
   onChange: any;
-};
+}
 
 export default class Dropdown extends React.Component<Props> {
 

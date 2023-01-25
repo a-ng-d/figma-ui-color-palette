@@ -3,7 +3,7 @@ import * as React from 'react';
 interface Props {
   icon: string;
   messages: Array<string>;
-};
+}
 
 export default class Message extends React.Component<Props> {
 

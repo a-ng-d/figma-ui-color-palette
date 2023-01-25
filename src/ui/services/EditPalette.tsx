@@ -23,7 +23,7 @@ interface Props {
   onColorChange: any;
   onCaptionsChange: any;
   onSettingsChange: any
-};
+}
 
 export default class EditPalette extends React.Component<Props> {
 
@@ -92,7 +92,7 @@ export default class EditPalette extends React.Component<Props> {
       })[0];
       name = element.id;
       id = element.getAttribute('data-id')
-    } catch {};
+    } catch {}
 
     switch (e.target.dataset.feature) {
 
@@ -110,7 +110,7 @@ export default class EditPalette extends React.Component<Props> {
             return item
           });
           this.props.onColorChange(colors)
-        };
+        }
         e._reactName === 'onBlur' ? this.dispatch.colors.on.status = false : this.dispatch.colors.on.status = true;
         break;
 

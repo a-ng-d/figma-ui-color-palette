@@ -7,7 +7,7 @@ interface Props {
   isDisabled: boolean;
   feature: string;
   onChange: any
-};
+}
 
 export default class Switch extends React.Component<Props> {
 
