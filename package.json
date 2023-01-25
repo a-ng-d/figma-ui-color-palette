@@ -28,6 +28,8 @@
     "@figma/plugin-typings": "^1.55.0",
     "@types/react": "^17.0.37",
     "@types/react-dom": "^17.0.11",
+    "@typescript-eslint/eslint-plugin": "^5.49.0",
+    "@typescript-eslint/parser": "^5.49.0",
     "css-loader": "^6.5.1",
     "eslint": "^8.32.0",
     "eslint-plugin-react": "^7.32.1",
