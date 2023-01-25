@@ -57,7 +57,7 @@ export default class Palette {
     // insert
     figma.currentPage.selection.forEach(element => {
 
-      let fills = element['fills'].filter(fill => fill.type === 'SOLID');
+      const fills = element['fills'].filter(fill => fill.type === 'SOLID');
 
       if (fills.length != 0) {
         fills.forEach(fill =>
