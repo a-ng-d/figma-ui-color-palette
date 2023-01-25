@@ -9,7 +9,7 @@ import './stylesheets/components.css';
 import { palette, presets } from '../utils/palettePackage';
 import { v4 as uuidv4 } from 'uuid';
 
-let isPaletteSelected: boolean = false;
+let isPaletteSelected = false;
 
 declare function require(path: string): any;
 
@@ -92,7 +92,7 @@ class App extends React.Component {
   }
 
   customHandler = (e: any) => {
-    let scale = this.state['preset']['scale'];
+    const scale = this.state['preset']['scale'];
     switch (e.target.dataset.feature) {
 
       case 'add':
@@ -270,6 +270,6 @@ class App extends React.Component {
     )
   }
 
-};
+}
 
 ReactDOM.render(<App />, document.getElementById('react-page'))
