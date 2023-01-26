@@ -6,7 +6,7 @@ interface Props {
   isChecked: boolean;
   isDisabled: boolean;
   feature: string;
-  onChange: any
+  onChange: React.ChangeEventHandler<HTMLInputElement>
 }
 
 export default class Switch extends React.Component<Props> {
