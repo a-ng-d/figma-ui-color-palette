@@ -113,6 +113,7 @@ export default class ColorItem extends React.Component<Props> {
             feature='rename'
             onChange={this.inputHandler}
             onFocus={this.selectionHandler}
+            onConfirm={this.inputHandler}
           />
         </div>
         <div className='colors__parameters'>

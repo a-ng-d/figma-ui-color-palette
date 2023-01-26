@@ -2,24 +2,25 @@ import * as React from 'react';
 
 interface Props {
   type: string;
-  icon: any;
+  icon: { type: string, value: string };
   placeholder?: string;
   value: string;
   charactersLimit?: number;
   min?: string;
   max?: string;
   feature: string;
-  onChange: any;
-  onFocus: any
+  onChange: React.FocusEventHandler<HTMLInputElement>;
+  onFocus: React.FocusEventHandler<HTMLInputElement>;
+  onConfirm?: React.KeyboardEventHandler<HTMLInputElement>
 }
 
 export default class Input extends React.Component<Props> {
 
-  onNudge = (e: any) => {
+  onNudge = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.shiftKey && e.key === 'ArrowUp')
-      e.target.value = parseFloat(e.target.value) + 9
+      (e.target as HTMLInputElement).value = (parseFloat((e.target as HTMLInputElement).value) + 9).toString()
     else if (e.shiftKey && e.key === 'ArrowDown')
-      e.target.value = parseFloat(e.target.value) - 9
+      (e.target as HTMLInputElement).value = (parseFloat((e.target as HTMLInputElement).value) - 9).toString()
   }
 
   Color = () => {
@@ -82,7 +83,7 @@ export default class Input extends React.Component<Props> {
           placeholder={this.props.placeholder}
           value={this.props.value}
           maxLength={this.props.charactersLimit}
-          onKeyPress={this.props.onChange}
+          onKeyPress={this.props.onConfirm}
           onChange={this.props.onChange}
           onBlur={this.props.onChange}
           onFocus={this.props.onFocus}

@@ -32,6 +32,7 @@ export default class Settings extends React.Component<Props> {
                 feature='rename-palette'
                 onChange={this.inputHandler}
                 onFocus={this.inputHandler}
+                onConfirm={this.inputHandler}
               />
             </FormItem>
           </div>
