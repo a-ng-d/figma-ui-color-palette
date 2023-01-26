@@ -25,6 +25,7 @@ interface Props {
   onSettingsChange: any
 };
 
+let colors;
 export default class EditPalette extends React.Component<Props> {
 
   dispatch: any;
@@ -37,7 +38,7 @@ export default class EditPalette extends React.Component<Props> {
         500
       ),
       colors: new Dispatcher(
-        () => parent.postMessage({ pluginMessage: { type: 'update-colors', data: this.state['newColors'] } }, '*'),
+        () => parent.postMessage({ pluginMessage: { type: 'update-colors', data: colors } }, '*'),
         500
       )
     };
@@ -84,7 +85,7 @@ export default class EditPalette extends React.Component<Props> {
   }
 
   colorHandler = (e: any) => {
-    let name, colors, id, element;
+    let name, id, element;
     try {
       element = e.nativeEvent.path.filter(el => {
         try { return el.classList.contains('colors__item') }
