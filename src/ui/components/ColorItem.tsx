@@ -75,9 +75,7 @@ export default class ColorItem extends React.Component<Props> {
           breakpoint: number = refTop + (height / 2),
           y: number = e.pageY - parentY + scrollY;
 
-    let refY: number;
-
-    refY = doMap(y, refTop, refBottom, 0, height);
+    const refY: number = doMap(y, refTop, refBottom, 0, height);
 
     if (refY >= -1 && refY <= height / 2)
       this.props.onDragChange(target.dataset.id, true, false, target.dataset.position)

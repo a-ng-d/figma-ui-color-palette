@@ -158,6 +158,7 @@ class App extends React.Component {
 
   render() {
     onmessage = (e: any) => {
+      let putIdsOnColors;
       Object.keys(this.state['preset']).length == 0 ? this.setState({ preset: presets.material }) : null;
       switch (e.data.pluginMessage.type) {
 
@@ -196,8 +197,8 @@ class App extends React.Component {
           break;
 
         case 'palette-selected':
-          const putIdsOnColors = e.data.pluginMessage.data.colors.map(color => {
-            color.id === undefined ? color.id = uuidv4() : color.id = color.id;
+          putIdsOnColors = e.data.pluginMessage.data.colors.map(color => {
+            color.id === undefined ? color.id = uuidv4() : null;
             return color
           });
           isPaletteSelected = true;

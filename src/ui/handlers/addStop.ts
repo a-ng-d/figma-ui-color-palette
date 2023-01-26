@@ -6,8 +6,8 @@ const addStop = (e: any, scale: any, hasPreset: boolean, presetName: string, pre
         sliderPadding: number = parseFloat(window.getComputedStyle(e.currentTarget.parentNode, null).getPropertyValue('padding-left')),
         offset: number = doMap(e.clientX - sliderPadding, 0, rangeWidth, 0, 100);
 
-  let newScale = [],
-      newLightnessScale = {};
+  let newScale = [];
+  const newLightnessScale = {};
 
   newScale = Object.values(scale);
   newScale.length < 25 ? newScale.push(offset.toFixed(1)) : null;

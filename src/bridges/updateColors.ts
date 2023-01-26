@@ -12,10 +12,9 @@ const updateColors = (msg, palette) => {
             captions: boolean = palette.getPluginData('captions') == 'hasCaptions' ? true : false,
             preset = JSON.parse(palette.getPluginData('preset'));
       
-      let colors: string; 
+      const colors: string = JSON.parse(palette.getPluginData('colors')); 
   
       palette.setPluginData('colors', JSON.stringify(msg.data));
-      colors = JSON.parse(palette.getPluginData('colors'));
   
       palette.children[0].remove();
       palette.appendChild(new Colors({
@@ -33,7 +32,7 @@ const updateColors = (msg, palette) => {
     else
       figma.notify('Your UI Color Palette seems corrupted. Do not edit any layer within it.')
   }
-  catch { }
+  catch { return }
 
 };
 

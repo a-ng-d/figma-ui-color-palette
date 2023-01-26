@@ -26,8 +26,6 @@ export default class CreatePalette extends React.Component<Props> {
   }
 
   // Handlers
-  slideHandler = () => { }
-
   checkHandler = (e: any) => {
     this.setState({
       hasCaptions: e.target.checked,
@@ -73,7 +71,7 @@ export default class CreatePalette extends React.Component<Props> {
             hasPreset={true}
             preset={this.props.preset}
             onChangePreset={this.presetHandler}
-            onScaleChange={this.slideHandler}
+            onScaleChange={null}
             onAddScale={this.scaleHandler}
             onRemoveScale={this.scaleHandler}
             onGoingStep={this.state['onGoingStep']}

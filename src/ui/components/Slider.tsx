@@ -39,12 +39,12 @@ export default class Slider extends React.Component<Props> {
           knobs = Array.from(range.children as HTMLCollectionOf<HTMLElement>),
           startTime: number = Date.now();
 
-    let offset: number,
-        update = () => {
-          palette.min = parseFloat(doMap((range.lastChild as HTMLElement).offsetLeft, 0, rangeWidth, 0, 100).toFixed(1));
-          palette.max = parseFloat(doMap((range.firstChild as HTMLElement).offsetLeft, 0, rangeWidth, 0, 100).toFixed(1));
-          knobs.forEach(knob => this.updateLightnessScaleEntry(knob.classList[1], doMap(knob.offsetLeft, 0, rangeWidth, 0, 100).toFixed(1)));
-        };
+    let offset: number;
+    const update = () => {
+      palette.min = parseFloat(doMap((range.lastChild as HTMLElement).offsetLeft, 0, rangeWidth, 0, 100).toFixed(1));
+      palette.max = parseFloat(doMap((range.firstChild as HTMLElement).offsetLeft, 0, rangeWidth, 0, 100).toFixed(1));
+      knobs.forEach(knob => this.updateLightnessScaleEntry(knob.classList[1], doMap(knob.offsetLeft, 0, rangeWidth, 0, 100).toFixed(1)));
+    };
 
     knob.style.zIndex = '2';
     this.setState({
@@ -179,10 +179,7 @@ export default class Slider extends React.Component<Props> {
       this.props.scale,
       this.state['selectedKnob'],
       e.metaKey,
-      e.ctrlKey,
-      this.props.presetName,
-      this.props.min,
-      this.props.max
+      e.ctrlKey
     );
     this.props.onChange('customized')
   }
@@ -192,10 +189,7 @@ export default class Slider extends React.Component<Props> {
       this.props.scale,
       this.state['selectedKnob'],
       e.metaKey,
-      e.ctrlKey,
-      this.props.presetName,
-      this.props.min,
-      this.props.max
+      e.ctrlKey
     );
     this.props.onChange('customized')
   }

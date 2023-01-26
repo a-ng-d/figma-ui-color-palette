@@ -29,7 +29,7 @@ export const palette: Palette = {
 
 export const presets = {
   material: {
-    name: 'Material Design 50-900 (Google) ',
+    name: 'Material Design 50-900 (Google)',
     scale: [50, 100, 200, 300, 400, 500, 600, 700, 800, 900],
     min: 24,
     max: 96
