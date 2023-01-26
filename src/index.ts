@@ -25,8 +25,8 @@ figma.on('selectionchange', () => processSelection());
 
 figma.ui.onmessage = msg => {
 
-  let palette: any;
-  const i = 0;
+  let palette: any,
+      i = 0;
 
   switch (msg.type) {
 

@@ -11,9 +11,10 @@ const updateScale = (msg, palette) => {
           captions: boolean = palette.getPluginData('captions') == 'hasCaptions' ? true : false,
           preset = JSON.parse(palette.getPluginData('preset'));
       
-      const scale: string = JSON.parse(palette.getPluginData('scale'));
+      let scale: string;
   
       palette.setPluginData('scale', JSON.stringify(msg.palette.scale));
+      scale = JSON.parse(palette.getPluginData('scale'));
   
       if (Object.keys(msg.palette.preset).length != 0)
         palette.setPluginData('preset', JSON.stringify(msg.palette.preset))
@@ -34,7 +35,7 @@ const updateScale = (msg, palette) => {
     else
       figma.notify('Your UI Color Palette seems corrupted. Do not edit any layer within it.') 
   }
-  catch { return }
+  catch { }
   
 };
 

@@ -84,20 +84,20 @@ export default class EditPalette extends React.Component<Props> {
   }
 
   colorHandler = (e: any) => {
-    let name, colors, id, element, code, hasAlreadyNewUIColor, hasSameName;
+    let name, colors, id, element;
     try {
       element = e.nativeEvent.path.filter(el => {
         try { return el.classList.contains('colors__item') }
-        catch { return }
+        catch {}
       })[0];
       name = element.id;
       id = element.getAttribute('data-id')
-    } catch { return }
+    } catch {}
 
     switch (e.target.dataset.feature) {
 
       case 'hex':
-        code = e.target.value.indexOf('#') == -1 ? '#' + e.target.value : e.target.value
+        const code = e.target.value.indexOf('#') == -1 ? '#' + e.target.value : e.target.value
         if (/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/i.test(code)) {
           colors = this.props.colors.map(item => {
             const rgb = chroma(e.target.value.indexOf('#') == -1 ? '#' + e.target.value : e.target.value)._rgb;
@@ -167,7 +167,7 @@ export default class EditPalette extends React.Component<Props> {
 
       case 'add':
         colors = this.props.colors;
-        hasAlreadyNewUIColor = colors.filter(color => color.name.includes('New UI Color'));
+        const hasAlreadyNewUIColor = colors.filter(color => color.name.includes('New UI Color'));
         colors.push({
           name: `New UI Color ${hasAlreadyNewUIColor.length + 1}`,
           rgb: {
@@ -184,7 +184,7 @@ export default class EditPalette extends React.Component<Props> {
         break;
 
       case 'rename':
-        hasSameName = this.props.colors.filter(color => color.name === e.target.value);
+        const hasSameName = this.props.colors.filter(color => color.name === e.target.value);
         colors = this.props.colors.map(item => {
           if (item.id === id)
             item.name = hasSameName.length > 1 ? e.target.value + ' 2' : e.target.value
@@ -219,10 +219,10 @@ export default class EditPalette extends React.Component<Props> {
 
   orderHandler = () => {
     const source: any = this.state['selectedElement'],
-          target: any = this.state['hoveredElement'],
-          colors = this.props.colors.map(el => el);
+          target: any = this.state['hoveredElement'];
 
-    let position;
+    let colors = this.props.colors.map(el => el),
+        position;
 
     const colorsWithoutSource = colors.splice(source.position, 1)[0];
 

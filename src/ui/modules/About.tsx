@@ -1,8 +1,13 @@
 import * as React from 'react';
-import Icon from './Icon';
-const package_json = require('./../../../package.json');
+import Button from '../components/Button';
+import Icon from './Icon'
+const package_json = require('./../../../package.json')
 
-export default class About extends React.Component {
+interface Props {
+
+}
+
+export default class About extends React.Component<Props> {
 
   render() {
     return (
