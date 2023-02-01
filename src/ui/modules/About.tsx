@@ -3,11 +3,7 @@ import Button from '../components/Button';
 import Icon from './Icon'
 const package_json = require('./../../../package.json')
 
-interface Props {
-
-}
-
-export default class About extends React.Component<Props> {
+export default class About extends React.Component {
 
   render() {
     return (
