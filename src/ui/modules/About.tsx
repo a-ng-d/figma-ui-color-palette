@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Button from '../components/Button';
-import Icon from './Icon'
-const package_json = require('./../../../package.json')
+import Icon from './Icon';
+import package_json from './../../../package.json';
 
 export default class About extends React.Component {
 
