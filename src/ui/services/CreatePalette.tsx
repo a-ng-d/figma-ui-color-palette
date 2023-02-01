@@ -26,7 +26,7 @@ export default class CreatePalette extends React.Component<Props> {
   }
 
   // Handlers
-  slideHandler = () => { }
+  slideHandler = () => { return }
 
   checkHandler = (e: any) => {
     this.setState({
