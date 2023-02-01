@@ -35,7 +35,7 @@ const updateScale = (msg, palette) => {
     else
       figma.notify('Your UI Color Palette seems corrupted. Do not edit any layer within it.') 
   }
-  catch { }
+  catch { return }
   
 };
 
