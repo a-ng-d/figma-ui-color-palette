@@ -1,5 +1,3 @@
-import chroma from 'chroma-js';
-
 const exportCss = (msg, palette) => {
 
   palette = figma.currentPage.selection[0];
