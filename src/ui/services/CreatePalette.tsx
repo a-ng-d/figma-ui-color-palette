@@ -67,7 +67,7 @@ export default class CreatePalette extends React.Component<Props> {
         />
 
     switch (this.state['context']) {
-      case 'Scale':
+      case 'Scale': {
         controls =
           <Scale
             hasPreset={true}
@@ -78,19 +78,20 @@ export default class CreatePalette extends React.Component<Props> {
             onRemoveScale={this.scaleHandler}
             onGoingStep={this.state['onGoingStep']}
           />;
-        break;
-
-        case 'Settings':
-          controls =
-              <Settings
-                paletteName={this.props.paletteName}
-                onSettingsChange={this.settingsHandler}
-              />;
-            break;
-
-        case 'About':
-          controls = <About />
+        break
       }
+      case 'Settings': {
+        controls =
+          <Settings
+            paletteName={this.props.paletteName}
+            onSettingsChange={this.settingsHandler}
+          />;
+        break
+      }
+      case 'About': {
+        controls = <About />
+      }
+    }
 
     return (
       <>

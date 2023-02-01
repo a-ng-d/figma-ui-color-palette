@@ -20,18 +20,21 @@ export default class Export extends React.Component<Props> {
   // Handlers
   exportHandler = (e: any) => {
     switch (e.target.dataset.feature) {
-      case 'export-to-json':
+
+      case 'export-to-json': {
         this.setState({
           format: 'JSON'
         });
         parent.postMessage({ pluginMessage: { type: 'export-palette', export: 'JSON' } }, '*')
-        break;
-
-      case 'export-to-css':
+        break
+      }
+      case 'export-to-css': {
         this.setState({
           format: 'CSS'
         });
         parent.postMessage({ pluginMessage: { type: 'export-palette', export: 'CSS' } }, '*')
+      }
+
     }
   }
 

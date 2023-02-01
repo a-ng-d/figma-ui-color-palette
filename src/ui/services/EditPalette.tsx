@@ -96,7 +96,7 @@ export default class EditPalette extends React.Component<Props> {
 
     switch (e.target.dataset.feature) {
 
-      case 'hex':
+      case 'hex': {
         const code = e.target.value.indexOf('#') == -1 ? '#' + e.target.value : e.target.value
         if (/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/i.test(code)) {
           colors = this.props.colors.map(item => {
@@ -112,9 +112,9 @@ export default class EditPalette extends React.Component<Props> {
           this.props.onColorChange(colors)
         }
         e._reactName === 'onBlur' ? this.dispatch.colors.on.status = false : this.dispatch.colors.on.status = true;
-        break;
-
-      case 'lightness':
+        break
+      }
+      case 'lightness': {
         colors = this.props.colors.map(item => {
           const rgb = chroma(item.rgb.r * 255, item.rgb.g * 255, item.rgb.b * 255).set('lch.l', e.target.value)._rgb
           if (item.id === id)
@@ -127,9 +127,9 @@ export default class EditPalette extends React.Component<Props> {
         });
         this.props.onColorChange(colors);
         parent.postMessage({ pluginMessage: { type: 'update-colors', data: colors } }, '*');
-        break;
-
-      case 'chroma':
+        break
+      }
+      case 'chroma': {
         colors = this.props.colors.map(item => {
           const rgb = chroma(item.rgb.r * 255, item.rgb.g * 255, item.rgb.b * 255).set('lch.c', e.target.value)._rgb
           if (item.id === id)
@@ -142,9 +142,9 @@ export default class EditPalette extends React.Component<Props> {
         });
         this.props.onColorChange(colors);
         parent.postMessage({ pluginMessage: { type: 'update-colors', data: colors } }, '*');
-        break;
-
-      case 'hue':
+        break
+      }
+      case 'hue': {
         colors = this.props.colors.map(item => {
           const rgb = chroma(item.rgb.r * 255, item.rgb.g * 255, item.rgb.b * 255).set('lch.h', e.target.value)._rgb
           if (item.id === id)
@@ -157,15 +157,15 @@ export default class EditPalette extends React.Component<Props> {
         });
         this.props.onColorChange(colors);
         parent.postMessage({ pluginMessage: { type: 'update-colors', data: colors } }, '*');
-        break;
-
-      case 'remove':
+        break
+      }
+      case 'remove': {
         colors = this.props.colors.filter(item => item.id != id);
         this.props.onColorChange(colors);
         parent.postMessage({ pluginMessage: { type: 'update-colors', data: colors } }, '*');
-        break;
-
-      case 'add':
+        break
+      }
+      case 'add': {
         colors = this.props.colors;
         const hasAlreadyNewUIColor = colors.filter(color => color.name.includes('New UI Color'));
         colors.push({
@@ -181,9 +181,9 @@ export default class EditPalette extends React.Component<Props> {
         });
         this.props.onColorChange(colors);
         parent.postMessage({ pluginMessage: { type: 'update-colors', data: colors } }, '*');
-        break;
-
-      case 'rename':
+        break
+      }
+      case 'rename': {
         const hasSameName = this.props.colors.filter(color => color.name === e.target.value);
         colors = this.props.colors.map(item => {
           if (item.id === id)
@@ -193,9 +193,9 @@ export default class EditPalette extends React.Component<Props> {
         this.props.onColorChange(colors);
         e._reactName === 'onBlur' ? parent.postMessage({ pluginMessage: { type: 'update-colors', data: colors } }, '*') : null;
         e.key === 'Enter' ? parent.postMessage({ pluginMessage: { type: 'update-colors', data: colors } }, '*') : null;
-        break;
-
-      case 'oklch':
+        break
+      }
+      case 'oklch': {
         colors = this.props.colors.map(item => {
           if (item.id === id)
             item.oklch = e.target.checked
@@ -203,9 +203,9 @@ export default class EditPalette extends React.Component<Props> {
         });
         this.props.onColorChange(colors);
         parent.postMessage({ pluginMessage: { type: 'update-colors', data: colors } }, '*');
-        break;
-
-      case 'shift-hue':
+        break
+      }
+      case 'shift-hue': {
         colors = this.props.colors.map(item => {
           if (item.id === id)
             item.hueShifting = parseFloat(e.target.value)
@@ -213,6 +213,7 @@ export default class EditPalette extends React.Component<Props> {
         });
         this.props.onColorChange(colors);
         parent.postMessage({ pluginMessage: { type: 'update-colors', data: colors } }, '*')
+      }
 
     }
   }
@@ -351,7 +352,8 @@ export default class EditPalette extends React.Component<Props> {
           />
 
     switch (this.state['context']) {
-      case 'Scale':
+
+      case 'Scale': {
         controls =
           <Scale
             hasPreset={false}
@@ -359,9 +361,9 @@ export default class EditPalette extends React.Component<Props> {
             scale={this.props.scale}
             onScaleChange={this.slideHandler}
           />;
-        break;
-
-      case 'Colors':
+        break
+      }
+      case 'Colors': {
         controls =
           <Colors
             colors={this.props.colors}
@@ -374,25 +376,27 @@ export default class EditPalette extends React.Component<Props> {
             onDropOutside={this.dropOutsideHandler}
             onOrderChange={this.orderHandler}
           />;
-        break;
-
-      case 'Export':
+        break
+      }
+      case 'Export': {
         controls =
           <Export
             exportPreview={this.props.export.data}
           />;
-        break;
-
-      case 'Settings':
+        break
+      }
+      case 'Settings': {
         controls =
           <Settings
             paletteName={this.props.paletteName}
             onSettingsChange={this.settingsHandler}
           />;
-        break;
-
-      case 'About':
+        break
+      }
+      case 'About': {
         controls = <About />
+      }
+
     }
 
     return (
