@@ -107,7 +107,7 @@ class App extends React.Component {
               max: palette.max
             }
           })
-        };
+        }
         break
       }
       case 'remove': {
