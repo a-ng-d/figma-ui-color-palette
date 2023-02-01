@@ -25,7 +25,7 @@ export default class Title {
     this.node.layoutAlign = 'STRETCH';
 
     // insert
-    this.node.appendChild(new Sample(this.text, null, [255, 255, 255], this.parent.captions).makeName('relative', 100, 48, 16))
+    this.node.appendChild(new Sample(this.text, null, [255, 255, 255], this.parent.captions).makeName('relative', 100, 48))
 
     return this.node
   }

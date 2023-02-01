@@ -43,7 +43,7 @@ export default class Colors {
       row.counterAxisSizingMode = 'AUTO';
 
       // insert
-      const rowName = new Sample(color.name, null, [color.rgb.r * 255, color.rgb.g * 255, color.rgb.b * 255], this.parent.captions).makeName('absolute', 160, 224, 10);
+      const rowName = new Sample(color.name, null, [color.rgb.r * 255, color.rgb.g * 255, color.rgb.b * 255], this.parent.captions).makeName('absolute', 160, 224);
       row.appendChild(rowName);
 
       Object.values(this.parent.scale).reverse().forEach((lightness: any) => {
@@ -70,7 +70,7 @@ export default class Colors {
           Object.keys(this.parent.scale).find(key => this.parent.scale[key] === lightness).substr(10),
           newColor._rgb,
           this.parent.captions
-        ).makeScale(160, 224, 10);
+        ).makeScale(160, 224);
         row.name = color.name;
         row.appendChild(sample)
       });
