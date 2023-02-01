@@ -200,7 +200,7 @@ class App extends React.Component {
         }
         case 'palette-selected': {
           const putIdsOnColors = e.data.pluginMessage.data.colors.map(color => {
-            color.id === undefined ? color.id = uuidv4() : color.id = color.id;
+            color.id === undefined ? color.id = uuidv4() : null;
             return color
           });
           isPaletteSelected = true;
