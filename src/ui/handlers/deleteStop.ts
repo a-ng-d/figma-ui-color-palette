@@ -1,5 +1,4 @@
 import { palette } from '../../utils/palettePackage';
-import { doMap } from './../../utils/doMap';
 
 const deleteStop = (scale: any, selectedKnob: HTMLElement, presetName: string, presetMin: string, presetMax: string) => {
   const newScale = [],

@@ -1,4 +1,3 @@
-import chroma from 'chroma-js';
 import Colors from './Colors';
 
 interface UIColors {

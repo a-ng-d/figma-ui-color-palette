@@ -179,10 +179,7 @@ export default class Slider extends React.Component<Props> {
       this.props.scale,
       this.state['selectedKnob'],
       e.metaKey,
-      e.ctrlKey,
-      this.props.presetName,
-      this.props.min,
-      this.props.max
+      e.ctrlKey
     );
     this.props.onChange('customized')
   }
@@ -192,10 +189,7 @@ export default class Slider extends React.Component<Props> {
       this.props.scale,
       this.state['selectedKnob'],
       e.metaKey,
-      e.ctrlKey,
-      this.props.presetName,
-      this.props.min,
-      this.props.max
+      e.ctrlKey
     );
     this.props.onChange('customized')
   }

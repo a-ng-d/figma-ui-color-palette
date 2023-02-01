@@ -1,5 +1,4 @@
 import * as React from 'react';
-import Button from '../components/Button';
 import Icon from './Icon';
 import package_json from './../../../package.json';
 

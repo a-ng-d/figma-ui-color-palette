@@ -84,13 +84,12 @@ export default class EditPalette extends React.Component<Props> {
   }
 
   colorHandler = (e: any) => {
-    let name, colors, id, element;
+    let colors, id, element;
     try {
       element = e.nativeEvent.path.filter(el => {
         try { return el.classList.contains('colors__item') }
         catch { return }
       })[0];
-      name = element.id;
       id = element.getAttribute('data-id')
     } catch { return }
 
@@ -253,8 +252,7 @@ export default class EditPalette extends React.Component<Props> {
   })
 
   selectionHandler = (e: any) => {
-    const target: HTMLElement = e.currentTarget,
-          neighbours: Array<Element> = Array.from(target.parentElement.children)
+    const target: HTMLElement = e.currentTarget;
     if (target !== e.target) return;
     this.setState({
       selectedElement: {

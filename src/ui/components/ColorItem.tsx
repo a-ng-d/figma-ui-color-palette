@@ -72,7 +72,6 @@ export default class ColorItem extends React.Component<Props> {
           scrollY: number = target.parentNode.parentNode.parentNode.scrollTop,
           refTop: number = target.offsetTop - parentY,
           refBottom: number = refTop + height,
-          breakpoint: number = refTop + (height / 2),
           y: number = e.pageY - parentY + scrollY,
           refY: number = doMap(y, refTop, refBottom, 0, height);
 

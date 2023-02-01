@@ -4,7 +4,7 @@ import Scale from '../modules/Scale';
 import Settings from '../modules/Settings';
 import About from '../modules/About';
 import Actions from '../modules/Actions';
-import { palette, presets } from '../../utils/palettePackage';
+import { palette } from '../../utils/palettePackage';
 
 interface Props {
   hasCaptions: boolean;

@@ -1,6 +1,6 @@
 import { palette } from '../../utils/palettePackage';
 
-const shiftRightStop = (scale, selectedKnob, meta, ctrl, presetName, presetMin, presetMax) => {
+const shiftRightStop = (scale, selectedKnob, meta, ctrl) => {
   const stopsList = [];
 
   Object.keys(scale).forEach(stop => {
