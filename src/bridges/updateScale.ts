@@ -9,12 +9,10 @@ const updateScale = (msg, palette) => {
       const paletteName: string = palette.getPluginData('name') === '' ? 'UI Color Palette' : palette.getPluginData('name'),
           colors: string = JSON.parse(palette.getPluginData('colors')),
           captions: boolean = palette.getPluginData('captions') == 'hasCaptions' ? true : false,
-          preset = JSON.parse(palette.getPluginData('preset'));
-      
-      let scale: string;
+          preset = JSON.parse(palette.getPluginData('preset')),
+          scale = JSON.parse(palette.getPluginData('scale'));
   
       palette.setPluginData('scale', JSON.stringify(msg.palette.scale));
-      scale = JSON.parse(palette.getPluginData('scale'));
   
       if (Object.keys(msg.palette.preset).length != 0)
         palette.setPluginData('preset', JSON.stringify(msg.palette.preset))

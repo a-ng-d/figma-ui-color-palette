@@ -220,10 +220,10 @@ export default class EditPalette extends React.Component<Props> {
 
   orderHandler = () => {
     const source: any = this.state['selectedElement'],
-          target: any = this.state['hoveredElement'];
+          target: any = this.state['hoveredElement'],
+          colors = this.props.colors.map(el => el);
 
-    let colors = this.props.colors.map(el => el),
-        position;
+    let position;
 
     const colorsWithoutSource = colors.splice(source.position, 1)[0];
 
