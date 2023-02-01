@@ -78,7 +78,6 @@ export default class Export extends React.Component<Props> {
             </ul>
           </div>
         </div>
-        {this.state['format'] === 'JSON' || 'CSS' ?
         <div>
           <div className='section-controls'>
             <div className='section-title'>Preview</div>
@@ -87,7 +86,6 @@ export default class Export extends React.Component<Props> {
             <textarea className='export-palette__preview textarea' value={this.props.exportPreview} readOnly></textarea>
           </div>
         </div>
-        : null }
       </div>
     )
   }
