@@ -38,7 +38,16 @@ export default class EditPalette extends React.Component<Props> {
         500
       ),
       colors: new Dispatcher(
-        () => parent.postMessage({ pluginMessage: { type: 'update-colors', data: colors } }, '*'),
+        () =>
+          parent.postMessage(
+            {
+              pluginMessage: {
+                type: 'update-colors',
+                data: this.state['newColors'],
+              },
+            },
+            '*'
+          ),
         500
       )
     };
