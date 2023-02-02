@@ -5,7 +5,7 @@ import Input from './../components/Input';
 interface Props {
   paletteName: string;
   onSettingsChange: any
-};
+}
 
 export default class Settings extends React.Component<Props> {
 
@@ -32,6 +32,7 @@ export default class Settings extends React.Component<Props> {
                 feature='rename-palette'
                 onChange={this.inputHandler}
                 onFocus={this.inputHandler}
+                onConfirm={this.inputHandler}
               />
             </FormItem>
           </div>

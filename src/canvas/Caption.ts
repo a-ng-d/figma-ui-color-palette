@@ -142,7 +142,7 @@ export default class Caption {
     }
     else if (type === 'TITLE') {
       this.node.appendChild(new Tag('_title', this.name, 16).makeNodeTag())
-    };
+    }
 
     return this.node
   }

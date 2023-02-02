@@ -1,18 +1,16 @@
 import { palette } from '../../utils/palettePackage';
 
-const shiftLeftStop = (scale, selectedKnob, meta, ctrl, presetName, presetMin, presetMax) => {
-  let stopsList = [],
-      newLightnessScale = {},
-      selectedKnobIndex;
+const shiftLeftStop = (scale, selectedKnob, meta, ctrl) => {
+  const stopsList = [];
 
   Object.keys(scale).forEach(stop => {
     stopsList.push(stop)
   });
-  selectedKnobIndex = stopsList.indexOf(selectedKnob.classList[1])
-  newLightnessScale = scale;
-
-  const currentStopValue: number = parseFloat(newLightnessScale[stopsList[selectedKnobIndex]]),
-        nextStopValue: number = parseFloat(newLightnessScale[stopsList[selectedKnobIndex + 1]]) + 2
+  
+  const selectedKnobIndex = stopsList.indexOf(selectedKnob.classList[1]),
+        newLightnessScale = scale,
+        currentStopValue: number = parseFloat(newLightnessScale[stopsList[selectedKnobIndex]]),
+        nextStopValue: number = parseFloat(newLightnessScale[stopsList[selectedKnobIndex + 1]]) + 2;
 
   if (currentStopValue <= nextStopValue)
     null

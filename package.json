@@ -6,7 +6,9 @@
   "scripts": {
     "build": "npx webpack --mode=development",
     "build:prod": "npx webpack --mode=production",
-    "start": "npx webpack --mode=development --watch"
+    "start": "npx webpack --mode=development --watch",
+    "typecheck": "npx tsc --noEmit",
+    "lint": "npx eslint . --ext .ts,.tsx --fix --ignore-path .gitignore"
   },
   "keywords": [
     "color",
@@ -26,7 +28,11 @@
     "@figma/plugin-typings": "^1.55.0",
     "@types/react": "^17.0.37",
     "@types/react-dom": "^17.0.11",
+    "@typescript-eslint/eslint-plugin": "^5.49.0",
+    "@typescript-eslint/parser": "^5.49.0",
     "css-loader": "^6.5.1",
+    "eslint": "^8.32.0",
+    "eslint-plugin-react": "^7.32.1",
     "figma-plugin-ds": "^1.0.1",
     "html-webpack-inline-source-plugin": "^1.0.0-beta.2",
     "html-webpack-plugin": "^5.5.0",

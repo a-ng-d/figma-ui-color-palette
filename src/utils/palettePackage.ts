@@ -15,7 +15,7 @@ interface Palette {
   min: number,
   max: number,
   captions: boolean,
-  preset: {}
+  preset: any
 }
 
 export const palette: Palette = {

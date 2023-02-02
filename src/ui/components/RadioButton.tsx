@@ -8,7 +8,7 @@ interface Props {
   feature: string;
   group: string;
   onChange: any
-};
+}
 
 export default class RadioButton extends React.Component<Props> {
 

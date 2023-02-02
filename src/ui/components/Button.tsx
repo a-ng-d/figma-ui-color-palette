@@ -7,7 +7,7 @@ interface Props {
   state?: string;
   feature: string;
   action: any
-};
+}
 
 export default class Button extends React.Component<Props> {
 

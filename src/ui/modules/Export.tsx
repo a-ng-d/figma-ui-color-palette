@@ -3,7 +3,7 @@ import RadioButton from './../components/RadioButton'
 
 interface Props {
   exportPreview: string
-};
+}
 
 export default class Export extends React.Component<Props> {
 
@@ -20,18 +20,21 @@ export default class Export extends React.Component<Props> {
   // Handlers
   exportHandler = (e: any) => {
     switch (e.target.dataset.feature) {
-      case 'export-to-json':
+
+      case 'export-to-json': {
         this.setState({
           format: 'JSON'
         });
         parent.postMessage({ pluginMessage: { type: 'export-palette', export: 'JSON' } }, '*')
-        break;
-
-      case 'export-to-css':
+        break
+      }
+      case 'export-to-css': {
         this.setState({
           format: 'CSS'
         });
         parent.postMessage({ pluginMessage: { type: 'export-palette', export: 'CSS' } }, '*')
+      }
+
     }
   }
 
@@ -75,7 +78,6 @@ export default class Export extends React.Component<Props> {
             </ul>
           </div>
         </div>
-        {this.state['format'] === 'JSON' || 'CSS' ?
         <div>
           <div className='section-controls'>
             <div className='section-title'>Preview</div>
@@ -84,7 +86,6 @@ export default class Export extends React.Component<Props> {
             <textarea className='export-palette__preview textarea' value={this.props.exportPreview} readOnly></textarea>
           </div>
         </div>
-        : null }
       </div>
     )
   }

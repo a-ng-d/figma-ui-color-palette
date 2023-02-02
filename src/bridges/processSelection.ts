@@ -3,7 +3,7 @@ import { presets } from './../utils/palettePackage';
 
 export let currentSelection: ReadonlyArray<SceneNode>;
 export let previousSelection: ReadonlyArray<SceneNode>;
-export let isSelectionChanged: boolean = false;
+export let isSelectionChanged = false;
 
 const processSelection = () => {
 

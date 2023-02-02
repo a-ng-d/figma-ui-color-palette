@@ -1,13 +1,11 @@
-import chroma from 'chroma-js';
-
 const exportCss = (msg, palette) => {
 
   palette = figma.currentPage.selection[0];
-  let css: Array<string> = [];
+  const css: Array<string> = [];
 
   if (palette.children.length == 1) {
     palette.children[0].children.forEach(row => {
-      let rowCss: Array<string> = [];
+      const rowCss: Array<string> = [];
       if (row.name != '_header' && row.name != '_title') {
         row.children.forEach((sample, index) => {
           if (index != 0) {

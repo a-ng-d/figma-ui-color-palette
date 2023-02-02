@@ -18,7 +18,7 @@ export default class Sample {
     this.children = null
   }
 
-  makeName(mode, width, height, fontSize) {
+  makeName(mode, width, height) {
     // base
     this.node.name = this.name;
     this.node.fills = [{
@@ -53,7 +53,7 @@ export default class Sample {
     return this.node
   }
 
-  makeScale(width, height, fontSize) {
+  makeScale(width, height) {
     // base
     this.node.name = this.scale;
     this.node.resize(width, height);

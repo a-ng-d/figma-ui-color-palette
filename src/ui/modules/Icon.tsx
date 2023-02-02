@@ -2,7 +2,7 @@ import * as React from 'react';
 
 interface Props {
   size: number
-};
+}
 
 export default class Icon extends React.Component<Props> {
 

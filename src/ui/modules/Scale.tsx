@@ -14,12 +14,12 @@ interface Props {
   onAddScale?: any;
   onRemoveScale?: any;
   onGoingStep?: any
-};
+}
 
 export default class Scale extends React.Component<Props> {
 
   setOnboardingMessages = () => {
-    let messages: Array<string> = []
+    const messages: Array<string> = []
 
     if (this.props.preset.name === 'Custom' && !this.props.hasPreset)
       messages.push(

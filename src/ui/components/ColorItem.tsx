@@ -21,7 +21,7 @@ interface Props {
   onDragChange: any;
   onDropOutside: any
   onOrderChange: any
-};
+}
 
 export default class ColorItem extends React.Component<Props> {
 
@@ -72,12 +72,8 @@ export default class ColorItem extends React.Component<Props> {
           scrollY: number = target.parentNode.parentNode.parentNode.scrollTop,
           refTop: number = target.offsetTop - parentY,
           refBottom: number = refTop + height,
-          breakpoint: number = refTop + (height / 2),
-          y: number = e.pageY - parentY + scrollY;
-
-    let refY: number;
-
-    refY = doMap(y, refTop, refBottom, 0, height);
+          y: number = e.pageY - parentY + scrollY,
+          refY: number = doMap(y, refTop, refBottom, 0, height);
 
     if (refY >= -1 && refY <= height / 2)
       this.props.onDragChange(target.dataset.id, true, false, target.dataset.position)
@@ -113,6 +109,7 @@ export default class ColorItem extends React.Component<Props> {
             feature='rename'
             onChange={this.inputHandler}
             onFocus={this.selectionHandler}
+            onConfirm={this.inputHandler}
           />
         </div>
         <div className='colors__parameters'>

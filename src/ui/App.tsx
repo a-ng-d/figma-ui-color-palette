@@ -9,9 +9,7 @@ import './stylesheets/components.css';
 import { palette, presets } from '../utils/palettePackage';
 import { v4 as uuidv4 } from 'uuid';
 
-let isPaletteSelected: boolean = false;
-
-declare function require(path: string): any;
+let isPaletteSelected = false;
 
 class App extends React.Component {
 
@@ -39,63 +37,64 @@ class App extends React.Component {
   presetHandler = (e: any) => {
     switch ((e.target as HTMLInputElement).value) {
 
-      case presets.material.name:
+      case presets.material.name: {
         this.setState({
           preset: presets.material,
           onGoingStep: 'preset changed'
-        })
-        break;
-
-      case presets.ant.name:
+        });
+        break
+      }
+      case presets.ant.name: {
         this.setState({
           preset: presets.ant,
           onGoingStep: 'preset changed'
-        })
-        break;
-
-      case presets.atlassian.name:
+        });
+        break
+      }
+      case presets.atlassian.name: {
         this.setState({
           preset: presets.atlassian,
           onGoingStep: 'preset changed'
-        })
-        break;
-
-      case presets.atlassianNeutral.name:
+        });
+        break
+      }
+      case presets.atlassianNeutral.name: {
         this.setState({
           preset: presets.atlassianNeutral,
           onGoingStep: 'preset changed'
-        })
-        break;
-
-      case presets.carbon.name:
+        });
+        break
+      }
+      case presets.carbon.name: {
         this.setState({
           preset: presets.carbon,
           onGoingStep: 'preset changed'
-        })
-        break;
-
-      case presets.base.name:
+        });
+        break
+      }
+      case presets.base.name: {
         this.setState({
           preset: presets.base,
           onGoingStep: 'preset changed'
-        })
-        break;
-
-      case presets.custom.name:
+        });
+        break
+      }
+      case presets.custom.name: {
         presets.custom.scale = [1, 2];
         this.setState({
           preset: presets.custom,
           onGoingStep: 'preset changed'
         })
+      }
 
     }
   }
 
   customHandler = (e: any) => {
-    let scale = this.state['preset']['scale'];
+    const scale = this.state['preset']['scale'];
     switch (e.target.dataset.feature) {
 
-      case 'add':
+      case 'add': {
         if (scale.length < 24) {
           scale.push(scale.length + 1)
           this.setState({
@@ -107,9 +106,9 @@ class App extends React.Component {
             }
           })
         }
-        break;
-
-      case 'remove':
+        break
+      }
+      case 'remove': {
         if (scale.length > 2) {
           scale.pop()
           this.setState({
@@ -121,6 +120,7 @@ class App extends React.Component {
             }
           })
         }
+      }
 
     }
   }
@@ -144,7 +144,7 @@ class App extends React.Component {
   settingsHandler = (e: any) => {
     switch (e.target.dataset.feature) {
 
-      case 'rename-palette':
+      case 'rename-palette': {
         palette.name = e.target.value;
         this.setState({
           paletteName: e.target.value,
@@ -152,6 +152,7 @@ class App extends React.Component {
         });
         e._reactName === 'onBlur' && this.state['service'] === 'Edit' ? parent.postMessage({ pluginMessage: { type: 'update-settings', data: this.state['paletteName'] } }, '*') : null;
         e.key === 'Enter' && this.state['service'] === 'Edit' ? parent.postMessage({ pluginMessage: { type: 'update-settings', data: this.state['paletteName'] } }, '*') : null;
+      }
 
     }
   }
@@ -161,7 +162,7 @@ class App extends React.Component {
       Object.keys(this.state['preset']).length == 0 ? this.setState({ preset: presets.material }) : null;
       switch (e.data.pluginMessage.type) {
 
-        case 'empty-selection':
+        case 'empty-selection': {
           this.setState({
             service: 'None',
             hasCaptions: true,
@@ -172,9 +173,9 @@ class App extends React.Component {
           palette.name = '';
           palette.preset = {};
           isPaletteSelected = false;
-          break;
-
-        case 'color-selected':
+          break
+        }
+        case 'color-selected': {
           if (isPaletteSelected) {
             this.setState({
               service: 'Create',
@@ -193,11 +194,11 @@ class App extends React.Component {
               onGoingStep: 'colors selected',
             })
           isPaletteSelected = false;
-          break;
-
-        case 'palette-selected':
+          break
+        }
+        case 'palette-selected': {
           const putIdsOnColors = e.data.pluginMessage.data.colors.map(color => {
-            color.id === undefined ? color.id = uuidv4() : color.id = color.id;
+            color.id === undefined ? color.id = uuidv4() : null;
             return color
           });
           isPaletteSelected = true;
@@ -212,9 +213,9 @@ class App extends React.Component {
             paletteName: e.data.pluginMessage.data.name,
             onGoingStep: 'palette selected'
           });
-          break;
-
-        case 'export-palette-json':
+          break
+        }
+        case 'export-palette-json': {
           this.setState({
             export: {
               format: 'JSON',
@@ -223,9 +224,9 @@ class App extends React.Component {
             },
             onGoingStep: 'export previewed'
           });
-          break;
-
-        case 'export-palette-css':
+          break
+        }
+        case 'export-palette-css': {
           this.setState({
             export: {
               format: 'CSS',
@@ -234,6 +235,7 @@ class App extends React.Component {
             },
             onGoingStep: 'export previewed'
           })
+        }
 
       }
     };
@@ -270,6 +272,6 @@ class App extends React.Component {
     )
   }
 
-};
+}
 
 ReactDOM.render(<App />, document.getElementById('react-page'))

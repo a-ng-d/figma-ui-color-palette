@@ -3,7 +3,7 @@ import chroma from 'chroma-js';
 const exportJson = (msg, palette) => {
 
   palette = figma.currentPage.selection[0];
-  let json = {};
+  const json = {};
 
   if (palette.children.length == 1) {
     palette.children[0].children.forEach(row => {
