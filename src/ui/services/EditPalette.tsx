@@ -94,15 +94,12 @@ export default class EditPalette extends React.Component<Props> {
   }
 
   colorHandler = (e: any) => {
-    let colors, id, element
+    let colors, id, element;
     try {
-      element = e.nativeEvent.path.filter((el) => {
-        try {
-          return el.classList.contains('colors__item')
-        } catch {
-          return
-        }
-      })[0]
+      element = e.nativeEvent.path.filter(el => {
+        try { return el.classList.contains('colors__item') }
+        catch {}
+      })[0];
       id = element.getAttribute('data-id')
     } catch {};
 
