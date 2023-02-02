@@ -8,7 +8,8 @@
     "build:prod": "npx webpack --mode=production",
     "start": "npx webpack --mode=development --watch",
     "typecheck": "npx tsc --noEmit",
-    "lint": "npx eslint . --ext .ts,.tsx --fix --ignore-path .gitignore"
+    "lint": "npx eslint . --ext .ts,.tsx --fix --ignore-path .gitignore",
+    "pretty": "npx prettier ./src  --write"
   },
   "keywords": [
     "color",
@@ -37,6 +38,7 @@
     "html-webpack-inline-source-plugin": "^1.0.0-beta.2",
     "html-webpack-plugin": "^5.5.0",
     "preact": "^10.6.4",
+    "prettier": "^2.8.3",
     "style-loader": "^3.3.1",
     "ts-loader": "^9.2.6",
     "typescript": "^4.5.2",
