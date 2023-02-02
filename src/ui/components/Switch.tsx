@@ -1,31 +1,31 @@
-import * as React from 'react';
+import * as React from 'react'
 
 interface Props {
-  id: string;
-  label: string;
-  isChecked: boolean;
-  isDisabled: boolean;
-  feature: string;
+  id: string
+  label: string
+  isChecked: boolean
+  isDisabled: boolean
+  feature: string
   onChange: React.ChangeEventHandler<HTMLInputElement>
 }
 
 export default class Switch extends React.Component<Props> {
-
   render() {
-    return(
-      <div className='switch'>
+    return (
+      <div className="switch">
         <input
           data-feature={this.props.feature}
           id={this.props.id}
-          className='switch__toggle'
-          type='checkbox'
+          className="switch__toggle"
+          type="checkbox"
           checked={this.props.isChecked}
           disabled={this.props.isDisabled}
           onChange={this.props.onChange}
         />
-        <label className='switch__label' htmlFor={this.props.id}>{this.props.label}</label>
+        <label className="switch__label" htmlFor={this.props.id}>
+          {this.props.label}
+        </label>
       </div>
     )
   }
-
 }
