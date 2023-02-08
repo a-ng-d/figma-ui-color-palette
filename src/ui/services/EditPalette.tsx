@@ -35,7 +35,13 @@ export default class EditPalette extends React.Component<Props> {
       scale: new Dispatcher(
         () =>
           parent.postMessage(
-            { pluginMessage: { type: 'update-scale', data: palette, isEditedInRealTime: true } },
+            {
+              pluginMessage: {
+                type: 'update-scale',
+                data: palette,
+                isEditedInRealTime: true
+              }
+            },
             '*'
           ),
         500
