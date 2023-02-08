@@ -300,7 +300,7 @@ class App extends React.Component {
           />
         ) : null}
         {this.state['service'] === 'None' ? <Onboarding /> : null}
-        <div className='help-bar'>
+        <div className="help-bar">
           <button className="button button--tertiary">
             <a
               href="https://docs.ui-color-palette.com"

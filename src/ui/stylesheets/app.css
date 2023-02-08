@@ -103,7 +103,7 @@ div.help-bar {
   padding: 0 var(--size-xsmall);
   gap: var(--size-xxxsmall);
   color: var(--figma-color-text);
-  border-top: 1px solid var(--figma-color-border)
+  border-top: 1px solid var(--figma-color-border);
 }
 
 /* Controls */
