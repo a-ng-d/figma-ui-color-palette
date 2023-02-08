@@ -13,17 +13,17 @@ const updateScale = (msg, palette) => {
         palette.getPluginData('captions') == 'hasCaptions' ? true : false,
       preset = JSON.parse(palette.getPluginData('preset'))
 
-    palette.setPluginData('scale', JSON.stringify(msg.palette.scale))
+    palette.setPluginData('scale', JSON.stringify(msg.data.scale))
 
-    if (Object.keys(msg.palette.preset).length != 0)
-      palette.setPluginData('preset', JSON.stringify(msg.palette.preset))
+    if (Object.keys(msg.data.preset).length != 0)
+      palette.setPluginData('preset', JSON.stringify(msg.data.preset))
 
     palette.children[0].remove()
     palette.appendChild(
       new Colors({
         paletteName: paletteName,
         colors: colors,
-        scale: msg.palette.scale,
+        scale: msg.data.scale,
         captions: captions,
         preset: preset,
       }).makeNode()

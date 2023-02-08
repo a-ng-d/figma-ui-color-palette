@@ -35,7 +35,7 @@ export default class EditPalette extends React.Component<Props> {
       scale: new Dispatcher(
         () =>
           parent.postMessage(
-            { pluginMessage: { type: 'update-scale', palette } },
+            { pluginMessage: { type: 'update-scale', data: palette, isEditedInRealTime: true } },
             '*'
           ),
         500
@@ -74,13 +74,13 @@ export default class EditPalette extends React.Component<Props> {
     if (e === 'released') {
       this.dispatch.scale.on.status = false
       parent.postMessage(
-        { pluginMessage: { type: 'update-scale', palette } },
+        { pluginMessage: { type: 'update-scale', data: palette, isEditedInRealTime: false } },
         '*'
       )
       this.props.onScaleChange()
     } else if (e === 'customized') {
       parent.postMessage(
-        { pluginMessage: { type: 'update-scale', palette } },
+        { pluginMessage: { type: 'update-scale', data: palette, isEditedInRealTime: false } },
         '*'
       )
       this.props.onChangeStop()
