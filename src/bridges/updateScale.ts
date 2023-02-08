@@ -24,7 +24,7 @@ const updateScale = (msg, palette) => {
         paletteName: paletteName,
         colors: colors,
         scale: msg.data.scale,
-        captions: captions,
+        captions: msg.isEditedInRealTime ? false : captions,
         preset: preset,
       }).makeNode()
     )
