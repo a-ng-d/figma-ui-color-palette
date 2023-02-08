@@ -8,7 +8,6 @@ import {
 const updateColors = (msg, palette) => {
   palette = isSelectionChanged ? previousSelection[0] : currentSelection[0]
 
-  try {
     if (palette.children.length == 1) {
       const paletteName: string =
           palette.getPluginData('name') === ''
@@ -40,9 +39,6 @@ const updateColors = (msg, palette) => {
       figma.notify(
         'Your UI Color Palette seems corrupted. Do not edit any layer within it.'
       )
-  } catch {
-    return
-  }
 }
 
 export default updateColors
