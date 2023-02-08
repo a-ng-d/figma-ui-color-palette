@@ -35,7 +35,13 @@ export default class EditPalette extends React.Component<Props> {
       scale: new Dispatcher(
         () =>
           parent.postMessage(
-            { pluginMessage: { type: 'update-scale', palette } },
+            {
+              pluginMessage: {
+                type: 'update-scale',
+                data: palette,
+                isEditedInRealTime: true
+              }
+            },
             '*'
           ),
         500
@@ -47,6 +53,7 @@ export default class EditPalette extends React.Component<Props> {
               pluginMessage: {
                 type: 'update-colors',
                 data: colors,
+                isEditedInRealTime: true
               },
             },
             '*'
@@ -74,13 +81,13 @@ export default class EditPalette extends React.Component<Props> {
     if (e === 'released') {
       this.dispatch.scale.on.status = false
       parent.postMessage(
-        { pluginMessage: { type: 'update-scale', palette } },
+        { pluginMessage: { type: 'update-scale', data: palette, isEditedInRealTime: false } },
         '*'
       )
       this.props.onScaleChange()
     } else if (e === 'customized') {
       parent.postMessage(
-        { pluginMessage: { type: 'update-scale', palette } },
+        { pluginMessage: { type: 'update-scale', data: palette, isEditedInRealTime: false } },
         '*'
       )
       this.props.onChangeStop()
@@ -91,7 +98,7 @@ export default class EditPalette extends React.Component<Props> {
     this.props.onCaptionsChange(e.target.checked)
     palette.captions = e.target.checked
     parent.postMessage(
-      { pluginMessage: { type: 'update-captions', palette } },
+      { pluginMessage: { type: 'update-captions', data: palette } },
       '*'
     )
     this.setState({
@@ -136,9 +143,14 @@ export default class EditPalette extends React.Component<Props> {
           })
           this.props.onColorChange(colors)
         }
-        e._reactName === 'onBlur'
-          ? (this.dispatch.colors.on.status = false)
-          : (this.dispatch.colors.on.status = true)
+        if (e._reactName === 'onBlur') {
+          this.dispatch.colors.on.status = false
+          parent.postMessage(
+            { pluginMessage: { type: 'update-colors', data: colors, isEditedInRealTime: false } },
+            '*'
+          )
+        } else
+          (this.dispatch.colors.on.status = true)
         break
       }
       case 'lightness': {
@@ -158,7 +170,7 @@ export default class EditPalette extends React.Component<Props> {
         })
         this.props.onColorChange(colors)
         parent.postMessage(
-          { pluginMessage: { type: 'update-colors', data: colors } },
+          { pluginMessage: { type: 'update-colors', data: colors, isEditedInRealTime: false } },
           '*'
         )
         break
@@ -180,7 +192,7 @@ export default class EditPalette extends React.Component<Props> {
         })
         this.props.onColorChange(colors)
         parent.postMessage(
-          { pluginMessage: { type: 'update-colors', data: colors } },
+          { pluginMessage: { type: 'update-colors', data: colors, isEditedInRealTime: false } },
           '*'
         )
         break
@@ -202,7 +214,7 @@ export default class EditPalette extends React.Component<Props> {
         })
         this.props.onColorChange(colors)
         parent.postMessage(
-          { pluginMessage: { type: 'update-colors', data: colors } },
+          { pluginMessage: { type: 'update-colors', data: colors, isEditedInRealTime: false } },
           '*'
         )
         break
@@ -211,7 +223,7 @@ export default class EditPalette extends React.Component<Props> {
         colors = this.props.colors.filter((item) => item.id != id)
         this.props.onColorChange(colors)
         parent.postMessage(
-          { pluginMessage: { type: 'update-colors', data: colors } },
+          { pluginMessage: { type: 'update-colors', data: colors, isEditedInRealTime: false } },
           '*'
         )
         break
@@ -234,7 +246,7 @@ export default class EditPalette extends React.Component<Props> {
         })
         this.props.onColorChange(colors)
         parent.postMessage(
-          { pluginMessage: { type: 'update-colors', data: colors } },
+          { pluginMessage: { type: 'update-colors', data: colors, isEditedInRealTime: false } },
           '*'
         )
         break
@@ -252,13 +264,13 @@ export default class EditPalette extends React.Component<Props> {
         this.props.onColorChange(colors)
         e._reactName === 'onBlur'
           ? parent.postMessage(
-              { pluginMessage: { type: 'update-colors', data: colors } },
+              { pluginMessage: { type: 'update-colors', data: colors, isEditedInRealTime: false } },
               '*'
             )
           : null
         e.key === 'Enter'
           ? parent.postMessage(
-              { pluginMessage: { type: 'update-colors', data: colors } },
+              { pluginMessage: { type: 'update-colors', data: colors, isEditedInRealTime: false } },
               '*'
             )
           : null
@@ -271,7 +283,7 @@ export default class EditPalette extends React.Component<Props> {
         })
         this.props.onColorChange(colors)
         parent.postMessage(
-          { pluginMessage: { type: 'update-colors', data: colors } },
+          { pluginMessage: { type: 'update-colors', data: colors, isEditedInRealTime: false } },
           '*'
         )
         break
@@ -283,7 +295,7 @@ export default class EditPalette extends React.Component<Props> {
         })
         this.props.onColorChange(colors)
         parent.postMessage(
-          { pluginMessage: { type: 'update-colors', data: colors } },
+          { pluginMessage: { type: 'update-colors', data: colors, isEditedInRealTime: false } },
           '*'
         )
       }
@@ -316,7 +328,7 @@ export default class EditPalette extends React.Component<Props> {
     })
     this.props.onColorChange(colors)
     parent.postMessage(
-      { pluginMessage: { type: 'update-colors', data: colors } },
+      { pluginMessage: { type: 'update-colors', data: colors, isEditedInRealTime: false } },
       '*'
     )
   }
@@ -381,7 +393,7 @@ export default class EditPalette extends React.Component<Props> {
   // Direct actions
   onCreate = () => {
     parent.postMessage(
-      { pluginMessage: { type: 'create-local-styles', palette } },
+      { pluginMessage: { type: 'create-local-styles', data: palette } },
       '*'
     )
     this.setState({
@@ -394,7 +406,7 @@ export default class EditPalette extends React.Component<Props> {
 
   onUpdate = () => {
     parent.postMessage(
-      { pluginMessage: { type: 'update-local-styles', palette } },
+      { pluginMessage: { type: 'update-local-styles', data: palette } },
       '*'
     )
     this.setState({
