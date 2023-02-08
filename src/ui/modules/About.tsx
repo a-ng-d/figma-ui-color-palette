@@ -59,6 +59,16 @@ export default class About extends React.Component {
                   Open an issue
                 </a>
               </button>
+              ﹒
+              <button className="button button--tertiary">
+                <a
+                  href="https://kutt.it/voice-of-uicp-users"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Give your feedback
+                </a>
+              </button>
             </div>
           </div>
           <div>

@@ -94,6 +94,18 @@ div.actions .buttons {
   gap: var(--size-xxsmall);
 }
 
+div.help-bar {
+  width: 100%;
+  height: var(--size-large);
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  padding: 0 var(--size-xsmall);
+  gap: var(--size-xxxsmall);
+  color: var(--figma-color-text);
+  border-top: 1px solid var(--figma-color-border)
+}
+
 /* Controls */
 div.section-controls {
   display: flex;
