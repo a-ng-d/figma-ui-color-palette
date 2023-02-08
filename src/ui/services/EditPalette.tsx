@@ -98,7 +98,7 @@ export default class EditPalette extends React.Component<Props> {
     this.props.onCaptionsChange(e.target.checked)
     palette.captions = e.target.checked
     parent.postMessage(
-      { pluginMessage: { type: 'update-captions', palette } },
+      { pluginMessage: { type: 'update-captions', data: palette } },
       '*'
     )
     this.setState({
@@ -393,7 +393,7 @@ export default class EditPalette extends React.Component<Props> {
   // Direct actions
   onCreate = () => {
     parent.postMessage(
-      { pluginMessage: { type: 'create-local-styles', palette } },
+      { pluginMessage: { type: 'create-local-styles', data: palette } },
       '*'
     )
     this.setState({
@@ -406,7 +406,7 @@ export default class EditPalette extends React.Component<Props> {
 
   onUpdate = () => {
     parent.postMessage(
-      { pluginMessage: { type: 'update-local-styles', palette } },
+      { pluginMessage: { type: 'update-local-styles', data: palette } },
       '*'
     )
     this.setState({

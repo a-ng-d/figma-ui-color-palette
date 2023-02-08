@@ -4,10 +4,10 @@ const createPalette = (msg, palette) => {
   const scene: SceneNode[] = []
 
   palette = new Palette(
-    msg.palette.name,
-    msg.palette.scale,
-    msg.palette.captions,
-    msg.palette.preset
+    msg.data.name,
+    msg.data.scale,
+    msg.data.captions,
+    msg.data.preset
   ).makeNode()
 
   if (palette.children.length != 0) {
