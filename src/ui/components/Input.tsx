@@ -1,33 +1,37 @@
-import * as React from 'react';
+import * as React from 'react'
 
 interface Props {
-  type: string;
-  icon: any;
-  placeholder?: string;
-  value: string;
-  charactersLimit?: number;
-  min?: string;
-  max?: string;
-  feature: string;
-  onChange: any;
-  onFocus: any
-};
+  type: string
+  icon: { type: string; value: string }
+  placeholder?: string
+  value: string
+  charactersLimit?: number
+  min?: string
+  max?: string
+  feature: string
+  onChange: React.FocusEventHandler<HTMLInputElement>
+  onFocus: React.FocusEventHandler<HTMLInputElement>
+  onConfirm?: React.KeyboardEventHandler<HTMLInputElement>
+}
 
 export default class Input extends React.Component<Props> {
-
-  onNudge = (e: any) => {
+  onNudge = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.shiftKey && e.key === 'ArrowUp')
-      e.target.value = parseFloat(e.target.value) + 9
+      (e.target as HTMLInputElement).value = (
+        parseFloat((e.target as HTMLInputElement).value) + 9
+      ).toString()
     else if (e.shiftKey && e.key === 'ArrowDown')
-      e.target.value = parseFloat(e.target.value) - 9
+      (e.target as HTMLInputElement).value = (
+        parseFloat((e.target as HTMLInputElement).value) - 9
+      ).toString()
   }
 
   Color = () => {
     return (
-      <div className='input input--with-icon'>
+      <div className="input input--with-icon">
         <input
           data-feature={this.props.feature}
-          type='color'
+          type="color"
           value={this.props.value}
           onChange={this.props.onChange}
           onBlur={this.props.onChange}
@@ -35,8 +39,8 @@ export default class Input extends React.Component<Props> {
         />
         <input
           data-feature={this.props.feature}
-          type='input'
-          className='input__field'
+          type="input"
+          className="input__field"
           value={this.props.value.toUpperCase().substr(1, 6)}
           onChange={this.props.onChange}
           onBlur={this.props.onChange}
@@ -48,18 +52,30 @@ export default class Input extends React.Component<Props> {
 
   Number = () => {
     return (
-      <div className={`input${this.props.icon.type === 'none' ? '' : ' input--with-icon'}`}>
-        {this.props.icon.type != 'none' ?
-          <div className={`icon${this.props.icon.type === 'icon' ? ` icon--${this.props.icon.value}` : ''}`}>{this.props.icon.type === 'letter' ? this.props.icon.value : ''}</div>
-        : null}
+      <div
+        className={`input${
+          this.props.icon.type === 'none' ? '' : ' input--with-icon'
+        }`}
+      >
+        {this.props.icon.type != 'none' ? (
+          <div
+            className={`icon${
+              this.props.icon.type === 'icon'
+                ? ` icon--${this.props.icon.value}`
+                : ''
+            }`}
+          >
+            {this.props.icon.type === 'letter' ? this.props.icon.value : ''}
+          </div>
+        ) : null}
         <input
           data-feature={this.props.feature}
-          type='number'
-          className='input__field'
+          type="number"
+          className="input__field"
           value={this.props.value}
           min={this.props.min}
           max={this.props.max}
-          step='1'
+          step="1"
           onKeyDown={this.onNudge}
           onChange={this.props.onChange}
           onFocus={this.props.onFocus}
@@ -70,19 +86,31 @@ export default class Input extends React.Component<Props> {
 
   Text = () => {
     return (
-      <div className={`input${this.props.icon.type === 'none' ? '' : ' input--with-icon'}`}>
-        {this.props.icon.type != 'none' ?
-          <div className={`icon${this.props.icon.type === 'icon' ? ` icon--${this.props.icon.value}` : ''}`}>{this.props.icon.type === 'letter' ? this.props.icon.value : ''}</div>
-        : null}
+      <div
+        className={`input${
+          this.props.icon.type === 'none' ? '' : ' input--with-icon'
+        }`}
+      >
+        {this.props.icon.type != 'none' ? (
+          <div
+            className={`icon${
+              this.props.icon.type === 'icon'
+                ? ` icon--${this.props.icon.value}`
+                : ''
+            }`}
+          >
+            {this.props.icon.type === 'letter' ? this.props.icon.value : ''}
+          </div>
+        ) : null}
         <input
           id={this.props.feature}
           data-feature={this.props.feature}
-          type='text'
-          className='input__field'
+          type="text"
+          className="input__field"
           placeholder={this.props.placeholder}
           value={this.props.value}
           maxLength={this.props.charactersLimit}
-          onKeyPress={this.props.onChange}
+          onKeyPress={this.props.onConfirm}
           onChange={this.props.onChange}
           onBlur={this.props.onChange}
           onFocus={this.props.onFocus}
@@ -94,11 +122,10 @@ export default class Input extends React.Component<Props> {
   render() {
     return (
       <>
-      {this.props.type === 'number' ? <this.Number /> : null}
-      {this.props.type === 'color' ? <this.Color /> : null}
-      {this.props.type === 'text' ? <this.Text /> : null}
+        {this.props.type === 'number' ? <this.Number /> : null}
+        {this.props.type === 'color' ? <this.Color /> : null}
+        {this.props.type === 'text' ? <this.Text /> : null}
       </>
     )
   }
-
 }

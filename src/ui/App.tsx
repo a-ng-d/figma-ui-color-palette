@@ -1,22 +1,19 @@
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
-import CreatePalette from './services/CreatePalette';
-import EditPalette from './services/EditPalette';
-import Onboarding from './services/Onboarding';
-import 'figma-plugin-ds/dist/figma-plugin-ds.css';
-import './stylesheets/app.css';
-import './stylesheets/components.css';
-import { palette, presets } from '../utils/palettePackage';
-import { v4 as uuidv4 } from 'uuid';
+import * as React from 'react'
+import * as ReactDOM from 'react-dom'
+import CreatePalette from './services/CreatePalette'
+import EditPalette from './services/EditPalette'
+import Onboarding from './services/Onboarding'
+import 'figma-plugin-ds/dist/figma-plugin-ds.css'
+import './stylesheets/app.css'
+import './stylesheets/components.css'
+import { palette, presets } from '../utils/palettePackage'
+import { v4 as uuidv4 } from 'uuid'
 
-let isPaletteSelected: boolean = false;
-
-declare function require(path: string): any;
+let isPaletteSelected = false
 
 class App extends React.Component {
-
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       service: 'None',
       newScale: {},
@@ -27,75 +24,74 @@ class App extends React.Component {
       export: {
         format: '',
         mimeType: '',
-        data: ''
+        data: '',
       },
-      paletteName: ''
+      paletteName: '',
     }
   }
 
   // Events
-  captionsHandler = (bool: boolean) => this.setState({ hasCaptions: bool, onGoingStep: 'captions changed' })
+  captionsHandler = (bool: boolean) =>
+    this.setState({ hasCaptions: bool, onGoingStep: 'captions changed' })
 
   presetHandler = (e: any) => {
     switch ((e.target as HTMLInputElement).value) {
-
-      case presets.material.name:
+      case presets.material.name: {
         this.setState({
           preset: presets.material,
-          onGoingStep: 'preset changed'
+          onGoingStep: 'preset changed',
         })
-        break;
-
-      case presets.ant.name:
+        break
+      }
+      case presets.ant.name: {
         this.setState({
           preset: presets.ant,
-          onGoingStep: 'preset changed'
+          onGoingStep: 'preset changed',
         })
-        break;
-
-      case presets.atlassian.name:
+        break
+      }
+      case presets.atlassian.name: {
         this.setState({
           preset: presets.atlassian,
-          onGoingStep: 'preset changed'
+          onGoingStep: 'preset changed',
         })
-        break;
-
-      case presets.atlassianNeutral.name:
+        break
+      }
+      case presets.atlassianNeutral.name: {
         this.setState({
           preset: presets.atlassianNeutral,
-          onGoingStep: 'preset changed'
+          onGoingStep: 'preset changed',
         })
-        break;
-
-      case presets.carbon.name:
+        break
+      }
+      case presets.carbon.name: {
         this.setState({
           preset: presets.carbon,
-          onGoingStep: 'preset changed'
+          onGoingStep: 'preset changed',
         })
-        break;
-
-      case presets.base.name:
+        break
+      }
+      case presets.base.name: {
         this.setState({
           preset: presets.base,
-          onGoingStep: 'preset changed'
+          onGoingStep: 'preset changed',
         })
-        break;
-
-      case presets.custom.name:
-        presets.custom.scale = [1, 2];
+        break
+      }
+      case presets.custom.name: {
+        presets.custom.scale = [1, 2]
         this.setState({
           preset: presets.custom,
-          onGoingStep: 'preset changed'
+          onGoingStep: 'preset changed',
         })
-
+      }
     }
   }
 
   customHandler = (e: any) => {
-    let scale = this.state['preset']['scale'];
+    const scale = this.state['preset']['scale']
     switch (e.target.dataset.feature) {
-
-      case 'add':
+      case 'add': {
         if (scale.length < 24) {
           scale.push(scale.length + 1)
           this.setState({
@@ -103,13 +99,13 @@ class App extends React.Component {
               name: presets.custom.name,
               scale: scale,
               min: palette.min,
-              max: palette.max
-            }
+              max: palette.max,
+            },
           })
         }
-        break;
-
-      case 'remove':
+        break
+      }
+      case 'remove': {
         if (scale.length > 2) {
           scale.pop()
           this.setState({
@@ -117,130 +113,168 @@ class App extends React.Component {
               name: presets.custom.name,
               scale: scale,
               min: palette.min,
-              max: palette.max
-            }
+              max: palette.max,
+            },
           })
         }
-
+      }
     }
   }
 
-  slideHandler = () => this.setState({
-    newScale: palette.scale,
-    onGoingStep: 'scale changed'
-  })
+  slideHandler = () =>
+    this.setState({
+      newScale: palette.scale,
+      onGoingStep: 'scale changed',
+    })
 
-  customSlideHandler = () => this.setState({
-    newScale: palette.scale,
-    preset: Object.keys(palette.preset).length == 0 ? this.state['preset'] : palette.preset,
-    onGoingStep: 'stop changed'
-  })
+  customSlideHandler = () =>
+    this.setState({
+      newScale: palette.scale,
+      preset:
+        Object.keys(palette.preset).length == 0
+          ? this.state['preset']
+          : palette.preset,
+      onGoingStep: 'stop changed',
+    })
 
-  colorHandler = (colors) => this.setState({
-    newColors: colors,
-    onGoingStep: 'color changed'
-  })
+  colorHandler = (colors) =>
+    this.setState({
+      newColors: colors,
+      onGoingStep: 'color changed',
+    })
 
   settingsHandler = (e: any) => {
     switch (e.target.dataset.feature) {
-
-      case 'rename-palette':
-        palette.name = e.target.value;
+      case 'rename-palette': {
+        palette.name = e.target.value
         this.setState({
           paletteName: e.target.value,
-          onGoingStep: 'settings changed'
-        });
-        e._reactName === 'onBlur' && this.state['service'] === 'Edit' ? parent.postMessage({ pluginMessage: { type: 'update-settings', data: this.state['paletteName'] } }, '*') : null;
-        e.key === 'Enter' && this.state['service'] === 'Edit' ? parent.postMessage({ pluginMessage: { type: 'update-settings', data: this.state['paletteName'] } }, '*') : null;
-
+          onGoingStep: 'settings changed',
+        })
+        e._reactName === 'onBlur' && this.state['service'] === 'Edit'
+          ? parent.postMessage(
+              {
+                pluginMessage: {
+                  type: 'update-settings',
+                  data: this.state['paletteName'],
+                },
+              },
+              '*'
+            )
+          : null
+        e.key === 'Enter' && this.state['service'] === 'Edit'
+          ? parent.postMessage(
+              {
+                pluginMessage: {
+                  type: 'update-settings',
+                  data: this.state['paletteName'],
+                },
+              },
+              '*'
+            )
+          : null
+      }
     }
   }
 
   render() {
     onmessage = (e: any) => {
-      Object.keys(this.state['preset']).length == 0 ? this.setState({ preset: presets.material }) : null;
+      Object.keys(this.state['preset']).length == 0
+        ? this.setState({ preset: presets.material })
+        : null
       switch (e.data.pluginMessage.type) {
-
-        case 'empty-selection':
+        case 'empty-selection': {
           this.setState({
             service: 'None',
             hasCaptions: true,
             paletteName: '',
             preset: {},
-            onGoingStep: 'selection empty'
-          });
-          palette.name = '';
-          palette.preset = {};
-          isPaletteSelected = false;
-          break;
-
-        case 'color-selected':
+            onGoingStep: 'selection empty',
+          })
+          palette.name = ''
+          palette.preset = {}
+          isPaletteSelected = false
+          break
+        }
+        case 'color-selected': {
           if (isPaletteSelected) {
             this.setState({
               service: 'Create',
               hasCaptions: true,
               onGoingStep: 'colors selected',
               preset: presets.material,
-              paletteName: ''
-            });
-            palette.name = '';
+              paletteName: '',
+            })
+            palette.name = ''
             palette.preset = presets.material
-          }  
-          else
+          } else
             this.setState({
               service: 'Create',
               hasCaptions: true,
               onGoingStep: 'colors selected',
             })
-          isPaletteSelected = false;
-          break;
-
-        case 'palette-selected':
-          const putIdsOnColors = e.data.pluginMessage.data.colors.map(color => {
-            color.id === undefined ? color.id = uuidv4() : color.id = color.id;
-            return color
-          });
-          isPaletteSelected = true;
-          palette.preset = {};
-          parent.postMessage({ pluginMessage: { type: 'export-palette', export: this.state['export'].format } }, '*');
+          isPaletteSelected = false
+          break
+        }
+        case 'palette-selected': {
+          const putIdsOnColors = e.data.pluginMessage.data.colors.map(
+            (color) => {
+              color.id === undefined ? (color.id = uuidv4()) : null
+              return color
+            }
+          )
+          isPaletteSelected = true
+          palette.preset = {}
+          parent.postMessage(
+            {
+              pluginMessage: {
+                type: 'export-palette',
+                export: this.state['export'].format,
+              },
+            },
+            '*'
+          )
           this.setState({
             service: 'Edit',
             newScale: e.data.pluginMessage.data.scale,
-            hasCaptions: e.data.pluginMessage.data.captions === 'hasCaptions' ? true : false,
+            hasCaptions:
+              e.data.pluginMessage.data.captions === 'hasCaptions'
+                ? true
+                : false,
             newColors: putIdsOnColors,
             preset: e.data.pluginMessage.data.preset,
             paletteName: e.data.pluginMessage.data.name,
-            onGoingStep: 'palette selected'
-          });
-          break;
-
-        case 'export-palette-json':
+            onGoingStep: 'palette selected',
+          })
+          break
+        }
+        case 'export-palette-json': {
           this.setState({
             export: {
               format: 'JSON',
               mimeType: 'application/json',
               data: JSON.stringify(e.data.pluginMessage.data, null, '  '),
             },
-            onGoingStep: 'export previewed'
-          });
-          break;
-
-        case 'export-palette-css':
+            onGoingStep: 'export previewed',
+          })
+          break
+        }
+        case 'export-palette-css': {
           this.setState({
             export: {
               format: 'CSS',
               mimeType: 'text/css',
-              data: `:root {\n  ${e.data.pluginMessage.data.join(';\n  ')}\n}`
+              data: `:root {\n  ${e.data.pluginMessage.data.join(';\n  ')}\n}`,
             },
-            onGoingStep: 'export previewed'
+            onGoingStep: 'export previewed',
           })
-
+        }
       }
-    };
+    }
 
     return (
       <main>
-        {this.state['service'] === 'Create' ?
+        {this.state['service'] === 'Create' ? (
           <CreatePalette
             preset={this.state['preset']}
             hasCaptions={this.state['hasCaptions']}
@@ -249,8 +283,8 @@ class App extends React.Component {
             onCustomPreset={this.customHandler}
             onSettingsChange={this.settingsHandler}
           />
-        : null}
-        {this.state['service'] === 'Edit' ?
+        ) : null}
+        {this.state['service'] === 'Edit' ? (
           <EditPalette
             scale={this.state['newScale']}
             colors={this.state['newColors']}
@@ -264,12 +298,32 @@ class App extends React.Component {
             onCaptionsChange={this.captionsHandler}
             onSettingsChange={this.settingsHandler}
           />
-        : null}
+        ) : null}
         {this.state['service'] === 'None' ? <Onboarding /> : null}
+        <div className="help-bar">
+          <button className="button button--tertiary">
+            <a
+              href="https://docs.ui-color-palette.com"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Read the documentation
+            </a>
+          </button>
+          ﹒
+          <button className="button button--tertiary">
+            <a
+              href="https://kutt.it/voice-of-uicp-users"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Give your feedback
+            </a>
+          </button>
+        </div>
       </main>
     )
   }
-
-};
+}
 
 ReactDOM.render(<App />, document.getElementById('react-page'))
