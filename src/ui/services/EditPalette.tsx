@@ -46,7 +46,7 @@ export default class EditPalette extends React.Component<Props> {
             {
               pluginMessage: {
                 type: 'update-colors',
-                data: this.state['newColors'],
+                data: colors,
               },
             },
             '*'
@@ -103,8 +103,7 @@ export default class EditPalette extends React.Component<Props> {
   }
 
   colorHandler = (e: any) => {
-    let colors, id, element
-    try {
+    let id, element
       element = e.nativeEvent.path.filter((el) => {
         try {
           return el.classList.contains('colors__item')
