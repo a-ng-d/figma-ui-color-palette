@@ -35,7 +35,7 @@ export default class About extends React.Component {
                   Read the documentation
                 </a>
               </button>
-              ﹒
+              <span>﹒</span>
               <button className="button button--tertiary">
                 <a
                   href="mailto:hello@ui-color-palette.com"
@@ -59,7 +59,7 @@ export default class About extends React.Component {
                   Open an issue
                 </a>
               </button>
-              ﹒
+              <span>﹒</span>
               <button className="button button--tertiary">
                 <a
                   href="https://kutt.it/voice-of-uicp-users"
@@ -83,7 +83,7 @@ export default class About extends React.Component {
                   Follow my activity
                 </a>
               </button>
-              ﹒
+              <span>﹒</span>
               <button className="button button--tertiary">
                 <a
                   href="https://www.buymeacoffee.com/a_ng_d"
