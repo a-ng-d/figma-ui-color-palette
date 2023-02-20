@@ -4,6 +4,7 @@ import Scale from '../modules/Scale'
 import Settings from '../modules/Settings'
 import About from '../modules/About'
 import Actions from '../modules/Actions'
+import HelpbBar from '../modules/HelpBar'
 import { palette } from '../../utils/palettePackage'
 
 interface Props {
@@ -59,10 +60,12 @@ export default class CreatePalette extends React.Component<Props> {
   render() {
     palette.captions = this.state['hasCaptions']
     palette.preset = this.props.preset
-    let actions, controls
+    let actions, controls, help
 
-    if (this.state['context'] === 'About') actions = null
-    else
+    if (this.state['context'] === 'About') {
+      actions = help = null
+    }
+    else {
       actions = (
         <Actions
           context="create"
@@ -71,6 +74,22 @@ export default class CreatePalette extends React.Component<Props> {
           onChangeCaptions={this.checkHandler}
         />
       )
+      
+      help = (
+        <HelpbBar
+          links={[
+            {
+              label: 'Read the documentation',
+              url: 'https://docs.ui-color-palette.com'
+            },
+            {
+              label: 'Give feedback',
+              url: 'https://kutt.it/voice-of-uicp-users'
+            }
+          ]}
+        />
+      )
+    }
 
     switch (this.state['context']) {
       case 'Scale': {
@@ -113,6 +132,7 @@ export default class CreatePalette extends React.Component<Props> {
           <div className="controls">{controls}</div>
           {actions}
         </section>
+        {help}
       </>
     )
   }
