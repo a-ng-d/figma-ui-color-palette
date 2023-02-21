@@ -64,8 +64,7 @@ export default class CreatePalette extends React.Component<Props> {
 
     if (this.state['context'] === 'About') {
       actions = help = null
-    }
-    else {
+    } else {
       actions = (
         <Actions
           context="create"
@@ -74,18 +73,18 @@ export default class CreatePalette extends React.Component<Props> {
           onChangeCaptions={this.checkHandler}
         />
       )
-      
+
       help = (
         <HelpbBar
           links={[
             {
               label: 'Read the documentation',
-              url: 'https://docs.ui-color-palette.com'
+              url: 'https://docs.ui-color-palette.com',
             },
             {
               label: 'Give feedback',
-              url: 'https://kutt.it/voice-of-uicp-users'
-            }
+              url: 'https://kutt.it/voice-of-uicp-users',
+            },
           ]}
         />
       )

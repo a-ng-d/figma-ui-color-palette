@@ -23,14 +23,22 @@ export default class About extends React.Component {
               </a>
             </p>
             <p className="type">
-              <a href="https://github.com/inVoltag/figma-ui-color-palette" target="_blank" rel="noreferrer">
+              <a
+                href="https://github.com/inVoltag/figma-ui-color-palette"
+                target="_blank"
+                rel="noreferrer"
+              >
                 Source code
-              </a>
-              {' '}is under{' '}
-              <a href="https://creativecommons.org/licenses/by/4.0" target="_blank" rel="noreferrer">
+              </a>{' '}
+              is under{' '}
+              <a
+                href="https://creativecommons.org/licenses/by/4.0"
+                target="_blank"
+                rel="noreferrer"
+              >
                 CC BY 4.0
-              </a>
-              {' '}license
+              </a>{' '}
+              license
             </p>
           </div>
         </div>
