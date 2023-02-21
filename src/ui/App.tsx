@@ -1,5 +1,5 @@
 import * as React from 'react'
-import * as ReactDOM from 'react-dom'
+import { createRoot } from 'react-dom/client'
 import CreatePalette from './services/CreatePalette'
 import EditPalette from './services/EditPalette'
 import Onboarding from './services/Onboarding'
@@ -10,6 +10,8 @@ import { palette, presets } from '../utils/palettePackage'
 import { v4 as uuidv4 } from 'uuid'
 
 let isPaletteSelected = false
+const container = document.getElementById('react-page'),
+      root = createRoot(container!)
 
 class App extends React.Component {
   constructor(props) {
@@ -326,4 +328,4 @@ class App extends React.Component {
   }
 }
 
-ReactDOM.render(<App />, document.getElementById('react-page'))
+root.render(<App />)
