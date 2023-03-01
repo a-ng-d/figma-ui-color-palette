@@ -7,6 +7,7 @@ import Export from '../modules/Export'
 import Settings from '../modules/Settings'
 import About from '../modules/About'
 import Actions from '../modules/Actions'
+import HelpbBar from '../modules/HelpBar'
 import chroma from 'chroma-js'
 import { palette } from '../../utils/palettePackage'
 import { v4 as uuidv4 } from 'uuid'
@@ -504,9 +505,9 @@ export default class EditPalette extends React.Component<Props> {
 
   render() {
     palette.captions = this.props.hasCaptions
-    let actions, controls
+    let actions, controls, help
 
-    if (this.state['context'] === 'Export')
+    if (this.state['context'] === 'Export') {
       actions = (
         <Actions
           context="export"
@@ -514,8 +515,24 @@ export default class EditPalette extends React.Component<Props> {
           onExportPalette={this.onExport}
         />
       )
-    else if (this.state['context'] === 'About') actions = null
-    else
+
+      help = (
+        <HelpbBar
+          links={[
+            {
+              label: 'Read the documentation',
+              url: 'https://docs.ui-color-palette.com',
+            },
+            {
+              label: 'Give feedback',
+              url: 'https://kutt.it/voice-of-uicp-users',
+            },
+          ]}
+        />
+      )
+    } else if (this.state['context'] === 'About') {
+      actions = help = null
+    } else {
       actions = (
         <Actions
           context="edit"
@@ -525,6 +542,22 @@ export default class EditPalette extends React.Component<Props> {
           onChangeCaptions={this.checkHandler}
         />
       )
+
+      help = (
+        <HelpbBar
+          links={[
+            {
+              label: 'Read the documentation',
+              url: 'https://docs.ui-color-palette.com',
+            },
+            {
+              label: 'Give feedback',
+              url: 'https://kutt.it/voice-of-uicp-users',
+            },
+          ]}
+        />
+      )
+    }
 
     switch (this.state['context']) {
       case 'Scale': {
@@ -589,6 +622,7 @@ export default class EditPalette extends React.Component<Props> {
           <div className="controls">{controls}</div>
           {actions}
         </section>
+        {help}
       </>
     )
   }

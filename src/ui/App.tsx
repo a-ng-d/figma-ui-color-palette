@@ -300,27 +300,6 @@ class App extends React.Component {
           />
         ) : null}
         {this.state['service'] === 'None' ? <Onboarding /> : null}
-        <div className="help-bar">
-          <button className="button button--tertiary">
-            <a
-              href="https://docs.ui-color-palette.com"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Read the documentation
-            </a>
-          </button>
-          ﹒
-          <button className="button button--tertiary">
-            <a
-              href="https://kutt.it/voice-of-uicp-users"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Give your feedback
-            </a>
-          </button>
-        </div>
       </main>
     )
   }

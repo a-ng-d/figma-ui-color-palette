@@ -15,12 +15,32 @@ export default class About extends React.Component {
               package_json.version.slice(2, 3)
             }`}</div>
           </div>
-          <p className="type">
-            Created and maintained by{' '}
-            <a href="https://an.gd" target="_blank" rel="noreferrer">
-              Aurélien Grimaud
-            </a>
-          </p>
+          <div>
+            <p className="type">
+              Created and maintained by{' '}
+              <a href="https://an.gd" target="_blank" rel="noreferrer">
+                Aurélien Grimaud
+              </a>
+            </p>
+            <p className="type">
+              <a
+                href="https://github.com/inVoltag/figma-ui-color-palette"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Source code
+              </a>{' '}
+              is under{' '}
+              <a
+                href="https://creativecommons.org/licenses/by/4.0"
+                target="_blank"
+                rel="noreferrer"
+              >
+                CC BY 4.0
+              </a>{' '}
+              license
+            </p>
+          </div>
         </div>
         <div>
           <div>
@@ -35,7 +55,7 @@ export default class About extends React.Component {
                   Read the documentation
                 </a>
               </button>
-              ﹒
+              <span>﹒</span>
               <button className="button button--tertiary">
                 <a
                   href="mailto:hello@ui-color-palette.com"
@@ -59,7 +79,7 @@ export default class About extends React.Component {
                   Open an issue
                 </a>
               </button>
-              ﹒
+              <span>﹒</span>
               <button className="button button--tertiary">
                 <a
                   href="https://kutt.it/voice-of-uicp-users"
@@ -83,7 +103,7 @@ export default class About extends React.Component {
                   Follow my activity
                 </a>
               </button>
-              ﹒
+              <span>﹒</span>
               <button className="button button--tertiary">
                 <a
                   href="https://www.buymeacoffee.com/a_ng_d"
