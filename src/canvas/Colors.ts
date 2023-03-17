@@ -116,7 +116,7 @@ export default class Colors {
             newColor._rgb,
             this.parent.captions,
             {
-              isClosestToRef: distance < 5 ? true : false
+              isClosestToRef: distance < 4 ? true : false
             }
           ).makeScale(160, 224)
           row.name = color.name
