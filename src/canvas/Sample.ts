@@ -55,7 +55,7 @@ export default class Sample {
     } else if (mode === 'absolute') {
       this.node.resize(width, height)
       this.node.primaryAxisSizingMode = 'FIXED'
-      this.children = new Caption('_color-name', this.name, 10).makeNode()
+      this.children = new Caption('_label', this.name, 10).makeNode()
     }
 
     // insert
