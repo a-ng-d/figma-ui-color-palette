@@ -112,7 +112,10 @@ export default class Colors {
               .find((key) => this.parent.scale[key] === lightness)
               .substr(10),
             newColor._rgb,
-            this.parent.captions
+            this.parent.captions,
+            {
+              isClosestToRef: distance < 5 ? true : false
+            }
           ).makeScale(160, 224)
           row.name = color.name
           row.appendChild(sample)
