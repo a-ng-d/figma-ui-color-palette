@@ -1,4 +1,4 @@
-import Caption from './Caption'
+import Properties from './Properties'
 import Status from './Status'
 
 export default class Sample {
@@ -50,11 +50,11 @@ export default class Sample {
       this.node.primaryAxisSizingMode = 'AUTO'
       this.node.layoutAlign = 'STRETCH'
       this.node.layoutGrow = 1
-      this.children = new Caption(this.name, this.rgb).makeNode('TITLE')
+      this.children = new Properties(this.name, this.rgb).makeNode('TITLE')
     } else if (mode === 'absolute') {
       this.node.resize(width, height)
       this.node.primaryAxisSizingMode = 'FIXED'
-      this.children = new Caption(this.name, this.rgb).makeNode('NAME')
+      this.children = new Properties(this.name, this.rgb).makeNode('NAME')
     }
 
     // insert
@@ -92,7 +92,7 @@ export default class Sample {
 
     // insert
     if (this.captions) {
-      this.children = new Caption(this.scale, this.rgb).makeNode('SAMPLE')
+      this.children = new Properties(this.scale, this.rgb).makeNode('SAMPLE')
       this.node.appendChild(this.children)
     }
     if (this.status.isClosestToRef)

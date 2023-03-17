@@ -2,7 +2,7 @@ import chroma from 'chroma-js'
 import { APCAcontrast, sRGBtoY, fontLookupAPCA } from 'apca-w3'
 import Tag from './Tag'
 
-export default class Caption {
+export default class Properties {
   name: string
   rgb: Array<number>
   hex: string
