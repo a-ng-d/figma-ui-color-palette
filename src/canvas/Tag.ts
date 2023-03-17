@@ -40,15 +40,23 @@ export default class Tag {
     this.nodeTag.itemSpacing = 4
 
     // insert
-    color === 'BLACK'
-      ? this.nodeTag.appendChild(this.makeNodeIndicator([0, 0, 0]))
-      : null
-    color === 'WHITE'
-      ? this.nodeTag.appendChild(this.makeNodeIndicator([1, 1, 1]))
-      : null
-    color === 'CUSTOM'
-      ? this.nodeTag.appendChild(this.makeNodeIndicator([rgb.r, rgb.g, rgb.b]))
-      : null
+    switch (color) {
+      case 'BLACK': {
+        this.nodeTag.appendChild(this.makeNodeIndicator([0, 0, 0]))
+        break
+      }
+      case 'WHITE': {
+        this.nodeTag.appendChild(this.makeNodeIndicator([1, 1, 1]))
+        break
+      }
+      case 'CUSTOM': {
+        this.nodeTag.appendChild(this.makeNodeIndicator([rgb.r, rgb.g, rgb.b]))
+        break
+      }
+      default: {
+
+      }
+    }
     this.nodeTag.appendChild(this.makeNodeText())
 
     return this.nodeTag
