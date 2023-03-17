@@ -1,18 +1,24 @@
 import Caption from './Caption'
+import Status from './Status'
 
 export default class Sample {
   name: string
+  source: Array<number>
   scale: string
   rgb: Array<number>
   captions: boolean
+  status: {
+    isClosestToRef: boolean
+  }
   node: FrameNode
   children: any
 
-  constructor(name, scale, rgb, captions) {
+  constructor(name, scale, rgb, captions, status?) {
     this.name = name
     this.scale = scale
     this.rgb = rgb
     this.captions = captions
+    this.status = status
     this.node = figma.createFrame()
     this.children = null
   }
@@ -72,7 +78,7 @@ export default class Sample {
     ]
 
     // layout
-    this.node.layoutMode = 'HORIZONTAL'
+    this.node.layoutMode = 'VERTICAL'
     this.node.paddingTop =
       this.node.paddingRight =
       this.node.paddingBottom =
@@ -80,12 +86,16 @@ export default class Sample {
         8
     this.node.primaryAxisSizingMode = 'FIXED'
     this.node.counterAxisSizingMode = 'FIXED'
+    this.node.primaryAxisAlignItems = 'MAX'
+    this.node.itemSpacing = 16
 
     // insert
     if (this.captions) {
       this.children = new Caption(this.scale, this.rgb).makeNode('SAMPLE')
       this.node.appendChild(this.children)
     }
+    if (this.status.isClosestToRef)
+      this.node.appendChild(new Status(this.status).makeNode())
 
     return this.node
   }
