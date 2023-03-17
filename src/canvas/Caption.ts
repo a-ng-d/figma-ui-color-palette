@@ -161,7 +161,7 @@ export default class Caption {
 
   makeNode(type: string) {
     // base
-    this.node.name = '_captions'
+    this.node.name = '_properties'
     this.node.fills = []
 
     // layout
