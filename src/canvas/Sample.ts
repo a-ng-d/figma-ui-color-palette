@@ -4,8 +4,8 @@ import Status from './Status'
 export default class Sample {
   name: string
   source: { [key: string]: number } | null
-  scale: string
-  rgb: Array<number>
+  scale: string | null
+  rgb: Array<number> | null
   captions: boolean
   status: {
     isClosestToRef: boolean
