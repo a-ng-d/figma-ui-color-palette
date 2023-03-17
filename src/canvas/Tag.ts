@@ -40,11 +40,12 @@ export default class Tag {
     this.nodeTag.itemSpacing = 4
 
     // insert
-    textColor === 'BLACK'
-      ? this.nodeTag.appendChild(this.makeNodeIndicator('BLACK'))
+    color === 'BLACK'
+      ? this.nodeTag.appendChild(this.makeNodeIndicator([0, 0, 0]))
       : null
-    textColor === 'WHITE'
-      ? this.nodeTag.appendChild(this.makeNodeIndicator('WHITE'))
+    color === 'WHITE'
+      ? this.nodeTag.appendChild(this.makeNodeIndicator([1, 1, 1]))
+      : null
       : null
     this.nodeTag.appendChild(this.makeNodeText())
 
@@ -75,7 +76,7 @@ export default class Tag {
     return this.nodeText
   }
 
-  makeNodeIndicator(textColor: string) {
+  makeNodeIndicator(rgb: Array<number>) {
     // base
     this.nodeIndicator = figma.createEllipse()
     this.nodeIndicator.name = '_indicator'
@@ -84,10 +85,10 @@ export default class Tag {
       {
         type: 'SOLID',
         color: {
-          r: textColor === 'WHITE' ? 1 : 0,
-          g: textColor === 'WHITE' ? 1 : 0,
-          b: textColor === 'WHITE' ? 1 : 0,
-        },
+          r: rgb[0],
+          g: rgb[1],
+          b: rgb[2],
+        }
       },
     ]
 
