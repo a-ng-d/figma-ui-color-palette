@@ -25,7 +25,7 @@ export default class Status {
     this.node.layoutGrow = 0
 
     if (this.status.isClosestToRef)
-      this.node.appendChild(new Tag('_close', 'Closest to ref', 10).makeNodeTag())
+      this.node.appendChild(new Tag('_close', 'Closest to ref', 10).makeNodeTag('CUSTOM', this.source))
 
     return this.node
   }

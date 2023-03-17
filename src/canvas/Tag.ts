@@ -14,7 +14,7 @@ export default class Tag {
     this.nodeText = figma.createText()
   }
 
-  makeNodeTag(textColor: string | null = null) {
+  makeNodeTag(color: string | null = null, rgb: { [key: string]: number } = null) {
     // base
     this.nodeTag.name = this.name
     this.nodeTag.fills = [
@@ -46,6 +46,8 @@ export default class Tag {
     color === 'WHITE'
       ? this.nodeTag.appendChild(this.makeNodeIndicator([1, 1, 1]))
       : null
+    color === 'CUSTOM'
+      ? this.nodeTag.appendChild(this.makeNodeIndicator([rgb.r, rgb.g, rgb.b]))
       : null
     this.nodeTag.appendChild(this.makeNodeText())
 
