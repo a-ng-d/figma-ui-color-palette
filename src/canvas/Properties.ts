@@ -159,7 +159,7 @@ export default class Properties {
     return this.nodeContrastScores
   }
 
-  makeNode(type: string) {
+  makeNode() {
     // base
     this.node.name = '_properties'
     this.node.fills = []
@@ -173,16 +173,10 @@ export default class Properties {
     this.node.layoutGrow = 1
 
     // insert
-    if (type === 'SAMPLE') {
-      this.node.appendChild(this.makeNodeTop())
-      this.nodeTop.appendChild(new Tag('_scale', this.name, 10).makeNodeTag())
-      this.nodeTop.appendChild(this.makeNodeBasics())
-      this.node.appendChild(this.makeNodeBottom())
-    } else if (type === 'NAME') {
-      this.node.appendChild(new Tag('_color-name', this.name, 10).makeNodeTag())
-    } else if (type === 'TITLE') {
-      this.node.appendChild(new Tag('_title', this.name, 16).makeNodeTag())
-    }
+    this.node.appendChild(this.makeNodeTop())
+    this.nodeTop.appendChild(new Tag('_scale', this.name, 10).makeNodeTag())
+    this.nodeTop.appendChild(this.makeNodeBasics())
+    this.node.appendChild(this.makeNodeBottom())
 
     return this.node
   }
