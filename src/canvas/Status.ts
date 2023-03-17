@@ -2,10 +2,12 @@ import Tag from './Tag'
 
 export default class Status {
   status: { isClosestToRef: boolean }
+  source : { [key: string]: number }
   node: FrameNode
 
-  constructor(status: { isClosestToRef: boolean }) {
+  constructor(status: { isClosestToRef: boolean }, source) {
     this.status = status
+    this.source = source
     this.node = figma.createFrame()
   }
 

@@ -53,6 +53,7 @@ export default class Colors {
       const rowName = new Sample(
         color.name,
         null,
+        null,
         [color.rgb.r * 255, color.rgb.g * 255, color.rgb.b * 255],
         this.parent.captions
       ).makeName('absolute', 160, 224)
@@ -108,6 +109,7 @@ export default class Colors {
 
           const sample = new Sample(
             color.name,
+            color.rgb,
             Object.keys(this.parent.scale)
               .find((key) => this.parent.scale[key] === lightness)
               .substr(10),

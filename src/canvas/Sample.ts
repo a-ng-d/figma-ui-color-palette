@@ -3,7 +3,7 @@ import Status from './Status'
 
 export default class Sample {
   name: string
-  source: Array<number>
+  source: { [key: string]: number } | null
   scale: string
   rgb: Array<number>
   captions: boolean
@@ -13,8 +13,9 @@ export default class Sample {
   node: FrameNode
   children: any
 
-  constructor(name, scale, rgb, captions, status?) {
+  constructor(name, source, scale, rgb, captions, status?) {
     this.name = name
+    this.source = source
     this.scale = scale
     this.rgb = rgb
     this.captions = captions
@@ -95,7 +96,7 @@ export default class Sample {
       this.node.appendChild(this.children)
     }
     if (this.status.isClosestToRef)
-      this.node.appendChild(new Status(this.status).makeNode())
+      this.node.appendChild(new Status(this.status, this.source).makeNode())
 
     return this.node
   }
