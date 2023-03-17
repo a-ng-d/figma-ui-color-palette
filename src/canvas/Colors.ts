@@ -61,7 +61,12 @@ export default class Colors {
       Object.values(this.parent.scale)
         .reverse()
         .forEach((lightness: any) => {
-          let newColor, lch, oklch
+          let newColor, lch, oklch, newColorHex, sourceColorHex, distance
+          sourceColorHex = chroma([
+            color.rgb.r * 255,
+            color.rgb.g * 255,
+            color.rgb.b * 255,
+          ])
           if (color.oklch) {
             oklch = chroma([
               color.rgb.r * 255,
@@ -92,7 +97,14 @@ export default class Colors {
                 ? 360
                 : lch[2] + color.hueShifting
             )
+            newColorHex = chroma(newColor._rgb).hex()
           }
+
+          distance = chroma.distance(
+            sourceColorHex,
+            newColorHex,
+            'lch'
+          )
 
           const sample = new Sample(
             color.name,
