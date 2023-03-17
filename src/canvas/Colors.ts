@@ -101,11 +101,7 @@ export default class Colors {
             newColorHex = chroma(newColor._rgb).hex()
           }
 
-          distance = chroma.distance(
-            sourceColorHex,
-            newColorHex,
-            'lch'
-          )
+          distance = chroma.distance(sourceColorHex, newColorHex, 'lch')
 
           const sample = new Sample(
             color.name,
@@ -116,7 +112,7 @@ export default class Colors {
             newColor._rgb,
             this.parent.captions,
             {
-              isClosestToRef: distance < 4 ? true : false
+              isClosestToRef: distance < 4 ? true : false,
             }
           ).makeScale(160, 224)
           row.name = color.name

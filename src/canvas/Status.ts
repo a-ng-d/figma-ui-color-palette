@@ -2,7 +2,7 @@ import Tag from './Tag'
 
 export default class Status {
   status: { isClosestToRef: boolean }
-  source : { [key: string]: number }
+  source: { [key: string]: number }
   node: FrameNode
 
   constructor(status: { isClosestToRef: boolean }, source) {
@@ -25,7 +25,12 @@ export default class Status {
     this.node.layoutGrow = 0
 
     if (this.status.isClosestToRef)
-      this.node.appendChild(new Tag('_close', 'Closest to ref', 10).makeNodeTag('CUSTOM', this.source))
+      this.node.appendChild(
+        new Tag('_close', 'Closest to ref', 10).makeNodeTag(
+          'CUSTOM',
+          this.source
+        )
+      )
 
     return this.node
   }

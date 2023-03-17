@@ -27,7 +27,9 @@ export default class Caption {
     this.node.layoutGrow = 1
 
     // insert
-    this.node.appendChild(new Tag(this.name, this.content, this.size).makeNodeTag())
+    this.node.appendChild(
+      new Tag(this.name, this.content, this.size).makeNodeTag()
+    )
 
     return this.node
   }
