@@ -10,21 +10,19 @@ const createLocalStyles = (palette, i) => {
     palette.children[0].children.forEach((row) => {
       if (row.name != '_header' && row.name != '_title')
         row.children.forEach((sample, index) => {
-          if (index != 0) {
-            if (
-              localStyles.filter(
-                (e) =>
-                  e.name ===
-                  `${row.name}/${sample.name.replace(row.name + '-', '')}`
-              ).length == 0
-            ) {
-              const style = new Style(
-                `${row.name}/${sample.name.replace(row.name + '-', '')}`,
-                sample.fills[0].color
-              ).makeNode()
-              figma.moveLocalPaintStyleAfter(style, null)
-              i++
-            }
+          if (
+            localStyles.filter(
+              (e) =>
+                e.name ===
+                `${row.name}/${sample.name.replace(row.name + '-', '')}`
+            ).length == 0
+          ) {
+            const style = new Style(
+              `${row.name}/${index === 0 ? 'source' : sample.name.replace(row.name + '-', '')}`,
+              sample.fills[0].color
+            ).makeNode()
+            figma.moveLocalPaintStyleAfter(style, null)
+            i++
           }
         })
     })
