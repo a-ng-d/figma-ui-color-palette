@@ -180,7 +180,10 @@ class App extends React.Component {
     }
   }
 
-  highlightHandler = () => {
+  highlightHandler = (action: string) => {
+    const openHighlight = () => this.setState({ hasHighlight: true })
+
+    const closeHighlight = () => {
     parent.postMessage(
       {
         pluginMessage: {
@@ -194,6 +197,14 @@ class App extends React.Component {
       '*'
     )
     this.setState({ hasHighlight: false })
+    }
+
+    const actions = {
+      OPEN: () => openHighlight(),
+      CLOSE: () => closeHighlight(),
+    }
+
+    return actions[action]  
   }
 
   render() {
@@ -325,7 +336,7 @@ class App extends React.Component {
         {this.state['service'] === 'None' ? <Onboarding /> : null}
         {this.state['hasHighlight'] ? (
           <Highlight
-            closeHighlight={this.highlightHandler}
+            closeHighlight={this.highlightHandler('CLOSE')}
           />
         ) : null}
       </main>
