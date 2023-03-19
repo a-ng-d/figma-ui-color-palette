@@ -25,6 +25,7 @@ export default class Header {
       new Sample(
         'Colors',
         null,
+        null,
         [255, 255, 255],
         this.parent.captions
       ).makeName('absolute', 160, 48)
@@ -37,6 +38,7 @@ export default class Header {
             Object.keys(this.parent.scale)
               .find((key) => this.parent.scale[key] === lightness)
               .substr(10),
+            null,
             null,
             [255, 255, 255],
             this.parent.captions

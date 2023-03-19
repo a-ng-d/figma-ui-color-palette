@@ -28,6 +28,7 @@ export default class Title {
       new Sample(
         this.text,
         null,
+        null,
         [255, 255, 255],
         this.parent.captions
       ).makeName('relative', 100, 48)
