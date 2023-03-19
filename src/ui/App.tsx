@@ -193,7 +193,7 @@ class App extends React.Component {
       },
       '*'
     )
-    this.setState({ isHighlightRead: true })
+    this.setState({ hasHighlight: false })
   }
 
   render() {
