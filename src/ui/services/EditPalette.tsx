@@ -19,6 +19,7 @@ interface Props {
   preset: any
   export: any
   paletteName: string
+  onHighlightReopen: any
   onScaleChange: any
   onChangeStop: any
   onColorChange: any
@@ -518,14 +519,24 @@ export default class EditPalette extends React.Component<Props> {
 
       help = (
         <HelpbBar
-          links={[
+          actions={[
             {
               label: 'Read the documentation',
+              isLink: true,
               url: 'https://docs.ui-color-palette.com',
+              action: null
             },
             {
               label: 'Give feedback',
+              isLink: true,
               url: 'https://kutt.it/voice-of-uicp-users',
+              action: null
+            },
+            {
+              label: 'What\'s new',
+              isLink: false,
+              url: '',
+              action: this.props.onHighlightReopen
             },
           ]}
         />
@@ -545,14 +556,24 @@ export default class EditPalette extends React.Component<Props> {
 
       help = (
         <HelpbBar
-          links={[
+          actions={[
             {
               label: 'Read the documentation',
+              isLink: true,
               url: 'https://docs.ui-color-palette.com',
+              action: null
             },
             {
               label: 'Give feedback',
+              isLink: true,
               url: 'https://kutt.it/voice-of-uicp-users',
+              action: null
+            },
+            {
+              label: 'What\'s new',
+              isLink: false,
+              url: '',
+              action: this.props.onHighlightReopen
             },
           ]}
         />

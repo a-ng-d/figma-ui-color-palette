@@ -3,9 +3,11 @@ import { createRoot } from 'react-dom/client'
 import CreatePalette from './services/CreatePalette'
 import EditPalette from './services/EditPalette'
 import Onboarding from './services/Onboarding'
+import Highlight from './modules/Highlight'
 import 'figma-plugin-ds/dist/figma-plugin-ds.css'
 import './stylesheets/app.css'
 import './stylesheets/components.css'
+import package_json from './../../package.json'
 import { palette, presets } from '../utils/palettePackage'
 import { v4 as uuidv4 } from 'uuid'
 
@@ -29,6 +31,7 @@ class App extends React.Component {
         data: '',
       },
       paletteName: '',
+      hasHighlight: false
     }
   }
 
@@ -179,12 +182,43 @@ class App extends React.Component {
     }
   }
 
+  highlightHandler = (action: string) => {
+    const openHighlight = () => this.setState({ hasHighlight: true })
+
+    const closeHighlight = () => {
+      parent.postMessage(
+        {
+          pluginMessage: {
+            type: 'close-highlight',
+            data: {
+              version: package_json.version,
+              isRead: true
+            },
+          },
+        },
+        '*'
+      )
+      this.setState({ hasHighlight: false })
+    }
+
+    const actions = {
+      OPEN: () => openHighlight(),
+      CLOSE: () => closeHighlight(),
+    }
+
+    return actions[action]  
+  }
+
   render() {
     onmessage = (e: any) => {
       Object.keys(this.state['preset']).length == 0
         ? this.setState({ preset: presets.material })
         : null
       switch (e.data.pluginMessage.type) {
+        case 'highlight-status' :
+          this.setState({ hasHighlight: !e.data.pluginMessage.data })
+          break 
+
         case 'empty-selection': {
           this.setState({
             service: 'None',
@@ -281,6 +315,7 @@ class App extends React.Component {
             preset={this.state['preset']}
             hasCaptions={this.state['hasCaptions']}
             paletteName={this.state['paletteName']}
+            onHighlightReopen={this.highlightHandler('OPEN')}
             onPresetChange={this.presetHandler}
             onCustomPreset={this.customHandler}
             onSettingsChange={this.settingsHandler}
@@ -294,6 +329,7 @@ class App extends React.Component {
             hasCaptions={this.state['hasCaptions']}
             export={this.state['export']}
             paletteName={this.state['paletteName']}
+            onHighlightReopen={this.highlightHandler('OPEN')}
             onScaleChange={this.slideHandler}
             onChangeStop={this.customSlideHandler}
             onColorChange={this.colorHandler}
@@ -302,6 +338,11 @@ class App extends React.Component {
           />
         ) : null}
         {this.state['service'] === 'None' ? <Onboarding /> : null}
+        {this.state['hasHighlight'] ? (
+          <Highlight
+            closeHighlight={this.highlightHandler('CLOSE')}
+          />
+        ) : null}
       </main>
     )
   }

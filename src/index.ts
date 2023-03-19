@@ -1,3 +1,5 @@
+import isHighlightRead from './bridges/isHighlightRead'
+import closeHighlight from './bridges/closeHighlight'
 import createPalette from './bridges/createPalette'
 import updateScale from './bridges/updateScale'
 import updateCaptions from './bridges/updateCaptions'
@@ -8,6 +10,7 @@ import processSelection from './bridges/processSelection'
 import exportJson from './bridges/exportJson'
 import exportCss from './bridges/exportCss'
 import updateSettings from './bridges/updateSettings'
+import package_json from './../package.json'
 
 figma.showUI(__html__, {
   width: 640,
@@ -23,11 +26,17 @@ figma.loadFontAsync({ family: 'Roboto Mono', style: 'Medium' })
 figma.on('run', () => processSelection())
 figma.on('selectionchange', () => processSelection())
 
+figma.on('run', () => isHighlightRead(package_json.version))
+
 figma.ui.onmessage = (msg) => {
   let palette: any
   const i = 0
 
   switch (msg.type) {
+    case 'close-highlight':
+      closeHighlight(msg)
+      break
+
     case 'create-palette':
       createPalette(msg, palette)
       break

@@ -5,11 +5,17 @@ interface Props {
   type: string
   label?: string
   state?: string
-  feature: string
-  action: any
+  isLink?: boolean
+  url?: string
+  feature?: string
+  action?: any
 }
 
 export default class Button extends React.Component<Props> {
+  static defaultProps = {
+    isLink: false
+  }
+
   Button = () => {
     return (
       <button
@@ -17,6 +23,18 @@ export default class Button extends React.Component<Props> {
         onMouseDown={this.props.action}
       >
         {this.props.label}
+      </button>
+    )
+  }
+
+  LinkButton = () => {
+    return (
+      <button
+        className={`button button--${this.props.type}`}
+      >
+        <a href={this.props.url} target="_blank" rel="noreferrer">
+          {this.props.label}
+        </a>
       </button>
     )
   }
@@ -40,9 +58,12 @@ export default class Button extends React.Component<Props> {
   render() {
     return (
       <>
-        {this.props.type === 'primary' ? <this.Button /> : null}
-        {this.props.type === 'secondary' ? <this.Button /> : null}
-        {this.props.type === 'icon' ? <this.Icon /> : null}
+        {this.props.type != 'icon'
+          ? this.props.isLink
+          ? <this.LinkButton />
+          : <this.Button />
+          : <this.Icon />          
+        }
       </>
     )
   }

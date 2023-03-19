@@ -1,6 +1,8 @@
 import * as React from 'react'
+import Button from '../components/Button'
+
 interface Props {
-  links: any
+  actions: any
 }
 
 export default class HelpbBar extends React.Component<Props> {
