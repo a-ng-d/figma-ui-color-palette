@@ -325,7 +325,6 @@ class App extends React.Component {
         {this.state['service'] === 'None' ? <Onboarding /> : null}
         {!this.state['isHighlightRead'] ? (
           <Highlight
-            currentVersion={package_json.version}
             closeHighlight={this.highlightHandler}
           />
         ) : null}

@@ -4,7 +4,6 @@ import releaseNotes from '../../utils/releaseNotes'
 import type { ReleaseNote } from '../../utils/releaseNotes'
 
 interface Props {
-  currentVersion: string
   closeHighlight: any
 }
 
@@ -12,7 +11,7 @@ export default class Highlight extends React.Component<Props> {
   openUrl = (currentNote: ReleaseNote) => window.open(currentNote['learnMore'], '_blank')
 
   render() {
-    const currentNote = releaseNotes.filter(note => note['version'] === this.props.currentVersion)[0]
+    const currentNote = releaseNotes.filter(note => note['isMostRecent'])[0]
     return (
       <div className="highlight">
         <PopIn
