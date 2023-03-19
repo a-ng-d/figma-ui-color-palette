@@ -2,28 +2,30 @@ import * as React from 'react'
 import Button from '../components/Button'
 
 interface Props {
-  links: any
+  actions: any
 }
 
 export default class HelpbBar extends React.Component<Props> {
   render() {
     return (
       <div className="help-bar">
-        {this.props.links.map((links, index) =>
-          index === this.props.links.length - 1 ? (
+        {this.props.actions.map((action, index) =>
+          index === this.props.actions.length - 1 ? (
             <Button
               type="tertiary"
-              isLink={true}
-              url={links.url}
-              label={links.label}
+              isLink={action.isLink}
+              url={action.url}
+              label={action.label}
+              action={action.action}
             />
           ) : (
             <>
               <Button
                 type="tertiary"
-                isLink={true}
-                url={links.url}
-                label={links.label}
+                isLink={action.isLink}
+                url={action.url}
+                label={action.label}
+                action={action.action}
               />
               <span>﹒</span>
             </>

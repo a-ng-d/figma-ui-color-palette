@@ -76,14 +76,18 @@ export default class CreatePalette extends React.Component<Props> {
 
       help = (
         <HelpbBar
-          links={[
+          actions={[
             {
               label: 'Read the documentation',
+              isLink: true,
               url: 'https://docs.ui-color-palette.com',
+              action: null
             },
             {
               label: 'Give feedback',
+              isLink: true,
               url: 'https://kutt.it/voice-of-uicp-users',
+              action: null
             },
           ]}
         />
