@@ -455,6 +455,15 @@ div.popin__header {
 div.popin__content {
   flex: 1;
   width: 100%;
+  overflow: scroll;
+}
+
+div.popin__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0 var(--size-xxsmall);
+  width: 100%;
+  padding: var(--size-xsmall);
 }
 
 /* Color items */
