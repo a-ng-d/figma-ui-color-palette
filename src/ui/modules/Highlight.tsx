@@ -13,10 +13,10 @@ export default class Highlight extends React.Component<Props> {
     return (
       <div className="highlight">
         <PopIn
-          title="Test"
+          title={currentNote['title']}
           close={this.props.closeHighlight}
         >
-          <p className="type">test</p>
+          <p className="type">{currentNote['content']}</p>
         </PopIn>
       </div>
     )
