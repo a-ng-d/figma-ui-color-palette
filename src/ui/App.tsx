@@ -29,7 +29,7 @@ class App extends React.Component {
         data: '',
       },
       paletteName: '',
-      isHighlightRead: true
+      hasHighlight: false
     }
   }
 
@@ -203,7 +203,7 @@ class App extends React.Component {
         : null
       switch (e.data.pluginMessage.type) {
         case 'highlight-status' :
-          this.setState({ isHighlightRead: e.data.pluginMessage.data })
+          this.setState({ hasHighlight: !e.data.pluginMessage.data })
           break 
 
         case 'empty-selection': {
@@ -323,7 +323,7 @@ class App extends React.Component {
           />
         ) : null}
         {this.state['service'] === 'None' ? <Onboarding /> : null}
-        {!this.state['isHighlightRead'] ? (
+        {this.state['hasHighlight'] ? (
           <Highlight
             closeHighlight={this.highlightHandler}
           />
