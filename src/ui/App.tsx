@@ -3,6 +3,7 @@ import * as ReactDOM from 'react-dom'
 import CreatePalette from './services/CreatePalette'
 import EditPalette from './services/EditPalette'
 import Onboarding from './services/Onboarding'
+import Highlight from './modules/Highlight'
 import 'figma-plugin-ds/dist/figma-plugin-ds.css'
 import './stylesheets/app.css'
 import './stylesheets/components.css'
@@ -27,6 +28,7 @@ class App extends React.Component {
         data: '',
       },
       paletteName: '',
+      hasHighlight: true
     }
   }
 
@@ -177,6 +179,8 @@ class App extends React.Component {
     }
   }
 
+  highlightHandler = () => this.setState({ hasHighlight: false })
+
   render() {
     onmessage = (e: any) => {
       Object.keys(this.state['preset']).length == 0
@@ -300,6 +304,11 @@ class App extends React.Component {
           />
         ) : null}
         {this.state['service'] === 'None' ? <Onboarding /> : null}
+        {this.state['hasHighlight'] ? (
+          <Highlight
+            closeHighlight={this.highlightHandler}
+          />
+        ) : null}
       </main>
     )
   }
