@@ -12,23 +12,18 @@ const createLocalStyles = (palette, i) => {
       if (row.name != '_header' && row.name != '_title')
         row.children.forEach((sample, index) => {
           if (
-            localStyles.filter(
-              (e) =>
-                e.name ===
-                `${row.name}/${sample.name.replace(row.name + '-', '')}`
-            ).length == 0
-            &&
-            localStyles.filter(
-              (e) =>
-                e.name ===
-                `${row.name}/source`
-            ).length == 0
+            localStyles.filter((e) => e.name === `${row.name}/${sample.name.replace(row.name + '-', '')}`).length == 0 &&
+            localStyles.filter((e) => e.name === `${row.name}/source`).length == 0
           ) {
             const style = new Style(
-              `${row.name}/${index === 0 ? 'source' : sample.name.replace(row.name + '-', '')}`,
+              `${row.name}/${
+                index === 0 ? 'source' : sample.name.replace(row.name + '-', '')
+              }`,
               sample.fills[0].color
             ).makeNode()
-            index === 0 ? source = style : figma.moveLocalPaintStyleAfter(style, source)
+            index === 0
+              ? (source = style)
+              : figma.moveLocalPaintStyleAfter(style, source)
             i++
           }
         })
