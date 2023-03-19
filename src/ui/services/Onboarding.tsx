@@ -3,7 +3,11 @@ import Icon from './../modules/Icon'
 import Message from '../components/Message'
 import HelpbBar from '../modules/HelpBar'
 
-export default class Onboarding extends React.Component {
+interface Props {
+  onHighlightReopen: any
+}
+
+export default class Onboarding extends React.Component<Props> {
   render() {
     return (
         <>
@@ -24,14 +28,24 @@ export default class Onboarding extends React.Component {
           </div>
         </section>
         <HelpbBar
-          links={[
+          actions={[
             {
               label: 'Read the documentation',
+              isLink: true,
               url: 'https://docs.ui-color-palette.com',
+              action: null
             },
             {
               label: 'Give feedback',
+              isLink: true,
               url: 'https://kutt.it/voice-of-uicp-users',
+              action: null
+            },
+            {
+              label: 'What\'s new',
+              isLink: false,
+              url: '',
+              action: this.props.onHighlightReopen
             },
           ]}
         />

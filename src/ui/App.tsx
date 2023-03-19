@@ -337,7 +337,11 @@ class App extends React.Component {
             onSettingsChange={this.settingsHandler}
           />
         ) : null}
-        {this.state['service'] === 'None' ? <Onboarding /> : null}
+        {this.state['service'] === 'None' ? (
+          <Onboarding
+            onHighlightReopen={this.highlightHandler('OPEN')}
+          />
+        ) : null}
         {this.state['hasHighlight'] ? (
           <Highlight
             closeHighlight={this.highlightHandler('CLOSE')}
