@@ -8,11 +8,11 @@ interface RealeaseNote {
 
 const releaseNotes: Array<RealeaseNote> = [
   {
-    'version': '1.8.0',
-    'title': 'Version 18 has been removed from the oven',
-    'image': '',
-    'content': 'test',
-    'learnMore': ''
+    "version": "1.8.0",
+    "title": "Version 18 has been removed from the oven",
+    "image": "https://placehold.co/148x148.png",
+    "content": "Ecoute pouilleux ! Pour moi tu n'es q'une merde de chien qui s'étale sur un trottoir... Et tu sais ce qu'on fait d'une merde de ce genre ? On peut  l'enlever soigneusement  avec une pelle, on peut laisser la pluie et le vent la balayer où bien on peut l'écraser. Alors si tu veux un conseil d'ami, choisi bien l'endroit où on te chiera.",
+    "learnMore": "https://kutt.it/uicp-v18"
   }
 ]
 
