@@ -28,7 +28,7 @@ class App extends React.Component {
         data: '',
       },
       paletteName: '',
-      hasHighlight: true
+      isHighlightRead: true
     }
   }
 
@@ -187,6 +187,10 @@ class App extends React.Component {
         ? this.setState({ preset: presets.material })
         : null
       switch (e.data.pluginMessage.type) {
+        case 'highlight-status' :
+          this.setState({ isHighlightRead: e.data.pluginMessage.data })
+          break 
+
         case 'empty-selection': {
           this.setState({
             service: 'None',
@@ -304,7 +308,7 @@ class App extends React.Component {
           />
         ) : null}
         {this.state['service'] === 'None' ? <Onboarding /> : null}
-        {this.state['hasHighlight'] ? (
+        {!this.state['isHighlightRead'] ? (
           <Highlight
             closeHighlight={this.highlightHandler}
           />
