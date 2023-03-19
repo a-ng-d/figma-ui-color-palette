@@ -6,6 +6,7 @@ const createLocalStyles = (palette, i) => {
   if (palette.children.length == 1) {
     const localStyles = figma.getLocalPaintStyles()
     i = 0
+    let source
 
     palette.children[0].children.forEach((row) => {
       if (row.name != '_header' && row.name != '_title')
@@ -21,7 +22,7 @@ const createLocalStyles = (palette, i) => {
               `${row.name}/${index === 0 ? 'source' : sample.name.replace(row.name + '-', '')}`,
               sample.fills[0].color
             ).makeNode()
-            figma.moveLocalPaintStyleAfter(style, null)
+            index === 0 ? source = style : figma.moveLocalPaintStyleAfter(style, source)
             i++
           }
         })
