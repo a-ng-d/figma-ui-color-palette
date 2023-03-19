@@ -11,6 +11,7 @@ interface Props {
   hasCaptions: boolean
   preset: any
   paletteName: string
+  onHighlightReopen: any
   onPresetChange: any
   onCustomPreset: any
   onSettingsChange: any
@@ -88,6 +89,12 @@ export default class CreatePalette extends React.Component<Props> {
               isLink: true,
               url: 'https://kutt.it/voice-of-uicp-users',
               action: null
+            },
+            {
+              label: 'What\'s new',
+              isLink: false,
+              url: '',
+              action: this.props.onHighlightReopen
             },
           ]}
         />

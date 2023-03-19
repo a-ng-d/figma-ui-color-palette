@@ -184,19 +184,19 @@ class App extends React.Component {
     const openHighlight = () => this.setState({ hasHighlight: true })
 
     const closeHighlight = () => {
-    parent.postMessage(
-      {
-        pluginMessage: {
-          type: 'close-highlight',
-          data: {
-            version: package_json.version,
-            isRead: true
+      parent.postMessage(
+        {
+          pluginMessage: {
+            type: 'close-highlight',
+            data: {
+              version: package_json.version,
+              isRead: true
+            },
           },
         },
-      },
-      '*'
-    )
-    this.setState({ hasHighlight: false })
+        '*'
+      )
+      this.setState({ hasHighlight: false })
     }
 
     const actions = {
@@ -313,6 +313,7 @@ class App extends React.Component {
             preset={this.state['preset']}
             hasCaptions={this.state['hasCaptions']}
             paletteName={this.state['paletteName']}
+            onHighlightReopen={this.highlightHandler('OPEN')}
             onPresetChange={this.presetHandler}
             onCustomPreset={this.customHandler}
             onSettingsChange={this.settingsHandler}
@@ -326,6 +327,7 @@ class App extends React.Component {
             hasCaptions={this.state['hasCaptions']}
             export={this.state['export']}
             paletteName={this.state['paletteName']}
+            onHighlightReopen={this.highlightHandler('OPEN')}
             onScaleChange={this.slideHandler}
             onChangeStop={this.customSlideHandler}
             onColorChange={this.colorHandler}
