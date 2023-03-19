@@ -112,7 +112,9 @@ div.highlight {
   left: 0;
   width: 100%;
   height: 100%;
-  padding: var(--size-medium)
+  z-index: 99;
+  padding: var(--size-medium);
+  background-color: rgba(0, 0, 0, .5);
 }
 
 div.highlight .popin__content .type {
