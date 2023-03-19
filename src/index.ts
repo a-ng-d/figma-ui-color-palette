@@ -1,4 +1,5 @@
 import isHighlightRead from './bridges/isHighlightRead'
+import closeHighlight from './bridges/closeHighlight'
 import createPalette from './bridges/createPalette'
 import updateScale from './bridges/updateScale'
 import updateCaptions from './bridges/updateCaptions'
@@ -32,6 +33,10 @@ figma.ui.onmessage = (msg) => {
   const i = 0
 
   switch (msg.type) {
+    case 'close-highlight':
+      closeHighlight(msg)
+      break
+
     case 'create-palette':
       createPalette(msg, palette)
       break

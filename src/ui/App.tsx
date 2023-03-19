@@ -7,6 +7,7 @@ import Highlight from './modules/Highlight'
 import 'figma-plugin-ds/dist/figma-plugin-ds.css'
 import './stylesheets/app.css'
 import './stylesheets/components.css'
+import package_json from './../../package.json'
 import { palette, presets } from '../utils/palettePackage'
 import { v4 as uuidv4 } from 'uuid'
 
@@ -179,7 +180,21 @@ class App extends React.Component {
     }
   }
 
-  highlightHandler = () => this.setState({ hasHighlight: false })
+  highlightHandler = () => {
+    parent.postMessage(
+      {
+        pluginMessage: {
+          type: 'close-highlight',
+          data: {
+            version: package_json.version,
+            isRead: true
+          },
+        },
+      },
+      '*'
+    )
+    this.setState({ isHighlightRead: true })
+  }
 
   render() {
     onmessage = (e: any) => {
