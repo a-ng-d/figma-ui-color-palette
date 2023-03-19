@@ -29,6 +29,7 @@ export default class Highlight extends React.Component<Props> {
           }}
           close={this.props.closeHighlight}
         >
+          <img src={currentNote['image']} />
           <p className="type">{currentNote['content']}</p>
         </PopIn>
       </div>
