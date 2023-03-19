@@ -1,7 +1,7 @@
 import * as React from 'react'
 import PopIn from '../components/PopIn'
 import releaseNotes from '../../utils/releaseNotes'
-import type { RealeaseNote } from '../../utils/releaseNotes'
+import type { ReleaseNote } from '../../utils/releaseNotes'
 
 interface Props {
   currentVersion: string
@@ -9,7 +9,7 @@ interface Props {
 }
 
 export default class Highlight extends React.Component<Props> {
-  openUrl = (currentNote: RealeaseNote) => window.open(currentNote['learnMore'], '_blank')
+  openUrl = (currentNote: ReleaseNote) => window.open(currentNote['learnMore'], '_blank')
 
   render() {
     const currentNote = releaseNotes.filter(note => note['version'] === this.props.currentVersion)[0]

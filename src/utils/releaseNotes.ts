@@ -1,4 +1,4 @@
-export interface RealeaseNote {
+export interface ReleaseNote {
   version: string,
   title: string,
   image: string,
@@ -6,7 +6,7 @@ export interface RealeaseNote {
   learnMore: string
 }
 
-const releaseNotes: Array<RealeaseNote> = [
+const releaseNotes: Array<ReleaseNote> = [
   {
     "version": "1.8.0",
     "title": "Version 18 has been removed from the oven",
