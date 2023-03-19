@@ -1,6 +1,7 @@
 import * as React from 'react'
 import PopIn from '../components/PopIn'
 import releaseNotes from '../../utils/releaseNotes'
+import type { RealeaseNote } from '../../utils/releaseNotes'
 
 interface Props {
   currentVersion: string

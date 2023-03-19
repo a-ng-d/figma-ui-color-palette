@@ -1,4 +1,4 @@
-interface RealeaseNote {
+export interface RealeaseNote {
   version: string,
   title: string,
   image: string,
