@@ -115,6 +115,11 @@ div.highlight {
   padding: var(--size-medium)
 }
 
+div.highlight .popin__content .type {
+  padding: var(--size-xsmall);
+  margin: 0
+}
+
 /* Controls */
 div.section-controls {
   display: flex;
@@ -454,6 +459,7 @@ div.popin__header {
 
 div.popin__content {
   flex: 1;
+  display: flex;
   width: 100%;
   overflow: scroll;
 }
