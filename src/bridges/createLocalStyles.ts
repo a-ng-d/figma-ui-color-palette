@@ -17,6 +17,12 @@ const createLocalStyles = (palette, i) => {
                 e.name ===
                 `${row.name}/${sample.name.replace(row.name + '-', '')}`
             ).length == 0
+            &&
+            localStyles.filter(
+              (e) =>
+                e.name ===
+                `${row.name}/source`
+            ).length == 0
           ) {
             const style = new Style(
               `${row.name}/${index === 0 ? 'source' : sample.name.replace(row.name + '-', '')}`,
