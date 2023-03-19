@@ -3,6 +3,16 @@ import Button from './Button'
 
 interface Props {
   title: string
+  actions: {
+    primary: {
+      label: string,
+      action: any
+    }
+    secondary: {
+      label: string,
+      action: any
+    }
+  }
   close: any
 }
 
@@ -21,6 +31,20 @@ export default class PopIn extends React.Component<Props> {
         </div>
         <div className="popin__content">
           {this.props.children}
+        </div>
+        <div className="popin__actions">
+          <Button
+            type="secondary"
+            label={this.props.actions.secondary.label}
+            feature="secondary-action"
+            action={this.props.actions.secondary.action}
+          />
+          <Button
+            type="primary"
+            label={this.props.actions.primary.label}
+            feature="primary-action"
+            action={this.props.actions.primary.action}
+          />
         </div>
       </div>
     )
