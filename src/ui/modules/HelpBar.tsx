@@ -25,6 +25,7 @@ export default class HelpbBar extends React.Component<Props> {
                 label={action.label}
                 action={action.action}
               />
+              <span>﹒</span>
             </>
           )
         )}
