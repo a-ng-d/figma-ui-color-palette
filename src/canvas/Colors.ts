@@ -83,6 +83,7 @@ export default class Colors {
                 ? 360
                 : oklch[2] + color.hueShifting
             )
+            newColorHex = chroma(newColor._rgb).hex()
           } else {
             lch = chroma([
               color.rgb.r * 255,
