@@ -5,11 +5,11 @@ interface Props {
   title: string
   actions: {
     primary: {
-      label: string,
+      label: string
       action: any
     }
     secondary: {
-      label: string,
+      label: string
       action: any
     }
   }
@@ -29,9 +29,7 @@ export default class PopIn extends React.Component<Props> {
             action={this.props.close}
           />
         </div>
-        <div className="popin__content">
-          {this.props.children}
-        </div>
+        <div className="popin__content">{this.props.children}</div>
         <div className="popin__actions">
           <Button
             type="secondary"

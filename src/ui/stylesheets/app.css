@@ -114,12 +114,12 @@ div.highlight {
   height: 100%;
   z-index: 99;
   padding: var(--size-medium);
-  background-color: rgba(0, 0, 0, .5);
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 div.highlight .popin__content .type {
   padding: var(--size-xsmall);
-  margin: 0
+  margin: 0;
 }
 
 /* Controls */

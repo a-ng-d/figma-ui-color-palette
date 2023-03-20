@@ -13,7 +13,7 @@ import { v4 as uuidv4 } from 'uuid'
 
 let isPaletteSelected = false
 const container = document.getElementById('react-page'),
-      root = createRoot(container!)
+  root = createRoot(container!)
 
 class App extends React.Component {
   constructor(props) {
@@ -31,7 +31,7 @@ class App extends React.Component {
         data: '',
       },
       paletteName: '',
-      hasHighlight: false
+      hasHighlight: false,
     }
   }
 
@@ -192,7 +192,7 @@ class App extends React.Component {
             type: 'close-highlight',
             data: {
               version: package_json.version,
-              isRead: true
+              isRead: true,
             },
           },
         },
@@ -206,7 +206,7 @@ class App extends React.Component {
       CLOSE: () => closeHighlight(),
     }
 
-    return actions[action]  
+    return actions[action]
   }
 
   render() {
@@ -215,9 +215,9 @@ class App extends React.Component {
         ? this.setState({ preset: presets.material })
         : null
       switch (e.data.pluginMessage.type) {
-        case 'highlight-status' :
+        case 'highlight-status':
           this.setState({ hasHighlight: !e.data.pluginMessage.data })
-          break 
+          break
 
         case 'empty-selection': {
           this.setState({
@@ -338,14 +338,10 @@ class App extends React.Component {
           />
         ) : null}
         {this.state['service'] === 'None' ? (
-          <Onboarding
-            onHighlightReopen={this.highlightHandler('OPEN')}
-          />
+          <Onboarding onHighlightReopen={this.highlightHandler('OPEN')} />
         ) : null}
         {this.state['hasHighlight'] ? (
-          <Highlight
-            closeHighlight={this.highlightHandler('CLOSE')}
-          />
+          <Highlight closeHighlight={this.highlightHandler('CLOSE')} />
         ) : null}
       </main>
     )

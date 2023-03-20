@@ -10,7 +10,7 @@ interface Props {
 export default class Onboarding extends React.Component<Props> {
   render() {
     return (
-        <>
+      <>
         <section>
           <div className="onboarding controls__control">
             <Icon size={48} />
@@ -33,19 +33,19 @@ export default class Onboarding extends React.Component<Props> {
               label: 'Read the documentation',
               isLink: true,
               url: 'https://docs.ui-color-palette.com',
-              action: null
+              action: null,
             },
             {
               label: 'Give feedback',
               isLink: true,
               url: 'https://kutt.it/voice-of-uicp-users',
-              action: null
+              action: null,
             },
             {
-              label: 'What\'s new',
+              label: "What's new",
               isLink: false,
               url: '',
-              action: this.props.onHighlightReopen
+              action: this.props.onHighlightReopen,
             },
           ]}
         />

@@ -13,7 +13,7 @@ interface Props {
 
 export default class Button extends React.Component<Props> {
   static defaultProps = {
-    isLink: false
+    isLink: false,
   }
 
   Button = () => {
@@ -29,9 +29,7 @@ export default class Button extends React.Component<Props> {
 
   LinkButton = () => {
     return (
-      <button
-        className={`button button--${this.props.type}`}
-      >
+      <button className={`button button--${this.props.type}`}>
         <a href={this.props.url} target="_blank" rel="noreferrer">
           {this.props.label}
         </a>
@@ -58,12 +56,15 @@ export default class Button extends React.Component<Props> {
   render() {
     return (
       <>
-        {this.props.type != 'icon'
-          ? this.props.isLink
-          ? <this.LinkButton />
-          : <this.Button />
-          : <this.Icon />          
-        }
+        {this.props.type != 'icon' ? (
+          this.props.isLink ? (
+            <this.LinkButton />
+          ) : (
+            <this.Button />
+          )
+        ) : (
+          <this.Icon />
+        )}
       </>
     )
   }

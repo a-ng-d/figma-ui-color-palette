@@ -8,10 +8,11 @@ interface Props {
 }
 
 export default class Highlight extends React.Component<Props> {
-  openUrl = (currentNote: ReleaseNote) => window.open(currentNote['learnMore'], '_blank')
+  openUrl = (currentNote: ReleaseNote) =>
+    window.open(currentNote['learnMore'], '_blank')
 
   render() {
-    const currentNote = releaseNotes.filter(note => note['isMostRecent'])[0]
+    const currentNote = releaseNotes.filter((note) => note['isMostRecent'])[0]
     return (
       <div className="highlight">
         <PopIn
@@ -19,12 +20,12 @@ export default class Highlight extends React.Component<Props> {
           actions={{
             primary: {
               label: 'Got it',
-              action: this.props.closeHighlight
+              action: this.props.closeHighlight,
             },
             secondary: {
               label: 'Learn more',
-              action: () => this.openUrl(currentNote)
-            }
+              action: () => this.openUrl(currentNote),
+            },
           }}
           close={this.props.closeHighlight}
         >
