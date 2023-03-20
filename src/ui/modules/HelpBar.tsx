@@ -11,15 +11,21 @@ export default class HelpBar extends React.Component<Props> {
       <div className="help-bar">
         {this.props.actions.map((action, index) =>
           index === this.props.actions.length - 1 ? (
-            <Button
-              type="tertiary"
-              isLink={action.isLink}
-              url={action.url}
-              label={action.label}
-              action={action.action}
-            />
+            <React.Fragment
+              key={action.label}
+            >
+              <Button
+                type="tertiary"
+                isLink={action.isLink}
+                url={action.url}
+                label={action.label}
+                action={action.action}
+              />
+            </React.Fragment>
           ) : (
-            <>
+            <React.Fragment
+              key={action.label}
+            >
               <Button
                 type="tertiary"
                 isLink={action.isLink}
@@ -28,7 +34,7 @@ export default class HelpBar extends React.Component<Props> {
                 action={action.action}
               />
               <span>﹒</span>
-            </>
+            </React.Fragment>
           )
         )}
       </div>
