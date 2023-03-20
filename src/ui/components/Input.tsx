@@ -15,6 +15,7 @@ interface Props {
 }
 
 export default class Input extends React.Component<Props> {
+  // Direct actions
   onNudge = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.shiftKey && e.key === 'ArrowUp')
       (e.target as HTMLInputElement).value = (
@@ -26,6 +27,7 @@ export default class Input extends React.Component<Props> {
       ).toString()
   }
 
+  // Templates
   Color = () => {
     return (
       <div className="input input--with-icon">
@@ -119,6 +121,7 @@ export default class Input extends React.Component<Props> {
     )
   }
 
+  // Render
   render() {
     return (
       <>

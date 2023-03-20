@@ -504,6 +504,7 @@ export default class EditPalette extends React.Component<Props> {
     a.click()
   }
 
+  // Render
   render() {
     palette.captions = this.props.hasCaptions
     let actions, controls, help

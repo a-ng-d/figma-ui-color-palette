@@ -16,6 +16,7 @@ export default class Button extends React.Component<Props> {
     isLink: false,
   }
 
+  // Templates
   Button = () => {
     return (
       <button
@@ -53,6 +54,7 @@ export default class Button extends React.Component<Props> {
     )
   }
 
+  // Render
   render() {
     return (
       <>

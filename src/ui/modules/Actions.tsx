@@ -15,6 +15,7 @@ interface Props {
 }
 
 export default class Actions extends React.Component<Props> {
+  // Templates
   Create = () => {
     return (
       <div className="actions">
@@ -84,6 +85,7 @@ export default class Actions extends React.Component<Props> {
     )
   }
 
+  // Render
   render() {
     return (
       <>

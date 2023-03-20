@@ -35,7 +35,7 @@ class App extends React.Component {
     }
   }
 
-  // Events
+  // Handlers
   captionsHandler = (bool: boolean) =>
     this.setState({ hasCaptions: bool, onGoingStep: 'captions changed' })
 
@@ -209,6 +209,7 @@ class App extends React.Component {
     return actions[action]
   }
 
+  // Render
   render() {
     onmessage = (e: any) => {
       Object.keys(this.state['preset']).length == 0
