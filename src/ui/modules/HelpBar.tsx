@@ -5,7 +5,7 @@ interface Props {
   actions: any
 }
 
-export default class HelpbBar extends React.Component<Props> {
+export default class HelpBar extends React.Component<Props> {
   render() {
     return (
       <div className="help-bar">

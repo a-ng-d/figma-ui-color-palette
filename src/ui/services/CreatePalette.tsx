@@ -4,7 +4,7 @@ import Scale from '../modules/Scale'
 import Settings from '../modules/Settings'
 import About from '../modules/About'
 import Actions from '../modules/Actions'
-import HelpbBar from '../modules/HelpBar'
+import HelpBar from '../modules/HelpBar'
 import { palette } from '../../utils/palettePackage'
 
 interface Props {
@@ -76,7 +76,7 @@ export default class CreatePalette extends React.Component<Props> {
       )
 
       help = (
-        <HelpbBar
+        <HelpBar
           actions={[
             {
               label: 'Read the documentation',

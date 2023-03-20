@@ -7,7 +7,7 @@ import Export from '../modules/Export'
 import Settings from '../modules/Settings'
 import About from '../modules/About'
 import Actions from '../modules/Actions'
-import HelpbBar from '../modules/HelpBar'
+import HelpBar from '../modules/HelpBar'
 import chroma from 'chroma-js'
 import { palette } from '../../utils/palettePackage'
 import { v4 as uuidv4 } from 'uuid'
@@ -518,7 +518,7 @@ export default class EditPalette extends React.Component<Props> {
       )
 
       help = (
-        <HelpbBar
+        <HelpBar
           actions={[
             {
               label: 'Read the documentation',
@@ -555,7 +555,7 @@ export default class EditPalette extends React.Component<Props> {
       )
 
       help = (
-        <HelpbBar
+        <HelpBar
           actions={[
             {
               label: 'Read the documentation',
