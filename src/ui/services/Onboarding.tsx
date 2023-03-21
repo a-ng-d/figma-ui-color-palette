@@ -1,7 +1,7 @@
 import * as React from 'react'
 import Icon from './../modules/Icon'
 import Message from '../components/Message'
-import HelpbBar from '../modules/HelpBar'
+import Shortcuts from '../modules/Shortcuts'
 
 interface Props {
   onHighlightReopen: any
@@ -27,7 +27,7 @@ export default class Onboarding extends React.Component<Props> {
             />
           </div>
         </section>
-        <HelpbBar
+        <Shortcuts
           actions={[
             {
               label: 'Read the documentation',

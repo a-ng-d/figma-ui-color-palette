@@ -7,7 +7,7 @@ import Export from '../modules/Export'
 import Settings from '../modules/Settings'
 import About from '../modules/About'
 import Actions from '../modules/Actions'
-import HelpBar from '../modules/HelpBar'
+import Shortcuts from '../modules/Shortcuts'
 import chroma from 'chroma-js'
 import { palette } from '../../utils/palettePackage'
 import { v4 as uuidv4 } from 'uuid'
@@ -519,7 +519,7 @@ export default class EditPalette extends React.Component<Props> {
       )
 
       help = (
-        <HelpBar
+        <Shortcuts
           actions={[
             {
               label: 'Read the documentation',
@@ -556,7 +556,7 @@ export default class EditPalette extends React.Component<Props> {
       )
 
       help = (
-        <HelpBar
+        <Shortcuts
           actions={[
             {
               label: 'Read the documentation',
