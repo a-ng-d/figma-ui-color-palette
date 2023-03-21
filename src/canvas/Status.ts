@@ -26,7 +26,7 @@ export default class Status {
 
     if (this.status.isClosestToRef)
       this.node.appendChild(
-        new Tag('_close', 'Closest to ref', 10).makeNodeTag(
+        new Tag('_close', 'Closest to source', 10).makeNodeTag(
           'CUSTOM',
           this.source
         )
