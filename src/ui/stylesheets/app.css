@@ -117,7 +117,7 @@ div.highlight {
   background-color: rgba(0, 0, 0, 0.5);
 }
 
-div.highlight .popin__content .type {
+div.highlight .highlight__text {
   padding: var(--size-xsmall);
   margin: 0;
 }
