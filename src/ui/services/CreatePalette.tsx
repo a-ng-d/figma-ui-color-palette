@@ -57,7 +57,7 @@ export default class CreatePalette extends React.Component<Props> {
       { pluginMessage: { type: 'create-palette', data: palette } },
       '*'
     )
-  
+
   // Renders
   render() {
     palette.captions = this.state['hasCaptions']

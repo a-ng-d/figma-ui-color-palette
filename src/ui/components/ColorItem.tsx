@@ -42,7 +42,6 @@ export default class ColorItem extends React.Component<Props> {
 
   selectionHandler = (e: any) => this.props.onSelectionCancellation(e)
 
-
   // Direct actions
   onMouseDown = (e: any) => this.props.onSelectionChange(e)
 
