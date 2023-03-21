@@ -18,9 +18,9 @@ interface Props {
 export default class Colors extends React.Component<Props> {
   render() {
     return (
-      <div className="starting-colors controls__control">
+      <div className="source-colors controls__control">
         <div className="section-controls">
-          <div className="section-title">Starting colors</div>
+          <div className="section-title">Source colors</div>
           <Button
             icon="plus"
             type="icon"

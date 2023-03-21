@@ -23,7 +23,7 @@ export default class Header {
     // insert
     this.node.appendChild(
       new Sample(
-        'Colors',
+        'Source colors',
         null,
         null,
         [255, 255, 255],
