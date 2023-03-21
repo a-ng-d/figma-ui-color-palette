@@ -60,6 +60,11 @@
   mask-image: url(data:image/svg+xml;charset=utf8,%3Csvg fill=%27none%27 height=%2732%27 width=%2732%27 xmlns=%27http://www.w3.org/2000/svg%27%3E%3Cpath d=%27M12.207 16.5l1.647 1.646-.707.708L10.293 16l2.854-2.854.707.708-1.647 1.646h7.586l-1.646-1.646.707-.708L21.707 16l-2.853 2.854-.707-.708 1.646-1.646z%27 fill=%27%23000%27/%3E%3C/svg%3E);
 }
 
+.icon--close {
+  -webkit-mask-image: url(data:image/svg+xml;charset=utf8,%3Csvg fill=%27none%27 height=%2732%27 width=%2732%27 xmlns=%27http://www.w3.org/2000/svg%27%3E%3Cpath d=%27m16 15.293 4.6465-4.6464.7071.7071-4.6465 4.6464 4.6465 4.6465-.7071.7071-4.6465-4.6464-4.6464 4.6464-.7071-.7071 4.6464-4.6465-4.6464-4.6463.7071-.7071z%27 fill=%27%23000%27/%3E%3C/svg%3E);
+  mask-image: url(data:image/svg+xml;charset=utf8,%3Csvg fill=%27none%27 height=%2732%27 width=%2732%27 xmlns=%27http://www.w3.org/2000/svg%27%3E%3Cpath d=%27m16 15.293 4.6465-4.6464.7071.7071-4.6465 4.6464 4.6465 4.6465-.7071.7071-4.6465-4.6464-4.6464 4.6464-.7071-.7071 4.6464-4.6465-4.6464-4.6463.7071-.7071z%27 fill=%27%23000%27/%3E%3C/svg%3E);
+}
+
 /* Checkbox */
 .checkbox__label:before {
   --black8: var(--figma-color-border-strong);
@@ -146,6 +151,7 @@
   --blue: var(--figma-color-border-selected);
 }
 
+.button--tertiary,
 .button--tertiary a {
   color: var(--figma-color-text-brand);
   text-decoration: none;

@@ -8,8 +8,6 @@ interface Props {
 }
 
 export default class Settings extends React.Component<Props> {
-  inputHandler = (e: any) => this.props.onSettingsChange(e)
-
   render() {
     return (
       <div className="settings controls__control">
@@ -28,9 +26,9 @@ export default class Settings extends React.Component<Props> {
                 }
                 charactersLimit={64}
                 feature="rename-palette"
-                onChange={this.inputHandler}
-                onFocus={this.inputHandler}
-                onConfirm={this.inputHandler}
+                onChange={this.props.onSettingsChange}
+                onFocus={this.props.onSettingsChange}
+                onConfirm={this.props.onSettingsChange}
               />
             </FormItem>
           </div>

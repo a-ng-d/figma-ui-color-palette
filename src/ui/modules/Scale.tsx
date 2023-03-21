@@ -17,6 +17,7 @@ interface Props {
 }
 
 export default class Scale extends React.Component<Props> {
+  // Direct actions
   setOnboardingMessages = () => {
     const messages: Array<string> = []
 
@@ -37,6 +38,7 @@ export default class Scale extends React.Component<Props> {
     return messages
   }
 
+  // Templates
   Create = () => {
     this.props.onGoingStep != 'captions changed' ? (palette.scale = {}) : ''
     return (
@@ -114,6 +116,7 @@ export default class Scale extends React.Component<Props> {
     )
   }
 
+  // Render
   render() {
     return <>{!this.props.hasPreset ? <this.Edit /> : <this.Create />}</>
   }

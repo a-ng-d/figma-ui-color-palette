@@ -6,6 +6,7 @@ interface Props {
 }
 
 export default class Message extends React.Component<Props> {
+  // Templates
   SingleMessage = () => {
     return (
       <div className="onboarding-tip">
@@ -63,6 +64,7 @@ export default class Message extends React.Component<Props> {
     )
   }
 
+  // Render
   render() {
     return (
       <>

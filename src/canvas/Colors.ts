@@ -53,6 +53,7 @@ export default class Colors {
       const rowName = new Sample(
         color.name,
         null,
+        null,
         [color.rgb.r * 255, color.rgb.g * 255, color.rgb.b * 255],
         this.parent.captions
       ).makeName('absolute', 160, 224)
@@ -61,7 +62,12 @@ export default class Colors {
       Object.values(this.parent.scale)
         .reverse()
         .forEach((lightness: any) => {
-          let newColor, lch, oklch
+          let newColor, lch, oklch, newColorHex, sourceColorHex, distance
+          sourceColorHex = chroma([
+            color.rgb.r * 255,
+            color.rgb.g * 255,
+            color.rgb.b * 255,
+          ])
           if (color.oklch) {
             oklch = chroma([
               color.rgb.r * 255,
@@ -77,6 +83,7 @@ export default class Colors {
                 ? 360
                 : oklch[2] + color.hueShifting
             )
+            newColorHex = chroma(newColor._rgb).hex()
           } else {
             lch = chroma([
               color.rgb.r * 255,
@@ -92,15 +99,22 @@ export default class Colors {
                 ? 360
                 : lch[2] + color.hueShifting
             )
+            newColorHex = chroma(newColor._rgb).hex()
           }
+
+          distance = chroma.distance(sourceColorHex, newColorHex, 'lch')
 
           const sample = new Sample(
             color.name,
+            color.rgb,
             Object.keys(this.parent.scale)
               .find((key) => this.parent.scale[key] === lightness)
               .substr(10),
             newColor._rgb,
-            this.parent.captions
+            this.parent.captions,
+            {
+              isClosestToRef: distance < 4 ? true : false,
+            }
           ).makeScale(160, 224)
           row.name = color.name
           row.appendChild(sample)

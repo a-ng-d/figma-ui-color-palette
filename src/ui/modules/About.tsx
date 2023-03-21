@@ -1,5 +1,6 @@
 import * as React from 'react'
 import Icon from './Icon'
+import Button from '../components/Button'
 import package_json from './../../../package.json'
 
 export default class About extends React.Component {
@@ -46,73 +47,55 @@ export default class About extends React.Component {
           <div>
             <div className="type type--bold">Get help</div>
             <div className="about__links">
-              <button className="button button--tertiary">
-                <a
-                  href="https://docs.ui-color-palette.com"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  Read the documentation
-                </a>
-              </button>
+              <Button
+                type="tertiary"
+                isLink={true}
+                url="https://docs.ui-color-palette.com"
+                label="Read the documentation"
+              />
               <span>﹒</span>
-              <button className="button button--tertiary">
-                <a
-                  href="mailto:hello@ui-color-palette.com"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  Send an email
-                </a>
-              </button>
+              <Button
+                type="tertiary"
+                isLink={true}
+                url="mailto:hello@ui-color-palette.com"
+                label="Send an email"
+              />
             </div>
           </div>
           <div>
             <div className="type type--bold">Be involved</div>
             <div className="about__links">
-              <button className="button button--tertiary">
-                <a
-                  href="https://github.com/inVoltag/figma-ui-color-palette/issues/new"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  Open an issue
-                </a>
-              </button>
+              <Button
+                type="tertiary"
+                isLink={true}
+                url="https://github.com/inVoltag/figma-ui-color-palette/issues/new"
+                label="Open an issue"
+              />
               <span>﹒</span>
-              <button className="button button--tertiary">
-                <a
-                  href="https://kutt.it/voice-of-uicp-users"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  Give your feedback
-                </a>
-              </button>
+              <Button
+                type="tertiary"
+                isLink={true}
+                url="https://kutt.it/voice-of-uicp-users"
+                label="Give feedback"
+              />
             </div>
           </div>
           <div>
             <div className="type type--bold">Give support</div>
             <div className="about__links">
-              <button className="button button--tertiary">
-                <a
-                  href="https://twitter.com/a_ng_d"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  Follow my activity
-                </a>
-              </button>
+              <Button
+                type="tertiary"
+                isLink={true}
+                url="https://www.linkedin.com/in/augrimaud"
+                label="Follow my activity"
+              />
               <span>﹒</span>
-              <button className="button button--tertiary">
-                <a
-                  href="https://www.buymeacoffee.com/a_ng_d"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  Buy me a coffee
-                </a>
-              </button>
+              <Button
+                type="tertiary"
+                isLink={true}
+                url="https://www.buymeacoffee.com/a_ng_d"
+                label="Buy me a coffee"
+              />
             </div>
           </div>
         </div>

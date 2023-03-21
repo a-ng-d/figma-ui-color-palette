@@ -7,7 +7,7 @@ import Export from '../modules/Export'
 import Settings from '../modules/Settings'
 import About from '../modules/About'
 import Actions from '../modules/Actions'
-import HelpbBar from '../modules/HelpBar'
+import Shortcuts from '../modules/Shortcuts'
 import chroma from 'chroma-js'
 import { palette } from '../../utils/palettePackage'
 import { v4 as uuidv4 } from 'uuid'
@@ -19,6 +19,7 @@ interface Props {
   preset: any
   export: any
   paletteName: string
+  onHighlightReopen: any
   onScaleChange: any
   onChangeStop: any
   onColorChange: any
@@ -503,6 +504,7 @@ export default class EditPalette extends React.Component<Props> {
     a.click()
   }
 
+  // Render
   render() {
     palette.captions = this.props.hasCaptions
     let actions, controls, help
@@ -517,15 +519,25 @@ export default class EditPalette extends React.Component<Props> {
       )
 
       help = (
-        <HelpbBar
-          links={[
+        <Shortcuts
+          actions={[
             {
               label: 'Read the documentation',
+              isLink: true,
               url: 'https://docs.ui-color-palette.com',
+              action: null,
             },
             {
               label: 'Give feedback',
+              isLink: true,
               url: 'https://kutt.it/voice-of-uicp-users',
+              action: null,
+            },
+            {
+              label: "What's new",
+              isLink: false,
+              url: '',
+              action: this.props.onHighlightReopen,
             },
           ]}
         />
@@ -544,15 +556,25 @@ export default class EditPalette extends React.Component<Props> {
       )
 
       help = (
-        <HelpbBar
-          links={[
+        <Shortcuts
+          actions={[
             {
               label: 'Read the documentation',
+              isLink: true,
               url: 'https://docs.ui-color-palette.com',
+              action: null,
             },
             {
               label: 'Give feedback',
+              isLink: true,
               url: 'https://kutt.it/voice-of-uicp-users',
+              action: null,
+            },
+            {
+              label: "What's new",
+              isLink: false,
+              url: '',
+              action: this.props.onHighlightReopen,
             },
           ]}
         />

@@ -1,18 +1,26 @@
+import Properties from './Properties'
 import Caption from './Caption'
+import Status from './Status'
 
 export default class Sample {
   name: string
-  scale: string
-  rgb: Array<number>
+  source: { [key: string]: number } | null
+  scale: string | null
+  rgb: Array<number> | null
   captions: boolean
+  status: {
+    isClosestToRef: boolean
+  }
   node: FrameNode
   children: any
 
-  constructor(name, scale, rgb, captions) {
+  constructor(name, source, scale, rgb, captions, status?) {
     this.name = name
+    this.source = source
     this.scale = scale
     this.rgb = rgb
     this.captions = captions
+    this.status = status
     this.node = figma.createFrame()
     this.children = null
   }
@@ -43,11 +51,11 @@ export default class Sample {
       this.node.primaryAxisSizingMode = 'AUTO'
       this.node.layoutAlign = 'STRETCH'
       this.node.layoutGrow = 1
-      this.children = new Caption(this.name, this.rgb).makeNode('TITLE')
+      this.children = new Caption('_title', this.name, 16).makeNode()
     } else if (mode === 'absolute') {
       this.node.resize(width, height)
       this.node.primaryAxisSizingMode = 'FIXED'
-      this.children = new Caption(this.name, this.rgb).makeNode('NAME')
+      this.children = new Caption('_label', this.name, 10).makeNode()
     }
 
     // insert
@@ -72,7 +80,7 @@ export default class Sample {
     ]
 
     // layout
-    this.node.layoutMode = 'HORIZONTAL'
+    this.node.layoutMode = 'VERTICAL'
     this.node.paddingTop =
       this.node.paddingRight =
       this.node.paddingBottom =
@@ -80,12 +88,16 @@ export default class Sample {
         8
     this.node.primaryAxisSizingMode = 'FIXED'
     this.node.counterAxisSizingMode = 'FIXED'
+    this.node.primaryAxisAlignItems = 'MAX'
+    this.node.itemSpacing = 16
 
     // insert
     if (this.captions) {
-      this.children = new Caption(this.scale, this.rgb).makeNode('SAMPLE')
+      this.children = new Properties(this.scale, this.rgb).makeNode()
       this.node.appendChild(this.children)
     }
+    if (this.status.isClosestToRef)
+      this.node.appendChild(new Status(this.status, this.source).makeNode())
 
     return this.node
   }

@@ -56,6 +56,7 @@ export default class Export extends React.Component<Props> {
     this.counter = 1
   }
 
+  // Render
   render() {
     this.setFirstPreview()
     return (

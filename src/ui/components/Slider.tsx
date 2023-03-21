@@ -27,7 +27,7 @@ export default class Slider extends React.Component<Props> {
     }
   }
 
-  // Events
+  // Direct actions
   onGrab = (e: any) => {
     const knob = e.target as HTMLElement,
       range = knob.parentElement as HTMLElement,
@@ -276,7 +276,7 @@ export default class Slider extends React.Component<Props> {
     this.props.onChange('customized')
   }
 
-  // Actions
+  // Utils
   doLightnessScale = () => {
     let granularity = 1
 
@@ -417,6 +417,7 @@ export default class Slider extends React.Component<Props> {
     )
   }
 
+  // Render
   render() {
     return (
       <div className="slider">

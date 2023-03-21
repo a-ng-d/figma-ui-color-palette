@@ -1,6 +1,6 @@
 {
   "name": "figma-ui-color-palette",
-  "version": "1.8.0",
+  "version": "1.9.0",
   "description": "Create accessible UI color palettes with consistant lightness and contrast",
   "main": "code.js",
   "scripts": {
@@ -49,8 +49,8 @@
   "dependencies": {
     "apca-w3": "^0.1.9",
     "chroma-js": "^2.4.2",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "uuid": "^8.3.2"
   }
 }

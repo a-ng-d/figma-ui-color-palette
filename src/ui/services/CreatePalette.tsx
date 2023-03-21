@@ -4,13 +4,14 @@ import Scale from '../modules/Scale'
 import Settings from '../modules/Settings'
 import About from '../modules/About'
 import Actions from '../modules/Actions'
-import HelpbBar from '../modules/HelpBar'
+import Shortcuts from '../modules/Shortcuts'
 import { palette } from '../../utils/palettePackage'
 
 interface Props {
   hasCaptions: boolean
   preset: any
   paletteName: string
+  onHighlightReopen: any
   onPresetChange: any
   onCustomPreset: any
   onSettingsChange: any
@@ -57,6 +58,7 @@ export default class CreatePalette extends React.Component<Props> {
       '*'
     )
 
+  // Renders
   render() {
     palette.captions = this.state['hasCaptions']
     palette.preset = this.props.preset
@@ -75,15 +77,25 @@ export default class CreatePalette extends React.Component<Props> {
       )
 
       help = (
-        <HelpbBar
-          links={[
+        <Shortcuts
+          actions={[
             {
               label: 'Read the documentation',
+              isLink: true,
               url: 'https://docs.ui-color-palette.com',
+              action: null,
             },
             {
               label: 'Give feedback',
+              isLink: true,
               url: 'https://kutt.it/voice-of-uicp-users',
+              action: null,
+            },
+            {
+              label: "What's new",
+              isLink: false,
+              url: '',
+              action: this.props.onHighlightReopen,
             },
           ]}
         />

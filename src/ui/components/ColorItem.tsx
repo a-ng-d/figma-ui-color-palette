@@ -32,7 +32,7 @@ export default class ColorItem extends React.Component<Props> {
     }
   }
 
-  // Events
+  // Handlers
   inputHandler = (e: any) => this.props.onColorChange(e)
 
   optionsHandler = (e: any) => {
@@ -42,6 +42,7 @@ export default class ColorItem extends React.Component<Props> {
 
   selectionHandler = (e: any) => this.props.onSelectionCancellation(e)
 
+  // Direct actions
   onMouseDown = (e: any) => this.props.onSelectionChange(e)
 
   onDragStart = (e: any) => {
@@ -95,6 +96,7 @@ export default class ColorItem extends React.Component<Props> {
     this.props.onOrderChange(e)
   }
 
+  // Render
   render() {
     return (
       <li

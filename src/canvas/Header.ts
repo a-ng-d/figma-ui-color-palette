@@ -23,7 +23,8 @@ export default class Header {
     // insert
     this.node.appendChild(
       new Sample(
-        'Colors',
+        'Source colors',
+        null,
         null,
         [255, 255, 255],
         this.parent.captions
@@ -37,6 +38,7 @@ export default class Header {
             Object.keys(this.parent.scale)
               .find((key) => this.parent.scale[key] === lightness)
               .substr(10),
+            null,
             null,
             [255, 255, 255],
             this.parent.captions
