@@ -86,7 +86,7 @@ export default class About extends React.Component {
               <Button
                 type="tertiary"
                 isLink={true}
-                url="https://twitter.com/a_ng_d"
+                url="https://www.linkedin.com/in/augrimaud"
                 label="Follow my activity"
               />
               <span>﹒</span>
