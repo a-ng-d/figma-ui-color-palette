@@ -2,11 +2,11 @@ import chroma from 'chroma-js'
 
 const exportCsv = (msg, palette) => {
   palette = figma.currentPage.selection[0]
-  let csv: string,
+  let csv: string = '',
       header: Array<string> = [palette.name]
-  const l: Array<string> = ['l'],
-        c: Array<string> = ['c'],
-        h: Array<string> = ['h']
+  const l: Array<number | string> = ['L'],
+        c: Array<number | string> = ['C'],
+        h: Array<number | string> = ['H']
 
   if (palette.children.length == 1) {
     palette.children[0].children.forEach((row) => {
@@ -20,14 +20,16 @@ const exportCsv = (msg, palette) => {
           if (index != 0) {
             const color = sample.fills[0].color,
                   lch = chroma([Math.floor(color.r * 255), Math.floor(color.g * 255), Math.floor(color.b * 255)]).lch()
-            l.push(lch[0].toFixed(1))
-            c.push(lch[1].toFixed(1))
-            h.push(lch[2].toFixed(1))
+            l.push(Math.round(lch[0]))
+            c.push(Math.round(lch[1]))
+            h.push(Math.round(lch[2]))
           }
         })
       }
     })
-    csv = `${header.join(',')}\n${l.join(',')}\n${c.join(',')}\n${h.join(',')}`
+    header.forEach((item, index) => {
+      csv = csv + `${header[index]},"${l[index]}","${c[index]}","${h[index]}"\n`
+    })
     figma.ui.postMessage({
       type: 'export-palette-csv',
       data: csv,
