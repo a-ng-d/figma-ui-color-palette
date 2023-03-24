@@ -37,6 +37,16 @@ export default class Export extends React.Component<Props> {
           { pluginMessage: { type: 'export-palette', export: 'CSS' } },
           '*'
         )
+        break
+      }
+      case 'export-to-csv': {
+        this.setState({
+          format: 'CSV',
+        })
+        parent.postMessage(
+          { pluginMessage: { type: 'export-palette', export: 'CSV' } },
+          '*'
+        )
       }
     }
   }
@@ -85,6 +95,17 @@ export default class Export extends React.Component<Props> {
                   isChecked={this.state['format'] === 'CSS' ? true : false}
                   isDisabled={false}
                   feature="export-to-css"
+                  group="fileFormat"
+                  onChange={this.exportHandler}
+                />
+              </li>
+              <li>
+                <RadioButton
+                  id="options__csv"
+                  label="CSV"
+                  isChecked={this.state['format'] === 'CSV' ? true : false}
+                  isDisabled={false}
+                  feature="export-to-csv"
                   group="fileFormat"
                   onChange={this.exportHandler}
                 />
