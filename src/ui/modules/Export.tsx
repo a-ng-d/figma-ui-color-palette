@@ -102,7 +102,7 @@ export default class Export extends React.Component<Props> {
               <li>
                 <RadioButton
                   id="options__csv"
-                  label="CSV"
+                  label="CSV (LCH)"
                   isChecked={this.state['format'] === 'CSV' ? true : false}
                   isDisabled={false}
                   feature="export-to-csv"
