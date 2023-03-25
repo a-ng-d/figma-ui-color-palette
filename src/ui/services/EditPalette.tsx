@@ -618,7 +618,7 @@ export default class EditPalette extends React.Component<Props> {
         break
       }
       case 'Export': {
-        controls = <Export exportPreview={this.props.export.data} />
+        controls = <Export exportPreview={this.props.export.format === 'CSV' ? this.props.export.data[0].csv : this.props.export.data} />
         break
       }
       case 'Settings': {
