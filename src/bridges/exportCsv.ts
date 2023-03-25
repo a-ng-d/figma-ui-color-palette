@@ -30,7 +30,7 @@ const exportCsv = (msg, palette) => {
           }
         })
         colors.push(row.name)
-        csv.push(`${row.name},L,C,H\n${lightness.map((stop, index) => `${stop},${l[index]},${c[index]},${h[index]}`).join('\n')}`)
+        csv.push(`${row.name},Lightness,Chroma,Hue\n${lightness.map((stop, index) => `${stop},${l[index]},${c[index]},${h[index]}`).join('\n')}`)
       }
       l.splice(0, l.length)
       c.splice(0, c.length)
