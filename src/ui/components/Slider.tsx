@@ -366,6 +366,10 @@ export default class Slider extends React.Component<Props> {
         this.onShiftRight(e)
       else if (e.key === 'ArrowLeft' && this.state['selectedKnob'] != null)
         this.onShiftLeft(e)
+      else if (e.key === 'Escape' && this.state['selectedKnob'] != null)
+        this.setState({
+          selectedKnob: null,
+        })
     }
     document.onmousedown = (e: any) => {
       if (e.target.closest('.slider__knob') == null)
