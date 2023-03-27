@@ -83,7 +83,7 @@ export default class Colors {
             lch = chroma(sourceColor).lch()
             newColor = chroma.lch(
               parseFloat(lightness),
-              lch[1],
+              Math.sin((parseFloat(lightness) / 100) * Math.PI) * chroma(sourceColor).lch()[1],
               lch[2] + color.hueShifting < 0
                 ? 0
                 : lch[2] + color.hueShifting > 360
