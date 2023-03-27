@@ -1,7 +1,7 @@
 {
   "name": "figma-ui-color-palette",
   "version": "2.0.0",
-  "description": "Create accessible UI color palettes with consistant lightness and contrast",
+  "description": "Create accessible UI color palettes with consistent lightness and contrast",
   "main": "code.js",
   "scripts": {
     "build": "npx webpack --mode=development",
