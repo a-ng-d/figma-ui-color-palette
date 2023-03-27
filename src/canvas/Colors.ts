@@ -37,7 +37,12 @@ export default class Colors {
     )
     this.node.appendChild(new Header(this.parent).makeNode())
     this.parent.colors.forEach((color) => {
-      const row = figma.createFrame()
+      const row = figma.createFrame(),
+            sourceColor = chroma([
+              color.rgb.r * 255,
+              color.rgb.g * 255,
+              color.rgb.b * 255,
+            ])
 
       // base
       row.name = color.name
@@ -62,18 +67,9 @@ export default class Colors {
       Object.values(this.parent.scale)
         .reverse()
         .forEach((lightness: any) => {
-          let newColor, lch, oklch, newColorHex, sourceColorHex, distance
-          sourceColorHex = chroma([
-            color.rgb.r * 255,
-            color.rgb.g * 255,
-            color.rgb.b * 255,
-          ])
+          let newColor, lch, oklch, distance
           if (color.oklch) {
-            oklch = chroma([
-              color.rgb.r * 255,
-              color.rgb.g * 255,
-              color.rgb.b * 255,
-            ]).oklch()
+            oklch = chroma(sourceColor).oklch()
             newColor = chroma.oklch(
               parseFloat(lightness) / 100,
               oklch[1],
@@ -83,13 +79,8 @@ export default class Colors {
                 ? 360
                 : oklch[2] + color.hueShifting
             )
-            newColorHex = chroma(newColor._rgb).hex()
           } else {
-            lch = chroma([
-              color.rgb.r * 255,
-              color.rgb.g * 255,
-              color.rgb.b * 255,
-            ]).lch()
+            lch = chroma(sourceColor).lch()
             newColor = chroma.lch(
               parseFloat(lightness),
               lch[1],
@@ -99,10 +90,9 @@ export default class Colors {
                 ? 360
                 : lch[2] + color.hueShifting
             )
-            newColorHex = chroma(newColor._rgb).hex()
           }
 
-          distance = chroma.distance(sourceColorHex, newColorHex, 'lch')
+          distance = chroma.distance(chroma(sourceColor).hex(), chroma(newColor).hex(), 'lch')
 
           const sample = new Sample(
             color.name,
