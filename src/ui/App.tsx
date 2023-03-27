@@ -305,6 +305,17 @@ class App extends React.Component {
             },
             onGoingStep: 'export previewed',
           })
+          break
+        }
+        case 'export-palette-csv': {
+          this.setState({
+            export: {
+              format: 'CSV',
+              mimeType: 'text/csv',
+              data: e.data.pluginMessage.data,
+            },
+            onGoingStep: 'export previewed',
+          })
         }
       }
     }

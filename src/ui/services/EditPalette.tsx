@@ -11,6 +11,8 @@ import Shortcuts from '../modules/Shortcuts'
 import chroma from 'chroma-js'
 import { palette } from '../../utils/palettePackage'
 import { v4 as uuidv4 } from 'uuid'
+import JSZip from 'JSZip'
+import FileSaver from 'file-saver'
 
 interface Props {
   scale: any
@@ -495,13 +497,24 @@ export default class EditPalette extends React.Component<Props> {
   }
 
   onExport = () => {
-    const a = document.createElement('a'),
-      file = new Blob([this.props.export.data], {
+    if (this.props.export.format === 'CSV') {
+      const zip = new JSZip()
+      this.props.export.data.forEach((item) =>
+        zip.file(
+          `${item.name.toLowerCase().replace(' ', '_').replace('/', '-')}.csv`,
+          item.csv
+        )
+      )
+      zip
+        .generateAsync({ type: 'blob' })
+        .then((content) => FileSaver.saveAs(content, 'colors'))
+        .catch((error) => console.error(error))
+    } else {
+      const blob = new Blob([this.props.export.data], {
         type: this.props.export.mimeType,
       })
-    a.href = URL.createObjectURL(file)
-    a.download = 'colors'
-    a.click()
+      FileSaver.saveAs(blob, 'colors')
+    }
   }
 
   // Render
@@ -610,7 +623,15 @@ export default class EditPalette extends React.Component<Props> {
         break
       }
       case 'Export': {
-        controls = <Export exportPreview={this.props.export.data} />
+        controls = (
+          <Export
+            exportPreview={
+              this.props.export.format === 'CSV'
+                ? this.props.export.data[0].csv
+                : this.props.export.data
+            }
+          />
+        )
         break
       }
       case 'Settings': {
