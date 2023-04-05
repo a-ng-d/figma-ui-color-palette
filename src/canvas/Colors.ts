@@ -67,7 +67,7 @@ export default class Colors {
       Object.values(this.parent.scale)
         .reverse()
         .forEach((lightness: any) => {
-          let newColor, lch, oklch, distance
+          let newColor, lch, oklch
           if (color.oklch) {
             oklch = chroma(sourceColor).oklch()
             newColor = chroma.oklch(
@@ -92,7 +92,7 @@ export default class Colors {
             )
           }
 
-          distance = chroma.distance(chroma(sourceColor).hex(), chroma(newColor).hex(), 'lch')
+          const distance: number = chroma.distance(chroma(sourceColor).hex(), chroma(newColor).hex(), 'lch')
 
           const sample = new Sample(
             color.name,
