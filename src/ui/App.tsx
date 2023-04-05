@@ -13,7 +13,7 @@ import { v4 as uuidv4 } from 'uuid'
 
 let isPaletteSelected = false
 const container = document.getElementById('react-page'),
-  root = createRoot(container!)
+  root = createRoot(container)
 
 class App extends React.Component {
   constructor(props) {
@@ -215,108 +215,113 @@ class App extends React.Component {
       Object.keys(this.state['preset']).length == 0
         ? this.setState({ preset: presets.material })
         : null
-      switch (e.data.pluginMessage.type) {
-        case 'highlight-status':
-          this.setState({ hasHighlight: !e.data.pluginMessage.data })
-          break
+      try {
+        switch (e.data.pluginMessage.type == undefined ? 'undefined' : e.data.pluginMessage.type) {
+          case 'highlight-status':
+            this.setState({ hasHighlight: !e.data.pluginMessage.data })
+            break
 
-        case 'empty-selection': {
-          this.setState({
-            service: 'None',
-            hasCaptions: true,
-            paletteName: '',
-            preset: {},
-            onGoingStep: 'selection empty',
-          })
-          palette.name = ''
-          palette.preset = {}
-          isPaletteSelected = false
-          break
-        }
-        case 'color-selected': {
-          if (isPaletteSelected) {
+          case 'empty-selection': {
             this.setState({
-              service: 'Create',
+              service: 'None',
               hasCaptions: true,
-              onGoingStep: 'colors selected',
-              preset: presets.material,
               paletteName: '',
+              preset: {},
+              onGoingStep: 'selection empty',
             })
             palette.name = ''
-            palette.preset = presets.material
-          } else
-            this.setState({
-              service: 'Create',
-              hasCaptions: true,
-              onGoingStep: 'colors selected',
-            })
-          isPaletteSelected = false
-          break
-        }
-        case 'palette-selected': {
-          const putIdsOnColors = e.data.pluginMessage.data.colors.map(
-            (color) => {
-              color.id === undefined ? (color.id = uuidv4()) : null
-              return color
-            }
-          )
-          isPaletteSelected = true
-          palette.preset = {}
-          parent.postMessage(
-            {
-              pluginMessage: {
-                type: 'export-palette',
-                export: this.state['export'].format,
+            palette.preset = {}
+            isPaletteSelected = false
+            break
+          }
+          case 'color-selected': {
+            if (isPaletteSelected) {
+              this.setState({
+                service: 'Create',
+                hasCaptions: true,
+                onGoingStep: 'colors selected',
+                preset: presets.material,
+                paletteName: '',
+              })
+              palette.name = ''
+              palette.preset = presets.material
+            } else
+              this.setState({
+                service: 'Create',
+                hasCaptions: true,
+                onGoingStep: 'colors selected',
+              })
+            isPaletteSelected = false
+            break
+          }
+          case 'palette-selected': {
+            const putIdsOnColors = e.data.pluginMessage.data.colors.map(
+              (color) => {
+                color.id === undefined ? (color.id = uuidv4()) : null
+                return color
+              }
+            )
+            isPaletteSelected = true
+            palette.preset = {}
+            parent.postMessage(
+              {
+                pluginMessage: {
+                  type: 'export-palette',
+                  export: this.state['export'].format,
+                },
               },
-            },
-            '*'
-          )
-          this.setState({
-            service: 'Edit',
-            newScale: e.data.pluginMessage.data.scale,
-            hasCaptions:
-              e.data.pluginMessage.data.captions === 'hasCaptions'
-                ? true
-                : false,
-            newColors: putIdsOnColors,
-            preset: e.data.pluginMessage.data.preset,
-            paletteName: e.data.pluginMessage.data.name,
-            onGoingStep: 'palette selected',
-          })
-          break
+              '*'
+            )
+            this.setState({
+              service: 'Edit',
+              newScale: e.data.pluginMessage.data.scale,
+              hasCaptions:
+                e.data.pluginMessage.data.captions === 'hasCaptions'
+                  ? true
+                  : false,
+              newColors: putIdsOnColors,
+              preset: e.data.pluginMessage.data.preset,
+              paletteName: e.data.pluginMessage.data.name,
+              onGoingStep: 'palette selected',
+            })
+            break
+          }
+          case 'export-palette-json': {
+            this.setState({
+              export: {
+                format: 'JSON',
+                mimeType: 'application/json',
+                data: JSON.stringify(e.data.pluginMessage.data, null, '  '),
+              },
+              onGoingStep: 'export previewed',
+            })
+            break
+          }
+          case 'export-palette-css': {
+            this.setState({
+              export: {
+                format: 'CSS',
+                mimeType: 'text/css',
+                data: `:root {\n  ${e.data.pluginMessage.data.join(';\n  ')}\n}`,
+              },
+              onGoingStep: 'export previewed',
+            })
+            break
+          }
+          case 'export-palette-csv': {
+            this.setState({
+              export: {
+                format: 'CSV',
+                mimeType: 'text/csv',
+                data: e.data.pluginMessage.data,
+              },
+              onGoingStep: 'export previewed',
+            })
+          }
         }
-        case 'export-palette-json': {
-          this.setState({
-            export: {
-              format: 'JSON',
-              mimeType: 'application/json',
-              data: JSON.stringify(e.data.pluginMessage.data, null, '  '),
-            },
-            onGoingStep: 'export previewed',
-          })
-          break
-        }
-        case 'export-palette-css': {
-          this.setState({
-            export: {
-              format: 'CSS',
-              mimeType: 'text/css',
-              data: `:root {\n  ${e.data.pluginMessage.data.join(';\n  ')}\n}`,
-            },
-            onGoingStep: 'export previewed',
-          })
-          break
-        }
-        case 'export-palette-csv': {
-          this.setState({
-            export: {
-              format: 'CSV',
-              mimeType: 'text/csv',
-              data: e.data.pluginMessage.data,
-            },
-            onGoingStep: 'export previewed',
-          })
-        }
+      }
+      catch(error) {
+        console.error(error)
       }
     }
 
