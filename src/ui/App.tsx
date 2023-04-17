@@ -164,8 +164,8 @@ class App extends React.Component {
                   type: 'update-settings',
                   data: {
                     name: e.target.value,
-                    algorithmVersion: this.state['algorithmVersion']
-                  }
+                    algorithmVersion: this.state['algorithmVersion'],
+                  },
                 },
               },
               '*'
@@ -178,17 +178,17 @@ class App extends React.Component {
                   type: 'update-settings',
                   data: {
                     name: e.target.value,
-                    algorithmVersion: this.state['algorithmVersion']
-                  }
+                    algorithmVersion: this.state['algorithmVersion'],
+                  },
                 },
               },
               '*'
             )
           : null
-        
+
         break
       }
-      case 'update-algorithm-version' : {
+      case 'update-algorithm-version': {
         this.setState({
           algorithmVersion: !e.target.checked ? 'v1' : 'v2',
           onGoingStep: 'settings changed',
@@ -199,8 +199,8 @@ class App extends React.Component {
               type: 'update-settings',
               data: {
                 name: this.state['paletteName'],
-                algorithmVersion: !e.target.checked ? 'v1' : 'v2'
-              }
+                algorithmVersion: !e.target.checked ? 'v1' : 'v2',
+              },
             },
           },
           '*'
@@ -243,7 +243,11 @@ class App extends React.Component {
         ? this.setState({ preset: presets.material })
         : null
       try {
-        switch (e.data.pluginMessage.type == undefined ? 'undefined' : e.data.pluginMessage.type) {
+        switch (
+          e.data.pluginMessage.type == undefined
+            ? 'undefined'
+            : e.data.pluginMessage.type
+        ) {
           case 'highlight-status':
             this.setState({ hasHighlight: !e.data.pluginMessage.data })
             break
@@ -347,8 +351,7 @@ class App extends React.Component {
             })
           }
         }
-      }
-      catch(error) {
+      } catch (error) {
         console.error(error)
       }
     }

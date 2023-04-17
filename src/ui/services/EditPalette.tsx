@@ -662,9 +662,11 @@ export default class EditPalette extends React.Component<Props> {
         <section
           onClick={this.unSelectColor}
           className={
-            this.state['context'] === 'Colors' ? 'section--scrollable' :
-            this.state['context'] === 'Settings' ? 'section--scrollable' :
-            ''
+            this.state['context'] === 'Colors'
+              ? 'section--scrollable'
+              : this.state['context'] === 'Settings'
+              ? 'section--scrollable'
+              : ''
           }
         >
           <div className="controls">{controls}</div>

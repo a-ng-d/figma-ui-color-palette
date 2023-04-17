@@ -38,11 +38,11 @@ export default class Colors {
     this.node.appendChild(new Header(this.parent).makeNode())
     this.parent.colors.forEach((color) => {
       const row = figma.createFrame(),
-            sourceColor = chroma([
-              color.rgb.r * 255,
-              color.rgb.g * 255,
-              color.rgb.b * 255,
-            ])
+        sourceColor = chroma([
+          color.rgb.r * 255,
+          color.rgb.g * 255,
+          color.rgb.b * 255,
+        ])
 
       // base
       row.name = color.name
@@ -72,7 +72,9 @@ export default class Colors {
             oklch = chroma(sourceColor).oklch()
             newColor = chroma.oklch(
               parseFloat((lightness / 100).toFixed(2)),
-              this.parent.algorithmVersion == 'v2' ? Math.sin((parseFloat(lightness) / 100) * Math.PI) * chroma(sourceColor).oklch()[1] : chroma(sourceColor).oklch()[1],
+              this.parent.algorithmVersion == 'v2'
+                ? Math.sin((parseFloat(lightness) / 100) * Math.PI) * chroma(sourceColor).oklch()[1]
+                : chroma(sourceColor).oklch()[1],
               oklch[2] + color.hueShifting < 0
                 ? 0
                 : oklch[2] + color.hueShifting > 360
@@ -83,7 +85,9 @@ export default class Colors {
             lch = chroma(sourceColor).lch()
             newColor = chroma.lch(
               parseFloat((lightness * 1).toFixed(1)),
-              this.parent.algorithmVersion == 'v2' ? Math.sin((parseFloat(lightness) / 100) * Math.PI) * chroma(sourceColor).lch()[1] : chroma(sourceColor).lch()[1],
+              this.parent.algorithmVersion == 'v2'
+                ? Math.sin((parseFloat(lightness) / 100) * Math.PI) * chroma(sourceColor).lch()[1]
+                : chroma(sourceColor).lch()[1],
               lch[2] + color.hueShifting < 0
                 ? 0
                 : lch[2] + color.hueShifting > 360
@@ -92,7 +96,11 @@ export default class Colors {
             )
           }
 
-          const distance: number = chroma.distance(chroma(sourceColor).hex(), chroma(newColor).hex(), 'lch')
+          const distance: number = chroma.distance(
+            chroma(sourceColor).hex(),
+            chroma(newColor).hex(),
+            'lch'
+          )
 
           const sample = new Sample(
             color.name,
