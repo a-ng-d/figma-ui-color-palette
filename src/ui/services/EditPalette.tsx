@@ -21,6 +21,7 @@ interface Props {
   preset: any
   export: any
   paletteName: string
+  algorithmVersion: string
   onHighlightReopen: any
   onScaleChange: any
   onChangeStop: any
@@ -638,6 +639,8 @@ export default class EditPalette extends React.Component<Props> {
         controls = (
           <Settings
             paletteName={this.props.paletteName}
+            settings={['base', 'color-management']}
+            isNewAlgorithm={this.props.algorithmVersion == 'v2' ? true : false}
             onSettingsChange={this.settingsHandler}
           />
         )

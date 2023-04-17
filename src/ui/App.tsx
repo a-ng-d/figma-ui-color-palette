@@ -31,6 +31,7 @@ class App extends React.Component {
         data: '',
       },
       paletteName: '',
+      algorithmVersion: 'v1',
       hasHighlight: false,
     }
   }
@@ -346,6 +347,7 @@ class App extends React.Component {
             hasCaptions={this.state['hasCaptions']}
             export={this.state['export']}
             paletteName={this.state['paletteName']}
+            algorithmVersion={this.state['algorithmVersion']}
             onHighlightReopen={this.highlightHandler('OPEN')}
             onScaleChange={this.slideHandler}
             onChangeStop={this.customSlideHandler}
