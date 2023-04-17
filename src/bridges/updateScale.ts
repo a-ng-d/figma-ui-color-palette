@@ -27,7 +27,7 @@ const updateScale = (msg, palette) => {
         scale: msg.data.scale,
         captions: msg.isEditedInRealTime ? false : captions,
         preset: preset,
-        algorithmVersion: algorithmVersion
+        algorithmVersion: algorithmVersion,
       }).makeNode()
     )
 

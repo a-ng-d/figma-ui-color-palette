@@ -16,7 +16,7 @@ const processSelection = () => {
   if (selection.length == 1 && selection[0].getPluginData('scale') != '') {
     if (selection[0].getPluginData('preset') === '')
       selection[0].setPluginData('preset', JSON.stringify(presets.material))
-    
+
     if (selection[0].getPluginData('algorithmVersion') === '')
       selection[0].setPluginData('algorithmVersion', 'v1')
 

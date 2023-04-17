@@ -23,9 +23,9 @@ const updateSettings = (msg, palette) => {
       palette.getPluginData('name') == undefined
         ? 'UI Color Palette'
         : palette.getPluginData('name')),
-      (palette.name = `${msg.data.name === '' ? 'UI Color Palette' : msg.data.name}﹒${
-        preset.name
-      }`)
+      (palette.name = `${
+        msg.data.name === '' ? 'UI Color Palette' : msg.data.name
+      }﹒${preset.name}`)
     palette.setPluginData('algorithmVersion', msg.data.algorithmVersion)
 
     palette.children[0].remove()
@@ -36,7 +36,7 @@ const updateSettings = (msg, palette) => {
         scale: scale,
         captions: captions,
         preset: preset,
-        algorithmVersion: msg.data.algorithmVersion
+        algorithmVersion: msg.data.algorithmVersion,
       }).makeNode()
     )
 

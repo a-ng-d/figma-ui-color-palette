@@ -29,7 +29,7 @@ const updateColors = (msg, palette) => {
         scale: scale,
         captions: msg.isEditedInRealTime ? false : captions,
         preset: preset,
-        algorithmVersion: algorithmVersion
+        algorithmVersion: algorithmVersion,
       }).makeNode()
     )
 
