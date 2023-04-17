@@ -2,6 +2,7 @@ import * as React from 'react'
 import FormItem from './../components/FormItem'
 import Input from './../components/Input'
 import Switch from '../components/Switch'
+import Message from '../components/Message'
 
 interface Props {
   paletteName: string
@@ -49,12 +50,16 @@ export default class Settings extends React.Component<Props> {
           <Switch
             id="update-algorithm"
             label="Enable the new algorithm for generating color shades"
-              isChecked={this.props.isNewAlgorithm}
-              isDisabled={false}
-              feature="update-algorithm-version"
-              onChange={this.props.onSettingsChange}
-            />
+            isChecked={this.props.isNewAlgorithm}
+            isDisabled={false}
+            feature="update-algorithm-version"
+            onChange={this.props.onSettingsChange}
+          />
         </div>
+        <Message
+          icon="library"
+          messages={['The new algorithm harmonizes Chroma values for consistent lightness across all shades.']}
+        />
       </div>
     )
   }
