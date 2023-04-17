@@ -4,6 +4,7 @@ import Input from './../components/Input'
 
 interface Props {
   paletteName: string
+  settings?: Array<string>
   onSettingsChange: any
 }
 
