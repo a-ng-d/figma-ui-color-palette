@@ -72,7 +72,7 @@ export default class Colors {
             oklch = chroma(sourceColor).oklch()
             newColor = chroma.oklch(
               parseFloat((lightness / 100).toFixed(2)),
-              -4 * ((parseFloat(lightness) / 100) - 0.5)^2 + 1 * chroma(sourceColor).oklch()[1],
+              this.parent.algorithmVersion == 'v2' ? Math.sin((parseFloat(lightness) / 100) * Math.PI) * chroma(sourceColor).oklch()[1] : chroma(sourceColor).oklch()[1],
               oklch[2] + color.hueShifting < 0
                 ? 0
                 : oklch[2] + color.hueShifting > 360
@@ -83,7 +83,7 @@ export default class Colors {
             lch = chroma(sourceColor).lch()
             newColor = chroma.lch(
               parseFloat((lightness * 1).toFixed(1)),
-              Math.sin((parseFloat(lightness) / 100) * Math.PI) * chroma(sourceColor).lch()[1],
+              this.parent.algorithmVersion == 'v2' ? Math.sin((parseFloat(lightness) / 100) * Math.PI) * chroma(sourceColor).lch()[1] : chroma(sourceColor).lch()[1],
               lch[2] + color.hueShifting < 0
                 ? 0
                 : lch[2] + color.hueShifting > 360
