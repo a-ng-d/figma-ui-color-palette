@@ -162,7 +162,10 @@ class App extends React.Component {
               {
                 pluginMessage: {
                   type: 'update-settings',
-                  data: this.state['paletteName'],
+                  data: {
+                    name: e.target.value,
+                    algorithmVersion: this.state['algorithmVersion']
+                  }
                 },
               },
               '*'
@@ -173,12 +176,35 @@ class App extends React.Component {
               {
                 pluginMessage: {
                   type: 'update-settings',
-                  data: this.state['paletteName'],
+                  data: {
+                    name: e.target.value,
+                    algorithmVersion: this.state['algorithmVersion']
+                  }
                 },
               },
               '*'
             )
           : null
+        
+        break
+      }
+      case 'update-algorithm-version' : {
+        this.setState({
+          algorithmVersion: !e.target.checked ? 'v1' : 'v2',
+          onGoingStep: 'settings changed',
+        })
+        parent.postMessage(
+          {
+            pluginMessage: {
+              type: 'update-settings',
+              data: {
+                name: this.state['paletteName'],
+                algorithmVersion: !e.target.checked ? 'v1' : 'v2'
+              }
+            },
+          },
+          '*'
+        )
       }
     }
   }
@@ -283,6 +309,7 @@ class App extends React.Component {
               newColors: putIdsOnColors,
               preset: e.data.pluginMessage.data.preset,
               paletteName: e.data.pluginMessage.data.name,
+              algorithmVersion: e.data.pluginMessage.data.algorithmVersion,
               onGoingStep: 'palette selected',
             })
             break
