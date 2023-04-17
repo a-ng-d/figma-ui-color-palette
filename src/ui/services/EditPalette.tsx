@@ -544,7 +544,7 @@ export default class EditPalette extends React.Component<Props> {
             {
               label: 'Give feedback',
               isLink: true,
-              url: 'https://uicp.link/feedback',
+              url: 'http://uicp.link/feedback',
               action: null,
             },
             {
@@ -581,7 +581,7 @@ export default class EditPalette extends React.Component<Props> {
             {
               label: 'Give feedback',
               isLink: true,
-              url: 'https://kutt.it/voice-of-uicp-users',
+              url: 'http://uicp.link/feedback',
               action: null,
             },
             {

@@ -38,7 +38,7 @@ export default class Onboarding extends React.Component<Props> {
             {
               label: 'Give feedback',
               isLink: true,
-              url: 'https://uicp.link/feedback',
+              url: 'http://uicp.link/feedback',
               action: null,
             },
             {

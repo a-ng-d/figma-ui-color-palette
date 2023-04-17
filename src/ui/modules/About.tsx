@@ -75,7 +75,7 @@ export default class About extends React.Component {
               <Button
                 type="tertiary"
                 isLink={true}
-                url="https://uicp.link/feedback"
+                url="http://uicp.link/feedback"
                 label="Give feedback"
               />
             </div>
