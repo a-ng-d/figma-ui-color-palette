@@ -17,6 +17,9 @@ const processSelection = () => {
     if (selection[0].getPluginData('preset') === '')
       selection[0].setPluginData('preset', JSON.stringify(presets.material))
 
+    if (selection[0].getPluginData('algorithmVersion') === '')
+      selection[0].setPluginData('algorithmVersion', 'v1')
+
     if (!selection[0].getPluginData('colors').includes('oklch'))
       selection[0].setPluginData(
         'colors',
@@ -36,6 +39,7 @@ const processSelection = () => {
         scale: JSON.parse(selection[0].getPluginData('scale')),
         captions: selection[0].getPluginData('captions'),
         colors: JSON.parse(selection[0].getPluginData('colors')),
+        algorithmVersion: selection[0].getPluginData('algorithmVersion'),
         preset: JSON.parse(selection[0].getPluginData('preset')),
       },
     })

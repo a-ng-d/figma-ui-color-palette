@@ -10,7 +10,8 @@ const updateCaptions = (msg, palette) => {
           : palette.getPluginData('name'),
       colors: string = JSON.parse(palette.getPluginData('colors')),
       scale: string = JSON.parse(palette.getPluginData('scale')),
-      preset = JSON.parse(palette.getPluginData('preset'))
+      preset = JSON.parse(palette.getPluginData('preset')),
+      algorithmVersion: string = palette.getPluginData('algorithmVersion')
 
     if (msg.data.captions) {
       palette.setPluginData('captions', 'hasCaptions')
@@ -23,6 +24,7 @@ const updateCaptions = (msg, palette) => {
           scale: scale,
           captions: msg.data.captions,
           preset: preset,
+          algorithmVersion: algorithmVersion,
         }).makeNode()
       )
     } else {
@@ -36,6 +38,7 @@ const updateCaptions = (msg, palette) => {
           scale: scale,
           captions: msg.data.captions,
           preset: preset,
+          algorithmVersion: algorithmVersion,
         }).makeNode()
       )
     }

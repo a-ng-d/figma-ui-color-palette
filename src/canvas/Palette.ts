@@ -19,16 +19,18 @@ export default class Palette {
   colors: Array<UIColors>
   captions: boolean
   preset: string
+  algorithmVersion: string
   children: any
   node: FrameNode
 
-  constructor(name, scale, captions, preset) {
+  constructor(name, scale, captions, preset, algorithmVersion) {
     this.paletteName = name
     this.name = `${name === '' ? 'UI Color Palette' : name}﹒${preset.name}`
     this.scale = scale
     this.colors = []
     this.captions = captions
     this.preset = preset
+    this.algorithmVersion = algorithmVersion
     this.children = null
     this.node = figma.createFrame()
   }
@@ -54,6 +56,7 @@ export default class Palette {
     this.node.setPluginData('name', this.paletteName)
     this.node.setPluginData('scale', JSON.stringify(this.scale))
     this.node.setPluginData('preset', JSON.stringify(this.preset))
+    this.node.setPluginData('algorithmVersion', this.algorithmVersion)
     this.captions
       ? this.node.setPluginData('captions', 'hasCaptions')
       : this.node.setPluginData('captions', 'hasNotCaptions')

@@ -121,6 +121,7 @@ export default class CreatePalette extends React.Component<Props> {
         controls = (
           <Settings
             paletteName={this.props.paletteName}
+            settings={['base']}
             onSettingsChange={this.settingsHandler}
           />
         )

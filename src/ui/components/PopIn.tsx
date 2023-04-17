@@ -14,6 +14,7 @@ interface Props {
     }
   }
   close: any
+  children: any
 }
 
 export default class PopIn extends React.Component<Props> {

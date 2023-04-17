@@ -7,7 +7,8 @@ const createPalette = (msg, palette) => {
     msg.data.name,
     msg.data.scale,
     msg.data.captions,
-    msg.data.preset
+    msg.data.preset,
+    'v2'
   ).makeNode()
 
   if (palette.children.length != 0) {
