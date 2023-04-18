@@ -40,7 +40,7 @@ export default class Scale extends React.Component<Props> {
 
   // Templates
   Create = () => {
-    this.props.onGoingStep != 'captions changed' ? (palette.scale = {}) : ''
+    palette.scale = {}
     return (
       <div className="lightness-scale controls__control">
         <div className="section-controls">
@@ -69,27 +69,16 @@ export default class Scale extends React.Component<Props> {
               action={this.props.onAddScale}
             />
           ) : null}
-        </div>
-        {this.props.onGoingStep != 'captions changed' ? (
-          <Slider
-            type="EQUAL"
-            hasPreset={this.props.hasPreset}
-            presetName={this.props.preset.name}
-            knobs={this.props.preset.scale}
-            min={this.props.preset.min}
-            max={this.props.preset.max}
-            onChange={this.props.onScaleChange}
-          />
-        ) : (
-          <Slider
-            type="CUSTOM"
-            hasPreset={this.props.hasPreset}
-            presetName={this.props.preset.name}
-            knobs={this.props.preset.scale}
-            scale={palette.scale}
-            onChange={this.props.onScaleChange}
-          />
-        )}
+        </div>    
+        <Slider
+          type="EQUAL"
+          hasPreset={this.props.hasPreset}
+          presetName={this.props.preset.name}
+          knobs={this.props.preset.scale}
+          min={this.props.preset.min}
+          max={this.props.preset.max}
+          onChange={this.props.onScaleChange}
+        />    
         <Message icon="library" messages={this.setOnboardingMessages()} />
       </div>
     )
