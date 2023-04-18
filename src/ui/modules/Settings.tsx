@@ -53,13 +53,13 @@ export default class Settings extends React.Component<Props> {
             feature="update-algorithm-version"
             onChange={this.props.onSettingsChange}
           />
-        </div>
-        <Message
+          <Message
           icon="library"
           messages={[
             'The Chroma values are harmonized to ensure consistent lightness across all shades, but this may make the colors look desaturated.',
           ]}
         />
+        </div>  
       </div>
     )
   }
