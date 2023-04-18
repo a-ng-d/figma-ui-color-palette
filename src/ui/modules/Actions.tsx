@@ -28,11 +28,11 @@ export default class Actions extends React.Component<Props> {
           />
         </div>
         <Checkbox
-          id="showCaptions"
+          id="show-properties"
           label="Show properties"
           isChecked={this.props.hasProperties}
           isDisabled={false}
-          feature="show-caption"
+          feature="show-properties"
           onChange={this.props.onChangeProperties}
         />
       </div>
@@ -61,7 +61,7 @@ export default class Actions extends React.Component<Props> {
           label="Show properties"
           isChecked={this.props.hasProperties}
           isDisabled={false}
-          feature="caption"
+          feature="show-properties"
           onChange={this.props.onChangeProperties}
         />
       </div>
