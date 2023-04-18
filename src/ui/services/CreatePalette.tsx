@@ -72,7 +72,7 @@ export default class CreatePalette extends React.Component<Props> {
           context="create"
           hasProperties={this.state['hasProperties']}
           onCreatePalette={this.onCreate}
-          onChangeCaptions={this.checkHandler}
+          onChangeProperties={this.checkHandler}
         />
       )
 

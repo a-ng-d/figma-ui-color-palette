@@ -26,7 +26,7 @@ interface Props {
   onScaleChange: any
   onChangeStop: any
   onColorChange: any
-  onCaptionsChange: any
+  onPropertiesChange: any
   onSettingsChange: any
 }
 
@@ -112,7 +112,7 @@ export default class EditPalette extends React.Component<Props> {
   }
 
   checkHandler = (e: any) => {
-    this.props.onCaptionsChange(e.target.checked)
+    this.props.onPropertiesChange(e.target.checked)
     palette.properties = e.target.checked
     parent.postMessage(
       { pluginMessage: { type: 'update-properties', data: palette } },
@@ -565,7 +565,7 @@ export default class EditPalette extends React.Component<Props> {
           hasProperties={this.props.hasProperties}
           onCreateLocalColors={this.onCreate}
           onUpdateLocalColors={this.onUpdate}
-          onChangeCaptions={this.checkHandler}
+          onChangeProperties={this.checkHandler}
         />
       )
 

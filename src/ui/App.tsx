@@ -382,7 +382,7 @@ class App extends React.Component {
             onScaleChange={this.slideHandler}
             onChangeStop={this.customSlideHandler}
             onColorChange={this.colorHandler}
-            onCaptionsChange={this.propertiesHandler}
+            onPropertiesChange={this.propertiesHandler}
             onSettingsChange={this.settingsHandler}
           />
         ) : null}

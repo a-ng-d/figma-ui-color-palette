@@ -10,7 +10,7 @@ interface Props {
   onCreatePalette?: any
   onCreateLocalColors?: any
   onUpdateLocalColors?: any
-  onChangeCaptions?: any
+  onChangeProperties?: any
   onExportPalette?: any
 }
 
@@ -33,7 +33,7 @@ export default class Actions extends React.Component<Props> {
           isChecked={this.props.hasProperties}
           isDisabled={false}
           feature="show-caption"
-          onChange={this.props.onChangeCaptions}
+          onChange={this.props.onChangeProperties}
         />
       </div>
     )
@@ -62,7 +62,7 @@ export default class Actions extends React.Component<Props> {
           isChecked={this.props.hasProperties}
           isDisabled={false}
           feature="caption"
-          onChange={this.props.onChangeCaptions}
+          onChange={this.props.onChangeProperties}
         />
       </div>
     )
