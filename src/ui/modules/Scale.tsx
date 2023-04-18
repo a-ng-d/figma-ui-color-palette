@@ -24,13 +24,13 @@ export default class Scale extends React.Component<Props> {
     if (this.props.preset.name === 'Custom' && !this.props.hasPreset)
       messages.push(
         'Click on the slider range to add a stop',
-        'Press Backspace ⌫ after selecting a stop to remove it',
+        'Press Backspace ⌫ after selecting a stop to remove it'
       )
 
     if (!this.props.hasPreset)
       messages.push(
         'Press ← or → to shift the stops with accuracy',
-        'Press Esc. after selecting a stop to unselect it',
+        'Press Esc. after selecting a stop to unselect it'
       )
 
     messages.push(
@@ -72,7 +72,7 @@ export default class Scale extends React.Component<Props> {
               action={this.props.onAddScale}
             />
           ) : null}
-        </div>    
+        </div>
         <Slider
           type="EQUAL"
           hasPreset={this.props.hasPreset}
@@ -81,7 +81,7 @@ export default class Scale extends React.Component<Props> {
           min={this.props.preset.min}
           max={this.props.preset.max}
           onChange={this.props.onChangeScale}
-        />    
+        />
         <Message icon="library" messages={this.setOnboardingMessages()} />
       </div>
     )

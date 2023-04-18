@@ -54,12 +54,12 @@ export default class Settings extends React.Component<Props> {
             onChange={this.props.onSettingsChange}
           />
           <Message
-          icon="library"
-          messages={[
-            'The Chroma values are harmonized to ensure consistent lightness across all shades, but this may make the colors look desaturated.',
-          ]}
-        />
-        </div>  
+            icon="library"
+            messages={[
+              'The Chroma values are harmonized to ensure consistent lightness across all shades, but this may make the colors look desaturated.',
+            ]}
+          />
+        </div>
       </div>
     )
   }

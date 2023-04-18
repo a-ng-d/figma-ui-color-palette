@@ -32,12 +32,11 @@ const processSelection = () => {
         'colors',
         setData(selection[0].getPluginData('colors'), 'hueShifting', 0)
       )
-    
+
     if (selection[0].getPluginData('captions') == 'hasCaptions') {
       selection[0].setPluginData('properties', 'hasProperties')
       selection[0].setPluginData('captions', '')
-    }
-    else if (selection[0].getPluginData('captions') == 'hasNotCaptions') {
+    } else if (selection[0].getPluginData('captions') == 'hasNotCaptions') {
       selection[0].setPluginData('properties', 'hasNotProperties')
       selection[0].setPluginData('captions', '')
     }
