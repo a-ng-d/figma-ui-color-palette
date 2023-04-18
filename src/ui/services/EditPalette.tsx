@@ -16,17 +16,17 @@ import FileSaver from 'file-saver'
 
 interface Props {
   scale: any
-  hasCaptions: boolean
+  hasProperties: boolean
   colors: any
   preset: any
   export: any
   paletteName: string
   algorithmVersion: string
   onHighlightReopen: any
-  onScaleChange: any
+  onChangeScale: any
   onChangeStop: any
   onColorChange: any
-  onCaptionsChange: any
+  onPropertiesChange: any
   onSettingsChange: any
 }
 
@@ -95,7 +95,7 @@ export default class EditPalette extends React.Component<Props> {
         },
         '*'
       )
-      this.props.onScaleChange()
+      this.props.onChangeScale()
     } else if (e === 'customized') {
       parent.postMessage(
         {
@@ -112,10 +112,10 @@ export default class EditPalette extends React.Component<Props> {
   }
 
   checkHandler = (e: any) => {
-    this.props.onCaptionsChange(e.target.checked)
-    palette.captions = e.target.checked
+    this.props.onPropertiesChange(e.target.checked)
+    palette.properties = e.target.checked
     parent.postMessage(
-      { pluginMessage: { type: 'update-captions', data: palette } },
+      { pluginMessage: { type: 'update-properties', data: palette } },
       '*'
     )
     this.setState({
@@ -520,7 +520,7 @@ export default class EditPalette extends React.Component<Props> {
 
   // Render
   render() {
-    palette.captions = this.props.hasCaptions
+    palette.properties = this.props.hasProperties
     let actions, controls, help
 
     if (this.state['context'] === 'Export') {
@@ -562,10 +562,10 @@ export default class EditPalette extends React.Component<Props> {
       actions = (
         <Actions
           context="edit"
-          hasCaptions={this.props.hasCaptions}
+          hasProperties={this.props.hasProperties}
           onCreateLocalColors={this.onCreate}
           onUpdateLocalColors={this.onUpdate}
-          onChangeCaptions={this.checkHandler}
+          onChangeProperties={this.checkHandler}
         />
       )
 
@@ -602,7 +602,7 @@ export default class EditPalette extends React.Component<Props> {
             hasPreset={false}
             preset={this.props.preset}
             scale={this.props.scale}
-            onScaleChange={this.slideHandler}
+            onChangeScale={this.slideHandler}
           />
         )
         break

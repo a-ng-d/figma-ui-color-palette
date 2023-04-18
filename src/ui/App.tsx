@@ -22,7 +22,7 @@ class App extends React.Component {
       service: 'None',
       newScale: {},
       newColors: {},
-      hasCaptions: true,
+      hasProperties: true,
       onGoingStep: '',
       preset: {},
       export: {
@@ -37,8 +37,8 @@ class App extends React.Component {
   }
 
   // Handlers
-  captionsHandler = (bool: boolean) =>
-    this.setState({ hasCaptions: bool, onGoingStep: 'captions changed' })
+  propertiesHandler = (bool: boolean) =>
+    this.setState({ hasProperties: bool, onGoingStep: 'properties changed' })
 
   presetHandler = (e: any) => {
     switch ((e.target as HTMLInputElement).value) {
@@ -255,7 +255,7 @@ class App extends React.Component {
           case 'empty-selection': {
             this.setState({
               service: 'None',
-              hasCaptions: true,
+              hasProperties: true,
               paletteName: '',
               preset: {},
               onGoingStep: 'selection empty',
@@ -269,7 +269,7 @@ class App extends React.Component {
             if (isPaletteSelected) {
               this.setState({
                 service: 'Create',
-                hasCaptions: true,
+                hasProperties: true,
                 onGoingStep: 'colors selected',
                 preset: presets.material,
                 paletteName: '',
@@ -279,7 +279,7 @@ class App extends React.Component {
             } else
               this.setState({
                 service: 'Create',
-                hasCaptions: true,
+                hasProperties: true,
                 onGoingStep: 'colors selected',
               })
             isPaletteSelected = false
@@ -306,8 +306,8 @@ class App extends React.Component {
             this.setState({
               service: 'Edit',
               newScale: e.data.pluginMessage.data.scale,
-              hasCaptions:
-                e.data.pluginMessage.data.captions === 'hasCaptions'
+              hasProperties:
+                e.data.pluginMessage.data.properties === 'hasProperties'
                   ? true
                   : false,
               newColors: putIdsOnColors,
@@ -361,7 +361,7 @@ class App extends React.Component {
         {this.state['service'] === 'Create' ? (
           <CreatePalette
             preset={this.state['preset']}
-            hasCaptions={this.state['hasCaptions']}
+            hasProperties={this.state['hasProperties']}
             paletteName={this.state['paletteName']}
             onHighlightReopen={this.highlightHandler('OPEN')}
             onPresetChange={this.presetHandler}
@@ -374,15 +374,15 @@ class App extends React.Component {
             scale={this.state['newScale']}
             colors={this.state['newColors']}
             preset={this.state['preset']}
-            hasCaptions={this.state['hasCaptions']}
+            hasProperties={this.state['hasProperties']}
             export={this.state['export']}
             paletteName={this.state['paletteName']}
             algorithmVersion={this.state['algorithmVersion']}
             onHighlightReopen={this.highlightHandler('OPEN')}
-            onScaleChange={this.slideHandler}
+            onChangeScale={this.slideHandler}
             onChangeStop={this.customSlideHandler}
             onColorChange={this.colorHandler}
-            onCaptionsChange={this.captionsHandler}
+            onPropertiesChange={this.propertiesHandler}
             onSettingsChange={this.settingsHandler}
           />
         ) : null}

@@ -11,8 +11,8 @@ const updateSettings = (msg, palette) => {
   if (palette.children.length == 1) {
     const colors = JSON.parse(palette.getPluginData('colors')),
       scale = JSON.parse(palette.getPluginData('scale')),
-      captions =
-        palette.getPluginData('captions') == 'hasCaptions' ? true : false,
+      properties =
+        palette.getPluginData('properties') == 'hasProperties' ? true : false,
       preset = JSON.parse(palette.getPluginData('preset'))
 
     let paletteName: string
@@ -34,7 +34,7 @@ const updateSettings = (msg, palette) => {
         paletteName: paletteName,
         colors: colors,
         scale: scale,
-        captions: captions,
+        properties: properties,
         preset: preset,
         algorithmVersion: msg.data.algorithmVersion,
       }).makeNode()

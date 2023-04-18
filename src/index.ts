@@ -2,7 +2,7 @@ import isHighlightRead from './bridges/isHighlightRead'
 import closeHighlight from './bridges/closeHighlight'
 import createPalette from './bridges/createPalette'
 import updateScale from './bridges/updateScale'
-import updateCaptions from './bridges/updateCaptions'
+import updateProperties from './bridges/updateProperties'
 import updateColors from './bridges/updateColors'
 import createLocalStyles from './bridges/createLocalStyles'
 import updateLocalStyles from './bridges/updateLocalStyles'
@@ -46,8 +46,8 @@ figma.ui.onmessage = (msg) => {
       updateScale(msg, palette)
       break
 
-    case 'update-captions':
-      updateCaptions(msg, palette)
+    case 'update-properties':
+      updateProperties(msg, palette)
       break
 
     case 'update-colors':

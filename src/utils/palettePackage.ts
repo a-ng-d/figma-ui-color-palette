@@ -14,7 +14,7 @@ interface Palette {
   scale: Scale
   min: number
   max: number
-  captions: boolean
+  properties: boolean
   preset: any
 }
 
@@ -23,7 +23,7 @@ export const palette: Palette = {
   scale: {},
   min: null,
   max: null,
-  captions: true,
+  properties: true,
   preset: {},
 }
 

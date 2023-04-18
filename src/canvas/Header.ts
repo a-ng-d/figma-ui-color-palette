@@ -27,7 +27,7 @@ export default class Header {
         null,
         null,
         [255, 255, 255],
-        this.parent.captions
+        this.parent.properties
       ).makeName('absolute', 160, 48)
     )
     Object.values(this.parent.scale)
@@ -41,7 +41,7 @@ export default class Header {
             null,
             null,
             [255, 255, 255],
-            this.parent.captions
+            this.parent.properties
           ).makeName('absolute', 160, 48)
         )
       })

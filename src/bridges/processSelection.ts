@@ -14,6 +14,7 @@ const processSelection = () => {
   currentSelection = figma.currentPage.selection
 
   if (selection.length == 1 && selection[0].getPluginData('scale') != '') {
+    // Migration
     if (selection[0].getPluginData('preset') === '')
       selection[0].setPluginData('preset', JSON.stringify(presets.material))
 
@@ -31,13 +32,23 @@ const processSelection = () => {
         'colors',
         setData(selection[0].getPluginData('colors'), 'hueShifting', 0)
       )
+    
+    if (selection[0].getPluginData('captions') == 'hasCaptions') {
+      selection[0].setPluginData('properties', 'hasProperties')
+      selection[0].setPluginData('captions', '')
+    }
+    else if (selection[0].getPluginData('captions') == 'hasNotCaptions') {
+      selection[0].setPluginData('properties', 'hasNotProperties')
+      selection[0].setPluginData('captions', '')
+    }
 
+    // to UI
     figma.ui.postMessage({
       type: 'palette-selected',
       data: {
         name: selection[0].getPluginData('name'),
         scale: JSON.parse(selection[0].getPluginData('scale')),
-        captions: selection[0].getPluginData('captions'),
+        properties: selection[0].getPluginData('properties'),
         colors: JSON.parse(selection[0].getPluginData('colors')),
         algorithmVersion: selection[0].getPluginData('algorithmVersion'),
         preset: JSON.parse(selection[0].getPluginData('preset')),

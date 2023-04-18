@@ -10,7 +10,7 @@ interface Props {
   preset: any
   scale?: any
   onChangePreset?: any
-  onScaleChange: any
+  onChangeScale: any
   onAddScale?: any
   onRemoveScale?: any
   onGoingStep?: any
@@ -80,7 +80,7 @@ export default class Scale extends React.Component<Props> {
           knobs={this.props.preset.scale}
           min={this.props.preset.min}
           max={this.props.preset.max}
-          onChange={this.props.onScaleChange}
+          onChange={this.props.onChangeScale}
         />    
         <Message icon="library" messages={this.setOnboardingMessages()} />
       </div>
@@ -101,7 +101,7 @@ export default class Scale extends React.Component<Props> {
           presetName={this.props.preset.name}
           knobs={this.props.preset.scale}
           scale={this.props.scale}
-          onChange={this.props.onScaleChange}
+          onChange={this.props.onChangeScale}
         />
         <Message icon="library" messages={this.setOnboardingMessages()} />
       </div>
