@@ -1,6 +1,6 @@
-import Colors from './../canvas/Colors'
+import Colors from '../canvas/Colors'
 
-const updateCaptions = (msg, palette) => {
+const updateProperties = (msg, palette) => {
   palette = figma.currentPage.selection[0]
 
   if (palette.children.length == 1) {
@@ -10,10 +10,11 @@ const updateCaptions = (msg, palette) => {
           : palette.getPluginData('name'),
       colors: string = JSON.parse(palette.getPluginData('colors')),
       scale: string = JSON.parse(palette.getPluginData('scale')),
-      preset = JSON.parse(palette.getPluginData('preset'))
+      preset = JSON.parse(palette.getPluginData('preset')),
+      algorithmVersion: string = palette.getPluginData('algorithmVersion')
 
-    if (msg.data.captions) {
-      palette.setPluginData('captions', 'hasCaptions')
+    if (msg.data.properties) {
+      palette.setPluginData('properties', 'hasProperties')
 
       palette.children[0].remove()
       palette.appendChild(
@@ -21,12 +22,13 @@ const updateCaptions = (msg, palette) => {
           paletteName: paletteName,
           colors: colors,
           scale: scale,
-          captions: msg.data.captions,
+          properties: msg.data.properties,
           preset: preset,
+          algorithmVersion: algorithmVersion,
         }).makeNode()
       )
     } else {
-      palette.setPluginData('captions', 'hasNotCaptions')
+      palette.setPluginData('properties', 'hasNotProperties')
 
       palette.children[0].remove()
       palette.appendChild(
@@ -34,8 +36,9 @@ const updateCaptions = (msg, palette) => {
           paletteName: paletteName,
           colors: colors,
           scale: scale,
-          captions: msg.data.captions,
+          properties: msg.data.properties,
           preset: preset,
+          algorithmVersion: algorithmVersion,
         }).makeNode()
       )
     }
@@ -49,4 +52,4 @@ const updateCaptions = (msg, palette) => {
     )
 }
 
-export default updateCaptions
+export default updateProperties

@@ -11,19 +11,22 @@ import Shortcuts from '../modules/Shortcuts'
 import chroma from 'chroma-js'
 import { palette } from '../../utils/palettePackage'
 import { v4 as uuidv4 } from 'uuid'
+import JSZip from 'JSZip'
+import FileSaver from 'file-saver'
 
 interface Props {
   scale: any
-  hasCaptions: boolean
+  hasProperties: boolean
   colors: any
   preset: any
   export: any
   paletteName: string
+  algorithmVersion: string
   onHighlightReopen: any
-  onScaleChange: any
+  onChangeScale: any
   onChangeStop: any
   onColorChange: any
-  onCaptionsChange: any
+  onPropertiesChange: any
   onSettingsChange: any
 }
 
@@ -92,7 +95,7 @@ export default class EditPalette extends React.Component<Props> {
         },
         '*'
       )
-      this.props.onScaleChange()
+      this.props.onChangeScale()
     } else if (e === 'customized') {
       parent.postMessage(
         {
@@ -109,10 +112,10 @@ export default class EditPalette extends React.Component<Props> {
   }
 
   checkHandler = (e: any) => {
-    this.props.onCaptionsChange(e.target.checked)
-    palette.captions = e.target.checked
+    this.props.onPropertiesChange(e.target.checked)
+    palette.properties = e.target.checked
     parent.postMessage(
-      { pluginMessage: { type: 'update-captions', data: palette } },
+      { pluginMessage: { type: 'update-properties', data: palette } },
       '*'
     )
     this.setState({
@@ -124,8 +127,8 @@ export default class EditPalette extends React.Component<Props> {
   }
 
   colorHandler = (e: any) => {
-    let id, element
-    element = e.nativeEvent.path.filter((el) => {
+    let id
+    const element = e.nativeEvent.path.filter((el) => {
       if (el.classList != undefined)
         return el.classList.contains('colors__item')
     })[0]
@@ -495,18 +498,29 @@ export default class EditPalette extends React.Component<Props> {
   }
 
   onExport = () => {
-    const a = document.createElement('a'),
-      file = new Blob([this.props.export.data], {
+    if (this.props.export.format === 'CSV') {
+      const zip = new JSZip()
+      this.props.export.data.forEach((item) =>
+        zip.file(
+          `${item.name.toLowerCase().replace(' ', '_').replace('/', '-')}.csv`,
+          item.csv
+        )
+      )
+      zip
+        .generateAsync({ type: 'blob' })
+        .then((content) => FileSaver.saveAs(content, 'colors'))
+        .catch((error) => console.error(error))
+    } else {
+      const blob = new Blob([this.props.export.data], {
         type: this.props.export.mimeType,
       })
-    a.href = URL.createObjectURL(file)
-    a.download = 'colors'
-    a.click()
+      FileSaver.saveAs(blob, 'colors')
+    }
   }
 
   // Render
   render() {
-    palette.captions = this.props.hasCaptions
+    palette.properties = this.props.hasProperties
     let actions, controls, help
 
     if (this.state['context'] === 'Export') {
@@ -530,7 +544,7 @@ export default class EditPalette extends React.Component<Props> {
             {
               label: 'Give feedback',
               isLink: true,
-              url: 'https://kutt.it/voice-of-uicp-users',
+              url: 'http://uicp.link/feedback',
               action: null,
             },
             {
@@ -548,10 +562,10 @@ export default class EditPalette extends React.Component<Props> {
       actions = (
         <Actions
           context="edit"
-          hasCaptions={this.props.hasCaptions}
+          hasProperties={this.props.hasProperties}
           onCreateLocalColors={this.onCreate}
           onUpdateLocalColors={this.onUpdate}
-          onChangeCaptions={this.checkHandler}
+          onChangeProperties={this.checkHandler}
         />
       )
 
@@ -567,7 +581,7 @@ export default class EditPalette extends React.Component<Props> {
             {
               label: 'Give feedback',
               isLink: true,
-              url: 'https://kutt.it/voice-of-uicp-users',
+              url: 'http://uicp.link/feedback',
               action: null,
             },
             {
@@ -588,7 +602,7 @@ export default class EditPalette extends React.Component<Props> {
             hasPreset={false}
             preset={this.props.preset}
             scale={this.props.scale}
-            onScaleChange={this.slideHandler}
+            onChangeScale={this.slideHandler}
           />
         )
         break
@@ -610,13 +624,23 @@ export default class EditPalette extends React.Component<Props> {
         break
       }
       case 'Export': {
-        controls = <Export exportPreview={this.props.export.data} />
+        controls = (
+          <Export
+            exportPreview={
+              this.props.export.format === 'CSV'
+                ? this.props.export.data[0].csv
+                : this.props.export.data
+            }
+          />
+        )
         break
       }
       case 'Settings': {
         controls = (
           <Settings
             paletteName={this.props.paletteName}
+            settings={['base', 'color-management']}
+            isNewAlgorithm={this.props.algorithmVersion == 'v2' ? true : false}
             onSettingsChange={this.settingsHandler}
           />
         )
@@ -638,7 +662,11 @@ export default class EditPalette extends React.Component<Props> {
         <section
           onClick={this.unSelectColor}
           className={
-            this.state['context'] === 'Colors' ? 'section--scrollable' : ''
+            this.state['context'] === 'Colors'
+              ? 'section--scrollable'
+              : this.state['context'] === 'Settings'
+              ? 'section--scrollable'
+              : ''
           }
         >
           <div className="controls">{controls}</div>

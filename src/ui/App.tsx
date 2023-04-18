@@ -13,7 +13,7 @@ import { v4 as uuidv4 } from 'uuid'
 
 let isPaletteSelected = false
 const container = document.getElementById('react-page'),
-  root = createRoot(container!)
+  root = createRoot(container)
 
 class App extends React.Component {
   constructor(props) {
@@ -22,7 +22,7 @@ class App extends React.Component {
       service: 'None',
       newScale: {},
       newColors: {},
-      hasCaptions: true,
+      hasProperties: true,
       onGoingStep: '',
       preset: {},
       export: {
@@ -31,13 +31,14 @@ class App extends React.Component {
         data: '',
       },
       paletteName: '',
+      algorithmVersion: 'v1',
       hasHighlight: false,
     }
   }
 
   // Handlers
-  captionsHandler = (bool: boolean) =>
-    this.setState({ hasCaptions: bool, onGoingStep: 'captions changed' })
+  propertiesHandler = (bool: boolean) =>
+    this.setState({ hasProperties: bool, onGoingStep: 'properties changed' })
 
   presetHandler = (e: any) => {
     switch ((e.target as HTMLInputElement).value) {
@@ -161,7 +162,10 @@ class App extends React.Component {
               {
                 pluginMessage: {
                   type: 'update-settings',
-                  data: this.state['paletteName'],
+                  data: {
+                    name: e.target.value,
+                    algorithmVersion: this.state['algorithmVersion'],
+                  },
                 },
               },
               '*'
@@ -172,12 +176,35 @@ class App extends React.Component {
               {
                 pluginMessage: {
                   type: 'update-settings',
-                  data: this.state['paletteName'],
+                  data: {
+                    name: e.target.value,
+                    algorithmVersion: this.state['algorithmVersion'],
+                  },
                 },
               },
               '*'
             )
           : null
+
+        break
+      }
+      case 'update-algorithm-version': {
+        this.setState({
+          algorithmVersion: !e.target.checked ? 'v1' : 'v2',
+          onGoingStep: 'settings changed',
+        })
+        parent.postMessage(
+          {
+            pluginMessage: {
+              type: 'update-settings',
+              data: {
+                name: this.state['paletteName'],
+                algorithmVersion: !e.target.checked ? 'v1' : 'v2',
+              },
+            },
+          },
+          '*'
+        )
       }
     }
   }
@@ -215,97 +242,117 @@ class App extends React.Component {
       Object.keys(this.state['preset']).length == 0
         ? this.setState({ preset: presets.material })
         : null
-      switch (e.data.pluginMessage.type) {
-        case 'highlight-status':
-          this.setState({ hasHighlight: !e.data.pluginMessage.data })
-          break
+      try {
+        switch (
+          e.data.pluginMessage.type == undefined
+            ? 'undefined'
+            : e.data.pluginMessage.type
+        ) {
+          case 'highlight-status':
+            this.setState({ hasHighlight: !e.data.pluginMessage.data })
+            break
 
-        case 'empty-selection': {
-          this.setState({
-            service: 'None',
-            hasCaptions: true,
-            paletteName: '',
-            preset: {},
-            onGoingStep: 'selection empty',
-          })
-          palette.name = ''
-          palette.preset = {}
-          isPaletteSelected = false
-          break
-        }
-        case 'color-selected': {
-          if (isPaletteSelected) {
+          case 'empty-selection': {
             this.setState({
-              service: 'Create',
-              hasCaptions: true,
-              onGoingStep: 'colors selected',
-              preset: presets.material,
+              service: 'None',
+              hasProperties: true,
               paletteName: '',
+              preset: {},
+              onGoingStep: 'selection empty',
             })
             palette.name = ''
-            palette.preset = presets.material
-          } else
-            this.setState({
-              service: 'Create',
-              hasCaptions: true,
-              onGoingStep: 'colors selected',
-            })
-          isPaletteSelected = false
-          break
-        }
-        case 'palette-selected': {
-          const putIdsOnColors = e.data.pluginMessage.data.colors.map(
-            (color) => {
-              color.id === undefined ? (color.id = uuidv4()) : null
-              return color
-            }
-          )
-          isPaletteSelected = true
-          palette.preset = {}
-          parent.postMessage(
-            {
-              pluginMessage: {
-                type: 'export-palette',
-                export: this.state['export'].format,
+            palette.preset = {}
+            isPaletteSelected = false
+            break
+          }
+          case 'color-selected': {
+            if (isPaletteSelected) {
+              this.setState({
+                service: 'Create',
+                hasProperties: true,
+                onGoingStep: 'colors selected',
+                preset: presets.material,
+                paletteName: '',
+              })
+              palette.name = ''
+              palette.preset = presets.material
+            } else
+              this.setState({
+                service: 'Create',
+                hasProperties: true,
+                onGoingStep: 'colors selected',
+              })
+            isPaletteSelected = false
+            break
+          }
+          case 'palette-selected': {
+            const putIdsOnColors = e.data.pluginMessage.data.colors.map(
+              (color) => {
+                color.id === undefined ? (color.id = uuidv4()) : null
+                return color
+              }
+            )
+            isPaletteSelected = true
+            palette.preset = {}
+            parent.postMessage(
+              {
+                pluginMessage: {
+                  type: 'export-palette',
+                  export: this.state['export'].format,
+                },
               },
-            },
-            '*'
-          )
-          this.setState({
-            service: 'Edit',
-            newScale: e.data.pluginMessage.data.scale,
-            hasCaptions:
-              e.data.pluginMessage.data.captions === 'hasCaptions'
-                ? true
-                : false,
-            newColors: putIdsOnColors,
-            preset: e.data.pluginMessage.data.preset,
-            paletteName: e.data.pluginMessage.data.name,
-            onGoingStep: 'palette selected',
-          })
-          break
+              '*'
+            )
+            this.setState({
+              service: 'Edit',
+              newScale: e.data.pluginMessage.data.scale,
+              hasProperties:
+                e.data.pluginMessage.data.properties === 'hasProperties'
+                  ? true
+                  : false,
+              newColors: putIdsOnColors,
+              preset: e.data.pluginMessage.data.preset,
+              paletteName: e.data.pluginMessage.data.name,
+              algorithmVersion: e.data.pluginMessage.data.algorithmVersion,
+              onGoingStep: 'palette selected',
+            })
+            break
+          }
+          case 'export-palette-json': {
+            this.setState({
+              export: {
+                format: 'JSON',
+                mimeType: 'application/json',
+                data: JSON.stringify(e.data.pluginMessage.data, null, '  '),
+              },
+              onGoingStep: 'export previewed',
+            })
+            break
+          }
+          case 'export-palette-css': {
+            this.setState({
+              export: {
+                format: 'CSS',
+                mimeType: 'text/css',
+                data: `:root {\n  ${e.data.pluginMessage.data.join(';\n  ')}\n}`,
+              },
+              onGoingStep: 'export previewed',
+            })
+            break
+          }
+          case 'export-palette-csv': {
+            this.setState({
+              export: {
+                format: 'CSV',
+                mimeType: 'text/csv',
+                data: e.data.pluginMessage.data,
+              },
+              onGoingStep: 'export previewed',
+            })
+          }
         }
-        case 'export-palette-json': {
-          this.setState({
-            export: {
-              format: 'JSON',
-              mimeType: 'application/json',
-              data: JSON.stringify(e.data.pluginMessage.data, null, '  '),
-            },
-            onGoingStep: 'export previewed',
-          })
-          break
-        }
-        case 'export-palette-css': {
-          this.setState({
-            export: {
-              format: 'CSS',
-              mimeType: 'text/css',
-              data: `:root {\n  ${e.data.pluginMessage.data.join(';\n  ')}\n}`,
-            },
-            onGoingStep: 'export previewed',
-          })
-        }
+      } catch (error) {
+        console.error(error)
       }
     }
 
@@ -314,7 +361,7 @@ class App extends React.Component {
         {this.state['service'] === 'Create' ? (
           <CreatePalette
             preset={this.state['preset']}
-            hasCaptions={this.state['hasCaptions']}
+            hasProperties={this.state['hasProperties']}
             paletteName={this.state['paletteName']}
             onHighlightReopen={this.highlightHandler('OPEN')}
             onPresetChange={this.presetHandler}
@@ -327,14 +374,15 @@ class App extends React.Component {
             scale={this.state['newScale']}
             colors={this.state['newColors']}
             preset={this.state['preset']}
-            hasCaptions={this.state['hasCaptions']}
+            hasProperties={this.state['hasProperties']}
             export={this.state['export']}
             paletteName={this.state['paletteName']}
+            algorithmVersion={this.state['algorithmVersion']}
             onHighlightReopen={this.highlightHandler('OPEN')}
-            onScaleChange={this.slideHandler}
+            onChangeScale={this.slideHandler}
             onChangeStop={this.customSlideHandler}
             onColorChange={this.colorHandler}
-            onCaptionsChange={this.captionsHandler}
+            onPropertiesChange={this.propertiesHandler}
             onSettingsChange={this.settingsHandler}
           />
         ) : null}

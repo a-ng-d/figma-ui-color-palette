@@ -2,13 +2,14 @@ import isHighlightRead from './bridges/isHighlightRead'
 import closeHighlight from './bridges/closeHighlight'
 import createPalette from './bridges/createPalette'
 import updateScale from './bridges/updateScale'
-import updateCaptions from './bridges/updateCaptions'
+import updateProperties from './bridges/updateProperties'
 import updateColors from './bridges/updateColors'
 import createLocalStyles from './bridges/createLocalStyles'
 import updateLocalStyles from './bridges/updateLocalStyles'
 import processSelection from './bridges/processSelection'
 import exportJson from './bridges/exportJson'
 import exportCss from './bridges/exportCss'
+import exportCsv from './bridges/exportCsv'
 import updateSettings from './bridges/updateSettings'
 import package_json from './../package.json'
 
@@ -45,8 +46,8 @@ figma.ui.onmessage = (msg) => {
       updateScale(msg, palette)
       break
 
-    case 'update-captions':
-      updateCaptions(msg, palette)
+    case 'update-properties':
+      updateProperties(msg, palette)
       break
 
     case 'update-colors':
@@ -64,6 +65,7 @@ figma.ui.onmessage = (msg) => {
     case 'export-palette':
       msg.export === 'JSON' ? exportJson(msg, palette) : null
       msg.export === 'CSS' ? exportCss(msg, palette) : null
+      msg.export === 'CSV' ? exportCsv(msg, palette) : null
       break
 
     case 'update-settings':

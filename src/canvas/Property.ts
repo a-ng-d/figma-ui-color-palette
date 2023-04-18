@@ -1,6 +1,6 @@
 import Tag from './Tag'
 
-export default class Caption {
+export default class Property {
   name: string
   content: string
   size: number
@@ -15,7 +15,7 @@ export default class Caption {
 
   makeNode() {
     // base
-    this.node.name = '_caption'
+    this.node.name = '_properties'
     this.node.fills = []
 
     // layout

@@ -75,7 +75,7 @@ div.onboarding .label {
 }
 
 div.onboarding-tip {
-  padding: 0 var(--size-xsmall);
+  padding: 0 calc(var(--size-xsmall) + var(--size-xxxsmall));
 }
 
 div.actions {
@@ -416,6 +416,7 @@ input[type='number']::-webkit-inner-spin-button {
   display: flex;
   align-items: center;
   gap: var(--size-xxsmall);
+  padding: 0 0 0 var(--size-xxsmall);
 }
 
 .form-item label {
@@ -593,11 +594,11 @@ ul.options li {
 div.settings {
   display: flex;
   flex-direction: column;
-  gap: var(--size-small) 0;
+  gap: var(--size-xsmall) 0;
 }
 
 div.settings__item {
-  padding: 0 var(--size-small);
+  padding: 0 var(--size-xsmall);
 }
 
 /* About */

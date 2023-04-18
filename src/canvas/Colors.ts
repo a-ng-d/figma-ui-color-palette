@@ -4,7 +4,7 @@ import Header from './Header'
 import Title from './Title'
 
 export default class Colors {
-  captions: boolean
+  properties: boolean
   parent: any
   node: FrameNode
 
@@ -37,7 +37,12 @@ export default class Colors {
     )
     this.node.appendChild(new Header(this.parent).makeNode())
     this.parent.colors.forEach((color) => {
-      const row = figma.createFrame()
+      const row = figma.createFrame(),
+        sourceColor = chroma([
+          color.rgb.r * 255,
+          color.rgb.g * 255,
+          color.rgb.b * 255,
+        ])
 
       // base
       row.name = color.name
@@ -55,54 +60,47 @@ export default class Colors {
         null,
         null,
         [color.rgb.r * 255, color.rgb.g * 255, color.rgb.b * 255],
-        this.parent.captions
+        this.parent.properties
       ).makeName('absolute', 160, 224)
       row.appendChild(rowName)
 
       Object.values(this.parent.scale)
         .reverse()
         .forEach((lightness: any) => {
-          let newColor, lch, oklch, newColorHex, sourceColorHex, distance
-          sourceColorHex = chroma([
-            color.rgb.r * 255,
-            color.rgb.g * 255,
-            color.rgb.b * 255,
-          ])
+          let newColor, lch, oklch
           if (color.oklch) {
-            oklch = chroma([
-              color.rgb.r * 255,
-              color.rgb.g * 255,
-              color.rgb.b * 255,
-            ]).oklch()
+            oklch = chroma(sourceColor).oklch()
             newColor = chroma.oklch(
-              parseFloat(lightness) / 100,
-              oklch[1],
+              parseFloat((lightness / 100).toFixed(2)),
+              this.parent.algorithmVersion == 'v2'
+                ? Math.sin((parseFloat(lightness) / 100) * Math.PI) * chroma(sourceColor).oklch()[1]
+                : chroma(sourceColor).oklch()[1],
               oklch[2] + color.hueShifting < 0
                 ? 0
                 : oklch[2] + color.hueShifting > 360
                 ? 360
                 : oklch[2] + color.hueShifting
             )
-            newColorHex = chroma(newColor._rgb).hex()
           } else {
-            lch = chroma([
-              color.rgb.r * 255,
-              color.rgb.g * 255,
-              color.rgb.b * 255,
-            ]).lch()
+            lch = chroma(sourceColor).lch()
             newColor = chroma.lch(
-              parseFloat(lightness),
-              lch[1],
+              parseFloat((lightness * 1).toFixed(1)),
+              this.parent.algorithmVersion == 'v2'
+                ? Math.sin((parseFloat(lightness) / 100) * Math.PI) * chroma(sourceColor).lch()[1]
+                : chroma(sourceColor).lch()[1],
               lch[2] + color.hueShifting < 0
                 ? 0
                 : lch[2] + color.hueShifting > 360
                 ? 360
                 : lch[2] + color.hueShifting
             )
-            newColorHex = chroma(newColor._rgb).hex()
           }
 
-          distance = chroma.distance(sourceColorHex, newColorHex, 'lch')
+          const distance: number = chroma.distance(
+            chroma(sourceColor).hex(),
+            chroma(newColor).hex(),
+            'lch'
+          )
 
           const sample = new Sample(
             color.name,
@@ -111,7 +109,7 @@ export default class Colors {
               .find((key) => this.parent.scale[key] === lightness)
               .substr(10),
             newColor._rgb,
-            this.parent.captions,
+            this.parent.properties,
             {
               isClosestToRef: distance < 4 ? true : false,
             }

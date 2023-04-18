@@ -9,9 +9,10 @@ const updateScale = (msg, palette) => {
           ? 'UI Color Palette'
           : palette.getPluginData('name'),
       colors: string = JSON.parse(palette.getPluginData('colors')),
-      captions: boolean =
-        palette.getPluginData('captions') == 'hasCaptions' ? true : false,
-      preset = JSON.parse(palette.getPluginData('preset'))
+      properties: boolean =
+        palette.getPluginData('properties') == 'hasProperties' ? true : false,
+      preset = JSON.parse(palette.getPluginData('preset')),
+      algorithmVersion: string = palette.getPluginData('algorithmVersion')
 
     palette.setPluginData('scale', JSON.stringify(msg.data.scale))
 
@@ -24,8 +25,9 @@ const updateScale = (msg, palette) => {
         paletteName: paletteName,
         colors: colors,
         scale: msg.data.scale,
-        captions: msg.isEditedInRealTime ? false : captions,
+        properties: msg.isEditedInRealTime ? false : properties,
         preset: preset,
+        algorithmVersion: algorithmVersion,
       }).makeNode()
     )
 

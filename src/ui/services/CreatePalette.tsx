@@ -8,7 +8,7 @@ import Shortcuts from '../modules/Shortcuts'
 import { palette } from '../../utils/palettePackage'
 
 interface Props {
-  hasCaptions: boolean
+  hasProperties: boolean
   preset: any
   paletteName: string
   onHighlightReopen: any
@@ -22,7 +22,7 @@ export default class CreatePalette extends React.Component<Props> {
     super(props)
     this.state = {
       context: 'Scale',
-      hasCaptions: true,
+      hasProperties: true,
     }
   }
 
@@ -33,10 +33,10 @@ export default class CreatePalette extends React.Component<Props> {
 
   checkHandler = (e: any) => {
     this.setState({
-      hasCaptions: e.target.checked,
-      onGoingStep: 'captions changed',
+      hasProperties: e.target.checked,
+      onGoingStep: 'properties changed',
     })
-    palette.captions = e.target.checked
+    palette.properties = e.target.checked
   }
 
   navHandler = (e: any) =>
@@ -60,7 +60,7 @@ export default class CreatePalette extends React.Component<Props> {
 
   // Renders
   render() {
-    palette.captions = this.state['hasCaptions']
+    palette.properties = this.state['hasProperties']
     palette.preset = this.props.preset
     let actions, controls, help
 
@@ -70,9 +70,9 @@ export default class CreatePalette extends React.Component<Props> {
       actions = (
         <Actions
           context="create"
-          hasCaptions={this.state['hasCaptions']}
+          hasProperties={this.state['hasProperties']}
           onCreatePalette={this.onCreate}
-          onChangeCaptions={this.checkHandler}
+          onChangeProperties={this.checkHandler}
         />
       )
 
@@ -88,7 +88,7 @@ export default class CreatePalette extends React.Component<Props> {
             {
               label: 'Give feedback',
               isLink: true,
-              url: 'https://kutt.it/voice-of-uicp-users',
+              url: 'http://uicp.link/feedback',
               action: null,
             },
             {
@@ -109,7 +109,7 @@ export default class CreatePalette extends React.Component<Props> {
             hasPreset={true}
             preset={this.props.preset}
             onChangePreset={this.presetHandler}
-            onScaleChange={this.slideHandler}
+            onChangeScale={this.slideHandler}
             onAddScale={this.scaleHandler}
             onRemoveScale={this.scaleHandler}
             onGoingStep={this.state['onGoingStep']}
@@ -121,6 +121,7 @@ export default class CreatePalette extends React.Component<Props> {
         controls = (
           <Settings
             paletteName={this.props.paletteName}
+            settings={['base']}
             onSettingsChange={this.settingsHandler}
           />
         )

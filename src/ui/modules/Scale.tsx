@@ -10,7 +10,7 @@ interface Props {
   preset: any
   scale?: any
   onChangePreset?: any
-  onScaleChange: any
+  onChangeScale: any
   onAddScale?: any
   onRemoveScale?: any
   onGoingStep?: any
@@ -28,7 +28,10 @@ export default class Scale extends React.Component<Props> {
       )
 
     if (!this.props.hasPreset)
-      messages.push('Press ← or → to shift the stops with accuracy')
+      messages.push(
+        'Press ← or → to shift the stops with accuracy',
+        'Press Esc. after selecting a stop to unselect it'
+      )
 
     messages.push(
       "Hold Shift ⇧ while dragging the first or the last stop to distribute stops' horizontal spacing",
@@ -40,7 +43,7 @@ export default class Scale extends React.Component<Props> {
 
   // Templates
   Create = () => {
-    this.props.onGoingStep != 'captions changed' ? (palette.scale = {}) : ''
+    palette.scale = {}
     return (
       <div className="lightness-scale controls__control">
         <div className="section-controls">
@@ -70,26 +73,15 @@ export default class Scale extends React.Component<Props> {
             />
           ) : null}
         </div>
-        {this.props.onGoingStep != 'captions changed' ? (
-          <Slider
-            type="EQUAL"
-            hasPreset={this.props.hasPreset}
-            presetName={this.props.preset.name}
-            knobs={this.props.preset.scale}
-            min={this.props.preset.min}
-            max={this.props.preset.max}
-            onChange={this.props.onScaleChange}
-          />
-        ) : (
-          <Slider
-            type="CUSTOM"
-            hasPreset={this.props.hasPreset}
-            presetName={this.props.preset.name}
-            knobs={this.props.preset.scale}
-            scale={palette.scale}
-            onChange={this.props.onScaleChange}
-          />
-        )}
+        <Slider
+          type="EQUAL"
+          hasPreset={this.props.hasPreset}
+          presetName={this.props.preset.name}
+          knobs={this.props.preset.scale}
+          min={this.props.preset.min}
+          max={this.props.preset.max}
+          onChange={this.props.onChangeScale}
+        />
         <Message icon="library" messages={this.setOnboardingMessages()} />
       </div>
     )
@@ -109,7 +101,7 @@ export default class Scale extends React.Component<Props> {
           presetName={this.props.preset.name}
           knobs={this.props.preset.scale}
           scale={this.props.scale}
-          onChange={this.props.onScaleChange}
+          onChange={this.props.onChangeScale}
         />
         <Message icon="library" messages={this.setOnboardingMessages()} />
       </div>

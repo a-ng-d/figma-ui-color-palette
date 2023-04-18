@@ -56,8 +56,6 @@ export default class Tag {
         this.nodeTag.appendChild(this.makeNodeIndicator([rgb.r, rgb.g, rgb.b]))
         break
       }
-      default: {
-      }
     }
     this.nodeTag.appendChild(this.makeNodeText())
 
