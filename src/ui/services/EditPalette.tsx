@@ -23,7 +23,7 @@ interface Props {
   paletteName: string
   algorithmVersion: string
   onHighlightReopen: any
-  onScaleChange: any
+  onChangeScale: any
   onChangeStop: any
   onColorChange: any
   onPropertiesChange: any
@@ -95,7 +95,7 @@ export default class EditPalette extends React.Component<Props> {
         },
         '*'
       )
-      this.props.onScaleChange()
+      this.props.onChangeScale()
     } else if (e === 'customized') {
       parent.postMessage(
         {
@@ -602,7 +602,7 @@ export default class EditPalette extends React.Component<Props> {
             hasPreset={false}
             preset={this.props.preset}
             scale={this.props.scale}
-            onScaleChange={this.slideHandler}
+            onChangeScale={this.slideHandler}
           />
         )
         break

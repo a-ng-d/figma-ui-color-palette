@@ -109,7 +109,7 @@ export default class CreatePalette extends React.Component<Props> {
             hasPreset={true}
             preset={this.props.preset}
             onChangePreset={this.presetHandler}
-            onScaleChange={this.slideHandler}
+            onChangeScale={this.slideHandler}
             onAddScale={this.scaleHandler}
             onRemoveScale={this.scaleHandler}
             onGoingStep={this.state['onGoingStep']}

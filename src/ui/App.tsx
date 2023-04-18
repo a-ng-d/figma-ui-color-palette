@@ -379,7 +379,7 @@ class App extends React.Component {
             paletteName={this.state['paletteName']}
             algorithmVersion={this.state['algorithmVersion']}
             onHighlightReopen={this.highlightHandler('OPEN')}
-            onScaleChange={this.slideHandler}
+            onChangeScale={this.slideHandler}
             onChangeStop={this.customSlideHandler}
             onColorChange={this.colorHandler}
             onPropertiesChange={this.propertiesHandler}
