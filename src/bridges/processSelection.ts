@@ -42,8 +42,6 @@ const processSelection = () => {
       selection[0].setPluginData('captions', '')
     }
 
-    console.log(selection[0].getPluginData('properties'))
-
     // to UI
     figma.ui.postMessage({
       type: 'palette-selected',
