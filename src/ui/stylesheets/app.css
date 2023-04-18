@@ -594,7 +594,7 @@ ul.options li {
 div.settings {
   display: flex;
   flex-direction: column;
-  gap: var(--size-small) 0;
+  gap: var(--size-xsmall) 0;
 }
 
 div.settings__item {
