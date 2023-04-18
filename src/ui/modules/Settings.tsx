@@ -57,7 +57,7 @@ export default class Settings extends React.Component<Props> {
         <Message
           icon="library"
           messages={[
-            'The new algorithm harmonizes Chroma values for consistent lightness across all shades.',
+            'The Chroma values are harmonized to ensure consistent lightness across all shades, but this may make the colors look desaturated.',
           ]}
         />
       </div>
