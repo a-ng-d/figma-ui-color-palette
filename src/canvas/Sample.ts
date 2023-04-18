@@ -1,5 +1,5 @@
 import Properties from './Properties'
-import Caption from './Caption'
+import Property from './Property'
 import Status from './Status'
 
 export default class Sample {
@@ -7,19 +7,19 @@ export default class Sample {
   source: { [key: string]: number } | null
   scale: string | null
   rgb: Array<number> | null
-  captions: boolean
+  properties: boolean
   status: {
     isClosestToRef: boolean
   }
   node: FrameNode
   children: any
 
-  constructor(name, source, scale, rgb, captions, status?) {
+  constructor(name, source, scale, rgb, properties, status?) {
     this.name = name
     this.source = source
     this.scale = scale
     this.rgb = rgb
-    this.captions = captions
+    this.properties = properties
     this.status = status
     this.node = figma.createFrame()
     this.children = null
@@ -51,11 +51,11 @@ export default class Sample {
       this.node.primaryAxisSizingMode = 'AUTO'
       this.node.layoutAlign = 'STRETCH'
       this.node.layoutGrow = 1
-      this.children = new Caption('_title', this.name, 16).makeNode()
+      this.children = new Property('_title', this.name, 16).makeNode()
     } else if (mode === 'absolute') {
       this.node.resize(width, height)
       this.node.primaryAxisSizingMode = 'FIXED'
-      this.children = new Caption('_label', this.name, 10).makeNode()
+      this.children = new Property('_label', this.name, 10).makeNode()
     }
 
     // insert
@@ -92,7 +92,7 @@ export default class Sample {
     this.node.itemSpacing = 16
 
     // insert
-    if (this.captions) {
+    if (this.properties) {
       this.children = new Properties(this.scale, this.rgb).makeNode()
       this.node.appendChild(this.children)
     }

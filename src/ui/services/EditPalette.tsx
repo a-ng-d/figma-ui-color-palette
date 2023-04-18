@@ -16,7 +16,7 @@ import FileSaver from 'file-saver'
 
 interface Props {
   scale: any
-  hasCaptions: boolean
+  hasProperties: boolean
   colors: any
   preset: any
   export: any
@@ -113,9 +113,9 @@ export default class EditPalette extends React.Component<Props> {
 
   checkHandler = (e: any) => {
     this.props.onCaptionsChange(e.target.checked)
-    palette.captions = e.target.checked
+    palette.properties = e.target.checked
     parent.postMessage(
-      { pluginMessage: { type: 'update-captions', data: palette } },
+      { pluginMessage: { type: 'update-properties', data: palette } },
       '*'
     )
     this.setState({
@@ -520,7 +520,7 @@ export default class EditPalette extends React.Component<Props> {
 
   // Render
   render() {
-    palette.captions = this.props.hasCaptions
+    palette.properties = this.props.hasProperties
     let actions, controls, help
 
     if (this.state['context'] === 'Export') {
@@ -562,7 +562,7 @@ export default class EditPalette extends React.Component<Props> {
       actions = (
         <Actions
           context="edit"
-          hasCaptions={this.props.hasCaptions}
+          hasProperties={this.props.hasProperties}
           onCreateLocalColors={this.onCreate}
           onUpdateLocalColors={this.onUpdate}
           onChangeCaptions={this.checkHandler}

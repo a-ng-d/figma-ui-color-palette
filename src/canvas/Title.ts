@@ -30,7 +30,7 @@ export default class Title {
         null,
         null,
         [255, 255, 255],
-        this.parent.captions
+        this.parent.properties
       ).makeName('relative', 100, 48)
     )
 

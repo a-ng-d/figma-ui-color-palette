@@ -17,18 +17,18 @@ export default class Palette {
   name: string
   scale: string
   colors: Array<UIColors>
-  captions: boolean
+  properties: boolean
   preset: string
   algorithmVersion: string
   children: any
   node: FrameNode
 
-  constructor(name, scale, captions, preset, algorithmVersion) {
+  constructor(name, scale, properties, preset, algorithmVersion) {
     this.paletteName = name
     this.name = `${name === '' ? 'UI Color Palette' : name}﹒${preset.name}`
     this.scale = scale
     this.colors = []
-    this.captions = captions
+    this.properties = properties
     this.preset = preset
     this.algorithmVersion = algorithmVersion
     this.children = null
@@ -57,9 +57,9 @@ export default class Palette {
     this.node.setPluginData('scale', JSON.stringify(this.scale))
     this.node.setPluginData('preset', JSON.stringify(this.preset))
     this.node.setPluginData('algorithmVersion', this.algorithmVersion)
-    this.captions
-      ? this.node.setPluginData('captions', 'hasCaptions')
-      : this.node.setPluginData('captions', 'hasNotCaptions')
+    this.properties
+      ? this.node.setPluginData('properties', 'hasProperties')
+      : this.node.setPluginData('properties', 'hasNotProperties')
 
     // insert
     figma.currentPage.selection.forEach((element) => {

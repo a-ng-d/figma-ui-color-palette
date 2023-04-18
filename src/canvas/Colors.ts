@@ -4,7 +4,7 @@ import Header from './Header'
 import Title from './Title'
 
 export default class Colors {
-  captions: boolean
+  properties: boolean
   parent: any
   node: FrameNode
 
@@ -60,7 +60,7 @@ export default class Colors {
         null,
         null,
         [color.rgb.r * 255, color.rgb.g * 255, color.rgb.b * 255],
-        this.parent.captions
+        this.parent.properties
       ).makeName('absolute', 160, 224)
       row.appendChild(rowName)
 
@@ -109,7 +109,7 @@ export default class Colors {
               .find((key) => this.parent.scale[key] === lightness)
               .substr(10),
             newColor._rgb,
-            this.parent.captions,
+            this.parent.properties,
             {
               isClosestToRef: distance < 4 ? true : false,
             }

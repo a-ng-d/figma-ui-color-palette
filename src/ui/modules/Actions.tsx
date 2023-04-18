@@ -5,7 +5,7 @@ import Switch from '../components/Switch'
 
 interface Props {
   context: string
-  hasCaptions?: boolean
+  hasProperties?: boolean
   exportType?: string | null
   onCreatePalette?: any
   onCreateLocalColors?: any
@@ -30,7 +30,7 @@ export default class Actions extends React.Component<Props> {
         <Checkbox
           id="showCaptions"
           label="Show properties"
-          isChecked={this.props.hasCaptions}
+          isChecked={this.props.hasProperties}
           isDisabled={false}
           feature="show-caption"
           onChange={this.props.onChangeCaptions}
@@ -57,9 +57,9 @@ export default class Actions extends React.Component<Props> {
           />
         </div>
         <Switch
-          id="showCaptions"
+          id="show-properties"
           label="Show properties"
-          isChecked={this.props.hasCaptions}
+          isChecked={this.props.hasProperties}
           isDisabled={false}
           feature="caption"
           onChange={this.props.onChangeCaptions}
