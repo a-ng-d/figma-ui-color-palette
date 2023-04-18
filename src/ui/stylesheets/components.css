@@ -9,6 +9,10 @@
   color: var(--figma-color-text);
 }
 
+.onboarding-tip__msg {
+  line-height: var(--font-line-height);
+}
+
 .label {
   color: var(--figma-color-text-tertiary);
 }
