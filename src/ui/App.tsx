@@ -24,7 +24,7 @@ class App extends React.Component {
       newColors: {},
       hasProperties: true,
       onGoingStep: '',
-      preset: {},
+      preset: presets.material,
       export: {
         format: '',
         mimeType: '',
@@ -239,9 +239,6 @@ class App extends React.Component {
   // Render
   render() {
     onmessage = (e: any) => {
-      Object.keys(this.state['preset']).length == 0
-        ? this.setState({ preset: presets.material })
-        : null
       try {
         switch (
           e.data.pluginMessage.type == undefined
@@ -257,7 +254,7 @@ class App extends React.Component {
               service: 'None',
               hasProperties: true,
               paletteName: '',
-              preset: {},
+              preset: presets.material,
               onGoingStep: 'selection empty',
             })
             palette.name = ''
