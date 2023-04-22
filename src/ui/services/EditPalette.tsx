@@ -1,5 +1,6 @@
 import * as React from 'react'
 import Dispatcher from '../modules/Dispatcher'
+import Feature from '../components/Feature'
 import Tabs from '../components/Tabs'
 import Scale from '../modules/Scale'
 import Colors from '../modules/Colors'
@@ -10,6 +11,7 @@ import Actions from '../modules/Actions'
 import Shortcuts from '../modules/Shortcuts'
 import chroma from 'chroma-js'
 import { palette } from '../../utils/palettePackage'
+import { features } from '../../utils/features'
 import { v4 as uuidv4 } from 'uuid'
 import JSZip from 'JSZip'
 import FileSaver from 'file-saver'
@@ -533,28 +535,34 @@ export default class EditPalette extends React.Component<Props> {
       )
 
       help = (
-        <Shortcuts
-          actions={[
-            {
-              label: 'Read the documentation',
-              isLink: true,
-              url: 'https://docs.ui-color-palette.com',
-              action: null,
-            },
-            {
-              label: 'Give feedback',
-              isLink: true,
-              url: 'http://uicp.link/feedback',
-              action: null,
-            },
-            {
-              label: "What's new",
-              isLink: false,
-              url: '',
-              action: this.props.onHighlightReopen,
-            },
-          ]}
-        />
+        <Feature
+          name='shortcuts'
+          isActive={features.find(feature => feature.name === 'shortcuts').isActive}
+          isPro={features.find(feature => feature.name === 'shortcuts').isPro}
+        >
+          <Shortcuts
+            actions={[
+              {
+                label: 'Read the documentation',
+                isLink: true,
+                url: 'https://docs.ui-color-palette.com',
+                action: null,
+              },
+              {
+                label: 'Give feedback',
+                isLink: true,
+                url: 'http://uicp.link/feedback',
+                action: null,
+              },
+              {
+                label: "What's new",
+                isLink: false,
+                url: '',
+                action: this.props.onHighlightReopen,
+              },
+            ]}
+          />
+        </Feature>
       )
     } else if (this.state['context'] === 'About') {
       actions = help = null
@@ -570,28 +578,34 @@ export default class EditPalette extends React.Component<Props> {
       )
 
       help = (
-        <Shortcuts
-          actions={[
-            {
-              label: 'Read the documentation',
-              isLink: true,
-              url: 'https://docs.ui-color-palette.com',
-              action: null,
-            },
-            {
-              label: 'Give feedback',
-              isLink: true,
-              url: 'http://uicp.link/feedback',
-              action: null,
-            },
-            {
-              label: "What's new",
-              isLink: false,
-              url: '',
-              action: this.props.onHighlightReopen,
-            },
-          ]}
-        />
+        <Feature
+          name='shortcuts'
+          isActive={features.find(feature => feature.name === 'shortcuts').isActive}
+          isPro={features.find(feature => feature.name === 'shortcuts').isPro}
+        >
+          <Shortcuts
+            actions={[
+              {
+                label: 'Read the documentation',
+                isLink: true,
+                url: 'https://docs.ui-color-palette.com',
+                action: null,
+              },
+              {
+                label: 'Give feedback',
+                isLink: true,
+                url: 'http://uicp.link/feedback',
+                action: null,
+              },
+              {
+                label: "What's new",
+                isLink: false,
+                url: '',
+                action: this.props.onHighlightReopen,
+              },
+            ]}
+          />
+        </Feature>
       )
     }
 

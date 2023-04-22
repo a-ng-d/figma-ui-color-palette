@@ -1,4 +1,5 @@
 import * as React from 'react'
+import Feature from '../components/Feature'
 import Tabs from '../components/Tabs'
 import Scale from '../modules/Scale'
 import Settings from '../modules/Settings'
@@ -6,6 +7,7 @@ import About from '../modules/About'
 import Actions from '../modules/Actions'
 import Shortcuts from '../modules/Shortcuts'
 import { palette } from '../../utils/palettePackage'
+import { features } from '../../utils/features'
 
 interface Props {
   hasProperties: boolean
@@ -77,28 +79,34 @@ export default class CreatePalette extends React.Component<Props> {
       )
 
       help = (
-        <Shortcuts
-          actions={[
-            {
-              label: 'Read the documentation',
-              isLink: true,
-              url: 'https://docs.ui-color-palette.com',
-              action: null,
-            },
-            {
-              label: 'Give feedback',
-              isLink: true,
-              url: 'http://uicp.link/feedback',
-              action: null,
-            },
-            {
-              label: "What's new",
-              isLink: false,
-              url: '',
-              action: this.props.onHighlightReopen,
-            },
-          ]}
-        />
+        <Feature
+          name='shortcuts'
+          isActive={features.find(feature => feature.name === 'shortcuts').isActive}
+          isPro={features.find(feature => feature.name === 'shortcuts').isPro}
+        >
+          <Shortcuts
+            actions={[
+              {
+                label: 'Read the documentation',
+                isLink: true,
+                url: 'https://docs.ui-color-palette.com',
+                action: null,
+              },
+              {
+                label: 'Give feedback',
+                isLink: true,
+                url: 'http://uicp.link/feedback',
+                action: null,
+              },
+              {
+                label: "What's new",
+                isLink: false,
+                url: '',
+                action: this.props.onHighlightReopen,
+              },
+            ]}
+          />
+        </Feature>
       )
     }
 

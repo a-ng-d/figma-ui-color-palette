@@ -29,5 +29,11 @@ export const features: Array<Features> = [
     description: 'Palette configuration service when the palette is selected',
     isActive: true,
     isPro: false
+  },
+  {
+    name: 'shortcuts',
+    description: 'Quick links and access',
+    isActive: true,
+    isPro: false
   }
 ]
