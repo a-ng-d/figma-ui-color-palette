@@ -45,6 +45,12 @@ export const features: Array<Features> = [
   {
     name: 'go create palette',
     description: 'Generate a palette',
+    isActive: true,
+    isPro: false
+  },
+  {
+    name: 'create local styles',
+    description: 'Create local styles on the document',
     isActive: false,
     isPro: false
   }

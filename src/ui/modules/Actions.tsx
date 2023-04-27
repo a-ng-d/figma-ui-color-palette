@@ -63,12 +63,18 @@ export default class Actions extends React.Component<Props> {
             feature="update"
             action={this.props.onUpdateLocalColors}
           />
-          <Button
-            type="primary"
-            label="Create local styles"
-            feature="create"
-            action={this.props.onCreateLocalColors}
-          />
+          <Feature
+            name='create local styles'
+            isActive={features.find(feature => feature.name === 'create local styles').isActive}
+            isPro={features.find(feature => feature.name === 'create local styles').isPro}
+          >
+            <Button
+              type="primary"
+              label="Create local styles"
+              feature="create"
+              action={this.props.onCreateLocalColors}
+            />
+          </Feature>
         </div>
         <Feature
           name='properties'
