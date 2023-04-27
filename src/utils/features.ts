@@ -51,7 +51,13 @@ export const features: Array<Features> = [
   {
     name: 'create local styles',
     description: 'Create local styles on the document',
-    isActive: false,
+    isActive: true,
+    isPro: false
+  },
+  {
+    name: 'update local styles',
+    description: 'Update local styles on the document',
+    isActive: true,
     isPro: false
   }
 ]
