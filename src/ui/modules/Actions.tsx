@@ -22,12 +22,18 @@ export default class Actions extends React.Component<Props> {
     return (
       <div className="actions">
         <div className="buttons">
-          <Button
-            type="primary"
-            label="Create a color palette"
-            feature="create"
-            action={this.props.onCreatePalette}
-          />
+          <Feature
+            name='go create palette'
+            isActive={features.find(feature => feature.name === 'go create palette').isActive}
+            isPro={features.find(feature => feature.name === 'go create palette').isPro}
+          >
+            <Button
+              type="primary"
+              label="Create a color palette"
+              feature="create"
+              action={this.props.onCreatePalette}
+            />
+          </Feature>
         </div>
         <Feature
           name='properties'

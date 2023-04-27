@@ -41,5 +41,11 @@ export const features: Array<Features> = [
     description: 'Shades information and WCAG scores',
     isActive: true,
     isPro: false
+  },
+  {
+    name: 'go create palette',
+    description: 'Generate a palette',
+    isActive: false,
+    isPro: false
   }
 ]
