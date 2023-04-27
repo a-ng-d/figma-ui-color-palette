@@ -59,5 +59,11 @@ export const features: Array<Features> = [
     description: 'Update local styles on the document',
     isActive: true,
     isPro: false
+  },
+  {
+    name: 'presets',
+    description: 'List of existing color systems',
+    isActive: true,
+    isPro: false
   }
 ]

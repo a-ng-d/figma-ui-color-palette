@@ -3,7 +3,9 @@ import Button from '../components/Button'
 import Dropdown from '../components/Dropdown'
 import Slider from '../components/Slider'
 import Message from '../components/Message'
+import Feature from '../components/Feature'
 import { palette, presets } from '../../utils/palettePackage'
+import { features } from '../../utils/features'
 
 interface Props {
   hasPreset: boolean
@@ -48,30 +50,36 @@ export default class Scale extends React.Component<Props> {
       <div className="lightness-scale controls__control">
         <div className="section-controls">
           <div className="section-title">Lightness scale</div>
-          <Dropdown
-            id="presets"
-            options={Object.entries(presets).map((entry) => entry[1].name)}
-            selected={this.props.preset.name}
-            onChange={this.props.onChangePreset}
-          />
-          {this.props.preset.scale.length > 2 &&
-          this.props.preset.name === 'Custom' ? (
-            <Button
-              icon="minus"
-              type="icon"
-              feature="remove"
-              action={this.props.onRemoveScale}
+          <Feature
+            name='presets'
+            isActive={features.find(feature => feature.name === 'presets').isActive}
+            isPro={features.find(feature => feature.name === 'presets').isPro}
+          >
+            <Dropdown
+              id="presets"
+              options={Object.entries(presets).map((entry) => entry[1].name)}
+              selected={this.props.preset.name}
+              onChange={this.props.onChangePreset}
             />
-          ) : null}
-          {this.props.preset.name === 'Custom' ? (
-            <Button
-              icon="plus"
-              type="icon"
-              state={this.props.preset.scale.length == 24 ? 'disabled' : ''}
-              feature="add"
-              action={this.props.onAddScale}
-            />
-          ) : null}
+            {this.props.preset.scale.length > 2 &&
+            this.props.preset.name === 'Custom' ? (
+              <Button
+                icon="minus"
+                type="icon"
+                feature="remove"
+                action={this.props.onRemoveScale}
+              />
+            ) : null}
+            {this.props.preset.name === 'Custom' ? (
+              <Button
+                icon="plus"
+                type="icon"
+                state={this.props.preset.scale.length == 24 ? 'disabled' : ''}
+                feature="add"
+                action={this.props.onAddScale}
+              />
+            ) : null}
+          </Feature>
         </div>
         <Slider
           type="EQUAL"
