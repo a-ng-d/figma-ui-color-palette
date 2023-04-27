@@ -2,6 +2,8 @@ import * as React from 'react'
 import Button from '../components/Button'
 import Checkbox from '../components/Checkbox'
 import Switch from '../components/Switch'
+import Feature from '../components/Feature'
+import { features } from '../../utils/features'
 
 interface Props {
   context: string
@@ -27,14 +29,20 @@ export default class Actions extends React.Component<Props> {
             action={this.props.onCreatePalette}
           />
         </div>
-        <Checkbox
-          id="show-properties"
-          label="Show properties"
-          isChecked={this.props.hasProperties}
-          isDisabled={false}
-          feature="show-properties"
-          onChange={this.props.onChangeProperties}
-        />
+        <Feature
+          name='properties'
+          isActive={features.find(feature => feature.name === 'properties').isActive}
+          isPro={features.find(feature => feature.name === 'properties').isPro}
+        >
+          <Checkbox
+            id="show-properties"
+            label="Show properties"
+            isChecked={this.props.hasProperties}
+            isDisabled={false}
+            feature="show-properties"
+            onChange={this.props.onChangeProperties}
+          />
+        </Feature>
       </div>
     )
   }
@@ -56,14 +64,20 @@ export default class Actions extends React.Component<Props> {
             action={this.props.onCreateLocalColors}
           />
         </div>
-        <Switch
-          id="show-properties"
-          label="Show properties"
-          isChecked={this.props.hasProperties}
-          isDisabled={false}
-          feature="show-properties"
-          onChange={this.props.onChangeProperties}
-        />
+        <Feature
+          name='properties'
+          isActive={features.find(feature => feature.name === 'properties').isActive}
+          isPro={features.find(feature => feature.name === 'properties').isPro}
+        >
+          <Switch
+            id="show-properties"
+            label="Show properties"
+            isChecked={this.props.hasProperties}
+            isDisabled={false}
+            feature="show-properties"
+            onChange={this.props.onChangeProperties}
+          />
+        </Feature>
       </div>
     )
   }
