@@ -18,7 +18,22 @@ export default class Export extends React.Component<Props> {
     super(props)
     this.counter = 0
     this.state = {
-      format: features.filter(feature => feature.name.includes('EXPORT') && feature.type === 'ACTION' && feature.isActive)[0] != undefined ? features.filter(feature => feature.name.includes('EXPORT') && feature.type === 'ACTION' && feature.isActive)[0].name.slice(7) : '',
+      format:
+        features.filter(
+          (feature) =>
+            feature.name.includes('EXPORT') &&
+            feature.type === 'ACTION' &&
+            feature.isActive
+        )[0] != undefined
+          ? features
+              .filter(
+                (feature) =>
+                  feature.name.includes('EXPORT') &&
+                  feature.type === 'ACTION' &&
+                  feature.isActive
+              )[0]
+              .name.slice(7)
+          : '',
     }
   }
 
@@ -84,7 +99,10 @@ export default class Export extends React.Component<Props> {
           <div className="export-palette__options">
             <ul>
               <Feature
-                isActive={features.find(feature => feature.name === 'EXPORT_JSON').isActive}
+                isActive={
+                  features.find((feature) => feature.name === 'EXPORT_JSON')
+                    .isActive
+                }
               >
                 <li>
                   <RadioButton
@@ -99,7 +117,10 @@ export default class Export extends React.Component<Props> {
                 </li>
               </Feature>
               <Feature
-                isActive={features.find(feature => feature.name === 'EXPORT_CSS').isActive}
+                isActive={
+                  features.find((feature) => feature.name === 'EXPORT_CSS')
+                    .isActive
+                }
               >
                 <li>
                   <RadioButton
@@ -114,7 +135,10 @@ export default class Export extends React.Component<Props> {
                 </li>
               </Feature>
               <Feature
-                isActive={features.find(feature => feature.name === 'EXPORT_CSV').isActive}
+                isActive={
+                  features.find((feature) => feature.name === 'EXPORT_CSV')
+                    .isActive
+                }
               >
                 <li>
                   <RadioButton
@@ -138,9 +162,7 @@ export default class Export extends React.Component<Props> {
           <div className="export-palette__options">
             <textarea
               className="export-palette__preview textarea"
-              value={
-                this.props.exportPreview
-              }
+              value={this.props.exportPreview}
               readOnly
             ></textarea>
           </div>

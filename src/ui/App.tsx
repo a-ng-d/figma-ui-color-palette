@@ -336,7 +336,9 @@ class App extends React.Component {
               export: {
                 format: 'CSS',
                 mimeType: 'text/css',
-                data: `:root {\n  ${e.data.pluginMessage.data.join(';\n  ')}\n}`,
+                data: `:root {\n  ${e.data.pluginMessage.data.join(
+                  ';\n  '
+                )}\n}`,
               },
               onGoingStep: 'export previewed',
             })
@@ -361,7 +363,9 @@ class App extends React.Component {
     return (
       <main>
         <Feature
-          isActive={features.find(feature => feature.name === 'CREATE').isActive}
+          isActive={
+            features.find((feature) => feature.name === 'CREATE').isActive
+          }
         >
           {this.state['service'] === 'Create' ? (
             <CreatePalette
@@ -376,7 +380,9 @@ class App extends React.Component {
           ) : null}
         </Feature>
         <Feature
-          isActive={features.find(feature => feature.name === 'EDIT').isActive}
+          isActive={
+            features.find((feature) => feature.name === 'EDIT').isActive
+          }
         >
           {this.state['service'] === 'Edit' ? (
             <EditPalette
@@ -397,14 +403,18 @@ class App extends React.Component {
           ) : null}
         </Feature>
         <Feature
-          isActive={features.find(feature => feature.name === 'ONBOARDING').isActive}
+          isActive={
+            features.find((feature) => feature.name === 'ONBOARDING').isActive
+          }
         >
           {this.state['service'] === 'None' ? (
             <Onboarding onHighlightReopen={this.highlightHandler('OPEN')} />
           ) : null}
         </Feature>
         <Feature
-          isActive={features.find(feature => feature.name === 'HIGHLIGHT').isActive}
+          isActive={
+            features.find((feature) => feature.name === 'HIGHLIGHT').isActive
+          }
         >
           {this.state['hasHighlight'] ? (
             <Highlight closeHighlight={this.highlightHandler('CLOSE')} />

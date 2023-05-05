@@ -22,7 +22,10 @@ export default class Settings extends React.Component<Props> {
           <div className="section-title">Base information</div>
         </div>
         <Feature
-          isActive={features.find(feature => feature.name === 'SETTINGS_PALETTE_NAME').isActive}
+          isActive={
+            features.find((feature) => feature.name === 'SETTINGS_PALETTE_NAME')
+              .isActive
+          }
         >
           <div className="settings__item">
             <FormItem label="Palette name" id="rename-palette">
@@ -30,7 +33,9 @@ export default class Settings extends React.Component<Props> {
                 type="text"
                 icon={{ type: 'none', value: null }}
                 placeholder="UI Color Palette"
-                value={this.props.paletteName != '' ? this.props.paletteName : ''}
+                value={
+                  this.props.paletteName != '' ? this.props.paletteName : ''
+                }
                 charactersLimit={64}
                 feature="rename-palette"
                 onChange={this.props.onSettingsChange}
@@ -51,7 +56,11 @@ export default class Settings extends React.Component<Props> {
           <div className="section-title">Color management</div>
         </div>
         <Feature
-          isActive={features.find(feature => feature.name === 'SETTINGS_NEW_ALGORITHM').isActive}
+          isActive={
+            features.find(
+              (feature) => feature.name === 'SETTINGS_NEW_ALGORITHM'
+            ).isActive
+          }
         >
           <div className="settings__item">
             <Switch
@@ -77,9 +86,7 @@ export default class Settings extends React.Component<Props> {
   render() {
     return (
       <div className="settings controls__control">
-        {this.props.settings.includes('base') ? (
-          <this.Base />
-        ) : null}
+        {this.props.settings.includes('base') ? <this.Base /> : null}
         {this.props.settings.includes('color-management') ? (
           <this.ColorManagement />
         ) : null}

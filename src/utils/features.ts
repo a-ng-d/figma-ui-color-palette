@@ -3,7 +3,7 @@ interface Features {
   description: string
   isActive: boolean
   isPro: boolean
-  type: string,
+  type: string
   service: Array<string>
 }
 
@@ -14,7 +14,7 @@ export const features: Array<Features> = [
     isActive: true,
     isPro: false,
     type: 'SERVICE',
-    service: []
+    service: [],
   },
   {
     name: 'CREATE',
@@ -22,7 +22,7 @@ export const features: Array<Features> = [
     isActive: true,
     isPro: false,
     type: 'SERVICE',
-    service: []
+    service: [],
   },
   {
     name: 'EDIT',
@@ -30,7 +30,7 @@ export const features: Array<Features> = [
     isActive: true,
     isPro: false,
     type: 'SERVICE',
-    service: []
+    service: [],
   },
   {
     name: 'HIGHLIGHT',
@@ -38,7 +38,7 @@ export const features: Array<Features> = [
     isActive: true,
     isPro: false,
     type: 'DIVISION',
-    service: ['onboard', 'create', 'edit']
+    service: ['onboard', 'create', 'edit'],
   },
   {
     name: 'SHORTCUTS',
@@ -46,7 +46,7 @@ export const features: Array<Features> = [
     isActive: true,
     isPro: false,
     type: 'DIVISION',
-    service: ['onboard', 'create', 'edit']
+    service: ['onboard', 'create', 'edit'],
   },
   {
     name: 'PROPERTIES',
@@ -54,7 +54,7 @@ export const features: Array<Features> = [
     isActive: true,
     isPro: false,
     type: 'ACTION',
-    service: ['create', 'edit']
+    service: ['create', 'edit'],
   },
   {
     name: 'CREATE_PALETTE',
@@ -62,7 +62,7 @@ export const features: Array<Features> = [
     isActive: true,
     isPro: false,
     type: 'ACTION',
-    service: ['create']
+    service: ['create'],
   },
   {
     name: 'CREATE_LOCAL_STYLES',
@@ -70,7 +70,7 @@ export const features: Array<Features> = [
     isActive: true,
     isPro: false,
     type: 'ACTION',
-    service: ['edit']
+    service: ['edit'],
   },
   {
     name: 'UPDATE_LOCAL_STYLES',
@@ -78,7 +78,7 @@ export const features: Array<Features> = [
     isActive: true,
     isPro: false,
     type: 'ACTION',
-    service: ['edit']
+    service: ['edit'],
   },
   {
     name: 'SCALE',
@@ -86,7 +86,7 @@ export const features: Array<Features> = [
     isActive: true,
     isPro: false,
     type: 'CONTEXT',
-    service: ['create', 'edit']
+    service: ['create', 'edit'],
   },
   {
     name: 'SCALE_PRESETS',
@@ -94,7 +94,7 @@ export const features: Array<Features> = [
     isActive: true,
     isPro: false,
     type: 'ACTION',
-    service: ['create']
+    service: ['create'],
   },
   {
     name: 'SCALE_CONFIGURATION',
@@ -102,15 +102,16 @@ export const features: Array<Features> = [
     isActive: true,
     isPro: false,
     type: 'ACTION',
-    service: ['create', 'edit']
+    service: ['create', 'edit'],
   },
   {
     name: 'SCALE_TIPS',
-    description: 'Tip message to onboard users about how to configure the lightness scale',
+    description:
+      'Tip message to onboard users about how to configure the lightness scale',
     isActive: true,
     isPro: false,
     type: 'DIVISION',
-    service: ['create', 'edit']
+    service: ['create', 'edit'],
   },
   {
     name: 'COLORS',
@@ -118,7 +119,7 @@ export const features: Array<Features> = [
     isActive: true,
     isPro: false,
     type: 'CONTEXT',
-    service: ['edit']
+    service: ['edit'],
   },
   {
     name: 'COLORS_OKLCH_SPACE',
@@ -126,7 +127,7 @@ export const features: Array<Features> = [
     isActive: true,
     isPro: false,
     type: 'ACTION',
-    service: ['edit']
+    service: ['edit'],
   },
   {
     name: 'COLORS_HUE_SHIFTING',
@@ -134,7 +135,7 @@ export const features: Array<Features> = [
     isActive: true,
     isPro: false,
     type: 'ACTION',
-    service: ['edit']
+    service: ['edit'],
   },
   {
     name: 'EXPORT',
@@ -142,7 +143,7 @@ export const features: Array<Features> = [
     isActive: true,
     isPro: false,
     type: 'CONTEXT',
-    service: ['edit']
+    service: ['edit'],
   },
   {
     name: 'EXPORT_JSON',
@@ -150,7 +151,7 @@ export const features: Array<Features> = [
     isActive: true,
     isPro: false,
     type: 'ACTION',
-    service: ['edit']
+    service: ['edit'],
   },
   {
     name: 'EXPORT_CSS',
@@ -158,7 +159,7 @@ export const features: Array<Features> = [
     isActive: true,
     isPro: false,
     type: 'ACTION',
-    service: ['edit']
+    service: ['edit'],
   },
   {
     name: 'EXPORT_CSV',
@@ -166,7 +167,7 @@ export const features: Array<Features> = [
     isActive: true,
     isPro: false,
     type: 'ACTION',
-    service: ['edit']
+    service: ['edit'],
   },
   {
     name: 'SETTINGS',
@@ -174,7 +175,7 @@ export const features: Array<Features> = [
     isActive: true,
     isPro: false,
     type: 'CONTEXT',
-    service: ['create', 'edit']
+    service: ['create', 'edit'],
   },
   {
     name: 'SETTINGS_PALETTE_NAME',
@@ -182,7 +183,7 @@ export const features: Array<Features> = [
     isActive: true,
     isPro: false,
     type: 'ACTION',
-    service: ['create', 'edit']
+    service: ['create', 'edit'],
   },
   {
     name: 'SETTINGS_NEW_ALGORITHM',
@@ -190,7 +191,7 @@ export const features: Array<Features> = [
     isActive: true,
     isPro: false,
     type: 'ACTION',
-    service: ['edit']
+    service: ['edit'],
   },
   {
     name: 'ABOUT',
@@ -198,6 +199,6 @@ export const features: Array<Features> = [
     isActive: true,
     isPro: false,
     type: 'CONTEXT',
-    service: ['create', 'edit']
+    service: ['create', 'edit'],
   },
 ]

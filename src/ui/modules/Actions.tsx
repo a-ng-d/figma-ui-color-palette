@@ -23,7 +23,10 @@ export default class Actions extends React.Component<Props> {
       <div className="actions">
         <div className="buttons">
           <Feature
-            isActive={features.find(feature => feature.name === 'CREATE_PALETTE').isActive}
+            isActive={
+              features.find((feature) => feature.name === 'CREATE_PALETTE')
+                .isActive
+            }
           >
             <Button
               type="primary"
@@ -34,7 +37,9 @@ export default class Actions extends React.Component<Props> {
           </Feature>
         </div>
         <Feature
-          isActive={features.find(feature => feature.name === 'PROPERTIES').isActive}
+          isActive={
+            features.find((feature) => feature.name === 'PROPERTIES').isActive
+          }
         >
           <Checkbox
             id="show-properties"
@@ -53,8 +58,11 @@ export default class Actions extends React.Component<Props> {
     return (
       <div className="actions">
         <div className="buttons">
-        <Feature
-            isActive={features.find(feature => feature.name === 'UPDATE_LOCAL_STYLES').isActive}
+          <Feature
+            isActive={
+              features.find((feature) => feature.name === 'UPDATE_LOCAL_STYLES')
+                .isActive
+            }
           >
             <Button
               type="secondary"
@@ -64,7 +72,10 @@ export default class Actions extends React.Component<Props> {
             />
           </Feature>
           <Feature
-            isActive={features.find(feature => feature.name === 'CREATE_LOCAL_STYLES').isActive}
+            isActive={
+              features.find((feature) => feature.name === 'CREATE_LOCAL_STYLES')
+                .isActive
+            }
           >
             <Button
               type="primary"
@@ -75,7 +86,9 @@ export default class Actions extends React.Component<Props> {
           </Feature>
         </div>
         <Feature
-          isActive={features.find(feature => feature.name === 'PROPERTIES').isActive}
+          isActive={
+            features.find((feature) => feature.name === 'PROPERTIES').isActive
+          }
         >
           <Switch
             id="show-properties"
