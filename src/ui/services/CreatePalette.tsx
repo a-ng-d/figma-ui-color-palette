@@ -135,7 +135,7 @@ export default class CreatePalette extends React.Component<Props> {
               {
                 label: 'Give feedback',
                 isLink: true,
-                url: 'http://uicp.link/feedback',
+                url: 'https://uicp.link/feedback',
                 action: null,
               },
               {
