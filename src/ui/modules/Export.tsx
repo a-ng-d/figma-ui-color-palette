@@ -1,5 +1,7 @@
 import * as React from 'react'
 import RadioButton from './../components/RadioButton'
+import Feature from '../components/Feature'
+import { features } from '../../utils/features'
 
 interface Props {
   exportPreview: string
@@ -77,39 +79,57 @@ export default class Export extends React.Component<Props> {
           </div>
           <div className="export-palette__options">
             <ul>
-              <li>
-                <RadioButton
-                  id="options__json"
-                  label="JSON"
-                  isChecked={this.state['format'] === 'JSON' ? true : false}
-                  isDisabled={false}
-                  feature="export-to-json"
-                  group="fileFormat"
-                  onChange={this.exportHandler}
-                />
-              </li>
-              <li>
-                <RadioButton
-                  id="options__css"
-                  label="CSS Custom Properties"
-                  isChecked={this.state['format'] === 'CSS' ? true : false}
-                  isDisabled={false}
-                  feature="export-to-css"
-                  group="fileFormat"
-                  onChange={this.exportHandler}
-                />
-              </li>
-              <li>
-                <RadioButton
-                  id="options__csv"
-                  label="CSV (LCH)"
-                  isChecked={this.state['format'] === 'CSV' ? true : false}
-                  isDisabled={false}
-                  feature="export-to-csv"
-                  group="fileFormat"
-                  onChange={this.exportHandler}
-                />
-              </li>
+              <Feature
+                name='json export'
+                isActive={features.find(feature => feature.name === 'json export').isActive}
+                isPro={features.find(feature => feature.name === 'json export').isPro}
+              >
+                <li>
+                  <RadioButton
+                    id="options__json"
+                    label="JSON"
+                    isChecked={this.state['format'] === 'JSON' ? true : false}
+                    isDisabled={false}
+                    feature="export-to-json"
+                    group="fileFormat"
+                    onChange={this.exportHandler}
+                  />
+                </li>
+              </Feature>
+              <Feature
+                name='css export'
+                isActive={features.find(feature => feature.name === 'css export').isActive}
+                isPro={features.find(feature => feature.name === 'css export').isPro}
+              >
+                <li>
+                  <RadioButton
+                    id="options__css"
+                    label="CSS Custom Properties"
+                    isChecked={this.state['format'] === 'CSS' ? true : false}
+                    isDisabled={false}
+                    feature="export-to-css"
+                    group="fileFormat"
+                    onChange={this.exportHandler}
+                  />
+                </li>
+              </Feature>
+              <Feature
+                name='lch csv export'
+                isActive={features.find(feature => feature.name === 'lch csv export').isActive}
+                isPro={features.find(feature => feature.name === 'lch csv export').isPro}
+              >
+                <li>
+                  <RadioButton
+                    id="options__csv"
+                    label="CSV (LCH)"
+                    isChecked={this.state['format'] === 'CSV' ? true : false}
+                    isDisabled={false}
+                    feature="export-to-csv"
+                    group="fileFormat"
+                    onChange={this.exportHandler}
+                  />
+                </li>
+              </Feature>
             </ul>
           </div>
         </div>
@@ -120,7 +140,11 @@ export default class Export extends React.Component<Props> {
           <div className="export-palette__options">
             <textarea
               className="export-palette__preview textarea"
-              value={this.props.exportPreview}
+              value={
+                features.find(feature => feature.name === 'json export').isActive ?
+                this.props.exportPreview :
+                ''
+              }
               readOnly
             ></textarea>
           </div>

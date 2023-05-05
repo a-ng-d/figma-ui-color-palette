@@ -97,6 +97,24 @@ export const features: Array<Features> = [
     isPro: false
   },
   {
+    name: 'json export',
+    description: 'Palette export to JSON',
+    isActive: true,
+    isPro: false
+  },
+  {
+    name: 'css export',
+    description: 'Palette export to CSS',
+    isActive: true,
+    isPro: false
+  },
+  {
+    name: 'lch csv export',
+    description: 'Palette LCH values export to CSV',
+    isActive: true,
+    isPro: false
+  },
+  {
     name: 'settings',
     description: 'Palette global configuration',
     isActive: true,
