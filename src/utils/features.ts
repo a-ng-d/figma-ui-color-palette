@@ -71,5 +71,11 @@ export const features: Array<Features> = [
     description: 'Palette name text field',
     isActive: true,
     isPro: false
+  },
+  {
+    name: 'enable new algorithm',
+    description: 'Toggle for enabling or disabling the color shades generation new algorithm',
+    isActive: true,
+    isPro: false
   }
 ]

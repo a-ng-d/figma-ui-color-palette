@@ -52,22 +52,28 @@ export default class Settings extends React.Component<Props> {
         <div className="section-controls">
           <div className="section-title">Color management</div>
         </div>
-        <div className="settings__item">
-          <Switch
-            id="update-algorithm"
-            label="Enable the new algorithm for generating color shades"
-            isChecked={this.props.isNewAlgorithm}
-            isDisabled={false}
-            feature="update-algorithm-version"
-            onChange={this.props.onSettingsChange}
-          />
-          <Message
-            icon="library"
-            messages={[
-              'The Chroma values are harmonized to ensure consistent lightness across all shades, but this may make the colors look desaturated.',
-            ]}
-          />
-        </div>
+        <Feature
+          name='enable new algorithm'
+          isActive={features.find(feature => feature.name === 'enable new algorithm').isActive}
+          isPro={features.find(feature => feature.name === 'enable new algorithm').isPro}
+        >
+          <div className="settings__item">
+            <Switch
+              id="update-algorithm"
+              label="Enable the new algorithm for generating color shades"
+              isChecked={this.props.isNewAlgorithm}
+              isDisabled={false}
+              feature="update-algorithm-version"
+              onChange={this.props.onSettingsChange}
+            />
+            <Message
+              icon="library"
+              messages={[
+                'The Chroma values are harmonized to ensure consistent lightness across all shades, but this may make the colors look desaturated.',
+              ]}
+            />
+          </div>
+        </Feature>
       </div>
     )
   }
