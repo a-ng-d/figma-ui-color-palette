@@ -91,6 +91,24 @@ export const features: Array<Features> = [
     isPro: false
   },
   {
+    name: 'colors',
+    description: 'Source colors configuration',
+    isActive: true,
+    isPro: false
+  },
+  {
+    name: 'oklch color space',
+    description: 'OKLCH color space toggle',
+    isActive: true,
+    isPro: false
+  },
+  {
+    name: 'hue shifting',
+    description: 'Color hue shifting number field',
+    isActive: true,
+    isPro: false
+  },
+  {
     name: 'export',
     description: 'Palette export options',
     isActive: true,
@@ -128,7 +146,7 @@ export const features: Array<Features> = [
   },
   {
     name: 'enable new algorithm',
-    description: 'Toggle for enabling or disabling the color shades generation new algorithm',
+    description: 'Color shades generation new algorithm toggle',
     isActive: true,
     isPro: false
   },
