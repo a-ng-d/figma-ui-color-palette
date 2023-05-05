@@ -15,7 +15,7 @@ const updateColors = (msg, palette) => {
           : palette.getPluginData('name'),
       scale: string = JSON.parse(palette.getPluginData('scale')),
       properties: boolean =
-        palette.getPluginData('properties') == 'hasProperties' ? true : false,
+        palette.getPluginData('PROPERTIES') == 'hasProperties' ? true : false,
       preset = JSON.parse(palette.getPluginData('preset')),
       algorithmVersion: string = palette.getPluginData('algorithmVersion')
 

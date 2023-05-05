@@ -34,10 +34,10 @@ const processSelection = () => {
       )
 
     if (selection[0].getPluginData('captions') == 'hasCaptions') {
-      selection[0].setPluginData('properties', 'hasProperties')
+      selection[0].setPluginData('PROPERTIES', 'hasProperties')
       selection[0].setPluginData('captions', '')
     } else if (selection[0].getPluginData('captions') == 'hasNotCaptions') {
-      selection[0].setPluginData('properties', 'hasNotProperties')
+      selection[0].setPluginData('PROPERTIES', 'hasNotProperties')
       selection[0].setPluginData('captions', '')
     }
 
@@ -47,7 +47,7 @@ const processSelection = () => {
       data: {
         name: selection[0].getPluginData('name'),
         scale: JSON.parse(selection[0].getPluginData('scale')),
-        properties: selection[0].getPluginData('properties'),
+        properties: selection[0].getPluginData('PROPERTIES'),
         colors: JSON.parse(selection[0].getPluginData('colors')),
         algorithmVersion: selection[0].getPluginData('algorithmVersion'),
         preset: JSON.parse(selection[0].getPluginData('preset')),

@@ -522,16 +522,16 @@ export default class EditPalette extends React.Component<Props> {
 
   setPrimaryContexts = () => {
     const contexts: Array<string> = []
-    if(features.find(feature => feature.name === 'scale').isActive) contexts.push('Scale')
-    if(features.find(feature => feature.name === 'colors').isActive) contexts.push('Colors')
-    if(features.find(feature => feature.name === 'export').isActive) contexts.push('Export')
-    if(features.find(feature => feature.name === 'settings').isActive) contexts.push('Settings')
+    if(features.find(feature => feature.name === 'SCALE').isActive) contexts.push('Scale')
+    if(features.find(feature => feature.name === 'COLORS').isActive) contexts.push('Colors')
+    if(features.find(feature => feature.name === 'EXPORT').isActive) contexts.push('Export')
+    if(features.find(feature => feature.name === 'SETTINGS').isActive) contexts.push('Settings')
     return contexts
   }
 
   setSecondaryContexts = () => {
     const contexts: Array<string> = []
-    if(features.find(feature => feature.name === 'about').isActive) contexts.push('About')
+    if(features.find(feature => feature.name === 'ABOUT').isActive) contexts.push('About')
     return contexts
   }
 
@@ -551,7 +551,7 @@ export default class EditPalette extends React.Component<Props> {
 
       help = (
         <Feature
-          isActive={features.find(feature => feature.name === 'shortcuts').isActive}
+          isActive={features.find(feature => feature.name === 'SHORTCUTS').isActive}
         >
           <Shortcuts
             actions={[
@@ -592,7 +592,7 @@ export default class EditPalette extends React.Component<Props> {
 
       help = (
         <Feature
-          isActive={features.find(feature => feature.name === 'shortcuts').isActive}
+          isActive={features.find(feature => feature.name === 'SHORTCUTS').isActive}
         >
           <Shortcuts
             actions={[

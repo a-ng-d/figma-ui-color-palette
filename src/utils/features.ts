@@ -8,168 +8,168 @@ interface Features {
 
 export const features: Array<Features> = [
   {
-    name: 'onboarding',
+    name: 'ONBOARDING',
     description: 'Onboarding service when the selection is empty',
     isActive: true,
     isPro: false,
     type: 'SERVICE'
   },
   {
-    name: 'create palette',
+    name: 'CREATE_PALETTE',
     description: 'Palette creation service when several colors are selected',
     isActive: true,
     isPro: false,
     type: 'SERVICE'
   },
   {
-    name: 'edit palette',
+    name: 'EDIT_PALETTE',
     description: 'Palette configuration service when the palette is selected',
     isActive: true,
     isPro: false,
     type: 'SERVICE'
   },
   {
-    name: 'highlight',
+    name: 'HIGHLIGHT',
     description: 'Release note that highlights the key feature',
     isActive: true,
     isPro: false,
     type: 'DIVISION'
   },
   {
-    name: 'shortcuts',
+    name: 'SHORTCUTS',
     description: 'Quick links and access',
     isActive: true,
     isPro: false,
     type: 'DIVISION'
   },
   {
-    name: 'properties',
+    name: 'PROPERTIES',
     description: 'Shades information and WCAG scores',
     isActive: true,
     isPro: false,
     type: 'ACTION'
   },
   {
-    name: 'go create palette',
+    name: 'GO_CREATE_PALETTE',
     description: 'Generate a palette',
     isActive: true,
     isPro: false,
     type: 'ACTION'
   },
   {
-    name: 'create local styles',
+    name: 'CREATE_LOCAL_STYLES',
     description: 'Create local styles on the document',
     isActive: true,
     isPro: false,
     type: 'ACTION'
   },
   {
-    name: 'update local styles',
+    name: 'UPDATE_LOCAL_STYLES',
     description: 'Update local styles on the document',
     isActive: true,
     isPro: false,
     type: 'ACTION'
   },
   {
-    name: 'scale',
+    name: 'SCALE',
     description: 'Lightness scale configuration',
     isActive: true,
     isPro: false,
     type: 'CONTEXT'
   },
   {
-    name: 'presets',
+    name: 'PRESETS',
     description: 'List of existing color systems',
     isActive: true,
     isPro: false,
     type: 'ACTION'
   },
   {
-    name: 'lightness configuration',
+    name: 'LIGHTNESS_CONFIGURATION',
     description: 'The lightness stops on a range slider',
     isActive: true,
     isPro: false,
     type: 'ACTION'
   },
   {
-    name: 'lightness configuration tips',
+    name: 'LIGHTNESS_CONFIGURATION_TIPS',
     description: 'Tip message to onboard users about how to configure the lightness scale',
     isActive: true,
     isPro: false,
     type: 'DIVISION'
   },
   {
-    name: 'colors',
+    name: 'COLORS',
     description: 'Source colors configuration',
     isActive: true,
     isPro: false,
     type: 'CONTEXT'
   },
   {
-    name: 'oklch color space',
+    name: 'OKLCH_COLOR_SPACE',
     description: 'OKLCH color space toggle',
     isActive: true,
     isPro: false,
     type: 'ACTION'
   },
   {
-    name: 'hue shifting',
+    name: 'HUE_SHIFTING',
     description: 'Color hue shifting number field',
     isActive: true,
     isPro: false,
     type: 'ACTION'
   },
   {
-    name: 'export',
+    name: 'EXPORT',
     description: 'Palette export options',
     isActive: true,
     isPro: false,
     type: 'CONTEXT'
   },
   {
-    name: 'json export',
+    name: 'JSON_EXPORT',
     description: 'Palette export to JSON',
     isActive: true,
     isPro: false,
     type: 'ACTION'
   },
   {
-    name: 'css export',
+    name: 'CSS_EXPORT',
     description: 'Palette export to CSS',
     isActive: true,
     isPro: false,
     type: 'ACTION'
   },
   {
-    name: 'lch csv export',
+    name: 'LCH_CSV_EXPORT',
     description: 'Palette LCH values export to CSV',
     isActive: true,
     isPro: false,
     type: 'ACTION'
   },
   {
-    name: 'settings',
+    name: 'SETTINGS',
     description: 'Palette global configuration',
     isActive: true,
     isPro: false,
     type: 'CONTEXT'
   },
   {
-    name: 'edit palette name',
+    name: 'EDIT_PALETTE_NAME',
     description: 'Palette name text field',
     isActive: true,
     isPro: false,
     type: 'ACTION'
   },
   {
-    name: 'enable new algorithm',
+    name: 'ENABLE_NEW_ALGORITHM',
     description: 'Color shades generation new algorithm toggle',
     isActive: true,
     isPro: false,
     type: 'ACTION'
   },
   {
-    name: 'about',
+    name: 'ABOUT',
     description: 'Additional informations and useful links',
     isActive: true,
     isPro: false,

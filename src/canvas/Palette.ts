@@ -58,8 +58,8 @@ export default class Palette {
     this.node.setPluginData('preset', JSON.stringify(this.preset))
     this.node.setPluginData('algorithmVersion', this.algorithmVersion)
     this.properties
-      ? this.node.setPluginData('properties', 'hasProperties')
-      : this.node.setPluginData('properties', 'hasNotProperties')
+      ? this.node.setPluginData('PROPERTIES', 'hasProperties')
+      : this.node.setPluginData('PROPERTIES', 'hasNotProperties')
 
     // insert
     figma.currentPage.selection.forEach((element) => {

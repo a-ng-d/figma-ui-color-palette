@@ -23,7 +23,7 @@ export default class Actions extends React.Component<Props> {
       <div className="actions">
         <div className="buttons">
           <Feature
-            isActive={features.find(feature => feature.name === 'go create palette').isActive}
+            isActive={features.find(feature => feature.name === 'GO_CREATE_PALETTE').isActive}
           >
             <Button
               type="primary"
@@ -34,7 +34,7 @@ export default class Actions extends React.Component<Props> {
           </Feature>
         </div>
         <Feature
-          isActive={features.find(feature => feature.name === 'properties').isActive}
+          isActive={features.find(feature => feature.name === 'PROPERTIES').isActive}
         >
           <Checkbox
             id="show-properties"
@@ -54,7 +54,7 @@ export default class Actions extends React.Component<Props> {
       <div className="actions">
         <div className="buttons">
         <Feature
-            isActive={features.find(feature => feature.name === 'update local styles').isActive}
+            isActive={features.find(feature => feature.name === 'UPDATE_LOCAL_STYLES').isActive}
           >
             <Button
               type="secondary"
@@ -64,7 +64,7 @@ export default class Actions extends React.Component<Props> {
             />
           </Feature>
           <Feature
-            isActive={features.find(feature => feature.name === 'create local styles').isActive}
+            isActive={features.find(feature => feature.name === 'CREATE_LOCAL_STYLES').isActive}
           >
             <Button
               type="primary"
@@ -75,7 +75,7 @@ export default class Actions extends React.Component<Props> {
           </Feature>
         </div>
         <Feature
-          isActive={features.find(feature => feature.name === 'properties').isActive}
+          isActive={features.find(feature => feature.name === 'PROPERTIES').isActive}
         >
           <Switch
             id="show-properties"
