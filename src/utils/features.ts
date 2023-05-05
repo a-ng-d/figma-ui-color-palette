@@ -37,12 +37,6 @@ export const features: Array<Features> = [
     isPro: false
   },
   {
-    name: 'scale',
-    description: 'Lightness scale configuration',
-    isActive: true,
-    isPro: false
-  },
-  {
     name: 'properties',
     description: 'Shades information and WCAG scores',
     isActive: true,
@@ -63,6 +57,12 @@ export const features: Array<Features> = [
   {
     name: 'update local styles',
     description: 'Update local styles on the document',
+    isActive: true,
+    isPro: false
+  },
+  {
+    name: 'scale',
+    description: 'Lightness scale configuration',
     isActive: true,
     isPro: false
   },
