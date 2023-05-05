@@ -32,7 +32,7 @@ export const features: Array<Features> = [
   },
   {
     name: 'shortcuts',
-    description: 'Quick links and accesses',
+    description: 'Quick links and access',
     isActive: true,
     isPro: false
   },
