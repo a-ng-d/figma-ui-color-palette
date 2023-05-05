@@ -91,12 +91,6 @@ export const features: Array<Features> = [
     isPro: false
   },
   {
-    name: 'colors',
-    description: 'Source colors configuration',
-    isActive: true,
-    isPro: false
-  },
-  {
     name: 'oklch color space',
     description: 'OKLCH color space toggle',
     isActive: true,
