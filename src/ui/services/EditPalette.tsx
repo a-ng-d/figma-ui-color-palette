@@ -79,7 +79,7 @@ export default class EditPalette extends React.Component<Props> {
         hasGuideBelow: false,
         position: null,
       },
-      context: 'Scale',
+      context: features.filter(feature => feature.type === 'CONTEXT' && feature.service.includes('edit') && feature.isActive)[0].name.charAt(0) + features.filter(feature => feature.type === 'CONTEXT' && feature.service.includes('edit') && feature.isActive)[0].name.slice(1).toLowerCase(),
     }
   }
 
