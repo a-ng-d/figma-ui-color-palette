@@ -59,6 +59,19 @@ export default class CreatePalette extends React.Component<Props> {
       { pluginMessage: { type: 'create-palette', data: palette } },
       '*'
     )
+  
+  setPrimaryContexts = () => {
+    const contexts: Array<string> = []
+    if(features.find(feature => feature.name === 'scale').isActive) contexts.push('Scale')
+    if(features.find(feature => feature.name === 'settings').isActive) contexts.push('Settings')
+    return contexts
+  }
+
+  setSecondaryContexts = () => {
+    const contexts: Array<string> = []
+    if(features.find(feature => feature.name === 'about').isActive) contexts.push('About')
+    return contexts
+  }
 
   // Renders
   render() {
@@ -145,12 +158,8 @@ export default class CreatePalette extends React.Component<Props> {
     return (
       <>
         <Tabs
-          primaryTabs={['Scale', 'Settings']}
-          secondaryTabs={
-            features.find(feature => feature.name === 'about').isActive ?
-            ['About'] :
-            []
-          }
+          primaryTabs={this.setPrimaryContexts()}
+          secondaryTabs={this.setSecondaryContexts()}
           active={this.state['context']}
           onClick={this.navHandler}
         />

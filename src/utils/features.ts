@@ -37,6 +37,12 @@ export const features: Array<Features> = [
     isPro: false
   },
   {
+    name: 'scale',
+    description: 'Lightness scale configuration',
+    isActive: true,
+    isPro: false
+  },
+  {
     name: 'properties',
     description: 'Shades information and WCAG scores',
     isActive: true,
@@ -75,6 +81,24 @@ export const features: Array<Features> = [
   {
     name: 'lightness configuration tips',
     description: 'Tip message to onboard users about how to configure the lightness scale',
+    isActive: true,
+    isPro: false
+  },
+  {
+    name: 'colors',
+    description: 'Source colors configuration',
+    isActive: true,
+    isPro: false
+  },
+  {
+    name: 'export',
+    description: 'Palette export options',
+    isActive: true,
+    isPro: false
+  },
+  {
+    name: 'settings',
+    description: 'Palette global configuration',
     isActive: true,
     isPro: false
   },

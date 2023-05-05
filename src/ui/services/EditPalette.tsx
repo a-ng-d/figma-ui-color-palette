@@ -520,6 +520,21 @@ export default class EditPalette extends React.Component<Props> {
     }
   }
 
+  setPrimaryContexts = () => {
+    const contexts: Array<string> = []
+    if(features.find(feature => feature.name === 'scale').isActive) contexts.push('Scale')
+    if(features.find(feature => feature.name === 'colors').isActive) contexts.push('Colors')
+    if(features.find(feature => feature.name === 'export').isActive) contexts.push('Export')
+    if(features.find(feature => feature.name === 'settings').isActive) contexts.push('Settings')
+    return contexts
+  }
+
+  setSecondaryContexts = () => {
+    const contexts: Array<string> = []
+    if(features.find(feature => feature.name === 'about').isActive) contexts.push('About')
+    return contexts
+  }
+
   // Render
   render() {
     palette.properties = this.props.hasProperties
@@ -668,12 +683,8 @@ export default class EditPalette extends React.Component<Props> {
     return (
       <>
         <Tabs
-          primaryTabs={['Scale', 'Colors', 'Export', 'Settings']}
-          secondaryTabs={
-            features.find(feature => feature.name === 'about').isActive ?
-            ['About'] :
-            []
-          }
+          primaryTabs={this.setPrimaryContexts()}
+          secondaryTabs={this.setSecondaryContexts()}
           active={this.state['context']}
           onClick={this.navHandler}
         />
