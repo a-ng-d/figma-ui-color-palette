@@ -13,12 +13,6 @@ export const features: Array<Features> = [
     isPro: false
   },
   {
-    name: 'highlight',
-    description: 'Release note that highlights the key feature',
-    isActive: true,
-    isPro: false
-  },
-  {
     name: 'create palette',
     description: 'Palette creation service when several colors are selected',
     isActive: true,
@@ -27,6 +21,12 @@ export const features: Array<Features> = [
   {
     name: 'edit palette',
     description: 'Palette configuration service when the palette is selected',
+    isActive: true,
+    isPro: false
+  },
+  {
+    name: 'highlight',
+    description: 'Release note that highlights the key feature',
     isActive: true,
     isPro: false
   },
