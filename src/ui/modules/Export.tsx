@@ -10,11 +10,15 @@ interface Props {
 export default class Export extends React.Component<Props> {
   counter: number
 
+  static defaultProps = {
+    exportPreview: '',
+  }
+
   constructor(props) {
     super(props)
     this.counter = 0
     this.state = {
-      format: 'JSON',
+      format: features.filter(feature => feature.name.includes('EXPORT') && feature.type === 'ACTION' && feature.isActive)[0] != undefined ? features.filter(feature => feature.name.includes('EXPORT') && feature.type === 'ACTION' && feature.isActive)[0].name.slice(7) : '',
     }
   }
 
@@ -54,7 +58,7 @@ export default class Export extends React.Component<Props> {
   }
 
   setFirstPreview = () => {
-    this.counter == 0
+    this.counter == 0 && this.state['format'] != ''
       ? parent.postMessage(
           {
             pluginMessage: {
@@ -135,9 +139,7 @@ export default class Export extends React.Component<Props> {
             <textarea
               className="export-palette__preview textarea"
               value={
-                features.find(feature => feature.name === 'EXPORT_JSON').isActive ?
-                this.props.exportPreview :
-                ''
+                this.props.exportPreview
               }
               readOnly
             ></textarea>
