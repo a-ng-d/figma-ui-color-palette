@@ -669,7 +669,11 @@ export default class EditPalette extends React.Component<Props> {
       <>
         <Tabs
           primaryTabs={['Scale', 'Colors', 'Export', 'Settings']}
-          secondaryTabs={['About']}
+          secondaryTabs={
+            features.find(feature => feature.name === 'about').isActive ?
+            ['About'] :
+            []
+          }
           active={this.state['context']}
           onClick={this.navHandler}
         />

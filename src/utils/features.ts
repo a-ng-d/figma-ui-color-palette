@@ -89,5 +89,11 @@ export const features: Array<Features> = [
     description: 'Toggle for enabling or disabling the color shades generation new algorithm',
     isActive: true,
     isPro: false
-  }
+  },
+  {
+    name: 'about',
+    description: 'Additional informations and useful links',
+    isActive: true,
+    isPro: false
+  },
 ]

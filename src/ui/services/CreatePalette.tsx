@@ -136,7 +136,9 @@ export default class CreatePalette extends React.Component<Props> {
         break
       }
       case 'About': {
-        controls = <About />
+        controls = (
+          <About />
+        )
       }
     }
 
@@ -144,7 +146,11 @@ export default class CreatePalette extends React.Component<Props> {
       <>
         <Tabs
           primaryTabs={['Scale', 'Settings']}
-          secondaryTabs={['About']}
+          secondaryTabs={
+            features.find(feature => feature.name === 'about').isActive ?
+            ['About'] :
+            []
+          }
           active={this.state['context']}
           onClick={this.navHandler}
         />
