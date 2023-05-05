@@ -1,5 +1,6 @@
 import * as React from 'react'
 import Dispatcher from '../modules/Dispatcher'
+import Feature from '../components/Feature'
 import Tabs from '../components/Tabs'
 import Scale from '../modules/Scale'
 import Colors from '../modules/Colors'
@@ -10,6 +11,7 @@ import Actions from '../modules/Actions'
 import Shortcuts from '../modules/Shortcuts'
 import chroma from 'chroma-js'
 import { palette } from '../../utils/palettePackage'
+import { features } from '../../utils/features'
 import { v4 as uuidv4 } from 'uuid'
 import JSZip from 'JSZip'
 import FileSaver from 'file-saver'
@@ -77,7 +79,31 @@ export default class EditPalette extends React.Component<Props> {
         hasGuideBelow: false,
         position: null,
       },
-      context: 'Scale',
+      context:
+        features.filter(
+          (feature) =>
+            feature.type === 'CONTEXT' &&
+            feature.service.includes('edit') &&
+            feature.isActive
+        )[0] != undefined
+          ? features
+              .filter(
+                (feature) =>
+                  feature.type === 'CONTEXT' &&
+                  feature.service.includes('edit') &&
+                  feature.isActive
+              )[0]
+              .name.charAt(0) +
+            features
+              .filter(
+                (feature) =>
+                  feature.type === 'CONTEXT' &&
+                  feature.service.includes('edit') &&
+                  feature.isActive
+              )[0]
+              .name.slice(1)
+              .toLowerCase()
+          : '',
     }
   }
 
@@ -518,6 +544,26 @@ export default class EditPalette extends React.Component<Props> {
     }
   }
 
+  setPrimaryContexts = () => {
+    const contexts: Array<string> = []
+    if (features.find((feature) => feature.name === 'SCALE').isActive)
+      contexts.push('Scale')
+    if (features.find((feature) => feature.name === 'COLORS').isActive)
+      contexts.push('Colors')
+    if (features.find((feature) => feature.name === 'EXPORT').isActive)
+      contexts.push('Export')
+    if (features.find((feature) => feature.name === 'SETTINGS').isActive)
+      contexts.push('Settings')
+    return contexts
+  }
+
+  setSecondaryContexts = () => {
+    const contexts: Array<string> = []
+    if (features.find((feature) => feature.name === 'ABOUT').isActive)
+      contexts.push('About')
+    return contexts
+  }
+
   // Render
   render() {
     palette.properties = this.props.hasProperties
@@ -533,28 +579,34 @@ export default class EditPalette extends React.Component<Props> {
       )
 
       help = (
-        <Shortcuts
-          actions={[
-            {
-              label: 'Read the documentation',
-              isLink: true,
-              url: 'https://docs.ui-color-palette.com',
-              action: null,
-            },
-            {
-              label: 'Give feedback',
-              isLink: true,
-              url: 'http://uicp.link/feedback',
-              action: null,
-            },
-            {
-              label: "What's new",
-              isLink: false,
-              url: '',
-              action: this.props.onHighlightReopen,
-            },
-          ]}
-        />
+        <Feature
+          isActive={
+            features.find((feature) => feature.name === 'SHORTCUTS').isActive
+          }
+        >
+          <Shortcuts
+            actions={[
+              {
+                label: 'Read the documentation',
+                isLink: true,
+                url: 'https://docs.ui-color-palette.com',
+                action: null,
+              },
+              {
+                label: 'Give feedback',
+                isLink: true,
+                url: 'http://uicp.link/feedback',
+                action: null,
+              },
+              {
+                label: "What's new",
+                isLink: false,
+                url: '',
+                action: this.props.onHighlightReopen,
+              },
+            ]}
+          />
+        </Feature>
       )
     } else if (this.state['context'] === 'About') {
       actions = help = null
@@ -570,28 +622,34 @@ export default class EditPalette extends React.Component<Props> {
       )
 
       help = (
-        <Shortcuts
-          actions={[
-            {
-              label: 'Read the documentation',
-              isLink: true,
-              url: 'https://docs.ui-color-palette.com',
-              action: null,
-            },
-            {
-              label: 'Give feedback',
-              isLink: true,
-              url: 'http://uicp.link/feedback',
-              action: null,
-            },
-            {
-              label: "What's new",
-              isLink: false,
-              url: '',
-              action: this.props.onHighlightReopen,
-            },
-          ]}
-        />
+        <Feature
+          isActive={
+            features.find((feature) => feature.name === 'SHORTCUTS').isActive
+          }
+        >
+          <Shortcuts
+            actions={[
+              {
+                label: 'Read the documentation',
+                isLink: true,
+                url: 'https://docs.ui-color-palette.com',
+                action: null,
+              },
+              {
+                label: 'Give feedback',
+                isLink: true,
+                url: 'http://uicp.link/feedback',
+                action: null,
+              },
+              {
+                label: "What's new",
+                isLink: false,
+                url: '',
+                action: this.props.onHighlightReopen,
+              },
+            ]}
+          />
+        </Feature>
       )
     }
 
@@ -654,8 +712,8 @@ export default class EditPalette extends React.Component<Props> {
     return (
       <>
         <Tabs
-          primaryTabs={['Scale', 'Colors', 'Export', 'Settings']}
-          secondaryTabs={['About']}
+          primaryTabs={this.setPrimaryContexts()}
+          secondaryTabs={this.setSecondaryContexts()}
           active={this.state['context']}
           onClick={this.navHandler}
         />

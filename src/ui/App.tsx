@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { createRoot } from 'react-dom/client'
+import Feature from './components/Feature'
 import CreatePalette from './services/CreatePalette'
 import EditPalette from './services/EditPalette'
 import Onboarding from './services/Onboarding'
@@ -9,6 +10,7 @@ import './stylesheets/app.css'
 import './stylesheets/components.css'
 import package_json from './../../package.json'
 import { palette, presets } from '../utils/palettePackage'
+import { features } from '../utils/features'
 import { v4 as uuidv4 } from 'uuid'
 
 let isPaletteSelected = false
@@ -334,7 +336,9 @@ class App extends React.Component {
               export: {
                 format: 'CSS',
                 mimeType: 'text/css',
-                data: `:root {\n  ${e.data.pluginMessage.data.join(';\n  ')}\n}`,
+                data: `:root {\n  ${e.data.pluginMessage.data.join(
+                  ';\n  '
+                )}\n}`,
               },
               onGoingStep: 'export previewed',
             })
@@ -358,40 +362,64 @@ class App extends React.Component {
 
     return (
       <main>
-        {this.state['service'] === 'Create' ? (
-          <CreatePalette
-            preset={this.state['preset']}
-            hasProperties={this.state['hasProperties']}
-            paletteName={this.state['paletteName']}
-            onHighlightReopen={this.highlightHandler('OPEN')}
-            onPresetChange={this.presetHandler}
-            onCustomPreset={this.customHandler}
-            onSettingsChange={this.settingsHandler}
-          />
-        ) : null}
-        {this.state['service'] === 'Edit' ? (
-          <EditPalette
-            scale={this.state['newScale']}
-            colors={this.state['newColors']}
-            preset={this.state['preset']}
-            hasProperties={this.state['hasProperties']}
-            export={this.state['export']}
-            paletteName={this.state['paletteName']}
-            algorithmVersion={this.state['algorithmVersion']}
-            onHighlightReopen={this.highlightHandler('OPEN')}
-            onChangeScale={this.slideHandler}
-            onChangeStop={this.customSlideHandler}
-            onColorChange={this.colorHandler}
-            onPropertiesChange={this.propertiesHandler}
-            onSettingsChange={this.settingsHandler}
-          />
-        ) : null}
-        {this.state['service'] === 'None' ? (
-          <Onboarding onHighlightReopen={this.highlightHandler('OPEN')} />
-        ) : null}
-        {this.state['hasHighlight'] ? (
-          <Highlight closeHighlight={this.highlightHandler('CLOSE')} />
-        ) : null}
+        <Feature
+          isActive={
+            features.find((feature) => feature.name === 'CREATE').isActive
+          }
+        >
+          {this.state['service'] === 'Create' ? (
+            <CreatePalette
+              preset={this.state['preset']}
+              hasProperties={this.state['hasProperties']}
+              paletteName={this.state['paletteName']}
+              onHighlightReopen={this.highlightHandler('OPEN')}
+              onPresetChange={this.presetHandler}
+              onCustomPreset={this.customHandler}
+              onSettingsChange={this.settingsHandler}
+            />
+          ) : null}
+        </Feature>
+        <Feature
+          isActive={
+            features.find((feature) => feature.name === 'EDIT').isActive
+          }
+        >
+          {this.state['service'] === 'Edit' ? (
+            <EditPalette
+              scale={this.state['newScale']}
+              colors={this.state['newColors']}
+              preset={this.state['preset']}
+              hasProperties={this.state['hasProperties']}
+              export={this.state['export']}
+              paletteName={this.state['paletteName']}
+              algorithmVersion={this.state['algorithmVersion']}
+              onHighlightReopen={this.highlightHandler('OPEN')}
+              onChangeScale={this.slideHandler}
+              onChangeStop={this.customSlideHandler}
+              onColorChange={this.colorHandler}
+              onPropertiesChange={this.propertiesHandler}
+              onSettingsChange={this.settingsHandler}
+            />
+          ) : null}
+        </Feature>
+        <Feature
+          isActive={
+            features.find((feature) => feature.name === 'ONBOARDING').isActive
+          }
+        >
+          {this.state['service'] === 'None' ? (
+            <Onboarding onHighlightReopen={this.highlightHandler('OPEN')} />
+          ) : null}
+        </Feature>
+        <Feature
+          isActive={
+            features.find((feature) => feature.name === 'HIGHLIGHT').isActive
+          }
+        >
+          {this.state['hasHighlight'] ? (
+            <Highlight closeHighlight={this.highlightHandler('CLOSE')} />
+          ) : null}
+        </Feature>
       </main>
     )
   }

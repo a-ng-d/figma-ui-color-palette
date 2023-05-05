@@ -2,6 +2,8 @@ import * as React from 'react'
 import Button from '../components/Button'
 import Checkbox from '../components/Checkbox'
 import Switch from '../components/Switch'
+import Feature from '../components/Feature'
+import { features } from '../../utils/features'
 
 interface Props {
   context: string
@@ -20,21 +22,34 @@ export default class Actions extends React.Component<Props> {
     return (
       <div className="actions">
         <div className="buttons">
-          <Button
-            type="primary"
-            label="Create a color palette"
-            feature="create"
-            action={this.props.onCreatePalette}
-          />
+          <Feature
+            isActive={
+              features.find((feature) => feature.name === 'CREATE_PALETTE')
+                .isActive
+            }
+          >
+            <Button
+              type="primary"
+              label="Create a color palette"
+              feature="create"
+              action={this.props.onCreatePalette}
+            />
+          </Feature>
         </div>
-        <Checkbox
-          id="show-properties"
-          label="Show properties"
-          isChecked={this.props.hasProperties}
-          isDisabled={false}
-          feature="show-properties"
-          onChange={this.props.onChangeProperties}
-        />
+        <Feature
+          isActive={
+            features.find((feature) => feature.name === 'PROPERTIES').isActive
+          }
+        >
+          <Checkbox
+            id="show-properties"
+            label="Show properties"
+            isChecked={this.props.hasProperties}
+            isDisabled={false}
+            feature="show-properties"
+            onChange={this.props.onChangeProperties}
+          />
+        </Feature>
       </div>
     )
   }
@@ -43,27 +58,47 @@ export default class Actions extends React.Component<Props> {
     return (
       <div className="actions">
         <div className="buttons">
-          <Button
-            type="secondary"
-            label="Update the local styles"
-            feature="update"
-            action={this.props.onUpdateLocalColors}
-          />
-          <Button
-            type="primary"
-            label="Create local styles"
-            feature="create"
-            action={this.props.onCreateLocalColors}
-          />
+          <Feature
+            isActive={
+              features.find((feature) => feature.name === 'UPDATE_LOCAL_STYLES')
+                .isActive
+            }
+          >
+            <Button
+              type="secondary"
+              label="Update the local styles"
+              feature="update"
+              action={this.props.onUpdateLocalColors}
+            />
+          </Feature>
+          <Feature
+            isActive={
+              features.find((feature) => feature.name === 'CREATE_LOCAL_STYLES')
+                .isActive
+            }
+          >
+            <Button
+              type="primary"
+              label="Create local styles"
+              feature="create"
+              action={this.props.onCreateLocalColors}
+            />
+          </Feature>
         </div>
-        <Switch
-          id="show-properties"
-          label="Show properties"
-          isChecked={this.props.hasProperties}
-          isDisabled={false}
-          feature="show-properties"
-          onChange={this.props.onChangeProperties}
-        />
+        <Feature
+          isActive={
+            features.find((feature) => feature.name === 'PROPERTIES').isActive
+          }
+        >
+          <Switch
+            id="show-properties"
+            label="Show properties"
+            isChecked={this.props.hasProperties}
+            isDisabled={false}
+            feature="show-properties"
+            onChange={this.props.onChangeProperties}
+          />
+        </Feature>
       </div>
     )
   }

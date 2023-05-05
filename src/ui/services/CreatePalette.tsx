@@ -1,4 +1,5 @@
 import * as React from 'react'
+import Feature from '../components/Feature'
 import Tabs from '../components/Tabs'
 import Scale from '../modules/Scale'
 import Settings from '../modules/Settings'
@@ -6,6 +7,7 @@ import About from '../modules/About'
 import Actions from '../modules/Actions'
 import Shortcuts from '../modules/Shortcuts'
 import { palette } from '../../utils/palettePackage'
+import { features } from '../../utils/features'
 
 interface Props {
   hasProperties: boolean
@@ -21,7 +23,31 @@ export default class CreatePalette extends React.Component<Props> {
   constructor(props) {
     super(props)
     this.state = {
-      context: 'Scale',
+      context:
+        features.filter(
+          (feature) =>
+            feature.type === 'CONTEXT' &&
+            feature.service.includes('create') &&
+            feature.isActive
+        )[0] != undefined
+          ? features
+              .filter(
+                (feature) =>
+                  feature.type === 'CONTEXT' &&
+                  feature.service.includes('create') &&
+                  feature.isActive
+              )[0]
+              .name.charAt(0) +
+            features
+              .filter(
+                (feature) =>
+                  feature.type === 'CONTEXT' &&
+                  feature.service.includes('create') &&
+                  feature.isActive
+              )[0]
+              .name.slice(1)
+              .toLowerCase()
+          : '',
       hasProperties: true,
     }
   }
@@ -58,6 +84,22 @@ export default class CreatePalette extends React.Component<Props> {
       '*'
     )
 
+  setPrimaryContexts = () => {
+    const contexts: Array<string> = []
+    if (features.find((feature) => feature.name === 'SCALE').isActive)
+      contexts.push('Scale')
+    if (features.find((feature) => feature.name === 'SETTINGS').isActive)
+      contexts.push('Settings')
+    return contexts
+  }
+
+  setSecondaryContexts = () => {
+    const contexts: Array<string> = []
+    if (features.find((feature) => feature.name === 'ABOUT').isActive)
+      contexts.push('About')
+    return contexts
+  }
+
   // Renders
   render() {
     palette.properties = this.state['hasProperties']
@@ -77,28 +119,34 @@ export default class CreatePalette extends React.Component<Props> {
       )
 
       help = (
-        <Shortcuts
-          actions={[
-            {
-              label: 'Read the documentation',
-              isLink: true,
-              url: 'https://docs.ui-color-palette.com',
-              action: null,
-            },
-            {
-              label: 'Give feedback',
-              isLink: true,
-              url: 'http://uicp.link/feedback',
-              action: null,
-            },
-            {
-              label: "What's new",
-              isLink: false,
-              url: '',
-              action: this.props.onHighlightReopen,
-            },
-          ]}
-        />
+        <Feature
+          isActive={
+            features.find((feature) => feature.name === 'SHORTCUTS').isActive
+          }
+        >
+          <Shortcuts
+            actions={[
+              {
+                label: 'Read the documentation',
+                isLink: true,
+                url: 'https://docs.ui-color-palette.com',
+                action: null,
+              },
+              {
+                label: 'Give feedback',
+                isLink: true,
+                url: 'http://uicp.link/feedback',
+                action: null,
+              },
+              {
+                label: "What's new",
+                isLink: false,
+                url: '',
+                action: this.props.onHighlightReopen,
+              },
+            ]}
+          />
+        </Feature>
       )
     }
 
@@ -135,8 +183,8 @@ export default class CreatePalette extends React.Component<Props> {
     return (
       <>
         <Tabs
-          primaryTabs={['Scale', 'Settings']}
-          secondaryTabs={['About']}
+          primaryTabs={this.setPrimaryContexts()}
+          secondaryTabs={this.setSecondaryContexts()}
           active={this.state['context']}
           onClick={this.navHandler}
         />

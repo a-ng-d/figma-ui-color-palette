@@ -3,7 +3,9 @@ import chroma from 'chroma-js'
 import Input from './Input'
 import Button from './Button'
 import Switch from './Switch'
+import Feature from './Feature'
 import { doMap } from './../../utils/doMap'
+import { features } from '../../utils/features'
 
 interface Props {
   name: string
@@ -177,13 +179,22 @@ export default class ColorItem extends React.Component<Props> {
           </div>
         </div>
         <div className="colors__buttons">
-          <Button
-            icon="adjust"
-            type="icon"
-            state={this.state['hasMoreOptions'] ? 'selected' : ''}
-            feature="more"
-            action={this.optionsHandler}
-          />
+          <Feature
+            isActive={
+              features.find((feature) => feature.name === 'COLORS_OKLCH_SPACE')
+                .isActive ||
+              features.find((feature) => feature.name === 'COLORS_HUE_SHIFTING')
+                .isActive
+            }
+          >
+            <Button
+              icon="adjust"
+              type="icon"
+              state={this.state['hasMoreOptions'] ? 'selected' : ''}
+              feature="more"
+              action={this.optionsHandler}
+            />
+          </Feature>
           <Button
             icon="minus"
             type="icon"
@@ -192,30 +203,44 @@ export default class ColorItem extends React.Component<Props> {
           />
         </div>
         {this.state['hasMoreOptions'] ? (
-          <div className="colors__space">
-            <Switch
-              id={'oklch-' + this.props.uuid}
-              label="Use OKLCH"
-              isChecked={this.props.oklch}
-              isDisabled={false}
-              feature="oklch"
-              onChange={this.inputHandler}
-            />
-          </div>
+          <Feature
+            isActive={
+              features.find((feature) => feature.name === 'COLORS_OKLCH_SPACE')
+                .isActive
+            }
+          >
+            <div className="colors__space">
+              <Switch
+                id={'oklch-' + this.props.uuid}
+                label="Use OKLCH"
+                isChecked={this.props.oklch}
+                isDisabled={false}
+                feature="oklch"
+                onChange={this.inputHandler}
+              />
+            </div>
+          </Feature>
         ) : null}
         {this.state['hasMoreOptions'] ? (
-          <div className="colors__shift">
-            <Input
-              type="number"
-              icon={{ type: 'icon', value: 'arrow-left-right' }}
-              value={this.props.shift.toString()}
-              min="-360"
-              max="360"
-              feature="shift-hue"
-              onChange={this.inputHandler}
-              onFocus={this.selectionHandler}
-            />
-          </div>
+          <Feature
+            isActive={
+              features.find((feature) => feature.name === 'COLORS_HUE_SHIFTING')
+                .isActive
+            }
+          >
+            <div className="colors__shift">
+              <Input
+                type="number"
+                icon={{ type: 'icon', value: 'arrow-left-right' }}
+                value={this.props.shift.toString()}
+                min="-360"
+                max="360"
+                feature="shift-hue"
+                onChange={this.inputHandler}
+                onFocus={this.selectionHandler}
+              />
+            </div>
+          </Feature>
         ) : null}
       </li>
     )
