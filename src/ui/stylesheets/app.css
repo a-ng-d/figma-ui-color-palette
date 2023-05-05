@@ -543,6 +543,7 @@ li .colors__buttons {
   grid-column: span 8 / 77;
   grid-row: 1 / 1;
   display: flex;
+  justify-content: flex-end;
 }
 
 li .colors__space {
