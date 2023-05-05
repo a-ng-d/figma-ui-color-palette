@@ -3,6 +3,8 @@ import FormItem from './../components/FormItem'
 import Input from './../components/Input'
 import Switch from '../components/Switch'
 import Message from '../components/Message'
+import Feature from '../components/Feature'
+import { features } from '../../utils/features'
 
 interface Props {
   paletteName: string
@@ -19,21 +21,27 @@ export default class Settings extends React.Component<Props> {
         <div className="section-controls">
           <div className="section-title">Base information</div>
         </div>
-        <div className="settings__item">
-          <FormItem label="Palette name" id="rename-palette">
-            <Input
-              type="text"
-              icon={{ type: 'none', value: null }}
-              placeholder="UI Color Palette"
-              value={this.props.paletteName != '' ? this.props.paletteName : ''}
-              charactersLimit={64}
-              feature="rename-palette"
-              onChange={this.props.onSettingsChange}
-              onFocus={this.props.onSettingsChange}
-              onConfirm={this.props.onSettingsChange}
-            />
-          </FormItem>
-        </div>
+        <Feature
+          name='edit palette name'
+          isActive={features.find(feature => feature.name === 'edit palette name').isActive}
+          isPro={features.find(feature => feature.name === 'edit palette name').isPro}
+        >
+          <div className="settings__item">
+            <FormItem label="Palette name" id="rename-palette">
+              <Input
+                type="text"
+                icon={{ type: 'none', value: null }}
+                placeholder="UI Color Palette"
+                value={this.props.paletteName != '' ? this.props.paletteName : ''}
+                charactersLimit={64}
+                feature="rename-palette"
+                onChange={this.props.onSettingsChange}
+                onFocus={this.props.onSettingsChange}
+                onConfirm={this.props.onSettingsChange}
+              />
+            </FormItem>
+          </div>
+        </Feature>
       </div>
     )
   }

@@ -65,5 +65,11 @@ export const features: Array<Features> = [
     description: 'List of existing color systems',
     isActive: true,
     isPro: false
+  },
+  {
+    name: 'edit palette name',
+    description: 'Palette name text field',
+    isActive: true,
+    isPro: false
   }
 ]
