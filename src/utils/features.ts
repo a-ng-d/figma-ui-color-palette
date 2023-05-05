@@ -69,7 +69,13 @@ export const features: Array<Features> = [
   {
     name: 'lightness configuration',
     description: 'The lightness stops on a range slider',
-    isActive: false,
+    isActive: true,
+    isPro: false
+  },
+  {
+    name: 'lightness configuration tips',
+    description: 'Tip message to onboard users about how to configure the lightness scale',
+    isActive: true,
     isPro: false
   },
   {

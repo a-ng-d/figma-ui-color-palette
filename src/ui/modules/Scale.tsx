@@ -96,7 +96,13 @@ export default class Scale extends React.Component<Props> {
             onChange={this.props.onChangeScale}
           />
         </Feature>
-        <Message icon="library" messages={this.setOnboardingMessages()} />
+        <Feature
+          name='lightness configuration tips'
+          isActive={features.find(feature => feature.name === 'lightness configuration tips').isActive}
+          isPro={features.find(feature => feature.name === 'lightness configuration tips').isPro}
+        >
+          <Message icon="library" messages={this.setOnboardingMessages()} />
+        </Feature>
       </div>
     )
   }
@@ -123,7 +129,13 @@ export default class Scale extends React.Component<Props> {
             onChange={this.props.onChangeScale}
           />
         </Feature>
-        <Message icon="library" messages={this.setOnboardingMessages()} />
+        <Feature
+          name='lightness configuration tips'
+          isActive={features.find(feature => feature.name === 'lightness configuration tips').isActive}
+          isPro={features.find(feature => feature.name === 'lightness configuration tips').isPro}
+        >
+          <Message icon="library" messages={this.setOnboardingMessages()} />
+        </Feature>
       </div>
     )
   }
