@@ -80,9 +80,7 @@ export default class Export extends React.Component<Props> {
           <div className="export-palette__options">
             <ul>
               <Feature
-                name='json export'
                 isActive={features.find(feature => feature.name === 'json export').isActive}
-                isPro={features.find(feature => feature.name === 'json export').isPro}
               >
                 <li>
                   <RadioButton
@@ -97,9 +95,7 @@ export default class Export extends React.Component<Props> {
                 </li>
               </Feature>
               <Feature
-                name='css export'
                 isActive={features.find(feature => feature.name === 'css export').isActive}
-                isPro={features.find(feature => feature.name === 'css export').isPro}
               >
                 <li>
                   <RadioButton
@@ -114,9 +110,7 @@ export default class Export extends React.Component<Props> {
                 </li>
               </Feature>
               <Feature
-                name='lch csv export'
                 isActive={features.find(feature => feature.name === 'lch csv export').isActive}
-                isPro={features.find(feature => feature.name === 'lch csv export').isPro}
               >
                 <li>
                   <RadioButton

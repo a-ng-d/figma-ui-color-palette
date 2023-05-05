@@ -93,9 +93,7 @@ export default class CreatePalette extends React.Component<Props> {
 
       help = (
         <Feature
-          name='shortcuts'
           isActive={features.find(feature => feature.name === 'shortcuts').isActive}
-          isPro={features.find(feature => feature.name === 'shortcuts').isPro}
         >
           <Shortcuts
             actions={[

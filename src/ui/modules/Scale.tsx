@@ -51,9 +51,7 @@ export default class Scale extends React.Component<Props> {
         <div className="section-controls">
           <div className="section-title">Lightness scale</div>
           <Feature
-            name='presets'
             isActive={features.find(feature => feature.name === 'presets').isActive}
-            isPro={features.find(feature => feature.name === 'presets').isPro}
           >
             <Dropdown
               id="presets"
@@ -82,9 +80,7 @@ export default class Scale extends React.Component<Props> {
           </Feature>
         </div>
         <Feature
-          name='lightness configuration'
           isActive={features.find(feature => feature.name === 'lightness configuration').isActive}
-          isPro={features.find(feature => feature.name === 'lightness configuration').isPro}
         >
           <Slider
             type="EQUAL"
@@ -97,9 +93,7 @@ export default class Scale extends React.Component<Props> {
           />
         </Feature>
         <Feature
-          name='lightness configuration tips'
           isActive={features.find(feature => feature.name === 'lightness configuration tips').isActive}
-          isPro={features.find(feature => feature.name === 'lightness configuration tips').isPro}
         >
           <Message icon="library" messages={this.setOnboardingMessages()} />
         </Feature>
@@ -116,9 +110,7 @@ export default class Scale extends React.Component<Props> {
           <div className="label">{this.props.preset.name}</div>
         </div>
         <Feature
-          name='lightness configuration'
           isActive={features.find(feature => feature.name === 'lightness configuration').isActive}
-          isPro={features.find(feature => feature.name === 'lightness configuration').isPro}
         >
           <Slider
             type="CUSTOM"
@@ -130,9 +122,7 @@ export default class Scale extends React.Component<Props> {
           />
         </Feature>
         <Feature
-          name='lightness configuration tips'
           isActive={features.find(feature => feature.name === 'lightness configuration tips').isActive}
-          isPro={features.find(feature => feature.name === 'lightness configuration tips').isPro}
         >
           <Message icon="library" messages={this.setOnboardingMessages()} />
         </Feature>

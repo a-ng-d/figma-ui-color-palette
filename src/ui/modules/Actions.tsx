@@ -23,9 +23,7 @@ export default class Actions extends React.Component<Props> {
       <div className="actions">
         <div className="buttons">
           <Feature
-            name='go create palette'
             isActive={features.find(feature => feature.name === 'go create palette').isActive}
-            isPro={features.find(feature => feature.name === 'go create palette').isPro}
           >
             <Button
               type="primary"
@@ -36,9 +34,7 @@ export default class Actions extends React.Component<Props> {
           </Feature>
         </div>
         <Feature
-          name='properties'
           isActive={features.find(feature => feature.name === 'properties').isActive}
-          isPro={features.find(feature => feature.name === 'properties').isPro}
         >
           <Checkbox
             id="show-properties"
@@ -58,9 +54,7 @@ export default class Actions extends React.Component<Props> {
       <div className="actions">
         <div className="buttons">
         <Feature
-            name='update local styles'
             isActive={features.find(feature => feature.name === 'update local styles').isActive}
-            isPro={features.find(feature => feature.name === 'update local styles').isPro}
           >
             <Button
               type="secondary"
@@ -70,9 +64,7 @@ export default class Actions extends React.Component<Props> {
             />
           </Feature>
           <Feature
-            name='create local styles'
             isActive={features.find(feature => feature.name === 'create local styles').isActive}
-            isPro={features.find(feature => feature.name === 'create local styles').isPro}
           >
             <Button
               type="primary"
@@ -83,9 +75,7 @@ export default class Actions extends React.Component<Props> {
           </Feature>
         </div>
         <Feature
-          name='properties'
           isActive={features.find(feature => feature.name === 'properties').isActive}
-          isPro={features.find(feature => feature.name === 'properties').isPro}
         >
           <Switch
             id="show-properties"

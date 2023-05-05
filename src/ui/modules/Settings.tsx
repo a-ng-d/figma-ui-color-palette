@@ -22,9 +22,7 @@ export default class Settings extends React.Component<Props> {
           <div className="section-title">Base information</div>
         </div>
         <Feature
-          name='edit palette name'
           isActive={features.find(feature => feature.name === 'edit palette name').isActive}
-          isPro={features.find(feature => feature.name === 'edit palette name').isPro}
         >
           <div className="settings__item">
             <FormItem label="Palette name" id="rename-palette">
@@ -53,9 +51,7 @@ export default class Settings extends React.Component<Props> {
           <div className="section-title">Color management</div>
         </div>
         <Feature
-          name='enable new algorithm'
           isActive={features.find(feature => feature.name === 'enable new algorithm').isActive}
-          isPro={features.find(feature => feature.name === 'enable new algorithm').isPro}
         >
           <div className="settings__item">
             <Switch

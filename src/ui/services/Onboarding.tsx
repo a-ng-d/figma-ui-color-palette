@@ -30,9 +30,7 @@ export default class Onboarding extends React.Component<Props> {
           </div>
         </section>
         <Feature
-          name='shortcuts'
           isActive={features.find(feature => feature.name === 'shortcuts').isActive}
-          isPro={features.find(feature => feature.name === 'shortcuts').isPro}
         >
           <Shortcuts
             actions={[

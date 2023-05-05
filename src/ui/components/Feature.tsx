@@ -1,9 +1,7 @@
 import * as React from 'react'
 
 interface Props {
-  name: string
   isActive: boolean
-  isPro: boolean
   children: any
 }
 

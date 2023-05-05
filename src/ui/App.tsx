@@ -361,9 +361,7 @@ class App extends React.Component {
     return (
       <main>
         <Feature
-          name='create palette'
           isActive={features.find(feature => feature.name === 'create palette').isActive}
-          isPro={features.find(feature => feature.name === 'create palette').isPro}
         >
           {this.state['service'] === 'Create' ? (
             <CreatePalette
@@ -378,9 +376,7 @@ class App extends React.Component {
           ) : null}
         </Feature>
         <Feature
-          name='edit palette'
           isActive={features.find(feature => feature.name === 'edit palette').isActive}
-          isPro={features.find(feature => feature.name === 'edit palette').isPro}
         >
           {this.state['service'] === 'Edit' ? (
             <EditPalette
@@ -401,18 +397,14 @@ class App extends React.Component {
           ) : null}
         </Feature>
         <Feature
-          name='onboarding'
           isActive={features.find(feature => feature.name === 'onboarding').isActive}
-          isPro={features.find(feature => feature.name === 'onboarding').isPro}
         >
           {this.state['service'] === 'None' ? (
             <Onboarding onHighlightReopen={this.highlightHandler('OPEN')} />
           ) : null}
         </Feature>
         <Feature
-          name='highlight'
           isActive={features.find(feature => feature.name === 'highlight').isActive}
-          isPro={features.find(feature => feature.name === 'highlight').isPro}
         >
           {this.state['hasHighlight'] ? (
             <Highlight closeHighlight={this.highlightHandler('CLOSE')} />

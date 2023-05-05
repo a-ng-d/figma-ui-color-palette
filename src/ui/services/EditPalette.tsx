@@ -551,9 +551,7 @@ export default class EditPalette extends React.Component<Props> {
 
       help = (
         <Feature
-          name='shortcuts'
           isActive={features.find(feature => feature.name === 'shortcuts').isActive}
-          isPro={features.find(feature => feature.name === 'shortcuts').isPro}
         >
           <Shortcuts
             actions={[
@@ -594,9 +592,7 @@ export default class EditPalette extends React.Component<Props> {
 
       help = (
         <Feature
-          name='shortcuts'
           isActive={features.find(feature => feature.name === 'shortcuts').isActive}
-          isPro={features.find(feature => feature.name === 'shortcuts').isPro}
         >
           <Shortcuts
             actions={[
