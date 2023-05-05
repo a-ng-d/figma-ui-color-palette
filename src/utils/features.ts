@@ -67,6 +67,12 @@ export const features: Array<Features> = [
     isPro: false
   },
   {
+    name: 'lightness configuration',
+    description: 'The lightness stops on a range slider',
+    isActive: false,
+    isPro: false
+  },
+  {
     name: 'edit palette name',
     description: 'Palette name text field',
     isActive: true,

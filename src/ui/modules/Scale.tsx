@@ -81,15 +81,21 @@ export default class Scale extends React.Component<Props> {
             ) : null}
           </Feature>
         </div>
-        <Slider
-          type="EQUAL"
-          hasPreset={this.props.hasPreset}
-          presetName={this.props.preset.name}
-          knobs={this.props.preset.scale}
-          min={this.props.preset.min}
-          max={this.props.preset.max}
-          onChange={this.props.onChangeScale}
-        />
+        <Feature
+          name='lightness configuration'
+          isActive={features.find(feature => feature.name === 'lightness configuration').isActive}
+          isPro={features.find(feature => feature.name === 'lightness configuration').isPro}
+        >
+          <Slider
+            type="EQUAL"
+            hasPreset={this.props.hasPreset}
+            presetName={this.props.preset.name}
+            knobs={this.props.preset.scale}
+            min={this.props.preset.min}
+            max={this.props.preset.max}
+            onChange={this.props.onChangeScale}
+          />
+        </Feature>
         <Message icon="library" messages={this.setOnboardingMessages()} />
       </div>
     )
@@ -103,14 +109,20 @@ export default class Scale extends React.Component<Props> {
           <div className="section-title">Lightness scale</div>
           <div className="label">{this.props.preset.name}</div>
         </div>
-        <Slider
-          type="CUSTOM"
-          hasPreset={this.props.hasPreset}
-          presetName={this.props.preset.name}
-          knobs={this.props.preset.scale}
-          scale={this.props.scale}
-          onChange={this.props.onChangeScale}
-        />
+        <Feature
+          name='lightness configuration'
+          isActive={features.find(feature => feature.name === 'lightness configuration').isActive}
+          isPro={features.find(feature => feature.name === 'lightness configuration').isPro}
+        >
+          <Slider
+            type="CUSTOM"
+            hasPreset={this.props.hasPreset}
+            presetName={this.props.preset.name}
+            knobs={this.props.preset.scale}
+            scale={this.props.scale}
+            onChange={this.props.onChangeScale}
+          />
+        </Feature>
         <Message icon="library" messages={this.setOnboardingMessages()} />
       </div>
     )
