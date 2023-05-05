@@ -23,7 +23,7 @@ export default class Actions extends React.Component<Props> {
       <div className="actions">
         <div className="buttons">
           <Feature
-            isActive={features.find(feature => feature.name === 'GO_CREATE_PALETTE').isActive}
+            isActive={features.find(feature => feature.name === 'CREATE_PALETTE').isActive}
           >
             <Button
               type="primary"

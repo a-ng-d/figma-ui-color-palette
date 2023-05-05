@@ -51,7 +51,7 @@ export default class Scale extends React.Component<Props> {
         <div className="section-controls">
           <div className="section-title">Lightness scale</div>
           <Feature
-            isActive={features.find(feature => feature.name === 'PRESETS').isActive}
+            isActive={features.find(feature => feature.name === 'SCALE_PRESETS').isActive}
           >
             <Dropdown
               id="presets"
@@ -80,7 +80,7 @@ export default class Scale extends React.Component<Props> {
           </Feature>
         </div>
         <Feature
-          isActive={features.find(feature => feature.name === 'LIGHTNESS_CONFIGURATION').isActive}
+          isActive={features.find(feature => feature.name === 'SCALE_CONFIGURATION').isActive}
         >
           <Slider
             type="EQUAL"
@@ -93,7 +93,7 @@ export default class Scale extends React.Component<Props> {
           />
         </Feature>
         <Feature
-          isActive={features.find(feature => feature.name === 'LIGHTNESS_CONFIGURATION_TIPS').isActive}
+          isActive={features.find(feature => feature.name === 'SCALE_TIPS').isActive}
         >
           <Message icon="library" messages={this.setOnboardingMessages()} />
         </Feature>
@@ -110,7 +110,7 @@ export default class Scale extends React.Component<Props> {
           <div className="label">{this.props.preset.name}</div>
         </div>
         <Feature
-          isActive={features.find(feature => feature.name === 'LIGHTNESS_CONFIGURATION').isActive}
+          isActive={features.find(feature => feature.name === 'SCALE_CONFIGURATION').isActive}
         >
           <Slider
             type="CUSTOM"
@@ -122,7 +122,7 @@ export default class Scale extends React.Component<Props> {
           />
         </Feature>
         <Feature
-          isActive={features.find(feature => feature.name === 'LIGHTNESS_CONFIGURATION_TIPS').isActive}
+          isActive={features.find(feature => feature.name === 'SCALE_TIPS').isActive}
         >
           <Message icon="library" messages={this.setOnboardingMessages()} />
         </Feature>

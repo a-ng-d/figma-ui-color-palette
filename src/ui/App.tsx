@@ -361,7 +361,7 @@ class App extends React.Component {
     return (
       <main>
         <Feature
-          isActive={features.find(feature => feature.name === 'CREATE_PALETTE').isActive}
+          isActive={features.find(feature => feature.name === 'CREATE').isActive}
         >
           {this.state['service'] === 'Create' ? (
             <CreatePalette
@@ -376,7 +376,7 @@ class App extends React.Component {
           ) : null}
         </Feature>
         <Feature
-          isActive={features.find(feature => feature.name === 'EDIT_PALETTE').isActive}
+          isActive={features.find(feature => feature.name === 'EDIT').isActive}
         >
           {this.state['service'] === 'Edit' ? (
             <EditPalette

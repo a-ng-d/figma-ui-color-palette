@@ -17,7 +17,7 @@ export const features: Array<Features> = [
     service: []
   },
   {
-    name: 'CREATE_PALETTE',
+    name: 'CREATE',
     description: 'Palette creation service when several colors are selected',
     isActive: true,
     isPro: false,
@@ -25,7 +25,7 @@ export const features: Array<Features> = [
     service: []
   },
   {
-    name: 'EDIT_PALETTE',
+    name: 'EDIT',
     description: 'Palette configuration service when the palette is selected',
     isActive: true,
     isPro: false,
@@ -57,7 +57,7 @@ export const features: Array<Features> = [
     service: ['create', 'edit']
   },
   {
-    name: 'GO_CREATE_PALETTE',
+    name: 'CREATE_PALETTE',
     description: 'Generate a palette',
     isActive: true,
     isPro: false,
@@ -89,7 +89,7 @@ export const features: Array<Features> = [
     service: ['create', 'edit']
   },
   {
-    name: 'PRESETS',
+    name: 'SCALE_PRESETS',
     description: 'List of existing color systems',
     isActive: true,
     isPro: false,
@@ -97,7 +97,7 @@ export const features: Array<Features> = [
     service: ['create']
   },
   {
-    name: 'LIGHTNESS_CONFIGURATION',
+    name: 'SCALE_CONFIGURATION',
     description: 'The lightness stops on a range slider',
     isActive: true,
     isPro: false,
@@ -105,7 +105,7 @@ export const features: Array<Features> = [
     service: ['create', 'edit']
   },
   {
-    name: 'LIGHTNESS_CONFIGURATION_TIPS',
+    name: 'SCALE_TIPS',
     description: 'Tip message to onboard users about how to configure the lightness scale',
     isActive: true,
     isPro: false,
@@ -121,7 +121,7 @@ export const features: Array<Features> = [
     service: ['edit']
   },
   {
-    name: 'OKLCH_COLOR_SPACE',
+    name: 'COLORS_OKLCH_SPACE',
     description: 'OKLCH color space toggle',
     isActive: true,
     isPro: false,
@@ -129,7 +129,7 @@ export const features: Array<Features> = [
     service: ['edit']
   },
   {
-    name: 'HUE_SHIFTING',
+    name: 'COLORS_HUE_SHIFTING',
     description: 'Color hue shifting number field',
     isActive: true,
     isPro: false,
@@ -145,7 +145,7 @@ export const features: Array<Features> = [
     service: ['edit']
   },
   {
-    name: 'JSON_EXPORT',
+    name: 'EXPORT_JSON',
     description: 'Palette export to JSON',
     isActive: true,
     isPro: false,
@@ -153,7 +153,7 @@ export const features: Array<Features> = [
     service: ['edit']
   },
   {
-    name: 'CSS_EXPORT',
+    name: 'EXPORT_CSS',
     description: 'Palette export to CSS',
     isActive: true,
     isPro: false,
@@ -161,7 +161,7 @@ export const features: Array<Features> = [
     service: ['edit']
   },
   {
-    name: 'LCH_CSV_EXPORT',
+    name: 'EXPORT_CSV',
     description: 'Palette LCH values export to CSV',
     isActive: true,
     isPro: false,
@@ -177,7 +177,7 @@ export const features: Array<Features> = [
     service: ['create', 'edit']
   },
   {
-    name: 'EDIT_PALETTE_NAME',
+    name: 'SETTINGS_PALETTE_NAME',
     description: 'Palette name text field',
     isActive: true,
     isPro: false,
@@ -185,7 +185,7 @@ export const features: Array<Features> = [
     service: ['create', 'edit']
   },
   {
-    name: 'ENABLE_NEW_ALGORITHM',
+    name: 'SETTINGS_NEW_ALGORITHM',
     description: 'Color shades generation new algorithm toggle',
     isActive: true,
     isPro: false,

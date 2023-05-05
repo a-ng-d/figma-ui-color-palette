@@ -180,7 +180,7 @@ export default class ColorItem extends React.Component<Props> {
         </div>
         <div className="colors__buttons">
           <Feature
-            isActive={features.find(feature => feature.name === 'OKLCH_COLOR_SPACE').isActive || features.find(feature => feature.name === 'HUE_SHIFTING').isActive}
+            isActive={features.find(feature => feature.name === 'COLORS_OKLCH_SPACE').isActive || features.find(feature => feature.name === 'COLORS_HUE_SHIFTING').isActive}
           >
             <Button
               icon="adjust"
@@ -199,7 +199,7 @@ export default class ColorItem extends React.Component<Props> {
         </div>
         {this.state['hasMoreOptions'] ? (
           <Feature
-            isActive={features.find(feature => feature.name === 'OKLCH_COLOR_SPACE').isActive}
+            isActive={features.find(feature => feature.name === 'COLORS_OKLCH_SPACE').isActive}
           >
             <div className="colors__space">
               <Switch
@@ -215,7 +215,7 @@ export default class ColorItem extends React.Component<Props> {
         ) : null}
         {this.state['hasMoreOptions'] ? (
           <Feature
-            isActive={features.find(feature => feature.name === 'HUE_SHIFTING').isActive}
+            isActive={features.find(feature => feature.name === 'COLORS_HUE_SHIFTING').isActive}
           >
             <div className="colors__shift">
               <Input
