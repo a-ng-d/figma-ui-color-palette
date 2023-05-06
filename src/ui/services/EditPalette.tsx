@@ -15,6 +15,7 @@ import { features } from '../../utils/features'
 import { v4 as uuidv4 } from 'uuid'
 import JSZip from 'JSZip'
 import FileSaver from 'file-saver'
+import type { textColorThemeHex } from '../../utils/types'
 
 interface Props {
   scale: any
@@ -23,6 +24,7 @@ interface Props {
   preset: any
   export: any
   paletteName: string
+  textColorsTheme: textColorThemeHex
   algorithmVersion: string
   onHighlightReopen: any
   onChangeScale: any
@@ -697,7 +699,8 @@ export default class EditPalette extends React.Component<Props> {
         controls = (
           <Settings
             paletteName={this.props.paletteName}
-            settings={['base', 'color-management']}
+            textColorsTheme={this.props.textColorsTheme}
+            settings={['base', 'contrast-management', 'color-management']}
             isNewAlgorithm={this.props.algorithmVersion == 'v2' ? true : false}
             onSettingsChange={this.settingsHandler}
           />

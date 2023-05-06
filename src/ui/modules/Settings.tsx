@@ -5,9 +5,11 @@ import Switch from '../components/Switch'
 import Message from '../components/Message'
 import Feature from '../components/Feature'
 import { features } from '../../utils/features'
+import type { textColorThemeHex } from '../../utils/types'
 
 interface Props {
   paletteName: string
+  textColorsTheme?: textColorThemeHex
   settings?: Array<string>
   isNewAlgorithm?: boolean
   onSettingsChange: any
@@ -38,6 +40,48 @@ export default class Settings extends React.Component<Props> {
                 }
                 charactersLimit={64}
                 feature="rename-palette"
+                onChange={this.props.onSettingsChange}
+                onFocus={this.props.onSettingsChange}
+                onConfirm={this.props.onSettingsChange}
+              />
+            </FormItem>
+          </div>
+        </Feature>
+      </div>
+    )
+  }
+
+  ContrastManagement = () => {
+    return (
+      <div className="settings__group">
+        <div className="section-controls">
+          <div className="section-title">Contrast management</div>
+        </div>
+        <Feature
+          isActive={
+            features.find(
+              (feature) => feature.name === 'SETTINGS_TEXT_COLORS_THEME'
+            ).isActive
+          }
+        >
+          <div className="settings__item">
+            <FormItem label="Text light color" id="change-text-light-color">
+              <Input
+                type="color"
+                icon={{ type: 'none', value: null }}
+                value={this.props.textColorsTheme.lightColor}
+                feature="text-light-color"
+                onChange={this.props.onSettingsChange}
+                onFocus={this.props.onSettingsChange}
+                onConfirm={this.props.onSettingsChange}
+              />
+            </FormItem>
+            <FormItem label="Text dark color" id="change-text-dark-color">
+              <Input
+                type="color"
+                icon={{ type: 'none', value: null }}
+                value={this.props.textColorsTheme.darkColor}
+                feature="text-dark-color"
                 onChange={this.props.onSettingsChange}
                 onFocus={this.props.onSettingsChange}
                 onConfirm={this.props.onSettingsChange}
@@ -87,6 +131,7 @@ export default class Settings extends React.Component<Props> {
     return (
       <div className="settings controls__control">
         {this.props.settings.includes('base') ? <this.Base /> : null}
+        {this.props.settings.includes('contrast-management') ? <this.ContrastManagement /> : null}
         {this.props.settings.includes('color-management') ? (
           <this.ColorManagement />
         ) : null}

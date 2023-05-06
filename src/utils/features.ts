@@ -179,6 +179,14 @@ export const features: Array<Features> = [
     service: ['create', 'edit'],
   },
   {
+    name: 'SETTINGS_TEXT_COLORS_THEME',
+    description: 'Text colors customization to better check contrast',
+    isActive: true,
+    isPro: false,
+    type: 'ACTION',
+    service: ['create', 'edit'],
+  },
+  {
     name: 'SETTINGS_NEW_ALGORITHM',
     description: 'Color shades generation new algorithm toggle',
     isActive: true,

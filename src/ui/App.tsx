@@ -33,6 +33,7 @@ class App extends React.Component {
         data: '',
       },
       paletteName: '',
+      textColorsTheme: {},
       algorithmVersion: 'v1',
       hasHighlight: false,
     }
@@ -312,6 +313,7 @@ class App extends React.Component {
               newColors: putIdsOnColors,
               preset: e.data.pluginMessage.data.preset,
               paletteName: e.data.pluginMessage.data.name,
+              textColorsTheme: e.data.pluginMessage.data.textColorsTheme,
               algorithmVersion: e.data.pluginMessage.data.algorithmVersion,
               onGoingStep: 'palette selected',
             })
@@ -389,6 +391,7 @@ class App extends React.Component {
               hasProperties={this.state['hasProperties']}
               export={this.state['export']}
               paletteName={this.state['paletteName']}
+              textColorsTheme={this.state['textColorsTheme']}
               algorithmVersion={this.state['algorithmVersion']}
               onHighlightReopen={this.highlightHandler('OPEN')}
               onChangeScale={this.slideHandler}
