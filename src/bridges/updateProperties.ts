@@ -15,7 +15,7 @@ const updateProperties = (msg, palette) => {
       algorithmVersion: string = palette.getPluginData('algorithmVersion')
 
     if (msg.data.properties) {
-      palette.setPluginData('PROPERTIES', 'hasProperties')
+      palette.setPluginData('properties', 'hasProperties')
 
       palette.children[0].remove()
       palette.appendChild(
@@ -30,7 +30,7 @@ const updateProperties = (msg, palette) => {
         }).makeNode()
       )
     } else {
-      palette.setPluginData('PROPERTIES', 'hasNotProperties')
+      palette.setPluginData('properties', 'hasNotProperties')
 
       palette.children[0].remove()
       palette.appendChild(

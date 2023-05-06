@@ -50,8 +50,8 @@ export default class Palette {
     this.node.setPluginData('textColorsTheme', JSON.stringify(this.textColorsTheme))
     this.node.setPluginData('algorithmVersion', this.algorithmVersion)
     this.properties
-      ? this.node.setPluginData('PROPERTIES', 'hasProperties')
-      : this.node.setPluginData('PROPERTIES', 'hasNotProperties')
+      ? this.node.setPluginData('properties', 'hasProperties')
+      : this.node.setPluginData('properties', 'hasNotProperties')
 
     // insert
     figma.currentPage.selection.forEach((element) => {

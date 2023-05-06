@@ -10,7 +10,7 @@ const updateScale = (msg, palette) => {
           : palette.getPluginData('name'),
       colors: string = JSON.parse(palette.getPluginData('colors')),
       properties: boolean =
-        palette.getPluginData('PROPERTIES') == 'hasProperties' ? true : false,
+        palette.getPluginData('properties') == 'hasProperties' ? true : false,
       preset = JSON.parse(palette.getPluginData('preset')),
       textColorsTheme = JSON.parse(palette.getPluginData('textColorsTheme')),
       algorithmVersion: string = palette.getPluginData('algorithmVersion')

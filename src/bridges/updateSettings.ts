@@ -12,7 +12,7 @@ const updateSettings = (msg, palette) => {
     const colors = JSON.parse(palette.getPluginData('colors')),
       scale = JSON.parse(palette.getPluginData('scale')),
       properties =
-        palette.getPluginData('PROPERTIES') == 'hasProperties' ? true : false,
+        palette.getPluginData('properties') == 'hasProperties' ? true : false,
       preset = JSON.parse(palette.getPluginData('preset')),
       textColorsTheme = JSON.parse(palette.getPluginData('textColorsTheme'))
 
