@@ -1,22 +1,4 @@
-interface Preset {
-  name: string
-  scale: Array<number>
-  min: number
-  max: number
-}
-
-interface Scale {
-  [key: string]: string
-}
-
-interface Palette {
-  name: string
-  scale: Scale
-  min: number
-  max: number
-  properties: boolean
-  preset: any
-}
+import type { Preset, Palette } from './types'
 
 export const palette: Palette = {
   name: '',

@@ -1,11 +1,4 @@
-interface Features {
-  name: string
-  description: string
-  isActive: boolean
-  isPro: boolean
-  type: string
-  service: Array<string>
-}
+import type { Features } from './types'
 
 export const features: Array<Features> = [
   {

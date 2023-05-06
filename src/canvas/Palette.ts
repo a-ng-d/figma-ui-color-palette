@@ -1,16 +1,5 @@
 import Colors from './Colors'
-
-interface UIColors {
-  name: string
-  rgb: {
-    r: number
-    g: number
-    b: number
-  }
-  id: string | undefined
-  oklch: boolean
-  hueShifting: number
-}
+import type { UIColors, Preset } from '../utils/types'
 
 export default class Palette {
   paletteName: string
@@ -18,7 +7,7 @@ export default class Palette {
   scale: string
   colors: Array<UIColors>
   properties: boolean
-  preset: string
+  preset: Preset
   algorithmVersion: string
   children: any
   node: FrameNode

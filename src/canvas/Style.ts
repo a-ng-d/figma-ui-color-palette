@@ -1,8 +1,4 @@
-interface Rgb {
-  r: number
-  g: number
-  b: number
-}
+import type { Rgb } from '../utils/types'
 
 export default class Style {
   name: string
