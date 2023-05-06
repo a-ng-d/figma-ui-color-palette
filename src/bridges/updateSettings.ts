@@ -13,7 +13,8 @@ const updateSettings = (msg, palette) => {
       scale = JSON.parse(palette.getPluginData('scale')),
       properties =
         palette.getPluginData('PROPERTIES') == 'hasProperties' ? true : false,
-      preset = JSON.parse(palette.getPluginData('preset'))
+      preset = JSON.parse(palette.getPluginData('preset')),
+      textColorsTheme = JSON.parse(palette.getPluginData('textColorsTheme'))
 
     let paletteName: string
 
@@ -36,6 +37,7 @@ const updateSettings = (msg, palette) => {
         scale: scale,
         properties: properties,
         preset: preset,
+        textColorsTheme: textColorsTheme,
         algorithmVersion: msg.data.algorithmVersion,
       }).makeNode()
     )

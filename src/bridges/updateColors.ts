@@ -17,6 +17,7 @@ const updateColors = (msg, palette) => {
       properties: boolean =
         palette.getPluginData('PROPERTIES') == 'hasProperties' ? true : false,
       preset = JSON.parse(palette.getPluginData('preset')),
+      textColorsTheme = JSON.parse(palette.getPluginData('textColorsTheme')),
       algorithmVersion: string = palette.getPluginData('algorithmVersion')
 
     palette.setPluginData('colors', JSON.stringify(msg.data))
@@ -29,6 +30,7 @@ const updateColors = (msg, palette) => {
         scale: scale,
         properties: msg.isEditedInRealTime ? false : properties,
         preset: preset,
+        textColorsTheme: textColorsTheme,
         algorithmVersion: algorithmVersion,
       }).makeNode()
     )
