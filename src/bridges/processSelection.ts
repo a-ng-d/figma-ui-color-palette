@@ -47,7 +47,7 @@ const processSelection = () => {
       data: {
         name: selection[0].getPluginData('name'),
         scale: JSON.parse(selection[0].getPluginData('scale')),
-        properties: selection[0].getPluginData('PROPERTIES'),
+        properties: selection[0].getPluginData('properties'),
         colors: JSON.parse(selection[0].getPluginData('colors')),
         algorithmVersion: selection[0].getPluginData('algorithmVersion'),
         preset: JSON.parse(selection[0].getPluginData('preset')),
