@@ -41,6 +41,13 @@ const processSelection = () => {
       selection[0].setPluginData('captions', '')
     }
 
+    if (selection[0].getPluginData('textColorsTheme') === '') {
+      selection[0].setPluginData('textColorsTheme', JSON.stringify({
+        lightColor: '#FFFFFF',
+        darkColor: '#000000'
+      }))
+    }
+      
     // to UI
     figma.ui.postMessage({
       type: 'palette-selected',
