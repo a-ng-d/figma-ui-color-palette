@@ -8,6 +8,7 @@ const createPalette = (msg, palette) => {
     msg.data.scale,
     msg.data.properties,
     msg.data.preset,
+    '{"lightColor": "#CAC8FF", "darkColor": "#161616"}',
     'v2'
   ).makeNode()
 
