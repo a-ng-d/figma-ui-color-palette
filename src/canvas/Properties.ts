@@ -1,10 +1,12 @@
 import chroma from 'chroma-js'
 import { APCAcontrast, sRGBtoY, fontLookupAPCA } from 'apca-w3'
 import Tag from './Tag'
+import type { textColorThemeHex } from '../utils/types'
 
 export default class Properties {
   name: string
   rgb: Array<number>
+  textColorsTheme: textColorThemeHex
   hex: string
   lch: Array<number>
   nodeTop: FrameNode
@@ -14,9 +16,10 @@ export default class Properties {
   nodeProperties: TextNode
   node: FrameNode
 
-  constructor(name: string, rgb: Array<number>) {
+  constructor(name: string, rgb: Array<number>, textColorsTheme: string) {
     this.name = name
     this.rgb = rgb
+    this.textColorsTheme = JSON.parse(textColorsTheme)
     this.hex = chroma(rgb).hex()
     this.lch = chroma(rgb).lch()
     this.node = figma.createFrame()

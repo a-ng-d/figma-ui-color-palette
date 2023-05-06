@@ -30,7 +30,8 @@ export default class Title {
         null,
         null,
         [255, 255, 255],
-        this.parent.properties
+        this.parent.properties,
+        this.parent.textColorsTheme
       ).makeName('relative', 100, 48)
     )
 

@@ -8,18 +8,20 @@ export default class Sample {
   scale: string | null
   rgb: Array<number> | null
   properties: boolean
+  textColorsTheme: string
   status: {
     isClosestToRef: boolean
   }
   node: FrameNode
   children: any
 
-  constructor(name, source, scale, rgb, properties, status?) {
+  constructor(name: string, source: { [key: string]: number } | null, scale: string | null, rgb: Array<number> | null, properties: boolean, textColorsTheme: string, status?: { isClosestToRef: boolean }) {
     this.name = name
     this.source = source
     this.scale = scale
     this.rgb = rgb
     this.properties = properties
+    this.textColorsTheme = textColorsTheme
     this.status = status
     this.node = figma.createFrame()
     this.children = null
@@ -93,7 +95,7 @@ export default class Sample {
 
     // insert
     if (this.properties) {
-      this.children = new Properties(this.scale, this.rgb).makeNode()
+      this.children = new Properties(this.scale, this.rgb, this.textColorsTheme).makeNode()
       this.node.appendChild(this.children)
     }
     if (this.status.isClosestToRef)

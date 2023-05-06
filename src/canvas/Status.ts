@@ -5,7 +5,7 @@ export default class Status {
   source: { [key: string]: number }
   node: FrameNode
 
-  constructor(status: { isClosestToRef: boolean }, source) {
+  constructor(status: { isClosestToRef: boolean }, source: { [key: string]: number }) {
     this.status = status
     this.source = source
     this.node = figma.createFrame()
