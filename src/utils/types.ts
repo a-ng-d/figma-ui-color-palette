@@ -53,3 +53,13 @@ export interface Rgb {
   g: number
   b: number
 }
+
+export interface textColorThemeHex {
+  lightColor: string
+  darkColor: string
+}
+
+export interface textColorThemeGL {
+  lightColor: Array<number>
+  darkColor: Array<number>
+}
