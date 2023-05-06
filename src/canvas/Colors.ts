@@ -8,7 +8,7 @@ export default class Colors {
   parent: any
   node: FrameNode
 
-  constructor(parent) {
+  constructor(parent: any) {
     this.parent = parent
     this.node = figma.createFrame()
   }

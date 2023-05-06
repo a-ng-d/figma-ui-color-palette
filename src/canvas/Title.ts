@@ -5,7 +5,7 @@ export default class Title {
   parent: any
   node: FrameNode
 
-  constructor(text, parent) {
+  constructor(text: string, parent: any) {
     this.text = text
     this.parent = parent
     this.node = figma.createFrame()

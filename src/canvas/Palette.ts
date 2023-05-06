@@ -85,7 +85,7 @@ export default class Palette {
     return this.node
   }
 
-  changeName(name) {
+  changeName(name: string) {
     this.node.name = name
   }
 }

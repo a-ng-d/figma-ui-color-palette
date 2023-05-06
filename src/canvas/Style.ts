@@ -5,7 +5,7 @@ export default class Style {
   rgb: Rgb
   node: PaintStyle
 
-  constructor(name, rgb) {
+  constructor(name: string, rgb: Rgb) {
     this.name = name
     this.rgb = rgb
     this.node = figma.createPaintStyle()

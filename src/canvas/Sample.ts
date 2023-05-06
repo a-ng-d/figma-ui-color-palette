@@ -66,7 +66,7 @@ export default class Sample {
     return this.node
   }
 
-  makeScale(width, height) {
+  makeScale(width: number, height: number) {
     // base
     this.node.name = this.scale
     this.node.resize(width, height)
