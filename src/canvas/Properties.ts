@@ -16,10 +16,10 @@ export default class Properties {
   nodeProperties: TextNode
   node: FrameNode
 
-  constructor(name: string, rgb: Array<number>, textColorsTheme: string) {
+  constructor(name: string, rgb: Array<number>, textColorsTheme: textColorThemeHex) {
     this.name = name
     this.rgb = rgb
-    this.textColorsTheme = JSON.parse(textColorsTheme)
+    this.textColorsTheme = textColorsTheme
     this.hex = chroma(rgb).hex()
     this.lch = chroma(rgb).lch()
     this.node = figma.createFrame()

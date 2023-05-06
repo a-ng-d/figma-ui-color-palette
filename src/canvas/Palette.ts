@@ -1,5 +1,5 @@
 import Colors from './Colors'
-import type { UIColors, Preset } from '../utils/types'
+import type { UIColors, Preset, textColorThemeHex } from '../utils/types'
 
 export default class Palette {
   paletteName: string
@@ -8,12 +8,12 @@ export default class Palette {
   colors: Array<UIColors>
   properties: boolean
   preset: Preset
-  textColorsTheme: string
+  textColorsTheme: textColorThemeHex
   algorithmVersion: string
   children: any
   node: FrameNode
 
-  constructor(name: string, scale: string, properties: boolean, preset: Preset, textColorsTheme: string, algorithmVersion: string) {
+  constructor(name: string, scale: string, properties: boolean, preset: Preset, textColorsTheme: textColorThemeHex, algorithmVersion: string) {
     this.paletteName = name
     this.name = `${name === '' ? 'UI Color Palette' : name}﹒${preset.name}`
     this.scale = scale
@@ -47,7 +47,7 @@ export default class Palette {
     this.node.setPluginData('name', this.paletteName)
     this.node.setPluginData('scale', JSON.stringify(this.scale))
     this.node.setPluginData('preset', JSON.stringify(this.preset))
-    this.node.setPluginData('textColorsTheme', this.textColorsTheme)
+    this.node.setPluginData('textColorsTheme', JSON.stringify(this.textColorsTheme))
     this.node.setPluginData('algorithmVersion', this.algorithmVersion)
     this.properties
       ? this.node.setPluginData('PROPERTIES', 'hasProperties')
