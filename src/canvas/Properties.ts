@@ -26,12 +26,12 @@ export default class Properties {
   }
 
   getContrast(textColor: string) {
-    return chroma.contrast(this.rgb, textColor === 'BLACK' ? '#000' : '#FFF')
+    return chroma.contrast(this.rgb, textColor === 'BLACK' ? this.textColorsTheme.darkColor : this.textColorsTheme.lightColor)
   }
 
   getAPCAContrast(textColor: string) {
     return APCAcontrast(
-      sRGBtoY(textColor === 'BLACK' ? [0, 0, 0, 1] : [255, 255, 255, 1]),
+      sRGBtoY(textColor === 'BLACK' ? chroma(this.textColorsTheme.darkColor).rgb() : chroma(this.textColorsTheme.lightColor).rgb()),
       sRGBtoY(this.rgb)
     )
   }
@@ -131,14 +131,14 @@ export default class Properties {
         '_wcag21-black',
         `${this.getContrast('BLACK').toFixed(2)} • ${this.getLevel('BLACK')}`,
         8
-      ).makeNodeTag('BLACK')
+      ).makeNodeTag(chroma(this.textColorsTheme.darkColor).gl(), true)
     )
     this.nodeContrastScores.appendChild(
       new Tag(
         '_wcag21-white',
         `${this.getContrast('WHITE').toFixed(2)} • ${this.getLevel('WHITE')}`,
         8
-      ).makeNodeTag('WHITE')
+      ).makeNodeTag(chroma(this.textColorsTheme.lightColor).gl(), true)
     )
     this.nodeContrastScores.appendChild(
       new Tag(
@@ -147,7 +147,7 @@ export default class Properties {
           this.getMinFontSizes('BLACK')[4]
         }pt (400)`,
         8
-      ).makeNodeTag('BLACK')
+      ).makeNodeTag(chroma(this.textColorsTheme.darkColor).gl(), true)
     )
     this.nodeContrastScores.appendChild(
       new Tag(
@@ -156,7 +156,7 @@ export default class Properties {
           this.getMinFontSizes('WHITE')[4]
         }pt (400)`,
         8
-      ).makeNodeTag('WHITE')
+      ).makeNodeTag(chroma(this.textColorsTheme.lightColor).gl(), true)
     )
 
     return this.nodeContrastScores

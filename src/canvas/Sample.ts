@@ -27,7 +27,7 @@ export default class Sample {
     this.children = null
   }
 
-  makeName(mode, width, height) {
+  makeName(mode: string, width: number, height: number) {
     // base
     this.node.name = this.name
     this.node.fills = [

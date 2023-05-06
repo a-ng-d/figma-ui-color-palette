@@ -1,3 +1,5 @@
+import type { Rgb } from '../utils/types'
+
 export default class Tag {
   name: string
   content: string
@@ -14,10 +16,7 @@ export default class Tag {
     this.nodeText = figma.createText()
   }
 
-  makeNodeTag(
-    color: string | null = null,
-    rgb: { [key: string]: number } = null
-  ) {
+  makeNodeTag(gl: Array<number> = [0,0,0,1], hasIndicator: boolean = false) {
     // base
     this.nodeTag.name = this.name
     this.nodeTag.fills = [
@@ -43,20 +42,8 @@ export default class Tag {
     this.nodeTag.itemSpacing = 4
 
     // insert
-    switch (color) {
-      case 'BLACK': {
-        this.nodeTag.appendChild(this.makeNodeIndicator([0, 0, 0]))
-        break
-      }
-      case 'WHITE': {
-        this.nodeTag.appendChild(this.makeNodeIndicator([1, 1, 1]))
-        break
-      }
-      case 'CUSTOM': {
-        this.nodeTag.appendChild(this.makeNodeIndicator([rgb.r, rgb.g, rgb.b]))
-        break
-      }
-    }
+    if (hasIndicator)
+      this.nodeTag.appendChild(this.makeNodeIndicator([gl[0], gl[1], gl[2]]))
     this.nodeTag.appendChild(this.makeNodeText())
 
     return this.nodeTag
