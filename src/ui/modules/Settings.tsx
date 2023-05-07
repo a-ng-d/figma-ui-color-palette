@@ -73,7 +73,6 @@ export default class Settings extends React.Component<Props> {
                 feature="change-text-light-color"
                 onChange={this.props.onSettingsChange}
                 onFocus={this.props.onSettingsChange}
-                onConfirm={this.props.onSettingsChange}
               />
             </FormItem>
             <FormItem label="Text dark color" id="change-text-dark-color">
@@ -84,7 +83,6 @@ export default class Settings extends React.Component<Props> {
                 feature="change-text-dark-color"
                 onChange={this.props.onSettingsChange}
                 onFocus={this.props.onSettingsChange}
-                onConfirm={this.props.onSettingsChange}
               />
             </FormItem>
           </div>
