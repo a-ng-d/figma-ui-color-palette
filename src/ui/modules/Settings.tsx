@@ -70,7 +70,7 @@ export default class Settings extends React.Component<Props> {
                 type="color"
                 icon={{ type: 'none', value: null }}
                 value={this.props.textColorsTheme.lightColor}
-                feature="text-light-color"
+                feature="change-text-light-color"
                 onChange={this.props.onSettingsChange}
                 onFocus={this.props.onSettingsChange}
                 onConfirm={this.props.onSettingsChange}
@@ -81,7 +81,7 @@ export default class Settings extends React.Component<Props> {
                 type="color"
                 icon={{ type: 'none', value: null }}
                 value={this.props.textColorsTheme.darkColor}
-                feature="text-dark-color"
+                feature="change-text-dark-color"
                 onChange={this.props.onSettingsChange}
                 onFocus={this.props.onSettingsChange}
                 onConfirm={this.props.onSettingsChange}

@@ -7,6 +7,10 @@ export const palette: Palette = {
   max: null,
   properties: true,
   preset: {},
+  textColorsTheme: {
+    lightColor: '#FFFFFF',
+    darkColor: '#000000'
+  }
 }
 
 export const presets = {

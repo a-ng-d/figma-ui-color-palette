@@ -1,4 +1,5 @@
 import * as React from 'react'
+import Dispatcher from './modules/Dispatcher'
 import { createRoot } from 'react-dom/client'
 import Feature from './components/Feature'
 import CreatePalette from './services/CreatePalette'
@@ -18,8 +19,33 @@ const container = document.getElementById('react-page'),
   root = createRoot(container)
 
 class App extends React.Component {
+  dispatch: any
+
   constructor(props) {
     super(props)
+    this.dispatch = {
+      textColorsTheme: new Dispatcher(
+        () =>
+        parent.postMessage(
+          {
+            pluginMessage: {
+              type: 'update-settings',
+              data: {
+                name: this.state['paletteName'],
+                algorithmVersion: this.state['algorithmVersion'],
+                textColorsTheme: {
+                  lightColor: palette.textColorsTheme.lightColor,
+                  darkColor: palette.textColorsTheme.darkColor
+                }
+              },
+              isEditedInRealTime: false
+            },
+          },
+          '*'
+        ),
+        500
+      ),
+    }
     this.state = {
       service: 'None',
       newScale: {},
@@ -168,7 +194,9 @@ class App extends React.Component {
                   data: {
                     name: e.target.value,
                     algorithmVersion: this.state['algorithmVersion'],
+                    textColorsTheme: this.state['textColorsTheme'],
                   },
+                  isEditedInRealTime: false
                 },
               },
               '*'
@@ -182,13 +210,77 @@ class App extends React.Component {
                   data: {
                     name: e.target.value,
                     algorithmVersion: this.state['algorithmVersion'],
+                    textColorsTheme: this.state['textColorsTheme'],
                   },
+                  isEditedInRealTime: false
                 },
               },
               '*'
             )
           : null
 
+        break
+      }
+      case 'change-text-light-color': {
+        palette.textColorsTheme.lightColor = e.target.value
+        this.setState({
+          textColorsTheme: {
+            lightColor: e.target.value,
+            darkColor: this.state['textColorsTheme'].darkColor
+          },
+          onGoingStep: 'settings changed',
+        })
+        if (e._reactName === 'onBlur') {
+          this.dispatch.textColorsTheme.on.status = false
+          parent.postMessage(
+            {
+              pluginMessage: {
+                type: 'update-settings',
+                data: {
+                  name: this.state['paletteName'],
+                  algorithmVersion: this.state['algorithmVersion'],
+                  textColorsTheme: {
+                    lightColor: palette.textColorsTheme.lightColor,
+                    darkColor: palette.textColorsTheme.darkColor
+                  },
+                  isEditedInRealTime: false
+                },
+              },
+            },
+            '*'
+          )
+        } else this.dispatch.textColorsTheme.on.status = true
+        break
+      }
+      case 'change-text-dark-color': {
+        palette.textColorsTheme.darkColor = e.target.value
+        this.setState({
+          textColorsTheme: {
+            lightColor: this.state['textColorsTheme'].lightColor,
+            darkColor: e.target.value
+          },
+          onGoingStep: 'settings changed',
+        })
+        if (e._reactName === 'onBlur') {
+          this.dispatch.textColorsTheme.on.status = false
+          parent.postMessage(
+            {
+              pluginMessage: {
+                type: 'update-settings',
+                data: {
+                  name: this.state['paletteName'],
+                  algorithmVersion: this.state['algorithmVersion'],
+                  textColorsTheme: {
+                    lightColor: palette.textColorsTheme.lightColor,
+                    darkColor: palette.textColorsTheme.darkColor
+                  }
+                },
+                isEditedInRealTime: false
+              },
+            },
+            '*'
+          )
+        } else this.dispatch.textColorsTheme.on.status = true
         break
       }
       case 'update-algorithm-version': {
@@ -203,7 +295,9 @@ class App extends React.Component {
               data: {
                 name: this.state['paletteName'],
                 algorithmVersion: !e.target.checked ? 'v1' : 'v2',
+                textColorsTheme: this.state['textColorsTheme'],
               },
+              isEditedInRealTime: false
             },
           },
           '*'

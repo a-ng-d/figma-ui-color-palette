@@ -16,6 +16,7 @@ export interface Palette {
   max: number
   properties: boolean
   preset: any
+  textColorsTheme: { [key: string]: string }
 }
 
 export interface Features {
