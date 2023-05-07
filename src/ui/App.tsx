@@ -230,7 +230,7 @@ class App extends React.Component {
             ? '#' + e.target.value
             : e.target.value
         if (/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/i.test(code)) {
-          palette.textColorsTheme.darkColor = code
+          palette.textColorsTheme.lightColor = code
           this.setState({
             textColorsTheme: {
               lightColor: code,
