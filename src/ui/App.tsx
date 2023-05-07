@@ -59,7 +59,10 @@ class App extends React.Component {
         data: '',
       },
       paletteName: '',
-      textColorsTheme: {},
+      textColorsTheme: {
+        lightColor: '#FFFFFF',
+        darkColor: '#000000'
+      },
       algorithmVersion: 'v1',
       hasHighlight: false,
     }
@@ -230,7 +233,7 @@ class App extends React.Component {
           },
           onGoingStep: 'settings changed',
         })
-        if (e._reactName === 'onBlur') {
+        if (e._reactName === 'onBlur' && this.state['service'] === 'Edit') {
           this.dispatch.textColorsTheme.on.status = false
           parent.postMessage(
             {
@@ -249,7 +252,7 @@ class App extends React.Component {
             },
             '*'
           )
-        } else this.dispatch.textColorsTheme.on.status = true
+        } else if (this.state['service'] === 'Edit') this.dispatch.textColorsTheme.on.status = true
         break
       }
       case 'change-text-dark-color': {
@@ -261,7 +264,7 @@ class App extends React.Component {
           },
           onGoingStep: 'settings changed',
         })
-        if (e._reactName === 'onBlur') {
+        if (e._reactName === 'onBlur' && this.state['service'] === 'Edit') {
           this.dispatch.textColorsTheme.on.status = false
           parent.postMessage(
             {
@@ -280,7 +283,7 @@ class App extends React.Component {
             },
             '*'
           )
-        } else this.dispatch.textColorsTheme.on.status = true
+        } else if (this.state['service'] === 'Edit') this.dispatch.textColorsTheme.on.status = true
         break
       }
       case 'update-algorithm-version': {
@@ -350,12 +353,20 @@ class App extends React.Component {
             this.setState({
               service: 'None',
               hasProperties: true,
-              paletteName: '',
               preset: presets.material,
+              paletteName: '',
+                textColorsTheme: {
+                  lightColor: '#FFFFFF',
+                  darkColor: '#000000'
+                },
               onGoingStep: 'selection empty',
             })
             palette.name = ''
             palette.preset = {}
+            palette.textColorsTheme = {
+              lightColor: '#FFFFFF',
+              darkColor: '#000000'
+            }
             isPaletteSelected = false
             break
           }
@@ -364,12 +375,20 @@ class App extends React.Component {
               this.setState({
                 service: 'Create',
                 hasProperties: true,
-                onGoingStep: 'colors selected',
                 preset: presets.material,
                 paletteName: '',
+                textColorsTheme: {
+                  lightColor: '#FFFFFF',
+                  darkColor: '#000000'
+                },
+                onGoingStep: 'colors selected',
               })
               palette.name = ''
               palette.preset = presets.material
+              palette.textColorsTheme = {
+                lightColor: '#FFFFFF',
+                darkColor: '#000000'
+              }
             } else
               this.setState({
                 service: 'Create',
@@ -465,6 +484,7 @@ class App extends React.Component {
               preset={this.state['preset']}
               hasProperties={this.state['hasProperties']}
               paletteName={this.state['paletteName']}
+              textColorsTheme={this.state['textColorsTheme']}
               onHighlightReopen={this.highlightHandler('OPEN')}
               onPresetChange={this.presetHandler}
               onCustomPreset={this.customHandler}
