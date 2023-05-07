@@ -225,14 +225,20 @@ class App extends React.Component {
         break
       }
       case 'change-text-light-color': {
-        palette.textColorsTheme.lightColor = e.target.value
-        this.setState({
-          textColorsTheme: {
-            lightColor: e.target.value,
-            darkColor: this.state['textColorsTheme'].darkColor
-          },
-          onGoingStep: 'settings changed',
-        })
+        const code =
+          e.target.value.indexOf('#') == -1
+            ? '#' + e.target.value
+            : e.target.value
+        if (/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/i.test(code)) {
+          palette.textColorsTheme.darkColor = code
+          this.setState({
+            textColorsTheme: {
+              lightColor: code,
+              darkColor: this.state['textColorsTheme'].darkColor
+            },
+            onGoingStep: 'settings changed',
+          })
+        }
         if (e._reactName === 'onBlur' && this.state['service'] === 'Edit') {
           this.dispatch.textColorsTheme.on.status = false
           parent.postMessage(
@@ -256,14 +262,20 @@ class App extends React.Component {
         break
       }
       case 'change-text-dark-color': {
-        palette.textColorsTheme.darkColor = e.target.value
-        this.setState({
-          textColorsTheme: {
-            lightColor: this.state['textColorsTheme'].lightColor,
-            darkColor: e.target.value
-          },
-          onGoingStep: 'settings changed',
-        })
+        const code =
+          e.target.value.indexOf('#') == -1
+            ? '#' + e.target.value
+            : e.target.value
+        if (/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/i.test(code)) {
+          palette.textColorsTheme.darkColor = code
+          this.setState({
+            textColorsTheme: {
+              lightColor: this.state['textColorsTheme'].lightColor,
+              darkColor: code
+            },
+            onGoingStep: 'settings changed',
+          })
+        }
         if (e._reactName === 'onBlur' && this.state['service'] === 'Edit') {
           this.dispatch.textColorsTheme.on.status = false
           parent.postMessage(
