@@ -72,6 +72,7 @@ export default class Export extends React.Component<Props> {
     }
   }
 
+  // Direct actions
   setFirstPreview = () => {
     this.counter == 0 && this.state['format'] != ''
       ? parent.postMessage(
@@ -86,6 +87,10 @@ export default class Export extends React.Component<Props> {
       : null
     this.counter = 1
   }
+
+  selectPreview = (e) => e.target.select()
+
+  deSelectPreview = () => window.getSelection().removeAllRanges()
 
   // Render
   render() {
@@ -163,6 +168,8 @@ export default class Export extends React.Component<Props> {
             <textarea
               className="export-palette__preview textarea"
               value={this.props.exportPreview}
+              onBlur={this.deSelectPreview}
+              onFocus={this.selectPreview}
               readOnly
             ></textarea>
           </div>
