@@ -1,4 +1,5 @@
 import * as React from 'react'
+import type { settingsMessage } from '../utils/types'
 import Dispatcher from './modules/Dispatcher'
 import { createRoot } from 'react-dom/client'
 import Feature from './components/Feature'
@@ -18,6 +19,19 @@ let isPaletteSelected = false
 const container = document.getElementById('react-page'),
   root = createRoot(container)
 
+const settingsMessage: settingsMessage = {
+  type: '',
+  data: {
+    name: '',
+    algorithmVersion: '',
+    textColorsTheme: {
+      lightColor: '',
+      darkColor: ''
+    },
+  },
+  isEditedInRealTime: false
+}
+
 class App extends React.Component {
   dispatch: any
 
@@ -27,20 +41,7 @@ class App extends React.Component {
       textColorsTheme: new Dispatcher(
         () =>
         parent.postMessage(
-          {
-            pluginMessage: {
-              type: 'update-settings',
-              data: {
-                name: this.state['paletteName'],
-                algorithmVersion: this.state['algorithmVersion'],
-                textColorsTheme: {
-                  lightColor: palette.textColorsTheme.lightColor,
-                  darkColor: palette.textColorsTheme.darkColor
-                }
-              },
-              isEditedInRealTime: false
-            },
-          },
+          { pluginMessage: settingsMessage },
           '*'
         ),
         500
@@ -182,139 +183,91 @@ class App extends React.Component {
     })
 
   settingsHandler = (e: any) => {
+    settingsMessage.type = 'update-settings'
     switch (e.target.dataset.feature) {
       case 'rename-palette': {
         palette.name = e.target.value
+        settingsMessage.data.name = e.target.value
+        settingsMessage.data.algorithmVersion = this.state['algorithmVersion']
+        settingsMessage.data.textColorsTheme = this.state['textColorsTheme']
         this.setState({
-          paletteName: e.target.value,
+          paletteName: settingsMessage.data.name,
           onGoingStep: 'settings changed',
         })
-        e._reactName === 'onBlur' && this.state['service'] === 'Edit'
-          ? parent.postMessage(
-              {
-                pluginMessage: {
-                  type: 'update-settings',
-                  data: {
-                    name: e.target.value,
-                    algorithmVersion: this.state['algorithmVersion'],
-                    textColorsTheme: this.state['textColorsTheme'],
-                  },
-                  isEditedInRealTime: false
-                },
-              },
-              '*'
-            )
-          : null
-        e.key === 'Enter' && this.state['service'] === 'Edit'
-          ? parent.postMessage(
-              {
-                pluginMessage: {
-                  type: 'update-settings',
-                  data: {
-                    name: e.target.value,
-                    algorithmVersion: this.state['algorithmVersion'],
-                    textColorsTheme: this.state['textColorsTheme'],
-                  },
-                  isEditedInRealTime: false
-                },
-              },
-              '*'
-            )
-          : null
-
+        if (e._reactName === 'onBlur' && this.state['service'] === 'Edit')
+          parent.postMessage(
+            { pluginMessage: settingsMessage },
+            '*'
+          )
+        else if (e.key === 'Enter' && this.state['service'] === 'Edit')
+          parent.postMessage(
+            { pluginMessage: settingsMessage },
+            '*'
+          )
         break
       }
       case 'change-text-light-color': {
-        const code =
+        const code: string =
           e.target.value.indexOf('#') == -1
             ? '#' + e.target.value
             : e.target.value
         if (/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/i.test(code)) {
           palette.textColorsTheme.lightColor = code
+          settingsMessage.data.name = this.state['paletteName']
+          settingsMessage.data.algorithmVersion = this.state['algorithmVersion']
+          settingsMessage.data.textColorsTheme.lightColor = palette.textColorsTheme.lightColor
+          settingsMessage.data.textColorsTheme.darkColor = this.state['textColorsTheme'].darkColor
           this.setState({
-            textColorsTheme: {
-              lightColor: code,
-              darkColor: this.state['textColorsTheme'].darkColor
-            },
+            textColorsTheme: settingsMessage.data.textColorsTheme,
             onGoingStep: 'settings changed',
           })
         }
         if (e._reactName === 'onBlur' && this.state['service'] === 'Edit') {
           this.dispatch.textColorsTheme.on.status = false
           parent.postMessage(
-            {
-              pluginMessage: {
-                type: 'update-settings',
-                data: {
-                  name: this.state['paletteName'],
-                  algorithmVersion: this.state['algorithmVersion'],
-                  textColorsTheme: {
-                    lightColor: palette.textColorsTheme.lightColor,
-                    darkColor: palette.textColorsTheme.darkColor
-                  },
-                  isEditedInRealTime: false
-                },
-              },
-            },
+            { pluginMessage: settingsMessage },
             '*'
           )
-        } else if (this.state['service'] === 'Edit') this.dispatch.textColorsTheme.on.status = true
+        } else if (this.state['service'] === 'Edit')
+          this.dispatch.textColorsTheme.on.status = true
         break
       }
       case 'change-text-dark-color': {
-        const code =
+        const code: string =
           e.target.value.indexOf('#') == -1
             ? '#' + e.target.value
             : e.target.value
+        settingsMessage.data.name = this.state['paletteName']
+        settingsMessage.data.algorithmVersion = this.state['algorithmVersion']
+        settingsMessage.data.textColorsTheme.lightColor = this.state['textColorsTheme'].lightColor
+        settingsMessage.data.textColorsTheme.darkColor = code
         if (/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/i.test(code)) {
           palette.textColorsTheme.darkColor = code
           this.setState({
-            textColorsTheme: {
-              lightColor: this.state['textColorsTheme'].lightColor,
-              darkColor: code
-            },
+            textColorsTheme: settingsMessage.data.textColorsTheme,
             onGoingStep: 'settings changed',
           })
         }
         if (e._reactName === 'onBlur' && this.state['service'] === 'Edit') {
           this.dispatch.textColorsTheme.on.status = false
           parent.postMessage(
-            {
-              pluginMessage: {
-                type: 'update-settings',
-                data: {
-                  name: this.state['paletteName'],
-                  algorithmVersion: this.state['algorithmVersion'],
-                  textColorsTheme: {
-                    lightColor: palette.textColorsTheme.lightColor,
-                    darkColor: palette.textColorsTheme.darkColor
-                  }
-                },
-                isEditedInRealTime: false
-              },
-            },
+            { pluginMessage: settingsMessage },
             '*'
           )
-        } else if (this.state['service'] === 'Edit') this.dispatch.textColorsTheme.on.status = true
+        } else if (this.state['service'] === 'Edit')
+          this.dispatch.textColorsTheme.on.status = true
         break
       }
       case 'update-algorithm-version': {
+        settingsMessage.data.name = this.state['paletteName']
+        settingsMessage.data.algorithmVersion = !e.target.checked ? 'v1' : 'v2'
+        settingsMessage.data.textColorsTheme= this.state['textColorsTheme']
         this.setState({
-          algorithmVersion: !e.target.checked ? 'v1' : 'v2',
+          algorithmVersion: settingsMessage.data.algorithmVersion,
           onGoingStep: 'settings changed',
         })
         parent.postMessage(
-          {
-            pluginMessage: {
-              type: 'update-settings',
-              data: {
-                name: this.state['paletteName'],
-                algorithmVersion: !e.target.checked ? 'v1' : 'v2',
-                textColorsTheme: this.state['textColorsTheme'],
-              },
-              isEditedInRealTime: false
-            },
-          },
+          { pluginMessage: settingsMessage },
           '*'
         )
       }

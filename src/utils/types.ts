@@ -64,3 +64,13 @@ export interface textColorThemeGL {
   lightColor: Array<number>
   darkColor: Array<number>
 }
+
+export interface settingsMessage {
+  type: string,
+  data: {
+    name: string,
+    algorithmVersion: string,
+    textColorsTheme: textColorThemeHex,
+  },
+  isEditedInRealTime: boolean
+}
