@@ -1,3 +1,4 @@
+import type { TextColorsThemeHex } from '../utils/types'
 import chroma from 'chroma-js'
 import { APCAcontrast, sRGBtoY, fontLookupAPCA } from 'apca-w3'
 import Tag from './Tag'
@@ -5,6 +6,7 @@ import Tag from './Tag'
 export default class Properties {
   name: string
   rgb: Array<number>
+  textColorsTheme: TextColorsThemeHex
   hex: string
   lch: Array<number>
   nodeTop: FrameNode
@@ -14,21 +16,35 @@ export default class Properties {
   nodeProperties: TextNode
   node: FrameNode
 
-  constructor(name: string, rgb: Array<number>) {
+  constructor(
+    name: string,
+    rgb: Array<number>,
+    textColorsTheme: TextColorsThemeHex
+  ) {
     this.name = name
     this.rgb = rgb
+    this.textColorsTheme = textColorsTheme
     this.hex = chroma(rgb).hex()
     this.lch = chroma(rgb).lch()
     this.node = figma.createFrame()
   }
 
   getContrast(textColor: string) {
-    return chroma.contrast(this.rgb, textColor === 'BLACK' ? '#000' : '#FFF')
+    return chroma.contrast(
+      this.rgb,
+      textColor === 'BLACK'
+        ? this.textColorsTheme.darkColor
+        : this.textColorsTheme.lightColor
+    )
   }
 
   getAPCAContrast(textColor: string) {
     return APCAcontrast(
-      sRGBtoY(textColor === 'BLACK' ? [0, 0, 0, 1] : [255, 255, 255, 1]),
+      sRGBtoY(
+        textColor === 'BLACK'
+          ? chroma(this.textColorsTheme.darkColor).rgb()
+          : chroma(this.textColorsTheme.lightColor).rgb()
+      ),
       sRGBtoY(this.rgb)
     )
   }
@@ -125,26 +141,17 @@ export default class Properties {
     // insert
     this.nodeContrastScores.appendChild(
       new Tag(
-        '_wcag21-black',
-        `${this.getContrast('BLACK').toFixed(2)} • ${this.getLevel('BLACK')}`,
-        8
-      ).makeNodeTag('BLACK')
-    )
-    this.nodeContrastScores.appendChild(
-      new Tag(
         '_wcag21-white',
         `${this.getContrast('WHITE').toFixed(2)} • ${this.getLevel('WHITE')}`,
         8
-      ).makeNodeTag('WHITE')
+      ).makeNodeTag(chroma(this.textColorsTheme.lightColor).gl(), true)
     )
     this.nodeContrastScores.appendChild(
       new Tag(
-        '_apca-black',
-        `Lc ${this.getAPCAContrast('BLACK').toFixed(1)} • ${
-          this.getMinFontSizes('BLACK')[4]
-        }pt (400)`,
+        '_wcag21-black',
+        `${this.getContrast('BLACK').toFixed(2)} • ${this.getLevel('BLACK')}`,
         8
-      ).makeNodeTag('BLACK')
+      ).makeNodeTag(chroma(this.textColorsTheme.darkColor).gl(), true)
     )
     this.nodeContrastScores.appendChild(
       new Tag(
@@ -153,7 +160,16 @@ export default class Properties {
           this.getMinFontSizes('WHITE')[4]
         }pt (400)`,
         8
-      ).makeNodeTag('WHITE')
+      ).makeNodeTag(chroma(this.textColorsTheme.lightColor).gl(), true)
+    )
+    this.nodeContrastScores.appendChild(
+      new Tag(
+        '_apca-black',
+        `Lc ${this.getAPCAContrast('BLACK').toFixed(1)} • ${
+          this.getMinFontSizes('BLACK')[4]
+        }pt (400)`,
+        8
+      ).makeNodeTag(chroma(this.textColorsTheme.darkColor).gl(), true)
     )
 
     return this.nodeContrastScores

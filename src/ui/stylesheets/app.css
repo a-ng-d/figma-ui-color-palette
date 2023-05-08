@@ -425,7 +425,7 @@ input[type='number']::-webkit-inner-spin-button {
 
 .form-item .input,
 .form-item .textarea {
-  flex: 2;
+  flex: 3;
 }
 
 /* Icon buttons */

@@ -1,11 +1,4 @@
-export interface ReleaseNote {
-  version: string
-  isMostRecent: boolean
-  title: string
-  image: string
-  content: string
-  learnMore: string
-}
+import type { ReleaseNote } from './types'
 
 const releaseNotes: Array<ReleaseNote> = [
   {

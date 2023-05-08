@@ -1,4 +1,5 @@
 import * as React from 'react'
+import type { ColorsMessage, TextColorsThemeHex } from '../../utils/types'
 import Dispatcher from '../modules/Dispatcher'
 import Feature from '../components/Feature'
 import Tabs from '../components/Tabs'
@@ -23,6 +24,7 @@ interface Props {
   preset: any
   export: any
   paletteName: string
+  textColorsTheme: TextColorsThemeHex
   algorithmVersion: string
   onHighlightReopen: any
   onChangeScale: any
@@ -32,7 +34,11 @@ interface Props {
   onSettingsChange: any
 }
 
-let colors
+const colorsMessage: ColorsMessage = {
+  type: 'update-colors',
+  data: [],
+  isEditedInRealTime: false,
+}
 export default class EditPalette extends React.Component<Props> {
   dispatch: any
 
@@ -54,17 +60,7 @@ export default class EditPalette extends React.Component<Props> {
         500
       ),
       colors: new Dispatcher(
-        () =>
-          parent.postMessage(
-            {
-              pluginMessage: {
-                type: 'update-colors',
-                data: colors,
-                isEditedInRealTime: true,
-              },
-            },
-            '*'
-          ),
+        () => parent.postMessage({ pluginMessage: colorsMessage }, '*'),
         500
       ),
     }
@@ -153,22 +149,24 @@ export default class EditPalette extends React.Component<Props> {
   }
 
   colorHandler = (e: any) => {
-    let id
-    const element = e.nativeEvent.path.filter((el) => {
+    let id: string
+    const element: any | null = e.nativeEvent.path.filter((el) => {
       if (el.classList != undefined)
         return el.classList.contains('colors__item')
     })[0]
 
     element != undefined ? (id = element.getAttribute('data-id')) : null
 
+    colorsMessage.isEditedInRealTime = false
+
     switch (e.target.dataset.feature) {
       case 'hex': {
-        const code =
+        const code: string =
           e.target.value.indexOf('#') == -1
             ? '#' + e.target.value
             : e.target.value
         if (/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/i.test(code)) {
-          colors = this.props.colors.map((item) => {
+          colorsMessage.data = this.props.colors.map((item) => {
             const rgb = chroma(
               e.target.value.indexOf('#') == -1
                 ? '#' + e.target.value
@@ -182,25 +180,19 @@ export default class EditPalette extends React.Component<Props> {
               }
             return item
           })
-          this.props.onColorChange(colors)
+          this.props.onColorChange(colorsMessage.data)
         }
         if (e._reactName === 'onBlur') {
           this.dispatch.colors.on.status = false
-          parent.postMessage(
-            {
-              pluginMessage: {
-                type: 'update-colors',
-                data: colors,
-                isEditedInRealTime: false,
-              },
-            },
-            '*'
-          )
-        } else this.dispatch.colors.on.status = true
+          parent.postMessage({ pluginMessage: colorsMessage }, '*')
+        } else {
+          colorsMessage.isEditedInRealTime = true
+          this.dispatch.colors.on.status = true
+        }
         break
       }
       case 'lightness': {
-        colors = this.props.colors.map((item) => {
+        colorsMessage.data = this.props.colors.map((item) => {
           const rgb = chroma(
             item.rgb.r * 255,
             item.rgb.g * 255,
@@ -214,21 +206,12 @@ export default class EditPalette extends React.Component<Props> {
             }
           return item
         })
-        this.props.onColorChange(colors)
-        parent.postMessage(
-          {
-            pluginMessage: {
-              type: 'update-colors',
-              data: colors,
-              isEditedInRealTime: false,
-            },
-          },
-          '*'
-        )
+        this.props.onColorChange(colorsMessage.data)
+        parent.postMessage({ pluginMessage: colorsMessage }, '*')
         break
       }
       case 'chroma': {
-        colors = this.props.colors.map((item) => {
+        colorsMessage.data = this.props.colors.map((item) => {
           const rgb = chroma(
             item.rgb.r * 255,
             item.rgb.g * 255,
@@ -242,21 +225,12 @@ export default class EditPalette extends React.Component<Props> {
             }
           return item
         })
-        this.props.onColorChange(colors)
-        parent.postMessage(
-          {
-            pluginMessage: {
-              type: 'update-colors',
-              data: colors,
-              isEditedInRealTime: false,
-            },
-          },
-          '*'
-        )
+        this.props.onColorChange(colorsMessage.data)
+        parent.postMessage({ pluginMessage: colorsMessage }, '*')
         break
       }
       case 'hue': {
-        colors = this.props.colors.map((item) => {
+        colorsMessage.data = this.props.colors.map((item) => {
           const rgb = chroma(
             item.rgb.r * 255,
             item.rgb.g * 255,
@@ -270,40 +244,22 @@ export default class EditPalette extends React.Component<Props> {
             }
           return item
         })
-        this.props.onColorChange(colors)
-        parent.postMessage(
-          {
-            pluginMessage: {
-              type: 'update-colors',
-              data: colors,
-              isEditedInRealTime: false,
-            },
-          },
-          '*'
-        )
+        this.props.onColorChange(colorsMessage.data)
+        parent.postMessage({ pluginMessage: colorsMessage }, '*')
         break
       }
       case 'remove': {
-        colors = this.props.colors.filter((item) => item.id != id)
-        this.props.onColorChange(colors)
-        parent.postMessage(
-          {
-            pluginMessage: {
-              type: 'update-colors',
-              data: colors,
-              isEditedInRealTime: false,
-            },
-          },
-          '*'
-        )
+        colorsMessage.data = this.props.colors.filter((item) => item.id != id)
+        this.props.onColorChange(colorsMessage.data)
+        parent.postMessage({ pluginMessage: colorsMessage }, '*')
         break
       }
       case 'add': {
-        colors = this.props.colors
-        const hasAlreadyNewUIColor = colors.filter((color) =>
+        colorsMessage.data = this.props.colors
+        const hasAlreadyNewUIColor = colorsMessage.data.filter((color) =>
           color.name.includes('New UI Color')
         )
-        colors.push({
+        colorsMessage.data.push({
           name: `New UI Color ${hasAlreadyNewUIColor.length + 1}`,
           rgb: {
             r: 0.53,
@@ -314,90 +270,43 @@ export default class EditPalette extends React.Component<Props> {
           oklch: false,
           hueShifting: 0,
         })
-        this.props.onColorChange(colors)
-        parent.postMessage(
-          {
-            pluginMessage: {
-              type: 'update-colors',
-              data: colors,
-              isEditedInRealTime: false,
-            },
-          },
-          '*'
-        )
+        this.props.onColorChange(colorsMessage.data)
+        parent.postMessage({ pluginMessage: colorsMessage }, '*')
         break
       }
       case 'rename': {
         const hasSameName = this.props.colors.filter(
           (color) => color.name === e.target.value
         )
-        colors = this.props.colors.map((item) => {
+        colorsMessage.data = this.props.colors.map((item) => {
           if (item.id === id)
             item.name =
               hasSameName.length > 1 ? e.target.value + ' 2' : e.target.value
           return item
         })
-        this.props.onColorChange(colors)
-        e._reactName === 'onBlur'
-          ? parent.postMessage(
-              {
-                pluginMessage: {
-                  type: 'update-colors',
-                  data: colors,
-                  isEditedInRealTime: false,
-                },
-              },
-              '*'
-            )
-          : null
-        e.key === 'Enter'
-          ? parent.postMessage(
-              {
-                pluginMessage: {
-                  type: 'update-colors',
-                  data: colors,
-                  isEditedInRealTime: false,
-                },
-              },
-              '*'
-            )
-          : null
+        this.props.onColorChange(colorsMessage.data)
+        if (e._reactName === 'onBlur')
+          parent.postMessage({ pluginMessage: colorsMessage }, '*')
+        if (e.key === 'Enter')
+          parent.postMessage({ pluginMessage: colorsMessage }, '*')
         break
       }
       case 'oklch': {
-        colors = this.props.colors.map((item) => {
+        colorsMessage.data = this.props.colors.map((item) => {
           if (item.id === id) item.oklch = e.target.checked
           return item
         })
-        this.props.onColorChange(colors)
-        parent.postMessage(
-          {
-            pluginMessage: {
-              type: 'update-colors',
-              data: colors,
-              isEditedInRealTime: false,
-            },
-          },
-          '*'
-        )
+        this.props.onColorChange(colorsMessage.data)
+        parent.postMessage({ pluginMessage: colorsMessage }, '*')
         break
       }
       case 'shift-hue': {
-        colors = this.props.colors.map((item) => {
+        colorsMessage.data = this.props.colors.map((item) => {
           if (item.id === id) item.hueShifting = parseFloat(e.target.value)
           return item
         })
-        this.props.onColorChange(colors)
-        parent.postMessage(
-          {
-            pluginMessage: {
-              type: 'update-colors',
-              data: colors,
-              isEditedInRealTime: false,
-            },
-          },
-          '*'
-        )
+        this.props.onColorChange(colorsMessage.data)
+        parent.postMessage({ pluginMessage: colorsMessage }, '*')
       }
     }
   }
@@ -697,7 +606,8 @@ export default class EditPalette extends React.Component<Props> {
         controls = (
           <Settings
             paletteName={this.props.paletteName}
-            settings={['base', 'color-management']}
+            textColorsTheme={this.props.textColorsTheme}
+            settings={['base', 'contrast-management', 'color-management']}
             isNewAlgorithm={this.props.algorithmVersion == 'v2' ? true : false}
             onSettingsChange={this.settingsHandler}
           />
@@ -717,16 +627,7 @@ export default class EditPalette extends React.Component<Props> {
           active={this.state['context']}
           onClick={this.navHandler}
         />
-        <section
-          onClick={this.unSelectColor}
-          className={
-            this.state['context'] === 'Colors'
-              ? 'section--scrollable'
-              : this.state['context'] === 'Settings'
-              ? 'section--scrollable'
-              : ''
-          }
-        >
+        <section onClick={this.unSelectColor} className="section--scrollable">
           <div className="controls">{controls}</div>
           {actions}
         </section>

@@ -5,7 +5,7 @@ export default class Title {
   parent: any
   node: FrameNode
 
-  constructor(text, parent) {
+  constructor(text: string, parent: any) {
     this.text = text
     this.parent = parent
     this.node = figma.createFrame()
@@ -30,7 +30,8 @@ export default class Title {
         null,
         null,
         [255, 255, 255],
-        this.parent.properties
+        this.parent.properties,
+        this.parent.textColorsTheme
       ).makeName('relative', 100, 48)
     )
 

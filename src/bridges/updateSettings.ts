@@ -12,7 +12,7 @@ const updateSettings = (msg, palette) => {
     const colors = JSON.parse(palette.getPluginData('colors')),
       scale = JSON.parse(palette.getPluginData('scale')),
       properties =
-        palette.getPluginData('PROPERTIES') == 'hasProperties' ? true : false,
+        palette.getPluginData('properties') == 'hasProperties' ? true : false,
       preset = JSON.parse(palette.getPluginData('preset'))
 
     let paletteName: string
@@ -26,6 +26,10 @@ const updateSettings = (msg, palette) => {
       (palette.name = `${
         msg.data.name === '' ? 'UI Color Palette' : msg.data.name
       }﹒${preset.name}`)
+    palette.setPluginData(
+      'textColorsTheme',
+      JSON.stringify(msg.data.textColorsTheme)
+    )
     palette.setPluginData('algorithmVersion', msg.data.algorithmVersion)
 
     palette.children[0].remove()
@@ -34,8 +38,9 @@ const updateSettings = (msg, palette) => {
         paletteName: paletteName,
         colors: colors,
         scale: scale,
-        properties: properties,
+        properties: msg.isEditedInRealTime ? false : properties,
         preset: preset,
+        textColorsTheme: msg.data.textColorsTheme,
         algorithmVersion: msg.data.algorithmVersion,
       }).makeNode()
     )

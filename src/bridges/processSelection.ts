@@ -34,11 +34,21 @@ const processSelection = () => {
       )
 
     if (selection[0].getPluginData('captions') == 'hasCaptions') {
-      selection[0].setPluginData('PROPERTIES', 'hasProperties')
+      selection[0].setPluginData('properties', 'hasProperties')
       selection[0].setPluginData('captions', '')
     } else if (selection[0].getPluginData('captions') == 'hasNotCaptions') {
-      selection[0].setPluginData('PROPERTIES', 'hasNotProperties')
+      selection[0].setPluginData('properties', 'hasNotProperties')
       selection[0].setPluginData('captions', '')
+    }
+
+    if (selection[0].getPluginData('textColorsTheme') === '') {
+      selection[0].setPluginData(
+        'textColorsTheme',
+        JSON.stringify({
+          lightColor: '#FFFFFF',
+          darkColor: '#000000',
+        })
+      )
     }
 
     // to UI
@@ -47,8 +57,11 @@ const processSelection = () => {
       data: {
         name: selection[0].getPluginData('name'),
         scale: JSON.parse(selection[0].getPluginData('scale')),
-        properties: selection[0].getPluginData('PROPERTIES'),
+        properties: selection[0].getPluginData('properties'),
         colors: JSON.parse(selection[0].getPluginData('colors')),
+        textColorsTheme: JSON.parse(
+          selection[0].getPluginData('textColorsTheme')
+        ),
         algorithmVersion: selection[0].getPluginData('algorithmVersion'),
         preset: JSON.parse(selection[0].getPluginData('preset')),
       },

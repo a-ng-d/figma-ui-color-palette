@@ -1,4 +1,5 @@
 import * as React from 'react'
+import type { TextColorsThemeHex } from '../../utils/types'
 import Feature from '../components/Feature'
 import Tabs from '../components/Tabs'
 import Scale from '../modules/Scale'
@@ -13,6 +14,7 @@ interface Props {
   hasProperties: boolean
   preset: any
   paletteName: string
+  textColorsTheme: TextColorsThemeHex
   onHighlightReopen: any
   onPresetChange: any
   onCustomPreset: any
@@ -169,7 +171,8 @@ export default class CreatePalette extends React.Component<Props> {
         controls = (
           <Settings
             paletteName={this.props.paletteName}
-            settings={['base']}
+            textColorsTheme={this.props.textColorsTheme}
+            settings={['base', 'contrast-management']}
             onSettingsChange={this.settingsHandler}
           />
         )
@@ -188,7 +191,7 @@ export default class CreatePalette extends React.Component<Props> {
           active={this.state['context']}
           onClick={this.navHandler}
         />
-        <section>
+        <section className="section--scrollable">
           <div className="controls">{controls}</div>
           {actions}
         </section>

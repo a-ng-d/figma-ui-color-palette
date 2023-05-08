@@ -1,11 +1,4 @@
-interface Features {
-  name: string
-  description: string
-  isActive: boolean
-  isPro: boolean
-  type: string
-  service: Array<string>
-}
+import type { Features } from './types'
 
 export const features: Array<Features> = [
   {
@@ -180,6 +173,14 @@ export const features: Array<Features> = [
   {
     name: 'SETTINGS_PALETTE_NAME',
     description: 'Palette name text field',
+    isActive: true,
+    isPro: false,
+    type: 'ACTION',
+    service: ['create', 'edit'],
+  },
+  {
+    name: 'SETTINGS_TEXT_COLORS_THEME',
+    description: 'Text colors customization to better check contrast',
     isActive: true,
     isPro: false,
     type: 'ACTION',

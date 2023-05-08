@@ -1,16 +1,5 @@
+import type { UIColors, Preset, TextColorsThemeHex } from '../utils/types'
 import Colors from './Colors'
-
-interface UIColors {
-  name: string
-  rgb: {
-    r: number
-    g: number
-    b: number
-  }
-  id: string | undefined
-  oklch: boolean
-  hueShifting: number
-}
 
 export default class Palette {
   paletteName: string
@@ -18,12 +7,20 @@ export default class Palette {
   scale: string
   colors: Array<UIColors>
   properties: boolean
-  preset: string
+  preset: Preset
+  textColorsTheme: TextColorsThemeHex
   algorithmVersion: string
   children: any
   node: FrameNode
 
-  constructor(name, scale, properties, preset, algorithmVersion) {
+  constructor(
+    name: string,
+    scale: string,
+    properties: boolean,
+    preset: Preset,
+    textColorsTheme: TextColorsThemeHex,
+    algorithmVersion: string
+  ) {
     this.paletteName = name
     this.name = `${name === '' ? 'UI Color Palette' : name}﹒${preset.name}`
     this.scale = scale
@@ -31,6 +28,7 @@ export default class Palette {
     this.properties = properties
     this.preset = preset
     this.algorithmVersion = algorithmVersion
+    this.textColorsTheme = textColorsTheme
     this.children = null
     this.node = figma.createFrame()
   }
@@ -56,10 +54,14 @@ export default class Palette {
     this.node.setPluginData('name', this.paletteName)
     this.node.setPluginData('scale', JSON.stringify(this.scale))
     this.node.setPluginData('preset', JSON.stringify(this.preset))
+    this.node.setPluginData(
+      'textColorsTheme',
+      JSON.stringify(this.textColorsTheme)
+    )
     this.node.setPluginData('algorithmVersion', this.algorithmVersion)
     this.properties
-      ? this.node.setPluginData('PROPERTIES', 'hasProperties')
-      : this.node.setPluginData('PROPERTIES', 'hasNotProperties')
+      ? this.node.setPluginData('properties', 'hasProperties')
+      : this.node.setPluginData('properties', 'hasNotProperties')
 
     // insert
     figma.currentPage.selection.forEach((element) => {
@@ -93,7 +95,7 @@ export default class Palette {
     return this.node
   }
 
-  changeName(name) {
+  changeName(name: string) {
     this.node.name = name
   }
 }

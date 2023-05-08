@@ -8,7 +8,7 @@ export default class Colors {
   parent: any
   node: FrameNode
 
-  constructor(parent) {
+  constructor(parent: any) {
     this.parent = parent
     this.node = figma.createFrame()
   }
@@ -60,7 +60,8 @@ export default class Colors {
         null,
         null,
         [color.rgb.r * 255, color.rgb.g * 255, color.rgb.b * 255],
-        this.parent.properties
+        this.parent.properties,
+        this.parent.textColorsTheme
       ).makeName('absolute', 160, 224)
       row.appendChild(rowName)
 
@@ -110,9 +111,8 @@ export default class Colors {
               .substr(10),
             newColor._rgb,
             this.parent.properties,
-            {
-              isClosestToRef: distance < 4 ? true : false,
-            }
+            this.parent.textColorsTheme,
+            { isClosestToRef: distance < 4 ? true : false }
           ).makeScale(160, 224)
           row.name = color.name
           row.appendChild(sample)
