@@ -7,7 +7,7 @@ interface Props {
   isDisabled: boolean
   feature: string
   group: string
-  onChange: any
+  onChange: React.ChangeEventHandler
 }
 
 export default class RadioButton extends React.Component<Props> {

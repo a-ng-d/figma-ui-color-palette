@@ -2,7 +2,7 @@ import * as React from 'react'
 
 interface Props {
   isActive: boolean
-  children: any
+  children: React.ReactNode
 }
 
 export default class Feature extends React.Component<Props> {

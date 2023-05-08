@@ -38,8 +38,8 @@ export default class Export extends React.Component<Props> {
   }
 
   // Handlers
-  exportHandler = (e: any) => {
-    switch (e.target.dataset.feature) {
+  exportHandler = (e: React.SyntheticEvent) => {
+    switch ((e.target as HTMLElement).dataset.feature) {
       case 'export-to-json': {
         this.setState({
           format: 'JSON',

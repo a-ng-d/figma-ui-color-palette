@@ -1,24 +1,24 @@
-import type { UIColors, Preset, TextColorsThemeHex } from '../utils/types'
+import type { ColorConfiguration, PresetConfiguration, TextColorsThemeHexModel, PaletteNode, ScaleConfiguration } from '../utils/types'
 import Colors from './Colors'
 
 export default class Palette {
   paletteName: string
   name: string
-  scale: string
-  colors: Array<UIColors>
+  scale: ScaleConfiguration
+  colors: Array<ColorConfiguration>
   properties: boolean
-  preset: Preset
-  textColorsTheme: TextColorsThemeHex
+  preset: PresetConfiguration
+  textColorsTheme: TextColorsThemeHexModel
   algorithmVersion: string
-  children: any
+  children: PaletteNode
   node: FrameNode
 
   constructor(
     name: string,
-    scale: string,
+    scale: ScaleConfiguration,
     properties: boolean,
-    preset: Preset,
-    textColorsTheme: TextColorsThemeHex,
+    preset: PresetConfiguration,
+    textColorsTheme: TextColorsThemeHexModel,
     algorithmVersion: string
   ) {
     this.paletteName = name
@@ -89,7 +89,7 @@ export default class Palette {
       else return 0
     })
 
-    this.node.appendChild(new Colors(this).makeNode())
+    this.node.appendChild(new Colors(this as PaletteNode).makeNode())
 
     this.node.setPluginData('colors', JSON.stringify(this.colors))
     return this.node

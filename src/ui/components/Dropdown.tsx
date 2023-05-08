@@ -5,13 +5,13 @@ interface Props {
   id: string
   options: Array<string>
   selected: string
-  onChange: any
+  onChange: React.ChangeEventHandler
 }
 
 export default class Dropdown extends React.Component<Props> {
   componentDidMount = () => {
     selectMenu.init()
-    document.getElementById(this.props.id).onchange = (e) =>
+    document.getElementById(this.props.id).onchange = (e: any) =>
       this.props.onChange(e)
   }
 

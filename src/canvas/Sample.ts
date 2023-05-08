@@ -1,4 +1,4 @@
-import type { TextColorsThemeHex } from '../utils/types'
+import type { TextColorsThemeHexModel } from '../utils/types'
 import Properties from './Properties'
 import Property from './Property'
 import Status from './Status'
@@ -9,12 +9,12 @@ export default class Sample {
   scale: string | null
   rgb: Array<number> | null
   properties: boolean
-  textColorsTheme: TextColorsThemeHex
+  textColorsTheme: TextColorsThemeHexModel
   status: {
     isClosestToRef: boolean
   }
   node: FrameNode
-  children: any
+  children: FrameNode
 
   constructor(
     name: string,
@@ -22,7 +22,7 @@ export default class Sample {
     scale: string | null,
     rgb: Array<number> | null,
     properties: boolean,
-    textColorsTheme: TextColorsThemeHex,
+    textColorsTheme: TextColorsThemeHexModel,
     status?: { isClosestToRef: boolean }
   ) {
     this.name = name

@@ -1,5 +1,5 @@
 import * as React from 'react'
-import type { TextColorsThemeHex } from '../../utils/types'
+import type { TextColorsThemeHexModel } from '../../utils/types'
 import FormItem from './../components/FormItem'
 import Input from './../components/Input'
 import Switch from '../components/Switch'
@@ -9,10 +9,10 @@ import { features } from '../../utils/features'
 
 interface Props {
   paletteName: string
-  textColorsTheme?: TextColorsThemeHex
+  textColorsTheme?: TextColorsThemeHexModel
   settings?: Array<string>
   isNewAlgorithm?: boolean
-  onSettingsChange: any
+  onSettingsChange: React.ReactEventHandler
 }
 
 export default class Settings extends React.Component<Props> {

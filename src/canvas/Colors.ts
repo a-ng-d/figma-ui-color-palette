@@ -1,14 +1,15 @@
 import chroma from 'chroma-js'
+import type { PaletteNode } from '../utils/types'
 import Sample from './Sample'
 import Header from './Header'
 import Title from './Title'
 
 export default class Colors {
   properties: boolean
-  parent: any
+  parent: PaletteNode
   node: FrameNode
 
-  constructor(parent: any) {
+  constructor(parent: PaletteNode) {
     this.parent = parent
     this.node = figma.createFrame()
   }
@@ -67,12 +68,12 @@ export default class Colors {
 
       Object.values(this.parent.scale)
         .reverse()
-        .forEach((lightness: any) => {
+        .forEach((lightness: string) => {
           let newColor, lch, oklch
           if (color.oklch) {
             oklch = chroma(sourceColor).oklch()
             newColor = chroma.oklch(
-              parseFloat((lightness / 100).toFixed(2)),
+              parseFloat(lightness) / 100,
               this.parent.algorithmVersion == 'v2'
                 ? Math.sin((parseFloat(lightness) / 100) * Math.PI) * chroma(sourceColor).oklch()[1]
                 : chroma(sourceColor).oklch()[1],
@@ -85,7 +86,7 @@ export default class Colors {
           } else {
             lch = chroma(sourceColor).lch()
             newColor = chroma.lch(
-              parseFloat((lightness * 1).toFixed(1)),
+              parseFloat(lightness) * 1,
               this.parent.algorithmVersion == 'v2'
                 ? Math.sin((parseFloat(lightness) / 100) * Math.PI) * chroma(sourceColor).lch()[1]
                 : chroma(sourceColor).lch()[1],

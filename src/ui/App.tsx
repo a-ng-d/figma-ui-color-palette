@@ -1,5 +1,5 @@
 import * as React from 'react'
-import type { SettingsMessage } from '../utils/types'
+import type { DispatchProcess, SettingsMessage } from '../utils/types'
 import Dispatcher from './modules/Dispatcher'
 import { createRoot } from 'react-dom/client'
 import Feature from './components/Feature'
@@ -33,7 +33,7 @@ const settingsMessage: SettingsMessage = {
 }
 
 class App extends React.Component {
-  dispatch: any
+  dispatch: { [key: string]: DispatchProcess }
 
   constructor(props) {
     super(props)
@@ -69,7 +69,7 @@ class App extends React.Component {
   propertiesHandler = (bool: boolean) =>
     this.setState({ hasProperties: bool, onGoingStep: 'properties changed' })
 
-  presetHandler = (e: any) => {
+  presetHandler = (e: React.SyntheticEvent) => {
     switch ((e.target as HTMLInputElement).value) {
       case presets.material.name: {
         this.setState({
@@ -123,9 +123,9 @@ class App extends React.Component {
     }
   }
 
-  customHandler = (e: any) => {
+  customHandler = (e: React.SyntheticEvent) => {
     const scale = this.state['preset']['scale']
-    switch (e.target.dataset.feature) {
+    switch ((e.target as HTMLElement).dataset.feature) {
       case 'add': {
         if (scale.length < 24) {
           scale.push(scale.length + 1)
@@ -178,7 +178,7 @@ class App extends React.Component {
       onGoingStep: 'color changed',
     })
 
-  settingsHandler = (e: any) => {
+  settingsHandler = (e) => {
     switch (e.target.dataset.feature) {
       case 'rename-palette': {
         palette.name = e.target.value
@@ -286,7 +286,7 @@ class App extends React.Component {
 
   // Render
   render() {
-    onmessage = (e: any) => {
+    onmessage = (e: MessageEvent) => {
       try {
         switch (
           e.data.pluginMessage.type == undefined

@@ -1,5 +1,3 @@
-import type { Rgb } from '../utils/types'
-
 export default class Tag {
   name: string
   content: string

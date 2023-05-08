@@ -1,5 +1,5 @@
 import * as React from 'react'
-import type { TextColorsThemeHex } from '../../utils/types'
+import type { PresetConfiguration, TextColorsThemeHexModel } from '../../utils/types'
 import Feature from '../components/Feature'
 import Tabs from '../components/Tabs'
 import Scale from '../modules/Scale'
@@ -12,13 +12,13 @@ import { features } from '../../utils/features'
 
 interface Props {
   hasProperties: boolean
-  preset: any
+  preset: PresetConfiguration
   paletteName: string
-  textColorsTheme: TextColorsThemeHex
-  onHighlightReopen: any
-  onPresetChange: any
-  onCustomPreset: any
-  onSettingsChange: any
+  textColorsTheme: TextColorsThemeHexModel
+  onHighlightReopen: React.ChangeEventHandler
+  onPresetChange: React.ChangeEventHandler
+  onCustomPreset: React.ChangeEventHandler
+  onSettingsChange: React.ChangeEventHandler
 }
 
 export default class CreatePalette extends React.Component<Props> {
@@ -59,7 +59,7 @@ export default class CreatePalette extends React.Component<Props> {
     return
   }
 
-  checkHandler = (e: any) => {
+  checkHandler = (e) => {
     this.setState({
       hasProperties: e.target.checked,
       onGoingStep: 'properties changed',
@@ -67,17 +67,17 @@ export default class CreatePalette extends React.Component<Props> {
     palette.properties = e.target.checked
   }
 
-  navHandler = (e: any) =>
+  navHandler = (e: React.SyntheticEvent) =>
     this.setState({
-      context: e.target.innerText,
+      context: (e.target as HTMLElement).innerText,
       onGoingStep: 'tab changed',
     })
 
-  presetHandler = (e: any) => this.props.onPresetChange(e)
+  presetHandler = (e) => this.props.onPresetChange(e)
 
-  scaleHandler = (e: any) => this.props.onCustomPreset(e)
+  scaleHandler = (e) => this.props.onCustomPreset(e)
 
-  settingsHandler = (e: any) => this.props.onSettingsChange(e)
+  settingsHandler = (e) => this.props.onSettingsChange(e)
 
   // Direct actions
   onCreate = () =>

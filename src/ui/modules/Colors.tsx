@@ -1,18 +1,19 @@
 import * as React from 'react'
+import type { HoveredColor, SelectedColor, ColorConfiguration } from '../../utils/types'
 import Button from '../components/Button'
 import ColorItem from '../components/ColorItem'
 import chroma from 'chroma-js'
 
 interface Props {
-  colors: any
-  selectedElement: any
-  hoveredElement: any
-  onColorChange: any
-  onAddColor: any
-  onSelectionChange: any
-  onDragChange: any
-  onDropOutside: any
-  onOrderChange: any
+  colors: Array<ColorConfiguration>
+  selectedElement: SelectedColor
+  hoveredElement: HoveredColor
+  onColorChange: React.ChangeEventHandler
+  onAddColor: React.MouseEventHandler
+  onSelectionChange: React.ChangeEventHandler
+  onDragChange: (id: string, hasGuideAbove: boolean, hasGuideBelow: boolean, position: number) => void
+  onDropOutside: React.ChangeEventHandler
+  onOrderChange: React.ChangeEventHandler
 }
 
 export default class Colors extends React.Component<Props> {

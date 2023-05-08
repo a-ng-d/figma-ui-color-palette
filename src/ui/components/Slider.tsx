@@ -1,4 +1,5 @@
 import * as React from 'react'
+import type { ScaleConfiguration } from '../../utils/types'
 import Knob from './Knob'
 import { palette } from '../../utils/palettePackage'
 import { doMap } from './../../utils/doMap'
@@ -12,10 +13,10 @@ interface Props {
   hasPreset: boolean
   presetName: string
   type: string
-  min?: string
-  max?: string
-  scale?: any
-  onChange: any
+  min?: number
+  max?: number
+  scale?: ScaleConfiguration
+  onChange: (e: string) => void
 }
 
 export default class Slider extends React.Component<Props> {
@@ -28,7 +29,7 @@ export default class Slider extends React.Component<Props> {
   }
 
   // Direct actions
-  onGrab = (e: any) => {
+  onGrab = (e) => {
     const knob = e.target as HTMLElement,
       range = knob.parentElement as HTMLElement,
       shift = e.nativeEvent.layerX as number,
@@ -91,7 +92,7 @@ export default class Slider extends React.Component<Props> {
   }
 
   onSlide = (
-    e: any,
+    e: MouseEvent,
     slider: HTMLElement,
     range: HTMLElement,
     knobs: Array<HTMLElement>,
@@ -100,7 +101,7 @@ export default class Slider extends React.Component<Props> {
     offset: number,
     shift: number,
     rangeWidth: number,
-    update: any
+    update: () => void
   ) => {
     let limitMin: number, limitMax: number
     const gap: number = doMap(2, 0, 100, 0, rangeWidth),
@@ -193,14 +194,14 @@ export default class Slider extends React.Component<Props> {
       doMap(offset, 0, rangeWidth, 0, 100).toFixed(1)
     )
     update()
-    this.props.onChange()
+    this.props.onChange('')
   }
 
   onRelease = (
     knobs: Array<HTMLElement>,
     knob: HTMLElement,
     offset: number,
-    update: any,
+    update: () => void,
     rangeWidth: number,
     startTime: number
   ) => {
@@ -220,9 +221,9 @@ export default class Slider extends React.Component<Props> {
     this.props.onChange('released')
   }
 
-  onAdd = (e: any) => {
+  onAdd = (e) => {
     if (
-      e.target.classList[0] === 'slider__range' &&
+      (e.target as HTMLElement).classList[0] === 'slider__range' &&
       Object.keys(this.props.scale).length < 24 &&
       this.props.presetName === 'Custom' &&
       !this.props.hasPreset
@@ -256,7 +257,7 @@ export default class Slider extends React.Component<Props> {
     this.props.onChange('customized')
   }
 
-  onShiftRight = (e: any) => {
+  onShiftRight = (e: KeyboardEvent) => {
     shiftRightStop(
       this.props.scale,
       this.state['selectedKnob'],
@@ -266,7 +267,7 @@ export default class Slider extends React.Component<Props> {
     this.props.onChange('customized')
   }
 
-  onShiftLeft = (e: any) => {
+  onShiftLeft = (e: KeyboardEvent) => {
     shiftLeftStop(
       this.props.scale,
       this.state['selectedKnob'],
@@ -353,7 +354,7 @@ export default class Slider extends React.Component<Props> {
   }
 
   componentDidMount() {
-    window.onkeydown = (e: any) => {
+    window.onkeydown = (e: KeyboardEvent) => {
       if (
         e.key === 'Backspace' &&
         this.state['selectedKnob'] != null &&
@@ -371,8 +372,8 @@ export default class Slider extends React.Component<Props> {
           selectedKnob: null,
         })
     }
-    document.onmousedown = (e: any) => {
-      if (e.target.closest('.slider__knob') == null)
+    document.onmousedown = (e: MouseEvent) => {
+      if ((e.target as HTMLElement).closest('.slider__knob') == null)
         this.setState({
           selectedKnob: null,
         })
@@ -386,8 +387,8 @@ export default class Slider extends React.Component<Props> {
 
   // Templates
   Equal = () => {
-    palette.min = parseFloat(this.props.min)
-    palette.max = parseFloat(this.props.max)
+    palette.min = this.props.min
+    palette.max = this.props.max
     return (
       <div className="slider__range">
         {Object.entries(this.doLightnessScale()).map((lightness) => (

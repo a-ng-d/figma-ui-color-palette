@@ -17,12 +17,12 @@ interface Props {
   selected: boolean
   guideAbove: boolean
   guideBelow: boolean
-  onColorChange: any
-  onSelectionChange: any
-  onSelectionCancellation: any
-  onDragChange: any
-  onDropOutside: any
-  onOrderChange: any
+  onColorChange: React.ChangeEventHandler
+  onSelectionChange: React.ChangeEventHandler
+  onSelectionCancellation: React.ChangeEventHandler
+  onDragChange: (id: string, hasGuideAbove: boolean, hasGuideBelow: boolean, position: number) => void
+  onDropOutside: React.ChangeEventHandler
+  onOrderChange: React.ChangeEventHandler
 }
 
 export default class ColorItem extends React.Component<Props> {
@@ -35,19 +35,19 @@ export default class ColorItem extends React.Component<Props> {
   }
 
   // Handlers
-  inputHandler = (e: any) => this.props.onColorChange(e)
+  inputHandler = (e) => this.props.onColorChange(e)
 
-  optionsHandler = (e: any) => {
+  optionsHandler = (e) => {
     this.props.onSelectionCancellation(e)
     this.setState({ hasMoreOptions: !this.state['hasMoreOptions'] })
   }
 
-  selectionHandler = (e: any) => this.props.onSelectionCancellation(e)
+  selectionHandler = (e: React.ChangeEvent) => this.props.onSelectionCancellation(e)
 
   // Direct actions
-  onMouseDown = (e: any) => this.props.onSelectionChange(e)
+  onMouseDown = (e) => this.props.onSelectionChange(e)
 
-  onDragStart = (e: any) => {
+  onDragStart = (e) => {
     this.setState({ isDragged: true })
     const clone = e.currentTarget.cloneNode(true)
     clone.style.opacity = 0
@@ -58,7 +58,7 @@ export default class ColorItem extends React.Component<Props> {
     document.querySelector('#react-page').classList.add('dragged-ghost')
   }
 
-  onDragEnd = (e: any) => {
+  onDragEnd = (e) => {
     this.setState({ isDragged: false })
     this.props.onDragChange('', false, false, undefined)
     this.props.onDropOutside(e)
@@ -66,9 +66,9 @@ export default class ColorItem extends React.Component<Props> {
     document.querySelector('#ghost').remove()
   }
 
-  onDragOver = (e: any) => {
+  onDragOver = (e) => {
     e.preventDefault()
-    const target: any = e.currentTarget,
+    const target = e.currentTarget,
       height: number = target.clientHeight,
       parentY: number = target.parentNode.offsetTop,
       scrollY: number = target.parentNode.parentNode.parentNode.scrollTop,
@@ -93,7 +93,7 @@ export default class ColorItem extends React.Component<Props> {
       )
   }
 
-  onDrop = (e: any) => {
+  onDrop = (e) => {
     e.preventDefault()
     this.props.onOrderChange(e)
   }

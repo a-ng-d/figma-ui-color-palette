@@ -4,7 +4,7 @@ import PopIn from '../components/PopIn'
 import releaseNotes from '../../utils/releaseNotes'
 
 interface Props {
-  closeHighlight: any
+  closeHighlight: React.ReactEventHandler
 }
 
 export default class Highlight extends React.Component<Props> {

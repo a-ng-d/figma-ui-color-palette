@@ -6,7 +6,7 @@ import Shortcuts from '../modules/Shortcuts'
 import { features } from '../../utils/features'
 
 interface Props {
-  onHighlightReopen: any
+  onHighlightReopen: React.MouseEventHandler
 }
 
 export default class Onboarding extends React.Component<Props> {

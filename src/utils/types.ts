@@ -16,29 +16,47 @@ export interface ReleaseNote {
   learnMore: string
 }
 
-// Palette
-export interface Palette {
+export interface Shortcut {
+  label: string
+  isLink: boolean
+  url: string
+  action: any
+}
+
+// Palette nodes
+export interface PaletteNode {
+  paletteName: string
+  scale: ScaleConfiguration
+  colors: Array<ColorConfiguration>
+  properties: boolean
+  preset: PresetConfiguration
+  textColorsTheme: TextColorsThemeHexModel
+  algorithmVersion: string
+}
+
+// Palette configurations
+export interface PaletteConfiguration {
   name: string
-  scale: Scale
+  scale: ScaleConfiguration
   min: number
   max: number
   properties: boolean
-  preset: any
-  textColorsTheme: { [key: string]: string }
+  preset: PresetConfiguration | any
+  textColorsTheme: TextColorsThemeHexModel
 }
 
-export interface Preset {
+export interface PresetConfiguration {
   name: string
   scale: Array<number>
   min: number
   max: number
 }
 
-export interface Scale {
+export interface ScaleConfiguration {
   [key: string]: string
 }
 
-export interface UIColors {
+export interface ColorConfiguration {
   name: string
   rgb: {
     r: number
@@ -50,19 +68,49 @@ export interface UIColors {
   hueShifting: number
 }
 
-// Utils
-export interface Rgb {
+export interface ExportConfiguration {
+  format: string
+  mimeType: string
+  data: any
+}
+
+// Processes
+export interface DispatchProcess {
+  time: number
+  callback: () => void
+  on: {
+    active: boolean
+    blocked: boolean
+    interval: string
+    send: () => void
+    stop: () => void
+    status: boolean
+  }
+}
+
+export interface SelectedColor {
+  id: string
+  position: number
+}
+
+export interface HoveredColor extends SelectedColor {
+  hasGuideAbove: boolean
+  hasGuideBelow: boolean
+}
+
+// Models
+export interface RgbModel {
   r: number
   g: number
   b: number
 }
 
-export interface TextColorsThemeHex {
+export interface TextColorsThemeHexModel {
   lightColor: string
   darkColor: string
 }
 
-export interface TextColorsThemeGL {
+export interface TextColorsThemeGLModel {
   lightColor: Array<number>
   darkColor: Array<number>
 }
@@ -70,7 +118,7 @@ export interface TextColorsThemeGL {
 // Messages
 export interface ColorsMessage {
   type: string
-  data: Array<UIColors>
+  data: Array<ColorConfiguration>
   isEditedInRealTime: boolean
 }
 
@@ -79,7 +127,7 @@ export interface SettingsMessage {
   data: {
     name: string
     algorithmVersion: string
-    textColorsTheme: TextColorsThemeHex
+    textColorsTheme: TextColorsThemeHexModel
   }
   isEditedInRealTime: boolean
 }

@@ -1,3 +1,4 @@
+import type { PresetConfiguration, ScaleConfiguration, TextColorsThemeHexModel } from '../utils/types'
 import Colors from './../canvas/Colors'
 import {
   previousSelection,
@@ -13,11 +14,11 @@ const updateColors = (msg, palette) => {
         palette.getPluginData('name') === ''
           ? 'UI Color Palette'
           : palette.getPluginData('name'),
-      scale: string = JSON.parse(palette.getPluginData('scale')),
+      scale: ScaleConfiguration = JSON.parse(palette.getPluginData('scale')),
       properties: boolean =
         palette.getPluginData('properties') == 'hasProperties' ? true : false,
-      preset = JSON.parse(palette.getPluginData('preset')),
-      textColorsTheme = JSON.parse(palette.getPluginData('textColorsTheme')),
+      preset: PresetConfiguration = JSON.parse(palette.getPluginData('preset')),
+      textColorsTheme: TextColorsThemeHexModel = JSON.parse(palette.getPluginData('textColorsTheme')),
       algorithmVersion: string = palette.getPluginData('algorithmVersion')
 
     palette.setPluginData('colors', JSON.stringify(msg.data))
