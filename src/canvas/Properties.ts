@@ -1,7 +1,7 @@
+import type { TextColorsThemeHex } from '../utils/types'
 import chroma from 'chroma-js'
 import { APCAcontrast, sRGBtoY, fontLookupAPCA } from 'apca-w3'
 import Tag from './Tag'
-import type { TextColorsThemeHex } from '../utils/types'
 
 export default class Properties {
   name: string

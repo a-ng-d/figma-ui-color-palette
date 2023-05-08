@@ -1,5 +1,5 @@
-import Colors from './Colors'
 import type { UIColors, Preset, TextColorsThemeHex } from '../utils/types'
+import Colors from './Colors'
 
 export default class Palette {
   paletteName: string

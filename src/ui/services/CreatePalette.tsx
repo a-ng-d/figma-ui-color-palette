@@ -1,4 +1,5 @@
 import * as React from 'react'
+import type { TextColorsThemeHex } from '../../utils/types'
 import Feature from '../components/Feature'
 import Tabs from '../components/Tabs'
 import Scale from '../modules/Scale'
@@ -8,7 +9,6 @@ import Actions from '../modules/Actions'
 import Shortcuts from '../modules/Shortcuts'
 import { palette } from '../../utils/palettePackage'
 import { features } from '../../utils/features'
-import type { TextColorsThemeHex } from '../../utils/types'
 
 interface Props {
   hasProperties: boolean

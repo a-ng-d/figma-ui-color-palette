@@ -1,11 +1,11 @@
 import * as React from 'react'
+import type { TextColorsThemeHex } from '../../utils/types'
 import FormItem from './../components/FormItem'
 import Input from './../components/Input'
 import Switch from '../components/Switch'
 import Message from '../components/Message'
 import Feature from '../components/Feature'
 import { features } from '../../utils/features'
-import type { TextColorsThemeHex } from '../../utils/types'
 
 interface Props {
   paletteName: string

@@ -1,5 +1,5 @@
 import * as React from 'react'
-import type { ColorsMessage } from '../../utils/types'
+import type { ColorsMessage, TextColorsThemeHex } from '../../utils/types'
 import Dispatcher from '../modules/Dispatcher'
 import Feature from '../components/Feature'
 import Tabs from '../components/Tabs'
@@ -16,7 +16,6 @@ import { features } from '../../utils/features'
 import { v4 as uuidv4 } from 'uuid'
 import JSZip from 'JSZip'
 import FileSaver from 'file-saver'
-import type { TextColorsThemeHex } from '../../utils/types'
 
 interface Props {
   scale: any

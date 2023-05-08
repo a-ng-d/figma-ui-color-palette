@@ -1,7 +1,7 @@
+import type { TextColorsThemeHex } from '../utils/types'
 import Properties from './Properties'
 import Property from './Property'
 import Status from './Status'
-import type { TextColorsThemeHex } from '../utils/types'
 
 export default class Sample {
   name: string
