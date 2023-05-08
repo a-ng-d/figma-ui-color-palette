@@ -1,5 +1,5 @@
 import * as React from 'react'
-import type { settingsMessage } from '../utils/types'
+import type { SettingsMessage } from '../utils/types'
 import Dispatcher from './modules/Dispatcher'
 import { createRoot } from 'react-dom/client'
 import Feature from './components/Feature'
@@ -19,7 +19,7 @@ let isPaletteSelected = false
 const container = document.getElementById('react-page'),
   root = createRoot(container)
 
-const settingsMessage: settingsMessage = {
+const settingsMessage: SettingsMessage = {
   type: 'update-settings',
   data: {
     name: '',

@@ -5,11 +5,11 @@ import Switch from '../components/Switch'
 import Message from '../components/Message'
 import Feature from '../components/Feature'
 import { features } from '../../utils/features'
-import type { textColorThemeHex } from '../../utils/types'
+import type { TextColorsThemeHex } from '../../utils/types'
 
 interface Props {
   paletteName: string
-  textColorsTheme?: textColorThemeHex
+  textColorsTheme?: TextColorsThemeHex
   settings?: Array<string>
   isNewAlgorithm?: boolean
   onSettingsChange: any

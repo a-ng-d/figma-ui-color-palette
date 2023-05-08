@@ -1,5 +1,5 @@
 import * as React from 'react'
-import type { colorsMessage, Color } from '../../utils/types'
+import type { ColorsMessage } from '../../utils/types'
 import Dispatcher from '../modules/Dispatcher'
 import Feature from '../components/Feature'
 import Tabs from '../components/Tabs'
@@ -16,7 +16,7 @@ import { features } from '../../utils/features'
 import { v4 as uuidv4 } from 'uuid'
 import JSZip from 'JSZip'
 import FileSaver from 'file-saver'
-import type { textColorThemeHex } from '../../utils/types'
+import type { TextColorsThemeHex } from '../../utils/types'
 
 interface Props {
   scale: any
@@ -25,7 +25,7 @@ interface Props {
   preset: any
   export: any
   paletteName: string
-  textColorsTheme: textColorThemeHex
+  textColorsTheme: TextColorsThemeHex
   algorithmVersion: string
   onHighlightReopen: any
   onChangeScale: any
@@ -35,7 +35,7 @@ interface Props {
   onSettingsChange: any
 }
 
-const colorsMessage: colorsMessage = {
+const colorsMessage: ColorsMessage = {
   type: 'update-colors',
   data: [],
   isEditedInRealTime: false,

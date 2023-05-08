@@ -8,13 +8,13 @@ import Actions from '../modules/Actions'
 import Shortcuts from '../modules/Shortcuts'
 import { palette } from '../../utils/palettePackage'
 import { features } from '../../utils/features'
-import type { textColorThemeHex } from '../../utils/types'
+import type { TextColorsThemeHex } from '../../utils/types'
 
 interface Props {
   hasProperties: boolean
   preset: any
   paletteName: string
-  textColorsTheme: textColorThemeHex
+  textColorsTheme: TextColorsThemeHex
   onHighlightReopen: any
   onPresetChange: any
   onCustomPreset: any

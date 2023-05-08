@@ -67,12 +67,12 @@ export interface Rgb {
   b: number
 }
 
-export interface textColorThemeHex {
+export interface TextColorsThemeHex {
   lightColor: string
   darkColor: string
 }
 
-export interface textColorThemeGL {
+export interface TextColorsThemeGL {
   lightColor: Array<number>
   darkColor: Array<number>
 }
