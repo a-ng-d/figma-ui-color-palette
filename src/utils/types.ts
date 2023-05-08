@@ -61,6 +61,19 @@ export interface UIColors {
 }
 
 // Utils
+export interface DispatchProcess {
+  time: number
+  callback: () => void
+  on: {
+    active: boolean
+    blocked: boolean
+    interval: string
+    send: () => void
+    stop: () => void
+    status: boolean
+  }
+}
+
 export interface Rgb {
   r: number
   g: number

@@ -30,7 +30,7 @@ figma.on('selectionchange', () => processSelection())
 figma.on('run', () => isHighlightRead(package_json.version))
 
 figma.ui.onmessage = (msg) => {
-  let palette: any
+  let palette: ReadonlyArray<SceneNode>
   const i = 0
 
   switch (msg.type) {

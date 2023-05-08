@@ -1,5 +1,5 @@
 import * as React from 'react'
-import type { SettingsMessage } from '../utils/types'
+import type { DispatchProcess, SettingsMessage } from '../utils/types'
 import Dispatcher from './modules/Dispatcher'
 import { createRoot } from 'react-dom/client'
 import Feature from './components/Feature'
@@ -33,7 +33,7 @@ const settingsMessage: SettingsMessage = {
 }
 
 class App extends React.Component {
-  dispatch: any
+  dispatch: { [key: string]: DispatchProcess }
 
   constructor(props) {
     super(props)
@@ -178,8 +178,7 @@ class App extends React.Component {
       onGoingStep: 'color changed',
     })
 
-  settingsHandler = (e: any) => {
-    console.log(e)
+  settingsHandler = (e) => {
     switch (e.target.dataset.feature) {
       case 'rename-palette': {
         palette.name = e.target.value

@@ -1,11 +1,12 @@
+import type { PaletteNode } from '../utils/types'
 import Sample from './Sample'
 
 export default class Title {
   text: string
-  parent: any
+  parent: PaletteNode
   node: FrameNode
 
-  constructor(text: string, parent: any) {
+  constructor(text: string, parent: PaletteNode) {
     this.text = text
     this.parent = parent
     this.node = figma.createFrame()

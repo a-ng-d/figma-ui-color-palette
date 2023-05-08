@@ -16,7 +16,7 @@ interface Props {
   min?: number
   max?: number
   scale?: Scale
-  onChange: any
+  onChange: (e: string) => void
 }
 
 export default class Slider extends React.Component<Props> {
@@ -29,7 +29,7 @@ export default class Slider extends React.Component<Props> {
   }
 
   // Direct actions
-  onGrab = (e: any) => {
+  onGrab = (e) => {
     const knob = e.target as HTMLElement,
       range = knob.parentElement as HTMLElement,
       shift = e.nativeEvent.layerX as number,
@@ -194,7 +194,7 @@ export default class Slider extends React.Component<Props> {
       doMap(offset, 0, rangeWidth, 0, 100).toFixed(1)
     )
     update()
-    this.props.onChange()
+    this.props.onChange('')
   }
 
   onRelease = (
@@ -221,7 +221,7 @@ export default class Slider extends React.Component<Props> {
     this.props.onChange('released')
   }
 
-  onAdd = (e: any) => {
+  onAdd = (e) => {
     if (
       (e.target as HTMLElement).classList[0] === 'slider__range' &&
       Object.keys(this.props.scale).length < 24 &&

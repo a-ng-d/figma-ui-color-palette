@@ -68,12 +68,12 @@ export default class Colors {
 
       Object.values(this.parent.scale)
         .reverse()
-        .forEach((lightness: any) => {
+        .forEach((lightness: string) => {
           let newColor, lch, oklch
           if (color.oklch) {
             oklch = chroma(sourceColor).oklch()
             newColor = chroma.oklch(
-              parseFloat((lightness / 100).toFixed(2)),
+              parseFloat(lightness) / 100,
               this.parent.algorithmVersion == 'v2'
                 ? Math.sin((parseFloat(lightness) / 100) * Math.PI) * chroma(sourceColor).oklch()[1]
                 : chroma(sourceColor).oklch()[1],
@@ -86,7 +86,7 @@ export default class Colors {
           } else {
             lch = chroma(sourceColor).lch()
             newColor = chroma.lch(
-              parseFloat((lightness * 1).toFixed(1)),
+              parseFloat(lightness) * 1,
               this.parent.algorithmVersion == 'v2'
                 ? Math.sin((parseFloat(lightness) / 100) * Math.PI) * chroma(sourceColor).lch()[1]
                 : chroma(sourceColor).lch()[1],

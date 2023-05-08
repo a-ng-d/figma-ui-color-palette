@@ -10,7 +10,7 @@ export default class Palette {
   preset: Preset
   textColorsTheme: TextColorsThemeHex
   algorithmVersion: string
-  children: { [key: string]: any }
+  children: PaletteNode
   node: FrameNode
 
   constructor(

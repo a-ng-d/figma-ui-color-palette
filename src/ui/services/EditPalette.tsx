@@ -1,5 +1,5 @@
 import * as React from 'react'
-import type { ColorsMessage, Preset, TextColorsThemeHex, UIColors, ExportPalette, HoveredColor, SelectedColor } from '../../utils/types'
+import type { ColorsMessage, Preset, TextColorsThemeHex, UIColors, ExportPalette, HoveredColor, SelectedColor, DispatchProcess } from '../../utils/types'
 import Dispatcher from '../modules/Dispatcher'
 import Feature from '../components/Feature'
 import Tabs from '../components/Tabs'
@@ -40,7 +40,7 @@ const colorsMessage: ColorsMessage = {
   isEditedInRealTime: false,
 }
 export default class EditPalette extends React.Component<Props> {
-  dispatch: any
+  dispatch: { [key: string]: DispatchProcess }
 
   constructor(props) {
     super(props)

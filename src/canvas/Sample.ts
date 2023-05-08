@@ -1,4 +1,4 @@
-import type { TextColorsThemeHex } from '../utils/types'
+import type { PaletteNode, TextColorsThemeHex } from '../utils/types'
 import Properties from './Properties'
 import Property from './Property'
 import Status from './Status'
@@ -14,7 +14,7 @@ export default class Sample {
     isClosestToRef: boolean
   }
   node: FrameNode
-  children: any
+  children: FrameNode
 
   constructor(
     name: string,
