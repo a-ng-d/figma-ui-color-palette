@@ -26,10 +26,10 @@ const settingsMessage: SettingsMessage = {
     algorithmVersion: '',
     textColorsTheme: {
       lightColor: '',
-      darkColor: ''
+      darkColor: '',
     },
   },
-  isEditedInRealTime: false
+  isEditedInRealTime: false,
 }
 
 class App extends React.Component {
@@ -39,11 +39,7 @@ class App extends React.Component {
     super(props)
     this.dispatch = {
       textColorsTheme: new Dispatcher(
-        () =>
-        parent.postMessage(
-          { pluginMessage: settingsMessage },
-          '*'
-        ),
+        () => parent.postMessage({ pluginMessage: settingsMessage }, '*'),
         500
       ),
     }
@@ -62,7 +58,7 @@ class App extends React.Component {
       paletteName: '',
       textColorsTheme: {
         lightColor: '#FFFFFF',
-        darkColor: '#000000'
+        darkColor: '#000000',
       },
       algorithmVersion: 'v1',
       hasHighlight: false,
@@ -194,15 +190,9 @@ class App extends React.Component {
           onGoingStep: 'settings changed',
         })
         if (e._reactName === 'onBlur' && this.state['service'] === 'Edit')
-          parent.postMessage(
-            { pluginMessage: settingsMessage },
-            '*'
-          )
+          parent.postMessage({ pluginMessage: settingsMessage }, '*')
         else if (e.key === 'Enter' && this.state['service'] === 'Edit')
-          parent.postMessage(
-            { pluginMessage: settingsMessage },
-            '*'
-          )
+          parent.postMessage({ pluginMessage: settingsMessage }, '*')
         break
       }
       case 'change-text-light-color': {
@@ -214,8 +204,10 @@ class App extends React.Component {
           palette.textColorsTheme.lightColor = code
           settingsMessage.data.name = this.state['paletteName']
           settingsMessage.data.algorithmVersion = this.state['algorithmVersion']
-          settingsMessage.data.textColorsTheme.lightColor = palette.textColorsTheme.lightColor
-          settingsMessage.data.textColorsTheme.darkColor = this.state['textColorsTheme'].darkColor
+          settingsMessage.data.textColorsTheme.lightColor =
+            palette.textColorsTheme.lightColor
+          settingsMessage.data.textColorsTheme.darkColor =
+            this.state['textColorsTheme'].darkColor
           this.setState({
             textColorsTheme: settingsMessage.data.textColorsTheme,
             onGoingStep: 'settings changed',
@@ -223,10 +215,7 @@ class App extends React.Component {
         }
         if (e._reactName === 'onBlur' && this.state['service'] === 'Edit') {
           this.dispatch.textColorsTheme.on.status = false
-          parent.postMessage(
-            { pluginMessage: settingsMessage },
-            '*'
-          )
+          parent.postMessage({ pluginMessage: settingsMessage }, '*')
         } else if (this.state['service'] === 'Edit')
           this.dispatch.textColorsTheme.on.status = true
         break
@@ -238,7 +227,8 @@ class App extends React.Component {
             : e.target.value
         settingsMessage.data.name = this.state['paletteName']
         settingsMessage.data.algorithmVersion = this.state['algorithmVersion']
-        settingsMessage.data.textColorsTheme.lightColor = this.state['textColorsTheme'].lightColor
+        settingsMessage.data.textColorsTheme.lightColor =
+          this.state['textColorsTheme'].lightColor
         settingsMessage.data.textColorsTheme.darkColor = code
         if (/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/i.test(code)) {
           palette.textColorsTheme.darkColor = code
@@ -249,10 +239,7 @@ class App extends React.Component {
         }
         if (e._reactName === 'onBlur' && this.state['service'] === 'Edit') {
           this.dispatch.textColorsTheme.on.status = false
-          parent.postMessage(
-            { pluginMessage: settingsMessage },
-            '*'
-          )
+          parent.postMessage({ pluginMessage: settingsMessage }, '*')
         } else if (this.state['service'] === 'Edit')
           this.dispatch.textColorsTheme.on.status = true
         break
@@ -260,15 +247,12 @@ class App extends React.Component {
       case 'update-algorithm-version': {
         settingsMessage.data.name = this.state['paletteName']
         settingsMessage.data.algorithmVersion = !e.target.checked ? 'v1' : 'v2'
-        settingsMessage.data.textColorsTheme= this.state['textColorsTheme']
+        settingsMessage.data.textColorsTheme = this.state['textColorsTheme']
         this.setState({
           algorithmVersion: settingsMessage.data.algorithmVersion,
           onGoingStep: 'settings changed',
         })
-        parent.postMessage(
-          { pluginMessage: settingsMessage },
-          '*'
-        )
+        parent.postMessage({ pluginMessage: settingsMessage }, '*')
       }
     }
   }
@@ -319,17 +303,17 @@ class App extends React.Component {
               hasProperties: true,
               preset: presets.material,
               paletteName: '',
-                textColorsTheme: {
-                  lightColor: '#FFFFFF',
-                  darkColor: '#000000'
-                },
+              textColorsTheme: {
+                lightColor: '#FFFFFF',
+                darkColor: '#000000',
+              },
               onGoingStep: 'selection empty',
             })
             palette.name = ''
             palette.preset = {}
             palette.textColorsTheme = {
               lightColor: '#FFFFFF',
-              darkColor: '#000000'
+              darkColor: '#000000',
             }
             isPaletteSelected = false
             break
@@ -343,7 +327,7 @@ class App extends React.Component {
                 paletteName: '',
                 textColorsTheme: {
                   lightColor: '#FFFFFF',
-                  darkColor: '#000000'
+                  darkColor: '#000000',
                 },
                 onGoingStep: 'colors selected',
               })
@@ -351,7 +335,7 @@ class App extends React.Component {
               palette.preset = presets.material
               palette.textColorsTheme = {
                 lightColor: '#FFFFFF',
-                darkColor: '#000000'
+                darkColor: '#000000',
               }
             } else
               this.setState({

@@ -16,7 +16,11 @@ export default class Properties {
   nodeProperties: TextNode
   node: FrameNode
 
-  constructor(name: string, rgb: Array<number>, textColorsTheme: TextColorsThemeHex) {
+  constructor(
+    name: string,
+    rgb: Array<number>,
+    textColorsTheme: TextColorsThemeHex
+  ) {
     this.name = name
     this.rgb = rgb
     this.textColorsTheme = textColorsTheme
@@ -26,12 +30,21 @@ export default class Properties {
   }
 
   getContrast(textColor: string) {
-    return chroma.contrast(this.rgb, textColor === 'BLACK' ? this.textColorsTheme.darkColor : this.textColorsTheme.lightColor)
+    return chroma.contrast(
+      this.rgb,
+      textColor === 'BLACK'
+        ? this.textColorsTheme.darkColor
+        : this.textColorsTheme.lightColor
+    )
   }
 
   getAPCAContrast(textColor: string) {
     return APCAcontrast(
-      sRGBtoY(textColor === 'BLACK' ? chroma(this.textColorsTheme.darkColor).rgb() : chroma(this.textColorsTheme.lightColor).rgb()),
+      sRGBtoY(
+        textColor === 'BLACK'
+          ? chroma(this.textColorsTheme.darkColor).rgb()
+          : chroma(this.textColorsTheme.lightColor).rgb()
+      ),
       sRGBtoY(this.rgb)
     )
   }

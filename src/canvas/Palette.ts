@@ -13,7 +13,14 @@ export default class Palette {
   children: any
   node: FrameNode
 
-  constructor(name: string, scale: string, properties: boolean, preset: Preset, textColorsTheme: TextColorsThemeHex, algorithmVersion: string) {
+  constructor(
+    name: string,
+    scale: string,
+    properties: boolean,
+    preset: Preset,
+    textColorsTheme: TextColorsThemeHex,
+    algorithmVersion: string
+  ) {
     this.paletteName = name
     this.name = `${name === '' ? 'UI Color Palette' : name}﹒${preset.name}`
     this.scale = scale
@@ -47,7 +54,10 @@ export default class Palette {
     this.node.setPluginData('name', this.paletteName)
     this.node.setPluginData('scale', JSON.stringify(this.scale))
     this.node.setPluginData('preset', JSON.stringify(this.preset))
-    this.node.setPluginData('textColorsTheme', JSON.stringify(this.textColorsTheme))
+    this.node.setPluginData(
+      'textColorsTheme',
+      JSON.stringify(this.textColorsTheme)
+    )
     this.node.setPluginData('algorithmVersion', this.algorithmVersion)
     this.properties
       ? this.node.setPluginData('properties', 'hasProperties')

@@ -50,7 +50,6 @@ export interface UIColors {
   hueShifting: number
 }
 
-
 // Utils
 export interface Rgb {
   r: number
@@ -70,17 +69,17 @@ export interface TextColorsThemeGL {
 
 // Messages
 export interface ColorsMessage {
-  type: string,
-  data: Array<UIColors>,
+  type: string
+  data: Array<UIColors>
   isEditedInRealTime: boolean
 }
 
 export interface SettingsMessage {
-  type: string,
+  type: string
   data: {
-    name: string,
-    algorithmVersion: string,
-    textColorsTheme: TextColorsThemeHex,
-  },
+    name: string
+    algorithmVersion: string
+    textColorsTheme: TextColorsThemeHex
+  }
   isEditedInRealTime: boolean
 }

@@ -16,7 +16,15 @@ export default class Sample {
   node: FrameNode
   children: any
 
-  constructor(name: string, source: { [key: string]: number } | null, scale: string | null, rgb: Array<number> | null, properties: boolean, textColorsTheme: TextColorsThemeHex, status?: { isClosestToRef: boolean }) {
+  constructor(
+    name: string,
+    source: { [key: string]: number } | null,
+    scale: string | null,
+    rgb: Array<number> | null,
+    properties: boolean,
+    textColorsTheme: TextColorsThemeHex,
+    status?: { isClosestToRef: boolean }
+  ) {
     this.name = name
     this.source = source
     this.scale = scale
@@ -96,7 +104,11 @@ export default class Sample {
 
     // insert
     if (this.properties) {
-      this.children = new Properties(this.scale, this.rgb, this.textColorsTheme).makeNode()
+      this.children = new Properties(
+        this.scale,
+        this.rgb,
+        this.textColorsTheme
+      ).makeNode()
       this.node.appendChild(this.children)
     }
     if (this.status.isClosestToRef)

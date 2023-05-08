@@ -5,7 +5,10 @@ export default class Status {
   source: { [key: string]: number }
   node: FrameNode
 
-  constructor(status: { isClosestToRef: boolean }, source: { [key: string]: number }) {
+  constructor(
+    status: { isClosestToRef: boolean },
+    source: { [key: string]: number }
+  ) {
     this.status = status
     this.source = source
     this.node = figma.createFrame()
@@ -26,7 +29,10 @@ export default class Status {
 
     if (this.status.isClosestToRef)
       this.node.appendChild(
-        new Tag('_close', 'Closest to source', 10).makeNodeTag([this.source.r, this.source.g, this.source.b, 1], true)
+        new Tag('_close', 'Closest to source', 10).makeNodeTag(
+          [this.source.r, this.source.g, this.source.b, 1],
+          true
+        )
       )
 
     return this.node

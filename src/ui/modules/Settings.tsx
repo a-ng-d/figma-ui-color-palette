@@ -129,7 +129,9 @@ export default class Settings extends React.Component<Props> {
     return (
       <div className="settings controls__control">
         {this.props.settings.includes('base') ? <this.Base /> : null}
-        {this.props.settings.includes('contrast-management') ? <this.ContrastManagement /> : null}
+        {this.props.settings.includes('contrast-management') ? (
+          <this.ContrastManagement />
+        ) : null}
         {this.props.settings.includes('color-management') ? (
           <this.ColorManagement />
         ) : null}

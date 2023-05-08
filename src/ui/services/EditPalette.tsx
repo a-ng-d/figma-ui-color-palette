@@ -60,11 +60,7 @@ export default class EditPalette extends React.Component<Props> {
         500
       ),
       colors: new Dispatcher(
-        () =>
-        parent.postMessage(
-          { pluginMessage: colorsMessage },
-          '*'
-        ),
+        () => parent.postMessage({ pluginMessage: colorsMessage }, '*'),
         500
       ),
     }
@@ -188,10 +184,7 @@ export default class EditPalette extends React.Component<Props> {
         }
         if (e._reactName === 'onBlur') {
           this.dispatch.colors.on.status = false
-          parent.postMessage(
-            { pluginMessage: colorsMessage },
-            '*'
-          )
+          parent.postMessage({ pluginMessage: colorsMessage }, '*')
         } else {
           colorsMessage.isEditedInRealTime = true
           this.dispatch.colors.on.status = true
@@ -214,10 +207,7 @@ export default class EditPalette extends React.Component<Props> {
           return item
         })
         this.props.onColorChange(colorsMessage.data)
-        parent.postMessage(
-          { pluginMessage: colorsMessage },
-          '*'
-        )
+        parent.postMessage({ pluginMessage: colorsMessage }, '*')
         break
       }
       case 'chroma': {
@@ -236,10 +226,7 @@ export default class EditPalette extends React.Component<Props> {
           return item
         })
         this.props.onColorChange(colorsMessage.data)
-        parent.postMessage(
-          { pluginMessage: colorsMessage },
-          '*'
-        )
+        parent.postMessage({ pluginMessage: colorsMessage }, '*')
         break
       }
       case 'hue': {
@@ -258,19 +245,13 @@ export default class EditPalette extends React.Component<Props> {
           return item
         })
         this.props.onColorChange(colorsMessage.data)
-        parent.postMessage(
-          { pluginMessage: colorsMessage },
-          '*'
-        )
+        parent.postMessage({ pluginMessage: colorsMessage }, '*')
         break
       }
       case 'remove': {
         colorsMessage.data = this.props.colors.filter((item) => item.id != id)
         this.props.onColorChange(colorsMessage.data)
-        parent.postMessage(
-          { pluginMessage: colorsMessage },
-          '*'
-        )
+        parent.postMessage({ pluginMessage: colorsMessage }, '*')
         break
       }
       case 'add': {
@@ -290,10 +271,7 @@ export default class EditPalette extends React.Component<Props> {
           hueShifting: 0,
         })
         this.props.onColorChange(colorsMessage.data)
-        parent.postMessage(
-          { pluginMessage: colorsMessage },
-          '*'
-        )
+        parent.postMessage({ pluginMessage: colorsMessage }, '*')
         break
       }
       case 'rename': {
@@ -308,15 +286,9 @@ export default class EditPalette extends React.Component<Props> {
         })
         this.props.onColorChange(colorsMessage.data)
         if (e._reactName === 'onBlur')
-          parent.postMessage(
-            { pluginMessage: colorsMessage },
-            '*'
-          )
+          parent.postMessage({ pluginMessage: colorsMessage }, '*')
         if (e.key === 'Enter')
-          parent.postMessage(
-            { pluginMessage: colorsMessage },
-            '*'
-          )
+          parent.postMessage({ pluginMessage: colorsMessage }, '*')
         break
       }
       case 'oklch': {
@@ -325,10 +297,7 @@ export default class EditPalette extends React.Component<Props> {
           return item
         })
         this.props.onColorChange(colorsMessage.data)
-        parent.postMessage(
-          { pluginMessage: colorsMessage },
-          '*'
-        )
+        parent.postMessage({ pluginMessage: colorsMessage }, '*')
         break
       }
       case 'shift-hue': {
@@ -337,10 +306,7 @@ export default class EditPalette extends React.Component<Props> {
           return item
         })
         this.props.onColorChange(colorsMessage.data)
-        parent.postMessage(
-          { pluginMessage: colorsMessage },
-          '*'
-        )
+        parent.postMessage({ pluginMessage: colorsMessage }, '*')
       }
     }
   }
@@ -661,10 +627,7 @@ export default class EditPalette extends React.Component<Props> {
           active={this.state['context']}
           onClick={this.navHandler}
         />
-        <section
-          onClick={this.unSelectColor}
-          className="section--scrollable"
-        >
+        <section onClick={this.unSelectColor} className="section--scrollable">
           <div className="controls">{controls}</div>
           {actions}
         </section>

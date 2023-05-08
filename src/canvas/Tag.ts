@@ -16,7 +16,7 @@ export default class Tag {
     this.nodeText = figma.createText()
   }
 
-  makeNodeTag(gl: Array<number> = [0,0,0,1], hasIndicator: boolean = false) {
+  makeNodeTag(gl: Array<number> = [0, 0, 0, 1], hasIndicator: boolean = false) {
     // base
     this.nodeTag.name = this.name
     this.nodeTag.fills = [

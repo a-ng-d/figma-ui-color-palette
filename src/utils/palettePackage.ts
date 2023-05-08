@@ -9,8 +9,8 @@ export const palette: Palette = {
   preset: {},
   textColorsTheme: {
     lightColor: '#FFFFFF',
-    darkColor: '#000000'
-  }
+    darkColor: '#000000',
+  },
 }
 
 export const presets = {

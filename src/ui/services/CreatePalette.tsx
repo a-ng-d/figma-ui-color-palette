@@ -191,9 +191,7 @@ export default class CreatePalette extends React.Component<Props> {
           active={this.state['context']}
           onClick={this.navHandler}
         />
-        <section
-          className="section--scrollable"
-        >
+        <section className="section--scrollable">
           <div className="controls">{controls}</div>
           {actions}
         </section>
