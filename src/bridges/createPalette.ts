@@ -15,6 +15,8 @@ const createPalette = (msg, palette) => {
   if (palette.children.length != 0) {
     figma.currentPage.appendChild(palette)
     scene.push(palette)
+    palette.x = figma.viewport.center.x - palette.width / 2
+    palette.y = figma.viewport.center.y - palette.height / 2
     figma.currentPage.selection = scene
     figma.viewport.scrollAndZoomIntoView(scene)
   } else palette.remove()
