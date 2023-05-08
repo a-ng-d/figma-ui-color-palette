@@ -33,7 +33,7 @@ export interface Palette {
   min: number
   max: number
   properties: boolean
-  preset: Preset | {}
+  preset: Preset | any
   textColorsTheme: TextColorsThemeHex
 }
 
