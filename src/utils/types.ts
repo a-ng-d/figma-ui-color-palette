@@ -19,6 +19,18 @@ export interface Palette {
   textColorsTheme: { [key: string]: string }
 }
 
+export interface Color {
+  name: string
+  rgb: {
+    r: number
+    g: number
+    b: number
+  },
+  id: string
+  oklch: boolean
+  hueShifting: number
+}
+
 export interface Features {
   name: string
   description: string
@@ -63,6 +75,12 @@ export interface textColorThemeHex {
 export interface textColorThemeGL {
   lightColor: Array<number>
   darkColor: Array<number>
+}
+
+export interface colorsMessage {
+  type: string,
+  data: Array<Color>,
+  isEditedInRealTime: boolean
 }
 
 export interface settingsMessage {
