@@ -20,7 +20,7 @@ const container = document.getElementById('react-page'),
   root = createRoot(container)
 
 const settingsMessage: settingsMessage = {
-  type: '',
+  type: 'update-settings',
   data: {
     name: '',
     algorithmVersion: '',
@@ -183,7 +183,6 @@ class App extends React.Component {
     })
 
   settingsHandler = (e: any) => {
-    settingsMessage.type = 'update-settings'
     switch (e.target.dataset.feature) {
       case 'rename-palette': {
         palette.name = e.target.value

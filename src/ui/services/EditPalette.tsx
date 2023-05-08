@@ -36,7 +36,7 @@ interface Props {
 }
 
 const colorsMessage: colorsMessage = {
-  type: '',
+  type: 'update-colors',
   data: [],
   isEditedInRealTime: false,
 }
@@ -162,7 +162,6 @@ export default class EditPalette extends React.Component<Props> {
 
     element != undefined ? (id = element.getAttribute('data-id')) : null
 
-    colorsMessage.type = 'update-colors'
     colorsMessage.isEditedInRealTime = false
 
     switch (e.target.dataset.feature) {
