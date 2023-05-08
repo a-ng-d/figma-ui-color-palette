@@ -1,36 +1,3 @@
-export interface Preset {
-  name: string
-  scale: Array<number>
-  min: number
-  max: number
-}
-
-export interface Scale {
-  [key: string]: string
-}
-
-export interface Palette {
-  name: string
-  scale: Scale
-  min: number
-  max: number
-  properties: boolean
-  preset: any
-  textColorsTheme: { [key: string]: string }
-}
-
-export interface Color {
-  name: string
-  rgb: {
-    r: number
-    g: number
-    b: number
-  },
-  id: string
-  oklch: boolean
-  hueShifting: number
-}
-
 export interface Features {
   name: string
   description: string
@@ -49,6 +16,28 @@ export interface ReleaseNote {
   learnMore: string
 }
 
+// Palette
+export interface Palette {
+  name: string
+  scale: Scale
+  min: number
+  max: number
+  properties: boolean
+  preset: any
+  textColorsTheme: { [key: string]: string }
+}
+
+export interface Preset {
+  name: string
+  scale: Array<number>
+  min: number
+  max: number
+}
+
+export interface Scale {
+  [key: string]: string
+}
+
 export interface UIColors {
   name: string
   rgb: {
@@ -61,6 +50,8 @@ export interface UIColors {
   hueShifting: number
 }
 
+
+// Utils
 export interface Rgb {
   r: number
   g: number
@@ -77,18 +68,19 @@ export interface TextColorsThemeGL {
   darkColor: Array<number>
 }
 
-export interface colorsMessage {
+// Messages
+export interface ColorsMessage {
   type: string,
-  data: Array<Color>,
+  data: Array<UIColors>,
   isEditedInRealTime: boolean
 }
 
-export interface settingsMessage {
+export interface SettingsMessage {
   type: string,
   data: {
     name: string,
     algorithmVersion: string,
-    textColorsTheme: textColorThemeHex,
+    textColorsTheme: TextColorsThemeHex,
   },
   isEditedInRealTime: boolean
 }
