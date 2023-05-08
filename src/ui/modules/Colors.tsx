@@ -1,11 +1,11 @@
 import * as React from 'react'
-import type { HoveredColor, SelectedColor, UIColors } from '../../utils/types'
+import type { HoveredColor, SelectedColor, ColorConfiguration } from '../../utils/types'
 import Button from '../components/Button'
 import ColorItem from '../components/ColorItem'
 import chroma from 'chroma-js'
 
 interface Props {
-  colors: Array<UIColors>
+  colors: Array<ColorConfiguration>
   selectedElement: SelectedColor
   hoveredElement: HoveredColor
   onColorChange: React.ChangeEventHandler

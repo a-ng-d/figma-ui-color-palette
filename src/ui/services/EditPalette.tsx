@@ -1,5 +1,5 @@
 import * as React from 'react'
-import type { ColorsMessage, Preset, TextColorsThemeHex, UIColors, ExportPalette, HoveredColor, SelectedColor, DispatchProcess } from '../../utils/types'
+import type { ColorsMessage, PresetConfiguration, TextColorsThemeHexModel, ColorConfiguration, ExportConfiguration, HoveredColor, SelectedColor, DispatchProcess } from '../../utils/types'
 import Dispatcher from '../modules/Dispatcher'
 import Feature from '../components/Feature'
 import Tabs from '../components/Tabs'
@@ -20,16 +20,16 @@ import FileSaver from 'file-saver'
 interface Props {
   scale: { [key: string]: string }
   hasProperties: boolean
-  colors: Array<UIColors>
-  preset: Preset
-  export: ExportPalette
+  colors: Array<ColorConfiguration>
+  preset: PresetConfiguration
+  export: ExportConfiguration
   paletteName: string
-  textColorsTheme: TextColorsThemeHex
+  textColorsTheme: TextColorsThemeHexModel
   algorithmVersion: string
   onHighlightReopen: React.ChangeEventHandler
   onChangeScale: () => void
   onChangeStop: () => void
-  onColorChange: (colors: Array<UIColors>) => void
+  onColorChange: (colors: Array<ColorConfiguration>) => void
   onPropertiesChange: (bool: boolean) => void
   onSettingsChange: React.ChangeEventHandler
 }

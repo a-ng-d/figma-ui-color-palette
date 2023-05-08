@@ -1,24 +1,24 @@
-import type { UIColors, Preset, TextColorsThemeHex, PaletteNode, Scale } from '../utils/types'
+import type { ColorConfiguration, PresetConfiguration, TextColorsThemeHexModel, PaletteNode, ScaleConfiguration } from '../utils/types'
 import Colors from './Colors'
 
 export default class Palette {
   paletteName: string
   name: string
-  scale: Scale
-  colors: Array<UIColors>
+  scale: ScaleConfiguration
+  colors: Array<ColorConfiguration>
   properties: boolean
-  preset: Preset
-  textColorsTheme: TextColorsThemeHex
+  preset: PresetConfiguration
+  textColorsTheme: TextColorsThemeHexModel
   algorithmVersion: string
   children: PaletteNode
   node: FrameNode
 
   constructor(
     name: string,
-    scale: Scale,
+    scale: ScaleConfiguration,
     properties: boolean,
-    preset: Preset,
-    textColorsTheme: TextColorsThemeHex,
+    preset: PresetConfiguration,
+    textColorsTheme: TextColorsThemeHexModel,
     algorithmVersion: string
   ) {
     this.paletteName = name

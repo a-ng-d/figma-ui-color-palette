@@ -1,4 +1,4 @@
-import type { TextColorsThemeHex } from '../utils/types'
+import type { TextColorsThemeHexModel } from '../utils/types'
 import chroma from 'chroma-js'
 import { APCAcontrast, sRGBtoY, fontLookupAPCA } from 'apca-w3'
 import Tag from './Tag'
@@ -6,7 +6,7 @@ import Tag from './Tag'
 export default class Properties {
   name: string
   rgb: Array<number>
-  textColorsTheme: TextColorsThemeHex
+  textColorsTheme: TextColorsThemeHexModel
   hex: string
   lch: Array<number>
   nodeTop: FrameNode
@@ -19,7 +19,7 @@ export default class Properties {
   constructor(
     name: string,
     rgb: Array<number>,
-    textColorsTheme: TextColorsThemeHex
+    textColorsTheme: TextColorsThemeHexModel
   ) {
     this.name = name
     this.rgb = rgb

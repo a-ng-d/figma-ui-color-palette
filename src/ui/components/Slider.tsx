@@ -1,5 +1,5 @@
 import * as React from 'react'
-import type { Scale } from '../../utils/types'
+import type { ScaleConfiguration } from '../../utils/types'
 import Knob from './Knob'
 import { palette } from '../../utils/palettePackage'
 import { doMap } from './../../utils/doMap'
@@ -15,7 +15,7 @@ interface Props {
   type: string
   min?: number
   max?: number
-  scale?: Scale
+  scale?: ScaleConfiguration
   onChange: (e: string) => void
 }
 

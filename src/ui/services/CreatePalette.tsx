@@ -1,5 +1,5 @@
 import * as React from 'react'
-import type { Preset, TextColorsThemeHex } from '../../utils/types'
+import type { PresetConfiguration, TextColorsThemeHexModel } from '../../utils/types'
 import Feature from '../components/Feature'
 import Tabs from '../components/Tabs'
 import Scale from '../modules/Scale'
@@ -12,9 +12,9 @@ import { features } from '../../utils/features'
 
 interface Props {
   hasProperties: boolean
-  preset: Preset
+  preset: PresetConfiguration
   paletteName: string
-  textColorsTheme: TextColorsThemeHex
+  textColorsTheme: TextColorsThemeHexModel
   onHighlightReopen: React.ChangeEventHandler
   onPresetChange: React.ChangeEventHandler
   onCustomPreset: React.ChangeEventHandler

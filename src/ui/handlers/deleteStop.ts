@@ -1,8 +1,8 @@
-import type { Scale } from '../../utils/types'
+import type { ScaleConfiguration } from '../../utils/types'
 import { palette } from '../../utils/palettePackage'
 
 const deleteStop = (
-  scale: Scale,
+  scale: ScaleConfiguration,
   selectedKnob: HTMLElement,
   presetName: string,
   presetMin: number,

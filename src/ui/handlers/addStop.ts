@@ -1,10 +1,10 @@
-import type { Scale } from '../../utils/types'
+import type { ScaleConfiguration } from '../../utils/types'
 import { palette } from '../../utils/palettePackage'
 import { doMap } from './../../utils/doMap'
 
 const addStop = (
   e: MouseEvent,
-  scale: Scale,
+  scale: ScaleConfiguration,
   hasPreset: boolean,
   presetName: string,
   presetMin: number,
