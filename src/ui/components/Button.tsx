@@ -8,7 +8,7 @@ interface Props {
   isLink?: boolean
   url?: string
   feature?: string
-  action?: any
+  action?: React.MouseEventHandler
 }
 
 export default class Button extends React.Component<Props> {

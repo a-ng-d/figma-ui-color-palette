@@ -1,8 +1,9 @@
 import * as React from 'react'
+import type { Shortcut } from '../../utils/types'
 import Button from '../components/Button'
 
 interface Props {
-  actions: any
+  actions: Array<Shortcut>
 }
 
 export default class Shortcuts extends React.Component<Props> {

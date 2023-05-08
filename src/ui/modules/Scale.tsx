@@ -1,4 +1,5 @@
 import * as React from 'react'
+import type { Preset } from '../../utils/types'
 import Button from '../components/Button'
 import Dropdown from '../components/Dropdown'
 import Slider from '../components/Slider'
@@ -9,13 +10,13 @@ import { features } from '../../utils/features'
 
 interface Props {
   hasPreset: boolean
-  preset: any
-  scale?: any
-  onChangePreset?: any
-  onChangeScale: any
-  onAddScale?: any
-  onRemoveScale?: any
-  onGoingStep?: any
+  preset: Preset
+  scale?: { [key: string]: string }
+  onChangePreset?: React.ReactEventHandler
+  onChangeScale: (e: string) => void
+  onAddScale?: React.ReactEventHandler
+  onRemoveScale?: React.ReactEventHandler
+  onGoingStep?: React.ReactEventHandler
 }
 
 export default class Scale extends React.Component<Props> {

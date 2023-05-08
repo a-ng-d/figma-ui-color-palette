@@ -3,7 +3,7 @@ import * as React from 'react'
 interface Props {
   id: string
   label: string
-  children: any
+  children: React.ReactNode
 }
 
 export default class FormItem extends React.Component<Props> {

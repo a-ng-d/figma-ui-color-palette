@@ -1,18 +1,19 @@
+import type { Scale } from '../../utils/types'
 import { palette } from '../../utils/palettePackage'
 import { doMap } from './../../utils/doMap'
 
 const addStop = (
-  e: any,
-  scale: any,
+  e: MouseEvent,
+  scale: Scale,
   hasPreset: boolean,
   presetName: string,
-  presetMin: string,
-  presetMax: string
+  presetMin: number,
+  presetMax: number
 ) => {
-  const rangeWidth: number = e.currentTarget.offsetWidth,
+  const rangeWidth: number = (e.currentTarget as HTMLElement).offsetWidth,
     sliderPadding: number = parseFloat(
       window
-        .getComputedStyle(e.currentTarget.parentNode, null)
+        .getComputedStyle((e.currentTarget as any).parentNode, null)
         .getPropertyValue('padding-left')
     ),
     offset: number = doMap(e.clientX - sliderPadding, 0, rangeWidth, 0, 100),

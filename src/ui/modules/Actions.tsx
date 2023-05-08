@@ -9,11 +9,11 @@ interface Props {
   context: string
   hasProperties?: boolean
   exportType?: string | null
-  onCreatePalette?: any
-  onCreateLocalColors?: any
-  onUpdateLocalColors?: any
-  onChangeProperties?: any
-  onExportPalette?: any
+  onCreatePalette?: React.MouseEventHandler
+  onCreateLocalColors?: React.MouseEventHandler
+  onUpdateLocalColors?: React.MouseEventHandler
+  onChangeProperties?: React.ChangeEventHandler
+  onExportPalette?: React.MouseEventHandler
 }
 
 export default class Actions extends React.Component<Props> {

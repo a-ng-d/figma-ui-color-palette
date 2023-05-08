@@ -69,7 +69,7 @@ class App extends React.Component {
   propertiesHandler = (bool: boolean) =>
     this.setState({ hasProperties: bool, onGoingStep: 'properties changed' })
 
-  presetHandler = (e: any) => {
+  presetHandler = (e: React.SyntheticEvent) => {
     switch ((e.target as HTMLInputElement).value) {
       case presets.material.name: {
         this.setState({
@@ -123,9 +123,9 @@ class App extends React.Component {
     }
   }
 
-  customHandler = (e: any) => {
+  customHandler = (e: React.SyntheticEvent) => {
     const scale = this.state['preset']['scale']
-    switch (e.target.dataset.feature) {
+    switch ((e.target as HTMLElement).dataset.feature) {
       case 'add': {
         if (scale.length < 24) {
           scale.push(scale.length + 1)
@@ -179,6 +179,7 @@ class App extends React.Component {
     })
 
   settingsHandler = (e: any) => {
+    console.log(e)
     switch (e.target.dataset.feature) {
       case 'rename-palette': {
         palette.name = e.target.value
@@ -286,7 +287,7 @@ class App extends React.Component {
 
   // Render
   render() {
-    onmessage = (e: any) => {
+    onmessage = (e: MessageEvent) => {
       try {
         switch (
           e.data.pluginMessage.type == undefined

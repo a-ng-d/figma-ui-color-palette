@@ -12,7 +12,7 @@ interface Props {
   textColorsTheme?: TextColorsThemeHex
   settings?: Array<string>
   isNewAlgorithm?: boolean
-  onSettingsChange: any
+  onSettingsChange: React.ReactEventHandler
 }
 
 export default class Settings extends React.Component<Props> {

@@ -1,14 +1,15 @@
 import chroma from 'chroma-js'
+import type { PaletteNode } from '../utils/types'
 import Sample from './Sample'
 import Header from './Header'
 import Title from './Title'
 
 export default class Colors {
   properties: boolean
-  parent: any
+  parent: PaletteNode
   node: FrameNode
 
-  constructor(parent: any) {
+  constructor(parent: PaletteNode) {
     this.parent = parent
     this.node = figma.createFrame()
   }

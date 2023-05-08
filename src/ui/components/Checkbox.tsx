@@ -6,7 +6,7 @@ interface Props {
   isChecked: boolean
   isDisabled: boolean
   feature: string
-  onChange: any
+  onChange: React.ChangeEventHandler
 }
 
 export default class Checkbox extends React.Component<Props> {

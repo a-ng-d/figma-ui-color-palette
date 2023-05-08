@@ -1,5 +1,5 @@
 import * as React from 'react'
-import type { ColorsMessage, TextColorsThemeHex } from '../../utils/types'
+import type { ColorsMessage, Preset, TextColorsThemeHex, UIColors, ExportPalette, HoveredColor, SelectedColor } from '../../utils/types'
 import Dispatcher from '../modules/Dispatcher'
 import Feature from '../components/Feature'
 import Tabs from '../components/Tabs'
@@ -18,20 +18,20 @@ import JSZip from 'JSZip'
 import FileSaver from 'file-saver'
 
 interface Props {
-  scale: any
+  scale: { [key: string]: string }
   hasProperties: boolean
-  colors: any
-  preset: any
-  export: any
+  colors: Array<UIColors>
+  preset: Preset
+  export: ExportPalette
   paletteName: string
   textColorsTheme: TextColorsThemeHex
   algorithmVersion: string
-  onHighlightReopen: any
-  onChangeScale: any
-  onChangeStop: any
-  onColorChange: any
-  onPropertiesChange: any
-  onSettingsChange: any
+  onHighlightReopen: React.ChangeEventHandler
+  onChangeScale: () => void
+  onChangeStop: () => void
+  onColorChange: (colors: Array<UIColors>) => void
+  onPropertiesChange: (bool: boolean) => void
+  onSettingsChange: React.ChangeEventHandler
 }
 
 const colorsMessage: ColorsMessage = {
@@ -133,9 +133,9 @@ export default class EditPalette extends React.Component<Props> {
     } else this.dispatch.scale.on.status = true
   }
 
-  checkHandler = (e: any) => {
-    this.props.onPropertiesChange(e.target.checked)
-    palette.properties = e.target.checked
+  checkHandler = (e: React.SyntheticEvent) => {
+    this.props.onPropertiesChange((e.target as HTMLInputElement).checked)
+    palette.properties = (e.target as HTMLInputElement).checked
     parent.postMessage(
       { pluginMessage: { type: 'update-properties', data: palette } },
       '*'
@@ -148,9 +148,9 @@ export default class EditPalette extends React.Component<Props> {
     })
   }
 
-  colorHandler = (e: any) => {
+  colorHandler = (e) => {
     let id: string
-    const element: any | null = e.nativeEvent.path.filter((el) => {
+    const element: HTMLElement | null = e.nativeEvent.path.filter((el) => {
       if (el.classList != undefined)
         return el.classList.contains('colors__item')
     })[0]
@@ -312,23 +312,23 @@ export default class EditPalette extends React.Component<Props> {
   }
 
   orderHandler = () => {
-    const source: any = this.state['selectedElement'],
-      target: any = this.state['hoveredElement'],
+    const source: SelectedColor = this.state['selectedElement'],
+      target: HoveredColor = this.state['hoveredElement'],
       colors = this.props.colors.map((el) => el)
 
-    let position
+    let position: number
 
     const colorsWithoutSource = colors.splice(source.position, 1)[0]
 
     if (target.hasGuideAbove && target.position > source.position)
-      position = parseFloat(target.position) - 1
+      position = target.position - 1
     else if (target.hasGuideBelow && target.position > source.position)
-      position = parseFloat(target.position)
+      position = target.position
     else if (target.hasGuideAbove && target.position < source.position)
-      position = parseFloat(target.position)
+      position = target.position
     else if (target.hasGuideBelow && target.position < source.position)
-      position = parseFloat(target.position) + 1
-    else position = parseFloat(target.position)
+      position = target.position + 1
+    else position = target.position
 
     colors.splice(position, 0, colorsWithoutSource)
     this.setState({
@@ -348,14 +348,14 @@ export default class EditPalette extends React.Component<Props> {
     )
   }
 
-  navHandler = (e: any) =>
+  navHandler = (e: React.SyntheticEvent) =>
     this.setState({
-      context: e.target.innerText,
+      context: (e.target as HTMLElement).innerText,
       onGoingStep: 'tab changed',
     })
 
-  selectionHandler = (e: any) => {
-    const target: HTMLElement = e.currentTarget
+  selectionHandler = (e) => {
+    const target = e.currentTarget
     if (target !== e.target) return
     this.setState({
       selectedElement: {
@@ -381,20 +381,20 @@ export default class EditPalette extends React.Component<Props> {
     })
   }
 
-  dropOutsideHandler = (e: any) => {
-    const target: any = e.target,
-      parent: any = target.parentNode,
-      scrollY: any = parent.parentNode.parentNode.scrollTop,
-      parentRefTop: number = parent.offsetTop,
-      parentRefBottom: number = parentRefTop + parent.clientHeight
+  dropOutsideHandler = (e) => {
+    const target = e.target,
+      parent: ParentNode = target.parentNode,
+      scrollY: number = (parent.parentNode.parentNode as HTMLElement).scrollTop,
+      parentRefTop: number = (parent as HTMLElement).offsetTop,
+      parentRefBottom: number = parentRefTop + (parent as HTMLElement).clientHeight
 
     if (e.pageY + scrollY < parentRefTop) this.orderHandler()
     else if (e.pageY + scrollY > parentRefBottom) this.orderHandler()
   }
 
-  settingsHandler = (e: any) => this.props.onSettingsChange(e)
+  settingsHandler = (e) => this.props.onSettingsChange(e)
 
-  unSelectColor = (e: any) => {
+  unSelectColor = (e) => {
     e.target.closest('li.colors__item') == null
       ? this.setState({
           selectedElement: {

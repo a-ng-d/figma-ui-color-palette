@@ -1,11 +1,12 @@
+import type { Scale } from '../../utils/types'
 import { palette } from '../../utils/palettePackage'
 
 const deleteStop = (
-  scale: any,
+  scale: Scale,
   selectedKnob: HTMLElement,
   presetName: string,
-  presetMin: string,
-  presetMax: string
+  presetMin: number,
+  presetMax: number
 ) => {
   const newScale = [],
     newLightnessScale = {}

@@ -17,14 +17,24 @@ export interface ReleaseNote {
 }
 
 // Palette
+export interface PaletteNode {
+  paletteName: string
+  scale: Scale
+  colors: Array<UIColors>
+  properties: boolean
+  preset: Preset
+  textColorsTheme: TextColorsThemeHex
+  algorithmVersion: string
+}
+
 export interface Palette {
   name: string
   scale: Scale
   min: number
   max: number
   properties: boolean
-  preset: any
-  textColorsTheme: { [key: string]: string }
+  preset: Preset | {}
+  textColorsTheme: TextColorsThemeHex
 }
 
 export interface Preset {
@@ -65,6 +75,29 @@ export interface TextColorsThemeHex {
 export interface TextColorsThemeGL {
   lightColor: Array<number>
   darkColor: Array<number>
+}
+
+export interface Shortcut {
+  label: string
+  isLink: boolean
+  url: string
+  action: any
+}
+
+export interface ExportPalette {
+  format: string
+  mimeType: string
+  data: any
+}
+
+export interface SelectedColor {
+  id: string
+  position: number
+}
+
+export interface HoveredColor extends SelectedColor {
+  hasGuideAbove: boolean
+  hasGuideBelow: boolean
 }
 
 // Messages
