@@ -34,6 +34,7 @@ export default class Input extends React.Component<Props> {
         <input
           data-feature={this.props.feature}
           type="color"
+          className="input__color"
           value={this.props.value}
           onChange={this.props.onChange}
           onBlur={this.props.onChange}

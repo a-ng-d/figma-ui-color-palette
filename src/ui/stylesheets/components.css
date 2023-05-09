@@ -267,6 +267,14 @@ div.icon-button--disabled {
   color: var(--figma-color-text-secondary);
 }
 
+.input__color:hover ~ .input__field {
+  --black8: var(--figma-color-text);
+  --black1: var(--figma-color-border);
+  color: var(--black8);
+  border: 1px solid var(--black1);
+  background-image: none;
+}
+
 /* Text area */
 .textarea {
   --black8: var(--figma-color-text);
