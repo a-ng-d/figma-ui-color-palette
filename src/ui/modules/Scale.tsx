@@ -1,19 +1,22 @@
 import * as React from 'react'
+import type { PresetConfiguration } from '../../utils/types'
 import Button from '../components/Button'
 import Dropdown from '../components/Dropdown'
 import Slider from '../components/Slider'
 import Message from '../components/Message'
+import Feature from '../components/Feature'
 import { palette, presets } from '../../utils/palettePackage'
+import { features } from '../../utils/features'
 
 interface Props {
   hasPreset: boolean
-  preset: any
-  scale?: any
-  onChangePreset?: any
-  onChangeScale: any
-  onAddScale?: any
-  onRemoveScale?: any
-  onGoingStep?: any
+  preset: PresetConfiguration
+  scale?: { [key: string]: string }
+  onChangePreset?: React.ReactEventHandler
+  onChangeScale: (e: string) => void
+  onAddScale?: React.ReactEventHandler
+  onRemoveScale?: React.ReactEventHandler
+  onGoingStep?: React.ReactEventHandler
 }
 
 export default class Scale extends React.Component<Props> {
@@ -48,41 +51,64 @@ export default class Scale extends React.Component<Props> {
       <div className="lightness-scale controls__control">
         <div className="section-controls">
           <div className="section-title">Lightness scale</div>
-          <Dropdown
-            id="presets"
-            options={Object.entries(presets).map((entry) => entry[1].name)}
-            selected={this.props.preset.name}
-            onChange={this.props.onChangePreset}
-          />
-          {this.props.preset.scale.length > 2 &&
-          this.props.preset.name === 'Custom' ? (
-            <Button
-              icon="minus"
-              type="icon"
-              feature="remove"
-              action={this.props.onRemoveScale}
+          <Feature
+            isActive={
+              features.find((feature) => feature.name === 'SCALE_PRESETS')
+                .isActive
+            }
+          >
+            <Dropdown
+              id="presets"
+              options={Object.entries(presets).map((entry) => entry[1].name)}
+              selected={this.props.preset.name}
+              onChange={this.props.onChangePreset}
             />
-          ) : null}
-          {this.props.preset.name === 'Custom' ? (
-            <Button
-              icon="plus"
-              type="icon"
-              state={this.props.preset.scale.length == 24 ? 'disabled' : ''}
-              feature="add"
-              action={this.props.onAddScale}
-            />
-          ) : null}
+            {this.props.preset.scale.length > 2 &&
+            this.props.preset.name === 'Custom' ? (
+              <Button
+                icon="minus"
+                type="icon"
+                feature="remove"
+                action={this.props.onRemoveScale}
+              />
+            ) : null}
+            {this.props.preset.name === 'Custom' ? (
+              <Button
+                icon="plus"
+                type="icon"
+                state={this.props.preset.scale.length == 24 ? 'disabled' : ''}
+                feature="add"
+                action={this.props.onAddScale}
+              />
+            ) : null}
+          </Feature>
         </div>
-        <Slider
-          type="EQUAL"
-          hasPreset={this.props.hasPreset}
-          presetName={this.props.preset.name}
-          knobs={this.props.preset.scale}
-          min={this.props.preset.min}
-          max={this.props.preset.max}
-          onChange={this.props.onChangeScale}
-        />
-        <Message icon="library" messages={this.setOnboardingMessages()} />
+        <Feature
+          isActive={
+            features.find((feature) => feature.name === 'SCALE_CONFIGURATION')
+              .isActive
+          }
+        >
+          <Slider
+            type="EQUAL"
+            hasPreset={this.props.hasPreset}
+            presetName={this.props.preset.name}
+            knobs={this.props.preset.scale}
+            min={this.props.preset.min}
+            max={this.props.preset.max}
+            onChange={this.props.onChangeScale}
+          />
+        </Feature>
+        <Feature
+          isActive={
+            features.find((feature) => feature.name === 'SCALE_TIPS').isActive
+          }
+        >
+          <Message
+            icon="library"
+            messages={this.setOnboardingMessages()}
+          />
+        </Feature>
       </div>
     )
   }
@@ -95,15 +121,31 @@ export default class Scale extends React.Component<Props> {
           <div className="section-title">Lightness scale</div>
           <div className="label">{this.props.preset.name}</div>
         </div>
-        <Slider
-          type="CUSTOM"
-          hasPreset={this.props.hasPreset}
-          presetName={this.props.preset.name}
-          knobs={this.props.preset.scale}
-          scale={this.props.scale}
-          onChange={this.props.onChangeScale}
-        />
-        <Message icon="library" messages={this.setOnboardingMessages()} />
+        <Feature
+          isActive={
+            features.find((feature) => feature.name === 'SCALE_CONFIGURATION')
+              .isActive
+          }
+        >
+          <Slider
+            type="CUSTOM"
+            hasPreset={this.props.hasPreset}
+            presetName={this.props.preset.name}
+            knobs={this.props.preset.scale}
+            scale={this.props.scale}
+            onChange={this.props.onChangeScale}
+          />
+        </Feature>
+        <Feature
+          isActive={
+            features.find((feature) => feature.name === 'SCALE_TIPS').isActive
+          }
+        >
+          <Message
+            icon="library"
+            messages={this.setOnboardingMessages()}
+          />
+        </Feature>
       </div>
     )
   }

@@ -1,5 +1,8 @@
 import * as React from 'react'
+import type { DispatchProcess, SettingsMessage } from '../utils/types'
+import Dispatcher from './modules/Dispatcher'
 import { createRoot } from 'react-dom/client'
+import Feature from './components/Feature'
 import CreatePalette from './services/CreatePalette'
 import EditPalette from './services/EditPalette'
 import Onboarding from './services/Onboarding'
@@ -9,28 +12,54 @@ import './stylesheets/app.css'
 import './stylesheets/components.css'
 import package_json from './../../package.json'
 import { palette, presets } from '../utils/palettePackage'
+import { features } from '../utils/features'
 import { v4 as uuidv4 } from 'uuid'
 
 let isPaletteSelected = false
 const container = document.getElementById('react-page'),
   root = createRoot(container)
 
+const settingsMessage: SettingsMessage = {
+  type: 'update-settings',
+  data: {
+    name: '',
+    algorithmVersion: '',
+    textColorsTheme: {
+      lightColor: '',
+      darkColor: '',
+    },
+  },
+  isEditedInRealTime: false,
+}
+
 class App extends React.Component {
+  dispatch: { [key: string]: DispatchProcess }
+
   constructor(props) {
     super(props)
+    this.dispatch = {
+      textColorsTheme: new Dispatcher(
+        () => parent.postMessage({ pluginMessage: settingsMessage }, '*'),
+        500
+      ),
+    }
     this.state = {
       service: 'None',
       newScale: {},
       newColors: {},
       hasProperties: true,
       onGoingStep: '',
-      preset: {},
+      preset: presets.material,
       export: {
         format: '',
         mimeType: '',
         data: '',
       },
       paletteName: '',
+      textColorsTheme: {
+        lightColor: '#FFFFFF',
+        darkColor: '#000000',
+      },
       algorithmVersion: 'v1',
       hasHighlight: false,
     }
@@ -40,7 +69,7 @@ class App extends React.Component {
   propertiesHandler = (bool: boolean) =>
     this.setState({ hasProperties: bool, onGoingStep: 'properties changed' })
 
-  presetHandler = (e: any) => {
+  presetHandler = (e: React.SyntheticEvent) => {
     switch ((e.target as HTMLInputElement).value) {
       case presets.material.name: {
         this.setState({
@@ -94,9 +123,9 @@ class App extends React.Component {
     }
   }
 
-  customHandler = (e: any) => {
+  customHandler = (e: React.SyntheticEvent) => {
     const scale = this.state['preset']['scale']
-    switch (e.target.dataset.feature) {
+    switch ((e.target as HTMLElement).dataset.feature) {
       case 'add': {
         if (scale.length < 24) {
           scale.push(scale.length + 1)
@@ -149,62 +178,81 @@ class App extends React.Component {
       onGoingStep: 'color changed',
     })
 
-  settingsHandler = (e: any) => {
+  settingsHandler = (e) => {
     switch (e.target.dataset.feature) {
       case 'rename-palette': {
         palette.name = e.target.value
+        settingsMessage.data.name = e.target.value
+        settingsMessage.data.algorithmVersion = this.state['algorithmVersion']
+        settingsMessage.data.textColorsTheme = this.state['textColorsTheme']
         this.setState({
-          paletteName: e.target.value,
+          paletteName: settingsMessage.data.name,
           onGoingStep: 'settings changed',
         })
-        e._reactName === 'onBlur' && this.state['service'] === 'Edit'
-          ? parent.postMessage(
-              {
-                pluginMessage: {
-                  type: 'update-settings',
-                  data: {
-                    name: e.target.value,
-                    algorithmVersion: this.state['algorithmVersion'],
-                  },
-                },
-              },
-              '*'
-            )
-          : null
-        e.key === 'Enter' && this.state['service'] === 'Edit'
-          ? parent.postMessage(
-              {
-                pluginMessage: {
-                  type: 'update-settings',
-                  data: {
-                    name: e.target.value,
-                    algorithmVersion: this.state['algorithmVersion'],
-                  },
-                },
-              },
-              '*'
-            )
-          : null
-
+        if (e._reactName === 'onBlur' && this.state['service'] === 'Edit')
+          parent.postMessage({ pluginMessage: settingsMessage }, '*')
+        else if (e.key === 'Enter' && this.state['service'] === 'Edit')
+          parent.postMessage({ pluginMessage: settingsMessage }, '*')
+        break
+      }
+      case 'change-text-light-color': {
+        const code: string =
+          e.target.value.indexOf('#') == -1
+            ? '#' + e.target.value
+            : e.target.value
+        if (/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/i.test(code)) {
+          palette.textColorsTheme.lightColor = code
+          settingsMessage.data.name = this.state['paletteName']
+          settingsMessage.data.algorithmVersion = this.state['algorithmVersion']
+          settingsMessage.data.textColorsTheme.lightColor =
+            palette.textColorsTheme.lightColor
+          settingsMessage.data.textColorsTheme.darkColor =
+            this.state['textColorsTheme'].darkColor
+          this.setState({
+            textColorsTheme: settingsMessage.data.textColorsTheme,
+            onGoingStep: 'settings changed',
+          })
+        }
+        if (e._reactName === 'onBlur' && this.state['service'] === 'Edit') {
+          this.dispatch.textColorsTheme.on.status = false
+          parent.postMessage({ pluginMessage: settingsMessage }, '*')
+        } else if (this.state['service'] === 'Edit')
+          this.dispatch.textColorsTheme.on.status = true
+        break
+      }
+      case 'change-text-dark-color': {
+        const code: string =
+          e.target.value.indexOf('#') == -1
+            ? '#' + e.target.value
+            : e.target.value
+        settingsMessage.data.name = this.state['paletteName']
+        settingsMessage.data.algorithmVersion = this.state['algorithmVersion']
+        settingsMessage.data.textColorsTheme.lightColor =
+          this.state['textColorsTheme'].lightColor
+        settingsMessage.data.textColorsTheme.darkColor = code
+        if (/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/i.test(code)) {
+          palette.textColorsTheme.darkColor = code
+          this.setState({
+            textColorsTheme: settingsMessage.data.textColorsTheme,
+            onGoingStep: 'settings changed',
+          })
+        }
+        if (e._reactName === 'onBlur' && this.state['service'] === 'Edit') {
+          this.dispatch.textColorsTheme.on.status = false
+          parent.postMessage({ pluginMessage: settingsMessage }, '*')
+        } else if (this.state['service'] === 'Edit')
+          this.dispatch.textColorsTheme.on.status = true
         break
       }
       case 'update-algorithm-version': {
+        settingsMessage.data.name = this.state['paletteName']
+        settingsMessage.data.algorithmVersion = !e.target.checked ? 'v1' : 'v2'
+        settingsMessage.data.textColorsTheme = this.state['textColorsTheme']
         this.setState({
-          algorithmVersion: !e.target.checked ? 'v1' : 'v2',
+          algorithmVersion: settingsMessage.data.algorithmVersion,
           onGoingStep: 'settings changed',
         })
-        parent.postMessage(
-          {
-            pluginMessage: {
-              type: 'update-settings',
-              data: {
-                name: this.state['paletteName'],
-                algorithmVersion: !e.target.checked ? 'v1' : 'v2',
-              },
-            },
-          },
-          '*'
-        )
+        parent.postMessage({ pluginMessage: settingsMessage }, '*')
       }
     }
   }
@@ -238,10 +286,7 @@ class App extends React.Component {
 
   // Render
   render() {
-    onmessage = (e: any) => {
-      Object.keys(this.state['preset']).length == 0
-        ? this.setState({ preset: presets.material })
-        : null
+    onmessage = (e: MessageEvent) => {
       try {
         switch (
           e.data.pluginMessage.type == undefined
@@ -256,12 +301,20 @@ class App extends React.Component {
             this.setState({
               service: 'None',
               hasProperties: true,
+              preset: presets.material,
               paletteName: '',
-              preset: {},
+              textColorsTheme: {
+                lightColor: '#FFFFFF',
+                darkColor: '#000000',
+              },
               onGoingStep: 'selection empty',
             })
             palette.name = ''
             palette.preset = {}
+            palette.textColorsTheme = {
+              lightColor: '#FFFFFF',
+              darkColor: '#000000',
+            }
             isPaletteSelected = false
             break
           }
@@ -270,12 +323,20 @@ class App extends React.Component {
               this.setState({
                 service: 'Create',
                 hasProperties: true,
-                onGoingStep: 'colors selected',
                 preset: presets.material,
                 paletteName: '',
+                textColorsTheme: {
+                  lightColor: '#FFFFFF',
+                  darkColor: '#000000',
+                },
+                onGoingStep: 'colors selected',
               })
               palette.name = ''
               palette.preset = presets.material
+              palette.textColorsTheme = {
+                lightColor: '#FFFFFF',
+                darkColor: '#000000',
+              }
             } else
               this.setState({
                 service: 'Create',
@@ -313,6 +374,7 @@ class App extends React.Component {
               newColors: putIdsOnColors,
               preset: e.data.pluginMessage.data.preset,
               paletteName: e.data.pluginMessage.data.name,
+              textColorsTheme: e.data.pluginMessage.data.textColorsTheme,
               algorithmVersion: e.data.pluginMessage.data.algorithmVersion,
               onGoingStep: 'palette selected',
             })
@@ -334,7 +396,9 @@ class App extends React.Component {
               export: {
                 format: 'CSS',
                 mimeType: 'text/css',
-                data: `:root {\n  ${e.data.pluginMessage.data.join(';\n  ')}\n}`,
+                data: `:root {\n  ${e.data.pluginMessage.data.join(
+                  ';\n  '
+                )}\n}`,
               },
               onGoingStep: 'export previewed',
             })
@@ -358,40 +422,66 @@ class App extends React.Component {
 
     return (
       <main>
-        {this.state['service'] === 'Create' ? (
-          <CreatePalette
-            preset={this.state['preset']}
-            hasProperties={this.state['hasProperties']}
-            paletteName={this.state['paletteName']}
-            onHighlightReopen={this.highlightHandler('OPEN')}
-            onPresetChange={this.presetHandler}
-            onCustomPreset={this.customHandler}
-            onSettingsChange={this.settingsHandler}
-          />
-        ) : null}
-        {this.state['service'] === 'Edit' ? (
-          <EditPalette
-            scale={this.state['newScale']}
-            colors={this.state['newColors']}
-            preset={this.state['preset']}
-            hasProperties={this.state['hasProperties']}
-            export={this.state['export']}
-            paletteName={this.state['paletteName']}
-            algorithmVersion={this.state['algorithmVersion']}
-            onHighlightReopen={this.highlightHandler('OPEN')}
-            onChangeScale={this.slideHandler}
-            onChangeStop={this.customSlideHandler}
-            onColorChange={this.colorHandler}
-            onPropertiesChange={this.propertiesHandler}
-            onSettingsChange={this.settingsHandler}
-          />
-        ) : null}
-        {this.state['service'] === 'None' ? (
-          <Onboarding onHighlightReopen={this.highlightHandler('OPEN')} />
-        ) : null}
-        {this.state['hasHighlight'] ? (
-          <Highlight closeHighlight={this.highlightHandler('CLOSE')} />
-        ) : null}
+        <Feature
+          isActive={
+            features.find((feature) => feature.name === 'CREATE').isActive
+          }
+        >
+          {this.state['service'] === 'Create' ? (
+            <CreatePalette
+              preset={this.state['preset']}
+              hasProperties={this.state['hasProperties']}
+              paletteName={this.state['paletteName']}
+              textColorsTheme={this.state['textColorsTheme']}
+              onHighlightReopen={this.highlightHandler('OPEN')}
+              onPresetChange={this.presetHandler}
+              onCustomPreset={this.customHandler}
+              onSettingsChange={this.settingsHandler}
+            />
+          ) : null}
+        </Feature>
+        <Feature
+          isActive={
+            features.find((feature) => feature.name === 'EDIT').isActive
+          }
+        >
+          {this.state['service'] === 'Edit' ? (
+            <EditPalette
+              scale={this.state['newScale']}
+              colors={this.state['newColors']}
+              preset={this.state['preset']}
+              hasProperties={this.state['hasProperties']}
+              export={this.state['export']}
+              paletteName={this.state['paletteName']}
+              textColorsTheme={this.state['textColorsTheme']}
+              algorithmVersion={this.state['algorithmVersion']}
+              onHighlightReopen={this.highlightHandler('OPEN')}
+              onChangeScale={this.slideHandler}
+              onChangeStop={this.customSlideHandler}
+              onColorChange={this.colorHandler}
+              onPropertiesChange={this.propertiesHandler}
+              onSettingsChange={this.settingsHandler}
+            />
+          ) : null}
+        </Feature>
+        <Feature
+          isActive={
+            features.find((feature) => feature.name === 'ONBOARDING').isActive
+          }
+        >
+          {this.state['service'] === 'None' ? (
+            <Onboarding onHighlightReopen={this.highlightHandler('OPEN')} />
+          ) : null}
+        </Feature>
+        <Feature
+          isActive={
+            features.find((feature) => feature.name === 'HIGHLIGHT').isActive
+          }
+        >
+          {this.state['hasHighlight'] ? (
+            <Highlight closeHighlight={this.highlightHandler('CLOSE')} />
+          ) : null}
+        </Feature>
       </main>
     )
   }

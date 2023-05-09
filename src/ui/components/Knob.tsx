@@ -2,10 +2,10 @@ import * as React from 'react'
 
 interface Props {
   id: string
-  scale: any
+  scale: string
   state: string
-  number: any
-  action: any
+  number: string
+  action: React.MouseEventHandler
 }
 
 export default class Knob extends React.Component<Props> {

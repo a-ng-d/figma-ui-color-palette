@@ -1,15 +1,11 @@
-interface Rgb {
-  r: number
-  g: number
-  b: number
-}
+import type { RgbModel } from '../utils/types'
 
 export default class Style {
   name: string
-  rgb: Rgb
+  rgb: RgbModel
   node: PaintStyle
 
-  constructor(name, rgb) {
+  constructor(name: string, rgb: RgbModel) {
     this.name = name
     this.rgb = rgb
     this.node = figma.createPaintStyle()

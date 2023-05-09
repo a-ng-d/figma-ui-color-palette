@@ -1,4 +1,4 @@
-const exportCss = (msg, palette) => {
+const exportCss = (palette) => {
   palette = figma.currentPage.selection[0]
   const css: Array<string> = []
 

@@ -1,9 +1,16 @@
 export default class Dispatcher {
-  time: string
-  callback: any
-  on: any
+  time: number
+  callback: () => void
+  on: {
+    active: boolean
+    blocked: boolean
+    interval: string
+    send: () => void
+    stop: () => void
+    status: boolean
+  }
 
-  constructor(callback, time) {
+  constructor(callback: () => void, time: number) {
     this.time = time
     this.on = {
       active: false,

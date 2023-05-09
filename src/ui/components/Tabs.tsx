@@ -4,7 +4,7 @@ interface Props {
   primaryTabs: Array<string>
   secondaryTabs: Array<string>
   active: string
-  onClick: any
+  onClick: React.MouseEventHandler
 }
 
 export default class Tabs extends React.Component<Props> {

@@ -19,7 +19,11 @@ export default class About extends React.Component {
           <div>
             <p className="type">
               Created and maintained by{' '}
-              <a href="https://an.gd" target="_blank" rel="noreferrer">
+              <a
+                href="https://an.gd"
+                target="_blank"
+                rel="noreferrer"
+              >
                 Aurélien Grimaud
               </a>
             </p>
@@ -75,7 +79,7 @@ export default class About extends React.Component {
               <Button
                 type="tertiary"
                 isLink={true}
-                url="http://uicp.link/feedback"
+                url="https://uicp.link/feedback"
                 label="Give feedback"
               />
             </div>

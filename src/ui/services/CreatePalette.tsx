@@ -1,4 +1,9 @@
 import * as React from 'react'
+import type {
+  PresetConfiguration,
+  TextColorsThemeHexModel,
+} from '../../utils/types'
+import Feature from '../components/Feature'
 import Tabs from '../components/Tabs'
 import Scale from '../modules/Scale'
 import Settings from '../modules/Settings'
@@ -6,22 +11,48 @@ import About from '../modules/About'
 import Actions from '../modules/Actions'
 import Shortcuts from '../modules/Shortcuts'
 import { palette } from '../../utils/palettePackage'
+import { features } from '../../utils/features'
 
 interface Props {
   hasProperties: boolean
-  preset: any
+  preset: PresetConfiguration
   paletteName: string
-  onHighlightReopen: any
-  onPresetChange: any
-  onCustomPreset: any
-  onSettingsChange: any
+  textColorsTheme: TextColorsThemeHexModel
+  onHighlightReopen: React.ChangeEventHandler
+  onPresetChange: React.ChangeEventHandler
+  onCustomPreset: React.ChangeEventHandler
+  onSettingsChange: React.ChangeEventHandler
 }
 
 export default class CreatePalette extends React.Component<Props> {
   constructor(props) {
     super(props)
     this.state = {
-      context: 'Scale',
+      context:
+        features.filter(
+          (feature) =>
+            feature.type === 'CONTEXT' &&
+            feature.service.includes('create') &&
+            feature.isActive
+        )[0] != undefined
+          ? features
+              .filter(
+                (feature) =>
+                  feature.type === 'CONTEXT' &&
+                  feature.service.includes('create') &&
+                  feature.isActive
+              )[0]
+              .name.charAt(0) +
+            features
+              .filter(
+                (feature) =>
+                  feature.type === 'CONTEXT' &&
+                  feature.service.includes('create') &&
+                  feature.isActive
+              )[0]
+              .name.slice(1)
+              .toLowerCase()
+          : '',
       hasProperties: true,
     }
   }
@@ -31,7 +62,7 @@ export default class CreatePalette extends React.Component<Props> {
     return
   }
 
-  checkHandler = (e: any) => {
+  checkHandler = (e) => {
     this.setState({
       hasProperties: e.target.checked,
       onGoingStep: 'properties changed',
@@ -39,17 +70,17 @@ export default class CreatePalette extends React.Component<Props> {
     palette.properties = e.target.checked
   }
 
-  navHandler = (e: any) =>
+  navHandler = (e: React.SyntheticEvent) =>
     this.setState({
-      context: e.target.innerText,
+      context: (e.target as HTMLElement).innerText,
       onGoingStep: 'tab changed',
     })
 
-  presetHandler = (e: any) => this.props.onPresetChange(e)
+  presetHandler = (e) => this.props.onPresetChange(e)
 
-  scaleHandler = (e: any) => this.props.onCustomPreset(e)
+  scaleHandler = (e) => this.props.onCustomPreset(e)
 
-  settingsHandler = (e: any) => this.props.onSettingsChange(e)
+  settingsHandler = (e) => this.props.onSettingsChange(e)
 
   // Direct actions
   onCreate = () =>
@@ -57,6 +88,22 @@ export default class CreatePalette extends React.Component<Props> {
       { pluginMessage: { type: 'create-palette', data: palette } },
       '*'
     )
+
+  setPrimaryContexts = () => {
+    const contexts: Array<string> = []
+    if (features.find((feature) => feature.name === 'SCALE').isActive)
+      contexts.push('Scale')
+    if (features.find((feature) => feature.name === 'SETTINGS').isActive)
+      contexts.push('Settings')
+    return contexts
+  }
+
+  setSecondaryContexts = () => {
+    const contexts: Array<string> = []
+    if (features.find((feature) => feature.name === 'ABOUT').isActive)
+      contexts.push('About')
+    return contexts
+  }
 
   // Renders
   render() {
@@ -77,28 +124,34 @@ export default class CreatePalette extends React.Component<Props> {
       )
 
       help = (
-        <Shortcuts
-          actions={[
-            {
-              label: 'Read the documentation',
-              isLink: true,
-              url: 'https://docs.ui-color-palette.com',
-              action: null,
-            },
-            {
-              label: 'Give feedback',
-              isLink: true,
-              url: 'http://uicp.link/feedback',
-              action: null,
-            },
-            {
-              label: "What's new",
-              isLink: false,
-              url: '',
-              action: this.props.onHighlightReopen,
-            },
-          ]}
-        />
+        <Feature
+          isActive={
+            features.find((feature) => feature.name === 'SHORTCUTS').isActive
+          }
+        >
+          <Shortcuts
+            actions={[
+              {
+                label: 'Read the documentation',
+                isLink: true,
+                url: 'https://docs.ui-color-palette.com',
+                action: null,
+              },
+              {
+                label: 'Give feedback',
+                isLink: true,
+                url: 'https://uicp.link/feedback',
+                action: null,
+              },
+              {
+                label: "What's new",
+                isLink: false,
+                url: '',
+                action: this.props.onHighlightReopen,
+              },
+            ]}
+          />
+        </Feature>
       )
     }
 
@@ -121,7 +174,8 @@ export default class CreatePalette extends React.Component<Props> {
         controls = (
           <Settings
             paletteName={this.props.paletteName}
-            settings={['base']}
+            textColorsTheme={this.props.textColorsTheme}
+            settings={['base', 'contrast-management']}
             onSettingsChange={this.settingsHandler}
           />
         )
@@ -135,12 +189,12 @@ export default class CreatePalette extends React.Component<Props> {
     return (
       <>
         <Tabs
-          primaryTabs={['Scale', 'Settings']}
-          secondaryTabs={['About']}
+          primaryTabs={this.setPrimaryContexts()}
+          secondaryTabs={this.setSecondaryContexts()}
           active={this.state['context']}
           onClick={this.navHandler}
         />
-        <section>
+        <section className="section--scrollable">
           <div className="controls">{controls}</div>
           {actions}
         </section>

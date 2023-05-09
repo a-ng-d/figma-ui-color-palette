@@ -1,3 +1,4 @@
+import type { TextColorsThemeHexModel } from '../utils/types'
 import Properties from './Properties'
 import Property from './Property'
 import Status from './Status'
@@ -8,24 +9,34 @@ export default class Sample {
   scale: string | null
   rgb: Array<number> | null
   properties: boolean
+  textColorsTheme: TextColorsThemeHexModel
   status: {
     isClosestToRef: boolean
   }
   node: FrameNode
-  children: any
+  children: FrameNode
 
-  constructor(name, source, scale, rgb, properties, status?) {
+  constructor(
+    name: string,
+    source: { [key: string]: number } | null,
+    scale: string | null,
+    rgb: Array<number> | null,
+    properties: boolean,
+    textColorsTheme: TextColorsThemeHexModel,
+    status?: { isClosestToRef: boolean }
+  ) {
     this.name = name
     this.source = source
     this.scale = scale
     this.rgb = rgb
     this.properties = properties
+    this.textColorsTheme = textColorsTheme
     this.status = status
     this.node = figma.createFrame()
     this.children = null
   }
 
-  makeName(mode, width, height) {
+  makeName(mode: string, width: number, height: number) {
     // base
     this.node.name = this.name
     this.node.fills = [
@@ -64,7 +75,7 @@ export default class Sample {
     return this.node
   }
 
-  makeScale(width, height) {
+  makeScale(width: number, height: number) {
     // base
     this.node.name = this.scale
     this.node.resize(width, height)
@@ -93,7 +104,11 @@ export default class Sample {
 
     // insert
     if (this.properties) {
-      this.children = new Properties(this.scale, this.rgb).makeNode()
+      this.children = new Properties(
+        this.scale,
+        this.rgb,
+        this.textColorsTheme
+      ).makeNode()
       this.node.appendChild(this.children)
     }
     if (this.status.isClosestToRef)

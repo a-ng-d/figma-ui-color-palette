@@ -1,10 +1,10 @@
 import * as React from 'react'
+import type { ReleaseNote } from '../../utils/types'
 import PopIn from '../components/PopIn'
 import releaseNotes from '../../utils/releaseNotes'
-import type { ReleaseNote } from '../../utils/releaseNotes'
 
 interface Props {
-  closeHighlight: any
+  closeHighlight: React.ReactEventHandler
 }
 
 export default class Highlight extends React.Component<Props> {
@@ -29,7 +29,10 @@ export default class Highlight extends React.Component<Props> {
           }}
           close={this.props.closeHighlight}
         >
-          <img className="highlight__cover" src={currentNote['image']} />
+          <img
+            className="highlight__cover"
+            src={currentNote['image']}
+          />
           <p className="highlight__text type">{currentNote['content']}</p>
         </PopIn>
       </div>

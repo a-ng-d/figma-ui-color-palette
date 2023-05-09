@@ -1,6 +1,6 @@
 import chroma from 'chroma-js'
 
-const exportJson = (msg, palette) => {
+const exportJson = (palette) => {
   palette = figma.currentPage.selection[0]
   const json = {}
 

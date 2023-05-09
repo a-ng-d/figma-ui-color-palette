@@ -1,3 +1,9 @@
+import type {
+  PresetConfiguration,
+  ScaleConfiguration,
+  TextColorsThemeHexModel,
+  ColorConfiguration,
+} from '../utils/types'
 import Colors from '../canvas/Colors'
 
 const updateProperties = (msg, palette) => {
@@ -8,9 +14,14 @@ const updateProperties = (msg, palette) => {
         palette.getPluginData('name') === ''
           ? 'UI Color Palette'
           : palette.getPluginData('name'),
-      colors: string = JSON.parse(palette.getPluginData('colors')),
-      scale: string = JSON.parse(palette.getPluginData('scale')),
-      preset = JSON.parse(palette.getPluginData('preset')),
+      colors: Array<ColorConfiguration> = JSON.parse(
+        palette.getPluginData('colors')
+      ),
+      scale: ScaleConfiguration = JSON.parse(palette.getPluginData('scale')),
+      preset: PresetConfiguration = JSON.parse(palette.getPluginData('preset')),
+      textColorsTheme: TextColorsThemeHexModel = JSON.parse(
+        palette.getPluginData('textColorsTheme')
+      ),
       algorithmVersion: string = palette.getPluginData('algorithmVersion')
 
     if (msg.data.properties) {
@@ -24,6 +35,7 @@ const updateProperties = (msg, palette) => {
           scale: scale,
           properties: msg.data.properties,
           preset: preset,
+          textColorsTheme: textColorsTheme,
           algorithmVersion: algorithmVersion,
         }).makeNode()
       )
@@ -38,6 +50,7 @@ const updateProperties = (msg, palette) => {
           scale: scale,
           properties: msg.data.properties,
           preset: preset,
+          textColorsTheme: textColorsTheme,
           algorithmVersion: algorithmVersion,
         }).makeNode()
       )

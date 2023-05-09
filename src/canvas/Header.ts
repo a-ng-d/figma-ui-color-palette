@@ -1,10 +1,11 @@
+import type { PaletteNode } from '../utils/types'
 import Sample from './Sample'
 
 export default class Header {
-  parent: any
+  parent: PaletteNode
   node: FrameNode
 
-  constructor(parent) {
+  constructor(parent: PaletteNode) {
     this.parent = parent
     this.node = figma.createFrame()
   }
@@ -27,7 +28,8 @@ export default class Header {
         null,
         null,
         [255, 255, 255],
-        this.parent.properties
+        this.parent.properties,
+        this.parent.textColorsTheme
       ).makeName('absolute', 160, 48)
     )
     Object.values(this.parent.scale)
@@ -41,7 +43,8 @@ export default class Header {
             null,
             null,
             [255, 255, 255],
-            this.parent.properties
+            this.parent.properties,
+            this.parent.textColorsTheme
           ).makeName('absolute', 160, 48)
         )
       })

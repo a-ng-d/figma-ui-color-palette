@@ -1,29 +1,32 @@
+import type {
+  ColorConfiguration,
+  PresetConfiguration,
+  TextColorsThemeHexModel,
+  PaletteNode,
+  ScaleConfiguration,
+} from '../utils/types'
 import Colors from './Colors'
-
-interface UIColors {
-  name: string
-  rgb: {
-    r: number
-    g: number
-    b: number
-  }
-  id: string | undefined
-  oklch: boolean
-  hueShifting: number
-}
 
 export default class Palette {
   paletteName: string
   name: string
-  scale: string
-  colors: Array<UIColors>
+  scale: ScaleConfiguration
+  colors: Array<ColorConfiguration>
   properties: boolean
-  preset: string
+  preset: PresetConfiguration
+  textColorsTheme: TextColorsThemeHexModel
   algorithmVersion: string
-  children: any
+  children: PaletteNode
   node: FrameNode
 
-  constructor(name, scale, properties, preset, algorithmVersion) {
+  constructor(
+    name: string,
+    scale: ScaleConfiguration,
+    properties: boolean,
+    preset: PresetConfiguration,
+    textColorsTheme: TextColorsThemeHexModel,
+    algorithmVersion: string
+  ) {
     this.paletteName = name
     this.name = `${name === '' ? 'UI Color Palette' : name}﹒${preset.name}`
     this.scale = scale
@@ -31,6 +34,7 @@ export default class Palette {
     this.properties = properties
     this.preset = preset
     this.algorithmVersion = algorithmVersion
+    this.textColorsTheme = textColorsTheme
     this.children = null
     this.node = figma.createFrame()
   }
@@ -56,6 +60,10 @@ export default class Palette {
     this.node.setPluginData('name', this.paletteName)
     this.node.setPluginData('scale', JSON.stringify(this.scale))
     this.node.setPluginData('preset', JSON.stringify(this.preset))
+    this.node.setPluginData(
+      'textColorsTheme',
+      JSON.stringify(this.textColorsTheme)
+    )
     this.node.setPluginData('algorithmVersion', this.algorithmVersion)
     this.properties
       ? this.node.setPluginData('properties', 'hasProperties')
@@ -87,13 +95,13 @@ export default class Palette {
       else return 0
     })
 
-    this.node.appendChild(new Colors(this).makeNode())
+    this.node.appendChild(new Colors(this as PaletteNode).makeNode())
 
     this.node.setPluginData('colors', JSON.stringify(this.colors))
     return this.node
   }
 
-  changeName(name) {
+  changeName(name: string) {
     this.node.name = name
   }
 }

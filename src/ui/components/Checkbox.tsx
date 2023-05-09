@@ -6,7 +6,7 @@ interface Props {
   isChecked: boolean
   isDisabled: boolean
   feature: string
-  onChange: any
+  onChange: React.ChangeEventHandler
 }
 
 export default class Checkbox extends React.Component<Props> {
@@ -22,7 +22,10 @@ export default class Checkbox extends React.Component<Props> {
           disabled={this.props.isDisabled}
           onChange={this.props.onChange}
         />
-        <label className="checkbox__label" htmlFor={this.props.id}>
+        <label
+          className="checkbox__label"
+          htmlFor={this.props.id}
+        >
           {this.props.label}
         </label>
       </div>

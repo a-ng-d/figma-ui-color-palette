@@ -1,5 +1,7 @@
 import * as React from 'react'
 import RadioButton from './../components/RadioButton'
+import Feature from '../components/Feature'
+import { features } from '../../utils/features'
 
 interface Props {
   exportPreview: string
@@ -8,17 +10,36 @@ interface Props {
 export default class Export extends React.Component<Props> {
   counter: number
 
+  static defaultProps = {
+    exportPreview: '',
+  }
+
   constructor(props) {
     super(props)
     this.counter = 0
     this.state = {
-      format: 'JSON',
+      format:
+        features.filter(
+          (feature) =>
+            feature.name.includes('EXPORT') &&
+            feature.type === 'ACTION' &&
+            feature.isActive
+        )[0] != undefined
+          ? features
+              .filter(
+                (feature) =>
+                  feature.name.includes('EXPORT') &&
+                  feature.type === 'ACTION' &&
+                  feature.isActive
+              )[0]
+              .name.slice(7)
+          : '',
     }
   }
 
   // Handlers
-  exportHandler = (e: any) => {
-    switch (e.target.dataset.feature) {
+  exportHandler = (e: React.SyntheticEvent) => {
+    switch ((e.target as HTMLElement).dataset.feature) {
       case 'export-to-json': {
         this.setState({
           format: 'JSON',
@@ -51,8 +72,9 @@ export default class Export extends React.Component<Props> {
     }
   }
 
+  // Direct actions
   setFirstPreview = () => {
-    this.counter == 0
+    this.counter == 0 && this.state['format'] != ''
       ? parent.postMessage(
           {
             pluginMessage: {
@@ -66,6 +88,10 @@ export default class Export extends React.Component<Props> {
     this.counter = 1
   }
 
+  selectPreview = (e) => e.target.select()
+
+  deSelectPreview = () => window.getSelection().removeAllRanges()
+
   // Render
   render() {
     this.setFirstPreview()
@@ -77,39 +103,60 @@ export default class Export extends React.Component<Props> {
           </div>
           <div className="export-palette__options">
             <ul>
-              <li>
-                <RadioButton
-                  id="options__json"
-                  label="JSON"
-                  isChecked={this.state['format'] === 'JSON' ? true : false}
-                  isDisabled={false}
-                  feature="export-to-json"
-                  group="fileFormat"
-                  onChange={this.exportHandler}
-                />
-              </li>
-              <li>
-                <RadioButton
-                  id="options__css"
-                  label="CSS Custom Properties"
-                  isChecked={this.state['format'] === 'CSS' ? true : false}
-                  isDisabled={false}
-                  feature="export-to-css"
-                  group="fileFormat"
-                  onChange={this.exportHandler}
-                />
-              </li>
-              <li>
-                <RadioButton
-                  id="options__csv"
-                  label="CSV (LCH)"
-                  isChecked={this.state['format'] === 'CSV' ? true : false}
-                  isDisabled={false}
-                  feature="export-to-csv"
-                  group="fileFormat"
-                  onChange={this.exportHandler}
-                />
-              </li>
+              <Feature
+                isActive={
+                  features.find((feature) => feature.name === 'EXPORT_JSON')
+                    .isActive
+                }
+              >
+                <li>
+                  <RadioButton
+                    id="options__json"
+                    label="JSON"
+                    isChecked={this.state['format'] === 'JSON' ? true : false}
+                    isDisabled={false}
+                    feature="export-to-json"
+                    group="fileFormat"
+                    onChange={this.exportHandler}
+                  />
+                </li>
+              </Feature>
+              <Feature
+                isActive={
+                  features.find((feature) => feature.name === 'EXPORT_CSS')
+                    .isActive
+                }
+              >
+                <li>
+                  <RadioButton
+                    id="options__css"
+                    label="CSS Custom Properties"
+                    isChecked={this.state['format'] === 'CSS' ? true : false}
+                    isDisabled={false}
+                    feature="export-to-css"
+                    group="fileFormat"
+                    onChange={this.exportHandler}
+                  />
+                </li>
+              </Feature>
+              <Feature
+                isActive={
+                  features.find((feature) => feature.name === 'EXPORT_CSV')
+                    .isActive
+                }
+              >
+                <li>
+                  <RadioButton
+                    id="options__csv"
+                    label="CSV (LCH)"
+                    isChecked={this.state['format'] === 'CSV' ? true : false}
+                    isDisabled={false}
+                    feature="export-to-csv"
+                    group="fileFormat"
+                    onChange={this.exportHandler}
+                  />
+                </li>
+              </Feature>
             </ul>
           </div>
         </div>
@@ -121,6 +168,8 @@ export default class Export extends React.Component<Props> {
             <textarea
               className="export-palette__preview textarea"
               value={this.props.exportPreview}
+              onBlur={this.deSelectPreview}
+              onFocus={this.selectPreview}
               readOnly
             ></textarea>
           </div>

@@ -1,11 +1,12 @@
+import type { PaletteNode } from '../utils/types'
 import Sample from './Sample'
 
 export default class Title {
   text: string
-  parent: any
+  parent: PaletteNode
   node: FrameNode
 
-  constructor(text, parent) {
+  constructor(text: string, parent: PaletteNode) {
     this.text = text
     this.parent = parent
     this.node = figma.createFrame()
@@ -30,7 +31,8 @@ export default class Title {
         null,
         null,
         [255, 255, 255],
-        this.parent.properties
+        this.parent.properties,
+        this.parent.textColorsTheme
       ).makeName('relative', 100, 48)
     )
 

@@ -1,10 +1,12 @@
 import * as React from 'react'
+import Feature from '../components/Feature'
 import Icon from './../modules/Icon'
 import Message from '../components/Message'
 import Shortcuts from '../modules/Shortcuts'
+import { features } from '../../utils/features'
 
 interface Props {
-  onHighlightReopen: any
+  onHighlightReopen: React.MouseEventHandler
 }
 
 export default class Onboarding extends React.Component<Props> {
@@ -27,28 +29,34 @@ export default class Onboarding extends React.Component<Props> {
             />
           </div>
         </section>
-        <Shortcuts
-          actions={[
-            {
-              label: 'Read the documentation',
-              isLink: true,
-              url: 'https://docs.ui-color-palette.com',
-              action: null,
-            },
-            {
-              label: 'Give feedback',
-              isLink: true,
-              url: 'http://uicp.link/feedback',
-              action: null,
-            },
-            {
-              label: "What's new",
-              isLink: false,
-              url: '',
-              action: this.props.onHighlightReopen,
-            },
-          ]}
-        />
+        <Feature
+          isActive={
+            features.find((feature) => feature.name === 'SHORTCUTS').isActive
+          }
+        >
+          <Shortcuts
+            actions={[
+              {
+                label: 'Read the documentation',
+                isLink: true,
+                url: 'https://docs.ui-color-palette.com',
+                action: null,
+              },
+              {
+                label: 'Give feedback',
+                isLink: true,
+                url: 'https://uicp.link/feedback',
+                action: null,
+              },
+              {
+                label: "What's new",
+                isLink: false,
+                url: '',
+                action: this.props.onHighlightReopen,
+              },
+            ]}
+          />
+        </Feature>
       </>
     )
   }
