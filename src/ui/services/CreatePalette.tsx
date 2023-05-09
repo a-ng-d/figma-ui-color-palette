@@ -1,5 +1,8 @@
 import * as React from 'react'
-import type { PresetConfiguration, TextColorsThemeHexModel } from '../../utils/types'
+import type {
+  PresetConfiguration,
+  TextColorsThemeHexModel,
+} from '../../utils/types'
 import Feature from '../components/Feature'
 import Tabs from '../components/Tabs'
 import Scale from '../modules/Scale'

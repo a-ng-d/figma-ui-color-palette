@@ -1,5 +1,14 @@
 import * as React from 'react'
-import type { ColorsMessage, PresetConfiguration, TextColorsThemeHexModel, ColorConfiguration, ExportConfiguration, HoveredColor, SelectedColor, DispatchProcess } from '../../utils/types'
+import type {
+  ColorsMessage,
+  PresetConfiguration,
+  TextColorsThemeHexModel,
+  ColorConfiguration,
+  ExportConfiguration,
+  HoveredColor,
+  SelectedColor,
+  DispatchProcess,
+} from '../../utils/types'
 import Dispatcher from '../modules/Dispatcher'
 import Feature from '../components/Feature'
 import Tabs from '../components/Tabs'

@@ -20,7 +20,12 @@ interface Props {
   onColorChange: React.ChangeEventHandler
   onSelectionChange: React.ChangeEventHandler
   onSelectionCancellation: React.ChangeEventHandler
-  onDragChange: (id: string, hasGuideAbove: boolean, hasGuideBelow: boolean, position: number) => void
+  onDragChange: (
+    id: string,
+    hasGuideAbove: boolean,
+    hasGuideBelow: boolean,
+    position: number
+  ) => void
   onDropOutside: React.ChangeEventHandler
   onOrderChange: React.ChangeEventHandler
 }

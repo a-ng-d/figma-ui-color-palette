@@ -13,7 +13,10 @@ const addStop = (
   const rangeWidth: number = (e.currentTarget as HTMLElement).offsetWidth,
     sliderPadding: number = parseFloat(
       window
-        .getComputedStyle(((e.currentTarget as HTMLElement).parentNode as Element), null)
+        .getComputedStyle(
+          (e.currentTarget as HTMLElement).parentNode as Element,
+          null
+        )
         .getPropertyValue('padding-left')
     ),
     offset: number = doMap(e.clientX - sliderPadding, 0, rangeWidth, 0, 100),

@@ -1,4 +1,9 @@
-import type { PresetConfiguration, ScaleConfiguration, TextColorsThemeHexModel, ColorConfiguration } from '../utils/types'
+import type {
+  PresetConfiguration,
+  ScaleConfiguration,
+  TextColorsThemeHexModel,
+  ColorConfiguration,
+} from '../utils/types'
 import Colors from '../canvas/Colors'
 
 const updateProperties = (msg, palette) => {

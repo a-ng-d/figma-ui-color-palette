@@ -1,4 +1,8 @@
-import type { PresetConfiguration, ScaleConfiguration, TextColorsThemeHexModel } from '../utils/types'
+import type {
+  PresetConfiguration,
+  ScaleConfiguration,
+  TextColorsThemeHexModel,
+} from '../utils/types'
 import Colors from './../canvas/Colors'
 import {
   previousSelection,

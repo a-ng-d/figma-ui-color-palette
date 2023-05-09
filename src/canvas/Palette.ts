@@ -1,4 +1,10 @@
-import type { ColorConfiguration, PresetConfiguration, TextColorsThemeHexModel, PaletteNode, ScaleConfiguration } from '../utils/types'
+import type {
+  ColorConfiguration,
+  PresetConfiguration,
+  TextColorsThemeHexModel,
+  PaletteNode,
+  ScaleConfiguration,
+} from '../utils/types'
 import Colors from './Colors'
 
 export default class Palette {
