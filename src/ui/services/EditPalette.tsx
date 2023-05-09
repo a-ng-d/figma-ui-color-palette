@@ -395,7 +395,8 @@ export default class EditPalette extends React.Component<Props> {
       parent: ParentNode = target.parentNode,
       scrollY: number = (parent.parentNode.parentNode as HTMLElement).scrollTop,
       parentRefTop: number = (parent as HTMLElement).offsetTop,
-      parentRefBottom: number = parentRefTop + (parent as HTMLElement).clientHeight
+      parentRefBottom: number =
+        parentRefTop + (parent as HTMLElement).clientHeight
 
     if (e.pageY + scrollY < parentRefTop) this.orderHandler()
     else if (e.pageY + scrollY > parentRefBottom) this.orderHandler()
@@ -636,7 +637,10 @@ export default class EditPalette extends React.Component<Props> {
           active={this.state['context']}
           onClick={this.navHandler}
         />
-        <section onClick={this.unSelectColor} className="section--scrollable">
+        <section
+          onClick={this.unSelectColor}
+          className="section--scrollable"
+        >
           <div className="controls">{controls}</div>
           {actions}
         </section>

@@ -23,7 +23,10 @@ export default class Dropdown extends React.Component<Props> {
         defaultValue={this.props.selected}
       >
         {this.props.options.map((option, index) => (
-          <option key={index} value={option}>
+          <option
+            key={index}
+            value={option}
+          >
             {option}
           </option>
         ))}

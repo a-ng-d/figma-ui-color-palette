@@ -10,7 +10,10 @@ export default class FormItem extends React.Component<Props> {
   render() {
     return (
       <div className="form-item">
-        <label className="type" htmlFor={this.props.id}>
+        <label
+          className="type"
+          htmlFor={this.props.id}
+        >
           {this.props.label}
         </label>
         {this.props.children}

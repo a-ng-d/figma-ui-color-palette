@@ -30,7 +30,10 @@ export default class Settings extends React.Component<Props> {
           }
         >
           <div className="settings__item">
-            <FormItem label="Palette name" id="rename-palette">
+            <FormItem
+              label="Palette name"
+              id="rename-palette"
+            >
               <Input
                 type="text"
                 icon={{ type: 'none', value: null }}
@@ -65,7 +68,10 @@ export default class Settings extends React.Component<Props> {
           }
         >
           <div className="settings__item">
-            <FormItem label="Text light color" id="change-text-light-color">
+            <FormItem
+              label="Text light color"
+              id="change-text-light-color"
+            >
               <Input
                 type="color"
                 icon={{ type: 'none', value: null }}
@@ -75,7 +81,10 @@ export default class Settings extends React.Component<Props> {
                 onFocus={this.props.onSettingsChange}
               />
             </FormItem>
-            <FormItem label="Text dark color" id="change-text-dark-color">
+            <FormItem
+              label="Text dark color"
+              id="change-text-dark-color"
+            >
               <Input
                 type="color"
                 icon={{ type: 'none', value: null }}

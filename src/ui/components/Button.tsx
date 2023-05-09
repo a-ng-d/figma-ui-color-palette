@@ -31,7 +31,11 @@ export default class Button extends React.Component<Props> {
   LinkButton = () => {
     return (
       <button className={`button button--${this.props.type}`}>
-        <a href={this.props.url} target="_blank" rel="noreferrer">
+        <a
+          href={this.props.url}
+          target="_blank"
+          rel="noreferrer"
+        >
           {this.props.label}
         </a>
       </button>

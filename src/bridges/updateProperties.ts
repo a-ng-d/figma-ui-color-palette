@@ -14,10 +14,14 @@ const updateProperties = (msg, palette) => {
         palette.getPluginData('name') === ''
           ? 'UI Color Palette'
           : palette.getPluginData('name'),
-      colors: Array<ColorConfiguration> = JSON.parse(palette.getPluginData('colors')),
+      colors: Array<ColorConfiguration> = JSON.parse(
+        palette.getPluginData('colors')
+      ),
       scale: ScaleConfiguration = JSON.parse(palette.getPluginData('scale')),
       preset: PresetConfiguration = JSON.parse(palette.getPluginData('preset')),
-      textColorsTheme: TextColorsThemeHexModel = JSON.parse(palette.getPluginData('textColorsTheme')),
+      textColorsTheme: TextColorsThemeHexModel = JSON.parse(
+        palette.getPluginData('textColorsTheme')
+      ),
       algorithmVersion: string = palette.getPluginData('algorithmVersion')
 
     if (msg.data.properties) {

@@ -22,7 +22,9 @@ const updateColors = (msg, palette) => {
       properties: boolean =
         palette.getPluginData('properties') == 'hasProperties' ? true : false,
       preset: PresetConfiguration = JSON.parse(palette.getPluginData('preset')),
-      textColorsTheme: TextColorsThemeHexModel = JSON.parse(palette.getPluginData('textColorsTheme')),
+      textColorsTheme: TextColorsThemeHexModel = JSON.parse(
+        palette.getPluginData('textColorsTheme')
+      ),
       algorithmVersion: string = palette.getPluginData('algorithmVersion')
 
     palette.setPluginData('colors', JSON.stringify(msg.data))

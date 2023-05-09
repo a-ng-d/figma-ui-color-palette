@@ -19,7 +19,11 @@ export default class About extends React.Component {
           <div>
             <p className="type">
               Created and maintained by{' '}
-              <a href="https://an.gd" target="_blank" rel="noreferrer">
+              <a
+                href="https://an.gd"
+                target="_blank"
+                rel="noreferrer"
+              >
                 Aurélien Grimaud
               </a>
             </p>

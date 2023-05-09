@@ -104,7 +104,10 @@ export default class Scale extends React.Component<Props> {
             features.find((feature) => feature.name === 'SCALE_TIPS').isActive
           }
         >
-          <Message icon="library" messages={this.setOnboardingMessages()} />
+          <Message
+            icon="library"
+            messages={this.setOnboardingMessages()}
+          />
         </Feature>
       </div>
     )
@@ -138,7 +141,10 @@ export default class Scale extends React.Component<Props> {
             features.find((feature) => feature.name === 'SCALE_TIPS').isActive
           }
         >
-          <Message icon="library" messages={this.setOnboardingMessages()} />
+          <Message
+            icon="library"
+            messages={this.setOnboardingMessages()}
+          />
         </Feature>
       </div>
     )

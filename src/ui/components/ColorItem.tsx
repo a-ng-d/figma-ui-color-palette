@@ -47,7 +47,8 @@ export default class ColorItem extends React.Component<Props> {
     this.setState({ hasMoreOptions: !this.state['hasMoreOptions'] })
   }
 
-  selectionHandler = (e: React.ChangeEvent) => this.props.onSelectionCancellation(e)
+  selectionHandler = (e: React.ChangeEvent) =>
+    this.props.onSelectionCancellation(e)
 
   // Direct actions
   onMouseDown = (e) => this.props.onSelectionChange(e)

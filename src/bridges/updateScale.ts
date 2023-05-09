@@ -13,11 +13,15 @@ const updateScale = (msg, palette) => {
         palette.getPluginData('name') === ''
           ? 'UI Color Palette'
           : palette.getPluginData('name'),
-      colors: Array<ColorConfiguration> = JSON.parse(palette.getPluginData('colors')),
+      colors: Array<ColorConfiguration> = JSON.parse(
+        palette.getPluginData('colors')
+      ),
       properties: boolean =
         palette.getPluginData('properties') == 'hasProperties' ? true : false,
       preset: PresetConfiguration = JSON.parse(palette.getPluginData('preset')),
-      textColorsTheme: TextColorsThemeHexModel = JSON.parse(palette.getPluginData('textColorsTheme')),
+      textColorsTheme: TextColorsThemeHexModel = JSON.parse(
+        palette.getPluginData('textColorsTheme')
+      ),
       algorithmVersion: string = palette.getPluginData('algorithmVersion')
 
     palette.setPluginData('scale', JSON.stringify(msg.data.scale))

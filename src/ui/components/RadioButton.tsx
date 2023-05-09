@@ -24,7 +24,10 @@ export default class RadioButton extends React.Component<Props> {
           onChange={this.props.onChange}
           name={this.props.group}
         />
-        <label className="radio__label" htmlFor={this.props.id}>
+        <label
+          className="radio__label"
+          htmlFor={this.props.id}
+        >
           {this.props.label}
         </label>
       </div>

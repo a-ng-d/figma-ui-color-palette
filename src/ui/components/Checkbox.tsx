@@ -22,7 +22,10 @@ export default class Checkbox extends React.Component<Props> {
           disabled={this.props.isDisabled}
           onChange={this.props.onChange}
         />
-        <label className="checkbox__label" htmlFor={this.props.id}>
+        <label
+          className="checkbox__label"
+          htmlFor={this.props.id}
+        >
           {this.props.label}
         </label>
       </div>
