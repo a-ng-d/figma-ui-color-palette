@@ -5,7 +5,7 @@ const releaseNotes: Array<ReleaseNote> = [
   {
     version: '2.1.0',
     isMostRecent: true,
-    title: 'UI Color Palette 21 update highlight 🚀',
+    title: 'UI Color Palette 21 update highlight',
     image: images.find(image => image.name === 'UI Color Palette 21').data,
     content:
       "Enhance your palette customization by editing the text colors used for the contrast score, surpassing the restrictions of using pure black and white. This ensures that your palette remains accessible, aligns with your brand's style, and complies with the WCAG and APCA standards.",
