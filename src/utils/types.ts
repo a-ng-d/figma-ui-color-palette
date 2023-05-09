@@ -16,6 +16,12 @@ export interface ReleaseNote {
   learnMore: string
 }
 
+export interface ImageFormat {
+  name: string
+  mimeType: string
+  data: string
+}
+
 export interface Shortcut {
   label: string
   isLink: boolean
