@@ -1,7 +1,7 @@
 import Style from './../canvas/Style'
 
-const createLocalStyles = (palette, i) => {
-  palette = figma.currentPage.selection[0]
+const createLocalStyles = (palette, i: number) => {
+  palette = figma.currentPage.selection[0] as FrameNode
 
   if (palette.children.length == 1) {
     const localStyles = figma.getLocalPaintStyles()

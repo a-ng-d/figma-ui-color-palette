@@ -63,9 +63,9 @@ figma.ui.onmessage = (msg) => {
       break
 
     case 'export-palette':
-      msg.export === 'JSON' ? exportJson(msg, palette) : null
-      msg.export === 'CSS' ? exportCss(msg, palette) : null
-      msg.export === 'CSV' ? exportCsv(msg, palette) : null
+      msg.export === 'JSON' ? exportJson(palette) : null
+      msg.export === 'CSS' ? exportCss(palette) : null
+      msg.export === 'CSV' ? exportCsv(palette) : null
       break
 
     case 'update-settings':
