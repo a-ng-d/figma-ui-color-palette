@@ -94,6 +94,12 @@ export default class Settings extends React.Component<Props> {
                 onFocus={this.props.onSettingsChange}
               />
             </FormItem>
+            <Message
+              icon="library"
+              messages={[
+                'The light and dark text colors serve as a reference to simulate contrast and obtain both WCAG and APCA scores',
+              ]}
+            />
           </div>
         </Feature>
       </div>
