@@ -1,6 +1,6 @@
 import chroma from 'chroma-js'
 
-const exportCsv = (msg, palette) => {
+const exportCsv = (palette) => {
   palette = figma.currentPage.selection[0]
   const paletteCsv: Array<{ name: string; csv: string }> = [],
     csv: Array<string> = [],
