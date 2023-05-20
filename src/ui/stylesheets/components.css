@@ -117,6 +117,19 @@
   top: 14px;
 }
 
+.radio--blocked {
+  pointer-events: none;
+  cursor: default;
+}
+
+.radio--blocked .radio__label {
+  color: var(--figma-color-text-disabled)
+}
+
+.radio--blocked .radio__label:before {
+  --black8: var(--figma-color-border-disabled);
+}
+
 /* Button */
 .button--primary {
   --blue: var(--figma-color-bg-brand);
@@ -344,4 +357,20 @@ div.icon-button--disabled {
   100% {
     transform: translateX(-100%);
   }
+}
+
+/* Blocked state */
+.radio--blocked:after {
+  content: 'Pro';
+  height: var(--size-xsmall);
+  padding: 0 5px;
+  position: absolute;
+  right: 0;
+  font-size: var(--font-size-xsmall);
+  letter-spacing: var(--font-letter-spacing-neg-xsmall);
+  line-height: var(--font-line-height);
+  font-weight: 600;
+  color: var(--figma-color-text-brand);
+  background-color: var(--figma-color-bg-selected-secondary);
+  border-radius: var(--border-radius-small);
 }

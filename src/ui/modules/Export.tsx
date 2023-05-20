@@ -152,6 +152,9 @@ export default class Export extends React.Component<Props> {
                     label="CSV (LCH)"
                     isChecked={this.state['format'] === 'CSV' ? true : false}
                     isDisabled={false}
+                    isBlocked={
+                      features.find((feature) => feature.name === 'EXPORT_CSV').isPro && this.props.planStatus === 'PAID' ? false : true
+                    }
                     feature="export-to-csv"
                     group="fileFormat"
                     onChange={this.exportHandler}
