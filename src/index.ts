@@ -14,6 +14,10 @@ import exportCsv from './bridges/exportCsv'
 import updateSettings from './bridges/updateSettings'
 import package_json from './../package.json'
 
+figma.payments.setPaymentStatusInDevelopment({
+  type: 'UNPAID'
+})
+
 figma.showUI(__html__, {
   width: 640,
   height: 320,
