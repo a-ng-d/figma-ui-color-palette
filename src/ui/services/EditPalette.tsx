@@ -35,6 +35,7 @@ interface Props {
   paletteName: string
   textColorsTheme: TextColorsThemeHexModel
   algorithmVersion: string
+  planStatus: string
   onHighlightReopen: React.ChangeEventHandler
   onChangeScale: () => void
   onChangeStop: () => void
@@ -608,6 +609,7 @@ export default class EditPalette extends React.Component<Props> {
                 ? this.props.export.data[0].csv
                 : this.props.export.data
             }
+            planStatus={this.props.planStatus}
           />
         )
         break

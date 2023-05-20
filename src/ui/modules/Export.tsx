@@ -5,6 +5,7 @@ import { features } from '../../utils/features'
 
 interface Props {
   exportPreview: string
+  planStatus: string
 }
 
 export default class Export extends React.Component<Props> {
