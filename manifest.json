@@ -8,6 +8,7 @@
   "relaunchButtons": [
     { "command": "edit", "name": "Edit the color palette" }
   ],
+  "permissions": ["payments"],
   "main": "dist/code.js",
   "ui": "dist/ui.html"
 }
