@@ -8,7 +8,11 @@
   "relaunchButtons": [
     { "command": "edit", "name": "Edit the color palette" }
   ],
-  "permissions": ["payments"],
+  "networkAccess": {
+    "allowedDomains": [
+      "figma.com"
+    ]
+  },
   "main": "dist/code.js",
   "ui": "dist/ui.html"
 }
