@@ -1,4 +1,4 @@
-import hasProPlan from './bridges/hasProPlan'
+import checkPlanStatus from './bridges/checkPlanStatus'
 import isHighlightRead from './bridges/isHighlightRead'
 import closeHighlight from './bridges/closeHighlight'
 import createPalette from './bridges/createPalette'
@@ -29,7 +29,7 @@ figma.on('run', () => processSelection())
 figma.on('selectionchange', () => processSelection())
 
 figma.on('run', () => isHighlightRead(package_json.version))
-figma.on('run', () => hasProPlan())
+figma.on('run', () => checkPlanStatus())
 
 figma.ui.onmessage = (msg) => {
   let palette: ReadonlyArray<SceneNode>
