@@ -417,6 +417,7 @@ input[type='number']::-webkit-inner-spin-button {
   align-items: center;
   gap: var(--size-xxsmall);
   padding: 0 0 0 var(--size-xxsmall);
+  position: relative;
 }
 
 .form-item label {
@@ -426,6 +427,14 @@ input[type='number']::-webkit-inner-spin-button {
 .form-item .input,
 .form-item .textarea {
   flex: 4;
+}
+
+.form-item--blocked {
+  pointer-events: none;
+}
+
+.form-item--blocked label {
+  color: var(--figma-color-text-disabled);
 }
 
 /* Icon buttons */

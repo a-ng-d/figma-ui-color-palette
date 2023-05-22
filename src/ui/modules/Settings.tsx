@@ -34,6 +34,9 @@ export default class Settings extends React.Component<Props> {
             <FormItem
               label="Palette name"
               id="rename-palette"
+              isBlocked={
+                features.find((feature) => feature.name === 'SETTINGS_PALETTE_NAME').isPro ? this.props.planStatus === 'PAID' ? false : true : false
+              }
             >
               <Input
                 type="text"
@@ -43,6 +46,9 @@ export default class Settings extends React.Component<Props> {
                   this.props.paletteName != '' ? this.props.paletteName : ''
                 }
                 charactersLimit={64}
+                isBlocked={
+                  features.find((feature) => feature.name === 'SETTINGS_PALETTE_NAME').isPro ? this.props.planStatus === 'PAID' ? false : true : false
+                }
                 feature="rename-palette"
                 onChange={this.props.onSettingsChange}
                 onFocus={this.props.onSettingsChange}
