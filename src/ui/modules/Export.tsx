@@ -116,6 +116,9 @@ export default class Export extends React.Component<Props> {
                     label="JSON"
                     isChecked={this.state['format'] === 'JSON' ? true : false}
                     isDisabled={false}
+                    isBlocked={
+                      features.find((feature) => feature.name === 'EXPORT_JSON').isPro ? this.props.planStatus === 'PAID' ? false : true : false
+                    }
                     feature="export-to-json"
                     group="fileFormat"
                     onChange={this.exportHandler}
@@ -134,6 +137,9 @@ export default class Export extends React.Component<Props> {
                     label="CSS Custom Properties"
                     isChecked={this.state['format'] === 'CSS' ? true : false}
                     isDisabled={false}
+                    isBlocked={
+                      features.find((feature) => feature.name === 'EXPORT_CSS').isPro ? this.props.planStatus === 'PAID' ? false : true : false
+                    }
                     feature="export-to-css"
                     group="fileFormat"
                     onChange={this.exportHandler}
