@@ -18,6 +18,7 @@ interface Props {
 
 export default class Settings extends React.Component<Props> {
   isBlocked = (featureName: string) => features.find((feature) => feature.name === featureName).isPro ? this.props.planStatus === 'PAID' ? false : true : false
+  
   // Templates
   Base = () => {
     return (
@@ -75,11 +76,13 @@ export default class Settings extends React.Component<Props> {
             <FormItem
               label="Text light color"
               id="change-text-light-color"
+              isBlocked={this.isBlocked('SETTINGS_NEW_ALGORITHM')}
             >
               <Input
                 type="color"
                 icon={{ type: 'none', value: null }}
                 value={this.props.textColorsTheme.lightColor}
+                isBlocked={this.isBlocked('SETTINGS_NEW_ALGORITHM')}
                 feature="change-text-light-color"
                 onChange={this.props.onSettingsChange}
                 onFocus={this.props.onSettingsChange}
@@ -88,11 +91,13 @@ export default class Settings extends React.Component<Props> {
             <FormItem
               label="Text dark color"
               id="change-text-dark-color"
+              isBlocked={this.isBlocked('SETTINGS_NEW_ALGORITHM')}
             >
               <Input
                 type="color"
                 icon={{ type: 'none', value: null }}
                 value={this.props.textColorsTheme.darkColor}
+                isBlocked={this.isBlocked('SETTINGS_NEW_ALGORITHM')}
                 feature="change-text-dark-color"
                 onChange={this.props.onSettingsChange}
                 onFocus={this.props.onSettingsChange}
@@ -103,6 +108,7 @@ export default class Settings extends React.Component<Props> {
               messages={[
                 'The light and dark text colors serve as a reference to simulate contrast and obtain both WCAG and APCA scores',
               ]}
+              isBlocked={this.isBlocked('SETTINGS_NEW_ALGORITHM')}
             />
           </div>
         </Feature>

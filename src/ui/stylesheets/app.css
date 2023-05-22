@@ -64,20 +64,6 @@ div.lightness-scale {
   justify-content: space-between;
 }
 
-div.onboarding {
-  gap: var(--size-xxsmall);
-  align-items: center;
-  justify-content: center;
-}
-
-div.onboarding .label {
-  width: auto;
-}
-
-div.onboarding-tip {
-  padding: 0 calc(var(--size-xsmall) + var(--size-xxxsmall));
-}
-
 div.actions {
   width: 100%;
   height: var(--size-xxlarge);
@@ -629,4 +615,27 @@ div.about .about__links {
   display: flex;
   align-items: center;
   color: var(--figma-color-text);
+}
+
+/* Callout */
+div.onboarding {
+  gap: var(--size-xxsmall);
+  align-items: center;
+  justify-content: center;
+}
+
+div.onboarding .label {
+  width: auto;
+}
+
+div.onboarding-tip {
+  padding: 0 calc(var(--size-xsmall) + var(--size-xxxsmall));
+}
+
+div.onboarding-tip--blocked .onboarding-tip__msg {
+  color: var(--figma-color-text-disabled);
+}
+
+div.onboarding-tip--blocked .icon {
+  background: var(--figma-color-icon-disabled);
 }

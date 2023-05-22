@@ -305,6 +305,10 @@ div.icon-button--disabled {
   --black1: transparent;
 }
 
+.input--blocked input[type='color' i] {
+  opacity: .25
+}
+
 /* Text area */
 .textarea {
   --black8: var(--figma-color-text);
