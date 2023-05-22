@@ -38,6 +38,8 @@ export default class Export extends React.Component<Props> {
     }
   }
 
+  isBlocked = (featureName: string) => features.find((feature) => feature.name === featureName).isPro ? this.props.planStatus === 'PAID' ? false : true : false
+
   // Handlers
   exportHandler = (e: React.SyntheticEvent) => {
     switch ((e.target as HTMLElement).dataset.feature) {
@@ -115,9 +117,7 @@ export default class Export extends React.Component<Props> {
                     id="options__json"
                     label="JSON"
                     isChecked={this.state['format'] === 'JSON' ? true : false}
-                    isBlocked={
-                      features.find((feature) => feature.name === 'EXPORT_JSON').isPro ? this.props.planStatus === 'PAID' ? false : true : false
-                    }
+                    isBlocked={this.isBlocked('EXPORT_JSON')}
                     feature="export-to-json"
                     group="fileFormat"
                     onChange={this.exportHandler}
@@ -135,9 +135,7 @@ export default class Export extends React.Component<Props> {
                     id="options__css"
                     label="CSS Custom Properties"
                     isChecked={this.state['format'] === 'CSS' ? true : false}
-                    isBlocked={
-                      features.find((feature) => feature.name === 'EXPORT_CSS').isPro ? this.props.planStatus === 'PAID' ? false : true : false
-                    }
+                    isBlocked={this.isBlocked('EXPORT_CSS')}
                     feature="export-to-css"
                     group="fileFormat"
                     onChange={this.exportHandler}
@@ -155,9 +153,7 @@ export default class Export extends React.Component<Props> {
                     id="options__csv"
                     label="CSV (LCH)"
                     isChecked={this.state['format'] === 'CSV' ? true : false}
-                    isBlocked={
-                      features.find((feature) => feature.name === 'EXPORT_CSV').isPro ? this.props.planStatus === 'PAID' ? false : true : false
-                    }
+                    isBlocked={this.isBlocked('EXPORT_CSV')} 
                     feature="export-to-csv"
                     group="fileFormat"
                     onChange={this.exportHandler}

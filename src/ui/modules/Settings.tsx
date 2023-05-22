@@ -17,6 +17,7 @@ interface Props {
 }
 
 export default class Settings extends React.Component<Props> {
+  isBlocked = (featureName: string) => features.find((feature) => feature.name === featureName).isPro ? this.props.planStatus === 'PAID' ? false : true : false
   // Templates
   Base = () => {
     return (
@@ -34,9 +35,7 @@ export default class Settings extends React.Component<Props> {
             <FormItem
               label="Palette name"
               id="rename-palette"
-              isBlocked={
-                features.find((feature) => feature.name === 'SETTINGS_PALETTE_NAME').isPro ? this.props.planStatus === 'PAID' ? false : true : false
-              }
+              isBlocked={this.isBlocked('SETTINGS_PALETTE_NAME')}
             >
               <Input
                 type="text"
@@ -46,9 +45,7 @@ export default class Settings extends React.Component<Props> {
                   this.props.paletteName != '' ? this.props.paletteName : ''
                 }
                 charactersLimit={64}
-                isBlocked={
-                  features.find((feature) => feature.name === 'SETTINGS_PALETTE_NAME').isPro ? this.props.planStatus === 'PAID' ? false : true : false
-                }
+                isBlocked={this.isBlocked('SETTINGS_PALETTE_NAME')}
                 feature="rename-palette"
                 onChange={this.props.onSettingsChange}
                 onFocus={this.props.onSettingsChange}
