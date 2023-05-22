@@ -115,7 +115,6 @@ export default class Export extends React.Component<Props> {
                     id="options__json"
                     label="JSON"
                     isChecked={this.state['format'] === 'JSON' ? true : false}
-                    isDisabled={false}
                     isBlocked={
                       features.find((feature) => feature.name === 'EXPORT_JSON').isPro ? this.props.planStatus === 'PAID' ? false : true : false
                     }
@@ -136,7 +135,6 @@ export default class Export extends React.Component<Props> {
                     id="options__css"
                     label="CSS Custom Properties"
                     isChecked={this.state['format'] === 'CSS' ? true : false}
-                    isDisabled={false}
                     isBlocked={
                       features.find((feature) => feature.name === 'EXPORT_CSS').isPro ? this.props.planStatus === 'PAID' ? false : true : false
                     }
@@ -157,7 +155,6 @@ export default class Export extends React.Component<Props> {
                     id="options__csv"
                     label="CSV (LCH)"
                     isChecked={this.state['format'] === 'CSV' ? true : false}
-                    isDisabled={false}
                     isBlocked={
                       features.find((feature) => feature.name === 'EXPORT_CSV').isPro ? this.props.planStatus === 'PAID' ? false : true : false
                     }

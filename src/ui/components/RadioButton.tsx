@@ -4,7 +4,7 @@ interface Props {
   id: string
   label: string
   isChecked: boolean
-  isDisabled: boolean
+  isDisabled?: boolean
   isBlocked?: boolean
   feature: string
   group: string
@@ -13,6 +13,7 @@ interface Props {
 
 export default class RadioButton extends React.Component<Props> {
   static defaultProps = {
+    isDisabled: false,
     isBlocked: false
   }
 
