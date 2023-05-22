@@ -345,39 +345,39 @@ input[type='number']::-webkit-inner-spin-button {
   display: none;
 }
 
-.inputs {
+div.inputs {
   display: flex;
   gap: var(--size-xxsmall);
 }
 
-.inputs .label {
+div.inputs .label {
   flex: 0;
 }
 
-.inputs__bar {
+div.inputs__bar {
   display: flex;
   padding: 0 1px;
   position: relative;
 }
 
-.inputs__bar .input {
+div.inputs__bar .input {
   width: 40px;
   margin: 0 -0.5px;
 }
 
-.inputs__bar input {
+div.inputs__bar input {
   background-color: transparent;
 }
 
-.inputs__bar input:focus {
+div.inputs__bar input:focus {
   border: 1px solid var(--figma-color-border);
 }
 
-.inputs__bar:hover input {
+div.inputs__bar:hover input {
   border: 1px solid var(--figma-color-border);
 }
 
-.inputs__bar:focus-within:before {
+div.inputs__bar:focus-within:before {
   content: '';
   width: 100%;
   height: 100%;
@@ -388,17 +388,17 @@ input[type='number']::-webkit-inner-spin-button {
   border-radius: var(--border-radius-small);
 }
 
-.inputs__bar:focus-within input {
+div.inputs__bar:focus-within input {
   border: 1px solid var(--figma-color-border);
   outline: 1px solid transparent;
   outline-offset: -2px;
 }
 
-.select-menu__label {
+div.select-menu__label {
   margin-top: 0;
 }
 
-.form-item {
+div.form-item {
   display: flex;
   align-items: center;
   gap: var(--size-xxsmall);
@@ -406,20 +406,20 @@ input[type='number']::-webkit-inner-spin-button {
   position: relative;
 }
 
-.form-item label {
+div.form-item label {
   flex: 1;
 }
 
-.form-item .input,
-.form-item .textarea {
+div.form-item .input,
+div.form-item .textarea {
   flex: 4;
 }
 
-.form-item--blocked {
+div.form-item--blocked {
   pointer-events: none;
 }
 
-.form-item--blocked label {
+div.form-item--blocked label {
   color: var(--figma-color-text-disabled);
 }
 
