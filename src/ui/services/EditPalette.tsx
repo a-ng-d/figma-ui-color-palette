@@ -621,6 +621,7 @@ export default class EditPalette extends React.Component<Props> {
             textColorsTheme={this.props.textColorsTheme}
             settings={['base', 'contrast-management', 'color-management']}
             isNewAlgorithm={this.props.algorithmVersion == 'v2' ? true : false}
+            planStatus={this.props.planStatus}
             onSettingsChange={this.settingsHandler}
           />
         )

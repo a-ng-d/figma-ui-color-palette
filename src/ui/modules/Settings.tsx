@@ -12,6 +12,7 @@ interface Props {
   textColorsTheme?: TextColorsThemeHexModel
   settings?: Array<string>
   isNewAlgorithm?: boolean
+  planStatus: string
   onSettingsChange: React.ReactEventHandler
 }
 

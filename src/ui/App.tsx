@@ -438,6 +438,7 @@ class App extends React.Component {
               hasProperties={this.state['hasProperties']}
               paletteName={this.state['paletteName']}
               textColorsTheme={this.state['textColorsTheme']}
+              planStatus={this.state['planStatus']}
               onHighlightReopen={this.highlightHandler('OPEN')}
               onPresetChange={this.presetHandler}
               onCustomPreset={this.customHandler}
