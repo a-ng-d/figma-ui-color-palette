@@ -48,9 +48,9 @@ export default class Settings extends React.Component<Props> {
                 charactersLimit={64}
                 isBlocked={this.isBlocked('SETTINGS_PALETTE_NAME')}
                 feature="rename-palette"
-                onChange={this.props.onSettingsChange}
-                onFocus={this.props.onSettingsChange}
-                onConfirm={this.props.onSettingsChange}
+                onChange={this.isBlocked('SETTINGS_PALETTE_NAME') ? () => null : this.props.onSettingsChange}
+                onFocus={this.isBlocked('SETTINGS_PALETTE_NAME') ? () => null : this.props.onSettingsChange}
+                onConfirm={this.isBlocked('SETTINGS_PALETTE_NAME') ? () => null : this.props.onSettingsChange}
               />
             </FormItem>
           </div>
@@ -84,8 +84,8 @@ export default class Settings extends React.Component<Props> {
                 value={this.props.textColorsTheme.lightColor}
                 isBlocked={this.isBlocked('SETTINGS_TEXT_COLORS_THEME')}
                 feature="change-text-light-color"
-                onChange={this.props.onSettingsChange}
-                onFocus={this.props.onSettingsChange}
+                onChange={this.isBlocked('SETTINGS_TEXT_COLORS_THEME') ? () => null : this.props.onSettingsChange}
+                onFocus={this.isBlocked('SETTINGS_TEXT_COLORS_THEME') ? () => null : this.props.onSettingsChange}
               />
             </FormItem>
             <FormItem
@@ -99,8 +99,8 @@ export default class Settings extends React.Component<Props> {
                 value={this.props.textColorsTheme.darkColor}
                 isBlocked={this.isBlocked('SETTINGS_TEXT_COLORS_THEME')}
                 feature="change-text-dark-color"
-                onChange={this.props.onSettingsChange}
-                onFocus={this.props.onSettingsChange}
+                onChange={this.isBlocked('SETTINGS_TEXT_COLORS_THEME') ? () => null : this.props.onSettingsChange}
+                onFocus={this.isBlocked('SETTINGS_TEXT_COLORS_THEME') ? () => null : this.props.onSettingsChange}
               />
             </FormItem>
             <Message
@@ -134,10 +134,9 @@ export default class Settings extends React.Component<Props> {
               id="update-algorithm"
               label="Enable the new algorithm for generating color shades"
               isChecked={this.props.isNewAlgorithm}
-              isDisabled={false}
               isBlocked={this.isBlocked('SETTINGS_NEW_ALGORITHM')}
               feature="update-algorithm-version"
-              onChange={this.props.onSettingsChange}
+              onChange={this.isBlocked('SETTINGS_NEW_ALGORITHM') ? () => null : this.props.onSettingsChange}
             />
             <Message
               icon="library"

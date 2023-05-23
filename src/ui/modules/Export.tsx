@@ -120,7 +120,7 @@ export default class Export extends React.Component<Props> {
                     isBlocked={this.isBlocked('EXPORT_JSON')}
                     feature="export-to-json"
                     group="fileFormat"
-                    onChange={this.exportHandler}
+                    onChange={this.isBlocked('EXPORT_JSON') ? () => null : this.exportHandler}
                   />
                 </li>
               </Feature>
@@ -138,7 +138,7 @@ export default class Export extends React.Component<Props> {
                     isBlocked={this.isBlocked('EXPORT_CSS')}
                     feature="export-to-css"
                     group="fileFormat"
-                    onChange={this.exportHandler}
+                    onChange={this.isBlocked('EXPORT_CSS') ? () => null : this.exportHandler}
                   />
                 </li>
               </Feature>
@@ -156,7 +156,7 @@ export default class Export extends React.Component<Props> {
                     isBlocked={this.isBlocked('EXPORT_CSV')} 
                     feature="export-to-csv"
                     group="fileFormat"
-                    onChange={this.exportHandler}
+                    onChange={this.isBlocked('EXPORT_CSV') ? () => null : this.exportHandler}
                   />
                 </li>
               </Feature>
