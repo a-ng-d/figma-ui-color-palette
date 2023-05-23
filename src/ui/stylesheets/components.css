@@ -97,6 +97,40 @@
   --black8-opaque: var(--figma-color-bg-brand);
 }
 
+.switch--blocked {
+  pointer-events: none;
+}
+
+.switch--blocked .switch__label {
+  color: var(--figma-color-text-disabled);
+}
+
+.switch--blocked .switch__label:before {
+  --white: var(--figma-color-bg-disabled);
+}
+
+.switch--blocked .switch__label:after {
+  --white: var(--figma-color-bg-disabled-secondary)
+}
+
+.switch--blocked .switch__label:before,
+.switch--blocked .switch__label:after {
+  --black8-opaque: var(--figma-color-bg-disabled);
+}
+
+.switch--blocked .switch__toggle:checked + .switch__label:before {
+  --white: var(--figma-color-icon-brand-secondary);
+}
+
+.switch--blocked .switch__toggle:checked + .switch__label:after {
+  --white: var(--figma-color-icon-onbrand-secondary)
+}
+
+.switch--blocked .switch__toggle:checked + .switch__label:before,
+.switch--blocked .switch__toggle:checked + .switch__label:after {
+  --black8-opaque: var(--figma-color-icon-brand-secondary);
+}
+
 /* Radio */
 .radio__label:before {
   --black8: var(--figma-color-border-strong);
@@ -119,7 +153,6 @@
 
 .radio--blocked {
   pointer-events: none;
-  cursor: default;
 }
 
 .radio--blocked .radio__label {
@@ -382,7 +415,8 @@ div.icon-button--disabled {
 
 /* Blocked state */
 .radio--blocked:after,
-.form-item--blocked:after {
+.form-item--blocked:after,
+.switch--blocked:after {
   content: 'Pro';
   height: var(--size-xsmall);
   padding: 0 5px;

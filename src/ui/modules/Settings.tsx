@@ -76,13 +76,13 @@ export default class Settings extends React.Component<Props> {
             <FormItem
               label="Text light color"
               id="change-text-light-color"
-              isBlocked={this.isBlocked('SETTINGS_NEW_ALGORITHM')}
+              isBlocked={this.isBlocked('SETTINGS_TEXT_COLORS_THEME')}
             >
               <Input
                 type="color"
                 icon={{ type: 'none', value: null }}
                 value={this.props.textColorsTheme.lightColor}
-                isBlocked={this.isBlocked('SETTINGS_NEW_ALGORITHM')}
+                isBlocked={this.isBlocked('SETTINGS_TEXT_COLORS_THEME')}
                 feature="change-text-light-color"
                 onChange={this.props.onSettingsChange}
                 onFocus={this.props.onSettingsChange}
@@ -91,13 +91,13 @@ export default class Settings extends React.Component<Props> {
             <FormItem
               label="Text dark color"
               id="change-text-dark-color"
-              isBlocked={this.isBlocked('SETTINGS_NEW_ALGORITHM')}
+              isBlocked={this.isBlocked('SETTINGS_TEXT_COLORS_THEME')}
             >
               <Input
                 type="color"
                 icon={{ type: 'none', value: null }}
                 value={this.props.textColorsTheme.darkColor}
-                isBlocked={this.isBlocked('SETTINGS_NEW_ALGORITHM')}
+                isBlocked={this.isBlocked('SETTINGS_TEXT_COLORS_THEME')}
                 feature="change-text-dark-color"
                 onChange={this.props.onSettingsChange}
                 onFocus={this.props.onSettingsChange}
@@ -135,6 +135,7 @@ export default class Settings extends React.Component<Props> {
               label="Enable the new algorithm for generating color shades"
               isChecked={this.props.isNewAlgorithm}
               isDisabled={false}
+              isBlocked={this.isBlocked('SETTINGS_NEW_ALGORITHM')}
               feature="update-algorithm-version"
               onChange={this.props.onSettingsChange}
             />
@@ -143,6 +144,7 @@ export default class Settings extends React.Component<Props> {
               messages={[
                 'The Chroma values are harmonized to ensure consistent lightness across all shades, but this may make the colors look desaturated.',
               ]}
+              isBlocked={this.isBlocked('SETTINGS_NEW_ALGORITHM')}
             />
           </div>
         </Feature>
