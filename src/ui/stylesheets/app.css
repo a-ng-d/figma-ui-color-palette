@@ -80,16 +80,25 @@ div.actions .buttons {
   gap: var(--size-xxsmall);
 }
 
-div.help-bar {
+div.shortcuts {
   width: 100%;
   height: var(--size-large);
   display: flex;
-  justify-content: end;
-  align-items: center;
+  justify-content: space-between;
   padding: 0 var(--size-xsmall);
+  border-top: 1px solid var(--figma-color-border);
+}
+
+div.shortcuts__get-pro {
+  display: flex;
+  align-items: center;
+}
+
+div.shortcuts__links {
+  display: flex;
+  align-items: center;
   gap: var(--size-xxxsmall);
   color: var(--figma-color-text);
-  border-top: 1px solid var(--figma-color-border);
 }
 
 div.highlight {
@@ -638,4 +647,33 @@ div.onboarding-tip--blocked .onboarding-tip__msg {
 
 div.onboarding-tip--blocked .icon {
   background: var(--figma-color-icon-disabled);
+}
+
+/* Get Pro button */
+button.get-pro-button {
+  height: var(--size-small);
+  display: flex;
+  align-items: center;
+  border-radius: var(--border-radius-small);
+  background-color: var(--figma-color-bg-component);
+  border: 1px solid var(--figma-color-bg-component);
+  padding: 0 var(--size-xxsmall) 0 0;
+}
+
+button.get-pro-button:hover {
+  background-color: var(--figma-color-bg-component-hover);
+  border: 1px solid var(--figma-color-bg-component-hover);
+}
+
+button.get-pro-button:active {
+  background-color: var(--figma-color-bg-component-pressed);
+  border: 1px solid var(--figma-color-bg-component-pressed);
+}
+
+button.get-pro-button .type{
+  color: var(--figma-color-text-oncomponent);
+}
+
+button.get-pro-button .icon {
+  background: var(--figma-color-icon-oncomponent);
 }

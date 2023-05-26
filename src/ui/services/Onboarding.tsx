@@ -6,6 +6,7 @@ import Shortcuts from '../modules/Shortcuts'
 import { features } from '../../utils/features'
 
 interface Props {
+  planStatus: string
   onHighlightReopen: React.MouseEventHandler
 }
 
@@ -55,6 +56,7 @@ export default class Onboarding extends React.Component<Props> {
                 action: this.props.onHighlightReopen,
               },
             ]}
+            planStatus={this.props.planStatus}
           />
         </Feature>
       </>

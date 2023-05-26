@@ -151,6 +151,7 @@ export default class CreatePalette extends React.Component<Props> {
                 action: this.props.onHighlightReopen,
               },
             ]}
+            planStatus={this.props.planStatus}
           />
         </Feature>
       )

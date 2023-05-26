@@ -477,7 +477,10 @@ class App extends React.Component {
           }
         >
           {this.state['service'] === 'None' ? (
-            <Onboarding onHighlightReopen={this.highlightHandler('OPEN')} />
+            <Onboarding
+              onHighlightReopen={this.highlightHandler('OPEN')}
+              planStatus={this.state['planStatus']}
+            />
           ) : null}
         </Feature>
         <Feature

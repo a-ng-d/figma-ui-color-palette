@@ -525,6 +525,7 @@ export default class EditPalette extends React.Component<Props> {
                 action: this.props.onHighlightReopen,
               },
             ]}
+            planStatus={this.props.planStatus}
           />
         </Feature>
       )
@@ -568,6 +569,7 @@ export default class EditPalette extends React.Component<Props> {
                 action: this.props.onHighlightReopen,
               },
             ]}
+            planStatus={this.props.planStatus}
           />
         </Feature>
       )
