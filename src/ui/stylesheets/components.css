@@ -173,7 +173,7 @@
   --black8: var(--figma-color-border-disabled);
 }
 
-.radio__button:checked + .radio__label:after {
+.radio--blocked .radio__button:checked + .radio__label:after {
   background-color: var(--figma-color-icon-disabled)
 }
 
