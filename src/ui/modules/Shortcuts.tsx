@@ -9,9 +9,9 @@ interface Props {
 
 export default class Shortcuts extends React.Component<Props> {
   // Direct actions
-  onSubscribe = () =>
+  onGetProPlan = () =>
     parent.postMessage(
-    { pluginMessage: { type: 'subscribe' } },
+    { pluginMessage: { type: 'get-pro-plan' } },
       '*'
     )
 
@@ -20,7 +20,7 @@ export default class Shortcuts extends React.Component<Props> {
       <div className="shortcuts">
         <div className="shortcuts__get-pro">
           {this.props.planStatus === 'UNPAID' ?
-            <button className="get-pro-button">
+            <button className="get-pro-button" onMouseDown={this.onGetProPlan}>
               <div className="icon icon--lock-off"></div>
               <div className="type">Get Pro</div>
             </button>
