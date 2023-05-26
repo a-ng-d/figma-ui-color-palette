@@ -435,10 +435,6 @@ div.icon-button--disabled {
   content: 'Pro';
   height: var(--size-xsmall);
   padding: 0 5px;
-  position: absolute;
-  top: 50%;
-  right: 0;
-  transform: translate(0, -50%);
   font-size: var(--font-size-xsmall);
   letter-spacing: var(--font-letter-spacing-neg-xsmall);
   line-height: var(--font-line-height);
