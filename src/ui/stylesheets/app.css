@@ -656,18 +656,25 @@ button.get-pro-button {
   align-items: center;
   border-radius: var(--border-radius-small);
   background-color: var(--figma-color-bg-component);
-  border: 1px solid var(--figma-color-bg-component);
+  border: 2px solid var(--figma-color-bg-component);
   padding: 0 var(--size-xxsmall) 0 0;
 }
 
 button.get-pro-button:hover {
   background-color: var(--figma-color-bg-component-hover);
-  border: 1px solid var(--figma-color-bg-component-hover);
+  border: 2px solid var(--figma-color-bg-component-hover);
 }
 
 button.get-pro-button:active {
   background-color: var(--figma-color-bg-component-pressed);
-  border: 1px solid var(--figma-color-bg-component-pressed);
+  border: 2px solid var(--figma-color-bg-component-pressed);
+}
+
+button.get-pro-button:focus,
+button.get-pro-button:focus-visible {
+  background-color: var(--figma-color-bg-component-pressed);
+  border: 2px solid var(--figma-color-border-component);
+  outline: none;
 }
 
 button.get-pro-button .type{
