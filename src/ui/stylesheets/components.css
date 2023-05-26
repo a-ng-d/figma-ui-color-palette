@@ -22,6 +22,11 @@
   text-decoration: none;
 }
 
+.type a:focus-visible {
+  outline: none;
+  text-decoration: underline;
+}
+
 /* Icon */
 .icon {
   background: var(--figma-color-icon);
@@ -214,6 +219,11 @@
 .button--tertiary a {
   color: var(--figma-color-text-brand);
   text-decoration: none;
+}
+
+.button--tertiary a:focus-visible {
+  outline: none;
+  text-decoration: underline;
 }
 
 .icon-button {
