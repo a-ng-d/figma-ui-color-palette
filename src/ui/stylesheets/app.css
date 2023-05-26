@@ -673,7 +673,7 @@ button.get-pro-button:active {
 button.get-pro-button:focus,
 button.get-pro-button:focus-visible {
   background-color: var(--figma-color-bg-component-pressed);
-  border: 2px solid var(--figma-color-border-component);
+  border: 2px solid var(--figma-color-border-component-strong);
   outline: none;
 }
 
