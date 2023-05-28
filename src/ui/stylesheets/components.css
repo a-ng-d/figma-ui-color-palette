@@ -120,7 +120,7 @@
 }
 
 .switch--blocked .switch__label:after {
-  --white: var(--figma-color-bg-disabled-secondary)
+  --white: var(--figma-color-bg-disabled-secondary);
 }
 
 .switch--blocked .switch__label:before,
@@ -133,7 +133,7 @@
 }
 
 .switch--blocked .switch__toggle:checked + .switch__label:after {
-  --white: var(--figma-color-icon-onbrand-secondary)
+  --white: var(--figma-color-icon-onbrand-secondary);
 }
 
 .switch--blocked .switch__toggle:checked + .switch__label:before,
@@ -166,7 +166,7 @@
 }
 
 .radio--blocked .radio__label {
-  color: var(--figma-color-text-disabled)
+  color: var(--figma-color-text-disabled);
 }
 
 .radio--blocked .radio__label:before {
@@ -174,7 +174,7 @@
 }
 
 .radio--blocked .radio__button:checked + .radio__label:after {
-  background-color: var(--figma-color-icon-disabled)
+  background-color: var(--figma-color-icon-disabled);
 }
 
 /* Button */
@@ -354,7 +354,7 @@ div.icon-button--disabled {
 }
 
 .input--blocked input[type='color' i] {
-  opacity: .25
+  opacity: 0.25;
 }
 
 /* Text area */

@@ -9,12 +9,16 @@ interface Props {
 
 export default class FormItem extends React.Component<Props> {
   static defaultProps = {
-    isBlocked: false
+    isBlocked: false,
   }
 
   render() {
     return (
-      <div className={`form-item ${this.props.isBlocked ? 'form-item--blocked' : ''}`}>
+      <div
+        className={`form-item ${
+          this.props.isBlocked ? 'form-item--blocked' : ''
+        }`}
+      >
         <label
           className="type"
           htmlFor={this.props.id}

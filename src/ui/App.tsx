@@ -62,7 +62,7 @@ class App extends React.Component {
       },
       algorithmVersion: 'v1',
       hasHighlight: false,
-      planStatus: 'UNPAID'
+      planStatus: 'UNPAID',
     }
   }
 

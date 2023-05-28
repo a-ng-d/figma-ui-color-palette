@@ -17,8 +17,13 @@ interface Props {
 }
 
 export default class Settings extends React.Component<Props> {
-  isBlocked = (featureName: string) => features.find((feature) => feature.name === featureName).isPro ? this.props.planStatus === 'PAID' ? false : true : false
-  
+  isBlocked = (featureName: string) =>
+    features.find((feature) => feature.name === featureName).isPro
+      ? this.props.planStatus === 'PAID'
+        ? false
+        : true
+      : false
+
   // Templates
   Base = () => {
     return (
@@ -48,9 +53,21 @@ export default class Settings extends React.Component<Props> {
                 charactersLimit={64}
                 isBlocked={this.isBlocked('SETTINGS_PALETTE_NAME')}
                 feature="rename-palette"
-                onChange={this.isBlocked('SETTINGS_PALETTE_NAME') ? () => null : this.props.onSettingsChange}
-                onFocus={this.isBlocked('SETTINGS_PALETTE_NAME') ? () => null : this.props.onSettingsChange}
-                onConfirm={this.isBlocked('SETTINGS_PALETTE_NAME') ? () => null : this.props.onSettingsChange}
+                onChange={
+                  this.isBlocked('SETTINGS_PALETTE_NAME')
+                    ? () => null
+                    : this.props.onSettingsChange
+                }
+                onFocus={
+                  this.isBlocked('SETTINGS_PALETTE_NAME')
+                    ? () => null
+                    : this.props.onSettingsChange
+                }
+                onConfirm={
+                  this.isBlocked('SETTINGS_PALETTE_NAME')
+                    ? () => null
+                    : this.props.onSettingsChange
+                }
               />
             </FormItem>
           </div>
@@ -84,8 +101,16 @@ export default class Settings extends React.Component<Props> {
                 value={this.props.textColorsTheme.lightColor}
                 isBlocked={this.isBlocked('SETTINGS_TEXT_COLORS_THEME')}
                 feature="change-text-light-color"
-                onChange={this.isBlocked('SETTINGS_TEXT_COLORS_THEME') ? () => null : this.props.onSettingsChange}
-                onFocus={this.isBlocked('SETTINGS_TEXT_COLORS_THEME') ? () => null : this.props.onSettingsChange}
+                onChange={
+                  this.isBlocked('SETTINGS_TEXT_COLORS_THEME')
+                    ? () => null
+                    : this.props.onSettingsChange
+                }
+                onFocus={
+                  this.isBlocked('SETTINGS_TEXT_COLORS_THEME')
+                    ? () => null
+                    : this.props.onSettingsChange
+                }
               />
             </FormItem>
             <FormItem
@@ -99,8 +124,16 @@ export default class Settings extends React.Component<Props> {
                 value={this.props.textColorsTheme.darkColor}
                 isBlocked={this.isBlocked('SETTINGS_TEXT_COLORS_THEME')}
                 feature="change-text-dark-color"
-                onChange={this.isBlocked('SETTINGS_TEXT_COLORS_THEME') ? () => null : this.props.onSettingsChange}
-                onFocus={this.isBlocked('SETTINGS_TEXT_COLORS_THEME') ? () => null : this.props.onSettingsChange}
+                onChange={
+                  this.isBlocked('SETTINGS_TEXT_COLORS_THEME')
+                    ? () => null
+                    : this.props.onSettingsChange
+                }
+                onFocus={
+                  this.isBlocked('SETTINGS_TEXT_COLORS_THEME')
+                    ? () => null
+                    : this.props.onSettingsChange
+                }
               />
             </FormItem>
             <Message
@@ -136,7 +169,11 @@ export default class Settings extends React.Component<Props> {
               isChecked={this.props.isNewAlgorithm}
               isBlocked={this.isBlocked('SETTINGS_NEW_ALGORITHM')}
               feature="update-algorithm-version"
-              onChange={this.isBlocked('SETTINGS_NEW_ALGORITHM') ? () => null : this.props.onSettingsChange}
+              onChange={
+                this.isBlocked('SETTINGS_NEW_ALGORITHM')
+                  ? () => null
+                  : this.props.onSettingsChange
+              }
             />
             <Message
               icon="library"

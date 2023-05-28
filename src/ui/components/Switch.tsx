@@ -13,12 +13,14 @@ interface Props {
 export default class Switch extends React.Component<Props> {
   static defaultProps = {
     isDisabled: false,
-    isBlocked: false
+    isBlocked: false,
   }
 
   render() {
     return (
-      <div className={`switch ${this.props.isBlocked ? 'switch--blocked' : ''}`}>
+      <div
+        className={`switch ${this.props.isBlocked ? 'switch--blocked' : ''}`}
+      >
         <input
           data-feature={this.props.feature}
           id={this.props.id}

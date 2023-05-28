@@ -74,7 +74,7 @@ figma.ui.onmessage = async (msg) => {
     case 'update-settings':
       updateSettings(msg, palette)
       break
-    
+
     case 'get-pro-plan':
       await getProPlan()
   }

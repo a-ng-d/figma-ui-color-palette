@@ -14,7 +14,7 @@ interface Props {
 export default class RadioButton extends React.Component<Props> {
   static defaultProps = {
     isDisabled: false,
-    isBlocked: false
+    isBlocked: false,
   }
 
   render() {

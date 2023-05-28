@@ -38,7 +38,12 @@ export default class Export extends React.Component<Props> {
     }
   }
 
-  isBlocked = (featureName: string) => features.find((feature) => feature.name === featureName).isPro ? this.props.planStatus === 'PAID' ? false : true : false
+  isBlocked = (featureName: string) =>
+    features.find((feature) => feature.name === featureName).isPro
+      ? this.props.planStatus === 'PAID'
+        ? false
+        : true
+      : false
 
   // Handlers
   exportHandler = (e: React.SyntheticEvent) => {
@@ -120,7 +125,11 @@ export default class Export extends React.Component<Props> {
                     isBlocked={this.isBlocked('EXPORT_JSON')}
                     feature="export-to-json"
                     group="fileFormat"
-                    onChange={this.isBlocked('EXPORT_JSON') ? () => null : this.exportHandler}
+                    onChange={
+                      this.isBlocked('EXPORT_JSON')
+                        ? () => null
+                        : this.exportHandler
+                    }
                   />
                 </li>
               </Feature>
@@ -138,7 +147,11 @@ export default class Export extends React.Component<Props> {
                     isBlocked={this.isBlocked('EXPORT_CSS')}
                     feature="export-to-css"
                     group="fileFormat"
-                    onChange={this.isBlocked('EXPORT_CSS') ? () => null : this.exportHandler}
+                    onChange={
+                      this.isBlocked('EXPORT_CSS')
+                        ? () => null
+                        : this.exportHandler
+                    }
                   />
                 </li>
               </Feature>
@@ -153,10 +166,14 @@ export default class Export extends React.Component<Props> {
                     id="options__csv"
                     label="CSV (LCH)"
                     isChecked={this.state['format'] === 'CSV' ? true : false}
-                    isBlocked={this.isBlocked('EXPORT_CSV')} 
+                    isBlocked={this.isBlocked('EXPORT_CSV')}
                     feature="export-to-csv"
                     group="fileFormat"
-                    onChange={this.isBlocked('EXPORT_CSV') ? () => null : this.exportHandler}
+                    onChange={
+                      this.isBlocked('EXPORT_CSV')
+                        ? () => null
+                        : this.exportHandler
+                    }
                   />
                 </li>
               </Feature>

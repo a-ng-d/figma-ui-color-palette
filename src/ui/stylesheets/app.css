@@ -677,7 +677,7 @@ button.get-pro-button:focus-visible {
   outline: none;
 }
 
-button.get-pro-button .type{
+button.get-pro-button .type {
   color: var(--figma-color-text-oncomponent);
 }
 

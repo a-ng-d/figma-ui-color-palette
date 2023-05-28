@@ -10,21 +10,21 @@ interface Props {
 export default class Shortcuts extends React.Component<Props> {
   // Direct actions
   onGetProPlan = () =>
-    parent.postMessage(
-    { pluginMessage: { type: 'get-pro-plan' } },
-      '*'
-    )
+    parent.postMessage({ pluginMessage: { type: 'get-pro-plan' } }, '*')
 
   render() {
     return (
       <div className="shortcuts">
         <div className="shortcuts__get-pro">
-          {this.props.planStatus === 'UNPAID' ?
-            <button className="get-pro-button" onMouseDown={this.onGetProPlan}>
+          {this.props.planStatus === 'UNPAID' ? (
+            <button
+              className="get-pro-button"
+              onMouseDown={this.onGetProPlan}
+            >
               <div className="icon icon--lock-off"></div>
               <div className="type">Get Pro</div>
             </button>
-          : null }
+          ) : null}
         </div>
         <div className="shortcuts__links">
           {this.props.actions.map((action, index) =>
