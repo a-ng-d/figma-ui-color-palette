@@ -37,6 +37,7 @@ export interface PaletteNode {
   properties: boolean
   preset: PresetConfiguration
   textColorsTheme: TextColorsThemeHexModel
+  view: string
   algorithmVersion: string
 }
 

@@ -36,6 +36,7 @@ const updateProperties = (msg, palette) => {
           properties: msg.data.properties,
           preset: preset,
           textColorsTheme: textColorsTheme,
+          view: 'SHEET',
           algorithmVersion: algorithmVersion,
         }).makeNode()
       )
@@ -51,6 +52,7 @@ const updateProperties = (msg, palette) => {
           properties: msg.data.properties,
           preset: preset,
           textColorsTheme: textColorsTheme,
+          view: 'SHEET',
           algorithmVersion: algorithmVersion,
         }).makeNode()
       )
