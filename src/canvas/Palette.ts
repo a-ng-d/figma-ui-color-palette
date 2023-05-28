@@ -15,6 +15,7 @@ export default class Palette {
   properties: boolean
   preset: PresetConfiguration
   textColorsTheme: TextColorsThemeHexModel
+  view: string
   algorithmVersion: string
   children: PaletteNode
   node: FrameNode
@@ -25,6 +26,7 @@ export default class Palette {
     properties: boolean,
     preset: PresetConfiguration,
     textColorsTheme: TextColorsThemeHexModel,
+    view: string,
     algorithmVersion: string
   ) {
     this.paletteName = name
@@ -35,6 +37,7 @@ export default class Palette {
     this.preset = preset
     this.algorithmVersion = algorithmVersion
     this.textColorsTheme = textColorsTheme
+    this.view = view
     this.children = null
     this.node = figma.createFrame()
   }
@@ -60,14 +63,15 @@ export default class Palette {
     this.node.setPluginData('name', this.paletteName)
     this.node.setPluginData('scale', JSON.stringify(this.scale))
     this.node.setPluginData('preset', JSON.stringify(this.preset))
+    this.properties
+      ? this.node.setPluginData('properties', 'hasProperties')
+      : this.node.setPluginData('properties', 'hasNotProperties')
     this.node.setPluginData(
       'textColorsTheme',
       JSON.stringify(this.textColorsTheme)
     )
+    this.node.setPluginData('view', this.view)
     this.node.setPluginData('algorithmVersion', this.algorithmVersion)
-    this.properties
-      ? this.node.setPluginData('properties', 'hasProperties')
-      : this.node.setPluginData('properties', 'hasNotProperties')
 
     // insert
     figma.currentPage.selection.forEach((element) => {
