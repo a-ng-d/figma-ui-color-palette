@@ -30,7 +30,7 @@ export default class Palette {
     algorithmVersion: string
   ) {
     this.paletteName = name
-    this.name = `${name === '' ? 'UI Color Palette' : name}﹒${preset.name}`
+    this.name = `${name === '' ? 'UI Color Palette' : name}﹒${preset.name}﹒${view === 'PALETTE' ? 'Palette' : 'Sheet'}`
     this.scale = scale
     this.colors = []
     this.properties = properties

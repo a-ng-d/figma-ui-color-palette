@@ -32,7 +32,7 @@ export default class Colors {
           this.parent.paletteName === ''
             ? 'UI Color Palette'
             : this.parent.paletteName
-        } • ${this.parent.preset.name}`,
+        } • ${this.parent.preset.name} • ${this.parent.view === 'PALETTE' ? 'Palette' : 'Sheet'}`,
         this.parent
       ).makeNode()
     )
