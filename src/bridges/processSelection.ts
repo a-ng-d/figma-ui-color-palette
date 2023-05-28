@@ -51,6 +51,9 @@ const processSelection = () => {
       )
     }
 
+    if (selection[0].getPluginData('view') === '')
+      selection[0].setPluginData('view', 'PALETTE')
+
     // to UI
     figma.ui.postMessage({
       type: 'palette-selected',
