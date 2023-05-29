@@ -118,9 +118,9 @@ export default class Sample {
     return this.node
   }
 
-  makeRichScale(width: number, height: number) {
+  makeRichScale(width: number, height: number, name: string) {
     // base
-    this.node.name = this.name
+    this.node.name = name
     this.node.resize(width, height)
 
     // layout
@@ -161,12 +161,11 @@ export default class Sample {
     color.cornerRadius = 16
 
     // insert
-    color.appendChild(new Property('_label', this.name, 10).makeNode())
+    color.appendChild(new Property('_label', name, 10).makeNode())
     if (this.status.isClosestToRef)
-      this.node.appendChild(new Status(this.status, this.source).makeNode())
+      color.appendChild(new Status(this.status, this.source).makeNode())
     
     this.node.appendChild(color)
-
 
     return this.node
   }

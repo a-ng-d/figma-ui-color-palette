@@ -72,7 +72,7 @@ export default class Colors {
           [color.rgb.r * 255, color.rgb.g * 255, color.rgb.b * 255],
           this.parent.properties,
           this.parent.textColorsTheme
-        ).makeRichScale(160, 320)
+        ).makeRichScale(160, 320, color.name)
 
       row.appendChild(rowName)
 
@@ -116,17 +116,30 @@ export default class Colors {
             'lch'
           )
 
-          const sample = new Sample(
-            color.name,
-            color.rgb,
+          const scaleName: string =
             Object.keys(this.parent.scale)
               .find((key) => this.parent.scale[key] === lightness)
-              .substr(10),
-            newColor._rgb,
-            this.parent.properties,
-            this.parent.textColorsTheme,
-            { isClosestToRef: distance < 4 ? true : false }
-          ).makeScale(160, 224)
+              .substr(10)
+
+          const sample = this.parent.view === 'PALETTE' ?
+            new Sample(
+              color.name,
+              color.rgb,
+              scaleName,
+              newColor._rgb,
+              this.parent.properties,
+              this.parent.textColorsTheme,
+              { isClosestToRef: distance < 4 ? true : false }
+            ).makeScale(160, 224, scaleName) :
+            new Sample(
+              color.name,
+              color.rgb,
+              scaleName,
+              newColor._rgb,
+              this.parent.properties,
+              this.parent.textColorsTheme,
+              { isClosestToRef: distance < 4 ? true : false }
+            ).makeRichScale(264, 320, scaleName)
           row.name = color.name
           row.appendChild(sample)
         })
