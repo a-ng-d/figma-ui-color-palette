@@ -115,4 +115,57 @@ export default class Sample {
 
     return this.node
   }
+
+  makeRichScale(width: number, height: number) {
+    // base
+    this.node.name = this.name
+    this.node.resize(width, height)
+
+    // layout
+    this.node.layoutMode = 'VERTICAL'
+    this.node.paddingTop =
+      this.node.paddingRight =
+      this.node.paddingBottom =
+      this.node.paddingLeft =
+        16
+    this.node.primaryAxisSizingMode = 'FIXED'
+    this.node.counterAxisSizingMode = 'FIXED'
+    this.node.primaryAxisAlignItems = 'MIN'
+
+    // color
+    this.children = figma.createFrame()
+    this.children.name = '_color'
+    this.children.layoutMode = 'VERTICAL'
+    this.children.primaryAxisSizingMode = 'FIXED'
+    this.children.counterAxisSizingMode = 'FIXED'
+    this.children.layoutAlign = 'STRETCH'
+    this.children.resize(96, 96)
+    this.children.paddingTop =
+      this.children.paddingRight =
+      this.children.paddingBottom =
+      this.children.paddingLeft =
+        8
+    this.children.itemSpacing = 8
+    this.children.fills = [
+      {
+        type: 'SOLID',
+        color: {
+          r: this.rgb[0] / 255,
+          g: this.rgb[1] / 255,
+          b: this.rgb[2] / 255,
+        },
+      },
+    ]
+    this.children.cornerRadius = 16
+
+    // insert
+    this.children.appendChild(new Property('_label', this.name, 10).makeNode())
+    if (this.status.isClosestToRef)
+      this.node.appendChild(new Status(this.status, this.source).makeNode())
+    
+    this.node.appendChild(this.children)
+
+
+    return this.node
+  }
 }

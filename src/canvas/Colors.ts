@@ -56,14 +56,24 @@ export default class Colors {
       row.counterAxisSizingMode = 'AUTO'
 
       // insert
-      const rowName = new Sample(
-        color.name,
-        null,
-        null,
-        [color.rgb.r * 255, color.rgb.g * 255, color.rgb.b * 255],
-        this.parent.properties,
-        this.parent.textColorsTheme
-      ).makeName('ABSOLUTE', 160, 224)
+      const rowName = this.parent.view === 'PALETTE' ?
+        new Sample(
+          color.name,
+          null,
+          null,
+          [color.rgb.r * 255, color.rgb.g * 255, color.rgb.b * 255],
+          this.parent.properties,
+          this.parent.textColorsTheme
+        ).makeName('ABSOLUTE', 160, 224) :
+        new Sample(
+          color.name,
+          null,
+          null,
+          [color.rgb.r * 255, color.rgb.g * 255, color.rgb.b * 255],
+          this.parent.properties,
+          this.parent.textColorsTheme
+        ).makeRichScale(160, 320)
+
       row.appendChild(rowName)
 
       Object.values(this.parent.scale)
