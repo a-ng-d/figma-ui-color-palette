@@ -58,12 +58,12 @@ export default class Sample {
       this.node.paddingLeft =
         8
     this.node.counterAxisSizingMode = 'FIXED'
-    if (mode === 'relative') {
+    if (mode === 'RELATIVE') {
       this.node.primaryAxisSizingMode = 'AUTO'
       this.node.layoutAlign = 'STRETCH'
       this.node.layoutGrow = 1
       this.children = new Property('_title', this.name, 16).makeNode()
-    } else if (mode === 'absolute') {
+    } else if (mode === 'ABSOLUTE') {
       this.node.resize(width, height)
       this.node.primaryAxisSizingMode = 'FIXED'
       this.children = new Property('_label', this.name, 10).makeNode()

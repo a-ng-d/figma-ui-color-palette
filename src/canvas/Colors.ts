@@ -63,7 +63,7 @@ export default class Colors {
         [color.rgb.r * 255, color.rgb.g * 255, color.rgb.b * 255],
         this.parent.properties,
         this.parent.textColorsTheme
-      ).makeName('absolute', 160, 224)
+      ).makeName('ABSOLUTE', 160, 224)
       row.appendChild(rowName)
 
       Object.values(this.parent.scale)

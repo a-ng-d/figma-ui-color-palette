@@ -33,7 +33,7 @@ export default class Title {
         [255, 255, 255],
         this.parent.properties,
         this.parent.textColorsTheme
-      ).makeName('relative', 100, 48)
+      ).makeName('RELATIVE', 100, 48)
     )
 
     return this.node
