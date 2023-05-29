@@ -75,9 +75,9 @@ export default class Sample {
     return this.node
   }
 
-  makeScale(width: number, height: number) {
+  makeScale(width: number, height: number, name: string, isColorName: boolean = false) {
     // base
-    this.node.name = this.scale
+    this.node.name = name
     this.node.resize(width, height)
     this.node.fills = [
       {
@@ -110,6 +110,8 @@ export default class Sample {
       ).makeNode()
       this.node.appendChild(this.children)
     }
+    if (isColorName)
+      this.node.appendChild(new Property('_label', this.name, 10).makeNode())
     if (this.status.isClosestToRef)
       this.node.appendChild(new Status(this.status, this.source).makeNode())
 
