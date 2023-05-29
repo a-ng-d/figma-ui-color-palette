@@ -133,20 +133,20 @@ export default class Sample {
     this.node.primaryAxisAlignItems = 'MIN'
 
     // color
-    this.children = figma.createFrame()
-    this.children.name = '_color'
-    this.children.layoutMode = 'VERTICAL'
-    this.children.primaryAxisSizingMode = 'FIXED'
-    this.children.counterAxisSizingMode = 'FIXED'
-    this.children.layoutAlign = 'STRETCH'
-    this.children.resize(96, 96)
-    this.children.paddingTop =
-      this.children.paddingRight =
-      this.children.paddingBottom =
-      this.children.paddingLeft =
+    const color = figma.createFrame()
+    color.name = '_color'
+    color.layoutMode = 'VERTICAL'
+    color.primaryAxisSizingMode = 'FIXED'
+    color.counterAxisSizingMode = 'FIXED'
+    color.layoutAlign = 'STRETCH'
+    color.resize(96, 96)
+    color.paddingTop =
+      color.paddingRight =
+      color.paddingBottom =
+      color.paddingLeft =
         8
-    this.children.itemSpacing = 8
-    this.children.fills = [
+    color.itemSpacing = 8
+    color.fills = [
       {
         type: 'SOLID',
         color: {
@@ -156,14 +156,14 @@ export default class Sample {
         },
       },
     ]
-    this.children.cornerRadius = 16
+    color.cornerRadius = 16
 
     // insert
-    this.children.appendChild(new Property('_label', this.name, 10).makeNode())
+    color.appendChild(new Property('_label', this.name, 10).makeNode())
     if (this.status.isClosestToRef)
       this.node.appendChild(new Status(this.status, this.source).makeNode())
     
-    this.node.appendChild(this.children)
+    this.node.appendChild(color)
 
 
     return this.node
