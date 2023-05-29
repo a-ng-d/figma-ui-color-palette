@@ -100,7 +100,6 @@ export default class Sample {
     this.node.primaryAxisSizingMode = 'FIXED'
     this.node.counterAxisSizingMode = 'FIXED'
     this.node.primaryAxisAlignItems = 'MAX'
-    this.node.itemSpacing = 16
 
     // insert
     if (this.properties) {
