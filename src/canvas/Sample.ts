@@ -23,7 +23,7 @@ export default class Sample {
     rgb: Array<number> | null,
     properties: boolean,
     textColorsTheme: TextColorsThemeHexModel,
-    status?: { isClosestToRef: boolean }
+    status: { isClosestToRef: boolean } = { isClosestToRef: false }
   ) {
     this.name = name
     this.source = source
