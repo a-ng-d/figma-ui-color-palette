@@ -103,12 +103,13 @@ export default class Sample {
 
     // insert
     if (this.properties) {
-      this.children = new Properties(
-        this.scale,
-        this.rgb,
-        this.textColorsTheme
-      ).makeNode()
-      this.node.appendChild(this.children)
+      this.node.appendChild(
+        new Properties(
+          this.scale,
+          this.rgb,
+          this.textColorsTheme
+        ).makeNode()
+      )
     }
     if (isColorName)
       this.node.appendChild(new Property('_label', this.name, 10).makeNode())
