@@ -72,7 +72,7 @@ export default class Colors {
           [color.rgb.r * 255, color.rgb.g * 255, color.rgb.b * 255],
           this.parent.properties,
           this.parent.textColorsTheme
-        ).makeRichScale(160, 320, color.name)
+        ).makeRichScale(160, 376, color.name, true)
 
       row.appendChild(rowName)
 
