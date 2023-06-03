@@ -241,6 +241,9 @@ export default class Properties {
     this.nodeDetailedAPCAScoresProps = figma.createFrame()
     this.nodeDetailedAPCAScoresProps.name = '_wcag-score'
     this.nodeDetailedAPCAScoresProps.fills = []
+    const
+      minimumDarkFontSize: Array<string | number> = this.getMinFontSizes('BLACK'),
+      minimumLightFontSize: Array<string | number> = this.getMinFontSizes('WHITE')
 
     // layout
     this.nodeDetailedAPCAScoresProps.layoutMode = 'VERTICAL'
@@ -266,15 +269,15 @@ export default class Properties {
           ).makeNodeTag(),
           new Tag(
             '_200',
-            `${this.getMinFontSizes('WHITE')[4]}pt (200)`,
+            `${minimumLightFontSize[2]}pt (200)`,
           ).makeNodeTag(),
           new Tag(
             '_400',
-            `${this.getMinFontSizes('WHITE')[4]}pt (400)`,
+            `${minimumLightFontSize[4]}pt (400)`,
           ).makeNodeTag(),
           new Tag(
             '_700',
-            `${this.getMinFontSizes('WHITE')[4]}pt (700)`
+            `${minimumLightFontSize[7]}pt (700)`
           ).makeNodeTag()
         ],
         [
@@ -288,15 +291,15 @@ export default class Properties {
           ).makeNodeTag(),
           new Tag(
             '_200',
-            `${this.getMinFontSizes('BLACK')[4]}pt (200)`
+            `${minimumDarkFontSize[2]}pt (200)`
           ).makeNodeTag(),
           new Tag(
             '_400',
-            `${this.getMinFontSizes('BLACK')[4]}pt (400)`
+            `${minimumDarkFontSize[4]}pt (400)`
           ).makeNodeTag(),
           new Tag(
             '_700',
-            `${this.getMinFontSizes('BLACK')[4]}pt (700)`
+            `${minimumDarkFontSize[7]}pt (700)`
           ).makeNodeTag()
         ]
       )
