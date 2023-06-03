@@ -133,6 +133,7 @@ export default class Sample {
     this.node.primaryAxisSizingMode = 'FIXED'
     this.node.counterAxisSizingMode = 'FIXED'
     this.node.primaryAxisAlignItems = 'MIN'
+    this.node.itemSpacing = 8
 
     // color
     const color = figma.createFrame()
