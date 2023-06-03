@@ -33,9 +33,10 @@ const createLocalStyles = (palette, i: number) => {
           }
         })
     })
-    if (i > 1) figma.notify(`${i} local color styles have been created 🙌`)
-    else if (i == 1) figma.notify(`${i} local color style has been created 🙌`)
-    else figma.notify(`No local color style has been created`)
+
+    if (i > 1) figma.notify(`${i} local color styles have been created`)
+    else if (i == 1) figma.notify(`${i} local color style has been created`)
+    else figma.notify(`Local color styles already exist and cannot be created twice`)
   } else
     figma.notify(
       'Your UI Color Palette seems corrupted. Do not edit any layer within it.'

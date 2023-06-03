@@ -20,9 +20,9 @@ const updateLocalStyles = (palette, i) => {
         })
       })
     })
-    if (i > 1) figma.notify(`${i} local color styles have been updated 🙌`)
-    else if (i == 1) figma.notify(`${i} local color style has been updated 🙌`)
-    else figma.notify(`No local color style has been updated`)
+    if (i > 1) figma.notify(`${i} local color styles have been updated`)
+    else if (i == 1) figma.notify(`${i} local color style has been updated`)
+    else figma.notify(`No color has been updated because the palette has not been edited`)
   } else
     figma.notify(
       'Your UI Color Palette seems corrupted. Do not edit any layer within it.'
