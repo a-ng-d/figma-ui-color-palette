@@ -10,11 +10,29 @@ export default class Colors {
   nodeRow: FrameNode
   nodeRowSource: FrameNode
   nodeRowShades: FrameNode
+  nodeRowSlice: FrameNode
   node: FrameNode
 
   constructor(parent: PaletteNode) {
     this.parent = parent
     this.node = figma.createFrame()
+  }
+
+  makeNodeSlice(shades: Array<FrameNode>) {
+    // base
+    this.nodeRowSlice = figma.createFrame()
+    this.nodeRowSlice.name = '_slice'
+    this.nodeRowSlice.fills = []
+
+    // layout
+    this.nodeRowSlice.layoutMode = 'HORIZONTAL'
+    this.nodeRowSlice.primaryAxisSizingMode = 'AUTO'
+    this.nodeRowSlice.counterAxisSizingMode = 'AUTO'
+
+    // insert
+    shades.forEach(shade => this.nodeRowSlice.appendChild(shade))
+
+    return this.nodeRowSlice
   }
 
   makeNode() {
@@ -41,11 +59,13 @@ export default class Colors {
     )
     this.node.appendChild(new Header(this.parent).makeNode())
     this.parent.colors.forEach((color) => {
+      let i: number = 1
       const sourceColor: Array<number> = chroma([
           color.rgb.r * 255,
           color.rgb.g * 255,
           color.rgb.b * 255,
-        ])
+        ]),
+        samples: Array<FrameNode> = []
 
       // base
       this.nodeRow = figma.createFrame()
@@ -71,7 +91,7 @@ export default class Colors {
             [color.rgb.r * 255, color.rgb.g * 255, color.rgb.b * 255],
             this.parent.properties,
             this.parent.textColorsTheme
-          ).makeNodeScale(160, 224, color.name, true) :
+          ).makeNodeShade(160, 224, color.name, true) :
           new Sample(
             color.name,
             null,
@@ -79,7 +99,7 @@ export default class Colors {
             [color.rgb.r * 255, color.rgb.g * 255, color.rgb.b * 255],
             this.parent.properties,
             this.parent.textColorsTheme
-          ).makeNodeRichScale(160, 376, color.name, true)
+          ).makeNodeRichShade(160, 376, color.name, true)
       )
 
       Object.values(this.parent.scale)
@@ -127,8 +147,8 @@ export default class Colors {
               .find((key) => this.parent.scale[key] === lightness)
               .substr(10)
           
-          this.nodeRowShades.appendChild(
-            this.parent.view === 'PALETTE' ?
+          if (this.parent.view === 'PALETTE') {
+            this.nodeRowShades.appendChild(
               new Sample(
                 color.name,
                 color.rgb,
@@ -137,7 +157,12 @@ export default class Colors {
                 this.parent.properties,
                 this.parent.textColorsTheme,
                 { isClosestToRef: distance < 4 ? true : false }
-              ).makeNodeScale(160, 224, scaleName) :
+              ).makeNodeShade(160, 224, scaleName)
+            )
+          }
+          else {
+            this.nodeRowShades.layoutMode = 'VERTICAL'
+            samples.push(
               new Sample(
                 color.name,
                 color.rgb,
@@ -146,9 +171,18 @@ export default class Colors {
                 this.parent.properties,
                 this.parent.textColorsTheme,
                 { isClosestToRef: distance < 4 ? true : false }
-              ).makeNodeRichScale(264, 376, scaleName)
-          )
+              ).makeNodeRichShade(264, 376, scaleName)
+            )
+            if (i % 4 == 0) {
+              this.nodeRowShades.appendChild(this.makeNodeSlice(samples))
+              samples.length = 0
+            }
+          }
+          i++
         })
+      this.nodeRowShades.appendChild(this.makeNodeSlice(samples))
+      samples.length = 0
+      i = 1
       
       this.nodeRow.appendChild(this.nodeRowSource)
       this.nodeRow.appendChild(this.nodeRowShades)
