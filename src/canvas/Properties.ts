@@ -38,7 +38,7 @@ export default class Properties {
   getContrast(textColor: string) {
     return chroma.contrast(
       this.rgb,
-      textColor === 'BLACK'
+      textColor === 'DARK'
         ? this.textColorsTheme.darkColor
         : this.textColorsTheme.lightColor
     )
@@ -47,7 +47,7 @@ export default class Properties {
   getAPCAContrast(textColor: string) {
     return APCAcontrast(
       sRGBtoY(
-        textColor === 'BLACK'
+        textColor === 'DARK'
           ? chroma(this.textColorsTheme.darkColor).rgb()
           : chroma(this.textColorsTheme.lightColor).rgb()
       ),
@@ -146,29 +146,29 @@ export default class Properties {
     // insert
     this.nodeContrastScoresProps.appendChild(
       new Tag(
-        '_wcag21-white',
-        `${this.getContrast('WHITE').toFixed(2)} • ${this.getLevel('WHITE')}`
+        '_wcag21-light',
+        `${this.getContrast('LIGHT').toFixed(2)} • ${this.getLevel('LIGHT')}`
       ).makeNodeTag(chroma(this.textColorsTheme.lightColor).gl(), true)
     )
     this.nodeContrastScoresProps.appendChild(
       new Tag(
-        '_wcag21-black',
-        `${this.getContrast('BLACK').toFixed(2)} • ${this.getLevel('BLACK')}`
+        '_wcag21-dark',
+        `${this.getContrast('DARK').toFixed(2)} • ${this.getLevel('DARK')}`
       ).makeNodeTag(chroma(this.textColorsTheme.darkColor).gl(), true)
     )
     this.nodeContrastScoresProps.appendChild(
       new Tag(
-        '_apca-white',
-        `Lc ${this.getAPCAContrast('WHITE').toFixed(1)} • ${
-          this.getMinFontSizes('WHITE')[4]
+        '_apca-light',
+        `Lc ${this.getAPCAContrast('LIGHT').toFixed(1)} • ${
+          this.getMinFontSizes('LIGHT')[4]
         }pt (400)`
       ).makeNodeTag(chroma(this.textColorsTheme.lightColor).gl(), true)
     )
     this.nodeContrastScoresProps.appendChild(
       new Tag(
-        '_apca-black',
-        `Lc ${this.getAPCAContrast('BLACK').toFixed(1)} • ${
-          this.getMinFontSizes('BLACK')[4]
+        '_apca-dark',
+        `Lc ${this.getAPCAContrast('DARK').toFixed(1)} • ${
+          this.getMinFontSizes('DARK')[4]
         }pt (400)`
       ).makeNodeTag(chroma(this.textColorsTheme.darkColor).gl(), true)
     )
@@ -223,14 +223,14 @@ export default class Properties {
     )
     this.nodeDetailedWCAGScoresProps.appendChild(
       new Tag(
-        '_wcag21-white',
-        `${this.getContrast('WHITE').toFixed(2)} • ${this.getLevel('WHITE')}`
+        '_wcag21-light',
+        `${this.getContrast('LIGHT').toFixed(2)} • ${this.getLevel('LIGHT')}`
       ).makeNodeTag(chroma(this.textColorsTheme.lightColor).gl(), true)
     )
     this.nodeDetailedWCAGScoresProps.appendChild(
       new Tag(
-        '_wcag21-black',
-        `${this.getContrast('BLACK').toFixed(2)} • ${this.getLevel('BLACK')}`
+        '_wcag21-dark',
+        `${this.getContrast('DARK').toFixed(2)} • ${this.getLevel('DARK')}`
       ).makeNodeTag(chroma(this.textColorsTheme.darkColor).gl(), true)
     )
 
@@ -242,8 +242,8 @@ export default class Properties {
     this.nodeDetailedAPCAScoresProps.name = '_wcag-score'
     this.nodeDetailedAPCAScoresProps.fills = []
     const
-      minimumDarkFontSize: Array<string | number> = this.getMinFontSizes('BLACK'),
-      minimumLightFontSize: Array<string | number> = this.getMinFontSizes('WHITE')
+      minimumDarkFontSize: Array<string | number> = this.getMinFontSizes('DARK'),
+      minimumLightFontSize: Array<string | number> = this.getMinFontSizes('LIGHT')
 
     // layout
     this.nodeDetailedAPCAScoresProps.layoutMode = 'VERTICAL'
@@ -260,8 +260,8 @@ export default class Properties {
       this.makeColumns(
         [
           new Tag(
-            '_apca-white',
-            `Lc ${this.getAPCAContrast('WHITE').toFixed(1)}`,
+            '_apca-light',
+            `Lc ${this.getAPCAContrast('LIGHT').toFixed(1)}`,
           ).makeNodeTag(chroma(this.textColorsTheme.lightColor).gl(), true),
           new Tag(
             '_minimum-font-sizes',
@@ -294,8 +294,8 @@ export default class Properties {
         ],
         [
           new Tag(
-            '_apca-black',
-            `Lc ${this.getAPCAContrast('BLACK').toFixed(1)}`
+            '_apca-dark',
+            `Lc ${this.getAPCAContrast('DARK').toFixed(1)}`
           ).makeNodeTag(chroma(this.textColorsTheme.darkColor).gl(), true),
           new Tag(
             '_minimum-font-sizes',
