@@ -32,22 +32,23 @@ export default class Header {
         this.parent.textColorsTheme
       ).makeNodeName('ABSOLUTE', 160, 48)
     )
-    Object.values(this.parent.scale)
-      .reverse()
-      .forEach((lightness) => {
-        this.node.appendChild(
-          new Sample(
-            Object.keys(this.parent.scale)
-              .find((key) => this.parent.scale[key] === lightness)
-              .substr(10),
-            null,
-            null,
-            [255, 255, 255],
-            this.parent.properties,
-            this.parent.textColorsTheme
-          ).makeNodeName('ABSOLUTE', 160, 48)
-        )
-      })
+    if (this.parent.view === 'PALETTE') 
+      Object.values(this.parent.scale)
+        .reverse()
+        .forEach((lightness) => {
+          this.node.appendChild(
+            new Sample(
+              Object.keys(this.parent.scale)
+                .find((key) => this.parent.scale[key] === lightness)
+                .substr(10),
+              null,
+              null,
+              [255, 255, 255],
+              this.parent.properties,
+              this.parent.textColorsTheme
+            ).makeNodeName('ABSOLUTE', 160, 48)
+          )
+        })
 
     return this.node
   }
