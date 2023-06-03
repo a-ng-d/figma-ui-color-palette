@@ -36,7 +36,7 @@ export default class Sample {
     this.children = null
   }
 
-  makeName(mode: string, width: number, height: number) {
+  makeNodeName(mode: string, width: number, height: number) {
     // base
     this.node.name = this.name
     this.node.fills = [
@@ -75,7 +75,7 @@ export default class Sample {
     return this.node
   }
 
-  makeScale(width: number, height: number, name: string, isColorName: boolean = false) {
+  makeNodeScale(width: number, height: number, name: string, isColorName: boolean = false) {
     // base
     this.node.name = name
     this.node.resize(width, height)
@@ -119,7 +119,7 @@ export default class Sample {
     return this.node
   }
 
-  makeRichScale(width: number, height: number, name: string, isColorName: boolean = false) {
+  makeNodeRichScale(width: number, height: number, name: string, isColorName: boolean = false) {
     // base
     this.node.name = name
     this.node.resize(width, height)
@@ -174,7 +174,7 @@ export default class Sample {
           this.scale,
           this.rgb,
           this.textColorsTheme
-        ).makeDetailedNode()
+        ).makeNodeDetailed()
       )
 
     return this.node

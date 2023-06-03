@@ -64,7 +64,7 @@ export default class Colors {
           [color.rgb.r * 255, color.rgb.g * 255, color.rgb.b * 255],
           this.parent.properties,
           this.parent.textColorsTheme
-        ).makeScale(160, 224, color.name, true) :
+        ).makeNodeScale(160, 224, color.name, true) :
         new Sample(
           color.name,
           null,
@@ -72,7 +72,7 @@ export default class Colors {
           [color.rgb.r * 255, color.rgb.g * 255, color.rgb.b * 255],
           this.parent.properties,
           this.parent.textColorsTheme
-        ).makeRichScale(160, 376, color.name, true)
+        ).makeNodeRichScale(160, 376, color.name, true)
 
       row.appendChild(rowName)
 
@@ -130,7 +130,7 @@ export default class Colors {
               this.parent.properties,
               this.parent.textColorsTheme,
               { isClosestToRef: distance < 4 ? true : false }
-            ).makeScale(160, 224, scaleName) :
+            ).makeNodeScale(160, 224, scaleName) :
             new Sample(
               color.name,
               color.rgb,
@@ -139,7 +139,7 @@ export default class Colors {
               this.parent.properties,
               this.parent.textColorsTheme,
               { isClosestToRef: distance < 4 ? true : false }
-            ).makeRichScale(264, 320, scaleName)
+            ).makeNodeRichScale(264, 320, scaleName)
           row.name = color.name
           row.appendChild(sample)
         })

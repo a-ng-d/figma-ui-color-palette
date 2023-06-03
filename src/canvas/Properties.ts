@@ -67,7 +67,7 @@ export default class Properties {
     return fontLookupAPCA(this.getAPCAContrast(textColor))
   }
 
-  makeTopProps() {
+  makeNodeTopProps() {
     // base
     this.nodeTopProps = figma.createFrame()
     this.nodeTopProps.name = '_top'
@@ -82,7 +82,7 @@ export default class Properties {
     return this.nodeTopProps
   }
 
-  makeBottomProps() {
+  makeNodeBottomProps() {
     // base
     this.nodeBottomProps = figma.createFrame()
     this.nodeBottomProps.name = '_bottom'
@@ -95,12 +95,12 @@ export default class Properties {
     this.nodeBottomProps.layoutAlign = 'STRETCH'
 
     // insert
-    this.nodeBottomProps.appendChild(this.makeContrastScoresProps())
+    this.nodeBottomProps.appendChild(this.makeNodeContrastScoresProps())
 
     return this.nodeBottomProps
   }
 
-  makeBaseProps() {
+  makeNodeBaseProps() {
     // base
     this.nodeBaseProps = figma.createFrame()
     this.nodeBaseProps.name = '_base'
@@ -130,7 +130,7 @@ export default class Properties {
     return this.nodeBaseProps
   }
 
-  makeContrastScoresProps() {
+  makeNodeContrastScoresProps() {
     // base
     this.nodeContrastScoresProps = figma.createFrame()
     this.nodeContrastScoresProps.name = '_contrast-scores'
@@ -176,7 +176,7 @@ export default class Properties {
     return this.nodeContrastScoresProps
   }
 
-  makeDetailedBaseProps() {
+  makeNodeDetailedBaseProps() {
     this.nodeDetailedBaseProps = figma.createFrame()
     this.nodeDetailedBaseProps.name = '_base'
     this.nodeDetailedBaseProps.fills = []
@@ -237,7 +237,7 @@ export default class Properties {
     return this.nodeDetailedWCAGScoresProps
   }
 
-  makeDetailedAPCAScoresProps() {
+  makeNodeDetailedAPCAScoresProps() {
     this.nodeDetailedAPCAScoresProps = figma.createFrame()
     this.nodeDetailedAPCAScoresProps.name = '_wcag-score'
     this.nodeDetailedAPCAScoresProps.fills = []
@@ -257,7 +257,7 @@ export default class Properties {
       new Tag('_title', 'APCA scores', 10).makeNodeTag()
     )
     this.nodeDetailedAPCAScoresProps.appendChild(
-      this.makeColumns(
+      this.makeNodeColumns(
         [
           new Tag(
             '_apca-light',
@@ -332,7 +332,7 @@ export default class Properties {
     return this.nodeDetailedAPCAScoresProps
   }
 
-  makeColumns(leftNodes: Array<FrameNode>, rightNodes: Array<FrameNode>) {
+  makeNodeColumns(leftNodes: Array<FrameNode>, rightNodes: Array<FrameNode>) {
     this.nodeColumns = figma.createFrame()
     this.nodeLeftColumn = figma.createFrame()
     this.nodeRightColumn = figma.createFrame()
@@ -363,7 +363,7 @@ export default class Properties {
     return this.nodeColumns   
   }
 
-  makeDetailedNode() {
+  makeNodeDetailed() {
     // base
     this.node.name = '_properties'
     this.node.fills = []
@@ -378,16 +378,16 @@ export default class Properties {
 
     // insert
     this.node.appendChild(
-      this.makeColumns(
+      this.makeNodeColumns(
         [
-          this.makeDetailedBaseProps(),
+          this.makeNodeDetailedBaseProps(),
         ],
         [
           this.makeDetailedWCAGScoresProps()
         ]
       )
     )
-    this.node.appendChild(this.makeDetailedAPCAScoresProps())
+    this.node.appendChild(this.makeNodeDetailedAPCAScoresProps())
 
     return this.node
   }
@@ -406,10 +406,10 @@ export default class Properties {
     this.node.layoutGrow = 1
 
     // insert
-    this.node.appendChild(this.makeTopProps())
+    this.node.appendChild(this.makeNodeTopProps())
     this.nodeTopProps.appendChild(new Tag('_scale', this.name, 10).makeNodeTag())
-    this.nodeTopProps.appendChild(this.makeBaseProps())
-    this.node.appendChild(this.makeBottomProps())
+    this.nodeTopProps.appendChild(this.makeNodeBaseProps())
+    this.node.appendChild(this.makeNodeBottomProps())
 
     return this.node
   }

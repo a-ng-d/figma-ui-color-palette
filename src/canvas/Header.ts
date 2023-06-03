@@ -30,7 +30,7 @@ export default class Header {
         [255, 255, 255],
         this.parent.properties,
         this.parent.textColorsTheme
-      ).makeName('ABSOLUTE', 160, 48)
+      ).makeNodeName('ABSOLUTE', 160, 48)
     )
     Object.values(this.parent.scale)
       .reverse()
@@ -45,7 +45,7 @@ export default class Header {
             [255, 255, 255],
             this.parent.properties,
             this.parent.textColorsTheme
-          ).makeName('ABSOLUTE', 160, 48)
+          ).makeNodeName('ABSOLUTE', 160, 48)
         )
       })
 
