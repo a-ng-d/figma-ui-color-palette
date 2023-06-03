@@ -86,6 +86,17 @@ export default class Tag {
         },
       },
     ]
+    this.nodeIndicator.strokes = [
+      {
+        type: 'SOLID',
+        color: {
+          r: 0,
+          g: 0,
+          b: 0,
+        },
+        opacity: 0.1
+      },
+    ]
 
     return this.nodeIndicator
   }
