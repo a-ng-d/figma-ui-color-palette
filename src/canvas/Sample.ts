@@ -166,6 +166,13 @@ export default class Sample {
       color.appendChild(new Status(this.status, this.source).makeNode())
     
     this.node.appendChild(color)
+    this.node.appendChild(
+      new Properties(
+        this.scale,
+        this.rgb,
+        this.textColorsTheme
+      ).makeDetailedNode()
+    )
 
     return this.node
   }
