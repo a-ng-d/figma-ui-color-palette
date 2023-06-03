@@ -208,7 +208,7 @@ export default class Properties {
 
   makeDetailedWCAGScoresProps() {
     this.nodeDetailedWCAGScoresProps = figma.createFrame()
-    this.nodeDetailedWCAGScoresProps.name = '_wcag-score'
+    this.nodeDetailedWCAGScoresProps.name = '_wcag-scores'
     this.nodeDetailedWCAGScoresProps.fills = []
 
     // layout
@@ -239,7 +239,7 @@ export default class Properties {
 
   makeNodeDetailedAPCAScoresProps() {
     this.nodeDetailedAPCAScoresProps = figma.createFrame()
-    this.nodeDetailedAPCAScoresProps.name = '_wcag-score'
+    this.nodeDetailedAPCAScoresProps.name = '_apca-scores'
     this.nodeDetailedAPCAScoresProps.fills = []
     const
       minimumDarkFontSize: Array<string | number> = this.getMinFontSizes('DARK'),
