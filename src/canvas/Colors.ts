@@ -13,9 +13,47 @@ export default class Colors {
   nodeRowSlice: FrameNode
   node: FrameNode
 
-  constructor(parent: PaletteNode) {
+  constructor(parent?: PaletteNode) {
     this.parent = parent
     this.node = figma.createFrame()
+  }
+
+  getShadeColorFromLch(sourceColor: Array<number>, lightness: string, hueShifting: number, algorithmVersion: string) {
+    let lch: { _rgb: Array<number> }, newColor: { _rgb: Array<number> }
+    lch = chroma(sourceColor).lch()
+    newColor = chroma.lch(
+      parseFloat(lightness) * 1,
+      algorithmVersion == 'v2'
+        ? Math.sin((parseFloat(lightness) / 100) * Math.PI) *
+            chroma(sourceColor).lch()[1]
+        : chroma(sourceColor).lch()[1],
+      lch[2] + hueShifting < 0
+        ? 0
+        : lch[2] + hueShifting > 360
+        ? 360
+        : lch[2] + hueShifting
+    )
+
+    return newColor
+  }
+
+  getShadeColorFromOklch(sourceColor: Array<number>, lightness: string, hueShifting: number, algorithmVersion: string) {
+    let oklch: { _rgb: Array<number> }, newColor: { _rgb: Array<number> }
+    oklch = chroma(sourceColor).oklch()
+    newColor = chroma.oklch(
+      parseFloat(lightness) / 100,
+      algorithmVersion == 'v2'
+        ? Math.sin((parseFloat(lightness) / 100) * Math.PI) *
+            chroma(sourceColor).oklch()[1]
+        : chroma(sourceColor).oklch()[1],
+      oklch[2] + hueShifting < 0
+        ? 0
+        : oklch[2] + hueShifting > 360
+        ? 360
+        : oklch[2] + hueShifting
+    )
+
+    return newColor
   }
 
   makeNodeSlice(shades: Array<FrameNode>) {
@@ -107,32 +145,18 @@ export default class Colors {
         .forEach((lightness: string) => {
           let newColor, lch, oklch
           if (color.oklch) {
-            oklch = chroma(sourceColor).oklch()
-            newColor = chroma.oklch(
-              parseFloat(lightness) / 100,
-              this.parent.algorithmVersion == 'v2'
-                ? Math.sin((parseFloat(lightness) / 100) * Math.PI) *
-                    chroma(sourceColor).oklch()[1]
-                : chroma(sourceColor).oklch()[1],
-              oklch[2] + color.hueShifting < 0
-                ? 0
-                : oklch[2] + color.hueShifting > 360
-                ? 360
-                : oklch[2] + color.hueShifting
-            )
+           newColor = this.getShadeColorFromOklch(
+            sourceColor,
+            lightness,
+            color.hueShifting,
+            this.parent.algorithmVersion
+          )
           } else {
-            lch = chroma(sourceColor).lch()
-            newColor = chroma.lch(
-              parseFloat(lightness) * 1,
-              this.parent.algorithmVersion == 'v2'
-                ? Math.sin((parseFloat(lightness) / 100) * Math.PI) *
-                    chroma(sourceColor).lch()[1]
-                : chroma(sourceColor).lch()[1],
-              lch[2] + color.hueShifting < 0
-                ? 0
-                : lch[2] + color.hueShifting > 360
-                ? 360
-                : lch[2] + color.hueShifting
+            newColor = this.getShadeColorFromLch(
+              sourceColor,
+              lightness,
+              color.hueShifting,
+              this.parent.algorithmVersion
             )
           }
 
