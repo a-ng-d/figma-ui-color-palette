@@ -124,6 +124,7 @@ export default class Sample {
     // base
     this.node.name = name
     this.node.resize(width, height)
+    this.node.fills = []
 
     // layout
     this.node.layoutMode = 'VERTICAL'

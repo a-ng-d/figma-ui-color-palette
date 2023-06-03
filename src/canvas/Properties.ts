@@ -339,7 +339,7 @@ export default class Properties {
     this.nodeColumns.name = '_columns'
     this.nodeLeftColumn.name = '_left-column'
     this.nodeRightColumn.name = '_right-column'
-    //this.nodeColumns.fills = this.nodeLeftColumn.fills = this.nodeRightColumn.fills = []
+    this.nodeColumns.fills = this.nodeLeftColumn.fills = this.nodeRightColumn.fills = []
 
     // layout
     this.nodeColumns.layoutMode = 'HORIZONTAL'
