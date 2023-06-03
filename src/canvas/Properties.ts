@@ -9,10 +9,10 @@ export default class Properties {
   textColorsTheme: TextColorsThemeHexModel
   hex: string
   lch: Array<number>
-  nodeTop: FrameNode
-  nodeBottom: FrameNode
-  nodeBasics: FrameNode
-  nodeContrastScores: FrameNode
+  nodeTopProps: FrameNode
+  nodeBottomProps: FrameNode
+  nodeBaseProps: FrameNode
+  nodeContrastScoresProps: FrameNode
   nodeProperties: TextNode
   nodeDetailedBaseProps: FrameNode
   nodeDetailedWCAGScoresProps: FrameNode
@@ -67,58 +67,58 @@ export default class Properties {
     return fontLookupAPCA(this.getAPCAContrast(textColor))
   }
 
-  makeNodeTop() {
+  makeTopProps() {
     // base
-    this.nodeTop = figma.createFrame()
-    this.nodeTop.name = '_top'
-    this.nodeTop.fills = []
+    this.nodeTopProps = figma.createFrame()
+    this.nodeTopProps.name = '_top'
+    this.nodeTopProps.fills = []
 
     // layout
-    this.nodeTop.layoutMode = 'HORIZONTAL'
-    this.nodeTop.primaryAxisSizingMode = 'FIXED'
-    this.nodeTop.counterAxisSizingMode = 'AUTO'
-    this.nodeTop.layoutAlign = 'STRETCH'
+    this.nodeTopProps.layoutMode = 'HORIZONTAL'
+    this.nodeTopProps.primaryAxisSizingMode = 'FIXED'
+    this.nodeTopProps.counterAxisSizingMode = 'AUTO'
+    this.nodeTopProps.layoutAlign = 'STRETCH'
 
-    return this.nodeTop
+    return this.nodeTopProps
   }
 
-  makeNodeBottom() {
+  makeBottomProps() {
     // base
-    this.nodeBottom = figma.createFrame()
-    this.nodeBottom.name = '_bottom'
-    this.nodeBottom.fills = []
+    this.nodeBottomProps = figma.createFrame()
+    this.nodeBottomProps.name = '_bottom'
+    this.nodeBottomProps.fills = []
 
     // layout
-    this.nodeBottom.layoutMode = 'VERTICAL'
-    this.nodeBottom.primaryAxisSizingMode = 'AUTO'
-    this.nodeBottom.counterAxisSizingMode = 'FIXED'
-    this.nodeBottom.layoutAlign = 'STRETCH'
+    this.nodeBottomProps.layoutMode = 'VERTICAL'
+    this.nodeBottomProps.primaryAxisSizingMode = 'AUTO'
+    this.nodeBottomProps.counterAxisSizingMode = 'FIXED'
+    this.nodeBottomProps.layoutAlign = 'STRETCH'
 
     // insert
-    this.nodeBottom.appendChild(this.makeNodeContrastScores())
+    this.nodeBottomProps.appendChild(this.makeContrastScoresProps())
 
-    return this.nodeBottom
+    return this.nodeBottomProps
   }
 
-  makeNodeBasics() {
+  makeBaseProps() {
     // base
-    this.nodeBasics = figma.createFrame()
-    this.nodeBasics.name = '_basics'
-    this.nodeBasics.fills = []
+    this.nodeBaseProps = figma.createFrame()
+    this.nodeBaseProps.name = '_base'
+    this.nodeBaseProps.fills = []
 
     // layout
-    this.nodeBasics.layoutMode = 'VERTICAL'
-    this.nodeBasics.primaryAxisSizingMode = 'AUTO'
-    this.nodeBasics.counterAxisSizingMode = 'FIXED'
-    this.nodeBasics.counterAxisAlignItems = 'MAX'
-    this.nodeBasics.layoutGrow = 1
-    this.nodeBasics.itemSpacing = 4
+    this.nodeBaseProps.layoutMode = 'VERTICAL'
+    this.nodeBaseProps.primaryAxisSizingMode = 'AUTO'
+    this.nodeBaseProps.counterAxisSizingMode = 'FIXED'
+    this.nodeBaseProps.counterAxisAlignItems = 'MAX'
+    this.nodeBaseProps.layoutGrow = 1
+    this.nodeBaseProps.itemSpacing = 4
 
     // insert
-    this.nodeBasics.appendChild(
+    this.nodeBaseProps.appendChild(
       new Tag('_hex', this.hex.toUpperCase()).makeNodeTag()
     )
-    this.nodeBasics.appendChild(
+    this.nodeBaseProps.appendChild(
       new Tag(
         '_lch',
         `L ${Math.floor(this.lch[0])} • C ${Math.floor(
@@ -127,36 +127,36 @@ export default class Properties {
       ).makeNodeTag()
     )
 
-    return this.nodeBasics
+    return this.nodeBaseProps
   }
 
-  makeNodeContrastScores() {
+  makeContrastScoresProps() {
     // base
-    this.nodeContrastScores = figma.createFrame()
-    this.nodeContrastScores.name = '_contrast-scores'
-    this.nodeContrastScores.fills = []
+    this.nodeContrastScoresProps = figma.createFrame()
+    this.nodeContrastScoresProps.name = '_contrast-scores'
+    this.nodeContrastScoresProps.fills = []
 
     // layout
-    this.nodeContrastScores.layoutMode = 'VERTICAL'
-    this.nodeContrastScores.primaryAxisSizingMode = 'AUTO'
-    this.nodeContrastScores.counterAxisSizingMode = 'FIXED'
-    this.nodeContrastScores.layoutAlign = 'STRETCH'
-    this.nodeContrastScores.itemSpacing = 4
+    this.nodeContrastScoresProps.layoutMode = 'VERTICAL'
+    this.nodeContrastScoresProps.primaryAxisSizingMode = 'AUTO'
+    this.nodeContrastScoresProps.counterAxisSizingMode = 'FIXED'
+    this.nodeContrastScoresProps.layoutAlign = 'STRETCH'
+    this.nodeContrastScoresProps.itemSpacing = 4
 
     // insert
-    this.nodeContrastScores.appendChild(
+    this.nodeContrastScoresProps.appendChild(
       new Tag(
         '_wcag21-white',
         `${this.getContrast('WHITE').toFixed(2)} • ${this.getLevel('WHITE')}`
       ).makeNodeTag(chroma(this.textColorsTheme.lightColor).gl(), true)
     )
-    this.nodeContrastScores.appendChild(
+    this.nodeContrastScoresProps.appendChild(
       new Tag(
         '_wcag21-black',
         `${this.getContrast('BLACK').toFixed(2)} • ${this.getLevel('BLACK')}`
       ).makeNodeTag(chroma(this.textColorsTheme.darkColor).gl(), true)
     )
-    this.nodeContrastScores.appendChild(
+    this.nodeContrastScoresProps.appendChild(
       new Tag(
         '_apca-white',
         `Lc ${this.getAPCAContrast('WHITE').toFixed(1)} • ${
@@ -164,7 +164,7 @@ export default class Properties {
         }pt (400)`
       ).makeNodeTag(chroma(this.textColorsTheme.lightColor).gl(), true)
     )
-    this.nodeContrastScores.appendChild(
+    this.nodeContrastScoresProps.appendChild(
       new Tag(
         '_apca-black',
         `Lc ${this.getAPCAContrast('BLACK').toFixed(1)} • ${
@@ -173,7 +173,7 @@ export default class Properties {
       ).makeNodeTag(chroma(this.textColorsTheme.darkColor).gl(), true)
     )
 
-    return this.nodeContrastScores
+    return this.nodeContrastScoresProps
   }
 
   makeDetailedBaseProps() {
@@ -379,10 +379,10 @@ export default class Properties {
     this.node.layoutGrow = 1
 
     // insert
-    this.node.appendChild(this.makeNodeTop())
-    this.nodeTop.appendChild(new Tag('_scale', this.name, 10).makeNodeTag())
-    this.nodeTop.appendChild(this.makeNodeBasics())
-    this.node.appendChild(this.makeNodeBottom())
+    this.node.appendChild(this.makeTopProps())
+    this.nodeTopProps.appendChild(new Tag('_scale', this.name, 10).makeNodeTag())
+    this.nodeTopProps.appendChild(this.makeBaseProps())
+    this.node.appendChild(this.makeBottomProps())
 
     return this.node
   }
