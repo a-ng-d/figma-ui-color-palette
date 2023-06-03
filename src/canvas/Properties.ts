@@ -264,8 +264,8 @@ export default class Properties {
             `Lc ${this.getAPCAContrast('WHITE').toFixed(1)}`,
           ).makeNodeTag(chroma(this.textColorsTheme.lightColor).gl(), true),
           new Tag(
-            '_minimum-text-body',
-            'Minimum text body',
+            '_minimum-font-sizes',
+            'Minimum font sizes',
           ).makeNodeTag(),
           new Tag(
             '_200',
@@ -298,8 +298,8 @@ export default class Properties {
             `Lc ${this.getAPCAContrast('BLACK').toFixed(1)}`
           ).makeNodeTag(chroma(this.textColorsTheme.darkColor).gl(), true),
           new Tag(
-            '_minimum-text-body',
-            'Minimum text body'
+            '_minimum-font-sizes',
+            'Minimum font sizes'
           ).makeNodeTag(),
           new Tag(
             '_200',
