@@ -8,6 +8,8 @@ export default class Colors {
   properties: boolean
   parent: PaletteNode
   nodeRow: FrameNode
+  nodeRowSource: FrameNode
+  nodeRowShades: FrameNode
   node: FrameNode
 
   constructor(parent: PaletteNode) {
@@ -39,7 +41,6 @@ export default class Colors {
     )
     this.node.appendChild(new Header(this.parent).makeNode())
     this.parent.colors.forEach((color) => {
-      this.nodeRow = figma.createFrame()
       const sourceColor: Array<number> = chroma([
           color.rgb.r * 255,
           color.rgb.g * 255,
@@ -47,35 +48,39 @@ export default class Colors {
         ])
 
       // base
+      this.nodeRow = figma.createFrame()
+      this.nodeRowSource = figma.createFrame()
+      this.nodeRowShades = figma.createFrame()
       this.nodeRow.name = color.name
-      this.nodeRow.resize(100, 160)
-      this.nodeRow.fills = []
+      this.nodeRowSource.name = '_source'
+      this.nodeRowShades.name = '_shades'
+      this.nodeRow.fills = this.nodeRowSource.fills = this.nodeRowShades.fills = []
 
       // layout
-      this.nodeRow.layoutMode = 'HORIZONTAL'
-      this.nodeRow.primaryAxisSizingMode = 'AUTO'
-      this.nodeRow.counterAxisSizingMode = 'AUTO'
+      this.nodeRow.layoutMode = this.nodeRowSource.layoutMode = this.nodeRowShades.layoutMode = 'HORIZONTAL'
+      this.nodeRow.primaryAxisSizingMode = this.nodeRowSource.primaryAxisSizingMode = this.nodeRowShades.primaryAxisSizingMode = 'AUTO'
+      this.nodeRow.counterAxisSizingMode = this.nodeRowSource.counterAxisSizingMode = this.nodeRowShades.counterAxisSizingMode = 'AUTO'
 
       // insert
-      const rowName = this.parent.view === 'PALETTE' ?
-        new Sample(
-          color.name,
-          null,
-          null,
-          [color.rgb.r * 255, color.rgb.g * 255, color.rgb.b * 255],
-          this.parent.properties,
-          this.parent.textColorsTheme
-        ).makeNodeScale(160, 224, color.name, true) :
-        new Sample(
-          color.name,
-          null,
-          null,
-          [color.rgb.r * 255, color.rgb.g * 255, color.rgb.b * 255],
-          this.parent.properties,
-          this.parent.textColorsTheme
-        ).makeNodeRichScale(160, 376, color.name, true)
-
-      this.nodeRow.appendChild(rowName)
+      this.nodeRowSource.appendChild(
+        this.parent.view === 'PALETTE' ?
+          new Sample(
+            color.name,
+            null,
+            null,
+            [color.rgb.r * 255, color.rgb.g * 255, color.rgb.b * 255],
+            this.parent.properties,
+            this.parent.textColorsTheme
+          ).makeNodeScale(160, 224, color.name, true) :
+          new Sample(
+            color.name,
+            null,
+            null,
+            [color.rgb.r * 255, color.rgb.g * 255, color.rgb.b * 255],
+            this.parent.properties,
+            this.parent.textColorsTheme
+          ).makeNodeRichScale(160, 376, color.name, true)
+      )
 
       Object.values(this.parent.scale)
         .reverse()
@@ -121,30 +126,32 @@ export default class Colors {
             Object.keys(this.parent.scale)
               .find((key) => this.parent.scale[key] === lightness)
               .substr(10)
-
-          const sample = this.parent.view === 'PALETTE' ?
-            new Sample(
-              color.name,
-              color.rgb,
-              scaleName,
-              newColor._rgb,
-              this.parent.properties,
-              this.parent.textColorsTheme,
-              { isClosestToRef: distance < 4 ? true : false }
-            ).makeNodeScale(160, 224, scaleName) :
-            new Sample(
-              color.name,
-              color.rgb,
-              scaleName,
-              newColor._rgb,
-              this.parent.properties,
-              this.parent.textColorsTheme,
-              { isClosestToRef: distance < 4 ? true : false }
-            ).makeNodeRichScale(264, 320, scaleName)
-          this.nodeRow.name = color.name
-          this.nodeRow.appendChild(sample)
+          
+          this.nodeRowShades.appendChild(
+            this.parent.view === 'PALETTE' ?
+              new Sample(
+                color.name,
+                color.rgb,
+                scaleName,
+                newColor._rgb,
+                this.parent.properties,
+                this.parent.textColorsTheme,
+                { isClosestToRef: distance < 4 ? true : false }
+              ).makeNodeScale(160, 224, scaleName) :
+              new Sample(
+                color.name,
+                color.rgb,
+                scaleName,
+                newColor._rgb,
+                this.parent.properties,
+                this.parent.textColorsTheme,
+                { isClosestToRef: distance < 4 ? true : false }
+              ).makeNodeRichScale(264, 376, scaleName)
+          )
         })
-
+      
+      this.nodeRow.appendChild(this.nodeRowSource)
+      this.nodeRow.appendChild(this.nodeRowShades)
       this.node.appendChild(this.nodeRow)
     })
 
