@@ -7,6 +7,7 @@ import Title from './Title'
 export default class Colors {
   properties: boolean
   parent: PaletteNode
+  nodeRow: FrameNode
   node: FrameNode
 
   constructor(parent: PaletteNode) {
@@ -38,22 +39,22 @@ export default class Colors {
     )
     this.node.appendChild(new Header(this.parent).makeNode())
     this.parent.colors.forEach((color) => {
-      const row = figma.createFrame(),
-        sourceColor = chroma([
+      this.nodeRow = figma.createFrame()
+      const sourceColor: Array<number> = chroma([
           color.rgb.r * 255,
           color.rgb.g * 255,
           color.rgb.b * 255,
         ])
 
       // base
-      row.name = color.name
-      row.resize(100, 160)
-      row.fills = []
+      this.nodeRow.name = color.name
+      this.nodeRow.resize(100, 160)
+      this.nodeRow.fills = []
 
       // layout
-      row.layoutMode = 'HORIZONTAL'
-      row.primaryAxisSizingMode = 'AUTO'
-      row.counterAxisSizingMode = 'AUTO'
+      this.nodeRow.layoutMode = 'HORIZONTAL'
+      this.nodeRow.primaryAxisSizingMode = 'AUTO'
+      this.nodeRow.counterAxisSizingMode = 'AUTO'
 
       // insert
       const rowName = this.parent.view === 'PALETTE' ?
@@ -74,7 +75,7 @@ export default class Colors {
           this.parent.textColorsTheme
         ).makeNodeRichScale(160, 376, color.name, true)
 
-      row.appendChild(rowName)
+      this.nodeRow.appendChild(rowName)
 
       Object.values(this.parent.scale)
         .reverse()
@@ -140,11 +141,11 @@ export default class Colors {
               this.parent.textColorsTheme,
               { isClosestToRef: distance < 4 ? true : false }
             ).makeNodeRichScale(264, 320, scaleName)
-          row.name = color.name
-          row.appendChild(sample)
+          this.nodeRow.name = color.name
+          this.nodeRow.appendChild(sample)
         })
 
-      this.node.appendChild(row)
+      this.node.appendChild(this.nodeRow)
     })
 
     return this.node

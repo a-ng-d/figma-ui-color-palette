@@ -13,6 +13,7 @@ export default class Sample {
   status: {
     isClosestToRef: boolean
   }
+  nodeColor: FrameNode
   node: FrameNode
   children: FrameNode
 
@@ -137,20 +138,20 @@ export default class Sample {
     this.node.itemSpacing = 8
 
     // color
-    const color = figma.createFrame()
-    color.name = '_color'
-    color.layoutMode = 'VERTICAL'
-    color.primaryAxisSizingMode = 'FIXED'
-    color.counterAxisSizingMode = 'FIXED'
-    color.layoutAlign = 'STRETCH'
-    color.resize(96, 96)
-    color.paddingTop =
-      color.paddingRight =
-      color.paddingBottom =
-      color.paddingLeft =
+    this.nodeColor = figma.createFrame()
+    this.nodeColor.name = '_color'
+    this.nodeColor.layoutMode = 'VERTICAL'
+    this.nodeColor.primaryAxisSizingMode = 'FIXED'
+    this.nodeColor.counterAxisSizingMode = 'FIXED'
+    this.nodeColor.layoutAlign = 'STRETCH'
+    this.nodeColor.resize(96, 96)
+    this.nodeColor.paddingTop =
+      this.nodeColor.paddingRight =
+      this.nodeColor.paddingBottom =
+      this.nodeColor.paddingLeft =
         8
-    color.itemSpacing = 8
-    color.fills = [
+    this.nodeColor.itemSpacing = 8
+    this.nodeColor.fills = [
       {
         type: 'SOLID',
         color: {
@@ -160,14 +161,14 @@ export default class Sample {
         },
       },
     ]
-    color.cornerRadius = 16
+    this.nodeColor.cornerRadius = 16
 
     // insert
-    color.appendChild(new Property('_label', name, 10).makeNode())
+    this.nodeColor.appendChild(new Property('_label', name, 10).makeNode())
     if (this.status.isClosestToRef)
-      color.appendChild(new Status(this.status, this.source).makeNode())
+      this.nodeColor.appendChild(new Status(this.status, this.source).makeNode())
     
-    this.node.appendChild(color)
+    this.node.appendChild(this.nodeColor)
     if (!isColorName)
       this.node.appendChild(
         new Properties(
