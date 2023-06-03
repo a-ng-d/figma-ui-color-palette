@@ -15,7 +15,7 @@ export default class Property {
 
   makeNode() {
     // base
-    this.node.name = '_properties'
+    this.node.name = '_property'
     this.node.fills = []
 
     // layout
