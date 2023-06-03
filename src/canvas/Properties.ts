@@ -268,27 +268,27 @@ export default class Properties {
             'Minimum font sizes',
           ).makeNodeTag(),
           new Tag(
-            '_200',
+            '_200-light',
             `${minimumLightFontSize[2]}pt (200)`,
           ).makeNodeTag(),
           new Tag(
-            '_300',
+            '_300-light',
             `${minimumLightFontSize[3]}pt (300)`,
           ).makeNodeTag(),
           new Tag(
-            '_400',
+            '_400-light',
             `${minimumLightFontSize[4]}pt (400)`,
           ).makeNodeTag(),
           new Tag(
-            '_500',
+            '_500-light',
             `${minimumLightFontSize[5]}pt (500)`,
           ).makeNodeTag(),
           new Tag(
-            '_500',
+            '_500-light',
             `${minimumLightFontSize[5]}pt (500)`,
           ).makeNodeTag(),
           new Tag(
-            '_700',
+            '_700-light',
             `${minimumLightFontSize[7]}pt (700)`
           ).makeNodeTag()
         ],
@@ -302,27 +302,27 @@ export default class Properties {
             'Minimum font sizes'
           ).makeNodeTag(),
           new Tag(
-            '_200',
+            '_200-dark',
             `${minimumDarkFontSize[2]}pt (200)`
           ).makeNodeTag(),
           new Tag(
-            '_300',
+            '_300-dark',
             `${minimumDarkFontSize[3]}pt (300)`
           ).makeNodeTag(),
           new Tag(
-            '_400',
+            '_400-dark',
             `${minimumDarkFontSize[4]}pt (400)`
           ).makeNodeTag(),
           new Tag(
-            '_500',
+            '_500-dark',
             `${minimumDarkFontSize[5]}pt (500)`
           ).makeNodeTag(),
           new Tag(
-            '_600',
+            '_600-dark',
             `${minimumDarkFontSize[6]}pt (600)`
           ).makeNodeTag(),
           new Tag(
-            '_700',
+            '_700-dark',
             `${minimumDarkFontSize[7]}pt (700)`
           ).makeNodeTag()
         ]
