@@ -111,21 +111,16 @@ export default class Colors {
         samples: Array<FrameNode> = [],
         paletteDataItem: PaletteDataItem = {
           name: color.name,
-          source: {
-            hex: '',
-            lch: [],
-            rgb: [],
-            gl: []
-          },
-          lightness: {}
+          shades: []
         }
       
-      paletteDataItem.source = {
+      paletteDataItem.shades.push({
+        name: 'source',
         hex: chroma(sourceColor).hex(),
         lch: chroma(sourceColor).lch(),
         rgb: sourceColor,
         gl: chroma(sourceColor).gl()
-      }
+      })
 
       // base
       this.nodeRow = figma.createFrame()
@@ -194,12 +189,13 @@ export default class Colors {
               .find((key) => this.parent.scale[key] === lightness)
               .substr(10)
           
-          paletteDataItem.lightness[scaleName] = {
+          paletteDataItem.shades.push({
+            name: scaleName,
             hex: chroma(newColor).hex(),
             lch: chroma(newColor).lch(),
             rgb: newColor._rgb,
             gl: chroma(newColor).gl()
-          }
+          })
           
           if (this.parent.view === 'PALETTE') {
             this.nodeRowShades.appendChild(

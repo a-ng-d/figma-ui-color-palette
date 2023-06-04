@@ -43,20 +43,13 @@ export interface PaletteNode {
 
 export interface PaletteDataItem {
   name: string
-  source: {
+  shades: Array<{
+    name: string
     hex: string
     lch: Array<number>
     rgb: Array<number>
     gl: Array<number>
-  }
-  lightness: {
-    [lightness: string]: {
-      hex: string
-      lch: Array<number>
-      rgb: Array<number>
-      gl: Array<number>
-    }
-  }
+  }>
 }
 
 // Palette configurations
