@@ -19,7 +19,7 @@ export default class Colors {
   }
 
   getShadeColorFromLch(sourceColor: Array<number>, lightness: string, hueShifting: number, algorithmVersion: string) {
-    let lch: { _rgb: Array<number> }, newColor: { _rgb: Array<number> }
+    let lch: Array<number>, newColor: { _rgb: Array<number> }
     lch = chroma(sourceColor).lch()
     newColor = chroma.lch(
       parseFloat(lightness) * 1,
@@ -143,7 +143,7 @@ export default class Colors {
       Object.values(this.parent.scale)
         .reverse()
         .forEach((lightness: string) => {
-          let newColor, lch, oklch
+          let newColor: { _rgb: Array<number> }
           if (color.oklch) {
            newColor = this.getShadeColorFromOklch(
             sourceColor,

@@ -1,16 +1,16 @@
+import type { ColorConfiguration } from '../utils/types'
 import Style from './../canvas/Style'
 import Colors from '../canvas/Colors'
 
 const createLocalStyles = (palette, i: number) => {
   palette = figma.currentPage.selection[0] as FrameNode
-  console.log(palette.getPluginData('colors'))
+  const localStyles: Array<PaintStyle> = figma.getLocalPaintStyles()
+  let source: PaintStyle, shade: { _rgb: Array<number> }
 
   if (palette.children.length == 1) {
-    const localStyles: Array<PaintStyle> = figma.getLocalPaintStyles()
-    let source: PaintStyle, shade
     i = 0
 
-    JSON.parse(palette.getPluginData('colors')).forEach(color => {
+    JSON.parse(palette.getPluginData('colors')).forEach((color: ColorConfiguration) => {
       if (localStyles.filter((e) => e.name === `${color.name}/source`).length == 0) {
         source = new Style(
           `${color.name}/source`,
