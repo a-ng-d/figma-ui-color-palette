@@ -29,7 +29,7 @@ export interface Shortcut {
   action: any
 }
 
-// Palette nodes
+// Palette
 export interface PaletteNode {
   paletteName: string
   scale: ScaleConfiguration
@@ -39,6 +39,22 @@ export interface PaletteNode {
   textColorsTheme: TextColorsThemeHexModel
   view: string
   algorithmVersion: string
+}
+
+export interface PaletteDataItem {
+  name: string
+  source: {
+    hex: string
+    lch: Array<number>
+    rgb: Array<number>
+  }
+  lightness: {
+    [lightness: string]: {
+      hex: string
+      lch: Array<number>
+      rgb: Array<number>
+    }
+  }
 }
 
 // Palette configurations

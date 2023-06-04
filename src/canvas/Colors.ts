@@ -1,5 +1,5 @@
 import chroma from 'chroma-js'
-import type { PaletteNode } from '../utils/types'
+import type { PaletteNode, PaletteDataItem } from '../utils/types'
 import Sample from './Sample'
 import Header from './Header'
 import Title from './Title'
@@ -7,14 +7,18 @@ import Title from './Title'
 export default class Colors {
   properties: boolean
   parent: PaletteNode
+  palette: FrameNode
+  paletteData: Array<PaletteDataItem>
   nodeRow: FrameNode
   nodeRowSource: FrameNode
   nodeRowShades: FrameNode
   nodeRowSlice: FrameNode
   node: FrameNode
 
-  constructor(parent?: PaletteNode) {
+  constructor(parent?: PaletteNode, palette?: FrameNode) {
     this.parent = parent
+    this.palette = palette
+    this.paletteData = []
     this.node = figma.createFrame()
   }
 
@@ -98,12 +102,28 @@ export default class Colors {
     this.node.appendChild(new Header(this.parent).makeNode())
     this.parent.colors.forEach((color) => {
       let i: number = 1
-      const sourceColor: Array<number> = chroma([
+      const
+        sourceColor: Array<number> = chroma([
           color.rgb.r * 255,
           color.rgb.g * 255,
           color.rgb.b * 255,
         ]),
-        samples: Array<FrameNode> = []
+        samples: Array<FrameNode> = [],
+        paletteDataItem: PaletteDataItem = {
+          name: color.name,
+          source: {
+            hex: '',
+            lch: [],
+            rgb: []
+          },
+          lightness: {}
+        }
+      
+      paletteDataItem.source = {
+        hex: chroma(sourceColor).hex(),
+        lch: chroma(sourceColor).lch(),
+        rgb: sourceColor
+      }
 
       // base
       this.nodeRow = figma.createFrame()
@@ -144,6 +164,7 @@ export default class Colors {
         .reverse()
         .forEach((lightness: string) => {
           let newColor: { _rgb: Array<number> }
+
           if (color.oklch) {
            newColor = this.getShadeColorFromOklch(
             sourceColor,
@@ -170,6 +191,12 @@ export default class Colors {
             Object.keys(this.parent.scale)
               .find((key) => this.parent.scale[key] === lightness)
               .substr(10)
+          
+          paletteDataItem.lightness[scaleName] = {
+            hex: chroma(newColor).hex(),
+            lch: chroma(newColor).lch(),
+            rgb: newColor._rgb
+          }
           
           if (this.parent.view === 'PALETTE') {
             this.nodeRowShades.appendChild(
@@ -207,11 +234,13 @@ export default class Colors {
       this.nodeRowShades.appendChild(this.makeNodeSlice(samples))
       samples.length = 0
       i = 1
+      this.paletteData.push(paletteDataItem)
       
       this.nodeRow.appendChild(this.nodeRowSource)
       this.nodeRow.appendChild(this.nodeRowShades)
       this.node.appendChild(this.nodeRow)
     })
+    this.palette.setPluginData('data', JSON.stringify(this.paletteData))
 
     return this.node
   }
