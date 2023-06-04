@@ -47,12 +47,14 @@ export interface PaletteDataItem {
     hex: string
     lch: Array<number>
     rgb: Array<number>
+    gl: Array<number>
   }
   lightness: {
     [lightness: string]: {
       hex: string
       lch: Array<number>
       rgb: Array<number>
+      gl: Array<number>
     }
   }
 }

@@ -114,7 +114,8 @@ export default class Colors {
           source: {
             hex: '',
             lch: [],
-            rgb: []
+            rgb: [],
+            gl: []
           },
           lightness: {}
         }
@@ -122,7 +123,8 @@ export default class Colors {
       paletteDataItem.source = {
         hex: chroma(sourceColor).hex(),
         lch: chroma(sourceColor).lch(),
-        rgb: sourceColor
+        rgb: sourceColor,
+        gl: chroma(sourceColor).gl()
       }
 
       // base
@@ -195,7 +197,8 @@ export default class Colors {
           paletteDataItem.lightness[scaleName] = {
             hex: chroma(newColor).hex(),
             lch: chroma(newColor).lch(),
-            rgb: newColor._rgb
+            rgb: newColor._rgb,
+            gl: chroma(newColor).gl()
           }
           
           if (this.parent.view === 'PALETTE') {
