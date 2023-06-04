@@ -40,7 +40,7 @@ const updateColors = (msg, palette) => {
         textColorsTheme: textColorsTheme,
         view: 'SHEET',
         algorithmVersion: algorithmVersion,
-      }).makeNode()
+      }, palette).makeNode()
     )
 
     // palette migration

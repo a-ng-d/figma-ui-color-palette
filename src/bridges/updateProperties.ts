@@ -38,7 +38,7 @@ const updateProperties = (msg, palette) => {
           textColorsTheme: textColorsTheme,
           view: 'SHEET',
           algorithmVersion: algorithmVersion,
-        }).makeNode()
+        }, palette).makeNode()
       )
     } else {
       palette.setPluginData('properties', 'hasNotProperties')
@@ -54,7 +54,7 @@ const updateProperties = (msg, palette) => {
           textColorsTheme: textColorsTheme,
           view: 'SHEET',
           algorithmVersion: algorithmVersion,
-        }).makeNode()
+        }, palette).makeNode()
       )
     }
 

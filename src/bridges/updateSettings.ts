@@ -43,7 +43,7 @@ const updateSettings = (msg, palette) => {
         textColorsTheme: msg.data.textColorsTheme,
         view: 'SHEET',
         algorithmVersion: msg.data.algorithmVersion,
-      }).makeNode()
+      }, palette).makeNode()
     )
 
     // palette migration
