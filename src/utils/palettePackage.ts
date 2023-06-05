@@ -7,6 +7,7 @@ export const palette: PaletteConfiguration = {
   max: null,
   properties: true,
   preset: {},
+  view: 'PALETTE_WITH_PROPERTIES',
   textColorsTheme: {
     lightColor: '#FFFFFF',
     darkColor: '#000000',

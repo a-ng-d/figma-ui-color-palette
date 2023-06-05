@@ -60,6 +60,7 @@ export interface PaletteConfiguration {
   max: number
   properties: boolean
   preset: PresetConfiguration | any
+  view: string
   textColorsTheme: TextColorsThemeHexModel
 }
 
