@@ -1,7 +1,5 @@
 import * as React from 'react'
 import Button from '../components/Button'
-import Checkbox from '../components/Checkbox'
-import Switch from '../components/Switch'
 import Feature from '../components/Feature'
 import { features } from '../../utils/features'
 import Dropdown from '../components/Dropdown'
