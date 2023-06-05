@@ -63,9 +63,6 @@ export default class Palette {
     this.node.setPluginData('name', this.paletteName)
     this.node.setPluginData('scale', JSON.stringify(this.scale))
     this.node.setPluginData('preset', JSON.stringify(this.preset))
-    this.properties
-      ? this.node.setPluginData('properties', 'hasProperties')
-      : this.node.setPluginData('properties', 'hasNotProperties')
     this.node.setPluginData(
       'textColorsTheme',
       JSON.stringify(this.textColorsTheme)

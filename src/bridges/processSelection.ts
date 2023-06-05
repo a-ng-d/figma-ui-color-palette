@@ -16,7 +16,13 @@ const processSelection = () => {
 
   if (selection.length == 1 && selection[0].getPluginData('scale') != '') {
     const palette: BaseNode = selection[0]
+    console.log(palette.getPluginDataKeys())
     // Migration
+    if (palette.getPluginData('min') != '' || palette.getPluginData('max')) {
+      palette.setPluginData('min', '')
+      palette.setPluginData('max', '')
+    }
+      
     if (palette.getPluginData('preset') === '')
       palette.setPluginData('preset', JSON.stringify(presets.material))
 
@@ -35,12 +41,14 @@ const processSelection = () => {
         setData(palette.getPluginData('colors'), 'hueShifting', 0)
       )
 
-    if (palette.getPluginData('captions') == 'hasCaptions') {
-      palette.setPluginData('properties', 'hasProperties')
+    if (palette.getPluginData('captions') == 'hasCaptions' || palette.getPluginData('properties') == 'hasProperties') {
       palette.setPluginData('captions', '')
-    } else if (palette.getPluginData('captions') == 'hasNotCaptions') {
-      palette.setPluginData('properties', 'hasNotProperties')
+      palette.setPluginData('properties', '')
+      palette.setPluginData('view', 'PALETTE_WITH_PROPERTIES')
+    } else if (palette.getPluginData('captions') == 'hasNotCaptions' || palette.getPluginData('properties') == 'hasNotProperties') {
       palette.setPluginData('captions', '')
+      palette.setPluginData('properties', '')
+      palette.setPluginData('view', 'PALETTE')
     }
 
     if (palette.getPluginData('textColorsTheme') === '') {
@@ -73,14 +81,16 @@ const processSelection = () => {
       type: 'palette-selected',
       data: {
         name: palette.getPluginData('name'),
+        colors: JSON.parse(palette.getPluginData('colors')),
         scale: JSON.parse(palette.getPluginData('scale')),
         properties: palette.getPluginData('properties'),
-        colors: JSON.parse(palette.getPluginData('colors')),
+        preset: JSON.parse(palette.getPluginData('preset')),
         textColorsTheme: JSON.parse(
           palette.getPluginData('textColorsTheme')
         ),
+        view: palette.getPluginData('view'),
         algorithmVersion: palette.getPluginData('algorithmVersion'),
-        preset: JSON.parse(palette.getPluginData('preset')),
+        
       },
     })
   } else if (
