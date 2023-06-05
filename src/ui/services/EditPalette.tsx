@@ -649,8 +649,8 @@ export default class EditPalette extends React.Component<Props> {
           className="section--scrollable"
         >
           <div className="controls">{controls}</div>
-          {actions}
         </section>
+        {actions}
         {help}
       </>
     )

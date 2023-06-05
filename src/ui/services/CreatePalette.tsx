@@ -199,8 +199,8 @@ export default class CreatePalette extends React.Component<Props> {
         />
         <section className="section--scrollable">
           <div className="controls">{controls}</div>
-          {actions}
         </section>
+        {actions}
         {help}
       </>
     )
