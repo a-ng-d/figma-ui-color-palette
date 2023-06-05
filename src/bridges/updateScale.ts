@@ -22,6 +22,7 @@ const updateScale = (msg, palette) => {
       textColorsTheme: TextColorsThemeHexModel = JSON.parse(
         palette.getPluginData('textColorsTheme')
       ),
+      view: string = palette.getPluginData('view'),
       algorithmVersion: string = palette.getPluginData('algorithmVersion')
 
     palette.setPluginData('scale', JSON.stringify(msg.data.scale))
@@ -38,7 +39,7 @@ const updateScale = (msg, palette) => {
         properties: msg.isEditedInRealTime ? false : properties,
         preset: preset,
         textColorsTheme: textColorsTheme,
-        view: 'SHEET',
+        view: msg.isEditedInRealTime && view === 'PALETTE_WITH_PROPERTIES' ? 'PALETTE' : view,
         algorithmVersion: algorithmVersion,
       }, palette).makeNode()
     )

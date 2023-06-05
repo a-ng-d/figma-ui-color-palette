@@ -13,7 +13,8 @@ const updateSettings = (msg, palette) => {
       scale = JSON.parse(palette.getPluginData('scale')),
       properties =
         palette.getPluginData('properties') == 'hasProperties' ? true : false,
-      preset = JSON.parse(palette.getPluginData('preset'))
+      preset = JSON.parse(palette.getPluginData('preset')),
+      view: string = palette.getPluginData('view')
 
     let paletteName: string
 
@@ -41,7 +42,7 @@ const updateSettings = (msg, palette) => {
         properties: msg.isEditedInRealTime ? false : properties,
         preset: preset,
         textColorsTheme: msg.data.textColorsTheme,
-        view: 'SHEET',
+        view: view,
         algorithmVersion: msg.data.algorithmVersion,
       }, palette).makeNode()
     )
