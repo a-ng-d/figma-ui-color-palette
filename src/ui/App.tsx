@@ -72,7 +72,6 @@ class App extends React.Component {
     this.setState({ view: view, onGoingStep: 'view changed' })
 
   presetHandler = (e: React.SyntheticEvent) => {
-    console.log(e.target)
     switch ((e.target as HTMLInputElement).value) {
       case presets.material.name: {
         this.setState({
