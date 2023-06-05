@@ -3,7 +3,10 @@ import { selectMenu } from 'figma-plugin-ds'
 
 interface Props {
   id: string
-  options: Array<string>
+  options: Array<{
+    label: string,
+    feature: string
+  }>
   selected: string
   onChange: React.ChangeEventHandler
 }
@@ -25,9 +28,10 @@ export default class Dropdown extends React.Component<Props> {
         {this.props.options.map((option, index) => (
           <option
             key={index}
-            value={option}
+            value={option.label}
+            data-action={option.feature}
           >
-            {option}
+            {option.label}
           </option>
         ))}
       </select>
