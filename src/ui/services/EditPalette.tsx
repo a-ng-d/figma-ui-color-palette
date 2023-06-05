@@ -41,7 +41,7 @@ interface Props {
   onChangeScale: () => void
   onChangeStop: () => void
   onColorChange: (colors: Array<ColorConfiguration>) => void
-  onPropertiesChange: (bool: boolean) => void
+  onChangeView: (view: string) => void
   onSettingsChange: React.ChangeEventHandler
 }
 
@@ -144,11 +144,11 @@ export default class EditPalette extends React.Component<Props> {
     } else this.dispatch.scale.on.status = true
   }
 
-  checkHandler = (e: React.SyntheticEvent) => {
-    this.props.onPropertiesChange((e.target as HTMLInputElement).checked)
-    palette.properties = (e.target as HTMLInputElement).checked
+  viewHandler = (e) => {
+    this.props.onChangeView(e.target.options[e.target.selectedIndex].dataset.action)
+    palette.view = e.target.options[e.target.selectedIndex].dataset.action
     parent.postMessage(
-      { pluginMessage: { type: 'update-properties', data: palette } },
+      { pluginMessage: { type: 'update-view', data: palette } },
       '*'
     )
     this.setState({
@@ -540,7 +540,7 @@ export default class EditPalette extends React.Component<Props> {
           view={this.props.view}
           onCreateLocalColors={this.onCreate}
           onUpdateLocalColors={this.onUpdate}
-          onChangeProperties={this.checkHandler}
+          onChangeView={this.viewHandler}
         />
       )
 

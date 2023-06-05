@@ -64,14 +64,6 @@ export default class CreatePalette extends React.Component<Props> {
     return
   }
 
-  checkHandler = (e) => {
-    this.setState({
-      hasProperties: e.target.checked,
-      onGoingStep: 'properties changed',
-    })
-    palette.properties = e.target.checked
-  }
-
   viewHandler = (e) => {
     this.setState({
       onGoingStep: 'view changed',
@@ -128,7 +120,6 @@ export default class CreatePalette extends React.Component<Props> {
           context="create"
           hasProperties={this.state['hasProperties']}
           onCreatePalette={this.onCreate}
-          onChangeProperties={this.checkHandler}
           onChangeView={this.viewHandler}
         />
       )

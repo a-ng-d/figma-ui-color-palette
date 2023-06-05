@@ -15,7 +15,6 @@ interface Props {
   onCreatePalette?: React.MouseEventHandler
   onCreateLocalColors?: React.MouseEventHandler
   onUpdateLocalColors?: React.MouseEventHandler
-  onChangeProperties?: React.ChangeEventHandler
   onChangeView?: React.ChangeEventHandler
   onExportPalette?: React.MouseEventHandler
 }

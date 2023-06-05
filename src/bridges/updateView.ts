@@ -6,7 +6,7 @@ import type {
 } from '../utils/types'
 import Colors from '../canvas/Colors'
 
-const updateProperties = (msg, palette) => {
+const updateView = (msg, palette) => {
   palette = figma.currentPage.selection[0]
 
   if (palette.children.length == 1) {
@@ -23,40 +23,21 @@ const updateProperties = (msg, palette) => {
         palette.getPluginData('textColorsTheme')
       ),
       algorithmVersion: string = palette.getPluginData('algorithmVersion')
-
-    if (msg.data.properties) {
-      palette.setPluginData('properties', 'hasProperties')
-
-      palette.children[0].remove()
-      palette.appendChild(
-        new Colors({
-          paletteName: paletteName,
-          colors: colors,
-          scale: scale,
-          properties: msg.data.properties,
-          preset: preset,
-          textColorsTheme: textColorsTheme,
-          view: 'SHEET',
-          algorithmVersion: algorithmVersion,
-        }, palette).makeNode()
-      )
-    } else {
-      palette.setPluginData('properties', 'hasNotProperties')
-
-      palette.children[0].remove()
-      palette.appendChild(
-        new Colors({
-          paletteName: paletteName,
-          colors: colors,
-          scale: scale,
-          properties: msg.data.properties,
-          preset: preset,
-          textColorsTheme: textColorsTheme,
-          view: 'SHEET',
-          algorithmVersion: algorithmVersion,
-        }, palette).makeNode()
-      )
-    }
+    
+    palette.setPluginData('view', msg.data.view)
+    palette.children[0].remove()
+    palette.appendChild(
+      new Colors({
+        paletteName: paletteName,
+        colors: colors,
+        scale: scale,
+        properties: msg.data.properties,
+        preset: preset,
+        textColorsTheme: textColorsTheme,
+        view: msg.data.view,
+        algorithmVersion: algorithmVersion,
+      }, palette).makeNode()
+    )
 
     // palette migration
     palette.counterAxisSizingMode = 'AUTO'
@@ -67,4 +48,4 @@ const updateProperties = (msg, palette) => {
     )
 }
 
-export default updateProperties
+export default updateView

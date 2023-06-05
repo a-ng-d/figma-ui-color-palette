@@ -68,8 +68,8 @@ class App extends React.Component {
   }
 
   // Handlers
-  propertiesHandler = (bool: boolean) =>
-    this.setState({ hasProperties: bool, onGoingStep: 'properties changed' })
+  viewHandler = (view: string) =>
+    this.setState({ view: view, onGoingStep: 'view changed' })
 
   presetHandler = (e: React.SyntheticEvent) => {
     switch ((e.target as HTMLInputElement).value) {
@@ -469,7 +469,7 @@ class App extends React.Component {
               onChangeScale={this.slideHandler}
               onChangeStop={this.customSlideHandler}
               onColorChange={this.colorHandler}
-              onPropertiesChange={this.propertiesHandler}
+              onChangeView={this.viewHandler}
               onSettingsChange={this.settingsHandler}
             />
           ) : null}

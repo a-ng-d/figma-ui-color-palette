@@ -3,7 +3,7 @@ import isHighlightRead from './bridges/isHighlightRead'
 import closeHighlight from './bridges/closeHighlight'
 import createPalette from './bridges/createPalette'
 import updateScale from './bridges/updateScale'
-import updateProperties from './bridges/updateProperties'
+import updateView from './bridges/updateView'
 import updateColors from './bridges/updateColors'
 import createLocalStyles from './bridges/createLocalStyles'
 import updateLocalStyles from './bridges/updateLocalStyles'
@@ -49,8 +49,8 @@ figma.ui.onmessage = async (msg) => {
       updateScale(msg, palette)
       break
 
-    case 'update-properties':
-      updateProperties(msg, palette)
+    case 'update-view':
+      updateView(msg, palette)
       break
 
     case 'update-colors':
