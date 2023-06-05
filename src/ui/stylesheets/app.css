@@ -227,7 +227,7 @@ div.slider .slider__label {
   height: var(--size-small);
   border-radius: var(--border-radius-small);
   background: var(--figma-color-bg);
-  box-shadow: 0 0 0 1px var(--black3-opaque);
+  box-shadow: 0 0 0 1px var(--figma-color-border-disabled-strong);
   padding: var(--size-xxxsmall);
   text-align: center;
   position: relative;
@@ -271,7 +271,7 @@ div.slider .slider__label:before {
   height: 0;
   border-style: solid;
   border-width: var(--size-xxxsmall);
-  border-top-color: var(--black3-opaque);
+  border-top-color: var(--figma-color-border-disabled-strong);
   border-right-color: transparent;
   border-bottom-color: transparent;
   border-left-color: transparent;
