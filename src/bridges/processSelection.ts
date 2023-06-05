@@ -14,35 +14,36 @@ const processSelection = () => {
   currentSelection = figma.currentPage.selection
 
   if (selection.length == 1 && selection[0].getPluginData('scale') != '') {
+    const palette: BaseNode = selection[0]
     // Migration
-    if (selection[0].getPluginData('preset') === '')
-      selection[0].setPluginData('preset', JSON.stringify(presets.material))
+    if (palette.getPluginData('preset') === '')
+      palette.setPluginData('preset', JSON.stringify(presets.material))
 
-    if (selection[0].getPluginData('algorithmVersion') === '')
-      selection[0].setPluginData('algorithmVersion', 'v1')
+    if (palette.getPluginData('algorithmVersion') === '')
+      palette.setPluginData('algorithmVersion', 'v1')
 
-    if (!selection[0].getPluginData('colors').includes('oklch'))
-      selection[0].setPluginData(
+    if (!palette.getPluginData('colors').includes('oklch'))
+      palette.setPluginData(
         'colors',
-        setData(selection[0].getPluginData('colors'), 'oklch', false)
+        setData(palette.getPluginData('colors'), 'oklch', false)
       )
 
-    if (!selection[0].getPluginData('colors').includes('hueShifting'))
-      selection[0].setPluginData(
+    if (!palette.getPluginData('colors').includes('hueShifting'))
+      palette.setPluginData(
         'colors',
-        setData(selection[0].getPluginData('colors'), 'hueShifting', 0)
+        setData(palette.getPluginData('colors'), 'hueShifting', 0)
       )
 
-    if (selection[0].getPluginData('captions') == 'hasCaptions') {
-      selection[0].setPluginData('properties', 'hasProperties')
-      selection[0].setPluginData('captions', '')
-    } else if (selection[0].getPluginData('captions') == 'hasNotCaptions') {
-      selection[0].setPluginData('properties', 'hasNotProperties')
-      selection[0].setPluginData('captions', '')
+    if (palette.getPluginData('captions') == 'hasCaptions') {
+      palette.setPluginData('properties', 'hasProperties')
+      palette.setPluginData('captions', '')
+    } else if (palette.getPluginData('captions') == 'hasNotCaptions') {
+      palette.setPluginData('properties', 'hasNotProperties')
+      palette.setPluginData('captions', '')
     }
 
-    if (selection[0].getPluginData('textColorsTheme') === '') {
-      selection[0].setPluginData(
+    if (palette.getPluginData('textColorsTheme') === '') {
+      palette.setPluginData(
         'textColorsTheme',
         JSON.stringify({
           lightColor: '#FFFFFF',
@@ -51,22 +52,23 @@ const processSelection = () => {
       )
     }
 
-    if (selection[0].getPluginData('view') === '')
-      selection[0].setPluginData('view', 'PALETTE')
+    if (palette.getPluginData('view') === '')
+      palette.setPluginData('view', 'PALETTE')
+    
 
     // to UI
     figma.ui.postMessage({
       type: 'palette-selected',
       data: {
-        name: selection[0].getPluginData('name'),
-        scale: JSON.parse(selection[0].getPluginData('scale')),
-        properties: selection[0].getPluginData('properties'),
-        colors: JSON.parse(selection[0].getPluginData('colors')),
+        name: palette.getPluginData('name'),
+        scale: JSON.parse(palette.getPluginData('scale')),
+        properties: palette.getPluginData('properties'),
+        colors: JSON.parse(palette.getPluginData('colors')),
         textColorsTheme: JSON.parse(
-          selection[0].getPluginData('textColorsTheme')
+          palette.getPluginData('textColorsTheme')
         ),
-        algorithmVersion: selection[0].getPluginData('algorithmVersion'),
-        preset: JSON.parse(selection[0].getPluginData('preset')),
+        algorithmVersion: palette.getPluginData('algorithmVersion'),
+        preset: JSON.parse(palette.getPluginData('preset')),
       },
     })
   } else if (
