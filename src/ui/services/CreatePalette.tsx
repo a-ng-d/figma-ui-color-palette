@@ -55,6 +55,7 @@ export default class CreatePalette extends React.Component<Props> {
               .toLowerCase()
           : '',
       hasProperties: true,
+      onGoingStep: ''
     }
   }
 
