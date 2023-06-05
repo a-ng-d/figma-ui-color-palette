@@ -26,7 +26,7 @@ const updateSettings = (msg, palette) => {
         : palette.getPluginData('name')),
       (palette.name = `${
         msg.data.name === '' ? 'UI Color Palette' : msg.data.name
-      }﹒${preset.name}`)
+      }﹒${preset.name}﹒${view.includes('PALETTE') ? 'Palette' : 'Sheet'}`)
     palette.setPluginData(
       'textColorsTheme',
       JSON.stringify(msg.data.textColorsTheme)
