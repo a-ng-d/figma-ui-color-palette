@@ -54,15 +54,15 @@ export default class Actions extends React.Component<Props> {
                 options={[
                   {
                     label: 'Palette with properties',
-                    feature: 'PALETTE_WITH_PROPERTIES'
+                    value: 'PALETTE_WITH_PROPERTIES'
                  },
                  {
                   label: 'Palette',
-                  feature: 'PALETTE',
+                  value: 'PALETTE',
                  },
                  {
                   label: 'Color sheet',
-                  feature: 'SHEET'
+                  value: 'SHEET'
                  }
                 ]}
                 selected={'Palette with properties'}
@@ -121,15 +121,15 @@ export default class Actions extends React.Component<Props> {
                 options={[
                   {
                     label: 'Palette with properties',
-                    feature: 'PALETTE_WITH_PROPERTIES'
+                    value: 'PALETTE_WITH_PROPERTIES'
                  },
                  {
                   label: 'Palette',
-                  feature: 'PALETTE',
+                  value: 'PALETTE',
                  },
                  {
                   label: 'Color sheet',
-                  feature: 'SHEET'
+                  value: 'SHEET'
                  }
                 ]}
                 selected={

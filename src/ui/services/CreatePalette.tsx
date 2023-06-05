@@ -68,7 +68,7 @@ export default class CreatePalette extends React.Component<Props> {
     this.setState({
       onGoingStep: 'view changed',
     })
-    palette.view = e.target.options[e.target.selectedIndex].dataset.action
+    palette.view = e.target.value
   }
 
   navHandler = (e: React.SyntheticEvent) =>

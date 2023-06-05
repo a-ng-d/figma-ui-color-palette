@@ -5,7 +5,7 @@ interface Props {
   id: string
   options: Array<{
     label: string,
-    feature: string
+    value: string
   }>
   selected: string
   onChange: React.ChangeEventHandler
@@ -14,8 +14,12 @@ interface Props {
 export default class Dropdown extends React.Component<Props> {
   componentDidMount = () => {
     selectMenu.init()
-    document.getElementById(this.props.id).onchange = (e: any) =>
-      this.props.onChange(e)
+    setTimeout(() => document.getElementById(this.props.id).onchange = (e: any) =>
+      this.props.onChange(e), 1000)
+  }
+
+  componentWillUnmount = () => {
+    document.getElementById(this.props.id).onchange = null
   }
 
   render() {
@@ -28,8 +32,7 @@ export default class Dropdown extends React.Component<Props> {
         {this.props.options.map((option, index) => (
           <option
             key={index}
-            value={option.label}
-            data-action={option.feature}
+            value={option.value}
           >
             {option.label}
           </option>

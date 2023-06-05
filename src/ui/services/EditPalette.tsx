@@ -145,8 +145,8 @@ export default class EditPalette extends React.Component<Props> {
   }
 
   viewHandler = (e) => {
-    this.props.onChangeView(e.target.options[e.target.selectedIndex].dataset.action)
-    palette.view = e.target.options[e.target.selectedIndex].dataset.action
+    this.props.onChangeView(e.target.value)
+    palette.view = e.target.value
     parent.postMessage(
       { pluginMessage: { type: 'update-view', data: palette } },
       '*'
