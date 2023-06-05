@@ -130,10 +130,7 @@ export default class Actions extends React.Component<Props> {
                   value: 'SHEET'
                  }
                 ]}
-                selected={
-                  this.props.view === 'PALETTE_WITH_PROPERTIES' ? 'Palette with properties' :
-                  this.props.view === 'PALETTE' ? 'Palette' : 'Color sheet'
-                }
+                selected={this.props.view}
                 onChange={this.props.onChangeView}
               />
             </FormItem>
