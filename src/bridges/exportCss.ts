@@ -1,25 +1,22 @@
+import { PaletteDataItem } from '../utils/types'
+
 const exportCss = (palette) => {
   palette = figma.currentPage.selection[0]
   const css: Array<string> = []
 
   if (palette.children.length == 1) {
-    palette.children[0].children.forEach((row) => {
+    JSON.parse(palette.getPluginData('data')).forEach((color: PaletteDataItem) => {
       const rowCss: Array<string> = []
-      if (row.name != '_header' && row.name != '_title') {
-        row.children.forEach((sample, index) => {
-          if (index != 0) {
-            const color = sample.fills[0].color
-            rowCss.unshift(
-              `--${row.name.toLowerCase().split(' ').join('-')}-${
-                sample.name
-              }: rgb(${Math.floor(color.r * 255)}, ${Math.floor(
-                color.g * 255
-              )}, ${Math.floor(color.b * 255)})`
-            )
-          }
-        })
-        rowCss.forEach((sampleCss) => css.push(sampleCss))
-      }
+      color.shades.forEach(shade => {
+        rowCss.unshift(
+          `--${color.name.toLowerCase().split(' ').join('-')}-${
+            shade.name
+          }: rgb(${Math.floor(shade.rgb[0])}, ${Math.floor(
+            shade.rgb[1]
+          )}, ${Math.floor(shade.rgb[2])})`
+        )  
+      })
+      rowCss.reverse().forEach((sampleCss) => css.push(sampleCss))
     })
     figma.ui.postMessage({
       type: 'export-palette-css',
