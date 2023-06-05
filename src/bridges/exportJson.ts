@@ -7,7 +7,6 @@ const exportJson = (palette) => {
     JSON.parse(palette.getPluginData('data')).forEach((color: PaletteDataItem) => {
       json[color.name] = []
       color.shades.forEach(shade => {
-        console.log(shade)
         json[color.name].push({
           name: shade.name,
           rgb: {

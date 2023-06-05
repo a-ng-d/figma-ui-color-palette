@@ -72,7 +72,6 @@ export default class Colors {
           color.rgb.g * 255,
           color.rgb.b * 255,
         ])._rgb
-      console.log(sourceColor)
 
       paletteDataItem.shades.push({
         name: 'source',
