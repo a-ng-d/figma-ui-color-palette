@@ -29,7 +29,9 @@ export default class Settings extends React.Component<Props> {
     return (
       <div className="settings__group">
         <div className="section-controls">
-          <div className="section-title">Base information</div>
+          <div className="section-controls__left-part">
+            <div className="section-title">Base information</div>
+          </div>
         </div>
         <Feature
           isActive={
@@ -80,7 +82,9 @@ export default class Settings extends React.Component<Props> {
     return (
       <div className="settings__group">
         <div className="section-controls">
-          <div className="section-title">Contrast management</div>
+          <div className="section-controls__left-part">
+            <div className="section-title">Contrast management</div>
+          </div>
         </div>
         <Feature
           isActive={
@@ -153,7 +157,9 @@ export default class Settings extends React.Component<Props> {
     return (
       <div className="settings__group">
         <div className="section-controls">
-          <div className="section-title">Color management</div>
+          <div className="section-controls__left-part">
+            <div className="section-title">Color management</div>
+          </div>
         </div>
         <Feature
           isActive={

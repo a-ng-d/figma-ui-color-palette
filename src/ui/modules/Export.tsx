@@ -107,7 +107,9 @@ export default class Export extends React.Component<Props> {
       <div className="export-palette controls__control">
         <div>
           <div className="section-controls">
-            <div className="section-title">File format</div>
+            <div className="section-controls__left-part">
+              <div className="section-title">File format</div>
+            </div>
           </div>
           <div className="export-palette__options">
             <ul>
@@ -182,7 +184,9 @@ export default class Export extends React.Component<Props> {
         </div>
         <div>
           <div className="section-controls">
-            <div className="section-title">Preview</div>
+            <div className="section-controls__left-part">
+              <div className="section-title">Preview</div>
+            </div>
           </div>
           <div className="export-palette__options">
             <textarea

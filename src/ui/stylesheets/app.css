@@ -134,9 +134,19 @@ div.highlight .highlight__text {
 /* Controls */
 div.section-controls {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   justify-content: space-between;
   padding: 0 var(--size-xsmall);
+  height: var(--size-medium);
+}
+
+div.section-controls__left-part {
+  display: flex;
+  align-items: baseline;
+  flex: 1;
+}
+div.section-controls__right-part {
+  display: flex;
 }
 
 div.section-controls .section-title,
@@ -145,7 +155,7 @@ div.section-controls .label {
 }
 
 div.section-controls .select-menu {
-  flex: 1;
+  flex: 1
 }
 
 /* Tabs */
