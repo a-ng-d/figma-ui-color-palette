@@ -10,6 +10,7 @@ import FormItem from '../components/FormItem'
 interface Props {
   context: string
   hasProperties?: boolean
+  view?: string
   exportType?: string | null
   onCreatePalette?: React.MouseEventHandler
   onCreateLocalColors?: React.MouseEventHandler
@@ -44,8 +45,7 @@ export default class Actions extends React.Component<Props> {
             isActive={
               features.find((feature) => feature.name === 'VIEWS').isActive
             }
-          >
-            
+          >      
             <FormItem
               id="change-view"
               label="View"
@@ -107,20 +107,41 @@ export default class Actions extends React.Component<Props> {
             />
           </Feature>
         </div>
-        <Feature
-          isActive={
-            features.find((feature) => feature.name === 'PROPERTIES').isActive
-          }
-        >
-          <Switch
-            id="show-properties"
-            label="Show properties"
-            isChecked={this.props.hasProperties}
-            isDisabled={false}
-            feature="show-properties"
-            onChange={this.props.onChangeProperties}
-          />
-        </Feature>
+        <div className="actions__view">
+          <Feature
+            isActive={
+              features.find((feature) => feature.name === 'VIEWS').isActive
+            }
+          >
+            <FormItem
+              id="change-view"
+              label="View"
+            >
+              <Dropdown
+                id="views"
+                options={[
+                  {
+                    label: 'Palette with properties',
+                    feature: 'PALETTE_WITH_PROPERTIES'
+                 },
+                 {
+                  label: 'Palette',
+                  feature: 'PALETTE',
+                 },
+                 {
+                  label: 'Color sheet',
+                  feature: 'SHEET'
+                 }
+                ]}
+                selected={
+                  this.props.view === 'PALETTE_WITH_PROPERTIES' ? 'Palette with properties' :
+                  this.props.view === 'PALETTE' ? 'Palette' : 'Color sheet'
+                }
+                onChange={this.props.onChangeView}
+              />
+            </FormItem>
+          </Feature>
+        </div>
       </div>
     )
   }

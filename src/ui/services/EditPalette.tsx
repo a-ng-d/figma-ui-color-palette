@@ -29,6 +29,7 @@ import FileSaver from 'file-saver'
 interface Props {
   scale: { [key: string]: string }
   hasProperties: boolean
+  view: string
   colors: Array<ColorConfiguration>
   preset: PresetConfiguration
   export: ExportConfiguration
@@ -536,6 +537,7 @@ export default class EditPalette extends React.Component<Props> {
         <Actions
           context="edit"
           hasProperties={this.props.hasProperties}
+          view={this.props.view}
           onCreateLocalColors={this.onCreate}
           onUpdateLocalColors={this.onUpdate}
           onChangeProperties={this.checkHandler}

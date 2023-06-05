@@ -48,6 +48,7 @@ class App extends React.Component {
       newScale: {},
       newColors: {},
       hasProperties: true,
+      view: 'PALETTE_WITH_PROPERTIES',
       onGoingStep: '',
       preset: presets.material,
       export: {
@@ -376,6 +377,7 @@ class App extends React.Component {
                 e.data.pluginMessage.data.properties === 'hasProperties'
                   ? true
                   : false,
+              view: e.data.pluginMessage.data.view,
               newColors: putIdsOnColors,
               preset: e.data.pluginMessage.data.preset,
               paletteName: e.data.pluginMessage.data.name,
@@ -457,6 +459,7 @@ class App extends React.Component {
               colors={this.state['newColors']}
               preset={this.state['preset']}
               hasProperties={this.state['hasProperties']}
+              view={this.state['view']}
               export={this.state['export']}
               paletteName={this.state['paletteName']}
               textColorsTheme={this.state['textColorsTheme']}
