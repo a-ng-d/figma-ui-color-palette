@@ -29,10 +29,11 @@ export default class Header {
         null,
         [255, 255, 255],
         this.parent.properties,
-        this.parent.textColorsTheme
+        this.parent.textColorsTheme,
+        this.parent.view
       ).makeNodeName('ABSOLUTE', 160, 48)
     )
-    if (this.parent.view === 'PALETTE') 
+    if (this.parent.view.includes('PALETTE')) 
       Object.values(this.parent.scale)
         .reverse()
         .forEach((lightness) => {
@@ -45,7 +46,8 @@ export default class Header {
               null,
               [255, 255, 255],
               this.parent.properties,
-              this.parent.textColorsTheme
+              this.parent.textColorsTheme,
+              this.parent.view
             ).makeNodeName('ABSOLUTE', 160, 48)
           )
         })

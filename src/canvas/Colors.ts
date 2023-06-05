@@ -157,7 +157,7 @@ export default class Colors {
           this.parent.paletteName === ''
             ? 'UI Color Palette'
             : this.parent.paletteName
-        } • ${this.parent.preset.name} • ${this.parent.view === 'PALETTE' ? 'Palette' : 'Sheet'}`,
+        } • ${this.parent.preset.name} • ${this.parent.view.includes('PALETTE') ? 'Palette' : 'Sheet'}`,
         this.parent
       ).makeNode()
     )
@@ -188,14 +188,15 @@ export default class Colors {
 
       // insert
       this.nodeRowSource.appendChild(
-        this.parent.view === 'PALETTE' ?
+        this.parent.view.includes('PALETTE') ?
           new Sample(
             color.name,
             null,
             null,
             [color.rgb.r * 255, color.rgb.g * 255, color.rgb.b * 255],
             this.parent.properties,
-            this.parent.textColorsTheme
+            this.parent.textColorsTheme,
+            this.parent.view
           ).makeNodeShade(160, 224, color.name, true) :
           new Sample(
             color.name,
@@ -203,7 +204,8 @@ export default class Colors {
             null,
             [color.rgb.r * 255, color.rgb.g * 255, color.rgb.b * 255],
             this.parent.properties,
-            this.parent.textColorsTheme
+            this.parent.textColorsTheme,
+            this.parent.view
           ).makeNodeRichShade(160, 376, color.name, true)
       )
 
@@ -239,7 +241,7 @@ export default class Colors {
               .find((key) => this.parent.scale[key] === lightness)
               .substr(10)
           
-          if (this.parent.view === 'PALETTE') {
+          if (this.parent.view.includes('PALETTE')) {
             this.nodeRowShades.appendChild(
               new Sample(
                 color.name,
@@ -248,6 +250,7 @@ export default class Colors {
                 newColor._rgb,
                 this.parent.properties,
                 this.parent.textColorsTheme,
+                this.parent.view,
                 { isClosestToRef: distance < 4 ? true : false }
               ).makeNodeShade(160, 224, scaleName)
             )
@@ -262,6 +265,7 @@ export default class Colors {
                 newColor._rgb,
                 this.parent.properties,
                 this.parent.textColorsTheme,
+                this.parent.view,
                 { isClosestToRef: distance < 4 ? true : false }
               ).makeNodeRichShade(264, 376, scaleName)
             )
@@ -272,7 +276,6 @@ export default class Colors {
           }
           i++
         })
-      this.nodeRowShades.appendChild(this.makeNodeSlice(samples))
       samples.length = 0
       i = 1
       

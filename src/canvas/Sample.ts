@@ -10,6 +10,7 @@ export default class Sample {
   rgb: Array<number> | null
   properties: boolean
   textColorsTheme: TextColorsThemeHexModel
+  view: string
   status: {
     isClosestToRef: boolean
   }
@@ -24,6 +25,7 @@ export default class Sample {
     rgb: Array<number> | null,
     properties: boolean,
     textColorsTheme: TextColorsThemeHexModel,
+    view: string,
     status: { isClosestToRef: boolean } = { isClosestToRef: false }
   ) {
     this.name = name
@@ -32,6 +34,7 @@ export default class Sample {
     this.rgb = rgb
     this.properties = properties
     this.textColorsTheme = textColorsTheme
+    this.view = view
     this.status = status
     this.node = figma.createFrame()
     this.children = null
@@ -101,9 +104,10 @@ export default class Sample {
     this.node.primaryAxisSizingMode = 'FIXED'
     this.node.counterAxisSizingMode = 'FIXED'
     this.node.primaryAxisAlignItems = 'MAX'
+    this.node.itemSpacing = 8
 
     // insert
-    if (this.properties) {
+    if (this.view.includes('PALETTE_WITH_PROPERTIES') && !isColorName) {
       this.node.appendChild(
         new Properties(
           this.scale,
@@ -112,7 +116,7 @@ export default class Sample {
         ).makeNode()
       )
     }
-    if (isColorName)
+    else if (isColorName)
       this.node.appendChild(new Property('_label', this.name, 10).makeNode())
     if (this.status.isClosestToRef)
       this.node.appendChild(new Status(this.status, this.source).makeNode())
