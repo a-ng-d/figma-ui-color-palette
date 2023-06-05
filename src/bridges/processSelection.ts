@@ -1,5 +1,6 @@
 import { setData } from './../utils/setData'
 import { presets } from './../utils/palettePackage'
+import Colors from '../canvas/Colors'
 
 export let currentSelection: ReadonlyArray<SceneNode>
 export let previousSelection: ReadonlyArray<SceneNode>
@@ -55,6 +56,17 @@ const processSelection = () => {
     if (palette.getPluginData('view') === '')
       palette.setPluginData('view', 'PALETTE')
     
+    if (palette.getPluginData('data') === '')
+      new Colors({ 
+        paletteName: palette.getPluginData('name'),
+        colors: JSON.parse(palette.getPluginData('colors')),
+        scale: JSON.parse(palette.getPluginData('scale')),
+        properties: palette.getPluginData('properties') == 'hasProperties' ? true : false,
+        preset: JSON.parse(palette.getPluginData('preset')),
+        textColorsTheme: JSON.parse(palette.getPluginData('textColorsTheme')),
+        view: 'SHEET',
+        algorithmVersion: palette.getPluginData('algorithmVersion'),
+      }, selection[0] as FrameNode).makePaletteData()
 
     // to UI
     figma.ui.postMessage({
