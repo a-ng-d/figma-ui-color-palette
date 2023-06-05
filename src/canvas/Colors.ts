@@ -276,7 +276,8 @@ export default class Colors {
           }
           i++
         })
-      this.nodeRowShades.appendChild(this.makeNodeSlice(samples))
+      if (this.parent.view.includes('SHEET'))
+        this.nodeRowShades.appendChild(this.makeNodeSlice(samples))
       samples.length = 0
       i = 1
       
