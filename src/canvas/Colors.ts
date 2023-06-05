@@ -71,7 +71,8 @@ export default class Colors {
           color.rgb.r * 255,
           color.rgb.g * 255,
           color.rgb.b * 255,
-        ])
+        ])._rgb
+      console.log(sourceColor)
 
       paletteDataItem.shades.push({
         name: 'source',
@@ -169,7 +170,7 @@ export default class Colors {
           color.rgb.r * 255,
           color.rgb.g * 255,
           color.rgb.b * 255,
-        ]),
+        ])._rgb,
         samples: Array<FrameNode> = []
 
       // base
