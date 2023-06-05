@@ -60,6 +60,68 @@ export default class Colors {
     return newColor
   }
 
+  makePaletteData() {
+    this.parent.colors.forEach((color) => {
+      const
+        paletteDataItem: PaletteDataItem = {
+          name: color.name,
+          shades: []
+        },
+        sourceColor: Array<number> = chroma([
+          color.rgb.r * 255,
+          color.rgb.g * 255,
+          color.rgb.b * 255,
+        ])
+
+      paletteDataItem.shades.push({
+        name: 'source',
+        hex: chroma(sourceColor).hex(),
+        lch: chroma(color.rgb).lch(),
+        rgb: sourceColor,
+        gl: chroma(sourceColor).gl()
+      })
+
+      Object.values(this.parent.scale)
+        .reverse()
+        .forEach((lightness: string) => {
+          let newColor: { _rgb: Array<number> }
+
+          if (color.oklch) {
+           newColor = this.getShadeColorFromOklch(
+            sourceColor,
+            lightness,
+            color.hueShifting,
+            this.parent.algorithmVersion
+          )
+          } else {
+            newColor = this.getShadeColorFromLch(
+              sourceColor,
+              lightness,
+              color.hueShifting,
+              this.parent.algorithmVersion
+            )
+          }
+
+          const scaleName: string =
+            Object.keys(this.parent.scale)
+              .find((key) => this.parent.scale[key] === lightness)
+              .substr(10)
+          
+          paletteDataItem.shades.push({
+            name: scaleName,
+            hex: chroma(newColor).hex(),
+            lch: chroma(newColor).lch(),
+            rgb: newColor._rgb,
+            gl: chroma(newColor).gl()
+          })
+        })
+      
+      this.paletteData.push(paletteDataItem)
+    })
+
+    this.palette.setPluginData('data', JSON.stringify(this.paletteData))
+  }
+
   makeNodeSlice(shades: Array<FrameNode>) {
     // base
     this.nodeRowSlice = figma.createFrame()
@@ -81,7 +143,7 @@ export default class Colors {
     // base
     this.node.name = '_colors﹒do not edit any layer'
     this.node.fills = []
-    this.node.locked = true
+    //this.node.locked = true
 
     // layout
     this.node.layoutMode = 'VERTICAL'
@@ -108,19 +170,7 @@ export default class Colors {
           color.rgb.g * 255,
           color.rgb.b * 255,
         ]),
-        samples: Array<FrameNode> = [],
-        paletteDataItem: PaletteDataItem = {
-          name: color.name,
-          shades: []
-        }
-      
-      paletteDataItem.shades.push({
-        name: 'source',
-        hex: chroma(sourceColor).hex(),
-        lch: chroma(sourceColor).lch(),
-        rgb: sourceColor,
-        gl: chroma(sourceColor).gl()
-      })
+        samples: Array<FrameNode> = []
 
       // base
       this.nodeRow = figma.createFrame()
@@ -189,14 +239,6 @@ export default class Colors {
               .find((key) => this.parent.scale[key] === lightness)
               .substr(10)
           
-          paletteDataItem.shades.push({
-            name: scaleName,
-            hex: chroma(newColor).hex(),
-            lch: chroma(newColor).lch(),
-            rgb: newColor._rgb,
-            gl: chroma(newColor).gl()
-          })
-          
           if (this.parent.view === 'PALETTE') {
             this.nodeRowShades.appendChild(
               new Sample(
@@ -233,13 +275,12 @@ export default class Colors {
       this.nodeRowShades.appendChild(this.makeNodeSlice(samples))
       samples.length = 0
       i = 1
-      this.paletteData.push(paletteDataItem)
       
       this.nodeRow.appendChild(this.nodeRowSource)
       this.nodeRow.appendChild(this.nodeRowShades)
       this.node.appendChild(this.nodeRow)
     })
-    this.palette.setPluginData('data', JSON.stringify(this.paletteData))
+    this.makePaletteData()
 
     return this.node
   }
