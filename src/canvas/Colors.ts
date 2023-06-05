@@ -276,6 +276,7 @@ export default class Colors {
           }
           i++
         })
+      this.nodeRowShades.appendChild(this.makeNodeSlice(samples))
       samples.length = 0
       i = 1
       
