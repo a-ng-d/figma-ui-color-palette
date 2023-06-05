@@ -80,6 +80,16 @@ div.actions .buttons {
   gap: var(--size-xxsmall);
 }
 
+div.actions__view {
+  display: flex;
+  align-items: center;
+  gap: var(--size-xxsmall);
+}
+
+div.actions__view .select-menu {
+  width: 200px
+}
+
 div.shortcuts {
   width: 100%;
   height: var(--size-large);

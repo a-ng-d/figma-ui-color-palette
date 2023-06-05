@@ -50,6 +50,14 @@ export const features: Array<Features> = [
     service: ['create', 'edit'],
   },
   {
+    name: 'VIEWS',
+    description: 'Different types of information arrangement',
+    isActive: true,
+    isPro: false,
+    type: 'ACTION',
+    service: ['create', 'edit'],
+  },
+  {
     name: 'CREATE_PALETTE',
     description: 'Generate a palette',
     isActive: true,
