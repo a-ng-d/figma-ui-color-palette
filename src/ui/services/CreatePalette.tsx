@@ -72,6 +72,13 @@ export default class CreatePalette extends React.Component<Props> {
     palette.properties = e.target.checked
   }
 
+  viewHandler = (e) => {
+    this.setState({
+      onGoingStep: 'view changed',
+    })
+    palette.view = e.target.options[e.target.selectedIndex].dataset.action
+  }
+
   navHandler = (e: React.SyntheticEvent) =>
     this.setState({
       context: (e.target as HTMLElement).innerText,
@@ -122,6 +129,7 @@ export default class CreatePalette extends React.Component<Props> {
           hasProperties={this.state['hasProperties']}
           onCreatePalette={this.onCreate}
           onChangeProperties={this.checkHandler}
+          onChangeView={this.viewHandler}
         />
       )
 
