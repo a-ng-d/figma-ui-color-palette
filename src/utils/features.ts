@@ -202,4 +202,12 @@ export const features: Array<Features> = [
     type: 'CONTEXT',
     service: ['create', 'edit'],
   },
+  {
+    name: 'GET_PRO',
+    description: 'Access the subscription to get pro features',
+    isActive: false,
+    isPro: false,
+    type: 'ACTION',
+    service: ['onboard', 'create', 'edit'],
+  },
 ]

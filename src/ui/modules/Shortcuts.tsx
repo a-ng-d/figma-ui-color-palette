@@ -1,6 +1,8 @@
 import * as React from 'react'
 import type { Shortcut } from '../../utils/types'
 import Button from '../components/Button'
+import Feature from '../components/Feature'
+import { features } from '../../utils/features'
 
 interface Props {
   actions: Array<Shortcut>
@@ -16,15 +18,22 @@ export default class Shortcuts extends React.Component<Props> {
     return (
       <div className="shortcuts">
         <div className="shortcuts__get-pro">
-          {this.props.planStatus === 'UNPAID' ? (
-            <button
-              className="get-pro-button"
-              onMouseDown={this.onGetProPlan}
-            >
-              <div className="icon icon--lock-off"></div>
-              <div className="type">Get Pro</div>
-            </button>
-          ) : null}
+          <Feature
+            isActive={
+              features.find((feature) => feature.name === 'GET_PRO')
+                .isActive
+            }
+          >     
+            {this.props.planStatus === 'UNPAID' ? (
+              <button
+                className="get-pro-button"
+                onMouseDown={this.onGetProPlan}
+              >
+                <div className="icon icon--lock-off"></div>
+                <div className="type">Get Pro</div>
+              </button>
+            ) : null}
+          </Feature>
         </div>
         <div className="shortcuts__links">
           {this.props.actions.map((action, index) =>
