@@ -75,7 +75,7 @@ div.actions {
   gap: var(--size-xxsmall);
 }
 
-div.actions .buttons {
+div.actions__buttons {
   display: flex;
   gap: var(--size-xxsmall);
 }
@@ -134,6 +134,7 @@ div.highlight .highlight__text {
 /* Controls */
 div.section-controls {
   display: flex;
+  align-items: baseline;
   justify-content: space-between;
   padding: 0 var(--size-xsmall);
 }
@@ -419,7 +420,7 @@ div.select-menu__label {
 
 div.form-item {
   display: flex;
-  align-items: center;
+  align-items: baseline;
   gap: var(--size-xxsmall);
   padding: 0 0 0 var(--size-xxsmall);
   position: relative;

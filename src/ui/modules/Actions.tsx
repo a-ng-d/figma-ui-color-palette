@@ -24,7 +24,7 @@ export default class Actions extends React.Component<Props> {
   Create = () => {
     return (
       <div className="actions">
-        <div className="buttons">
+        <div className="actions__buttons">
           <Feature
             isActive={
               features.find((feature) => feature.name === 'CREATE_PALETTE')
@@ -79,7 +79,7 @@ export default class Actions extends React.Component<Props> {
   Edit = () => {
     return (
       <div className="actions">
-        <div className="buttons">
+        <div className="actions__buttons">
           <Feature
             isActive={
               features.find((feature) => feature.name === 'UPDATE_LOCAL_STYLES')
