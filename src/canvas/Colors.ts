@@ -77,7 +77,7 @@ export default class Colors {
       paletteDataItem.shades.push({
         name: 'source',
         hex: chroma(sourceColor).hex(),
-        lch: chroma(color.rgb).lch(),
+        lch: chroma(sourceColor).lch(),
         rgb: sourceColor,
         gl: chroma(sourceColor).gl()
       })
