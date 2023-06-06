@@ -12,7 +12,6 @@ export default class Palette {
   name: string
   scale: ScaleConfiguration
   colors: Array<ColorConfiguration>
-  properties: boolean
   preset: PresetConfiguration
   textColorsTheme: TextColorsThemeHexModel
   view: string
@@ -23,7 +22,6 @@ export default class Palette {
   constructor(
     name: string,
     scale: ScaleConfiguration,
-    properties: boolean,
     preset: PresetConfiguration,
     textColorsTheme: TextColorsThemeHexModel,
     view: string,
@@ -33,7 +31,6 @@ export default class Palette {
     this.name = `${name === '' ? 'UI Color Palette' : name}﹒${preset.name}﹒${view.includes('PALETTE') ? 'Palette' : 'Sheet'}`
     this.scale = scale
     this.colors = []
-    this.properties = properties
     this.preset = preset
     this.algorithmVersion = algorithmVersion
     this.textColorsTheme = textColorsTheme

@@ -16,7 +16,6 @@ interface Props {
   onChangeScale: (e: string) => void
   onAddScale?: React.ReactEventHandler
   onRemoveScale?: React.ReactEventHandler
-  onGoingStep?: React.ReactEventHandler
 }
 
 export default class Scale extends React.Component<Props> {

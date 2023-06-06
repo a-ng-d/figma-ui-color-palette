@@ -5,7 +5,6 @@ import Header from './Header'
 import Title from './Title'
 
 export default class Colors {
-  properties: boolean
   parent: PaletteNode
   palette: FrameNode
   paletteData: Array<PaletteDataItem>
@@ -143,7 +142,7 @@ export default class Colors {
     // base
     this.node.name = '_colors﹒do not edit any layer'
     this.node.fills = []
-    //this.node.locked = true
+    this.node.locked = true
 
     // layout
     this.node.layoutMode = 'VERTICAL'
@@ -194,7 +193,6 @@ export default class Colors {
             null,
             null,
             [color.rgb.r * 255, color.rgb.g * 255, color.rgb.b * 255],
-            this.parent.properties,
             this.parent.textColorsTheme,
             this.parent.view
           ).makeNodeShade(160, 224, color.name, true) :
@@ -203,7 +201,6 @@ export default class Colors {
             null,
             null,
             [color.rgb.r * 255, color.rgb.g * 255, color.rgb.b * 255],
-            this.parent.properties,
             this.parent.textColorsTheme,
             this.parent.view
           ).makeNodeRichShade(160, 376, color.name, true)
@@ -248,7 +245,6 @@ export default class Colors {
                 color.rgb,
                 scaleName,
                 newColor._rgb,
-                this.parent.properties,
                 this.parent.textColorsTheme,
                 this.parent.view,
                 { isClosestToRef: distance < 4 ? true : false }
@@ -263,7 +259,6 @@ export default class Colors {
                 color.rgb,
                 scaleName,
                 newColor._rgb,
-                this.parent.properties,
                 this.parent.textColorsTheme,
                 this.parent.view,
                 { isClosestToRef: distance < 4 ? true : false }

@@ -34,7 +34,6 @@ export interface PaletteNode {
   paletteName: string
   scale: ScaleConfiguration
   colors: Array<ColorConfiguration>
-  properties: boolean
   preset: PresetConfiguration
   textColorsTheme: TextColorsThemeHexModel
   view: string
@@ -58,7 +57,6 @@ export interface PaletteConfiguration {
   scale: ScaleConfiguration
   min: number
   max: number
-  properties: boolean
   preset: PresetConfiguration | any
   view: string
   textColorsTheme: TextColorsThemeHexModel

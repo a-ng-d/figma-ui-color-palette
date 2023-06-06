@@ -69,7 +69,6 @@ const processSelection = () => {
         paletteName: palette.getPluginData('name'),
         colors: JSON.parse(palette.getPluginData('colors')),
         scale: JSON.parse(palette.getPluginData('scale')),
-        properties: palette.getPluginData('properties') == 'hasProperties' ? true : false,
         preset: JSON.parse(palette.getPluginData('preset')),
         textColorsTheme: JSON.parse(palette.getPluginData('textColorsTheme')),
         view: 'SHEET',
@@ -83,7 +82,6 @@ const processSelection = () => {
         name: palette.getPluginData('name'),
         colors: JSON.parse(palette.getPluginData('colors')),
         scale: JSON.parse(palette.getPluginData('scale')),
-        properties: palette.getPluginData('properties'),
         preset: JSON.parse(palette.getPluginData('preset')),
         textColorsTheme: JSON.parse(
           palette.getPluginData('textColorsTheme')

@@ -47,7 +47,6 @@ class App extends React.Component {
       service: 'None',
       newScale: {},
       newColors: {},
-      hasProperties: true,
       view: 'PALETTE_WITH_PROPERTIES',
       onGoingStep: '',
       preset: presets.material,
@@ -306,7 +305,6 @@ class App extends React.Component {
           case 'empty-selection': {
             this.setState({
               service: 'None',
-              hasProperties: true,
               preset: presets.material,
               paletteName: '',
               textColorsTheme: {
@@ -328,7 +326,6 @@ class App extends React.Component {
             if (isPaletteSelected) {
               this.setState({
                 service: 'Create',
-                hasProperties: true,
                 preset: presets.material,
                 paletteName: '',
                 textColorsTheme: {
@@ -346,7 +343,6 @@ class App extends React.Component {
             } else
               this.setState({
                 service: 'Create',
-                hasProperties: true,
                 onGoingStep: 'colors selected',
               })
             isPaletteSelected = false
@@ -373,10 +369,6 @@ class App extends React.Component {
             this.setState({
               service: 'Edit',
               newScale: e.data.pluginMessage.data.scale,
-              hasProperties:
-                e.data.pluginMessage.data.properties === 'hasProperties'
-                  ? true
-                  : false,
               view: e.data.pluginMessage.data.view,
               newColors: putIdsOnColors,
               preset: e.data.pluginMessage.data.preset,
@@ -437,7 +429,6 @@ class App extends React.Component {
           {this.state['service'] === 'Create' ? (
             <CreatePalette
               preset={this.state['preset']}
-              hasProperties={this.state['hasProperties']}
               paletteName={this.state['paletteName']}
               textColorsTheme={this.state['textColorsTheme']}
               planStatus={this.state['planStatus']}
@@ -458,7 +449,6 @@ class App extends React.Component {
               scale={this.state['newScale']}
               colors={this.state['newColors']}
               preset={this.state['preset']}
-              hasProperties={this.state['hasProperties']}
               view={this.state['view']}
               export={this.state['export']}
               paletteName={this.state['paletteName']}

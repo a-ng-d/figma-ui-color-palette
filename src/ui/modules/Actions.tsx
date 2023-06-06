@@ -7,7 +7,6 @@ import FormItem from '../components/FormItem'
 
 interface Props {
   context: string
-  hasProperties?: boolean
   view?: string
   exportType?: string | null
   planStatus?: string
@@ -134,18 +133,21 @@ export default class Actions extends React.Component<Props> {
                   {
                     label: 'Palette with properties',
                     value: 'PALETTE_WITH_PROPERTIES',
+                    isActive: features.find((feature) => feature.name === 'VIEWS_PALETTE_WITH_PROPERTIES').isActive,
                     isBlocked: this.isBlocked('VIEWS_PALETTE_WITH_PROPERTIES')
                  },
                  {
-                  label: 'Palette',
-                  value: 'PALETTE',
-                  isBlocked: this.isBlocked('VIEWS_PALETTE')
+                    label: 'Palette',
+                    value: 'PALETTE',
+                    isActive: features.find((feature) => feature.name === 'VIEWS_PALETTE').isActive,
+                    isBlocked: this.isBlocked('VIEWS_PALETTE')
                  },
                  {
                   label: 'Color sheet',
                   value: 'SHEET',
+                  isActive: features.find((feature) => feature.name === 'VIEWS_SHEET').isActive,
                   isBlocked: this.isBlocked('VIEWS_SHEET')
-                 }
+                 },
                 ]}
                 selected={this.props.view}
                 onChange={this.props.onChangeView}

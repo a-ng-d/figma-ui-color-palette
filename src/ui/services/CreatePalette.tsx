@@ -14,7 +14,6 @@ import { palette } from '../../utils/palettePackage'
 import { features } from '../../utils/features'
 
 interface Props {
-  hasProperties: boolean
   preset: PresetConfiguration
   paletteName: string
   textColorsTheme: TextColorsThemeHexModel
@@ -53,9 +52,7 @@ export default class CreatePalette extends React.Component<Props> {
               )[0]
               .name.slice(1)
               .toLowerCase()
-          : '',
-      hasProperties: true,
-      onGoingStep: ''
+          : ''
     }
   }
 
@@ -65,18 +62,13 @@ export default class CreatePalette extends React.Component<Props> {
   }
 
   viewHandler = (e) => {
-    if (e.target[e.target.selectedIndex].dataset.isBlocked === 'false') {
-      this.setState({
-        onGoingStep: 'view changed',
-      })
+    if (e.target[e.target.selectedIndex].dataset.isBlocked === 'false')
       palette.view = e.target.value
-    }
   }
 
   navHandler = (e: React.SyntheticEvent) =>
     this.setState({
-      context: (e.target as HTMLElement).innerText,
-      onGoingStep: 'tab changed',
+      context: (e.target as HTMLElement).innerText
     })
 
   presetHandler = (e) => this.props.onPresetChange(e)
@@ -110,7 +102,6 @@ export default class CreatePalette extends React.Component<Props> {
 
   // Renders
   render() {
-    palette.properties = this.state['hasProperties']
     palette.preset = this.props.preset
     let actions, controls, help
 
@@ -120,7 +111,6 @@ export default class CreatePalette extends React.Component<Props> {
       actions = (
         <Actions
           context="create"
-          hasProperties={this.state['hasProperties']}
           planStatus={this.props.planStatus}
           onCreatePalette={this.onCreate}
           onChangeView={this.viewHandler}
@@ -170,7 +160,6 @@ export default class CreatePalette extends React.Component<Props> {
             onChangeScale={this.slideHandler}
             onAddScale={this.scaleHandler}
             onRemoveScale={this.scaleHandler}
-            onGoingStep={this.state['onGoingStep']}
           />
         )
         break

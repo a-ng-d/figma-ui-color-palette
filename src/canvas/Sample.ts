@@ -8,7 +8,6 @@ export default class Sample {
   source: { [key: string]: number } | null
   scale: string | null
   rgb: Array<number> | null
-  properties: boolean
   textColorsTheme: TextColorsThemeHexModel
   view: string
   status: {
@@ -23,7 +22,6 @@ export default class Sample {
     source: { [key: string]: number } | null,
     scale: string | null,
     rgb: Array<number> | null,
-    properties: boolean,
     textColorsTheme: TextColorsThemeHexModel,
     view: string,
     status: { isClosestToRef: boolean } = { isClosestToRef: false }
@@ -32,7 +30,6 @@ export default class Sample {
     this.source = source
     this.scale = scale
     this.rgb = rgb
-    this.properties = properties
     this.textColorsTheme = textColorsTheme
     this.view = view
     this.status = status

@@ -31,7 +31,6 @@ const updateView = (msg, palette) => {
         paletteName: paletteName,
         colors: colors,
         scale: scale,
-        properties: msg.data.properties,
         preset: preset,
         textColorsTheme: textColorsTheme,
         view: msg.data.view,

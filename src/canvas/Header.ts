@@ -28,7 +28,6 @@ export default class Header {
         null,
         null,
         [255, 255, 255],
-        this.parent.properties,
         this.parent.textColorsTheme,
         this.parent.view
       ).makeNodeName('ABSOLUTE', 160, 48)
@@ -45,7 +44,6 @@ export default class Header {
               null,
               null,
               [255, 255, 255],
-              this.parent.properties,
               this.parent.textColorsTheme,
               this.parent.view
             ).makeNodeName('ABSOLUTE', 160, 48)

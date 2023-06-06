@@ -11,8 +11,6 @@ const updateSettings = (msg, palette) => {
   if (palette.children.length == 1) {
     const colors = JSON.parse(palette.getPluginData('colors')),
       scale = JSON.parse(palette.getPluginData('scale')),
-      properties =
-        palette.getPluginData('properties') == 'hasProperties' ? true : false,
       preset = JSON.parse(palette.getPluginData('preset')),
       view: string = palette.getPluginData('view')
 
@@ -39,7 +37,6 @@ const updateSettings = (msg, palette) => {
         paletteName: paletteName,
         colors: colors,
         scale: scale,
-        properties: msg.isEditedInRealTime ? false : properties,
         preset: preset,
         textColorsTheme: msg.data.textColorsTheme,
         view: view,

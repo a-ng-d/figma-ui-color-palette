@@ -28,7 +28,6 @@ import FileSaver from 'file-saver'
 
 interface Props {
   scale: { [key: string]: string }
-  hasProperties: boolean
   view: string
   colors: Array<ColorConfiguration>
   preset: PresetConfiguration
@@ -344,10 +343,6 @@ export default class EditPalette extends React.Component<Props> {
     else position = target.position
 
     colors.splice(position, 0, colorsWithoutSource)
-    this.setState({
-      newColors: colors,
-      onGoingStep: 'color changed',
-    })
     this.props.onColorChange(colors)
     parent.postMessage(
       {
@@ -364,7 +359,6 @@ export default class EditPalette extends React.Component<Props> {
   navHandler = (e: React.SyntheticEvent) =>
     this.setState({
       context: (e.target as HTMLElement).innerText,
-      onGoingStep: 'tab changed',
     })
 
   selectionHandler = (e) => {
@@ -489,7 +483,6 @@ export default class EditPalette extends React.Component<Props> {
 
   // Render
   render() {
-    palette.properties = this.props.hasProperties
     let actions, controls, help
 
     if (this.state['context'] === 'Export') {
@@ -538,7 +531,6 @@ export default class EditPalette extends React.Component<Props> {
       actions = (
         <Actions
           context="edit"
-          hasProperties={this.props.hasProperties}
           view={this.props.view}
           planStatus={this.props.planStatus}
           onCreateLocalColors={this.onCreate}

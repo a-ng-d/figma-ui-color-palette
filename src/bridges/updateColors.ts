@@ -19,8 +19,6 @@ const updateColors = (msg, palette) => {
           ? 'UI Color Palette'
           : palette.getPluginData('name'),
       scale: ScaleConfiguration = JSON.parse(palette.getPluginData('scale')),
-      properties: boolean =
-        palette.getPluginData('properties') == 'hasProperties' ? true : false,
       preset: PresetConfiguration = JSON.parse(palette.getPluginData('preset')),
       textColorsTheme: TextColorsThemeHexModel = JSON.parse(
         palette.getPluginData('textColorsTheme')
@@ -36,7 +34,6 @@ const updateColors = (msg, palette) => {
         paletteName: paletteName,
         colors: msg.data,
         scale: scale,
-        properties: msg.isEditedInRealTime ? false : properties,
         preset: preset,
         textColorsTheme: textColorsTheme,
         view: msg.isEditedInRealTime && view === 'PALETTE_WITH_PROPERTIES' ? 'PALETTE' : view,

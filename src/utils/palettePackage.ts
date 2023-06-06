@@ -5,7 +5,6 @@ export const palette: PaletteConfiguration = {
   scale: {},
   min: null,
   max: null,
-  properties: true,
   preset: {},
   view: 'PALETTE_WITH_PROPERTIES',
   textColorsTheme: {
