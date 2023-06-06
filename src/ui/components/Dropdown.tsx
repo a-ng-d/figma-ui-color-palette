@@ -6,6 +6,7 @@ interface Props {
   options: Array<{
     label: string
     value: string
+    isActive?: boolean
     isBlocked?: boolean
   }>
   selected: string
@@ -40,16 +41,16 @@ export default class Dropdown extends React.Component<Props> {
         className="select-menu"
         defaultValue={this.props.selected}
       >
-        {this.props.options.map((option, index) => (
-          <option
+        {this.props.options.map((option, index) =>
+          option.isActive ? (<option
             key={index}
             value={option.value}
             disabled={option.isBlocked}
             data-is-blocked={option.isBlocked}
           >
             {option.label}
-          </option>
-        ))}
+          </option>) : null
+        )}
       </select>
     )
   }
