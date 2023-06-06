@@ -306,6 +306,14 @@ div.icon-button--disabled {
   --blue: var(--figma-color-bg-brand);
 }
 
+.select-menu__item--blocked {
+  pointer-events: none;
+}
+
+.select-menu__item--blocked .select-menu__item-label {
+  color: var(--figma-color-text-disabled)
+}
+
 /* Input */
 .input__field {
   --black8: var(--figma-color-text);
@@ -431,9 +439,11 @@ div.icon-button--disabled {
 /* Blocked state */
 .radio--blocked:after,
 .form-item--blocked:after,
-.switch--blocked:after {
+.switch--blocked:after,
+.select-menu__item--blocked:after {
   content: 'Pro';
   height: var(--size-xsmall);
+  margin: 0 0 0 var(--size-xxsmall);
   padding: 0 5px;
   font-size: var(--font-size-xsmall);
   letter-spacing: var(--font-letter-spacing-neg-xsmall);

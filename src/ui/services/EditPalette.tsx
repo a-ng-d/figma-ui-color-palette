@@ -145,18 +145,20 @@ export default class EditPalette extends React.Component<Props> {
   }
 
   viewHandler = (e) => {
-    this.props.onChangeView(e.target.value)
-    palette.view = e.target.value
-    parent.postMessage(
-      { pluginMessage: { type: 'update-view', data: palette } },
-      '*'
-    )
-    this.setState({
-      selectedElement: {
-        id: '',
-        position: null,
-      },
-    })
+    if (e.target[e.target.selectedIndex].dataset.isBlocked === 'false') {
+      this.props.onChangeView(e.target.value)
+      palette.view = e.target.value
+      parent.postMessage(
+        { pluginMessage: { type: 'update-view', data: palette } },
+        '*'
+      )
+      this.setState({
+        selectedElement: {
+          id: '',
+          position: null,
+        },
+      })
+    }
   }
 
   colorHandler = (e) => {
@@ -538,6 +540,7 @@ export default class EditPalette extends React.Component<Props> {
           context="edit"
           hasProperties={this.props.hasProperties}
           view={this.props.view}
+          planStatus={this.props.planStatus}
           onCreateLocalColors={this.onCreate}
           onUpdateLocalColors={this.onUpdate}
           onChangeView={this.viewHandler}

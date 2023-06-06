@@ -64,6 +64,7 @@ export default class Scale extends React.Component<Props> {
                   return {
                       label: entry[1].name,
                       value: entry[1].name,
+                      isBlocked: false
                     }
                 })}
                 selected={this.props.preset.name}

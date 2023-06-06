@@ -65,10 +65,12 @@ export default class CreatePalette extends React.Component<Props> {
   }
 
   viewHandler = (e) => {
-    this.setState({
-      onGoingStep: 'view changed',
-    })
-    palette.view = e.target.value
+    if (e.target[e.target.selectedIndex].dataset.isBlocked === 'false') {
+      this.setState({
+        onGoingStep: 'view changed',
+      })
+      palette.view = e.target.value
+    }
   }
 
   navHandler = (e: React.SyntheticEvent) =>
@@ -119,6 +121,7 @@ export default class CreatePalette extends React.Component<Props> {
         <Actions
           context="create"
           hasProperties={this.state['hasProperties']}
+          planStatus={this.props.planStatus}
           onCreatePalette={this.onCreate}
           onChangeView={this.viewHandler}
         />

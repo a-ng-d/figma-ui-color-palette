@@ -10,6 +10,7 @@ interface Props {
   hasProperties?: boolean
   view?: string
   exportType?: string | null
+  planStatus?: string
   onCreatePalette?: React.MouseEventHandler
   onCreateLocalColors?: React.MouseEventHandler
   onUpdateLocalColors?: React.MouseEventHandler
@@ -18,6 +19,13 @@ interface Props {
 }
 
 export default class Actions extends React.Component<Props> {
+  isBlocked = (featureName: string) =>
+    features.find((feature) => feature.name === featureName).isPro
+      ? this.props.planStatus === 'PAID'
+        ? false
+        : true
+      : false
+
   // Templates
   Create = () => {
     return (
@@ -52,16 +60,19 @@ export default class Actions extends React.Component<Props> {
                 options={[
                   {
                     label: 'Palette with properties',
-                    value: 'PALETTE_WITH_PROPERTIES'
+                    value: 'PALETTE_WITH_PROPERTIES',
+                    isBlocked: this.isBlocked('VIEWS_PALETTE_WITH_PROPERTIES')
                  },
                  {
-                  label: 'Palette',
-                  value: 'PALETTE',
+                    label: 'Palette',
+                    value: 'PALETTE',
+                    isBlocked: this.isBlocked('VIEWS_PALETTE')
                  },
                  {
                   label: 'Color sheet',
-                  value: 'SHEET'
-                 }
+                  value: 'SHEET',
+                  isBlocked: this.isBlocked('VIEWS_SHEET')
+                 },
                 ]}
                 selected={'Palette with properties'}
                 onChange={this.props.onChangeView}
@@ -119,15 +130,18 @@ export default class Actions extends React.Component<Props> {
                 options={[
                   {
                     label: 'Palette with properties',
-                    value: 'PALETTE_WITH_PROPERTIES'
+                    value: 'PALETTE_WITH_PROPERTIES',
+                    isBlocked: this.isBlocked('VIEWS_PALETTE_WITH_PROPERTIES')
                  },
                  {
                   label: 'Palette',
                   value: 'PALETTE',
+                  isBlocked: this.isBlocked('VIEWS_PALETTE')
                  },
                  {
                   label: 'Color sheet',
-                  value: 'SHEET'
+                  value: 'SHEET',
+                  isBlocked: this.isBlocked('VIEWS_SHEET')
                  }
                 ]}
                 selected={this.props.view}

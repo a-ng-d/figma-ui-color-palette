@@ -4,8 +4,9 @@ import { selectMenu } from 'figma-plugin-ds'
 interface Props {
   id: string
   options: Array<{
-    label: string,
+    label: string
     value: string
+    isBlocked?: boolean
   }>
   selected: string
   onChange: React.ChangeEventHandler
@@ -14,8 +15,18 @@ interface Props {
 export default class Dropdown extends React.Component<Props> {
   componentDidMount = () => {
     selectMenu.init()
-    setTimeout(() => document.getElementById(this.props.id).onchange = (e: any) =>
-      this.props.onChange(e), 1000)
+    setTimeout(() => {
+      document.getElementById(this.props.id).onchange = (e: any) =>
+        this.props.onChange(e)
+
+      document.getElementById(this.props.id).nextSibling.nextSibling.childNodes.forEach((li: any) => {
+        const option = this.props.options.find(option => option.value === li.dataset.value)
+        if (option.isBlocked) {
+          li.classList.add('select-menu__item--blocked')
+        }
+      })
+      
+    }, 500)
   }
 
   componentWillUnmount = () => {
@@ -33,6 +44,8 @@ export default class Dropdown extends React.Component<Props> {
           <option
             key={index}
             value={option.value}
+            disabled={option.isBlocked}
+            data-is-blocked={option.isBlocked}
           >
             {option.label}
           </option>
