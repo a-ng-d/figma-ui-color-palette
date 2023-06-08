@@ -14,8 +14,8 @@ import { palette } from '../../utils/palettePackage'
 import { features } from '../../utils/features'
 
 interface Props {
-  preset: PresetConfiguration
   paletteName: string
+  preset: PresetConfiguration
   textColorsTheme: TextColorsThemeHexModel
   planStatus: string
   onHighlightReopen: React.ChangeEventHandler
@@ -57,9 +57,15 @@ export default class CreatePalette extends React.Component<Props> {
   }
 
   // Handlers
+  presetHandler = (e) => this.props.onPresetChange(e)
+
+  scaleHandler = (e) => this.props.onCustomPreset(e)
+  
   slideHandler = () => {
     return
   }
+
+  settingsHandler = (e) => this.props.onSettingsChange(e)
 
   viewHandler = (e) => {
     if (e.target[e.target.selectedIndex].dataset.isBlocked === 'false')
@@ -70,12 +76,6 @@ export default class CreatePalette extends React.Component<Props> {
     this.setState({
       context: (e.target as HTMLElement).innerText
     })
-
-  presetHandler = (e) => this.props.onPresetChange(e)
-
-  scaleHandler = (e) => this.props.onCustomPreset(e)
-
-  settingsHandler = (e) => this.props.onSettingsChange(e)
 
   // Direct actions
   onCreate = () =>

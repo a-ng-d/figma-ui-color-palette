@@ -1,4 +1,7 @@
 import * as React from 'react'
+import chroma from 'chroma-js'
+import JSZip from 'JSZip'
+import FileSaver from 'file-saver'
 import type {
   ColorsMessage,
   PresetConfiguration,
@@ -19,22 +22,19 @@ import Settings from '../modules/Settings'
 import About from '../modules/About'
 import Actions from '../modules/Actions'
 import Shortcuts from '../modules/Shortcuts'
-import chroma from 'chroma-js'
 import { palette } from '../../utils/palettePackage'
 import { features } from '../../utils/features'
 import { v4 as uuidv4 } from 'uuid'
-import JSZip from 'JSZip'
-import FileSaver from 'file-saver'
 
 interface Props {
-  scale: { [key: string]: string }
-  view: string
-  colors: Array<ColorConfiguration>
-  preset: PresetConfiguration
-  export: ExportConfiguration
   paletteName: string
+  preset: PresetConfiguration
+  scale: { [key: string]: string }
+  colors: Array<ColorConfiguration>
+  view: string
   textColorsTheme: TextColorsThemeHexModel
   algorithmVersion: string
+  export: ExportConfiguration
   planStatus: string
   onHighlightReopen: React.ChangeEventHandler
   onChangeScale: () => void
@@ -49,6 +49,7 @@ const colorsMessage: ColorsMessage = {
   data: [],
   isEditedInRealTime: false,
 }
+
 export default class EditPalette extends React.Component<Props> {
   dispatch: { [key: string]: DispatchProcess }
 
@@ -141,23 +142,6 @@ export default class EditPalette extends React.Component<Props> {
       )
       this.props.onChangeStop()
     } else this.dispatch.scale.on.status = true
-  }
-
-  viewHandler = (e) => {
-    if (e.target[e.target.selectedIndex].dataset.isBlocked === 'false') {
-      this.props.onChangeView(e.target.value)
-      palette.view = e.target.value
-      parent.postMessage(
-        { pluginMessage: { type: 'update-view', data: palette } },
-        '*'
-      )
-      this.setState({
-        selectedElement: {
-          id: '',
-          position: null,
-        },
-      })
-    }
   }
 
   colorHandler = (e) => {
@@ -356,11 +340,6 @@ export default class EditPalette extends React.Component<Props> {
     )
   }
 
-  navHandler = (e: React.SyntheticEvent) =>
-    this.setState({
-      context: (e.target as HTMLElement).innerText,
-    })
-
   selectionHandler = (e) => {
     const target = e.currentTarget
     if (target !== e.target) return
@@ -370,6 +349,17 @@ export default class EditPalette extends React.Component<Props> {
         position: target.dataset.position,
       },
     })
+  }
+
+  unSelectColor = (e) => {
+    e.target.closest('li.colors__item') == null
+      ? this.setState({
+          selectedElement: {
+            id: '',
+            position: null,
+          },
+        })
+      : null
   }
 
   dragHandler = (
@@ -402,15 +392,26 @@ export default class EditPalette extends React.Component<Props> {
 
   settingsHandler = (e) => this.props.onSettingsChange(e)
 
-  unSelectColor = (e) => {
-    e.target.closest('li.colors__item') == null
-      ? this.setState({
-          selectedElement: {
-            id: '',
-            position: null,
-          },
-        })
-      : null
+  navHandler = (e: React.SyntheticEvent) =>
+  this.setState({
+    context: (e.target as HTMLElement).innerText,
+  })
+
+  viewHandler = (e) => {
+    if (e.target[e.target.selectedIndex].dataset.isBlocked === 'false') {
+      this.props.onChangeView(e.target.value)
+      palette.view = e.target.value
+      parent.postMessage(
+        { pluginMessage: { type: 'update-view', data: palette } },
+        '*'
+      )
+      this.setState({
+        selectedElement: {
+          id: '',
+          position: null,
+        },
+      })
+    }
   }
 
   // Direct actions
