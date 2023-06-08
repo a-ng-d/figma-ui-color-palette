@@ -189,82 +189,89 @@ class App extends React.Component {
     })
   
   settingsHandler = (e) => {
-    switch (e.target.dataset.feature) {
-      case 'rename-palette': {
-        palette.name = e.target.value
-        settingsMessage.data.name = e.target.value
-        settingsMessage.data.algorithmVersion = this.state['algorithmVersion']
-        settingsMessage.data.textColorsTheme = this.state['textColorsTheme']
-        this.setState({
-          paletteName: settingsMessage.data.name,
-          onGoingStep: 'settings changed',
-        })
-        if (e._reactName === 'onBlur' && this.state['service'] === 'Edit')
-        parent.postMessage({ pluginMessage: settingsMessage }, '*')
-        else if (e.key === 'Enter' && this.state['service'] === 'Edit')
-        parent.postMessage({ pluginMessage: settingsMessage }, '*')
-        break
-      }
-      case 'change-text-light-color': {
-        const code: string =
+    const renamePalette = () => {
+      palette.name = e.target.value
+      settingsMessage.data.name = e.target.value
+      settingsMessage.data.algorithmVersion = this.state['algorithmVersion']
+      settingsMessage.data.textColorsTheme = this.state['textColorsTheme']
+      this.setState({
+        paletteName: settingsMessage.data.name,
+        onGoingStep: 'settings changed',
+      })
+      if (e._reactName === 'onBlur' && this.state['service'] === 'Edit')
+      parent.postMessage({ pluginMessage: settingsMessage }, '*')
+      else if (e.key === 'Enter' && this.state['service'] === 'Edit')
+      parent.postMessage({ pluginMessage: settingsMessage }, '*')
+    }
+
+    const changeTextLightColor = () => {
+      const code: string =
         e.target.value.indexOf('#') == -1
         ? '#' + e.target.value
         : e.target.value
-        if (/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/i.test(code)) {
-          palette.textColorsTheme.lightColor = code
-          settingsMessage.data.name = this.state['paletteName']
-          settingsMessage.data.algorithmVersion = this.state['algorithmVersion']
-          settingsMessage.data.textColorsTheme.lightColor =
-          palette.textColorsTheme.lightColor
-          settingsMessage.data.textColorsTheme.darkColor =
-          this.state['textColorsTheme'].darkColor
-          this.setState({
-            textColorsTheme: settingsMessage.data.textColorsTheme,
-            onGoingStep: 'settings changed',
-          })
-        }
-        if (e._reactName === 'onBlur' && this.state['service'] === 'Edit') {
-          this.dispatch.textColorsTheme.on.status = false
-          parent.postMessage({ pluginMessage: settingsMessage }, '*')
-        } else if (this.state['service'] === 'Edit')
-        this.dispatch.textColorsTheme.on.status = true
-        break
-      }
-      case 'change-text-dark-color': {
-        const code: string =
-        e.target.value.indexOf('#') == -1
-        ? '#' + e.target.value
-        : e.target.value
+      if (/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/i.test(code)) {
+        palette.textColorsTheme.lightColor = code
         settingsMessage.data.name = this.state['paletteName']
         settingsMessage.data.algorithmVersion = this.state['algorithmVersion']
         settingsMessage.data.textColorsTheme.lightColor =
-        this.state['textColorsTheme'].lightColor
-        settingsMessage.data.textColorsTheme.darkColor = code
-        if (/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/i.test(code)) {
-          palette.textColorsTheme.darkColor = code
-          this.setState({
-            textColorsTheme: settingsMessage.data.textColorsTheme,
-            onGoingStep: 'settings changed',
-          })
-        }
-        if (e._reactName === 'onBlur' && this.state['service'] === 'Edit') {
-          this.dispatch.textColorsTheme.on.status = false
-          parent.postMessage({ pluginMessage: settingsMessage }, '*')
-        } else if (this.state['service'] === 'Edit')
-        this.dispatch.textColorsTheme.on.status = true
-        break
-      }
-      case 'update-algorithm-version': {
-        settingsMessage.data.name = this.state['paletteName']
-        settingsMessage.data.algorithmVersion = !e.target.checked ? 'v1' : 'v2'
-        settingsMessage.data.textColorsTheme = this.state['textColorsTheme']
+        palette.textColorsTheme.lightColor
+        settingsMessage.data.textColorsTheme.darkColor =
+        this.state['textColorsTheme'].darkColor
         this.setState({
-          algorithmVersion: settingsMessage.data.algorithmVersion,
+          textColorsTheme: settingsMessage.data.textColorsTheme,
           onGoingStep: 'settings changed',
         })
-        parent.postMessage({ pluginMessage: settingsMessage }, '*')
       }
+      if (e._reactName === 'onBlur' && this.state['service'] === 'Edit') {
+        this.dispatch.textColorsTheme.on.status = false
+        parent.postMessage({ pluginMessage: settingsMessage }, '*')
+      } else if (this.state['service'] === 'Edit')
+      this.dispatch.textColorsTheme.on.status = true
     }
+
+    const changeTextDarkColor = () => {
+      const code: string =
+        e.target.value.indexOf('#') == -1
+        ? '#' + e.target.value
+        : e.target.value
+      settingsMessage.data.name = this.state['paletteName']
+      settingsMessage.data.algorithmVersion = this.state['algorithmVersion']
+      settingsMessage.data.textColorsTheme.lightColor =
+      this.state['textColorsTheme'].lightColor
+      settingsMessage.data.textColorsTheme.darkColor = code
+      if (/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/i.test(code)) {
+        palette.textColorsTheme.darkColor = code
+        this.setState({
+          textColorsTheme: settingsMessage.data.textColorsTheme,
+          onGoingStep: 'settings changed',
+        })
+      }
+      if (e._reactName === 'onBlur' && this.state['service'] === 'Edit') {
+        this.dispatch.textColorsTheme.on.status = false
+        parent.postMessage({ pluginMessage: settingsMessage }, '*')
+      } else if (this.state['service'] === 'Edit')
+      this.dispatch.textColorsTheme.on.status = true
+    }
+
+    const updateAlgorythmVersion = () => {
+      settingsMessage.data.name = this.state['paletteName']
+      settingsMessage.data.algorithmVersion = !e.target.checked ? 'v1' : 'v2'
+      settingsMessage.data.textColorsTheme = this.state['textColorsTheme']
+      this.setState({
+        algorithmVersion: settingsMessage.data.algorithmVersion,
+        onGoingStep: 'settings changed',
+      })
+      parent.postMessage({ pluginMessage: settingsMessage }, '*')
+    }
+
+    const actions: Actions = {
+      RENAME_PALETTE: () => renamePalette(),
+      CHANGE_TEXT_LIGHT_COLOR: () => changeTextLightColor(),
+      CHANGE_TEXT_DARK_COLOR: () => changeTextDarkColor(),
+      UPDATE_ALGORITHM_VERSION: () => updateAlgorythmVersion()
+    }
+
+    return actions[e.target.dataset.feature]()
   }
   
   viewHandler = (view: string) =>

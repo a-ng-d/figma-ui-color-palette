@@ -46,6 +46,7 @@ export default class Settings extends React.Component<Props> {
               isBlocked={this.isBlocked('SETTINGS_PALETTE_NAME')}
             >
               <Input
+                id="rename-palette"
                 type="text"
                 icon={{ type: 'none', value: null }}
                 placeholder="UI Color Palette"
@@ -54,7 +55,7 @@ export default class Settings extends React.Component<Props> {
                 }
                 charactersLimit={64}
                 isBlocked={this.isBlocked('SETTINGS_PALETTE_NAME')}
-                feature="rename-palette"
+                feature="RENAME_PALETTE"
                 onChange={
                   this.isBlocked('SETTINGS_PALETTE_NAME')
                     ? () => null
@@ -100,11 +101,12 @@ export default class Settings extends React.Component<Props> {
               isBlocked={this.isBlocked('SETTINGS_TEXT_COLORS_THEME')}
             >
               <Input
+                id="change-text-light-color"
                 type="color"
                 icon={{ type: 'none', value: null }}
                 value={this.props.textColorsTheme.lightColor}
                 isBlocked={this.isBlocked('SETTINGS_TEXT_COLORS_THEME')}
-                feature="change-text-light-color"
+                feature="CHANGE_TEXT_LIGHT_COLOR"
                 onChange={
                   this.isBlocked('SETTINGS_TEXT_COLORS_THEME')
                     ? () => null
@@ -123,11 +125,12 @@ export default class Settings extends React.Component<Props> {
               isBlocked={this.isBlocked('SETTINGS_TEXT_COLORS_THEME')}
             >
               <Input
+                id="change-text-dark-color"
                 type="color"
                 icon={{ type: 'none', value: null }}
                 value={this.props.textColorsTheme.darkColor}
                 isBlocked={this.isBlocked('SETTINGS_TEXT_COLORS_THEME')}
-                feature="change-text-dark-color"
+                feature="CHANGE_TEXT_DARK_COLOR"
                 onChange={
                   this.isBlocked('SETTINGS_TEXT_COLORS_THEME')
                     ? () => null
@@ -174,7 +177,7 @@ export default class Settings extends React.Component<Props> {
               label="Enable the new algorithm for generating color shades"
               isChecked={this.props.isNewAlgorithm}
               isBlocked={this.isBlocked('SETTINGS_NEW_ALGORITHM')}
-              feature="update-algorithm-version"
+              feature="UPDATE_ALGORITHM_VERSION"
               onChange={
                 this.isBlocked('SETTINGS_NEW_ALGORITHM')
                   ? () => null
