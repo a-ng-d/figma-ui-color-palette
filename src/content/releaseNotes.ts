@@ -1,5 +1,5 @@
-import type { ReleaseNote } from './types'
-import { images } from '../content/images'
+import type { ReleaseNote } from '../utils/types'
+import { images } from './images'
 
 const releaseNotes: Array<ReleaseNote> = [
   {

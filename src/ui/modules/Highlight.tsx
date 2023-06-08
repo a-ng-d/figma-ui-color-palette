@@ -1,7 +1,7 @@
 import * as React from 'react'
 import type { ReleaseNote } from '../../utils/types'
 import PopIn from '../components/PopIn'
-import releaseNotes from '../../utils/releaseNotes'
+import releaseNotes from '../../content/releaseNotes'
 
 interface Props {
   closeHighlight: React.ReactEventHandler
