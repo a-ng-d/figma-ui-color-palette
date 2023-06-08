@@ -32,11 +32,11 @@ export interface Shortcut {
 // Palette
 export interface PaletteNode {
   paletteName: string
+  preset: PresetConfiguration
   scale: ScaleConfiguration
   colors: Array<ColorConfiguration>
-  preset: PresetConfiguration
-  textColorsTheme: TextColorsThemeHexModel
   view: string
+  textColorsTheme: TextColorsThemeHexModel
   algorithmVersion: string
 }
 
@@ -45,19 +45,19 @@ export interface PaletteDataItem {
   shades: Array<{
     name: string
     hex: string
-    lch: Array<number>
     rgb: Array<number>
     gl: Array<number>
+    lch: Array<number>
   }>
 }
 
 // Palette configurations
 export interface PaletteConfiguration {
   name: string
+  preset: PresetConfiguration | any
   scale: ScaleConfiguration
   min: number
   max: number
-  preset: PresetConfiguration | any
   view: string
   textColorsTheme: TextColorsThemeHexModel
 }
@@ -75,12 +75,12 @@ export interface ScaleConfiguration {
 
 export interface ColorConfiguration {
   name: string
+  id: string | undefined
   rgb: {
     r: number
     g: number
     b: number
   }
-  id: string | undefined
   oklch: boolean
   hueShifting: number
 }
@@ -143,8 +143,8 @@ export interface SettingsMessage {
   type: string
   data: {
     name: string
-    algorithmVersion: string
     textColorsTheme: TextColorsThemeHexModel
+    algorithmVersion: string
   }
   isEditedInRealTime: boolean
 }

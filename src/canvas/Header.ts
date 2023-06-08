@@ -28,8 +28,8 @@ export default class Header {
         null,
         null,
         [255, 255, 255],
-        this.parent.textColorsTheme,
-        this.parent.view
+        this.parent.view,
+        this.parent.textColorsTheme
       ).makeNodeName('ABSOLUTE', 160, 48)
     )
     if (this.parent.view.includes('PALETTE')) 
@@ -44,8 +44,8 @@ export default class Header {
               null,
               null,
               [255, 255, 255],
-              this.parent.textColorsTheme,
-              this.parent.view
+              this.parent.view,
+              this.parent.textColorsTheme
             ).makeNodeName('ABSOLUTE', 160, 48)
           )
         })

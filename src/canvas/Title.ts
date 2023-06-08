@@ -31,8 +31,8 @@ export default class Title {
         null,
         null,
         [255, 255, 255],
-        this.parent.textColorsTheme,
-        this.parent.view
+        this.parent.view,
+        this.parent.textColorsTheme
       ).makeNodeName('RELATIVE', 100, 48)
     )
 

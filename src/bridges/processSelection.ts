@@ -67,11 +67,11 @@ const processSelection = () => {
     if (palette.getPluginData('data') === '')
       new Colors({ 
         paletteName: palette.getPluginData('name'),
-        colors: JSON.parse(palette.getPluginData('colors')),
-        scale: JSON.parse(palette.getPluginData('scale')),
         preset: JSON.parse(palette.getPluginData('preset')),
-        textColorsTheme: JSON.parse(palette.getPluginData('textColorsTheme')),
+        scale: JSON.parse(palette.getPluginData('scale')),
+        colors: JSON.parse(palette.getPluginData('colors')),
         view: 'SHEET',
+        textColorsTheme: JSON.parse(palette.getPluginData('textColorsTheme')),
         algorithmVersion: palette.getPluginData('algorithmVersion'),
       }, selection[0] as FrameNode).makePaletteData()
 
@@ -80,15 +80,14 @@ const processSelection = () => {
       type: 'palette-selected',
       data: {
         name: palette.getPluginData('name'),
-        colors: JSON.parse(palette.getPluginData('colors')),
-        scale: JSON.parse(palette.getPluginData('scale')),
         preset: JSON.parse(palette.getPluginData('preset')),
+        scale: JSON.parse(palette.getPluginData('scale')),
+        colors: JSON.parse(palette.getPluginData('colors')),
+        view: palette.getPluginData('view'),
         textColorsTheme: JSON.parse(
           palette.getPluginData('textColorsTheme')
         ),
-        view: palette.getPluginData('view'),
         algorithmVersion: palette.getPluginData('algorithmVersion'),
-        
       },
     })
   } else if (

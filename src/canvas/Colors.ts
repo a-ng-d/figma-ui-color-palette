@@ -75,9 +75,9 @@ export default class Colors {
       paletteDataItem.shades.push({
         name: 'source',
         hex: chroma(sourceColor).hex(),
-        lch: chroma(sourceColor).lch(),
         rgb: sourceColor,
-        gl: chroma(sourceColor).gl()
+        gl: chroma(sourceColor).gl(),
+        lch: chroma(sourceColor).lch(),
       })
 
       Object.values(this.parent.scale)
@@ -109,9 +109,9 @@ export default class Colors {
           paletteDataItem.shades.push({
             name: scaleName,
             hex: chroma(newColor).hex(),
-            lch: chroma(newColor).lch(),
             rgb: newColor._rgb,
-            gl: chroma(newColor).gl()
+            gl: chroma(newColor).gl(),
+            lch: chroma(newColor).lch(),
           })
         })
       
@@ -193,16 +193,16 @@ export default class Colors {
             null,
             null,
             [color.rgb.r * 255, color.rgb.g * 255, color.rgb.b * 255],
-            this.parent.textColorsTheme,
-            this.parent.view
+            this.parent.view,
+            this.parent.textColorsTheme
           ).makeNodeShade(160, 224, color.name, true) :
           new Sample(
             color.name,
             null,
             null,
             [color.rgb.r * 255, color.rgb.g * 255, color.rgb.b * 255],
-            this.parent.textColorsTheme,
-            this.parent.view
+            this.parent.view,
+            this.parent.textColorsTheme
           ).makeNodeRichShade(160, 376, color.name, true)
       )
 
@@ -245,8 +245,8 @@ export default class Colors {
                 color.rgb,
                 scaleName,
                 newColor._rgb,
-                this.parent.textColorsTheme,
                 this.parent.view,
+                this.parent.textColorsTheme,
                 { isClosestToRef: distance < 4 ? true : false }
               ).makeNodeShade(160, 224, scaleName)
             )
@@ -259,8 +259,8 @@ export default class Colors {
                 color.rgb,
                 scaleName,
                 newColor._rgb,
-                this.parent.textColorsTheme,
                 this.parent.view,
+                this.parent.textColorsTheme,
                 { isClosestToRef: distance < 4 ? true : false }
               ).makeNodeRichShade(264, 376, scaleName)
             )

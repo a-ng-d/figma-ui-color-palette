@@ -8,8 +8,8 @@ export default class Sample {
   source: { [key: string]: number } | null
   scale: string | null
   rgb: Array<number> | null
-  textColorsTheme: TextColorsThemeHexModel
   view: string
+  textColorsTheme: TextColorsThemeHexModel
   status: {
     isClosestToRef: boolean
   }
@@ -22,8 +22,8 @@ export default class Sample {
     source: { [key: string]: number } | null,
     scale: string | null,
     rgb: Array<number> | null,
-    textColorsTheme: TextColorsThemeHexModel,
     view: string,
+    textColorsTheme: TextColorsThemeHexModel,
     status: { isClosestToRef: boolean } = { isClosestToRef: false }
   ) {
     this.name = name

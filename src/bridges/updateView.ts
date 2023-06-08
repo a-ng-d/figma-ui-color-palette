@@ -29,11 +29,11 @@ const updateView = (msg, palette) => {
     palette.appendChild(
       new Colors({
         paletteName: paletteName,
-        colors: colors,
-        scale: scale,
         preset: preset,
-        textColorsTheme: textColorsTheme,
+        scale: scale,
+        colors: colors,
         view: msg.data.view,
+        textColorsTheme: textColorsTheme,
         algorithmVersion: algorithmVersion,
       }, palette).makeNode()
     )

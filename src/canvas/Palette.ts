@@ -13,28 +13,28 @@ export default class Palette {
   scale: ScaleConfiguration
   colors: Array<ColorConfiguration>
   preset: PresetConfiguration
-  textColorsTheme: TextColorsThemeHexModel
   view: string
+  textColorsTheme: TextColorsThemeHexModel
   algorithmVersion: string
   children: PaletteNode
   node: FrameNode
 
   constructor(
     name: string,
-    scale: ScaleConfiguration,
     preset: PresetConfiguration,
-    textColorsTheme: TextColorsThemeHexModel,
+    scale: ScaleConfiguration,
     view: string,
+    textColorsTheme: TextColorsThemeHexModel,
     algorithmVersion: string
   ) {
     this.paletteName = name
     this.name = `${name === '' ? 'UI Color Palette' : name}﹒${preset.name}﹒${view.includes('PALETTE') ? 'Palette' : 'Sheet'}`
+    this.preset = preset
     this.scale = scale
     this.colors = []
-    this.preset = preset
+    this.view = view
     this.algorithmVersion = algorithmVersion
     this.textColorsTheme = textColorsTheme
-    this.view = view
     this.children = null
     this.node = figma.createFrame()
   }

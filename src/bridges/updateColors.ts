@@ -32,11 +32,11 @@ const updateColors = (msg, palette) => {
     palette.appendChild(
       new Colors({
         paletteName: paletteName,
-        colors: msg.data,
-        scale: scale,
         preset: preset,
-        textColorsTheme: textColorsTheme,
+        scale: scale,
+        colors: msg.data,
         view: msg.isEditedInRealTime && view === 'PALETTE_WITH_PROPERTIES' ? 'PALETTE' : view,
+        textColorsTheme: textColorsTheme,
         algorithmVersion: algorithmVersion,
       }, palette).makeNode()
     )

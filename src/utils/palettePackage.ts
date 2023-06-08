@@ -2,10 +2,10 @@ import type { PresetConfiguration, PaletteConfiguration } from './types'
 
 export const palette: PaletteConfiguration = {
   name: '',
-  scale: {},
+  preset: {},
   min: null,
   max: null,
-  preset: {},
+  scale: {},
   view: 'PALETTE_WITH_PROPERTIES',
   textColorsTheme: {
     lightColor: '#FFFFFF',
