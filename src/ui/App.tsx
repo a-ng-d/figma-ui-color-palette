@@ -167,26 +167,26 @@ class App extends React.Component {
 
   
   slideHandler = () =>
-  this.setState({
-    newScale: palette.scale,
-    onGoingStep: 'scale changed',
-  })
+    this.setState({
+      newScale: palette.scale,
+      onGoingStep: 'scale changed',
+    })
   
   customSlideHandler = () =>
-  this.setState({
-    newScale: palette.scale,
-    preset:
-    Object.keys(palette.preset).length == 0
-    ? this.state['preset']
-    : palette.preset,
-    onGoingStep: 'stop changed',
-  })
+    this.setState({
+      preset:
+        Object.keys(palette.preset).length == 0
+        ? this.state['preset']
+        : palette.preset,
+      newScale: palette.scale,
+      onGoingStep: 'stop changed',
+    })
   
   colorHandler = (colors) =>
-  this.setState({
-    newColors: colors,
-    onGoingStep: 'color changed',
-  })
+    this.setState({
+      newColors: colors,
+      onGoingStep: 'color changed',
+    })
   
   settingsHandler = (e) => {
     switch (e.target.dataset.feature) {
