@@ -29,6 +29,16 @@ export interface Shortcut {
   action: any
 }
 
+export interface Presets {
+  material: PresetConfiguration
+  ant: PresetConfiguration
+  atlassian: PresetConfiguration
+  atlassianNeutral: PresetConfiguration
+  carbon: PresetConfiguration
+  base: PresetConfiguration
+  custom: PresetConfiguration
+}
+
 // Palette
 export interface PaletteNode {
   paletteName: string
