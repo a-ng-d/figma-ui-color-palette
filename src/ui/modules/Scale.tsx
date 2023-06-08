@@ -62,7 +62,7 @@ export default class Scale extends React.Component<Props> {
                 options={Object.entries(presets).map((entry) => {
                   return {
                       label: entry[1].name,
-                      value: entry[1].name,
+                      value: entry[1].id,
                       isActive: true,
                       isBlocked: false
                     }

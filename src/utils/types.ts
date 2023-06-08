@@ -77,6 +77,7 @@ export interface PresetConfiguration {
   scale: Array<number>
   min: number
   max: number
+  id: string
 }
 
 export interface ScaleConfiguration {
@@ -123,6 +124,10 @@ export interface SelectedColor {
 export interface HoveredColor extends SelectedColor {
   hasGuideAbove: boolean
   hasGuideBelow: boolean
+}
+
+export interface Actions {
+  [ action: string ]: () => void
 }
 
 // Models

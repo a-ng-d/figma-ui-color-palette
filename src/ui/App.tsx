@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { createRoot } from 'react-dom/client'
-import type { DispatchProcess, SettingsMessage } from '../utils/types'
+import type { Actions, DispatchProcess, SettingsMessage } from '../utils/types'
 import Dispatcher from './modules/Dispatcher'
 import Feature from './components/Feature'
 import Onboarding from './services/Onboarding'
@@ -68,57 +68,62 @@ class App extends React.Component {
 
   // Handlers
   presetHandler = (e: React.SyntheticEvent) => {
-    switch ((e.target as HTMLInputElement).value) {
-      case presets.material.name: {
-        this.setState({
-          preset: presets.material,
-          onGoingStep: 'preset changed',
-        })
-        break
-      }
-      case presets.ant.name: {
-        this.setState({
-          preset: presets.ant,
-          onGoingStep: 'preset changed',
-        })
-        break
-      }
-      case presets.atlassian.name: {
-        this.setState({
-          preset: presets.atlassian,
-          onGoingStep: 'preset changed',
-        })
-        break
-      }
-      case presets.atlassianNeutral.name: {
-        this.setState({
-          preset: presets.atlassianNeutral,
-          onGoingStep: 'preset changed',
-        })
-        break
-      }
-      case presets.carbon.name: {
-        this.setState({
-          preset: presets.carbon,
-          onGoingStep: 'preset changed',
-        })
-        break
-      }
-      case presets.base.name: {
-        this.setState({
-          preset: presets.base,
-          onGoingStep: 'preset changed',
-        })
-        break
-      }
-      case presets.custom.name: {
-        presets.custom.scale = [1, 2]
-        this.setState({
-          preset: presets.custom,
-          onGoingStep: 'preset changed',
-        })
-      }
+    const setMaterialDesignPreset = () => 
+      this.setState({
+        preset: presets.material,
+        onGoingStep: 'preset changed',
+      })
+    
+    const setAntDesignPreset = () => 
+      this.setState({
+        preset: presets.ant,
+        onGoingStep: 'preset changed',
+      })
+    
+    const setAdsPreset = () => 
+      this.setState({
+        preset: presets.atlassian,
+        onGoingStep: 'preset changed',
+      })
+    
+    const setAdsNeutralPreset = () => 
+      this.setState({
+        preset: presets.atlassianNeutral,
+        onGoingStep: 'preset changed',
+      })
+
+    const setCarbonPreset = () => 
+      this.setState({
+        preset: presets.carbon,
+        onGoingStep: 'preset changed',
+      })
+    
+    const setBasePreset = () => 
+      this.setState({
+        preset: presets.base,
+        onGoingStep: 'preset changed',
+      })
+    
+    const setCustomPreset = () => {
+      presets.custom.scale = [1, 2]
+      console.log('ok')
+      this.setState({
+        preset: presets.custom,
+        onGoingStep: 'preset changed',
+      })
     }
+
+    const actions: Actions = {
+      MATERIAL: () => setMaterialDesignPreset(),
+      ANT: () => setAntDesignPreset(),
+      ADS: () => setAdsPreset(),
+      ADS_NEUTRAL: () => setAdsNeutralPreset(),
+      CARBON: () => setCarbonPreset(),
+      BASE: () => setBasePreset(),
+      CUSTOM: () => setCustomPreset()
+    }
+
+    return actions[(e.target as HTMLInputElement).value]()
   }
   
   customHandler = (e: React.SyntheticEvent) => {
