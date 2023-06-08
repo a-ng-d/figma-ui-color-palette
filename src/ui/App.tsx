@@ -128,35 +128,41 @@ class App extends React.Component {
   
   customHandler = (e: React.SyntheticEvent) => {
     const scale = this.state['preset']['scale']
-    switch ((e.target as HTMLElement).dataset.feature) {
-      case 'add': {
-        if (scale.length < 24) {
-          scale.push(scale.length + 1)
-          this.setState({
-            preset: {
-              name: presets.custom.name,
-              scale: scale,
-              min: palette.min,
-              max: palette.max,
-            },
-          })
-        }
-        break
-      }
-      case 'remove': {
-        if (scale.length > 2) {
-          scale.pop()
-          this.setState({
-            preset: {
-              name: presets.custom.name,
-              scale: scale,
-              min: palette.min,
-              max: palette.max,
-            },
-          })
-        }
+
+    const addStop = () => {
+      if (scale.length < 24) {
+        scale.push(scale.length + 1)
+        this.setState({
+          preset: {
+            name: presets.custom.name,
+            scale: scale,
+            min: palette.min,
+            max: palette.max,
+          },
+        })
       }
     }
+
+    const removeStop = () => {
+      if (scale.length > 2) {
+        scale.pop()
+        this.setState({
+          preset: {
+            name: presets.custom.name,
+            scale: scale,
+            min: palette.min,
+            max: palette.max,
+          },
+        })
+      }
+    }
+
+    const actions: Actions = {
+      ADD: () => addStop(),
+      REMOVE: () => removeStop(),
+    }
+
+    return actions[(e.target as HTMLInputElement).dataset.feature]()
   }
 
   
