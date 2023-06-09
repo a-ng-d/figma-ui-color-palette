@@ -2,6 +2,7 @@ import * as React from 'react'
 import RadioButton from './../components/RadioButton'
 import Feature from '../components/Feature'
 import features from '../../utils/features'
+import isBlocked from '../../utils/isBlocked'
 
 interface Props {
   exportPreview: string
@@ -37,13 +38,6 @@ export default class Export extends React.Component<Props> {
           : '',
     }
   }
-
-  isBlocked = (featureName: string) =>
-    features.find((feature) => feature.name === featureName).isPro
-      ? this.props.planStatus === 'PAID'
-        ? false
-        : true
-      : false
 
   // Handlers
   exportHandler = (e: React.SyntheticEvent) => {
@@ -124,11 +118,11 @@ export default class Export extends React.Component<Props> {
                     id="options__json"
                     label="JSON"
                     isChecked={this.state['format'] === 'JSON' ? true : false}
-                    isBlocked={this.isBlocked('EXPORT_JSON')}
+                    isBlocked={isBlocked('EXPORT_JSON', this.props.planStatus)}
                     feature="export-to-json"
                     group="fileFormat"
                     onChange={
-                      this.isBlocked('EXPORT_JSON')
+                      isBlocked('EXPORT_JSON', this.props.planStatus)
                         ? () => null
                         : this.exportHandler
                     }
@@ -146,11 +140,11 @@ export default class Export extends React.Component<Props> {
                     id="options__css"
                     label="CSS Custom Properties"
                     isChecked={this.state['format'] === 'CSS' ? true : false}
-                    isBlocked={this.isBlocked('EXPORT_CSS')}
+                    isBlocked={isBlocked('EXPORT_CSS', this.props.planStatus)}
                     feature="export-to-css"
                     group="fileFormat"
                     onChange={
-                      this.isBlocked('EXPORT_CSS')
+                      isBlocked('EXPORT_CSS', this.props.planStatus)
                         ? () => null
                         : this.exportHandler
                     }
@@ -168,11 +162,11 @@ export default class Export extends React.Component<Props> {
                     id="options__csv"
                     label="CSV (LCH)"
                     isChecked={this.state['format'] === 'CSV' ? true : false}
-                    isBlocked={this.isBlocked('EXPORT_CSV')}
+                    isBlocked={isBlocked('EXPORT_CSV', this.props.planStatus)}
                     feature="export-to-csv"
                     group="fileFormat"
                     onChange={
-                      this.isBlocked('EXPORT_CSV')
+                      isBlocked('EXPORT_CSV', this.props.planStatus)
                         ? () => null
                         : this.exportHandler
                     }

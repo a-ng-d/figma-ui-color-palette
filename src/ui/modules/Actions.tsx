@@ -4,6 +4,7 @@ import Feature from '../components/Feature'
 import features from '../../utils/features'
 import Dropdown from '../components/Dropdown'
 import FormItem from '../components/FormItem'
+import isBlocked from '../../utils/isBlocked'
 
 interface Props {
   context: string
@@ -18,13 +19,6 @@ interface Props {
 }
 
 export default class Actions extends React.Component<Props> {
-  isBlocked = (featureName: string) =>
-    features.find((feature) => feature.name === featureName).isPro
-      ? this.props.planStatus === 'PAID'
-        ? false
-        : true
-      : false
-
   // Templates
   Create = () => {
     return (
@@ -61,19 +55,19 @@ export default class Actions extends React.Component<Props> {
                     label: 'Palette with properties',
                     value: 'PALETTE_WITH_PROPERTIES',
                     isActive: features.find((feature) => feature.name === 'VIEWS_PALETTE_WITH_PROPERTIES').isActive,
-                    isBlocked: this.isBlocked('VIEWS_PALETTE_WITH_PROPERTIES')
+                    isBlocked: isBlocked('VIEWS_PALETTE_WITH_PROPERTIES', this.props.planStatus)
                  },
                  {
                     label: 'Palette',
                     value: 'PALETTE',
                     isActive: features.find((feature) => feature.name === 'VIEWS_PALETTE').isActive,
-                    isBlocked: this.isBlocked('VIEWS_PALETTE')
+                    isBlocked: isBlocked('VIEWS_PALETTE', this.props.planStatus)
                  },
                  {
                   label: 'Color sheet',
                   value: 'SHEET',
                   isActive: features.find((feature) => feature.name === 'VIEWS_SHEET').isActive,
-                  isBlocked: this.isBlocked('VIEWS_SHEET')
+                  isBlocked: isBlocked('VIEWS_SHEET', this.props.planStatus)
                  },
                 ]}
                 selected={'Palette with properties'}
@@ -134,19 +128,19 @@ export default class Actions extends React.Component<Props> {
                     label: 'Palette with properties',
                     value: 'PALETTE_WITH_PROPERTIES',
                     isActive: features.find((feature) => feature.name === 'VIEWS_PALETTE_WITH_PROPERTIES').isActive,
-                    isBlocked: this.isBlocked('VIEWS_PALETTE_WITH_PROPERTIES')
+                    isBlocked: isBlocked('VIEWS_PALETTE_WITH_PROPERTIES', this.props.planStatus)
                  },
                  {
                     label: 'Palette',
                     value: 'PALETTE',
                     isActive: features.find((feature) => feature.name === 'VIEWS_PALETTE').isActive,
-                    isBlocked: this.isBlocked('VIEWS_PALETTE')
+                    isBlocked: isBlocked('VIEWS_PALETTE', this.props.planStatus)
                  },
                  {
                   label: 'Color sheet',
                   value: 'SHEET',
                   isActive: features.find((feature) => feature.name === 'VIEWS_SHEET').isActive,
-                  isBlocked: this.isBlocked('VIEWS_SHEET')
+                  isBlocked: isBlocked('VIEWS_SHEET', this.props.planStatus)
                  },
                 ]}
                 selected={this.props.view}
