@@ -123,7 +123,7 @@ class App extends React.Component {
       CUSTOM: () => setCustomPreset()
     }
 
-    return actions[(e.target as HTMLInputElement).value]()
+    return actions[(e.target as HTMLInputElement).value]?.()
   }
   
   customHandler = (e: React.SyntheticEvent) => {
@@ -162,7 +162,7 @@ class App extends React.Component {
       REMOVE: () => removeStop(),
     }
 
-    return actions[(e.target as HTMLInputElement).dataset.feature]()
+    return actions[(e.target as HTMLInputElement).dataset.feature]?.()
   }
 
   
@@ -271,7 +271,7 @@ class App extends React.Component {
       UPDATE_ALGORITHM_VERSION: () => updateAlgorythmVersion()
     }
 
-    return actions[e.target.dataset.feature]()
+    return actions[e.target.dataset.feature]?.()
   }
   
   viewHandler = (view: string) =>
