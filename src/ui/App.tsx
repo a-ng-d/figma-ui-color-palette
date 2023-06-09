@@ -106,7 +106,6 @@ class App extends React.Component {
     
     const setCustomPreset = () => {
       presets.custom.scale = [1, 2]
-      console.log('ok')
       this.setState({
         preset: presets.custom,
         onGoingStep: 'preset changed',
@@ -165,7 +164,6 @@ class App extends React.Component {
     return actions[(e.target as HTMLInputElement).dataset.feature]?.()
   }
 
-  
   slideHandler = () =>
     this.setState({
       newScale: palette.scale,
