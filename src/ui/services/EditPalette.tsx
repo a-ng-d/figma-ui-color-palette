@@ -156,7 +156,7 @@ export default class EditPalette extends React.Component<Props> {
 
     colorsMessage.isEditedInRealTime = false
 
-    const changeHexCode = () => {
+    const updateHexCode = () => {
       const code: string =
         e.target.value.indexOf('#') == -1
           ? '#' + e.target.value
@@ -187,7 +187,7 @@ export default class EditPalette extends React.Component<Props> {
       }
     }
 
-    const changeLightnessProp = () => {
+    const updateLightnessProp = () => {
       colorsMessage.data = this.props.colors.map((item) => {
         const rgb = chroma(
           item.rgb.r * 255,
@@ -206,7 +206,7 @@ export default class EditPalette extends React.Component<Props> {
       parent.postMessage({ pluginMessage: colorsMessage }, '*')
     }
 
-    const changeChromaProp = () => {
+    const updateChromaProp = () => {
       colorsMessage.data = this.props.colors.map((item) => {
         const rgb = chroma(
           item.rgb.r * 255,
@@ -225,7 +225,7 @@ export default class EditPalette extends React.Component<Props> {
       parent.postMessage({ pluginMessage: colorsMessage }, '*')
     }
 
-    const changeHueProp = () => {
+    const updateHueProp = () => {
       colorsMessage.data = this.props.colors.map((item) => {
         const rgb = chroma(
           item.rgb.r * 255,
@@ -306,10 +306,10 @@ export default class EditPalette extends React.Component<Props> {
     }
 
     const actions: ActionsList = {
-      HEX: () => changeHexCode(),
-      LIGHTNESS: () => changeLightnessProp(),
-      CHROMA: () => changeChromaProp(),
-      HUE: () => changeHueProp(),
+      HEX: () => updateHexCode(),
+      LIGHTNESS: () => updateLightnessProp(),
+      CHROMA: () => updateChromaProp(),
+      HUE: () => updateHueProp(),
       ADD: () => addColor(),
       REMOVE: () => removeColor(),
       RENAME: () => renameColor(),

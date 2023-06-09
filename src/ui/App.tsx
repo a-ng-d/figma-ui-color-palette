@@ -204,7 +204,7 @@ class App extends React.Component {
       parent.postMessage({ pluginMessage: settingsMessage }, '*')
     }
 
-    const changeTextLightColor = () => {
+    const updateTextLightColor = () => {
       const code: string =
         e.target.value.indexOf('#') == -1
         ? '#' + e.target.value
@@ -229,7 +229,7 @@ class App extends React.Component {
       this.dispatch.textColorsTheme.on.status = true
     }
 
-    const changeTextDarkColor = () => {
+    const updateTextDarkColor = () => {
       const code: string =
         e.target.value.indexOf('#') == -1
         ? '#' + e.target.value
@@ -266,8 +266,8 @@ class App extends React.Component {
 
     const actions: ActionsList = {
       RENAME_PALETTE: () => renamePalette(),
-      CHANGE_TEXT_LIGHT_COLOR: () => changeTextLightColor(),
-      CHANGE_TEXT_DARK_COLOR: () => changeTextDarkColor(),
+      CHANGE_TEXT_LIGHT_COLOR: () => updateTextLightColor(),
+      CHANGE_TEXT_DARK_COLOR: () => updateTextDarkColor(),
       UPDATE_ALGORITHM_VERSION: () => updateAlgorythmVersion()
     }
 
@@ -284,7 +284,7 @@ class App extends React.Component {
       parent.postMessage(
         {
           pluginMessage: {
-            type: 'close-highlight',
+            type: 'CLOSE_HIGHLIGHT',
             data: {
               version: package_json.version,
               isRead: true,
@@ -314,7 +314,7 @@ class App extends React.Component {
         const checkHighlightStatus = () =>
           this.setState({ hasHighlight: !e.data.pluginMessage.data })
 
-        const changeWhileEmptySelection = () => {
+        const updateWhileEmptySelection = () => {
           this.setState({
             service: 'None',
             paletteName: '',
@@ -334,7 +334,7 @@ class App extends React.Component {
           isPaletteSelected = false
         }
 
-        const changeWhileColorSelected = () => {
+        const updateWhileColorSelected = () => {
           if (isPaletteSelected) {
             this.setState({
               service: 'Create',
@@ -360,7 +360,7 @@ class App extends React.Component {
           isPaletteSelected = false
         }
 
-        const changeWhilePaletteSelected = () => {
+        const updateWhilePaletteSelected = () => {
           const putIdsOnColors = e.data.pluginMessage.data.colors.map(
             (color) => {
               color.id === undefined ? (color.id = uuidv4()) : null
@@ -372,7 +372,7 @@ class App extends React.Component {
           parent.postMessage(
             {
               pluginMessage: {
-                type: 'export-palette',
+                type: 'EXPORT_PALETTE',
                 export: this.state['export'].format,
               },
             },
@@ -426,9 +426,9 @@ class App extends React.Component {
         const actions: ActionsList = {
           PLAN_STATUS: () => checkPlanStatus(),
           HIGHTLIGHT_STATUS: () => checkHighlightStatus(),
-          EMPTY_SELECTION: () => changeWhileEmptySelection(),
-          COLOR_SELECTED: () => changeWhileColorSelected(),
-          PALETTE_SELECTED: () => changeWhilePaletteSelected(),
+          EMPTY_SELECTION: () => updateWhileEmptySelection(),
+          COLOR_SELECTED: () => updateWhileColorSelected(),
+          PALETTE_SELECTED: () => updateWhilePaletteSelected(),
           EXPORT_PALETTE_JSON: () => exportPaletteAsJson(),
           EXPORT_PALETTE_CSS: () => exportPaletteAsCss(),
           EXPORT_PALETTE_CSV: () => exportPaletteAsCsv(),
