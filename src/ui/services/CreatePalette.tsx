@@ -18,10 +18,10 @@ interface Props {
   preset: PresetConfiguration
   textColorsTheme: TextColorsThemeHexModel
   planStatus: string
-  onHighlightReopen: React.ChangeEventHandler
-  onPresetChange: React.ChangeEventHandler
+  onReopenHighlight: React.ChangeEventHandler
+  onChangePreset: React.ChangeEventHandler
   onCustomPreset: React.ChangeEventHandler
-  onSettingsChange: React.ChangeEventHandler
+  onChangeSettings: React.ChangeEventHandler
 }
 
 export default class CreatePalette extends React.Component<Props> {
@@ -57,7 +57,7 @@ export default class CreatePalette extends React.Component<Props> {
   }
 
   // Handlers
-  presetHandler = (e) => this.props.onPresetChange(e)
+  presetHandler = (e) => this.props.onChangePreset(e)
 
   scaleHandler = (e) => this.props.onCustomPreset(e)
   
@@ -65,7 +65,7 @@ export default class CreatePalette extends React.Component<Props> {
     return
   }
 
-  settingsHandler = (e) => this.props.onSettingsChange(e)
+  settingsHandler = (e) => this.props.onChangeSettings(e)
 
   viewHandler = (e) => {
     if (e.target[e.target.selectedIndex].dataset.isBlocked === 'false')
@@ -141,7 +141,7 @@ export default class CreatePalette extends React.Component<Props> {
                 label: "What's new",
                 isLink: false,
                 url: '',
-                action: this.props.onHighlightReopen,
+                action: this.props.onReopenHighlight,
               },
             ]}
             planStatus={this.props.planStatus}
@@ -171,7 +171,7 @@ export default class CreatePalette extends React.Component<Props> {
             textColorsTheme={this.props.textColorsTheme}
             settings={['base', 'contrast-management']}
             planStatus={this.props.planStatus}
-            onSettingsChange={this.settingsHandler}
+            onChangeSettings={this.settingsHandler}
           />
         )
         break

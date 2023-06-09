@@ -37,12 +37,12 @@ interface Props {
   algorithmVersion: string
   export: ExportConfiguration
   planStatus: string
-  onHighlightReopen: React.ChangeEventHandler
+  onReopenHighlight: React.ChangeEventHandler
   onChangeScale: () => void
   onChangeStop: () => void
-  onColorChange: (colors: Array<ColorConfiguration>) => void
+  onChangeColor: (colors: Array<ColorConfiguration>) => void
   onChangeView: (view: string) => void
-  onSettingsChange: React.ChangeEventHandler
+  onChangeSettings: React.ChangeEventHandler
 }
 
 const colorsMessage: ColorsMessage = {
@@ -176,7 +176,7 @@ export default class EditPalette extends React.Component<Props> {
             }
           return item
         })
-        this.props.onColorChange(colorsMessage.data)
+        this.props.onChangeColor(colorsMessage.data)
       }
       if (e._reactName === 'onBlur') {
         this.dispatch.colors.on.status = false
@@ -202,7 +202,7 @@ export default class EditPalette extends React.Component<Props> {
           }
         return item
       })
-      this.props.onColorChange(colorsMessage.data)
+      this.props.onChangeColor(colorsMessage.data)
       parent.postMessage({ pluginMessage: colorsMessage }, '*')
     }
 
@@ -221,7 +221,7 @@ export default class EditPalette extends React.Component<Props> {
           }
         return item
       })
-      this.props.onColorChange(colorsMessage.data)
+      this.props.onChangeColor(colorsMessage.data)
       parent.postMessage({ pluginMessage: colorsMessage }, '*')
     }
 
@@ -240,7 +240,7 @@ export default class EditPalette extends React.Component<Props> {
           }
         return item
       })
-      this.props.onColorChange(colorsMessage.data)
+      this.props.onChangeColor(colorsMessage.data)
       parent.postMessage({ pluginMessage: colorsMessage }, '*')
     }
 
@@ -260,13 +260,13 @@ export default class EditPalette extends React.Component<Props> {
         oklch: false,
         hueShifting: 0,
       })
-      this.props.onColorChange(colorsMessage.data)
+      this.props.onChangeColor(colorsMessage.data)
       parent.postMessage({ pluginMessage: colorsMessage }, '*')
     }
 
     const removeColor = () => {
       colorsMessage.data = this.props.colors.filter((item) => item.id != id)
-      this.props.onColorChange(colorsMessage.data)
+      this.props.onChangeColor(colorsMessage.data)
       parent.postMessage({ pluginMessage: colorsMessage }, '*')
     }
 
@@ -280,7 +280,7 @@ export default class EditPalette extends React.Component<Props> {
             hasSameName.length > 1 ? e.target.value + ' 2' : e.target.value
         return item
       })
-      this.props.onColorChange(colorsMessage.data)
+      this.props.onChangeColor(colorsMessage.data)
       if (e._reactName === 'onBlur')
         parent.postMessage({ pluginMessage: colorsMessage }, '*')
       if (e.key === 'Enter')
@@ -292,7 +292,7 @@ export default class EditPalette extends React.Component<Props> {
         if (item.id === id) item.oklch = e.target.checked
         return item
       })
-      this.props.onColorChange(colorsMessage.data)
+      this.props.onChangeColor(colorsMessage.data)
       parent.postMessage({ pluginMessage: colorsMessage }, '*')
     }
 
@@ -301,7 +301,7 @@ export default class EditPalette extends React.Component<Props> {
         if (item.id === id) item.hueShifting = parseFloat(e.target.value)
         return item
       })
-      this.props.onColorChange(colorsMessage.data)
+      this.props.onChangeColor(colorsMessage.data)
       parent.postMessage({ pluginMessage: colorsMessage }, '*')
     }
 
@@ -340,7 +340,7 @@ export default class EditPalette extends React.Component<Props> {
     else position = target.position
 
     colors.splice(position, 0, colorsWithoutSource)
-    this.props.onColorChange(colors)
+    this.props.onChangeColor(colors)
     parent.postMessage(
       {
         pluginMessage: {
@@ -403,7 +403,7 @@ export default class EditPalette extends React.Component<Props> {
     else if (e.pageY + scrollY > parentRefBottom) this.orderHandler()
   }
 
-  settingsHandler = (e) => this.props.onSettingsChange(e)
+  settingsHandler = (e) => this.props.onChangeSettings(e)
 
   navHandler = (e: React.SyntheticEvent) =>
   this.setState({
@@ -532,7 +532,7 @@ export default class EditPalette extends React.Component<Props> {
                 label: "What's new",
                 isLink: false,
                 url: '',
-                action: this.props.onHighlightReopen,
+                action: this.props.onReopenHighlight,
               },
             ]}
             planStatus={this.props.planStatus}
@@ -577,7 +577,7 @@ export default class EditPalette extends React.Component<Props> {
                 label: "What's new",
                 isLink: false,
                 url: '',
-                action: this.props.onHighlightReopen,
+                action: this.props.onReopenHighlight,
               },
             ]}
             planStatus={this.props.planStatus}
@@ -604,12 +604,12 @@ export default class EditPalette extends React.Component<Props> {
             colors={this.props.colors}
             selectedElement={this.state['selectedElement']}
             hoveredElement={this.state['hoveredElement']}
-            onColorChange={this.colorHandler}
+            onChangeColor={this.colorHandler}
             onAddColor={this.colorHandler}
-            onSelectionChange={this.selectionHandler}
+            onChangeSelection={this.selectionHandler}
             onDragChange={this.dragHandler}
             onDropOutside={this.dropOutsideHandler}
-            onOrderChange={this.orderHandler}
+            onChangeOrder={this.orderHandler}
           />
         )
         break
@@ -635,7 +635,7 @@ export default class EditPalette extends React.Component<Props> {
             settings={['base', 'contrast-management', 'color-management']}
             isNewAlgorithm={this.props.algorithmVersion == 'v2' ? true : false}
             planStatus={this.props.planStatus}
-            onSettingsChange={this.settingsHandler}
+            onChangeSettings={this.settingsHandler}
           />
         )
         break

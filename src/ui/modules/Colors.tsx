@@ -12,9 +12,9 @@ interface Props {
   colors: Array<ColorConfiguration>
   selectedElement: SelectedColor
   hoveredElement: HoveredColor
-  onColorChange: React.ChangeEventHandler
+  onChangeColor: React.ChangeEventHandler
   onAddColor: React.MouseEventHandler
-  onSelectionChange: React.ChangeEventHandler
+  onChangeSelection: React.ChangeEventHandler
   onDragChange: (
     id: string,
     hasGuideAbove: boolean,
@@ -22,7 +22,7 @@ interface Props {
     position: number
   ) => void
   onDropOutside: React.ChangeEventHandler
-  onOrderChange: React.ChangeEventHandler
+  onChangeOrder: React.ChangeEventHandler
 }
 
 export default class Colors extends React.Component<Props> {
@@ -69,12 +69,12 @@ export default class Colors extends React.Component<Props> {
                   ? this.props.hoveredElement.hasGuideBelow
                   : false
               }
-              onColorChange={this.props.onColorChange}
-              onSelectionChange={this.props.onSelectionChange}
-              onSelectionCancellation={this.props.onSelectionChange}
+              onChangeColor={this.props.onChangeColor}
+              onChangeSelection={this.props.onChangeSelection}
+              onCancellationSelection={this.props.onChangeSelection}
               onDragChange={this.props.onDragChange}
               onDropOutside={this.props.onDropOutside}
-              onOrderChange={this.props.onOrderChange}
+              onChangeOrder={this.props.onChangeOrder}
             />
           ))}
         </ul>

@@ -17,9 +17,9 @@ interface Props {
   selected: boolean
   guideAbove: boolean
   guideBelow: boolean
-  onColorChange: React.ChangeEventHandler
-  onSelectionChange: React.ChangeEventHandler
-  onSelectionCancellation: React.ChangeEventHandler
+  onChangeColor: React.ChangeEventHandler
+  onChangeSelection: React.ChangeEventHandler
+  onCancellationSelection: React.ChangeEventHandler
   onDragChange: (
     id: string,
     hasGuideAbove: boolean,
@@ -27,7 +27,7 @@ interface Props {
     position: number
   ) => void
   onDropOutside: React.ChangeEventHandler
-  onOrderChange: React.ChangeEventHandler
+  onChangeOrder: React.ChangeEventHandler
 }
 
 export default class ColorItem extends React.Component<Props> {
@@ -40,18 +40,18 @@ export default class ColorItem extends React.Component<Props> {
   }
 
   // Handlers
-  inputHandler = (e) => this.props.onColorChange(e)
+  inputHandler = (e) => this.props.onChangeColor(e)
 
   optionsHandler = (e) => {
-    this.props.onSelectionCancellation(e)
+    this.props.onCancellationSelection(e)
     this.setState({ hasMoreOptions: !this.state['hasMoreOptions'] })
   }
 
   selectionHandler = (e: React.ChangeEvent) =>
-    this.props.onSelectionCancellation(e)
+    this.props.onCancellationSelection(e)
 
   // Direct actions
-  onMouseDown = (e) => this.props.onSelectionChange(e)
+  onMouseDown = (e) => this.props.onChangeSelection(e)
 
   onDragStart = (e) => {
     this.setState({ isDragged: true })
@@ -101,7 +101,7 @@ export default class ColorItem extends React.Component<Props> {
 
   onDrop = (e) => {
     e.preventDefault()
-    this.props.onOrderChange(e)
+    this.props.onChangeOrder(e)
   }
 
   // Render

@@ -13,7 +13,7 @@ interface Props {
   settings?: Array<string>
   isNewAlgorithm?: boolean
   planStatus: string
-  onSettingsChange: React.ReactEventHandler
+  onChangeSettings: React.ReactEventHandler
 }
 
 export default class Settings extends React.Component<Props> {
@@ -59,17 +59,17 @@ export default class Settings extends React.Component<Props> {
                 onChange={
                   this.isBlocked('SETTINGS_PALETTE_NAME')
                     ? () => null
-                    : this.props.onSettingsChange
+                    : this.props.onChangeSettings
                 }
                 onFocus={
                   this.isBlocked('SETTINGS_PALETTE_NAME')
                     ? () => null
-                    : this.props.onSettingsChange
+                    : this.props.onChangeSettings
                 }
                 onConfirm={
                   this.isBlocked('SETTINGS_PALETTE_NAME')
                     ? () => null
-                    : this.props.onSettingsChange
+                    : this.props.onChangeSettings
                 }
               />
             </FormItem>
@@ -110,12 +110,12 @@ export default class Settings extends React.Component<Props> {
                 onChange={
                   this.isBlocked('SETTINGS_TEXT_COLORS_THEME')
                     ? () => null
-                    : this.props.onSettingsChange
+                    : this.props.onChangeSettings
                 }
                 onFocus={
                   this.isBlocked('SETTINGS_TEXT_COLORS_THEME')
                     ? () => null
-                    : this.props.onSettingsChange
+                    : this.props.onChangeSettings
                 }
               />
             </FormItem>
@@ -134,12 +134,12 @@ export default class Settings extends React.Component<Props> {
                 onChange={
                   this.isBlocked('SETTINGS_TEXT_COLORS_THEME')
                     ? () => null
-                    : this.props.onSettingsChange
+                    : this.props.onChangeSettings
                 }
                 onFocus={
                   this.isBlocked('SETTINGS_TEXT_COLORS_THEME')
                     ? () => null
-                    : this.props.onSettingsChange
+                    : this.props.onChangeSettings
                 }
               />
             </FormItem>
@@ -181,7 +181,7 @@ export default class Settings extends React.Component<Props> {
               onChange={
                 this.isBlocked('SETTINGS_NEW_ALGORITHM')
                   ? () => null
-                  : this.props.onSettingsChange
+                  : this.props.onChangeSettings
               }
             />
             <Message

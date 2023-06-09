@@ -451,10 +451,10 @@ class App extends React.Component {
               paletteName={this.state['paletteName']}
               textColorsTheme={this.state['textColorsTheme']}
               planStatus={this.state['planStatus']}
-              onHighlightReopen={this.highlightHandler('OPEN')}
-              onPresetChange={this.presetHandler}
+              onReopenHighlight={this.highlightHandler('OPEN')}
+              onChangePreset={this.presetHandler}
               onCustomPreset={this.customHandler}
-              onSettingsChange={this.settingsHandler}
+              onChangeSettings={this.settingsHandler}
             />
           ) : null}
         </Feature>
@@ -474,12 +474,12 @@ class App extends React.Component {
               algorithmVersion={this.state['algorithmVersion']}
               export={this.state['export']}
               planStatus={this.state['planStatus']}
-              onHighlightReopen={this.highlightHandler('OPEN')}
+              onReopenHighlight={this.highlightHandler('OPEN')}
               onChangeScale={this.slideHandler}
               onChangeStop={this.customSlideHandler}
-              onColorChange={this.colorHandler}
+              onChangeColor={this.colorHandler}
               onChangeView={this.viewHandler}
-              onSettingsChange={this.settingsHandler}
+              onChangeSettings={this.settingsHandler}
             />
           ) : null}
         </Feature>
@@ -490,7 +490,7 @@ class App extends React.Component {
         >
           {this.state['service'] === 'None' ? (
             <Onboarding
-              onHighlightReopen={this.highlightHandler('OPEN')}
+              onReopenHighlight={this.highlightHandler('OPEN')}
               planStatus={this.state['planStatus']}
             />
           ) : null}

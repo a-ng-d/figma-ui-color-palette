@@ -7,7 +7,7 @@ import { features } from '../../utils/features'
 
 interface Props {
   planStatus: string
-  onHighlightReopen: React.MouseEventHandler
+  onReopenHighlight: React.MouseEventHandler
 }
 
 export default class Onboarding extends React.Component<Props> {
@@ -53,7 +53,7 @@ export default class Onboarding extends React.Component<Props> {
                 label: "What's new",
                 isLink: false,
                 url: '',
-                action: this.props.onHighlightReopen,
+                action: this.props.onReopenHighlight,
               },
             ]}
             planStatus={this.props.planStatus}
