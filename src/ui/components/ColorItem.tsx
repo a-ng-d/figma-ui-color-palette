@@ -129,7 +129,7 @@ export default class ColorItem extends React.Component<Props> {
             type="text"
             icon={{ type: 'none', value: null }}
             value={this.props.name}
-            feature="rename"
+            feature="RENAME"
             onChange={this.inputHandler}
             onFocus={this.selectionHandler}
             onConfirm={this.inputHandler}
@@ -140,7 +140,7 @@ export default class ColorItem extends React.Component<Props> {
             type="color"
             icon={{ type: 'none', value: null }}
             value={this.props.hex}
-            feature="hex"
+            feature="HEX"
             onChange={this.inputHandler}
             onFocus={this.selectionHandler}
           />
@@ -153,7 +153,7 @@ export default class ColorItem extends React.Component<Props> {
                 value={chroma(this.props.hex).lch()[0].toFixed(0)}
                 min="0"
                 max="100"
-                feature="lightness"
+                feature="LIGHTNESS"
                 onChange={this.inputHandler}
                 onFocus={this.selectionHandler}
               />
@@ -163,7 +163,7 @@ export default class ColorItem extends React.Component<Props> {
                 value={chroma(this.props.hex).lch()[1].toFixed(0)}
                 min="0"
                 max="100"
-                feature="chroma"
+                feature="CHROMA"
                 onChange={this.inputHandler}
                 onFocus={this.selectionHandler}
               />
@@ -177,7 +177,7 @@ export default class ColorItem extends React.Component<Props> {
                 }
                 min="0"
                 max="360"
-                feature="hue"
+                feature="HUE"
                 onChange={this.inputHandler}
                 onFocus={this.selectionHandler}
               />
@@ -197,14 +197,14 @@ export default class ColorItem extends React.Component<Props> {
               icon="adjust"
               type="icon"
               state={this.state['hasMoreOptions'] ? 'selected' : ''}
-              feature="more"
+              feature="MORE"
               action={this.optionsHandler}
             />
           </Feature>
           <Button
             icon="minus"
             type="icon"
-            feature="remove"
+            feature="REMOVE"
             action={this.inputHandler}
           />
         </div>
@@ -221,7 +221,7 @@ export default class ColorItem extends React.Component<Props> {
                 label="Use OKLCH"
                 isChecked={this.props.oklch}
                 isDisabled={false}
-                feature="oklch"
+                feature="OKLCH"
                 onChange={this.inputHandler}
               />
             </div>
@@ -241,7 +241,7 @@ export default class ColorItem extends React.Component<Props> {
                 value={this.props.shift.toString()}
                 min="-360"
                 max="360"
-                feature="shift-hue"
+                feature="SHIFT_HUE"
                 onChange={this.inputHandler}
                 onFocus={this.selectionHandler}
               />

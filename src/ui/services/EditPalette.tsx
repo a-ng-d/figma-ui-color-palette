@@ -11,6 +11,7 @@ import type {
   HoveredColor,
   SelectedColor,
   DispatchProcess,
+  ActionsList
 } from '../../utils/types'
 import Dispatcher from '../modules/Dispatcher'
 import Feature from '../components/Feature'
@@ -155,45 +156,18 @@ export default class EditPalette extends React.Component<Props> {
 
     colorsMessage.isEditedInRealTime = false
 
-    switch (e.target.dataset.feature) {
-      case 'hex': {
-        const code: string =
-          e.target.value.indexOf('#') == -1
-            ? '#' + e.target.value
-            : e.target.value
-        if (/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/i.test(code)) {
-          colorsMessage.data = this.props.colors.map((item) => {
-            const rgb = chroma(
-              e.target.value.indexOf('#') == -1
-                ? '#' + e.target.value
-                : e.target.value
-            )._rgb
-            if (item.id === id)
-              item.rgb = {
-                r: rgb[0] / 255,
-                g: rgb[1] / 255,
-                b: rgb[2] / 255,
-              }
-            return item
-          })
-          this.props.onColorChange(colorsMessage.data)
-        }
-        if (e._reactName === 'onBlur') {
-          this.dispatch.colors.on.status = false
-          parent.postMessage({ pluginMessage: colorsMessage }, '*')
-        } else {
-          colorsMessage.isEditedInRealTime = true
-          this.dispatch.colors.on.status = true
-        }
-        break
-      }
-      case 'lightness': {
+    const changeHexCode = () => {
+      const code: string =
+        e.target.value.indexOf('#') == -1
+          ? '#' + e.target.value
+          : e.target.value
+      if (/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/i.test(code)) {
         colorsMessage.data = this.props.colors.map((item) => {
           const rgb = chroma(
-            item.rgb.r * 255,
-            item.rgb.g * 255,
-            item.rgb.b * 255
-          ).set('lch.l', e.target.value)._rgb
+            e.target.value.indexOf('#') == -1
+              ? '#' + e.target.value
+              : e.target.value
+          )._rgb
           if (item.id === id)
             item.rgb = {
               r: rgb[0] / 255,
@@ -203,108 +177,147 @@ export default class EditPalette extends React.Component<Props> {
           return item
         })
         this.props.onColorChange(colorsMessage.data)
-        parent.postMessage({ pluginMessage: colorsMessage }, '*')
-        break
       }
-      case 'chroma': {
-        colorsMessage.data = this.props.colors.map((item) => {
-          const rgb = chroma(
-            item.rgb.r * 255,
-            item.rgb.g * 255,
-            item.rgb.b * 255
-          ).set('lch.c', e.target.value)._rgb
-          if (item.id === id)
-            item.rgb = {
-              r: rgb[0] / 255,
-              g: rgb[1] / 255,
-              b: rgb[2] / 255,
-            }
-          return item
-        })
-        this.props.onColorChange(colorsMessage.data)
+      if (e._reactName === 'onBlur') {
+        this.dispatch.colors.on.status = false
         parent.postMessage({ pluginMessage: colorsMessage }, '*')
-        break
-      }
-      case 'hue': {
-        colorsMessage.data = this.props.colors.map((item) => {
-          const rgb = chroma(
-            item.rgb.r * 255,
-            item.rgb.g * 255,
-            item.rgb.b * 255
-          ).set('lch.h', e.target.value)._rgb
-          if (item.id === id)
-            item.rgb = {
-              r: rgb[0] / 255,
-              g: rgb[1] / 255,
-              b: rgb[2] / 255,
-            }
-          return item
-        })
-        this.props.onColorChange(colorsMessage.data)
-        parent.postMessage({ pluginMessage: colorsMessage }, '*')
-        break
-      }
-      case 'remove': {
-        colorsMessage.data = this.props.colors.filter((item) => item.id != id)
-        this.props.onColorChange(colorsMessage.data)
-        parent.postMessage({ pluginMessage: colorsMessage }, '*')
-        break
-      }
-      case 'add': {
-        colorsMessage.data = this.props.colors
-        const hasAlreadyNewUIColor = colorsMessage.data.filter((color) =>
-          color.name.includes('New UI Color')
-        )
-        colorsMessage.data.push({
-          name: `New UI Color ${hasAlreadyNewUIColor.length + 1}`,
-          rgb: {
-            r: 0.53,
-            g: 0.92,
-            b: 0.97,
-          },
-          id: uuidv4(),
-          oklch: false,
-          hueShifting: 0,
-        })
-        this.props.onColorChange(colorsMessage.data)
-        parent.postMessage({ pluginMessage: colorsMessage }, '*')
-        break
-      }
-      case 'rename': {
-        const hasSameName = this.props.colors.filter(
-          (color) => color.name === e.target.value
-        )
-        colorsMessage.data = this.props.colors.map((item) => {
-          if (item.id === id)
-            item.name =
-              hasSameName.length > 1 ? e.target.value + ' 2' : e.target.value
-          return item
-        })
-        this.props.onColorChange(colorsMessage.data)
-        if (e._reactName === 'onBlur')
-          parent.postMessage({ pluginMessage: colorsMessage }, '*')
-        if (e.key === 'Enter')
-          parent.postMessage({ pluginMessage: colorsMessage }, '*')
-        break
-      }
-      case 'oklch': {
-        colorsMessage.data = this.props.colors.map((item) => {
-          if (item.id === id) item.oklch = e.target.checked
-          return item
-        })
-        this.props.onColorChange(colorsMessage.data)
-        parent.postMessage({ pluginMessage: colorsMessage }, '*')
-        break
-      }
-      case 'shift-hue': {
-        colorsMessage.data = this.props.colors.map((item) => {
-          if (item.id === id) item.hueShifting = parseFloat(e.target.value)
-          return item
-        })
-        this.props.onColorChange(colorsMessage.data)
-        parent.postMessage({ pluginMessage: colorsMessage }, '*')
+      } else {
+        colorsMessage.isEditedInRealTime = true
+        this.dispatch.colors.on.status = true
       }
     }
+
+    const changeLightnessProp = () => {
+      colorsMessage.data = this.props.colors.map((item) => {
+        const rgb = chroma(
+          item.rgb.r * 255,
+          item.rgb.g * 255,
+          item.rgb.b * 255
+        ).set('lch.l', e.target.value)._rgb
+        if (item.id === id)
+          item.rgb = {
+            r: rgb[0] / 255,
+            g: rgb[1] / 255,
+            b: rgb[2] / 255,
+          }
+        return item
+      })
+      this.props.onColorChange(colorsMessage.data)
+      parent.postMessage({ pluginMessage: colorsMessage }, '*')
+    }
+
+    const changeChromaProp = () => {
+      colorsMessage.data = this.props.colors.map((item) => {
+        const rgb = chroma(
+          item.rgb.r * 255,
+          item.rgb.g * 255,
+          item.rgb.b * 255
+        ).set('lch.c', e.target.value)._rgb
+        if (item.id === id)
+          item.rgb = {
+            r: rgb[0] / 255,
+            g: rgb[1] / 255,
+            b: rgb[2] / 255,
+          }
+        return item
+      })
+      this.props.onColorChange(colorsMessage.data)
+      parent.postMessage({ pluginMessage: colorsMessage }, '*')
+    }
+
+    const changeHueProp = () => {
+      colorsMessage.data = this.props.colors.map((item) => {
+        const rgb = chroma(
+          item.rgb.r * 255,
+          item.rgb.g * 255,
+          item.rgb.b * 255
+        ).set('lch.h', e.target.value)._rgb
+        if (item.id === id)
+          item.rgb = {
+            r: rgb[0] / 255,
+            g: rgb[1] / 255,
+            b: rgb[2] / 255,
+          }
+        return item
+      })
+      this.props.onColorChange(colorsMessage.data)
+      parent.postMessage({ pluginMessage: colorsMessage }, '*')
+    }
+
+    const addColor = () => {
+      colorsMessage.data = this.props.colors
+      const hasAlreadyNewUIColor = colorsMessage.data.filter((color) =>
+        color.name.includes('New UI Color')
+      )
+      colorsMessage.data.push({
+        name: `New UI Color ${hasAlreadyNewUIColor.length + 1}`,
+        rgb: {
+          r: 0.53,
+          g: 0.92,
+          b: 0.97,
+        },
+        id: uuidv4(),
+        oklch: false,
+        hueShifting: 0,
+      })
+      this.props.onColorChange(colorsMessage.data)
+      parent.postMessage({ pluginMessage: colorsMessage }, '*')
+    }
+
+    const removeColor = () => {
+      colorsMessage.data = this.props.colors.filter((item) => item.id != id)
+      this.props.onColorChange(colorsMessage.data)
+      parent.postMessage({ pluginMessage: colorsMessage }, '*')
+    }
+
+    const renameColor = () => {
+      const hasSameName = this.props.colors.filter(
+        (color) => color.name === e.target.value
+      )
+      colorsMessage.data = this.props.colors.map((item) => {
+        if (item.id === id)
+          item.name =
+            hasSameName.length > 1 ? e.target.value + ' 2' : e.target.value
+        return item
+      })
+      this.props.onColorChange(colorsMessage.data)
+      if (e._reactName === 'onBlur')
+        parent.postMessage({ pluginMessage: colorsMessage }, '*')
+      if (e.key === 'Enter')
+        parent.postMessage({ pluginMessage: colorsMessage }, '*')
+    }
+
+    const enableOklch = () => {
+      colorsMessage.data = this.props.colors.map((item) => {
+        if (item.id === id) item.oklch = e.target.checked
+        return item
+      })
+      this.props.onColorChange(colorsMessage.data)
+      parent.postMessage({ pluginMessage: colorsMessage }, '*')
+    }
+
+    const setHueShifting = () => {
+      colorsMessage.data = this.props.colors.map((item) => {
+        if (item.id === id) item.hueShifting = parseFloat(e.target.value)
+        return item
+      })
+      this.props.onColorChange(colorsMessage.data)
+      parent.postMessage({ pluginMessage: colorsMessage }, '*')
+    }
+
+    const actions: ActionsList = {
+      HEX: () => changeHexCode(),
+      LIGHTNESS: () => changeLightnessProp(),
+      CHROMA: () => changeChromaProp(),
+      HUE: () => changeHueProp(),
+      ADD: () => addColor(),
+      REMOVE: () => removeColor(),
+      RENAME: () => renameColor(),
+      OKLCH: () => enableOklch(),
+      SHIFT_HUE: () => setHueShifting(),
+    }
+
+    return actions[e.target.dataset.feature]?.()
   }
 
   orderHandler = () => {
