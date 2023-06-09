@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { createRoot } from 'react-dom/client'
-import type { Actions, DispatchProcess, SettingsMessage } from '../utils/types'
+import type { Actions, ColorConfiguration, DispatchProcess, SettingsMessage } from '../utils/types'
 import Dispatcher from './modules/Dispatcher'
 import Feature from './components/Feature'
 import Onboarding from './services/Onboarding'
@@ -182,7 +182,7 @@ class App extends React.Component {
       onGoingStep: 'stop changed',
     })
   
-  colorHandler = (colors) =>
+  colorHandler = (colors: Array<ColorConfiguration>) =>
     this.setState({
       newColors: colors,
       onGoingStep: 'color changed',
