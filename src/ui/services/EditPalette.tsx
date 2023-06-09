@@ -24,7 +24,7 @@ import About from '../modules/About'
 import Actions from '../modules/Actions'
 import Shortcuts from '../modules/Shortcuts'
 import { palette } from '../../utils/palettePackage'
-import { features } from '../../utils/features'
+import features from '../../utils/features'
 import { v4 as uuidv4 } from 'uuid'
 
 interface Props {

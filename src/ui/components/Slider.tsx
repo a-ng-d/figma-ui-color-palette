@@ -2,7 +2,7 @@ import * as React from 'react'
 import type { ScaleConfiguration } from '../../utils/types'
 import Knob from './Knob'
 import { palette } from '../../utils/palettePackage'
-import { doMap } from './../../utils/doMap'
+import doMap from './../../utils/doMap'
 import addStop from './../handlers/addStop'
 import deleteStop from './../handlers/deleteStop'
 import shiftLeftStop from './../handlers/shiftLeftStop'
@@ -234,7 +234,6 @@ export default class Slider extends React.Component<Props> {
       addStop(
         e,
         this.props.scale,
-        this.props.hasPreset,
         this.props.presetName,
         this.props.min,
         this.props.max

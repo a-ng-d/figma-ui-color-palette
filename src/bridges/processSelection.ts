@@ -1,4 +1,4 @@
-import { setData } from './../utils/setData'
+import setData from './../utils/setData'
 import { presets } from './../utils/palettePackage'
 import Colors from '../canvas/Colors'
 

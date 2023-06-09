@@ -1,7 +1,7 @@
 import * as React from 'react'
 import RadioButton from './../components/RadioButton'
 import Feature from '../components/Feature'
-import { features } from '../../utils/features'
+import features from '../../utils/features'
 
 interface Props {
   exportPreview: string

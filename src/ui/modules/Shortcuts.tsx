@@ -2,7 +2,7 @@ import * as React from 'react'
 import type { Shortcut } from '../../utils/types'
 import Button from '../components/Button'
 import Feature from '../components/Feature'
-import { features } from '../../utils/features'
+import features from '../../utils/features'
 
 interface Props {
   actions: Array<Shortcut>

@@ -1,7 +1,7 @@
 import * as React from 'react'
 import Button from '../components/Button'
 import Feature from '../components/Feature'
-import { features } from '../../utils/features'
+import features from '../../utils/features'
 import Dropdown from '../components/Dropdown'
 import FormItem from '../components/FormItem'
 

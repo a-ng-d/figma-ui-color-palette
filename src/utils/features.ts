@@ -1,6 +1,6 @@
 import type { Features } from './types'
 
-export const features: Array<Features> = [
+const features: Array<Features> = [
   {
     name: 'ONBOARDING',
     description: 'Onboarding service when the selection is empty',
@@ -243,3 +243,5 @@ export const features: Array<Features> = [
     service: ['onboard', 'create', 'edit'],
   },
 ]
+
+export default features

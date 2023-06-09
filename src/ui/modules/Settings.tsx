@@ -5,7 +5,7 @@ import Input from './../components/Input'
 import Switch from '../components/Switch'
 import Message from '../components/Message'
 import Feature from '../components/Feature'
-import { features } from '../../utils/features'
+import features from '../../utils/features'
 
 interface Props {
   paletteName: string

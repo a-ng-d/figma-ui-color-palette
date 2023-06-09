@@ -3,7 +3,7 @@ import Feature from '../components/Feature'
 import Icon from './../modules/Icon'
 import Message from '../components/Message'
 import Shortcuts from '../modules/Shortcuts'
-import { features } from '../../utils/features'
+import features from '../../utils/features'
 
 interface Props {
   planStatus: string

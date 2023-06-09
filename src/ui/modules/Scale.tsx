@@ -6,7 +6,7 @@ import Slider from '../components/Slider'
 import Message from '../components/Message'
 import Feature from '../components/Feature'
 import { palette, presets } from '../../utils/palettePackage'
-import { features } from '../../utils/features'
+import features from '../../utils/features'
 
 interface Props {
   hasPreset: boolean

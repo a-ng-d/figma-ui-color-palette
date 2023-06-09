@@ -11,7 +11,7 @@ import About from '../modules/About'
 import Actions from '../modules/Actions'
 import Shortcuts from '../modules/Shortcuts'
 import { palette } from '../../utils/palettePackage'
-import { features } from '../../utils/features'
+import features from '../../utils/features'
 
 interface Props {
   paletteName: string

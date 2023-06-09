@@ -4,8 +4,8 @@ import Input from './Input'
 import Button from './Button'
 import Switch from './Switch'
 import Feature from './Feature'
-import { doMap } from './../../utils/doMap'
-import { features } from '../../utils/features'
+import doMap from './../../utils/doMap'
+import features from '../../utils/features'
 
 interface Props {
   name: string
