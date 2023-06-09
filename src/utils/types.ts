@@ -126,7 +126,7 @@ export interface HoveredColor extends SelectedColor {
   hasGuideBelow: boolean
 }
 
-export interface Actions {
+export interface ActionsList {
   [ action: string ]: () => void
 }
 

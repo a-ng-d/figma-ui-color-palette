@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { createRoot } from 'react-dom/client'
-import type { Actions, ColorConfiguration, DispatchProcess, SettingsMessage } from '../utils/types'
+import type { ActionsList, ColorConfiguration, DispatchProcess, SettingsMessage } from '../utils/types'
 import Dispatcher from './modules/Dispatcher'
 import Feature from './components/Feature'
 import Onboarding from './services/Onboarding'
@@ -113,7 +113,7 @@ class App extends React.Component {
       })
     }
 
-    const actions: Actions = {
+    const actions: ActionsList = {
       MATERIAL: () => setMaterialDesignPreset(),
       ANT: () => setAntDesignPreset(),
       ADS: () => setAdsPreset(),
@@ -157,7 +157,7 @@ class App extends React.Component {
       }
     }
 
-    const actions: Actions = {
+    const actions: ActionsList = {
       ADD: () => addStop(),
       REMOVE: () => removeStop(),
     }
@@ -264,7 +264,7 @@ class App extends React.Component {
       parent.postMessage({ pluginMessage: settingsMessage }, '*')
     }
 
-    const actions: Actions = {
+    const actions: ActionsList = {
       RENAME_PALETTE: () => renamePalette(),
       CHANGE_TEXT_LIGHT_COLOR: () => changeTextLightColor(),
       CHANGE_TEXT_DARK_COLOR: () => changeTextDarkColor(),
@@ -423,7 +423,7 @@ class App extends React.Component {
             onGoingStep: 'export previewed',
           })
 
-        const actions: Actions = {
+        const actions: ActionsList = {
           PLAN_STATUS: () => checkPlanStatus(),
           HIGHTLIGHT_STATUS: () => checkHighlightStatus(),
           EMPTY_SELECTION: () => changeWhileEmptySelection(),
