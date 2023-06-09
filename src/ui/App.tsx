@@ -20,7 +20,7 @@ const container = document.getElementById('react-page'),
   root = createRoot(container)
 
 const settingsMessage: SettingsMessage = {
-  type: 'update-settings',
+  type: 'UPDATE_SETTINGS',
   data: {
     name: '',
     textColorsTheme: {

@@ -1,3 +1,4 @@
+import type { ActionsList } from './utils/types'
 import checkPlanStatus from './bridges/checkPlanStatus'
 import isHighlightRead from './bridges/isHighlightRead'
 import closeHighlight from './bridges/closeHighlight'
@@ -36,46 +37,22 @@ figma.ui.onmessage = async (msg) => {
   let palette: ReadonlyArray<SceneNode>
   const i = 0
 
-  switch (msg.type) {
-    case 'close-highlight':
-      closeHighlight(msg)
-      break
-
-    case 'create-palette':
-      createPalette(msg, palette)
-      break
-
-    case 'update-scale':
-      updateScale(msg, palette)
-      break
-
-    case 'update-view':
-      updateView(msg, palette)
-      break
-
-    case 'update-colors':
-      updateColors(msg, palette)
-      break
-
-    case 'create-local-styles':
-      createLocalStyles(palette, i)
-      break
-
-    case 'update-local-styles':
-      updateLocalStyles(palette, i)
-      break
-
-    case 'export-palette':
+  const actions: ActionsList = {
+    CLOSE_HIGHLIGHT: () => closeHighlight(msg),
+    CREATE_PALETTE: () => createPalette(msg, palette),
+    UPDATE_SCALE: () => updateScale(msg, palette),
+    UPDATE_VIEW: () => updateView(msg, palette),
+    UPDATE_COLORS: () => updateColors(msg, palette),
+    CREATE_LOCAL_STYLES: () => createLocalStyles(palette, i),
+    UPDATE_LOCAL_STYLES: () => updateLocalStyles(palette, i),
+    EXPORT_PALETTE: () => {
       msg.export === 'JSON' ? exportJson(palette) : null
       msg.export === 'CSS' ? exportCss(palette) : null
       msg.export === 'CSV' ? exportCsv(palette) : null
-      break
-
-    case 'update-settings':
-      updateSettings(msg, palette)
-      break
-
-    case 'get-pro-plan':
-      await getProPlan()
+    },
+    UPDATE_SETTINGS: () => updateSettings(msg, palette),
+    GET_PRO_PLAN: async () => await getProPlan(),
   }
+
+  return actions[msg.type]?.()
 }

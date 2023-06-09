@@ -46,7 +46,7 @@ interface Props {
 }
 
 const colorsMessage: ColorsMessage = {
-  type: 'update-colors',
+  type: 'UPDATE_COLORS',
   data: [],
   isEditedInRealTime: false,
 }
@@ -62,7 +62,7 @@ export default class EditPalette extends React.Component<Props> {
           parent.postMessage(
             {
               pluginMessage: {
-                type: 'update-scale',
+                type: 'UPDATE_SCALE',
                 data: palette,
                 isEditedInRealTime: true,
               },
@@ -122,7 +122,7 @@ export default class EditPalette extends React.Component<Props> {
       parent.postMessage(
         {
           pluginMessage: {
-            type: 'update-scale',
+            type: 'UPDATE_SCALE',
             data: palette,
             isEditedInRealTime: false,
           },
@@ -134,7 +134,7 @@ export default class EditPalette extends React.Component<Props> {
       parent.postMessage(
         {
           pluginMessage: {
-            type: 'update-scale',
+            type: 'UPDATE_SCALE',
             data: palette,
             isEditedInRealTime: false,
           },
@@ -344,7 +344,7 @@ export default class EditPalette extends React.Component<Props> {
     parent.postMessage(
       {
         pluginMessage: {
-          type: 'update-colors',
+          type: 'UPDATE_COLORs',
           data: colors,
           isEditedInRealTime: false,
         },
@@ -415,7 +415,7 @@ export default class EditPalette extends React.Component<Props> {
       this.props.onChangeView(e.target.value)
       palette.view = e.target.value
       parent.postMessage(
-        { pluginMessage: { type: 'update-view', data: palette } },
+        { pluginMessage: { type: 'UPDATE_VIEW', data: palette } },
         '*'
       )
       this.setState({
@@ -430,7 +430,7 @@ export default class EditPalette extends React.Component<Props> {
   // Direct actions
   onCreate = () => {
     parent.postMessage(
-      { pluginMessage: { type: 'create-local-styles', data: palette } },
+      { pluginMessage: { type: 'CREATE_LOCAL_STYLES', data: palette } },
       '*'
     )
     this.setState({
@@ -443,7 +443,7 @@ export default class EditPalette extends React.Component<Props> {
 
   onUpdate = () => {
     parent.postMessage(
-      { pluginMessage: { type: 'update-local-styles', data: palette } },
+      { pluginMessage: { type: 'UPDATE_LOCAL_STYLES', data: palette } },
       '*'
     )
     this.setState({

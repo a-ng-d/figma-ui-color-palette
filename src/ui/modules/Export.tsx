@@ -53,7 +53,7 @@ export default class Export extends React.Component<Props> {
           format: 'JSON',
         })
         parent.postMessage(
-          { pluginMessage: { type: 'export-palette', export: 'JSON' } },
+          { pluginMessage: { type: 'EXPORT_PALETTE', export: 'JSON' } },
           '*'
         )
         break
@@ -63,7 +63,7 @@ export default class Export extends React.Component<Props> {
           format: 'CSS',
         })
         parent.postMessage(
-          { pluginMessage: { type: 'export-palette', export: 'CSS' } },
+          { pluginMessage: { type: 'EXPORT_PALETTE', export: 'CSS' } },
           '*'
         )
         break
@@ -73,7 +73,7 @@ export default class Export extends React.Component<Props> {
           format: 'CSV',
         })
         parent.postMessage(
-          { pluginMessage: { type: 'export-palette', export: 'CSV' } },
+          { pluginMessage: { type: 'EXPORT_PALETTE', export: 'CSV' } },
           '*'
         )
       }
@@ -86,7 +86,7 @@ export default class Export extends React.Component<Props> {
       ? parent.postMessage(
           {
             pluginMessage: {
-              type: 'export-palette',
+              type: 'EXPORT_PALETTE',
               export: this.state['format'],
             },
           },

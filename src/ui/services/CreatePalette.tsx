@@ -80,7 +80,7 @@ export default class CreatePalette extends React.Component<Props> {
   // Direct actions
   onCreate = () =>
     parent.postMessage(
-      { pluginMessage: { type: 'create-palette', data: palette } },
+      { pluginMessage: { type: 'CREATE_PALETTE', data: palette } },
       '*'
     )
 

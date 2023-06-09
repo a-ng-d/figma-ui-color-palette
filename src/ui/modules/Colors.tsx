@@ -37,7 +37,7 @@ export default class Colors extends React.Component<Props> {
             <Button
               icon="plus"
               type="icon"
-              feature="add"
+              feature="ADD"
               action={this.props.onAddColor}
             />
           </div>
