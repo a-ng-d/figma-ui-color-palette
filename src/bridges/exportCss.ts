@@ -19,7 +19,7 @@ const exportCss = (palette) => {
       rowCss.reverse().forEach((sampleCss) => css.push(sampleCss))
     })
     figma.ui.postMessage({
-      type: 'export-palette-css',
+      type: 'EXPORT_PALETTE_CSS',
       data: css,
     })
   } else

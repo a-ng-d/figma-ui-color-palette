@@ -308,131 +308,133 @@ class App extends React.Component {
   render() {
     onmessage = (e: MessageEvent) => {
       try {
-        switch (
-          e.data.pluginMessage.type == undefined
-            ? 'undefined'
-            : e.data.pluginMessage.type
-        ) {
-          case 'plan-status':
-            this.setState({ planStatus: e.data.pluginMessage.data })
-            break
+        const checkPlanStatus = () =>
+          this.setState({ planStatus: e.data.pluginMessage.data })
+        
+        const checkHighlightStatus = () =>
+          this.setState({ hasHighlight: !e.data.pluginMessage.data })
 
-          case 'highlight-status':
-            this.setState({ hasHighlight: !e.data.pluginMessage.data })
-            break
+        const changeWhileEmptySelection = () => {
+          this.setState({
+            service: 'None',
+            paletteName: '',
+            preset: presets.material,
+            textColorsTheme: {
+              lightColor: '#FFFFFF',
+              darkColor: '#000000',
+            },
+            onGoingStep: 'selection empty',
+          })
+          palette.name = ''
+          palette.preset = {}
+          palette.textColorsTheme = {
+            lightColor: '#FFFFFF',
+            darkColor: '#000000',
+          }
+          isPaletteSelected = false
+        }
 
-          case 'empty-selection': {
+        const changeWhileColorSelected = () => {
+          if (isPaletteSelected) {
             this.setState({
-              service: 'None',
+              service: 'Create',
               paletteName: '',
               preset: presets.material,
               textColorsTheme: {
                 lightColor: '#FFFFFF',
                 darkColor: '#000000',
               },
-              onGoingStep: 'selection empty',
+              onGoingStep: 'colors selected',
             })
             palette.name = ''
-            palette.preset = {}
+            palette.preset = presets.material
             palette.textColorsTheme = {
               lightColor: '#FFFFFF',
               darkColor: '#000000',
             }
-            isPaletteSelected = false
-            break
-          }
-          case 'color-selected': {
-            if (isPaletteSelected) {
-              this.setState({
-                service: 'Create',
-                paletteName: '',
-                preset: presets.material,
-                textColorsTheme: {
-                  lightColor: '#FFFFFF',
-                  darkColor: '#000000',
-                },
-                onGoingStep: 'colors selected',
-              })
-              palette.name = ''
-              palette.preset = presets.material
-              palette.textColorsTheme = {
-                lightColor: '#FFFFFF',
-                darkColor: '#000000',
-              }
-            } else
-              this.setState({
-                service: 'Create',
-                onGoingStep: 'colors selected',
-              })
-            isPaletteSelected = false
-            break
-          }
-          case 'palette-selected': {
-            const putIdsOnColors = e.data.pluginMessage.data.colors.map(
-              (color) => {
-                color.id === undefined ? (color.id = uuidv4()) : null
-                return color
-              }
-            )
-            isPaletteSelected = true
-            palette.preset = {}
-            parent.postMessage(
-              {
-                pluginMessage: {
-                  type: 'export-palette',
-                  export: this.state['export'].format,
-                },
-              },
-              '*'
-            )
+          } else
             this.setState({
-              service: 'Edit',
-              paletteName: e.data.pluginMessage.data.name,
-              preset: e.data.pluginMessage.data.preset,
-              newScale: e.data.pluginMessage.data.scale,
-              newColors: putIdsOnColors,
-              view: e.data.pluginMessage.data.view,
-              textColorsTheme: e.data.pluginMessage.data.textColorsTheme,
-              algorithmVersion: e.data.pluginMessage.data.algorithmVersion,
-              onGoingStep: 'palette selected',
+              service: 'Create',
+              onGoingStep: 'colors selected',
             })
-            break
-          }
-          case 'export-palette-json': {
-            this.setState({
-              export: {
-                format: 'JSON',
-                mimeType: 'application/json',
-                data: JSON.stringify(e.data.pluginMessage.data, null, '  '),
-              },
-              onGoingStep: 'export previewed',
-            })
-            break
-          }
-          case 'export-palette-css': {
-            this.setState({
-              export: {
-                format: 'CSS',
-                mimeType: 'text/css',
-                data: `:root {\n  ${e.data.pluginMessage.data.join(
-                  ';\n  '
-                )}\n}`,
-              },
-              onGoingStep: 'export previewed',
-            })
-            break
-          }
-          case 'export-palette-csv': {
-            this.setState({
-              export: {
-                format: 'CSV',
-                mimeType: 'text/csv',
-                data: e.data.pluginMessage.data,
-              },
-              onGoingStep: 'export previewed',
-            })
-          }
+          isPaletteSelected = false
         }
+
+        const changeWhilePaletteSelected = () => {
+          const putIdsOnColors = e.data.pluginMessage.data.colors.map(
+            (color) => {
+              color.id === undefined ? (color.id = uuidv4()) : null
+              return color
+            }
+          )
+          isPaletteSelected = true
+          palette.preset = {}
+          parent.postMessage(
+            {
+              pluginMessage: {
+                type: 'export-palette',
+                export: this.state['export'].format,
+              },
+            },
+            '*'
+          )
+          this.setState({
+            service: 'Edit',
+            paletteName: e.data.pluginMessage.data.name,
+            preset: e.data.pluginMessage.data.preset,
+            newScale: e.data.pluginMessage.data.scale,
+            newColors: putIdsOnColors,
+            view: e.data.pluginMessage.data.view,
+            textColorsTheme: e.data.pluginMessage.data.textColorsTheme,
+            algorithmVersion: e.data.pluginMessage.data.algorithmVersion,
+            onGoingStep: 'palette selected',
+          })
+        }
+
+        const exportPaletteAsJson = () =>
+          this.setState({
+            export: {
+              format: 'JSON',
+              mimeType: 'application/json',
+              data: JSON.stringify(e.data.pluginMessage.data, null, '  '),
+            },
+            onGoingStep: 'export previewed',
+          })
+        
+        const exportPaletteAsCss = () =>
+          this.setState({
+            export: {
+              format: 'CSS',
+              mimeType: 'text/css',
+              data: `:root {\n  ${e.data.pluginMessage.data.join(
+                ';\n  '
+              )}\n}`,
+            },
+            onGoingStep: 'export previewed',
+          })
+        
+        const exportPaletteAsCsv = () =>
+          this.setState({
+            export: {
+              format: 'CSV',
+              mimeType: 'text/csv',
+              data: e.data.pluginMessage.data,
+            },
+            onGoingStep: 'export previewed',
+          })
+
+        const actions: Actions = {
+          PLAN_STATUS: () => checkPlanStatus(),
+          HIGHTLIGHT_STATUS: () => checkHighlightStatus(),
+          EMPTY_SELECTION: () => changeWhileEmptySelection(),
+          COLOR_SELECTED: () => changeWhileColorSelected(),
+          PALETTE_SELECTED: () => changeWhilePaletteSelected(),
+          EXPORT_PALETTE_JSON: () => exportPaletteAsJson(),
+          EXPORT_PALETTE_CSS: () => exportPaletteAsCss(),
+          EXPORT_PALETTE_CSV: () => exportPaletteAsCsv(),
+        }
+    
+        return actions[e.data.pluginMessage.type]?.()
       } catch (error) {
         console.error(error)
       }

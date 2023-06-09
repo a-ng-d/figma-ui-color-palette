@@ -77,7 +77,7 @@ const processSelection = () => {
 
     // to UI
     figma.ui.postMessage({
-      type: 'palette-selected',
+      type: 'PALETTE_SELECTED',
       data: {
         name: palette.getPluginData('name'),
         preset: JSON.parse(palette.getPluginData('preset')),
@@ -95,7 +95,7 @@ const processSelection = () => {
     (selection.length > 1 && selection[0].getPluginData('scale') != '')
   )
     figma.ui.postMessage({
-      type: 'empty-selection',
+      type: 'EMPTY_SELECTION',
       data: {},
     })
 
@@ -106,7 +106,7 @@ const processSelection = () => {
         element.getPluginData('scale') === ''
       )
         figma.ui.postMessage({
-          type: 'color-selected',
+          type: 'COLOR_SELECTED',
           data: {},
         })
   })

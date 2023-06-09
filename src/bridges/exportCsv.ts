@@ -36,7 +36,7 @@ const exportCsv = (palette) => {
       })
     )
     figma.ui.postMessage({
-      type: 'export-palette-csv',
+      type: 'EXPORT_PALETTE_CSV',
       data: paletteCsv,
     })
   } else
