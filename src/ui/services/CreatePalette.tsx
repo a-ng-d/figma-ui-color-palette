@@ -177,7 +177,10 @@ export default class CreatePalette extends React.Component<Props> {
         break
       }
       case 'About': {
-        controls = <About />
+        controls =
+          <About
+            planStatus={this.props.planStatus}
+          />
       }
     }
 

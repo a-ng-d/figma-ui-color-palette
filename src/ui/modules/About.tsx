@@ -3,7 +3,11 @@ import Icon from './Icon'
 import Button from '../components/Button'
 import package_json from './../../../package.json'
 
-export default class About extends React.Component {
+interface Props {
+  planStatus: string
+}
+
+export default class About extends React.Component<Props> {
   render() {
     return (
       <div className="about controls__control">
@@ -14,7 +18,9 @@ export default class About extends React.Component {
             <div className="type">{`Version ${
               package_json.version.slice(0, 1) +
               package_json.version.slice(2, 3)
-            }`}</div>
+            }﹒${
+              this.props.planStatus === 'UNPAID' ? 'FREE' : 'PRO'
+            } Plan`}</div>
           </div>
           <div>
             <p className="type">
