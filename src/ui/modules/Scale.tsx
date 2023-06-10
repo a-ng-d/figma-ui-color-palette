@@ -1,5 +1,5 @@
 import * as React from 'react'
-import type { PresetConfiguration } from '../../utils/types'
+import type { PresetConfiguration, ScaleConfiguration } from '../../utils/types'
 import Button from '../components/Button'
 import Dropdown from '../components/Dropdown'
 import Slider from '../components/Slider'
@@ -11,7 +11,7 @@ import features from '../../utils/features'
 interface Props {
   hasPreset: boolean
   preset: PresetConfiguration
-  scale?: { [key: string]: string }
+  scale?: ScaleConfiguration
   onChangePreset?: React.ReactEventHandler
   onChangeScale: (e: string) => void
   onAddScale?: React.ReactEventHandler

@@ -11,7 +11,8 @@ import type {
   HoveredColor,
   SelectedColor,
   DispatchProcess,
-  ActionsList
+  ActionsList,
+  ScaleConfiguration
 } from '../../utils/types'
 import Dispatcher from '../modules/Dispatcher'
 import Feature from '../components/Feature'
@@ -30,7 +31,7 @@ import { v4 as uuidv4 } from 'uuid'
 interface Props {
   paletteName: string
   preset: PresetConfiguration
-  scale: { [key: string]: string }
+  scale: ScaleConfiguration
   colors: Array<ColorConfiguration>
   view: string
   textColorsTheme: TextColorsThemeHexModel

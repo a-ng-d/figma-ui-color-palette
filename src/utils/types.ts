@@ -81,7 +81,7 @@ export interface PresetConfiguration {
 }
 
 export interface ScaleConfiguration {
-  [key: string]: string
+  [key: string]: number
 }
 
 export interface ColorConfiguration {

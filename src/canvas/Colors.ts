@@ -21,13 +21,13 @@ export default class Colors {
     this.node = figma.createFrame()
   }
 
-  getShadeColorFromLch(sourceColor: Array<number>, lightness: string, hueShifting: number, algorithmVersion: string) {
+  getShadeColorFromLch(sourceColor: Array<number>, lightness: number, hueShifting: number, algorithmVersion: string) {
     let lch: Array<number>, newColor: { _rgb: Array<number> }
     lch = chroma(sourceColor).lch()
     newColor = chroma.lch(
-      parseFloat(lightness) * 1,
+      lightness * 1,
       algorithmVersion == 'v2'
-        ? Math.sin((parseFloat(lightness) / 100) * Math.PI) *
+        ? Math.sin((lightness / 100) * Math.PI) *
             chroma(sourceColor).lch()[1]
         : chroma(sourceColor).lch()[1],
       lch[2] + hueShifting < 0
@@ -40,13 +40,13 @@ export default class Colors {
     return newColor
   }
 
-  getShadeColorFromOklch(sourceColor: Array<number>, lightness: string, hueShifting: number, algorithmVersion: string) {
+  getShadeColorFromOklch(sourceColor: Array<number>, lightness: number, hueShifting: number, algorithmVersion: string) {
     let oklch: { _rgb: Array<number> }, newColor: { _rgb: Array<number> }
     oklch = chroma(sourceColor).oklch()
     newColor = chroma.oklch(
-      parseFloat(lightness) / 100,
+      lightness / 100,
       algorithmVersion == 'v2'
-        ? Math.sin((parseFloat(lightness) / 100) * Math.PI) *
+        ? Math.sin((lightness / 100) * Math.PI) *
             chroma(sourceColor).oklch()[1]
         : chroma(sourceColor).oklch()[1],
       oklch[2] + hueShifting < 0
@@ -82,7 +82,7 @@ export default class Colors {
 
       Object.values(this.parent.scale)
         .reverse()
-        .forEach((lightness: string) => {
+        .forEach((lightness: number) => {
           let newColor: { _rgb: Array<number> }
 
           if (color.oklch) {
@@ -208,7 +208,7 @@ export default class Colors {
 
       Object.values(this.parent.scale)
         .reverse()
-        .forEach((lightness: string) => {
+        .forEach((lightness: number) => {
           let newColor: { _rgb: Array<number> }
 
           if (color.oklch) {

@@ -5,7 +5,6 @@ import doMap from './../../utils/doMap'
 const addStop = (
   e: MouseEvent,
   scale: ScaleConfiguration,
-  hasPreset: boolean,
   presetName: string,
   presetMin: number,
   presetMax: number
@@ -25,7 +24,7 @@ const addStop = (
   let newScale = []
 
   newScale = Object.values(scale)
-  newScale.length < 25 ? newScale.push(offset.toFixed(1)) : null
+  newScale.length < 25 ? newScale.push(parseFloat(offset.toFixed(1))) : null
   newScale.sort((a, b) => b - a)
   newScale.forEach(
     (scale, index) => (newLightnessScale[`lightness-${index + 1}`] = scale)

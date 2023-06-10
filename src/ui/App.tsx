@@ -173,7 +173,7 @@ class App extends React.Component {
       newScale: palette.scale,
       onGoingStep: 'scale changed',
     })
-  
+    
   customSlideHandler = () =>
     this.setState({
       preset:
