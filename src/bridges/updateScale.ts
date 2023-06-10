@@ -35,7 +35,7 @@ const updateScale = (msg, palette) => {
         preset: preset,
         scale: msg.data.scale,
         colors: colors,
-        view: msg.isEditedInRealTime && view === 'PALETTE_WITH_PROPERTIES' ? 'PALETTE' : view,
+        view: msg.isEditedInRealTime && view === 'PALETTE_WITH_PROPERTIES' ? 'PALETTE' : msg.isEditedInRealTime && view === 'SHEET' ? 'SHEET_SAFE_MODE' : view,
         textColorsTheme: textColorsTheme,
         algorithmVersion: algorithmVersion,
       }, palette).makeNode()

@@ -169,9 +169,9 @@ export default class Sample {
     this.nodeColor.appendChild(new Property('_label', name, 10).makeNode())
     if (this.status.isClosestToRef)
       this.nodeColor.appendChild(new Status(this.status, this.source).makeNode())
-    
+
     this.node.appendChild(this.nodeColor)
-    if (!isColorName)
+    if (!this.view.includes('SHEET_SAFE_MODE') && !isColorName)
       this.node.appendChild(
         new Properties(
           this.scale,
