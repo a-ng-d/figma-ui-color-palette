@@ -242,8 +242,8 @@ export default class Properties {
     this.nodeDetailedAPCAScoresProps.name = '_apca-scores'
     this.nodeDetailedAPCAScoresProps.fills = []
     const
-      minimumDarkFontSize: Array<string | number> = this.getMinFontSizes('DARK'),
-      minimumLightFontSize: Array<string | number> = this.getMinFontSizes('LIGHT')
+      minimumDarkFontSize: Array<string | number> = this.getMinFontSizes('DARK'),
+      minimumLightFontSize: Array<string | number> = this.getMinFontSizes('LIGHT')
 
     // layout
     this.nodeDetailedAPCAScoresProps.layoutMode = 'VERTICAL'

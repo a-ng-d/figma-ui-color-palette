@@ -22,9 +22,8 @@ export default class Colors {
   }
 
   getShadeColorFromLch(sourceColor: Array<number>, lightness: number, hueShifting: number, algorithmVersion: string) {
-    let lch: Array<number>, newColor: { _rgb: Array<number> }
-    lch = chroma(sourceColor).lch()
-    newColor = chroma.lch(
+    const lch: Array<number> = chroma(sourceColor).lch(),
+    newColor: { _rgb: Array<number> } = chroma.lch(
       lightness * 1,
       algorithmVersion == 'v2'
         ? Math.sin((lightness / 100) * Math.PI) *
@@ -41,9 +40,8 @@ export default class Colors {
   }
 
   getShadeColorFromOklch(sourceColor: Array<number>, lightness: number, hueShifting: number, algorithmVersion: string) {
-    let oklch: { _rgb: Array<number> }, newColor: { _rgb: Array<number> }
-    oklch = chroma(sourceColor).oklch()
-    newColor = chroma.oklch(
+    const oklch: { _rgb: Array<number> } = chroma(sourceColor).oklch()
+    const newColor: { _rgb: Array<number> } = chroma.oklch(
       lightness / 100,
       algorithmVersion == 'v2'
         ? Math.sin((lightness / 100) * Math.PI) *
@@ -162,7 +160,7 @@ export default class Colors {
     )
     this.node.appendChild(new Header(this.parent).makeNode())
     this.parent.colors.forEach((color) => {
-      let i: number = 1
+      let i = 1
       const
         sourceColor: Array<number> = chroma([
           color.rgb.r * 255,

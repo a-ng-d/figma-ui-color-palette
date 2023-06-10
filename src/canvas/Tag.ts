@@ -6,7 +6,7 @@ export default class Tag {
   nodeText: TextNode
   nodeIndicator: EllipseNode
 
-  constructor(name: string, content: string, fontSize: number = 8) {
+  constructor(name: string, content: string, fontSize = 8) {
     this.name = name
     this.content = content
     this.fontSize = fontSize
@@ -14,7 +14,7 @@ export default class Tag {
     this.nodeText = figma.createText()
   }
 
-  makeNodeTag(gl: Array<number> = [0, 0, 0, 1], hasIndicator: boolean = false) {
+  makeNodeTag(gl: Array<number> = [0, 0, 0, 1], hasIndicator = false) {
     // base
     this.nodeTag.name = this.name
     this.nodeTag.fills = [

@@ -76,7 +76,7 @@ export default class Sample {
     return this.node
   }
 
-  makeNodeShade(width: number, height: number, name: string, isColorName: boolean = false) {
+  makeNodeShade(width: number, height: number, name: string, isColorName = false) {
     // base
     this.node.name = name
     this.node.resize(width, height)
@@ -121,7 +121,7 @@ export default class Sample {
     return this.node
   }
 
-  makeNodeRichShade(width: number, height: number, name: string, isColorName: boolean = false) {
+  makeNodeRichShade(width: number, height: number, name: string, isColorName = false) {
     // base
     this.node.name = name
     this.node.resize(width, height)
