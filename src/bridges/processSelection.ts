@@ -84,7 +84,7 @@ const processSelection = () => {
         selection[0] as FrameNode
       ).makePaletteData()
     
-    console.log(palette.getPluginDataKeys())
+    // console.log(palette.getPluginDataKeys())
     
     // to UI
     figma.ui.postMessage({
