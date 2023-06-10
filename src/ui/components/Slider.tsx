@@ -408,7 +408,7 @@ export default class Slider extends React.Component<Props> {
     return (
       <div
         className="slider__range"
-        onClick={this.onAdd}
+        onMouseDown={this.onAdd}
       >
         {Object.entries(this.props.scale).map((lightness) => (
           <Knob

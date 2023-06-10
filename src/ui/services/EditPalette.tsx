@@ -654,7 +654,7 @@ export default class EditPalette extends React.Component<Props> {
           primaryTabs={this.setPrimaryContexts()}
           secondaryTabs={this.setSecondaryContexts()}
           active={this.state['context']}
-          onClick={this.navHandler}
+          action={this.navHandler}
         />
         <section
           onMouseDown={this.unSelectColor}

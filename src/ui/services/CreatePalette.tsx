@@ -195,7 +195,7 @@ export default class CreatePalette extends React.Component<Props> {
           primaryTabs={this.setPrimaryContexts()}
           secondaryTabs={this.setSecondaryContexts()}
           active={this.state['context']}
-          onClick={this.navHandler}
+          action={this.navHandler}
         />
         <section className="section--scrollable">
           <div className="controls">{controls}</div>
