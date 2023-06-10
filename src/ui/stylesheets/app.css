@@ -111,7 +111,7 @@ div.shortcuts__links {
   color: var(--figma-color-text);
 }
 
-div.highlight {
+div.dialog {
   position: absolute;
   top: 0;
   left: 0;
@@ -122,11 +122,11 @@ div.highlight {
   background-color: rgba(0, 0, 0, 0.5);
 }
 
-div.highlight .highlight__cover {
+div.dialog .dialog__cover {
   height: 100%;
 }
 
-div.highlight .highlight__text {
+div.dialog .dialog__text {
   padding: var(--size-xsmall);
   margin: 0;
 }

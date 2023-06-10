@@ -14,7 +14,7 @@ export default class Highlight extends React.Component<Props> {
   render() {
     const currentNote = releaseNotes.filter((note) => note['isMostRecent'])[0]
     return (
-      <div className="highlight">
+      <div className="dialog">
         <PopIn
           title={currentNote['title']}
           actions={{
@@ -30,10 +30,10 @@ export default class Highlight extends React.Component<Props> {
           close={this.props.closeHighlight}
         >
           <img
-            className="highlight__cover"
+            className="dialog__cover"
             src={currentNote['image']}
           />
-          <p className="highlight__text type">{currentNote['content']}</p>
+          <p className="dialog__text type">{currentNote['content']}</p>
         </PopIn>
       </div>
     )
