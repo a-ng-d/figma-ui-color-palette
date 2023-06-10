@@ -345,7 +345,7 @@ export default class EditPalette extends React.Component<Props> {
     parent.postMessage(
       {
         pluginMessage: {
-          type: 'UPDATE_COLORs',
+          type: 'UPDATE_COLORS',
           data: colors,
           isEditedInRealTime: false,
         },
