@@ -14,6 +14,7 @@ import { v4 as uuidv4 } from 'uuid'
 import 'figma-plugin-ds/dist/figma-plugin-ds.css'
 import './stylesheets/app.css'
 import './stylesheets/components.css'
+import Dialog from './modules/Dialog'
 
 let isPaletteSelected = false
 const container = document.getElementById('react-page'),
@@ -62,6 +63,7 @@ class App extends React.Component {
       },
       hasHighlight: false,
       planStatus: 'UNPAID',
+      hasGetProPlanDialog: false,
       onGoingStep: '',
     }
   }
@@ -510,6 +512,21 @@ class App extends React.Component {
         >
           {this.state['hasHighlight'] ? (
             <Highlight closeHighlight={this.highlightHandler('CLOSE')} />
+          ) : null}
+        </Feature>
+        <Feature
+          isActive={
+            features.find((feature) => feature.name === 'GET_PRO_PLAN').isActive
+          }
+        >
+          {this.state['hasGetProPlanDialog'] ? (
+            <Dialog
+              title="Welcome to UI Color Palette Pro"
+              image=""
+              content="You have successfully upgraded to the Pro plan, unlocking a range of tools to enhance the accessibility, accuracy and deployment options."
+              label="Let's discover"
+              action={() => this.setState({ hasGetProPlanDialog: false })}
+            />
           ) : null}
         </Feature>
       </main>
