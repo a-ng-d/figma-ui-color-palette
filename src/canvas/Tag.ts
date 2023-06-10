@@ -94,7 +94,7 @@ export default class Tag {
           g: 0,
           b: 0,
         },
-        opacity: 0.1
+        opacity: 0.1,
       },
     ]
 

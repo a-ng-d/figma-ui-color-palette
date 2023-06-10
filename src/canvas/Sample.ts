@@ -76,7 +76,12 @@ export default class Sample {
     return this.node
   }
 
-  makeNodeShade(width: number, height: number, name: string, isColorName = false) {
+  makeNodeShade(
+    width: number,
+    height: number,
+    name: string,
+    isColorName = false
+  ) {
     // base
     this.node.name = name
     this.node.resize(width, height)
@@ -106,14 +111,9 @@ export default class Sample {
     // insert
     if (this.view.includes('PALETTE_WITH_PROPERTIES') && !isColorName) {
       this.node.appendChild(
-        new Properties(
-          this.scale,
-          this.rgb,
-          this.textColorsTheme
-        ).makeNode()
+        new Properties(this.scale, this.rgb, this.textColorsTheme).makeNode()
       )
-    }
-    else if (isColorName)
+    } else if (isColorName)
       this.node.appendChild(new Property('_label', this.name, 10).makeNode())
     if (this.status.isClosestToRef)
       this.node.appendChild(new Status(this.status, this.source).makeNode())
@@ -121,7 +121,12 @@ export default class Sample {
     return this.node
   }
 
-  makeNodeRichShade(width: number, height: number, name: string, isColorName = false) {
+  makeNodeRichShade(
+    width: number,
+    height: number,
+    name: string,
+    isColorName = false
+  ) {
     // base
     this.node.name = name
     this.node.resize(width, height)
@@ -168,7 +173,9 @@ export default class Sample {
     // insert
     this.nodeColor.appendChild(new Property('_label', name, 10).makeNode())
     if (this.status.isClosestToRef)
-      this.nodeColor.appendChild(new Status(this.status, this.source).makeNode())
+      this.nodeColor.appendChild(
+        new Status(this.status, this.source).makeNode()
+      )
 
     this.node.appendChild(this.nodeColor)
     if (!this.view.includes('SHEET_SAFE_MODE') && !isColorName)

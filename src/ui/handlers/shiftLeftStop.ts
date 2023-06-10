@@ -1,7 +1,12 @@
 import type { ScaleConfiguration } from '../../utils/types'
 import { palette } from '../../utils/palettePackage'
 
-const shiftLeftStop = (scale: ScaleConfiguration, selectedKnob: HTMLElement, meta: boolean, ctrl: boolean) => {
+const shiftLeftStop = (
+  scale: ScaleConfiguration,
+  selectedKnob: HTMLElement,
+  meta: boolean,
+  ctrl: boolean
+) => {
   const stopsList = []
 
   Object.keys(scale).forEach((stop) => {
@@ -11,7 +16,8 @@ const shiftLeftStop = (scale: ScaleConfiguration, selectedKnob: HTMLElement, met
   const selectedKnobIndex = stopsList.indexOf(selectedKnob.classList[1]),
     newLightnessScale = scale,
     currentStopValue: number = newLightnessScale[stopsList[selectedKnobIndex]],
-    nextStopValue: number = newLightnessScale[stopsList[selectedKnobIndex + 1]] + 2
+    nextStopValue: number =
+      newLightnessScale[stopsList[selectedKnobIndex + 1]] + 2
 
   if (currentStopValue <= nextStopValue) null
   else if (currentStopValue <= 1 && (!meta || ctrl))
@@ -20,8 +26,9 @@ const shiftLeftStop = (scale: ScaleConfiguration, selectedKnob: HTMLElement, met
     newLightnessScale[stopsList[selectedKnobIndex]] = 0
   else
     meta || ctrl
-      ? newLightnessScale[stopsList[selectedKnobIndex]] =
-          parseFloat((newLightnessScale[stopsList[selectedKnobIndex]] - 0.1).toFixed(1))
+      ? (newLightnessScale[stopsList[selectedKnobIndex]] = parseFloat(
+          (newLightnessScale[stopsList[selectedKnobIndex]] - 0.1).toFixed(1)
+        ))
       : newLightnessScale[stopsList[selectedKnobIndex]]--
   console.log(newLightnessScale)
   palette.scale = newLightnessScale

@@ -19,7 +19,7 @@ export default class Dialog extends React.Component<Props> {
             primary: {
               label: this.props.label,
               action: this.props.action,
-            }
+            },
           }}
           close={this.props.action}
         >

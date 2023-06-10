@@ -16,13 +16,13 @@ const processSelection = () => {
 
   if (selection.length == 1 && selection[0].getPluginData('scale') != '') {
     const palette: BaseNode = selection[0]
-    console.log(palette.getPluginDataKeys())
+
     // Migration
     if (palette.getPluginData('min') != '' || palette.getPluginData('max')) {
       palette.setPluginData('min', '')
       palette.setPluginData('max', '')
     }
-      
+
     if (palette.getPluginData('preset') === '')
       palette.setPluginData('preset', JSON.stringify(presets.material))
 
@@ -41,11 +41,17 @@ const processSelection = () => {
         setData(palette.getPluginData('colors'), 'hueShifting', 0)
       )
 
-    if (palette.getPluginData('captions') == 'hasCaptions' || palette.getPluginData('properties') == 'hasProperties') {
+    if (
+      palette.getPluginData('captions') == 'hasCaptions' ||
+      palette.getPluginData('properties') == 'hasProperties'
+    ) {
       palette.setPluginData('captions', '')
       palette.setPluginData('properties', '')
       palette.setPluginData('view', 'PALETTE_WITH_PROPERTIES')
-    } else if (palette.getPluginData('captions') == 'hasNotCaptions' || palette.getPluginData('properties') == 'hasNotProperties') {
+    } else if (
+      palette.getPluginData('captions') == 'hasNotCaptions' ||
+      palette.getPluginData('properties') == 'hasNotProperties'
+    ) {
       palette.setPluginData('captions', '')
       palette.setPluginData('properties', '')
       palette.setPluginData('view', 'PALETTE')
@@ -63,18 +69,23 @@ const processSelection = () => {
 
     if (palette.getPluginData('view') === '')
       palette.setPluginData('view', 'PALETTE')
-    
-    if (palette.getPluginData('data') === '')
-      new Colors({ 
-        paletteName: palette.getPluginData('name'),
-        preset: JSON.parse(palette.getPluginData('preset')),
-        scale: JSON.parse(palette.getPluginData('scale')),
-        colors: JSON.parse(palette.getPluginData('colors')),
-        view: 'SHEET',
-        textColorsTheme: JSON.parse(palette.getPluginData('textColorsTheme')),
-        algorithmVersion: palette.getPluginData('algorithmVersion'),
-      }, selection[0] as FrameNode).makePaletteData()
 
+    if (palette.getPluginData('data') === '')
+      new Colors(
+        {
+          paletteName: palette.getPluginData('name'),
+          preset: JSON.parse(palette.getPluginData('preset')),
+          scale: JSON.parse(palette.getPluginData('scale')),
+          colors: JSON.parse(palette.getPluginData('colors')),
+          view: 'SHEET',
+          textColorsTheme: JSON.parse(palette.getPluginData('textColorsTheme')),
+          algorithmVersion: palette.getPluginData('algorithmVersion'),
+        },
+        selection[0] as FrameNode
+      ).makePaletteData()
+    
+    console.log(palette.getPluginDataKeys())
+    
     // to UI
     figma.ui.postMessage({
       type: 'PALETTE_SELECTED',
@@ -84,9 +95,7 @@ const processSelection = () => {
         scale: JSON.parse(palette.getPluginData('scale')),
         colors: JSON.parse(palette.getPluginData('colors')),
         view: palette.getPluginData('view'),
-        textColorsTheme: JSON.parse(
-          palette.getPluginData('textColorsTheme')
-        ),
+        textColorsTheme: JSON.parse(palette.getPluginData('textColorsTheme')),
         algorithmVersion: palette.getPluginData('algorithmVersion'),
       },
     })

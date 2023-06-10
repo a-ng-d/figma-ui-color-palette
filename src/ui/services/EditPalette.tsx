@@ -12,7 +12,7 @@ import type {
   SelectedColor,
   DispatchProcess,
   ActionsList,
-  ScaleConfiguration
+  ScaleConfiguration,
 } from '../../utils/types'
 import Dispatcher from '../modules/Dispatcher'
 import Feature from '../components/Feature'
@@ -407,9 +407,9 @@ export default class EditPalette extends React.Component<Props> {
   settingsHandler = (e) => this.props.onChangeSettings(e)
 
   navHandler = (e: React.SyntheticEvent) =>
-  this.setState({
-    context: (e.target as HTMLElement).innerText,
-  })
+    this.setState({
+      context: (e.target as HTMLElement).innerText,
+    })
 
   viewHandler = (e) => {
     if (e.target.dataset.isBlocked === 'false') {
@@ -642,10 +642,7 @@ export default class EditPalette extends React.Component<Props> {
         break
       }
       case 'About': {
-        controls =
-        <About
-          planStatus={this.props.planStatus}
-        />
+        controls = <About planStatus={this.props.planStatus} />
       }
     }
 

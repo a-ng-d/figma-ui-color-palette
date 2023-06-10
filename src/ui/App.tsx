@@ -1,6 +1,11 @@
 import * as React from 'react'
 import { createRoot } from 'react-dom/client'
-import type { ActionsList, ColorConfiguration, DispatchProcess, SettingsMessage } from '../utils/types'
+import type {
+  ActionsList,
+  ColorConfiguration,
+  DispatchProcess,
+  SettingsMessage,
+} from '../utils/types'
 import Dispatcher from './modules/Dispatcher'
 import Feature from './components/Feature'
 import Onboarding from './services/Onboarding'
@@ -70,42 +75,42 @@ class App extends React.Component {
 
   // Handlers
   presetHandler = (e: React.SyntheticEvent) => {
-    const setMaterialDesignPreset = () => 
+    const setMaterialDesignPreset = () =>
       this.setState({
         preset: presets.material,
         onGoingStep: 'preset changed',
       })
-    
-    const setAntDesignPreset = () => 
+
+    const setAntDesignPreset = () =>
       this.setState({
         preset: presets.ant,
         onGoingStep: 'preset changed',
       })
-    
-    const setAdsPreset = () => 
+
+    const setAdsPreset = () =>
       this.setState({
         preset: presets.atlassian,
         onGoingStep: 'preset changed',
       })
-    
-    const setAdsNeutralPreset = () => 
+
+    const setAdsNeutralPreset = () =>
       this.setState({
         preset: presets.atlassianNeutral,
         onGoingStep: 'preset changed',
       })
 
-    const setCarbonPreset = () => 
+    const setCarbonPreset = () =>
       this.setState({
         preset: presets.carbon,
         onGoingStep: 'preset changed',
       })
-    
-    const setBasePreset = () => 
+
+    const setBasePreset = () =>
       this.setState({
         preset: presets.base,
         onGoingStep: 'preset changed',
       })
-    
+
     const setCustomPreset = () => {
       presets.custom.scale = [1, 2]
       this.setState({
@@ -121,12 +126,12 @@ class App extends React.Component {
       ADS_NEUTRAL: () => setAdsNeutralPreset(),
       CARBON: () => setCarbonPreset(),
       BASE: () => setBasePreset(),
-      CUSTOM: () => setCustomPreset()
+      CUSTOM: () => setCustomPreset(),
     }
 
     return actions[(e.target as HTMLElement).dataset.value]?.()
   }
-  
+
   customHandler = (e: React.SyntheticEvent) => {
     const scale = this.state['preset']['scale']
 
@@ -139,7 +144,7 @@ class App extends React.Component {
             scale: scale,
             min: palette.min,
             max: palette.max,
-            id: presets.custom.id
+            id: presets.custom.id,
           },
         })
       }
@@ -154,7 +159,7 @@ class App extends React.Component {
             scale: scale,
             min: palette.min,
             max: palette.max,
-            id: presets.custom.id
+            id: presets.custom.id,
           },
         })
       }
@@ -173,23 +178,23 @@ class App extends React.Component {
       newScale: palette.scale,
       onGoingStep: 'scale changed',
     })
-    
+
   customSlideHandler = () =>
     this.setState({
       preset:
         Object.keys(palette.preset).length == 0
-        ? this.state['preset']
-        : palette.preset,
+          ? this.state['preset']
+          : palette.preset,
       newScale: palette.scale,
       onGoingStep: 'stop changed',
     })
-  
+
   colorHandler = (colors: Array<ColorConfiguration>) =>
     this.setState({
       newColors: colors,
       onGoingStep: 'color changed',
     })
-  
+
   settingsHandler = (e) => {
     const renamePalette = () => {
       palette.name = e.target.value
@@ -201,24 +206,24 @@ class App extends React.Component {
         onGoingStep: 'settings changed',
       })
       if (e._reactName === 'onBlur' && this.state['service'] === 'Edit')
-      parent.postMessage({ pluginMessage: settingsMessage }, '*')
+        parent.postMessage({ pluginMessage: settingsMessage }, '*')
       else if (e.key === 'Enter' && this.state['service'] === 'Edit')
-      parent.postMessage({ pluginMessage: settingsMessage }, '*')
+        parent.postMessage({ pluginMessage: settingsMessage }, '*')
     }
 
     const updateTextLightColor = () => {
       const code: string =
         e.target.value.indexOf('#') == -1
-        ? '#' + e.target.value
-        : e.target.value
+          ? '#' + e.target.value
+          : e.target.value
       if (/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/i.test(code)) {
         palette.textColorsTheme.lightColor = code
         settingsMessage.data.name = this.state['paletteName']
         settingsMessage.data.algorithmVersion = this.state['algorithmVersion']
         settingsMessage.data.textColorsTheme.lightColor =
-        palette.textColorsTheme.lightColor
+          palette.textColorsTheme.lightColor
         settingsMessage.data.textColorsTheme.darkColor =
-        this.state['textColorsTheme'].darkColor
+          this.state['textColorsTheme'].darkColor
         this.setState({
           textColorsTheme: settingsMessage.data.textColorsTheme,
           onGoingStep: 'settings changed',
@@ -228,18 +233,18 @@ class App extends React.Component {
         this.dispatch.textColorsTheme.on.status = false
         parent.postMessage({ pluginMessage: settingsMessage }, '*')
       } else if (this.state['service'] === 'Edit')
-      this.dispatch.textColorsTheme.on.status = true
+        this.dispatch.textColorsTheme.on.status = true
     }
 
     const updateTextDarkColor = () => {
       const code: string =
         e.target.value.indexOf('#') == -1
-        ? '#' + e.target.value
-        : e.target.value
+          ? '#' + e.target.value
+          : e.target.value
       settingsMessage.data.name = this.state['paletteName']
       settingsMessage.data.algorithmVersion = this.state['algorithmVersion']
       settingsMessage.data.textColorsTheme.lightColor =
-      this.state['textColorsTheme'].lightColor
+        this.state['textColorsTheme'].lightColor
       settingsMessage.data.textColorsTheme.darkColor = code
       if (/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/i.test(code)) {
         palette.textColorsTheme.darkColor = code
@@ -252,7 +257,7 @@ class App extends React.Component {
         this.dispatch.textColorsTheme.on.status = false
         parent.postMessage({ pluginMessage: settingsMessage }, '*')
       } else if (this.state['service'] === 'Edit')
-      this.dispatch.textColorsTheme.on.status = true
+        this.dispatch.textColorsTheme.on.status = true
     }
 
     const updateAlgorythmVersion = () => {
@@ -270,18 +275,18 @@ class App extends React.Component {
       RENAME_PALETTE: () => renamePalette(),
       CHANGE_TEXT_LIGHT_COLOR: () => updateTextLightColor(),
       CHANGE_TEXT_DARK_COLOR: () => updateTextDarkColor(),
-      UPDATE_ALGORITHM_VERSION: () => updateAlgorythmVersion()
+      UPDATE_ALGORITHM_VERSION: () => updateAlgorythmVersion(),
     }
 
     return actions[e.target.dataset.feature]?.()
   }
-  
+
   viewHandler = (view: string) =>
     this.setState({ view: view, onGoingStep: 'view changed' })
 
   highlightHandler = (action: string) => {
     const openHighlight = () => this.setState({ hasHighlight: true })
-    
+
     const closeHighlight = () => {
       parent.postMessage(
         {
@@ -311,8 +316,11 @@ class App extends React.Component {
     onmessage = (e: MessageEvent) => {
       try {
         const getProPlan = () =>
-          this.setState({ planStatus: e.data.pluginMessage.data, hasGetProPlanDialog: true })
-        
+          this.setState({
+            planStatus: e.data.pluginMessage.data,
+            hasGetProPlanDialog: true,
+          })
+
         const checkHighlightStatus = () =>
           this.setState({ hasHighlight: !e.data.pluginMessage.data })
 
@@ -406,19 +414,17 @@ class App extends React.Component {
             },
             onGoingStep: 'export previewed',
           })
-        
+
         const exportPaletteAsCss = () =>
           this.setState({
             export: {
               format: 'CSS',
               mimeType: 'text/css',
-              data: `:root {\n  ${e.data.pluginMessage.data.join(
-                ';\n  '
-              )}\n}`,
+              data: `:root {\n  ${e.data.pluginMessage.data.join(';\n  ')}\n}`,
             },
             onGoingStep: 'export previewed',
           })
-        
+
         const exportPaletteAsCsv = () =>
           this.setState({
             export: {
@@ -439,7 +445,7 @@ class App extends React.Component {
           EXPORT_PALETTE_CSS: () => exportPaletteAsCss(),
           EXPORT_PALETTE_CSV: () => exportPaletteAsCsv(),
         }
-    
+
         return actions[e.data.pluginMessage.type]?.()
       } catch (error) {
         console.error(error)
@@ -463,7 +469,9 @@ class App extends React.Component {
               onReopenHighlight={this.highlightHandler('OPEN')}
               onChangePreset={this.presetHandler}
               onCustomPreset={this.customHandler}
-              onChangeView={(view: string) => this.setState({ view: view, onGoingStep: 'view changed' })}
+              onChangeView={(view: string) =>
+                this.setState({ view: view, onGoingStep: 'view changed' })
+              }
               onChangeSettings={this.settingsHandler}
             />
           ) : null}

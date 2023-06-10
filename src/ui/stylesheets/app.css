@@ -87,7 +87,7 @@ div.actions__view {
 }
 
 div.actions__view .select-menu {
-  width: 200px
+  width: 200px;
 }
 
 div.shortcuts {
@@ -155,7 +155,7 @@ div.section-controls .label {
 }
 
 div.section-controls .select-menu {
-  flex: 1
+  flex: 1;
 }
 
 /* Tabs */

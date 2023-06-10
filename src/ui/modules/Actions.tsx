@@ -43,7 +43,7 @@ export default class Actions extends React.Component<Props> {
             isActive={
               features.find((feature) => feature.name === 'VIEWS').isActive
             }
-          >      
+          >
             <FormItem
               id="change-view"
               label="Layout"
@@ -55,23 +55,36 @@ export default class Actions extends React.Component<Props> {
                     label: 'Palette with properties',
                     value: 'PALETTE_WITH_PROPERTIES',
                     position: 0,
-                    isActive: features.find((feature) => feature.name === 'VIEWS_PALETTE_WITH_PROPERTIES').isActive,
-                    isBlocked: isBlocked('VIEWS_PALETTE_WITH_PROPERTIES', this.props.planStatus)
-                 },
-                 {
+                    isActive: features.find(
+                      (feature) =>
+                        feature.name === 'VIEWS_PALETTE_WITH_PROPERTIES'
+                    ).isActive,
+                    isBlocked: isBlocked(
+                      'VIEWS_PALETTE_WITH_PROPERTIES',
+                      this.props.planStatus
+                    ),
+                  },
+                  {
                     label: 'Palette',
                     value: 'PALETTE',
                     position: 1,
-                    isActive: features.find((feature) => feature.name === 'VIEWS_PALETTE').isActive,
-                    isBlocked: isBlocked('VIEWS_PALETTE', this.props.planStatus)
-                 },
-                 {
-                  label: 'Color sheet',
-                  value: 'SHEET',
-                  position: 2,
-                  isActive: features.find((feature) => feature.name === 'VIEWS_SHEET').isActive,
-                  isBlocked: isBlocked('VIEWS_SHEET', this.props.planStatus)
-                 },
+                    isActive: features.find(
+                      (feature) => feature.name === 'VIEWS_PALETTE'
+                    ).isActive,
+                    isBlocked: isBlocked(
+                      'VIEWS_PALETTE',
+                      this.props.planStatus
+                    ),
+                  },
+                  {
+                    label: 'Color sheet',
+                    value: 'SHEET',
+                    position: 2,
+                    isActive: features.find(
+                      (feature) => feature.name === 'VIEWS_SHEET'
+                    ).isActive,
+                    isBlocked: isBlocked('VIEWS_SHEET', this.props.planStatus),
+                  },
                 ]}
                 selected={this.props.view}
                 onChange={this.props.onChangeView}
@@ -131,23 +144,36 @@ export default class Actions extends React.Component<Props> {
                     label: 'Palette with properties',
                     value: 'PALETTE_WITH_PROPERTIES',
                     position: 0,
-                    isActive: features.find((feature) => feature.name === 'VIEWS_PALETTE_WITH_PROPERTIES').isActive,
-                    isBlocked: isBlocked('VIEWS_PALETTE_WITH_PROPERTIES', this.props.planStatus)
-                 },
-                 {
+                    isActive: features.find(
+                      (feature) =>
+                        feature.name === 'VIEWS_PALETTE_WITH_PROPERTIES'
+                    ).isActive,
+                    isBlocked: isBlocked(
+                      'VIEWS_PALETTE_WITH_PROPERTIES',
+                      this.props.planStatus
+                    ),
+                  },
+                  {
                     label: 'Palette',
                     value: 'PALETTE',
                     position: 1,
-                    isActive: features.find((feature) => feature.name === 'VIEWS_PALETTE').isActive,
-                    isBlocked: isBlocked('VIEWS_PALETTE', this.props.planStatus)
-                 },
-                 {
-                  label: 'Color sheet',
-                  value: 'SHEET',
-                  position: 2,
-                  isActive: features.find((feature) => feature.name === 'VIEWS_SHEET').isActive,
-                  isBlocked: isBlocked('VIEWS_SHEET', this.props.planStatus)
-                 },
+                    isActive: features.find(
+                      (feature) => feature.name === 'VIEWS_PALETTE'
+                    ).isActive,
+                    isBlocked: isBlocked(
+                      'VIEWS_PALETTE',
+                      this.props.planStatus
+                    ),
+                  },
+                  {
+                    label: 'Color sheet',
+                    value: 'SHEET',
+                    position: 2,
+                    isActive: features.find(
+                      (feature) => feature.name === 'VIEWS_SHEET'
+                    ).isActive,
+                    isBlocked: isBlocked('VIEWS_SHEET', this.props.planStatus),
+                  },
                 ]}
                 selected={this.props.view}
                 onChange={this.props.onChangeView}

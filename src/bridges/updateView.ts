@@ -23,24 +23,29 @@ const updateView = (msg, palette) => {
         palette.getPluginData('textColorsTheme')
       ),
       algorithmVersion: string = palette.getPluginData('algorithmVersion')
-    
+
     palette.setPluginData('view', msg.data.view)
     palette.children[0].remove()
     palette.appendChild(
-      new Colors({
-        paletteName: paletteName,
-        preset: preset,
-        scale: scale,
-        colors: colors,
-        view: msg.data.view,
-        textColorsTheme: textColorsTheme,
-        algorithmVersion: algorithmVersion,
-      }, palette).makeNode()
+      new Colors(
+        {
+          paletteName: paletteName,
+          preset: preset,
+          scale: scale,
+          colors: colors,
+          view: msg.data.view,
+          textColorsTheme: textColorsTheme,
+          algorithmVersion: algorithmVersion,
+        },
+        palette
+      ).makeNode()
     )
 
     // palette migration
     palette.counterAxisSizingMode = 'AUTO'
-    palette.name = `${paletteName}﹒${preset.name}﹒${msg.data.view.includes('PALETTE') ? 'Palette' : 'Sheet'}`
+    palette.name = `${paletteName}﹒${preset.name}﹒${
+      msg.data.view.includes('PALETTE') ? 'Palette' : 'Sheet'
+    }`
   } else
     figma.notify(
       'Your UI Color Palette seems corrupted. Do not edit any layer within it.'

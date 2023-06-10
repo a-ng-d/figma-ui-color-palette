@@ -32,7 +32,7 @@ export default class Header {
         this.parent.textColorsTheme
       ).makeNodeName('ABSOLUTE', 160, 48)
     )
-    if (this.parent.view.includes('PALETTE')) 
+    if (this.parent.view.includes('PALETTE'))
       Object.values(this.parent.scale)
         .reverse()
         .forEach((lightness) => {

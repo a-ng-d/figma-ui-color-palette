@@ -19,21 +19,21 @@ export const presets: Presets = {
     scale: [50, 100, 200, 300, 400, 500, 600, 700, 800, 900],
     min: 24,
     max: 96,
-    id: 'MATERIAL'
+    id: 'MATERIAL',
   },
   ant: {
     name: 'Ant Design 1-10',
     scale: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
     min: 24,
     max: 96,
-    id: 'ANT'
+    id: 'ANT',
   },
   atlassian: {
     name: 'ADS Foundations 50-500 (Atlassian)',
     scale: [50, 75, 100, 200, 300, 400, 500],
     min: 24,
     max: 96,
-    id: 'ADS'
+    id: 'ADS',
   },
   atlassianNeutral: {
     name: 'ADS Foundations, Neutral 50-500 (Atlassian)',
@@ -43,27 +43,27 @@ export const presets: Presets = {
     ],
     min: 8,
     max: 100,
-    id: 'ADS_NEUTRAL'
+    id: 'ADS_NEUTRAL',
   },
   carbon: {
     name: 'Carbon 10-100 (IBM)',
     scale: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
     min: 24,
     max: 96,
-    id: 'CARBON'
+    id: 'CARBON',
   },
   base: {
     name: 'Base 50-700 (Uber)',
     scale: [50, 100, 200, 300, 400, 500, 600, 700],
     min: 24,
     max: 96,
-    id: 'BASE'
+    id: 'BASE',
   },
   custom: {
     name: 'Custom',
     scale: [1, 2],
     min: 10,
     max: 90,
-    id: 'CUSTOM'
+    id: 'CUSTOM',
   },
 }

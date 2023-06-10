@@ -1,4 +1,4 @@
-import features from "./features"
+import features from './features'
 
 const isBlocked = (featureName: string, planStatus: string): boolean =>
   features.find((feature) => feature.name === featureName).isPro

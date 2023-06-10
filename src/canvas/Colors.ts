@@ -21,31 +21,39 @@ export default class Colors {
     this.node = figma.createFrame()
   }
 
-  getShadeColorFromLch(sourceColor: Array<number>, lightness: number, hueShifting: number, algorithmVersion: string) {
+  getShadeColorFromLch(
+    sourceColor: Array<number>,
+    lightness: number,
+    hueShifting: number,
+    algorithmVersion: string
+  ) {
     const lch: Array<number> = chroma(sourceColor).lch(),
-    newColor: { _rgb: Array<number> } = chroma.lch(
-      lightness * 1,
-      algorithmVersion == 'v2'
-        ? Math.sin((lightness / 100) * Math.PI) *
-            chroma(sourceColor).lch()[1]
-        : chroma(sourceColor).lch()[1],
-      lch[2] + hueShifting < 0
-        ? 0
-        : lch[2] + hueShifting > 360
-        ? 360
-        : lch[2] + hueShifting
-    )
+      newColor: { _rgb: Array<number> } = chroma.lch(
+        lightness * 1,
+        algorithmVersion == 'v2'
+          ? Math.sin((lightness / 100) * Math.PI) * chroma(sourceColor).lch()[1]
+          : chroma(sourceColor).lch()[1],
+        lch[2] + hueShifting < 0
+          ? 0
+          : lch[2] + hueShifting > 360
+          ? 360
+          : lch[2] + hueShifting
+      )
 
     return newColor
   }
 
-  getShadeColorFromOklch(sourceColor: Array<number>, lightness: number, hueShifting: number, algorithmVersion: string) {
+  getShadeColorFromOklch(
+    sourceColor: Array<number>,
+    lightness: number,
+    hueShifting: number,
+    algorithmVersion: string
+  ) {
     const oklch: { _rgb: Array<number> } = chroma(sourceColor).oklch()
     const newColor: { _rgb: Array<number> } = chroma.oklch(
       lightness / 100,
       algorithmVersion == 'v2'
-        ? Math.sin((lightness / 100) * Math.PI) *
-            chroma(sourceColor).oklch()[1]
+        ? Math.sin((lightness / 100) * Math.PI) * chroma(sourceColor).oklch()[1]
         : chroma(sourceColor).oklch()[1],
       oklch[2] + hueShifting < 0
         ? 0
@@ -59,10 +67,9 @@ export default class Colors {
 
   makePaletteData() {
     this.parent.colors.forEach((color) => {
-      const
-        paletteDataItem: PaletteDataItem = {
+      const paletteDataItem: PaletteDataItem = {
           name: color.name,
-          shades: []
+          shades: [],
         },
         sourceColor: Array<number> = chroma([
           color.rgb.r * 255,
@@ -84,12 +91,12 @@ export default class Colors {
           let newColor: { _rgb: Array<number> }
 
           if (color.oklch) {
-           newColor = this.getShadeColorFromOklch(
-            sourceColor,
-            lightness,
-            color.hueShifting,
-            this.parent.algorithmVersion
-          )
+            newColor = this.getShadeColorFromOklch(
+              sourceColor,
+              lightness,
+              color.hueShifting,
+              this.parent.algorithmVersion
+            )
           } else {
             newColor = this.getShadeColorFromLch(
               sourceColor,
@@ -99,11 +106,10 @@ export default class Colors {
             )
           }
 
-          const scaleName: string =
-            Object.keys(this.parent.scale)
-              .find((key) => this.parent.scale[key] === lightness)
-              .substr(10)
-          
+          const scaleName: string = Object.keys(this.parent.scale)
+            .find((key) => this.parent.scale[key] === lightness)
+            .substr(10)
+
           paletteDataItem.shades.push({
             name: scaleName,
             hex: chroma(newColor).hex(),
@@ -112,7 +118,7 @@ export default class Colors {
             lch: chroma(newColor).lch(),
           })
         })
-      
+
       this.paletteData.push(paletteDataItem)
     })
 
@@ -131,7 +137,7 @@ export default class Colors {
     this.nodeRowSlice.counterAxisSizingMode = 'AUTO'
 
     // insert
-    shades.forEach(shade => this.nodeRowSlice.appendChild(shade))
+    shades.forEach((shade) => this.nodeRowSlice.appendChild(shade))
 
     return this.nodeRowSlice
   }
@@ -154,15 +160,16 @@ export default class Colors {
           this.parent.paletteName === ''
             ? 'UI Color Palette'
             : this.parent.paletteName
-        } • ${this.parent.preset.name} • ${this.parent.view.includes('PALETTE') ? 'Palette' : 'Sheet'}`,
+        } • ${this.parent.preset.name} • ${
+          this.parent.view.includes('PALETTE') ? 'Palette' : 'Sheet'
+        }`,
         this.parent
       ).makeNode()
     )
     this.node.appendChild(new Header(this.parent).makeNode())
     this.parent.colors.forEach((color) => {
       let i = 1
-      const
-        sourceColor: Array<number> = chroma([
+      const sourceColor: Array<number> = chroma([
           color.rgb.r * 255,
           color.rgb.g * 255,
           color.rgb.b * 255,
@@ -176,32 +183,44 @@ export default class Colors {
       this.nodeRow.name = color.name
       this.nodeRowSource.name = '_source'
       this.nodeRowShades.name = '_shades'
-      this.nodeRow.fills = this.nodeRowSource.fills = this.nodeRowShades.fills = []
+      this.nodeRow.fills =
+        this.nodeRowSource.fills =
+        this.nodeRowShades.fills =
+          []
 
       // layout
-      this.nodeRow.layoutMode = this.nodeRowSource.layoutMode = this.nodeRowShades.layoutMode = 'HORIZONTAL'
-      this.nodeRow.primaryAxisSizingMode = this.nodeRowSource.primaryAxisSizingMode = this.nodeRowShades.primaryAxisSizingMode = 'AUTO'
-      this.nodeRow.counterAxisSizingMode = this.nodeRowSource.counterAxisSizingMode = this.nodeRowShades.counterAxisSizingMode = 'AUTO'
+      this.nodeRow.layoutMode =
+        this.nodeRowSource.layoutMode =
+        this.nodeRowShades.layoutMode =
+          'HORIZONTAL'
+      this.nodeRow.primaryAxisSizingMode =
+        this.nodeRowSource.primaryAxisSizingMode =
+        this.nodeRowShades.primaryAxisSizingMode =
+          'AUTO'
+      this.nodeRow.counterAxisSizingMode =
+        this.nodeRowSource.counterAxisSizingMode =
+        this.nodeRowShades.counterAxisSizingMode =
+          'AUTO'
 
       // insert
       this.nodeRowSource.appendChild(
-        this.parent.view.includes('PALETTE') ?
-          new Sample(
-            color.name,
-            null,
-            null,
-            [color.rgb.r * 255, color.rgb.g * 255, color.rgb.b * 255],
-            this.parent.view,
-            this.parent.textColorsTheme
-          ).makeNodeShade(160, 224, color.name, true) :
-          new Sample(
-            color.name,
-            null,
-            null,
-            [color.rgb.r * 255, color.rgb.g * 255, color.rgb.b * 255],
-            this.parent.view,
-            this.parent.textColorsTheme
-          ).makeNodeRichShade(160, 376, color.name, true)
+        this.parent.view.includes('PALETTE')
+          ? new Sample(
+              color.name,
+              null,
+              null,
+              [color.rgb.r * 255, color.rgb.g * 255, color.rgb.b * 255],
+              this.parent.view,
+              this.parent.textColorsTheme
+            ).makeNodeShade(160, 224, color.name, true)
+          : new Sample(
+              color.name,
+              null,
+              null,
+              [color.rgb.r * 255, color.rgb.g * 255, color.rgb.b * 255],
+              this.parent.view,
+              this.parent.textColorsTheme
+            ).makeNodeRichShade(160, 376, color.name, true)
       )
 
       Object.values(this.parent.scale)
@@ -210,12 +229,12 @@ export default class Colors {
           let newColor: { _rgb: Array<number> }
 
           if (color.oklch) {
-           newColor = this.getShadeColorFromOklch(
-            sourceColor,
-            lightness,
-            color.hueShifting,
-            this.parent.algorithmVersion
-          )
+            newColor = this.getShadeColorFromOklch(
+              sourceColor,
+              lightness,
+              color.hueShifting,
+              this.parent.algorithmVersion
+            )
           } else {
             newColor = this.getShadeColorFromLch(
               sourceColor,
@@ -231,11 +250,10 @@ export default class Colors {
             'lch'
           )
 
-          const scaleName: string =
-            Object.keys(this.parent.scale)
-              .find((key) => this.parent.scale[key] === lightness)
-              .substr(10)
-          
+          const scaleName: string = Object.keys(this.parent.scale)
+            .find((key) => this.parent.scale[key] === lightness)
+            .substr(10)
+
           if (this.parent.view.includes('PALETTE')) {
             this.nodeRowShades.appendChild(
               new Sample(
@@ -248,8 +266,7 @@ export default class Colors {
                 { isClosestToRef: distance < 4 ? true : false }
               ).makeNodeShade(160, 224, scaleName)
             )
-          }
-          else {
+          } else {
             this.nodeRowShades.layoutMode = 'VERTICAL'
             samples.push(
               new Sample(
@@ -273,7 +290,7 @@ export default class Colors {
         this.nodeRowShades.appendChild(this.makeNodeSlice(samples))
       samples.length = 0
       i = 1
-      
+
       this.nodeRow.appendChild(this.nodeRowSource)
       this.nodeRow.appendChild(this.nodeRowShades)
       this.node.appendChild(this.nodeRow)

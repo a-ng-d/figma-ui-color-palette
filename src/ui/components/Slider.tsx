@@ -281,13 +281,9 @@ export default class Slider extends React.Component<Props> {
     let granularity = 1
 
     this.props.knobs.map((index) => {
-      palette.scale[`lightness-${index}`] = parseFloat(doMap(
-        granularity,
-        0,
-        1,
-        palette.min,
-        palette.max
-      ).toFixed(1))
+      palette.scale[`lightness-${index}`] = parseFloat(
+        doMap(granularity, 0, 1, palette.min, palette.max).toFixed(1)
+      )
       granularity -= 1 / (this.props.knobs.length - 1)
     })
 
@@ -300,10 +296,9 @@ export default class Slider extends React.Component<Props> {
 
   updateKnobTooltip = (tooltip: HTMLElement, value: number | string) => {
     tooltip.style.display = 'block'
-    if (typeof(value) === 'string')
+    if (typeof value === 'string')
       tooltip.textContent = value == '100.0' ? '100' : value
-    else
-      tooltip.textContent = value == 100 ? '100' : value?.toFixed(1)
+    else tooltip.textContent = value == 100 ? '100' : value?.toFixed(1)
   }
 
   distributeKnobs = (

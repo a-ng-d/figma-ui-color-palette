@@ -127,7 +127,7 @@ export interface HoveredColor extends SelectedColor {
 }
 
 export interface ActionsList {
-  [ action: string ]: () => void
+  [action: string]: () => void
 }
 
 // Models

@@ -19,31 +19,36 @@ export default class Dropdown extends React.Component<Props> {
 
   constructor(props) {
     super(props)
-    this.state = {
+    ;(this.state = {
       isListOpen: false,
-      position: this.props.options.filter(option => option.value === this.props.selected)[0].position
-    },
-    this.selectMenuRef = React.createRef()
+      position: this.props.options.filter(
+        (option) => option.value === this.props.selected
+      )[0].position,
+    }),
+      (this.selectMenuRef = React.createRef())
     this.listRef = React.createRef()
-    this.handleClickOutside = this.handleClickOutside.bind(this);
+    this.handleClickOutside = this.handleClickOutside.bind(this)
   }
 
   componentDidMount = () =>
-    document.addEventListener("mousedown", this.handleClickOutside)
+    document.addEventListener('mousedown', this.handleClickOutside)
 
   componentWillUnmount = () =>
-    document.removeEventListener("mousedown", this.handleClickOutside)
+    document.removeEventListener('mousedown', this.handleClickOutside)
 
   handleClickOutside(event) {
-    if (this.selectMenuRef && !this.selectMenuRef.current.contains(event.target))
+    if (
+      this.selectMenuRef &&
+      !this.selectMenuRef.current.contains(event.target)
+    )
       this.setState({
-        isListOpen: false
+        isListOpen: false,
       })
   }
 
   onOpenList = () => {
     this.setState({
-      isListOpen: true
+      isListOpen: true,
     })
     setTimeout(() => {
       if (this.listRef.current.getBoundingClientRect().top < 40)
@@ -54,42 +59,61 @@ export default class Dropdown extends React.Component<Props> {
   onSelectItem = (e) => {
     this.setState({
       isListOpen: false,
-      position: e.target.dataset.position
+      position: e.target.dataset.position,
     })
     this.props.onChange(e)
   }
 
   render() {
     return (
-      <div className="select-menu" ref={this.selectMenuRef}>
-        <button className={`select-menu__button ${this.state['isListOpen'] ? 'select-menu__button--active' : ''}`} onMouseDown={this.onOpenList}>
+      <div
+        className="select-menu"
+        ref={this.selectMenuRef}
+      >
+        <button
+          className={`select-menu__button ${
+            this.state['isListOpen'] ? 'select-menu__button--active' : ''
+          }`}
+          onMouseDown={this.onOpenList}
+        >
           <span className="select-menu__label">
-            {this.props.options.filter(option => option.value === this.props.selected)[0].label}
+            {
+              this.props.options.filter(
+                (option) => option.value === this.props.selected
+              )[0].label
+            }
           </span>
           <span className="select-menu__caret"></span>
         </button>
-        {this.state['isListOpen'] ?
+        {this.state['isListOpen'] ? (
           <ul
             className="select-menu__menu select-menu__menu--active"
             style={{ top: `${this.state['position'] * -24 - 6}px` }}
             ref={this.listRef}
           >
             {this.props.options.map((option, index) =>
-              option.isActive ? (<li
-                key={index}
-                className={`select-menu__item ${option.value === this.props.selected ? 'select-menu__item--selected' : ''} ${option.isBlocked ? 'select-menu__item--blocked' : ''}`}
-                data-value={option.value}
-                data-position={option.position}
-                data-is-blocked={option.isBlocked}
-                onMouseDown={this.onSelectItem}
-              >
-                <span className="select-menu__item-icon"></span>
-                <span className="select-menu__item-label">{option.label}</span>
-              </li>) : null
+              option.isActive ? (
+                <li
+                  key={index}
+                  className={`select-menu__item ${
+                    option.value === this.props.selected
+                      ? 'select-menu__item--selected'
+                      : ''
+                  } ${option.isBlocked ? 'select-menu__item--blocked' : ''}`}
+                  data-value={option.value}
+                  data-position={option.position}
+                  data-is-blocked={option.isBlocked}
+                  onMouseDown={this.onSelectItem}
+                >
+                  <span className="select-menu__item-icon"></span>
+                  <span className="select-menu__item-label">
+                    {option.label}
+                  </span>
+                </li>
+              ) : null
             )}
-          </ul> :
-          null
-        }      
+          </ul>
+        ) : null}
       </div>
     )
   }

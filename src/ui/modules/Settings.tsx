@@ -37,7 +37,10 @@ export default class Settings extends React.Component<Props> {
             <FormItem
               label="Palette name"
               id="rename-palette"
-              isBlocked={isBlocked('SETTINGS_PALETTE_NAME', this.props.planStatus)}
+              isBlocked={isBlocked(
+                'SETTINGS_PALETTE_NAME',
+                this.props.planStatus
+              )}
             >
               <Input
                 id="rename-palette"
@@ -48,7 +51,10 @@ export default class Settings extends React.Component<Props> {
                   this.props.paletteName != '' ? this.props.paletteName : ''
                 }
                 charactersLimit={64}
-                isBlocked={isBlocked('SETTINGS_PALETTE_NAME', this.props.planStatus)}
+                isBlocked={isBlocked(
+                  'SETTINGS_PALETTE_NAME',
+                  this.props.planStatus
+                )}
                 feature="RENAME_PALETTE"
                 onChange={
                   isBlocked('SETTINGS_PALETTE_NAME', this.props.planStatus)
@@ -92,14 +98,20 @@ export default class Settings extends React.Component<Props> {
             <FormItem
               label="Text light color"
               id="change-text-light-color"
-              isBlocked={isBlocked('SETTINGS_TEXT_COLORS_THEME', this.props.planStatus)}
+              isBlocked={isBlocked(
+                'SETTINGS_TEXT_COLORS_THEME',
+                this.props.planStatus
+              )}
             >
               <Input
                 id="change-text-light-color"
                 type="color"
                 icon={{ type: 'none', value: null }}
                 value={this.props.textColorsTheme.lightColor}
-                isBlocked={isBlocked('SETTINGS_TEXT_COLORS_THEME', this.props.planStatus)}
+                isBlocked={isBlocked(
+                  'SETTINGS_TEXT_COLORS_THEME',
+                  this.props.planStatus
+                )}
                 feature="CHANGE_TEXT_LIGHT_COLOR"
                 onChange={
                   isBlocked('SETTINGS_TEXT_COLORS_THEME', this.props.planStatus)
@@ -116,14 +128,20 @@ export default class Settings extends React.Component<Props> {
             <FormItem
               label="Text dark color"
               id="change-text-dark-color"
-              isBlocked={isBlocked('SETTINGS_TEXT_COLORS_THEME', this.props.planStatus)}
+              isBlocked={isBlocked(
+                'SETTINGS_TEXT_COLORS_THEME',
+                this.props.planStatus
+              )}
             >
               <Input
                 id="change-text-dark-color"
                 type="color"
                 icon={{ type: 'none', value: null }}
                 value={this.props.textColorsTheme.darkColor}
-                isBlocked={isBlocked('SETTINGS_TEXT_COLORS_THEME', this.props.planStatus)}
+                isBlocked={isBlocked(
+                  'SETTINGS_TEXT_COLORS_THEME',
+                  this.props.planStatus
+                )}
                 feature="CHANGE_TEXT_DARK_COLOR"
                 onChange={
                   isBlocked('SETTINGS_TEXT_COLORS_THEME', this.props.planStatus)
@@ -142,7 +160,10 @@ export default class Settings extends React.Component<Props> {
               messages={[
                 'The light and dark text colors serve as a reference to simulate contrast and obtain both WCAG and APCA scores',
               ]}
-              isBlocked={isBlocked('SETTINGS_NEW_ALGORITHM', this.props.planStatus)}
+              isBlocked={isBlocked(
+                'SETTINGS_NEW_ALGORITHM',
+                this.props.planStatus
+              )}
             />
           </div>
         </Feature>
@@ -170,7 +191,10 @@ export default class Settings extends React.Component<Props> {
               id="update-algorithm"
               label="Enable the new algorithm for generating color shades"
               isChecked={this.props.isNewAlgorithm}
-              isBlocked={isBlocked('SETTINGS_NEW_ALGORITHM', this.props.planStatus)}
+              isBlocked={isBlocked(
+                'SETTINGS_NEW_ALGORITHM',
+                this.props.planStatus
+              )}
               feature="UPDATE_ALGORITHM_VERSION"
               onChange={
                 isBlocked('SETTINGS_NEW_ALGORITHM', this.props.planStatus)
@@ -183,7 +207,10 @@ export default class Settings extends React.Component<Props> {
               messages={[
                 'The Chroma values are harmonized to ensure consistent lightness across all shades, but this may make the colors look desaturated.',
               ]}
-              isBlocked={isBlocked('SETTINGS_NEW_ALGORITHM', this.props.planStatus)}
+              isBlocked={isBlocked(
+                'SETTINGS_NEW_ALGORITHM',
+                this.props.planStatus
+              )}
             />
           </div>
         </Feature>

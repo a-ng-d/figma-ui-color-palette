@@ -61,12 +61,12 @@ export default class Scale extends React.Component<Props> {
                 id="presets"
                 options={Object.entries(presets).map((entry, index) => {
                   return {
-                      label: entry[1].name,
-                      value: entry[1].id,
-                      position: index,
-                      isActive: true,
-                      isBlocked: false
-                    }
+                    label: entry[1].name,
+                    value: entry[1].id,
+                    position: index,
+                    isActive: true,
+                    isBlocked: false,
+                  }
                 })}
                 selected={this.props.preset.id}
                 onChange={this.props.onChangePreset}

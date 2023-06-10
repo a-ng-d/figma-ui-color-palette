@@ -241,9 +241,10 @@ export default class Properties {
     this.nodeDetailedAPCAScoresProps = figma.createFrame()
     this.nodeDetailedAPCAScoresProps.name = '_apca-scores'
     this.nodeDetailedAPCAScoresProps.fills = []
-    const
-      minimumDarkFontSize: Array<string | number> = this.getMinFontSizes('DARK'),
-      minimumLightFontSize: Array<string | number> = this.getMinFontSizes('LIGHT')
+    const minimumDarkFontSize: Array<string | number> =
+        this.getMinFontSizes('DARK'),
+      minimumLightFontSize: Array<string | number> =
+        this.getMinFontSizes('LIGHT')
 
     // layout
     this.nodeDetailedAPCAScoresProps.layoutMode = 'VERTICAL'
@@ -261,46 +262,40 @@ export default class Properties {
         [
           new Tag(
             '_apca-light',
-            `Lc ${this.getAPCAContrast('LIGHT').toFixed(1)}`,
+            `Lc ${this.getAPCAContrast('LIGHT').toFixed(1)}`
           ).makeNodeTag(chroma(this.textColorsTheme.lightColor).gl(), true),
-          new Tag(
-            '_minimum-font-sizes',
-            'Minimum font sizes',
-          ).makeNodeTag(),
+          new Tag('_minimum-font-sizes', 'Minimum font sizes').makeNodeTag(),
           new Tag(
             '_200-light',
-            `${minimumLightFontSize[2]}pt (200)`,
+            `${minimumLightFontSize[2]}pt (200)`
           ).makeNodeTag(),
           new Tag(
             '_300-light',
-            `${minimumLightFontSize[3]}pt (300)`,
+            `${minimumLightFontSize[3]}pt (300)`
           ).makeNodeTag(),
           new Tag(
             '_400-light',
-            `${minimumLightFontSize[4]}pt (400)`,
+            `${minimumLightFontSize[4]}pt (400)`
           ).makeNodeTag(),
           new Tag(
             '_500-light',
-            `${minimumLightFontSize[5]}pt (500)`,
+            `${minimumLightFontSize[5]}pt (500)`
           ).makeNodeTag(),
           new Tag(
             '_500-light',
-            `${minimumLightFontSize[5]}pt (500)`,
+            `${minimumLightFontSize[5]}pt (500)`
           ).makeNodeTag(),
           new Tag(
             '_700-light',
             `${minimumLightFontSize[7]}pt (700)`
-          ).makeNodeTag()
+          ).makeNodeTag(),
         ],
         [
           new Tag(
             '_apca-dark',
             `Lc ${this.getAPCAContrast('DARK').toFixed(1)}`
           ).makeNodeTag(chroma(this.textColorsTheme.darkColor).gl(), true),
-          new Tag(
-            '_minimum-font-sizes',
-            'Minimum font sizes'
-          ).makeNodeTag(),
+          new Tag('_minimum-font-sizes', 'Minimum font sizes').makeNodeTag(),
           new Tag(
             '_200-dark',
             `${minimumDarkFontSize[2]}pt (200)`
@@ -324,7 +319,7 @@ export default class Properties {
           new Tag(
             '_700-dark',
             `${minimumDarkFontSize[7]}pt (700)`
-          ).makeNodeTag()
+          ).makeNodeTag(),
         ]
       )
     )
@@ -339,7 +334,10 @@ export default class Properties {
     this.nodeColumns.name = '_columns'
     this.nodeLeftColumn.name = '_left-column'
     this.nodeRightColumn.name = '_right-column'
-    this.nodeColumns.fills = this.nodeLeftColumn.fills = this.nodeRightColumn.fills = []
+    this.nodeColumns.fills =
+      this.nodeLeftColumn.fills =
+      this.nodeRightColumn.fills =
+        []
 
     // layout
     this.nodeColumns.layoutMode = 'HORIZONTAL'
@@ -348,19 +346,22 @@ export default class Properties {
     this.nodeColumns.layoutAlign = 'STRETCH'
     this.nodeColumns.itemSpacing = 8
 
-    this.nodeLeftColumn.layoutMode = this.nodeRightColumn.layoutMode = 'VERTICAL'
-    this.nodeLeftColumn.primaryAxisSizingMode = this.nodeRightColumn.primaryAxisSizingMode = 'AUTO'
-    this.nodeLeftColumn.counterAxisSizingMode = this.nodeRightColumn.counterAxisSizingMode = 'FIXED'
+    this.nodeLeftColumn.layoutMode = this.nodeRightColumn.layoutMode =
+      'VERTICAL'
+    this.nodeLeftColumn.primaryAxisSizingMode =
+      this.nodeRightColumn.primaryAxisSizingMode = 'AUTO'
+    this.nodeLeftColumn.counterAxisSizingMode =
+      this.nodeRightColumn.counterAxisSizingMode = 'FIXED'
     this.nodeLeftColumn.layoutGrow = this.nodeRightColumn.layoutGrow = 1
     this.nodeLeftColumn.itemSpacing = this.nodeRightColumn.itemSpacing = 4
 
     // insert
-    leftNodes.forEach(node => this.nodeLeftColumn.appendChild(node))
-    rightNodes.forEach(node => this.nodeRightColumn.appendChild(node))
+    leftNodes.forEach((node) => this.nodeLeftColumn.appendChild(node))
+    rightNodes.forEach((node) => this.nodeRightColumn.appendChild(node))
     this.nodeColumns.appendChild(this.nodeLeftColumn)
     this.nodeColumns.appendChild(this.nodeRightColumn)
 
-    return this.nodeColumns   
+    return this.nodeColumns
   }
 
   makeNodeDetailed() {
@@ -379,12 +380,8 @@ export default class Properties {
     // insert
     this.node.appendChild(
       this.makeNodeColumns(
-        [
-          this.makeNodeDetailedBaseProps(),
-        ],
-        [
-          this.makeDetailedWCAGScoresProps()
-        ]
+        [this.makeNodeDetailedBaseProps()],
+        [this.makeDetailedWCAGScoresProps()]
       )
     )
     this.node.appendChild(this.makeNodeDetailedAPCAScoresProps())
@@ -407,7 +404,9 @@ export default class Properties {
 
     // insert
     this.node.appendChild(this.makeNodeTopProps())
-    this.nodeTopProps.appendChild(new Tag('_scale', this.name, 10).makeNodeTag())
+    this.nodeTopProps.appendChild(
+      new Tag('_scale', this.name, 10).makeNodeTag()
+    )
     this.nodeTopProps.appendChild(this.makeNodeBaseProps())
     this.node.appendChild(this.makeNodeBottomProps())
 

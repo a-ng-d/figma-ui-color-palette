@@ -311,7 +311,7 @@ div.icon-button--disabled {
 }
 
 .select-menu__item--blocked .select-menu__item-label {
-  color: var(--figma-color-text-disabled)
+  color: var(--figma-color-text-disabled);
 }
 
 /* Input */

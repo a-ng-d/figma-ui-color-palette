@@ -33,15 +33,18 @@ const updateSettings = (msg, palette) => {
 
     palette.children[0].remove()
     palette.appendChild(
-      new Colors({
-        paletteName: paletteName,
-        preset: preset,
-        scale: scale,
-        colors: colors,
-        view: view,
-        textColorsTheme: msg.data.textColorsTheme,
-        algorithmVersion: msg.data.algorithmVersion,
-      }, palette).makeNode()
+      new Colors(
+        {
+          paletteName: paletteName,
+          preset: preset,
+          scale: scale,
+          colors: colors,
+          view: view,
+          textColorsTheme: msg.data.textColorsTheme,
+          algorithmVersion: msg.data.algorithmVersion,
+        },
+        palette
+      ).makeNode()
     )
 
     // palette migration

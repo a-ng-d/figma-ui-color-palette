@@ -54,7 +54,7 @@ export default class CreatePalette extends React.Component<Props> {
               )[0]
               .name.slice(1)
               .toLowerCase()
-          : ''
+          : '',
     }
   }
 
@@ -74,7 +74,7 @@ export default class CreatePalette extends React.Component<Props> {
 
   navHandler = (e: React.SyntheticEvent) =>
     this.setState({
-      context: (e.target as HTMLElement).innerText
+      context: (e.target as HTMLElement).innerText,
     })
 
   // Direct actions
@@ -178,10 +178,7 @@ export default class CreatePalette extends React.Component<Props> {
         break
       }
       case 'About': {
-        controls =
-          <About
-            planStatus={this.props.planStatus}
-          />
+        controls = <About planStatus={this.props.planStatus} />
       }
     }
 
