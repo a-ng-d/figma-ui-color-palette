@@ -19,7 +19,7 @@ export default class About extends React.Component<Props> {
               package_json.version.slice(0, 1) +
               package_json.version.slice(2, 3)
             }﹒${
-              this.props.planStatus === 'UNPAID' ? 'FREE' : 'PRO'
+              this.props.planStatus === 'UNPAID' ? 'Free' : 'Pro'
             } Plan`}</div>
           </div>
           <div>
