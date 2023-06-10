@@ -43,7 +43,7 @@ const updateColors = (msg, palette) => {
 
     // palette migration
     palette.counterAxisSizingMode = 'AUTO'
-    palette.name = `${paletteName}﹒${preset.name}`
+    palette.name = `${paletteName}﹒${preset.name}﹒${view.includes('PALETTE') ? 'Palette' : 'Sheet'}`
   } else
     figma.notify(
       'Your UI Color Palette seems corrupted. Do not edit any layer within it.'
