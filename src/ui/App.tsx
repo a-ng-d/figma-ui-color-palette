@@ -308,8 +308,8 @@ class App extends React.Component {
   render() {
     onmessage = (e: MessageEvent) => {
       try {
-        const checkPlanStatus = () =>
-          this.setState({ planStatus: e.data.pluginMessage.data })
+        const getProPlan = () =>
+          this.setState({ planStatus: e.data.pluginMessage.data, hasGetProPlanDialog: true })
         
         const checkHighlightStatus = () =>
           this.setState({ hasHighlight: !e.data.pluginMessage.data })
@@ -428,7 +428,7 @@ class App extends React.Component {
           })
 
         const actions: ActionsList = {
-          PLAN_STATUS: () => checkPlanStatus(),
+          GET_PRO_PLAN: () => getProPlan(),
           HIGHTLIGHT_STATUS: () => checkHighlightStatus(),
           EMPTY_SELECTION: () => updateWhileEmptySelection(),
           COLOR_SELECTED: () => updateWhileColorSelected(),

@@ -20,7 +20,7 @@ export default class Shortcuts extends React.Component<Props> {
         <div className="shortcuts__get-pro">
           <Feature
             isActive={
-              features.find((feature) => feature.name === 'GET_PRO')
+              features.find((feature) => feature.name === 'GET_PRO_PLAN')
                 .isActive
             }
           >     

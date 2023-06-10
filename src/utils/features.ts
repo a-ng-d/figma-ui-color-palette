@@ -235,7 +235,7 @@ const features: Array<Features> = [
     service: ['create', 'edit'],
   },
   {
-    name: 'GET_PRO',
+    name: 'GET_PRO_PLAN',
     description: 'Access the subscription to get pro features',
     isActive: true,
     isPro: false,
