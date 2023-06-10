@@ -59,15 +59,16 @@ export default class Scale extends React.Component<Props> {
             >
               <Dropdown
                 id="presets"
-                options={Object.entries(presets).map((entry) => {
+                options={Object.entries(presets).map((entry, index) => {
                   return {
                       label: entry[1].name,
                       value: entry[1].id,
+                      position: index,
                       isActive: true,
                       isBlocked: false
                     }
                 })}
-                selected={this.props.preset.name}
+                selected={this.props.preset.id}
                 onChange={this.props.onChangePreset}
               />
             </Feature>

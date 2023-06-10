@@ -1,11 +1,11 @@
 import * as React from 'react'
-import { selectMenu } from 'figma-plugin-ds'
 
 interface Props {
   id: string
   options: Array<{
     label: string
     value: string
+    position: number
     isActive?: boolean
     isBlocked?: boolean
   }>
@@ -14,44 +14,83 @@ interface Props {
 }
 
 export default class Dropdown extends React.Component<Props> {
-  componentDidMount = () => {
-    selectMenu.init()
-    setTimeout(() => {
-      document.getElementById(this.props.id).onchange = (e: any) =>
-        this.props.onChange(e)
+  selectMenuRef: any
+  listRef: any
 
-      document.getElementById(this.props.id).nextSibling.nextSibling.childNodes.forEach((li: any) => {
-        const option = this.props.options.find(option => option.value === li.dataset.value)
-        if (option.isBlocked) {
-          li.classList.add('select-menu__item--blocked')
-        }
-      })
-      
-    }, 500)
+  constructor(props) {
+    super(props)
+    this.state = {
+      isListOpen: false,
+      position: this.props.options.filter(option => option.value === this.props.selected)[0].position
+    },
+    this.selectMenuRef = React.createRef()
+    this.listRef = React.createRef()
+    this.handleClickOutside = this.handleClickOutside.bind(this);
   }
 
-  componentWillUnmount = () => {
-    document.getElementById(this.props.id).onchange = null
+  componentDidMount = () =>
+    document.addEventListener("mousedown", this.handleClickOutside)
+
+  componentWillUnmount = () =>
+    document.removeEventListener("mousedown", this.handleClickOutside)
+
+  handleClickOutside(event) {
+    if (this.selectMenuRef && !this.selectMenuRef.current.contains(event.target))
+      this.setState({
+        isListOpen: false
+      })
+  }
+
+  onOpenList = () => {
+    this.setState({
+      isListOpen: true
+    })
+    setTimeout(() => {
+      if (this.listRef.current.getBoundingClientRect().top < 40)
+        this.listRef.current.style.top = '-6px'
+    }, 1)
+  }
+
+  onSelectItem = (e) => {
+    this.setState({
+      isListOpen: false,
+      position: e.target.dataset.position
+    })
+    this.props.onChange(e)
   }
 
   render() {
     return (
-      <select
-        id={this.props.id}
-        className="select-menu"
-        defaultValue={this.props.selected}
-      >
-        {this.props.options.map((option, index) =>
-          option.isActive ? (<option
-            key={index}
-            value={option.value}
-            disabled={option.isBlocked}
-            data-is-blocked={option.isBlocked}
+      <div className="select-menu" ref={this.selectMenuRef}>
+        <button className={`select-menu__button ${this.state['isListOpen'] ? 'select-menu__button--active' : ''}`} onMouseDown={this.onOpenList}>
+          <span className="select-menu__label">
+            {this.props.options.filter(option => option.value === this.props.selected)[0].label}
+          </span>
+          <span className="select-menu__caret"></span>
+        </button>
+        {this.state['isListOpen'] ?
+          <ul
+            className="select-menu__menu select-menu__menu--active"
+            style={{ top: `${this.state['position'] * -24 - 6}px` }}
+            ref={this.listRef}
           >
-            {option.label}
-          </option>) : null
-        )}
-      </select>
+            {this.props.options.map((option, index) =>
+              option.isActive ? (<li
+                key={index}
+                className={`select-menu__item ${option.value === this.props.selected ? 'select-menu__item--selected' : ''} ${option.isBlocked ? 'select-menu__item--blocked' : ''}`}
+                data-value={option.value}
+                data-position={option.position}
+                data-is-blocked={option.isBlocked}
+                onMouseDown={this.onSelectItem}
+              >
+                <span className="select-menu__item-icon"></span>
+                <span className="select-menu__item-label">{option.label}</span>
+              </li>) : null
+            )}
+          </ul> :
+          null
+        }      
+      </div>
     )
   }
 }

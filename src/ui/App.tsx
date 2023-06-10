@@ -122,7 +122,7 @@ class App extends React.Component {
       CUSTOM: () => setCustomPreset()
     }
 
-    return actions[(e.target as HTMLInputElement).value]?.()
+    return actions[(e.target as HTMLElement).dataset.value]?.()
   }
   
   customHandler = (e: React.SyntheticEvent) => {
@@ -137,6 +137,7 @@ class App extends React.Component {
             scale: scale,
             min: palette.min,
             max: palette.max,
+            id: presets.custom.id
           },
         })
       }
@@ -151,6 +152,7 @@ class App extends React.Component {
             scale: scale,
             min: palette.min,
             max: palette.max,
+            id: presets.custom.id
           },
         })
       }
@@ -317,6 +319,7 @@ class App extends React.Component {
             service: 'None',
             paletteName: '',
             preset: presets.material,
+            view: 'PALETTE_WITH_PROPERTIES',
             textColorsTheme: {
               lightColor: '#FFFFFF',
               darkColor: '#000000',
@@ -325,6 +328,7 @@ class App extends React.Component {
           })
           palette.name = ''
           palette.preset = {}
+          palette.view = 'PALETTE_WITH_PROPERTIES'
           palette.textColorsTheme = {
             lightColor: '#FFFFFF',
             darkColor: '#000000',
@@ -338,6 +342,7 @@ class App extends React.Component {
               service: 'Create',
               paletteName: '',
               preset: presets.material,
+              view: 'PALETTE_WITH_PROPERTIES',
               textColorsTheme: {
                 lightColor: '#FFFFFF',
                 darkColor: '#000000',
@@ -346,6 +351,7 @@ class App extends React.Component {
             })
             palette.name = ''
             palette.preset = presets.material
+            palette.view = 'PALETTE_WITH_PROPERTIES'
             palette.textColorsTheme = {
               lightColor: '#FFFFFF',
               darkColor: '#000000',
@@ -449,11 +455,13 @@ class App extends React.Component {
             <CreatePalette
               preset={this.state['preset']}
               paletteName={this.state['paletteName']}
+              view={this.state['view']}
               textColorsTheme={this.state['textColorsTheme']}
               planStatus={this.state['planStatus']}
               onReopenHighlight={this.highlightHandler('OPEN')}
               onChangePreset={this.presetHandler}
               onCustomPreset={this.customHandler}
+              onChangeView={(view: string) => this.setState({ view: view, onGoingStep: 'view changed' })}
               onChangeSettings={this.settingsHandler}
             />
           ) : null}

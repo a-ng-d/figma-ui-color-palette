@@ -411,9 +411,9 @@ export default class EditPalette extends React.Component<Props> {
   })
 
   viewHandler = (e) => {
-    if (e.target[e.target.selectedIndex].dataset.isBlocked === 'false') {
-      this.props.onChangeView(e.target.value)
-      palette.view = e.target.value
+    if (e.target.dataset.isBlocked === 'false') {
+      this.props.onChangeView(e.target.dataset.value)
+      palette.view = e.target.dataset.value
       parent.postMessage(
         { pluginMessage: { type: 'UPDATE_VIEW', data: palette } },
         '*'
@@ -641,7 +641,10 @@ export default class EditPalette extends React.Component<Props> {
         break
       }
       case 'About': {
-        controls = <About />
+        controls =
+        <About
+          planStatus={this.props.planStatus}
+        />
       }
     }
 
@@ -654,7 +657,7 @@ export default class EditPalette extends React.Component<Props> {
           onClick={this.navHandler}
         />
         <section
-          onClick={this.unSelectColor}
+          onMouseDown={this.unSelectColor}
           className="section--scrollable"
         >
           <div className="controls">{controls}</div>

@@ -16,11 +16,13 @@ import features from '../../utils/features'
 interface Props {
   paletteName: string
   preset: PresetConfiguration
+  view: string
   textColorsTheme: TextColorsThemeHexModel
   planStatus: string
   onReopenHighlight: React.ChangeEventHandler
   onChangePreset: React.ChangeEventHandler
   onCustomPreset: React.ChangeEventHandler
+  onChangeView: (view: string) => void
   onChangeSettings: React.ChangeEventHandler
 }
 
@@ -68,8 +70,10 @@ export default class CreatePalette extends React.Component<Props> {
   settingsHandler = (e) => this.props.onChangeSettings(e)
 
   viewHandler = (e) => {
-    if (e.target[e.target.selectedIndex].dataset.isBlocked === 'false')
-      palette.view = e.target.value
+    if (e.target.dataset.isBlocked === 'false') {
+      palette.view = e.target.dataset.value
+      this.props.onChangeView(e.target.dataset.value)
+    }
   }
 
   navHandler = (e: React.SyntheticEvent) =>
@@ -111,6 +115,7 @@ export default class CreatePalette extends React.Component<Props> {
       actions = (
         <Actions
           context="create"
+          view={this.props.view}
           planStatus={this.props.planStatus}
           onCreatePalette={this.onCreate}
           onChangeView={this.viewHandler}
