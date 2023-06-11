@@ -23,6 +23,7 @@ figma.showUI(__html__, {
   themeColors: true,
 })
 figma.loadFontAsync({ family: 'Inter', style: 'Regular' })
+figma.loadFontAsync({ family: 'Inter', style: 'Medium' })
 figma.loadFontAsync({ family: 'Roboto', style: 'Regular' })
 figma.loadFontAsync({ family: 'Roboto Mono', style: 'Regular' })
 figma.loadFontAsync({ family: 'Roboto Mono', style: 'Medium' })
