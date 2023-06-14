@@ -107,7 +107,7 @@ export default class Slider extends React.Component<Props> {
       knobs.forEach((knob) =>
         this.updateLightnessScaleEntry(
           knob.classList[1],
-          doMap(knob.offsetLeft, 0, rangeWidth, 0, 100)
+          parseFloat(knob.style.left.replace('%', ''))
         )
       )
     }
