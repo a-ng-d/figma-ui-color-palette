@@ -390,14 +390,15 @@ export default class Slider extends React.Component<Props> {
       if (
         e.key === 'Backspace' &&
         this.state['selectedStop']['stop'] != null &&
-        this.props.stops.length > 2
+        this.props.stops.length > 2 &&
+        this.state['selectedStop']['state'] != 'EDITING'
       )
         this.props.presetName === 'Custom' && !this.props.hasPreset
           ? this.onDelete()
           : null
-      else if (e.key === 'ArrowRight' && this.state['selectedStop']['stop'] != null)
+      else if (e.key === 'ArrowRight' && this.state['selectedStop']['stop'] != null && this.state['selectedStop']['state'] != 'EDITING')
         this.onShiftRight(e)
-      else if (e.key === 'ArrowLeft' && this.state['selectedStop']['stop'] != null)
+      else if (e.key === 'ArrowLeft' && this.state['selectedStop']['stop'] != null && this.state['selectedStop']['state'] != 'EDITING')
         this.onShiftLeft(e)
       else if (e.key === 'Escape' && this.state['selectedStop']['stop'] != null)
         this.setState({
