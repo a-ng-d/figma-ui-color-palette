@@ -365,7 +365,7 @@ export default class Slider extends React.Component<Props> {
   ) => {
     knobs.forEach((knob) => {
       const shift = knob.offsetLeft - src.offsetLeft + offset
-      if (knob != src) knob.style.left = doMap(shift, 0, width, 0, 100) + '%'
+      if (knob != src) knob.style.left = parseFloat(doMap(shift, 0, width, 0, 100).toFixed(1)) + '%'
       this.updateKnobTooltip(
         knob.childNodes[0] as HTMLElement,
         palette.scale[knob.classList[1]]
