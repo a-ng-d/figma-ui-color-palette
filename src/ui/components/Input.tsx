@@ -100,6 +100,7 @@ export default class Input extends React.Component<Props> {
           step={this.props.step}
           autoFocus={this.props.isAutoFocus}
           onKeyDown={this.onNudge}
+          onKeyPress={this.props.onConfirm}
           onChange={this.props.onChange}
           onFocus={this.props.onFocus}
         />
