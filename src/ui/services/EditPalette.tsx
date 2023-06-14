@@ -148,17 +148,17 @@ export default class EditPalette extends React.Component<Props> {
     }
 
     const onTypeStopValue = () => {
-        parent.postMessage(
-          {
-            pluginMessage: {
-              type: 'UPDATE_SCALE',
-              data: palette,
-              isEditedInRealTime: false,
-            },
+      parent.postMessage(
+        {
+          pluginMessage: {
+            type: 'UPDATE_SCALE',
+            data: palette,
+            isEditedInRealTime: false,
           },
-          '*'
-        )
-        this.props.onChangeStop()
+        },
+        '*'
+      )
+      this.props.onChangeStop()
     } 
 
     const actions: ActionsList = {
