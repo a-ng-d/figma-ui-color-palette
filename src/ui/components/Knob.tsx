@@ -5,7 +5,7 @@ interface Props {
   id: string
   shortId: string
   value: string | number
-  inputValue?: number
+  stopInputValue?: number
   state?: string
   min?: string
   max?: string
@@ -43,7 +43,7 @@ export default class Knob extends React.Component<Props> {
             <Input
               type="number"
               icon={{ type: 'none', value: null }}
-              value={this.props.inputValue.toString()}
+              value={this.props.stopInputValue.toString()}
               min={this.props.min}
               max={this.props.max}
               step="0.1"

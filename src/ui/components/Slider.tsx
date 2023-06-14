@@ -28,7 +28,7 @@ export default class Slider extends React.Component<Props> {
         state: 'NORMAL',
       },
       knobs: [],
-      value: 0
+      stopInputValue: 0
     }
   }
 
@@ -47,7 +47,7 @@ export default class Slider extends React.Component<Props> {
           knob: e.target,
           state: 'EDITING'
         },
-        value: this.props.scale[e.target.classList[1]]
+        stopInputValue: this.props.scale[e.target.classList[1]]
       })
     }
   }
@@ -57,15 +57,15 @@ export default class Slider extends React.Component<Props> {
       palette.scale = this.props.scale
       if (parseFloat(e.target.value) < parseFloat(e.target.min)) {
         palette.scale[`lightness-${stopId}`] = parseFloat(e.target.min)
-        this.setState({ value: parseFloat(e.target.min) })
+        this.setState({ stopInputValue: parseFloat(e.target.min) })
       }
       else if (parseFloat(e.target.value) > parseFloat(e.target.max)) {
         palette.scale[`lightness-${stopId}`] = parseFloat(e.target.max)
-        this.setState({ value: parseFloat(e.target.max) })
+        this.setState({ stopInputValue: parseFloat(e.target.max) })
       }
       else {
         palette.scale[`lightness-${stopId}`] = parseFloat(e.target.value)
-        this.setState({ value: parseFloat(e.target.value) })
+        this.setState({ stopInputValue: parseFloat(e.target.value) })
       }
       this.props.onChange('TYPED')
     }
@@ -477,13 +477,13 @@ export default class Slider extends React.Component<Props> {
             id={lightness[0]}
             shortId={lightness[0].replace('lightness-', '')}
             value={lightness[1]}
-            inputValue={this.state['value']}
+            stopInputValue={this.state['stopInputValue']}
             state={this.getState(lightness[0])}
             min={original[index + 1] == undefined ? '0' : (original[index + 1][1] + 2).toString()}
             max={original[index - 1] == undefined ? '100' : (original[index - 1][1] - 2).toString()}
             onMouseDown={this.onGrab}
             onClick={this.clickHandler}
-            onChangeStopValue={(e) => this.setState({ value: e.target.value })}
+            onChangeStopValue={(e) => this.setState({ stopInputValue: e.target.value })}
             onValidStopValue={this.validHandler}
           />
         ))}
