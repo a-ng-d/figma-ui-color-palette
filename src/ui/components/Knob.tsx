@@ -51,6 +51,7 @@ export default class Knob extends React.Component<Props> {
               isAutoFocus={true}
               onChange={this.props.onChangeStopValue}
               onFocus={(e: React.FocusEvent<HTMLInputElement>) => this.props.onValidStopValue(this.props.shortId, e)}
+              onBlur={(e: React.FocusEvent<HTMLInputElement>) => this.props.onValidStopValue(this.props.shortId, e)}
               onConfirm={(e: React.KeyboardEvent<HTMLInputElement>) => this.props.onValidStopValue(this.props.shortId, e)}
             />
           </div>

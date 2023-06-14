@@ -15,6 +15,7 @@ interface Props {
   isAutoFocus?: boolean
   onChange: React.FocusEventHandler<HTMLInputElement>
   onFocus: React.FocusEventHandler<HTMLInputElement>
+  onBlur: React.FocusEventHandler<HTMLInputElement>
   onConfirm?: React.KeyboardEventHandler<HTMLInputElement>
 }
 
@@ -53,8 +54,8 @@ export default class Input extends React.Component<Props> {
           value={this.props.value}
           autoFocus={this.props.isAutoFocus}
           onChange={this.props.onChange}
-          onBlur={this.props.onChange}
           onFocus={this.props.onFocus}
+          onBlur={this.props.onBlur}
         />
         <input
           id={this.props.id}
@@ -64,8 +65,8 @@ export default class Input extends React.Component<Props> {
           value={this.props.value.toUpperCase().substr(1, 6)}
           autoFocus={this.props.isAutoFocus}
           onChange={this.props.onChange}
-          onBlur={this.props.onChange}
           onFocus={this.props.onFocus}
+          onBlur={this.props.onBlur}
         />
       </div>
     )
@@ -103,6 +104,7 @@ export default class Input extends React.Component<Props> {
           onKeyPress={this.props.onConfirm}
           onChange={this.props.onChange}
           onFocus={this.props.onFocus}
+          onBlur={this.props.onBlur}
         />
       </div>
     )
@@ -137,8 +139,8 @@ export default class Input extends React.Component<Props> {
           autoFocus={this.props.isAutoFocus}
           onKeyPress={this.props.onConfirm}
           onChange={this.props.onChange}
-          onBlur={this.props.onChange}
           onFocus={this.props.onFocus}
+          onBlur={this.props.onBlur}
         />
       </div>
     )
