@@ -25,6 +25,46 @@ export default class Slider extends React.Component<Props> {
     this.state = {
       selectedKnob: null,
       knobs: [],
+      value: 0
+    }
+  }
+
+  clickHandler = (e) => {
+    if (e.detail == 1 && !this.props.hasPreset && this.state['selectedKnob']['state'] != 'SLIDING') {
+      this.setState({
+        selectedKnob: {
+          knob: e.target,
+          state: 'SELECTED'
+        }
+      })
+    }
+    else if (e.detail == 2 && !this.props.hasPreset) {
+      this.setState({
+        selectedKnob: {
+          knob: e.target,
+          state: 'EDITING'
+        },
+        value: this.props.scale[e.target.classList[1]]
+      })
+    }
+  }
+
+  validHandler = (stopId: string, e) => {
+    if (e.key === 'Enter' || e._reactName === 'onBlur') {
+      palette.scale = this.props.scale
+      if (parseFloat(e.target.value) < parseFloat(e.target.min)) {
+        palette.scale[`lightness-${stopId}`] = parseFloat(e.target.min)
+        this.setState({ value: parseFloat(e.target.min) })
+      }
+      else if (parseFloat(e.target.value) > parseFloat(e.target.max)) {
+        palette.scale[`lightness-${stopId}`] = parseFloat(e.target.max)
+        this.setState({ value: parseFloat(e.target.max) })
+      }
+      else {
+        palette.scale[`lightness-${stopId}`] = parseFloat(e.target.value)
+        this.setState({ value: parseFloat(e.target.value) })
+      }
+      this.props.onChange('TYPED')
     }
   }
 
@@ -336,14 +376,14 @@ export default class Slider extends React.Component<Props> {
     })
   }
 
-  isSelected = (lightness) => {
+  getState = (lightness: string) => {
     let state: string
-    if (this.state['selectedKnob'] != null)
+    if (this.state['selectedKnob']['knob'] != null)
       state =
-        this.state['selectedKnob'].classList[1] === lightness
-          ? 'selected'
-          : 'normal'
-    else state = 'normal'
+        this.state['selectedKnob']['knob'].classList[1] === lightness
+          ? this.state['selectedKnob']['state']
+          : 'NORMAL'
+    else state = 'NORMAL'
 
     return state
   }
@@ -390,10 +430,10 @@ export default class Slider extends React.Component<Props> {
           <Knob
             key={lightness[0]}
             id={lightness[0]}
-            scale={lightness[1]}
-            state={this.isSelected(lightness[0])}
-            number={lightness[0].replace('lightness-', '')}
-            action={this.onGrab}
+            shortId={lightness[0].replace('lightness-', '')}
+            value={lightness[1]}
+            inputValue={this.state['value']}
+            onMouseDown={this.onGrab}
           />
         ))}
       </div>
@@ -406,14 +446,20 @@ export default class Slider extends React.Component<Props> {
         className="slider__range"
         onMouseDown={this.onAdd}
       >
-        {Object.entries(this.props.scale).map((lightness) => (
+        {Object.entries(this.props.scale).map((lightness, index, original) => (
           <Knob
             key={lightness[0]}
             id={lightness[0]}
-            scale={lightness[1]}
-            state={this.isSelected(lightness[0])}
-            number={lightness[0].replace('lightness-', '')}
-            action={this.onGrab}
+            shortId={lightness[0].replace('lightness-', '')}
+            value={lightness[1]}
+            inputValue={this.state['value']}
+            state={this.getState(lightness[0])}
+            min={original[index + 1] == undefined ? '0' : (original[index + 1][1] + 2).toString()}
+            max={original[index - 1] == undefined ? '100' : (original[index - 1][1] - 2).toString()}
+            onMouseDown={this.onGrab}
+            onClick={this.clickHandler}
+            onChangeStopValue={(e) => this.setState({ value: e.target.value })}
+            onValidStopValue={this.validHandler}
           />
         ))}
       </div>
