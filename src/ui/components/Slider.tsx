@@ -33,7 +33,7 @@ export default class Slider extends React.Component<Props> {
   }
 
   clickHandler = (e) => {
-    if (e.detail == 1 && !this.props.hasPreset && this.state['selectedStop']['state'] != 'SLIDING') {
+    if (e.detail == 1 && !this.props.hasPreset && this.state['selectedStop']['state'] != 'SLIDING' && this.state['selectedStop']['state'] != 'EDITING') {
       this.setState({
         selectedStop: {
           stop: e.target,
@@ -41,7 +41,7 @@ export default class Slider extends React.Component<Props> {
         }
       })
     }
-    else if (e.detail == 2 && !this.props.hasPreset) {
+    else if (e.detail == 2 && !this.props.hasPreset && this.state['selectedStop']['state'] != 'EDITING') {
       this.setState({
         selectedStop: {
           stop: e.target,
@@ -113,13 +113,6 @@ export default class Slider extends React.Component<Props> {
     }
 
     stop.style.zIndex = '2'
-    this.setState({
-      selectedStop: {
-        stop: null,
-        state: 'NORMAL'
-      },
-      stops: stops,
-    })
 
     document.onmousemove = (e) =>
       this.onSlide(
@@ -409,13 +402,13 @@ export default class Slider extends React.Component<Props> {
         })
     }
     document.onmousedown = (e: MouseEvent) => {
-      if ((e.target as HTMLElement).closest('.slider__stop') == null)
-        this.setState({
+      if ((e.target as HTMLElement).closest('.slider__knob') == null)
+        setTimeout(() => this.setState({
           selectedStop: {
             stop: null,
             state: 'NORMAL'
           },
-        })
+        }), 50)
     }
   }
 
