@@ -3,10 +3,15 @@ import type {
   TextColorsThemeHexModel,
   ColorConfiguration,
 } from '../utils/types'
+import {
+  previousSelection,
+  currentSelection,
+  isSelectionChanged,
+} from './processSelection'
 import Colors from './../canvas/Colors'
 
 const updateScale = (msg, palette) => {
-  palette = figma.currentPage.selection[0]
+  palette = isSelectionChanged ? previousSelection[0] : currentSelection[0]
 
   if (palette.children.length == 1) {
     const paletteName: string =
