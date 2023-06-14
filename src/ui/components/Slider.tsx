@@ -1,12 +1,12 @@
 import * as React from 'react'
 import type { ScaleConfiguration } from '../../utils/types'
 import Knob from './Knob'
-import { palette } from '../../utils/palettePackage'
 import doMap from './../../utils/doMap'
 import addStop from './../handlers/addStop'
 import deleteStop from './../handlers/deleteStop'
 import shiftLeftStop from './../handlers/shiftLeftStop'
 import shiftRightStop from './../handlers/shiftRightStop'
+import { palette } from '../../utils/palettePackage'
 
 interface Props {
   knobs: Array<number>
@@ -16,14 +16,17 @@ interface Props {
   min?: number
   max?: number
   scale?: ScaleConfiguration
-  onChange: (e: string) => void
+  onChange: (state: string, e?: React.FocusEvent<HTMLInputElement> | React.KeyboardEvent<HTMLInputElement>) => void
 }
 
 export default class Slider extends React.Component<Props> {
   constructor(props) {
     super(props)
     this.state = {
-      selectedKnob: null,
+      selectedKnob: {
+        knob: null,
+        state: 'NORMAL',
+      },
       knobs: [],
       value: 0
     }
@@ -109,7 +112,10 @@ export default class Slider extends React.Component<Props> {
 
     knob.style.zIndex = '2'
     this.setState({
-      selectedKnob: null,
+      selectedKnob: {
+        knob: null,
+        state: 'NORMAL'
+      },
       knobs: knobs,
     })
 
@@ -128,7 +134,7 @@ export default class Slider extends React.Component<Props> {
       )
 
     document.onmouseup = () =>
-      this.onRelease(knobs, knob, offset, update, rangeWidth, startTime)
+      this.onRelease(knobs, knob, update, startTime)
   }
 
   onSlide = (
@@ -168,6 +174,12 @@ export default class Slider extends React.Component<Props> {
         100
       ).toFixed(1)
     )
+    this.setState({
+      selectedKnob: {
+        knob: knob,
+        state: 'SLIDING',
+      },
+    })
 
     if (knob == range.lastChild) {
       // 900
@@ -234,15 +246,13 @@ export default class Slider extends React.Component<Props> {
       parseFloat(doMap(offset, 0, rangeWidth, 0, 100).toFixed(1))
     )
     update()
-    this.props.onChange('')
+    this.props.onChange('UPDATING')
   }
 
   onRelease = (
     knobs: Array<HTMLElement>,
     knob: HTMLElement,
-    offset: number,
     update: () => void,
-    rangeWidth: number,
     startTime: number
   ) => {
     document.onmousemove = null
@@ -255,10 +265,13 @@ export default class Slider extends React.Component<Props> {
     update()
     if (Date.now() - startTime < 200 && !this.props.hasPreset) {
       this.setState({
-        selectedKnob: knob,
+        selectedKnob: {
+          knob: null,
+          state: 'NORMAL',
+        },
       })
     }
-    this.props.onChange('released')
+    this.props.onChange('RELEASED')
   }
 
   onAdd = (e) => {
@@ -269,7 +282,10 @@ export default class Slider extends React.Component<Props> {
       !this.props.hasPreset
     ) {
       this.setState({
-        selectedKnob: null,
+        selectedKnob: {
+          knob: null,
+          state: 'NORMAL'
+        },
       })
       addStop(
         e,
@@ -278,42 +294,45 @@ export default class Slider extends React.Component<Props> {
         this.props.min,
         this.props.max
       )
-      this.props.onChange('customized')
+      this.props.onChange('SHIFTED')
     }
   }
 
   onDelete = () => {
     deleteStop(
       this.props.scale,
-      this.state['selectedKnob'],
+      this.state['selectedKnob']['knob'],
       this.props.presetName,
       this.props.min,
       this.props.max
     )
     this.setState({
-      selectedKnob: null,
+      selectedKnob: {
+        knob: null,
+        state: 'NORMAL'
+      },
     })
-    this.props.onChange('customized')
+    this.props.onChange('SHIFTED')
   }
 
   onShiftRight = (e: KeyboardEvent) => {
     shiftRightStop(
       this.props.scale,
-      this.state['selectedKnob'],
+      this.state['selectedKnob']['knob'],
       e.metaKey,
       e.ctrlKey
     )
-    this.props.onChange('customized')
+    this.props.onChange('SHIFTED')
   }
 
   onShiftLeft = (e: KeyboardEvent) => {
     shiftLeftStop(
       this.props.scale,
-      this.state['selectedKnob'],
+      this.state['selectedKnob']['knob'],
       e.metaKey,
       e.ctrlKey
     )
-    this.props.onChange('customized')
+    this.props.onChange('SHIFTED')
   }
 
   // Utils
@@ -392,25 +411,31 @@ export default class Slider extends React.Component<Props> {
     window.onkeydown = (e: KeyboardEvent) => {
       if (
         e.key === 'Backspace' &&
-        this.state['selectedKnob'] != null &&
+        this.state['selectedKnob']['knob'] != null &&
         this.props.knobs.length > 2
       )
         this.props.presetName === 'Custom' && !this.props.hasPreset
           ? this.onDelete()
           : null
-      else if (e.key === 'ArrowRight' && this.state['selectedKnob'] != null)
+      else if (e.key === 'ArrowRight' && this.state['selectedKnob']['knob'] != null)
         this.onShiftRight(e)
-      else if (e.key === 'ArrowLeft' && this.state['selectedKnob'] != null)
+      else if (e.key === 'ArrowLeft' && this.state['selectedKnob']['knob'] != null)
         this.onShiftLeft(e)
-      else if (e.key === 'Escape' && this.state['selectedKnob'] != null)
+      else if (e.key === 'Escape' && this.state['selectedKnob']['knob'] != null)
         this.setState({
-          selectedKnob: null,
+          selectedKnob: {
+            knob: null,
+            state: 'NORMAL'
+          },
         })
     }
     document.onmousedown = (e: MouseEvent) => {
       if ((e.target as HTMLElement).closest('.slider__knob') == null)
         this.setState({
-          selectedKnob: null,
+          selectedKnob: {
+            knob: null,
+            state: 'NORMAL'
+          },
         })
     }
   }
