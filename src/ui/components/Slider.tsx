@@ -54,20 +54,22 @@ export default class Slider extends React.Component<Props> {
 
   validHandler = (stopId: string, e) => {
     if (e.key === 'Enter' || e._reactName === 'onBlur') {
-      palette.scale = this.props.scale
-      if (parseFloat(e.target.value) < parseFloat(e.target.min)) {
-        palette.scale[`lightness-${stopId}`] = parseFloat(e.target.min)
-        this.setState({ stopInputValue: parseFloat(e.target.min) })
-      }
-      else if (parseFloat(e.target.value) > parseFloat(e.target.max)) {
-        palette.scale[`lightness-${stopId}`] = parseFloat(e.target.max)
-        this.setState({ stopInputValue: parseFloat(e.target.max) })
-      }
-      else {
-        palette.scale[`lightness-${stopId}`] = parseFloat(e.target.value)
-        this.setState({ stopInputValue: parseFloat(e.target.value) })
-      }
-      this.props.onChange('TYPED')
+      if (e.target.value != '') {
+        palette.scale = this.props.scale
+        if (parseFloat(e.target.value) < parseFloat(e.target.min)) {
+          palette.scale[`lightness-${stopId}`] = parseFloat(e.target.min)
+          this.setState({ stopInputValue: parseFloat(e.target.min) })
+        }
+        else if (parseFloat(e.target.value) > parseFloat(e.target.max)) {
+          palette.scale[`lightness-${stopId}`] = parseFloat(e.target.max)
+          this.setState({ stopInputValue: parseFloat(e.target.max) })
+        }
+        else {
+          palette.scale[`lightness-${stopId}`] = parseFloat(e.target.value)
+          this.setState({ stopInputValue: parseFloat(e.target.value) })
+        }
+        this.props.onChange('TYPED')
+      } else this.setState({ stopInputValue: this.props.scale[`lightness-${stopId}`] })
     }
   }
 
@@ -457,7 +459,7 @@ export default class Slider extends React.Component<Props> {
             id={lightness[0]}
             shortId={lightness[0].replace('lightness-', '')}
             value={lightness[1]}
-            inputValue={this.state['value']}
+            stopInputValue={this.state['stopInputValue']}
             onMouseDown={this.onGrab}
           />
         ))}
