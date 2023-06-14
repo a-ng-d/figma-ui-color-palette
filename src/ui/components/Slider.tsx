@@ -27,7 +27,6 @@ export default class Slider extends React.Component<Props> {
         stop: null,
         state: 'NORMAL',
       },
-      stops: [],
       stopInputValue: 0
     }
   }
