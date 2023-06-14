@@ -158,24 +158,6 @@ export default class Slider extends React.Component<Props> {
       )
     offset = e.clientX - slider.offsetLeft - sliderPadding - shift
 
-    palette.min = parseFloat(
-      doMap(
-        (range.lastChild as HTMLElement).offsetLeft,
-        0,
-        rangeWidth,
-        0,
-        100
-      ).toFixed(1)
-    )
-    palette.max = parseFloat(
-      doMap(
-        (range.firstChild as HTMLElement).offsetLeft,
-        0,
-        rangeWidth,
-        0,
-        100
-      ).toFixed(1)
-    )
     this.setState({
       selectedKnob: {
         knob: knob,
@@ -237,12 +219,6 @@ export default class Slider extends React.Component<Props> {
     knob.style.left = doMap(offset, 0, rangeWidth, 0, 100).toFixed(1) + '%'
 
     // update lightness scale
-    knobs.forEach((knob) =>
-      this.updateLightnessScaleEntry(
-        knob.classList[1],
-        parseFloat(doMap(knob.offsetLeft, 0, rangeWidth, 0, 100).toFixed(1))
-      )
-    )
     this.updateKnobTooltip(
       tooltip,
       parseFloat(doMap(offset, 0, rangeWidth, 0, 100).toFixed(1))
@@ -264,7 +240,6 @@ export default class Slider extends React.Component<Props> {
     knobs.forEach(
       (knob) => ((knob.children[0] as HTMLElement).style.display = 'none')
     )
-    update()
     if (Date.now() - startTime < 200 && !this.props.hasPreset) {
       this.setState({
         selectedKnob: {
@@ -273,6 +248,7 @@ export default class Slider extends React.Component<Props> {
         },
       })
     }
+    update()
     this.props.onChange('RELEASED')
   }
 
