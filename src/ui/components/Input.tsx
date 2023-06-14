@@ -9,6 +9,7 @@ interface Props {
   charactersLimit?: number
   min?: string
   max?: string
+  step?: string
   isBlocked?: boolean
   feature: string
   onChange: React.FocusEventHandler<HTMLInputElement>
@@ -18,6 +19,7 @@ interface Props {
 
 export default class Input extends React.Component<Props> {
   static defaultProps = {
+    step: '1',
     isBlocked: false,
   }
 
@@ -25,11 +27,11 @@ export default class Input extends React.Component<Props> {
   onNudge = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.shiftKey && e.key === 'ArrowUp')
       (e.target as HTMLInputElement).value = (
-        parseFloat((e.target as HTMLInputElement).value) + 9
+        parseFloat((e.target as HTMLInputElement).value) + (9 * parseFloat(this.props.step))
       ).toString()
     else if (e.shiftKey && e.key === 'ArrowDown')
       (e.target as HTMLInputElement).value = (
-        parseFloat((e.target as HTMLInputElement).value) - 9
+        parseFloat((e.target as HTMLInputElement).value) - (9 * parseFloat(this.props.step))
       ).toString()
   }
 
@@ -91,7 +93,7 @@ export default class Input extends React.Component<Props> {
           value={this.props.value}
           min={this.props.min}
           max={this.props.max}
-          step="1"
+          step={this.props.step}
           onKeyDown={this.onNudge}
           onChange={this.props.onChange}
           onFocus={this.props.onFocus}
