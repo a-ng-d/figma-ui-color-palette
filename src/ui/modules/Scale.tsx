@@ -111,7 +111,7 @@ export default class Scale extends React.Component<Props> {
             type="EQUAL"
             hasPreset={this.props.hasPreset}
             presetName={this.props.preset.name}
-            knobs={this.props.preset.scale}
+            stops={this.props.preset.scale}
             min={this.props.preset.min}
             max={this.props.preset.max}
             onChange={this.props.onChangeScale}
@@ -153,7 +153,7 @@ export default class Scale extends React.Component<Props> {
             type="CUSTOM"
             hasPreset={this.props.hasPreset}
             presetName={this.props.preset.name}
-            knobs={this.props.preset.scale}
+            stops={this.props.preset.scale}
             scale={this.props.scale}
             onChange={this.props.onChangeScale}
           />

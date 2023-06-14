@@ -9,7 +9,7 @@ import shiftRightStop from './../handlers/shiftRightStop'
 import { palette } from '../../utils/palettePackage'
 
 interface Props {
-  knobs: Array<number>
+  stops: Array<number>
   hasPreset: boolean
   presetName: string
   type: string
@@ -23,28 +23,28 @@ export default class Slider extends React.Component<Props> {
   constructor(props) {
     super(props)
     this.state = {
-      selectedKnob: {
-        knob: null,
+      selectedStop: {
+        stop: null,
         state: 'NORMAL',
       },
-      knobs: [],
+      stops: [],
       stopInputValue: 0
     }
   }
 
   clickHandler = (e) => {
-    if (e.detail == 1 && !this.props.hasPreset && this.state['selectedKnob']['state'] != 'SLIDING') {
+    if (e.detail == 1 && !this.props.hasPreset && this.state['selectedStop']['state'] != 'SLIDING') {
       this.setState({
-        selectedKnob: {
-          knob: e.target,
+        selectedStop: {
+          stop: e.target,
           state: 'SELECTED'
         }
       })
     }
     else if (e.detail == 2 && !this.props.hasPreset) {
       this.setState({
-        selectedKnob: {
-          knob: e.target,
+        selectedStop: {
+          stop: e.target,
           state: 'EDITING'
         },
         stopInputValue: this.props.scale[e.target.classList[1]]
@@ -75,13 +75,13 @@ export default class Slider extends React.Component<Props> {
 
   // Direct actions
   onGrab = (e) => {
-    const knob = e.target as HTMLElement,
-      range = knob.parentElement as HTMLElement,
+    const stop = e.target as HTMLElement,
+      range = stop.parentElement as HTMLElement,
       shift = e.nativeEvent.layerX as number,
-      tooltip = knob.children[0] as HTMLElement,
+      tooltip = stop.children[0] as HTMLElement,
       rangeWidth = range.offsetWidth as number,
       slider = range.parentElement as HTMLElement,
-      knobs = Array.from(range.children as HTMLCollectionOf<HTMLElement>),
+      stops = Array.from(range.children as HTMLCollectionOf<HTMLElement>),
       startTime: number = Date.now()
 
     let offset: number
@@ -104,21 +104,21 @@ export default class Slider extends React.Component<Props> {
           100
         ).toFixed(1)
       )
-      knobs.forEach((knob) =>
+      stops.forEach((stop) =>
         this.updateLightnessScaleEntry(
-          knob.classList[1],
-          parseFloat(knob.style.left.replace('%', ''))
+          stop.classList[1],
+          parseFloat(stop.style.left.replace('%', ''))
         )
       )
     }
 
-    knob.style.zIndex = '2'
+    stop.style.zIndex = '2'
     this.setState({
-      selectedKnob: {
-        knob: null,
+      selectedStop: {
+        stop: null,
         state: 'NORMAL'
       },
-      knobs: knobs,
+      stops: stops,
     })
 
     document.onmousemove = (e) =>
@@ -126,8 +126,8 @@ export default class Slider extends React.Component<Props> {
         e,
         slider,
         range,
-        knobs,
-        knob,
+        stops,
+        stop,
         tooltip,
         offset,
         shift,
@@ -136,15 +136,15 @@ export default class Slider extends React.Component<Props> {
       )
 
     document.onmouseup = () =>
-      this.onRelease(knobs, knob, update, startTime)
+      this.onRelease(stops, stop, update, startTime)
   }
 
   onSlide = (
     e: MouseEvent,
     slider: HTMLElement,
     range: HTMLElement,
-    knobs: Array<HTMLElement>,
-    knob: HTMLElement,
+    stops: Array<HTMLElement>,
+    stop: HTMLElement,
     tooltip: HTMLElement,
     offset: number,
     shift: number,
@@ -159,67 +159,67 @@ export default class Slider extends React.Component<Props> {
     offset = e.clientX - slider.offsetLeft - sliderPadding - shift
 
     this.setState({
-      selectedKnob: {
-        knob: knob,
+      selectedStop: {
+        stop: stop,
         state: 'SLIDING',
       },
     })
 
-    if (knob == range.lastChild) {
+    if (stop == range.lastChild) {
       // 900
       limitMin = 0
-      limitMax = (knob.previousElementSibling as HTMLElement).offsetLeft - gap
-    } else if (knob == range.firstChild) {
+      limitMax = (stop.previousElementSibling as HTMLElement).offsetLeft - gap
+    } else if (stop == range.firstChild) {
       // 50
-      limitMin = (knob.nextElementSibling as HTMLElement).offsetLeft + gap
+      limitMin = (stop.nextElementSibling as HTMLElement).offsetLeft + gap
       limitMax = rangeWidth
     } else {
-      limitMin = (knob.nextElementSibling as HTMLElement).offsetLeft + gap
-      limitMax = (knob.previousElementSibling as HTMLElement).offsetLeft - gap
+      limitMin = (stop.nextElementSibling as HTMLElement).offsetLeft + gap
+      limitMax = (stop.previousElementSibling as HTMLElement).offsetLeft - gap
     }
 
     if (offset <= limitMin) offset = limitMin
     else if (offset >= limitMax) offset = limitMax
 
-    // distribute knobs horizontal spacing
-    if (knob == range.lastChild && e.shiftKey)
+    // distribute stops horizontal spacing
+    if (stop == range.lastChild && e.shiftKey)
       // 900
-      this.distributeKnobs(
+      this.distributeStops(
         'MIN',
         parseFloat(doMap(offset, 0, rangeWidth, 0, 100).toFixed(1)),
-        knobs
+        stops
       )
-    else if (knob == range.firstChild && e.shiftKey)
+    else if (stop == range.firstChild && e.shiftKey)
       // 50
-      this.distributeKnobs(
+      this.distributeStops(
         'MAX',
         parseFloat(doMap(offset, 0, rangeWidth, 0, 100).toFixed(1)),
-        knobs
+        stops
       )
 
-    // link every knob
+    // link every stop
     if (e.ctrlKey || e.metaKey) {
       if (
         offset <
-          knob.offsetLeft - (range.lastChild as HTMLElement).offsetLeft ||
+          stop.offsetLeft - (range.lastChild as HTMLElement).offsetLeft ||
         offset >
           rangeWidth -
             (range.firstChild as HTMLElement).offsetLeft +
-            knob.offsetLeft
+            stop.offsetLeft
       )
-        offset = knob.offsetLeft
-      else this.linkKnobs(offset, knob, knobs, rangeWidth)
+        offset = stop.offsetLeft
+      else this.linkStops(offset, stop, stops, rangeWidth)
     }
 
     if (e.ctrlKey == false && e.metaKey == false && e.shiftKey == false)
-      knobs.forEach(
-        (knob) => ((knob.children[0] as HTMLElement).style.display = 'none')
+      stops.forEach(
+        (stop) => ((stop.children[0] as HTMLElement).style.display = 'none')
       )
 
-    knob.style.left = doMap(offset, 0, rangeWidth, 0, 100).toFixed(1) + '%'
+    stop.style.left = doMap(offset, 0, rangeWidth, 0, 100).toFixed(1) + '%'
 
     // update lightness scale
-    this.updateKnobTooltip(
+    this.updateStopTooltip(
       tooltip,
       parseFloat(doMap(offset, 0, rangeWidth, 0, 100).toFixed(1))
     )
@@ -228,22 +228,22 @@ export default class Slider extends React.Component<Props> {
   }
 
   onRelease = (
-    knobs: Array<HTMLElement>,
-    knob: HTMLElement,
+    stops: Array<HTMLElement>,
+    stop: HTMLElement,
     update: () => void,
     startTime: number
   ) => {
     document.onmousemove = null
     document.onmouseup = null
-    knob.onmouseup = null
-    knob.style.zIndex = '1'
-    knobs.forEach(
-      (knob) => ((knob.children[0] as HTMLElement).style.display = 'none')
+    stop.onmouseup = null
+    stop.style.zIndex = '1'
+    stops.forEach(
+      (stop) => ((stop.children[0] as HTMLElement).style.display = 'none')
     )
     if (Date.now() - startTime < 200 && !this.props.hasPreset) {
       this.setState({
-        selectedKnob: {
-          knob: null,
+        selectedStop: {
+          stop: null,
           state: 'NORMAL',
         },
       })
@@ -260,8 +260,8 @@ export default class Slider extends React.Component<Props> {
       !this.props.hasPreset
     ) {
       this.setState({
-        selectedKnob: {
-          knob: null,
+        selectedStop: {
+          stop: null,
           state: 'NORMAL'
         },
       })
@@ -279,14 +279,14 @@ export default class Slider extends React.Component<Props> {
   onDelete = () => {
     deleteStop(
       this.props.scale,
-      this.state['selectedKnob']['knob'],
+      this.state['selectedStop']['stop'],
       this.props.presetName,
       this.props.min,
       this.props.max
     )
     this.setState({
-      selectedKnob: {
-        knob: null,
+      selectedStop: {
+        stop: null,
         state: 'NORMAL'
       },
     })
@@ -296,7 +296,7 @@ export default class Slider extends React.Component<Props> {
   onShiftRight = (e: KeyboardEvent) => {
     shiftRightStop(
       this.props.scale,
-      this.state['selectedKnob']['knob'],
+      this.state['selectedStop']['stop'],
       e.metaKey,
       e.ctrlKey
     )
@@ -306,7 +306,7 @@ export default class Slider extends React.Component<Props> {
   onShiftLeft = (e: KeyboardEvent) => {
     shiftLeftStop(
       this.props.scale,
-      this.state['selectedKnob']['knob'],
+      this.state['selectedStop']['stop'],
       e.metaKey,
       e.ctrlKey
     )
@@ -317,11 +317,11 @@ export default class Slider extends React.Component<Props> {
   doLightnessScale = () => {
     let granularity = 1
 
-    this.props.knobs.map((index) => {
+    this.props.stops.map((index) => {
       palette.scale[`lightness-${index}`] = parseFloat(
         doMap(granularity, 0, 1, palette.min, palette.max).toFixed(1)
       )
-      granularity -= 1 / (this.props.knobs.length - 1)
+      granularity -= 1 / (this.props.stops.length - 1)
     })
 
     return palette.scale
@@ -331,54 +331,54 @@ export default class Slider extends React.Component<Props> {
     palette.scale[key] = parseFloat(value.toFixed(1))
   }
 
-  updateKnobTooltip = (tooltip: HTMLElement, value: number | string) => {
+  updateStopTooltip = (tooltip: HTMLElement, value: number | string) => {
     tooltip.style.display = 'block'
     if (typeof value === 'string')
       tooltip.textContent = value == '100.0' ? '100' : value
     else tooltip.textContent = value == 100 ? '100' : value?.toFixed(1)
   }
 
-  distributeKnobs = (
+  distributeStops = (
     type: string,
     value: number,
-    knobs: Array<HTMLElement>
+    stops: Array<HTMLElement>
   ) => {
     if (type === 'MIN') palette.min = value
     else if (type === 'MAX') palette.max = value
 
     this.doLightnessScale()
 
-    knobs.forEach((knob) => {
-      knob.style.left = palette.scale[knob.classList[1]] + '%'
-      this.updateKnobTooltip(
-        knob.childNodes[0] as HTMLElement,
-        parseFloat(palette.scale[knob.classList[1]].toFixed(1))
+    stops.forEach((stop) => {
+      stop.style.left = palette.scale[stop.classList[1]] + '%'
+      this.updateStopTooltip(
+        stop.childNodes[0] as HTMLElement,
+        parseFloat(palette.scale[stop.classList[1]].toFixed(1))
       )
     })
   }
 
-  linkKnobs = (
+  linkStops = (
     offset: number,
     src: HTMLElement,
-    knobs: Array<HTMLElement>,
+    stops: Array<HTMLElement>,
     width: number
   ) => {
-    knobs.forEach((knob) => {
-      const shift = knob.offsetLeft - src.offsetLeft + offset
-      if (knob != src) knob.style.left = parseFloat(doMap(shift, 0, width, 0, 100).toFixed(1)) + '%'
-      this.updateKnobTooltip(
-        knob.childNodes[0] as HTMLElement,
-        palette.scale[knob.classList[1]]
+    stops.forEach((stop) => {
+      const shift = stop.offsetLeft - src.offsetLeft + offset
+      if (stop != src) stop.style.left = parseFloat(doMap(shift, 0, width, 0, 100).toFixed(1)) + '%'
+      this.updateStopTooltip(
+        stop.childNodes[0] as HTMLElement,
+        palette.scale[stop.classList[1]]
       )
     })
   }
 
   getState = (lightness: string) => {
     let state: string
-    if (this.state['selectedKnob']['knob'] != null)
+    if (this.state['selectedStop']['stop'] != null)
       state =
-        this.state['selectedKnob']['knob'].classList[1] === lightness
-          ? this.state['selectedKnob']['state']
+        this.state['selectedStop']['stop'].classList[1] === lightness
+          ? this.state['selectedStop']['state']
           : 'NORMAL'
     else state = 'NORMAL'
 
@@ -389,29 +389,29 @@ export default class Slider extends React.Component<Props> {
     window.onkeydown = (e: KeyboardEvent) => {
       if (
         e.key === 'Backspace' &&
-        this.state['selectedKnob']['knob'] != null &&
-        this.props.knobs.length > 2
+        this.state['selectedStop']['stop'] != null &&
+        this.props.stops.length > 2
       )
         this.props.presetName === 'Custom' && !this.props.hasPreset
           ? this.onDelete()
           : null
-      else if (e.key === 'ArrowRight' && this.state['selectedKnob']['knob'] != null)
+      else if (e.key === 'ArrowRight' && this.state['selectedStop']['stop'] != null)
         this.onShiftRight(e)
-      else if (e.key === 'ArrowLeft' && this.state['selectedKnob']['knob'] != null)
+      else if (e.key === 'ArrowLeft' && this.state['selectedStop']['stop'] != null)
         this.onShiftLeft(e)
-      else if (e.key === 'Escape' && this.state['selectedKnob']['knob'] != null)
+      else if (e.key === 'Escape' && this.state['selectedStop']['stop'] != null)
         this.setState({
-          selectedKnob: {
-            knob: null,
+          selectedStop: {
+            stop: null,
             state: 'NORMAL'
           },
         })
     }
     document.onmousedown = (e: MouseEvent) => {
-      if ((e.target as HTMLElement).closest('.slider__knob') == null)
+      if ((e.target as HTMLElement).closest('.slider__stop') == null)
         this.setState({
-          selectedKnob: {
-            knob: null,
+          selectedStop: {
+            stop: null,
             state: 'NORMAL'
           },
         })
