@@ -2,7 +2,7 @@ import * as React from 'react'
 import type { Shortcut } from '../../utils/types'
 import Button from '../components/Button'
 import Feature from '../components/Feature'
-import { features } from '../../utils/features'
+import features from '../../utils/features'
 
 interface Props {
   actions: Array<Shortcut>
@@ -20,7 +20,7 @@ export default class Shortcuts extends React.Component<Props> {
         <div className="shortcuts__get-pro">
           <Feature
             isActive={
-              features.find((feature) => feature.name === 'GET_PRO')
+              features.find((feature) => feature.name === 'GET_PRO_PLAN')
                 .isActive
             }
           >     
