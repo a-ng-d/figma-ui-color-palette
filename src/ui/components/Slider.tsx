@@ -166,6 +166,8 @@ export default class Slider extends React.Component<Props> {
       },
     })
 
+    update()
+
     if (stop == range.lastChild) {
       // 900
       limitMin = 0
@@ -441,6 +443,7 @@ export default class Slider extends React.Component<Props> {
   }
 
   Custom = () => {
+    palette.scale = this.props.scale
     return (
       <div
         className="slider__range"
