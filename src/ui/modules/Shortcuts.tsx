@@ -23,7 +23,7 @@ export default class Shortcuts extends React.Component<Props> {
               features.find((feature) => feature.name === 'GET_PRO_PLAN')
                 .isActive
             }
-          >     
+          >
             {this.props.planStatus === 'UNPAID' ? (
               <button
                 className="get-pro-button"
