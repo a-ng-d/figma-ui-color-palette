@@ -360,7 +360,7 @@ export default class Slider extends React.Component<Props> {
       if (stop != src) stop.style.left = parseFloat(doMap(shift, 0, width, 0, 100).toFixed(1)) + '%'
       this.updateStopTooltip(
         stop.childNodes[0] as HTMLElement,
-        palette.scale[stop.classList[1]]
+        parseFloat(doMap(shift, 0, width, 0, 100).toFixed(1))
       )
     })
   }
