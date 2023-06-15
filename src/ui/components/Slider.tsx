@@ -236,8 +236,8 @@ export default class Slider extends React.Component<Props> {
     document.onmouseup = null
     stop.onmouseup = null
     stop.style.zIndex = '1'
-    stops.forEach(
-      (stop) => ((stop.children[0] as HTMLElement).style.display = 'none')
+    stops.forEach(stop =>
+      (stop.children[0] as HTMLElement).style.display = 'none'
     )
     
     update()
