@@ -32,7 +32,7 @@ export default class Actions extends React.Component<Props> {
           >
             <Button
               type="primary"
-              label="Create a color palette"
+              label="Create a UI Color Palette"
               feature="create"
               action={this.props.onCreatePalette}
             />

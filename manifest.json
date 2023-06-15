@@ -7,7 +7,7 @@
     "figjam"
   ],
   "relaunchButtons": [
-    { "command": "edit", "name": "Edit the color palette" }
+    { "command": "edit", "name": "Edit the UI Color Palette" }
   ],
   "networkAccess": {
     "allowedDomains": [
