@@ -66,6 +66,7 @@ class App extends React.Component {
         mimeType: '',
         data: '',
       },
+      editorType: 'figma',
       hasHighlight: false,
       planStatus: 'UNPAID',
       hasGetProPlanDialog: false,
@@ -315,9 +316,12 @@ class App extends React.Component {
   render() {
     onmessage = (e: MessageEvent) => {
       try {
-        const checkHighlightStatus = () =>
-        this.setState({ hasHighlight: !e.data.pluginMessage.data })
+        const checkEditorType = () =>
+          this.setState({ editorType: e.data.pluginMessage.data })
         
+        const checkHighlightStatus = () =>
+          this.setState({ hasHighlight: !e.data.pluginMessage.data })
+
         const checkPlanStatus = () =>
           this.setState({
             planStatus: e.data.pluginMessage.data,
@@ -441,6 +445,7 @@ class App extends React.Component {
             })
 
         const actions: ActionsList = {
+          EDITOR_TYPE: () => checkEditorType(),
           HIGHTLIGHT_STATUS: () => checkHighlightStatus(),
           PLAN_STATUS: () => checkPlanStatus(),
           EMPTY_SELECTION: () => updateWhileEmptySelection(),
@@ -457,7 +462,7 @@ class App extends React.Component {
         console.error(error)
       }
     }
-
+    
     return (
       <main>
         <Feature
@@ -497,6 +502,7 @@ class App extends React.Component {
               textColorsTheme={this.state['textColorsTheme']}
               algorithmVersion={this.state['algorithmVersion']}
               export={this.state['export']}
+              editorType={this.state['editorType']}
               planStatus={this.state['planStatus']}
               onReopenHighlight={this.highlightHandler('OPEN')}
               onChangeScale={this.slideHandler}

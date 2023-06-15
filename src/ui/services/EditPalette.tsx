@@ -37,6 +37,7 @@ interface Props {
   textColorsTheme: TextColorsThemeHexModel
   algorithmVersion: string
   export: ExportConfiguration
+  editorType: string
   planStatus: string
   onReopenHighlight: React.ChangeEventHandler
   onChangeScale: () => void
@@ -572,6 +573,7 @@ export default class EditPalette extends React.Component<Props> {
         <Actions
           context="edit"
           view={this.props.view}
+          editorType={this.props.editorType}
           planStatus={this.props.planStatus}
           onCreateLocalColors={this.onCreate}
           onUpdateLocalColors={this.onUpdate}
@@ -670,7 +672,6 @@ export default class EditPalette extends React.Component<Props> {
         controls = <About planStatus={this.props.planStatus} />
       }
     }
-
     return (
       <>
         <Tabs

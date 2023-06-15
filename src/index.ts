@@ -1,6 +1,7 @@
 import type { ActionsList } from './utils/types'
 import processSelection from './bridges/processSelection'
 import isHighlightRead from './bridges/isHighlightRead'
+import checkEditorType from './bridges/checkEditorType'
 import checkPlanStatus from './bridges/checkPlanStatus'
 import closeHighlight from './bridges/closeHighlight'
 import createPalette from './bridges/createPalette'
@@ -31,6 +32,7 @@ figma.loadFontAsync({ family: 'Roboto Mono', style: 'Medium' })
 figma.on('run', () => processSelection())
 figma.on('selectionchange', () => processSelection())
 
+figma.on('run', () => checkEditorType())
 figma.on('run', () => isHighlightRead(package_json.version))
 figma.on('run', async () => await checkPlanStatus())
 

@@ -10,6 +10,7 @@ interface Props {
   context: string
   view?: string
   exportType?: string | null
+  editorType?: string
   planStatus?: string
   onCreatePalette?: React.MouseEventHandler
   onCreateLocalColors?: React.MouseEventHandler
@@ -19,6 +20,10 @@ interface Props {
 }
 
 export default class Actions extends React.Component<Props> {
+  static defaultProps = {
+    editorType: 'figma'
+  }
+
   // Templates
   Create = () => {
     return (
@@ -103,7 +108,7 @@ export default class Actions extends React.Component<Props> {
           <Feature
             isActive={
               features.find((feature) => feature.name === 'UPDATE_LOCAL_STYLES')
-                .isActive
+                .isActive && this.props.editorType === 'figma'
             }
           >
             <Button
@@ -116,7 +121,7 @@ export default class Actions extends React.Component<Props> {
           <Feature
             isActive={
               features.find((feature) => feature.name === 'CREATE_LOCAL_STYLES')
-                .isActive
+                .isActive && this.props.editorType === 'figma'
             }
           >
             <Button
