@@ -76,7 +76,7 @@ const features: Array<Features> = [
   {
     name: 'VIEWS_SHEET',
     description: 'Detailed color sheet view',
-    isActive: true,
+    isActive: false,
     isPro: true,
     type: 'ACTION',
     service: ['create', 'edit'],
@@ -190,7 +190,7 @@ const features: Array<Features> = [
     name: 'EXPORT_CSV',
     description: 'Palette LCH values export to CSV',
     isActive: true,
-    isPro: true,
+    isPro: false,
     type: 'ACTION',
     service: ['edit'],
   },
@@ -237,7 +237,7 @@ const features: Array<Features> = [
   {
     name: 'GET_PRO_PLAN',
     description: 'Access the subscription to get pro features',
-    isActive: true,
+    isActive: false,
     isPro: false,
     type: 'ACTION',
     service: ['onboard', 'create', 'edit'],
