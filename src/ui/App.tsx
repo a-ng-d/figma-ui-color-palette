@@ -315,10 +315,9 @@ class App extends React.Component {
   render() {
     onmessage = (e: MessageEvent) => {
       try {
-        const getProPlan = () =>
+        const checkPlanStatus = () =>
           this.setState({
             planStatus: e.data.pluginMessage.data,
-            hasGetProPlanDialog: true,
           })
 
         const checkHighlightStatus = () =>
@@ -434,6 +433,12 @@ class App extends React.Component {
             },
             onGoingStep: 'export previewed',
           })
+        
+          const getProPlan = () =>
+            this.setState({
+              planStatus: e.data.pluginMessage.data,
+              hasGetProPlanDialog: true,
+            })
 
         const actions: ActionsList = {
           GET_PRO_PLAN: () => getProPlan(),
@@ -444,6 +449,7 @@ class App extends React.Component {
           EXPORT_PALETTE_JSON: () => exportPaletteAsJson(),
           EXPORT_PALETTE_CSS: () => exportPaletteAsCss(),
           EXPORT_PALETTE_CSV: () => exportPaletteAsCsv(),
+          GET_PRO_PLAN: () => getProPlan(),
         }
 
         return actions[e.data.pluginMessage.type]?.()
