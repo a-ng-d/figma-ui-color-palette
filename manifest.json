@@ -13,6 +13,7 @@
       "figma.com"
     ]
   },
+  "permissions": ["payments"],
   "main": "dist/code.js",
   "ui": "dist/ui.html"
 }
