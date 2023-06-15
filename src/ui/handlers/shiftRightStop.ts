@@ -5,7 +5,8 @@ const shiftRightStop = (
   scale: ScaleConfiguration,
   selectedKnob: HTMLElement,
   meta: boolean,
-  ctrl: boolean
+  ctrl: boolean,
+  gap: number
 ) => {
   const stopsList = []
 
@@ -17,7 +18,7 @@ const shiftRightStop = (
     newLightnessScale = scale,
     currentStopValue: number = newLightnessScale[stopsList[selectedKnobIndex]],
     nextStopValue: number =
-      newLightnessScale[stopsList[selectedKnobIndex - 1]] - 2
+      newLightnessScale[stopsList[selectedKnobIndex - 1]] - gap
 
   if (currentStopValue >= nextStopValue) null
   else if (currentStopValue >= 99 && (!meta || ctrl))

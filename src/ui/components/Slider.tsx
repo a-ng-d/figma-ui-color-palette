@@ -8,6 +8,8 @@ import shiftLeftStop from './../handlers/shiftLeftStop'
 import shiftRightStop from './../handlers/shiftRightStop'
 import { palette } from '../../utils/palettePackage'
 
+const safeGap: number = 2
+
 interface Props {
   stops: Array<number>
   hasPreset: boolean
@@ -151,7 +153,7 @@ export default class Slider extends React.Component<Props> {
     update: () => void
   ) => {
     let limitMin: number, limitMax: number
-    const gap: number = doMap(2, 0, 100, 0, rangeWidth),
+    const gap: number = doMap(safeGap, 0, 100, 0, rangeWidth),
       sliderPadding: number = parseFloat(
         window.getComputedStyle(slider, null).getPropertyValue('padding-left')
       )
@@ -290,7 +292,8 @@ export default class Slider extends React.Component<Props> {
       this.props.scale,
       this.state['selectedStop']['stop'],
       e.metaKey,
-      e.ctrlKey
+      e.ctrlKey,
+      safeGap
     )
     this.props.onChange('SHIFTED')
   }
@@ -300,7 +303,8 @@ export default class Slider extends React.Component<Props> {
       this.props.scale,
       this.state['selectedStop']['stop'],
       e.metaKey,
-      e.ctrlKey
+      e.ctrlKey,
+      safeGap
     )
     this.props.onChange('SHIFTED')
   }
@@ -450,8 +454,8 @@ export default class Slider extends React.Component<Props> {
             value={lightness[1]}
             stopInputValue={this.state['stopInputValue']}
             state={this.getState(lightness[0])}
-            min={original[index + 1] == undefined ? '0' : (original[index + 1][1] + 2).toString()}
-            max={original[index - 1] == undefined ? '100' : (original[index - 1][1] - 2).toString()}
+            min={original[index + 1] == undefined ? '0' : (original[index + 1][1] + safeGap).toString()}
+            max={original[index - 1] == undefined ? '100' : (original[index - 1][1] - safeGap).toString()}
             onMouseDown={this.onGrab}
             onClick={this.clickHandler}
             onChangeStopValue={(e) => this.setState({ stopInputValue: e.target.value })}
