@@ -117,8 +117,8 @@ export default class EditPalette extends React.Component<Props> {
   }
 
   // Handlers
-  slideHandler = (e: string) => {
-    if (e === 'released') {
+  slideHandler = (state: string) => {
+    const onReleaseStop = () => {
       this.dispatch.scale.on.status = false
       parent.postMessage(
         {
@@ -131,7 +131,9 @@ export default class EditPalette extends React.Component<Props> {
         '*'
       )
       this.props.onChangeScale()
-    } else if (e === 'customized') {
+    }
+
+    const onChangeStop = () => {
       parent.postMessage(
         {
           pluginMessage: {
@@ -143,7 +145,30 @@ export default class EditPalette extends React.Component<Props> {
         '*'
       )
       this.props.onChangeStop()
-    } else this.dispatch.scale.on.status = true
+    }
+
+    const onTypeStopValue = () => {
+      parent.postMessage(
+        {
+          pluginMessage: {
+            type: 'UPDATE_SCALE',
+            data: palette,
+            isEditedInRealTime: false,
+          },
+        },
+        '*'
+      )
+      this.props.onChangeStop()
+    } 
+
+    const actions: ActionsList = {
+      RELEASED: () => onReleaseStop(),
+      SHIFTED: () => onChangeStop(),
+      TYPED: () => onTypeStopValue(),
+      UPDATING: () => this.dispatch.scale.on.status = true
+    }
+
+    return actions[state]?.()
   }
 
   colorHandler = (e) => {

@@ -30,7 +30,6 @@ const shiftLeftStop = (
           (newLightnessScale[stopsList[selectedKnobIndex]] - 0.1).toFixed(1)
         ))
       : newLightnessScale[stopsList[selectedKnobIndex]]--
-  console.log(newLightnessScale)
   palette.scale = newLightnessScale
 }
 

@@ -132,6 +132,7 @@ export default class ColorItem extends React.Component<Props> {
             feature="RENAME"
             onChange={this.inputHandler}
             onFocus={this.selectionHandler}
+            onBlur={this.inputHandler}
             onConfirm={this.inputHandler}
           />
         </div>
@@ -143,6 +144,7 @@ export default class ColorItem extends React.Component<Props> {
             feature="HEX"
             onChange={this.inputHandler}
             onFocus={this.selectionHandler}
+            onBlur={this.inputHandler}
           />
           <div className="inputs">
             <div className="label">LCH</div>
@@ -156,6 +158,7 @@ export default class ColorItem extends React.Component<Props> {
                 feature="LIGHTNESS"
                 onChange={this.inputHandler}
                 onFocus={this.selectionHandler}
+                onBlur={this.inputHandler}
               />
               <Input
                 type="number"
@@ -166,6 +169,7 @@ export default class ColorItem extends React.Component<Props> {
                 feature="CHROMA"
                 onChange={this.inputHandler}
                 onFocus={this.selectionHandler}
+                onBlur={this.inputHandler}
               />
               <Input
                 type="number"
@@ -180,6 +184,7 @@ export default class ColorItem extends React.Component<Props> {
                 feature="HUE"
                 onChange={this.inputHandler}
                 onFocus={this.selectionHandler}
+                onBlur={this.inputHandler}
               />
             </div>
           </div>
@@ -244,6 +249,7 @@ export default class ColorItem extends React.Component<Props> {
                 feature="SHIFT_HUE"
                 onChange={this.inputHandler}
                 onFocus={this.selectionHandler}
+                onBlur={this.inputHandler}
               />
             </div>
           </Feature>

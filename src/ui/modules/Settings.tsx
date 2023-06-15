@@ -66,6 +66,11 @@ export default class Settings extends React.Component<Props> {
                     ? () => null
                     : this.props.onChangeSettings
                 }
+                onBlur={
+                  isBlocked('SETTINGS_PALETTE_NAME', this.props.planStatus)
+                    ? () => null
+                    : this.props.onChangeSettings
+                }
                 onConfirm={
                   isBlocked('SETTINGS_PALETTE_NAME', this.props.planStatus)
                     ? () => null
@@ -123,6 +128,11 @@ export default class Settings extends React.Component<Props> {
                     ? () => null
                     : this.props.onChangeSettings
                 }
+                onBlur={
+                  isBlocked('SETTINGS_TEXT_COLORS_THEME', this.props.planStatus)
+                    ? () => null
+                    : this.props.onChangeSettings
+                }
               />
             </FormItem>
             <FormItem
@@ -149,6 +159,11 @@ export default class Settings extends React.Component<Props> {
                     : this.props.onChangeSettings
                 }
                 onFocus={
+                  isBlocked('SETTINGS_TEXT_COLORS_THEME', this.props.planStatus)
+                    ? () => null
+                    : this.props.onChangeSettings
+                }
+                onBlur={
                   isBlocked('SETTINGS_TEXT_COLORS_THEME', this.props.planStatus)
                     ? () => null
                     : this.props.onChangeSettings

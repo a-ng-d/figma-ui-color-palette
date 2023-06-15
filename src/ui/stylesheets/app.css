@@ -335,6 +335,20 @@ div.slider .slider__graduation {
   pointer-events: none;
 }
 
+div.slider .slider__input {
+  position: absolute;
+  transform: translateX(-50%) translateY(-100%);
+  left: 50%;
+  top: calc(var(--size-xxsmall) * -1);
+  padding: 1px 2px;
+  z-index: 2;
+  width: var(--size-xlarge);
+  box-shadow: var(--shadow-floating-window);
+  border: 1px solid var(--figma-color-border);
+  border-radius: var(--border-radius-med);
+  background-color: var(--figma-color-bg);
+}
+
 /* Inputs */
 input[type='color' i] {
   width: var(--size-xsmall);
