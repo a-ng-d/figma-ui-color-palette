@@ -1,22 +1,21 @@
 import * as React from 'react'
-import type { PresetConfiguration } from '../../utils/types'
+import type { PresetConfiguration, ScaleConfiguration } from '../../utils/types'
 import Button from '../components/Button'
 import Dropdown from '../components/Dropdown'
 import Slider from '../components/Slider'
 import Message from '../components/Message'
 import Feature from '../components/Feature'
 import { palette, presets } from '../../utils/palettePackage'
-import { features } from '../../utils/features'
+import features from '../../utils/features'
 
 interface Props {
   hasPreset: boolean
   preset: PresetConfiguration
-  scale?: { [key: string]: string }
+  scale?: ScaleConfiguration
   onChangePreset?: React.ReactEventHandler
   onChangeScale: (e: string) => void
   onAddScale?: React.ReactEventHandler
   onRemoveScale?: React.ReactEventHandler
-  onGoingStep?: React.ReactEventHandler
 }
 
 export default class Scale extends React.Component<Props> {
@@ -50,38 +49,57 @@ export default class Scale extends React.Component<Props> {
     return (
       <div className="lightness-scale controls__control">
         <div className="section-controls">
-          <div className="section-title">Lightness scale</div>
-          <Feature
-            isActive={
-              features.find((feature) => feature.name === 'SCALE_PRESETS')
-                .isActive
-            }
-          >
-            <Dropdown
-              id="presets"
-              options={Object.entries(presets).map((entry) => entry[1].name)}
-              selected={this.props.preset.name}
-              onChange={this.props.onChangePreset}
-            />
-            {this.props.preset.scale.length > 2 &&
-            this.props.preset.name === 'Custom' ? (
-              <Button
-                icon="minus"
-                type="icon"
-                feature="remove"
-                action={this.props.onRemoveScale}
+          <div className="section-controls__left-part">
+            <div className="section-title">Lightness scale</div>
+            <Feature
+              isActive={
+                features.find((feature) => feature.name === 'SCALE_PRESETS')
+                  .isActive
+              }
+            >
+              <Dropdown
+                id="presets"
+                options={Object.entries(presets).map((entry, index) => {
+                  return {
+                    label: entry[1].name,
+                    value: entry[1].id,
+                    position: index,
+                    isActive: true,
+                    isBlocked: false,
+                  }
+                })}
+                selected={this.props.preset.id}
+                onChange={this.props.onChangePreset}
               />
-            ) : null}
-            {this.props.preset.name === 'Custom' ? (
-              <Button
-                icon="plus"
-                type="icon"
-                state={this.props.preset.scale.length == 24 ? 'disabled' : ''}
-                feature="add"
-                action={this.props.onAddScale}
-              />
-            ) : null}
-          </Feature>
+            </Feature>
+          </div>
+          <div className="section-controls__right-part">
+            <Feature
+              isActive={
+                features.find((feature) => feature.name === 'SCALE_PRESETS')
+                  .isActive
+              }
+            >
+              {this.props.preset.scale.length > 2 &&
+              this.props.preset.name === 'Custom' ? (
+                <Button
+                  icon="minus"
+                  type="icon"
+                  feature="REMOVE"
+                  action={this.props.onRemoveScale}
+                />
+              ) : null}
+              {this.props.preset.name === 'Custom' ? (
+                <Button
+                  icon="plus"
+                  type="icon"
+                  state={this.props.preset.scale.length == 24 ? 'disabled' : ''}
+                  feature="ADD"
+                  action={this.props.onAddScale}
+                />
+              ) : null}
+            </Feature>
+          </div>
         </div>
         <Feature
           isActive={
@@ -118,8 +136,12 @@ export default class Scale extends React.Component<Props> {
     return (
       <div className="lightness-scale controls__control">
         <div className="section-controls">
-          <div className="section-title">Lightness scale</div>
-          <div className="label">{this.props.preset.name}</div>
+          <div className="section-controls__left-part">
+            <div className="section-title">Lightness scale</div>
+          </div>
+          <div className="section-controls__right-part">
+            <div className="label">{this.props.preset.name}</div>
+          </div>
         </div>
         <Feature
           isActive={

@@ -12,8 +12,8 @@ export default class Palette {
   name: string
   scale: ScaleConfiguration
   colors: Array<ColorConfiguration>
-  properties: boolean
   preset: PresetConfiguration
+  view: string
   textColorsTheme: TextColorsThemeHexModel
   algorithmVersion: string
   children: PaletteNode
@@ -21,18 +21,20 @@ export default class Palette {
 
   constructor(
     name: string,
-    scale: ScaleConfiguration,
-    properties: boolean,
     preset: PresetConfiguration,
+    scale: ScaleConfiguration,
+    view: string,
     textColorsTheme: TextColorsThemeHexModel,
     algorithmVersion: string
   ) {
     this.paletteName = name
-    this.name = `${name === '' ? 'UI Color Palette' : name}﹒${preset.name}`
+    this.name = `${name === '' ? 'UI Color Palette' : name}﹒${preset.name}﹒${
+      view.includes('PALETTE') ? 'Palette' : 'Sheet'
+    }`
+    this.preset = preset
     this.scale = scale
     this.colors = []
-    this.properties = properties
-    this.preset = preset
+    this.view = view
     this.algorithmVersion = algorithmVersion
     this.textColorsTheme = textColorsTheme
     this.children = null
@@ -64,10 +66,8 @@ export default class Palette {
       'textColorsTheme',
       JSON.stringify(this.textColorsTheme)
     )
+    this.node.setPluginData('view', this.view)
     this.node.setPluginData('algorithmVersion', this.algorithmVersion)
-    this.properties
-      ? this.node.setPluginData('properties', 'hasProperties')
-      : this.node.setPluginData('properties', 'hasNotProperties')
 
     // insert
     figma.currentPage.selection.forEach((element) => {
@@ -95,7 +95,7 @@ export default class Palette {
       else return 0
     })
 
-    this.node.appendChild(new Colors(this as PaletteNode).makeNode())
+    this.node.appendChild(new Colors(this as PaletteNode, this.node).makeNode())
 
     this.node.setPluginData('colors', JSON.stringify(this.colors))
     return this.node

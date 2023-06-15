@@ -1,6 +1,6 @@
 import type { Features } from './types'
 
-export const features: Array<Features> = [
+const features: Array<Features> = [
   {
     name: 'ONBOARDING',
     description: 'Onboarding service when the selection is empty',
@@ -46,6 +46,38 @@ export const features: Array<Features> = [
     description: 'Shades information and WCAG scores',
     isActive: true,
     isPro: false,
+    type: 'ACTION',
+    service: ['create', 'edit'],
+  },
+  {
+    name: 'VIEWS',
+    description: 'Different types of information arrangement',
+    isActive: true,
+    isPro: false,
+    type: 'DIVISION',
+    service: ['create', 'edit'],
+  },
+  {
+    name: 'VIEWS_PALETTE',
+    description: 'Palette view',
+    isActive: true,
+    isPro: false,
+    type: 'ACTION',
+    service: ['create', 'edit'],
+  },
+  {
+    name: 'VIEWS_PALETTE_WITH_PROPERTIES',
+    description: 'Detailed palette view',
+    isActive: true,
+    isPro: false,
+    type: 'ACTION',
+    service: ['create', 'edit'],
+  },
+  {
+    name: 'VIEWS_SHEET',
+    description: 'Detailed color sheet view',
+    isActive: true,
+    isPro: true,
     type: 'ACTION',
     service: ['create', 'edit'],
   },
@@ -211,3 +243,5 @@ export const features: Array<Features> = [
     service: ['onboard', 'create', 'edit'],
   },
 ]
+
+export default features

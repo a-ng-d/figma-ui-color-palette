@@ -6,10 +6,9 @@ const getProPlan = async () => {
     .then(() => {
       if (figma.payments.status.type === 'PAID') {
         figma.ui.postMessage({
-          type: 'plan-status',
+          type: 'GET_PRO_PLAN',
           data: figma.payments.status.type,
         })
-        figma.notify('You have upgraded UI Color Palette to Pro Plan')
       }
     })
 }

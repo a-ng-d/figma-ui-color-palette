@@ -75,9 +75,19 @@ div.actions {
   gap: var(--size-xxsmall);
 }
 
-div.actions .buttons {
+div.actions__buttons {
   display: flex;
   gap: var(--size-xxsmall);
+}
+
+div.actions__view {
+  display: flex;
+  align-items: center;
+  gap: var(--size-xxsmall);
+}
+
+div.actions__view .select-menu {
+  width: 200px;
 }
 
 div.shortcuts {
@@ -101,7 +111,7 @@ div.shortcuts__links {
   color: var(--figma-color-text);
 }
 
-div.highlight {
+div.dialog {
   position: absolute;
   top: 0;
   left: 0;
@@ -112,11 +122,11 @@ div.highlight {
   background-color: rgba(0, 0, 0, 0.5);
 }
 
-div.highlight .highlight__cover {
+div.dialog .dialog__cover {
   height: 100%;
 }
 
-div.highlight .highlight__text {
+div.dialog .dialog__text {
   padding: var(--size-xsmall);
   margin: 0;
 }
@@ -124,8 +134,19 @@ div.highlight .highlight__text {
 /* Controls */
 div.section-controls {
   display: flex;
+  align-items: center;
   justify-content: space-between;
   padding: 0 var(--size-xsmall);
+  height: var(--size-medium);
+}
+
+div.section-controls__left-part {
+  display: flex;
+  align-items: baseline;
+  flex: 1;
+}
+div.section-controls__right-part {
+  display: flex;
 }
 
 div.section-controls .section-title,
@@ -206,7 +227,7 @@ div.slider .slider__label {
   height: var(--size-small);
   border-radius: var(--border-radius-small);
   background: var(--figma-color-bg);
-  box-shadow: 0 0 0 1px var(--black3-opaque);
+  box-shadow: 0 0 0 1px var(--figma-color-border-disabled-strong);
   padding: var(--size-xxxsmall);
   text-align: center;
   position: relative;
@@ -250,7 +271,7 @@ div.slider .slider__label:before {
   height: 0;
   border-style: solid;
   border-width: var(--size-xxxsmall);
-  border-top-color: var(--black3-opaque);
+  border-top-color: var(--figma-color-border-disabled-strong);
   border-right-color: transparent;
   border-bottom-color: transparent;
   border-left-color: transparent;
@@ -409,7 +430,7 @@ div.select-menu__label {
 
 div.form-item {
   display: flex;
-  align-items: center;
+  align-items: baseline;
   gap: var(--size-xxsmall);
   padding: 0 0 0 var(--size-xxsmall);
   position: relative;

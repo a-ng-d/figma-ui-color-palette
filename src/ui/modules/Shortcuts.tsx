@@ -12,7 +12,7 @@ interface Props {
 export default class Shortcuts extends React.Component<Props> {
   // Direct actions
   onGetProPlan = () =>
-    parent.postMessage({ pluginMessage: { type: 'get-pro-plan' } }, '*')
+    parent.postMessage({ pluginMessage: { type: 'GET_PRO_PLAN' } }, '*')
 
   render() {
     return (

@@ -1,6 +1,7 @@
 import * as React from 'react'
 
 interface Props {
+  id?: string
   type: string
   icon: { type: string; value: string }
   placeholder?: string
@@ -41,6 +42,7 @@ export default class Input extends React.Component<Props> {
         } input input--with-icon`}
       >
         <input
+          id={this.props.id}
           data-feature={this.props.feature}
           type="color"
           className="input__color"
@@ -50,6 +52,7 @@ export default class Input extends React.Component<Props> {
           onFocus={this.props.onFocus}
         />
         <input
+          id={this.props.id}
           data-feature={this.props.feature}
           type="input"
           className="input__field"
@@ -81,6 +84,7 @@ export default class Input extends React.Component<Props> {
           </div>
         ) : null}
         <input
+          id={this.props.id}
           data-feature={this.props.feature}
           type="number"
           className="input__field"
@@ -115,7 +119,7 @@ export default class Input extends React.Component<Props> {
           </div>
         ) : null}
         <input
-          id={this.props.feature}
+          id={this.props.id}
           data-feature={this.props.feature}
           type="text"
           className="input__field"
