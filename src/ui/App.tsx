@@ -62,6 +62,7 @@ class App extends React.Component {
       },
       algorithmVersion: 'v1',
       hasHighlight: false,
+      planStatus: 'UNPAID',
     }
   }
 
@@ -293,6 +294,10 @@ class App extends React.Component {
             ? 'undefined'
             : e.data.pluginMessage.type
         ) {
+          case 'plan-status':
+            this.setState({ planStatus: e.data.pluginMessage.data })
+            break
+
           case 'highlight-status':
             this.setState({ hasHighlight: !e.data.pluginMessage.data })
             break
@@ -433,6 +438,7 @@ class App extends React.Component {
               hasProperties={this.state['hasProperties']}
               paletteName={this.state['paletteName']}
               textColorsTheme={this.state['textColorsTheme']}
+              planStatus={this.state['planStatus']}
               onHighlightReopen={this.highlightHandler('OPEN')}
               onPresetChange={this.presetHandler}
               onCustomPreset={this.customHandler}
@@ -455,6 +461,7 @@ class App extends React.Component {
               paletteName={this.state['paletteName']}
               textColorsTheme={this.state['textColorsTheme']}
               algorithmVersion={this.state['algorithmVersion']}
+              planStatus={this.state['planStatus']}
               onHighlightReopen={this.highlightHandler('OPEN')}
               onChangeScale={this.slideHandler}
               onChangeStop={this.customSlideHandler}
@@ -470,7 +477,10 @@ class App extends React.Component {
           }
         >
           {this.state['service'] === 'None' ? (
-            <Onboarding onHighlightReopen={this.highlightHandler('OPEN')} />
+            <Onboarding
+              onHighlightReopen={this.highlightHandler('OPEN')}
+              planStatus={this.state['planStatus']}
+            />
           ) : null}
         </Feature>
         <Feature

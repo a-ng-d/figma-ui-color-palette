@@ -8,6 +8,7 @@ interface Props {
   charactersLimit?: number
   min?: string
   max?: string
+  isBlocked?: boolean
   feature: string
   onChange: React.FocusEventHandler<HTMLInputElement>
   onFocus: React.FocusEventHandler<HTMLInputElement>
@@ -15,6 +16,10 @@ interface Props {
 }
 
 export default class Input extends React.Component<Props> {
+  static defaultProps = {
+    isBlocked: false,
+  }
+
   // Direct actions
   onNudge = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.shiftKey && e.key === 'ArrowUp')
@@ -30,7 +35,11 @@ export default class Input extends React.Component<Props> {
   // Templates
   Color = () => {
     return (
-      <div className="input input--with-icon">
+      <div
+        className={`input ${
+          this.props.isBlocked ? 'input--blocked' : ''
+        } input input--with-icon`}
+      >
         <input
           data-feature={this.props.feature}
           type="color"
@@ -56,8 +65,8 @@ export default class Input extends React.Component<Props> {
   Number = () => {
     return (
       <div
-        className={`input${
-          this.props.icon.type === 'none' ? '' : ' input--with-icon'
+        className={`input ${this.props.isBlocked ? 'input--blocked' : ''} ${
+          this.props.icon.type === 'none' ? '' : 'input--with-icon'
         }`}
       >
         {this.props.icon.type != 'none' ? (
@@ -90,7 +99,7 @@ export default class Input extends React.Component<Props> {
   Text = () => {
     return (
       <div
-        className={`input${
+        className={`input ${this.props.isBlocked ? 'input--blocked' : ''} ${
           this.props.icon.type === 'none' ? '' : ' input--with-icon'
         }`}
       >

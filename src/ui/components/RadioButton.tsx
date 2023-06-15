@@ -4,16 +4,22 @@ interface Props {
   id: string
   label: string
   isChecked: boolean
-  isDisabled: boolean
+  isDisabled?: boolean
+  isBlocked?: boolean
   feature: string
   group: string
   onChange: React.ChangeEventHandler
 }
 
 export default class RadioButton extends React.Component<Props> {
+  static defaultProps = {
+    isDisabled: false,
+    isBlocked: false,
+  }
+
   render() {
     return (
-      <div className="radio">
+      <div className={`radio ${this.props.isBlocked ? 'radio--blocked' : ''}`}>
         <input
           data-feature={this.props.feature}
           id={this.props.id}

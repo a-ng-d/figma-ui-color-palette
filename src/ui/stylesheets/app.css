@@ -64,20 +64,6 @@ div.lightness-scale {
   justify-content: space-between;
 }
 
-div.onboarding {
-  gap: var(--size-xxsmall);
-  align-items: center;
-  justify-content: center;
-}
-
-div.onboarding .label {
-  width: auto;
-}
-
-div.onboarding-tip {
-  padding: 0 calc(var(--size-xsmall) + var(--size-xxxsmall));
-}
-
 div.actions {
   width: 100%;
   height: var(--size-xxlarge);
@@ -94,16 +80,25 @@ div.actions .buttons {
   gap: var(--size-xxsmall);
 }
 
-div.help-bar {
+div.shortcuts {
   width: 100%;
   height: var(--size-large);
   display: flex;
-  justify-content: end;
-  align-items: center;
+  justify-content: space-between;
   padding: 0 var(--size-xsmall);
+  border-top: 1px solid var(--figma-color-border);
+}
+
+div.shortcuts__get-pro {
+  display: flex;
+  align-items: center;
+}
+
+div.shortcuts__links {
+  display: flex;
+  align-items: center;
   gap: var(--size-xxxsmall);
   color: var(--figma-color-text);
-  border-top: 1px solid var(--figma-color-border);
 }
 
 div.highlight {
@@ -359,39 +354,39 @@ input[type='number']::-webkit-inner-spin-button {
   display: none;
 }
 
-.inputs {
+div.inputs {
   display: flex;
   gap: var(--size-xxsmall);
 }
 
-.inputs .label {
+div.inputs .label {
   flex: 0;
 }
 
-.inputs__bar {
+div.inputs__bar {
   display: flex;
   padding: 0 1px;
   position: relative;
 }
 
-.inputs__bar .input {
+div.inputs__bar .input {
   width: 40px;
   margin: 0 -0.5px;
 }
 
-.inputs__bar input {
+div.inputs__bar input {
   background-color: transparent;
 }
 
-.inputs__bar input:focus {
+div.inputs__bar input:focus {
   border: 1px solid var(--figma-color-border);
 }
 
-.inputs__bar:hover input {
+div.inputs__bar:hover input {
   border: 1px solid var(--figma-color-border);
 }
 
-.inputs__bar:focus-within:before {
+div.inputs__bar:focus-within:before {
   content: '';
   width: 100%;
   height: 100%;
@@ -402,30 +397,39 @@ input[type='number']::-webkit-inner-spin-button {
   border-radius: var(--border-radius-small);
 }
 
-.inputs__bar:focus-within input {
+div.inputs__bar:focus-within input {
   border: 1px solid var(--figma-color-border);
   outline: 1px solid transparent;
   outline-offset: -2px;
 }
 
-.select-menu__label {
+div.select-menu__label {
   margin-top: 0;
 }
 
-.form-item {
+div.form-item {
   display: flex;
   align-items: center;
   gap: var(--size-xxsmall);
   padding: 0 0 0 var(--size-xxsmall);
+  position: relative;
 }
 
-.form-item label {
+div.form-item label {
   flex: 1;
 }
 
-.form-item .input,
-.form-item .textarea {
+div.form-item .input,
+div.form-item .textarea {
   flex: 4;
+}
+
+div.form-item--blocked {
+  pointer-events: none;
+}
+
+div.form-item--blocked label {
+  color: var(--figma-color-text-disabled);
 }
 
 /* Icon buttons */
@@ -571,11 +575,11 @@ div.export-palette > div {
 }
 
 div.export-palette > div:first-child {
-  flex: 0 1 33%;
+  flex: 2;
 }
 
 div.export-palette > div:last-child {
-  flex: 0 1 66%;
+  flex: 3;
 }
 
 div.export-palette__options {
@@ -620,4 +624,63 @@ div.about .about__links {
   display: flex;
   align-items: center;
   color: var(--figma-color-text);
+}
+
+/* Callout */
+div.onboarding {
+  gap: var(--size-xxsmall);
+  align-items: center;
+  justify-content: center;
+}
+
+div.onboarding .label {
+  width: auto;
+}
+
+div.onboarding-tip {
+  padding: 0 calc(var(--size-xsmall) + var(--size-xxxsmall));
+}
+
+div.onboarding-tip--blocked .onboarding-tip__msg {
+  color: var(--figma-color-text-disabled);
+}
+
+div.onboarding-tip--blocked .icon {
+  background: var(--figma-color-icon-disabled);
+}
+
+/* Get Pro button */
+button.get-pro-button {
+  height: var(--size-small);
+  display: flex;
+  align-items: center;
+  border-radius: var(--border-radius-small);
+  background-color: var(--figma-color-bg-component);
+  border: 2px solid var(--figma-color-bg-component);
+  padding: 0 var(--size-xxsmall) 0 0;
+}
+
+button.get-pro-button:hover {
+  background-color: var(--figma-color-bg-component-hover);
+  border: 2px solid var(--figma-color-bg-component-hover);
+}
+
+button.get-pro-button:active {
+  background-color: var(--figma-color-bg-component-pressed);
+  border: 2px solid var(--figma-color-bg-component-pressed);
+}
+
+button.get-pro-button:focus,
+button.get-pro-button:focus-visible {
+  background-color: var(--figma-color-bg-component-pressed);
+  border: 2px solid var(--figma-color-border-component-strong);
+  outline: none;
+}
+
+button.get-pro-button .type {
+  color: var(--figma-color-text-oncomponent);
+}
+
+button.get-pro-button .icon {
+  background: var(--figma-color-icon-oncomponent);
 }

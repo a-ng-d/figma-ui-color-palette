@@ -1,3 +1,4 @@
+import checkPlanStatus from './bridges/checkPlanStatus'
 import isHighlightRead from './bridges/isHighlightRead'
 import closeHighlight from './bridges/closeHighlight'
 import createPalette from './bridges/createPalette'
@@ -11,6 +12,7 @@ import exportJson from './bridges/exportJson'
 import exportCss from './bridges/exportCss'
 import exportCsv from './bridges/exportCsv'
 import updateSettings from './bridges/updateSettings'
+import getProPlan from './bridges/getProPlan'
 import package_json from './../package.json'
 
 figma.showUI(__html__, {
@@ -28,8 +30,9 @@ figma.on('run', () => processSelection())
 figma.on('selectionchange', () => processSelection())
 
 figma.on('run', () => isHighlightRead(package_json.version))
+figma.on('run', async () => await checkPlanStatus())
 
-figma.ui.onmessage = (msg) => {
+figma.ui.onmessage = async (msg) => {
   let palette: ReadonlyArray<SceneNode>
   const i = 0
 
@@ -70,5 +73,9 @@ figma.ui.onmessage = (msg) => {
 
     case 'update-settings':
       updateSettings(msg, palette)
+      break
+
+    case 'get-pro-plan':
+      await getProPlan()
   }
 }

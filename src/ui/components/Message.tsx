@@ -3,13 +3,22 @@ import * as React from 'react'
 interface Props {
   icon: string
   messages: Array<string>
+  isBlocked?: boolean
 }
 
 export default class Message extends React.Component<Props> {
+  static defaultProps = {
+    isBlocked: false,
+  }
+
   // Templates
   SingleMessage = () => {
     return (
-      <div className="onboarding-tip">
+      <div
+        className={`onboarding-tip ${
+          this.props.isBlocked ? 'onboarding-tip--blocked' : ''
+        }`}
+      >
         <div className={`icon icon--${this.props.icon}`}></div>
         <div className="onboarding-tip__msg">{this.props.messages[0]}</div>
       </div>

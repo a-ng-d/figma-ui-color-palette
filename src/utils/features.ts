@@ -158,7 +158,7 @@ export const features: Array<Features> = [
     name: 'EXPORT_CSV',
     description: 'Palette LCH values export to CSV',
     isActive: true,
-    isPro: false,
+    isPro: true,
     type: 'ACTION',
     service: ['edit'],
   },
@@ -201,5 +201,13 @@ export const features: Array<Features> = [
     isPro: false,
     type: 'CONTEXT',
     service: ['create', 'edit'],
+  },
+  {
+    name: 'GET_PRO',
+    description: 'Access the subscription to get pro features',
+    isActive: false,
+    isPro: false,
+    type: 'ACTION',
+    service: ['onboard', 'create', 'edit'],
   },
 ]

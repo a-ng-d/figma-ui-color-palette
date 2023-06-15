@@ -18,6 +18,7 @@ interface Props {
   preset: PresetConfiguration
   paletteName: string
   textColorsTheme: TextColorsThemeHexModel
+  planStatus: string
   onHighlightReopen: React.ChangeEventHandler
   onPresetChange: React.ChangeEventHandler
   onCustomPreset: React.ChangeEventHandler
@@ -150,6 +151,7 @@ export default class CreatePalette extends React.Component<Props> {
                 action: this.props.onHighlightReopen,
               },
             ]}
+            planStatus={this.props.planStatus}
           />
         </Feature>
       )
@@ -176,6 +178,7 @@ export default class CreatePalette extends React.Component<Props> {
             paletteName={this.props.paletteName}
             textColorsTheme={this.props.textColorsTheme}
             settings={['base', 'contrast-management']}
+            planStatus={this.props.planStatus}
             onSettingsChange={this.settingsHandler}
           />
         )

@@ -12,10 +12,18 @@ interface Props {
   textColorsTheme?: TextColorsThemeHexModel
   settings?: Array<string>
   isNewAlgorithm?: boolean
+  planStatus: string
   onSettingsChange: React.ReactEventHandler
 }
 
 export default class Settings extends React.Component<Props> {
+  isBlocked = (featureName: string) =>
+    features.find((feature) => feature.name === featureName).isPro
+      ? this.props.planStatus === 'PAID'
+        ? false
+        : true
+      : false
+
   // Templates
   Base = () => {
     return (
@@ -33,6 +41,7 @@ export default class Settings extends React.Component<Props> {
             <FormItem
               label="Palette name"
               id="rename-palette"
+              isBlocked={this.isBlocked('SETTINGS_PALETTE_NAME')}
             >
               <Input
                 type="text"
@@ -42,10 +51,23 @@ export default class Settings extends React.Component<Props> {
                   this.props.paletteName != '' ? this.props.paletteName : ''
                 }
                 charactersLimit={64}
+                isBlocked={this.isBlocked('SETTINGS_PALETTE_NAME')}
                 feature="rename-palette"
-                onChange={this.props.onSettingsChange}
-                onFocus={this.props.onSettingsChange}
-                onConfirm={this.props.onSettingsChange}
+                onChange={
+                  this.isBlocked('SETTINGS_PALETTE_NAME')
+                    ? () => null
+                    : this.props.onSettingsChange
+                }
+                onFocus={
+                  this.isBlocked('SETTINGS_PALETTE_NAME')
+                    ? () => null
+                    : this.props.onSettingsChange
+                }
+                onConfirm={
+                  this.isBlocked('SETTINGS_PALETTE_NAME')
+                    ? () => null
+                    : this.props.onSettingsChange
+                }
               />
             </FormItem>
           </div>
@@ -71,27 +93,47 @@ export default class Settings extends React.Component<Props> {
             <FormItem
               label="Text light color"
               id="change-text-light-color"
+              isBlocked={this.isBlocked('SETTINGS_TEXT_COLORS_THEME')}
             >
               <Input
                 type="color"
                 icon={{ type: 'none', value: null }}
                 value={this.props.textColorsTheme.lightColor}
+                isBlocked={this.isBlocked('SETTINGS_TEXT_COLORS_THEME')}
                 feature="change-text-light-color"
-                onChange={this.props.onSettingsChange}
-                onFocus={this.props.onSettingsChange}
+                onChange={
+                  this.isBlocked('SETTINGS_TEXT_COLORS_THEME')
+                    ? () => null
+                    : this.props.onSettingsChange
+                }
+                onFocus={
+                  this.isBlocked('SETTINGS_TEXT_COLORS_THEME')
+                    ? () => null
+                    : this.props.onSettingsChange
+                }
               />
             </FormItem>
             <FormItem
               label="Text dark color"
               id="change-text-dark-color"
+              isBlocked={this.isBlocked('SETTINGS_TEXT_COLORS_THEME')}
             >
               <Input
                 type="color"
                 icon={{ type: 'none', value: null }}
                 value={this.props.textColorsTheme.darkColor}
+                isBlocked={this.isBlocked('SETTINGS_TEXT_COLORS_THEME')}
                 feature="change-text-dark-color"
-                onChange={this.props.onSettingsChange}
-                onFocus={this.props.onSettingsChange}
+                onChange={
+                  this.isBlocked('SETTINGS_TEXT_COLORS_THEME')
+                    ? () => null
+                    : this.props.onSettingsChange
+                }
+                onFocus={
+                  this.isBlocked('SETTINGS_TEXT_COLORS_THEME')
+                    ? () => null
+                    : this.props.onSettingsChange
+                }
               />
             </FormItem>
             <Message
@@ -99,6 +141,7 @@ export default class Settings extends React.Component<Props> {
               messages={[
                 'The light and dark text colors serve as a reference to simulate contrast and obtain both WCAG and APCA scores',
               ]}
+              isBlocked={this.isBlocked('SETTINGS_NEW_ALGORITHM')}
             />
           </div>
         </Feature>
@@ -124,15 +167,20 @@ export default class Settings extends React.Component<Props> {
               id="update-algorithm"
               label="Enable the new algorithm for generating color shades"
               isChecked={this.props.isNewAlgorithm}
-              isDisabled={false}
+              isBlocked={this.isBlocked('SETTINGS_NEW_ALGORITHM')}
               feature="update-algorithm-version"
-              onChange={this.props.onSettingsChange}
+              onChange={
+                this.isBlocked('SETTINGS_NEW_ALGORITHM')
+                  ? () => null
+                  : this.props.onSettingsChange
+              }
             />
             <Message
               icon="library"
               messages={[
                 'The Chroma values are harmonized to ensure consistent lightness across all shades, but this may make the colors look desaturated.',
               ]}
+              isBlocked={this.isBlocked('SETTINGS_NEW_ALGORITHM')}
             />
           </div>
         </Feature>
