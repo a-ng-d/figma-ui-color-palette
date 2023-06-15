@@ -41,7 +41,7 @@ const processSelection = () => {
     })
 
   selection.forEach((element) => {
-    if (element.type != 'GROUP')
+    if (element.type != 'CONNECTOR' && element.type != 'GROUP' && element.type != 'EMBED')
       if (
         element['fills'].filter((fill) => fill.type === 'SOLID').length != 0 &&
         element.getPluginData('scale') === ''

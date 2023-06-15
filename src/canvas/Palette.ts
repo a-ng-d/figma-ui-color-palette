@@ -71,22 +71,24 @@ export default class Palette {
 
     // insert
     figma.currentPage.selection.forEach((element) => {
-      const fills = element['fills'].filter((fill) => fill.type === 'SOLID')
+      if (element.type != 'CONNECTOR' && element.type != 'GROUP' && element.type != 'EMBED') {
+        const fills = element['fills'].filter((fill) => fill.type === 'SOLID')
 
-      if (fills.length != 0) {
-        fills.forEach((fill) =>
-          this.colors.push({
-            name: element.name,
-            rgb: fill.color,
-            id: undefined,
-            oklch: false,
-            hueShifting: 0,
-          })
-        )
-      } else
-        figma.notify(
-          `The layer '${element.name}' must get at least one solid color`
-        )
+        if (fills.length != 0) {
+          fills.forEach((fill) =>
+            this.colors.push({
+              name: element.name,
+              rgb: fill.color,
+              id: undefined,
+              oklch: false,
+              hueShifting: 0,
+            })
+          )
+        } else
+          figma.notify(
+            `The layer '${element.name}' must get at least one solid color`
+          )
+      } 
     })
 
     this.colors.sort((a, b) => {
