@@ -11,7 +11,8 @@
   ],
   "networkAccess": {
     "allowedDomains": [
-      "figma.com"
+      "figma.com",
+      "rsms.me"
     ]
   },
   "permissions": ["payments"],
