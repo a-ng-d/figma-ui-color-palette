@@ -34,7 +34,7 @@ export default class Slider extends React.Component<Props> {
   }
 
   clickHandler = (e) => {
-    if (e.detail == 1 && !this.props.hasPreset && this.state['selectedStop']['state'] != 'SLIDING' && this.state['selectedStop']['state'] != 'EDITING') {
+    if (e.detail == 1 && !this.props.hasPreset && this.state['selectedStop']['state'] === 'NORMAL') {
       this.setState({
         selectedStop: {
           stop: e.target,
@@ -244,6 +244,14 @@ export default class Slider extends React.Component<Props> {
       (stop.children[0] as HTMLElement).style.display = 'none'
     )
     
+    if (this.state['selectedStop']['state'] === 'SLIDING')
+    this.setState({
+      selectedStop: {
+        stop: null,
+        state: 'SLIDED'
+      }
+    })
+
     update()
     this.props.onChange('RELEASED')
   }
@@ -471,6 +479,7 @@ export default class Slider extends React.Component<Props> {
 
   // Render
   render() {
+    console.log(this.state['selectedStop']['state'])
     return (
       <div className="slider">
         {this.props.type === 'EQUAL' ? <this.Equal /> : null}
