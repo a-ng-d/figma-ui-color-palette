@@ -112,6 +112,13 @@ export default class Slider extends React.Component<Props> {
     }
 
     stop.style.zIndex = '2'
+    if (this.state['selectedStop']['stop'] != stop)
+      this.setState({
+        selectedStop: {
+          stop: null,
+          state: 'NORMAL'
+        },
+      })
 
     document.onmousemove = (e) =>
       this.onSlide(
@@ -232,14 +239,7 @@ export default class Slider extends React.Component<Props> {
     stops.forEach(
       (stop) => ((stop.children[0] as HTMLElement).style.display = 'none')
     )
-    if (Date.now() - startTime < 200 && !this.props.hasPreset) {
-      this.setState({
-        selectedStop: {
-          stop: null,
-          state: 'NORMAL',
-        },
-      })
-    }
+    
     update()
     this.props.onChange('RELEASED')
   }
