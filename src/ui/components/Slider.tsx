@@ -479,7 +479,6 @@ export default class Slider extends React.Component<Props> {
 
   // Render
   render() {
-    console.log(this.state['selectedStop']['state'])
     return (
       <div className="slider">
         {this.props.type === 'EQUAL' ? <this.Equal /> : null}
