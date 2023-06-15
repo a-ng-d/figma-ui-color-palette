@@ -315,14 +315,14 @@ class App extends React.Component {
   render() {
     onmessage = (e: MessageEvent) => {
       try {
+        const checkHighlightStatus = () =>
+        this.setState({ hasHighlight: !e.data.pluginMessage.data })
+        
         const checkPlanStatus = () =>
           this.setState({
             planStatus: e.data.pluginMessage.data,
           })
-
-        const checkHighlightStatus = () =>
-          this.setState({ hasHighlight: !e.data.pluginMessage.data })
-
+        
         const updateWhileEmptySelection = () => {
           this.setState({
             service: 'None',
@@ -441,8 +441,8 @@ class App extends React.Component {
             })
 
         const actions: ActionsList = {
-          PLAN_STATUS: () => checkPlanStatus(),
           HIGHTLIGHT_STATUS: () => checkHighlightStatus(),
+          PLAN_STATUS: () => checkPlanStatus(),
           EMPTY_SELECTION: () => updateWhileEmptySelection(),
           COLOR_SELECTED: () => updateWhileColorSelected(),
           PALETTE_SELECTED: () => updateWhilePaletteSelected(),
