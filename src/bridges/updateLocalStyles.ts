@@ -44,7 +44,7 @@ const updateLocalStyles = (palette, i: number) => {
     else if (i == 1) figma.notify(`${i} local color style has been updated`)
     else
       figma.notify(
-        `No color has been updated because the palette has not been edited`
+        `No color has been updated because the UI Color Palette has not been edited`
       )
   } else
     figma.notify(
