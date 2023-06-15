@@ -74,7 +74,7 @@ export default class Slider extends React.Component<Props> {
 
   // Direct actions
   onGrab = (e) => {
-    const stop = e.target as HTMLElement,
+    const stop = e.currentTarget as HTMLElement,
       range = stop.parentElement as HTMLElement,
       shift = e.nativeEvent.layerX as number,
       tooltip = stop.children[0] as HTMLElement,
