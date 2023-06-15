@@ -33,12 +33,12 @@ export default class Sample {
     this.textColorsTheme = textColorsTheme
     this.view = view
     this.status = status
-    this.node = figma.createFrame()
     this.children = null
   }
 
   makeNodeName(mode: string, width: number, height: number) {
     // base
+    this.node = figma.createFrame()
     this.node.name = this.name
     this.node.fills = [
       {
@@ -83,6 +83,7 @@ export default class Sample {
     isColorName = false
   ) {
     // base
+    this.node = figma.createFrame()
     this.node.name = name
     this.node.resize(width, height)
     this.node.fills = [
@@ -128,6 +129,7 @@ export default class Sample {
     isColorName = false
   ) {
     // base
+    this.node = figma.createFrame()
     this.node.name = name
     this.node.resize(width, height)
     this.node.fills = []

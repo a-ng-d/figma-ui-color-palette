@@ -9,11 +9,11 @@ export default class Title {
   constructor(text: string, parent: PaletteNode) {
     this.text = text
     this.parent = parent
-    this.node = figma.createFrame()
   }
 
   makeNode() {
     // base
+    this.node = figma.createFrame()
     this.node.name = '_title'
     this.node.resize(100, 48)
     this.node.fills = []

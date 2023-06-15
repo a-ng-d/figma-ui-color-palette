@@ -38,11 +38,11 @@ export default class Palette {
     this.algorithmVersion = algorithmVersion
     this.textColorsTheme = textColorsTheme
     this.children = null
-    this.node = figma.createFrame()
   }
 
   makeNode() {
     // base
+    this.node = figma.createFrame()
     this.node.name = this.name
     this.node.resize(1640, 100)
     this.node.cornerRadius = 16

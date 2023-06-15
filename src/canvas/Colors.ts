@@ -18,7 +18,6 @@ export default class Colors {
     this.parent = parent
     this.palette = palette
     this.paletteData = []
-    this.node = figma.createFrame()
   }
 
   getShadeColorFromLch(
@@ -144,6 +143,7 @@ export default class Colors {
 
   makeNode() {
     // base
+    this.node = figma.createFrame()
     this.node.name = '_colors﹒do not edit any layer'
     this.node.fills = []
     this.node.locked = true

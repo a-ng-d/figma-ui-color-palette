@@ -7,11 +7,11 @@ export default class Header {
 
   constructor(parent: PaletteNode) {
     this.parent = parent
-    this.node = figma.createFrame()
   }
 
   makeNode() {
     // base
+    this.node = figma.createFrame()
     this.node.name = '_header'
     this.node.resize(100, 48)
     this.node.fills = []

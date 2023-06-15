@@ -32,7 +32,6 @@ export default class Properties {
     this.textColorsTheme = textColorsTheme
     this.hex = chroma(rgb).hex()
     this.lch = chroma(rgb).lch()
-    this.node = figma.createFrame()
   }
 
   getContrast(textColor: string) {
@@ -391,6 +390,7 @@ export default class Properties {
 
   makeNode() {
     // base
+    this.node = figma.createFrame()
     this.node.name = '_properties'
     this.node.fills = []
 

@@ -10,12 +10,11 @@ export default class Tag {
     this.name = name
     this.content = content
     this.fontSize = fontSize
-    this.nodeTag = figma.createFrame()
-    this.nodeText = figma.createText()
   }
 
   makeNodeTag(gl: Array<number> = [0, 0, 0, 1], hasIndicator = false) {
     // base
+    this.nodeTag = figma.createFrame()
     this.nodeTag.name = this.name
     this.nodeTag.fills = [
       {
@@ -49,6 +48,7 @@ export default class Tag {
 
   makeNodeText() {
     // base
+    this.nodeText = figma.createText()
     this.nodeText.name = '_text'
     this.nodeText.characters = this.content
     this.nodeText.fontName = {

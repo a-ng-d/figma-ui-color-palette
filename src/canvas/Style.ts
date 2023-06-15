@@ -8,10 +8,10 @@ export default class Style {
   constructor(name: string, rgb: RgbModel) {
     this.name = name
     this.rgb = rgb
-    this.node = figma.createPaintStyle()
   }
 
   makeNode() {
+    this.node = figma.createPaintStyle()
     this.node.name = this.name
     this.node.paints = [
       {
