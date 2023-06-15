@@ -1,7 +1,9 @@
 import * as React from 'react'
+import Feature from '../components/Feature'
 import Icon from './Icon'
 import Button from '../components/Button'
 import package_json from './../../../package.json'
+import features from '../../utils/features'
 
 interface Props {
   planStatus: string
@@ -14,13 +16,31 @@ export default class About extends React.Component<Props> {
         <div>
           <Icon size={32} />
           <div>
-            <div className="type type--xlarge">UI Color Palette</div>
-            <div className="type">{`Version ${
-              package_json.version.slice(0, 1) +
-              package_json.version.slice(2, 3)
-            }﹒${
-              this.props.planStatus === 'UNPAID' ? 'Free' : 'Pro'
-            } Plan`}</div>
+            <p className="type type--xlarge">UI Color Palette</p>
+            <div className="about__info">
+              <p className="type">{`Version ${
+                package_json.version.slice(0, 1) +
+                package_json.version.slice(2, 3)
+              }`}</p>
+              <Feature
+                isActive={
+                  features.find((feature) => feature.name === 'GET_PRO_PLAN')
+                    .isActive
+                }
+              >
+                {this.props.planStatus === 'UNPAID' ?(
+                <>
+                  <span>﹒</span>
+                  <p className="type">Free Plan</p>
+                </>
+                ) : (
+                <>
+                  <span>﹒</span>
+                  <p className="type">Pro Plan</p>
+                </>
+                )}
+              </Feature>
+            </div>
           </div>
           <div>
             <p className="type">

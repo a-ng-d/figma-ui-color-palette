@@ -655,7 +655,17 @@ div.about > div {
   flex: 1;
 }
 
-div.about .about__links {
+div.about p {
+  margin: 0
+}
+
+div.about__info {
+  display: flex;
+  align-items: center;
+  color: var(--figma-color-text);
+}
+
+div.about__links {
   display: flex;
   align-items: center;
   color: var(--figma-color-text);
