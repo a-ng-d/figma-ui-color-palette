@@ -441,7 +441,7 @@ class App extends React.Component {
             })
 
         const actions: ActionsList = {
-          GET_PRO_PLAN: () => getProPlan(),
+          PLAN_STATUS: () => checkPlanStatus(),
           HIGHTLIGHT_STATUS: () => checkHighlightStatus(),
           EMPTY_SELECTION: () => updateWhileEmptySelection(),
           COLOR_SELECTED: () => updateWhileColorSelected(),

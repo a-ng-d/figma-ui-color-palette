@@ -3,7 +3,7 @@ const checkPlanStatus = async () => {
     type: 'UNPAID',
   })
   await figma.ui.postMessage({
-    type: 'plan-status',
+    type: 'PLAN_STATUS',
     data: figma.payments.status.type,
   })
 }
