@@ -13,7 +13,7 @@ interface Props {
   preset: PresetConfiguration
   scale?: ScaleConfiguration
   onChangePreset?: React.ReactEventHandler
-  onChangeScale: (e: string) => void
+  onChangeScale?: (e: string) => void
   onAddScale?: React.ReactEventHandler
   onRemoveScale?: React.ReactEventHandler
 }
