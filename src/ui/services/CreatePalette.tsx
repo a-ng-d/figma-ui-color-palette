@@ -159,8 +159,8 @@ export default class CreatePalette extends React.Component<Props> {
             preset={this.props.preset}
             onChangePreset={this.presetHandler}
             onChangeScale={() => null}
-            onAddScale={this.scaleHandler}
-            onRemoveScale={this.scaleHandler}
+            onAddStop={this.scaleHandler}
+            onRemoveStop={this.scaleHandler}
           />
         )
         break

@@ -14,8 +14,8 @@ interface Props {
   scale?: ScaleConfiguration
   onChangePreset?: React.ReactEventHandler
   onChangeScale?: (e: string) => void
-  onAddScale?: React.ReactEventHandler
-  onRemoveScale?: React.ReactEventHandler
+  onAddStop?: React.ReactEventHandler
+  onRemoveStop?: React.ReactEventHandler
 }
 
 export default class Scale extends React.Component<Props> {
@@ -87,7 +87,7 @@ export default class Scale extends React.Component<Props> {
                   icon="minus"
                   type="icon"
                   feature="REMOVE"
-                  action={this.props.onRemoveScale}
+                  action={this.props.onRemoveStop}
                 />
               ) : null}
               {this.props.preset.name === 'Custom' ? (
@@ -96,7 +96,7 @@ export default class Scale extends React.Component<Props> {
                   type="icon"
                   state={this.props.preset.scale.length == 24 ? 'disabled' : ''}
                   feature="ADD"
-                  action={this.props.onAddScale}
+                  action={this.props.onAddStop}
                 />
               ) : null}
             </Feature>
