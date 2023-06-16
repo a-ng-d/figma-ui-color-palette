@@ -204,7 +204,7 @@ export default class Settings extends React.Component<Props> {
           <div className="settings__item">
             <Switch
               id="update-algorithm"
-              label="Enable the new algorithm for generating color shades"
+              label="Enable the new algorithm for creating color shades"
               isChecked={this.props.isNewAlgorithm}
               isBlocked={isBlocked(
                 'SETTINGS_NEW_ALGORITHM',
