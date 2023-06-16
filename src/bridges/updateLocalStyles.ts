@@ -15,28 +15,28 @@ const updateLocalStyles = (palette, i: number) => {
           target = localStyles.filter(
             (localStyle) => localStyle.name === `${color.name}/${shade.name}`
           )[0]
-
-          if (
-            shade.hex !=
-            chroma([
-              target.paints[0]['color'].r * 255,
-              target.paints[0]['color'].g * 255,
-              target.paints[0]['color'].b * 255,
-            ]).hex()
-          ) {
-            target.paints = [
-              {
-                type: 'SOLID',
-                color: {
-                  r: shade.gl[0],
-                  g: shade.gl[1],
-                  b: shade.gl[2],
+          if (target != undefined)
+            if (
+              shade.hex !=
+              chroma([
+                target.paints[0]['color'].r * 255,
+                target.paints[0]['color'].g * 255,
+                target.paints[0]['color'].b * 255,
+              ]).hex()
+            ) {
+              target.paints = [
+                {
+                  type: 'SOLID',
+                  color: {
+                    r: shade.gl[0],
+                    g: shade.gl[1],
+                    b: shade.gl[2],
+                  },
                 },
-              },
-            ]
-            i++
-          }
-        })
+              ]
+              i++
+            }
+          })
       }
     )
 
