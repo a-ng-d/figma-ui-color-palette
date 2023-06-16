@@ -8,8 +8,8 @@ const isHighlightRead = async (version: string) => {
 
   if (mostRecentReleaseNoteVersion != version)
     await figma.ui.postMessage({
-      type: 'highlight-status',
-      data: true,
+      type: 'HIGHLIGHT_STATUS',
+      data: 'NO_RELEASE_NOTE',
     })
   else {
     if (
@@ -17,13 +17,13 @@ const isHighlightRead = async (version: string) => {
       (await !figma.clientStorage.getAsync(`${version}_isRead`))
     )
       await figma.ui.postMessage({
-        type: 'highlight-status',
-        data: false,
+        type: 'HIGHLIGHT_STATUS',
+        data: 'UNREAD_RELEASE_NOTE',
       })
     else
       await figma.ui.postMessage({
-        type: 'highlight-status',
-        data: true,
+        type: 'HIGHLIGHT_STATUS',
+        data: 'READ_RELEASE_NOTE',
       })
   }
 }

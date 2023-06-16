@@ -320,7 +320,7 @@ class App extends React.Component {
           this.setState({ editorType: e.data.pluginMessage.data })
         
         const checkHighlightStatus = () =>
-          this.setState({ hasHighlight: !e.data.pluginMessage.data })
+          this.setState({ hasHighlight: e.data.pluginMessage.data === 'NO_RELEASE_NOTE' || e.data.pluginMessage.data === 'READ_RELEASE_NOTE' ? false : true })
 
         const checkPlanStatus = () =>
           this.setState({
@@ -446,7 +446,7 @@ class App extends React.Component {
 
         const actions: ActionsList = {
           EDITOR_TYPE: () => checkEditorType(),
-          HIGHTLIGHT_STATUS: () => checkHighlightStatus(),
+          HIGHLIGHT_STATUS: () => checkHighlightStatus(),
           PLAN_STATUS: () => checkPlanStatus(),
           EMPTY_SELECTION: () => updateWhileEmptySelection(),
           COLOR_SELECTED: () => updateWhileColorSelected(),
@@ -462,7 +462,7 @@ class App extends React.Component {
         console.error(error)
       }
     }
-    
+
     return (
       <main>
         <Feature
