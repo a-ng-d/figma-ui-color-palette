@@ -28,16 +28,16 @@ export default class About extends React.Component<Props> {
                     .isActive
                 }
               >
-                {this.props.planStatus === 'UNPAID' ?(
-                <>
-                  <span>﹒</span>
-                  <p className="type">Free Plan</p>
-                </>
+                {this.props.planStatus === 'UNPAID' ? (
+                  <>
+                    <span>﹒</span>
+                    <p className="type">Free Plan</p>
+                  </>
                 ) : (
-                <>
-                  <span>﹒</span>
-                  <p className="type">Pro Plan</p>
-                </>
+                  <>
+                    <span>﹒</span>
+                    <p className="type">Pro Plan</p>
+                  </>
                 )}
               </Feature>
             </div>

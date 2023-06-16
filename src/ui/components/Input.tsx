@@ -23,18 +23,20 @@ export default class Input extends React.Component<Props> {
   static defaultProps = {
     step: '1',
     isBlocked: false,
-    isAutoFocus: false
+    isAutoFocus: false,
   }
 
   // Direct actions
   onNudge = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.shiftKey && e.key === 'ArrowUp')
       (e.target as HTMLInputElement).value = (
-        parseFloat((e.target as HTMLInputElement).value) + (9 * parseFloat(this.props.step))
+        parseFloat((e.target as HTMLInputElement).value) +
+        9 * parseFloat(this.props.step)
       ).toString()
     else if (e.shiftKey && e.key === 'ArrowDown')
       (e.target as HTMLInputElement).value = (
-        parseFloat((e.target as HTMLInputElement).value) - (9 * parseFloat(this.props.step))
+        parseFloat((e.target as HTMLInputElement).value) -
+        9 * parseFloat(this.props.step)
       ).toString()
   }
 

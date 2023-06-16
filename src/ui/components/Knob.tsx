@@ -12,7 +12,12 @@ interface Props {
   onMouseDown: React.MouseEventHandler
   onClick?: React.MouseEventHandler
   onChangeStopValue?: React.FocusEventHandler<HTMLInputElement>
-  onValidStopValue?: (stopId: string, e: React.FocusEvent<HTMLInputElement> | React.KeyboardEvent<HTMLInputElement>) => void
+  onValidStopValue?: (
+    stopId: string,
+    e:
+      | React.FocusEvent<HTMLInputElement>
+      | React.KeyboardEvent<HTMLInputElement>
+  ) => void
 }
 
 export default class Knob extends React.Component<Props> {
@@ -38,7 +43,7 @@ export default class Knob extends React.Component<Props> {
         <div className="type type--inverse slider__tooltip">
           {this.transformStopValue(this.props.value)}
         </div>
-        {this.props.state === 'EDITING' ? 
+        {this.props.state === 'EDITING' ? (
           <div className="slider__input">
             <Input
               type="number"
@@ -50,12 +55,18 @@ export default class Knob extends React.Component<Props> {
               feature="TYPE_STOP_VALUE"
               isAutoFocus={true}
               onChange={this.props.onChangeStopValue}
-              onFocus={(e: React.FocusEvent<HTMLInputElement>) => this.props.onValidStopValue(this.props.shortId, e)}
-              onBlur={(e: React.FocusEvent<HTMLInputElement>) => this.props.onValidStopValue(this.props.shortId, e)}
-              onConfirm={(e: React.KeyboardEvent<HTMLInputElement>) => this.props.onValidStopValue(this.props.shortId, e)}
+              onFocus={(e: React.FocusEvent<HTMLInputElement>) =>
+                this.props.onValidStopValue(this.props.shortId, e)
+              }
+              onBlur={(e: React.FocusEvent<HTMLInputElement>) =>
+                this.props.onValidStopValue(this.props.shortId, e)
+              }
+              onConfirm={(e: React.KeyboardEvent<HTMLInputElement>) =>
+                this.props.onValidStopValue(this.props.shortId, e)
+              }
             />
           </div>
-        : null}
+        ) : null}
         <div className="type slider__label">{this.props.shortId}</div>
         <div className="slider__graduation"></div>
       </div>

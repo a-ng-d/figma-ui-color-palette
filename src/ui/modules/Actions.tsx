@@ -21,7 +21,7 @@ interface Props {
 
 export default class Actions extends React.Component<Props> {
   static defaultProps = {
-    editorType: 'figma'
+    editorType: 'figma',
   }
 
   // Templates

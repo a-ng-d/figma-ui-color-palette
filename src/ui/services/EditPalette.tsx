@@ -160,13 +160,13 @@ export default class EditPalette extends React.Component<Props> {
         '*'
       )
       this.props.onChangeStop()
-    } 
+    }
 
     const actions: ActionsList = {
       RELEASED: () => onReleaseStop(),
       SHIFTED: () => onChangeStop(),
       TYPED: () => onTypeStopValue(),
-      UPDATING: () => this.dispatch.scale.on.status = true
+      UPDATING: () => (this.dispatch.scale.on.status = true),
     }
 
     return actions[state]?.()

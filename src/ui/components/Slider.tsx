@@ -18,7 +18,12 @@ interface Props {
   min?: number
   max?: number
   scale?: ScaleConfiguration
-  onChange: (state: string, e?: React.FocusEvent<HTMLInputElement> | React.KeyboardEvent<HTMLInputElement>) => void
+  onChange: (
+    state: string,
+    e?:
+      | React.FocusEvent<HTMLInputElement>
+      | React.KeyboardEvent<HTMLInputElement>
+  ) => void
 }
 
 export default class Slider extends React.Component<Props> {
@@ -29,26 +34,33 @@ export default class Slider extends React.Component<Props> {
         stop: null,
         state: 'NORMAL',
       },
-      stopInputValue: 0
+      stopInputValue: 0,
     }
   }
 
   clickHandler = (e) => {
-    if (e.detail == 1 && !this.props.hasPreset && this.state['selectedStop']['state'] === 'NORMAL') {
+    if (
+      e.detail == 1 &&
+      !this.props.hasPreset &&
+      this.state['selectedStop']['state'] === 'NORMAL'
+    ) {
       this.setState({
         selectedStop: {
           stop: e.target,
-          state: 'SELECTED'
-        }
-      })
-    }
-    else if (e.detail == 2 && !this.props.hasPreset && this.state['selectedStop']['state'] != 'EDITING') {
-      this.setState({
-        selectedStop: {
-          stop: e.target,
-          state: 'EDITING'
+          state: 'SELECTED',
         },
-        stopInputValue: this.props.scale[e.target.classList[1]]
+      })
+    } else if (
+      e.detail == 2 &&
+      !this.props.hasPreset &&
+      this.state['selectedStop']['state'] != 'EDITING'
+    ) {
+      this.setState({
+        selectedStop: {
+          stop: e.target,
+          state: 'EDITING',
+        },
+        stopInputValue: this.props.scale[e.target.classList[1]],
       })
     }
   }
@@ -60,17 +72,18 @@ export default class Slider extends React.Component<Props> {
         if (parseFloat(e.target.value) < parseFloat(e.target.min)) {
           palette.scale[`lightness-${stopId}`] = parseFloat(e.target.min)
           this.setState({ stopInputValue: parseFloat(e.target.min) })
-        }
-        else if (parseFloat(e.target.value) > parseFloat(e.target.max)) {
+        } else if (parseFloat(e.target.value) > parseFloat(e.target.max)) {
           palette.scale[`lightness-${stopId}`] = parseFloat(e.target.max)
           this.setState({ stopInputValue: parseFloat(e.target.max) })
-        }
-        else {
+        } else {
           palette.scale[`lightness-${stopId}`] = parseFloat(e.target.value)
           this.setState({ stopInputValue: parseFloat(e.target.value) })
         }
         this.props.onChange('TYPED')
-      } else this.setState({ stopInputValue: this.props.scale[`lightness-${stopId}`] })
+      } else
+        this.setState({
+          stopInputValue: this.props.scale[`lightness-${stopId}`],
+        })
     }
   }
 
@@ -117,7 +130,7 @@ export default class Slider extends React.Component<Props> {
       this.setState({
         selectedStop: {
           stop: null,
-          state: 'NORMAL'
+          state: 'NORMAL',
         },
       })
 
@@ -135,8 +148,7 @@ export default class Slider extends React.Component<Props> {
         update
       )
 
-    document.onmouseup = () =>
-      this.onRelease(stops, stop, update)
+    document.onmouseup = () => this.onRelease(stops, stop, update)
   }
 
   onSlide = (
@@ -238,17 +250,17 @@ export default class Slider extends React.Component<Props> {
     document.onmouseup = null
     stop.onmouseup = null
     stop.style.zIndex = '1'
-    stops.forEach(stop =>
-      (stop.children[0] as HTMLElement).style.display = 'none'
+    stops.forEach(
+      (stop) => ((stop.children[0] as HTMLElement).style.display = 'none')
     )
-    
+
     if (this.state['selectedStop']['state'] === 'SLIDING')
-    this.setState({
-      selectedStop: {
-        stop: null,
-        state: 'SLIDED'
-      }
-    })
+      this.setState({
+        selectedStop: {
+          stop: null,
+          state: 'SLIDED',
+        },
+      })
 
     update()
     this.props.onChange('RELEASED')
@@ -264,7 +276,7 @@ export default class Slider extends React.Component<Props> {
       this.setState({
         selectedStop: {
           stop: null,
-          state: 'NORMAL'
+          state: 'NORMAL',
         },
       })
       addStop(
@@ -289,7 +301,7 @@ export default class Slider extends React.Component<Props> {
     this.setState({
       selectedStop: {
         stop: null,
-        state: 'NORMAL'
+        state: 'NORMAL',
       },
     })
     this.props.onChange('SHIFTED')
@@ -369,7 +381,9 @@ export default class Slider extends React.Component<Props> {
   ) => {
     stops.forEach((stop) => {
       const shift = stop.offsetLeft - src.offsetLeft + offset
-      if (stop != src) stop.style.left = parseFloat(doMap(shift, 0, width, 0, 100).toFixed(1)) + '%'
+      if (stop != src)
+        stop.style.left =
+          parseFloat(doMap(shift, 0, width, 0, 100).toFixed(1)) + '%'
       this.updateStopTooltip(
         stop.childNodes[0] as HTMLElement,
         parseFloat(doMap(shift, 0, width, 0, 100).toFixed(1))
@@ -400,26 +414,38 @@ export default class Slider extends React.Component<Props> {
         this.props.presetName === 'Custom' && !this.props.hasPreset
           ? this.onDelete()
           : null
-      else if (e.key === 'ArrowRight' && this.state['selectedStop']['stop'] != null && this.state['selectedStop']['state'] != 'EDITING')
+      else if (
+        e.key === 'ArrowRight' &&
+        this.state['selectedStop']['stop'] != null &&
+        this.state['selectedStop']['state'] != 'EDITING'
+      )
         this.onShiftRight(e)
-      else if (e.key === 'ArrowLeft' && this.state['selectedStop']['stop'] != null && this.state['selectedStop']['state'] != 'EDITING')
+      else if (
+        e.key === 'ArrowLeft' &&
+        this.state['selectedStop']['stop'] != null &&
+        this.state['selectedStop']['state'] != 'EDITING'
+      )
         this.onShiftLeft(e)
       else if (e.key === 'Escape' && this.state['selectedStop']['stop'] != null)
         this.setState({
           selectedStop: {
             stop: null,
-            state: 'NORMAL'
+            state: 'NORMAL',
           },
         })
     }
     document.onmousedown = (e: MouseEvent) => {
       if ((e.target as HTMLElement).closest('.slider__knob') == null)
-        setTimeout(() => this.setState({
-          selectedStop: {
-            stop: null,
-            state: 'NORMAL'
-          },
-        }), 50)
+        setTimeout(
+          () =>
+            this.setState({
+              selectedStop: {
+                stop: null,
+                state: 'NORMAL',
+              },
+            }),
+          50
+        )
     }
   }
 
@@ -463,11 +489,21 @@ export default class Slider extends React.Component<Props> {
             value={lightness[1]}
             stopInputValue={this.state['stopInputValue']}
             state={this.getState(lightness[0])}
-            min={original[index + 1] == undefined ? '0' : (original[index + 1][1] + safeGap).toString()}
-            max={original[index - 1] == undefined ? '100' : (original[index - 1][1] - safeGap).toString()}
+            min={
+              original[index + 1] == undefined
+                ? '0'
+                : (original[index + 1][1] + safeGap).toString()
+            }
+            max={
+              original[index - 1] == undefined
+                ? '100'
+                : (original[index - 1][1] - safeGap).toString()
+            }
             onMouseDown={this.onGrab}
             onClick={this.clickHandler}
-            onChangeStopValue={(e) => this.setState({ stopInputValue: e.target.value })}
+            onChangeStopValue={(e) =>
+              this.setState({ stopInputValue: e.target.value })
+            }
             onValidStopValue={this.validHandler}
           />
         ))}

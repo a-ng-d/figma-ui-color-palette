@@ -17,7 +17,7 @@ const processSelection = () => {
 
     // Migration
     setPaletteMigration(palette)
-    
+
     // to UI
     figma.ui.postMessage({
       type: 'PALETTE_SELECTED',
@@ -41,7 +41,11 @@ const processSelection = () => {
     })
 
   selection.forEach((element) => {
-    if (element.type != 'CONNECTOR' && element.type != 'GROUP' && element.type != 'EMBED')
+    if (
+      element.type != 'CONNECTOR' &&
+      element.type != 'GROUP' &&
+      element.type != 'EMBED'
+    )
       if (
         element['fills'].filter((fill) => fill.type === 'SOLID').length != 0 &&
         element.getPluginData('scale') === ''

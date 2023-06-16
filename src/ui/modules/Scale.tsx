@@ -33,7 +33,7 @@ export default class Scale extends React.Component<Props> {
       messages.push(
         'Double click the stop to type a value',
         'Press ← or → after selecting a stop to shift the stops',
-        'Press Esc. after selecting a stop to unselect it',
+        'Press Esc. after selecting a stop to unselect it'
       )
 
     messages.push(

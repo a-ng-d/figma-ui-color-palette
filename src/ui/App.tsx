@@ -318,15 +318,21 @@ class App extends React.Component {
       try {
         const checkEditorType = () =>
           this.setState({ editorType: e.data.pluginMessage.data })
-        
+
         const checkHighlightStatus = () =>
-          this.setState({ hasHighlight: e.data.pluginMessage.data === 'NO_RELEASE_NOTE' || e.data.pluginMessage.data === 'READ_RELEASE_NOTE' ? false : true })
+          this.setState({
+            hasHighlight:
+              e.data.pluginMessage.data === 'NO_RELEASE_NOTE' ||
+              e.data.pluginMessage.data === 'READ_RELEASE_NOTE'
+                ? false
+                : true,
+          })
 
         const checkPlanStatus = () =>
           this.setState({
             planStatus: e.data.pluginMessage.data,
           })
-        
+
         const updateWhileEmptySelection = () => {
           this.setState({
             service: 'None',
@@ -437,12 +443,12 @@ class App extends React.Component {
             },
             onGoingStep: 'export previewed',
           })
-        
-          const getProPlan = () =>
-            this.setState({
-              planStatus: e.data.pluginMessage.data,
-              hasGetProPlanDialog: true,
-            })
+
+        const getProPlan = () =>
+          this.setState({
+            planStatus: e.data.pluginMessage.data,
+            hasGetProPlanDialog: true,
+          })
 
         const actions: ActionsList = {
           EDITOR_TYPE: () => checkEditorType(),
