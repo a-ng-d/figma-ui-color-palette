@@ -3,8 +3,17 @@ import { images } from './images'
 
 const releaseNotes: Array<ReleaseNote> = [
   {
-    version: '2.1.0',
+    version: '2.2.0',
     isMostRecent: true,
+    title: 'UI Color Palette 22 update highlight',
+    image: images.find((image) => image.name === 'UI Color Palette 22').data,
+    content:
+      "Newly extended to Figjam, the UI Color Palette plugin empowers designers to create and customize their UI color schemes at the start of the design process, providing greater flexibility to their workflow and enhancing their creative potential.",
+    learnMore: 'https://uicp.link/whats-new',
+  },
+  {
+    version: '2.1.0',
+    isMostRecent: false,
     title: 'UI Color Palette 21 update highlight',
     image: images.find((image) => image.name === 'UI Color Palette 21').data,
     content:
