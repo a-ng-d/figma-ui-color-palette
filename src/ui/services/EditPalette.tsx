@@ -174,12 +174,9 @@ export default class EditPalette extends React.Component<Props> {
 
   colorHandler = (e) => {
     let id: string
-    const element: HTMLElement | null = e.nativeEvent.path.filter((el) => {
-      if (el.classList != undefined)
-        return el.classList.contains('colors__item')
-    })[0]
+    const element: HTMLElement | null = e.target.closest('.colors__item')
 
-    element != undefined ? (id = element.getAttribute('data-id')) : null
+    element != null ? (id = element.getAttribute('data-id')) : null
 
     colorsMessage.isEditedInRealTime = false
 
