@@ -36,7 +36,7 @@ const updateLocalStyles = (palette, i: number) => {
               ]
               i++
             }
-          })
+        })
       }
     )
 
