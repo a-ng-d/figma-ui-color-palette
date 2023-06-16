@@ -4,15 +4,23 @@ interface Props {
   id: string
   label: string
   isChecked: boolean
-  isDisabled: boolean
+  isDisabled?: boolean
+  isBlocked?: boolean
   feature: string
   onChange: React.ChangeEventHandler<HTMLInputElement>
 }
 
 export default class Switch extends React.Component<Props> {
+  static defaultProps = {
+    isDisabled: false,
+    isBlocked: false,
+  }
+
   render() {
     return (
-      <div className="switch">
+      <div
+        className={`switch ${this.props.isBlocked ? 'switch--blocked' : ''}`}
+      >
         <input
           data-feature={this.props.feature}
           id={this.props.id}

@@ -5,14 +5,16 @@ import Input from './../components/Input'
 import Switch from '../components/Switch'
 import Message from '../components/Message'
 import Feature from '../components/Feature'
-import { features } from '../../utils/features'
+import features from '../../utils/features'
+import isBlocked from '../../utils/isBlocked'
 
 interface Props {
   paletteName: string
   textColorsTheme?: TextColorsThemeHexModel
   settings?: Array<string>
   isNewAlgorithm?: boolean
-  onSettingsChange: React.ReactEventHandler
+  planStatus: string
+  onChangeSettings: React.ReactEventHandler
 }
 
 export default class Settings extends React.Component<Props> {
@@ -21,7 +23,9 @@ export default class Settings extends React.Component<Props> {
     return (
       <div className="settings__group">
         <div className="section-controls">
-          <div className="section-title">Base information</div>
+          <div className="section-controls__left-part">
+            <div className="section-title">Base information</div>
+          </div>
         </div>
         <Feature
           isActive={
@@ -33,8 +37,13 @@ export default class Settings extends React.Component<Props> {
             <FormItem
               label="Palette name"
               id="rename-palette"
+              isBlocked={isBlocked(
+                'SETTINGS_PALETTE_NAME',
+                this.props.planStatus
+              )}
             >
               <Input
+                id="rename-palette"
                 type="text"
                 icon={{ type: 'none', value: null }}
                 placeholder="UI Color Palette"
@@ -42,10 +51,31 @@ export default class Settings extends React.Component<Props> {
                   this.props.paletteName != '' ? this.props.paletteName : ''
                 }
                 charactersLimit={64}
-                feature="rename-palette"
-                onChange={this.props.onSettingsChange}
-                onFocus={this.props.onSettingsChange}
-                onConfirm={this.props.onSettingsChange}
+                isBlocked={isBlocked(
+                  'SETTINGS_PALETTE_NAME',
+                  this.props.planStatus
+                )}
+                feature="RENAME_PALETTE"
+                onChange={
+                  isBlocked('SETTINGS_PALETTE_NAME', this.props.planStatus)
+                    ? () => null
+                    : this.props.onChangeSettings
+                }
+                onFocus={
+                  isBlocked('SETTINGS_PALETTE_NAME', this.props.planStatus)
+                    ? () => null
+                    : this.props.onChangeSettings
+                }
+                onBlur={
+                  isBlocked('SETTINGS_PALETTE_NAME', this.props.planStatus)
+                    ? () => null
+                    : this.props.onChangeSettings
+                }
+                onConfirm={
+                  isBlocked('SETTINGS_PALETTE_NAME', this.props.planStatus)
+                    ? () => null
+                    : this.props.onChangeSettings
+                }
               />
             </FormItem>
           </div>
@@ -58,7 +88,9 @@ export default class Settings extends React.Component<Props> {
     return (
       <div className="settings__group">
         <div className="section-controls">
-          <div className="section-title">Contrast management</div>
+          <div className="section-controls__left-part">
+            <div className="section-title">Contrast management</div>
+          </div>
         </div>
         <Feature
           isActive={
@@ -71,27 +103,71 @@ export default class Settings extends React.Component<Props> {
             <FormItem
               label="Text light color"
               id="change-text-light-color"
+              isBlocked={isBlocked(
+                'SETTINGS_TEXT_COLORS_THEME',
+                this.props.planStatus
+              )}
             >
               <Input
+                id="change-text-light-color"
                 type="color"
                 icon={{ type: 'none', value: null }}
                 value={this.props.textColorsTheme.lightColor}
-                feature="change-text-light-color"
-                onChange={this.props.onSettingsChange}
-                onFocus={this.props.onSettingsChange}
+                isBlocked={isBlocked(
+                  'SETTINGS_TEXT_COLORS_THEME',
+                  this.props.planStatus
+                )}
+                feature="CHANGE_TEXT_LIGHT_COLOR"
+                onChange={
+                  isBlocked('SETTINGS_TEXT_COLORS_THEME', this.props.planStatus)
+                    ? () => null
+                    : this.props.onChangeSettings
+                }
+                onFocus={
+                  isBlocked('SETTINGS_TEXT_COLORS_THEME', this.props.planStatus)
+                    ? () => null
+                    : this.props.onChangeSettings
+                }
+                onBlur={
+                  isBlocked('SETTINGS_TEXT_COLORS_THEME', this.props.planStatus)
+                    ? () => null
+                    : this.props.onChangeSettings
+                }
               />
             </FormItem>
             <FormItem
               label="Text dark color"
               id="change-text-dark-color"
+              isBlocked={isBlocked(
+                'SETTINGS_TEXT_COLORS_THEME',
+                this.props.planStatus
+              )}
             >
               <Input
+                id="change-text-dark-color"
                 type="color"
                 icon={{ type: 'none', value: null }}
                 value={this.props.textColorsTheme.darkColor}
-                feature="change-text-dark-color"
-                onChange={this.props.onSettingsChange}
-                onFocus={this.props.onSettingsChange}
+                isBlocked={isBlocked(
+                  'SETTINGS_TEXT_COLORS_THEME',
+                  this.props.planStatus
+                )}
+                feature="CHANGE_TEXT_DARK_COLOR"
+                onChange={
+                  isBlocked('SETTINGS_TEXT_COLORS_THEME', this.props.planStatus)
+                    ? () => null
+                    : this.props.onChangeSettings
+                }
+                onFocus={
+                  isBlocked('SETTINGS_TEXT_COLORS_THEME', this.props.planStatus)
+                    ? () => null
+                    : this.props.onChangeSettings
+                }
+                onBlur={
+                  isBlocked('SETTINGS_TEXT_COLORS_THEME', this.props.planStatus)
+                    ? () => null
+                    : this.props.onChangeSettings
+                }
               />
             </FormItem>
             <Message
@@ -99,6 +175,10 @@ export default class Settings extends React.Component<Props> {
               messages={[
                 'The light and dark text colors serve as a reference to simulate contrast and obtain both WCAG and APCA scores',
               ]}
+              isBlocked={isBlocked(
+                'SETTINGS_NEW_ALGORITHM',
+                this.props.planStatus
+              )}
             />
           </div>
         </Feature>
@@ -110,7 +190,9 @@ export default class Settings extends React.Component<Props> {
     return (
       <div className="settings__group">
         <div className="section-controls">
-          <div className="section-title">Color management</div>
+          <div className="section-controls__left-part">
+            <div className="section-title">Color management</div>
+          </div>
         </div>
         <Feature
           isActive={
@@ -122,17 +204,28 @@ export default class Settings extends React.Component<Props> {
           <div className="settings__item">
             <Switch
               id="update-algorithm"
-              label="Enable the new algorithm for generating color shades"
+              label="Enable the new algorithm for creating color shades"
               isChecked={this.props.isNewAlgorithm}
-              isDisabled={false}
-              feature="update-algorithm-version"
-              onChange={this.props.onSettingsChange}
+              isBlocked={isBlocked(
+                'SETTINGS_NEW_ALGORITHM',
+                this.props.planStatus
+              )}
+              feature="UPDATE_ALGORITHM_VERSION"
+              onChange={
+                isBlocked('SETTINGS_NEW_ALGORITHM', this.props.planStatus)
+                  ? () => null
+                  : this.props.onChangeSettings
+              }
             />
             <Message
               icon="library"
               messages={[
                 'The Chroma values are harmonized to ensure consistent lightness across all shades, but this may make the colors look desaturated.',
               ]}
+              isBlocked={isBlocked(
+                'SETTINGS_NEW_ALGORITHM',
+                this.props.planStatus
+              )}
             />
           </div>
         </Feature>

@@ -12,8 +12,8 @@ export default class Palette {
   name: string
   scale: ScaleConfiguration
   colors: Array<ColorConfiguration>
-  properties: boolean
   preset: PresetConfiguration
+  view: string
   textColorsTheme: TextColorsThemeHexModel
   algorithmVersion: string
   children: PaletteNode
@@ -21,26 +21,28 @@ export default class Palette {
 
   constructor(
     name: string,
-    scale: ScaleConfiguration,
-    properties: boolean,
     preset: PresetConfiguration,
+    scale: ScaleConfiguration,
+    view: string,
     textColorsTheme: TextColorsThemeHexModel,
     algorithmVersion: string
   ) {
     this.paletteName = name
-    this.name = `${name === '' ? 'UI Color Palette' : name}﹒${preset.name}`
+    this.name = `${name === '' ? 'UI Color Palette' : name}﹒${preset.name}﹒${
+      view.includes('PALETTE') ? 'Palette' : 'Sheet'
+    }`
+    this.preset = preset
     this.scale = scale
     this.colors = []
-    this.properties = properties
-    this.preset = preset
+    this.view = view
     this.algorithmVersion = algorithmVersion
     this.textColorsTheme = textColorsTheme
     this.children = null
-    this.node = figma.createFrame()
   }
 
   makeNode() {
     // base
+    this.node = figma.createFrame()
     this.node.name = this.name
     this.node.resize(1640, 100)
     this.node.cornerRadius = 16
@@ -64,29 +66,33 @@ export default class Palette {
       'textColorsTheme',
       JSON.stringify(this.textColorsTheme)
     )
+    this.node.setPluginData('view', this.view)
     this.node.setPluginData('algorithmVersion', this.algorithmVersion)
-    this.properties
-      ? this.node.setPluginData('properties', 'hasProperties')
-      : this.node.setPluginData('properties', 'hasNotProperties')
 
     // insert
     figma.currentPage.selection.forEach((element) => {
-      const fills = element['fills'].filter((fill) => fill.type === 'SOLID')
+      if (
+        element.type != 'CONNECTOR' &&
+        element.type != 'GROUP' &&
+        element.type != 'EMBED'
+      ) {
+        const fills = element['fills'].filter((fill) => fill.type === 'SOLID')
 
-      if (fills.length != 0) {
-        fills.forEach((fill) =>
-          this.colors.push({
-            name: element.name,
-            rgb: fill.color,
-            id: undefined,
-            oklch: false,
-            hueShifting: 0,
-          })
-        )
-      } else
-        figma.notify(
-          `The layer '${element.name}' must get at least one solid color`
-        )
+        if (fills.length != 0) {
+          fills.forEach((fill) =>
+            this.colors.push({
+              name: element.name,
+              rgb: fill.color,
+              id: undefined,
+              oklch: false,
+              hueShifting: 0,
+            })
+          )
+        } else
+          figma.notify(
+            `The layer '${element.name}' must get at least one solid color`
+          )
+      }
     })
 
     this.colors.sort((a, b) => {
@@ -95,7 +101,7 @@ export default class Palette {
       else return 0
     })
 
-    this.node.appendChild(new Colors(this as PaletteNode).makeNode())
+    this.node.appendChild(new Colors(this as PaletteNode, this.node).makeNode())
 
     this.node.setPluginData('colors', JSON.stringify(this.colors))
     return this.node

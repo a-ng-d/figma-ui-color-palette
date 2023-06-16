@@ -1,4 +1,4 @@
-export const setData = (
+const setData = (
   data: string,
   entry: string,
   value: boolean | string | number
@@ -7,3 +7,5 @@ export const setData = (
   parsedData.forEach((record) => (record[entry] = value))
   return JSON.stringify(parsedData)
 }
+
+export default setData

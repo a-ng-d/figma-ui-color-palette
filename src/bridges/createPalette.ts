@@ -5,9 +5,9 @@ const createPalette = (msg, palette) => {
 
   palette = new Palette(
     msg.data.name,
-    msg.data.scale,
-    msg.data.properties,
     msg.data.preset,
+    msg.data.scale,
+    msg.data.view,
     msg.data.textColorsTheme,
     'v2'
   ).makeNode()

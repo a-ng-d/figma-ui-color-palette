@@ -12,9 +12,7 @@ const deleteStop = (
     newLightnessScale = {}
 
   Object.values(scale).forEach((scale) => {
-    scale === parseFloat(selectedKnob.style.left).toFixed(1)
-      ? null
-      : newScale.push(scale)
+    scale === parseFloat(selectedKnob.style.left) ? null : newScale.push(scale)
   })
   newScale.forEach(
     (scale, index) => (newLightnessScale[`lightness-${index + 1}`] = scale)

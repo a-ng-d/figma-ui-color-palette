@@ -1,6 +1,7 @@
 import * as React from 'react'
 
 interface Props {
+  id?: string
   type: string
   icon: { type: string; value: string }
   placeholder?: string
@@ -8,46 +9,66 @@ interface Props {
   charactersLimit?: number
   min?: string
   max?: string
+  step?: string
+  isBlocked?: boolean
   feature: string
+  isAutoFocus?: boolean
   onChange: React.FocusEventHandler<HTMLInputElement>
   onFocus: React.FocusEventHandler<HTMLInputElement>
+  onBlur: React.FocusEventHandler<HTMLInputElement>
   onConfirm?: React.KeyboardEventHandler<HTMLInputElement>
 }
 
 export default class Input extends React.Component<Props> {
+  static defaultProps = {
+    step: '1',
+    isBlocked: false,
+    isAutoFocus: false,
+  }
+
   // Direct actions
   onNudge = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.shiftKey && e.key === 'ArrowUp')
       (e.target as HTMLInputElement).value = (
-        parseFloat((e.target as HTMLInputElement).value) + 9
+        parseFloat((e.target as HTMLInputElement).value) +
+        9 * parseFloat(this.props.step)
       ).toString()
     else if (e.shiftKey && e.key === 'ArrowDown')
       (e.target as HTMLInputElement).value = (
-        parseFloat((e.target as HTMLInputElement).value) - 9
+        parseFloat((e.target as HTMLInputElement).value) -
+        9 * parseFloat(this.props.step)
       ).toString()
   }
 
   // Templates
   Color = () => {
     return (
-      <div className="input input--with-icon">
+      <div
+        className={`input ${
+          this.props.isBlocked ? 'input--blocked' : ''
+        } input input--with-icon`}
+      >
         <input
+          id={this.props.id}
           data-feature={this.props.feature}
           type="color"
           className="input__color"
           value={this.props.value}
+          autoFocus={this.props.isAutoFocus}
           onChange={this.props.onChange}
-          onBlur={this.props.onChange}
           onFocus={this.props.onFocus}
+          onBlur={this.props.onBlur}
         />
         <input
+          id={this.props.id}
           data-feature={this.props.feature}
           type="input"
           className="input__field"
           value={this.props.value.toUpperCase().substr(1, 6)}
+          autoFocus={this.props.isAutoFocus}
           onChange={this.props.onChange}
-          onBlur={this.props.onChange}
           onFocus={this.props.onFocus}
+          onBlur={this.props.onBlur}
         />
       </div>
     )
@@ -56,8 +77,8 @@ export default class Input extends React.Component<Props> {
   Number = () => {
     return (
       <div
-        className={`input${
-          this.props.icon.type === 'none' ? '' : ' input--with-icon'
+        className={`input ${this.props.isBlocked ? 'input--blocked' : ''} ${
+          this.props.icon.type === 'none' ? '' : 'input--with-icon'
         }`}
       >
         {this.props.icon.type != 'none' ? (
@@ -72,16 +93,20 @@ export default class Input extends React.Component<Props> {
           </div>
         ) : null}
         <input
+          id={this.props.id}
           data-feature={this.props.feature}
           type="number"
           className="input__field"
           value={this.props.value}
           min={this.props.min}
           max={this.props.max}
-          step="1"
+          step={this.props.step}
+          autoFocus={this.props.isAutoFocus}
           onKeyDown={this.onNudge}
+          onKeyPress={this.props.onConfirm}
           onChange={this.props.onChange}
           onFocus={this.props.onFocus}
+          onBlur={this.props.onBlur}
         />
       </div>
     )
@@ -90,7 +115,7 @@ export default class Input extends React.Component<Props> {
   Text = () => {
     return (
       <div
-        className={`input${
+        className={`input ${this.props.isBlocked ? 'input--blocked' : ''} ${
           this.props.icon.type === 'none' ? '' : ' input--with-icon'
         }`}
       >
@@ -106,17 +131,18 @@ export default class Input extends React.Component<Props> {
           </div>
         ) : null}
         <input
-          id={this.props.feature}
+          id={this.props.id}
           data-feature={this.props.feature}
           type="text"
           className="input__field"
           placeholder={this.props.placeholder}
           value={this.props.value}
           maxLength={this.props.charactersLimit}
+          autoFocus={this.props.isAutoFocus}
           onKeyPress={this.props.onConfirm}
           onChange={this.props.onChange}
-          onBlur={this.props.onChange}
           onFocus={this.props.onFocus}
+          onBlur={this.props.onBlur}
         />
       </div>
     )

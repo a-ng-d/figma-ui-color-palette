@@ -3,10 +3,11 @@ import Feature from '../components/Feature'
 import Icon from './../modules/Icon'
 import Message from '../components/Message'
 import Shortcuts from '../modules/Shortcuts'
-import { features } from '../../utils/features'
+import features from '../../utils/features'
 
 interface Props {
-  onHighlightReopen: React.MouseEventHandler
+  planStatus: string
+  onReopenHighlight: React.MouseEventHandler
 }
 
 export default class Onboarding extends React.Component<Props> {
@@ -19,7 +20,7 @@ export default class Onboarding extends React.Component<Props> {
             <Message
               icon="list-tile"
               messages={[
-                'Select your colors (layers filled with a solid color) on the Figma canvas to create an UI Color Palette',
+                'Select your source colors (solid colors only) on the Figma/Figjam canvas to create a UI Color Palette',
               ]}
             />
             <div className="type">－ or －</div>
@@ -52,9 +53,10 @@ export default class Onboarding extends React.Component<Props> {
                 label: "What's new",
                 isLink: false,
                 url: '',
-                action: this.props.onHighlightReopen,
+                action: this.props.onReopenHighlight,
               },
             ]}
+            planStatus={this.props.planStatus}
           />
         </Feature>
       </>

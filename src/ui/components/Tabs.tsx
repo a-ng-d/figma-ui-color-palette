@@ -4,7 +4,7 @@ interface Props {
   primaryTabs: Array<string>
   secondaryTabs: Array<string>
   active: string
-  onClick: React.MouseEventHandler
+  action: React.MouseEventHandler
 }
 
 export default class Tabs extends React.Component<Props> {
@@ -18,7 +18,7 @@ export default class Tabs extends React.Component<Props> {
               className={`tabs__tab type${
                 this.props.active === tab ? ' tabs__tab--active' : ''
               }`}
-              onClick={this.props.onClick}
+              onMouseDown={this.props.action}
             >
               {tab}
             </div>
@@ -32,7 +32,7 @@ export default class Tabs extends React.Component<Props> {
                 className={`tabs__tab type${
                   this.props.active === tab ? ' tabs__tab--active' : ''
                 }`}
-                onClick={this.props.onClick}
+                onMouseDown={this.props.action}
               >
                 {tab}
               </div>

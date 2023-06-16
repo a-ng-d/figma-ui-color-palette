@@ -1,41 +1,33 @@
-import chroma from 'chroma-js'
+import type { PaletteDataItem } from '../utils/types'
 
 const exportJson = (palette) => {
   palette = figma.currentPage.selection[0]
   const json = {}
-
   if (palette.children.length == 1) {
-    palette.children[0].children.forEach((row) => {
-      if (row.name != '_header' && row.name != '_title')
-        row.children.forEach((sample, index) => {
-          if (index != 0) {
-            const color = sample.fills[0].color
-            json[row.name][sample.name] = {}
-            json[row.name][sample.name] = {
-              rgb: {
-                r: Math.floor(color.r * 255),
-                g: Math.floor(color.g * 255),
-                b: Math.floor(color.b * 255),
-              },
-              lch: {
-                l: Math.floor(
-                  chroma(color.r * 255, color.g * 255, color.b * 255).lch()[0]
-                ),
-                c: Math.floor(
-                  chroma(color.r * 255, color.g * 255, color.b * 255).lch()[1]
-                ),
-                h: Math.floor(
-                  chroma(color.r * 255, color.g * 255, color.b * 255).lch()[2]
-                ),
-              },
-              hex: chroma(color.r * 255, color.g * 255, color.b * 255).hex(),
-              type: 'color',
-            }
-          } else json[row.name] = {}
+    JSON.parse(palette.getPluginData('data')).forEach(
+      (color: PaletteDataItem) => {
+        json[color.name] = []
+        color.shades.forEach((shade) => {
+          json[color.name].push({
+            name: shade.name,
+            rgb: {
+              r: Math.floor(shade.rgb[0]),
+              g: Math.floor(shade.rgb[1]),
+              b: Math.floor(shade.rgb[2]),
+            },
+            lch: {
+              l: Math.floor(shade.lch[0]),
+              c: Math.floor(shade.lch[1]),
+              h: Math.floor(shade.lch[2]),
+            },
+            hex: shade.hex,
+            type: 'color',
+          })
         })
-    })
+      }
+    )
     figma.ui.postMessage({
-      type: 'export-palette-json',
+      type: 'EXPORT_PALETTE_JSON',
       data: json,
     })
   } else

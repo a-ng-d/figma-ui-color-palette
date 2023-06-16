@@ -10,12 +10,12 @@ export default class Property {
     this.name = name
     this.content = content
     this.size = size
-    this.node = figma.createFrame()
   }
 
   makeNode() {
     // base
-    this.node.name = '_properties'
+    this.node = figma.createFrame()
+    this.node.name = '_property'
     this.node.fills = []
 
     // layout

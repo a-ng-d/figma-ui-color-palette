@@ -11,17 +11,19 @@ import About from '../modules/About'
 import Actions from '../modules/Actions'
 import Shortcuts from '../modules/Shortcuts'
 import { palette } from '../../utils/palettePackage'
-import { features } from '../../utils/features'
+import features from '../../utils/features'
 
 interface Props {
-  hasProperties: boolean
-  preset: PresetConfiguration
   paletteName: string
+  preset: PresetConfiguration
+  view: string
   textColorsTheme: TextColorsThemeHexModel
-  onHighlightReopen: React.ChangeEventHandler
-  onPresetChange: React.ChangeEventHandler
+  planStatus: string
+  onReopenHighlight: React.ChangeEventHandler
+  onChangePreset: React.ChangeEventHandler
   onCustomPreset: React.ChangeEventHandler
-  onSettingsChange: React.ChangeEventHandler
+  onChangeView: (view: string) => void
+  onChangeSettings: React.ChangeEventHandler
 }
 
 export default class CreatePalette extends React.Component<Props> {
@@ -53,39 +55,32 @@ export default class CreatePalette extends React.Component<Props> {
               .name.slice(1)
               .toLowerCase()
           : '',
-      hasProperties: true,
     }
   }
 
   // Handlers
-  slideHandler = () => {
-    return
-  }
+  presetHandler = (e) => this.props.onChangePreset(e)
 
-  checkHandler = (e) => {
-    this.setState({
-      hasProperties: e.target.checked,
-      onGoingStep: 'properties changed',
-    })
-    palette.properties = e.target.checked
+  scaleHandler = (e) => this.props.onCustomPreset(e)
+
+  settingsHandler = (e) => this.props.onChangeSettings(e)
+
+  viewHandler = (e) => {
+    if (e.target.dataset.isBlocked === 'false') {
+      palette.view = e.target.dataset.value
+      this.props.onChangeView(e.target.dataset.value)
+    }
   }
 
   navHandler = (e: React.SyntheticEvent) =>
     this.setState({
       context: (e.target as HTMLElement).innerText,
-      onGoingStep: 'tab changed',
     })
-
-  presetHandler = (e) => this.props.onPresetChange(e)
-
-  scaleHandler = (e) => this.props.onCustomPreset(e)
-
-  settingsHandler = (e) => this.props.onSettingsChange(e)
 
   // Direct actions
   onCreate = () =>
     parent.postMessage(
-      { pluginMessage: { type: 'create-palette', data: palette } },
+      { pluginMessage: { type: 'CREATE_PALETTE', data: palette } },
       '*'
     )
 
@@ -107,7 +102,6 @@ export default class CreatePalette extends React.Component<Props> {
 
   // Renders
   render() {
-    palette.properties = this.state['hasProperties']
     palette.preset = this.props.preset
     let actions, controls, help
 
@@ -117,9 +111,10 @@ export default class CreatePalette extends React.Component<Props> {
       actions = (
         <Actions
           context="create"
-          hasProperties={this.state['hasProperties']}
+          view={this.props.view}
+          planStatus={this.props.planStatus}
           onCreatePalette={this.onCreate}
-          onChangeProperties={this.checkHandler}
+          onChangeView={this.viewHandler}
         />
       )
 
@@ -147,9 +142,10 @@ export default class CreatePalette extends React.Component<Props> {
                 label: "What's new",
                 isLink: false,
                 url: '',
-                action: this.props.onHighlightReopen,
+                action: this.props.onReopenHighlight,
               },
             ]}
+            planStatus={this.props.planStatus}
           />
         </Feature>
       )
@@ -162,10 +158,9 @@ export default class CreatePalette extends React.Component<Props> {
             hasPreset={true}
             preset={this.props.preset}
             onChangePreset={this.presetHandler}
-            onChangeScale={this.slideHandler}
+            onChangeScale={() => null}
             onAddScale={this.scaleHandler}
             onRemoveScale={this.scaleHandler}
-            onGoingStep={this.state['onGoingStep']}
           />
         )
         break
@@ -176,13 +171,14 @@ export default class CreatePalette extends React.Component<Props> {
             paletteName={this.props.paletteName}
             textColorsTheme={this.props.textColorsTheme}
             settings={['base', 'contrast-management']}
-            onSettingsChange={this.settingsHandler}
+            planStatus={this.props.planStatus}
+            onChangeSettings={this.settingsHandler}
           />
         )
         break
       }
       case 'About': {
-        controls = <About />
+        controls = <About planStatus={this.props.planStatus} />
       }
     }
 
@@ -192,12 +188,12 @@ export default class CreatePalette extends React.Component<Props> {
           primaryTabs={this.setPrimaryContexts()}
           secondaryTabs={this.setSecondaryContexts()}
           active={this.state['context']}
-          onClick={this.navHandler}
+          action={this.navHandler}
         />
         <section className="section--scrollable">
           <div className="controls">{controls}</div>
-          {actions}
         </section>
+        {actions}
         {help}
       </>
     )

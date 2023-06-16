@@ -1,27 +1,34 @@
 import * as React from 'react'
 import Button from '../components/Button'
-import Checkbox from '../components/Checkbox'
-import Switch from '../components/Switch'
 import Feature from '../components/Feature'
-import { features } from '../../utils/features'
+import features from '../../utils/features'
+import Dropdown from '../components/Dropdown'
+import FormItem from '../components/FormItem'
+import isBlocked from '../../utils/isBlocked'
 
 interface Props {
   context: string
-  hasProperties?: boolean
+  view?: string
   exportType?: string | null
+  editorType?: string
+  planStatus?: string
   onCreatePalette?: React.MouseEventHandler
   onCreateLocalColors?: React.MouseEventHandler
   onUpdateLocalColors?: React.MouseEventHandler
-  onChangeProperties?: React.ChangeEventHandler
+  onChangeView?: React.ChangeEventHandler
   onExportPalette?: React.MouseEventHandler
 }
 
 export default class Actions extends React.Component<Props> {
+  static defaultProps = {
+    editorType: 'figma',
+  }
+
   // Templates
   Create = () => {
     return (
       <div className="actions">
-        <div className="buttons">
+        <div className="actions__buttons">
           <Feature
             isActive={
               features.find((feature) => feature.name === 'CREATE_PALETTE')
@@ -30,26 +37,66 @@ export default class Actions extends React.Component<Props> {
           >
             <Button
               type="primary"
-              label="Create a color palette"
+              label="Create a UI Color Palette"
               feature="create"
               action={this.props.onCreatePalette}
             />
           </Feature>
         </div>
-        <Feature
-          isActive={
-            features.find((feature) => feature.name === 'PROPERTIES').isActive
-          }
-        >
-          <Checkbox
-            id="show-properties"
-            label="Show properties"
-            isChecked={this.props.hasProperties}
-            isDisabled={false}
-            feature="show-properties"
-            onChange={this.props.onChangeProperties}
-          />
-        </Feature>
+        <div className="actions__view">
+          <Feature
+            isActive={
+              features.find((feature) => feature.name === 'VIEWS').isActive
+            }
+          >
+            <FormItem
+              id="change-view"
+              label="Layout"
+            >
+              <Dropdown
+                id="views"
+                options={[
+                  {
+                    label: 'Palette with properties',
+                    value: 'PALETTE_WITH_PROPERTIES',
+                    position: 0,
+                    isActive: features.find(
+                      (feature) =>
+                        feature.name === 'VIEWS_PALETTE_WITH_PROPERTIES'
+                    ).isActive,
+                    isBlocked: isBlocked(
+                      'VIEWS_PALETTE_WITH_PROPERTIES',
+                      this.props.planStatus
+                    ),
+                  },
+                  {
+                    label: 'Palette',
+                    value: 'PALETTE',
+                    position: 1,
+                    isActive: features.find(
+                      (feature) => feature.name === 'VIEWS_PALETTE'
+                    ).isActive,
+                    isBlocked: isBlocked(
+                      'VIEWS_PALETTE',
+                      this.props.planStatus
+                    ),
+                  },
+                  {
+                    label: 'Color sheet',
+                    value: 'SHEET',
+                    position: 2,
+                    isActive: features.find(
+                      (feature) => feature.name === 'VIEWS_SHEET'
+                    ).isActive,
+                    isBlocked: isBlocked('VIEWS_SHEET', this.props.planStatus),
+                  },
+                ]}
+                selected={this.props.view}
+                onChange={this.props.onChangeView}
+              />
+            </FormItem>
+          </Feature>
+        </div>
       </div>
     )
   }
@@ -57,11 +104,11 @@ export default class Actions extends React.Component<Props> {
   Edit = () => {
     return (
       <div className="actions">
-        <div className="buttons">
+        <div className="actions__buttons">
           <Feature
             isActive={
               features.find((feature) => feature.name === 'UPDATE_LOCAL_STYLES')
-                .isActive
+                .isActive && this.props.editorType === 'figma'
             }
           >
             <Button
@@ -74,7 +121,7 @@ export default class Actions extends React.Component<Props> {
           <Feature
             isActive={
               features.find((feature) => feature.name === 'CREATE_LOCAL_STYLES')
-                .isActive
+                .isActive && this.props.editorType === 'figma'
             }
           >
             <Button
@@ -85,20 +132,60 @@ export default class Actions extends React.Component<Props> {
             />
           </Feature>
         </div>
-        <Feature
-          isActive={
-            features.find((feature) => feature.name === 'PROPERTIES').isActive
-          }
-        >
-          <Switch
-            id="show-properties"
-            label="Show properties"
-            isChecked={this.props.hasProperties}
-            isDisabled={false}
-            feature="show-properties"
-            onChange={this.props.onChangeProperties}
-          />
-        </Feature>
+        <div className="actions__view">
+          <Feature
+            isActive={
+              features.find((feature) => feature.name === 'VIEWS').isActive
+            }
+          >
+            <FormItem
+              id="change-view"
+              label="Layout"
+            >
+              <Dropdown
+                id="views"
+                options={[
+                  {
+                    label: 'Palette with properties',
+                    value: 'PALETTE_WITH_PROPERTIES',
+                    position: 0,
+                    isActive: features.find(
+                      (feature) =>
+                        feature.name === 'VIEWS_PALETTE_WITH_PROPERTIES'
+                    ).isActive,
+                    isBlocked: isBlocked(
+                      'VIEWS_PALETTE_WITH_PROPERTIES',
+                      this.props.planStatus
+                    ),
+                  },
+                  {
+                    label: 'Palette',
+                    value: 'PALETTE',
+                    position: 1,
+                    isActive: features.find(
+                      (feature) => feature.name === 'VIEWS_PALETTE'
+                    ).isActive,
+                    isBlocked: isBlocked(
+                      'VIEWS_PALETTE',
+                      this.props.planStatus
+                    ),
+                  },
+                  {
+                    label: 'Color sheet',
+                    value: 'SHEET',
+                    position: 2,
+                    isActive: features.find(
+                      (feature) => feature.name === 'VIEWS_SHEET'
+                    ).isActive,
+                    isBlocked: isBlocked('VIEWS_SHEET', this.props.planStatus),
+                  },
+                ]}
+                selected={this.props.view}
+                onChange={this.props.onChangeView}
+              />
+            </FormItem>
+          </Feature>
+        </div>
       </div>
     )
   }

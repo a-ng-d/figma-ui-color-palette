@@ -9,11 +9,11 @@ export default class Title {
   constructor(text: string, parent: PaletteNode) {
     this.text = text
     this.parent = parent
-    this.node = figma.createFrame()
   }
 
   makeNode() {
     // base
+    this.node = figma.createFrame()
     this.node.name = '_title'
     this.node.resize(100, 48)
     this.node.fills = []
@@ -31,9 +31,9 @@ export default class Title {
         null,
         null,
         [255, 255, 255],
-        this.parent.properties,
+        this.parent.view,
         this.parent.textColorsTheme
-      ).makeName('relative', 100, 48)
+      ).makeNodeName('RELATIVE', 100, 48)
     )
 
     return this.node

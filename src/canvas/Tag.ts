@@ -6,16 +6,15 @@ export default class Tag {
   nodeText: TextNode
   nodeIndicator: EllipseNode
 
-  constructor(name: string, content: string, fontSize: number) {
+  constructor(name: string, content: string, fontSize = 8) {
     this.name = name
     this.content = content
     this.fontSize = fontSize
-    this.nodeTag = figma.createFrame()
-    this.nodeText = figma.createText()
   }
 
-  makeNodeTag(gl: Array<number> = [0, 0, 0, 1], hasIndicator: boolean = false) {
+  makeNodeTag(gl: Array<number> = [0, 0, 0, 1], hasIndicator = false) {
     // base
+    this.nodeTag = figma.createFrame()
     this.nodeTag.name = this.name
     this.nodeTag.fills = [
       {
@@ -49,6 +48,7 @@ export default class Tag {
 
   makeNodeText() {
     // base
+    this.nodeText = figma.createText()
     this.nodeText.name = '_text'
     this.nodeText.characters = this.content
     this.nodeText.fontName = {
@@ -84,6 +84,17 @@ export default class Tag {
           g: rgb[1],
           b: rgb[2],
         },
+      },
+    ]
+    this.nodeIndicator.strokes = [
+      {
+        type: 'SOLID',
+        color: {
+          r: 0,
+          g: 0,
+          b: 0,
+        },
+        opacity: 0.1,
       },
     ]
 

@@ -8,7 +8,7 @@ interface Props {
       label: string
       action: React.MouseEventHandler
     }
-    secondary: {
+    secondary?: {
       label: string
       action: React.MouseEventHandler
     }
@@ -32,12 +32,14 @@ export default class PopIn extends React.Component<Props> {
         </div>
         <div className="popin__content">{this.props.children}</div>
         <div className="popin__actions">
-          <Button
-            type="secondary"
-            label={this.props.actions.secondary.label}
-            feature="secondary-action"
-            action={this.props.actions.secondary.action}
-          />
+          {this.props.actions.secondary != undefined ? (
+            <Button
+              type="secondary"
+              label={this.props.actions.secondary.label}
+              feature="secondary-action"
+              action={this.props.actions.secondary.action}
+            />
+          ) : null}
           <Button
             type="primary"
             label={this.props.actions.primary.label}

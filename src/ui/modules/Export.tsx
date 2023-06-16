@@ -1,10 +1,12 @@
 import * as React from 'react'
 import RadioButton from './../components/RadioButton'
 import Feature from '../components/Feature'
-import { features } from '../../utils/features'
+import features from '../../utils/features'
+import isBlocked from '../../utils/isBlocked'
 
 interface Props {
   exportPreview: string
+  planStatus: string
 }
 
 export default class Export extends React.Component<Props> {
@@ -45,7 +47,7 @@ export default class Export extends React.Component<Props> {
           format: 'JSON',
         })
         parent.postMessage(
-          { pluginMessage: { type: 'export-palette', export: 'JSON' } },
+          { pluginMessage: { type: 'EXPORT_PALETTE', export: 'JSON' } },
           '*'
         )
         break
@@ -55,7 +57,7 @@ export default class Export extends React.Component<Props> {
           format: 'CSS',
         })
         parent.postMessage(
-          { pluginMessage: { type: 'export-palette', export: 'CSS' } },
+          { pluginMessage: { type: 'EXPORT_PALETTE', export: 'CSS' } },
           '*'
         )
         break
@@ -65,7 +67,7 @@ export default class Export extends React.Component<Props> {
           format: 'CSV',
         })
         parent.postMessage(
-          { pluginMessage: { type: 'export-palette', export: 'CSV' } },
+          { pluginMessage: { type: 'EXPORT_PALETTE', export: 'CSV' } },
           '*'
         )
       }
@@ -78,7 +80,7 @@ export default class Export extends React.Component<Props> {
       ? parent.postMessage(
           {
             pluginMessage: {
-              type: 'export-palette',
+              type: 'EXPORT_PALETTE',
               export: this.state['format'],
             },
           },
@@ -99,7 +101,9 @@ export default class Export extends React.Component<Props> {
       <div className="export-palette controls__control">
         <div>
           <div className="section-controls">
-            <div className="section-title">File format</div>
+            <div className="section-controls__left-part">
+              <div className="section-title">File format</div>
+            </div>
           </div>
           <div className="export-palette__options">
             <ul>
@@ -114,10 +118,14 @@ export default class Export extends React.Component<Props> {
                     id="options__json"
                     label="JSON"
                     isChecked={this.state['format'] === 'JSON' ? true : false}
-                    isDisabled={false}
+                    isBlocked={isBlocked('EXPORT_JSON', this.props.planStatus)}
                     feature="export-to-json"
                     group="fileFormat"
-                    onChange={this.exportHandler}
+                    onChange={
+                      isBlocked('EXPORT_JSON', this.props.planStatus)
+                        ? () => null
+                        : this.exportHandler
+                    }
                   />
                 </li>
               </Feature>
@@ -132,10 +140,14 @@ export default class Export extends React.Component<Props> {
                     id="options__css"
                     label="CSS Custom Properties"
                     isChecked={this.state['format'] === 'CSS' ? true : false}
-                    isDisabled={false}
+                    isBlocked={isBlocked('EXPORT_CSS', this.props.planStatus)}
                     feature="export-to-css"
                     group="fileFormat"
-                    onChange={this.exportHandler}
+                    onChange={
+                      isBlocked('EXPORT_CSS', this.props.planStatus)
+                        ? () => null
+                        : this.exportHandler
+                    }
                   />
                 </li>
               </Feature>
@@ -150,10 +162,14 @@ export default class Export extends React.Component<Props> {
                     id="options__csv"
                     label="CSV (LCH)"
                     isChecked={this.state['format'] === 'CSV' ? true : false}
-                    isDisabled={false}
+                    isBlocked={isBlocked('EXPORT_CSV', this.props.planStatus)}
                     feature="export-to-csv"
                     group="fileFormat"
-                    onChange={this.exportHandler}
+                    onChange={
+                      isBlocked('EXPORT_CSV', this.props.planStatus)
+                        ? () => null
+                        : this.exportHandler
+                    }
                   />
                 </li>
               </Feature>
@@ -162,7 +178,9 @@ export default class Export extends React.Component<Props> {
         </div>
         <div>
           <div className="section-controls">
-            <div className="section-title">Preview</div>
+            <div className="section-controls__left-part">
+              <div className="section-title">Preview</div>
+            </div>
           </div>
           <div className="export-palette__options">
             <textarea

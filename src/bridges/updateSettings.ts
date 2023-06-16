@@ -11,9 +11,8 @@ const updateSettings = (msg, palette) => {
   if (palette.children.length == 1) {
     const colors = JSON.parse(palette.getPluginData('colors')),
       scale = JSON.parse(palette.getPluginData('scale')),
-      properties =
-        palette.getPluginData('properties') == 'hasProperties' ? true : false,
-      preset = JSON.parse(palette.getPluginData('preset'))
+      preset = JSON.parse(palette.getPluginData('preset')),
+      view: string = palette.getPluginData('view')
 
     let paletteName: string
 
@@ -25,7 +24,7 @@ const updateSettings = (msg, palette) => {
         : palette.getPluginData('name')),
       (palette.name = `${
         msg.data.name === '' ? 'UI Color Palette' : msg.data.name
-      }﹒${preset.name}`)
+      }﹒${preset.name}﹒${view.includes('PALETTE') ? 'Palette' : 'Sheet'}`)
     palette.setPluginData(
       'textColorsTheme',
       JSON.stringify(msg.data.textColorsTheme)
@@ -34,15 +33,18 @@ const updateSettings = (msg, palette) => {
 
     palette.children[0].remove()
     palette.appendChild(
-      new Colors({
-        paletteName: paletteName,
-        colors: colors,
-        scale: scale,
-        properties: msg.isEditedInRealTime ? false : properties,
-        preset: preset,
-        textColorsTheme: msg.data.textColorsTheme,
-        algorithmVersion: msg.data.algorithmVersion,
-      }).makeNode()
+      new Colors(
+        {
+          paletteName: paletteName,
+          preset: preset,
+          scale: scale,
+          colors: colors,
+          view: view,
+          textColorsTheme: msg.data.textColorsTheme,
+          algorithmVersion: msg.data.algorithmVersion,
+        },
+        palette
+      ).makeNode()
     )
 
     // palette migration

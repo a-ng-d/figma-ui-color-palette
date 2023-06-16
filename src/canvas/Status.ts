@@ -11,11 +11,11 @@ export default class Status {
   ) {
     this.status = status
     this.source = source
-    this.node = figma.createFrame()
   }
 
   makeNode() {
     // base
+    this.node = figma.createFrame()
     this.node.name = '_status'
     this.node.fills = []
 

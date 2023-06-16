@@ -29,25 +29,46 @@ export interface Shortcut {
   action: any
 }
 
-// Palette nodes
+export interface Presets {
+  material: PresetConfiguration
+  ant: PresetConfiguration
+  atlassian: PresetConfiguration
+  atlassianNeutral: PresetConfiguration
+  carbon: PresetConfiguration
+  base: PresetConfiguration
+  custom: PresetConfiguration
+}
+
+// Palette
 export interface PaletteNode {
   paletteName: string
+  preset: PresetConfiguration
   scale: ScaleConfiguration
   colors: Array<ColorConfiguration>
-  properties: boolean
-  preset: PresetConfiguration
+  view: string
   textColorsTheme: TextColorsThemeHexModel
   algorithmVersion: string
+}
+
+export interface PaletteDataItem {
+  name: string
+  shades: Array<{
+    name: string
+    hex: string
+    rgb: Array<number>
+    gl: Array<number>
+    lch: Array<number>
+  }>
 }
 
 // Palette configurations
 export interface PaletteConfiguration {
   name: string
+  preset: PresetConfiguration | any
   scale: ScaleConfiguration
   min: number
   max: number
-  properties: boolean
-  preset: PresetConfiguration | any
+  view: string
   textColorsTheme: TextColorsThemeHexModel
 }
 
@@ -56,20 +77,21 @@ export interface PresetConfiguration {
   scale: Array<number>
   min: number
   max: number
+  id: string
 }
 
 export interface ScaleConfiguration {
-  [key: string]: string
+  [key: string]: number
 }
 
 export interface ColorConfiguration {
   name: string
+  id: string | undefined
   rgb: {
     r: number
     g: number
     b: number
   }
-  id: string | undefined
   oklch: boolean
   hueShifting: number
 }
@@ -104,6 +126,10 @@ export interface HoveredColor extends SelectedColor {
   hasGuideBelow: boolean
 }
 
+export interface ActionsList {
+  [action: string]: () => void
+}
+
 // Models
 export interface RgbModel {
   r: number
@@ -132,8 +158,8 @@ export interface SettingsMessage {
   type: string
   data: {
     name: string
-    algorithmVersion: string
     textColorsTheme: TextColorsThemeHexModel
+    algorithmVersion: string
   }
   isEditedInRealTime: boolean
 }

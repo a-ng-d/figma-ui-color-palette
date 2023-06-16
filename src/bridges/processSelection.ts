@@ -1,5 +1,4 @@
-import { setData } from './../utils/setData'
-import { presets } from './../utils/palettePackage'
+import setPaletteMigration from '../utils/setPaletteMigration'
 
 export let currentSelection: ReadonlyArray<SceneNode>
 export let previousSelection: ReadonlyArray<SceneNode>
@@ -14,56 +13,22 @@ const processSelection = () => {
   currentSelection = figma.currentPage.selection
 
   if (selection.length == 1 && selection[0].getPluginData('scale') != '') {
+    const palette: BaseNode = selection[0]
+
     // Migration
-    if (selection[0].getPluginData('preset') === '')
-      selection[0].setPluginData('preset', JSON.stringify(presets.material))
-
-    if (selection[0].getPluginData('algorithmVersion') === '')
-      selection[0].setPluginData('algorithmVersion', 'v1')
-
-    if (!selection[0].getPluginData('colors').includes('oklch'))
-      selection[0].setPluginData(
-        'colors',
-        setData(selection[0].getPluginData('colors'), 'oklch', false)
-      )
-
-    if (!selection[0].getPluginData('colors').includes('hueShifting'))
-      selection[0].setPluginData(
-        'colors',
-        setData(selection[0].getPluginData('colors'), 'hueShifting', 0)
-      )
-
-    if (selection[0].getPluginData('captions') == 'hasCaptions') {
-      selection[0].setPluginData('properties', 'hasProperties')
-      selection[0].setPluginData('captions', '')
-    } else if (selection[0].getPluginData('captions') == 'hasNotCaptions') {
-      selection[0].setPluginData('properties', 'hasNotProperties')
-      selection[0].setPluginData('captions', '')
-    }
-
-    if (selection[0].getPluginData('textColorsTheme') === '') {
-      selection[0].setPluginData(
-        'textColorsTheme',
-        JSON.stringify({
-          lightColor: '#FFFFFF',
-          darkColor: '#000000',
-        })
-      )
-    }
+    setPaletteMigration(palette)
 
     // to UI
     figma.ui.postMessage({
-      type: 'palette-selected',
+      type: 'PALETTE_SELECTED',
       data: {
-        name: selection[0].getPluginData('name'),
-        scale: JSON.parse(selection[0].getPluginData('scale')),
-        properties: selection[0].getPluginData('properties'),
-        colors: JSON.parse(selection[0].getPluginData('colors')),
-        textColorsTheme: JSON.parse(
-          selection[0].getPluginData('textColorsTheme')
-        ),
-        algorithmVersion: selection[0].getPluginData('algorithmVersion'),
-        preset: JSON.parse(selection[0].getPluginData('preset')),
+        name: palette.getPluginData('name'),
+        preset: JSON.parse(palette.getPluginData('preset')),
+        scale: JSON.parse(palette.getPluginData('scale')),
+        colors: JSON.parse(palette.getPluginData('colors')),
+        view: palette.getPluginData('view'),
+        textColorsTheme: JSON.parse(palette.getPluginData('textColorsTheme')),
+        algorithmVersion: palette.getPluginData('algorithmVersion'),
       },
     })
   } else if (
@@ -71,18 +36,22 @@ const processSelection = () => {
     (selection.length > 1 && selection[0].getPluginData('scale') != '')
   )
     figma.ui.postMessage({
-      type: 'empty-selection',
+      type: 'EMPTY_SELECTION',
       data: {},
     })
 
   selection.forEach((element) => {
-    if (element.type != 'GROUP')
+    if (
+      element.type != 'CONNECTOR' &&
+      element.type != 'GROUP' &&
+      element.type != 'EMBED'
+    )
       if (
         element['fills'].filter((fill) => fill.type === 'SOLID').length != 0 &&
         element.getPluginData('scale') === ''
       )
         figma.ui.postMessage({
-          type: 'color-selected',
+          type: 'COLOR_SELECTED',
           data: {},
         })
   })
