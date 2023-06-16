@@ -8,7 +8,7 @@ import shiftLeftStop from './../handlers/shiftLeftStop'
 import shiftRightStop from './../handlers/shiftRightStop'
 import { palette } from '../../utils/palettePackage'
 
-const safeGap: number = 2
+const safeGap = 2
 
 interface Props {
   stops: Array<number>
@@ -82,8 +82,7 @@ export default class Slider extends React.Component<Props> {
       tooltip = stop.children[0] as HTMLElement,
       rangeWidth = range.offsetWidth as number,
       slider = range.parentElement as HTMLElement,
-      stops = Array.from(range.children as HTMLCollectionOf<HTMLElement>),
-      startTime: number = Date.now()
+      stops = Array.from(range.children as HTMLCollectionOf<HTMLElement>)
 
     let offset: number
     const update = () => {
@@ -137,7 +136,7 @@ export default class Slider extends React.Component<Props> {
       )
 
     document.onmouseup = () =>
-      this.onRelease(stops, stop, update, startTime)
+      this.onRelease(stops, stop, update)
   }
 
   onSlide = (
@@ -233,8 +232,7 @@ export default class Slider extends React.Component<Props> {
   onRelease = (
     stops: Array<HTMLElement>,
     stop: HTMLElement,
-    update: () => void,
-    startTime: number
+    update: () => void
   ) => {
     document.onmousemove = null
     document.onmouseup = null
