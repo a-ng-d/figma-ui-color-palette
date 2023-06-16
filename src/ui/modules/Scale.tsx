@@ -31,8 +31,8 @@ export default class Scale extends React.Component<Props> {
 
     if (!this.props.hasPreset)
       messages.push(
-        'Double click the stop to type a value',
-        'Press ← or → after selecting a stop to shift the stops',
+        'Double click a stop to type its value',
+        'Press ← or → after selecting a stop to shift it',
         'Press Esc. after selecting a stop to unselect it'
       )
 
