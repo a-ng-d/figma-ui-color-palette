@@ -34,7 +34,7 @@ figma.on('selectionchange', () => processSelection())
 
 figma.on('run', () => checkEditorType())
 figma.on('run', () => isHighlightRead(package_json.version))
-figma.on('run', async () => await checkPlanStatus())
+// figma.on('run', async () => await checkPlanStatus())
 
 figma.ui.onmessage = async (msg) => {
   let palette: ReadonlyArray<SceneNode>
