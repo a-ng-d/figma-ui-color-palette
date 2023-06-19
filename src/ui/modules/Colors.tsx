@@ -54,7 +54,7 @@ export default class Colors extends React.Component<Props> {
               />
             </div>
           </div>
-          <ul className="colors">
+          <ul className="colors mask">
             {this.props.colors.map((color, index) => (
               <ColorItem
                 key={color.id}
