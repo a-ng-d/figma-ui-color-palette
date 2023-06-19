@@ -31,14 +31,14 @@ export default class CreatePalette extends React.Component<Props> {
         features.filter(
           (feature) =>
             feature.type === 'CONTEXT' &&
-            feature.service.includes('create') &&
+            feature.service.includes('CREATE') &&
             feature.isActive
         )[0] != undefined
           ? features
               .filter(
                 (feature) =>
                   feature.type === 'CONTEXT' &&
-                  feature.service.includes('create') &&
+                  feature.service.includes('CREATE') &&
                   feature.isActive
               )[0]
               .name.charAt(0) +
@@ -46,7 +46,7 @@ export default class CreatePalette extends React.Component<Props> {
               .filter(
                 (feature) =>
                   feature.type === 'CONTEXT' &&
-                  feature.service.includes('create') &&
+                  feature.service.includes('CREATE') &&
                   feature.isActive
               )[0]
               .name.slice(1)

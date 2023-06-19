@@ -90,14 +90,14 @@ export default class EditPalette extends React.Component<Props> {
         features.filter(
           (feature) =>
             feature.type === 'CONTEXT' &&
-            feature.service.includes('edit') &&
+            feature.service.includes('EDIT') &&
             feature.isActive
         )[0] != undefined
           ? features
               .filter(
                 (feature) =>
                   feature.type === 'CONTEXT' &&
-                  feature.service.includes('edit') &&
+                  feature.service.includes('EDIT') &&
                   feature.isActive
               )[0]
               .name.charAt(0) +
@@ -105,7 +105,7 @@ export default class EditPalette extends React.Component<Props> {
               .filter(
                 (feature) =>
                   feature.type === 'CONTEXT' &&
-                  feature.service.includes('edit') &&
+                  feature.service.includes('EDIT') &&
                   feature.isActive
               )[0]
               .name.slice(1)

@@ -38,7 +38,7 @@ export default class Actions extends React.Component<Props> {
             <Button
               type="primary"
               label="Create a UI Color Palette"
-              feature="create"
+              feature="CREATE"
               action={this.props.onCreatePalette}
             />
           </Feature>
@@ -127,7 +127,7 @@ export default class Actions extends React.Component<Props> {
             <Button
               type="primary"
               label="Create local styles"
-              feature="create"
+              feature="CREATE"
               action={this.props.onCreateLocalColors}
             />
           </Feature>
