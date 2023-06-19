@@ -15,15 +15,12 @@ import type {
   ScaleConfiguration,
 } from '../../utils/types'
 import Dispatcher from '../modules/Dispatcher'
-import Feature from '../components/Feature'
 import Tabs from '../components/Tabs'
 import Scale from '../modules/Scale'
 import Colors from '../modules/Colors'
 import Export from '../modules/Export'
 import Settings from '../modules/Settings'
 import About from '../modules/About'
-import Actions from '../modules/Actions'
-import Shortcuts from '../modules/Shortcuts'
 import { palette } from '../../utils/palettePackage'
 import features from '../../utils/features'
 import { v4 as uuidv4 } from 'uuid'
@@ -521,95 +518,7 @@ export default class EditPalette extends React.Component<Props> {
 
   // Render
   render() {
-    let actions, controls, help
-
-    if (this.state['context'] === 'Export') {
-      actions = (
-        <Actions
-          context="export"
-          exportType={this.props.export.format}
-          onExportPalette={this.onExport}
-        />
-      )
-
-      help = (
-        <Feature
-          isActive={
-            features.find((feature) => feature.name === 'SHORTCUTS').isActive
-          }
-        >
-          <Shortcuts
-            actions={[
-              {
-                label: 'Read the documentation',
-                isLink: true,
-                url: 'https://docs.ui-color-palette.com',
-                action: null,
-              },
-              {
-                label: 'Give feedback',
-                isLink: true,
-                url: 'https://uicp.link/feedback',
-                action: null,
-              },
-              {
-                label: "What's new",
-                isLink: false,
-                url: '',
-                action: this.props.onReopenHighlight,
-              },
-            ]}
-            planStatus={this.props.planStatus}
-          />
-        </Feature>
-      )
-    } else if (this.state['context'] === 'About') {
-      actions = help = null
-    } else {
-      actions = (
-        <Actions
-          context="edit"
-          view={this.props.view}
-          editorType={this.props.editorType}
-          planStatus={this.props.planStatus}
-          onCreateLocalColors={this.onCreate}
-          onUpdateLocalColors={this.onUpdate}
-          onChangeView={this.viewHandler}
-        />
-      )
-
-      help = (
-        <Feature
-          isActive={
-            features.find((feature) => feature.name === 'SHORTCUTS').isActive
-          }
-        >
-          <Shortcuts
-            actions={[
-              {
-                label: 'Read the documentation',
-                isLink: true,
-                url: 'https://docs.ui-color-palette.com',
-                action: null,
-              },
-              {
-                label: 'Give feedback',
-                isLink: true,
-                url: 'https://uicp.link/feedback',
-                action: null,
-              },
-              {
-                label: "What's new",
-                isLink: false,
-                url: '',
-                action: this.props.onReopenHighlight,
-              },
-            ]}
-            planStatus={this.props.planStatus}
-          />
-        </Feature>
-      )
-    }
+    let controls
 
     switch (this.state['context']) {
       case 'Scale': {
@@ -618,7 +527,14 @@ export default class EditPalette extends React.Component<Props> {
             hasPreset={false}
             preset={this.props.preset}
             scale={this.props.scale}
+            view={this.props.view}
+            planStatus={this.props.planStatus}
+            editorType={this.props.editorType}
             onChangeScale={this.slideHandler}
+            onChangeView={this.viewHandler}
+            onCreateLocalColors={this.onCreate}
+            onUpdateLocalColors={this.onUpdate}
+            onReopenHighlight={this.props.onReopenHighlight}
           />
         )
         break
@@ -629,12 +545,19 @@ export default class EditPalette extends React.Component<Props> {
             colors={this.props.colors}
             selectedElement={this.state['selectedElement']}
             hoveredElement={this.state['hoveredElement']}
+            view={this.props.view}
+            planStatus={this.props.planStatus}
+            editorType={this.props.editorType}
             onChangeColor={this.colorHandler}
             onAddColor={this.colorHandler}
             onChangeSelection={this.selectionHandler}
             onDragChange={this.dragHandler}
             onDropOutside={this.dropOutsideHandler}
             onChangeOrder={this.orderHandler}
+            onCreateLocalColors={this.onCreate}
+            onUpdateLocalColors={this.onUpdate}
+            onChangeView={this.viewHandler}
+            onReopenHighlight={this.props.onReopenHighlight}
           />
         )
         break
@@ -648,6 +571,9 @@ export default class EditPalette extends React.Component<Props> {
                 : this.props.export.data
             }
             planStatus={this.props.planStatus}
+            exportType={this.props.export.format}
+            onExportPalette={this.onExport}
+            onReopenHighlight={this.props.onReopenHighlight}
           />
         )
         break
@@ -658,9 +584,16 @@ export default class EditPalette extends React.Component<Props> {
             paletteName={this.props.paletteName}
             textColorsTheme={this.props.textColorsTheme}
             settings={['base', 'contrast-management', 'color-management']}
+            context="EDIT"
+            view={this.props.view}
             isNewAlgorithm={this.props.algorithmVersion == 'v2' ? true : false}
             planStatus={this.props.planStatus}
+            editorType={this.props.editorType}
             onChangeSettings={this.settingsHandler}
+            onCreateLocalColors={this.onCreate}
+            onUpdateLocalColors={this.onUpdate}
+            onChangeView={this.viewHandler}
+            onReopenHighlight={this.props.onReopenHighlight}
           />
         )
         break
@@ -679,12 +612,9 @@ export default class EditPalette extends React.Component<Props> {
         />
         <section
           onMouseDown={this.unSelectColor}
-          className="section--scrollable"
         >
           <div className="controls">{controls}</div>
         </section>
-        {actions}
-        {help}
       </>
     )
   }

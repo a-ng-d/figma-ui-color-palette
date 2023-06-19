@@ -5,6 +5,8 @@ import Input from './../components/Input'
 import Switch from '../components/Switch'
 import Message from '../components/Message'
 import Feature from '../components/Feature'
+import Shortcuts from './Shortcuts'
+import Actions from './Actions'
 import features from '../../utils/features'
 import isBlocked from '../../utils/isBlocked'
 
@@ -12,9 +14,17 @@ interface Props {
   paletteName: string
   textColorsTheme?: TextColorsThemeHexModel
   settings?: Array<string>
+  context: string
+  view: string
   isNewAlgorithm?: boolean
   planStatus: string
+  editorType?: string
   onChangeSettings: React.ReactEventHandler
+  onCreatePalette?: () => void
+  onCreateLocalColors?: () => void
+  onUpdateLocalColors?: () => void
+  onChangeView: React.ChangeEventHandler
+  onReopenHighlight: React.ChangeEventHandler
 }
 
 export default class Settings extends React.Component<Props> {
@@ -235,15 +245,65 @@ export default class Settings extends React.Component<Props> {
 
   render() {
     return (
-      <div className="settings controls__control">
-        {this.props.settings.includes('base') ? <this.Base /> : null}
-        {this.props.settings.includes('contrast-management') ? (
-          <this.ContrastManagement />
-        ) : null}
-        {this.props.settings.includes('color-management') ? (
-          <this.ColorManagement />
-        ) : null}
-      </div>
+      <>
+        <div className="settings controls__control">
+          {this.props.settings.includes('base') ? <this.Base /> : null}
+          {this.props.settings.includes('contrast-management') ? (
+            <this.ContrastManagement />
+          ) : null}
+          {this.props.settings.includes('color-management') ? (
+            <this.ColorManagement />
+          ) : null}
+        </div>
+        {this.props.context === 'CREATE' ? (
+          <Actions
+            context="CREATE"
+            view={this.props.view}
+            planStatus={this.props.planStatus}
+            onCreatePalette={this.props.onCreatePalette}
+            onChangeView={this.props.onChangeView}
+          />
+        ) : (
+          <Actions
+            context="EDIT"
+            view={this.props.view}
+            editorType={this.props.editorType}
+            planStatus={this.props.planStatus}
+            onCreateLocalColors={this.props.onCreateLocalColors}
+            onUpdateLocalColors={this.props.onUpdateLocalColors}
+            onChangeView={this.props.onChangeView}
+          />
+        )}
+        <Feature
+          isActive={
+            features.find((feature) => feature.name === 'SHORTCUTS').isActive
+          }
+        >
+          <Shortcuts
+            actions={[
+              {
+                label: 'Read the documentation',
+                isLink: true,
+                url: 'https://docs.ui-color-palette.com',
+                action: null,
+              },
+              {
+                label: 'Give feedback',
+                isLink: true,
+                url: 'https://uicp.link/feedback',
+                action: null,
+              },
+              {
+                label: "What's new",
+                isLink: false,
+                url: '',
+                action: this.props.onReopenHighlight,
+              },
+            ]}
+            planStatus={this.props.planStatus}
+          />
+        </Feature>
+      </>
     )
   }
 }

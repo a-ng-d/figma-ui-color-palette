@@ -1,10 +1,12 @@
 import * as React from 'react'
 import type { PresetConfiguration, ScaleConfiguration } from '../../utils/types'
+import Feature from '../components/Feature'
 import Button from '../components/Button'
 import Dropdown from '../components/Dropdown'
 import Slider from '../components/Slider'
 import Message from '../components/Message'
-import Feature from '../components/Feature'
+import Actions from './Actions'
+import Shortcuts from './Shortcuts'
 import { palette, presets } from '../../utils/palettePackage'
 import features from '../../utils/features'
 
@@ -12,10 +14,18 @@ interface Props {
   hasPreset: boolean
   preset: PresetConfiguration
   scale?: ScaleConfiguration
+  view: string
+  planStatus: string
+  editorType?: string
   onChangePreset?: React.ReactEventHandler
   onChangeScale: (e: string) => void
-  onAddScale?: React.ReactEventHandler
-  onRemoveScale?: React.ReactEventHandler
+  onAddStop?: React.ReactEventHandler
+  onRemoveStop?: React.ReactEventHandler
+  onChangeView: React.ChangeEventHandler
+  onCreatePalette?: () => void
+  onCreateLocalColors?: () => void
+  onUpdateLocalColors?: () => void
+  onReopenHighlight: React.ChangeEventHandler
 }
 
 export default class Scale extends React.Component<Props> {
@@ -45,131 +55,187 @@ export default class Scale extends React.Component<Props> {
   }
 
   // Templates
+  Shortcuts = () => {
+    return(
+      <Feature
+        isActive={
+          features.find((feature) => feature.name === 'SHORTCUTS').isActive
+        }
+      >
+        <Shortcuts
+          actions={[
+            {
+              label: 'Read the documentation',
+              isLink: true,
+              url: 'https://docs.ui-color-palette.com',
+              action: null,
+            },
+            {
+              label: 'Give feedback',
+              isLink: true,
+              url: 'https://uicp.link/feedback',
+              action: null,
+            },
+            {
+              label: "What's new",
+              isLink: false,
+              url: '',
+              action: this.props.onReopenHighlight,
+            },
+          ]}
+          planStatus={this.props.planStatus}
+        />
+      </Feature>
+    )
+  }
+
   Create = () => {
     palette.scale = {}
     return (
-      <div className="lightness-scale controls__control">
-        <div className="section-controls">
-          <div className="section-controls__left-part">
-            <div className="section-title">Lightness scale</div>
-            <Feature
-              isActive={
-                features.find((feature) => feature.name === 'SCALE_PRESETS')
-                  .isActive
-              }
-            >
-              <Dropdown
-                id="presets"
-                options={Object.entries(presets).map((entry, index) => {
-                  return {
-                    label: entry[1].name,
-                    value: entry[1].id,
-                    position: index,
-                    isActive: true,
-                    isBlocked: false,
-                  }
-                })}
-                selected={this.props.preset.id}
-                onChange={this.props.onChangePreset}
-              />
-            </Feature>
-          </div>
-          <div className="section-controls__right-part">
-            <Feature
-              isActive={
-                features.find((feature) => feature.name === 'SCALE_PRESETS')
-                  .isActive
-              }
-            >
-              {this.props.preset.scale.length > 2 &&
-              this.props.preset.name === 'Custom' ? (
-                <Button
-                  icon="minus"
-                  type="icon"
-                  feature="REMOVE"
-                  action={this.props.onRemoveScale}
+      <>
+        <div className="lightness-scale controls__control">
+          <div className="section-controls">
+            <div className="section-controls__left-part">
+              <div className="section-title">Lightness scale</div>
+              <Feature
+                isActive={
+                  features.find((feature) => feature.name === 'SCALE_PRESETS')
+                    .isActive
+                }
+              >
+                <Dropdown
+                  id="presets"
+                  options={Object.entries(presets).map((entry, index) => {
+                    return {
+                      label: entry[1].name,
+                      value: entry[1].id,
+                      position: index,
+                      isActive: true,
+                      isBlocked: false,
+                    }
+                  })}
+                  selected={this.props.preset.id}
+                  onChange={this.props.onChangePreset}
                 />
-              ) : null}
-              {this.props.preset.name === 'Custom' ? (
-                <Button
-                  icon="plus"
-                  type="icon"
-                  state={this.props.preset.scale.length == 24 ? 'disabled' : ''}
-                  feature="ADD"
-                  action={this.props.onAddScale}
-                />
-              ) : null}
-            </Feature>
+              </Feature>
+            </div>
+            <div className="section-controls__right-part">
+              <Feature
+                isActive={
+                  features.find((feature) => feature.name === 'SCALE_PRESETS')
+                    .isActive
+                }
+              >
+                {this.props.preset.scale.length > 2 &&
+                this.props.preset.name === 'Custom' ? (
+                  <Button
+                    icon="minus"
+                    type="icon"
+                    feature="REMOVE"
+                    action={this.props.onRemoveStop}
+                  />
+                ) : null}
+                {this.props.preset.name === 'Custom' ? (
+                  <Button
+                    icon="plus"
+                    type="icon"
+                    state={this.props.preset.scale.length == 24 ? 'disabled' : ''}
+                    feature="ADD"
+                    action={this.props.onAddStop}
+                  />
+                ) : null}
+              </Feature>
+            </div>
           </div>
+          <Feature
+            isActive={
+              features.find((feature) => feature.name === 'SCALE_CONFIGURATION')
+                .isActive
+            }
+          >
+            <Slider
+              type="EQUAL"
+              hasPreset={this.props.hasPreset}
+              presetName={this.props.preset.name}
+              stops={this.props.preset.scale}
+              min={this.props.preset.min}
+              max={this.props.preset.max}
+              onChange={this.props.onChangeScale}
+            />
+          </Feature>
+          <Feature
+            isActive={
+              features.find((feature) => feature.name === 'SCALE_TIPS').isActive
+            }
+          >
+            <Message
+              icon="library"
+              messages={this.setOnboardingMessages()}
+            />
+          </Feature>
         </div>
-        <Feature
-          isActive={
-            features.find((feature) => feature.name === 'SCALE_CONFIGURATION')
-              .isActive
-          }
-        >
-          <Slider
-            type="EQUAL"
-            hasPreset={this.props.hasPreset}
-            presetName={this.props.preset.name}
-            stops={this.props.preset.scale}
-            min={this.props.preset.min}
-            max={this.props.preset.max}
-            onChange={this.props.onChangeScale}
-          />
-        </Feature>
-        <Feature
-          isActive={
-            features.find((feature) => feature.name === 'SCALE_TIPS').isActive
-          }
-        >
-          <Message
-            icon="library"
-            messages={this.setOnboardingMessages()}
-          />
-        </Feature>
-      </div>
+        <Actions
+          context="CREATE"
+          view={this.props.view}
+          planStatus={this.props.planStatus}
+          onCreatePalette={this.props.onCreatePalette}
+          onChangeView={this.props.onChangeView}
+        />
+        <this.Shortcuts />
+      </>
     )
   }
 
   Edit = () => {
     palette.scale = {}
     return (
-      <div className="lightness-scale controls__control">
-        <div className="section-controls">
-          <div className="section-controls__left-part">
-            <div className="section-title">Lightness scale</div>
+      <>
+        <div className="lightness-scale controls__control">
+          <div className="section-controls">
+            <div className="section-controls__left-part">
+              <div className="section-title">Lightness scale</div>
+            </div>
+            <div className="section-controls__right-part">
+              <div className="label">{this.props.preset.name}</div>
+            </div>
           </div>
-          <div className="section-controls__right-part">
-            <div className="label">{this.props.preset.name}</div>
-          </div>
+          <Feature
+            isActive={
+              features.find((feature) => feature.name === 'SCALE_CONFIGURATION')
+                .isActive
+            }
+          >
+            <Slider
+              type="CUSTOM"
+              hasPreset={this.props.hasPreset}
+              presetName={this.props.preset.name}
+              stops={this.props.preset.scale}
+              scale={this.props.scale}
+              onChange={this.props.onChangeScale}
+            />
+          </Feature>
+          <Feature
+            isActive={
+              features.find((feature) => feature.name === 'SCALE_TIPS').isActive
+            }
+          >
+            <Message
+              icon="library"
+              messages={this.setOnboardingMessages()}
+            />
+          </Feature>
         </div>
-        <Feature
-          isActive={
-            features.find((feature) => feature.name === 'SCALE_CONFIGURATION')
-              .isActive
-          }
-        >
-          <Slider
-            type="CUSTOM"
-            hasPreset={this.props.hasPreset}
-            presetName={this.props.preset.name}
-            stops={this.props.preset.scale}
-            scale={this.props.scale}
-            onChange={this.props.onChangeScale}
-          />
-        </Feature>
-        <Feature
-          isActive={
-            features.find((feature) => feature.name === 'SCALE_TIPS').isActive
-          }
-        >
-          <Message
-            icon="library"
-            messages={this.setOnboardingMessages()}
-          />
-        </Feature>
-      </div>
+        <Actions
+          context="EDIT"
+          view={this.props.view}
+          editorType={this.props.editorType}
+          planStatus={this.props.planStatus}
+          onCreateLocalColors={this.props.onCreateLocalColors}
+          onUpdateLocalColors={this.props.onUpdateLocalColors}
+          onChangeView={this.props.onChangeView}
+        />
+        <this.Shortcuts />
+      </>
     )
   }
 

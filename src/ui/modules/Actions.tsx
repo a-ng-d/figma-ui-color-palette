@@ -1,6 +1,6 @@
 import * as React from 'react'
-import Button from '../components/Button'
 import Feature from '../components/Feature'
+import Button from '../components/Button'
 import features from '../../utils/features'
 import Dropdown from '../components/Dropdown'
 import FormItem from '../components/FormItem'
@@ -211,9 +211,9 @@ export default class Actions extends React.Component<Props> {
   render() {
     return (
       <>
-        {this.props.context === 'create' ? <this.Create /> : null}
-        {this.props.context === 'edit' ? <this.Edit /> : null}
-        {this.props.context === 'export' ? <this.Export /> : null}
+        {this.props.context === 'CREATE' ? <this.Create /> : null}
+        {this.props.context === 'EDIT' ? <this.Edit /> : null}
+        {this.props.context === 'EXPORT' ? <this.Export /> : null}
       </>
     )
   }

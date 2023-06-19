@@ -3,13 +3,10 @@ import type {
   PresetConfiguration,
   TextColorsThemeHexModel,
 } from '../../utils/types'
-import Feature from '../components/Feature'
 import Tabs from '../components/Tabs'
 import Scale from '../modules/Scale'
 import Settings from '../modules/Settings'
 import About from '../modules/About'
-import Actions from '../modules/Actions'
-import Shortcuts from '../modules/Shortcuts'
 import { palette } from '../../utils/palettePackage'
 import features from '../../utils/features'
 
@@ -103,53 +100,7 @@ export default class CreatePalette extends React.Component<Props> {
   // Renders
   render() {
     palette.preset = this.props.preset
-    let actions, controls, help
-
-    if (this.state['context'] === 'About') {
-      actions = help = null
-    } else {
-      actions = (
-        <Actions
-          context="create"
-          view={this.props.view}
-          planStatus={this.props.planStatus}
-          onCreatePalette={this.onCreate}
-          onChangeView={this.viewHandler}
-        />
-      )
-
-      help = (
-        <Feature
-          isActive={
-            features.find((feature) => feature.name === 'SHORTCUTS').isActive
-          }
-        >
-          <Shortcuts
-            actions={[
-              {
-                label: 'Read the documentation',
-                isLink: true,
-                url: 'https://docs.ui-color-palette.com',
-                action: null,
-              },
-              {
-                label: 'Give feedback',
-                isLink: true,
-                url: 'https://uicp.link/feedback',
-                action: null,
-              },
-              {
-                label: "What's new",
-                isLink: false,
-                url: '',
-                action: this.props.onReopenHighlight,
-              },
-            ]}
-            planStatus={this.props.planStatus}
-          />
-        </Feature>
-      )
-    }
+    let controls
 
     switch (this.state['context']) {
       case 'Scale': {
@@ -157,10 +108,15 @@ export default class CreatePalette extends React.Component<Props> {
           <Scale
             hasPreset={true}
             preset={this.props.preset}
+            view={this.props.view}
+            planStatus={this.props.planStatus}
             onChangePreset={this.presetHandler}
             onChangeScale={() => null}
-            onAddScale={this.scaleHandler}
-            onRemoveScale={this.scaleHandler}
+            onAddStop={this.scaleHandler}
+            onRemoveStop={this.scaleHandler}
+            onChangeView={this.viewHandler}
+            onCreatePalette={this.onCreate}
+            onReopenHighlight={this.props.onReopenHighlight}
           />
         )
         break
@@ -171,8 +127,13 @@ export default class CreatePalette extends React.Component<Props> {
             paletteName={this.props.paletteName}
             textColorsTheme={this.props.textColorsTheme}
             settings={['base', 'contrast-management']}
+            context="CREATE"
+            view={this.props.view}
             planStatus={this.props.planStatus}
             onChangeSettings={this.settingsHandler}
+            onCreatePalette={this.onCreate}
+            onChangeView={this.viewHandler}
+            onReopenHighlight={this.props.onReopenHighlight}
           />
         )
         break
@@ -190,11 +151,9 @@ export default class CreatePalette extends React.Component<Props> {
           active={this.state['context']}
           action={this.navHandler}
         />
-        <section className="section--scrollable">
+        <section>
           <div className="controls">{controls}</div>
         </section>
-        {actions}
-        {help}
       </>
     )
   }

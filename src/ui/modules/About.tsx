@@ -2,8 +2,8 @@ import * as React from 'react'
 import Feature from '../components/Feature'
 import Icon from './Icon'
 import Button from '../components/Button'
-import package_json from './../../../package.json'
 import features from '../../utils/features'
+import package_json from './../../../package.json'
 
 interface Props {
   planStatus: string
