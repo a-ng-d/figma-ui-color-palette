@@ -126,7 +126,7 @@ export default class CreatePalette extends React.Component<Props> {
           <Settings
             paletteName={this.props.paletteName}
             textColorsTheme={this.props.textColorsTheme}
-            settings={['base', 'contrast-management']}
+            settings={['BASE', 'CONTRAST_MANAGEMENT']}
             context="CREATE"
             view={this.props.view}
             planStatus={this.props.planStatus}

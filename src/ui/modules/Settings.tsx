@@ -247,11 +247,11 @@ export default class Settings extends React.Component<Props> {
     return (
       <>
         <div className="settings controls__control">
-          {this.props.settings.includes('base') ? <this.Base /> : null}
-          {this.props.settings.includes('contrast-management') ? (
+          {this.props.settings.includes('BASE') ? <this.Base /> : null}
+          {this.props.settings.includes('CONTRAST_MANAGEMENT') ? (
             <this.ContrastManagement />
           ) : null}
-          {this.props.settings.includes('color-management') ? (
+          {this.props.settings.includes('COLOR_MANAGEMENT') ? (
             <this.ColorManagement />
           ) : null}
         </div>

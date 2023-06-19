@@ -583,7 +583,7 @@ export default class EditPalette extends React.Component<Props> {
           <Settings
             paletteName={this.props.paletteName}
             textColorsTheme={this.props.textColorsTheme}
-            settings={['base', 'contrast-management', 'color-management']}
+            settings={['BASE', 'CONTRAST_MANAGEMENT', 'COLOR_MANAGEMENT']}
             context="EDIT"
             view={this.props.view}
             isNewAlgorithm={this.props.algorithmVersion == 'v2' ? true : false}
