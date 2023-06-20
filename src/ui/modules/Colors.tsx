@@ -45,6 +45,7 @@ export default class Colors extends React.Component<Props> {
           <div className="section-controls">
             <div className="section-controls__left-part">
               <div className="section-title">{locals.en.colors.title}</div>
+              <div className="type">{`(${this.props.colors.length})`}</div>
             </div>
             <div className="section-controls__right-part">
               <Button
@@ -55,7 +56,7 @@ export default class Colors extends React.Component<Props> {
               />
             </div>
           </div>
-          <ul className="colors">
+          <ul className="colors mask">
             {this.props.colors.map((color, index) => (
               <ColorItem
                 key={color.id}
