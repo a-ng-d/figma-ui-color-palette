@@ -414,7 +414,7 @@ class App extends React.Component {
           })
         }
 
-        const exportPaletteAsJson = () =>
+        const exportPaletteToJson = () =>
           this.setState({
             export: {
               format: 'JSON',
@@ -424,7 +424,7 @@ class App extends React.Component {
             onGoingStep: 'export previewed',
           })
 
-        const exportPaletteAsCss = () =>
+        const exportPaletteToCss = () =>
           this.setState({
             export: {
               format: 'CSS',
@@ -434,7 +434,7 @@ class App extends React.Component {
             onGoingStep: 'export previewed',
           })
 
-        const exportPaletteAsCsv = () =>
+        const exportPaletteToCsv = () =>
           this.setState({
             export: {
               format: 'CSV',
@@ -467,6 +467,9 @@ class App extends React.Component {
           EMPTY_SELECTION: () => updateWhileEmptySelection(),
           COLOR_SELECTED: () => updateWhileColorSelected(),
           PALETTE_SELECTED: () => updateWhilePaletteSelected(),
+          EXPORT_PALETTE_JSON: () => exportPaletteToJson(),
+          EXPORT_PALETTE_CSS: () => exportPaletteToCss(),
+          EXPORT_PALETTE_CSV: () => exportPaletteToCsv(),
           EXPORT_PALETTE_IOS: () => exportPaletteToiOS(),
           GET_PRO_PLAN: () => getProPlan(),
         }
