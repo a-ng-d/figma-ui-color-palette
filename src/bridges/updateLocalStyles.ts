@@ -1,5 +1,6 @@
 import chroma from 'chroma-js'
 import type { PaletteDataItem } from '../utils/types'
+import { locals } from '../content/locals'
 
 const updateLocalStyles = (palette, i: number) => {
   palette = figma.currentPage.selection[0]
@@ -40,16 +41,10 @@ const updateLocalStyles = (palette, i: number) => {
       }
     )
 
-    if (i > 1) figma.notify(`${i} local color styles have been updated`)
-    else if (i == 1) figma.notify(`${i} local color style has been updated`)
-    else
-      figma.notify(
-        `No color has been updated because the UI Color Palette has not been edited`
-      )
-  } else
-    figma.notify(
-      'Your UI Color Palette seems corrupted. Do not edit any layer within it.'
-    )
+    if (i > 1) figma.notify(`${i} ${locals.en.info.updatedlocalStyles}`)
+    else if (i == 1) figma.notify(`${i} ${locals.en.info.updatedlocalStyle}`)
+    else figma.notify(locals.en.warning.updateLocalStyles)
+  } else figma.notify(locals.en.error.corruption)
 }
 
 export default updateLocalStyles

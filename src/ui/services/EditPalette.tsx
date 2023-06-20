@@ -15,17 +15,15 @@ import type {
   ScaleConfiguration,
 } from '../../utils/types'
 import Dispatcher from '../modules/Dispatcher'
-import Feature from '../components/Feature'
 import Tabs from '../components/Tabs'
 import Scale from '../modules/Scale'
 import Colors from '../modules/Colors'
 import Export from '../modules/Export'
 import Settings from '../modules/Settings'
 import About from '../modules/About'
-import Actions from '../modules/Actions'
-import Shortcuts from '../modules/Shortcuts'
 import { palette } from '../../utils/palettePackage'
 import features from '../../utils/features'
+import { locals } from '../../content/locals'
 import { v4 as uuidv4 } from 'uuid'
 
 interface Props {
@@ -93,26 +91,15 @@ export default class EditPalette extends React.Component<Props> {
         features.filter(
           (feature) =>
             feature.type === 'CONTEXT' &&
-            feature.service.includes('edit') &&
+            feature.service.includes('EDIT') &&
             feature.isActive
         )[0] != undefined
-          ? features
-              .filter(
-                (feature) =>
-                  feature.type === 'CONTEXT' &&
-                  feature.service.includes('edit') &&
-                  feature.isActive
-              )[0]
-              .name.charAt(0) +
-            features
-              .filter(
-                (feature) =>
-                  feature.type === 'CONTEXT' &&
-                  feature.service.includes('edit') &&
-                  feature.isActive
-              )[0]
-              .name.slice(1)
-              .toLowerCase()
+          ? features.filter(
+              (feature) =>
+                feature.type === 'CONTEXT' &&
+                feature.service.includes('EDIT') &&
+                feature.isActive
+            )[0].name
           : '',
     }
   }
@@ -431,7 +418,7 @@ export default class EditPalette extends React.Component<Props> {
 
   navHandler = (e: React.SyntheticEvent) =>
     this.setState({
-      context: (e.target as HTMLElement).innerText,
+      context: (e.target as HTMLElement).dataset.feature,
     })
 
   viewHandler = (e) => {
@@ -500,146 +487,93 @@ export default class EditPalette extends React.Component<Props> {
   }
 
   setPrimaryContexts = () => {
-    const contexts: Array<string> = []
+    const contexts: Array<{
+      label: string
+      id: string
+    }> = []
     if (features.find((feature) => feature.name === 'SCALE').isActive)
-      contexts.push('Scale')
+      contexts.push({
+        label: locals.en.contexts.scale,
+        id: 'SCALE',
+      })
     if (features.find((feature) => feature.name === 'COLORS').isActive)
-      contexts.push('Colors')
+      contexts.push({
+        label: locals.en.contexts.colors,
+        id: 'COLORS',
+      })
     if (features.find((feature) => feature.name === 'EXPORT').isActive)
-      contexts.push('Export')
+      contexts.push({
+        label: locals.en.contexts.export,
+        id: 'EXPORT',
+      })
     if (features.find((feature) => feature.name === 'SETTINGS').isActive)
-      contexts.push('Settings')
+      contexts.push({
+        label: locals.en.contexts.settings,
+        id: 'SETTINGS',
+      })
     return contexts
   }
 
   setSecondaryContexts = () => {
-    const contexts: Array<string> = []
+    const contexts: Array<{
+      label: string
+      id: string
+    }> = []
     if (features.find((feature) => feature.name === 'ABOUT').isActive)
-      contexts.push('About')
+      contexts.push({
+        label: locals.en.contexts.about,
+        id: 'ABOUT',
+      })
     return contexts
   }
 
   // Render
   render() {
-    let actions, controls, help
-
-    if (this.state['context'] === 'Export') {
-      actions = (
-        <Actions
-          context="export"
-          exportType={this.props.export.format}
-          onExportPalette={this.onExport}
-        />
-      )
-
-      help = (
-        <Feature
-          isActive={
-            features.find((feature) => feature.name === 'SHORTCUTS').isActive
-          }
-        >
-          <Shortcuts
-            actions={[
-              {
-                label: 'Read the documentation',
-                isLink: true,
-                url: 'https://docs.ui-color-palette.com',
-                action: null,
-              },
-              {
-                label: 'Give feedback',
-                isLink: true,
-                url: 'https://uicp.link/feedback',
-                action: null,
-              },
-              {
-                label: "What's new",
-                isLink: false,
-                url: '',
-                action: this.props.onReopenHighlight,
-              },
-            ]}
-            planStatus={this.props.planStatus}
-          />
-        </Feature>
-      )
-    } else if (this.state['context'] === 'About') {
-      actions = help = null
-    } else {
-      actions = (
-        <Actions
-          context="edit"
-          view={this.props.view}
-          editorType={this.props.editorType}
-          planStatus={this.props.planStatus}
-          onCreateLocalColors={this.onCreate}
-          onUpdateLocalColors={this.onUpdate}
-          onChangeView={this.viewHandler}
-        />
-      )
-
-      help = (
-        <Feature
-          isActive={
-            features.find((feature) => feature.name === 'SHORTCUTS').isActive
-          }
-        >
-          <Shortcuts
-            actions={[
-              {
-                label: 'Read the documentation',
-                isLink: true,
-                url: 'https://docs.ui-color-palette.com',
-                action: null,
-              },
-              {
-                label: 'Give feedback',
-                isLink: true,
-                url: 'https://uicp.link/feedback',
-                action: null,
-              },
-              {
-                label: "What's new",
-                isLink: false,
-                url: '',
-                action: this.props.onReopenHighlight,
-              },
-            ]}
-            planStatus={this.props.planStatus}
-          />
-        </Feature>
-      )
-    }
+    let controls
 
     switch (this.state['context']) {
-      case 'Scale': {
+      case 'SCALE': {
         controls = (
           <Scale
             hasPreset={false}
             preset={this.props.preset}
             scale={this.props.scale}
+            view={this.props.view}
+            planStatus={this.props.planStatus}
+            editorType={this.props.editorType}
             onChangeScale={this.slideHandler}
+            onChangeView={this.viewHandler}
+            ononCreateLocalStyles={this.onCreate}
+            ononUpdateLocalStyles={this.onUpdate}
+            onReopenHighlight={this.props.onReopenHighlight}
           />
         )
         break
       }
-      case 'Colors': {
+      case 'COLORS': {
         controls = (
           <Colors
             colors={this.props.colors}
             selectedElement={this.state['selectedElement']}
             hoveredElement={this.state['hoveredElement']}
+            view={this.props.view}
+            planStatus={this.props.planStatus}
+            editorType={this.props.editorType}
             onChangeColor={this.colorHandler}
             onAddColor={this.colorHandler}
             onChangeSelection={this.selectionHandler}
             onDragChange={this.dragHandler}
             onDropOutside={this.dropOutsideHandler}
             onChangeOrder={this.orderHandler}
+            ononCreateLocalStyles={this.onCreate}
+            ononUpdateLocalStyles={this.onUpdate}
+            onChangeView={this.viewHandler}
+            onReopenHighlight={this.props.onReopenHighlight}
           />
         )
         break
       }
-      case 'Export': {
+      case 'EXPORT': {
         controls = (
           <Export
             exportPreview={
@@ -648,24 +582,34 @@ export default class EditPalette extends React.Component<Props> {
                 : this.props.export.data
             }
             planStatus={this.props.planStatus}
+            exportType={this.props.export.format}
+            onExportPalette={this.onExport}
+            onReopenHighlight={this.props.onReopenHighlight}
           />
         )
         break
       }
-      case 'Settings': {
+      case 'SETTINGS': {
         controls = (
           <Settings
             paletteName={this.props.paletteName}
             textColorsTheme={this.props.textColorsTheme}
-            settings={['base', 'contrast-management', 'color-management']}
+            settings={['BASE', 'CONTRAST_MANAGEMENT', 'COLOR_MANAGEMENT']}
+            context="EDIT"
+            view={this.props.view}
             isNewAlgorithm={this.props.algorithmVersion == 'v2' ? true : false}
             planStatus={this.props.planStatus}
+            editorType={this.props.editorType}
             onChangeSettings={this.settingsHandler}
+            ononCreateLocalStyles={this.onCreate}
+            ononUpdateLocalStyles={this.onUpdate}
+            onChangeView={this.viewHandler}
+            onReopenHighlight={this.props.onReopenHighlight}
           />
         )
         break
       }
-      case 'About': {
+      case 'ABOUT': {
         controls = <About planStatus={this.props.planStatus} />
       }
     }
@@ -677,14 +621,9 @@ export default class EditPalette extends React.Component<Props> {
           active={this.state['context']}
           action={this.navHandler}
         />
-        <section
-          onMouseDown={this.unSelectColor}
-          className="section--scrollable"
-        >
+        <section onMouseDown={this.unSelectColor}>
           <div className="controls">{controls}</div>
         </section>
-        {actions}
-        {help}
       </>
     )
   }

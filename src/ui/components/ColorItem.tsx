@@ -6,6 +6,7 @@ import Switch from './Switch'
 import Feature from './Feature'
 import doMap from './../../utils/doMap'
 import features from '../../utils/features'
+import { locals } from '../../content/locals'
 
 interface Props {
   name: string
@@ -223,7 +224,7 @@ export default class ColorItem extends React.Component<Props> {
             <div className="colors__space">
               <Switch
                 id={'oklch-' + this.props.uuid}
-                label="Use OKLCH"
+                label={locals.en.colors.oklch}
                 isChecked={this.props.oklch}
                 isDisabled={false}
                 feature="OKLCH"

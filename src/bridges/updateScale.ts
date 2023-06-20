@@ -9,6 +9,7 @@ import {
   isSelectionChanged,
 } from './processSelection'
 import Colors from './../canvas/Colors'
+import { locals } from '../content/locals'
 
 const updateScale = (msg, palette) => {
   palette = isSelectionChanged ? previousSelection[0] : currentSelection[0]
@@ -59,10 +60,7 @@ const updateScale = (msg, palette) => {
     palette.name = `${paletteName}﹒${preset.name}﹒${
       view.includes('PALETTE') ? 'Palette' : 'Sheet'
     }`
-  } else
-    figma.notify(
-      'Your UI Color Palette seems corrupted. Do not edit any layer within it.'
-    )
+  } else figma.notify(locals.en.error.corruption)
 }
 
 export default updateScale

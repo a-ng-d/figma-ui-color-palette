@@ -3,6 +3,7 @@ import type { Shortcut } from '../../utils/types'
 import Button from '../components/Button'
 import Feature from '../components/Feature'
 import features from '../../utils/features'
+import { locals } from '../../content/locals'
 
 interface Props {
   actions: Array<Shortcut>
@@ -30,7 +31,7 @@ export default class Shortcuts extends React.Component<Props> {
                 onMouseDown={this.onGetProPlan}
               >
                 <div className="icon icon--lock-off"></div>
-                <div className="type">Get Pro</div>
+                <div className="type">{locals.en.plan.getPro}</div>
               </button>
             ) : null}
           </Feature>

@@ -3,15 +3,13 @@ import type {
   PresetConfiguration,
   TextColorsThemeHexModel,
 } from '../../utils/types'
-import Feature from '../components/Feature'
 import Tabs from '../components/Tabs'
 import Scale from '../modules/Scale'
 import Settings from '../modules/Settings'
 import About from '../modules/About'
-import Actions from '../modules/Actions'
-import Shortcuts from '../modules/Shortcuts'
 import { palette } from '../../utils/palettePackage'
 import features from '../../utils/features'
+import { locals } from '../../content/locals'
 
 interface Props {
   paletteName: string
@@ -34,26 +32,15 @@ export default class CreatePalette extends React.Component<Props> {
         features.filter(
           (feature) =>
             feature.type === 'CONTEXT' &&
-            feature.service.includes('create') &&
+            feature.service.includes('CREATE') &&
             feature.isActive
         )[0] != undefined
-          ? features
-              .filter(
-                (feature) =>
-                  feature.type === 'CONTEXT' &&
-                  feature.service.includes('create') &&
-                  feature.isActive
-              )[0]
-              .name.charAt(0) +
-            features
-              .filter(
-                (feature) =>
-                  feature.type === 'CONTEXT' &&
-                  feature.service.includes('create') &&
-                  feature.isActive
-              )[0]
-              .name.slice(1)
-              .toLowerCase()
+          ? features.filter(
+              (feature) =>
+                feature.type === 'CONTEXT' &&
+                feature.service.includes('CREATE') &&
+                feature.isActive
+            )[0].name
           : '',
     }
   }
@@ -74,7 +61,7 @@ export default class CreatePalette extends React.Component<Props> {
 
   navHandler = (e: React.SyntheticEvent) =>
     this.setState({
-      context: (e.target as HTMLElement).innerText,
+      context: (e.target as HTMLElement).dataset.feature,
     })
 
   // Direct actions
@@ -85,94 +72,73 @@ export default class CreatePalette extends React.Component<Props> {
     )
 
   setPrimaryContexts = () => {
-    const contexts: Array<string> = []
+    const contexts: Array<{
+      label: string
+      id: string
+    }> = []
     if (features.find((feature) => feature.name === 'SCALE').isActive)
-      contexts.push('Scale')
+      contexts.push({
+        label: locals.en.contexts.scale,
+        id: 'SCALE',
+      })
     if (features.find((feature) => feature.name === 'SETTINGS').isActive)
-      contexts.push('Settings')
+      contexts.push({
+        label: locals.en.contexts.settings,
+        id: 'SETTINGS',
+      })
     return contexts
   }
 
   setSecondaryContexts = () => {
-    const contexts: Array<string> = []
+    const contexts: Array<{
+      label: string
+      id: string
+    }> = []
     if (features.find((feature) => feature.name === 'ABOUT').isActive)
-      contexts.push('About')
+      contexts.push({
+        label: locals.en.contexts.about,
+        id: 'ABOUT',
+      })
     return contexts
   }
 
   // Renders
   render() {
     palette.preset = this.props.preset
-    let actions, controls, help
-
-    if (this.state['context'] === 'About') {
-      actions = help = null
-    } else {
-      actions = (
-        <Actions
-          context="create"
-          view={this.props.view}
-          planStatus={this.props.planStatus}
-          onCreatePalette={this.onCreate}
-          onChangeView={this.viewHandler}
-        />
-      )
-
-      help = (
-        <Feature
-          isActive={
-            features.find((feature) => feature.name === 'SHORTCUTS').isActive
-          }
-        >
-          <Shortcuts
-            actions={[
-              {
-                label: 'Read the documentation',
-                isLink: true,
-                url: 'https://docs.ui-color-palette.com',
-                action: null,
-              },
-              {
-                label: 'Give feedback',
-                isLink: true,
-                url: 'https://uicp.link/feedback',
-                action: null,
-              },
-              {
-                label: "What's new",
-                isLink: false,
-                url: '',
-                action: this.props.onReopenHighlight,
-              },
-            ]}
-            planStatus={this.props.planStatus}
-          />
-        </Feature>
-      )
-    }
+    let controls
 
     switch (this.state['context']) {
-      case 'Scale': {
+      case 'SCALE': {
         controls = (
           <Scale
             hasPreset={true}
             preset={this.props.preset}
+            view={this.props.view}
+            planStatus={this.props.planStatus}
             onChangePreset={this.presetHandler}
             onChangeScale={() => null}
-            onAddScale={this.scaleHandler}
-            onRemoveScale={this.scaleHandler}
+            onAddStop={this.scaleHandler}
+            onRemoveStop={this.scaleHandler}
+            onChangeView={this.viewHandler}
+            onCreatePalette={this.onCreate}
+            onReopenHighlight={this.props.onReopenHighlight}
           />
         )
         break
       }
-      case 'Settings': {
+      case 'SETTINGS': {
         controls = (
           <Settings
             paletteName={this.props.paletteName}
             textColorsTheme={this.props.textColorsTheme}
-            settings={['base', 'contrast-management']}
+            settings={['BASE', 'CONTRAST_MANAGEMENT']}
+            context="CREATE"
+            view={this.props.view}
             planStatus={this.props.planStatus}
             onChangeSettings={this.settingsHandler}
+            onCreatePalette={this.onCreate}
+            onChangeView={this.viewHandler}
+            onReopenHighlight={this.props.onReopenHighlight}
           />
         )
         break
@@ -190,11 +156,9 @@ export default class CreatePalette extends React.Component<Props> {
           active={this.state['context']}
           action={this.navHandler}
         />
-        <section className="section--scrollable">
+        <section>
           <div className="controls">{controls}</div>
         </section>
-        {actions}
-        {help}
       </>
     )
   }

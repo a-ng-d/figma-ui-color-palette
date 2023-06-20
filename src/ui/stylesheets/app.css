@@ -50,7 +50,6 @@ div.controls {
   display: flex;
   flex-direction: column;
   flex: 1;
-  padding: var(--size-xxsmall) 0;
 }
 
 div.controls__control {
@@ -58,6 +57,7 @@ div.controls__control {
   flex: 1;
   flex-direction: column;
   justify-content: flex-start;
+  padding: var(--size-xxsmall) 0;
 }
 
 div.lightness-scale {
@@ -518,7 +518,16 @@ div.popin__actions {
   padding: 0 var(--size-xsmall) var(--size-xsmall) var(--size-xsmall);
 }
 
-/* Color items */
+/* Colors */
+div.source-colors {
+  flex: 1 0 176px;
+  overflow: hidden;
+}
+
+ul.colors {
+  overflow: scroll;
+}
+
 li.colors__item {
   display: grid;
   grid-template-columns: repeat(76, 1fr);
@@ -602,6 +611,8 @@ li .colors__shift > .input {
 /* Export */
 div.export-palette {
   flex-direction: row;
+  flex: 1 0 176px;
+  overflow: hidden;
 }
 
 div.export-palette > div {
@@ -620,10 +631,12 @@ div.export-palette > div:last-child {
 div.export-palette__options {
   padding: 0 var(--size-xsmall);
   flex: 1;
+  overflow: scroll;
 }
 
 textarea.export-palette__preview {
   height: 100%;
+  margin: 0;
 }
 
 ul.options li {
@@ -632,9 +645,9 @@ ul.options li {
 
 /* Settings */
 div.settings {
-  display: flex;
-  flex-direction: column;
   gap: var(--size-xsmall) 0;
+  flex: 1 0 176px;
+  overflow: scroll;
 }
 
 div.settings__item {
@@ -645,7 +658,7 @@ div.settings__item {
 div.about {
   flex-direction: row;
   align-items: baseline;
-  padding: 0 var(--size-small);
+  padding: var(--size-xsmall) var(--size-small);
 }
 
 div.about > div {

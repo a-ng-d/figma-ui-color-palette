@@ -4,6 +4,7 @@ import {
   currentSelection,
   isSelectionChanged,
 } from './processSelection'
+import { locals } from '../content/locals'
 
 const updateSettings = (msg, palette) => {
   palette = isSelectionChanged ? previousSelection[0] : currentSelection[0]
@@ -49,10 +50,7 @@ const updateSettings = (msg, palette) => {
 
     // palette migration
     palette.counterAxisSizingMode = 'AUTO'
-  } else
-    figma.notify(
-      'Your UI Color Palette seems corrupted. Do not edit any layer within it.'
-    )
+  } else figma.notify(locals.en.error.corruption)
 }
 
 export default updateSettings

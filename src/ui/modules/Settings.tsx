@@ -5,16 +5,27 @@ import Input from './../components/Input'
 import Switch from '../components/Switch'
 import Message from '../components/Message'
 import Feature from '../components/Feature'
+import Shortcuts from './Shortcuts'
+import Actions from './Actions'
 import features from '../../utils/features'
 import isBlocked from '../../utils/isBlocked'
+import { locals } from '../../content/locals'
 
 interface Props {
   paletteName: string
   textColorsTheme?: TextColorsThemeHexModel
   settings?: Array<string>
+  context: string
+  view: string
   isNewAlgorithm?: boolean
   planStatus: string
+  editorType?: string
   onChangeSettings: React.ReactEventHandler
+  onCreatePalette?: () => void
+  ononCreateLocalStyles?: () => void
+  ononUpdateLocalStyles?: () => void
+  onChangeView: React.ChangeEventHandler
+  onReopenHighlight: React.ChangeEventHandler
 }
 
 export default class Settings extends React.Component<Props> {
@@ -24,7 +35,7 @@ export default class Settings extends React.Component<Props> {
       <div className="settings__group">
         <div className="section-controls">
           <div className="section-controls__left-part">
-            <div className="section-title">Base information</div>
+            <div className="section-title">{locals.en.settings.base.title}</div>
           </div>
         </div>
         <Feature
@@ -35,7 +46,7 @@ export default class Settings extends React.Component<Props> {
         >
           <div className="settings__item">
             <FormItem
-              label="Palette name"
+              label={locals.en.settings.base.name}
               id="rename-palette"
               isBlocked={isBlocked(
                 'SETTINGS_PALETTE_NAME',
@@ -46,7 +57,7 @@ export default class Settings extends React.Component<Props> {
                 id="rename-palette"
                 type="text"
                 icon={{ type: 'none', value: null }}
-                placeholder="UI Color Palette"
+                placeholder={locals.en.settings.base.defaultName}
                 value={
                   this.props.paletteName != '' ? this.props.paletteName : ''
                 }
@@ -89,7 +100,9 @@ export default class Settings extends React.Component<Props> {
       <div className="settings__group">
         <div className="section-controls">
           <div className="section-controls__left-part">
-            <div className="section-title">Contrast management</div>
+            <div className="section-title">
+              {locals.en.settings.contrast.title}
+            </div>
           </div>
         </div>
         <Feature
@@ -101,7 +114,7 @@ export default class Settings extends React.Component<Props> {
         >
           <div className="settings__item">
             <FormItem
-              label="Text light color"
+              label={locals.en.settings.contrast.textLightColor}
               id="change-text-light-color"
               isBlocked={isBlocked(
                 'SETTINGS_TEXT_COLORS_THEME',
@@ -136,7 +149,7 @@ export default class Settings extends React.Component<Props> {
               />
             </FormItem>
             <FormItem
-              label="Text dark color"
+              label={locals.en.settings.contrast.textDarkColor}
               id="change-text-dark-color"
               isBlocked={isBlocked(
                 'SETTINGS_TEXT_COLORS_THEME',
@@ -173,7 +186,7 @@ export default class Settings extends React.Component<Props> {
             <Message
               icon="library"
               messages={[
-                'The light and dark text colors serve as a reference to simulate contrast and obtain both WCAG and APCA scores',
+                locals.en.settings.contrast.textThemeColorsDescription,
               ]}
               isBlocked={isBlocked(
                 'SETTINGS_NEW_ALGORITHM',
@@ -191,7 +204,9 @@ export default class Settings extends React.Component<Props> {
       <div className="settings__group">
         <div className="section-controls">
           <div className="section-controls__left-part">
-            <div className="section-title">Color management</div>
+            <div className="section-title">
+              {locals.en.settings.color.title}
+            </div>
           </div>
         </div>
         <Feature
@@ -204,7 +219,7 @@ export default class Settings extends React.Component<Props> {
           <div className="settings__item">
             <Switch
               id="update-algorithm"
-              label="Enable the new algorithm for creating color shades"
+              label={locals.en.settings.color.newAlgorithm}
               isChecked={this.props.isNewAlgorithm}
               isBlocked={isBlocked(
                 'SETTINGS_NEW_ALGORITHM',
@@ -219,9 +234,7 @@ export default class Settings extends React.Component<Props> {
             />
             <Message
               icon="library"
-              messages={[
-                'The Chroma values are harmonized to ensure consistent lightness across all shades, but this may make the colors look desaturated.',
-              ]}
+              messages={[locals.en.settings.color.newAlgorithmDescription]}
               isBlocked={isBlocked(
                 'SETTINGS_NEW_ALGORITHM',
                 this.props.planStatus
@@ -235,15 +248,65 @@ export default class Settings extends React.Component<Props> {
 
   render() {
     return (
-      <div className="settings controls__control">
-        {this.props.settings.includes('base') ? <this.Base /> : null}
-        {this.props.settings.includes('contrast-management') ? (
-          <this.ContrastManagement />
-        ) : null}
-        {this.props.settings.includes('color-management') ? (
-          <this.ColorManagement />
-        ) : null}
-      </div>
+      <>
+        <div className="settings controls__control">
+          {this.props.settings.includes('BASE') ? <this.Base /> : null}
+          {this.props.settings.includes('CONTRAST_MANAGEMENT') ? (
+            <this.ContrastManagement />
+          ) : null}
+          {this.props.settings.includes('COLOR_MANAGEMENT') ? (
+            <this.ColorManagement />
+          ) : null}
+        </div>
+        {this.props.context === 'CREATE' ? (
+          <Actions
+            context="CREATE"
+            view={this.props.view}
+            planStatus={this.props.planStatus}
+            onCreatePalette={this.props.onCreatePalette}
+            onChangeView={this.props.onChangeView}
+          />
+        ) : (
+          <Actions
+            context="EDIT"
+            view={this.props.view}
+            editorType={this.props.editorType}
+            planStatus={this.props.planStatus}
+            ononCreateLocalStyles={this.props.ononCreateLocalStyles}
+            ononUpdateLocalStyles={this.props.ononUpdateLocalStyles}
+            onChangeView={this.props.onChangeView}
+          />
+        )}
+        <Feature
+          isActive={
+            features.find((feature) => feature.name === 'SHORTCUTS').isActive
+          }
+        >
+          <Shortcuts
+            actions={[
+              {
+                label: locals.en.shortcuts.documentation,
+                isLink: true,
+                url: 'https://docs.ui-color-palette.com',
+                action: null,
+              },
+              {
+                label: locals.en.shortcuts.feedback,
+                isLink: true,
+                url: 'https://uicp.link/feedback',
+                action: null,
+              },
+              {
+                label: locals.en.shortcuts.news,
+                isLink: false,
+                url: '',
+                action: this.props.onReopenHighlight,
+              },
+            ]}
+            planStatus={this.props.planStatus}
+          />
+        </Feature>
+      </>
     )
   }
 }
