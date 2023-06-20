@@ -76,6 +76,16 @@ export default class Export extends React.Component<Props> {
           { pluginMessage: { type: 'EXPORT_PALETTE', export: 'CSV' } },
           '*'
         )
+        break
+      }
+      case 'export-to-ios': {
+        this.setState({
+          format: 'iOS',
+        })
+        parent.postMessage(
+          { pluginMessage: { type: 'EXPORT_PALETTE', export: 'iOS' } },
+          '*'
+        )
       }
     }
   }
