@@ -10,6 +10,13 @@ export const locals = {
       feedback: 'Give feedback',
       news: 'What\'s new'
     },
+    contexts: {
+      scale: 'Scale',
+      colors: 'Colors',
+      export: 'Export',
+      settings: 'Settings',
+      about: 'About'
+    },
     scale: {
       title: 'Lightness scale',
       ctrl: 'Hold Ctrl ⌃ or Cmd ⌘ while dragging a stop to move them all',

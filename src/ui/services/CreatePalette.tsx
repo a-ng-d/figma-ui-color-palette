@@ -9,6 +9,7 @@ import Settings from '../modules/Settings'
 import About from '../modules/About'
 import { palette } from '../../utils/palettePackage'
 import features from '../../utils/features'
+import { locals } from '../../content/locals'
 
 interface Props {
   paletteName: string
@@ -78,12 +79,12 @@ export default class CreatePalette extends React.Component<Props> {
     }> = []
     if (features.find((feature) => feature.name === 'SCALE').isActive)
       contexts.push({
-        label: 'Scale',
+        label: locals.en.contexts.scale,
         id: 'SCALE'
       })
     if (features.find((feature) => feature.name === 'SETTINGS').isActive)
       contexts.push({
-        label: 'Settings',
+        label: locals.en.contexts.settings,
         id: 'SETTINGS'
       })
     return contexts
@@ -96,7 +97,7 @@ export default class CreatePalette extends React.Component<Props> {
     }> = []
     if (features.find((feature) => feature.name === 'ABOUT').isActive)
       contexts.push({
-        label: 'About',
+        label: locals.en.contexts.about,
         id: 'ABOUT'
       })
     return contexts

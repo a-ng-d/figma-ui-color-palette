@@ -23,6 +23,7 @@ import Settings from '../modules/Settings'
 import About from '../modules/About'
 import { palette } from '../../utils/palettePackage'
 import features from '../../utils/features'
+import { locals } from '../../content/locals'
 import { v4 as uuidv4 } from 'uuid'
 
 interface Props {
@@ -493,22 +494,22 @@ export default class EditPalette extends React.Component<Props> {
     }> = []
     if (features.find((feature) => feature.name === 'SCALE').isActive)
       contexts.push({
-        label: 'Scale',
+        label: locals.en.contexts.scale,
         id: 'SCALE'
       })
     if (features.find((feature) => feature.name === 'COLORS').isActive)
       contexts.push({
-        label: 'Colors',
+        label: locals.en.contexts.colors,
         id: 'COLORS'
       })
     if (features.find((feature) => feature.name === 'EXPORT').isActive)
       contexts.push({
-        label: 'Export',
+        label: locals.en.contexts.export,
         id: 'EXPORT'
       })
     if (features.find((feature) => feature.name === 'SETTINGS').isActive)
       contexts.push({
-        label: 'Settings',
+        label: locals.en.contexts.settings,
         id: 'SETTINGS'
       })
     return contexts
@@ -521,7 +522,7 @@ export default class EditPalette extends React.Component<Props> {
     }> = []
     if (features.find((feature) => feature.name === 'ABOUT').isActive)
       contexts.push({
-        label: 'About',
+        label: locals.en.contexts.about,
         id: 'ABOUT'
       })
     return contexts
