@@ -12,6 +12,7 @@ export default class Colors {
   nodeRowSource: FrameNode
   nodeRowShades: FrameNode
   nodeRowSlice: FrameNode
+  nodeEmpty: FrameNode
   node: FrameNode
 
   constructor(parent?: PaletteNode, palette?: FrameNode) {
@@ -62,6 +63,35 @@ export default class Colors {
     )
 
     return newColor
+  }
+
+  makeEmptyCase() {
+    // base
+    this.nodeEmpty = figma.createFrame()
+    this.nodeEmpty.name = '_message'
+    this.nodeEmpty.resize(100, 48)
+    this.nodeEmpty.fills = []
+
+    // layout
+    this.nodeEmpty.layoutMode = 'HORIZONTAL'
+    this.nodeEmpty.primaryAxisSizingMode = 'FIXED'
+    this.nodeEmpty.counterAxisSizingMode = 'AUTO'
+    this.nodeEmpty.layoutAlign = 'STRETCH'
+    this.nodeEmpty.primaryAxisAlignItems = 'CENTER'
+
+    // insert
+    this.nodeEmpty.appendChild(
+      new Sample(
+        'There is not any source color. Add it manually in the Colors section',
+        null,
+        null,
+        [255, 255, 255],
+        this.parent.view,
+        this.parent.textColorsTheme
+      ).makeNodeName('RELATIVE', 100, 48)
+    )
+
+    return this.nodeEmpty
   }
 
   makePaletteData() {
@@ -296,6 +326,8 @@ export default class Colors {
       this.node.appendChild(this.nodeRow)
     })
     this.makePaletteData()
+    if (this.parent.colors.length == 0)
+      this.node.appendChild(this.makeEmptyCase())
 
     return this.node
   }
