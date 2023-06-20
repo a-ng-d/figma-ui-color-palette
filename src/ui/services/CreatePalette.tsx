@@ -40,17 +40,7 @@ export default class CreatePalette extends React.Component<Props> {
                   feature.type === 'CONTEXT' &&
                   feature.service.includes('CREATE') &&
                   feature.isActive
-              )[0]
-              .name.charAt(0) +
-            features
-              .filter(
-                (feature) =>
-                  feature.type === 'CONTEXT' &&
-                  feature.service.includes('CREATE') &&
-                  feature.isActive
-              )[0]
-              .name.slice(1)
-              .toLowerCase()
+              )[0].name
           : '',
     }
   }
@@ -71,7 +61,7 @@ export default class CreatePalette extends React.Component<Props> {
 
   navHandler = (e: React.SyntheticEvent) =>
     this.setState({
-      context: (e.target as HTMLElement).innerText,
+      context: (e.target as HTMLElement).dataset.feature,
     })
 
   // Direct actions
@@ -82,18 +72,33 @@ export default class CreatePalette extends React.Component<Props> {
     )
 
   setPrimaryContexts = () => {
-    const contexts: Array<string> = []
+    const contexts: Array<{
+      label: string
+      id: string
+    }> = []
     if (features.find((feature) => feature.name === 'SCALE').isActive)
-      contexts.push('Scale')
+      contexts.push({
+        label: 'Scale',
+        id: 'SCALE'
+      })
     if (features.find((feature) => feature.name === 'SETTINGS').isActive)
-      contexts.push('Settings')
+      contexts.push({
+        label: 'Settings',
+        id: 'SETTINGS'
+      })
     return contexts
   }
 
   setSecondaryContexts = () => {
-    const contexts: Array<string> = []
+    const contexts: Array<{
+      label: string
+      id: string
+    }> = []
     if (features.find((feature) => feature.name === 'ABOUT').isActive)
-      contexts.push('About')
+      contexts.push({
+        label: 'About',
+        id: 'ABOUT'
+      })
     return contexts
   }
 
@@ -103,7 +108,7 @@ export default class CreatePalette extends React.Component<Props> {
     let controls
 
     switch (this.state['context']) {
-      case 'Scale': {
+      case 'SCALE': {
         controls = (
           <Scale
             hasPreset={true}
@@ -121,7 +126,7 @@ export default class CreatePalette extends React.Component<Props> {
         )
         break
       }
-      case 'Settings': {
+      case 'SETTINGS': {
         controls = (
           <Settings
             paletteName={this.props.paletteName}

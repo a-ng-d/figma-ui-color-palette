@@ -99,17 +99,7 @@ export default class EditPalette extends React.Component<Props> {
                   feature.type === 'CONTEXT' &&
                   feature.service.includes('EDIT') &&
                   feature.isActive
-              )[0]
-              .name.charAt(0) +
-            features
-              .filter(
-                (feature) =>
-                  feature.type === 'CONTEXT' &&
-                  feature.service.includes('EDIT') &&
-                  feature.isActive
-              )[0]
-              .name.slice(1)
-              .toLowerCase()
+              )[0].name
           : '',
     }
   }
@@ -428,7 +418,7 @@ export default class EditPalette extends React.Component<Props> {
 
   navHandler = (e: React.SyntheticEvent) =>
     this.setState({
-      context: (e.target as HTMLElement).innerText,
+      context: (e.target as HTMLElement).dataset.feature,
     })
 
   viewHandler = (e) => {
@@ -497,22 +487,43 @@ export default class EditPalette extends React.Component<Props> {
   }
 
   setPrimaryContexts = () => {
-    const contexts: Array<string> = []
+    const contexts: Array<{
+      label: string
+      id: string
+    }> = []
     if (features.find((feature) => feature.name === 'SCALE').isActive)
-      contexts.push('Scale')
+      contexts.push({
+        label: 'Scale',
+        id: 'SCALE'
+      })
     if (features.find((feature) => feature.name === 'COLORS').isActive)
-      contexts.push('Colors')
+      contexts.push({
+        label: 'Colors',
+        id: 'COLORS'
+      })
     if (features.find((feature) => feature.name === 'EXPORT').isActive)
-      contexts.push('Export')
+      contexts.push({
+        label: 'Export',
+        id: 'EXPORT'
+      })
     if (features.find((feature) => feature.name === 'SETTINGS').isActive)
-      contexts.push('Settings')
+      contexts.push({
+        label: 'Settings',
+        id: 'SETTINGS'
+      })
     return contexts
   }
 
   setSecondaryContexts = () => {
-    const contexts: Array<string> = []
+    const contexts: Array<{
+      label: string
+      id: string
+    }> = []
     if (features.find((feature) => feature.name === 'ABOUT').isActive)
-      contexts.push('About')
+      contexts.push({
+        label: 'About',
+        id: 'ABOUT'
+      })
     return contexts
   }
 
@@ -521,7 +532,7 @@ export default class EditPalette extends React.Component<Props> {
     let controls
 
     switch (this.state['context']) {
-      case 'Scale': {
+      case 'SCALE': {
         controls = (
           <Scale
             hasPreset={false}
@@ -539,7 +550,7 @@ export default class EditPalette extends React.Component<Props> {
         )
         break
       }
-      case 'Colors': {
+      case 'COLORS': {
         controls = (
           <Colors
             colors={this.props.colors}
@@ -562,7 +573,7 @@ export default class EditPalette extends React.Component<Props> {
         )
         break
       }
-      case 'Export': {
+      case 'EXPORT': {
         controls = (
           <Export
             exportPreview={
@@ -578,7 +589,7 @@ export default class EditPalette extends React.Component<Props> {
         )
         break
       }
-      case 'Settings': {
+      case 'SETTINGS': {
         controls = (
           <Settings
             paletteName={this.props.paletteName}
@@ -598,7 +609,7 @@ export default class EditPalette extends React.Component<Props> {
         )
         break
       }
-      case 'About': {
+      case 'ABOUT': {
         controls = <About planStatus={this.props.planStatus} />
       }
     }
