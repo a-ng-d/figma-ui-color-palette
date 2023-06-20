@@ -94,13 +94,12 @@ export default class EditPalette extends React.Component<Props> {
             feature.service.includes('EDIT') &&
             feature.isActive
         )[0] != undefined
-          ? features
-              .filter(
-                (feature) =>
-                  feature.type === 'CONTEXT' &&
-                  feature.service.includes('EDIT') &&
-                  feature.isActive
-              )[0].name
+          ? features.filter(
+              (feature) =>
+                feature.type === 'CONTEXT' &&
+                feature.service.includes('EDIT') &&
+                feature.isActive
+            )[0].name
           : '',
     }
   }
@@ -495,22 +494,22 @@ export default class EditPalette extends React.Component<Props> {
     if (features.find((feature) => feature.name === 'SCALE').isActive)
       contexts.push({
         label: locals.en.contexts.scale,
-        id: 'SCALE'
+        id: 'SCALE',
       })
     if (features.find((feature) => feature.name === 'COLORS').isActive)
       contexts.push({
         label: locals.en.contexts.colors,
-        id: 'COLORS'
+        id: 'COLORS',
       })
     if (features.find((feature) => feature.name === 'EXPORT').isActive)
       contexts.push({
         label: locals.en.contexts.export,
-        id: 'EXPORT'
+        id: 'EXPORT',
       })
     if (features.find((feature) => feature.name === 'SETTINGS').isActive)
       contexts.push({
         label: locals.en.contexts.settings,
-        id: 'SETTINGS'
+        id: 'SETTINGS',
       })
     return contexts
   }
@@ -523,7 +522,7 @@ export default class EditPalette extends React.Component<Props> {
     if (features.find((feature) => feature.name === 'ABOUT').isActive)
       contexts.push({
         label: locals.en.contexts.about,
-        id: 'ABOUT'
+        id: 'ABOUT',
       })
     return contexts
   }
@@ -622,9 +621,7 @@ export default class EditPalette extends React.Component<Props> {
           active={this.state['context']}
           action={this.navHandler}
         />
-        <section
-          onMouseDown={this.unSelectColor}
-        >
+        <section onMouseDown={this.unSelectColor}>
           <div className="controls">{controls}</div>
         </section>
       </>

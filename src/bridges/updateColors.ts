@@ -55,10 +55,7 @@ const updateColors = (msg, palette) => {
     palette.name = `${paletteName}﹒${preset.name}﹒${
       view.includes('PALETTE') ? 'Palette' : 'Sheet'
     }`
-  } else
-    figma.notify(
-      locals.en.error.corruption
-    )
+  } else figma.notify(locals.en.error.corruption)
 }
 
 export default updateColors

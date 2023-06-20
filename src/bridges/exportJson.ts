@@ -31,10 +31,7 @@ const exportJson = (palette) => {
       type: 'EXPORT_PALETTE_JSON',
       data: json,
     })
-  } else
-    figma.notify(
-      locals.en.error.corruption
-    )
+  } else figma.notify(locals.en.error.corruption)
 }
 
 export default exportJson

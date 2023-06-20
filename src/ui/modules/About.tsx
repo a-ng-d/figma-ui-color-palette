@@ -76,7 +76,9 @@ export default class About extends React.Component<Props> {
         </div>
         <div>
           <div>
-            <div className="type type--bold">{locals.en.about.getHelp.title}</div>
+            <div className="type type--bold">
+              {locals.en.about.getHelp.title}
+            </div>
             <div className="about__links">
               <Button
                 type="tertiary"
@@ -94,7 +96,9 @@ export default class About extends React.Component<Props> {
             </div>
           </div>
           <div>
-            <div className="type type--bold">{locals.en.about.beInvolved.title}</div>
+            <div className="type type--bold">
+              {locals.en.about.beInvolved.title}
+            </div>
             <div className="about__links">
               <Button
                 type="tertiary"
@@ -112,7 +116,9 @@ export default class About extends React.Component<Props> {
             </div>
           </div>
           <div>
-            <div className="type type--bold">{locals.en.about.giveSupport.title}</div>
+            <div className="type type--bold">
+              {locals.en.about.giveSupport.title}
+            </div>
             <div className="about__links">
               <Button
                 type="tertiary"

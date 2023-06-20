@@ -25,10 +25,7 @@ const exportCss = (palette) => {
       type: 'EXPORT_PALETTE_CSS',
       data: css,
     })
-  } else
-    figma.notify(
-      locals.en.error.corruption
-    )
+  } else figma.notify(locals.en.error.corruption)
 }
 
 export default exportCss

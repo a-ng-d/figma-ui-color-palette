@@ -43,14 +43,8 @@ const updateLocalStyles = (palette, i: number) => {
 
     if (i > 1) figma.notify(`${i} ${locals.en.info.updatedlocalStyles}`)
     else if (i == 1) figma.notify(`${i} ${locals.en.info.updatedlocalStyle}`)
-    else
-      figma.notify(
-        locals.en.warning.updateLocalStyles
-      )
-  } else
-    figma.notify(
-      locals.en.error.corruption
-    )
+    else figma.notify(locals.en.warning.updateLocalStyles)
+  } else figma.notify(locals.en.error.corruption)
 }
 
 export default updateLocalStyles

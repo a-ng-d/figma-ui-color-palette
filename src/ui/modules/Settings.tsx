@@ -100,7 +100,9 @@ export default class Settings extends React.Component<Props> {
       <div className="settings__group">
         <div className="section-controls">
           <div className="section-controls__left-part">
-            <div className="section-title">{locals.en.settings.contrast.title}</div>
+            <div className="section-title">
+              {locals.en.settings.contrast.title}
+            </div>
           </div>
         </div>
         <Feature
@@ -202,7 +204,9 @@ export default class Settings extends React.Component<Props> {
       <div className="settings__group">
         <div className="section-controls">
           <div className="section-controls__left-part">
-            <div className="section-title">{locals.en.settings.color.title}</div>
+            <div className="section-title">
+              {locals.en.settings.color.title}
+            </div>
           </div>
         </div>
         <Feature
@@ -230,9 +234,7 @@ export default class Settings extends React.Component<Props> {
             />
             <Message
               icon="library"
-              messages={[
-                locals.en.settings.color.newAlgorithmDescription,
-              ]}
+              messages={[locals.en.settings.color.newAlgorithmDescription]}
               isBlocked={isBlocked(
                 'SETTINGS_NEW_ALGORITHM',
                 this.props.planStatus

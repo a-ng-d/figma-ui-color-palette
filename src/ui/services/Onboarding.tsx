@@ -20,9 +20,7 @@ export default class Onboarding extends React.Component<Props> {
             <Icon size={48} />
             <Message
               icon="list-tile"
-              messages={[
-                locals.en.onboarding.selectColor,
-              ]}
+              messages={[locals.en.onboarding.selectColor]}
             />
             <div className="type">－ or －</div>
             <Message

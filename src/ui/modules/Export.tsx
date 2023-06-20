@@ -125,7 +125,10 @@ export default class Export extends React.Component<Props> {
                       id="options__json"
                       label="JSON"
                       isChecked={this.state['format'] === 'JSON' ? true : false}
-                      isBlocked={isBlocked('EXPORT_JSON', this.props.planStatus)}
+                      isBlocked={isBlocked(
+                        'EXPORT_JSON',
+                        this.props.planStatus
+                      )}
                       feature="export-to-json"
                       group="fileFormat"
                       onChange={

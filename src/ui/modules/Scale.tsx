@@ -35,10 +35,7 @@ export default class Scale extends React.Component<Props> {
     const messages: Array<string> = []
 
     if (this.props.preset.name === 'Custom' && !this.props.hasPreset)
-      messages.push(
-        locals.en.scale.add,
-        locals.en.scale.remove
-      )
+      messages.push(locals.en.scale.add, locals.en.scale.remove)
 
     if (!this.props.hasPreset)
       messages.push(
@@ -47,17 +44,14 @@ export default class Scale extends React.Component<Props> {
         locals.en.scale.esc
       )
 
-    messages.push(
-      locals.en.scale.shift,
-      locals.en.scale.ctrl
-    )
+    messages.push(locals.en.scale.shift, locals.en.scale.ctrl)
 
     return messages
   }
 
   // Templates
   Shortcuts = () => {
-    return(
+    return (
       <Feature
         isActive={
           features.find((feature) => feature.name === 'SHORTCUTS').isActive
@@ -97,7 +91,7 @@ export default class Scale extends React.Component<Props> {
         <div className="lightness-scale controls__control">
           <div className="section-controls">
             <div className="section-controls__left-part">
-              <div className="section-title">{ locals.en.scale.title }</div>
+              <div className="section-title">{locals.en.scale.title}</div>
               <Feature
                 isActive={
                   features.find((feature) => feature.name === 'SCALE_PRESETS')
@@ -140,7 +134,9 @@ export default class Scale extends React.Component<Props> {
                   <Button
                     icon="plus"
                     type="icon"
-                    state={this.props.preset.scale.length == 24 ? 'disabled' : ''}
+                    state={
+                      this.props.preset.scale.length == 24 ? 'disabled' : ''
+                    }
                     feature="ADD"
                     action={this.props.onAddStop}
                   />

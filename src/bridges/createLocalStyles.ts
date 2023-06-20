@@ -29,14 +29,8 @@ const createLocalStyles = (palette, i: number) => {
 
     if (i > 1) figma.notify(`${i} ${locals.en.info.createdlocalStyles}`)
     else if (i == 1) figma.notify(`${i} ${locals.en.info.createdlocalStyle}`)
-    else
-      figma.notify(
-        locals.en.warning.createLocalStyles
-      )
-  } else
-    figma.notify(
-      locals.en.error.corruption
-    )
+    else figma.notify(locals.en.warning.createLocalStyles)
+  } else figma.notify(locals.en.error.corruption)
 }
 
 export default createLocalStyles

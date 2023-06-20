@@ -35,13 +35,12 @@ export default class CreatePalette extends React.Component<Props> {
             feature.service.includes('CREATE') &&
             feature.isActive
         )[0] != undefined
-          ? features
-              .filter(
-                (feature) =>
-                  feature.type === 'CONTEXT' &&
-                  feature.service.includes('CREATE') &&
-                  feature.isActive
-              )[0].name
+          ? features.filter(
+              (feature) =>
+                feature.type === 'CONTEXT' &&
+                feature.service.includes('CREATE') &&
+                feature.isActive
+            )[0].name
           : '',
     }
   }
@@ -80,12 +79,12 @@ export default class CreatePalette extends React.Component<Props> {
     if (features.find((feature) => feature.name === 'SCALE').isActive)
       contexts.push({
         label: locals.en.contexts.scale,
-        id: 'SCALE'
+        id: 'SCALE',
       })
     if (features.find((feature) => feature.name === 'SETTINGS').isActive)
       contexts.push({
         label: locals.en.contexts.settings,
-        id: 'SETTINGS'
+        id: 'SETTINGS',
       })
     return contexts
   }
@@ -98,7 +97,7 @@ export default class CreatePalette extends React.Component<Props> {
     if (features.find((feature) => feature.name === 'ABOUT').isActive)
       contexts.push({
         label: locals.en.contexts.about,
-        id: 'ABOUT'
+        id: 'ABOUT',
       })
     return contexts
   }

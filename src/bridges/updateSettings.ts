@@ -50,10 +50,7 @@ const updateSettings = (msg, palette) => {
 
     // palette migration
     palette.counterAxisSizingMode = 'AUTO'
-  } else
-    figma.notify(
-      locals.en.error.corruption
-    )
+  } else figma.notify(locals.en.error.corruption)
 }
 
 export default updateSettings

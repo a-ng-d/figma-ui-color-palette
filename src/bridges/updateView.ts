@@ -47,10 +47,7 @@ const updateView = (msg, palette) => {
     palette.name = `${paletteName}﹒${preset.name}﹒${
       msg.data.view.includes('PALETTE') ? 'Palette' : 'Sheet'
     }`
-  } else
-    figma.notify(
-      locals.en.error.corruption
-    )
+  } else figma.notify(locals.en.error.corruption)
 }
 
 export default updateView
