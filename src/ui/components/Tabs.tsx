@@ -15,7 +15,6 @@ interface Props {
 
 export default class Tabs extends React.Component<Props> {
   render() {
-    console.log(this.props.primaryTabs)
     return (
       <div className="tabs">
         <div className="tabs__primary">
