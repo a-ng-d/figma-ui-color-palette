@@ -9,6 +9,7 @@ import Actions from './Actions'
 import Shortcuts from './Shortcuts'
 import { palette, presets } from '../../utils/palettePackage'
 import features from '../../utils/features'
+import { locals } from '../../content/locals'
 
 interface Props {
   hasPreset: boolean
@@ -35,20 +36,20 @@ export default class Scale extends React.Component<Props> {
 
     if (this.props.preset.name === 'Custom' && !this.props.hasPreset)
       messages.push(
-        'Click on the slider range to add a stop',
-        'Press Backspace ⌫ after selecting a stop to remove it'
+        locals.en.scale.add,
+        locals.en.scale.remove
       )
 
     if (!this.props.hasPreset)
       messages.push(
-        'Double click a stop to type its value',
-        'Press ← or → after selecting a stop to shift it',
-        'Press Esc. after selecting a stop to unselect it'
+        locals.en.scale.edit,
+        locals.en.scale.nav,
+        locals.en.scale.esc
       )
 
     messages.push(
-      "Hold Shift ⇧ while dragging the first or the last stop to distribute stops' horizontal spacing",
-      'Hold Ctrl ⌃ or Cmd ⌘ while dragging a stop to move them all'
+      locals.en.scale.shift,
+      locals.en.scale.ctrl
     )
 
     return messages
@@ -65,19 +66,19 @@ export default class Scale extends React.Component<Props> {
         <Shortcuts
           actions={[
             {
-              label: 'Read the documentation',
+              label: locals.en.shortcuts.documentation,
               isLink: true,
               url: 'https://docs.ui-color-palette.com',
               action: null,
             },
             {
-              label: 'Give feedback',
+              label: locals.en.shortcuts.feedback,
               isLink: true,
               url: 'https://uicp.link/feedback',
               action: null,
             },
             {
-              label: "What's new",
+              label: locals.en.shortcuts.news,
               isLink: false,
               url: '',
               action: this.props.onReopenHighlight,
@@ -96,7 +97,7 @@ export default class Scale extends React.Component<Props> {
         <div className="lightness-scale controls__control">
           <div className="section-controls">
             <div className="section-controls__left-part">
-              <div className="section-title">Lightness scale</div>
+              <div className="section-title">{ locals.en.scale.title }</div>
               <Feature
                 isActive={
                   features.find((feature) => feature.name === 'SCALE_PRESETS')
@@ -193,7 +194,7 @@ export default class Scale extends React.Component<Props> {
         <div className="lightness-scale controls__control">
           <div className="section-controls">
             <div className="section-controls__left-part">
-              <div className="section-title">Lightness scale</div>
+              <div className="section-title">{locals.en.scale.title}</div>
             </div>
             <div className="section-controls__right-part">
               <div className="label">{this.props.preset.name}</div>

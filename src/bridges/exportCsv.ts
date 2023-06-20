@@ -1,4 +1,5 @@
 import { PaletteDataItem } from '../utils/types'
+import { locals } from '../content/locals';
 
 const exportCsv = (palette) => {
   palette = figma.currentPage.selection[0]
@@ -43,7 +44,7 @@ const exportCsv = (palette) => {
     })
   } else
     figma.notify(
-      'Your UI Color Palette seems corrupted. Do not edit any layer within it.'
+      locals.en.error.corruption
     )
 }
 

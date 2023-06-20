@@ -9,6 +9,7 @@ import Shortcuts from './Shortcuts'
 import Actions from './Actions'
 import features from '../../utils/features'
 import isBlocked from '../../utils/isBlocked'
+import { locals } from '../../content/locals'
 
 interface Props {
   paletteName: string
@@ -34,7 +35,7 @@ export default class Settings extends React.Component<Props> {
       <div className="settings__group">
         <div className="section-controls">
           <div className="section-controls__left-part">
-            <div className="section-title">Base information</div>
+            <div className="section-title">{locals.en.settings.base.title}</div>
           </div>
         </div>
         <Feature
@@ -45,7 +46,7 @@ export default class Settings extends React.Component<Props> {
         >
           <div className="settings__item">
             <FormItem
-              label="Palette name"
+              label={locals.en.settings.base.name}
               id="rename-palette"
               isBlocked={isBlocked(
                 'SETTINGS_PALETTE_NAME',
@@ -56,7 +57,7 @@ export default class Settings extends React.Component<Props> {
                 id="rename-palette"
                 type="text"
                 icon={{ type: 'none', value: null }}
-                placeholder="UI Color Palette"
+                placeholder={locals.en.settings.base.defaultName}
                 value={
                   this.props.paletteName != '' ? this.props.paletteName : ''
                 }
@@ -99,7 +100,7 @@ export default class Settings extends React.Component<Props> {
       <div className="settings__group">
         <div className="section-controls">
           <div className="section-controls__left-part">
-            <div className="section-title">Contrast management</div>
+            <div className="section-title">{locals.en.settings.contrast.title}</div>
           </div>
         </div>
         <Feature
@@ -111,7 +112,7 @@ export default class Settings extends React.Component<Props> {
         >
           <div className="settings__item">
             <FormItem
-              label="Text light color"
+              label={locals.en.settings.contrast.textLightColor}
               id="change-text-light-color"
               isBlocked={isBlocked(
                 'SETTINGS_TEXT_COLORS_THEME',
@@ -146,7 +147,7 @@ export default class Settings extends React.Component<Props> {
               />
             </FormItem>
             <FormItem
-              label="Text dark color"
+              label={locals.en.settings.contrast.textDarkColor}
               id="change-text-dark-color"
               isBlocked={isBlocked(
                 'SETTINGS_TEXT_COLORS_THEME',
@@ -183,7 +184,7 @@ export default class Settings extends React.Component<Props> {
             <Message
               icon="library"
               messages={[
-                'The light and dark text colors serve as a reference to simulate contrast and obtain both WCAG and APCA scores',
+                locals.en.settings.contrast.textThemeColorsDescription,
               ]}
               isBlocked={isBlocked(
                 'SETTINGS_NEW_ALGORITHM',
@@ -201,7 +202,7 @@ export default class Settings extends React.Component<Props> {
       <div className="settings__group">
         <div className="section-controls">
           <div className="section-controls__left-part">
-            <div className="section-title">Color management</div>
+            <div className="section-title">{locals.en.settings.color.title}</div>
           </div>
         </div>
         <Feature
@@ -214,7 +215,7 @@ export default class Settings extends React.Component<Props> {
           <div className="settings__item">
             <Switch
               id="update-algorithm"
-              label="Enable the new algorithm for creating color shades"
+              label={locals.en.settings.color.newAlgorithm}
               isChecked={this.props.isNewAlgorithm}
               isBlocked={isBlocked(
                 'SETTINGS_NEW_ALGORITHM',
@@ -230,7 +231,7 @@ export default class Settings extends React.Component<Props> {
             <Message
               icon="library"
               messages={[
-                'The Chroma values are harmonized to ensure consistent lightness across all shades, but this may make the colors look desaturated.',
+                locals.en.settings.color.newAlgorithmDescription,
               ]}
               isBlocked={isBlocked(
                 'SETTINGS_NEW_ALGORITHM',
@@ -282,19 +283,19 @@ export default class Settings extends React.Component<Props> {
           <Shortcuts
             actions={[
               {
-                label: 'Read the documentation',
+                label: locals.en.shortcuts.documentation,
                 isLink: true,
                 url: 'https://docs.ui-color-palette.com',
                 action: null,
               },
               {
-                label: 'Give feedback',
+                label: locals.en.shortcuts.feedback,
                 isLink: true,
                 url: 'https://uicp.link/feedback',
                 action: null,
               },
               {
-                label: "What's new",
+                label: locals.en.shortcuts.news,
                 isLink: false,
                 url: '',
                 action: this.props.onReopenHighlight,

@@ -5,6 +5,7 @@ import type {
   ColorConfiguration,
 } from '../utils/types'
 import Colors from '../canvas/Colors'
+import { locals } from '../content/locals'
 
 const updateView = (msg, palette) => {
   palette = figma.currentPage.selection[0]
@@ -48,7 +49,7 @@ const updateView = (msg, palette) => {
     }`
   } else
     figma.notify(
-      'Your UI Color Palette seems corrupted. Do not edit any layer within it.'
+      locals.en.error.corruption
     )
 }
 

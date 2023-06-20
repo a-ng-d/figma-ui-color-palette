@@ -5,6 +5,7 @@ import Actions from './Actions'
 import Shortcuts from './Shortcuts'
 import features from '../../utils/features'
 import isBlocked from '../../utils/isBlocked'
+import { locals } from '../../content/locals'
 
 interface Props {
   exportPreview: string
@@ -108,7 +109,7 @@ export default class Export extends React.Component<Props> {
           <div>
             <div className="section-controls">
               <div className="section-controls__left-part">
-                <div className="section-title">File format</div>
+                <div className="section-title">{locals.en.export.format}</div>
               </div>
             </div>
             <div className="export-palette__options">
@@ -185,7 +186,7 @@ export default class Export extends React.Component<Props> {
           <div>
             <div className="section-controls">
               <div className="section-controls__left-part">
-                <div className="section-title">Preview</div>
+                <div className="section-title">{locals.en.export.preview}</div>
               </div>
             </div>
             <div className="export-palette__options">
@@ -212,19 +213,19 @@ export default class Export extends React.Component<Props> {
           <Shortcuts
             actions={[
               {
-                label: 'Read the documentation',
+                label: locals.en.shortcuts.documentation,
                 isLink: true,
                 url: 'https://docs.ui-color-palette.com',
                 action: null,
               },
               {
-                label: 'Give feedback',
+                label: locals.en.shortcuts.feedback,
                 isLink: true,
                 url: 'https://uicp.link/feedback',
                 action: null,
               },
               {
-                label: "What's new",
+                label: locals.en.shortcuts.news,
                 isLink: false,
                 url: '',
                 action: this.props.onReopenHighlight,

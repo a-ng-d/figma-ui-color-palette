@@ -5,6 +5,7 @@ import features from '../../utils/features'
 import Dropdown from '../components/Dropdown'
 import FormItem from '../components/FormItem'
 import isBlocked from '../../utils/isBlocked'
+import { locals } from '../../content/locals'
 
 interface Props {
   context: string
@@ -37,7 +38,7 @@ export default class Actions extends React.Component<Props> {
           >
             <Button
               type="primary"
-              label="Create a UI Color Palette"
+              label={locals.en.actions.createPalette}
               feature="CREATE"
               action={this.props.onCreatePalette}
             />
@@ -51,13 +52,13 @@ export default class Actions extends React.Component<Props> {
           >
             <FormItem
               id="change-view"
-              label="Layout"
+              label={locals.en.views.title}
             >
               <Dropdown
                 id="views"
                 options={[
                   {
-                    label: 'Palette with properties',
+                    label: locals.en.views.detailed,
                     value: 'PALETTE_WITH_PROPERTIES',
                     position: 0,
                     isActive: features.find(
@@ -70,7 +71,7 @@ export default class Actions extends React.Component<Props> {
                     ),
                   },
                   {
-                    label: 'Palette',
+                    label: locals.en.views.simple,
                     value: 'PALETTE',
                     position: 1,
                     isActive: features.find(
@@ -82,7 +83,7 @@ export default class Actions extends React.Component<Props> {
                     ),
                   },
                   {
-                    label: 'Color sheet',
+                    label: locals.en.views.sheet,
                     value: 'SHEET',
                     position: 2,
                     isActive: features.find(
@@ -113,7 +114,7 @@ export default class Actions extends React.Component<Props> {
           >
             <Button
               type="secondary"
-              label="Update the local styles"
+              label={locals.en.actions.updateLocalStyles}
               feature="update"
               action={this.props.onUpdateLocalColors}
             />
@@ -126,7 +127,7 @@ export default class Actions extends React.Component<Props> {
           >
             <Button
               type="primary"
-              label="Create local styles"
+              label={locals.en.actions.createLocalStyles}
               feature="CREATE"
               action={this.props.onCreateLocalColors}
             />
@@ -140,13 +141,13 @@ export default class Actions extends React.Component<Props> {
           >
             <FormItem
               id="change-view"
-              label="Layout"
+              label={locals.en.views.title}
             >
               <Dropdown
                 id="views"
                 options={[
                   {
-                    label: 'Palette with properties',
+                    label: locals.en.views.detailed,
                     value: 'PALETTE_WITH_PROPERTIES',
                     position: 0,
                     isActive: features.find(
@@ -159,7 +160,7 @@ export default class Actions extends React.Component<Props> {
                     ),
                   },
                   {
-                    label: 'Palette',
+                    label: locals.en.views.simple,
                     value: 'PALETTE',
                     position: 1,
                     isActive: features.find(
@@ -171,7 +172,7 @@ export default class Actions extends React.Component<Props> {
                     ),
                   },
                   {
-                    label: 'Color sheet',
+                    label: locals.en.views.sheet,
                     value: 'SHEET',
                     position: 2,
                     isActive: features.find(
@@ -196,7 +197,7 @@ export default class Actions extends React.Component<Props> {
         <div className="buttons">
           <Button
             type="primary"
-            label={`Export the palette to ${this.props.exportType}`}
+            label={`${locals.en.actions.export} ${this.props.exportType}`}
             feature="export"
             action={this.props.onExportPalette}
           >

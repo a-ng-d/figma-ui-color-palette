@@ -1,4 +1,5 @@
 import type { PaletteDataItem } from '../utils/types'
+import { locals } from '../content/locals'
 
 const exportJson = (palette) => {
   palette = figma.currentPage.selection[0]
@@ -32,7 +33,7 @@ const exportJson = (palette) => {
     })
   } else
     figma.notify(
-      'Your UI Color Palette seems corrupted. Do not edit any layer within it.'
+      locals.en.error.corruption
     )
 }
 

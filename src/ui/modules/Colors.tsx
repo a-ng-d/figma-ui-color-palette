@@ -11,6 +11,7 @@ import ColorItem from '../components/ColorItem'
 import Actions from './Actions'
 import Shortcuts from './Shortcuts'
 import features from '../../utils/features'
+import { locals } from '../../content/locals'
 
 interface Props {
   colors: Array<ColorConfiguration>
@@ -43,7 +44,7 @@ export default class Colors extends React.Component<Props> {
         <div className="source-colors controls__control">
           <div className="section-controls">
             <div className="section-controls__left-part">
-              <div className="section-title">Source colors</div>
+              <div className="section-title">{locals.en.colors.title}</div>
             </div>
             <div className="section-controls__right-part">
               <Button
@@ -108,19 +109,19 @@ export default class Colors extends React.Component<Props> {
           <Shortcuts
             actions={[
               {
-                label: 'Read the documentation',
+                label: locals.en.shortcuts.documentation,
                 isLink: true,
                 url: 'https://docs.ui-color-palette.com',
                 action: null,
               },
               {
-                label: 'Give feedback',
+                label: locals.en.shortcuts.feedback,
                 isLink: true,
                 url: 'https://uicp.link/feedback',
                 action: null,
               },
               {
-                label: "What's new",
+                label: locals.en.shortcuts.news,
                 isLink: false,
                 url: '',
                 action: this.props.onReopenHighlight,
