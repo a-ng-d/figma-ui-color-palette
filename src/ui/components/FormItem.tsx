@@ -15,8 +15,8 @@ export default class FormItem extends React.Component<Props> {
   render() {
     return (
       <div
-        className={`form-item ${
-          this.props.isBlocked ? 'form-item--blocked' : ''
+        className={`form-item${
+          this.props.isBlocked ? ' form-item--blocked' : ''
         }`}
       >
         <label

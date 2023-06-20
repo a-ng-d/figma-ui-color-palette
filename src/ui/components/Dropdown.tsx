@@ -71,8 +71,8 @@ export default class Dropdown extends React.Component<Props> {
         ref={this.selectMenuRef}
       >
         <button
-          className={`select-menu__button ${
-            this.state['isListOpen'] ? 'select-menu__button--active' : ''
+          className={`select-menu__button${
+            this.state['isListOpen'] ? ' select-menu__button--active' : ''
           }`}
           onMouseDown={this.onOpenList}
         >
@@ -95,11 +95,11 @@ export default class Dropdown extends React.Component<Props> {
               option.isActive ? (
                 <li
                   key={index}
-                  className={`select-menu__item ${
+                  className={`select-menu__item${
                     option.value === this.props.selected
-                      ? 'select-menu__item--selected'
+                      ? ' select-menu__item--selected'
                       : ''
-                  } ${option.isBlocked ? 'select-menu__item--blocked' : ''}`}
+                  }${option.isBlocked ? ' select-menu__item--blocked' : ''}`}
                   data-value={option.value}
                   data-position={option.position}
                   data-is-blocked={option.isBlocked}

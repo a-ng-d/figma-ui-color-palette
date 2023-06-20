@@ -15,8 +15,8 @@ export default class Message extends React.Component<Props> {
   SingleMessage = () => {
     return (
       <div
-        className={`onboarding-tip ${
-          this.props.isBlocked ? 'onboarding-tip--blocked' : ''
+        className={`onboarding-tip${
+          this.props.isBlocked ? ' onboarding-tip--blocked' : ''
         }`}
       >
         <div className={`icon icon--${this.props.icon}`}></div>

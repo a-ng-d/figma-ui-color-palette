@@ -19,7 +19,7 @@ export default class Switch extends React.Component<Props> {
   render() {
     return (
       <div
-        className={`switch ${this.props.isBlocked ? 'switch--blocked' : ''}`}
+        className={`switch${this.props.isBlocked ? ' switch--blocked' : ''}`}
       >
         <input
           data-feature={this.props.feature}
