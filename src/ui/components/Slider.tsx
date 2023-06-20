@@ -170,12 +170,13 @@ export default class Slider extends React.Component<Props> {
       )
     offset = e.clientX - slider.offsetLeft - sliderPadding - shift
 
-    this.setState({
-      selectedStop: {
-        stop: stop,
-        state: 'SLIDING',
-      },
-    })
+    if (!this.props.hasPreset)
+      this.setState({
+        selectedStop: {
+          stop: stop,
+          state: 'SLIDING',
+        },
+      })
 
     update()
 
