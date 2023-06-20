@@ -6,6 +6,7 @@ import type {
   ScaleConfiguration,
 } from '../utils/types'
 import Colors from './Colors'
+import { locals } from '../content/locals'
 
 export default class Palette {
   paletteName: string
@@ -28,7 +29,7 @@ export default class Palette {
     algorithmVersion: string
   ) {
     this.paletteName = name
-    this.name = `${name === '' ? 'UI Color Palette' : name}﹒${preset.name}﹒${
+    this.name = `${name === '' ? locals.en.name : name}﹒${preset.name}﹒${
       view.includes('PALETTE') ? 'Palette' : 'Sheet'
     }`
     this.preset = preset

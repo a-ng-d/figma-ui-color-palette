@@ -102,6 +102,8 @@ export const locals = {
         'Local color styles already exist and cannot be created twice',
       updateLocalStyles:
         'No color has been updated because the UI Color Palette has not been edited',
+      emptySourceColors:
+        'There is not any source color. Add it manually in the Colors section'
     },
     error: {
       corruption:

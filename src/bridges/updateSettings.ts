@@ -21,10 +21,10 @@ const updateSettings = (msg, palette) => {
     ;(paletteName =
       palette.getPluginData('name') === '' ||
       palette.getPluginData('name') == undefined
-        ? 'UI Color Palette'
+        ? locals.en.name
         : palette.getPluginData('name')),
       (palette.name = `${
-        msg.data.name === '' ? 'UI Color Palette' : msg.data.name
+        msg.data.name === '' ? locals.en.name : msg.data.name
       }﹒${preset.name}﹒${view.includes('PALETTE') ? 'Palette' : 'Sheet'}`)
     palette.setPluginData(
       'textColorsTheme',

@@ -1,3 +1,4 @@
+import { locals } from '../content/locals'
 import type { PaletteNode } from '../utils/types'
 import Sample from './Sample'
 
@@ -24,7 +25,7 @@ export default class Header {
     // insert
     this.node.appendChild(
       new Sample(
-        'Source colors',
+        locals.en.colors.title,
         null,
         null,
         [255, 255, 255],

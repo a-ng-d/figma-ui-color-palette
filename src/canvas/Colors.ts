@@ -3,6 +3,7 @@ import type { PaletteNode, PaletteDataItem } from '../utils/types'
 import Sample from './Sample'
 import Header from './Header'
 import Title from './Title'
+import { locals } from '../content/locals'
 
 export default class Colors {
   parent: PaletteNode
@@ -82,7 +83,7 @@ export default class Colors {
     // insert
     this.nodeEmpty.appendChild(
       new Sample(
-        'There is not any source color. Add it manually in the Colors section',
+        locals.en.warning.emptySourceColors,
         null,
         null,
         [255, 255, 255],
@@ -188,7 +189,7 @@ export default class Colors {
       new Title(
         `${
           this.parent.paletteName === ''
-            ? 'UI Color Palette'
+            ? locals.en.name
             : this.parent.paletteName
         } • ${this.parent.preset.name} • ${
           this.parent.view.includes('PALETTE') ? 'Palette' : 'Sheet'

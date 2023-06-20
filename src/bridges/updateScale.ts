@@ -17,7 +17,7 @@ const updateScale = (msg, palette) => {
   if (palette.children.length == 1) {
     const paletteName: string =
         palette.getPluginData('name') === ''
-          ? 'UI Color Palette'
+          ? locals.en.name
           : palette.getPluginData('name'),
       colors: Array<ColorConfiguration> = JSON.parse(
         palette.getPluginData('colors')
