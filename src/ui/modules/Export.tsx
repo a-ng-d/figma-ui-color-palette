@@ -1,4 +1,5 @@
 import * as React from 'react'
+import type { ActionsList } from '../../utils/types'
 import Feature from '../components/Feature'
 import RadioButton from './../components/RadioButton'
 import Actions from './Actions'
@@ -47,8 +48,8 @@ export default class Export extends React.Component<Props> {
 
   // Handlers
   exportHandler = (e: React.SyntheticEvent) => {
-    switch ((e.target as HTMLElement).dataset.feature) {
-      case 'export-to-json': {
+    const actions: ActionsList = {
+      EXPORT_TO_JSON: () => {
         this.setState({
           format: 'JSON',
         })
@@ -56,9 +57,8 @@ export default class Export extends React.Component<Props> {
           { pluginMessage: { type: 'EXPORT_PALETTE', export: 'JSON' } },
           '*'
         )
-        break
-      }
-      case 'export-to-css': {
+      },
+      EXPORT_TO_CSS: () => {
         this.setState({
           format: 'CSS',
         })
@@ -66,9 +66,8 @@ export default class Export extends React.Component<Props> {
           { pluginMessage: { type: 'EXPORT_PALETTE', export: 'CSS' } },
           '*'
         )
-        break
-      }
-      case 'export-to-csv': {
+      },
+      EXPORT_TO_CSV: () => {
         this.setState({
           format: 'CSV',
         })
@@ -76,9 +75,8 @@ export default class Export extends React.Component<Props> {
           { pluginMessage: { type: 'EXPORT_PALETTE', export: 'CSV' } },
           '*'
         )
-        break
-      }
-      case 'export-to-ios': {
+      },
+      EXPORT_TO_IOS: () => {
         this.setState({
           format: 'iOS',
         })
@@ -88,6 +86,8 @@ export default class Export extends React.Component<Props> {
         )
       }
     }
+
+    return actions[(e.target as HTMLElement).dataset.feature]?.()
   }
 
   // Direct actions
@@ -139,7 +139,7 @@ export default class Export extends React.Component<Props> {
                         'EXPORT_JSON',
                         this.props.planStatus
                       )}
-                      feature="export-to-json"
+                      feature="EXPORT_TO_JSON"
                       group="fileFormat"
                       onChange={
                         isBlocked('EXPORT_JSON', this.props.planStatus)
@@ -161,7 +161,7 @@ export default class Export extends React.Component<Props> {
                       label="CSS Custom Properties"
                       isChecked={this.state['format'] === 'CSS' ? true : false}
                       isBlocked={isBlocked('EXPORT_CSS', this.props.planStatus)}
-                      feature="export-to-css"
+                      feature="EXPORT_TO_CSS"
                       group="fileFormat"
                       onChange={
                         isBlocked('EXPORT_CSS', this.props.planStatus)
@@ -183,7 +183,7 @@ export default class Export extends React.Component<Props> {
                       label="CSV (LCH)"
                       isChecked={this.state['format'] === 'CSV' ? true : false}
                       isBlocked={isBlocked('EXPORT_CSV', this.props.planStatus)}
-                      feature="export-to-csv"
+                      feature="EXPORT_TO_CSV"
                       group="fileFormat"
                       onChange={
                         isBlocked('EXPORT_CSV', this.props.planStatus)
@@ -205,7 +205,7 @@ export default class Export extends React.Component<Props> {
                       label="iOS (Swift)"
                       isChecked={this.state['format'] === 'iOS' ? true : false}
                       isBlocked={isBlocked('EXPORT_IOS', this.props.planStatus)}
-                      feature="export-to-ios"
+                      feature="EXPORT_TO_IOS"
                       group="fileFormat"
                       onChange={
                         isBlocked('EXPORT_IOS', this.props.planStatus)
