@@ -34,7 +34,7 @@ export default class Knob extends React.Component<Props> {
     return (
       <div
         className={`slider__knob ${this.props.id}${
-          this.props.state === 'SELECTED' ? ' slider__knob--selected' : ''
+          this.props.state === 'SELECTED' ? ' slider__knob--selected' : this.props.state === 'EDITING' ? ' slider__knob--editing' : ''
         }`}
         style={{ left: `${this.props.value}%` }}
         onMouseDown={this.props.onMouseDown}

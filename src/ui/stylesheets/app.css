@@ -238,7 +238,7 @@ div.slider .slider__knob:hover .slider__label {
   background: var(--figma-color-bg-hover);
 }
 
-div.slider .slider__knob--selected {
+div.slider .slider__knob--selected, div.slider .slider__knob--editing {
   z-index: 2 !important;
 }
 
