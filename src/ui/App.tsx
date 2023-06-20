@@ -443,6 +443,16 @@ class App extends React.Component {
             },
             onGoingStep: 'export previewed',
           })
+        
+        const exportPaletteToiOS = () =>
+          this.setState({
+            export: {
+              format: 'iOS',
+              mimeType: 'text/swift',
+              data: e.data.pluginMessage.data.join(';\n\n'),
+            },
+            onGoingStep: 'export previewed',
+          })
 
         const getProPlan = () =>
           this.setState({
@@ -457,9 +467,7 @@ class App extends React.Component {
           EMPTY_SELECTION: () => updateWhileEmptySelection(),
           COLOR_SELECTED: () => updateWhileColorSelected(),
           PALETTE_SELECTED: () => updateWhilePaletteSelected(),
-          EXPORT_PALETTE_JSON: () => exportPaletteAsJson(),
-          EXPORT_PALETTE_CSS: () => exportPaletteAsCss(),
-          EXPORT_PALETTE_CSV: () => exportPaletteAsCsv(),
+          EXPORT_PALETTE_IOS: () => exportPaletteToiOS(),
           GET_PRO_PLAN: () => getProPlan(),
         }
 
