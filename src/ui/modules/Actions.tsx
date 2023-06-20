@@ -14,8 +14,8 @@ interface Props {
   editorType?: string
   planStatus?: string
   onCreatePalette?: React.MouseEventHandler
-  onCreateLocalColors?: React.MouseEventHandler
-  onUpdateLocalColors?: React.MouseEventHandler
+  ononCreateLocalStyles?: React.MouseEventHandler
+  ononUpdateLocalStyles?: React.MouseEventHandler
   onChangeView?: React.ChangeEventHandler
   onExportPalette?: React.MouseEventHandler
 }
@@ -116,7 +116,7 @@ export default class Actions extends React.Component<Props> {
               type="secondary"
               label={locals.en.actions.updateLocalStyles}
               feature="update"
-              action={this.props.onUpdateLocalColors}
+              action={this.props.ononUpdateLocalStyles}
             />
           </Feature>
           <Feature
@@ -129,7 +129,7 @@ export default class Actions extends React.Component<Props> {
               type="primary"
               label={locals.en.actions.createLocalStyles}
               feature="CREATE"
-              action={this.props.onCreateLocalColors}
+              action={this.props.ononCreateLocalStyles}
             />
           </Feature>
         </div>

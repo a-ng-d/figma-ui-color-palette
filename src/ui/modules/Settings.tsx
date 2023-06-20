@@ -22,8 +22,8 @@ interface Props {
   editorType?: string
   onChangeSettings: React.ReactEventHandler
   onCreatePalette?: () => void
-  onCreateLocalColors?: () => void
-  onUpdateLocalColors?: () => void
+  ononCreateLocalStyles?: () => void
+  ononUpdateLocalStyles?: () => void
   onChangeView: React.ChangeEventHandler
   onReopenHighlight: React.ChangeEventHandler
 }
@@ -270,8 +270,8 @@ export default class Settings extends React.Component<Props> {
             view={this.props.view}
             editorType={this.props.editorType}
             planStatus={this.props.planStatus}
-            onCreateLocalColors={this.props.onCreateLocalColors}
-            onUpdateLocalColors={this.props.onUpdateLocalColors}
+            ononCreateLocalStyles={this.props.ononCreateLocalStyles}
+            ononUpdateLocalStyles={this.props.ononUpdateLocalStyles}
             onChangeView={this.props.onChangeView}
           />
         )}
