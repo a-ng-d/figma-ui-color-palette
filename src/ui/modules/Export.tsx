@@ -133,7 +133,7 @@ export default class Export extends React.Component<Props> {
                   <li>
                     <RadioButton
                       id="options__json"
-                      label="JSON"
+                      label={locals.en.export.json}
                       isChecked={this.state['format'] === 'JSON' ? true : false}
                       isBlocked={isBlocked(
                         'EXPORT_JSON',
@@ -158,7 +158,7 @@ export default class Export extends React.Component<Props> {
                   <li>
                     <RadioButton
                       id="options__css"
-                      label="CSS Custom Properties"
+                      label={locals.en.export.css}
                       isChecked={this.state['format'] === 'CSS' ? true : false}
                       isBlocked={isBlocked('EXPORT_CSS', this.props.planStatus)}
                       feature="EXPORT_TO_CSS"
@@ -180,7 +180,7 @@ export default class Export extends React.Component<Props> {
                   <li>
                     <RadioButton
                       id="options__csv"
-                      label="CSV (LCH)"
+                      label={locals.en.export.csv}
                       isChecked={this.state['format'] === 'CSV' ? true : false}
                       isBlocked={isBlocked('EXPORT_CSV', this.props.planStatus)}
                       feature="EXPORT_TO_CSV"
@@ -202,7 +202,7 @@ export default class Export extends React.Component<Props> {
                   <li>
                     <RadioButton
                       id="options__ios"
-                      label="iOS (Swift)"
+                      label={locals.en.export.ios}
                       isChecked={this.state['format'] === 'iOS' ? true : false}
                       isBlocked={isBlocked('EXPORT_IOS', this.props.planStatus)}
                       feature="EXPORT_TO_IOS"
