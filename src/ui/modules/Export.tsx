@@ -183,6 +183,28 @@ export default class Export extends React.Component<Props> {
                     />
                   </li>
                 </Feature>
+                <Feature
+                  isActive={
+                    features.find((feature) => feature.name === 'EXPORT_IOS')
+                      .isActive
+                  }
+                >
+                  <li>
+                    <RadioButton
+                      id="options__ios"
+                      label="iOS (Swift)"
+                      isChecked={this.state['format'] === 'iOS' ? true : false}
+                      isBlocked={isBlocked('EXPORT_IOS', this.props.planStatus)}
+                      feature="export-to-ios"
+                      group="fileFormat"
+                      onChange={
+                        isBlocked('EXPORT_IOS', this.props.planStatus)
+                          ? () => null
+                          : this.exportHandler
+                      }
+                    />
+                  </li>
+                </Feature>
               </ul>
             </div>
           </div>

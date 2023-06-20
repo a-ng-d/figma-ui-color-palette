@@ -195,6 +195,14 @@ const features: Array<Features> = [
     service: ['EDIT'],
   },
   {
+    name: 'EXPORT_IOS',
+    description: 'Palette export to iOS',
+    isActive: true,
+    isPro: false,
+    type: 'ACTION',
+    service: ['EDIT'],
+  },
+  {
     name: 'SETTINGS',
     description: 'Palette global configuration',
     isActive: true,
