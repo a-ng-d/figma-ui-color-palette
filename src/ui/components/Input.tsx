@@ -44,9 +44,9 @@ export default class Input extends React.Component<Props> {
   Color = () => {
     return (
       <div
-        className={`input ${
-          this.props.isBlocked ? 'input--blocked' : ''
-        } input input--with-icon`}
+        className={`input input--with-icon${
+          this.props.isBlocked ? ' input--blocked' : ''
+        }`}
       >
         <input
           id={this.props.id}
@@ -77,8 +77,8 @@ export default class Input extends React.Component<Props> {
   Number = () => {
     return (
       <div
-        className={`input ${this.props.isBlocked ? 'input--blocked' : ''} ${
-          this.props.icon.type === 'none' ? '' : 'input--with-icon'
+        className={`input${this.props.isBlocked ? ' input--blocked' : ''}${
+          this.props.icon.type === 'none' ? '' : ' input--with-icon'
         }`}
       >
         {this.props.icon.type != 'none' ? (
@@ -115,7 +115,7 @@ export default class Input extends React.Component<Props> {
   Text = () => {
     return (
       <div
-        className={`input ${this.props.isBlocked ? 'input--blocked' : ''} ${
+        className={`input${this.props.isBlocked ? ' input--blocked' : ''}${
           this.props.icon.type === 'none' ? '' : ' input--with-icon'
         }`}
       >
