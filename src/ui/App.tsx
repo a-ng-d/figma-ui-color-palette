@@ -448,8 +448,8 @@ class App extends React.Component {
           this.setState({
             export: {
               format: 'iOS',
-              mimeType: 'text/swift',
-              data: e.data.pluginMessage.data.join(';\n\n'),
+              mimeType: 'text/x-swift',
+              data: `import SwiftUI\n\nextension Color {\n  ${e.data.pluginMessage.data.join('\n  ')}\n}`,
             },
             onGoingStep: 'export previewed',
           })
