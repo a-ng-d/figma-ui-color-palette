@@ -203,7 +203,7 @@ export default class Export extends React.Component<Props> {
                     <RadioButton
                       id="options__swift"
                       label={locals.en.export.swift}
-                      isChecked={this.state['format'] === 'Swift' ? true : false}
+                      isChecked={this.state['format'] === 'SWIFT' ? true : false}
                       isBlocked={isBlocked('EXPORT_SWIFT', this.props.planStatus)}
                       feature="EXPORT_TO_SWIFT"
                       group="fileFormat"
