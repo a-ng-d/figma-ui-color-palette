@@ -203,6 +203,14 @@ const features: Array<Features> = [
     service: ['EDIT'],
   },
   {
+    name: 'EXPORT_XML',
+    description: 'Palette export to XML (Android)',
+    isActive: true,
+    isPro: false,
+    type: 'ACTION',
+    service: ['EDIT'],
+  },
+  {
     name: 'SETTINGS',
     description: 'Palette global configuration',
     isActive: true,
