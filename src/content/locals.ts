@@ -39,7 +39,7 @@ export const locals = {
       json: 'JSON (Tokens)',
       css: 'CSS (Custom Properties)',
       csv: 'CSV (LCH)',
-      ios: 'Swift (Apple OS)',
+      swift: 'Swift (Apple OS)',
     },
     settings: {
       base: {

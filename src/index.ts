@@ -13,7 +13,7 @@ import updateLocalStyles from './bridges/updateLocalStyles'
 import exportJson from './bridges/exportJson'
 import exportCss from './bridges/exportCss'
 import exportCsv from './bridges/exportCsv'
-import exportiOS from './bridges/exportiOS'
+import exportSwift from './bridges/exportSwift'
 import updateSettings from './bridges/updateSettings'
 import getProPlan from './bridges/getProPlan'
 import package_json from './../package.json'
@@ -53,7 +53,7 @@ figma.ui.onmessage = async (msg) => {
       msg.export === 'JSON' ? exportJson(palette) : null
       msg.export === 'CSS' ? exportCss(palette) : null
       msg.export === 'CSV' ? exportCsv(palette) : null
-      msg.export === 'iOS' ? exportiOS(palette) : null
+      msg.export === 'SWIFT' ? exportSwift(palette) : null
     },
     UPDATE_SETTINGS: () => updateSettings(msg, palette),
     GET_PRO_PLAN: async () => await getProPlan(),

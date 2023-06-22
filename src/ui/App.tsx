@@ -444,10 +444,10 @@ class App extends React.Component {
             onGoingStep: 'export previewed',
           })
         
-        const exportPaletteToiOS = () =>
+        const exportPaletteToSwift = () =>
           this.setState({
             export: {
-              format: 'iOS',
+              format: 'SWIFT',
               mimeType: 'text/x-swift',
               data: `import SwiftUI\n\nextension Color {\n  ${e.data.pluginMessage.data.join('\n  ')}\n}`,
             },
@@ -470,7 +470,7 @@ class App extends React.Component {
           EXPORT_PALETTE_JSON: () => exportPaletteToJson(),
           EXPORT_PALETTE_CSS: () => exportPaletteToCss(),
           EXPORT_PALETTE_CSV: () => exportPaletteToCsv(),
-          EXPORT_PALETTE_IOS: () => exportPaletteToiOS(),
+          EXPORT_PALETTE_SWIFT: () => exportPaletteToSwift(),
           GET_PRO_PLAN: () => getProPlan(),
         }
 

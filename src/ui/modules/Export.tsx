@@ -76,12 +76,12 @@ export default class Export extends React.Component<Props> {
           '*'
         )
       },
-      EXPORT_TO_IOS: () => {
+      EXPORT_TO_SWIFT: () => {
         this.setState({
-          format: 'iOS',
+          format: 'SWIFT',
         })
         parent.postMessage(
-          { pluginMessage: { type: 'EXPORT_PALETTE', export: 'iOS' } },
+          { pluginMessage: { type: 'EXPORT_PALETTE', export: 'SWIFT' } },
           '*'
         )
       }
@@ -195,20 +195,20 @@ export default class Export extends React.Component<Props> {
                 </Feature>
                 <Feature
                   isActive={
-                    features.find((feature) => feature.name === 'EXPORT_IOS')
+                    features.find((feature) => feature.name === 'EXPORT_SWIFT')
                       .isActive
                   }
                 >
                   <li>
                     <RadioButton
-                      id="options__ios"
-                      label={locals.en.export.ios}
-                      isChecked={this.state['format'] === 'iOS' ? true : false}
-                      isBlocked={isBlocked('EXPORT_IOS', this.props.planStatus)}
-                      feature="EXPORT_TO_IOS"
+                      id="options__swift"
+                      label={locals.en.export.swift}
+                      isChecked={this.state['format'] === 'Swift' ? true : false}
+                      isBlocked={isBlocked('EXPORT_SWIFT', this.props.planStatus)}
+                      feature="EXPORT_TO_SWIFT"
                       group="fileFormat"
                       onChange={
-                        isBlocked('EXPORT_IOS', this.props.planStatus)
+                        isBlocked('EXPORT_SWIFT', this.props.planStatus)
                           ? () => null
                           : this.exportHandler
                       }
