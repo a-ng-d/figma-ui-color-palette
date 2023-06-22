@@ -12,6 +12,7 @@ import Onboarding from './services/Onboarding'
 import CreatePalette from './services/CreatePalette'
 import EditPalette from './services/EditPalette'
 import Highlight from './modules/Highlight'
+import Dialog from './modules/Dialog'
 import package_json from './../../package.json'
 import { palette, presets } from '../utils/palettePackage'
 import features from '../utils/features'
@@ -19,7 +20,6 @@ import { v4 as uuidv4 } from 'uuid'
 import 'figma-plugin-ds/dist/figma-plugin-ds.css'
 import './stylesheets/app.css'
 import './stylesheets/components.css'
-import Dialog from './modules/Dialog'
 
 let isPaletteSelected = false
 const container = document.getElementById('react-page'),

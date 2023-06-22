@@ -1,9 +1,9 @@
 import * as React from 'react'
 import Feature from '../components/Feature'
 import Button from '../components/Button'
-import features from '../../utils/features'
 import Dropdown from '../components/Dropdown'
 import FormItem from '../components/FormItem'
+import features from '../../utils/features'
 import isBlocked from '../../utils/isBlocked'
 import { locals } from '../../content/locals'
 
