@@ -91,6 +91,12 @@ export const locals = {
       pro: 'Pro plan',
       free: 'Free plan',
     },
+    properties: {
+      base: 'Base',
+      wcag: 'WCAG scores',
+      apca: 'APCA scores',
+      fontSize: 'Minimum font sizes',
+    },
     info: {
       createdlocalStyle: 'local color style has been created',
       createdlocalStyles: 'local color styles have been created',
@@ -103,7 +109,7 @@ export const locals = {
       updateLocalStyles:
         'No color has been updated because the UI Color Palette has not been edited',
       emptySourceColors:
-        'There is not any source color. Add it manually in the Colors section'
+        'There is not any source color. Add it manually in the Colors section.'
     },
     error: {
       corruption:
