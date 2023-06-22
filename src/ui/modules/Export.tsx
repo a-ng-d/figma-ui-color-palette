@@ -215,6 +215,28 @@ export default class Export extends React.Component<Props> {
                     />
                   </li>
                 </Feature>
+                <Feature
+                  isActive={
+                    features.find((feature) => feature.name === 'EXPORT_XML')
+                      .isActive
+                  }
+                >
+                  <li>
+                    <RadioButton
+                      id="options__xml"
+                      label={locals.en.export.swift}
+                      isChecked={this.state['format'] === 'XML' ? true : false}
+                      isBlocked={isBlocked('EXPORT_XML', this.props.planStatus)}
+                      feature="EXPORT_TO_XML"
+                      group="fileFormat"
+                      onChange={
+                        isBlocked('EXPORT_XML', this.props.planStatus)
+                          ? () => null
+                          : this.exportHandler
+                      }
+                    />
+                  </li>
+                </Feature>
               </ul>
             </div>
           </div>
