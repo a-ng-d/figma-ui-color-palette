@@ -84,6 +84,15 @@ export default class Export extends React.Component<Props> {
           { pluginMessage: { type: 'EXPORT_PALETTE', export: 'SWIFT' } },
           '*'
         )
+      },
+      EXPORT_TO_XML: () => {
+        this.setState({
+          format: 'XML',
+        })
+        parent.postMessage(
+          { pluginMessage: { type: 'EXPORT_PALETTE', export: 'XML' } },
+          '*'
+        )
       }
     }
 
