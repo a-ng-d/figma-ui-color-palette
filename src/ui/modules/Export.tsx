@@ -233,7 +233,7 @@ export default class Export extends React.Component<Props> {
                   <li>
                     <RadioButton
                       id="options__xml"
-                      label={locals.en.export.swift}
+                      label={locals.en.export.xml}
                       isChecked={this.state['format'] === 'XML' ? true : false}
                       isBlocked={isBlocked('EXPORT_XML', this.props.planStatus)}
                       feature="EXPORT_TO_XML"
