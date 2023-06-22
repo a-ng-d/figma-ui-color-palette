@@ -453,6 +453,16 @@ class App extends React.Component {
             },
             onGoingStep: 'export previewed',
           })
+        
+        const exportPaletteToXml = () =>
+          this.setState({
+            export: {
+              format: 'XML',
+              mimeType: 'text/xml',
+              data: `<resources>\n  ${e.data.pluginMessage.data.join('\n  ')}\n</resources>`,
+            },
+            onGoingStep: 'export previewed',
+          })
 
         const getProPlan = () =>
           this.setState({
@@ -471,6 +481,7 @@ class App extends React.Component {
           EXPORT_PALETTE_CSS: () => exportPaletteToCss(),
           EXPORT_PALETTE_CSV: () => exportPaletteToCsv(),
           EXPORT_PALETTE_SWIFT: () => exportPaletteToSwift(),
+          EXPORT_PALETTE_XML: () => exportPaletteToXml(),
           GET_PRO_PLAN: () => getProPlan(),
         }
 
