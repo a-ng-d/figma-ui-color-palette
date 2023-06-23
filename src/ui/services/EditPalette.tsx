@@ -476,7 +476,7 @@ export default class EditPalette extends React.Component<Props> {
       )
       zip
         .generateAsync({ type: 'blob' })
-        .then((content) => FileSaver.saveAs(content, 'colors'))
+        .then((content) => FileSaver.saveAs(content, `${this.props.paletteName.toLowerCase().split(' ').join('_')}-colors`))
         .catch((error) => console.error(error))
     } else {
       const blob = new Blob([this.props.export.data], {
