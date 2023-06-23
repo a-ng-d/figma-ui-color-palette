@@ -67,15 +67,6 @@ export default class Export extends React.Component<Props> {
           '*'
         )
       },
-      EXPORT_TO_CSV: () => {
-        this.setState({
-          format: 'CSV',
-        })
-        parent.postMessage(
-          { pluginMessage: { type: 'EXPORT_PALETTE', export: 'CSV' } },
-          '*'
-        )
-      },
       EXPORT_TO_SWIFT: () => {
         this.setState({
           format: 'SWIFT',
@@ -93,7 +84,16 @@ export default class Export extends React.Component<Props> {
           { pluginMessage: { type: 'EXPORT_PALETTE', export: 'XML' } },
           '*'
         )
-      }
+      },
+      EXPORT_TO_CSV: () => {
+        this.setState({
+          format: 'CSV',
+        })
+        parent.postMessage(
+          { pluginMessage: { type: 'EXPORT_PALETTE', export: 'CSV' } },
+          '*'
+        )
+      },
     }
 
     return actions[(e.target as HTMLElement).dataset.feature]?.()
@@ -182,28 +182,6 @@ export default class Export extends React.Component<Props> {
                 </Feature>
                 <Feature
                   isActive={
-                    features.find((feature) => feature.name === 'EXPORT_CSV')
-                      .isActive
-                  }
-                >
-                  <li>
-                    <RadioButton
-                      id="options__csv"
-                      label={locals.en.export.csv}
-                      isChecked={this.state['format'] === 'CSV' ? true : false}
-                      isBlocked={isBlocked('EXPORT_CSV', this.props.planStatus)}
-                      feature="EXPORT_TO_CSV"
-                      group="fileFormat"
-                      onChange={
-                        isBlocked('EXPORT_CSV', this.props.planStatus)
-                          ? () => null
-                          : this.exportHandler
-                      }
-                    />
-                  </li>
-                </Feature>
-                <Feature
-                  isActive={
                     features.find((feature) => feature.name === 'EXPORT_SWIFT')
                       .isActive
                   }
@@ -240,6 +218,28 @@ export default class Export extends React.Component<Props> {
                       group="fileFormat"
                       onChange={
                         isBlocked('EXPORT_XML', this.props.planStatus)
+                          ? () => null
+                          : this.exportHandler
+                      }
+                    />
+                  </li>
+                </Feature>
+                <Feature
+                  isActive={
+                    features.find((feature) => feature.name === 'EXPORT_CSV')
+                      .isActive
+                  }
+                >
+                  <li>
+                    <RadioButton
+                      id="options__csv"
+                      label={locals.en.export.csv}
+                      isChecked={this.state['format'] === 'CSV' ? true : false}
+                      isBlocked={isBlocked('EXPORT_CSV', this.props.planStatus)}
+                      feature="EXPORT_TO_CSV"
+                      group="fileFormat"
+                      onChange={
+                        isBlocked('EXPORT_CSV', this.props.planStatus)
                           ? () => null
                           : this.exportHandler
                       }

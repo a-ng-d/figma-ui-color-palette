@@ -434,16 +434,6 @@ class App extends React.Component {
             onGoingStep: 'export previewed',
           })
 
-        const exportPaletteToCsv = () =>
-          this.setState({
-            export: {
-              format: 'CSV',
-              mimeType: 'text/csv',
-              data: e.data.pluginMessage.data,
-            },
-            onGoingStep: 'export previewed',
-          })
-        
         const exportPaletteToSwift = () =>
           this.setState({
             export: {
@@ -453,7 +443,7 @@ class App extends React.Component {
             },
             onGoingStep: 'export previewed',
           })
-        
+  
         const exportPaletteToXml = () =>
           this.setState({
             export: {
@@ -464,6 +454,16 @@ class App extends React.Component {
             onGoingStep: 'export previewed',
           })
 
+        const exportPaletteToCsv = () =>
+          this.setState({
+            export: {
+              format: 'CSV',
+              mimeType: 'text/csv',
+              data: e.data.pluginMessage.data,
+            },
+            onGoingStep: 'export previewed',
+          })
+          
         const getProPlan = () =>
           this.setState({
             planStatus: e.data.pluginMessage.data,
@@ -479,9 +479,9 @@ class App extends React.Component {
           PALETTE_SELECTED: () => updateWhilePaletteSelected(),
           EXPORT_PALETTE_JSON: () => exportPaletteToJson(),
           EXPORT_PALETTE_CSS: () => exportPaletteToCss(),
-          EXPORT_PALETTE_CSV: () => exportPaletteToCsv(),
           EXPORT_PALETTE_SWIFT: () => exportPaletteToSwift(),
           EXPORT_PALETTE_XML: () => exportPaletteToXml(),
+          EXPORT_PALETTE_CSV: () => exportPaletteToCsv(),
           GET_PRO_PLAN: () => getProPlan(),
         }
 
