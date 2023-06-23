@@ -1,4 +1,5 @@
 import * as React from 'react'
+import type { ActionsList } from '../../utils/types'
 import Feature from '../components/Feature'
 import RadioButton from './../components/RadioButton'
 import Actions from './Actions'
@@ -47,8 +48,8 @@ export default class Export extends React.Component<Props> {
 
   // Handlers
   exportHandler = (e: React.SyntheticEvent) => {
-    switch ((e.target as HTMLElement).dataset.feature) {
-      case 'export-to-json': {
+    const actions: ActionsList = {
+      EXPORT_TO_JSON: () => {
         this.setState({
           format: 'JSON',
         })
@@ -56,9 +57,8 @@ export default class Export extends React.Component<Props> {
           { pluginMessage: { type: 'EXPORT_PALETTE', export: 'JSON' } },
           '*'
         )
-        break
-      }
-      case 'export-to-css': {
+      },
+      EXPORT_TO_CSS: () => {
         this.setState({
           format: 'CSS',
         })
@@ -66,9 +66,8 @@ export default class Export extends React.Component<Props> {
           { pluginMessage: { type: 'EXPORT_PALETTE', export: 'CSS' } },
           '*'
         )
-        break
-      }
-      case 'export-to-csv': {
+      },
+      EXPORT_TO_CSV: () => {
         this.setState({
           format: 'CSV',
         })
@@ -76,8 +75,19 @@ export default class Export extends React.Component<Props> {
           { pluginMessage: { type: 'EXPORT_PALETTE', export: 'CSV' } },
           '*'
         )
+      },
+      EXPORT_TO_SWIFT: () => {
+        this.setState({
+          format: 'SWIFT',
+        })
+        parent.postMessage(
+          { pluginMessage: { type: 'EXPORT_PALETTE', export: 'SWIFT' } },
+          '*'
+        )
       }
     }
+
+    return actions[(e.target as HTMLElement).dataset.feature]?.()
   }
 
   // Direct actions
@@ -123,13 +133,13 @@ export default class Export extends React.Component<Props> {
                   <li>
                     <RadioButton
                       id="options__json"
-                      label="JSON"
+                      label={locals.en.export.json}
                       isChecked={this.state['format'] === 'JSON' ? true : false}
                       isBlocked={isBlocked(
                         'EXPORT_JSON',
                         this.props.planStatus
                       )}
-                      feature="export-to-json"
+                      feature="EXPORT_TO_JSON"
                       group="fileFormat"
                       onChange={
                         isBlocked('EXPORT_JSON', this.props.planStatus)
@@ -148,10 +158,10 @@ export default class Export extends React.Component<Props> {
                   <li>
                     <RadioButton
                       id="options__css"
-                      label="CSS Custom Properties"
+                      label={locals.en.export.css}
                       isChecked={this.state['format'] === 'CSS' ? true : false}
                       isBlocked={isBlocked('EXPORT_CSS', this.props.planStatus)}
-                      feature="export-to-css"
+                      feature="EXPORT_TO_CSS"
                       group="fileFormat"
                       onChange={
                         isBlocked('EXPORT_CSS', this.props.planStatus)
@@ -170,13 +180,35 @@ export default class Export extends React.Component<Props> {
                   <li>
                     <RadioButton
                       id="options__csv"
-                      label="CSV (LCH)"
+                      label={locals.en.export.csv}
                       isChecked={this.state['format'] === 'CSV' ? true : false}
                       isBlocked={isBlocked('EXPORT_CSV', this.props.planStatus)}
-                      feature="export-to-csv"
+                      feature="EXPORT_TO_CSV"
                       group="fileFormat"
                       onChange={
                         isBlocked('EXPORT_CSV', this.props.planStatus)
+                          ? () => null
+                          : this.exportHandler
+                      }
+                    />
+                  </li>
+                </Feature>
+                <Feature
+                  isActive={
+                    features.find((feature) => feature.name === 'EXPORT_SWIFT')
+                      .isActive
+                  }
+                >
+                  <li>
+                    <RadioButton
+                      id="options__swift"
+                      label={locals.en.export.swift}
+                      isChecked={this.state['format'] === 'SWIFT' ? true : false}
+                      isBlocked={isBlocked('EXPORT_SWIFT', this.props.planStatus)}
+                      feature="EXPORT_TO_SWIFT"
+                      group="fileFormat"
+                      onChange={
+                        isBlocked('EXPORT_SWIFT', this.props.planStatus)
                           ? () => null
                           : this.exportHandler
                       }

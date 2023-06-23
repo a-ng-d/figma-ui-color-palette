@@ -195,6 +195,14 @@ const features: Array<Features> = [
     service: ['EDIT'],
   },
   {
+    name: 'EXPORT_SWIFT',
+    description: 'Palette export to SWIFT (macOS, iOS, iPadOS, watchOS, tvOS, visionOS)',
+    isActive: true,
+    isPro: false,
+    type: 'ACTION',
+    service: ['EDIT'],
+  },
+  {
     name: 'SETTINGS',
     description: 'Palette global configuration',
     isActive: true,

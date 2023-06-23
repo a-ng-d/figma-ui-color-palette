@@ -36,6 +36,10 @@ export const locals = {
     export: {
       format: 'File format',
       preview: 'Preview',
+      json: 'JSON (Tokens)',
+      css: 'CSS (Custom Properties)',
+      csv: 'CSV (LCH)',
+      swift: 'Swift (Apple OS)',
     },
     settings: {
       base: {
@@ -84,7 +88,7 @@ export const locals = {
       createPalette: 'Create a UI Color Palette',
       createLocalStyles: 'Create local styles',
       updateLocalStyles: 'Update the local styles',
-      export: 'Export the palette to',
+      export: 'Export the UI Color Palette to',
     },
     plan: {
       getPro: 'Get pro',

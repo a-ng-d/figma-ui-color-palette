@@ -414,7 +414,7 @@ class App extends React.Component {
           })
         }
 
-        const exportPaletteAsJson = () =>
+        const exportPaletteToJson = () =>
           this.setState({
             export: {
               format: 'JSON',
@@ -424,7 +424,7 @@ class App extends React.Component {
             onGoingStep: 'export previewed',
           })
 
-        const exportPaletteAsCss = () =>
+        const exportPaletteToCss = () =>
           this.setState({
             export: {
               format: 'CSS',
@@ -434,12 +434,22 @@ class App extends React.Component {
             onGoingStep: 'export previewed',
           })
 
-        const exportPaletteAsCsv = () =>
+        const exportPaletteToCsv = () =>
           this.setState({
             export: {
               format: 'CSV',
               mimeType: 'text/csv',
               data: e.data.pluginMessage.data,
+            },
+            onGoingStep: 'export previewed',
+          })
+        
+        const exportPaletteToSwift = () =>
+          this.setState({
+            export: {
+              format: 'SWIFT',
+              mimeType: 'text/swift',
+              data: `import SwiftUI\n\nextension Color {\n  ${e.data.pluginMessage.data.join('\n  ')}\n}`,
             },
             onGoingStep: 'export previewed',
           })
@@ -457,9 +467,10 @@ class App extends React.Component {
           EMPTY_SELECTION: () => updateWhileEmptySelection(),
           COLOR_SELECTED: () => updateWhileColorSelected(),
           PALETTE_SELECTED: () => updateWhilePaletteSelected(),
-          EXPORT_PALETTE_JSON: () => exportPaletteAsJson(),
-          EXPORT_PALETTE_CSS: () => exportPaletteAsCss(),
-          EXPORT_PALETTE_CSV: () => exportPaletteAsCsv(),
+          EXPORT_PALETTE_JSON: () => exportPaletteToJson(),
+          EXPORT_PALETTE_CSS: () => exportPaletteToCss(),
+          EXPORT_PALETTE_CSV: () => exportPaletteToCsv(),
+          EXPORT_PALETTE_SWIFT: () => exportPaletteToSwift(),
           GET_PRO_PLAN: () => getProPlan(),
         }
 
