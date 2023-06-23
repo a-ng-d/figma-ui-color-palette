@@ -84,6 +84,15 @@ export default class Export extends React.Component<Props> {
           { pluginMessage: { type: 'EXPORT_PALETTE', export: 'SWIFT' } },
           '*'
         )
+      },
+      EXPORT_TO_XML: () => {
+        this.setState({
+          format: 'XML',
+        })
+        parent.postMessage(
+          { pluginMessage: { type: 'EXPORT_PALETTE', export: 'XML' } },
+          '*'
+        )
       }
     }
 
@@ -209,6 +218,28 @@ export default class Export extends React.Component<Props> {
                       group="fileFormat"
                       onChange={
                         isBlocked('EXPORT_SWIFT', this.props.planStatus)
+                          ? () => null
+                          : this.exportHandler
+                      }
+                    />
+                  </li>
+                </Feature>
+                <Feature
+                  isActive={
+                    features.find((feature) => feature.name === 'EXPORT_XML')
+                      .isActive
+                  }
+                >
+                  <li>
+                    <RadioButton
+                      id="options__xml"
+                      label={locals.en.export.xml}
+                      isChecked={this.state['format'] === 'XML' ? true : false}
+                      isBlocked={isBlocked('EXPORT_XML', this.props.planStatus)}
+                      feature="EXPORT_TO_XML"
+                      group="fileFormat"
+                      onChange={
+                        isBlocked('EXPORT_XML', this.props.planStatus)
                           ? () => null
                           : this.exportHandler
                       }

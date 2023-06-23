@@ -40,6 +40,7 @@ export const locals = {
       css: 'CSS (Custom Properties)',
       csv: 'CSV (LCH)',
       swift: 'Swift (Apple OS)',
+      xml: 'XML (Android)',
     },
     settings: {
       base: {
