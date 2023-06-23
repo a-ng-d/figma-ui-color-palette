@@ -482,7 +482,7 @@ export default class EditPalette extends React.Component<Props> {
       const blob = new Blob([this.props.export.data], {
         type: this.props.export.mimeType,
       })
-      FileSaver.saveAs(blob, this.props.export.format != 'SWIFT' ? 'colors' : 'colors.swift')
+      FileSaver.saveAs(blob, `${this.props.paletteName.toLowerCase().split(' ').join('_')}-colors${this.props.export.format === 'SWIFT' ? '.swift' : ''}`)
     }
   }
 
