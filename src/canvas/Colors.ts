@@ -3,7 +3,7 @@ import type { PaletteNode, PaletteDataItem } from '../utils/types'
 import Sample from './Sample'
 import Header from './Header'
 import Title from './Title'
-import { locals } from '../content/locals'
+import { locals, lang } from '../content/locals'
 
 export default class Colors {
   parent: PaletteNode
@@ -83,7 +83,7 @@ export default class Colors {
     // insert
     this.nodeEmpty.appendChild(
       new Sample(
-        locals.en.warning.emptySourceColors,
+        locals[lang].warning.emptySourceColors,
         null,
         null,
         [255, 255, 255],
@@ -189,7 +189,7 @@ export default class Colors {
       new Title(
         `${
           this.parent.paletteName === ''
-            ? locals.en.name
+            ? locals[lang].name
             : this.parent.paletteName
         } • ${this.parent.preset.name} • ${
           this.parent.view.includes('PALETTE') ? 'Palette' : 'Sheet'

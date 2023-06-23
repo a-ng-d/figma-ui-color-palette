@@ -18,6 +18,7 @@ interface Props {
   view: string
   planStatus: string
   editorType?: string
+  lang: string
   onChangePreset?: React.ReactEventHandler
   onChangeScale: (e: string) => void
   onAddStop?: React.ReactEventHandler
@@ -35,16 +36,16 @@ export default class Scale extends React.Component<Props> {
     const messages: Array<string> = []
 
     if (this.props.preset.name === 'Custom' && !this.props.hasPreset)
-      messages.push(locals.en.scale.add, locals.en.scale.remove)
+      messages.push(locals[this.props.lang].scale.add, locals[this.props.lang].scale.remove)
 
     if (!this.props.hasPreset)
       messages.push(
-        locals.en.scale.edit,
-        locals.en.scale.nav,
-        locals.en.scale.esc
+        locals[this.props.lang].scale.edit,
+        locals[this.props.lang].scale.nav,
+        locals[this.props.lang].scale.esc
       )
 
-    messages.push(locals.en.scale.shift, locals.en.scale.ctrl)
+    messages.push(locals[this.props.lang].scale.shift, locals[this.props.lang].scale.ctrl)
 
     return messages
   }
@@ -60,25 +61,26 @@ export default class Scale extends React.Component<Props> {
         <Shortcuts
           actions={[
             {
-              label: locals.en.shortcuts.documentation,
+              label: locals[this.props.lang].shortcuts.documentation,
               isLink: true,
               url: 'https://docs.ui-color-palette.com',
               action: null,
             },
             {
-              label: locals.en.shortcuts.feedback,
+              label: locals[this.props.lang].shortcuts.feedback,
               isLink: true,
               url: 'https://uicp.link/feedback',
               action: null,
             },
             {
-              label: locals.en.shortcuts.news,
+              label: locals[this.props.lang].shortcuts.news,
               isLink: false,
               url: '',
               action: this.props.onReopenHighlight,
             },
           ]}
           planStatus={this.props.planStatus}
+          lang={this.props.lang}
         />
       </Feature>
     )
@@ -91,7 +93,7 @@ export default class Scale extends React.Component<Props> {
         <div className="lightness-scale controls__control">
           <div className="section-controls">
             <div className="section-controls__left-part">
-              <div className="section-title">{locals.en.scale.title}</div>
+              <div className="section-title">{locals[this.props.lang].scale.title}</div>
               <Feature
                 isActive={
                   features.find((feature) => feature.name === 'SCALE_PRESETS')
@@ -175,6 +177,7 @@ export default class Scale extends React.Component<Props> {
           context="CREATE"
           view={this.props.view}
           planStatus={this.props.planStatus}
+          lang={this.props.lang}
           onCreatePalette={this.props.onCreatePalette}
           onChangeView={this.props.onChangeView}
         />
@@ -190,7 +193,7 @@ export default class Scale extends React.Component<Props> {
         <div className="lightness-scale controls__control">
           <div className="section-controls">
             <div className="section-controls__left-part">
-              <div className="section-title">{locals.en.scale.title}</div>
+              <div className="section-title">{locals[this.props.lang].scale.title}</div>
               <div className="type">{`(${Object.entries(this.props.scale).length})`}</div>
             </div>
             <div className="section-controls__right-part">
@@ -228,6 +231,7 @@ export default class Scale extends React.Component<Props> {
           view={this.props.view}
           editorType={this.props.editorType}
           planStatus={this.props.planStatus}
+          lang={this.props.lang}
           ononCreateLocalStyles={this.props.ononCreateLocalStyles}
           ononUpdateLocalStyles={this.props.ononUpdateLocalStyles}
           onChangeView={this.props.onChangeView}

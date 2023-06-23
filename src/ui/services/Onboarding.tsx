@@ -8,6 +8,7 @@ import { locals } from '../../content/locals'
 
 interface Props {
   planStatus: string
+  lang: string
   onReopenHighlight: React.MouseEventHandler
 }
 
@@ -20,12 +21,12 @@ export default class Onboarding extends React.Component<Props> {
             <Icon size={48} />
             <Message
               icon="list-tile"
-              messages={[locals.en.onboarding.selectColor]}
+              messages={[locals[this.props.lang].onboarding.selectColor]}
             />
             <div className="type">－ or －</div>
             <Message
               icon="theme"
-              messages={[locals.en.onboarding.selectPalette]}
+              messages={[locals[this.props.lang].onboarding.selectPalette]}
             />
           </div>
         </section>
@@ -37,25 +38,26 @@ export default class Onboarding extends React.Component<Props> {
           <Shortcuts
             actions={[
               {
-                label: locals.en.shortcuts.documentation,
+                label: locals[this.props.lang].shortcuts.documentation,
                 isLink: true,
                 url: 'https://docs.ui-color-palette.com',
                 action: null,
               },
               {
-                label: locals.en.shortcuts.feedback,
+                label: locals[this.props.lang].shortcuts.feedback,
                 isLink: true,
                 url: 'https://uicp.link/feedback',
                 action: null,
               },
               {
-                label: locals.en.shortcuts.news,
+                label: locals[this.props.lang].shortcuts.news,
                 isLink: false,
                 url: '',
                 action: this.props.onReopenHighlight,
               },
             ]}
             planStatus={this.props.planStatus}
+            lang={this.props.lang}
           />
         </Feature>
       </>

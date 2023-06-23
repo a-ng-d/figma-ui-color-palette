@@ -5,7 +5,7 @@ import type {
   ColorConfiguration,
 } from '../utils/types'
 import Colors from '../canvas/Colors'
-import { locals } from '../content/locals'
+import { locals, lang } from '../content/locals'
 
 const updateView = (msg, palette) => {
   palette = figma.currentPage.selection[0]
@@ -13,7 +13,7 @@ const updateView = (msg, palette) => {
   if (palette.children.length == 1) {
     const paletteName: string =
         palette.getPluginData('name') === ''
-          ? locals.en.name
+          ? locals[lang].name
           : palette.getPluginData('name'),
       colors: Array<ColorConfiguration> = JSON.parse(
         palette.getPluginData('colors')
@@ -47,7 +47,7 @@ const updateView = (msg, palette) => {
     palette.name = `${paletteName}﹒${preset.name}﹒${
       msg.data.view.includes('PALETTE') ? 'Palette' : 'Sheet'
     }`
-  } else figma.notify(locals.en.error.corruption)
+  } else figma.notify(locals[lang].error.corruption)
 }
 
 export default updateView

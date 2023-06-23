@@ -20,6 +20,7 @@ interface Props {
   view: string
   editorType: string
   planStatus: string
+  lang: string
   onChangeColor: React.ChangeEventHandler
   onAddColor: React.MouseEventHandler
   onChangeSelection: React.ChangeEventHandler
@@ -44,7 +45,7 @@ export default class Colors extends React.Component<Props> {
         <div className="source-colors controls__control">
           <div className="section-controls">
             <div className="section-controls__left-part">
-              <div className="section-title">{locals.en.colors.title}</div>
+              <div className="section-title">{locals[this.props.lang].colors.title}</div>
               <div className="type">{`(${this.props.colors.length})`}</div>
             </div>
             <div className="section-controls__right-part">
@@ -83,6 +84,7 @@ export default class Colors extends React.Component<Props> {
                     ? this.props.hoveredElement.hasGuideBelow
                     : false
                 }
+                lang={this.props.lang}
                 onChangeColor={this.props.onChangeColor}
                 onChangeSelection={this.props.onChangeSelection}
                 onCancellationSelection={this.props.onChangeSelection}
@@ -98,6 +100,7 @@ export default class Colors extends React.Component<Props> {
           view={this.props.view}
           editorType={this.props.editorType}
           planStatus={this.props.planStatus}
+          lang={this.props.lang}
           ononCreateLocalStyles={this.props.ononCreateLocalStyles}
           ononUpdateLocalStyles={this.props.ononUpdateLocalStyles}
           onChangeView={this.props.onChangeView}
@@ -110,25 +113,26 @@ export default class Colors extends React.Component<Props> {
           <Shortcuts
             actions={[
               {
-                label: locals.en.shortcuts.documentation,
+                label: locals[this.props.lang].shortcuts.documentation,
                 isLink: true,
                 url: 'https://docs.ui-color-palette.com',
                 action: null,
               },
               {
-                label: locals.en.shortcuts.feedback,
+                label: locals[this.props.lang].shortcuts.feedback,
                 isLink: true,
                 url: 'https://uicp.link/feedback',
                 action: null,
               },
               {
-                label: locals.en.shortcuts.news,
+                label: locals[this.props.lang].shortcuts.news,
                 isLink: false,
                 url: '',
                 action: this.props.onReopenHighlight,
               },
             ]}
             planStatus={this.props.planStatus}
+            lang={this.props.lang}
           />
         </Feature>
       </>

@@ -17,6 +17,7 @@ interface Props {
   view: string
   textColorsTheme: TextColorsThemeHexModel
   planStatus: string
+  lang: string
   onReopenHighlight: React.ChangeEventHandler
   onChangePreset: React.ChangeEventHandler
   onCustomPreset: React.ChangeEventHandler
@@ -78,12 +79,12 @@ export default class CreatePalette extends React.Component<Props> {
     }> = []
     if (features.find((feature) => feature.name === 'SCALE').isActive)
       contexts.push({
-        label: locals.en.contexts.scale,
+        label: locals[this.props.lang].contexts.scale,
         id: 'SCALE',
       })
     if (features.find((feature) => feature.name === 'SETTINGS').isActive)
       contexts.push({
-        label: locals.en.contexts.settings,
+        label: locals[this.props.lang].contexts.settings,
         id: 'SETTINGS',
       })
     return contexts
@@ -96,7 +97,7 @@ export default class CreatePalette extends React.Component<Props> {
     }> = []
     if (features.find((feature) => feature.name === 'ABOUT').isActive)
       contexts.push({
-        label: locals.en.contexts.about,
+        label: locals[this.props.lang].contexts.about,
         id: 'ABOUT',
       })
     return contexts
@@ -115,6 +116,7 @@ export default class CreatePalette extends React.Component<Props> {
             preset={this.props.preset}
             view={this.props.view}
             planStatus={this.props.planStatus}
+            lang={this.props.lang}
             onChangePreset={this.presetHandler}
             onChangeScale={() => null}
             onAddStop={this.scaleHandler}
@@ -135,6 +137,7 @@ export default class CreatePalette extends React.Component<Props> {
             context="CREATE"
             view={this.props.view}
             planStatus={this.props.planStatus}
+            lang={this.props.lang}
             onChangeSettings={this.settingsHandler}
             onCreatePalette={this.onCreate}
             onChangeView={this.viewHandler}
@@ -144,7 +147,12 @@ export default class CreatePalette extends React.Component<Props> {
         break
       }
       case 'About': {
-        controls = <About planStatus={this.props.planStatus} />
+        controls = (
+          <About
+            planStatus={this.props.planStatus}
+            lang={this.props.lang}
+          />
+        )
       }
     }
 

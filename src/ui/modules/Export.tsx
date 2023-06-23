@@ -12,6 +12,7 @@ interface Props {
   exportPreview: string
   planStatus: string
   exportType: string
+  lang: string
   onExportPalette: () => void
   onReopenHighlight: React.ChangeEventHandler
 }
@@ -128,7 +129,7 @@ export default class Export extends React.Component<Props> {
           <div>
             <div className="section-controls">
               <div className="section-controls__left-part">
-                <div className="section-title">{locals.en.export.format}</div>
+                <div className="section-title">{locals[this.props.lang].export.format}</div>
               </div>
             </div>
             <div className="export-palette__options">
@@ -142,7 +143,7 @@ export default class Export extends React.Component<Props> {
                   <li>
                     <RadioButton
                       id="options__json"
-                      label={locals.en.export.json}
+                      label={locals[this.props.lang].export.json}
                       isChecked={this.state['format'] === 'JSON' ? true : false}
                       isBlocked={isBlocked(
                         'EXPORT_JSON',
@@ -167,7 +168,7 @@ export default class Export extends React.Component<Props> {
                   <li>
                     <RadioButton
                       id="options__css"
-                      label={locals.en.export.css}
+                      label={locals[this.props.lang].export.css}
                       isChecked={this.state['format'] === 'CSS' ? true : false}
                       isBlocked={isBlocked('EXPORT_CSS', this.props.planStatus)}
                       feature="EXPORT_TO_CSS"
@@ -189,7 +190,7 @@ export default class Export extends React.Component<Props> {
                   <li>
                     <RadioButton
                       id="options__swift"
-                      label={locals.en.export.swift}
+                      label={locals[this.props.lang].export.swift}
                       isChecked={this.state['format'] === 'SWIFT' ? true : false}
                       isBlocked={isBlocked('EXPORT_SWIFT', this.props.planStatus)}
                       feature="EXPORT_TO_SWIFT"
@@ -211,7 +212,7 @@ export default class Export extends React.Component<Props> {
                   <li>
                     <RadioButton
                       id="options__xml"
-                      label={locals.en.export.xml}
+                      label={locals[this.props.lang].export.xml}
                       isChecked={this.state['format'] === 'XML' ? true : false}
                       isBlocked={isBlocked('EXPORT_XML', this.props.planStatus)}
                       feature="EXPORT_TO_XML"
@@ -233,7 +234,7 @@ export default class Export extends React.Component<Props> {
                   <li>
                     <RadioButton
                       id="options__csv"
-                      label={locals.en.export.csv}
+                      label={locals[this.props.lang].export.csv}
                       isChecked={this.state['format'] === 'CSV' ? true : false}
                       isBlocked={isBlocked('EXPORT_CSV', this.props.planStatus)}
                       feature="EXPORT_TO_CSV"
@@ -252,7 +253,7 @@ export default class Export extends React.Component<Props> {
           <div>
             <div className="section-controls">
               <div className="section-controls__left-part">
-                <div className="section-title">{locals.en.export.preview}</div>
+                <div className="section-title">{locals[this.props.lang].export.preview}</div>
               </div>
             </div>
             <div className="export-palette__options">
@@ -269,6 +270,7 @@ export default class Export extends React.Component<Props> {
         <Actions
           context="EXPORT"
           exportType={this.props.exportType}
+          lang={this.props.lang}
           onExportPalette={this.props.onExportPalette}
         />
         <Feature
@@ -279,25 +281,26 @@ export default class Export extends React.Component<Props> {
           <Shortcuts
             actions={[
               {
-                label: locals.en.shortcuts.documentation,
+                label: locals[this.props.lang].shortcuts.documentation,
                 isLink: true,
                 url: 'https://docs.ui-color-palette.com',
                 action: null,
               },
               {
-                label: locals.en.shortcuts.feedback,
+                label: locals[this.props.lang].shortcuts.feedback,
                 isLink: true,
                 url: 'https://uicp.link/feedback',
                 action: null,
               },
               {
-                label: locals.en.shortcuts.news,
+                label: locals[this.props.lang].shortcuts.news,
                 isLink: false,
                 url: '',
                 action: this.props.onReopenHighlight,
               },
             ]}
             planStatus={this.props.planStatus}
+            lang={this.props.lang}
           />
         </Feature>
       </>

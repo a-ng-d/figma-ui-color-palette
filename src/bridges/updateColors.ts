@@ -9,7 +9,7 @@ import {
   currentSelection,
   isSelectionChanged,
 } from './processSelection'
-import { locals } from '../content/locals'
+import { locals, lang } from '../content/locals'
 
 const updateColors = (msg, palette) => {
   palette = isSelectionChanged ? previousSelection[0] : currentSelection[0]
@@ -17,7 +17,7 @@ const updateColors = (msg, palette) => {
   if (palette.children.length == 1) {
     const paletteName: string =
         palette.getPluginData('name') === ''
-          ? locals.en.name
+          ? locals[lang].name
           : palette.getPluginData('name'),
       scale: ScaleConfiguration = JSON.parse(palette.getPluginData('scale')),
       preset: PresetConfiguration = JSON.parse(palette.getPluginData('preset')),
@@ -55,7 +55,7 @@ const updateColors = (msg, palette) => {
     palette.name = `${paletteName}﹒${preset.name}﹒${
       view.includes('PALETTE') ? 'Palette' : 'Sheet'
     }`
-  } else figma.notify(locals.en.error.corruption)
+  } else figma.notify(locals[lang].error.corruption)
 }
 
 export default updateColors

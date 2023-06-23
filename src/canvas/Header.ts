@@ -1,6 +1,6 @@
-import { locals } from '../content/locals'
 import type { PaletteNode } from '../utils/types'
 import Sample from './Sample'
+import { locals, lang } from '../content/locals'
 
 export default class Header {
   parent: PaletteNode
@@ -25,7 +25,7 @@ export default class Header {
     // insert
     this.node.appendChild(
       new Sample(
-        locals.en.colors.title,
+        locals[lang].colors.title,
         null,
         null,
         [255, 255, 255],

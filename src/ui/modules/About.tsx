@@ -8,6 +8,7 @@ import { locals } from '../../content/locals'
 
 interface Props {
   planStatus: string
+  lang: string
 }
 
 export default class About extends React.Component<Props> {
@@ -17,7 +18,7 @@ export default class About extends React.Component<Props> {
         <div>
           <Icon size={32} />
           <div>
-            <p className="type type--xlarge">{locals.en.name}</p>
+            <p className="type type--xlarge">{locals[this.props.lang].name}</p>
             <div className="about__info">
               <p className="type">{`Version ${
                 package_json.version.slice(0, 1) +
@@ -32,12 +33,12 @@ export default class About extends React.Component<Props> {
                 {this.props.planStatus === 'UNPAID' ? (
                   <>
                     <span>﹒</span>
-                    <p className="type">{locals.en.plan.free}</p>
+                    <p className="type">{locals[this.props.lang].plan.free}</p>
                   </>
                 ) : (
                   <>
                     <span>﹒</span>
-                    <p className="type">{locals.en.plan.pro}</p>
+                    <p className="type">{locals[this.props.lang].plan.pro}</p>
                   </>
                 )}
               </Feature>
@@ -77,61 +78,61 @@ export default class About extends React.Component<Props> {
         <div>
           <div>
             <div className="type type--bold">
-              {locals.en.about.getHelp.title}
+              {locals[this.props.lang].about.getHelp.title}
             </div>
             <div className="about__links">
               <Button
                 type="tertiary"
                 isLink={true}
                 url="https://docs.ui-color-palette.com"
-                label={locals.en.about.getHelp.documentation}
+                label={locals[this.props.lang].about.getHelp.documentation}
               />
               <span>﹒</span>
               <Button
                 type="tertiary"
                 isLink={true}
                 url="mailto:hello@ui-color-palette.com"
-                label={locals.en.about.getHelp.email}
+                label={locals[this.props.lang].about.getHelp.email}
               />
             </div>
           </div>
           <div>
             <div className="type type--bold">
-              {locals.en.about.beInvolved.title}
+              {locals[this.props.lang].about.beInvolved.title}
             </div>
             <div className="about__links">
               <Button
                 type="tertiary"
                 isLink={true}
                 url="https://github.com/inVoltag/figma-ui-color-palette/issues/new"
-                label={locals.en.about.beInvolved.issue}
+                label={locals[this.props.lang].about.beInvolved.issue}
               />
               <span>﹒</span>
               <Button
                 type="tertiary"
                 isLink={true}
                 url="https://uicp.link/feedback"
-                label={locals.en.about.beInvolved.feedback}
+                label={locals[this.props.lang].about.beInvolved.feedback}
               />
             </div>
           </div>
           <div>
             <div className="type type--bold">
-              {locals.en.about.giveSupport.title}
+              {locals[this.props.lang].about.giveSupport.title}
             </div>
             <div className="about__links">
               <Button
                 type="tertiary"
                 isLink={true}
                 url="https://www.linkedin.com/in/augrimaud"
-                label={locals.en.about.giveSupport.follow}
+                label={locals[this.props.lang].about.giveSupport.follow}
               />
               <span>﹒</span>
               <Button
                 type="tertiary"
                 isLink={true}
                 url="https://www.buymeacoffee.com/a_ng_d"
-                label={locals.en.about.giveSupport.coffee}
+                label={locals[this.props.lang].about.giveSupport.coffee}
               />
             </div>
           </div>

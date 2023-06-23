@@ -13,6 +13,7 @@ interface Props {
   exportType?: string | null
   editorType?: string
   planStatus?: string
+  lang: string
   onCreatePalette?: React.MouseEventHandler
   ononCreateLocalStyles?: React.MouseEventHandler
   ononUpdateLocalStyles?: React.MouseEventHandler
@@ -38,7 +39,7 @@ export default class Actions extends React.Component<Props> {
           >
             <Button
               type="primary"
-              label={locals.en.actions.createPalette}
+              label={locals[this.props.lang].actions.createPalette}
               feature="CREATE"
               action={this.props.onCreatePalette}
             />
@@ -52,13 +53,13 @@ export default class Actions extends React.Component<Props> {
           >
             <FormItem
               id="change-view"
-              label={locals.en.views.title}
+              label={locals[this.props.lang].views.title}
             >
               <Dropdown
                 id="views"
                 options={[
                   {
-                    label: locals.en.views.detailed,
+                    label: locals[this.props.lang].views.detailed,
                     value: 'PALETTE_WITH_PROPERTIES',
                     position: 0,
                     isActive: features.find(
@@ -71,7 +72,7 @@ export default class Actions extends React.Component<Props> {
                     ),
                   },
                   {
-                    label: locals.en.views.simple,
+                    label: locals[this.props.lang].views.simple,
                     value: 'PALETTE',
                     position: 1,
                     isActive: features.find(
@@ -83,7 +84,7 @@ export default class Actions extends React.Component<Props> {
                     ),
                   },
                   {
-                    label: locals.en.views.sheet,
+                    label: locals[this.props.lang].views.sheet,
                     value: 'SHEET',
                     position: 2,
                     isActive: features.find(
@@ -114,7 +115,7 @@ export default class Actions extends React.Component<Props> {
           >
             <Button
               type="secondary"
-              label={locals.en.actions.updateLocalStyles}
+              label={locals[this.props.lang].actions.updateLocalStyles}
               feature="update"
               action={this.props.ononUpdateLocalStyles}
             />
@@ -127,7 +128,7 @@ export default class Actions extends React.Component<Props> {
           >
             <Button
               type="primary"
-              label={locals.en.actions.createLocalStyles}
+              label={locals[this.props.lang].actions.createLocalStyles}
               feature="CREATE"
               action={this.props.ononCreateLocalStyles}
             />
@@ -141,13 +142,13 @@ export default class Actions extends React.Component<Props> {
           >
             <FormItem
               id="change-view"
-              label={locals.en.views.title}
+              label={locals[this.props.lang].views.title}
             >
               <Dropdown
                 id="views"
                 options={[
                   {
-                    label: locals.en.views.detailed,
+                    label: locals[this.props.lang].views.detailed,
                     value: 'PALETTE_WITH_PROPERTIES',
                     position: 0,
                     isActive: features.find(
@@ -160,7 +161,7 @@ export default class Actions extends React.Component<Props> {
                     ),
                   },
                   {
-                    label: locals.en.views.simple,
+                    label: locals[this.props.lang].views.simple,
                     value: 'PALETTE',
                     position: 1,
                     isActive: features.find(
@@ -172,7 +173,7 @@ export default class Actions extends React.Component<Props> {
                     ),
                   },
                   {
-                    label: locals.en.views.sheet,
+                    label: locals[this.props.lang].views.sheet,
                     value: 'SHEET',
                     position: 2,
                     isActive: features.find(
@@ -197,7 +198,7 @@ export default class Actions extends React.Component<Props> {
         <div className="buttons">
           <Button
             type="primary"
-            label={`${locals.en.actions.export} ${this.props.exportType}`}
+            label={`${locals[this.props.lang].actions.export} ${this.props.exportType}`}
             feature="export"
             action={this.props.onExportPalette}
           >

@@ -1,5 +1,5 @@
 import type { PaletteDataItem } from '../utils/types'
-import { locals } from '../content/locals'
+import { locals, lang } from '../content/locals'
 
 const exportJson = (palette) => {
   palette = figma.currentPage.selection[0]
@@ -35,7 +35,7 @@ const exportJson = (palette) => {
       type: 'EXPORT_PALETTE_JSON',
       data: json,
     })
-  } else figma.notify(locals.en.error.corruption)
+  } else figma.notify(locals[lang].error.corruption)
 }
 
 export default exportJson

@@ -1,5 +1,5 @@
 import { PaletteDataItem } from '../utils/types'
-import { locals } from '../content/locals'
+import { locals, lang } from '../content/locals'
 
 const exportCsv = (palette) => {
   palette = figma.currentPage.selection[0]
@@ -40,9 +40,9 @@ const exportCsv = (palette) => {
     )
     figma.ui.postMessage({
       type: 'EXPORT_PALETTE_CSV',
-      data: paletteCsv.length == 0 ? [{ name: 'empty', csv: [locals.en.warning.emptySourceColors]}] : paletteCsv,
+      data: paletteCsv.length == 0 ? [{ name: 'empty', csv: [locals[lang].warning.emptySourceColors]}] : paletteCsv,
     })
-  } else figma.notify(locals.en.error.corruption)
+  } else figma.notify(locals[lang].error.corruption)
 }
 
 export default exportCsv

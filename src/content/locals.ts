@@ -1,5 +1,7 @@
+export const lang = 'EN'
+
 export const locals = {
-  en: {
+  EN: {
     name: 'UI Color Palette',
     onboarding: {
       selectColor:

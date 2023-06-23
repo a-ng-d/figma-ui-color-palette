@@ -4,7 +4,7 @@ import {
   currentSelection,
   isSelectionChanged,
 } from './processSelection'
-import { locals } from '../content/locals'
+import { locals, lang } from '../content/locals'
 
 const updateSettings = (msg, palette) => {
   palette = isSelectionChanged ? previousSelection[0] : currentSelection[0]
@@ -21,10 +21,10 @@ const updateSettings = (msg, palette) => {
     ;(paletteName =
       palette.getPluginData('name') === '' ||
       palette.getPluginData('name') == undefined
-        ? locals.en.name
+        ? locals[lang].name
         : palette.getPluginData('name')),
       (palette.name = `${
-        msg.data.name === '' ? locals.en.name : msg.data.name
+        msg.data.name === '' ? locals[lang].name : msg.data.name
       }﹒${preset.name}﹒${view.includes('PALETTE') ? 'Palette' : 'Sheet'}`)
     palette.setPluginData(
       'textColorsTheme',
@@ -50,7 +50,7 @@ const updateSettings = (msg, palette) => {
 
     // palette migration
     palette.counterAxisSizingMode = 'AUTO'
-  } else figma.notify(locals.en.error.corruption)
+  } else figma.notify(locals[lang].error.corruption)
 }
 
 export default updateSettings

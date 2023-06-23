@@ -69,6 +69,7 @@ class App extends React.Component {
       editorType: 'figma',
       hasHighlight: false,
       planStatus: 'UNPAID',
+      lang: 'EN',
       hasGetProPlanDialog: false,
       onGoingStep: '',
     }
@@ -505,6 +506,7 @@ class App extends React.Component {
               view={this.state['view']}
               textColorsTheme={this.state['textColorsTheme']}
               planStatus={this.state['planStatus']}
+              lang={this.state['lang']}
               onReopenHighlight={this.highlightHandler('OPEN')}
               onChangePreset={this.presetHandler}
               onCustomPreset={this.customHandler}
@@ -532,6 +534,7 @@ class App extends React.Component {
               export={this.state['export']}
               editorType={this.state['editorType']}
               planStatus={this.state['planStatus']}
+              lang={this.state['lang']}
               onReopenHighlight={this.highlightHandler('OPEN')}
               onChangeScale={this.slideHandler}
               onChangeStop={this.customSlideHandler}
@@ -548,8 +551,9 @@ class App extends React.Component {
         >
           {this.state['service'] === 'None' ? (
             <Onboarding
-              onReopenHighlight={this.highlightHandler('OPEN')}
               planStatus={this.state['planStatus']}
+              lang={this.state['lang']}
+              onReopenHighlight={this.highlightHandler('OPEN')}
             />
           ) : null}
         </Feature>

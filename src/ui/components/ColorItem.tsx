@@ -18,6 +18,7 @@ interface Props {
   selected: boolean
   guideAbove: boolean
   guideBelow: boolean
+  lang: string
   onChangeColor: React.ChangeEventHandler
   onChangeSelection: React.ChangeEventHandler
   onCancellationSelection: React.ChangeEventHandler
@@ -224,7 +225,7 @@ export default class ColorItem extends React.Component<Props> {
             <div className="colors__space">
               <Switch
                 id={'oklch-' + this.props.uuid}
-                label={locals.en.colors.oklch}
+                label={locals[this.props.lang].colors.oklch}
                 isChecked={this.props.oklch}
                 isDisabled={false}
                 feature="OKLCH"

@@ -18,12 +18,12 @@ import exportCsv from './bridges/exportCsv'
 import updateSettings from './bridges/updateSettings'
 import getProPlan from './bridges/getProPlan'
 import package_json from './../package.json'
-import { locals } from './content/locals'
+import { locals, lang } from './content/locals'
 
 figma.showUI(__html__, {
   width: 640,
   height: 320,
-  title: locals.en.name,
+  title: locals[lang].name,
   themeColors: true,
 })
 figma.loadFontAsync({ family: 'Inter', style: 'Regular' })

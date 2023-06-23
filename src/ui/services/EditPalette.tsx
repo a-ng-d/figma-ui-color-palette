@@ -37,6 +37,7 @@ interface Props {
   export: ExportConfiguration
   editorType: string
   planStatus: string
+  lang: string
   onReopenHighlight: React.ChangeEventHandler
   onChangeScale: () => void
   onChangeStop: () => void
@@ -493,22 +494,22 @@ export default class EditPalette extends React.Component<Props> {
     }> = []
     if (features.find((feature) => feature.name === 'SCALE').isActive)
       contexts.push({
-        label: locals.en.contexts.scale,
+        label: locals[this.props.lang].contexts.scale,
         id: 'SCALE',
       })
     if (features.find((feature) => feature.name === 'COLORS').isActive)
       contexts.push({
-        label: locals.en.contexts.colors,
+        label: locals[this.props.lang].contexts.colors,
         id: 'COLORS',
       })
     if (features.find((feature) => feature.name === 'EXPORT').isActive)
       contexts.push({
-        label: locals.en.contexts.export,
+        label: locals[this.props.lang].contexts.export,
         id: 'EXPORT',
       })
     if (features.find((feature) => feature.name === 'SETTINGS').isActive)
       contexts.push({
-        label: locals.en.contexts.settings,
+        label: locals[this.props.lang].contexts.settings,
         id: 'SETTINGS',
       })
     return contexts
@@ -521,7 +522,7 @@ export default class EditPalette extends React.Component<Props> {
     }> = []
     if (features.find((feature) => feature.name === 'ABOUT').isActive)
       contexts.push({
-        label: locals.en.contexts.about,
+        label: locals[this.props.lang].contexts.about,
         id: 'ABOUT',
       })
     return contexts
@@ -541,6 +542,7 @@ export default class EditPalette extends React.Component<Props> {
             view={this.props.view}
             planStatus={this.props.planStatus}
             editorType={this.props.editorType}
+            lang={this.props.lang}
             onChangeScale={this.slideHandler}
             onChangeView={this.viewHandler}
             ononCreateLocalStyles={this.onCreate}
@@ -559,6 +561,7 @@ export default class EditPalette extends React.Component<Props> {
             view={this.props.view}
             planStatus={this.props.planStatus}
             editorType={this.props.editorType}
+            lang={this.props.lang}
             onChangeColor={this.colorHandler}
             onAddColor={this.colorHandler}
             onChangeSelection={this.selectionHandler}
@@ -583,6 +586,7 @@ export default class EditPalette extends React.Component<Props> {
             }
             planStatus={this.props.planStatus}
             exportType={this.props.export.format}
+            lang={this.props.lang}
             onExportPalette={this.onExport}
             onReopenHighlight={this.props.onReopenHighlight}
           />
@@ -600,6 +604,7 @@ export default class EditPalette extends React.Component<Props> {
             isNewAlgorithm={this.props.algorithmVersion == 'v2' ? true : false}
             planStatus={this.props.planStatus}
             editorType={this.props.editorType}
+            lang={this.props.lang}
             onChangeSettings={this.settingsHandler}
             ononCreateLocalStyles={this.onCreate}
             ononUpdateLocalStyles={this.onUpdate}
@@ -610,7 +615,12 @@ export default class EditPalette extends React.Component<Props> {
         break
       }
       case 'ABOUT': {
-        controls = <About planStatus={this.props.planStatus} />
+        controls = (
+          <About
+            planStatus={this.props.planStatus}
+            lang={this.props.lang}
+          />
+        )
       }
     }
     return (

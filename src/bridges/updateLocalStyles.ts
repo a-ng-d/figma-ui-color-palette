@@ -1,6 +1,6 @@
 import chroma from 'chroma-js'
 import type { PaletteDataItem } from '../utils/types'
-import { locals } from '../content/locals'
+import { locals, lang } from '../content/locals'
 
 const updateLocalStyles = (palette, i: number) => {
   palette = figma.currentPage.selection[0]
@@ -41,10 +41,10 @@ const updateLocalStyles = (palette, i: number) => {
       }
     )
 
-    if (i > 1) figma.notify(`${i} ${locals.en.info.updatedlocalStyles}`)
-    else if (i == 1) figma.notify(`${i} ${locals.en.info.updatedlocalStyle}`)
-    else figma.notify(locals.en.warning.updateLocalStyles)
-  } else figma.notify(locals.en.error.corruption)
+    if (i > 1) figma.notify(`${i} ${locals[lang].info.updatedlocalStyles}`)
+    else if (i == 1) figma.notify(`${i} ${locals[lang].info.updatedlocalStyle}`)
+    else figma.notify(locals[lang].warning.updateLocalStyles)
+  } else figma.notify(locals[lang].error.corruption)
 }
 
 export default updateLocalStyles

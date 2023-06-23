@@ -8,6 +8,7 @@ import { locals } from '../../content/locals'
 interface Props {
   actions: Array<Shortcut>
   planStatus: string
+  lang: string
 }
 
 export default class Shortcuts extends React.Component<Props> {
@@ -31,7 +32,7 @@ export default class Shortcuts extends React.Component<Props> {
                 onMouseDown={this.onGetProPlan}
               >
                 <div className="icon icon--lock-off"></div>
-                <div className="type">{locals.en.plan.getPro}</div>
+                <div className="type">{locals[this.props.lang].plan.getPro}</div>
               </button>
             ) : null}
           </Feature>

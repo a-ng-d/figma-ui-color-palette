@@ -2,7 +2,7 @@ import type { TextColorsThemeHexModel } from '../utils/types'
 import chroma from 'chroma-js'
 import { APCAcontrast, sRGBtoY, fontLookupAPCA } from 'apca-w3'
 import Tag from './Tag'
-import { locals } from '../content/locals'
+import { locals, lang } from '../content/locals'
 
 export default class Properties {
   name: string
@@ -189,7 +189,7 @@ export default class Properties {
 
     // insert
     this.nodeDetailedBaseProps.appendChild(
-      new Tag('_title', locals.en.properties.base, 10).makeNodeTag()
+      new Tag('_title', locals[lang].properties.base, 10).makeNodeTag()
     )
     this.nodeDetailedBaseProps.appendChild(
       new Tag('_hex', this.hex.toUpperCase()).makeNodeTag()
@@ -219,7 +219,7 @@ export default class Properties {
 
     // insert
     this.nodeDetailedWCAGScoresProps.appendChild(
-      new Tag('_title', locals.en.properties.wcag, 10).makeNodeTag()
+      new Tag('_title', locals[lang].properties.wcag, 10).makeNodeTag()
     )
     this.nodeDetailedWCAGScoresProps.appendChild(
       new Tag(
@@ -255,7 +255,7 @@ export default class Properties {
 
     // insert
     this.nodeDetailedAPCAScoresProps.appendChild(
-      new Tag('_title', locals.en.properties.apca, 10).makeNodeTag()
+      new Tag('_title', locals[lang].properties.apca, 10).makeNodeTag()
     )
     this.nodeDetailedAPCAScoresProps.appendChild(
       this.makeNodeColumns(
@@ -264,7 +264,7 @@ export default class Properties {
             '_apca-light',
             `Lc ${this.getAPCAContrast('LIGHT').toFixed(1)}`
           ).makeNodeTag(chroma(this.textColorsTheme.lightColor).gl(), true),
-          new Tag('_minimum-font-sizes', locals.en.properties.fontSize).makeNodeTag(),
+          new Tag('_minimum-font-sizes', locals[lang].properties.fontSize).makeNodeTag(),
           new Tag(
             '_200-light',
             `${minimumLightFontSize[2]}pt (200)`
@@ -295,7 +295,7 @@ export default class Properties {
             '_apca-dark',
             `Lc ${this.getAPCAContrast('DARK').toFixed(1)}`
           ).makeNodeTag(chroma(this.textColorsTheme.darkColor).gl(), true),
-          new Tag('_minimum-font-sizes', locals.en.properties.fontSize).makeNodeTag(),
+          new Tag('_minimum-font-sizes', locals[lang].properties.fontSize).makeNodeTag(),
           new Tag(
             '_200-dark',
             `${minimumDarkFontSize[2]}pt (200)`

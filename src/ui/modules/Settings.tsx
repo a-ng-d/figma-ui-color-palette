@@ -20,6 +20,7 @@ interface Props {
   isNewAlgorithm?: boolean
   planStatus: string
   editorType?: string
+  lang: string
   onChangeSettings: React.ReactEventHandler
   onCreatePalette?: () => void
   ononCreateLocalStyles?: () => void
@@ -35,7 +36,7 @@ export default class Settings extends React.Component<Props> {
       <div className="settings__group">
         <div className="section-controls">
           <div className="section-controls__left-part">
-            <div className="section-title">{locals.en.settings.base.title}</div>
+            <div className="section-title">{locals[this.props.lang].settings.base.title}</div>
           </div>
         </div>
         <Feature
@@ -46,7 +47,7 @@ export default class Settings extends React.Component<Props> {
         >
           <div className="settings__item">
             <FormItem
-              label={locals.en.settings.base.name}
+              label={locals[this.props.lang].settings.base.name}
               id="rename-palette"
               isBlocked={isBlocked(
                 'SETTINGS_PALETTE_NAME',
@@ -57,7 +58,7 @@ export default class Settings extends React.Component<Props> {
                 id="rename-palette"
                 type="text"
                 icon={{ type: 'none', value: null }}
-                placeholder={locals.en.settings.base.defaultName}
+                placeholder={locals[this.props.lang].settings.base.defaultName}
                 value={
                   this.props.paletteName != '' ? this.props.paletteName : ''
                 }
@@ -101,7 +102,7 @@ export default class Settings extends React.Component<Props> {
         <div className="section-controls">
           <div className="section-controls__left-part">
             <div className="section-title">
-              {locals.en.settings.contrast.title}
+              {locals[this.props.lang].settings.contrast.title}
             </div>
           </div>
         </div>
@@ -114,7 +115,7 @@ export default class Settings extends React.Component<Props> {
         >
           <div className="settings__item">
             <FormItem
-              label={locals.en.settings.contrast.textLightColor}
+              label={locals[this.props.lang].settings.contrast.textLightColor}
               id="change-text-light-color"
               isBlocked={isBlocked(
                 'SETTINGS_TEXT_COLORS_THEME',
@@ -149,7 +150,7 @@ export default class Settings extends React.Component<Props> {
               />
             </FormItem>
             <FormItem
-              label={locals.en.settings.contrast.textDarkColor}
+              label={locals[this.props.lang].settings.contrast.textDarkColor}
               id="change-text-dark-color"
               isBlocked={isBlocked(
                 'SETTINGS_TEXT_COLORS_THEME',
@@ -186,7 +187,7 @@ export default class Settings extends React.Component<Props> {
             <Message
               icon="library"
               messages={[
-                locals.en.settings.contrast.textThemeColorsDescription,
+                locals[this.props.lang].settings.contrast.textThemeColorsDescription,
               ]}
               isBlocked={isBlocked(
                 'SETTINGS_NEW_ALGORITHM',
@@ -205,7 +206,7 @@ export default class Settings extends React.Component<Props> {
         <div className="section-controls">
           <div className="section-controls__left-part">
             <div className="section-title">
-              {locals.en.settings.color.title}
+              {locals[this.props.lang].settings.color.title}
             </div>
           </div>
         </div>
@@ -219,7 +220,7 @@ export default class Settings extends React.Component<Props> {
           <div className="settings__item">
             <Switch
               id="update-algorithm"
-              label={locals.en.settings.color.newAlgorithm}
+              label={locals[this.props.lang].settings.color.newAlgorithm}
               isChecked={this.props.isNewAlgorithm}
               isBlocked={isBlocked(
                 'SETTINGS_NEW_ALGORITHM',
@@ -234,7 +235,7 @@ export default class Settings extends React.Component<Props> {
             />
             <Message
               icon="library"
-              messages={[locals.en.settings.color.newAlgorithmDescription]}
+              messages={[locals[this.props.lang].settings.color.newAlgorithmDescription]}
               isBlocked={isBlocked(
                 'SETTINGS_NEW_ALGORITHM',
                 this.props.planStatus
@@ -263,6 +264,7 @@ export default class Settings extends React.Component<Props> {
             context="CREATE"
             view={this.props.view}
             planStatus={this.props.planStatus}
+            lang={this.props.lang}
             onCreatePalette={this.props.onCreatePalette}
             onChangeView={this.props.onChangeView}
           />
@@ -272,6 +274,7 @@ export default class Settings extends React.Component<Props> {
             view={this.props.view}
             editorType={this.props.editorType}
             planStatus={this.props.planStatus}
+            lang={this.props.lang}
             ononCreateLocalStyles={this.props.ononCreateLocalStyles}
             ononUpdateLocalStyles={this.props.ononUpdateLocalStyles}
             onChangeView={this.props.onChangeView}
@@ -285,25 +288,26 @@ export default class Settings extends React.Component<Props> {
           <Shortcuts
             actions={[
               {
-                label: locals.en.shortcuts.documentation,
+                label: locals[this.props.lang].shortcuts.documentation,
                 isLink: true,
                 url: 'https://docs.ui-color-palette.com',
                 action: null,
               },
               {
-                label: locals.en.shortcuts.feedback,
+                label: locals[this.props.lang].shortcuts.feedback,
                 isLink: true,
                 url: 'https://uicp.link/feedback',
                 action: null,
               },
               {
-                label: locals.en.shortcuts.news,
+                label: locals[this.props.lang].shortcuts.news,
                 isLink: false,
                 url: '',
                 action: this.props.onReopenHighlight,
               },
             ]}
             planStatus={this.props.planStatus}
+            lang={this.props.lang}
           />
         </Feature>
       </>

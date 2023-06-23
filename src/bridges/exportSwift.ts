@@ -1,5 +1,5 @@
 import { PaletteDataItem } from '../utils/types'
-import { locals } from '../content/locals'
+import { locals, lang } from '../content/locals'
 
 const exportSwift = (palette) => {
   palette = figma.currentPage.selection[0]
@@ -24,7 +24,7 @@ const exportSwift = (palette) => {
       type: 'EXPORT_PALETTE_SWIFT',
       data: swift,
     })
-  } else figma.notify(locals.en.error.corruption)
+  } else figma.notify(locals[lang].error.corruption)
 }
 
 export default exportSwift
