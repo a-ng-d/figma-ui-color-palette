@@ -25,8 +25,8 @@ interface Props {
   onRemoveStop?: React.ReactEventHandler
   onChangeView: React.ChangeEventHandler
   onCreatePalette?: () => void
-  ononCreateLocalStyles?: () => void
-  ononUpdateLocalStyles?: () => void
+  onCreateLocalStyles?: () => void
+  onUpdateLocalStyles?: () => void
   onReopenHighlight: React.ChangeEventHandler
 }
 
@@ -232,8 +232,8 @@ export default class Scale extends React.Component<Props> {
           editorType={this.props.editorType}
           planStatus={this.props.planStatus}
           lang={this.props.lang}
-          ononCreateLocalStyles={this.props.ononCreateLocalStyles}
-          ononUpdateLocalStyles={this.props.ononUpdateLocalStyles}
+          onCreateLocalStyles={this.props.onCreateLocalStyles}
+          onUpdateLocalStyles={this.props.onUpdateLocalStyles}
           onChangeView={this.props.onChangeView}
         />
         <this.Shortcuts />

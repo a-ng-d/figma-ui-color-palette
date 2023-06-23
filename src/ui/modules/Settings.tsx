@@ -23,8 +23,8 @@ interface Props {
   lang: string
   onChangeSettings: React.ReactEventHandler
   onCreatePalette?: () => void
-  ononCreateLocalStyles?: () => void
-  ononUpdateLocalStyles?: () => void
+  onCreateLocalStyles?: () => void
+  onUpdateLocalStyles?: () => void
   onChangeView: React.ChangeEventHandler
   onReopenHighlight: React.ChangeEventHandler
 }
@@ -275,8 +275,8 @@ export default class Settings extends React.Component<Props> {
             editorType={this.props.editorType}
             planStatus={this.props.planStatus}
             lang={this.props.lang}
-            ononCreateLocalStyles={this.props.ononCreateLocalStyles}
-            ononUpdateLocalStyles={this.props.ononUpdateLocalStyles}
+            onCreateLocalStyles={this.props.onCreateLocalStyles}
+            onUpdateLocalStyles={this.props.onUpdateLocalStyles}
             onChangeView={this.props.onChangeView}
           />
         )}

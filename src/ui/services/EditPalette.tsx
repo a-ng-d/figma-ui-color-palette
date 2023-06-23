@@ -545,8 +545,8 @@ export default class EditPalette extends React.Component<Props> {
             lang={this.props.lang}
             onChangeScale={this.slideHandler}
             onChangeView={this.viewHandler}
-            ononCreateLocalStyles={this.onCreate}
-            ononUpdateLocalStyles={this.onUpdate}
+            onCreateLocalStyles={this.onCreate}
+            onUpdateLocalStyles={this.onUpdate}
             onReopenHighlight={this.props.onReopenHighlight}
           />
         )
@@ -568,8 +568,8 @@ export default class EditPalette extends React.Component<Props> {
             onDragChange={this.dragHandler}
             onDropOutside={this.dropOutsideHandler}
             onChangeOrder={this.orderHandler}
-            ononCreateLocalStyles={this.onCreate}
-            ononUpdateLocalStyles={this.onUpdate}
+            onCreateLocalStyles={this.onCreate}
+            onUpdateLocalStyles={this.onUpdate}
             onChangeView={this.viewHandler}
             onReopenHighlight={this.props.onReopenHighlight}
           />
@@ -606,8 +606,8 @@ export default class EditPalette extends React.Component<Props> {
             editorType={this.props.editorType}
             lang={this.props.lang}
             onChangeSettings={this.settingsHandler}
-            ononCreateLocalStyles={this.onCreate}
-            ononUpdateLocalStyles={this.onUpdate}
+            onCreateLocalStyles={this.onCreate}
+            onUpdateLocalStyles={this.onUpdate}
             onChangeView={this.viewHandler}
             onReopenHighlight={this.props.onReopenHighlight}
           />
