@@ -20,6 +20,11 @@ const exportJson = (palette) => {
               c: Math.floor(shade.lch[1]),
               h: Math.floor(shade.lch[2]),
             },
+            gl: {
+              r: parseFloat(shade.gl[0].toFixed(3)),
+              g: parseFloat(shade.gl[1].toFixed(3)),
+              b: parseFloat(shade.gl[2].toFixed(3)),
+            },
             hex: shade.hex,
             type: 'color',
           }
