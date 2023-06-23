@@ -7,10 +7,9 @@ const exportJson = (palette) => {
   if (palette.children.length == 1) {
     JSON.parse(palette.getPluginData('data')).forEach(
       (color: PaletteDataItem) => {
-        json[color.name] = []
+        json[color.name] = {}
         color.shades.forEach((shade) => {
-          json[color.name].push({
-            name: shade.name,
+          json[color.name][shade.name] = {
             rgb: {
               r: Math.floor(shade.rgb[0]),
               g: Math.floor(shade.rgb[1]),
@@ -23,7 +22,7 @@ const exportJson = (palette) => {
             },
             hex: shade.hex,
             type: 'color',
-          })
+          }
         })
       }
     )
