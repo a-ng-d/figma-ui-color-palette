@@ -11,7 +11,7 @@ const exportCss = (palette) => {
         const rowCss: Array<string> = []
         color.shades.forEach((shade) => {
           rowCss.unshift(
-            `--${color.name.toLowerCase().split(' ').join('-')}-${
+            `--${color.name.toLowerCase().split(' ').join('-').replace(/[@/$^%#&!?,;:+=<>(){}\[\]"«»]/g, '-')}-${
               shade.name
             }: rgb(${Math.floor(shade.rgb[0])}, ${Math.floor(
               shade.rgb[1]
