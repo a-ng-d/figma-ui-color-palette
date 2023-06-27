@@ -64,8 +64,10 @@ export const locals = {
           'The Chroma values are harmonized to ensure consistent lightness across all shades, but this may make the colors look desaturated.',
         colorSpace: 'Color space',
         colorSpaceOptions: {
-          lch: 'LCH',
-          oklch: 'OKLCH'
+          lch: 'LCH (Lightness, Chroma, Hue)',
+          oklch: 'OKLCH (OK Lightness, Chroma, Hue)',
+          lab: 'CIELAB (CIE, Lightness, A axis, B axis',
+          hsl: 'HSL (Hue, Saturation, Lightness)'
         }
       },
     },

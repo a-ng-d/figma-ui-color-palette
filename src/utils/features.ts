@@ -267,6 +267,22 @@ const features: Array<Features> = [
     service: ['CREATE', 'EDIT'],
   },
   {
+    name: 'SETTINGS_COLOR_SPACE_LAB',
+    description: 'CIELAB color space',
+    isActive: true,
+    isPro: false,
+    type: 'ACTION',
+    service: ['CREATE', 'EDIT'],
+  },
+  {
+    name: 'SETTINGS_COLOR_SPACE_HSL',
+    description: 'HSL color space',
+    isActive: true,
+    isPro: false,
+    type: 'ACTION',
+    service: ['CREATE', 'EDIT'],
+  },
+  {
     name: 'ABOUT',
     description: 'Additional informations and useful links',
     isActive: true,
