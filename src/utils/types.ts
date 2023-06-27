@@ -70,6 +70,7 @@ export interface PaletteConfiguration {
   scale: ScaleConfiguration
   min: number
   max: number
+  colorSpace: string
   view: string
   textColorsTheme: TextColorsThemeHexModel
 }

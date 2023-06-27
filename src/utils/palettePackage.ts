@@ -6,6 +6,7 @@ export const palette: PaletteConfiguration = {
   max: null,
   preset: {},
   scale: {},
+  colorSpace: 'LCH',
   view: 'PALETTE_WITH_PROPERTIES',
   textColorsTheme: {
     lightColor: '#FFFFFF',
