@@ -161,6 +161,7 @@ export interface SettingsMessage {
   type: string
   data: {
     name: string
+    colorSpace: string
     textColorsTheme: TextColorsThemeHexModel
     algorithmVersion: string
   }

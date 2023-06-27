@@ -27,6 +27,7 @@ const updateSettings = (msg, palette) => {
       (palette.name = `${
         msg.data.name === '' ? locals[lang].name : msg.data.name
       }﹒${preset.name}﹒${view.includes('PALETTE') ? 'Palette' : 'Sheet'}`)
+    palette.setPluginData('colorSpace', msg.data.colorSpace)
     palette.setPluginData(
       'textColorsTheme',
       JSON.stringify(msg.data.textColorsTheme)

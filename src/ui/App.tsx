@@ -29,6 +29,7 @@ const settingsMessage: SettingsMessage = {
   type: 'UPDATE_SETTINGS',
   data: {
     name: '',
+    colorSpace: '',
     textColorsTheme: {
       lightColor: '',
       darkColor: '',
@@ -274,11 +275,24 @@ class App extends React.Component {
       parent.postMessage({ pluginMessage: settingsMessage }, '*')
     }
 
+    const updateColorSpace = () => {
+      settingsMessage.data.name = this.state['paletteName']
+      settingsMessage.data.colorSpace = e.target.dataset.value
+      settingsMessage.data.textColorsTheme = this.state['textColorsTheme']
+      settingsMessage.data.algorithmVersion = this.state['algorithmVersion']
+      this.setState({
+        colorSpace: settingsMessage.data.colorSpace,
+        onGoingStep: 'settings changed',
+      })
+      parent.postMessage({ pluginMessage: settingsMessage }, '*')
+    }
+
     const actions: ActionsList = {
       RENAME_PALETTE: () => renamePalette(),
       CHANGE_TEXT_LIGHT_COLOR: () => updateTextLightColor(),
       CHANGE_TEXT_DARK_COLOR: () => updateTextDarkColor(),
       UPDATE_ALGORITHM_VERSION: () => updateAlgorythmVersion(),
+      UPDATE_COLOR_SPACE: () => updateColorSpace(),
     }
 
     return actions[e.target.dataset.feature]?.()
