@@ -91,7 +91,6 @@ export default class Settings extends React.Component<Props> {
   }
 
   colorSpace = () => {
-    console.log(this.props.colorSpace)
     return (
       <Feature
         isActive={
