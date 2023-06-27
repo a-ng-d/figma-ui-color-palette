@@ -31,7 +31,7 @@ export default class Colors {
     const
       lch: Array<number> = chroma(sourceColor).lch(),
       newColor: { _rgb: Array<number> } = chroma.lch(
-        lightness * 1,
+        lightness,
         algorithmVersion == 'v2'
           ? Math.sin((lightness / 100) * Math.PI) * lch[1]
           : lch[1],
@@ -110,6 +110,29 @@ export default class Colors {
     return newColor
   }
 
+  getShadeColorFromHsl(
+    sourceColor: Array<number>,
+    lightness: number,
+    hueShifting: number,
+    algorithmVersion: string
+  ) {
+    const
+      hsl: Array<number> = chroma(sourceColor).hsl(),
+      newColor: { _rgb: Array<number> } = chroma.hsl(
+        hsl[0] + hueShifting < 0
+          ? 0
+          : hsl[0] + hueShifting > 360
+          ? 360
+          : hsl[0] + hueShifting,
+        algorithmVersion == 'v2'
+          ? Math.sin((lightness / 100) * Math.PI) * hsl[1]
+          : hsl[1],
+        lightness / 100
+      )
+
+    return newColor
+  }
+
   makeEmptyCase() {
     // base
     this.nodeEmpty = figma.createFrame()
@@ -181,6 +204,13 @@ export default class Colors {
             )
           else if (this.parent.colorSpace === 'LAB')
             newColor = this.getShadeColorFromLab(
+              sourceColor,
+              lightness,
+              color.hueShifting,
+              this.parent.algorithmVersion
+            )
+          else if (this.parent.colorSpace === 'HSL')
+            newColor = this.getShadeColorFromHsl(
               sourceColor,
               lightness,
               color.hueShifting,
@@ -327,6 +357,13 @@ export default class Colors {
             )
           else if (this.parent.colorSpace === 'LAB')
             newColor = this.getShadeColorFromLab(
+              sourceColor,
+              lightness,
+              color.hueShifting,
+              this.parent.algorithmVersion
+            )
+          else if (this.parent.colorSpace === 'HSL')
+            newColor = this.getShadeColorFromHsl(
               sourceColor,
               lightness,
               color.hueShifting,
