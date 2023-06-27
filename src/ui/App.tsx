@@ -229,7 +229,8 @@ class App extends React.Component {
         onGoingStep: 'settings changed',
       })
 
-      parent.postMessage({ pluginMessage: settingsMessage }, '*')
+      if (this.state['service'] === 'Edit')
+        parent.postMessage({ pluginMessage: settingsMessage }, '*')
     }
 
     const updateAlgorythmVersion = () => {
