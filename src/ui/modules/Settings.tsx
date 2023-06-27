@@ -335,7 +335,7 @@ export default class Settings extends React.Component<Props> {
           </div>
         </div>
         <this.colorSpace />
-        {this.props.context === 'EDIT' ? <this.newAlgorithm /> : null}
+        {this.props.context === 'LOCAL_STYLES' ? <this.newAlgorithm /> : null}
       </div>
     )
   }
