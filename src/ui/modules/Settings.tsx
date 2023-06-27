@@ -1,10 +1,11 @@
 import * as React from 'react'
 import type { TextColorsThemeHexModel } from '../../utils/types'
+import Feature from '../components/Feature'
 import FormItem from './../components/FormItem'
 import Input from './../components/Input'
 import Switch from '../components/Switch'
 import Message from '../components/Message'
-import Feature from '../components/Feature'
+import Dropdown from '../components/Dropdown'
 import Shortcuts from './Shortcuts'
 import Actions from './Actions'
 import features from '../../utils/features'
@@ -18,6 +19,7 @@ interface Props {
   context: string
   view: string
   isNewAlgorithm?: boolean
+  colorSpace?: string
   planStatus: string
   editorType?: string
   lang: string
@@ -238,6 +240,62 @@ export default class Settings extends React.Component<Props> {
               messages={[locals[this.props.lang].settings.color.newAlgorithmDescription]}
               isBlocked={isBlocked(
                 'SETTINGS_NEW_ALGORITHM',
+                this.props.planStatus
+              )}
+            />
+          </div>
+        </Feature>
+        <Feature
+          isActive={
+            features.find(
+              (feature) => feature.name === 'SETTINGS_COLOR_SPACE'
+            ).isActive
+          }
+        >
+          <div className="settings__item">
+          <FormItem
+              id="change-color-space"
+              label={locals[this.props.lang].settings.color.colorSpace}
+            >
+              <Dropdown
+                id="color-spaces"
+                options={[
+                  {
+                    label: locals[this.props.lang].settings.color.colorSpaceOptions.lch,
+                    value: 'LCH',
+                    position: 0,
+                    isActive: features.find(
+                      (feature) =>
+                        feature.name === 'SETTINGS_COLOR_SPACE_LCH'
+                    ).isActive,
+                    isBlocked: isBlocked(
+                      'SETTINGS_COLOR_SPACE_LCH',
+                      this.props.planStatus
+                    ),
+                  },
+                  {
+                    label: locals[this.props.lang].settings.color.colorSpaceOptions.oklch,
+                    value: 'OKLCH',
+                    position: 1,
+                    isActive: features.find(
+                      (feature) =>
+                        feature.name === 'SETTINGS_COLOR_SPACE_OKLCH'
+                    ).isActive,
+                    isBlocked: isBlocked(
+                      'SETTINGS_COLOR_SPACE_OKLCH',
+                      this.props.planStatus
+                    ),
+                  },
+                ]}
+                selected={this.props.colorSpace}
+                onChange={this.props.onChangeSettings}
+              />
+            </FormItem>
+            <Message
+              icon="library"
+              messages={[locals[this.props.lang].settings.color.colorSpaceOptionsDescription]}
+              isBlocked={isBlocked(
+                'SETTINGS_COLOR_SPACE',
                 this.props.planStatus
               )}
             />

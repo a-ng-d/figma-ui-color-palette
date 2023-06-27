@@ -62,6 +62,11 @@ export const locals = {
         newAlgorithm: 'Enable the new algorithm for creating color shades',
         newAlgorithmDescription:
           'The Chroma values are harmonized to ensure consistent lightness across all shades, but this may make the colors look desaturated.',
+        colorSpace: 'Color space',
+        colorSpaceOptions: {
+          lch: 'LCH',
+          oklch: 'OKLCH'
+        }
       },
     },
     about: {

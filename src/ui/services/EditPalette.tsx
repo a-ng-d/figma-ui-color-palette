@@ -31,6 +31,7 @@ interface Props {
   preset: PresetConfiguration
   scale: ScaleConfiguration
   colors: Array<ColorConfiguration>
+  colorSpace: string
   view: string
   textColorsTheme: TextColorsThemeHexModel
   algorithmVersion: string
@@ -602,6 +603,7 @@ export default class EditPalette extends React.Component<Props> {
             context="EDIT"
             view={this.props.view}
             isNewAlgorithm={this.props.algorithmVersion == 'v2' ? true : false}
+            colorSpace={this.props.colorSpace}
             planStatus={this.props.planStatus}
             editorType={this.props.editorType}
             lang={this.props.lang}

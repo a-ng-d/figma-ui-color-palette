@@ -503,8 +503,8 @@ class App extends React.Component {
         >
           {this.state['service'] === 'Create' ? (
             <CreatePalette
-              preset={this.state['preset']}
               paletteName={this.state['paletteName']}
+              preset={this.state['preset']}
               view={this.state['view']}
               textColorsTheme={this.state['textColorsTheme']}
               planStatus={this.state['planStatus']}
@@ -530,6 +530,7 @@ class App extends React.Component {
               preset={this.state['preset']}
               scale={this.state['newScale']}
               colors={this.state['newColors']}
+              colorSpace={this.state['colorSpace']}
               view={this.state['view']}
               textColorsTheme={this.state['textColorsTheme']}
               algorithmVersion={this.state['algorithmVersion']}
