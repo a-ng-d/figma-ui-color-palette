@@ -455,7 +455,8 @@ div.form-item label {
 }
 
 div.form-item .input,
-div.form-item .textarea {
+div.form-item .textarea,
+div.form-item .select-menu {
   flex: 4;
 }
 
