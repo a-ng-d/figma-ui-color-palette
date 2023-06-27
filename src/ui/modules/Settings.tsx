@@ -142,14 +142,27 @@ export default class Settings extends React.Component<Props> {
                       feature.name === 'SETTINGS_COLOR_SPACE_LAB'
                   ).isActive,
                   isBlocked: isBlocked(
-                    'SETTINGS_COLOR_SPACE_HSL',
+                    'SETTINGS_COLOR_SPACE_LAB',
+                    this.props.planStatus
+                  ),
+                },
+                {
+                  label: locals[this.props.lang].settings.color.colorSpaceOptions.oklab,
+                  value: 'OKLAB',
+                  position: 3,
+                  isActive: features.find(
+                    (feature) =>
+                      feature.name === 'SETTINGS_COLOR_SPACE_OKLAB'
+                  ).isActive,
+                  isBlocked: isBlocked(
+                    'SETTINGS_COLOR_SPACE_OKLAB',
                     this.props.planStatus
                   ),
                 },
                 {
                   label: locals[this.props.lang].settings.color.colorSpaceOptions.hsl,
                   value: 'HSL',
-                  position: 3,
+                  position: 4,
                   isActive: features.find(
                     (feature) =>
                       feature.name === 'SETTINGS_COLOR_SPACE_HSL'

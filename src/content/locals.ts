@@ -65,8 +65,9 @@ export const locals = {
         colorSpace: 'Color space',
         colorSpaceOptions: {
           lch: 'LCH (Lightness, Chroma, Hue)',
-          oklch: 'OKLCH (OK Lightness, Chroma, Hue)',
-          lab: 'CIELAB (CIE, Lightness, A axis, B axis',
+          oklch: 'OKLCH (OK, Lightness, Chroma, Hue)',
+          lab: 'CIELAB (CIE, Lightness, A axis, B axis)',
+          oklab: 'OKLAB (OK, Lightness, A axis, B axis)',
           hsl: 'HSL (Hue, Saturation, Lightness)'
         }
       },

@@ -275,6 +275,14 @@ const features: Array<Features> = [
     service: ['CREATE', 'EDIT'],
   },
   {
+    name: 'SETTINGS_COLOR_SPACE_OKLAB',
+    description: 'OKLAB color space',
+    isActive: true,
+    isPro: false,
+    type: 'ACTION',
+    service: ['CREATE', 'EDIT'],
+  },
+  {
     name: 'SETTINGS_COLOR_SPACE_HSL',
     description: 'HSL color space',
     isActive: true,

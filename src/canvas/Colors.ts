@@ -88,20 +88,47 @@ export default class Colors {
     
     const
       newLabA: number = chr * Math.cos(h),
+      newLabB: number = chr * Math.sin(h),
+      newColor: { _rgb: Array<number> } = chroma.lab(
+        lightness,
+        algorithmVersion == 'v2'
+          ? Math.sin((lightness / 100) * Math.PI) * -newLabA
+          : -newLabA,
+        algorithmVersion == 'v2'
+          ? Math.sin((lightness / 100) * Math.PI) * -newLabB
+          : -newLabB
+      )
+
+    return newColor
+  }
+
+  getShadeColorFromOklab(
+    sourceColor: Array<number>,
+    lightness: number,
+    hueShifting: number,
+    algorithmVersion: string
+  ) {
+    const
+      labA: number = chroma(sourceColor).get('oklab.a'),
+      labB: number = chroma(sourceColor).get('oklab.b'),
+      chr: number = Math.sqrt(labA ** 2 + labB ** 2)
+    let
+      h: number = Math.atan(labB / labA) + (hueShifting * (Math.PI / 180))
+
+    if (h > Math.PI)
+      h = Math.PI
+    else if (h < -Math.PI)
+      h = Math.PI
+    
+    const
+      newLabA: number = chr * Math.cos(h),
       newLabB: number = chr * Math.sin(h)
 
-    let newColor: { _rgb: Array<number> } = chroma(sourceColor).set(
-      'lab.l',
-      lightness
-    )
-    newColor = chroma(newColor).set(
-      'lab.a',
+    let newColor: { _rgb: Array<number> } = chroma.oklab(
+      lightness / 100,
       algorithmVersion == 'v2'
         ? Math.sin((lightness / 100) * Math.PI) * -newLabA
-        : -newLabA
-    )
-    newColor = chroma(newColor).set(
-      'lab.b',
+        : -newLabA,
       algorithmVersion == 'v2'
         ? Math.sin((lightness / 100) * Math.PI) * -newLabB
         : -newLabB
@@ -204,6 +231,13 @@ export default class Colors {
             )
           else if (this.parent.colorSpace === 'LAB')
             newColor = this.getShadeColorFromLab(
+              sourceColor,
+              lightness,
+              color.hueShifting,
+              this.parent.algorithmVersion
+            )
+          else if (this.parent.colorSpace === 'OKLAB')
+            newColor = this.getShadeColorFromOklab(
               sourceColor,
               lightness,
               color.hueShifting,
@@ -357,6 +391,13 @@ export default class Colors {
             )
           else if (this.parent.colorSpace === 'LAB')
             newColor = this.getShadeColorFromLab(
+              sourceColor,
+              lightness,
+              color.hueShifting,
+              this.parent.algorithmVersion
+            )
+          else if (this.parent.colorSpace === 'OKLAB')
+            newColor = this.getShadeColorFromOklab(
               sourceColor,
               lightness,
               color.hueShifting,
