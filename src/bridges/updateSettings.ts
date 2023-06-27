@@ -10,9 +10,10 @@ const updateSettings = (msg, palette) => {
   palette = isSelectionChanged ? previousSelection[0] : currentSelection[0]
 
   if (palette.children.length == 1) {
-    const colors = JSON.parse(palette.getPluginData('colors')),
-      scale = JSON.parse(palette.getPluginData('scale')),
+    const
       preset = JSON.parse(palette.getPluginData('preset')),
+      scale = JSON.parse(palette.getPluginData('scale')),
+      colors = JSON.parse(palette.getPluginData('colors')),
       view: string = palette.getPluginData('view')
 
     let paletteName: string

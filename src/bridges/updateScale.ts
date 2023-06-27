@@ -15,19 +15,20 @@ const updateScale = (msg, palette) => {
   palette = isSelectionChanged ? previousSelection[0] : currentSelection[0]
 
   if (palette.children.length == 1) {
-    const paletteName: string =
+    const
+      paletteName: string =
         palette.getPluginData('name') === ''
           ? locals[lang].name
           : palette.getPluginData('name'),
+      preset: PresetConfiguration = JSON.parse(palette.getPluginData('preset')),
       colors: Array<ColorConfiguration> = JSON.parse(
         palette.getPluginData('colors')
       ),
       colorSpace: string = palette.getPluginData('colorSpace'),
-      preset: PresetConfiguration = JSON.parse(palette.getPluginData('preset')),
+      view: string = palette.getPluginData('view'),
       textColorsTheme: TextColorsThemeHexModel = JSON.parse(
         palette.getPluginData('textColorsTheme')
       ),
-      view: string = palette.getPluginData('view'),
       algorithmVersion: string = palette.getPluginData('algorithmVersion')
 
     palette.setPluginData('scale', JSON.stringify(msg.data.scale))

@@ -11,22 +11,24 @@ const updateView = (msg, palette) => {
   palette = figma.currentPage.selection[0]
 
   if (palette.children.length == 1) {
-    const paletteName: string =
+    const
+      paletteName: string =
         palette.getPluginData('name') === ''
           ? locals[lang].name
           : palette.getPluginData('name'),
+      preset: PresetConfiguration = JSON.parse(palette.getPluginData('preset')),
+      scale: ScaleConfiguration = JSON.parse(palette.getPluginData('scale')),
       colors: Array<ColorConfiguration> = JSON.parse(
         palette.getPluginData('colors')
       ),
       colorSpace: string = palette.getPluginData('colorSpace'),
-      scale: ScaleConfiguration = JSON.parse(palette.getPluginData('scale')),
-      preset: PresetConfiguration = JSON.parse(palette.getPluginData('preset')),
       textColorsTheme: TextColorsThemeHexModel = JSON.parse(
         palette.getPluginData('textColorsTheme')
       ),
       algorithmVersion: string = palette.getPluginData('algorithmVersion')
 
     palette.setPluginData('view', msg.data.view)
+    
     palette.children[0].remove()
     palette.appendChild(
       new Colors(
