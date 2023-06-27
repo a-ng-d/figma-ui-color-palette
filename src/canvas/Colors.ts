@@ -120,14 +120,14 @@ export default class Colors {
         .forEach((lightness: number) => {
           let newColor: { _rgb: Array<number> }
 
-          if (color.oklch) {
+          if (this.parent.colorSpace === 'OKLCH') {
             newColor = this.getShadeColorFromOklch(
               sourceColor,
               lightness,
               color.hueShifting,
               this.parent.algorithmVersion
             )
-          } else {
+          } else if (this.parent.colorSpace === 'LCH') {
             newColor = this.getShadeColorFromLch(
               sourceColor,
               lightness,
@@ -259,14 +259,14 @@ export default class Colors {
         .forEach((lightness: number) => {
           let newColor: { _rgb: Array<number> }
 
-          if (color.oklch) {
+          if (this.parent.colorSpace === 'OKLCH') {
             newColor = this.getShadeColorFromOklch(
               sourceColor,
               lightness,
               color.hueShifting,
               this.parent.algorithmVersion
             )
-          } else {
+          } else if (this.parent.colorSpace === 'LCH') {
             newColor = this.getShadeColorFromLch(
               sourceColor,
               lightness,
