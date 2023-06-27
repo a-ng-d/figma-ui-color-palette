@@ -280,7 +280,7 @@ export default class Colors {
           const distance: number = chroma.distance(
             chroma(sourceColor).hex(),
             chroma(newColor).hex(),
-            this.parent.colorSpace.toLowerCase()
+            'rgb'
           )
 
           const scaleName: string = Object.keys(this.parent.scale)
