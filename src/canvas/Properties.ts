@@ -366,6 +366,7 @@ export default class Properties {
 
   makeNodeDetailed() {
     // base
+    this.node = figma.createFrame()
     this.node.name = '_properties'
     this.node.fills = []
 
