@@ -110,8 +110,9 @@ export default class Colors {
       paletteDataItem.shades.push({
         name: 'source',
         hex: chroma(sourceColor).hex(),
-        rgb: sourceColor.map(value => Math.floor(value)),
+        rgb: sourceColor,
         gl: chroma(sourceColor).gl(),
+        lch: chroma(sourceColor).lch(),
         oklch: chroma(sourceColor).oklch(),
       })
 
@@ -143,8 +144,9 @@ export default class Colors {
           paletteDataItem.shades.push({
             name: scaleName,
             hex: chroma(newColor).hex(),
-            rgb: newColor._rgb.map(value => Math.floor(value)),
+            rgb: newColor._rgb,
             gl: chroma(newColor).gl(),
+            lch: chroma(newColor).lch(),
             oklch: chroma(newColor).oklch(),
           })
         })
@@ -278,7 +280,7 @@ export default class Colors {
           const distance: number = chroma.distance(
             chroma(sourceColor).hex(),
             chroma(newColor).hex(),
-            'lch'
+            this.parent.colorSpace.toLowerCase()
           )
 
           const scaleName: string = Object.keys(this.parent.scale)
