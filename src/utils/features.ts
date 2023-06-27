@@ -76,8 +76,8 @@ const features: Array<Features> = [
   {
     name: 'VIEWS_SHEET',
     description: 'Detailed color sheet view',
-    isActive: false,
-    isPro: true,
+    isActive: true,
+    isPro: false,
     type: 'ACTION',
     service: ['CREATE', 'EDIT'],
   },
