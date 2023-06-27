@@ -55,6 +55,7 @@ class App extends React.Component {
       preset: presets.material,
       newScale: {},
       newColors: {},
+      colorSpace: 'LCH',
       view: 'PALETTE_WITH_PROPERTIES',
       textColorsTheme: {
         lightColor: '#FFFFFF',
@@ -408,6 +409,7 @@ class App extends React.Component {
             preset: e.data.pluginMessage.data.preset,
             newScale: e.data.pluginMessage.data.scale,
             newColors: putIdsOnColors,
+            colorSpace: e.data.pluginMessage.data.colorSpace,
             view: e.data.pluginMessage.data.view,
             textColorsTheme: e.data.pluginMessage.data.textColorsTheme,
             algorithmVersion: e.data.pluginMessage.data.algorithmVersion,
