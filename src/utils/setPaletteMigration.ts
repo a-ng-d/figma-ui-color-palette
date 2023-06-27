@@ -3,17 +3,17 @@ import { presets } from './palettePackage'
 import Colors from '../canvas/Colors'
 
 const setPaletteMigration = (palette: BaseNode) => {
+  // min-max
   if (palette.getPluginData('min') != '' || palette.getPluginData('max')) {
     palette.setPluginData('min', '')
     palette.setPluginData('max', '')
   }
 
+  // preset
   if (palette.getPluginData('preset') === '')
     palette.setPluginData('preset', JSON.stringify(presets.material))
 
-  if (palette.getPluginData('algorithmVersion') === '')
-    palette.setPluginData('algorithmVersion', 'v1')
-
+  // colors
   if (!palette.getPluginData('colors').includes('oklch'))
     palette.setPluginData(
       'colors',
@@ -25,7 +25,8 @@ const setPaletteMigration = (palette: BaseNode) => {
       'colors',
       setData(palette.getPluginData('colors'), 'hueShifting', 0)
     )
-
+  
+  // view
   if (
     palette.getPluginData('captions') == 'hasCaptions' ||
     palette.getPluginData('properties') == 'hasProperties'
@@ -42,6 +43,10 @@ const setPaletteMigration = (palette: BaseNode) => {
     palette.setPluginData('view', 'PALETTE')
   }
 
+  if (palette.getPluginData('view') === '')
+    palette.setPluginData('view', 'PALETTE')
+
+  // textColorsTheme
   if (palette.getPluginData('textColorsTheme') === '') {
     palette.setPluginData(
       'textColorsTheme',
@@ -52,9 +57,11 @@ const setPaletteMigration = (palette: BaseNode) => {
     )
   }
 
-  if (palette.getPluginData('view') === '')
-    palette.setPluginData('view', 'PALETTE')
+  // algorithm
+  if (palette.getPluginData('algorithmVersion') === '')
+    palette.setPluginData('algorithmVersion', 'v1')
 
+  // data
   if (palette.getPluginData('data') === '')
     new Colors(
       {
