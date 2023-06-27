@@ -59,6 +59,7 @@ export interface PaletteDataItem {
     rgb: Array<number>
     gl: Array<number>
     lch: Array<number>
+    oklch: Array<number>
   }>
 }
 

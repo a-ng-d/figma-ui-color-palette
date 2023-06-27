@@ -112,7 +112,7 @@ export default class Colors {
         hex: chroma(sourceColor).hex(),
         rgb: sourceColor.map(value => Math.floor(value)),
         gl: chroma(sourceColor).gl(),
-        lch: chroma(sourceColor).lch().map(value => Math.floor(value)),
+        oklch: chroma(sourceColor).oklch(),
       })
 
       Object.values(this.parent.scale)
@@ -145,7 +145,7 @@ export default class Colors {
             hex: chroma(newColor).hex(),
             rgb: newColor._rgb.map(value => Math.floor(value)),
             gl: chroma(newColor).gl(),
-            lch: chroma(newColor).lch().map(value => Math.floor(value)),
+            oklch: chroma(newColor).oklch(),
           })
         })
 
