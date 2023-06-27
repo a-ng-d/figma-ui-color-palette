@@ -294,7 +294,7 @@ class App extends React.Component {
         colorSpace: settingsMessage.data.colorSpace,
         onGoingStep: 'settings changed',
       })
-      
+
       parent.postMessage({ pluginMessage: settingsMessage }, '*')
     }
 
@@ -530,6 +530,7 @@ class App extends React.Component {
             <CreatePalette
               paletteName={this.state['paletteName']}
               preset={this.state['preset']}
+              colorSpace={this.state['colorSpace']}
               view={this.state['view']}
               textColorsTheme={this.state['textColorsTheme']}
               planStatus={this.state['planStatus']}

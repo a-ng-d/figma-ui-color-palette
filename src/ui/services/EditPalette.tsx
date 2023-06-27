@@ -597,13 +597,12 @@ export default class EditPalette extends React.Component<Props> {
       case 'SETTINGS': {
         controls = (
           <Settings
-            paletteName={this.props.paletteName}
-            textColorsTheme={this.props.textColorsTheme}
-            settings={['BASE', 'CONTRAST_MANAGEMENT', 'COLOR_MANAGEMENT']}
             context="EDIT"
-            view={this.props.view}
-            isNewAlgorithm={this.props.algorithmVersion == 'v2' ? true : false}
+            paletteName={this.props.paletteName}
             colorSpace={this.props.colorSpace}
+            isNewAlgorithm={this.props.algorithmVersion == 'v2' ? true : false}
+            textColorsTheme={this.props.textColorsTheme}
+            view={this.props.view}
             planStatus={this.props.planStatus}
             editorType={this.props.editorType}
             lang={this.props.lang}
