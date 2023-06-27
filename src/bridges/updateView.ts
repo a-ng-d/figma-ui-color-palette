@@ -18,6 +18,7 @@ const updateView = (msg, palette) => {
       colors: Array<ColorConfiguration> = JSON.parse(
         palette.getPluginData('colors')
       ),
+      colorSpace: string = palette.getPluginData('colorSpace'),
       scale: ScaleConfiguration = JSON.parse(palette.getPluginData('scale')),
       preset: PresetConfiguration = JSON.parse(palette.getPluginData('preset')),
       textColorsTheme: TextColorsThemeHexModel = JSON.parse(
@@ -34,6 +35,7 @@ const updateView = (msg, palette) => {
           preset: preset,
           scale: scale,
           colors: colors,
+          colorSpace: colorSpace,
           view: msg.data.view,
           textColorsTheme: textColorsTheme,
           algorithmVersion: algorithmVersion,

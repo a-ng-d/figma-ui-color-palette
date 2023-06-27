@@ -13,6 +13,7 @@ export default class Palette {
   name: string
   scale: ScaleConfiguration
   colors: Array<ColorConfiguration>
+  colorSpace: string
   preset: PresetConfiguration
   view: string
   textColorsTheme: TextColorsThemeHexModel
@@ -24,6 +25,7 @@ export default class Palette {
     name: string,
     preset: PresetConfiguration,
     scale: ScaleConfiguration,
+    colorSpace: string,
     view: string,
     textColorsTheme: TextColorsThemeHexModel,
     algorithmVersion: string

@@ -40,6 +40,7 @@ const updateSettings = (msg, palette) => {
           preset: preset,
           scale: scale,
           colors: colors,
+          colorSpace: msg.data.colorSpace,
           view: view,
           textColorsTheme: msg.data.textColorsTheme,
           algorithmVersion: msg.data.algorithmVersion,

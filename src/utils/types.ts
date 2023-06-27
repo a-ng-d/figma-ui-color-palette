@@ -45,6 +45,7 @@ export interface PaletteNode {
   preset: PresetConfiguration
   scale: ScaleConfiguration
   colors: Array<ColorConfiguration>
+  colorSpace: string
   view: string
   textColorsTheme: TextColorsThemeHexModel
   algorithmVersion: string
