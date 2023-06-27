@@ -221,6 +221,7 @@ class App extends React.Component {
     const updateColorSpace = () => {
       settingsMessage.data.name = this.state['paletteName']
       settingsMessage.data.colorSpace = e.target.dataset.value
+      palette.colorSpace = e.target.dataset.value
       settingsMessage.data.textColorsTheme = this.state['textColorsTheme']
       settingsMessage.data.algorithmVersion = this.state['algorithmVersion']
 
@@ -366,6 +367,7 @@ class App extends React.Component {
             service: 'None',
             paletteName: '',
             preset: presets.material,
+            colorSpace: 'LCH',
             view: 'PALETTE_WITH_PROPERTIES',
             textColorsTheme: {
               lightColor: '#FFFFFF',
@@ -375,6 +377,7 @@ class App extends React.Component {
           })
           palette.name = ''
           palette.preset = {}
+          palette.colorSpace = 'LCH'
           palette.view = 'PALETTE_WITH_PROPERTIES'
           palette.textColorsTheme = {
             lightColor: '#FFFFFF',
@@ -389,6 +392,7 @@ class App extends React.Component {
               service: 'Create',
               paletteName: '',
               preset: presets.material,
+              colorSpace: 'LCH',
               view: 'PALETTE_WITH_PROPERTIES',
               textColorsTheme: {
                 lightColor: '#FFFFFF',
@@ -398,6 +402,7 @@ class App extends React.Component {
             })
             palette.name = ''
             palette.preset = presets.material
+            palette.colorSpace = 'LCH'
             palette.view = 'PALETTE_WITH_PROPERTIES'
             palette.textColorsTheme = {
               lightColor: '#FFFFFF',
