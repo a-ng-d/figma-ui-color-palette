@@ -51,7 +51,7 @@ class App extends React.Component {
       ),
     }
     this.state = {
-      service: 'None',
+      service: 'NONE',
       paletteName: '',
       preset: presets.material,
       newScale: {},
@@ -212,9 +212,9 @@ class App extends React.Component {
         onGoingStep: 'settings changed',
       })
 
-      if (e._reactName === 'onBlur' && this.state['service'] === 'Edit')
+      if (e._reactName === 'onBlur' && this.state['service'] === 'EDIT')
         parent.postMessage({ pluginMessage: settingsMessage }, '*')
-      else if (e.key === 'Enter' && this.state['service'] === 'Edit')
+      else if (e.key === 'Enter' && this.state['service'] === 'EDIT')
         parent.postMessage({ pluginMessage: settingsMessage }, '*')
     }
 
@@ -230,7 +230,7 @@ class App extends React.Component {
         onGoingStep: 'settings changed',
       })
 
-      if (this.state['service'] === 'Edit')
+      if (this.state['service'] === 'EDIT')
         parent.postMessage({ pluginMessage: settingsMessage }, '*')
     }
 
@@ -267,10 +267,10 @@ class App extends React.Component {
           onGoingStep: 'settings changed',
         })
       }
-      if (e._reactName === 'onBlur' && this.state['service'] === 'Edit') {
+      if (e._reactName === 'onBlur' && this.state['service'] === 'EDIT') {
         this.dispatch.textColorsTheme.on.status = false
         parent.postMessage({ pluginMessage: settingsMessage }, '*')
-      } else if (this.state['service'] === 'Edit')
+      } else if (this.state['service'] === 'EDIT')
         this.dispatch.textColorsTheme.on.status = true
     }
 
@@ -293,10 +293,10 @@ class App extends React.Component {
           onGoingStep: 'settings changed',
         })
       }
-      if (e._reactName === 'onBlur' && this.state['service'] === 'Edit') {
+      if (e._reactName === 'onBlur' && this.state['service'] === 'EDIT') {
         this.dispatch.textColorsTheme.on.status = false
         parent.postMessage({ pluginMessage: settingsMessage }, '*')
-      } else if (this.state['service'] === 'Edit')
+      } else if (this.state['service'] === 'EDIT')
         this.dispatch.textColorsTheme.on.status = true
     }
 
@@ -364,7 +364,7 @@ class App extends React.Component {
 
         const updateWhileEmptySelection = () => {
           this.setState({
-            service: 'None',
+            service: 'NONE',
             paletteName: '',
             preset: presets.material,
             colorSpace: 'LCH',
@@ -389,7 +389,7 @@ class App extends React.Component {
         const updateWhileColorSelected = () => {
           if (isPaletteSelected) {
             this.setState({
-              service: 'Create',
+              service: 'CREATE',
               paletteName: '',
               preset: presets.material,
               colorSpace: 'LCH',
@@ -410,7 +410,7 @@ class App extends React.Component {
             }
           } else
             this.setState({
-              service: 'Create',
+              service: 'CREATE',
               onGoingStep: 'colors selected',
             })
           isPaletteSelected = false
@@ -435,7 +435,7 @@ class App extends React.Component {
             '*'
           )
           this.setState({
-            service: 'Edit',
+            service: 'EDIT',
             paletteName: e.data.pluginMessage.data.name,
             preset: e.data.pluginMessage.data.preset,
             newScale: e.data.pluginMessage.data.scale,
@@ -532,7 +532,7 @@ class App extends React.Component {
             features.find((feature) => feature.name === 'CREATE').isActive
           }
         >
-          {this.state['service'] === 'Create' ? (
+          {this.state['service'] === 'CREATE' ? (
             <CreatePalette
               paletteName={this.state['paletteName']}
               preset={this.state['preset']}
@@ -556,7 +556,7 @@ class App extends React.Component {
             features.find((feature) => feature.name === 'EDIT').isActive
           }
         >
-          {this.state['service'] === 'Edit' ? (
+          {this.state['service'] === 'EDIT' ? (
             <EditPalette
               paletteName={this.state['paletteName']}
               preset={this.state['preset']}
@@ -584,7 +584,7 @@ class App extends React.Component {
             features.find((feature) => feature.name === 'ONBOARDING').isActive
           }
         >
-          {this.state['service'] === 'None' ? (
+          {this.state['service'] === 'NONE' ? (
             <Onboarding
               planStatus={this.state['planStatus']}
               lang={this.state['lang']}
