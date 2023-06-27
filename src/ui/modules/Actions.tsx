@@ -94,6 +94,7 @@ export default class Actions extends React.Component<Props> {
                   },
                 ]}
                 selected={this.props.view}
+                feature="UPDATE_VIEW"
                 onChange={this.props.onChangeView}
               />
             </FormItem>
@@ -183,6 +184,7 @@ export default class Actions extends React.Component<Props> {
                   },
                 ]}
                 selected={this.props.view}
+                feature="UPDATE_VIEW"
                 onChange={this.props.onChangeView}
               />
             </FormItem>

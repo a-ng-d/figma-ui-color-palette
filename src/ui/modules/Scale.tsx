@@ -112,6 +112,7 @@ export default class Scale extends React.Component<Props> {
                     }
                   })}
                   selected={this.props.preset.id}
+                  feature="UPDATE_PRESET"
                   onChange={this.props.onChangePreset}
                 />
               </Feature>

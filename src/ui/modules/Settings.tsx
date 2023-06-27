@@ -288,6 +288,7 @@ export default class Settings extends React.Component<Props> {
                   },
                 ]}
                 selected={this.props.colorSpace}
+                feature="UPDATE_COLOR_SPACE"
                 onChange={this.props.onChangeSettings}
               />
             </FormItem>

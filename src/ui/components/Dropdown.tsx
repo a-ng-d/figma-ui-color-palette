@@ -10,6 +10,7 @@ interface Props {
     isBlocked?: boolean
   }>
   selected: string
+  feature: string
   onChange: React.ChangeEventHandler
 }
 
@@ -103,6 +104,7 @@ export default class Dropdown extends React.Component<Props> {
                   data-value={option.value}
                   data-position={option.position}
                   data-is-blocked={option.isBlocked}
+                  data-feature={this.props.feature}
                   onMouseDown={this.onSelectItem}
                 >
                   <span className="select-menu__item-icon"></span>
