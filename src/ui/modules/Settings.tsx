@@ -348,7 +348,7 @@ export default class Settings extends React.Component<Props> {
           />
         ) : (
           <Actions
-            context="EDIT"
+            context="LOCAL_STYLES"
             view={this.props.view}
             editorType={this.props.editorType}
             planStatus={this.props.planStatus}

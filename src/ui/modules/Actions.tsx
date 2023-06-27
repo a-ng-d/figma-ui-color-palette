@@ -104,7 +104,7 @@ export default class Actions extends React.Component<Props> {
     )
   }
 
-  Edit = () => {
+  LocalStyles = () => {
     return (
       <div className="actions">
         <div className="actions__buttons">
@@ -216,7 +216,7 @@ export default class Actions extends React.Component<Props> {
     return (
       <>
         {this.props.context === 'CREATE' ? <this.Create /> : null}
-        {this.props.context === 'EDIT' ? <this.Edit /> : null}
+        {this.props.context === 'LOCAL_STYLES' ? <this.LocalStyles /> : null}
         {this.props.context === 'EXPORT' ? <this.Export /> : null}
       </>
     )
