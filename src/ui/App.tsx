@@ -203,12 +203,15 @@ class App extends React.Component {
     const renamePalette = () => {
       palette.name = e.target.value
       settingsMessage.data.name = e.target.value
-      settingsMessage.data.algorithmVersion = this.state['algorithmVersion']
+      settingsMessage.data.colorSpace = this.state['colorSpace']
       settingsMessage.data.textColorsTheme = this.state['textColorsTheme']
+      settingsMessage.data.algorithmVersion = this.state['algorithmVersion']
+
       this.setState({
         paletteName: settingsMessage.data.name,
         onGoingStep: 'settings changed',
       })
+
       if (e._reactName === 'onBlur' && this.state['service'] === 'Edit')
         parent.postMessage({ pluginMessage: settingsMessage }, '*')
       else if (e.key === 'Enter' && this.state['service'] === 'Edit')
@@ -221,13 +224,14 @@ class App extends React.Component {
           ? '#' + e.target.value
           : e.target.value
       if (/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/i.test(code)) {
-        palette.textColorsTheme.lightColor = code
         settingsMessage.data.name = this.state['paletteName']
-        settingsMessage.data.algorithmVersion = this.state['algorithmVersion']
-        settingsMessage.data.textColorsTheme.lightColor =
-          palette.textColorsTheme.lightColor
+        settingsMessage.data.colorSpace = this.state['colorSpace']
+        settingsMessage.data.textColorsTheme.lightColor = code
+        palette.textColorsTheme.lightColor = code
         settingsMessage.data.textColorsTheme.darkColor =
           this.state['textColorsTheme'].darkColor
+        settingsMessage.data.algorithmVersion = this.state['algorithmVersion']
+
         this.setState({
           textColorsTheme: settingsMessage.data.textColorsTheme,
           onGoingStep: 'settings changed',
@@ -245,13 +249,15 @@ class App extends React.Component {
         e.target.value.indexOf('#') == -1
           ? '#' + e.target.value
           : e.target.value
-      settingsMessage.data.name = this.state['paletteName']
-      settingsMessage.data.algorithmVersion = this.state['algorithmVersion']
-      settingsMessage.data.textColorsTheme.lightColor =
-        this.state['textColorsTheme'].lightColor
-      settingsMessage.data.textColorsTheme.darkColor = code
       if (/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/i.test(code)) {
+        settingsMessage.data.name = this.state['paletteName']
+        settingsMessage.data.colorSpace = this.state['colorSpace']
+        settingsMessage.data.textColorsTheme.lightColor =
+          this.state['textColorsTheme'].lightColor
+        settingsMessage.data.textColorsTheme.darkColor = code
         palette.textColorsTheme.darkColor = code
+        settingsMessage.data.algorithmVersion = this.state['algorithmVersion']
+
         this.setState({
           textColorsTheme: settingsMessage.data.textColorsTheme,
           onGoingStep: 'settings changed',
@@ -266,12 +272,15 @@ class App extends React.Component {
 
     const updateAlgorythmVersion = () => {
       settingsMessage.data.name = this.state['paletteName']
-      settingsMessage.data.algorithmVersion = !e.target.checked ? 'v1' : 'v2'
+      settingsMessage.data.colorSpace = this.state['colorSpace']
       settingsMessage.data.textColorsTheme = this.state['textColorsTheme']
+      settingsMessage.data.algorithmVersion = !e.target.checked ? 'v1' : 'v2'
+
       this.setState({
         algorithmVersion: settingsMessage.data.algorithmVersion,
         onGoingStep: 'settings changed',
       })
+
       parent.postMessage({ pluginMessage: settingsMessage }, '*')
     }
 
@@ -280,10 +289,12 @@ class App extends React.Component {
       settingsMessage.data.colorSpace = e.target.dataset.value
       settingsMessage.data.textColorsTheme = this.state['textColorsTheme']
       settingsMessage.data.algorithmVersion = this.state['algorithmVersion']
+
       this.setState({
         colorSpace: settingsMessage.data.colorSpace,
         onGoingStep: 'settings changed',
       })
+      
       parent.postMessage({ pluginMessage: settingsMessage }, '*')
     }
 
