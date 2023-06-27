@@ -28,12 +28,13 @@ export default class Colors {
     hueShifting: number,
     algorithmVersion: string
   ) {
-    const lch: Array<number> = chroma(sourceColor).lch(),
+    const
+      lch: Array<number> = chroma(sourceColor).lch(),
       newColor: { _rgb: Array<number> } = chroma.lch(
         lightness * 1,
         algorithmVersion == 'v2'
-          ? Math.sin((lightness / 100) * Math.PI) * chroma(sourceColor).lch()[1]
-          : chroma(sourceColor).lch()[1],
+          ? Math.sin((lightness / 100) * Math.PI) * lch[1]
+          : lch[1],
         lch[2] + hueShifting < 0
           ? 0
           : lch[2] + hueShifting > 360
@@ -50,17 +51,60 @@ export default class Colors {
     hueShifting: number,
     algorithmVersion: string
   ) {
-    const oklch: { _rgb: Array<number> } = chroma(sourceColor).oklch()
-    const newColor: { _rgb: Array<number> } = chroma.oklch(
+    const
+      oklch: { _rgb: Array<number> } = chroma(sourceColor).oklch(),
+      newColor: { _rgb: Array<number> } = chroma.oklch(
       lightness / 100,
       algorithmVersion == 'v2'
-        ? Math.sin((lightness / 100) * Math.PI) * chroma(sourceColor).oklch()[1]
-        : chroma(sourceColor).oklch()[1],
+        ? Math.sin((lightness / 100) * Math.PI) * oklch[1]
+        : oklch[1],
       oklch[2] + hueShifting < 0
         ? 0
         : oklch[2] + hueShifting > 360
         ? 360
         : oklch[2] + hueShifting
+    )
+
+    return newColor
+  }
+
+  getShadeColorFromLab(
+    sourceColor: Array<number>,
+    lightness: number,
+    hueShifting: number,
+    algorithmVersion: string
+  ) {
+    const
+      labA: number = chroma(sourceColor).get('lab.a'),
+      labB: number = chroma(sourceColor).get('lab.b'),
+      chr: number = Math.sqrt(labA ** 2 + labB ** 2)
+    let
+      h: number = Math.atan(labB / labA) + (hueShifting * (Math.PI / 180))
+
+    if (h > Math.PI)
+      h = Math.PI
+    else if (h < -Math.PI)
+      h = Math.PI
+    
+    const
+      newLabA: number = chr * Math.cos(h),
+      newLabB: number = chr * Math.sin(h)
+
+    let newColor: { _rgb: Array<number> } = chroma(sourceColor).set(
+      'lab.l',
+      lightness
+    )
+    newColor = chroma(newColor).set(
+      'lab.a',
+      algorithmVersion == 'v2'
+        ? Math.sin((lightness / 100) * Math.PI) * -newLabA
+        : -newLabA
+    )
+    newColor = chroma(newColor).set(
+      'lab.b',
+      algorithmVersion == 'v2'
+        ? Math.sin((lightness / 100) * Math.PI) * -newLabB
+        : -newLabB
     )
 
     return newColor
@@ -121,21 +165,27 @@ export default class Colors {
         .forEach((lightness: number) => {
           let newColor: { _rgb: Array<number> }
 
-          if (this.parent.colorSpace === 'OKLCH') {
-            newColor = this.getShadeColorFromOklch(
-              sourceColor,
-              lightness,
-              color.hueShifting,
-              this.parent.algorithmVersion
-            )
-          } else if (this.parent.colorSpace === 'LCH') {
+          if (this.parent.colorSpace === 'LCH')
             newColor = this.getShadeColorFromLch(
               sourceColor,
               lightness,
               color.hueShifting,
               this.parent.algorithmVersion
             )
-          }
+          else if (this.parent.colorSpace === 'OKLCH')
+            newColor = this.getShadeColorFromOklch(
+              sourceColor,
+              lightness,
+              color.hueShifting,
+              this.parent.algorithmVersion
+            )
+          else if (this.parent.colorSpace === 'LAB')
+            newColor = this.getShadeColorFromLab(
+              sourceColor,
+              lightness,
+              color.hueShifting,
+              this.parent.algorithmVersion
+            )
 
           const scaleName: string = Object.keys(this.parent.scale)
             .find((key) => this.parent.scale[key] === lightness)
@@ -261,22 +311,28 @@ export default class Colors {
         .forEach((lightness: number) => {
           let newColor: { _rgb: Array<number> }
 
-          if (this.parent.colorSpace === 'OKLCH') {
-            newColor = this.getShadeColorFromOklch(
-              sourceColor,
-              lightness,
-              color.hueShifting,
-              this.parent.algorithmVersion
-            )
-          } else if (this.parent.colorSpace === 'LCH') {
+          if (this.parent.colorSpace === 'LCH')
             newColor = this.getShadeColorFromLch(
               sourceColor,
               lightness,
               color.hueShifting,
               this.parent.algorithmVersion
             )
-          }
-
+          else if (this.parent.colorSpace === 'OKLCH')
+            newColor = this.getShadeColorFromOklch(
+              sourceColor,
+              lightness,
+              color.hueShifting,
+              this.parent.algorithmVersion
+            )
+          else if (this.parent.colorSpace === 'LAB')
+            newColor = this.getShadeColorFromLab(
+              sourceColor,
+              lightness,
+              color.hueShifting,
+              this.parent.algorithmVersion
+            )
+          
           const distance: number = chroma.distance(
             chroma(sourceColor).hex(),
             chroma(newColor).hex(),
