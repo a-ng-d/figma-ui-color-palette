@@ -26,6 +26,9 @@ const setPaletteMigration = (palette: BaseNode) => {
       setData(palette.getPluginData('colors'), 'hueShifting', 0)
     )
   
+  if (palette.getPluginData('colorSpace') === '')
+    palette.setPluginData('colorSpace', 'LCH')
+  
   // view
   if (
     palette.getPluginData('captions') == 'hasCaptions' ||
