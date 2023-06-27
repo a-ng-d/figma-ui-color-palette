@@ -37,6 +37,7 @@ export default class Palette {
     this.preset = preset
     this.scale = scale
     this.colors = []
+    this.colorSpace = colorSpace
     this.view = view
     this.algorithmVersion = algorithmVersion
     this.textColorsTheme = textColorsTheme
@@ -63,13 +64,14 @@ export default class Palette {
     // data
     this.node.setRelaunchData({ edit: '' })
     this.node.setPluginData('name', this.paletteName)
-    this.node.setPluginData('scale', JSON.stringify(this.scale))
     this.node.setPluginData('preset', JSON.stringify(this.preset))
+    this.node.setPluginData('scale', JSON.stringify(this.scale))
+    this.node.setPluginData('colorSpace', this.colorSpace)
+    this.node.setPluginData('view', this.view)
     this.node.setPluginData(
       'textColorsTheme',
       JSON.stringify(this.textColorsTheme)
     )
-    this.node.setPluginData('view', this.view)
     this.node.setPluginData('algorithmVersion', this.algorithmVersion)
 
     // insert
