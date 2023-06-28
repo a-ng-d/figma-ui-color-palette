@@ -149,7 +149,7 @@ export default class ColorItem extends React.Component<Props> {
             onBlur={this.inputHandler}
           />
           <div className="inputs">
-            <div className="label">LCH</div>
+            <div className="label">{locals[this.props.lang].colors.lch}</div>
             <div className="inputs__bar">
               <Input
                 type="number"
@@ -220,23 +220,19 @@ export default class ColorItem extends React.Component<Props> {
                 .isActive
             }
           >
-            <div className="colors__shift">
-              <FormItem
-                id="shift-hue"
-                label={locals[this.props.lang].colors.hueShiting}
-              >
-                <Input
-                  type="number"
-                  icon={{ type: 'icon', value: 'arrow-left-right' }}
-                  value={this.props.shift.toString()}
-                  min="-360"
-                  max="360"
-                  feature="SHIFT_HUE"
-                  onChange={this.inputHandler}
-                  onFocus={this.selectionHandler}
-                  onBlur={this.inputHandler}
-                />
-              </FormItem>
+            <div className="colors__shift inputs">
+              <div className="label">{locals[this.props.lang].colors.hueShifting}</div>
+              <Input
+                type="number"
+                icon={{ type: 'icon', value: 'arrow-left-right' }}
+                value={this.props.shift.toString()}
+                min="-360"
+                max="360"
+                feature="SHIFT_HUE"
+                onChange={this.inputHandler}
+                onFocus={this.selectionHandler}
+                onBlur={this.inputHandler}
+              />
             </div>
           </Feature>
         ) : null}

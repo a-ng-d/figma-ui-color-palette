@@ -460,12 +460,6 @@ div.form-item .select-menu {
   flex: 4;
 }
 
-.colors__item div.form-item .input,
-.colors__item div.form-item .textarea,
-.colors__item div.form-item .select-menu {
-  flex: 2;
-}
-
 div.form-item--blocked {
   pointer-events: none;
 }
@@ -602,7 +596,7 @@ li .colors__buttons {
 }
 
 li .colors__shift {
-  grid-column: 1 / span 27;
+  grid-column: 1 / span 16;
   grid-row: 2 / 2;
 }
 
