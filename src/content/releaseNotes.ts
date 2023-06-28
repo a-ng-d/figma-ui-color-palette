@@ -1,10 +1,20 @@
 import type { ReleaseNote } from '../utils/types'
+import rnv23 from './images/release_note_v23.webp'
 import rnv22 from './images/release_note_v22.webp'
 import rnv21 from './images/release_note_v21.webp'
 import rnv20 from './images/release_note_v20.webp'
 import rnv19 from './images/release_note_v19.webp'
 
 const releaseNotes: Array<ReleaseNote> = [
+  {
+    version: '2.3.0',
+    isMostRecent: true,
+    title: 'UI Color Palette 23 says welcome to Color Spaces',
+    image: rnv23,
+    content:
+      'Color spaces can be managed throughout the UI Color Palette. This allows you to select and switch between a variety of color spaces such as LCH, OKLCH, LAB, OKLAB, and HSL.',
+    learnMore: 'https://uicp.link/whats-new',
+  },
   {
     version: '2.2.0',
     isMostRecent: true,
