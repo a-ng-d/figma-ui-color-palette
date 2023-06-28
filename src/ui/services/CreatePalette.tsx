@@ -12,7 +12,7 @@ import features from '../../utils/features'
 import { locals } from '../../content/locals'
 
 interface Props {
-  paletteName: string
+  name: string
   preset: PresetConfiguration
   colorSpace: string
   view: string
@@ -133,7 +133,7 @@ export default class CreatePalette extends React.Component<Props> {
         controls = (
           <Settings
             context="CREATE"
-            paletteName={this.props.paletteName}
+            name={this.props.name}
             colorSpace={this.props.colorSpace}
             textColorsTheme={this.props.textColorsTheme}
             view={this.props.view}

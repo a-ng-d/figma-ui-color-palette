@@ -52,7 +52,7 @@ class App extends React.Component {
     }
     this.state = {
       service: 'NONE',
-      paletteName: '',
+      name: '',
       preset: presets.material,
       newScale: {},
       newColors: {},
@@ -208,7 +208,7 @@ class App extends React.Component {
       settingsMessage.data.algorithmVersion = this.state['algorithmVersion']
 
       this.setState({
-        paletteName: settingsMessage.data.name,
+        name: settingsMessage.data.name,
         onGoingStep: 'settings changed',
       })
 
@@ -219,7 +219,7 @@ class App extends React.Component {
     }
 
     const updateColorSpace = () => {
-      settingsMessage.data.name = this.state['paletteName']
+      settingsMessage.data.name = this.state['name']
       settingsMessage.data.colorSpace = e.target.dataset.value
       palette.colorSpace = e.target.dataset.value
       settingsMessage.data.textColorsTheme = this.state['textColorsTheme']
@@ -235,7 +235,7 @@ class App extends React.Component {
     }
 
     const updateAlgorythmVersion = () => {
-      settingsMessage.data.name = this.state['paletteName']
+      settingsMessage.data.name = this.state['name']
       settingsMessage.data.colorSpace = this.state['colorSpace']
       settingsMessage.data.textColorsTheme = this.state['textColorsTheme']
       settingsMessage.data.algorithmVersion = !e.target.checked ? 'v1' : 'v2'
@@ -254,7 +254,7 @@ class App extends React.Component {
           ? '#' + e.target.value
           : e.target.value
       if (/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/i.test(code)) {
-        settingsMessage.data.name = this.state['paletteName']
+        settingsMessage.data.name = this.state['name']
         settingsMessage.data.colorSpace = this.state['colorSpace']
         settingsMessage.data.textColorsTheme.lightColor = code
         palette.textColorsTheme.lightColor = code
@@ -280,7 +280,7 @@ class App extends React.Component {
           ? '#' + e.target.value
           : e.target.value
       if (/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/i.test(code)) {
-        settingsMessage.data.name = this.state['paletteName']
+        settingsMessage.data.name = this.state['name']
         settingsMessage.data.colorSpace = this.state['colorSpace']
         settingsMessage.data.textColorsTheme.lightColor =
           this.state['textColorsTheme'].lightColor
@@ -365,7 +365,7 @@ class App extends React.Component {
         const updateWhileEmptySelection = () => {
           this.setState({
             service: 'NONE',
-            paletteName: '',
+            name: '',
             preset: presets.material,
             colorSpace: 'LCH',
             view: 'PALETTE_WITH_PROPERTIES',
@@ -390,7 +390,7 @@ class App extends React.Component {
           if (isPaletteSelected) {
             this.setState({
               service: 'CREATE',
-              paletteName: '',
+              name: '',
               preset: presets.material,
               colorSpace: 'LCH',
               view: 'PALETTE_WITH_PROPERTIES',
@@ -436,7 +436,7 @@ class App extends React.Component {
           )
           this.setState({
             service: 'EDIT',
-            paletteName: e.data.pluginMessage.data.name,
+            name: e.data.pluginMessage.data.name,
             preset: e.data.pluginMessage.data.preset,
             newScale: e.data.pluginMessage.data.scale,
             newColors: putIdsOnColors,
@@ -534,7 +534,7 @@ class App extends React.Component {
         >
           {this.state['service'] === 'CREATE' ? (
             <CreatePalette
-              paletteName={this.state['paletteName']}
+              name={this.state['name']}
               preset={this.state['preset']}
               colorSpace={this.state['colorSpace']}
               view={this.state['view']}
@@ -558,7 +558,7 @@ class App extends React.Component {
         >
           {this.state['service'] === 'EDIT' ? (
             <EditPalette
-              paletteName={this.state['paletteName']}
+              name={this.state['name']}
               preset={this.state['preset']}
               scale={this.state['newScale']}
               colors={this.state['newColors']}

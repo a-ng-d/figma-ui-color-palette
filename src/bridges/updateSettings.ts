@@ -16,10 +16,10 @@ const updateSettings = (msg, palette) => {
       colors = JSON.parse(palette.getPluginData('colors')),
       view: string = palette.getPluginData('view')
 
-    let paletteName: string
+    let name: string
 
     palette.setPluginData('name', msg.data.name)
-    ;(paletteName =
+    ;(name =
       palette.getPluginData('name') === '' ||
       palette.getPluginData('name') == undefined
         ? locals[lang].name
@@ -38,7 +38,7 @@ const updateSettings = (msg, palette) => {
     palette.appendChild(
       new Colors(
         {
-          paletteName: paletteName,
+          name: name,
           preset: preset,
           scale: scale,
           colors: colors,
@@ -53,7 +53,7 @@ const updateSettings = (msg, palette) => {
 
     // palette migration
     palette.counterAxisSizingMode = 'AUTO'
-    palette.name = `${paletteName}﹒${preset.name}﹒${msg.data.colorSpace} ${
+    palette.name = `${name}﹒${preset.name}﹒${msg.data.colorSpace} ${
       view.includes('PALETTE') ? 'Palette' : 'Sheet'
     }`
   } else figma.notify(locals[lang].error.corruption)

@@ -332,9 +332,9 @@ export default class Colors {
     this.node.appendChild(
       new Title(
         `${
-          this.parent.paletteName === ''
+          this.parent.name === ''
             ? locals[lang].name
-            : this.parent.paletteName
+            : this.parent.name
         } • ${this.parent.preset.name} • ${
           this.parent.view.includes('PALETTE') ? 'Palette' : 'Sheet'
         }`,

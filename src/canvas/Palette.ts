@@ -9,8 +9,8 @@ import Colors from './Colors'
 import { locals, lang } from '../content/locals'
 
 export default class Palette {
-  paletteName: string
   name: string
+  frameName: string
   scale: ScaleConfiguration
   colors: Array<ColorConfiguration>
   colorSpace: string
@@ -30,8 +30,8 @@ export default class Palette {
     textColorsTheme: TextColorsThemeHexModel,
     algorithmVersion: string
   ) {
-    this.paletteName = name
-    this.name = `${name}﹒${preset.name}﹒${colorSpace} ${
+    this.name = name
+    this.frameName = `${name === '' ? locals[lang].name : name}﹒${preset.name}﹒${colorSpace} ${
       view.includes('PALETTE') ? 'Palette' : 'Sheet'
     }`
     this.preset = preset
@@ -47,7 +47,7 @@ export default class Palette {
   makeNode() {
     // base
     this.node = figma.createFrame()
-    this.node.name = this.name
+    this.node.name = this.frameName
     this.node.resize(1640, 100)
     this.node.cornerRadius = 16
 
@@ -63,7 +63,7 @@ export default class Palette {
 
     // data
     this.node.setRelaunchData({ edit: '' })
-    this.node.setPluginData('name', this.paletteName)
+    this.node.setPluginData('name', this.name)
     this.node.setPluginData('preset', JSON.stringify(this.preset))
     this.node.setPluginData('scale', JSON.stringify(this.scale))
     this.node.setPluginData('colorSpace', this.colorSpace)
@@ -110,9 +110,5 @@ export default class Palette {
 
     this.node.setPluginData('colors', JSON.stringify(this.colors))
     return this.node
-  }
-
-  changeName(name: string) {
-    this.node.name = name
   }
 }

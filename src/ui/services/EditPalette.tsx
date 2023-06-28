@@ -27,7 +27,7 @@ import { locals } from '../../content/locals'
 import { v4 as uuidv4 } from 'uuid'
 
 interface Props {
-  paletteName: string
+  name: string
   preset: PresetConfiguration
   scale: ScaleConfiguration
   colors: Array<ColorConfiguration>
@@ -468,13 +468,13 @@ export default class EditPalette extends React.Component<Props> {
       )
       zip
         .generateAsync({ type: 'blob' })
-        .then((content) => FileSaver.saveAs(content, `${this.props.paletteName.toLowerCase().split(' ').join('_')}-colors`))
+        .then((content) => FileSaver.saveAs(content, `${this.props.name.toLowerCase().split(' ').join('_')}-colors`))
         .catch((error) => console.error(error))
     } else {
       const blob = new Blob([this.props.export.data], {
         type: this.props.export.mimeType,
       })
-      FileSaver.saveAs(blob, `${this.props.paletteName.toLowerCase().split(' ').join('_')}-colors${this.props.export.format === 'SWIFT' ? '.swift' : ''}`)
+      FileSaver.saveAs(blob, `${this.props.name.toLowerCase().split(' ').join('_')}-colors${this.props.export.format === 'SWIFT' ? '.swift' : ''}`)
     }
   }
 
@@ -588,7 +588,7 @@ export default class EditPalette extends React.Component<Props> {
         controls = (
           <Settings
             context="LOCAL_STYLES"
-            paletteName={this.props.paletteName}
+            name={this.props.name}
             colorSpace={this.props.colorSpace}
             isNewAlgorithm={this.props.algorithmVersion == 'v2' ? true : false}
             textColorsTheme={this.props.textColorsTheme}

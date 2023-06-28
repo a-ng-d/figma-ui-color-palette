@@ -1,5 +1,6 @@
 import type { PaletteNode } from '../utils/types'
 import Tag from './Tag'
+import { lang, locals } from '../content/locals'
 
 export default class Title {
   text: string
@@ -29,7 +30,7 @@ export default class Title {
     this.nodeName.appendChild(
       new Tag(
         '_name',
-        this.parent.paletteName,
+        this.parent.name === '' ? locals[lang].name : this.parent.name,
         20
       ).makeNodeTag()
     )

@@ -5,7 +5,7 @@ const createPalette = (msg, palette) => {
   const scene: SceneNode[] = []
 
   palette = new Palette(
-    msg.data.name === '' ? locals[lang].name : msg.data.name,
+    msg.data.name,
     msg.data.preset,
     msg.data.scale,
     msg.data.colorSpace,

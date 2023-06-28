@@ -14,7 +14,7 @@ import { locals } from '../../content/locals'
 
 interface Props {
   context: string
-  paletteName: string
+  name: string
   textColorsTheme?: TextColorsThemeHexModel
   colorSpace: string
   isNewAlgorithm?: boolean
@@ -55,7 +55,7 @@ export default class Settings extends React.Component<Props> {
               icon={{ type: 'none', value: null }}
               placeholder={locals[this.props.lang].settings.base.defaultName}
               value={
-                this.props.paletteName != '' ? this.props.paletteName : ''
+                this.props.name != '' ? this.props.name : ''
               }
               charactersLimit={64}
               isBlocked={isBlocked(

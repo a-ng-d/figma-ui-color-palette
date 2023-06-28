@@ -41,7 +41,7 @@ export interface Presets {
 
 // Palette
 export interface PaletteNode {
-  paletteName: string
+  name: string
   preset: PresetConfiguration
   scale: ScaleConfiguration
   colors: Array<ColorConfiguration>

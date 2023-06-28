@@ -68,7 +68,7 @@ const setPaletteMigration = (palette: BaseNode) => {
   if (palette.getPluginData('data') === '')
     new Colors(
       {
-        paletteName: palette.getPluginData('name'),
+        name: palette.getPluginData('name'),
         preset: JSON.parse(palette.getPluginData('preset')),
         scale: JSON.parse(palette.getPluginData('scale')),
         colors: JSON.parse(palette.getPluginData('colors')),
@@ -80,7 +80,7 @@ const setPaletteMigration = (palette: BaseNode) => {
       palette as FrameNode
     ).makePaletteData()
 
-  // console.log(palette.getPluginDataKeys())
+  console.log(palette.getPluginData('name'))
 }
 
 export default setPaletteMigration
