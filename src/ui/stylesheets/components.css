@@ -306,7 +306,7 @@ div.icon-button--disabled {
 .select-menu__button:hover .select-menu__caret,
 .select-menu__button:focus .select-menu__caret,
 .select-menu__item--selected .select-menu__item-icon {
-  background: var(--figma-color-icon);
+  background: var(--figma-color-icon-onselected-strong);
 }
 
 .select-menu__menu {
