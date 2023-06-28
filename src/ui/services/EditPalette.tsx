@@ -468,13 +468,13 @@ export default class EditPalette extends React.Component<Props> {
       )
       zip
         .generateAsync({ type: 'blob' })
-        .then((content) => FileSaver.saveAs(content, `${this.props.name.toLowerCase().split(' ').join('_')}-colors`))
+        .then((content) => FileSaver.saveAs(content, `${this.props.name === '' ? locals[this.props.lang].name.toLowerCase().split(' ').join('_') : this.props.name.toLowerCase().split(' ').join('_')}-colors`))
         .catch((error) => console.error(error))
     } else {
       const blob = new Blob([this.props.export.data], {
         type: this.props.export.mimeType,
       })
-      FileSaver.saveAs(blob, `${this.props.name.toLowerCase().split(' ').join('_')}-colors${this.props.export.format === 'SWIFT' ? '.swift' : ''}`)
+      FileSaver.saveAs(blob, `${this.props.name === '' ? locals[this.props.lang].name.toLowerCase().split(' ').join('_') : this.props.name.toLowerCase().split(' ').join('_')}-colors${this.props.export.format === 'SWIFT' ? '.swift' : ''}`)
     }
   }
 
