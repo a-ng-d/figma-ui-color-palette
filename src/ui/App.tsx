@@ -71,7 +71,7 @@ class App extends React.Component {
       editorType: 'figma',
       hasHighlight: false,
       planStatus: 'UNPAID',
-      lang: 'EN',
+      lang: 'en-US',
       hasGetProPlanDialog: false,
       onGoingStep: '',
     }
