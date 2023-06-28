@@ -295,6 +295,11 @@ div.icon-button--disabled {
   opacity: 1;
 }
 
+.select-menu__button:hover .select-menu__caret,
+.select-menu__button:focus .select-menu__caret {
+  background: var(--figma-color-icon);
+}
+
 .select-menu__item-icon {
   mask-image: url('data:image/svg+xml;charset=utf8,%3Csvg fill=%27none%27 height=%2732%27 width=%2732%27 xmlns=%27http://www.w3.org/2000/svg%27%3E%3Cpath clip-rule=%27evenodd%27 d=%27m21.2071 13.7071-6.2071 6.2071-3.7071-3.7071 1.4142-1.4142 2.2929 2.2929 4.7929-4.7929z%27 fill=%27%23000%27 fill-rule=%27evenodd%27/%3E%3C/svg%3E');
   mask-position: center;
@@ -303,8 +308,6 @@ div.icon-button--disabled {
   background: transparent;
 }
 
-.select-menu__button:hover .select-menu__caret,
-.select-menu__button:focus .select-menu__caret,
 .select-menu__item--selected .select-menu__item-icon {
   background: var(--figma-color-icon-onselected-strong);
 }
