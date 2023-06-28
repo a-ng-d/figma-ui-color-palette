@@ -79,24 +79,31 @@ export default class Colors {
       labB: number = chroma(sourceColor).get('lab.b'),
       chr: number = Math.sqrt(labA ** 2 + labB ** 2)
     let
-      h: number = Math.atan(labB / labA) + (hueShifting * (Math.PI / 180))
+      h: number = Math.atan(labB / labA)
 
     if (h > Math.PI)
       h = Math.PI
     else if (h < -Math.PI)
       h = Math.PI
     
-    const
+    let
       newLabA: number = chr * Math.cos(h),
-      newLabB: number = chr * Math.sin(h),
+      newLabB: number = chr * Math.sin(h)
+    
+    if (Math.sign(newLabA) != Math.sign(labA))
+      newLabA *= -1
+    if (Math.sign(newLabB) != Math.sign(labB))
+      newLabB *= -1
+
+    const
       newColor: { _rgb: Array<number> } = chroma.lab(
         lightness,
         algorithmVersion == 'v2'
-          ? Math.sin((lightness / 100) * Math.PI) * -newLabA
-          : -newLabA,
+          ? Math.sin((lightness / 100) * Math.PI) * newLabA
+          : newLabA,
         algorithmVersion == 'v2'
-          ? Math.sin((lightness / 100) * Math.PI) * -newLabB
-          : -newLabB
+          ? Math.sin((lightness / 100) * Math.PI) * newLabB
+          : newLabB
       )
 
     return newColor
@@ -120,19 +127,25 @@ export default class Colors {
     else if (h < -Math.PI)
       h = Math.PI
     
-    const
+    let
       newLabA: number = chr * Math.cos(h),
       newLabB: number = chr * Math.sin(h)
+    
+    if (Math.sign(newLabA) != Math.sign(labA))
+      newLabA *= -1
+    if (Math.sign(newLabB) != Math.sign(labB))
+      newLabB *= -1
 
-    let newColor: { _rgb: Array<number> } = chroma.oklab(
-      lightness / 100,
-      algorithmVersion == 'v2'
-        ? Math.sin((lightness / 100) * Math.PI) * -newLabA
-        : -newLabA,
-      algorithmVersion == 'v2'
-        ? Math.sin((lightness / 100) * Math.PI) * -newLabB
-        : -newLabB
-    )
+    const
+      newColor: { _rgb: Array<number> } = chroma.oklab(
+        lightness / 100,
+        algorithmVersion == 'v2'
+          ? Math.sin((lightness / 100) * Math.PI) * newLabA
+          : newLabA,
+        algorithmVersion == 'v2'
+          ? Math.sin((lightness / 100) * Math.PI) * newLabB
+          : newLabB
+      )
 
     return newColor
   }
