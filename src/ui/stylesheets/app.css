@@ -509,7 +509,7 @@ div.popin__content {
   flex: 1;
   display: flex;
   width: 100%;
-  overflow: scroll;
+  overflow-y: auto;
 }
 
 div.popin__actions {
@@ -527,7 +527,7 @@ div.source-colors {
 }
 
 ul.colors {
-  overflow: scroll;
+  overflow-y: auto;
 }
 
 li.colors__item {
@@ -628,7 +628,7 @@ div.export-palette > div:last-child {
 div.export-palette__options {
   padding: 0 var(--size-xsmall);
   flex: 1;
-  overflow: scroll;
+  overflow-y: auto;
 }
 
 textarea.export-palette__preview {
@@ -644,7 +644,7 @@ ul.options li {
 div.settings {
   gap: var(--size-xsmall) 0;
   flex: 1 0 176px;
-  overflow: scroll;
+  overflow-y: auto;
 }
 
 div.settings__item {
