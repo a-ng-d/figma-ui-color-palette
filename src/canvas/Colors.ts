@@ -181,6 +181,7 @@ export default class Colors {
         null,
         null,
         [255, 255, 255],
+        this.parent.colorSpace,
         this.parent.view,
         this.parent.textColorsTheme
       ).makeNodeName('RELATIVE', 100, 48)
@@ -357,17 +358,19 @@ export default class Colors {
               null,
               null,
               [color.rgb.r * 255, color.rgb.g * 255, color.rgb.b * 255],
+              this.parent.colorSpace,
               this.parent.view,
               this.parent.textColorsTheme
-            ).makeNodeShade(160, 224, color.name, true)
+            ).makeNodeShade(184, 248, color.name, true)
           : new Sample(
               color.name,
               null,
               null,
               [color.rgb.r * 255, color.rgb.g * 255, color.rgb.b * 255],
+              this.parent.colorSpace,
               this.parent.view,
               this.parent.textColorsTheme
-            ).makeNodeRichShade(160, 376, color.name, true)
+            ).makeNodeRichShade(184, 434, color.name, true)
       )
 
       Object.values(this.parent.scale)
@@ -428,10 +431,11 @@ export default class Colors {
                 color.rgb,
                 scaleName,
                 newColor._rgb,
+                this.parent.colorSpace,
                 this.parent.view,
                 this.parent.textColorsTheme,
                 { isClosestToRef: distance < 4 ? true : false }
-              ).makeNodeShade(160, 224, scaleName)
+              ).makeNodeShade(184, 248, scaleName)
             )
           } else {
             this.nodeRowShades.layoutMode = 'VERTICAL'
@@ -441,10 +445,11 @@ export default class Colors {
                 color.rgb,
                 scaleName,
                 newColor._rgb,
+                this.parent.colorSpace,
                 this.parent.view,
                 this.parent.textColorsTheme,
                 { isClosestToRef: distance < 4 ? true : false }
-              ).makeNodeRichShade(264, 376, scaleName)
+              ).makeNodeRichShade(322, 434, scaleName)
             )
             if (i % 4 == 0) {
               this.nodeRowShades.appendChild(this.makeNodeSlice(samples))
