@@ -376,7 +376,7 @@ export default class Settings extends React.Component<Props> {
     )
   }
 
-  render() {
+  render = () => {
     return (
       <>
         <div className="settings controls__control">

@@ -10,7 +10,7 @@ export default class Header {
     this.parent = parent
   }
 
-  makeNode() {
+  makeNode = () => {
     // base
     this.node = figma.createFrame()
     this.node.name = '_header'

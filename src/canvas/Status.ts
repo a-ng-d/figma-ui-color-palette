@@ -13,7 +13,7 @@ export default class Status {
     this.source = source
   }
 
-  makeNode() {
+  makeNode = () => {
     // base
     this.node = figma.createFrame()
     this.node.name = '_status'

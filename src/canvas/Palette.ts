@@ -44,7 +44,7 @@ export default class Palette {
     this.children = null
   }
 
-  makeNode() {
+  makeNode = () => {
     // base
     this.node = figma.createFrame()
     this.node.name = this.frameName

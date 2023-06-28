@@ -12,7 +12,7 @@ export default class FormItem extends React.Component<Props> {
     isBlocked: false,
   }
 
-  render() {
+  render = () => {
     return (
       <div
         className={`form-item${

@@ -166,7 +166,7 @@ export default class Colors {
     return newColor
   }
 
-  makeEmptyCase() {
+  makeEmptyCase = () => {
     // base
     this.nodeEmpty = figma.createFrame()
     this.nodeEmpty.name = '_message'
@@ -196,7 +196,7 @@ export default class Colors {
     return this.nodeEmpty
   }
 
-  makePaletteData() {
+  makePaletteData = () => {
     this.parent.colors.forEach((color) => {
       const paletteDataItem: PaletteDataItem = {
           name: color.name,
@@ -301,7 +301,7 @@ export default class Colors {
     return this.nodeRowSlice
   }
 
-  makeNode() {
+  makeNode = () => {
     // base
     this.node = figma.createFrame()
     this.node.name = '_colors﹒do not edit any layer'

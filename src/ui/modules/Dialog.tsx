@@ -10,7 +10,7 @@ interface Props {
 }
 
 export default class Dialog extends React.Component<Props> {
-  render() {
+  render = () => {
     return (
       <div className="dialog">
         <PopIn

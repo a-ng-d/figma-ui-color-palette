@@ -46,7 +46,7 @@ export default class Tag {
     return this.nodeTag
   }
 
-  makeNodeText() {
+  makeNodeText = () => {
     // base
     this.nodeText = figma.createText()
     this.nodeText.name = '_text'

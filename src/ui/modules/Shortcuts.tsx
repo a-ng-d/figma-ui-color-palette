@@ -16,7 +16,7 @@ export default class Shortcuts extends React.Component<Props> {
   onGetProPlan = () =>
     parent.postMessage({ pluginMessage: { type: 'GET_PRO_PLAN' } }, '*')
 
-  render() {
+  render = () => {
     return (
       <div className="shortcuts">
         <div className="shortcuts__get-pro">

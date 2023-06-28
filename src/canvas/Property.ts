@@ -12,7 +12,7 @@ export default class Property {
     this.size = size
   }
 
-  makeNode() {
+  makeNode = () => {
     // base
     this.node = figma.createFrame()
     this.node.name = '_property'

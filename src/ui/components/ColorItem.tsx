@@ -106,7 +106,7 @@ export default class ColorItem extends React.Component<Props> {
   }
 
   // Render
-  render() {
+  render = () => {
     return (
       <li
         id={this.props.name.split(' ').join('-').toLowerCase()}

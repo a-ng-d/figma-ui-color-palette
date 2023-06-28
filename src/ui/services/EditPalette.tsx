@@ -539,7 +539,7 @@ export default class EditPalette extends React.Component<Props> {
   }
 
   // Render
-  render() {
+  render = () => {
     let controls
 
     switch (this.state['context']) {

@@ -74,7 +74,7 @@ export default class Dropdown extends React.Component<Props> {
     this.props.onChange(e)
   }
 
-  render() {
+  render = () => {
     return (
       <div
         className="select-menu"

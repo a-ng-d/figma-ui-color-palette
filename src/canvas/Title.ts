@@ -14,7 +14,7 @@ export default class Title {
     this.parent = parent
   }
 
-  makeNodeName() {
+  makeNodeName = () => {
     // base
     this.nodeName = figma.createFrame()
     this.nodeName.name = '_palette-name'
@@ -38,7 +38,7 @@ export default class Title {
     return this.nodeName
   }
 
-  makeNodeProps() {
+  makeNodeProps = () => {
     // base
     this.nodeProps = figma.createFrame()
     this.nodeProps.name = '_palette-props'
@@ -74,7 +74,7 @@ export default class Title {
     return this.nodeProps
   }
 
-  makeNode() {
+  makeNode = () => {
     // base
     this.node = figma.createFrame()
     this.node.name = '_title'

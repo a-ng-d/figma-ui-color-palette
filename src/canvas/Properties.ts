@@ -78,7 +78,7 @@ export default class Properties {
     return fontLookupAPCA(this.getAPCAContrast(textColor))
   }
 
-  makeNodeTopProps() {
+  makeNodeTopProps = () => {
     // base
     this.nodeTopProps = figma.createFrame()
     this.nodeTopProps.name = '_top'
@@ -93,7 +93,7 @@ export default class Properties {
     return this.nodeTopProps
   }
 
-  makeNodeBottomProps() {
+  makeNodeBottomProps = () => {
     // base
     this.nodeBottomProps = figma.createFrame()
     this.nodeBottomProps.name = '_bottom'
@@ -111,7 +111,7 @@ export default class Properties {
     return this.nodeBottomProps
   }
 
-  makeNodeBaseProps() {
+  makeNodeBaseProps = () => {
     // base
     this.nodeBaseProps = figma.createFrame()
     this.nodeBaseProps.name = '_base'
@@ -173,7 +173,7 @@ export default class Properties {
     return this.nodeBaseProps
   }
 
-  makeNodeContrastScoresProps() {
+  makeNodeContrastScoresProps = () => {
     // base
     this.nodeContrastScoresProps = figma.createFrame()
     this.nodeContrastScoresProps.name = '_contrast-scores'
@@ -219,7 +219,7 @@ export default class Properties {
     return this.nodeContrastScoresProps
   }
 
-  makeNodeDetailedBaseProps() {
+  makeNodeDetailedBaseProps = () => {
     this.nodeDetailedBaseProps = figma.createFrame()
     this.nodeDetailedBaseProps.name = '_base'
     this.nodeDetailedBaseProps.fills = []
@@ -281,7 +281,7 @@ export default class Properties {
     return this.nodeDetailedBaseProps
   }
 
-  makeDetailedWCAGScoresProps() {
+  makeDetailedWCAGScoresProps = () => {
     this.nodeDetailedWCAGScoresProps = figma.createFrame()
     this.nodeDetailedWCAGScoresProps.name = '_wcag-scores'
     this.nodeDetailedWCAGScoresProps.fills = []
@@ -312,7 +312,7 @@ export default class Properties {
     return this.nodeDetailedWCAGScoresProps
   }
 
-  makeNodeDetailedAPCAScoresProps() {
+  makeNodeDetailedAPCAScoresProps = () => {
     this.nodeDetailedAPCAScoresProps = figma.createFrame()
     this.nodeDetailedAPCAScoresProps.name = '_apca-scores'
     this.nodeDetailedAPCAScoresProps.fills = []
@@ -445,7 +445,7 @@ export default class Properties {
     return this.nodeColumns
   }
 
-  makeNodeDetailed() {
+  makeNodeDetailed = () => {
     // base
     this.node = figma.createFrame()
     this.node.name = '_properties'
@@ -471,7 +471,7 @@ export default class Properties {
     return this.node
   }
 
-  makeNode() {
+  makeNode = () => {
     // base
     this.node = figma.createFrame()
     this.node.name = '_properties'
