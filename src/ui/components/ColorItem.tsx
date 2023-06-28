@@ -78,7 +78,7 @@ export default class ColorItem extends React.Component<Props> {
     const target = e.currentTarget,
       height: number = target.clientHeight,
       parentY: number = target.parentNode.offsetTop,
-      scrollY: number = target.parentNode.parentNode.parentNode.scrollTop,
+      scrollY: number = target.parentNode.scrollTop,
       refTop: number = target.offsetTop - parentY,
       refBottom: number = refTop + height,
       y: number = e.pageY - parentY + scrollY,
