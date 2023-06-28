@@ -60,17 +60,17 @@ export const locals = {
       },
       color: {
         title: 'Color management',
-        newAlgorithm: 'Enable the new algorithm for creating color shades',
-        newAlgorithmDescription:
-          'The Chroma values are harmonized to ensure consistent lightness across all shades, but this may make the colors look desaturated.',
         colorSpace: 'Color space',
         colorSpaceOptions: {
           lch: 'LCH (Lightness, Chroma, Hue)',
           oklch: 'OKLCH (OK, Lightness, Chroma, Hue)',
-          lab: 'CIELAB (CIE, Lightness, A axis, B axis)',
-          oklab: 'OKLAB (OK, Lightness, A axis, B axis)',
+          lab: 'CIELAB (CIE, Lightness, a﹡ axis, b﹡ axis)',
+          oklab: 'OKLAB (OK, Lightness, a﹡ axis, b﹡ axis)',
           hsl: 'HSL (Hue, Saturation, Lightness)'
-        }
+        },
+        newAlgorithm: 'Enable the new algorithm for creating color shades',
+        newAlgorithmDescription:
+          'The Chroma values are harmonized to ensure consistent lightness across all shades, but this may make the colors look desaturated.',
       },
     },
     about: {
