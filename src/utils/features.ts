@@ -76,7 +76,7 @@ const features: Array<Features> = [
   {
     name: 'VIEWS_SHEET',
     description: 'Detailed color sheet view',
-    isActive: true,
+    isActive: false,
     isPro: false,
     type: 'ACTION',
     service: ['CREATE', 'EDIT'],
@@ -190,7 +190,7 @@ const features: Array<Features> = [
     name: 'EXPORT_SWIFT',
     description:
       'Palette export to SWIFT (macOS, iOS, iPadOS, watchOS, tvOS, visionOS)',
-    isActive: true,
+    isActive: false,
     isPro: false,
     type: 'ACTION',
     service: ['EDIT'],
@@ -198,7 +198,7 @@ const features: Array<Features> = [
   {
     name: 'EXPORT_XML',
     description: 'Palette export to XML (Android)',
-    isActive: true,
+    isActive: false,
     isPro: false,
     type: 'ACTION',
     service: ['EDIT'],
