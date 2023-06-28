@@ -529,10 +529,12 @@ li.colors__item {
   grid-template-rows: var(--size-medium);
   padding: 0 var(--size-xsmall);
   position: relative;
+  z-index: 2;
 }
 
 li.colors__item[draggable='true'] {
   background-color: var(--figma-color-bg-selected);
+  z-index: 1;
 }
 
 li.colors__item[draggable='true'] .input__field,
