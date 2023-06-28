@@ -38,14 +38,6 @@ section {
   flex-direction: column;
 }
 
-section.section--scrollable {
-  overflow: hidden;
-}
-
-section.section--scrollable div.controls {
-  overflow: scroll;
-}
-
 div.controls {
   display: flex;
   flex-direction: column;
