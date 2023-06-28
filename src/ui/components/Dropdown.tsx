@@ -52,7 +52,6 @@ export default class Dropdown extends React.Component<Props> {
       isListOpen: true,
     })
     setTimeout(() => {
-      console.log(document.body.clientHeight)
       if (this.listRef.current.getBoundingClientRect().top < 16) {
         this.listRef.current.style.top = '-6px'
         this.listRef.current.style.bottom = 'auto'

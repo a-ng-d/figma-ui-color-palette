@@ -79,8 +79,6 @@ const setPaletteMigration = (palette: BaseNode) => {
       },
       palette as FrameNode
     ).makePaletteData()
-
-  console.log(palette.getPluginData('name'))
 }
 
 export default setPaletteMigration
