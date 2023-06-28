@@ -51,7 +51,7 @@ class App extends React.Component {
       ),
     }
     this.state = {
-      service: 'NONE',
+      service: '',
       name: '',
       preset: presets.material,
       newScale: {},
@@ -473,21 +473,17 @@ class App extends React.Component {
             export: {
               format: 'SWIFT',
               mimeType: 'text/swift',
-              data: `import SwiftUI\n\nextension Color {\n  ${e.data.pluginMessage.data.join(
-                '\n  '
-              )}\n}`,
+              data: `import SwiftUI\n\nextension Color {\n  ${e.data.pluginMessage.data.join('\n  ')}\n}`,
             },
             onGoingStep: 'export previewed',
           })
-
+  
         const exportPaletteToXml = () =>
           this.setState({
             export: {
               format: 'XML',
               mimeType: 'text/xml',
-              data: `<resources>\n  ${e.data.pluginMessage.data.join(
-                '\n  '
-              )}\n</resources>`,
+              data: `<resources>\n  ${e.data.pluginMessage.data.join('\n  ')}\n</resources>`,
             },
             onGoingStep: 'export previewed',
           })
@@ -501,7 +497,7 @@ class App extends React.Component {
             },
             onGoingStep: 'export previewed',
           })
-
+          
         const getProPlan = () =>
           this.setState({
             planStatus: e.data.pluginMessage.data,
