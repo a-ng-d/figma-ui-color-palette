@@ -31,7 +31,7 @@ export default class Palette {
     algorithmVersion: string
   ) {
     this.paletteName = name
-    this.name = `${name === '' ? locals[lang].name : name}﹒${preset.name}﹒${
+    this.name = `${name}﹒${preset.name}﹒${colorSpace} ${
       view.includes('PALETTE') ? 'Palette' : 'Sheet'
     }`
     this.preset = preset

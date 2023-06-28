@@ -1,10 +1,11 @@
+import { lang, locals } from '../content/locals'
 import Palette from './../canvas/Palette'
 
 const createPalette = (msg, palette) => {
   const scene: SceneNode[] = []
 
   palette = new Palette(
-    msg.data.name,
+    msg.data.name === '' ? locals[lang].name : msg.data.name,
     msg.data.preset,
     msg.data.scale,
     msg.data.colorSpace,

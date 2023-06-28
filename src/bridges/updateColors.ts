@@ -55,7 +55,7 @@ const updateColors = (msg, palette) => {
 
     // palette migration
     palette.counterAxisSizingMode = 'AUTO'
-    palette.name = `${paletteName}﹒${preset.name}﹒${
+    palette.name = `${paletteName}﹒${preset.name}﹒${colorSpace} ${
       view.includes('PALETTE') ? 'Palette' : 'Sheet'
     }`
   } else figma.notify(locals[lang].error.corruption)
