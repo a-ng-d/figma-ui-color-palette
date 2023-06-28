@@ -25,6 +25,9 @@ const setPaletteMigration = (palette: BaseNode) => {
       'colors',
       setData(palette.getPluginData('colors'), 'hueShifting', 0)
     )
+
+  if (JSON.parse(palette.getPluginData('colors')).filter(color => color.oklch).length == JSON.parse(palette.getPluginData('colors')).length)
+      palette.setPluginData('colorSpace', 'OKLCH')
   
   if (palette.getPluginData('colorSpace') === '')
     palette.setPluginData('colorSpace', 'LCH')
