@@ -16,7 +16,7 @@ const exportXml = (palette) => {
               .toLowerCase()
               .split(' ')
               .join('_')
-              .replace(/[@/$^%#&!?,;:+=<>(){}\[\]"«»]/g, '_')}_${shade.name}">${
+              .replace(/[@/$^%#&!?,;:+=<>(){}"«»]/g, '_')}_${shade.name}">${
               shade.hex
             }</color>`
           )

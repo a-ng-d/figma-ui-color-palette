@@ -1,4 +1,4 @@
-export const lang: string = 'en-US'
+export const lang = 'en-US'
 
 export const locals = {
   'en-US': {

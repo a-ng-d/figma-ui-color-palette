@@ -1,4 +1,3 @@
-import { lang, locals } from '../content/locals'
 import Palette from './../canvas/Palette'
 
 const createPalette = (msg, palette) => {

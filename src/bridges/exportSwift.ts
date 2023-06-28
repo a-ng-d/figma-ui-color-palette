@@ -15,7 +15,7 @@ const exportSwift = (palette) => {
             `static let ${color.name
               .toLowerCase()
               .replace(/[^a-zA-Z0-9]+(.)/g, (m, chr) => chr.toUpperCase())
-              .replace(/[@/$^%#&!?,;:+=<>(){}\[\]"«»]/g, '')}${
+              .replace(/[@/$^%#&!?,;:+=<>(){}"«»]/g, '')}${
               shade.name === 'source' ? 'Source' : shade.name
             } = Color(red: ${shade.gl[0].toFixed(
               3

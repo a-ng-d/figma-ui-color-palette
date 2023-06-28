@@ -16,7 +16,7 @@ const exportCss = (palette) => {
               .toLowerCase()
               .split(' ')
               .join('-')
-              .replace(/[@/$^%#&!?,;:+=<>(){}\[\]"«»]/g, '-')}-${
+              .replace(/[@/$^%#&!?,;:+=<>(){}"«»]/g, '-')}-${
               shade.name
             }: rgb(${Math.floor(shade.rgb[0])}, ${Math.floor(
               shade.rgb[1]

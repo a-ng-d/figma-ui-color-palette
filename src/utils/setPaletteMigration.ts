@@ -6,12 +6,10 @@ const setPaletteMigration = (palette: BaseNode) => {
   const min = palette.getPluginData('min'),
     max = palette.getPluginData('max'),
     preset = palette.getPluginData('preset'),
-    scale = palette.getPluginData('scale'),
     colors = palette.getPluginData('colors'),
     colorSpace = palette.getPluginData('colorSpace'),
     captions = palette.getPluginData('captions'),
     properties = palette.getPluginData('properties'),
-    view = palette.getPluginData('view'),
     textColorsTheme = palette.getPluginData('textColorsTheme'),
     algorithmVersion = palette.getPluginData('algorithmVersion')
 
