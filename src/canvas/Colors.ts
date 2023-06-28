@@ -209,6 +209,9 @@ export default class Colors {
         gl: chroma(sourceColor).gl(),
         lch: chroma(sourceColor).lch(),
         oklch: chroma(sourceColor).oklch(),
+        lab: chroma(sourceColor).lab(),
+        oklab: chroma(sourceColor).oklab(),
+        hsl: chroma(sourceColor).hsl(),
       })
 
       Object.values(this.parent.scale)
@@ -263,6 +266,9 @@ export default class Colors {
             gl: chroma(newColor).gl(),
             lch: chroma(newColor).lch(),
             oklch: chroma(newColor).oklch(),
+            lab: chroma(newColor).lab(),
+            oklab: chroma(newColor).oklab(),
+            hsl: chroma(newColor).hsl()
           })
         })
 

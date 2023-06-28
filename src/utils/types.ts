@@ -60,6 +60,9 @@ export interface PaletteDataItem {
     gl: Array<number>
     lch: Array<number>
     oklch: Array<number>
+    lab: Array<number>
+    oklab: Array<number>
+    hsl: Array<number>
   }>
 }
 
