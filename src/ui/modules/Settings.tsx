@@ -178,14 +178,17 @@ export default class Settings extends React.Component<Props> {
               onChange={this.props.onChangeSettings}
             />
           </FormItem>
-          <Message
-            icon="library"
-            messages={[locals[this.props.lang].settings.color.colorSpaceOptionsDescription]}
-            isBlocked={isBlocked(
-              'SETTINGS_COLOR_SPACE',
-              this.props.planStatus
-            )}
-          />
+          {this.props.colorSpace === 'HSL' ? (
+              <Message
+                icon="warning"
+                messages={[locals[this.props.lang].warning.hslColorSpace]}
+                isBlocked={isBlocked(
+                  'SETTINGS_COLOR_SPACE',
+                  this.props.planStatus
+                )}
+              />
+            ) : null
+          }
         </div>
       </Feature>
     )
