@@ -33,7 +33,7 @@ export const locals = {
     },
     colors: {
       title: 'Source colors',
-      oklch: 'Use OKLCH',
+      hueShiting: 'Shift hue',
     },
     export: {
       format: 'File format',

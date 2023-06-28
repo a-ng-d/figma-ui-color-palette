@@ -147,14 +147,6 @@ const features: Array<Features> = [
     service: ['EDIT'],
   },
   {
-    name: 'COLORS_OKLCH_SPACE',
-    description: 'OKLCH color space toggle',
-    isActive: true,
-    isPro: false,
-    type: 'ACTION',
-    service: ['EDIT'],
-  },
-  {
     name: 'COLORS_HUE_SHIFTING',
     description: 'Color hue shifting number field',
     isActive: true,

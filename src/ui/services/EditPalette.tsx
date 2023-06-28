@@ -300,15 +300,6 @@ export default class EditPalette extends React.Component<Props> {
         parent.postMessage({ pluginMessage: colorsMessage }, '*')
     }
 
-    const enableOklch = () => {
-      colorsMessage.data = this.props.colors.map((item) => {
-        if (item.id === id) item.oklch = e.target.checked
-        return item
-      })
-      this.props.onChangeColor(colorsMessage.data)
-      parent.postMessage({ pluginMessage: colorsMessage }, '*')
-    }
-
     const setHueShifting = () => {
       colorsMessage.data = this.props.colors.map((item) => {
         if (item.id === id) item.hueShifting = parseFloat(e.target.value)
@@ -326,7 +317,6 @@ export default class EditPalette extends React.Component<Props> {
       ADD: () => addColor(),
       REMOVE: () => removeColor(),
       RENAME: () => renameColor(),
-      OKLCH: () => enableOklch(),
       SHIFT_HUE: () => setHueShifting(),
     }
 
