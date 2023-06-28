@@ -32,7 +32,7 @@ export default class Header {
         this.parent.colorSpace,
         this.parent.view,
         this.parent.textColorsTheme
-      ).makeNodeName('ABSOLUTE', 160, 48)
+      ).makeNodeName('ABSOLUTE', 184, 48)
     )
     if (this.parent.view.includes('PALETTE'))
       Object.values(this.parent.scale)
@@ -49,7 +49,7 @@ export default class Header {
               this.parent.colorSpace,
               this.parent.view,
               this.parent.textColorsTheme
-            ).makeNodeName('ABSOLUTE', 160, 48)
+            ).makeNodeName('ABSOLUTE', 184, 48)
           )
         })
 
