@@ -361,7 +361,7 @@ export default class Properties {
           ).makeNodeTag(),
           new Tag(
             '_500-light',
-            `${minimumLightFontSize[5]}pt (500)`
+            `${minimumLightFontSize[6]}pt (600)`
           ).makeNodeTag(),
           new Tag(
             '_700-light',
