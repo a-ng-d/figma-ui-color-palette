@@ -637,7 +637,7 @@ ul.options li {
 
 /* Settings */
 div.settings {
-  gap: var(--size-xsmall) 0;
+  gap: var(--size-small) 0;
   flex: 1 0 176px;
   overflow-y: auto;
 }
