@@ -200,7 +200,9 @@ export default class Actions extends React.Component<Props> {
         <div className="buttons">
           <Button
             type="primary"
-            label={`${locals[this.props.lang].actions.export} ${this.props.exportType}`}
+            label={`${locals[this.props.lang].actions.export} ${
+              this.props.exportType
+            }`}
             feature="export"
             action={this.props.onExportPalette}
           >

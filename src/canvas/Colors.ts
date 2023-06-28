@@ -28,8 +28,7 @@ export default class Colors {
     hueShifting: number,
     algorithmVersion: string
   ) {
-    const
-      lch: Array<number> = chroma(sourceColor).lch(),
+    const lch: Array<number> = chroma(sourceColor).lch(),
       newColor: { _rgb: Array<number> } = chroma.lch(
         lightness,
         algorithmVersion == 'v2'
@@ -51,19 +50,18 @@ export default class Colors {
     hueShifting: number,
     algorithmVersion: string
   ) {
-    const
-      oklch: { _rgb: Array<number> } = chroma(sourceColor).oklch(),
+    const oklch: { _rgb: Array<number> } = chroma(sourceColor).oklch(),
       newColor: { _rgb: Array<number> } = chroma.oklch(
-      lightness / 100,
-      algorithmVersion == 'v2'
-        ? Math.sin((lightness / 100) * Math.PI) * oklch[1]
-        : oklch[1],
-      oklch[2] + hueShifting < 0
-        ? 0
-        : oklch[2] + hueShifting > 360
-        ? 360
-        : oklch[2] + hueShifting
-    )
+        lightness / 100,
+        algorithmVersion == 'v2'
+          ? Math.sin((lightness / 100) * Math.PI) * oklch[1]
+          : oklch[1],
+        oklch[2] + hueShifting < 0
+          ? 0
+          : oklch[2] + hueShifting > 360
+          ? 360
+          : oklch[2] + hueShifting
+      )
 
     return newColor
   }
@@ -74,41 +72,35 @@ export default class Colors {
     hueShifting: number,
     algorithmVersion: string
   ) {
-    const
-      labA: number = chroma(sourceColor).get('lab.a'),
+    const labA: number = chroma(sourceColor).get('lab.a'),
       labB: number = chroma(sourceColor).get('lab.b'),
       chr: number = Math.sqrt(labA ** 2 + labB ** 2)
-    let
-      h: number = Math.atan(labB / labA) + (hueShifting * (Math.PI / 180))
+    let h: number = Math.atan(labB / labA) + hueShifting * (Math.PI / 180)
 
-    if (h > Math.PI)
-      h = Math.PI
-    else if (h < -Math.PI)
-      h = Math.PI
-    
-    let
-      newLabA: number = chr * Math.cos(h),
+    if (h > Math.PI) h = Math.PI
+    else if (h < -Math.PI) h = Math.PI
+
+    let newLabA: number = chr * Math.cos(h),
       newLabB: number = chr * Math.sin(h)
-    
+
     if (Math.sign(labA) == -1 && Math.sign(labB) == 1) {
       newLabA *= -1
       newLabB *= -1
-    }  
+    }
     if (Math.sign(labA) == -1 && Math.sign(labB) == -1) {
       newLabA *= -1
       newLabB *= -1
     }
 
-    const
-      newColor: { _rgb: Array<number> } = chroma.lab(
-        lightness,
-        algorithmVersion == 'v2'
-          ? Math.sin((lightness / 100) * Math.PI) * newLabA
-          : newLabA,
-        algorithmVersion == 'v2'
-          ? Math.sin((lightness / 100) * Math.PI) * newLabB
-          : newLabB
-      )
+    const newColor: { _rgb: Array<number> } = chroma.lab(
+      lightness,
+      algorithmVersion == 'v2'
+        ? Math.sin((lightness / 100) * Math.PI) * newLabA
+        : newLabA,
+      algorithmVersion == 'v2'
+        ? Math.sin((lightness / 100) * Math.PI) * newLabB
+        : newLabB
+    )
 
     return newColor
   }
@@ -119,41 +111,35 @@ export default class Colors {
     hueShifting: number,
     algorithmVersion: string
   ) {
-    const
-      labA: number = chroma(sourceColor).get('oklab.a'),
+    const labA: number = chroma(sourceColor).get('oklab.a'),
       labB: number = chroma(sourceColor).get('oklab.b'),
       chr: number = Math.sqrt(labA ** 2 + labB ** 2)
-    let
-      h: number = Math.atan(labB / labA) + (hueShifting * (Math.PI / 180))
+    let h: number = Math.atan(labB / labA) + hueShifting * (Math.PI / 180)
 
-    if (h > Math.PI)
-      h = Math.PI
-    else if (h < -Math.PI)
-      h = Math.PI
-    
-    let
-      newLabA: number = chr * Math.cos(h),
+    if (h > Math.PI) h = Math.PI
+    else if (h < -Math.PI) h = Math.PI
+
+    let newLabA: number = chr * Math.cos(h),
       newLabB: number = chr * Math.sin(h)
-    
+
     if (Math.sign(labA) == -1 && Math.sign(labB) == 1) {
       newLabA *= -1
       newLabB *= -1
-    }  
+    }
     if (Math.sign(labA) == -1 && Math.sign(labB) == -1) {
       newLabA *= -1
       newLabB *= -1
     }
 
-    const
-      newColor: { _rgb: Array<number> } = chroma.oklab(
-        lightness / 100,
-        algorithmVersion == 'v2'
-          ? Math.sin((lightness / 100) * Math.PI) * newLabA
-          : newLabA,
-        algorithmVersion == 'v2'
-          ? Math.sin((lightness / 100) * Math.PI) * newLabB
-          : newLabB
-      )
+    const newColor: { _rgb: Array<number> } = chroma.oklab(
+      lightness / 100,
+      algorithmVersion == 'v2'
+        ? Math.sin((lightness / 100) * Math.PI) * newLabA
+        : newLabA,
+      algorithmVersion == 'v2'
+        ? Math.sin((lightness / 100) * Math.PI) * newLabB
+        : newLabB
+    )
 
     return newColor
   }
@@ -164,8 +150,7 @@ export default class Colors {
     hueShifting: number,
     algorithmVersion: string
   ) {
-    const
-      hsl: Array<number> = chroma(sourceColor).hsl(),
+    const hsl: Array<number> = chroma(sourceColor).hsl(),
       newColor: { _rgb: Array<number> } = chroma.hsl(
         hsl[0] + hueShifting < 0
           ? 0
@@ -289,7 +274,7 @@ export default class Colors {
             oklch: chroma(newColor).oklch(),
             lab: chroma(newColor).lab(),
             oklab: chroma(newColor).oklab(),
-            hsl: chroma(newColor).hsl()
+            hsl: chroma(newColor).hsl(),
           })
         })
 
@@ -331,13 +316,9 @@ export default class Colors {
     // insert
     this.node.appendChild(
       new Title(
-        `${
-          this.parent.name === ''
-            ? locals[lang].name
-            : this.parent.name
-        } • ${this.parent.preset.name} • ${
-          this.parent.view.includes('PALETTE') ? 'Palette' : 'Sheet'
-        }`,
+        `${this.parent.name === '' ? locals[lang].name : this.parent.name} • ${
+          this.parent.preset.name
+        } • ${this.parent.view.includes('PALETTE') ? 'Palette' : 'Sheet'}`,
         this.parent
       ).makeNode()
     )
@@ -440,7 +421,7 @@ export default class Colors {
               color.hueShifting,
               this.parent.algorithmVersion
             )
-          
+
           const distance: number = chroma.distance(
             chroma(sourceColor).hex(),
             chroma(newColor).hex(),

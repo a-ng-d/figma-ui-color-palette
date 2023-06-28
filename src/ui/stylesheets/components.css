@@ -329,7 +329,7 @@ div.icon-button--disabled {
 }
 
 .select-menu__item--blocked .select-menu__item-icon {
-  background: var(--figma-color-icon-disabled)
+  background: var(--figma-color-icon-disabled);
 }
 
 /* Input */

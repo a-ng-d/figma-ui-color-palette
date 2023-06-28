@@ -54,11 +54,7 @@ export default class Title {
 
     // insert
     this.nodeProps.appendChild(
-      new Tag(
-        '_preset',
-        `Preset: ${this.parent.preset.name}`,
-        12
-      ).makeNodeTag()
+      new Tag('_preset', `Preset: ${this.parent.preset.name}`, 12).makeNodeTag()
     )
     this.nodeProps.appendChild(
       new Tag(
@@ -91,12 +87,8 @@ export default class Title {
     this.node.layoutAlign = 'STRETCH'
 
     // insert
-    this.node.appendChild(
-      this.makeNodeName()
-    )
-    this.node.appendChild(
-      this.makeNodeProps()
-    )
+    this.node.appendChild(this.makeNodeName())
+    this.node.appendChild(this.makeNodeProps())
 
     return this.node
   }

@@ -31,9 +31,9 @@ export default class Palette {
     algorithmVersion: string
   ) {
     this.name = name
-    this.frameName = `${name === '' ? locals[lang].name : name}﹒${preset.name}﹒${colorSpace} ${
-      view.includes('PALETTE') ? 'Palette' : 'Sheet'
-    }`
+    this.frameName = `${name === '' ? locals[lang].name : name}﹒${
+      preset.name
+    }﹒${colorSpace} ${view.includes('PALETTE') ? 'Palette' : 'Sheet'}`
     this.preset = preset
     this.scale = scale
     this.colors = []

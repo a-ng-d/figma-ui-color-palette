@@ -115,7 +115,12 @@ export default class Sample {
     // insert
     if (this.view.includes('PALETTE_WITH_PROPERTIES') && !isColorName) {
       this.node.appendChild(
-        new Properties(this.scale, this.rgb, this.colorSpace, this.textColorsTheme).makeNode()
+        new Properties(
+          this.scale,
+          this.rgb,
+          this.colorSpace,
+          this.textColorsTheme
+        ).makeNode()
       )
     } else if (isColorName)
       this.node.appendChild(new Property('_label', this.name, 10).makeNode())

@@ -221,7 +221,9 @@ export default class ColorItem extends React.Component<Props> {
             }
           >
             <div className="colors__shift inputs">
-              <div className="label">{locals[this.props.lang].colors.hueShifting}</div>
+              <div className="label">
+                {locals[this.props.lang].colors.hueShifting}
+              </div>
               <Input
                 type="number"
                 icon={{ type: 'icon', value: 'arrow-left-right' }}

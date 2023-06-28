@@ -40,7 +40,10 @@ const exportCsv = (palette) => {
     )
     figma.ui.postMessage({
       type: 'EXPORT_PALETTE_CSV',
-      data: paletteCsv.length == 0 ? [{ name: 'empty', csv: [locals[lang].warning.emptySourceColors]}] : paletteCsv,
+      data:
+        paletteCsv.length == 0
+          ? [{ name: 'empty', csv: [locals[lang].warning.emptySourceColors] }]
+          : paletteCsv,
     })
   } else figma.notify(locals[lang].error.corruption)
 }

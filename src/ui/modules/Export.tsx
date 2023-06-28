@@ -129,7 +129,9 @@ export default class Export extends React.Component<Props> {
           <div>
             <div className="section-controls">
               <div className="section-controls__left-part">
-                <div className="section-title">{locals[this.props.lang].export.format}</div>
+                <div className="section-title">
+                  {locals[this.props.lang].export.format}
+                </div>
               </div>
             </div>
             <div className="export-palette__options">
@@ -191,8 +193,13 @@ export default class Export extends React.Component<Props> {
                     <RadioButton
                       id="options__swift"
                       label={locals[this.props.lang].export.swift}
-                      isChecked={this.state['format'] === 'SWIFT' ? true : false}
-                      isBlocked={isBlocked('EXPORT_SWIFT', this.props.planStatus)}
+                      isChecked={
+                        this.state['format'] === 'SWIFT' ? true : false
+                      }
+                      isBlocked={isBlocked(
+                        'EXPORT_SWIFT',
+                        this.props.planStatus
+                      )}
                       feature="EXPORT_TO_SWIFT"
                       group="fileFormat"
                       onChange={
@@ -253,7 +260,9 @@ export default class Export extends React.Component<Props> {
           <div>
             <div className="section-controls">
               <div className="section-controls__left-part">
-                <div className="section-title">{locals[this.props.lang].export.preview}</div>
+                <div className="section-title">
+                  {locals[this.props.lang].export.preview}
+                </div>
               </div>
             </div>
             <div className="export-palette__options">

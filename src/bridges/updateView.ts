@@ -11,8 +11,7 @@ const updateView = (msg, palette) => {
   palette = figma.currentPage.selection[0]
 
   if (palette.children.length == 1) {
-    const
-      name: string =
+    const name: string =
         palette.getPluginData('name') === ''
           ? locals[lang].name
           : palette.getPluginData('name'),
@@ -28,7 +27,7 @@ const updateView = (msg, palette) => {
       algorithmVersion: string = palette.getPluginData('algorithmVersion')
 
     palette.setPluginData('view', msg.data.view)
-    
+
     palette.children[0].remove()
     palette.appendChild(
       new Colors(

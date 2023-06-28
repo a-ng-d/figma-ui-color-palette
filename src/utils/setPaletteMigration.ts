@@ -3,8 +3,7 @@ import { presets } from './palettePackage'
 import Colors from '../canvas/Colors'
 
 const setPaletteMigration = (palette: BaseNode) => {
-  const
-    min = palette.getPluginData('min'),
+  const min = palette.getPluginData('min'),
     max = palette.getPluginData('max'),
     preset = palette.getPluginData('preset'),
     scale = palette.getPluginData('scale'),
@@ -28,35 +27,25 @@ const setPaletteMigration = (palette: BaseNode) => {
 
   // colors
   if (!colors.includes('oklch'))
-    palette.setPluginData(
-      'colors',
-      setData(colors, 'oklch', false)
-    )
+    palette.setPluginData('colors', setData(colors, 'oklch', false))
 
   if (!colors.includes('hueShifting'))
-    palette.setPluginData(
-      'colors',
-      setData(colors, 'hueShifting', 0)
-    )
+    palette.setPluginData('colors', setData(colors, 'hueShifting', 0))
 
-  if (JSON.parse(colors).filter(color => color.oklch).length == JSON.parse(colors).length)
-    palette.setPluginData('colorSpace', 'OKLCH')
-  
-  if (colorSpace === '')
-    palette.setPluginData('colorSpace', 'LCH')
-  
-  // view
   if (
-    captions == 'hasCaptions' ||
-    properties == 'hasProperties'
-  ) {
+    JSON.parse(colors).filter((color) => color.oklch).length ==
+    JSON.parse(colors).length
+  )
+    palette.setPluginData('colorSpace', 'OKLCH')
+
+  if (colorSpace === '') palette.setPluginData('colorSpace', 'LCH')
+
+  // view
+  if (captions == 'hasCaptions' || properties == 'hasProperties') {
     palette.setPluginData('captions', '')
     palette.setPluginData('properties', '')
     palette.setPluginData('view', 'PALETTE_WITH_PROPERTIES')
-  } else if (
-    captions == 'hasNotCaptions' ||
-    properties == 'hasNotProperties'
-  ) {
+  } else if (captions == 'hasNotCaptions' || properties == 'hasNotProperties') {
     palette.setPluginData('captions', '')
     palette.setPluginData('properties', '')
     palette.setPluginData('view', 'PALETTE')
@@ -74,8 +63,7 @@ const setPaletteMigration = (palette: BaseNode) => {
   }
 
   // algorithm
-  if (algorithmVersion === '')
-    palette.setPluginData('algorithmVersion', 'v1')
+  if (algorithmVersion === '') palette.setPluginData('algorithmVersion', 'v1')
 
   // data
   if (palette.getPluginData('data') === '')

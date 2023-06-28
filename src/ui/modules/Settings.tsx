@@ -54,9 +54,7 @@ export default class Settings extends React.Component<Props> {
               type="text"
               icon={{ type: 'none', value: null }}
               placeholder={locals[this.props.lang].settings.base.defaultName}
-              value={
-                this.props.name != '' ? this.props.name : ''
-              }
+              value={this.props.name != '' ? this.props.name : ''}
               charactersLimit={64}
               isBlocked={isBlocked(
                 'SETTINGS_PALETTE_NAME',
@@ -94,9 +92,8 @@ export default class Settings extends React.Component<Props> {
     return (
       <Feature
         isActive={
-          features.find(
-            (feature) => feature.name === 'SETTINGS_COLOR_SPACE'
-          ).isActive
+          features.find((feature) => feature.name === 'SETTINGS_COLOR_SPACE')
+            .isActive
         }
       >
         <div className="settings__item">
@@ -108,12 +105,13 @@ export default class Settings extends React.Component<Props> {
               id="color-spaces"
               options={[
                 {
-                  label: locals[this.props.lang].settings.color.colorSpaceOptions.lch,
+                  label:
+                    locals[this.props.lang].settings.color.colorSpaceOptions
+                      .lch,
                   value: 'LCH',
                   position: 0,
                   isActive: features.find(
-                    (feature) =>
-                      feature.name === 'SETTINGS_COLOR_SPACE_LCH'
+                    (feature) => feature.name === 'SETTINGS_COLOR_SPACE_LCH'
                   ).isActive,
                   isBlocked: isBlocked(
                     'SETTINGS_COLOR_SPACE_LCH',
@@ -121,12 +119,13 @@ export default class Settings extends React.Component<Props> {
                   ),
                 },
                 {
-                  label: locals[this.props.lang].settings.color.colorSpaceOptions.oklch,
+                  label:
+                    locals[this.props.lang].settings.color.colorSpaceOptions
+                      .oklch,
                   value: 'OKLCH',
                   position: 1,
                   isActive: features.find(
-                    (feature) =>
-                      feature.name === 'SETTINGS_COLOR_SPACE_OKLCH'
+                    (feature) => feature.name === 'SETTINGS_COLOR_SPACE_OKLCH'
                   ).isActive,
                   isBlocked: isBlocked(
                     'SETTINGS_COLOR_SPACE_OKLCH',
@@ -134,12 +133,13 @@ export default class Settings extends React.Component<Props> {
                   ),
                 },
                 {
-                  label: locals[this.props.lang].settings.color.colorSpaceOptions.lab,
+                  label:
+                    locals[this.props.lang].settings.color.colorSpaceOptions
+                      .lab,
                   value: 'LAB',
                   position: 2,
                   isActive: features.find(
-                    (feature) =>
-                      feature.name === 'SETTINGS_COLOR_SPACE_LAB'
+                    (feature) => feature.name === 'SETTINGS_COLOR_SPACE_LAB'
                   ).isActive,
                   isBlocked: isBlocked(
                     'SETTINGS_COLOR_SPACE_LAB',
@@ -147,12 +147,13 @@ export default class Settings extends React.Component<Props> {
                   ),
                 },
                 {
-                  label: locals[this.props.lang].settings.color.colorSpaceOptions.oklab,
+                  label:
+                    locals[this.props.lang].settings.color.colorSpaceOptions
+                      .oklab,
                   value: 'OKLAB',
                   position: 3,
                   isActive: features.find(
-                    (feature) =>
-                      feature.name === 'SETTINGS_COLOR_SPACE_OKLAB'
+                    (feature) => feature.name === 'SETTINGS_COLOR_SPACE_OKLAB'
                   ).isActive,
                   isBlocked: isBlocked(
                     'SETTINGS_COLOR_SPACE_OKLAB',
@@ -160,12 +161,13 @@ export default class Settings extends React.Component<Props> {
                   ),
                 },
                 {
-                  label: locals[this.props.lang].settings.color.colorSpaceOptions.hsl,
+                  label:
+                    locals[this.props.lang].settings.color.colorSpaceOptions
+                      .hsl,
                   value: 'HSL',
                   position: 4,
                   isActive: features.find(
-                    (feature) =>
-                      feature.name === 'SETTINGS_COLOR_SPACE_HSL'
+                    (feature) => feature.name === 'SETTINGS_COLOR_SPACE_HSL'
                   ).isActive,
                   isBlocked: isBlocked(
                     'SETTINGS_COLOR_SPACE_HSL',
@@ -179,16 +181,15 @@ export default class Settings extends React.Component<Props> {
             />
           </FormItem>
           {this.props.colorSpace === 'HSL' ? (
-              <Message
-                icon="warning"
-                messages={[locals[this.props.lang].warning.hslColorSpace]}
-                isBlocked={isBlocked(
-                  'SETTINGS_COLOR_SPACE',
-                  this.props.planStatus
-                )}
-              />
-            ) : null
-          }
+            <Message
+              icon="warning"
+              messages={[locals[this.props.lang].warning.hslColorSpace]}
+              isBlocked={isBlocked(
+                'SETTINGS_COLOR_SPACE',
+                this.props.planStatus
+              )}
+            />
+          ) : null}
         </div>
       </Feature>
     )
@@ -198,9 +199,8 @@ export default class Settings extends React.Component<Props> {
     return (
       <Feature
         isActive={
-          features.find(
-            (feature) => feature.name === 'SETTINGS_NEW_ALGORITHM'
-          ).isActive
+          features.find((feature) => feature.name === 'SETTINGS_NEW_ALGORITHM')
+            .isActive
         }
       >
         <div className="settings__item">
@@ -221,7 +221,9 @@ export default class Settings extends React.Component<Props> {
           />
           <Message
             icon="library"
-            messages={[locals[this.props.lang].settings.color.newAlgorithmDescription]}
+            messages={[
+              locals[this.props.lang].settings.color.newAlgorithmDescription,
+            ]}
             isBlocked={isBlocked(
               'SETTINGS_NEW_ALGORITHM',
               this.props.planStatus
@@ -315,7 +317,8 @@ export default class Settings extends React.Component<Props> {
           <Message
             icon="library"
             messages={[
-              locals[this.props.lang].settings.contrast.textThemeColorsDescription,
+              locals[this.props.lang].settings.contrast
+                .textThemeColorsDescription,
             ]}
             isBlocked={isBlocked(
               'SETTINGS_NEW_ALGORITHM',
@@ -332,7 +335,9 @@ export default class Settings extends React.Component<Props> {
       <div className="settings__group">
         <div className="section-controls">
           <div className="section-controls__left-part">
-            <div className="section-title">{locals[this.props.lang].settings.base.title}</div>
+            <div className="section-title">
+              {locals[this.props.lang].settings.base.title}
+            </div>
           </div>
         </div>
         <this.PaletteName />

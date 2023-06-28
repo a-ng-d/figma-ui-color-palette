@@ -126,31 +126,41 @@ export default class Properties {
     this.nodeBaseProps.itemSpacing = 4
 
     let basePropViaColorSpace
-    
+
     if (this.colorSpace === 'LCH') {
       basePropViaColorSpace = new Tag(
         '_lch',
-        `L ${Math.floor(this.lch[0])} • C ${Math.floor(this.lch[1])} • H ${Math.floor(this.lch[2])}`
+        `L ${Math.floor(this.lch[0])} • C ${Math.floor(
+          this.lch[1]
+        )} • H ${Math.floor(this.lch[2])}`
       ).makeNodeTag()
     } else if (this.colorSpace === 'OKLCH') {
       basePropViaColorSpace = new Tag(
         '_oklch',
-        `L ${parseFloat(this.oklch[0].toFixed(2))} • C ${parseFloat(this.oklch[1].toFixed(2))} • H ${Math.floor(this.oklch[2])}`
+        `L ${parseFloat(this.oklch[0].toFixed(2))} • C ${parseFloat(
+          this.oklch[1].toFixed(2)
+        )} • H ${Math.floor(this.oklch[2])}`
       ).makeNodeTag()
     } else if (this.colorSpace === 'LAB') {
       basePropViaColorSpace = new Tag(
         '_lab',
-        `L ${Math.floor(this.lab[0])} • A ${Math.floor(this.lab[1])} • B ${Math.floor(this.lab[2])}`
+        `L ${Math.floor(this.lab[0])} • A ${Math.floor(
+          this.lab[1]
+        )} • B ${Math.floor(this.lab[2])}`
       ).makeNodeTag()
     } else if (this.colorSpace === 'OKLAB') {
       basePropViaColorSpace = new Tag(
         '_oklab',
-        `L ${parseFloat(this.oklab[0].toFixed(2))} • A ${parseFloat(this.oklab[1].toFixed(2))} • B ${parseFloat(this.oklab[2].toFixed(2))}`
+        `L ${parseFloat(this.oklab[0].toFixed(2))} • A ${parseFloat(
+          this.oklab[1].toFixed(2)
+        )} • B ${parseFloat(this.oklab[2].toFixed(2))}`
       ).makeNodeTag()
     } else if (this.colorSpace === 'HSL') {
       basePropViaColorSpace = new Tag(
         '_lab',
-        `H ${Math.floor(this.hsl[0])} • S ${Math.floor(this.hsl[1] * 100)} • L ${Math.floor(this.hsl[2] * 100)}`
+        `H ${Math.floor(this.hsl[0])} • S ${Math.floor(
+          this.hsl[1] * 100
+        )} • L ${Math.floor(this.hsl[2] * 100)}`
       ).makeNodeTag()
     }
 
@@ -158,9 +168,7 @@ export default class Properties {
     this.nodeBaseProps.appendChild(
       new Tag('_hex', this.hex.toUpperCase()).makeNodeTag()
     )
-    this.nodeBaseProps.appendChild(
-      basePropViaColorSpace
-    )
+    this.nodeBaseProps.appendChild(basePropViaColorSpace)
 
     return this.nodeBaseProps
   }
@@ -223,34 +231,43 @@ export default class Properties {
     this.nodeDetailedBaseProps.itemSpacing = 4
 
     let basePropViaColorSpace
-    
+
     if (this.colorSpace === 'LCH') {
       basePropViaColorSpace = new Tag(
         '_lch',
-        `L ${Math.floor(this.lch[0])} • C ${Math.floor(this.lch[1])} • H ${Math.floor(this.lch[2])}`
+        `L ${Math.floor(this.lch[0])} • C ${Math.floor(
+          this.lch[1]
+        )} • H ${Math.floor(this.lch[2])}`
       ).makeNodeTag()
     } else if (this.colorSpace === 'OKLCH') {
       basePropViaColorSpace = new Tag(
         '_oklch',
-        `L ${parseFloat(this.oklch[0].toFixed(2))} • C ${parseFloat(this.oklch[1].toFixed(2))} • H ${Math.floor(this.oklch[2])}`
+        `L ${parseFloat(this.oklch[0].toFixed(2))} • C ${parseFloat(
+          this.oklch[1].toFixed(2)
+        )} • H ${Math.floor(this.oklch[2])}`
       ).makeNodeTag()
     } else if (this.colorSpace === 'LAB') {
       basePropViaColorSpace = new Tag(
         '_lab',
-        `L ${Math.floor(this.lab[0])} • A ${Math.floor(this.lab[1])} • B ${Math.floor(this.lab[2])}`
+        `L ${Math.floor(this.lab[0])} • A ${Math.floor(
+          this.lab[1]
+        )} • B ${Math.floor(this.lab[2])}`
       ).makeNodeTag()
     } else if (this.colorSpace === 'OKLAB') {
       basePropViaColorSpace = new Tag(
         '_oklab',
-        `L ${parseFloat(this.oklab[0].toFixed(2))} • A ${parseFloat(this.oklab[1].toFixed(2))} • B ${parseFloat(this.oklab[2].toFixed(2))}`
+        `L ${parseFloat(this.oklab[0].toFixed(2))} • A ${parseFloat(
+          this.oklab[1].toFixed(2)
+        )} • B ${parseFloat(this.oklab[2].toFixed(2))}`
       ).makeNodeTag()
     } else if (this.colorSpace === 'HSL') {
       basePropViaColorSpace = new Tag(
         '_lab',
-        `H ${Math.floor(this.hsl[0])} • S ${Math.floor(this.hsl[1] * 100)} • L ${Math.floor(this.hsl[2] * 100)}`
+        `H ${Math.floor(this.hsl[0])} • S ${Math.floor(
+          this.hsl[1] * 100
+        )} • L ${Math.floor(this.hsl[2] * 100)}`
       ).makeNodeTag()
     }
-      
 
     // insert
     this.nodeDetailedBaseProps.appendChild(
@@ -259,9 +276,7 @@ export default class Properties {
     this.nodeDetailedBaseProps.appendChild(
       new Tag('_hex', this.hex.toUpperCase()).makeNodeTag()
     )
-    this.nodeDetailedBaseProps.appendChild(
-      basePropViaColorSpace
-    )
+    this.nodeDetailedBaseProps.appendChild(basePropViaColorSpace)
 
     return this.nodeDetailedBaseProps
   }
@@ -324,7 +339,10 @@ export default class Properties {
             '_apca-light',
             `Lc ${this.getAPCAContrast('LIGHT').toFixed(1)}`
           ).makeNodeTag(chroma(this.textColorsTheme.lightColor).gl(), true),
-          new Tag('_minimum-font-sizes', locals[lang].properties.fontSize).makeNodeTag(),
+          new Tag(
+            '_minimum-font-sizes',
+            locals[lang].properties.fontSize
+          ).makeNodeTag(),
           new Tag(
             '_200-light',
             `${minimumLightFontSize[2]}pt (200)`
@@ -355,7 +373,10 @@ export default class Properties {
             '_apca-dark',
             `Lc ${this.getAPCAContrast('DARK').toFixed(1)}`
           ).makeNodeTag(chroma(this.textColorsTheme.darkColor).gl(), true),
-          new Tag('_minimum-font-sizes', locals[lang].properties.fontSize).makeNodeTag(),
+          new Tag(
+            '_minimum-font-sizes',
+            locals[lang].properties.fontSize
+          ).makeNodeTag(),
           new Tag(
             '_200-dark',
             `${minimumDarkFontSize[2]}pt (200)`

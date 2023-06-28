@@ -12,7 +12,13 @@ const exportXml = (palette) => {
         colors.unshift(`<!--${color.name}-->`)
         color.shades.forEach((shade) => {
           colors.unshift(
-            `<color name="${color.name.toLowerCase().split(' ').join('_').replace(/[@/$^%#&!?,;:+=<>(){}\[\]"«»]/g, '_')}_${shade.name}">${shade.hex}</color>`
+            `<color name="${color.name
+              .toLowerCase()
+              .split(' ')
+              .join('_')
+              .replace(/[@/$^%#&!?,;:+=<>(){}\[\]"«»]/g, '_')}_${shade.name}">${
+              shade.hex
+            }</color>`
           )
         })
         colors.unshift('')

@@ -32,7 +32,9 @@ export default class Shortcuts extends React.Component<Props> {
                 onMouseDown={this.onGetProPlan}
               >
                 <div className="icon icon--lock-off"></div>
-                <div className="type">{locals[this.props.lang].plan.getPro}</div>
+                <div className="type">
+                  {locals[this.props.lang].plan.getPro}
+                </div>
               </button>
             ) : null}
           </Feature>

@@ -36,7 +36,10 @@ export default class Scale extends React.Component<Props> {
     const messages: Array<string> = []
 
     if (this.props.preset.name === 'Custom' && !this.props.hasPreset)
-      messages.push(locals[this.props.lang].scale.add, locals[this.props.lang].scale.remove)
+      messages.push(
+        locals[this.props.lang].scale.add,
+        locals[this.props.lang].scale.remove
+      )
 
     if (!this.props.hasPreset)
       messages.push(
@@ -45,7 +48,10 @@ export default class Scale extends React.Component<Props> {
         locals[this.props.lang].scale.esc
       )
 
-    messages.push(locals[this.props.lang].scale.shift, locals[this.props.lang].scale.ctrl)
+    messages.push(
+      locals[this.props.lang].scale.shift,
+      locals[this.props.lang].scale.ctrl
+    )
 
     return messages
   }
@@ -93,7 +99,9 @@ export default class Scale extends React.Component<Props> {
         <div className="lightness-scale controls__control">
           <div className="section-controls">
             <div className="section-controls__left-part">
-              <div className="section-title">{locals[this.props.lang].scale.title}</div>
+              <div className="section-title">
+                {locals[this.props.lang].scale.title}
+              </div>
               <Feature
                 isActive={
                   features.find((feature) => feature.name === 'SCALE_PRESETS')
@@ -194,8 +202,12 @@ export default class Scale extends React.Component<Props> {
         <div className="lightness-scale controls__control">
           <div className="section-controls">
             <div className="section-controls__left-part">
-              <div className="section-title">{locals[this.props.lang].scale.title}</div>
-              <div className="type">{`(${Object.entries(this.props.scale).length})`}</div>
+              <div className="section-title">
+                {locals[this.props.lang].scale.title}
+              </div>
+              <div className="type">{`(${
+                Object.entries(this.props.scale).length
+              })`}</div>
             </div>
             <div className="section-controls__right-part">
               <div className="label">{this.props.preset.name}</div>
