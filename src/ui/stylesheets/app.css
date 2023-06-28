@@ -520,6 +520,7 @@ div.source-colors {
 
 ul.colors {
   overflow-y: auto;
+  padding: 1px 0;
 }
 
 li.colors__item {
