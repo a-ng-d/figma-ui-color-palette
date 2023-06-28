@@ -79,7 +79,7 @@ export default class Colors {
       labB: number = chroma(sourceColor).get('lab.b'),
       chr: number = Math.sqrt(labA ** 2 + labB ** 2)
     let
-      h: number = Math.atan(labB / labA)
+      h: number = Math.atan(labB / labA) + (hueShifting * (Math.PI / 180))
 
     if (h > Math.PI)
       h = Math.PI
@@ -90,10 +90,14 @@ export default class Colors {
       newLabA: number = chr * Math.cos(h),
       newLabB: number = chr * Math.sin(h)
     
-    if (Math.sign(newLabA) != Math.sign(labA))
+    if (Math.sign(labA) == -1 && Math.sign(labB) == 1) {
       newLabA *= -1
-    if (Math.sign(newLabB) != Math.sign(labB))
       newLabB *= -1
+    }  
+    if (Math.sign(labA) == -1 && Math.sign(labB) == -1) {
+      newLabA *= -1
+      newLabB *= -1
+    }
 
     const
       newColor: { _rgb: Array<number> } = chroma.lab(
@@ -131,10 +135,14 @@ export default class Colors {
       newLabA: number = chr * Math.cos(h),
       newLabB: number = chr * Math.sin(h)
     
-    if (Math.sign(newLabA) != Math.sign(labA))
+    if (Math.sign(labA) == -1 && Math.sign(labB) == 1) {
       newLabA *= -1
-    if (Math.sign(newLabB) != Math.sign(labB))
       newLabB *= -1
+    }  
+    if (Math.sign(labA) == -1 && Math.sign(labB) == -1) {
+      newLabA *= -1
+      newLabB *= -1
+    }
 
     const
       newColor: { _rgb: Array<number> } = chroma.oklab(
