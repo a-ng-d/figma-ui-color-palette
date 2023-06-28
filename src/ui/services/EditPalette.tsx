@@ -27,10 +27,11 @@ import { locals } from '../../content/locals'
 import { v4 as uuidv4 } from 'uuid'
 
 interface Props {
-  paletteName: string
+  name: string
   preset: PresetConfiguration
   scale: ScaleConfiguration
   colors: Array<ColorConfiguration>
+  colorSpace: string
   view: string
   textColorsTheme: TextColorsThemeHexModel
   algorithmVersion: string
@@ -299,15 +300,6 @@ export default class EditPalette extends React.Component<Props> {
         parent.postMessage({ pluginMessage: colorsMessage }, '*')
     }
 
-    const enableOklch = () => {
-      colorsMessage.data = this.props.colors.map((item) => {
-        if (item.id === id) item.oklch = e.target.checked
-        return item
-      })
-      this.props.onChangeColor(colorsMessage.data)
-      parent.postMessage({ pluginMessage: colorsMessage }, '*')
-    }
-
     const setHueShifting = () => {
       colorsMessage.data = this.props.colors.map((item) => {
         if (item.id === id) item.hueShifting = parseFloat(e.target.value)
@@ -325,7 +317,6 @@ export default class EditPalette extends React.Component<Props> {
       ADD: () => addColor(),
       REMOVE: () => removeColor(),
       RENAME: () => renameColor(),
-      OKLCH: () => enableOklch(),
       SHIFT_HUE: () => setHueShifting(),
     }
 
@@ -477,13 +468,13 @@ export default class EditPalette extends React.Component<Props> {
       )
       zip
         .generateAsync({ type: 'blob' })
-        .then((content) => FileSaver.saveAs(content, `${this.props.paletteName.toLowerCase().split(' ').join('_')}-colors`))
+        .then((content) => FileSaver.saveAs(content, `${this.props.name.toLowerCase().split(' ').join('_')}-colors`))
         .catch((error) => console.error(error))
     } else {
       const blob = new Blob([this.props.export.data], {
         type: this.props.export.mimeType,
       })
-      FileSaver.saveAs(blob, `${this.props.paletteName.toLowerCase().split(' ').join('_')}-colors${this.props.export.format === 'SWIFT' ? '.swift' : ''}`)
+      FileSaver.saveAs(blob, `${this.props.name.toLowerCase().split(' ').join('_')}-colors${this.props.export.format === 'SWIFT' ? '.swift' : ''}`)
     }
   }
 
@@ -596,12 +587,12 @@ export default class EditPalette extends React.Component<Props> {
       case 'SETTINGS': {
         controls = (
           <Settings
-            paletteName={this.props.paletteName}
-            textColorsTheme={this.props.textColorsTheme}
-            settings={['BASE', 'CONTRAST_MANAGEMENT', 'COLOR_MANAGEMENT']}
-            context="EDIT"
-            view={this.props.view}
+            context="LOCAL_STYLES"
+            name={this.props.name}
+            colorSpace={this.props.colorSpace}
             isNewAlgorithm={this.props.algorithmVersion == 'v2' ? true : false}
+            textColorsTheme={this.props.textColorsTheme}
+            view={this.props.view}
             planStatus={this.props.planStatus}
             editorType={this.props.editorType}
             lang={this.props.lang}

@@ -28,12 +28,13 @@ export default class Colors {
     hueShifting: number,
     algorithmVersion: string
   ) {
-    const lch: Array<number> = chroma(sourceColor).lch(),
+    const
+      lch: Array<number> = chroma(sourceColor).lch(),
       newColor: { _rgb: Array<number> } = chroma.lch(
-        lightness * 1,
+        lightness,
         algorithmVersion == 'v2'
-          ? Math.sin((lightness / 100) * Math.PI) * chroma(sourceColor).lch()[1]
-          : chroma(sourceColor).lch()[1],
+          ? Math.sin((lightness / 100) * Math.PI) * lch[1]
+          : lch[1],
         lch[2] + hueShifting < 0
           ? 0
           : lch[2] + hueShifting > 360
@@ -50,18 +51,132 @@ export default class Colors {
     hueShifting: number,
     algorithmVersion: string
   ) {
-    const oklch: { _rgb: Array<number> } = chroma(sourceColor).oklch()
-    const newColor: { _rgb: Array<number> } = chroma.oklch(
+    const
+      oklch: { _rgb: Array<number> } = chroma(sourceColor).oklch(),
+      newColor: { _rgb: Array<number> } = chroma.oklch(
       lightness / 100,
       algorithmVersion == 'v2'
-        ? Math.sin((lightness / 100) * Math.PI) * chroma(sourceColor).oklch()[1]
-        : chroma(sourceColor).oklch()[1],
+        ? Math.sin((lightness / 100) * Math.PI) * oklch[1]
+        : oklch[1],
       oklch[2] + hueShifting < 0
         ? 0
         : oklch[2] + hueShifting > 360
         ? 360
         : oklch[2] + hueShifting
     )
+
+    return newColor
+  }
+
+  getShadeColorFromLab(
+    sourceColor: Array<number>,
+    lightness: number,
+    hueShifting: number,
+    algorithmVersion: string
+  ) {
+    const
+      labA: number = chroma(sourceColor).get('lab.a'),
+      labB: number = chroma(sourceColor).get('lab.b'),
+      chr: number = Math.sqrt(labA ** 2 + labB ** 2)
+    let
+      h: number = Math.atan(labB / labA) + (hueShifting * (Math.PI / 180))
+
+    if (h > Math.PI)
+      h = Math.PI
+    else if (h < -Math.PI)
+      h = Math.PI
+    
+    let
+      newLabA: number = chr * Math.cos(h),
+      newLabB: number = chr * Math.sin(h)
+    
+    if (Math.sign(labA) == -1 && Math.sign(labB) == 1) {
+      newLabA *= -1
+      newLabB *= -1
+    }  
+    if (Math.sign(labA) == -1 && Math.sign(labB) == -1) {
+      newLabA *= -1
+      newLabB *= -1
+    }
+
+    const
+      newColor: { _rgb: Array<number> } = chroma.lab(
+        lightness,
+        algorithmVersion == 'v2'
+          ? Math.sin((lightness / 100) * Math.PI) * newLabA
+          : newLabA,
+        algorithmVersion == 'v2'
+          ? Math.sin((lightness / 100) * Math.PI) * newLabB
+          : newLabB
+      )
+
+    return newColor
+  }
+
+  getShadeColorFromOklab(
+    sourceColor: Array<number>,
+    lightness: number,
+    hueShifting: number,
+    algorithmVersion: string
+  ) {
+    const
+      labA: number = chroma(sourceColor).get('oklab.a'),
+      labB: number = chroma(sourceColor).get('oklab.b'),
+      chr: number = Math.sqrt(labA ** 2 + labB ** 2)
+    let
+      h: number = Math.atan(labB / labA) + (hueShifting * (Math.PI / 180))
+
+    if (h > Math.PI)
+      h = Math.PI
+    else if (h < -Math.PI)
+      h = Math.PI
+    
+    let
+      newLabA: number = chr * Math.cos(h),
+      newLabB: number = chr * Math.sin(h)
+    
+    if (Math.sign(labA) == -1 && Math.sign(labB) == 1) {
+      newLabA *= -1
+      newLabB *= -1
+    }  
+    if (Math.sign(labA) == -1 && Math.sign(labB) == -1) {
+      newLabA *= -1
+      newLabB *= -1
+    }
+
+    const
+      newColor: { _rgb: Array<number> } = chroma.oklab(
+        lightness / 100,
+        algorithmVersion == 'v2'
+          ? Math.sin((lightness / 100) * Math.PI) * newLabA
+          : newLabA,
+        algorithmVersion == 'v2'
+          ? Math.sin((lightness / 100) * Math.PI) * newLabB
+          : newLabB
+      )
+
+    return newColor
+  }
+
+  getShadeColorFromHsl(
+    sourceColor: Array<number>,
+    lightness: number,
+    hueShifting: number,
+    algorithmVersion: string
+  ) {
+    const
+      hsl: Array<number> = chroma(sourceColor).hsl(),
+      newColor: { _rgb: Array<number> } = chroma.hsl(
+        hsl[0] + hueShifting < 0
+          ? 0
+          : hsl[0] + hueShifting > 360
+          ? 360
+          : hsl[0] + hueShifting,
+        algorithmVersion == 'v2'
+          ? Math.sin((lightness / 100) * Math.PI) * hsl[1]
+          : hsl[1],
+        lightness / 100
+      )
 
     return newColor
   }
@@ -87,6 +202,7 @@ export default class Colors {
         null,
         null,
         [255, 255, 255],
+        this.parent.colorSpace,
         this.parent.view,
         this.parent.textColorsTheme
       ).makeNodeName('RELATIVE', 100, 48)
@@ -110,9 +226,13 @@ export default class Colors {
       paletteDataItem.shades.push({
         name: 'source',
         hex: chroma(sourceColor).hex(),
-        rgb: sourceColor.map(value => Math.floor(value)),
+        rgb: sourceColor,
         gl: chroma(sourceColor).gl(),
-        lch: chroma(sourceColor).lch().map(value => Math.floor(value)),
+        lch: chroma(sourceColor).lch(),
+        oklch: chroma(sourceColor).oklch(),
+        lab: chroma(sourceColor).lab(),
+        oklab: chroma(sourceColor).oklab(),
+        hsl: chroma(sourceColor).hsl(),
       })
 
       Object.values(this.parent.scale)
@@ -120,21 +240,41 @@ export default class Colors {
         .forEach((lightness: number) => {
           let newColor: { _rgb: Array<number> }
 
-          if (color.oklch) {
-            newColor = this.getShadeColorFromOklch(
-              sourceColor,
-              lightness,
-              color.hueShifting,
-              this.parent.algorithmVersion
-            )
-          } else {
+          if (this.parent.colorSpace === 'LCH')
             newColor = this.getShadeColorFromLch(
               sourceColor,
               lightness,
               color.hueShifting,
               this.parent.algorithmVersion
             )
-          }
+          else if (this.parent.colorSpace === 'OKLCH')
+            newColor = this.getShadeColorFromOklch(
+              sourceColor,
+              lightness,
+              color.hueShifting,
+              this.parent.algorithmVersion
+            )
+          else if (this.parent.colorSpace === 'LAB')
+            newColor = this.getShadeColorFromLab(
+              sourceColor,
+              lightness,
+              color.hueShifting,
+              this.parent.algorithmVersion
+            )
+          else if (this.parent.colorSpace === 'OKLAB')
+            newColor = this.getShadeColorFromOklab(
+              sourceColor,
+              lightness,
+              color.hueShifting,
+              this.parent.algorithmVersion
+            )
+          else if (this.parent.colorSpace === 'HSL')
+            newColor = this.getShadeColorFromHsl(
+              sourceColor,
+              lightness,
+              color.hueShifting,
+              this.parent.algorithmVersion
+            )
 
           const scaleName: string = Object.keys(this.parent.scale)
             .find((key) => this.parent.scale[key] === lightness)
@@ -143,9 +283,13 @@ export default class Colors {
           paletteDataItem.shades.push({
             name: scaleName,
             hex: chroma(newColor).hex(),
-            rgb: newColor._rgb.map(value => Math.floor(value)),
+            rgb: newColor._rgb,
             gl: chroma(newColor).gl(),
-            lch: chroma(newColor).lch().map(value => Math.floor(value)),
+            lch: chroma(newColor).lch(),
+            oklch: chroma(newColor).oklch(),
+            lab: chroma(newColor).lab(),
+            oklab: chroma(newColor).oklab(),
+            hsl: chroma(newColor).hsl()
           })
         })
 
@@ -188,9 +332,9 @@ export default class Colors {
     this.node.appendChild(
       new Title(
         `${
-          this.parent.paletteName === ''
+          this.parent.name === ''
             ? locals[lang].name
-            : this.parent.paletteName
+            : this.parent.name
         } • ${this.parent.preset.name} • ${
           this.parent.view.includes('PALETTE') ? 'Palette' : 'Sheet'
         }`,
@@ -241,17 +385,19 @@ export default class Colors {
               null,
               null,
               [color.rgb.r * 255, color.rgb.g * 255, color.rgb.b * 255],
+              this.parent.colorSpace,
               this.parent.view,
               this.parent.textColorsTheme
-            ).makeNodeShade(160, 224, color.name, true)
+            ).makeNodeShade(184, 248, color.name, true)
           : new Sample(
               color.name,
               null,
               null,
               [color.rgb.r * 255, color.rgb.g * 255, color.rgb.b * 255],
+              this.parent.colorSpace,
               this.parent.view,
               this.parent.textColorsTheme
-            ).makeNodeRichShade(160, 376, color.name, true)
+            ).makeNodeRichShade(184, 434, color.name, true)
       )
 
       Object.values(this.parent.scale)
@@ -259,26 +405,46 @@ export default class Colors {
         .forEach((lightness: number) => {
           let newColor: { _rgb: Array<number> }
 
-          if (color.oklch) {
-            newColor = this.getShadeColorFromOklch(
-              sourceColor,
-              lightness,
-              color.hueShifting,
-              this.parent.algorithmVersion
-            )
-          } else {
+          if (this.parent.colorSpace === 'LCH')
             newColor = this.getShadeColorFromLch(
               sourceColor,
               lightness,
               color.hueShifting,
               this.parent.algorithmVersion
             )
-          }
-
+          else if (this.parent.colorSpace === 'OKLCH')
+            newColor = this.getShadeColorFromOklch(
+              sourceColor,
+              lightness,
+              color.hueShifting,
+              this.parent.algorithmVersion
+            )
+          else if (this.parent.colorSpace === 'LAB')
+            newColor = this.getShadeColorFromLab(
+              sourceColor,
+              lightness,
+              color.hueShifting,
+              this.parent.algorithmVersion
+            )
+          else if (this.parent.colorSpace === 'OKLAB')
+            newColor = this.getShadeColorFromOklab(
+              sourceColor,
+              lightness,
+              color.hueShifting,
+              this.parent.algorithmVersion
+            )
+          else if (this.parent.colorSpace === 'HSL')
+            newColor = this.getShadeColorFromHsl(
+              sourceColor,
+              lightness,
+              color.hueShifting,
+              this.parent.algorithmVersion
+            )
+          
           const distance: number = chroma.distance(
             chroma(sourceColor).hex(),
             chroma(newColor).hex(),
-            'lch'
+            'rgb'
           )
 
           const scaleName: string = Object.keys(this.parent.scale)
@@ -292,10 +458,11 @@ export default class Colors {
                 color.rgb,
                 scaleName,
                 newColor._rgb,
+                this.parent.colorSpace,
                 this.parent.view,
                 this.parent.textColorsTheme,
                 { isClosestToRef: distance < 4 ? true : false }
-              ).makeNodeShade(160, 224, scaleName)
+              ).makeNodeShade(184, 248, scaleName)
             )
           } else {
             this.nodeRowShades.layoutMode = 'VERTICAL'
@@ -305,10 +472,11 @@ export default class Colors {
                 color.rgb,
                 scaleName,
                 newColor._rgb,
+                this.parent.colorSpace,
                 this.parent.view,
                 this.parent.textColorsTheme,
                 { isClosestToRef: distance < 4 ? true : false }
-              ).makeNodeRichShade(264, 376, scaleName)
+              ).makeNodeRichShade(322, 434, scaleName)
             )
             if (i % 4 == 0) {
               this.nodeRowShades.appendChild(this.makeNodeSlice(samples))

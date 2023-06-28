@@ -57,7 +57,7 @@ export default class Colors extends React.Component<Props> {
               />
             </div>
           </div>
-          <ul className="colors mask">
+          <ul className="colors">
             {this.props.colors.map((color, index) => (
               <ColorItem
                 key={color.id}
@@ -96,7 +96,7 @@ export default class Colors extends React.Component<Props> {
           </ul>
         </div>
         <Actions
-          context="EDIT"
+          context="LOCAL_STYLES"
           view={this.props.view}
           editorType={this.props.editorType}
           planStatus={this.props.planStatus}

@@ -1,3 +1,4 @@
+import { lang, locals } from '../content/locals'
 import Palette from './../canvas/Palette'
 
 const createPalette = (msg, palette) => {
@@ -7,6 +8,7 @@ const createPalette = (msg, palette) => {
     msg.data.name,
     msg.data.preset,
     msg.data.scale,
+    msg.data.colorSpace,
     msg.data.view,
     msg.data.textColorsTheme,
     'v2'

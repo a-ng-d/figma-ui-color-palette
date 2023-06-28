@@ -22,7 +22,6 @@ export default class Property {
     this.node.layoutMode = 'VERTICAL'
     this.node.primaryAxisSizingMode = 'FIXED'
     this.node.counterAxisSizingMode = 'FIXED'
-    this.node.primaryAxisAlignItems = 'SPACE_BETWEEN'
     this.node.layoutAlign = 'STRETCH'
     this.node.layoutGrow = 1
 

@@ -12,8 +12,9 @@ import features from '../../utils/features'
 import { locals } from '../../content/locals'
 
 interface Props {
-  paletteName: string
+  name: string
   preset: PresetConfiguration
+  colorSpace: string
   view: string
   textColorsTheme: TextColorsThemeHexModel
   planStatus: string
@@ -131,10 +132,10 @@ export default class CreatePalette extends React.Component<Props> {
       case 'SETTINGS': {
         controls = (
           <Settings
-            paletteName={this.props.paletteName}
-            textColorsTheme={this.props.textColorsTheme}
-            settings={['BASE', 'CONTRAST_MANAGEMENT']}
             context="CREATE"
+            name={this.props.name}
+            colorSpace={this.props.colorSpace}
+            textColorsTheme={this.props.textColorsTheme}
             view={this.props.view}
             planStatus={this.props.planStatus}
             lang={this.props.lang}
@@ -146,7 +147,7 @@ export default class CreatePalette extends React.Component<Props> {
         )
         break
       }
-      case 'About': {
+      case 'ABOUT': {
         controls = (
           <About
             planStatus={this.props.planStatus}

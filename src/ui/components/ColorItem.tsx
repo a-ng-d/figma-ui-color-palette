@@ -2,7 +2,7 @@ import * as React from 'react'
 import chroma from 'chroma-js'
 import Input from './Input'
 import Button from './Button'
-import Switch from './Switch'
+import FormItem from './FormItem'
 import Feature from './Feature'
 import doMap from './../../utils/doMap'
 import features from '../../utils/features'
@@ -149,7 +149,7 @@ export default class ColorItem extends React.Component<Props> {
             onBlur={this.inputHandler}
           />
           <div className="inputs">
-            <div className="label">LCH</div>
+            <div className="label">{locals[this.props.lang].colors.lch}</div>
             <div className="inputs__bar">
               <Input
                 type="number"
@@ -194,8 +194,6 @@ export default class ColorItem extends React.Component<Props> {
         <div className="colors__buttons">
           <Feature
             isActive={
-              features.find((feature) => feature.name === 'COLORS_OKLCH_SPACE')
-                .isActive ||
               features.find((feature) => feature.name === 'COLORS_HUE_SHIFTING')
                 .isActive
             }
@@ -218,30 +216,12 @@ export default class ColorItem extends React.Component<Props> {
         {this.state['hasMoreOptions'] ? (
           <Feature
             isActive={
-              features.find((feature) => feature.name === 'COLORS_OKLCH_SPACE')
-                .isActive
-            }
-          >
-            <div className="colors__space">
-              <Switch
-                id={'oklch-' + this.props.uuid}
-                label={locals[this.props.lang].colors.oklch}
-                isChecked={this.props.oklch}
-                isDisabled={false}
-                feature="OKLCH"
-                onChange={this.inputHandler}
-              />
-            </div>
-          </Feature>
-        ) : null}
-        {this.state['hasMoreOptions'] ? (
-          <Feature
-            isActive={
               features.find((feature) => feature.name === 'COLORS_HUE_SHIFTING')
                 .isActive
             }
           >
-            <div className="colors__shift">
+            <div className="colors__shift inputs">
+              <div className="label">{locals[this.props.lang].colors.hueShifting}</div>
               <Input
                 type="number"
                 icon={{ type: 'icon', value: 'arrow-left-right' }}

@@ -10,6 +10,7 @@ interface Props {
     isBlocked?: boolean
   }>
   selected: string
+  feature: string
   onChange: React.ChangeEventHandler
 }
 
@@ -51,8 +52,14 @@ export default class Dropdown extends React.Component<Props> {
       isListOpen: true,
     })
     setTimeout(() => {
-      if (this.listRef.current.getBoundingClientRect().top < 40)
+      if (this.listRef.current.getBoundingClientRect().top < 16) {
         this.listRef.current.style.top = '-6px'
+        this.listRef.current.style.bottom = 'auto'
+      }
+      if (this.listRef.current.getBoundingClientRect().bottom > document.body.clientHeight - 16) {
+        this.listRef.current.style.top = 'auto'
+        this.listRef.current.style.bottom = '-6px'
+      }
     }, 1)
   }
 
@@ -103,6 +110,7 @@ export default class Dropdown extends React.Component<Props> {
                   data-value={option.value}
                   data-position={option.position}
                   data-is-blocked={option.isBlocked}
+                  data-feature={this.props.feature}
                   onMouseDown={this.onSelectItem}
                 >
                   <span className="select-menu__item-icon"></span>

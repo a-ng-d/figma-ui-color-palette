@@ -112,6 +112,7 @@ export default class Scale extends React.Component<Props> {
                     }
                   })}
                   selected={this.props.preset.id}
+                  feature="UPDATE_PRESET"
                   onChange={this.props.onChangePreset}
                 />
               </Feature>
@@ -227,7 +228,7 @@ export default class Scale extends React.Component<Props> {
           </Feature>
         </div>
         <Actions
-          context="EDIT"
+          context="LOCAL_STYLES"
           view={this.props.view}
           editorType={this.props.editorType}
           planStatus={this.props.planStatus}

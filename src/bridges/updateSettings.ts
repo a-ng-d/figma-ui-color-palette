@@ -10,15 +10,16 @@ const updateSettings = (msg, palette) => {
   palette = isSelectionChanged ? previousSelection[0] : currentSelection[0]
 
   if (palette.children.length == 1) {
-    const colors = JSON.parse(palette.getPluginData('colors')),
-      scale = JSON.parse(palette.getPluginData('scale')),
+    const
       preset = JSON.parse(palette.getPluginData('preset')),
+      scale = JSON.parse(palette.getPluginData('scale')),
+      colors = JSON.parse(palette.getPluginData('colors')),
       view: string = palette.getPluginData('view')
 
-    let paletteName: string
+    let name: string
 
     palette.setPluginData('name', msg.data.name)
-    ;(paletteName =
+    ;(name =
       palette.getPluginData('name') === '' ||
       palette.getPluginData('name') == undefined
         ? locals[lang].name
@@ -26,6 +27,7 @@ const updateSettings = (msg, palette) => {
       (palette.name = `${
         msg.data.name === '' ? locals[lang].name : msg.data.name
       }﹒${preset.name}﹒${view.includes('PALETTE') ? 'Palette' : 'Sheet'}`)
+    palette.setPluginData('colorSpace', msg.data.colorSpace)
     palette.setPluginData(
       'textColorsTheme',
       JSON.stringify(msg.data.textColorsTheme)
@@ -36,10 +38,11 @@ const updateSettings = (msg, palette) => {
     palette.appendChild(
       new Colors(
         {
-          paletteName: paletteName,
+          name: name,
           preset: preset,
           scale: scale,
           colors: colors,
+          colorSpace: msg.data.colorSpace,
           view: view,
           textColorsTheme: msg.data.textColorsTheme,
           algorithmVersion: msg.data.algorithmVersion,
@@ -50,6 +53,9 @@ const updateSettings = (msg, palette) => {
 
     // palette migration
     palette.counterAxisSizingMode = 'AUTO'
+    palette.name = `${name}﹒${preset.name}﹒${msg.data.colorSpace} ${
+      view.includes('PALETTE') ? 'Palette' : 'Sheet'
+    }`
   } else figma.notify(locals[lang].error.corruption)
 }
 

@@ -33,7 +33,8 @@ export const locals = {
     },
     colors: {
       title: 'Source colors',
-      oklch: 'Use OKLCH',
+      lch: 'LCH',
+      hueShifting: 'HUE',
     },
     export: {
       format: 'File format',
@@ -59,6 +60,14 @@ export const locals = {
       },
       color: {
         title: 'Color management',
+        colorSpace: 'Color space',
+        colorSpaceOptions: {
+          lch: 'LCH (Lightness, Chroma, Hue)',
+          oklch: 'OKLCH (OK, Lightness, Chroma, Hue)',
+          lab: 'CIELAB (CIE, Lightness, a﹡ axis, b﹡ axis)',
+          oklab: 'OKLAB (OK, Lightness, a﹡ axis, b﹡ axis)',
+          hsl: 'HSL (Hue, Saturation, Lightness)'
+        },
         newAlgorithm: 'Enable the new algorithm for creating color shades',
         newAlgorithmDescription:
           'The Chroma values are harmonized to ensure consistent lightness across all shades, but this may make the colors look desaturated.',
@@ -116,7 +125,8 @@ export const locals = {
       updateLocalStyles:
         'No color has been updated because the UI Color Palette has not been edited',
       emptySourceColors:
-        'There is not any source color. Add it manually in the Colors section.'
+        'There is not any source color. Add it manually in the Colors section.',
+      hslColorSpace: 'The HSL color space may include the source colors in the palette, but this approach will not ensure consistency in lightness and contrast.'
     },
     error: {
       corruption:

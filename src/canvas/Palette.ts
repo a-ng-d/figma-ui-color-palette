@@ -9,10 +9,11 @@ import Colors from './Colors'
 import { locals, lang } from '../content/locals'
 
 export default class Palette {
-  paletteName: string
   name: string
+  frameName: string
   scale: ScaleConfiguration
   colors: Array<ColorConfiguration>
+  colorSpace: string
   preset: PresetConfiguration
   view: string
   textColorsTheme: TextColorsThemeHexModel
@@ -24,17 +25,19 @@ export default class Palette {
     name: string,
     preset: PresetConfiguration,
     scale: ScaleConfiguration,
+    colorSpace: string,
     view: string,
     textColorsTheme: TextColorsThemeHexModel,
     algorithmVersion: string
   ) {
-    this.paletteName = name
-    this.name = `${name === '' ? locals[lang].name : name}﹒${preset.name}﹒${
+    this.name = name
+    this.frameName = `${name === '' ? locals[lang].name : name}﹒${preset.name}﹒${colorSpace} ${
       view.includes('PALETTE') ? 'Palette' : 'Sheet'
     }`
     this.preset = preset
     this.scale = scale
     this.colors = []
+    this.colorSpace = colorSpace
     this.view = view
     this.algorithmVersion = algorithmVersion
     this.textColorsTheme = textColorsTheme
@@ -44,7 +47,7 @@ export default class Palette {
   makeNode() {
     // base
     this.node = figma.createFrame()
-    this.node.name = this.name
+    this.node.name = this.frameName
     this.node.resize(1640, 100)
     this.node.cornerRadius = 16
 
@@ -60,14 +63,15 @@ export default class Palette {
 
     // data
     this.node.setRelaunchData({ edit: '' })
-    this.node.setPluginData('name', this.paletteName)
-    this.node.setPluginData('scale', JSON.stringify(this.scale))
+    this.node.setPluginData('name', this.name)
     this.node.setPluginData('preset', JSON.stringify(this.preset))
+    this.node.setPluginData('scale', JSON.stringify(this.scale))
+    this.node.setPluginData('colorSpace', this.colorSpace)
+    this.node.setPluginData('view', this.view)
     this.node.setPluginData(
       'textColorsTheme',
       JSON.stringify(this.textColorsTheme)
     )
-    this.node.setPluginData('view', this.view)
     this.node.setPluginData('algorithmVersion', this.algorithmVersion)
 
     // insert
@@ -106,9 +110,5 @@ export default class Palette {
 
     this.node.setPluginData('colors', JSON.stringify(this.colors))
     return this.node
-  }
-
-  changeName(name: string) {
-    this.node.name = name
   }
 }

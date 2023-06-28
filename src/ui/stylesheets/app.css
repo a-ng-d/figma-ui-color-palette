@@ -455,7 +455,8 @@ div.form-item label {
 }
 
 div.form-item .input,
-div.form-item .textarea {
+div.form-item .textarea,
+div.form-item .select-menu {
   flex: 4;
 }
 
@@ -594,13 +595,8 @@ li .colors__buttons {
   justify-content: flex-end;
 }
 
-li .colors__space {
-  grid-column: 1 / span 16;
-  grid-row: 2 / 2;
-}
-
 li .colors__shift {
-  grid-column: 17 / span 11;
+  grid-column: 1 / span 16;
   grid-row: 2 / 2;
 }
 
