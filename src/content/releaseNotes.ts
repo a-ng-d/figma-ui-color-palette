@@ -17,7 +17,7 @@ const releaseNotes: Array<ReleaseNote> = [
   },
   {
     version: '2.2.0',
-    isMostRecent: true,
+    isMostRecent: false,
     title: 'UI Color Palette 22 update highlight',
     image: rnv22,
     content:
