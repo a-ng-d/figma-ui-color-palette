@@ -2,13 +2,19 @@ import type { TextColorsThemeHexModel } from '../utils/types'
 import chroma from 'chroma-js'
 import { APCAcontrast, sRGBtoY, fontLookupAPCA } from 'apca-w3'
 import Tag from './Tag'
+import { locals, lang } from '../content/locals'
 
 export default class Properties {
   name: string
   rgb: Array<number>
+  colorSpace: string
   textColorsTheme: TextColorsThemeHexModel
   hex: string
   lch: Array<number>
+  oklch: Array<number>
+  lab: Array<number>
+  oklab: Array<number>
+  hsl: Array<number>
   nodeTopProps: FrameNode
   nodeBottomProps: FrameNode
   nodeBaseProps: FrameNode
@@ -25,13 +31,19 @@ export default class Properties {
   constructor(
     name: string,
     rgb: Array<number>,
+    colorSpace: string,
     textColorsTheme: TextColorsThemeHexModel
   ) {
     this.name = name
     this.rgb = rgb
+    this.colorSpace = colorSpace
     this.textColorsTheme = textColorsTheme
     this.hex = chroma(rgb).hex()
     this.lch = chroma(rgb).lch()
+    this.oklch = chroma(rgb).oklch()
+    this.lab = chroma(rgb).lab()
+    this.oklab = chroma(rgb).oklab()
+    this.hsl = chroma(rgb).hsl()
   }
 
   getContrast(textColor: string) {
@@ -66,7 +78,7 @@ export default class Properties {
     return fontLookupAPCA(this.getAPCAContrast(textColor))
   }
 
-  makeNodeTopProps() {
+  makeNodeTopProps = () => {
     // base
     this.nodeTopProps = figma.createFrame()
     this.nodeTopProps.name = '_top'
@@ -81,7 +93,7 @@ export default class Properties {
     return this.nodeTopProps
   }
 
-  makeNodeBottomProps() {
+  makeNodeBottomProps = () => {
     // base
     this.nodeBottomProps = figma.createFrame()
     this.nodeBottomProps.name = '_bottom'
@@ -99,7 +111,7 @@ export default class Properties {
     return this.nodeBottomProps
   }
 
-  makeNodeBaseProps() {
+  makeNodeBaseProps = () => {
     // base
     this.nodeBaseProps = figma.createFrame()
     this.nodeBaseProps.name = '_base'
@@ -113,23 +125,55 @@ export default class Properties {
     this.nodeBaseProps.layoutGrow = 1
     this.nodeBaseProps.itemSpacing = 4
 
-    // insert
-    this.nodeBaseProps.appendChild(
-      new Tag('_hex', this.hex.toUpperCase()).makeNodeTag()
-    )
-    this.nodeBaseProps.appendChild(
-      new Tag(
+    let basePropViaColorSpace
+
+    if (this.colorSpace === 'LCH') {
+      basePropViaColorSpace = new Tag(
         '_lch',
         `L ${Math.floor(this.lch[0])} • C ${Math.floor(
           this.lch[1]
         )} • H ${Math.floor(this.lch[2])}`
       ).makeNodeTag()
+    } else if (this.colorSpace === 'OKLCH') {
+      basePropViaColorSpace = new Tag(
+        '_oklch',
+        `L ${parseFloat(this.oklch[0].toFixed(2))} • C ${parseFloat(
+          this.oklch[1].toFixed(2)
+        )} • H ${Math.floor(this.oklch[2])}`
+      ).makeNodeTag()
+    } else if (this.colorSpace === 'LAB') {
+      basePropViaColorSpace = new Tag(
+        '_lab',
+        `L ${Math.floor(this.lab[0])} • A ${Math.floor(
+          this.lab[1]
+        )} • B ${Math.floor(this.lab[2])}`
+      ).makeNodeTag()
+    } else if (this.colorSpace === 'OKLAB') {
+      basePropViaColorSpace = new Tag(
+        '_oklab',
+        `L ${parseFloat(this.oklab[0].toFixed(2))} • A ${parseFloat(
+          this.oklab[1].toFixed(2)
+        )} • B ${parseFloat(this.oklab[2].toFixed(2))}`
+      ).makeNodeTag()
+    } else if (this.colorSpace === 'HSL') {
+      basePropViaColorSpace = new Tag(
+        '_lab',
+        `H ${Math.floor(this.hsl[0])} • S ${Math.floor(
+          this.hsl[1] * 100
+        )} • L ${Math.floor(this.hsl[2] * 100)}`
+      ).makeNodeTag()
+    }
+
+    // insert
+    this.nodeBaseProps.appendChild(
+      new Tag('_hex', this.hex.toUpperCase()).makeNodeTag()
     )
+    this.nodeBaseProps.appendChild(basePropViaColorSpace)
 
     return this.nodeBaseProps
   }
 
-  makeNodeContrastScoresProps() {
+  makeNodeContrastScoresProps = () => {
     // base
     this.nodeContrastScoresProps = figma.createFrame()
     this.nodeContrastScoresProps.name = '_contrast-scores'
@@ -175,7 +219,7 @@ export default class Properties {
     return this.nodeContrastScoresProps
   }
 
-  makeNodeDetailedBaseProps() {
+  makeNodeDetailedBaseProps = () => {
     this.nodeDetailedBaseProps = figma.createFrame()
     this.nodeDetailedBaseProps.name = '_base'
     this.nodeDetailedBaseProps.fills = []
@@ -186,26 +230,58 @@ export default class Properties {
     this.nodeDetailedBaseProps.layoutAlign = 'STRETCH'
     this.nodeDetailedBaseProps.itemSpacing = 4
 
-    // insert
-    this.nodeDetailedBaseProps.appendChild(
-      new Tag('_title', 'Base', 10).makeNodeTag()
-    )
-    this.nodeDetailedBaseProps.appendChild(
-      new Tag('_hex', this.hex.toUpperCase()).makeNodeTag()
-    )
-    this.nodeDetailedBaseProps.appendChild(
-      new Tag(
+    let basePropViaColorSpace
+
+    if (this.colorSpace === 'LCH') {
+      basePropViaColorSpace = new Tag(
         '_lch',
         `L ${Math.floor(this.lch[0])} • C ${Math.floor(
           this.lch[1]
         )} • H ${Math.floor(this.lch[2])}`
       ).makeNodeTag()
+    } else if (this.colorSpace === 'OKLCH') {
+      basePropViaColorSpace = new Tag(
+        '_oklch',
+        `L ${parseFloat(this.oklch[0].toFixed(2))} • C ${parseFloat(
+          this.oklch[1].toFixed(2)
+        )} • H ${Math.floor(this.oklch[2])}`
+      ).makeNodeTag()
+    } else if (this.colorSpace === 'LAB') {
+      basePropViaColorSpace = new Tag(
+        '_lab',
+        `L ${Math.floor(this.lab[0])} • A ${Math.floor(
+          this.lab[1]
+        )} • B ${Math.floor(this.lab[2])}`
+      ).makeNodeTag()
+    } else if (this.colorSpace === 'OKLAB') {
+      basePropViaColorSpace = new Tag(
+        '_oklab',
+        `L ${parseFloat(this.oklab[0].toFixed(2))} • A ${parseFloat(
+          this.oklab[1].toFixed(2)
+        )} • B ${parseFloat(this.oklab[2].toFixed(2))}`
+      ).makeNodeTag()
+    } else if (this.colorSpace === 'HSL') {
+      basePropViaColorSpace = new Tag(
+        '_lab',
+        `H ${Math.floor(this.hsl[0])} • S ${Math.floor(
+          this.hsl[1] * 100
+        )} • L ${Math.floor(this.hsl[2] * 100)}`
+      ).makeNodeTag()
+    }
+
+    // insert
+    this.nodeDetailedBaseProps.appendChild(
+      new Tag('_title', locals[lang].properties.base, 10).makeNodeTag()
     )
+    this.nodeDetailedBaseProps.appendChild(
+      new Tag('_hex', this.hex.toUpperCase()).makeNodeTag()
+    )
+    this.nodeDetailedBaseProps.appendChild(basePropViaColorSpace)
 
     return this.nodeDetailedBaseProps
   }
 
-  makeDetailedWCAGScoresProps() {
+  makeDetailedWCAGScoresProps = () => {
     this.nodeDetailedWCAGScoresProps = figma.createFrame()
     this.nodeDetailedWCAGScoresProps.name = '_wcag-scores'
     this.nodeDetailedWCAGScoresProps.fills = []
@@ -218,7 +294,7 @@ export default class Properties {
 
     // insert
     this.nodeDetailedWCAGScoresProps.appendChild(
-      new Tag('_title', 'WCAG scores', 10).makeNodeTag()
+      new Tag('_title', locals[lang].properties.wcag, 10).makeNodeTag()
     )
     this.nodeDetailedWCAGScoresProps.appendChild(
       new Tag(
@@ -236,7 +312,7 @@ export default class Properties {
     return this.nodeDetailedWCAGScoresProps
   }
 
-  makeNodeDetailedAPCAScoresProps() {
+  makeNodeDetailedAPCAScoresProps = () => {
     this.nodeDetailedAPCAScoresProps = figma.createFrame()
     this.nodeDetailedAPCAScoresProps.name = '_apca-scores'
     this.nodeDetailedAPCAScoresProps.fills = []
@@ -254,7 +330,7 @@ export default class Properties {
 
     // insert
     this.nodeDetailedAPCAScoresProps.appendChild(
-      new Tag('_title', 'APCA scores', 10).makeNodeTag()
+      new Tag('_title', locals[lang].properties.apca, 10).makeNodeTag()
     )
     this.nodeDetailedAPCAScoresProps.appendChild(
       this.makeNodeColumns(
@@ -263,7 +339,10 @@ export default class Properties {
             '_apca-light',
             `Lc ${this.getAPCAContrast('LIGHT').toFixed(1)}`
           ).makeNodeTag(chroma(this.textColorsTheme.lightColor).gl(), true),
-          new Tag('_minimum-font-sizes', 'Minimum font sizes').makeNodeTag(),
+          new Tag(
+            '_minimum-font-sizes',
+            locals[lang].properties.fontSize
+          ).makeNodeTag(),
           new Tag(
             '_200-light',
             `${minimumLightFontSize[2]}pt (200)`
@@ -282,7 +361,7 @@ export default class Properties {
           ).makeNodeTag(),
           new Tag(
             '_500-light',
-            `${minimumLightFontSize[5]}pt (500)`
+            `${minimumLightFontSize[6]}pt (600)`
           ).makeNodeTag(),
           new Tag(
             '_700-light',
@@ -294,7 +373,10 @@ export default class Properties {
             '_apca-dark',
             `Lc ${this.getAPCAContrast('DARK').toFixed(1)}`
           ).makeNodeTag(chroma(this.textColorsTheme.darkColor).gl(), true),
-          new Tag('_minimum-font-sizes', 'Minimum font sizes').makeNodeTag(),
+          new Tag(
+            '_minimum-font-sizes',
+            locals[lang].properties.fontSize
+          ).makeNodeTag(),
           new Tag(
             '_200-dark',
             `${minimumDarkFontSize[2]}pt (200)`
@@ -363,8 +445,9 @@ export default class Properties {
     return this.nodeColumns
   }
 
-  makeNodeDetailed() {
+  makeNodeDetailed = () => {
     // base
+    this.node = figma.createFrame()
     this.node.name = '_properties'
     this.node.fills = []
 
@@ -388,7 +471,7 @@ export default class Properties {
     return this.node
   }
 
-  makeNode() {
+  makeNode = () => {
     // base
     this.node = figma.createFrame()
     this.node.name = '_properties'

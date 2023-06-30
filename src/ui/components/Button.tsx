@@ -59,7 +59,7 @@ export default class Button extends React.Component<Props> {
   }
 
   // Render
-  render() {
+  render = () => {
     return (
       <>
         {this.props.type != 'icon' ? (

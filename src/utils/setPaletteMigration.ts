@@ -3,46 +3,54 @@ import { presets } from './palettePackage'
 import Colors from '../canvas/Colors'
 
 const setPaletteMigration = (palette: BaseNode) => {
-  if (palette.getPluginData('min') != '' || palette.getPluginData('max')) {
+  const min = palette.getPluginData('min'),
+    max = palette.getPluginData('max'),
+    preset = palette.getPluginData('preset'),
+    colors = palette.getPluginData('colors'),
+    colorSpace = palette.getPluginData('colorSpace'),
+    captions = palette.getPluginData('captions'),
+    properties = palette.getPluginData('properties'),
+    textColorsTheme = palette.getPluginData('textColorsTheme'),
+    algorithmVersion = palette.getPluginData('algorithmVersion')
+
+  // min-max
+  if (min != '' || max != '') {
     palette.setPluginData('min', '')
     palette.setPluginData('max', '')
   }
 
-  if (palette.getPluginData('preset') === '')
+  // preset
+  if (preset === '')
     palette.setPluginData('preset', JSON.stringify(presets.material))
 
-  if (palette.getPluginData('algorithmVersion') === '')
-    palette.setPluginData('algorithmVersion', 'v1')
+  // colors
+  if (!colors.includes('oklch'))
+    palette.setPluginData('colors', setData(colors, 'oklch', false))
 
-  if (!palette.getPluginData('colors').includes('oklch'))
-    palette.setPluginData(
-      'colors',
-      setData(palette.getPluginData('colors'), 'oklch', false)
-    )
-
-  if (!palette.getPluginData('colors').includes('hueShifting'))
-    palette.setPluginData(
-      'colors',
-      setData(palette.getPluginData('colors'), 'hueShifting', 0)
-    )
+  if (!colors.includes('hueShifting'))
+    palette.setPluginData('colors', setData(colors, 'hueShifting', 0))
 
   if (
-    palette.getPluginData('captions') == 'hasCaptions' ||
-    palette.getPluginData('properties') == 'hasProperties'
-  ) {
+    JSON.parse(colors).filter((color) => color.oklch).length ==
+    JSON.parse(colors).length
+  )
+    palette.setPluginData('colorSpace', 'OKLCH')
+
+  if (colorSpace === '') palette.setPluginData('colorSpace', 'LCH')
+
+  // view
+  if (captions == 'hasCaptions' || properties == 'hasProperties') {
     palette.setPluginData('captions', '')
     palette.setPluginData('properties', '')
     palette.setPluginData('view', 'PALETTE_WITH_PROPERTIES')
-  } else if (
-    palette.getPluginData('captions') == 'hasNotCaptions' ||
-    palette.getPluginData('properties') == 'hasNotProperties'
-  ) {
+  } else if (captions == 'hasNotCaptions' || properties == 'hasNotProperties') {
     palette.setPluginData('captions', '')
     palette.setPluginData('properties', '')
     palette.setPluginData('view', 'PALETTE')
   }
 
-  if (palette.getPluginData('textColorsTheme') === '') {
+  // textColorsTheme
+  if (textColorsTheme === '') {
     palette.setPluginData(
       'textColorsTheme',
       JSON.stringify({
@@ -52,24 +60,24 @@ const setPaletteMigration = (palette: BaseNode) => {
     )
   }
 
-  if (palette.getPluginData('view') === '')
-    palette.setPluginData('view', 'PALETTE')
+  // algorithm
+  if (algorithmVersion === '') palette.setPluginData('algorithmVersion', 'v1')
 
+  // data
   if (palette.getPluginData('data') === '')
     new Colors(
       {
-        paletteName: palette.getPluginData('name'),
+        name: palette.getPluginData('name'),
         preset: JSON.parse(palette.getPluginData('preset')),
         scale: JSON.parse(palette.getPluginData('scale')),
         colors: JSON.parse(palette.getPluginData('colors')),
+        colorSpace: palette.getPluginData('colorSpace'),
         view: 'SHEET',
         textColorsTheme: JSON.parse(palette.getPluginData('textColorsTheme')),
         algorithmVersion: palette.getPluginData('algorithmVersion'),
       },
       palette as FrameNode
     ).makePaletteData()
-
-  // console.log(palette.getPluginDataKeys())
 }
 
 export default setPaletteMigration

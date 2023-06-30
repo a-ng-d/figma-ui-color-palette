@@ -12,6 +12,7 @@ import Onboarding from './services/Onboarding'
 import CreatePalette from './services/CreatePalette'
 import EditPalette from './services/EditPalette'
 import Highlight from './modules/Highlight'
+import Dialog from './modules/Dialog'
 import package_json from './../../package.json'
 import { palette, presets } from '../utils/palettePackage'
 import features from '../utils/features'
@@ -19,7 +20,6 @@ import { v4 as uuidv4 } from 'uuid'
 import 'figma-plugin-ds/dist/figma-plugin-ds.css'
 import './stylesheets/app.css'
 import './stylesheets/components.css'
-import Dialog from './modules/Dialog'
 
 let isPaletteSelected = false
 const container = document.getElementById('react-page'),
@@ -29,6 +29,7 @@ const settingsMessage: SettingsMessage = {
   type: 'UPDATE_SETTINGS',
   data: {
     name: '',
+    colorSpace: '',
     textColorsTheme: {
       lightColor: '',
       darkColor: '',
@@ -50,11 +51,12 @@ class App extends React.Component {
       ),
     }
     this.state = {
-      service: 'None',
-      paletteName: '',
+      service: '',
+      name: '',
       preset: presets.material,
       newScale: {},
       newColors: {},
+      colorSpace: 'LCH',
       view: 'PALETTE_WITH_PROPERTIES',
       textColorsTheme: {
         lightColor: '#FFFFFF',
@@ -69,6 +71,7 @@ class App extends React.Component {
       editorType: 'figma',
       hasHighlight: false,
       planStatus: 'UNPAID',
+      lang: 'en-US',
       hasGetProPlanDialog: false,
       onGoingStep: '',
     }
@@ -200,16 +203,49 @@ class App extends React.Component {
     const renamePalette = () => {
       palette.name = e.target.value
       settingsMessage.data.name = e.target.value
-      settingsMessage.data.algorithmVersion = this.state['algorithmVersion']
+      settingsMessage.data.colorSpace = this.state['colorSpace']
       settingsMessage.data.textColorsTheme = this.state['textColorsTheme']
+      settingsMessage.data.algorithmVersion = this.state['algorithmVersion']
+
       this.setState({
-        paletteName: settingsMessage.data.name,
+        name: settingsMessage.data.name,
         onGoingStep: 'settings changed',
       })
-      if (e._reactName === 'onBlur' && this.state['service'] === 'Edit')
+
+      if (e._reactName === 'onBlur' && this.state['service'] === 'EDIT')
         parent.postMessage({ pluginMessage: settingsMessage }, '*')
-      else if (e.key === 'Enter' && this.state['service'] === 'Edit')
+      else if (e.key === 'Enter' && this.state['service'] === 'EDIT')
         parent.postMessage({ pluginMessage: settingsMessage }, '*')
+    }
+
+    const updateColorSpace = () => {
+      settingsMessage.data.name = this.state['name']
+      settingsMessage.data.colorSpace = e.target.dataset.value
+      palette.colorSpace = e.target.dataset.value
+      settingsMessage.data.textColorsTheme = this.state['textColorsTheme']
+      settingsMessage.data.algorithmVersion = this.state['algorithmVersion']
+
+      this.setState({
+        colorSpace: settingsMessage.data.colorSpace,
+        onGoingStep: 'settings changed',
+      })
+
+      if (this.state['service'] === 'EDIT')
+        parent.postMessage({ pluginMessage: settingsMessage }, '*')
+    }
+
+    const updateAlgorythmVersion = () => {
+      settingsMessage.data.name = this.state['name']
+      settingsMessage.data.colorSpace = this.state['colorSpace']
+      settingsMessage.data.textColorsTheme = this.state['textColorsTheme']
+      settingsMessage.data.algorithmVersion = !e.target.checked ? 'v1' : 'v2'
+
+      this.setState({
+        algorithmVersion: settingsMessage.data.algorithmVersion,
+        onGoingStep: 'settings changed',
+      })
+
+      parent.postMessage({ pluginMessage: settingsMessage }, '*')
     }
 
     const updateTextLightColor = () => {
@@ -218,22 +254,23 @@ class App extends React.Component {
           ? '#' + e.target.value
           : e.target.value
       if (/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/i.test(code)) {
+        settingsMessage.data.name = this.state['name']
+        settingsMessage.data.colorSpace = this.state['colorSpace']
+        settingsMessage.data.textColorsTheme.lightColor = code
         palette.textColorsTheme.lightColor = code
-        settingsMessage.data.name = this.state['paletteName']
-        settingsMessage.data.algorithmVersion = this.state['algorithmVersion']
-        settingsMessage.data.textColorsTheme.lightColor =
-          palette.textColorsTheme.lightColor
         settingsMessage.data.textColorsTheme.darkColor =
           this.state['textColorsTheme'].darkColor
+        settingsMessage.data.algorithmVersion = this.state['algorithmVersion']
+
         this.setState({
           textColorsTheme: settingsMessage.data.textColorsTheme,
           onGoingStep: 'settings changed',
         })
       }
-      if (e._reactName === 'onBlur' && this.state['service'] === 'Edit') {
+      if (e._reactName === 'onBlur' && this.state['service'] === 'EDIT') {
         this.dispatch.textColorsTheme.on.status = false
         parent.postMessage({ pluginMessage: settingsMessage }, '*')
-      } else if (this.state['service'] === 'Edit')
+      } else if (this.state['service'] === 'EDIT')
         this.dispatch.textColorsTheme.on.status = true
     }
 
@@ -242,41 +279,33 @@ class App extends React.Component {
         e.target.value.indexOf('#') == -1
           ? '#' + e.target.value
           : e.target.value
-      settingsMessage.data.name = this.state['paletteName']
-      settingsMessage.data.algorithmVersion = this.state['algorithmVersion']
-      settingsMessage.data.textColorsTheme.lightColor =
-        this.state['textColorsTheme'].lightColor
-      settingsMessage.data.textColorsTheme.darkColor = code
       if (/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/i.test(code)) {
+        settingsMessage.data.name = this.state['name']
+        settingsMessage.data.colorSpace = this.state['colorSpace']
+        settingsMessage.data.textColorsTheme.lightColor =
+          this.state['textColorsTheme'].lightColor
+        settingsMessage.data.textColorsTheme.darkColor = code
         palette.textColorsTheme.darkColor = code
+        settingsMessage.data.algorithmVersion = this.state['algorithmVersion']
+
         this.setState({
           textColorsTheme: settingsMessage.data.textColorsTheme,
           onGoingStep: 'settings changed',
         })
       }
-      if (e._reactName === 'onBlur' && this.state['service'] === 'Edit') {
+      if (e._reactName === 'onBlur' && this.state['service'] === 'EDIT') {
         this.dispatch.textColorsTheme.on.status = false
         parent.postMessage({ pluginMessage: settingsMessage }, '*')
-      } else if (this.state['service'] === 'Edit')
+      } else if (this.state['service'] === 'EDIT')
         this.dispatch.textColorsTheme.on.status = true
-    }
-
-    const updateAlgorythmVersion = () => {
-      settingsMessage.data.name = this.state['paletteName']
-      settingsMessage.data.algorithmVersion = !e.target.checked ? 'v1' : 'v2'
-      settingsMessage.data.textColorsTheme = this.state['textColorsTheme']
-      this.setState({
-        algorithmVersion: settingsMessage.data.algorithmVersion,
-        onGoingStep: 'settings changed',
-      })
-      parent.postMessage({ pluginMessage: settingsMessage }, '*')
     }
 
     const actions: ActionsList = {
       RENAME_PALETTE: () => renamePalette(),
+      UPDATE_COLOR_SPACE: () => updateColorSpace(),
+      UPDATE_ALGORITHM_VERSION: () => updateAlgorythmVersion(),
       CHANGE_TEXT_LIGHT_COLOR: () => updateTextLightColor(),
       CHANGE_TEXT_DARK_COLOR: () => updateTextDarkColor(),
-      UPDATE_ALGORITHM_VERSION: () => updateAlgorythmVersion(),
     }
 
     return actions[e.target.dataset.feature]?.()
@@ -313,7 +342,7 @@ class App extends React.Component {
   }
 
   // Render
-  render() {
+  render = () => {
     onmessage = (e: MessageEvent) => {
       try {
         const checkEditorType = () =>
@@ -335,9 +364,10 @@ class App extends React.Component {
 
         const updateWhileEmptySelection = () => {
           this.setState({
-            service: 'None',
-            paletteName: '',
+            service: 'NONE',
+            name: '',
             preset: presets.material,
+            colorSpace: 'LCH',
             view: 'PALETTE_WITH_PROPERTIES',
             textColorsTheme: {
               lightColor: '#FFFFFF',
@@ -347,6 +377,7 @@ class App extends React.Component {
           })
           palette.name = ''
           palette.preset = {}
+          palette.colorSpace = 'LCH'
           palette.view = 'PALETTE_WITH_PROPERTIES'
           palette.textColorsTheme = {
             lightColor: '#FFFFFF',
@@ -358,9 +389,10 @@ class App extends React.Component {
         const updateWhileColorSelected = () => {
           if (isPaletteSelected) {
             this.setState({
-              service: 'Create',
-              paletteName: '',
+              service: 'CREATE',
+              name: '',
               preset: presets.material,
+              colorSpace: 'LCH',
               view: 'PALETTE_WITH_PROPERTIES',
               textColorsTheme: {
                 lightColor: '#FFFFFF',
@@ -370,6 +402,7 @@ class App extends React.Component {
             })
             palette.name = ''
             palette.preset = presets.material
+            palette.colorSpace = 'LCH'
             palette.view = 'PALETTE_WITH_PROPERTIES'
             palette.textColorsTheme = {
               lightColor: '#FFFFFF',
@@ -377,7 +410,7 @@ class App extends React.Component {
             }
           } else
             this.setState({
-              service: 'Create',
+              service: 'CREATE',
               onGoingStep: 'colors selected',
             })
           isPaletteSelected = false
@@ -402,11 +435,12 @@ class App extends React.Component {
             '*'
           )
           this.setState({
-            service: 'Edit',
-            paletteName: e.data.pluginMessage.data.name,
+            service: 'EDIT',
+            name: e.data.pluginMessage.data.name,
             preset: e.data.pluginMessage.data.preset,
             newScale: e.data.pluginMessage.data.scale,
             newColors: putIdsOnColors,
+            colorSpace: e.data.pluginMessage.data.colorSpace,
             view: e.data.pluginMessage.data.view,
             textColorsTheme: e.data.pluginMessage.data.textColorsTheme,
             algorithmVersion: e.data.pluginMessage.data.algorithmVersion,
@@ -414,7 +448,7 @@ class App extends React.Component {
           })
         }
 
-        const exportPaletteAsJson = () =>
+        const exportPaletteToJson = () =>
           this.setState({
             export: {
               format: 'JSON',
@@ -424,17 +458,37 @@ class App extends React.Component {
             onGoingStep: 'export previewed',
           })
 
-        const exportPaletteAsCss = () =>
+        const exportPaletteToCss = () =>
           this.setState({
             export: {
               format: 'CSS',
               mimeType: 'text/css',
-              data: `:root {\n  ${e.data.pluginMessage.data.join(';\n  ')}\n}`,
+              data: `:root {\n  ${e.data.pluginMessage.data.join('\n  ')}\n}`,
             },
             onGoingStep: 'export previewed',
           })
 
-        const exportPaletteAsCsv = () =>
+        const exportPaletteToSwift = () =>
+          this.setState({
+            export: {
+              format: 'SWIFT',
+              mimeType: 'text/swift',
+              data: `import SwiftUI\n\nextension Color {\n  ${e.data.pluginMessage.data.join('\n  ')}\n}`,
+            },
+            onGoingStep: 'export previewed',
+          })
+  
+        const exportPaletteToXml = () =>
+          this.setState({
+            export: {
+              format: 'XML',
+              mimeType: 'text/xml',
+              data: `<resources>\n  ${e.data.pluginMessage.data.join('\n  ')}\n</resources>`,
+            },
+            onGoingStep: 'export previewed',
+          })
+
+        const exportPaletteToCsv = () =>
           this.setState({
             export: {
               format: 'CSV',
@@ -443,7 +497,7 @@ class App extends React.Component {
             },
             onGoingStep: 'export previewed',
           })
-
+          
         const getProPlan = () =>
           this.setState({
             planStatus: e.data.pluginMessage.data,
@@ -457,9 +511,11 @@ class App extends React.Component {
           EMPTY_SELECTION: () => updateWhileEmptySelection(),
           COLOR_SELECTED: () => updateWhileColorSelected(),
           PALETTE_SELECTED: () => updateWhilePaletteSelected(),
-          EXPORT_PALETTE_JSON: () => exportPaletteAsJson(),
-          EXPORT_PALETTE_CSS: () => exportPaletteAsCss(),
-          EXPORT_PALETTE_CSV: () => exportPaletteAsCsv(),
+          EXPORT_PALETTE_JSON: () => exportPaletteToJson(),
+          EXPORT_PALETTE_CSS: () => exportPaletteToCss(),
+          EXPORT_PALETTE_SWIFT: () => exportPaletteToSwift(),
+          EXPORT_PALETTE_XML: () => exportPaletteToXml(),
+          EXPORT_PALETTE_CSV: () => exportPaletteToCsv(),
           GET_PRO_PLAN: () => getProPlan(),
         }
 
@@ -476,13 +532,15 @@ class App extends React.Component {
             features.find((feature) => feature.name === 'CREATE').isActive
           }
         >
-          {this.state['service'] === 'Create' ? (
+          {this.state['service'] === 'CREATE' ? (
             <CreatePalette
+              name={this.state['name']}
               preset={this.state['preset']}
-              paletteName={this.state['paletteName']}
+              colorSpace={this.state['colorSpace']}
               view={this.state['view']}
               textColorsTheme={this.state['textColorsTheme']}
               planStatus={this.state['planStatus']}
+              lang={this.state['lang']}
               onReopenHighlight={this.highlightHandler('OPEN')}
               onChangePreset={this.presetHandler}
               onCustomPreset={this.customHandler}
@@ -498,18 +556,20 @@ class App extends React.Component {
             features.find((feature) => feature.name === 'EDIT').isActive
           }
         >
-          {this.state['service'] === 'Edit' ? (
+          {this.state['service'] === 'EDIT' ? (
             <EditPalette
-              paletteName={this.state['paletteName']}
+              name={this.state['name']}
               preset={this.state['preset']}
               scale={this.state['newScale']}
               colors={this.state['newColors']}
+              colorSpace={this.state['colorSpace']}
               view={this.state['view']}
               textColorsTheme={this.state['textColorsTheme']}
               algorithmVersion={this.state['algorithmVersion']}
               export={this.state['export']}
               editorType={this.state['editorType']}
               planStatus={this.state['planStatus']}
+              lang={this.state['lang']}
               onReopenHighlight={this.highlightHandler('OPEN')}
               onChangeScale={this.slideHandler}
               onChangeStop={this.customSlideHandler}
@@ -524,10 +584,11 @@ class App extends React.Component {
             features.find((feature) => feature.name === 'ONBOARDING').isActive
           }
         >
-          {this.state['service'] === 'None' ? (
+          {this.state['service'] === 'NONE' ? (
             <Onboarding
-              onReopenHighlight={this.highlightHandler('OPEN')}
               planStatus={this.state['planStatus']}
+              lang={this.state['lang']}
+              onReopenHighlight={this.highlightHandler('OPEN')}
             />
           ) : null}
         </Feature>

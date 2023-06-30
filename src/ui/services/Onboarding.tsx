@@ -4,14 +4,16 @@ import Icon from './../modules/Icon'
 import Message from '../components/Message'
 import Shortcuts from '../modules/Shortcuts'
 import features from '../../utils/features'
+import { locals } from '../../content/locals'
 
 interface Props {
   planStatus: string
+  lang: string
   onReopenHighlight: React.MouseEventHandler
 }
 
 export default class Onboarding extends React.Component<Props> {
-  render() {
+  render = () => {
     return (
       <>
         <section>
@@ -19,14 +21,12 @@ export default class Onboarding extends React.Component<Props> {
             <Icon size={48} />
             <Message
               icon="list-tile"
-              messages={[
-                'Select your source colors (solid colors only) on the Figma/Figjam canvas to create a UI Color Palette',
-              ]}
+              messages={[locals[this.props.lang].onboarding.selectColor]}
             />
             <div className="type">－ or －</div>
             <Message
               icon="theme"
-              messages={['Select a UI Color Palette to edit it']}
+              messages={[locals[this.props.lang].onboarding.selectPalette]}
             />
           </div>
         </section>
@@ -38,25 +38,26 @@ export default class Onboarding extends React.Component<Props> {
           <Shortcuts
             actions={[
               {
-                label: 'Read the documentation',
+                label: locals[this.props.lang].shortcuts.documentation,
                 isLink: true,
                 url: 'https://docs.ui-color-palette.com',
                 action: null,
               },
               {
-                label: 'Give feedback',
+                label: locals[this.props.lang].shortcuts.feedback,
                 isLink: true,
                 url: 'https://uicp.link/feedback',
                 action: null,
               },
               {
-                label: "What's new",
+                label: locals[this.props.lang].shortcuts.news,
                 isLink: false,
                 url: '',
                 action: this.props.onReopenHighlight,
               },
             ]}
             planStatus={this.props.planStatus}
+            lang={this.props.lang}
           />
         </Feature>
       </>

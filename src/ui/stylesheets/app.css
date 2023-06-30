@@ -38,19 +38,10 @@ section {
   flex-direction: column;
 }
 
-section.section--scrollable {
-  overflow: hidden;
-}
-
-section.section--scrollable div.controls {
-  overflow: scroll;
-}
-
 div.controls {
   display: flex;
   flex-direction: column;
   flex: 1;
-  padding: var(--size-xxsmall) 0;
 }
 
 div.controls__control {
@@ -58,6 +49,7 @@ div.controls__control {
   flex: 1;
   flex-direction: column;
   justify-content: flex-start;
+  padding: var(--size-xxsmall) 0;
 }
 
 div.lightness-scale {
@@ -238,7 +230,8 @@ div.slider .slider__knob:hover .slider__label {
   background: var(--figma-color-bg-hover);
 }
 
-div.slider .slider__knob--selected {
+div.slider .slider__knob--selected,
+div.slider .slider__knob--editing {
   z-index: 2 !important;
 }
 
@@ -455,7 +448,8 @@ div.form-item label {
 }
 
 div.form-item .input,
-div.form-item .textarea {
+div.form-item .textarea,
+div.form-item .select-menu {
   flex: 4;
 }
 
@@ -507,7 +501,7 @@ div.popin__content {
   flex: 1;
   display: flex;
   width: 100%;
-  overflow: scroll;
+  overflow-y: auto;
 }
 
 div.popin__actions {
@@ -518,17 +512,30 @@ div.popin__actions {
   padding: 0 var(--size-xsmall) var(--size-xsmall) var(--size-xsmall);
 }
 
-/* Color items */
+/* Colors */
+div.source-colors {
+  flex: 1 0 176px;
+  overflow: hidden;
+  padding: var(--size-xxsmall) 0 0 0;
+}
+
+ul.colors {
+  overflow-y: auto;
+  padding: 1px 0;
+}
+
 li.colors__item {
   display: grid;
   grid-template-columns: repeat(76, 1fr);
   grid-template-rows: var(--size-medium);
   padding: 0 var(--size-xsmall);
   position: relative;
+  z-index: 2;
 }
 
 li.colors__item[draggable='true'] {
   background-color: var(--figma-color-bg-selected);
+  z-index: 1;
 }
 
 li.colors__item[draggable='true'] .input__field,
@@ -585,13 +592,8 @@ li .colors__buttons {
   justify-content: flex-end;
 }
 
-li .colors__space {
-  grid-column: 1 / span 16;
-  grid-row: 2 / 2;
-}
-
 li .colors__shift {
-  grid-column: 17 / span 11;
+  grid-column: 1 / span 16;
   grid-row: 2 / 2;
 }
 
@@ -602,6 +604,8 @@ li .colors__shift > .input {
 /* Export */
 div.export-palette {
   flex-direction: row;
+  flex: 1 0 176px;
+  overflow: hidden;
 }
 
 div.export-palette > div {
@@ -620,10 +624,12 @@ div.export-palette > div:last-child {
 div.export-palette__options {
   padding: 0 var(--size-xsmall);
   flex: 1;
+  overflow-y: auto;
 }
 
 textarea.export-palette__preview {
   height: 100%;
+  margin: 0;
 }
 
 ul.options li {
@@ -632,9 +638,17 @@ ul.options li {
 
 /* Settings */
 div.settings {
-  display: flex;
-  flex-direction: column;
-  gap: var(--size-xsmall) 0;
+  flex: 1 0 176px;
+  overflow-y: auto;
+  padding: 0
+}
+
+div.settings__group {
+  padding: var(--size-xxsmall) 0;
+}
+
+div.settings__group + div.settings__group {
+  border-top: 1px solid var(--figma-color-border);
 }
 
 div.settings__item {
@@ -645,7 +659,7 @@ div.settings__item {
 div.about {
   flex-direction: row;
   align-items: baseline;
-  padding: 0 var(--size-small);
+  padding: var(--size-xsmall) var(--size-small);
 }
 
 div.about > div {

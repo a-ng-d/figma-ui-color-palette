@@ -1,10 +1,11 @@
 import * as React from 'react'
-import Button from '../components/Button'
 import Feature from '../components/Feature'
-import features from '../../utils/features'
+import Button from '../components/Button'
 import Dropdown from '../components/Dropdown'
 import FormItem from '../components/FormItem'
+import features from '../../utils/features'
 import isBlocked from '../../utils/isBlocked'
+import { locals } from '../../content/locals'
 
 interface Props {
   context: string
@@ -12,9 +13,10 @@ interface Props {
   exportType?: string | null
   editorType?: string
   planStatus?: string
+  lang: string
   onCreatePalette?: React.MouseEventHandler
-  onCreateLocalColors?: React.MouseEventHandler
-  onUpdateLocalColors?: React.MouseEventHandler
+  onCreateLocalStyles?: React.MouseEventHandler
+  onUpdateLocalStyles?: React.MouseEventHandler
   onChangeView?: React.ChangeEventHandler
   onExportPalette?: React.MouseEventHandler
 }
@@ -37,8 +39,8 @@ export default class Actions extends React.Component<Props> {
           >
             <Button
               type="primary"
-              label="Create a UI Color Palette"
-              feature="create"
+              label={locals[this.props.lang].actions.createPalette}
+              feature="CREATE"
               action={this.props.onCreatePalette}
             />
           </Feature>
@@ -51,13 +53,13 @@ export default class Actions extends React.Component<Props> {
           >
             <FormItem
               id="change-view"
-              label="Layout"
+              label={locals[this.props.lang].views.title}
             >
               <Dropdown
                 id="views"
                 options={[
                   {
-                    label: 'Palette with properties',
+                    label: locals[this.props.lang].views.detailed,
                     value: 'PALETTE_WITH_PROPERTIES',
                     position: 0,
                     isActive: features.find(
@@ -70,7 +72,7 @@ export default class Actions extends React.Component<Props> {
                     ),
                   },
                   {
-                    label: 'Palette',
+                    label: locals[this.props.lang].views.simple,
                     value: 'PALETTE',
                     position: 1,
                     isActive: features.find(
@@ -82,7 +84,7 @@ export default class Actions extends React.Component<Props> {
                     ),
                   },
                   {
-                    label: 'Color sheet',
+                    label: locals[this.props.lang].views.sheet,
                     value: 'SHEET',
                     position: 2,
                     isActive: features.find(
@@ -92,6 +94,7 @@ export default class Actions extends React.Component<Props> {
                   },
                 ]}
                 selected={this.props.view}
+                feature="UPDATE_VIEW"
                 onChange={this.props.onChangeView}
               />
             </FormItem>
@@ -101,7 +104,7 @@ export default class Actions extends React.Component<Props> {
     )
   }
 
-  Edit = () => {
+  LocalStyles = () => {
     return (
       <div className="actions">
         <div className="actions__buttons">
@@ -113,9 +116,9 @@ export default class Actions extends React.Component<Props> {
           >
             <Button
               type="secondary"
-              label="Update the local styles"
+              label={locals[this.props.lang].actions.updateLocalStyles}
               feature="update"
-              action={this.props.onUpdateLocalColors}
+              action={this.props.onUpdateLocalStyles}
             />
           </Feature>
           <Feature
@@ -126,9 +129,9 @@ export default class Actions extends React.Component<Props> {
           >
             <Button
               type="primary"
-              label="Create local styles"
-              feature="create"
-              action={this.props.onCreateLocalColors}
+              label={locals[this.props.lang].actions.createLocalStyles}
+              feature="CREATE"
+              action={this.props.onCreateLocalStyles}
             />
           </Feature>
         </div>
@@ -140,13 +143,13 @@ export default class Actions extends React.Component<Props> {
           >
             <FormItem
               id="change-view"
-              label="Layout"
+              label={locals[this.props.lang].views.title}
             >
               <Dropdown
                 id="views"
                 options={[
                   {
-                    label: 'Palette with properties',
+                    label: locals[this.props.lang].views.detailed,
                     value: 'PALETTE_WITH_PROPERTIES',
                     position: 0,
                     isActive: features.find(
@@ -159,7 +162,7 @@ export default class Actions extends React.Component<Props> {
                     ),
                   },
                   {
-                    label: 'Palette',
+                    label: locals[this.props.lang].views.simple,
                     value: 'PALETTE',
                     position: 1,
                     isActive: features.find(
@@ -171,7 +174,7 @@ export default class Actions extends React.Component<Props> {
                     ),
                   },
                   {
-                    label: 'Color sheet',
+                    label: locals[this.props.lang].views.sheet,
                     value: 'SHEET',
                     position: 2,
                     isActive: features.find(
@@ -181,6 +184,7 @@ export default class Actions extends React.Component<Props> {
                   },
                 ]}
                 selected={this.props.view}
+                feature="UPDATE_VIEW"
                 onChange={this.props.onChangeView}
               />
             </FormItem>
@@ -196,7 +200,9 @@ export default class Actions extends React.Component<Props> {
         <div className="buttons">
           <Button
             type="primary"
-            label={`Export the palette to ${this.props.exportType}`}
+            label={`${locals[this.props.lang].actions.export} ${
+              this.props.exportType
+            }`}
             feature="export"
             action={this.props.onExportPalette}
           >
@@ -208,12 +214,12 @@ export default class Actions extends React.Component<Props> {
   }
 
   // Render
-  render() {
+  render = () => {
     return (
       <>
-        {this.props.context === 'create' ? <this.Create /> : null}
-        {this.props.context === 'edit' ? <this.Edit /> : null}
-        {this.props.context === 'export' ? <this.Export /> : null}
+        {this.props.context === 'CREATE' ? <this.Create /> : null}
+        {this.props.context === 'LOCAL_STYLES' ? <this.LocalStyles /> : null}
+        {this.props.context === 'EXPORT' ? <this.Export /> : null}
       </>
     )
   }

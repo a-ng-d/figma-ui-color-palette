@@ -12,15 +12,18 @@ import createLocalStyles from './bridges/createLocalStyles'
 import updateLocalStyles from './bridges/updateLocalStyles'
 import exportJson from './bridges/exportJson'
 import exportCss from './bridges/exportCss'
+import exportSwift from './bridges/exportSwift'
+import exportXml from './bridges/exportXml'
 import exportCsv from './bridges/exportCsv'
 import updateSettings from './bridges/updateSettings'
 import getProPlan from './bridges/getProPlan'
 import package_json from './../package.json'
+import { locals, lang } from './content/locals'
 
 figma.showUI(__html__, {
   width: 640,
   height: 320,
-  title: 'UI Color Palette',
+  title: locals[lang].name,
   themeColors: true,
 })
 figma.loadFontAsync({ family: 'Inter', style: 'Regular' })
@@ -51,6 +54,8 @@ figma.ui.onmessage = async (msg) => {
     EXPORT_PALETTE: () => {
       msg.export === 'JSON' ? exportJson(palette) : null
       msg.export === 'CSS' ? exportCss(palette) : null
+      msg.export === 'SWIFT' ? exportSwift(palette) : null
+      msg.export === 'XML' ? exportXml(palette) : null
       msg.export === 'CSV' ? exportCsv(palette) : null
     },
     UPDATE_SETTINGS: () => updateSettings(msg, palette),

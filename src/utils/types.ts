@@ -41,10 +41,11 @@ export interface Presets {
 
 // Palette
 export interface PaletteNode {
-  paletteName: string
+  name: string
   preset: PresetConfiguration
   scale: ScaleConfiguration
   colors: Array<ColorConfiguration>
+  colorSpace: string
   view: string
   textColorsTheme: TextColorsThemeHexModel
   algorithmVersion: string
@@ -58,6 +59,10 @@ export interface PaletteDataItem {
     rgb: Array<number>
     gl: Array<number>
     lch: Array<number>
+    oklch: Array<number>
+    lab: Array<number>
+    oklab: Array<number>
+    hsl: Array<number>
   }>
 }
 
@@ -68,6 +73,7 @@ export interface PaletteConfiguration {
   scale: ScaleConfiguration
   min: number
   max: number
+  colorSpace: string
   view: string
   textColorsTheme: TextColorsThemeHexModel
 }
@@ -158,6 +164,7 @@ export interface SettingsMessage {
   type: string
   data: {
     name: string
+    colorSpace: string
     textColorsTheme: TextColorsThemeHexModel
     algorithmVersion: string
   }

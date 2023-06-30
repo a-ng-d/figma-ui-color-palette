@@ -1,12 +1,20 @@
 import * as React from 'react'
-import RadioButton from './../components/RadioButton'
+import type { ActionsList } from '../../utils/types'
 import Feature from '../components/Feature'
+import RadioButton from './../components/RadioButton'
+import Actions from './Actions'
+import Shortcuts from './Shortcuts'
 import features from '../../utils/features'
 import isBlocked from '../../utils/isBlocked'
+import { locals } from '../../content/locals'
 
 interface Props {
   exportPreview: string
   planStatus: string
+  exportType: string
+  lang: string
+  onExportPalette: () => void
+  onReopenHighlight: React.ChangeEventHandler
 }
 
 export default class Export extends React.Component<Props> {
@@ -41,8 +49,8 @@ export default class Export extends React.Component<Props> {
 
   // Handlers
   exportHandler = (e: React.SyntheticEvent) => {
-    switch ((e.target as HTMLElement).dataset.feature) {
-      case 'export-to-json': {
+    const actions: ActionsList = {
+      EXPORT_TO_JSON: () => {
         this.setState({
           format: 'JSON',
         })
@@ -50,9 +58,8 @@ export default class Export extends React.Component<Props> {
           { pluginMessage: { type: 'EXPORT_PALETTE', export: 'JSON' } },
           '*'
         )
-        break
-      }
-      case 'export-to-css': {
+      },
+      EXPORT_TO_CSS: () => {
         this.setState({
           format: 'CSS',
         })
@@ -60,9 +67,26 @@ export default class Export extends React.Component<Props> {
           { pluginMessage: { type: 'EXPORT_PALETTE', export: 'CSS' } },
           '*'
         )
-        break
-      }
-      case 'export-to-csv': {
+      },
+      EXPORT_TO_SWIFT: () => {
+        this.setState({
+          format: 'SWIFT',
+        })
+        parent.postMessage(
+          { pluginMessage: { type: 'EXPORT_PALETTE', export: 'SWIFT' } },
+          '*'
+        )
+      },
+      EXPORT_TO_XML: () => {
+        this.setState({
+          format: 'XML',
+        })
+        parent.postMessage(
+          { pluginMessage: { type: 'EXPORT_PALETTE', export: 'XML' } },
+          '*'
+        )
+      },
+      EXPORT_TO_CSV: () => {
         this.setState({
           format: 'CSV',
         })
@@ -70,8 +94,10 @@ export default class Export extends React.Component<Props> {
           { pluginMessage: { type: 'EXPORT_PALETTE', export: 'CSV' } },
           '*'
         )
-      }
+      },
     }
+
+    return actions[(e.target as HTMLElement).dataset.feature]?.()
   }
 
   // Direct actions
@@ -95,104 +121,198 @@ export default class Export extends React.Component<Props> {
   deSelectPreview = () => window.getSelection().removeAllRanges()
 
   // Render
-  render() {
+  render = () => {
     this.setFirstPreview()
     return (
-      <div className="export-palette controls__control">
-        <div>
-          <div className="section-controls">
-            <div className="section-controls__left-part">
-              <div className="section-title">File format</div>
+      <>
+        <div className="export-palette controls__control">
+          <div>
+            <div className="section-controls">
+              <div className="section-controls__left-part">
+                <div className="section-title">
+                  {locals[this.props.lang].export.format}
+                </div>
+              </div>
+            </div>
+            <div className="export-palette__options">
+              <ul>
+                <Feature
+                  isActive={
+                    features.find((feature) => feature.name === 'EXPORT_JSON')
+                      .isActive
+                  }
+                >
+                  <li>
+                    <RadioButton
+                      id="options__json"
+                      label={locals[this.props.lang].export.json}
+                      isChecked={this.state['format'] === 'JSON' ? true : false}
+                      isBlocked={isBlocked(
+                        'EXPORT_JSON',
+                        this.props.planStatus
+                      )}
+                      feature="EXPORT_TO_JSON"
+                      group="fileFormat"
+                      onChange={
+                        isBlocked('EXPORT_JSON', this.props.planStatus)
+                          ? () => null
+                          : this.exportHandler
+                      }
+                    />
+                  </li>
+                </Feature>
+                <Feature
+                  isActive={
+                    features.find((feature) => feature.name === 'EXPORT_CSS')
+                      .isActive
+                  }
+                >
+                  <li>
+                    <RadioButton
+                      id="options__css"
+                      label={locals[this.props.lang].export.css}
+                      isChecked={this.state['format'] === 'CSS' ? true : false}
+                      isBlocked={isBlocked('EXPORT_CSS', this.props.planStatus)}
+                      feature="EXPORT_TO_CSS"
+                      group="fileFormat"
+                      onChange={
+                        isBlocked('EXPORT_CSS', this.props.planStatus)
+                          ? () => null
+                          : this.exportHandler
+                      }
+                    />
+                  </li>
+                </Feature>
+                <Feature
+                  isActive={
+                    features.find((feature) => feature.name === 'EXPORT_SWIFT')
+                      .isActive
+                  }
+                >
+                  <li>
+                    <RadioButton
+                      id="options__swift"
+                      label={locals[this.props.lang].export.swift}
+                      isChecked={
+                        this.state['format'] === 'SWIFT' ? true : false
+                      }
+                      isBlocked={isBlocked(
+                        'EXPORT_SWIFT',
+                        this.props.planStatus
+                      )}
+                      feature="EXPORT_TO_SWIFT"
+                      group="fileFormat"
+                      onChange={
+                        isBlocked('EXPORT_SWIFT', this.props.planStatus)
+                          ? () => null
+                          : this.exportHandler
+                      }
+                    />
+                  </li>
+                </Feature>
+                <Feature
+                  isActive={
+                    features.find((feature) => feature.name === 'EXPORT_XML')
+                      .isActive
+                  }
+                >
+                  <li>
+                    <RadioButton
+                      id="options__xml"
+                      label={locals[this.props.lang].export.xml}
+                      isChecked={this.state['format'] === 'XML' ? true : false}
+                      isBlocked={isBlocked('EXPORT_XML', this.props.planStatus)}
+                      feature="EXPORT_TO_XML"
+                      group="fileFormat"
+                      onChange={
+                        isBlocked('EXPORT_XML', this.props.planStatus)
+                          ? () => null
+                          : this.exportHandler
+                      }
+                    />
+                  </li>
+                </Feature>
+                <Feature
+                  isActive={
+                    features.find((feature) => feature.name === 'EXPORT_CSV')
+                      .isActive
+                  }
+                >
+                  <li>
+                    <RadioButton
+                      id="options__csv"
+                      label={locals[this.props.lang].export.csv}
+                      isChecked={this.state['format'] === 'CSV' ? true : false}
+                      isBlocked={isBlocked('EXPORT_CSV', this.props.planStatus)}
+                      feature="EXPORT_TO_CSV"
+                      group="fileFormat"
+                      onChange={
+                        isBlocked('EXPORT_CSV', this.props.planStatus)
+                          ? () => null
+                          : this.exportHandler
+                      }
+                    />
+                  </li>
+                </Feature>
+              </ul>
             </div>
           </div>
-          <div className="export-palette__options">
-            <ul>
-              <Feature
-                isActive={
-                  features.find((feature) => feature.name === 'EXPORT_JSON')
-                    .isActive
-                }
-              >
-                <li>
-                  <RadioButton
-                    id="options__json"
-                    label="JSON"
-                    isChecked={this.state['format'] === 'JSON' ? true : false}
-                    isBlocked={isBlocked('EXPORT_JSON', this.props.planStatus)}
-                    feature="export-to-json"
-                    group="fileFormat"
-                    onChange={
-                      isBlocked('EXPORT_JSON', this.props.planStatus)
-                        ? () => null
-                        : this.exportHandler
-                    }
-                  />
-                </li>
-              </Feature>
-              <Feature
-                isActive={
-                  features.find((feature) => feature.name === 'EXPORT_CSS')
-                    .isActive
-                }
-              >
-                <li>
-                  <RadioButton
-                    id="options__css"
-                    label="CSS Custom Properties"
-                    isChecked={this.state['format'] === 'CSS' ? true : false}
-                    isBlocked={isBlocked('EXPORT_CSS', this.props.planStatus)}
-                    feature="export-to-css"
-                    group="fileFormat"
-                    onChange={
-                      isBlocked('EXPORT_CSS', this.props.planStatus)
-                        ? () => null
-                        : this.exportHandler
-                    }
-                  />
-                </li>
-              </Feature>
-              <Feature
-                isActive={
-                  features.find((feature) => feature.name === 'EXPORT_CSV')
-                    .isActive
-                }
-              >
-                <li>
-                  <RadioButton
-                    id="options__csv"
-                    label="CSV (LCH)"
-                    isChecked={this.state['format'] === 'CSV' ? true : false}
-                    isBlocked={isBlocked('EXPORT_CSV', this.props.planStatus)}
-                    feature="export-to-csv"
-                    group="fileFormat"
-                    onChange={
-                      isBlocked('EXPORT_CSV', this.props.planStatus)
-                        ? () => null
-                        : this.exportHandler
-                    }
-                  />
-                </li>
-              </Feature>
-            </ul>
-          </div>
-        </div>
-        <div>
-          <div className="section-controls">
-            <div className="section-controls__left-part">
-              <div className="section-title">Preview</div>
+          <div>
+            <div className="section-controls">
+              <div className="section-controls__left-part">
+                <div className="section-title">
+                  {locals[this.props.lang].export.preview}
+                </div>
+              </div>
+            </div>
+            <div className="export-palette__options">
+              <textarea
+                className="export-palette__preview textarea"
+                value={this.props.exportPreview}
+                onBlur={this.deSelectPreview}
+                onFocus={this.selectPreview}
+                readOnly
+              ></textarea>
             </div>
           </div>
-          <div className="export-palette__options">
-            <textarea
-              className="export-palette__preview textarea"
-              value={this.props.exportPreview}
-              onBlur={this.deSelectPreview}
-              onFocus={this.selectPreview}
-              readOnly
-            ></textarea>
-          </div>
         </div>
-      </div>
+        <Actions
+          context="EXPORT"
+          exportType={this.props.exportType}
+          lang={this.props.lang}
+          onExportPalette={this.props.onExportPalette}
+        />
+        <Feature
+          isActive={
+            features.find((feature) => feature.name === 'SHORTCUTS').isActive
+          }
+        >
+          <Shortcuts
+            actions={[
+              {
+                label: locals[this.props.lang].shortcuts.documentation,
+                isLink: true,
+                url: 'https://docs.ui-color-palette.com',
+                action: null,
+              },
+              {
+                label: locals[this.props.lang].shortcuts.feedback,
+                isLink: true,
+                url: 'https://uicp.link/feedback',
+                action: null,
+              },
+              {
+                label: locals[this.props.lang].shortcuts.news,
+                isLink: false,
+                url: '',
+                action: this.props.onReopenHighlight,
+              },
+            ]}
+            planStatus={this.props.planStatus}
+            lang={this.props.lang}
+          />
+        </Feature>
+      </>
     )
   }
 }

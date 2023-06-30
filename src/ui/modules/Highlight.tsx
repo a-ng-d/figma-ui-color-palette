@@ -11,7 +11,7 @@ export default class Highlight extends React.Component<Props> {
   openUrl = (currentNote: ReleaseNote) =>
     window.open(currentNote['learnMore'], '_blank')
 
-  render() {
+  render = () => {
     const currentNote = releaseNotes.filter((note) => note['isMostRecent'])[0]
     return (
       <div className="dialog">

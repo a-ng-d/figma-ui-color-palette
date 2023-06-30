@@ -10,7 +10,7 @@ interface Props {
 }
 
 export default class Checkbox extends React.Component<Props> {
-  render() {
+  render = () => {
     return (
       <div className="checkbox">
         <input

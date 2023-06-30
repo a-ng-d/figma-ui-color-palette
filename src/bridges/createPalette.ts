@@ -7,6 +7,7 @@ const createPalette = (msg, palette) => {
     msg.data.name,
     msg.data.preset,
     msg.data.scale,
+    msg.data.colorSpace,
     msg.data.view,
     msg.data.textColorsTheme,
     'v2'

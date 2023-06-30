@@ -9,23 +9,25 @@ import {
   isSelectionChanged,
 } from './processSelection'
 import Colors from './../canvas/Colors'
+import { locals, lang } from '../content/locals'
 
 const updateScale = (msg, palette) => {
   palette = isSelectionChanged ? previousSelection[0] : currentSelection[0]
 
   if (palette.children.length == 1) {
-    const paletteName: string =
+    const name: string =
         palette.getPluginData('name') === ''
-          ? 'UI Color Palette'
+          ? locals[lang].name
           : palette.getPluginData('name'),
+      preset: PresetConfiguration = JSON.parse(palette.getPluginData('preset')),
       colors: Array<ColorConfiguration> = JSON.parse(
         palette.getPluginData('colors')
       ),
-      preset: PresetConfiguration = JSON.parse(palette.getPluginData('preset')),
+      colorSpace: string = palette.getPluginData('colorSpace'),
+      view: string = palette.getPluginData('view'),
       textColorsTheme: TextColorsThemeHexModel = JSON.parse(
         palette.getPluginData('textColorsTheme')
       ),
-      view: string = palette.getPluginData('view'),
       algorithmVersion: string = palette.getPluginData('algorithmVersion')
 
     palette.setPluginData('scale', JSON.stringify(msg.data.scale))
@@ -37,10 +39,11 @@ const updateScale = (msg, palette) => {
     palette.appendChild(
       new Colors(
         {
-          paletteName: paletteName,
+          name: name,
           preset: preset,
           scale: msg.data.scale,
           colors: colors,
+          colorSpace: colorSpace,
           view:
             msg.isEditedInRealTime && view === 'PALETTE_WITH_PROPERTIES'
               ? 'PALETTE'
@@ -56,13 +59,10 @@ const updateScale = (msg, palette) => {
 
     // palette migration
     palette.counterAxisSizingMode = 'AUTO'
-    palette.name = `${paletteName}﹒${preset.name}﹒${
+    palette.name = `${name}﹒${preset.name}﹒${colorSpace} ${
       view.includes('PALETTE') ? 'Palette' : 'Sheet'
     }`
-  } else
-    figma.notify(
-      'Your UI Color Palette seems corrupted. Do not edit any layer within it.'
-    )
+  } else figma.notify(locals[lang].error.corruption)
 }
 
 export default updateScale

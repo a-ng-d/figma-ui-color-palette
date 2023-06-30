@@ -1,5 +1,6 @@
 import type { PaletteNode } from '../utils/types'
 import Sample from './Sample'
+import { locals, lang } from '../content/locals'
 
 export default class Header {
   parent: PaletteNode
@@ -9,7 +10,7 @@ export default class Header {
     this.parent = parent
   }
 
-  makeNode() {
+  makeNode = () => {
     // base
     this.node = figma.createFrame()
     this.node.name = '_header'
@@ -24,13 +25,14 @@ export default class Header {
     // insert
     this.node.appendChild(
       new Sample(
-        'Source colors',
+        locals[lang].colors.title,
         null,
         null,
         [255, 255, 255],
+        this.parent.colorSpace,
         this.parent.view,
         this.parent.textColorsTheme
-      ).makeNodeName('ABSOLUTE', 160, 48)
+      ).makeNodeName('ABSOLUTE', 184, 48)
     )
     if (this.parent.view.includes('PALETTE'))
       Object.values(this.parent.scale)
@@ -44,9 +46,10 @@ export default class Header {
               null,
               null,
               [255, 255, 255],
+              this.parent.colorSpace,
               this.parent.view,
               this.parent.textColorsTheme
-            ).makeNodeName('ABSOLUTE', 160, 48)
+            ).makeNodeName('ABSOLUTE', 184, 48)
           )
         })
 

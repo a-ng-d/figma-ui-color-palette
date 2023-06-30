@@ -8,6 +8,7 @@ export default class Sample {
   source: { [key: string]: number } | null
   scale: string | null
   rgb: Array<number> | null
+  colorSpace: string
   view: string
   textColorsTheme: TextColorsThemeHexModel
   status: {
@@ -22,6 +23,7 @@ export default class Sample {
     source: { [key: string]: number } | null,
     scale: string | null,
     rgb: Array<number> | null,
+    colorSpace: string,
     view: string,
     textColorsTheme: TextColorsThemeHexModel,
     status: { isClosestToRef: boolean } = { isClosestToRef: false }
@@ -30,8 +32,9 @@ export default class Sample {
     this.source = source
     this.scale = scale
     this.rgb = rgb
-    this.textColorsTheme = textColorsTheme
+    this.colorSpace = colorSpace
     this.view = view
+    this.textColorsTheme = textColorsTheme
     this.status = status
     this.children = null
   }
@@ -112,7 +115,12 @@ export default class Sample {
     // insert
     if (this.view.includes('PALETTE_WITH_PROPERTIES') && !isColorName) {
       this.node.appendChild(
-        new Properties(this.scale, this.rgb, this.textColorsTheme).makeNode()
+        new Properties(
+          this.scale,
+          this.rgb,
+          this.colorSpace,
+          this.textColorsTheme
+        ).makeNode()
       )
     } else if (isColorName)
       this.node.appendChild(new Property('_label', this.name, 10).makeNode())
@@ -185,6 +193,7 @@ export default class Sample {
         new Properties(
           this.scale,
           this.rgb,
+          this.colorSpace,
           this.textColorsTheme
         ).makeNodeDetailed()
       )

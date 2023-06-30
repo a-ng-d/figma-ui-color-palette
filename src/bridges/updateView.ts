@@ -5,34 +5,38 @@ import type {
   ColorConfiguration,
 } from '../utils/types'
 import Colors from '../canvas/Colors'
+import { locals, lang } from '../content/locals'
 
 const updateView = (msg, palette) => {
   palette = figma.currentPage.selection[0]
 
   if (palette.children.length == 1) {
-    const paletteName: string =
+    const name: string =
         palette.getPluginData('name') === ''
-          ? 'UI Color Palette'
+          ? locals[lang].name
           : palette.getPluginData('name'),
+      preset: PresetConfiguration = JSON.parse(palette.getPluginData('preset')),
+      scale: ScaleConfiguration = JSON.parse(palette.getPluginData('scale')),
       colors: Array<ColorConfiguration> = JSON.parse(
         palette.getPluginData('colors')
       ),
-      scale: ScaleConfiguration = JSON.parse(palette.getPluginData('scale')),
-      preset: PresetConfiguration = JSON.parse(palette.getPluginData('preset')),
+      colorSpace: string = palette.getPluginData('colorSpace'),
       textColorsTheme: TextColorsThemeHexModel = JSON.parse(
         palette.getPluginData('textColorsTheme')
       ),
       algorithmVersion: string = palette.getPluginData('algorithmVersion')
 
     palette.setPluginData('view', msg.data.view)
+
     palette.children[0].remove()
     palette.appendChild(
       new Colors(
         {
-          paletteName: paletteName,
+          name: name,
           preset: preset,
           scale: scale,
           colors: colors,
+          colorSpace: colorSpace,
           view: msg.data.view,
           textColorsTheme: textColorsTheme,
           algorithmVersion: algorithmVersion,
@@ -43,13 +47,10 @@ const updateView = (msg, palette) => {
 
     // palette migration
     palette.counterAxisSizingMode = 'AUTO'
-    palette.name = `${paletteName}﹒${preset.name}﹒${
+    palette.name = `${name}﹒${preset.name}﹒${colorSpace} ${
       msg.data.view.includes('PALETTE') ? 'Palette' : 'Sheet'
     }`
-  } else
-    figma.notify(
-      'Your UI Color Palette seems corrupted. Do not edit any layer within it.'
-    )
+  } else figma.notify(locals[lang].error.corruption)
 }
 
 export default updateView

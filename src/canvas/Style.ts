@@ -10,7 +10,7 @@ export default class Style {
     this.rgb = rgb
   }
 
-  makeNode() {
+  makeNode = () => {
     this.node = figma.createPaintStyle()
     this.node.name = this.name
     this.node.paints = [

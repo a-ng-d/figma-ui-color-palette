@@ -18,7 +18,7 @@ interface Props {
 }
 
 export default class PopIn extends React.Component<Props> {
-  render() {
+  render = () => {
     return (
       <div className="popin">
         <div className="popin__header">

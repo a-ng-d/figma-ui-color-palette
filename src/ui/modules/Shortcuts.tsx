@@ -3,10 +3,12 @@ import type { Shortcut } from '../../utils/types'
 import Button from '../components/Button'
 import Feature from '../components/Feature'
 import features from '../../utils/features'
+import { locals } from '../../content/locals'
 
 interface Props {
   actions: Array<Shortcut>
   planStatus: string
+  lang: string
 }
 
 export default class Shortcuts extends React.Component<Props> {
@@ -14,7 +16,7 @@ export default class Shortcuts extends React.Component<Props> {
   onGetProPlan = () =>
     parent.postMessage({ pluginMessage: { type: 'GET_PRO_PLAN' } }, '*')
 
-  render() {
+  render = () => {
     return (
       <div className="shortcuts">
         <div className="shortcuts__get-pro">
@@ -30,7 +32,9 @@ export default class Shortcuts extends React.Component<Props> {
                 onMouseDown={this.onGetProPlan}
               >
                 <div className="icon icon--lock-off"></div>
-                <div className="type">Get Pro</div>
+                <div className="type">
+                  {locals[this.props.lang].plan.getPro}
+                </div>
               </button>
             ) : null}
           </Feature>

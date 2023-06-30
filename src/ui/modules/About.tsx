@@ -2,21 +2,23 @@ import * as React from 'react'
 import Feature from '../components/Feature'
 import Icon from './Icon'
 import Button from '../components/Button'
-import package_json from './../../../package.json'
 import features from '../../utils/features'
+import package_json from './../../../package.json'
+import { locals } from '../../content/locals'
 
 interface Props {
   planStatus: string
+  lang: string
 }
 
 export default class About extends React.Component<Props> {
-  render() {
+  render = () => {
     return (
       <div className="about controls__control">
         <div>
           <Icon size={32} />
           <div>
-            <p className="type type--xlarge">UI Color Palette</p>
+            <p className="type type--xlarge">{locals[this.props.lang].name}</p>
             <div className="about__info">
               <p className="type">{`Version ${
                 package_json.version.slice(0, 1) +
@@ -31,12 +33,12 @@ export default class About extends React.Component<Props> {
                 {this.props.planStatus === 'UNPAID' ? (
                   <>
                     <span>﹒</span>
-                    <p className="type">Free Plan</p>
+                    <p className="type">{locals[this.props.lang].plan.free}</p>
                   </>
                 ) : (
                   <>
                     <span>﹒</span>
-                    <p className="type">Pro Plan</p>
+                    <p className="type">{locals[this.props.lang].plan.pro}</p>
                   </>
                 )}
               </Feature>
@@ -75,56 +77,62 @@ export default class About extends React.Component<Props> {
         </div>
         <div>
           <div>
-            <div className="type type--bold">Get help</div>
+            <div className="type type--bold">
+              {locals[this.props.lang].about.getHelp.title}
+            </div>
             <div className="about__links">
               <Button
                 type="tertiary"
                 isLink={true}
                 url="https://docs.ui-color-palette.com"
-                label="Read the documentation"
+                label={locals[this.props.lang].about.getHelp.documentation}
               />
               <span>﹒</span>
               <Button
                 type="tertiary"
                 isLink={true}
                 url="mailto:hello@ui-color-palette.com"
-                label="Send an email"
+                label={locals[this.props.lang].about.getHelp.email}
               />
             </div>
           </div>
           <div>
-            <div className="type type--bold">Be involved</div>
+            <div className="type type--bold">
+              {locals[this.props.lang].about.beInvolved.title}
+            </div>
             <div className="about__links">
               <Button
                 type="tertiary"
                 isLink={true}
                 url="https://github.com/inVoltag/figma-ui-color-palette/issues/new"
-                label="Open an issue"
+                label={locals[this.props.lang].about.beInvolved.issue}
               />
               <span>﹒</span>
               <Button
                 type="tertiary"
                 isLink={true}
                 url="https://uicp.link/feedback"
-                label="Give feedback"
+                label={locals[this.props.lang].about.beInvolved.feedback}
               />
             </div>
           </div>
           <div>
-            <div className="type type--bold">Give support</div>
+            <div className="type type--bold">
+              {locals[this.props.lang].about.giveSupport.title}
+            </div>
             <div className="about__links">
               <Button
                 type="tertiary"
                 isLink={true}
                 url="https://www.linkedin.com/in/augrimaud"
-                label="Follow my activity"
+                label={locals[this.props.lang].about.giveSupport.follow}
               />
               <span>﹒</span>
               <Button
                 type="tertiary"
                 isLink={true}
                 url="https://www.buymeacoffee.com/a_ng_d"
-                label="Buy me a coffee"
+                label={locals[this.props.lang].about.giveSupport.coffee}
               />
             </div>
           </div>

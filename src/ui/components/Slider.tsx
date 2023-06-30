@@ -170,12 +170,13 @@ export default class Slider extends React.Component<Props> {
       )
     offset = e.clientX - slider.offsetLeft - sliderPadding - shift
 
-    this.setState({
-      selectedStop: {
-        stop: stop,
-        state: 'SLIDING',
-      },
-    })
+    if (!this.props.hasPreset)
+      this.setState({
+        selectedStop: {
+          stop: stop,
+          state: 'SLIDING',
+        },
+      })
 
     update()
 
@@ -403,7 +404,7 @@ export default class Slider extends React.Component<Props> {
     return state
   }
 
-  componentDidMount() {
+  componentDidMount = () => {
     window.onkeydown = (e: KeyboardEvent) => {
       if (
         e.key === 'Backspace' &&
@@ -449,7 +450,7 @@ export default class Slider extends React.Component<Props> {
     }
   }
 
-  componentWillUnmount() {
+  componentWillUnmount = () => {
     window.onkeydown = null
     document.onmousedown = null
   }
@@ -512,7 +513,7 @@ export default class Slider extends React.Component<Props> {
   }
 
   // Render
-  render() {
+  render = () => {
     return (
       <div className="slider">
         {this.props.type === 'EQUAL' ? <this.Equal /> : null}
