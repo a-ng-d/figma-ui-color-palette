@@ -13,7 +13,7 @@ interface Props {
 }
 
 export default class Onboarding extends React.Component<Props> {
-  render = () => {
+  render() {
     return (
       <>
         <section>

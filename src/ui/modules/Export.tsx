@@ -121,7 +121,7 @@ export default class Export extends React.Component<Props> {
   deSelectPreview = () => window.getSelection().removeAllRanges()
 
   // Render
-  render = () => {
+  render() {
     this.setFirstPreview()
     return (
       <>

@@ -5,7 +5,7 @@ interface Props {
 }
 
 export default class Icon extends React.Component<Props> {
-  render = () => {
+  render() {
     return (
       <svg
         width={this.props.size}

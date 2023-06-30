@@ -30,7 +30,7 @@ export default class Knob extends React.Component<Props> {
       ? '100'
       : value.toFixed(1)
 
-  render = () => {
+  render() {
     return (
       <div
         className={`slider__knob ${this.props.id}${

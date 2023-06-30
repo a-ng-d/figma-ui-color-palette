@@ -17,7 +17,7 @@ export default class RadioButton extends React.Component<Props> {
     isBlocked: false,
   }
 
-  render = () => {
+  render() {
     return (
       <div className={`radio${this.props.isBlocked ? ' radio--blocked' : ''}`}>
         <input

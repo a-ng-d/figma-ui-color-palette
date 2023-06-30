@@ -255,7 +255,7 @@ export default class Scale extends React.Component<Props> {
   }
 
   // Render
-  render = () => {
+  render() {
     return <>{!this.props.hasPreset ? <this.Edit /> : <this.Create />}</>
   }
 }

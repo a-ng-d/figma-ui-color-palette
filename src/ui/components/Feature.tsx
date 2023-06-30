@@ -12,7 +12,7 @@ export default class Feature extends React.Component<Props> {
   }
 
   // Render
-  render = () => {
+  render() {
     return <>{this.props.isActive ? this.props.children : null}</>
   }
 }

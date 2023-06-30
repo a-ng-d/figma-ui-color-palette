@@ -513,7 +513,7 @@ export default class Slider extends React.Component<Props> {
   }
 
   // Render
-  render = () => {
+  render() {
     return (
       <div className="slider">
         {this.props.type === 'EQUAL' ? <this.Equal /> : null}

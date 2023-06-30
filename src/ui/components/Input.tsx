@@ -149,7 +149,7 @@ export default class Input extends React.Component<Props> {
   }
 
   // Render
-  render = () => {
+  render() {
     return (
       <>
         {this.props.type === 'number' ? <this.Number /> : null}

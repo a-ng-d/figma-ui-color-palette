@@ -12,7 +12,7 @@ interface Props {
 }
 
 export default class About extends React.Component<Props> {
-  render = () => {
+  render() {
     return (
       <div className="about controls__control">
         <div>

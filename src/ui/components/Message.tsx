@@ -74,7 +74,7 @@ export default class Message extends React.Component<Props> {
   }
 
   // Render
-  render = () => {
+  render() {
     return (
       <>
         {this.props.messages.length > 1 ? (

@@ -105,7 +105,7 @@ export default class CreatePalette extends React.Component<Props> {
   }
 
   // Renders
-  render = () => {
+  render() {
     palette.preset = this.props.preset
     let controls
 

@@ -214,7 +214,7 @@ export default class Actions extends React.Component<Props> {
   }
 
   // Render
-  render = () => {
+  render() {
     return (
       <>
         {this.props.context === 'CREATE' ? <this.Create /> : null}

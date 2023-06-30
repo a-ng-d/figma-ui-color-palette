@@ -39,7 +39,7 @@ interface Props {
 }
 
 export default class Colors extends React.Component<Props> {
-  render = () => {
+  render() {
     return (
       <>
         <div className="source-colors controls__control">

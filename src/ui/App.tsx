@@ -342,7 +342,7 @@ class App extends React.Component {
   }
 
   // Render
-  render = () => {
+  render() {
     onmessage = (e: MessageEvent) => {
       try {
         const checkEditorType = () =>
