@@ -9,7 +9,7 @@ const releaseNotes: Array<ReleaseNote> = [
   {
     version: '2.3.0',
     isMostRecent: true,
-    title: 'UI Color Palette 23 says welcome to Color Spaces',
+    title: 'UI Color Palette 23 says welcome to Color spaces',
     image: rnv23,
     content:
       'Color spaces can be managed throughout the UI Color Palette. This allows you to select and switch between a variety of color spaces such as LCH, OKLCH, LAB, OKLAB, and HSL.',
