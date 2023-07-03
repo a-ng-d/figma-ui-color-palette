@@ -10,12 +10,13 @@ interface Props {
   min?: string
   max?: string
   step?: string
+  isReadOnly?: boolean
   isBlocked?: boolean
   feature: string
   isAutoFocus?: boolean
-  onChange: React.FocusEventHandler<HTMLInputElement>
-  onFocus: React.FocusEventHandler<HTMLInputElement>
-  onBlur: React.FocusEventHandler<HTMLInputElement>
+  onChange: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>
+  onFocus: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>
+  onBlur: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>
   onConfirm?: React.KeyboardEventHandler<HTMLInputElement>
 }
 
@@ -148,6 +149,18 @@ export default class Input extends React.Component<Props> {
     )
   }
 
+  LongText = () => {
+    return (
+      <textarea
+        className="textarea"
+        value={this.props.value}
+        onFocus={this.props.onFocus}
+        onBlur={this.props.onBlur}
+        readOnly={this.props.isReadOnly}
+      ></textarea>
+    )
+  }
+
   // Render
   render() {
     return (
@@ -155,6 +168,7 @@ export default class Input extends React.Component<Props> {
         {this.props.type === 'number' ? <this.Number /> : null}
         {this.props.type === 'color' ? <this.Color /> : null}
         {this.props.type === 'text' ? <this.Text /> : null}
+        {this.props.type === 'long-text' ? <this.LongText /> : null}
       </>
     )
   }
