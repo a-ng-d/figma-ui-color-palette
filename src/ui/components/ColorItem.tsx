@@ -127,7 +127,7 @@ export default class ColorItem extends React.Component<Props> {
       >
         <div className="colors__name">
           <Input
-            type="text"
+            type="TEXT"
             icon={{ type: 'none', value: null }}
             value={this.props.name}
             feature="RENAME"
@@ -139,7 +139,7 @@ export default class ColorItem extends React.Component<Props> {
         </div>
         <div className="colors__parameters">
           <Input
-            type="color"
+            type="COLOR"
             icon={{ type: 'none', value: null }}
             value={this.props.hex}
             feature="HEX"
@@ -151,7 +151,7 @@ export default class ColorItem extends React.Component<Props> {
             <div className="label">{locals[this.props.lang].colors.lch}</div>
             <div className="inputs__bar">
               <Input
-                type="number"
+                type="NUMBER"
                 icon={{ type: 'none', value: null }}
                 value={chroma(this.props.hex).lch()[0].toFixed(0)}
                 min="0"
@@ -162,7 +162,7 @@ export default class ColorItem extends React.Component<Props> {
                 onBlur={this.inputHandler}
               />
               <Input
-                type="number"
+                type="NUMBER"
                 icon={{ type: 'none', value: null }}
                 value={chroma(this.props.hex).lch()[1].toFixed(0)}
                 min="0"
@@ -173,7 +173,7 @@ export default class ColorItem extends React.Component<Props> {
                 onBlur={this.inputHandler}
               />
               <Input
-                type="number"
+                type="NUMBER"
                 icon={{ type: 'none', value: null }}
                 value={
                   chroma(this.props.hex).lch()[2].toFixed(0) == 'NaN'

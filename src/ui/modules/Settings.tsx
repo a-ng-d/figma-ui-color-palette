@@ -51,7 +51,7 @@ export default class Settings extends React.Component<Props> {
           >
             <Input
               id="rename-palette"
-              type="text"
+              type="TEXT"
               icon={{ type: 'none', value: null }}
               placeholder={locals[this.props.lang].settings.base.defaultName}
               value={this.props.name != '' ? this.props.name : ''}
@@ -254,7 +254,7 @@ export default class Settings extends React.Component<Props> {
           >
             <Input
               id="change-text-light-color"
-              type="color"
+              type="COLOR"
               icon={{ type: 'none', value: null }}
               value={this.props.textColorsTheme.lightColor}
               isBlocked={isBlocked(
@@ -289,7 +289,7 @@ export default class Settings extends React.Component<Props> {
           >
             <Input
               id="change-text-dark-color"
-              type="color"
+              type="COLOR"
               icon={{ type: 'none', value: null }}
               value={this.props.textColorsTheme.darkColor}
               isBlocked={isBlocked(

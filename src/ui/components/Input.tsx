@@ -165,10 +165,10 @@ export default class Input extends React.Component<Props> {
   render() {
     return (
       <>
-        {this.props.type === 'number' ? <this.Number /> : null}
-        {this.props.type === 'color' ? <this.Color /> : null}
-        {this.props.type === 'text' ? <this.Text /> : null}
-        {this.props.type === 'long-text' ? <this.LongText /> : null}
+        {this.props.type === 'NUMBER' ? <this.Number /> : null}
+        {this.props.type === 'COLOR' ? <this.Color /> : null}
+        {this.props.type === 'TEXT' ? <this.Text /> : null}
+        {this.props.type === 'LONG_TEXT' ? <this.LongText /> : null}
       </>
     )
   }
