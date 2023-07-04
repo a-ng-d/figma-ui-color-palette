@@ -528,7 +528,7 @@ li.colors__item {
   display: grid;
   grid-template-columns: repeat(76, 1fr);
   grid-template-rows: var(--size-medium);
-  padding: 0 var(--size-xsmall);
+  padding: 2px var(--size-xsmall);
   position: relative;
   z-index: 2;
 }
@@ -594,6 +594,11 @@ li .colors__buttons {
 
 li .colors__shift {
   grid-column: 1 / span 16;
+  grid-row: 2 / 2;
+}
+
+li .colors__description {
+  grid-column: 17 / span 33;
   grid-row: 2 / 2;
 }
 

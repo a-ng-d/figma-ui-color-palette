@@ -35,6 +35,8 @@ export const locals = {
       title: 'Source colors',
       lch: 'LCH',
       hueShifting: 'HUE',
+      description: 'Description',
+      descriptionTip: "What's it for?"
     },
     export: {
       format: 'File format',

@@ -1,8 +1,9 @@
 import * as React from 'react'
 import chroma from 'chroma-js'
+import Feature from './Feature'
 import Input from './Input'
 import Button from './Button'
-import Feature from './Feature'
+import FormItem from './FormItem'
 import doMap from './../../utils/doMap'
 import features from '../../utils/features'
 import { locals } from '../../content/locals'
@@ -208,29 +209,54 @@ export default class ColorItem extends React.Component<Props> {
           />
         </div>
         {this.state['hasMoreOptions'] ? (
-          <Feature
-            isActive={
-              features.find((feature) => feature.name === 'COLORS_HUE_SHIFTING')
-                .isActive
-            }
-          >
-            <div className="colors__shift inputs">
-              <div className="label">
-                {locals[this.props.lang].colors.hueShifting}
+          <>
+            <Feature
+              isActive={
+                features.find((feature) => feature.name === 'COLORS_HUE_SHIFTING')
+                  .isActive
+              }
+            >
+              <div className="colors__shift inputs">
+                <div className="label">
+                  {locals[this.props.lang].colors.hueShifting}
+                </div>
+                <Input
+                  type="NUMBER"
+                  icon={{ type: 'icon', value: 'arrow-left-right' }}
+                  value={this.props.shift.toString()}
+                  min="-360"
+                  max="360"
+                  feature="SHIFT_HUE"
+                  onChange={this.inputHandler}
+                  onFocus={this.selectionHandler}
+                  onBlur={this.inputHandler}
+                />
               </div>
-              <Input
-                type="number"
-                icon={{ type: 'icon', value: 'arrow-left-right' }}
-                value={this.props.shift.toString()}
-                min="-360"
-                max="360"
-                feature="SHIFT_HUE"
-                onChange={this.inputHandler}
-                onFocus={this.selectionHandler}
-                onBlur={this.inputHandler}
-              />
-            </div>
-          </Feature>
+            </Feature>
+            <Feature
+              isActive={
+                features.find((feature) => feature.name === 'COLORS_DESCRIPTION')
+                  .isActive
+              }
+            >
+              <div className="colors__description">
+                <FormItem
+                  id="color-description"
+                  label={locals[this.props.lang].colors.description}
+                >
+                  <Input
+                    type="TEXT"
+                    value=""
+                    placeholder={locals[this.props.lang].colors.descriptionTip}
+                    feature="DESCRIPTION"
+                    onChange={this.inputHandler}
+                    onFocus={this.selectionHandler}
+                    onBlur={this.inputHandler}
+                  />
+                </FormItem>
+              </div>
+            </Feature>
+          </>
         ) : null}
       </li>
     )
