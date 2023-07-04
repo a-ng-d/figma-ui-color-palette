@@ -13,6 +13,7 @@ interface Props {
   hex: string
   oklch: boolean
   shift: number
+  description: string
   uuid: string
   index: number
   selected: boolean
@@ -246,7 +247,7 @@ export default class ColorItem extends React.Component<Props> {
                 >
                   <Input
                     type="TEXT"
-                    value=""
+                    value={this.props.description}
                     placeholder={locals[this.props.lang].colors.descriptionTip}
                     feature="DESCRIPTION"
                     onChange={this.inputHandler}

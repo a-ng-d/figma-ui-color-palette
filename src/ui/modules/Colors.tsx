@@ -72,6 +72,7 @@ export default class Colors extends React.Component<Props> {
                 ).hex()}
                 oklch={color.oklch}
                 shift={color.hueShifting}
+                description={color.description}
                 uuid={color.id}
                 selected={
                   this.props.selectedElement.id === color.id ? true : false
