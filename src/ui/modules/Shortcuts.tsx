@@ -1,7 +1,7 @@
 import * as React from 'react'
 import type { Shortcut } from '../../utils/types'
-import Button from '../components/Button'
 import Feature from '../components/Feature'
+import Button from '../components/Button'
 import features from '../../utils/features'
 import { locals } from '../../content/locals'
 
