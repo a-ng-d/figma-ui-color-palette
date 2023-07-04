@@ -387,7 +387,7 @@ export default class Settings extends React.Component<Props> {
     )
   }
 
-  Base = () => {
+  Global = () => {
     return (
       <div className="settings__group">
         <div className="section-controls">
@@ -438,7 +438,7 @@ export default class Settings extends React.Component<Props> {
     return (
       <>
         <div className="settings controls__control">
-          <this.Base />
+          <this.Global />
           <this.ColorManagement />
           <this.ContrastManagement />
         </div>
@@ -453,7 +453,7 @@ export default class Settings extends React.Component<Props> {
           />
         ) : (
           <Actions
-            context="LOCAL_STYLES"
+            context="DEPLOY"
             view={this.props.view}
             editorType={this.props.editorType}
             planStatus={this.props.planStatus}

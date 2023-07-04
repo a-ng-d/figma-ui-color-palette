@@ -99,7 +99,7 @@ export default class Colors extends React.Component<Props> {
           </ul>
         </div>
         <Actions
-          context="LOCAL_STYLES"
+          context="DEPLOY"
           view={this.props.view}
           editorType={this.props.editorType}
           planStatus={this.props.planStatus}

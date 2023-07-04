@@ -240,7 +240,7 @@ export default class Scale extends React.Component<Props> {
           </Feature>
         </div>
         <Actions
-          context="LOCAL_STYLES"
+          context="DEPLOY"
           view={this.props.view}
           editorType={this.props.editorType}
           planStatus={this.props.planStatus}

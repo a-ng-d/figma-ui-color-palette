@@ -101,8 +101,14 @@ export const locals = {
     actions: {
       createPalette: 'Create a UI Color Palette',
       createLocalStyles: 'Create local styles',
+      createLocalVariables: 'Create local variables',
       updateLocalStyles: 'Update the local styles',
+      updateLocalVariables: 'Update the local variables',
       export: 'Export the UI Color Palette to',
+      managePalette: {
+        localStyles: 'Manage local styles',
+        localVariables: 'Manage local variables'
+      }
     },
     plan: {
       getPro: 'Get pro',
