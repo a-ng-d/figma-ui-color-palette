@@ -67,7 +67,7 @@ const setPaletteMigration = (palette: BaseNode) => {
   if (algorithmVersion === '') palette.setPluginData('algorithmVersion', 'v1')
 
   // data
-  if (palette.getPluginData('data') === '')
+  if (palette.getPluginData('data') === '' || JSON.parse(palette.getPluginData('data')).description == undefined)
     new Colors(
       {
         name: palette.getPluginData('name'),
