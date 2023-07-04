@@ -23,7 +23,7 @@ const updateLocalStyles = (palette, i: number) => {
                 target.paints[0]['color'].r * 255,
                 target.paints[0]['color'].g * 255,
                 target.paints[0]['color'].b * 255,
-              ]).hex()
+              ]).hex() || color.description != target.description
             ) {
               target.paints = [
                 {
@@ -35,6 +35,7 @@ const updateLocalStyles = (palette, i: number) => {
                   },
                 },
               ]
+              target.description = color.description
               i++
             }
         })
