@@ -87,6 +87,66 @@ export default class Settings extends React.Component<Props> {
     )
   }
 
+  view = () => {
+    return (
+      <Feature
+        isActive={
+          features.find((feature) => feature.name === 'VIEWS').isActive
+        }
+      >
+        <div className="settings__item">
+          <FormItem
+            id="change-view"
+            label={locals[this.props.lang].views.title}
+          >
+            <Dropdown
+              id="views"
+              options={[
+                {
+                  label: locals[this.props.lang].views.detailed,
+                  value: 'PALETTE_WITH_PROPERTIES',
+                  position: 0,
+                  isActive: features.find(
+                    (feature) =>
+                      feature.name === 'VIEWS_PALETTE_WITH_PROPERTIES'
+                  ).isActive,
+                  isBlocked: isBlocked(
+                    'VIEWS_PALETTE_WITH_PROPERTIES',
+                    this.props.planStatus
+                  ),
+                },
+                {
+                  label: locals[this.props.lang].views.simple,
+                  value: 'PALETTE',
+                  position: 1,
+                  isActive: features.find(
+                    (feature) => feature.name === 'VIEWS_PALETTE'
+                  ).isActive,
+                  isBlocked: isBlocked(
+                    'VIEWS_PALETTE',
+                    this.props.planStatus
+                  ),
+                },
+                {
+                  label: locals[this.props.lang].views.sheet,
+                  value: 'SHEET',
+                  position: 2,
+                  isActive: features.find(
+                    (feature) => feature.name === 'VIEWS_SHEET'
+                  ).isActive,
+                  isBlocked: isBlocked('VIEWS_SHEET', this.props.planStatus),
+                },
+              ]}
+              selected={this.props.view}
+              feature="UPDATE_VIEW"
+              onChange={this.props.onChangeView}
+            />
+          </FormItem>
+        </div>
+      </Feature>
+    )
+  }
+
   colorSpace = () => {
     return (
       <Feature
@@ -338,6 +398,7 @@ export default class Settings extends React.Component<Props> {
           </div>
         </div>
         <this.PaletteName />
+        <this.view />
       </div>
     )
   }

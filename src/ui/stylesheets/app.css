@@ -67,19 +67,15 @@ div.actions {
   gap: var(--size-xxsmall);
 }
 
-div.actions__buttons {
+div.actions__right {
   display: flex;
   gap: var(--size-xxsmall);
 }
 
-div.actions__view {
+div.actions__left {
   display: flex;
   align-items: center;
   gap: var(--size-xxsmall);
-}
-
-div.actions__view .select-menu {
-  width: 200px;
 }
 
 div.shortcuts {
@@ -658,6 +654,10 @@ div.settings__group + div.settings__group {
 
 div.settings__item {
   padding: 0 var(--size-xsmall);
+}
+
+div.settings__item + div.settings__item {
+  margin-top: 2px;
 }
 
 /* About */

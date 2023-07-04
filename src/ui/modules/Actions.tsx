@@ -30,7 +30,7 @@ export default class Actions extends React.Component<Props> {
   Create = () => {
     return (
       <div className="actions">
-        <div className="actions__buttons">
+        <div className="actions__right">
           <Feature
             isActive={
               features.find((feature) => feature.name === 'CREATE_PALETTE')
@@ -45,60 +45,8 @@ export default class Actions extends React.Component<Props> {
             />
           </Feature>
         </div>
-        <div className="actions__view">
-          <Feature
-            isActive={
-              features.find((feature) => feature.name === 'VIEWS').isActive
-            }
-          >
-            <FormItem
-              id="change-view"
-              label={locals[this.props.lang].views.title}
-            >
-              <Dropdown
-                id="views"
-                options={[
-                  {
-                    label: locals[this.props.lang].views.detailed,
-                    value: 'PALETTE_WITH_PROPERTIES',
-                    position: 0,
-                    isActive: features.find(
-                      (feature) =>
-                        feature.name === 'VIEWS_PALETTE_WITH_PROPERTIES'
-                    ).isActive,
-                    isBlocked: isBlocked(
-                      'VIEWS_PALETTE_WITH_PROPERTIES',
-                      this.props.planStatus
-                    ),
-                  },
-                  {
-                    label: locals[this.props.lang].views.simple,
-                    value: 'PALETTE',
-                    position: 1,
-                    isActive: features.find(
-                      (feature) => feature.name === 'VIEWS_PALETTE'
-                    ).isActive,
-                    isBlocked: isBlocked(
-                      'VIEWS_PALETTE',
-                      this.props.planStatus
-                    ),
-                  },
-                  {
-                    label: locals[this.props.lang].views.sheet,
-                    value: 'SHEET',
-                    position: 2,
-                    isActive: features.find(
-                      (feature) => feature.name === 'VIEWS_SHEET'
-                    ).isActive,
-                    isBlocked: isBlocked('VIEWS_SHEET', this.props.planStatus),
-                  },
-                ]}
-                selected={this.props.view}
-                feature="UPDATE_VIEW"
-                onChange={this.props.onChangeView}
-              />
-            </FormItem>
-          </Feature>
+        <div className="actions__left">
+
         </div>
       </div>
     )
@@ -107,7 +55,7 @@ export default class Actions extends React.Component<Props> {
   LocalStyles = () => {
     return (
       <div className="actions">
-        <div className="actions__buttons">
+        <div className="actions__right">
           <Feature
             isActive={
               features.find((feature) => feature.name === 'UPDATE_LOCAL_STYLES')
@@ -135,60 +83,8 @@ export default class Actions extends React.Component<Props> {
             />
           </Feature>
         </div>
-        <div className="actions__view">
-          <Feature
-            isActive={
-              features.find((feature) => feature.name === 'VIEWS').isActive
-            }
-          >
-            <FormItem
-              id="change-view"
-              label={locals[this.props.lang].views.title}
-            >
-              <Dropdown
-                id="views"
-                options={[
-                  {
-                    label: locals[this.props.lang].views.detailed,
-                    value: 'PALETTE_WITH_PROPERTIES',
-                    position: 0,
-                    isActive: features.find(
-                      (feature) =>
-                        feature.name === 'VIEWS_PALETTE_WITH_PROPERTIES'
-                    ).isActive,
-                    isBlocked: isBlocked(
-                      'VIEWS_PALETTE_WITH_PROPERTIES',
-                      this.props.planStatus
-                    ),
-                  },
-                  {
-                    label: locals[this.props.lang].views.simple,
-                    value: 'PALETTE',
-                    position: 1,
-                    isActive: features.find(
-                      (feature) => feature.name === 'VIEWS_PALETTE'
-                    ).isActive,
-                    isBlocked: isBlocked(
-                      'VIEWS_PALETTE',
-                      this.props.planStatus
-                    ),
-                  },
-                  {
-                    label: locals[this.props.lang].views.sheet,
-                    value: 'SHEET',
-                    position: 2,
-                    isActive: features.find(
-                      (feature) => feature.name === 'VIEWS_SHEET'
-                    ).isActive,
-                    isBlocked: isBlocked('VIEWS_SHEET', this.props.planStatus),
-                  },
-                ]}
-                selected={this.props.view}
-                feature="UPDATE_VIEW"
-                onChange={this.props.onChangeView}
-              />
-            </FormItem>
-          </Feature>
+        <div className="actions__left">
+          
         </div>
       </div>
     )

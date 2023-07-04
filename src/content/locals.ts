@@ -49,7 +49,7 @@ export const locals = {
     },
     settings: {
       base: {
-        title: 'Base information',
+        title: 'Global',
         name: 'Palette name',
         defaultName: 'UI Color Palette',
       },
