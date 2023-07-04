@@ -153,6 +153,7 @@ export default class Input extends React.Component<Props> {
     return (
       <textarea
         className="textarea"
+        placeholder={this.props.placeholder}
         value={this.props.value}
         onFocus={this.props.onFocus}
         onBlur={this.props.onBlur}
