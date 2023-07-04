@@ -253,6 +253,7 @@ export default class ColorItem extends React.Component<Props> {
                     onChange={this.inputHandler}
                     onFocus={this.selectionHandler}
                     onBlur={this.inputHandler}
+                    onConfirm={this.inputHandler}
                   />
                 </FormItem>
               </div>

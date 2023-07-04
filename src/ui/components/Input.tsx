@@ -17,7 +17,7 @@ interface Props {
   onChange?: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>
   onFocus: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>
   onBlur: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>
-  onConfirm?: React.KeyboardEventHandler<HTMLInputElement>
+  onConfirm?: React.KeyboardEventHandler<HTMLInputElement | HTMLTextAreaElement>
 }
 
 export default class Input extends React.Component<Props> {
@@ -159,6 +159,7 @@ export default class Input extends React.Component<Props> {
         className="textarea"
         placeholder={this.props.placeholder}
         value={this.props.value}
+        onKeyPress={this.props.onConfirm}
         onChange={this.props.onChange}
         onFocus={this.props.onFocus}
         onBlur={this.props.onBlur}
