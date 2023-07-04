@@ -53,6 +53,7 @@ export interface PaletteNode {
 
 export interface PaletteDataItem {
   name: string
+  description: string
   shades: Array<{
     name: string
     hex: string

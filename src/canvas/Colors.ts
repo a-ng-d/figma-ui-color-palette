@@ -200,6 +200,7 @@ export default class Colors {
     this.parent.colors.forEach((color) => {
       const paletteDataItem: PaletteDataItem = {
           name: color.name,
+          description: color.description,
           shades: [],
         },
         sourceColor: Array<number> = chroma([
