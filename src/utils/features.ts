@@ -124,7 +124,7 @@ const features: Array<Features> = [
   {
     name: 'CREATE_LOCAL_VARIABLES',
     description: 'Create local variables in the document',
-    isActive: false,
+    isActive: true,
     isPro: false,
     type: 'ACTION',
     service: ['EDIT'],

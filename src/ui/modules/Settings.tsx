@@ -26,6 +26,8 @@ interface Props {
   onCreatePalette?: () => void
   onCreateLocalStyles?: () => void
   onUpdateLocalStyles?: () => void
+  onCreateLocalVariables?: () => void
+  onUpdateLocalVariables?: () => void
   onChangeView: React.ChangeEventHandler
   onReopenHighlight: React.ChangeEventHandler
 }
@@ -449,7 +451,6 @@ export default class Settings extends React.Component<Props> {
             planStatus={this.props.planStatus}
             lang={this.props.lang}
             onCreatePalette={this.props.onCreatePalette}
-            onChangeView={this.props.onChangeView}
           />
         ) : (
           <Actions
@@ -460,7 +461,8 @@ export default class Settings extends React.Component<Props> {
             lang={this.props.lang}
             onCreateLocalStyles={this.props.onCreateLocalStyles}
             onUpdateLocalStyles={this.props.onUpdateLocalStyles}
-            onChangeView={this.props.onChangeView}
+            onCreateLocalVariables={this.props.onCreateLocalVariables}
+            onUpdateLocalVariables={this.props.onUpdateLocalVariables}
           />
         )}
         <Feature

@@ -34,7 +34,8 @@ interface Props {
   onChangeOrder: React.ChangeEventHandler
   onCreateLocalStyles: () => void
   onUpdateLocalStyles: () => void
-  onChangeView: React.ChangeEventHandler
+  onCreateLocalVariables: () => void
+  onUpdateLocalVariables: () => void
   onReopenHighlight: React.ChangeEventHandler
 }
 
@@ -106,7 +107,8 @@ export default class Colors extends React.Component<Props> {
           lang={this.props.lang}
           onCreateLocalStyles={this.props.onCreateLocalStyles}
           onUpdateLocalStyles={this.props.onUpdateLocalStyles}
-          onChangeView={this.props.onChangeView}
+          onCreateLocalVariables={this.props.onCreateLocalVariables}
+          onUpdateLocalVariables={this.props.onUpdateLocalVariables}
         />
         <Feature
           isActive={

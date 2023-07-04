@@ -17,7 +17,8 @@ interface Props {
   onCreatePalette?: React.MouseEventHandler
   onCreateLocalStyles?: React.MouseEventHandler
   onUpdateLocalStyles?: React.MouseEventHandler
-  onChangeView?: React.ChangeEventHandler
+  onCreateLocalVariables?: React.MouseEventHandler
+  onUpdateLocalVariables?: React.MouseEventHandler
   onExportPalette?: React.MouseEventHandler
 }
 
@@ -80,7 +81,7 @@ export default class Actions extends React.Component<Props> {
             type="secondary"
             label={locals[this.props.lang].actions.updateLocalVariables}
             feature="UPDATE_LOCAL_VARIABLES"
-            action={this.props.onUpdateLocalStyles}
+            action={this.props.onUpdateLocalVariables}
           />
         </Feature>
         <Feature
@@ -93,7 +94,7 @@ export default class Actions extends React.Component<Props> {
             type="primary"
             label={locals[this.props.lang].actions.createLocalVariables}
             feature="CREATE_LOCAL_VARIABLES"
-            action={this.props.onCreateLocalStyles}
+            action={this.props.onCreateLocalVariables}
           />
         </Feature>
       </>

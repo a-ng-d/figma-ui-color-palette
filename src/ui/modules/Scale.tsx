@@ -23,10 +23,11 @@ interface Props {
   onChangeScale: (e: string) => void
   onAddStop?: React.ReactEventHandler
   onRemoveStop?: React.ReactEventHandler
-  onChangeView: React.ChangeEventHandler
   onCreatePalette?: () => void
   onCreateLocalStyles?: () => void
   onUpdateLocalStyles?: () => void
+  onCreateLocalVariables?: () => void
+  onUpdateLocalVariables?: () => void
   onReopenHighlight: React.ChangeEventHandler
 }
 
@@ -188,7 +189,6 @@ export default class Scale extends React.Component<Props> {
           planStatus={this.props.planStatus}
           lang={this.props.lang}
           onCreatePalette={this.props.onCreatePalette}
-          onChangeView={this.props.onChangeView}
         />
         <this.Shortcuts />
       </>
@@ -247,7 +247,8 @@ export default class Scale extends React.Component<Props> {
           lang={this.props.lang}
           onCreateLocalStyles={this.props.onCreateLocalStyles}
           onUpdateLocalStyles={this.props.onUpdateLocalStyles}
-          onChangeView={this.props.onChangeView}
+          onCreateLocalVariables={this.props.onCreateLocalVariables}
+          onUpdateLocalVariables={this.props.onUpdateLocalVariables}
         />
         <this.Shortcuts />
       </>

@@ -445,7 +445,7 @@ export default class EditPalette extends React.Component<Props> {
   }
 
   // Direct actions
-  onCreate = () => {
+  onCreateStyles = () => {
     parent.postMessage(
       { pluginMessage: { type: 'CREATE_LOCAL_STYLES', data: palette } },
       '*'
@@ -458,7 +458,7 @@ export default class EditPalette extends React.Component<Props> {
     })
   }
 
-  onUpdate = () => {
+  onUpdateStyles = () => {
     parent.postMessage(
       { pluginMessage: { type: 'UPDATE_LOCAL_STYLES', data: palette } },
       '*'
@@ -469,6 +469,14 @@ export default class EditPalette extends React.Component<Props> {
         position: null,
       },
     })
+  }
+
+  onCreateVariables = () => {
+    console.log('create variables')
+  }
+
+  onUpdateVariables = () => {
+    console.log('update variables')
   }
 
   onExport = () => {
@@ -568,9 +576,10 @@ export default class EditPalette extends React.Component<Props> {
             editorType={this.props.editorType}
             lang={this.props.lang}
             onChangeScale={this.slideHandler}
-            onChangeView={this.viewHandler}
-            onCreateLocalStyles={this.onCreate}
-            onUpdateLocalStyles={this.onUpdate}
+            onCreateLocalStyles={this.onCreateStyles}
+            onUpdateLocalStyles={this.onUpdateStyles}
+            onCreateLocalVariables={this.onCreateVariables}
+            onUpdateLocalVariables={this.onUpdateVariables}
             onReopenHighlight={this.props.onReopenHighlight}
           />
         )
@@ -592,9 +601,10 @@ export default class EditPalette extends React.Component<Props> {
             onDragChange={this.dragHandler}
             onDropOutside={this.dropOutsideHandler}
             onChangeOrder={this.orderHandler}
-            onCreateLocalStyles={this.onCreate}
-            onUpdateLocalStyles={this.onUpdate}
-            onChangeView={this.viewHandler}
+            onCreateLocalStyles={this.onCreateStyles}
+            onUpdateLocalStyles={this.onUpdateStyles}
+            onCreateLocalVariables={this.onCreateVariables}
+            onUpdateLocalVariables={this.onUpdateVariables}
             onReopenHighlight={this.props.onReopenHighlight}
           />
         )
@@ -630,8 +640,10 @@ export default class EditPalette extends React.Component<Props> {
             editorType={this.props.editorType}
             lang={this.props.lang}
             onChangeSettings={this.settingsHandler}
-            onCreateLocalStyles={this.onCreate}
-            onUpdateLocalStyles={this.onUpdate}
+            onCreateLocalStyles={this.onCreateStyles}
+            onUpdateLocalStyles={this.onUpdateStyles}
+            onCreateLocalVariables={this.onCreateVariables}
+            onUpdateLocalVariables={this.onUpdateVariables}
             onChangeView={this.viewHandler}
             onReopenHighlight={this.props.onReopenHighlight}
           />
