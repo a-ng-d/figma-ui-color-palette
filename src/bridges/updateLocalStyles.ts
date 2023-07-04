@@ -19,11 +19,12 @@ const updateLocalStyles = (palette, i: number) => {
           if (target != undefined)
             if (
               shade.hex !=
-              chroma([
-                target.paints[0]['color'].r * 255,
-                target.paints[0]['color'].g * 255,
-                target.paints[0]['color'].b * 255,
-              ]).hex() || color.description + '﹒' + shade.description != target.description
+                chroma([
+                  target.paints[0]['color'].r * 255,
+                  target.paints[0]['color'].g * 255,
+                  target.paints[0]['color'].b * 255,
+                ]).hex() ||
+              color.description + '﹒' + shade.description != target.description
             ) {
               target.paints = [
                 {

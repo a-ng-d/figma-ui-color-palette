@@ -213,8 +213,9 @@ export default class ColorItem extends React.Component<Props> {
           <>
             <Feature
               isActive={
-                features.find((feature) => feature.name === 'COLORS_HUE_SHIFTING')
-                  .isActive
+                features.find(
+                  (feature) => feature.name === 'COLORS_HUE_SHIFTING'
+                ).isActive
               }
             >
               <div className="colors__shift inputs">
@@ -236,8 +237,9 @@ export default class ColorItem extends React.Component<Props> {
             </Feature>
             <Feature
               isActive={
-                features.find((feature) => feature.name === 'COLORS_DESCRIPTION')
-                  .isActive
+                features.find(
+                  (feature) => feature.name === 'COLORS_DESCRIPTION'
+                ).isActive
               }
             >
               <div className="colors__description">

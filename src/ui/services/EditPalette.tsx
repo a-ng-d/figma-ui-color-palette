@@ -272,7 +272,7 @@ export default class EditPalette extends React.Component<Props> {
         id: uuidv4(),
         oklch: false,
         hueShifting: 0,
-        description: ''
+        description: '',
       })
       this.props.onChangeColor(colorsMessage.data)
       parent.postMessage({ pluginMessage: colorsMessage }, '*')
@@ -312,8 +312,7 @@ export default class EditPalette extends React.Component<Props> {
 
     const updateColorDescription = () => {
       colorsMessage.data = this.props.colors.map((item) => {
-        if (item.id === id)
-          item.description = e.target.value
+        if (item.id === id) item.description = e.target.value
         return item
       })
       this.props.onChangeColor(colorsMessage.data)

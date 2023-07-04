@@ -24,7 +24,7 @@ export default class Input extends React.Component<Props> {
   static defaultProps = {
     icon: {
       type: 'none',
-      value: null
+      value: null,
     },
     step: '1',
     isBlocked: false,

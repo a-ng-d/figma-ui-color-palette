@@ -645,7 +645,7 @@ ul.options li {
 div.settings {
   flex: 1 0 176px;
   overflow-y: auto;
-  padding: 0
+  padding: 0;
 }
 
 div.settings__group {
