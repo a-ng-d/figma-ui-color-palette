@@ -128,7 +128,6 @@ export default class ColorItem extends React.Component<Props> {
         <div className="colors__name">
           <Input
             type="TEXT"
-            icon={{ type: 'none', value: null }}
             value={this.props.name}
             feature="RENAME"
             onChange={this.inputHandler}
@@ -140,7 +139,6 @@ export default class ColorItem extends React.Component<Props> {
         <div className="colors__parameters">
           <Input
             type="COLOR"
-            icon={{ type: 'none', value: null }}
             value={this.props.hex}
             feature="HEX"
             onChange={this.inputHandler}
@@ -152,7 +150,6 @@ export default class ColorItem extends React.Component<Props> {
             <div className="inputs__bar">
               <Input
                 type="NUMBER"
-                icon={{ type: 'none', value: null }}
                 value={chroma(this.props.hex).lch()[0].toFixed(0)}
                 min="0"
                 max="100"
@@ -163,7 +160,6 @@ export default class ColorItem extends React.Component<Props> {
               />
               <Input
                 type="NUMBER"
-                icon={{ type: 'none', value: null }}
                 value={chroma(this.props.hex).lch()[1].toFixed(0)}
                 min="0"
                 max="100"
@@ -174,7 +170,6 @@ export default class ColorItem extends React.Component<Props> {
               />
               <Input
                 type="NUMBER"
-                icon={{ type: 'none', value: null }}
                 value={
                   chroma(this.props.hex).lch()[2].toFixed(0) == 'NaN'
                     ? 0

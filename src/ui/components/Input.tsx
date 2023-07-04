@@ -22,6 +22,10 @@ interface Props {
 
 export default class Input extends React.Component<Props> {
   static defaultProps = {
+    icon: {
+      type: 'none',
+      value: null
+    },
     step: '1',
     isBlocked: false,
     isAutoFocus: false,

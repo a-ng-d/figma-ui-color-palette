@@ -51,7 +51,6 @@ export default class Knob extends React.Component<Props> {
           <div className="slider__input">
             <Input
               type="NUMBER"
-              icon={{ type: 'none', value: null }}
               value={this.props.stopInputValue.toString()}
               min={this.props.min}
               max={this.props.max}
