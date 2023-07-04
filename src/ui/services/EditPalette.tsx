@@ -317,6 +317,10 @@ export default class EditPalette extends React.Component<Props> {
         return item
       })
       this.props.onChangeColor(colorsMessage.data)
+      if (e._reactName === 'onBlur')
+        parent.postMessage({ pluginMessage: colorsMessage }, '*')
+      if (e.key === 'Enter')
+        parent.postMessage({ pluginMessage: colorsMessage }, '*')
     }
 
     const actions: ActionsList = {
