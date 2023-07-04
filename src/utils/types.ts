@@ -56,6 +56,7 @@ export interface PaletteDataItem {
   description: string
   shades: Array<{
     name: string
+    description: string
     hex: string
     rgb: Array<number>
     gl: Array<number>
