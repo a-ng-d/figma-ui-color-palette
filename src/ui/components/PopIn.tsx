@@ -26,7 +26,7 @@ export default class PopIn extends React.Component<Props> {
           <Button
             icon="close"
             type="icon"
-            feature="close"
+            feature="CLOSE_HIGHLIGHT"
             action={this.props.close}
           />
         </div>
@@ -36,14 +36,14 @@ export default class PopIn extends React.Component<Props> {
             <Button
               type="secondary"
               label={this.props.actions.secondary.label}
-              feature="secondary-action"
+              feature="SECONDARY_ACTION"
               action={this.props.actions.secondary.action}
             />
           ) : null}
           <Button
             type="primary"
             label={this.props.actions.primary.label}
-            feature="primary-action"
+            feature="PRIMARY_ACTION"
             action={this.props.actions.primary.action}
           />
         </div>

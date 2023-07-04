@@ -114,7 +114,7 @@ export default class Actions extends React.Component<Props> {
             <Button
               type="primary"
               label={locals[this.props.lang].actions.createPalette}
-              feature="CREATE"
+              feature="CREATE_PALETTE"
               action={this.props.onCreatePalette}
             />
           </Feature>
@@ -186,7 +186,7 @@ export default class Actions extends React.Component<Props> {
             label={`${locals[this.props.lang].actions.export} ${
               this.props.exportType
             }`}
-            feature="export"
+            feature="EXPORT_PALETTE"
             action={this.props.onExportPalette}
           >
             <a></a>

@@ -122,7 +122,6 @@ export default class CreatePalette extends React.Component<Props> {
             onChangeScale={() => null}
             onAddStop={this.scaleHandler}
             onRemoveStop={this.scaleHandler}
-            onChangeView={this.viewHandler}
             onCreatePalette={this.onCreate}
             onReopenHighlight={this.props.onReopenHighlight}
           />

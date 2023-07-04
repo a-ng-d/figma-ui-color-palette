@@ -170,8 +170,8 @@ class App extends React.Component {
     }
 
     const actions: ActionsList = {
-      ADD: () => addStop(),
-      REMOVE: () => removeStop(),
+      ADD_STOP: () => addStop(),
+      REMOVE_STOP: () => removeStop(),
     }
 
     return actions[(e.target as HTMLInputElement).dataset.feature]?.()

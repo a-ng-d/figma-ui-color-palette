@@ -323,15 +323,15 @@ export default class EditPalette extends React.Component<Props> {
     }
 
     const actions: ActionsList = {
-      HEX: () => updateHexCode(),
-      LIGHTNESS: () => updateLightnessProp(),
-      CHROMA: () => updateChromaProp(),
-      HUE: () => updateHueProp(),
-      ADD: () => addColor(),
-      REMOVE: () => removeColor(),
-      RENAME: () => renameColor(),
+      UPDATE_HEX: () => updateHexCode(),
+      UPDATE_LIGHTNESS: () => updateLightnessProp(),
+      UPDATE_CHROMA: () => updateChromaProp(),
+      UPDATE_HUE: () => updateHueProp(),
+      ADD_COLOR: () => addColor(),
+      REMOVE_COLOR: () => removeColor(),
+      RENAME_COLOR: () => renameColor(),
       SHIFT_HUE: () => setHueShifting(),
-      DESCRIPTION: () => updateColorDescription(),
+      UPDATE_DESCRIPTION: () => updateColorDescription(),
     }
 
     return actions[e.target.dataset.feature]?.()

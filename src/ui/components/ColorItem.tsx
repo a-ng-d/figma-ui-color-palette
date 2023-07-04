@@ -131,7 +131,7 @@ export default class ColorItem extends React.Component<Props> {
           <Input
             type="TEXT"
             value={this.props.name}
-            feature="RENAME"
+            feature="RENAME_COLOR"
             onChange={this.inputHandler}
             onFocus={this.selectionHandler}
             onBlur={this.inputHandler}
@@ -142,7 +142,7 @@ export default class ColorItem extends React.Component<Props> {
           <Input
             type="COLOR"
             value={this.props.hex}
-            feature="HEX"
+            feature="UPDATE_HEX"
             onChange={this.inputHandler}
             onFocus={this.selectionHandler}
             onBlur={this.inputHandler}
@@ -155,7 +155,7 @@ export default class ColorItem extends React.Component<Props> {
                 value={chroma(this.props.hex).lch()[0].toFixed(0)}
                 min="0"
                 max="100"
-                feature="LIGHTNESS"
+                feature="UPDATE_LIGHTNESS"
                 onChange={this.inputHandler}
                 onFocus={this.selectionHandler}
                 onBlur={this.inputHandler}
@@ -165,7 +165,7 @@ export default class ColorItem extends React.Component<Props> {
                 value={chroma(this.props.hex).lch()[1].toFixed(0)}
                 min="0"
                 max="100"
-                feature="CHROMA"
+                feature="UPDATE_CHROMA"
                 onChange={this.inputHandler}
                 onFocus={this.selectionHandler}
                 onBlur={this.inputHandler}
@@ -179,7 +179,7 @@ export default class ColorItem extends React.Component<Props> {
                 }
                 min="0"
                 max="360"
-                feature="HUE"
+                feature="UPDATE_HUE"
                 onChange={this.inputHandler}
                 onFocus={this.selectionHandler}
                 onBlur={this.inputHandler}
@@ -201,14 +201,14 @@ export default class ColorItem extends React.Component<Props> {
               icon="adjust"
               type="icon"
               state={this.state['hasMoreOptions'] ? 'selected' : ''}
-              feature="MORE"
+              feature="DISPLAY_MORE"
               action={this.optionsHandler}
             />
           </Feature>
           <Button
             icon="minus"
             type="icon"
-            feature="REMOVE"
+            feature="REMOVE_COLOR"
             action={this.inputHandler}
           />
         </div>
@@ -254,7 +254,7 @@ export default class ColorItem extends React.Component<Props> {
                     type="TEXT"
                     value={this.props.description}
                     placeholder={locals[this.props.lang].colors.descriptionTip}
-                    feature="DESCRIPTION"
+                    feature="UPDATE_DESCRIPTION"
                     onChange={this.inputHandler}
                     onFocus={this.selectionHandler}
                     onBlur={this.inputHandler}
