@@ -3,7 +3,7 @@ import * as React from 'react'
 interface Props {
   id?: string
   type: string
-  icon: { type: string; value: string }
+  icon?: { type: string; value: string }
   placeholder?: string
   value: string
   charactersLimit?: number
@@ -12,9 +12,9 @@ interface Props {
   step?: string
   isReadOnly?: boolean
   isBlocked?: boolean
-  feature: string
+  feature?: string
   isAutoFocus?: boolean
-  onChange: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>
+  onChange?: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>
   onFocus: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>
   onBlur: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>
   onConfirm?: React.KeyboardEventHandler<HTMLInputElement>
