@@ -100,6 +100,7 @@ export interface ColorConfiguration {
   }
   oklch: boolean
   hueShifting: number
+  description: string
 }
 
 export interface ExportConfiguration {

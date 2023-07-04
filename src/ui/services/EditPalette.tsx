@@ -272,6 +272,7 @@ export default class EditPalette extends React.Component<Props> {
         id: uuidv4(),
         oklch: false,
         hueShifting: 0,
+        description: ''
       })
       this.props.onChangeColor(colorsMessage.data)
       parent.postMessage({ pluginMessage: colorsMessage }, '*')
