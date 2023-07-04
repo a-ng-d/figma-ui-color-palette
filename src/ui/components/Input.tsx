@@ -3,24 +3,29 @@ import * as React from 'react'
 interface Props {
   id?: string
   type: string
-  icon: { type: string; value: string }
+  icon?: { type: string; value: string }
   placeholder?: string
   value: string
   charactersLimit?: number
   min?: string
   max?: string
   step?: string
+  isReadOnly?: boolean
   isBlocked?: boolean
-  feature: string
+  feature?: string
   isAutoFocus?: boolean
-  onChange: React.FocusEventHandler<HTMLInputElement>
-  onFocus: React.FocusEventHandler<HTMLInputElement>
-  onBlur: React.FocusEventHandler<HTMLInputElement>
-  onConfirm?: React.KeyboardEventHandler<HTMLInputElement>
+  onChange?: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>
+  onFocus: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>
+  onBlur: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>
+  onConfirm?: React.KeyboardEventHandler<HTMLInputElement | HTMLTextAreaElement>
 }
 
 export default class Input extends React.Component<Props> {
   static defaultProps = {
+    icon: {
+      type: 'none',
+      value: null,
+    },
     step: '1',
     isBlocked: false,
     isAutoFocus: false,
@@ -148,13 +153,29 @@ export default class Input extends React.Component<Props> {
     )
   }
 
+  LongText = () => {
+    return (
+      <textarea
+        className="textarea"
+        placeholder={this.props.placeholder}
+        value={this.props.value}
+        onKeyPress={this.props.onConfirm}
+        onChange={this.props.onChange}
+        onFocus={this.props.onFocus}
+        onBlur={this.props.onBlur}
+        readOnly={this.props.isReadOnly}
+      ></textarea>
+    )
+  }
+
   // Render
   render() {
     return (
       <>
-        {this.props.type === 'number' ? <this.Number /> : null}
-        {this.props.type === 'color' ? <this.Color /> : null}
-        {this.props.type === 'text' ? <this.Text /> : null}
+        {this.props.type === 'NUMBER' ? <this.Number /> : null}
+        {this.props.type === 'COLOR' ? <this.Color /> : null}
+        {this.props.type === 'TEXT' ? <this.Text /> : null}
+        {this.props.type === 'LONG_TEXT' ? <this.LongText /> : null}
       </>
     )
   }

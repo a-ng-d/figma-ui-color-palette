@@ -46,6 +46,7 @@ const exportJson = (palette) => {
               l: Math.floor(shade.hsl[2] * 100),
             },
             hex: shade.hex,
+            description: color.description != '' ? color.description.concat('﹒', shade.description) : shade.description,
             type: 'color',
           }
         })

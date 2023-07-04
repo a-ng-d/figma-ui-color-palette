@@ -50,8 +50,7 @@ export default class Knob extends React.Component<Props> {
         {this.props.state === 'EDITING' ? (
           <div className="slider__input">
             <Input
-              type="number"
-              icon={{ type: 'none', value: null }}
+              type="NUMBER"
               value={this.props.stopInputValue.toString()}
               min={this.props.min}
               max={this.props.max}

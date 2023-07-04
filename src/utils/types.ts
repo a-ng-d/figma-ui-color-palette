@@ -53,8 +53,10 @@ export interface PaletteNode {
 
 export interface PaletteDataItem {
   name: string
+  description: string
   shades: Array<{
     name: string
+    description: string
     hex: string
     rgb: Array<number>
     gl: Array<number>
@@ -100,6 +102,7 @@ export interface ColorConfiguration {
   }
   oklch: boolean
   hueShifting: number
+  description: string
 }
 
 export interface ExportConfiguration {

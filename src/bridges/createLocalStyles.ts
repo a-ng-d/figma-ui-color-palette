@@ -16,11 +16,15 @@ const createLocalStyles = (palette, i: number) => {
             localStyles.filter((e) => e.name === `${color.name}/${shade.name}`)
               .length == 0
           ) {
-            const style: PaintStyle = new Style(`${color.name}/${shade.name}`, {
-              r: shade.gl[0],
-              g: shade.gl[1],
-              b: shade.gl[2],
-            }).makeNode()
+            const style: PaintStyle = new Style(
+              `${color.name}/${shade.name}`,
+              color.description != '' ? color.description.concat('﹒', shade.description) : shade.description,
+              {
+                r: shade.gl[0],
+                g: shade.gl[1],
+                b: shade.gl[2],
+              }
+            ).makeNode()
             i++
           }
         })

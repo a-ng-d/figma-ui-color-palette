@@ -148,7 +148,15 @@ const features: Array<Features> = [
   },
   {
     name: 'COLORS_HUE_SHIFTING',
-    description: 'Color hue shifting number field',
+    description: 'Source color hue shifting number',
+    isActive: true,
+    isPro: false,
+    type: 'ACTION',
+    service: ['EDIT'],
+  },
+  {
+    name: 'COLORS_DESCRIPTION',
+    description: 'Description of the source colors purpose',
     isActive: true,
     isPro: false,
     type: 'ACTION',

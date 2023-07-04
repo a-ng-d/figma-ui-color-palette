@@ -1,8 +1,9 @@
 import * as React from 'react'
 import chroma from 'chroma-js'
+import Feature from './Feature'
 import Input from './Input'
 import Button from './Button'
-import Feature from './Feature'
+import FormItem from './FormItem'
 import doMap from './../../utils/doMap'
 import features from '../../utils/features'
 import { locals } from '../../content/locals'
@@ -12,6 +13,7 @@ interface Props {
   hex: string
   oklch: boolean
   shift: number
+  description: string
   uuid: string
   index: number
   selected: boolean
@@ -127,8 +129,7 @@ export default class ColorItem extends React.Component<Props> {
       >
         <div className="colors__name">
           <Input
-            type="text"
-            icon={{ type: 'none', value: null }}
+            type="TEXT"
             value={this.props.name}
             feature="RENAME"
             onChange={this.inputHandler}
@@ -139,8 +140,7 @@ export default class ColorItem extends React.Component<Props> {
         </div>
         <div className="colors__parameters">
           <Input
-            type="color"
-            icon={{ type: 'none', value: null }}
+            type="COLOR"
             value={this.props.hex}
             feature="HEX"
             onChange={this.inputHandler}
@@ -151,8 +151,7 @@ export default class ColorItem extends React.Component<Props> {
             <div className="label">{locals[this.props.lang].colors.lch}</div>
             <div className="inputs__bar">
               <Input
-                type="number"
-                icon={{ type: 'none', value: null }}
+                type="NUMBER"
                 value={chroma(this.props.hex).lch()[0].toFixed(0)}
                 min="0"
                 max="100"
@@ -162,8 +161,7 @@ export default class ColorItem extends React.Component<Props> {
                 onBlur={this.inputHandler}
               />
               <Input
-                type="number"
-                icon={{ type: 'none', value: null }}
+                type="NUMBER"
                 value={chroma(this.props.hex).lch()[1].toFixed(0)}
                 min="0"
                 max="100"
@@ -173,8 +171,7 @@ export default class ColorItem extends React.Component<Props> {
                 onBlur={this.inputHandler}
               />
               <Input
-                type="number"
-                icon={{ type: 'none', value: null }}
+                type="NUMBER"
                 value={
                   chroma(this.props.hex).lch()[2].toFixed(0) == 'NaN'
                     ? 0
@@ -195,6 +192,9 @@ export default class ColorItem extends React.Component<Props> {
             isActive={
               features.find((feature) => feature.name === 'COLORS_HUE_SHIFTING')
                 .isActive
+              || 
+              features.find((feature) => feature.name === 'COLORS_DESCRIPTION')
+                .isActive
             }
           >
             <Button
@@ -213,29 +213,57 @@ export default class ColorItem extends React.Component<Props> {
           />
         </div>
         {this.state['hasMoreOptions'] ? (
-          <Feature
-            isActive={
-              features.find((feature) => feature.name === 'COLORS_HUE_SHIFTING')
-                .isActive
-            }
-          >
-            <div className="colors__shift inputs">
-              <div className="label">
-                {locals[this.props.lang].colors.hueShifting}
+          <>
+            <Feature
+              isActive={
+                features.find(
+                  (feature) => feature.name === 'COLORS_HUE_SHIFTING'
+                ).isActive
+              }
+            >
+              <div className="colors__shift inputs">
+                <div className="label">
+                  {locals[this.props.lang].colors.hueShifting}
+                </div>
+                <Input
+                  type="NUMBER"
+                  icon={{ type: 'icon', value: 'arrow-left-right' }}
+                  value={this.props.shift.toString()}
+                  min="-360"
+                  max="360"
+                  feature="SHIFT_HUE"
+                  onChange={this.inputHandler}
+                  onFocus={this.selectionHandler}
+                  onBlur={this.inputHandler}
+                />
               </div>
-              <Input
-                type="number"
-                icon={{ type: 'icon', value: 'arrow-left-right' }}
-                value={this.props.shift.toString()}
-                min="-360"
-                max="360"
-                feature="SHIFT_HUE"
-                onChange={this.inputHandler}
-                onFocus={this.selectionHandler}
-                onBlur={this.inputHandler}
-              />
-            </div>
-          </Feature>
+            </Feature>
+            <Feature
+              isActive={
+                features.find(
+                  (feature) => feature.name === 'COLORS_DESCRIPTION'
+                ).isActive
+              }
+            >
+              <div className="colors__description">
+                <FormItem
+                  id="color-description"
+                  label={locals[this.props.lang].colors.description}
+                >
+                  <Input
+                    type="TEXT"
+                    value={this.props.description}
+                    placeholder={locals[this.props.lang].colors.descriptionTip}
+                    feature="DESCRIPTION"
+                    onChange={this.inputHandler}
+                    onFocus={this.selectionHandler}
+                    onBlur={this.inputHandler}
+                    onConfirm={this.inputHandler}
+                  />
+                </FormItem>
+              </div>
+            </Feature>
+          </>
         ) : null}
       </li>
     )

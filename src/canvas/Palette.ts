@@ -91,6 +91,7 @@ export default class Palette {
               id: undefined,
               oklch: false,
               hueShifting: 0,
+              description: '',
             })
           )
         } else

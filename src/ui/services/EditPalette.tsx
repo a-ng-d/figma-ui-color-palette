@@ -272,6 +272,7 @@ export default class EditPalette extends React.Component<Props> {
         id: uuidv4(),
         oklch: false,
         hueShifting: 0,
+        description: '',
       })
       this.props.onChangeColor(colorsMessage.data)
       parent.postMessage({ pluginMessage: colorsMessage }, '*')
@@ -309,6 +310,18 @@ export default class EditPalette extends React.Component<Props> {
       parent.postMessage({ pluginMessage: colorsMessage }, '*')
     }
 
+    const updateColorDescription = () => {
+      colorsMessage.data = this.props.colors.map((item) => {
+        if (item.id === id) item.description = e.target.value
+        return item
+      })
+      this.props.onChangeColor(colorsMessage.data)
+      if (e._reactName === 'onBlur')
+        parent.postMessage({ pluginMessage: colorsMessage }, '*')
+      if (e.key === 'Enter')
+        parent.postMessage({ pluginMessage: colorsMessage }, '*')
+    }
+
     const actions: ActionsList = {
       HEX: () => updateHexCode(),
       LIGHTNESS: () => updateLightnessProp(),
@@ -318,6 +331,7 @@ export default class EditPalette extends React.Component<Props> {
       REMOVE: () => removeColor(),
       RENAME: () => renameColor(),
       SHIFT_HUE: () => setHueShifting(),
+      DESCRIPTION: () => updateColorDescription(),
     }
 
     return actions[e.target.dataset.feature]?.()

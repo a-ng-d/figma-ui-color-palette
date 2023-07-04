@@ -30,6 +30,9 @@ const setPaletteMigration = (palette: BaseNode) => {
   if (!colors.includes('hueShifting'))
     palette.setPluginData('colors', setData(colors, 'hueShifting', 0))
 
+  if (!colors.includes('description'))
+    palette.setPluginData('colors', setData(colors, 'description', ''))
+
   if (
     JSON.parse(colors).filter((color) => color.oklch).length ==
     JSON.parse(colors).length
@@ -64,7 +67,7 @@ const setPaletteMigration = (palette: BaseNode) => {
   if (algorithmVersion === '') palette.setPluginData('algorithmVersion', 'v1')
 
   // data
-  if (palette.getPluginData('data') === '')
+  if (palette.getPluginData('data') === '' || JSON.parse(palette.getPluginData('data')).description == undefined)
     new Colors(
       {
         name: palette.getPluginData('name'),
