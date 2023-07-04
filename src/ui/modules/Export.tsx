@@ -2,6 +2,7 @@ import * as React from 'react'
 import type { ActionsList } from '../../utils/types'
 import Feature from '../components/Feature'
 import RadioButton from './../components/RadioButton'
+import Input from '../components/Input'
 import Actions from './Actions'
 import Shortcuts from './Shortcuts'
 import features from '../../utils/features'
@@ -266,13 +267,13 @@ export default class Export extends React.Component<Props> {
               </div>
             </div>
             <div className="export-palette__options">
-              <textarea
-                className="export-palette__preview textarea"
+              <Input
+                type="LONG_TEXT"
                 value={this.props.exportPreview}
+                isReadOnly={true}
                 onBlur={this.deSelectPreview}
                 onFocus={this.selectPreview}
-                readOnly
-              ></textarea>
+              />
             </div>
           </div>
         </div>

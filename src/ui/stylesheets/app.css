@@ -627,7 +627,7 @@ div.export-palette__options {
   overflow-y: auto;
 }
 
-textarea.export-palette__preview {
+div.export-palette__options textarea {
   height: 100%;
   margin: 0;
 }
