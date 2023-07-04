@@ -18,7 +18,7 @@ const createLocalStyles = (palette, i: number) => {
           ) {
             const style: PaintStyle = new Style(
               `${color.name}/${shade.name}`,
-              shade.description,
+              color.description + '﹒' + shade.description,
               {
                 r: shade.gl[0],
                 g: shade.gl[1],
