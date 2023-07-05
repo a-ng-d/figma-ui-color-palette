@@ -2,7 +2,6 @@ import * as React from 'react'
 import Feature from '../components/Feature'
 import Button from '../components/Button'
 import Dropdown from '../components/Dropdown'
-import FormItem from '../components/FormItem'
 import features from '../../utils/features'
 import isBlocked from '../../utils/isBlocked'
 import { locals } from '../../content/locals'
@@ -11,7 +10,6 @@ interface Props {
   context: string
   view?: string
   exportType?: string | null
-  editorType?: string
   planStatus?: string
   lang: string
   onCreatePalette?: React.MouseEventHandler
@@ -23,10 +21,6 @@ interface Props {
 }
 
 export default class Actions extends React.Component<Props> {
-  static defaultProps = {
-    editorType: 'figma',
-  }
-
   constructor(props) {
     super(props)
     this.state = {
@@ -45,7 +39,7 @@ export default class Actions extends React.Component<Props> {
         <Feature
           isActive={
             features.find((feature) => feature.name === 'UPDATE_LOCAL_STYLES')
-              .isActive && this.props.editorType === 'figma'
+              .isActive
           }
         >
           <Button
@@ -58,7 +52,7 @@ export default class Actions extends React.Component<Props> {
         <Feature
           isActive={
             features.find((feature) => feature.name === 'CREATE_LOCAL_STYLES')
-              .isActive && this.props.editorType === 'figma'
+              .isActive
           }
         >
           <Button
@@ -79,7 +73,7 @@ export default class Actions extends React.Component<Props> {
           isActive={
             features.find(
               (feature) => feature.name === 'UPDATE_LOCAL_VARIABLES'
-            ).isActive && this.props.editorType === 'figma'
+            ).isActive
           }
         >
           <Button
@@ -93,7 +87,7 @@ export default class Actions extends React.Component<Props> {
           isActive={
             features.find(
               (feature) => feature.name === 'CREATE_LOCAL_VARIABLES'
-            ).isActive && this.props.editorType === 'figma'
+            ).isActive
           }
         >
           <Button

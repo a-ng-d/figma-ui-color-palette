@@ -239,17 +239,18 @@ export default class Scale extends React.Component<Props> {
             />
           </Feature>
         </div>
-        <Actions
-          context="DEPLOY"
-          view={this.props.view}
-          editorType={this.props.editorType}
-          planStatus={this.props.planStatus}
-          lang={this.props.lang}
-          onCreateLocalStyles={this.props.onCreateLocalStyles}
-          onUpdateLocalStyles={this.props.onUpdateLocalStyles}
-          onCreateLocalVariables={this.props.onCreateLocalVariables}
-          onUpdateLocalVariables={this.props.onUpdateLocalVariables}
-        />
+        {this.props.editorType === 'figma' ? (
+          <Actions
+            context="DEPLOY"
+            view={this.props.view}
+            planStatus={this.props.planStatus}
+            lang={this.props.lang}
+            onCreateLocalStyles={this.props.onCreateLocalStyles}
+            onUpdateLocalStyles={this.props.onUpdateLocalStyles}
+            onCreateLocalVariables={this.props.onCreateLocalVariables}
+            onUpdateLocalVariables={this.props.onUpdateLocalVariables}
+          />
+        ): null}
         <this.Shortcuts />
       </>
     )

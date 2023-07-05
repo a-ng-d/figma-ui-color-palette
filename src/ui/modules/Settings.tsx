@@ -447,11 +447,10 @@ export default class Settings extends React.Component<Props> {
             lang={this.props.lang}
             onCreatePalette={this.props.onCreatePalette}
           />
-        ) : (
+        ) : this.props.editorType === 'figma' ? (
           <Actions
             context="DEPLOY"
             view={this.props.view}
-            editorType={this.props.editorType}
             planStatus={this.props.planStatus}
             lang={this.props.lang}
             onCreateLocalStyles={this.props.onCreateLocalStyles}
@@ -459,7 +458,7 @@ export default class Settings extends React.Component<Props> {
             onCreateLocalVariables={this.props.onCreateLocalVariables}
             onUpdateLocalVariables={this.props.onUpdateLocalVariables}
           />
-        )}
+        ) : null}
         <Feature
           isActive={
             features.find((feature) => feature.name === 'SHORTCUTS').isActive
