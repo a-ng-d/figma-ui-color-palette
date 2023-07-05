@@ -128,9 +128,9 @@ export const locals = {
       updatedlocalStyles: 'local color styles have been updated',
     },
     warning: {
-      createLocalStyles:
+      cannotCreateLocalStyles:
         'Local color styles already exist and cannot be created twice',
-      updateLocalStyles:
+      cannotUpdateLocalStyles:
         'No color has been updated because the UI Color Palette has not been edited',
       emptySourceColors:
         'There is not any source color. Add it manually in the Colors section.',

@@ -45,7 +45,7 @@ const updateLocalStyles = (palette, i: number) => {
 
     if (i > 1) figma.notify(`${i} ${locals[lang].info.updatedlocalStyles}`)
     else if (i == 1) figma.notify(`${i} ${locals[lang].info.updatedlocalStyle}`)
-    else figma.notify(locals[lang].warning.updateLocalStyles)
+    else figma.notify(locals[lang].warning.cannotUpdateLocalStyles)
   } else figma.notify(locals[lang].error.corruption)
 }
 
