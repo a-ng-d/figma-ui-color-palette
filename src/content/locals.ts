@@ -126,12 +126,18 @@ export const locals = {
       createdlocalStyles: 'local color styles have been created',
       updatedlocalStyle: 'local color style has been updated',
       updatedlocalStyles: 'local color styles have been updated',
+      createdlocalVariable: 'local color variable has been created',
+      createdlocalVariables: 'local color variables have been created',
+      updatedlocalVariable: 'local color variable has been updated',
+      updatedlocalVariables: 'local color variables have been updated',
     },
     warning: {
       cannotCreateLocalStyles:
         'Local color styles already exist and cannot be created twice',
       cannotUpdateLocalStyles:
         'No color has been updated because the UI Color Palette has not been edited',
+      cannotCreateLocalVariables:
+        'Local color variables already exist and cannot be created twice',
       emptySourceColors:
         'There is not any source color. Add it manually in the Colors section.',
       hslColorSpace:

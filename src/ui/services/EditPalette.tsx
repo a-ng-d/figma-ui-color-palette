@@ -472,7 +472,16 @@ export default class EditPalette extends React.Component<Props> {
   }
 
   onCreateVariables = () => {
-    console.log('create variables')
+    parent.postMessage(
+      { pluginMessage: { type: 'CREATE_LOCAL_VARIABLES' } },
+      '*'
+    )
+    this.setState({
+      selectedElement: {
+        id: '',
+        position: null,
+      },
+    })
   }
 
   onUpdateVariables = () => {
