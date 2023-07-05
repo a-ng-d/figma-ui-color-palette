@@ -8,9 +8,8 @@ const createLocalVariables = (palette, i: number) => {
 
   if (palette.children.length == 1) {
     i = 0
-    const name = palette.getPluginData('name') === '' ? 'UI Color Palette' : palette.getPluginData('name')
-
-    const collections: Array<VariableCollection> = figma.variables.getLocalVariableCollections()
+    const name = palette.getPluginData('name') === '' ? 'UI Color Palette' : palette.getPluginData('name'),
+    collections: Array<VariableCollection> = figma.variables.getLocalVariableCollections()
     
     let collection: VariableCollection | undefined = collections.find(collection => collection.name === name)
 
