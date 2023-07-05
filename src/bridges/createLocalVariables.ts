@@ -52,8 +52,8 @@ const createLocalVariables = (palette, i: number) => {
       }
     )
 
-    if (i > 1) figma.notify(`${i} ${locals[lang].info.createdlocalVariables}`)
-    else if (i == 1) figma.notify(`${i} ${locals[lang].info.createdlocalVariable}`)
+    if (i > 1) figma.notify(`${i} ${locals[lang].info.createdLocalVariables}`)
+    else if (i == 1) figma.notify(`${i} ${locals[lang].info.createdLocalVariable}`)
     else figma.notify(locals[lang].warning.cannotCreateLocalVariables)
   } else figma.notify(locals[lang].error.corruption)
 }
