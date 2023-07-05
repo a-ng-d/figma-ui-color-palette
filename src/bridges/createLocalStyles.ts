@@ -24,7 +24,7 @@ const createLocalStyles = (palette, i: number) => {
                 g: shade.gl[1],
                 b: shade.gl[2],
               }
-            ).makeNode()
+            ).makePaintStyle()
             i++
           }
         })
