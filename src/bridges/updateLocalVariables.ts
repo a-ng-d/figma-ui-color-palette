@@ -26,7 +26,7 @@ const updateLocalVariables = (palette, i: number) => {
               .join('-')
               .replace(/[@/$^%#&!?,;:+=<>(){}"«»]/g, '-')}-${
               shade.name
-            }`
+            }` && localVariable.variableCollectionId === collection.id
           )
           const targetValue = target.valuesByMode[collection.modes[0].modeId]
 

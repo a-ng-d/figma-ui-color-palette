@@ -15,19 +15,19 @@ const createLocalVariables = (palette, i: number) => {
 
     if (collection == undefined)
       collection = new LocalVariable().makeCollection(name)
-   
+
     JSON.parse(palette.getPluginData('data')).forEach(
       (color: PaletteDataItem) => {
         color.shades.forEach((shade) => {
           if (
-            localVariables.filter((localVariable) => localVariable.name === `${color.name}/${color.name
+            localVariables.find((localVariable) => localVariable.name === `${color.name}/${color.name
               .toLowerCase()
               .split(' ')
               .join('-')
               .replace(/[@/$^%#&!?,;:+=<>(){}"«»]/g, '-')}-${
               shade.name
-            }`)
-              .length == 0
+            }` && localVariable.variableCollectionId === collection.id)
+              == undefined
           ) {
             new LocalVariable(
               `${color.name}/${color.name
