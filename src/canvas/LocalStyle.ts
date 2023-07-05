@@ -1,6 +1,6 @@
 import type { RgbModel } from '../utils/types'
 
-export default class Style {
+export default class LocalStyle {
   name: string
   description: string
   rgb: RgbModel

@@ -1,5 +1,5 @@
 import type { PaletteDataItem } from '../utils/types'
-import Style from './../canvas/Style'
+import LocalStyle from './../canvas/LocalStyle'
 import { locals, lang } from '../content/locals'
 
 const createLocalStyles = (palette, i: number) => {
@@ -16,7 +16,7 @@ const createLocalStyles = (palette, i: number) => {
             localStyles.filter((e) => e.name === `${color.name}/${shade.name}`)
               .length == 0
           ) {
-            const style: PaintStyle = new Style(
+            new LocalStyle(
               `${color.name}/${shade.name}`,
               color.description != '' ? color.description.concat('﹒', shade.description) : shade.description,
               {
