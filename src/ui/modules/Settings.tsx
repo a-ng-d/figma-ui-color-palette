@@ -44,7 +44,7 @@ export default class Settings extends React.Component<Props> {
       >
         <div className="settings__item">
           <FormItem
-            label={locals[this.props.lang].settings.base.name}
+            label={locals[this.props.lang].settings.global.name.label}
             id="rename-palette"
             isBlocked={isBlocked(
               'SETTINGS_PALETTE_NAME',
@@ -54,7 +54,7 @@ export default class Settings extends React.Component<Props> {
             <Input
               id="rename-palette"
               type="TEXT"
-              placeholder={locals[this.props.lang].settings.base.defaultName}
+              placeholder={locals[this.props.lang].name}
               value={this.props.name != '' ? this.props.name : ''}
               charactersLimit={64}
               isBlocked={isBlocked(
@@ -97,13 +97,13 @@ export default class Settings extends React.Component<Props> {
         <div className="settings__item">
           <FormItem
             id="change-view"
-            label={locals[this.props.lang].views.title}
+            label={locals[this.props.lang].settings.global.views.label}
           >
             <Dropdown
               id="views"
               options={[
                 {
-                  label: locals[this.props.lang].views.detailed,
+                  label: locals[this.props.lang].settings.global.views.detailed,
                   value: 'PALETTE_WITH_PROPERTIES',
                   position: 0,
                   isActive: features.find(
@@ -116,7 +116,7 @@ export default class Settings extends React.Component<Props> {
                   ),
                 },
                 {
-                  label: locals[this.props.lang].views.simple,
+                  label: locals[this.props.lang].settings.global.views.simple,
                   value: 'PALETTE',
                   position: 1,
                   isActive: features.find(
@@ -125,7 +125,7 @@ export default class Settings extends React.Component<Props> {
                   isBlocked: isBlocked('VIEWS_PALETTE', this.props.planStatus),
                 },
                 {
-                  label: locals[this.props.lang].views.sheet,
+                  label: locals[this.props.lang].settings.global.views.sheet,
                   value: 'SHEET',
                   position: 2,
                   isActive: features.find(
@@ -155,14 +155,14 @@ export default class Settings extends React.Component<Props> {
         <div className="settings__item">
           <FormItem
             id="change-color-space"
-            label={locals[this.props.lang].settings.color.colorSpace}
+            label={locals[this.props.lang].settings.color.colorSpace.label}
           >
             <Dropdown
               id="color-spaces"
               options={[
                 {
                   label:
-                    locals[this.props.lang].settings.color.colorSpaceOptions
+                    locals[this.props.lang].settings.color.colorSpace
                       .lch,
                   value: 'LCH',
                   position: 0,
@@ -176,7 +176,7 @@ export default class Settings extends React.Component<Props> {
                 },
                 {
                   label:
-                    locals[this.props.lang].settings.color.colorSpaceOptions
+                    locals[this.props.lang].settings.color.colorSpace
                       .oklch,
                   value: 'OKLCH',
                   position: 1,
@@ -190,7 +190,7 @@ export default class Settings extends React.Component<Props> {
                 },
                 {
                   label:
-                    locals[this.props.lang].settings.color.colorSpaceOptions
+                    locals[this.props.lang].settings.color.colorSpace
                       .lab,
                   value: 'LAB',
                   position: 2,
@@ -204,7 +204,7 @@ export default class Settings extends React.Component<Props> {
                 },
                 {
                   label:
-                    locals[this.props.lang].settings.color.colorSpaceOptions
+                    locals[this.props.lang].settings.color.colorSpace
                       .oklab,
                   value: 'OKLAB',
                   position: 3,
@@ -218,7 +218,7 @@ export default class Settings extends React.Component<Props> {
                 },
                 {
                   label:
-                    locals[this.props.lang].settings.color.colorSpaceOptions
+                    locals[this.props.lang].settings.color.colorSpace
                       .hsl,
                   value: 'HSL',
                   position: 4,
@@ -262,7 +262,7 @@ export default class Settings extends React.Component<Props> {
         <div className="settings__item">
           <Switch
             id="update-algorithm"
-            label={locals[this.props.lang].settings.color.newAlgorithm}
+            label={locals[this.props.lang].settings.color.newAlgorithm.label}
             isChecked={this.props.isNewAlgorithm}
             isBlocked={isBlocked(
               'SETTINGS_NEW_ALGORITHM',
@@ -278,7 +278,7 @@ export default class Settings extends React.Component<Props> {
           <Message
             icon="library"
             messages={[
-              locals[this.props.lang].settings.color.newAlgorithmDescription,
+              locals[this.props.lang].settings.color.newAlgorithm.description
             ]}
             isBlocked={isBlocked(
               'SETTINGS_NEW_ALGORITHM',
@@ -301,7 +301,7 @@ export default class Settings extends React.Component<Props> {
       >
         <div className="settings__item">
           <FormItem
-            label={locals[this.props.lang].settings.contrast.textLightColor}
+            label={locals[this.props.lang].settings.contrast.textColors.textLightColor}
             id="change-text-light-color"
             isBlocked={isBlocked(
               'SETTINGS_TEXT_COLORS_THEME',
@@ -335,7 +335,7 @@ export default class Settings extends React.Component<Props> {
             />
           </FormItem>
           <FormItem
-            label={locals[this.props.lang].settings.contrast.textDarkColor}
+            label={locals[this.props.lang].settings.contrast.textColors.textDarkColor}
             id="change-text-dark-color"
             isBlocked={isBlocked(
               'SETTINGS_TEXT_COLORS_THEME',
@@ -371,7 +371,7 @@ export default class Settings extends React.Component<Props> {
           <Message
             icon="library"
             messages={[
-              locals[this.props.lang].settings.contrast
+              locals[this.props.lang].settings.contrast.textColors
                 .textThemeColorsDescription,
             ]}
             isBlocked={isBlocked(
@@ -390,7 +390,7 @@ export default class Settings extends React.Component<Props> {
         <div className="section-controls">
           <div className="section-controls__left-part">
             <div className="section-title">
-              {locals[this.props.lang].settings.base.title}
+              {locals[this.props.lang].settings.global.title}
             </div>
           </div>
         </div>

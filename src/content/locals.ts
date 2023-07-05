@@ -48,31 +48,42 @@ export const locals = {
       xml: 'XML (Android)',
     },
     settings: {
-      base: {
+      global: {
         title: 'Global',
-        name: 'Palette name',
-        defaultName: 'UI Color Palette',
+        name: {
+          label: 'Palette name',
+        },
+        views: {
+          label: 'Palette layout',
+          simple: 'Palette',
+          detailed: 'Palette with properties',
+          sheet: 'Color sheet',
+        },
       },
       contrast: {
         title: 'Contrast management',
-        textLightColor: 'Text light color',
-        textDarkColor: 'Text dark color',
-        textThemeColorsDescription:
-          'The light and dark text colors serve as a reference to simulate contrast and obtain both WCAG and APCA scores',
+        textColors: {
+          textLightColor: 'Text light color',
+          textDarkColor: 'Text dark color',
+          textThemeColorsDescription:
+            'The light and dark text colors serve as a reference to simulate contrast and obtain both WCAG and APCA scores',
+        }
       },
       color: {
         title: 'Color management',
-        colorSpace: 'Color space',
-        colorSpaceOptions: {
+        colorSpace: {
+          label: 'Color space',
           lch: 'LCH (Lightness, Chroma, Hue)',
           oklch: 'OKLCH (OK, Lightness, Chroma, Hue)',
           lab: 'CIELAB (CIE, Lightness, a﹡ axis, b﹡ axis)',
           oklab: 'OKLAB (OK, Lightness, a﹡ axis, b﹡ axis)',
           hsl: 'HSL (Hue, Saturation, Lightness)',
         },
-        newAlgorithm: 'Enable the new algorithm for creating color shades',
-        newAlgorithmDescription:
+        newAlgorithm: {
+          label: 'Enable the new algorithm for creating color shades',
+          description:
           'The Chroma values are harmonized to ensure consistent lightness across all shades, but this may make the colors look desaturated.',
+        }
       },
     },
     about: {
@@ -91,12 +102,6 @@ export const locals = {
         follow: 'Follow my actvity',
         coffee: 'Buy me a coffee',
       },
-    },
-    views: {
-      title: 'Layout',
-      simple: 'Palette',
-      detailed: 'Palette with properties',
-      sheet: 'Color sheet',
     },
     actions: {
       createPalette: 'Create a UI Color Palette',
