@@ -13,7 +13,7 @@ const createLocalStyles = (palette, i: number) => {
       (color: PaletteDataItem) => {
         color.shades.forEach((shade) => {
           if (
-            localStyles.filter((e) => e.name === `${color.name}/${shade.name}`)
+            localStyles.filter((localStyle) => localStyle.name === `${color.name}/${shade.name}`)
               .length == 0
           ) {
             new LocalStyle(

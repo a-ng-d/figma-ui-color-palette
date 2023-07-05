@@ -21,7 +21,7 @@ const createLocalVariables = (palette, i: number) => {
       (color: PaletteDataItem) => {
         color.shades.forEach((shade) => {
           if (
-            localVariables.filter((e) => e.name === `${color.name}/${color.name
+            localVariables.filter((localVariable) => localVariable.name === `${color.name}/${color.name
               .toLowerCase()
               .split(' ')
               .join('-')
