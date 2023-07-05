@@ -446,10 +446,7 @@ export default class EditPalette extends React.Component<Props> {
 
   // Direct actions
   onCreateStyles = () => {
-    parent.postMessage(
-      { pluginMessage: { type: 'CREATE_LOCAL_STYLES' } },
-      '*'
-    )
+    parent.postMessage({ pluginMessage: { type: 'CREATE_LOCAL_STYLES' } }, '*')
     this.setState({
       selectedElement: {
         id: '',
@@ -459,10 +456,7 @@ export default class EditPalette extends React.Component<Props> {
   }
 
   onUpdateStyles = () => {
-    parent.postMessage(
-      { pluginMessage: { type: 'UPDATE_LOCAL_STYLES' } },
-      '*'
-    )
+    parent.postMessage({ pluginMessage: { type: 'UPDATE_LOCAL_STYLES' } }, '*')
     this.setState({
       selectedElement: {
         id: '',

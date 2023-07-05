@@ -107,8 +107,8 @@ export const locals = {
       export: 'Export the UI Color Palette to',
       managePalette: {
         localStyles: 'Manage local styles',
-        localVariables: 'Manage local variables'
-      }
+        localVariables: 'Manage local variables',
+      },
     },
     plan: {
       getPro: 'Get pro',

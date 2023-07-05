@@ -13,12 +13,15 @@ const createLocalStyles = (palette, i: number) => {
       (color: PaletteDataItem) => {
         color.shades.forEach((shade) => {
           if (
-            localStyles.find((localStyle) => localStyle.name === `${color.name}/${shade.name}`)
-              == undefined
+            localStyles.find(
+              (localStyle) => localStyle.name === `${color.name}/${shade.name}`
+            ) == undefined
           ) {
             new LocalStyle(
               `${color.name}/${shade.name}`,
-              color.description != '' ? color.description.concat('﹒', shade.description) : shade.description,
+              color.description != ''
+                ? color.description.concat('﹒', shade.description)
+                : shade.description,
               {
                 r: shade.gl[0],
                 g: shade.gl[1],

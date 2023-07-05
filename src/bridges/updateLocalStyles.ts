@@ -20,11 +20,11 @@ const updateLocalStyles = (palette, i: number) => {
           if (target != undefined) {
             if (
               shade.hex !=
-                chroma([
-                  target.paints[0]['color'].r * 255,
-                  target.paints[0]['color'].g * 255,
-                  target.paints[0]['color'].b * 255,
-                ]).hex()
+              chroma([
+                target.paints[0]['color'].r * 255,
+                target.paints[0]['color'].g * 255,
+                target.paints[0]['color'].b * 255,
+              ]).hex()
             ) {
               target.paints = [
                 {
@@ -40,7 +40,10 @@ const updateLocalStyles = (palette, i: number) => {
             }
             if (color.description != '')
               if (target.description.split('﹒')[0] != color.description) {
-                target.description = color.description != '' ? color.description.concat('﹒', shade.description) : shade.description
+                target.description =
+                  color.description != ''
+                    ? color.description.concat('﹒', shade.description)
+                    : shade.description
                 j++
               }
 

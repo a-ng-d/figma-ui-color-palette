@@ -8,10 +8,16 @@ const createLocalVariables = (palette, i: number) => {
 
   if (palette.children.length == 1) {
     i = 0
-    const name = palette.getPluginData('name') === '' ? 'UI Color Palette' : palette.getPluginData('name'),
-    collections: Array<VariableCollection> = figma.variables.getLocalVariableCollections()
-    
-    let collection: VariableCollection | undefined = collections.find(collection => collection.name === name)
+    const name =
+        palette.getPluginData('name') === ''
+          ? 'UI Color Palette'
+          : palette.getPluginData('name'),
+      collections: Array<VariableCollection> =
+        figma.variables.getLocalVariableCollections()
+
+    let collection: VariableCollection | undefined = collections.find(
+      (collection) => collection.name === name
+    )
 
     if (collection == undefined)
       collection = new LocalVariable().makeCollection(name)
@@ -20,25 +26,28 @@ const createLocalVariables = (palette, i: number) => {
       (color: PaletteDataItem) => {
         color.shades.forEach((shade) => {
           if (
-            localVariables.find((localVariable) => localVariable.name === `${color.name}/${color.name
-              .toLowerCase()
-              .split(' ')
-              .join('-')
-              .replace(/[@/$^%#&!?,;:+=<>(){}"«»]/g, '-')}-${
-              shade.name
-            }` && localVariable.variableCollectionId === collection.id)
-              == undefined
+            localVariables.find(
+              (localVariable) =>
+                localVariable.name ===
+                  `${color.name}/${color.name
+                    .toLowerCase()
+                    .split(' ')
+                    .join('-')
+                    .replace(/[@/$^%#&!?,;:+=<>(){}"«»]/g, '-')}-${
+                    shade.name
+                  }` && localVariable.variableCollectionId === collection.id
+            ) == undefined
           ) {
             new LocalVariable(
               `${color.name}/${color.name
                 .toLowerCase()
                 .split(' ')
                 .join('-')
-                .replace(/[@/$^%#&!?,;:+=<>(){}"«»]/g, '-')}-${
-                shade.name
-              }`,
+                .replace(/[@/$^%#&!?,;:+=<>(){}"«»]/g, '-')}-${shade.name}`,
               collection,
-              color.description != '' ? color.description.concat('﹒', shade.description) : shade.description,
+              color.description != ''
+                ? color.description.concat('﹒', shade.description)
+                : shade.description,
               {
                 r: shade.gl[0],
                 g: shade.gl[1],
@@ -52,7 +61,8 @@ const createLocalVariables = (palette, i: number) => {
     )
 
     if (i > 1) figma.notify(`${i} ${locals[lang].info.createdLocalVariables}`)
-    else if (i == 1) figma.notify(`${i} ${locals[lang].info.createdLocalVariable}`)
+    else if (i == 1)
+      figma.notify(`${i} ${locals[lang].info.createdLocalVariable}`)
     else figma.notify(locals[lang].warning.cannotCreateLocalVariables)
   } else figma.notify(locals[lang].error.corruption)
 }

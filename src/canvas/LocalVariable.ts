@@ -1,4 +1,3 @@
-
 import type { RgbModel } from '../utils/types'
 
 export default class LocalVariable {
@@ -8,7 +7,12 @@ export default class LocalVariable {
   rgb: RgbModel
   variable: Variable
 
-  constructor(name?: string, collection?: VariableCollection, description?: string, rgb?: RgbModel) {
+  constructor(
+    name?: string,
+    collection?: VariableCollection,
+    description?: string,
+    rgb?: RgbModel
+  ) {
     this.name = name
     this.collection = collection
     this.description = description
@@ -29,10 +33,7 @@ export default class LocalVariable {
       'COLOR'
     )
     this.variable.description = this.description
-    this.variable.setValueForMode(
-      this.collection.modes[0].modeId,
-      this.rgb
-    )
+    this.variable.setValueForMode(this.collection.modes[0].modeId, this.rgb)
 
     return this.variable
   }

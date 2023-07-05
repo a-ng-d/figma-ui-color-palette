@@ -92,9 +92,7 @@ export default class Settings extends React.Component<Props> {
   view = () => {
     return (
       <Feature
-        isActive={
-          features.find((feature) => feature.name === 'VIEWS').isActive
-        }
+        isActive={features.find((feature) => feature.name === 'VIEWS').isActive}
       >
         <div className="settings__item">
           <FormItem
@@ -124,10 +122,7 @@ export default class Settings extends React.Component<Props> {
                   isActive: features.find(
                     (feature) => feature.name === 'VIEWS_PALETTE'
                   ).isActive,
-                  isBlocked: isBlocked(
-                    'VIEWS_PALETTE',
-                    this.props.planStatus
-                  ),
+                  isBlocked: isBlocked('VIEWS_PALETTE', this.props.planStatus),
                 },
                 {
                   label: locals[this.props.lang].views.sheet,

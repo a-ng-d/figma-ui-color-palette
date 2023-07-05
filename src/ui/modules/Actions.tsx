@@ -30,7 +30,11 @@ export default class Actions extends React.Component<Props> {
   constructor(props) {
     super(props)
     this.state = {
-      deploymentAction: features.find((feature) => feature.name === 'LOCAL_STYLES').isActive ? 'LOCAL_STYLES' : 'LOCAL_VARIABLES'
+      deploymentAction: features.find(
+        (feature) => feature.name === 'LOCAL_STYLES'
+      ).isActive
+        ? 'LOCAL_STYLES'
+        : 'LOCAL_VARIABLES',
     }
   }
 
@@ -73,8 +77,9 @@ export default class Actions extends React.Component<Props> {
       <>
         <Feature
           isActive={
-            features.find((feature) => feature.name === 'UPDATE_LOCAL_VARIABLES')
-              .isActive && this.props.editorType === 'figma'
+            features.find(
+              (feature) => feature.name === 'UPDATE_LOCAL_VARIABLES'
+            ).isActive && this.props.editorType === 'figma'
           }
         >
           <Button
@@ -86,8 +91,9 @@ export default class Actions extends React.Component<Props> {
         </Feature>
         <Feature
           isActive={
-            features.find((feature) => feature.name === 'CREATE_LOCAL_VARIABLES')
-              .isActive && this.props.editorType === 'figma'
+            features.find(
+              (feature) => feature.name === 'CREATE_LOCAL_VARIABLES'
+            ).isActive && this.props.editorType === 'figma'
           }
         >
           <Button
@@ -119,9 +125,7 @@ export default class Actions extends React.Component<Props> {
             />
           </Feature>
         </div>
-        <div className="actions__left">
-
-        </div>
+        <div className="actions__left"></div>
       </div>
     )
   }
@@ -141,36 +145,33 @@ export default class Actions extends React.Component<Props> {
             id="types"
             options={[
               {
-                label: locals[this.props.lang].actions.managePalette.localStyles,
+                label:
+                  locals[this.props.lang].actions.managePalette.localStyles,
                 value: 'LOCAL_STYLES',
                 position: 0,
                 isActive: features.find(
-                  (feature) =>
-                    feature.name === 'LOCAL_STYLES'
+                  (feature) => feature.name === 'LOCAL_STYLES'
                 ).isActive,
-                isBlocked: isBlocked(
-                  'LOCAL_STYLES',
-                  this.props.planStatus
-                ),
+                isBlocked: isBlocked('LOCAL_STYLES', this.props.planStatus),
               },
               {
-                label: locals[this.props.lang].actions.managePalette.localVariables,
+                label:
+                  locals[this.props.lang].actions.managePalette.localVariables,
                 value: 'LOCAL_VARIABLES',
                 position: 1,
                 isActive: features.find(
                   (feature) => feature.name === 'LOCAL_VARIABLES'
                 ).isActive,
-                isBlocked: isBlocked(
-                  'LOCAL_VARIABLES',
-                  this.props.planStatus
-                ),
-              }
+                isBlocked: isBlocked('LOCAL_VARIABLES', this.props.planStatus),
+              },
             ]}
             selected={this.state['deploymentAction']}
             feature="UPDATE_DEPLOYMENT_ACTION"
-            onChange={(e) => this.setState({
-              deploymentAction: (e.target as HTMLElement).dataset.value
-            })}
+            onChange={(e) =>
+              this.setState({
+                deploymentAction: (e.target as HTMLElement).dataset.value,
+              })
+            }
           />
         </div>
       </div>
