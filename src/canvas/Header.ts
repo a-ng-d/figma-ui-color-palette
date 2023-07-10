@@ -4,23 +4,25 @@ import { locals, lang } from '../content/locals'
 
 export default class Header {
   parent: PaletteNode
+  sampleSize: number
   node: FrameNode
 
-  constructor(parent: PaletteNode) {
+  constructor(parent: PaletteNode, size: number) {
     this.parent = parent
+    this.sampleSize = size
   }
 
   makeNode = () => {
     // base
     this.node = figma.createFrame()
     this.node.name = '_header'
-    this.node.resize(100, 48)
+    this.node.resize(100, this.sampleSize / 4)
     this.node.fills = []
 
     // layout
     this.node.layoutMode = 'HORIZONTAL'
-    this.node.primaryAxisSizingMode = 'AUTO'
-    this.node.counterAxisSizingMode = 'AUTO'
+    this.node.layoutSizingHorizontal = 'HUG'
+    this.node.layoutSizingVertical = 'HUG'
 
     // insert
     this.node.appendChild(
@@ -32,7 +34,7 @@ export default class Header {
         this.parent.colorSpace,
         this.parent.view,
         this.parent.textColorsTheme
-      ).makeNodeName('ABSOLUTE', 184, 48)
+      ).makeNodeName('ABSOLUTE', this.sampleSize, 48)
     )
     if (this.parent.view.includes('PALETTE'))
       Object.values(this.parent.scale)
@@ -49,7 +51,7 @@ export default class Header {
               this.parent.colorSpace,
               this.parent.view,
               this.parent.textColorsTheme
-            ).makeNodeName('ABSOLUTE', 184, 48)
+            ).makeNodeName('ABSOLUTE', this.sampleSize, 48)
           )
         })
 

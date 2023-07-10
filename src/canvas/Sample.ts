@@ -56,20 +56,19 @@ export default class Sample {
 
     // layout
     this.node.layoutMode = 'HORIZONTAL'
+    this.node.layoutSizingHorizontal = 'FIXED'
     this.node.paddingTop =
       this.node.paddingRight =
       this.node.paddingBottom =
       this.node.paddingLeft =
         8
-    this.node.counterAxisSizingMode = 'FIXED'
+    this.node.resize(width, height)
+
     if (mode === 'RELATIVE') {
-      this.node.primaryAxisSizingMode = 'AUTO'
-      this.node.layoutAlign = 'STRETCH'
+      this.node.counterAxisSizingMode = 'FIXED'
       this.node.layoutGrow = 1
-      this.children = new Property('_title', this.name, 16).makeNode()
+      this.children = new Property('_large-label', this.name, 16).makeNode()
     } else if (mode === 'ABSOLUTE') {
-      this.node.resize(width, height)
-      this.node.primaryAxisSizingMode = 'FIXED'
       this.children = new Property('_label', this.name, 10).makeNode()
     }
 
@@ -102,15 +101,14 @@ export default class Sample {
 
     // layout
     this.node.layoutMode = 'VERTICAL'
+    this.node.layoutSizingHorizontal = 'FIXED'
+    this.node.layoutSizingVertical = 'FIXED'
+    this.node.primaryAxisAlignItems = 'MAX'
     this.node.paddingTop =
       this.node.paddingRight =
       this.node.paddingBottom =
       this.node.paddingLeft =
         8
-    this.node.primaryAxisSizingMode = 'FIXED'
-    this.node.counterAxisSizingMode = 'FIXED'
-    this.node.primaryAxisAlignItems = 'MAX'
-    this.node.itemSpacing = 8
 
     // insert
     if (this.view.includes('PALETTE_WITH_PROPERTIES') && !isColorName) {
@@ -144,22 +142,22 @@ export default class Sample {
 
     // layout
     this.node.layoutMode = 'VERTICAL'
+    this.node.layoutSizingHorizontal = 'FIXED'
+    this.node.layoutSizingVertical = 'FIXED'
+    this.node.primaryAxisAlignItems = 'MIN'
     this.node.paddingTop =
       this.node.paddingRight =
       this.node.paddingBottom =
       this.node.paddingLeft =
         16
-    this.node.primaryAxisSizingMode = 'FIXED'
-    this.node.counterAxisSizingMode = 'FIXED'
-    this.node.primaryAxisAlignItems = 'MIN'
     this.node.itemSpacing = 8
 
     // color
     this.nodeColor = figma.createFrame()
     this.nodeColor.name = '_color'
     this.nodeColor.layoutMode = 'VERTICAL'
-    this.nodeColor.primaryAxisSizingMode = 'FIXED'
-    this.nodeColor.counterAxisSizingMode = 'FIXED'
+    this.nodeColor.layoutSizingHorizontal = 'FIXED'
+    this.nodeColor.layoutSizingVertical = 'FIXED'
     this.nodeColor.layoutAlign = 'STRETCH'
     this.nodeColor.resize(96, 96)
     this.nodeColor.paddingTop =

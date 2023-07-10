@@ -87,8 +87,8 @@ export default class Properties {
     // layout
     this.nodeTopProps.layoutMode = 'HORIZONTAL'
     this.nodeTopProps.primaryAxisSizingMode = 'FIXED'
-    this.nodeTopProps.counterAxisSizingMode = 'AUTO'
     this.nodeTopProps.layoutAlign = 'STRETCH'
+    this.nodeTopProps.layoutSizingVertical = 'HUG'
 
     return this.nodeTopProps
   }
@@ -101,9 +101,9 @@ export default class Properties {
 
     // layout
     this.nodeBottomProps.layoutMode = 'VERTICAL'
-    this.nodeBottomProps.primaryAxisSizingMode = 'AUTO'
     this.nodeBottomProps.counterAxisSizingMode = 'FIXED'
     this.nodeBottomProps.layoutAlign = 'STRETCH'
+    this.nodeBottomProps.layoutSizingVertical = 'HUG'
 
     // insert
     this.nodeBottomProps.appendChild(this.makeNodeContrastScoresProps())
@@ -119,10 +119,10 @@ export default class Properties {
 
     // layout
     this.nodeBaseProps.layoutMode = 'VERTICAL'
-    this.nodeBaseProps.primaryAxisSizingMode = 'AUTO'
     this.nodeBaseProps.counterAxisSizingMode = 'FIXED'
-    this.nodeBaseProps.counterAxisAlignItems = 'MAX'
     this.nodeBaseProps.layoutGrow = 1
+    this.nodeBaseProps.layoutSizingVertical = 'HUG'
+    this.nodeBaseProps.counterAxisAlignItems = 'MAX'
     this.nodeBaseProps.itemSpacing = 4
 
     let basePropViaColorSpace
@@ -181,9 +181,9 @@ export default class Properties {
 
     // layout
     this.nodeContrastScoresProps.layoutMode = 'VERTICAL'
-    this.nodeContrastScoresProps.primaryAxisSizingMode = 'AUTO'
     this.nodeContrastScoresProps.counterAxisSizingMode = 'FIXED'
     this.nodeContrastScoresProps.layoutAlign = 'STRETCH'
+    this.nodeContrastScoresProps.layoutSizingVertical = 'HUG'
     this.nodeContrastScoresProps.itemSpacing = 4
 
     // insert
@@ -226,8 +226,9 @@ export default class Properties {
 
     // layout
     this.nodeDetailedBaseProps.layoutMode = 'VERTICAL'
-    this.nodeDetailedBaseProps.primaryAxisSizingMode = 'AUTO'
+    this.nodeDetailedBaseProps.counterAxisSizingMode = 'FIXED'
     this.nodeDetailedBaseProps.layoutAlign = 'STRETCH'
+    this.nodeDetailedBaseProps.layoutSizingVertical = 'HUG'
     this.nodeDetailedBaseProps.itemSpacing = 4
 
     let basePropViaColorSpace
@@ -288,8 +289,8 @@ export default class Properties {
 
     // layout
     this.nodeDetailedWCAGScoresProps.layoutMode = 'VERTICAL'
-    this.nodeDetailedWCAGScoresProps.primaryAxisSizingMode = 'AUTO'
     this.nodeDetailedWCAGScoresProps.layoutAlign = 'STRETCH'
+    this.nodeDetailedWCAGScoresProps.layoutSizingVertical = 'HUG'
     this.nodeDetailedWCAGScoresProps.itemSpacing = 4
 
     // insert
@@ -323,9 +324,9 @@ export default class Properties {
 
     // layout
     this.nodeDetailedAPCAScoresProps.layoutMode = 'VERTICAL'
-    this.nodeDetailedAPCAScoresProps.primaryAxisSizingMode = 'AUTO'
     this.nodeDetailedAPCAScoresProps.counterAxisSizingMode = 'FIXED'
     this.nodeDetailedAPCAScoresProps.layoutAlign = 'STRETCH'
+    this.nodeDetailedAPCAScoresProps.layoutSizingVertical = 'HUG'
     this.nodeDetailedAPCAScoresProps.itemSpacing = 4
 
     // insert
@@ -423,17 +424,18 @@ export default class Properties {
     // layout
     this.nodeColumns.layoutMode = 'HORIZONTAL'
     this.nodeColumns.primaryAxisSizingMode = 'FIXED'
-    this.nodeColumns.counterAxisSizingMode = 'AUTO'
     this.nodeColumns.layoutAlign = 'STRETCH'
+    this.nodeColumns.layoutSizingVertical = 'HUG'
     this.nodeColumns.itemSpacing = 8
 
     this.nodeLeftColumn.layoutMode = this.nodeRightColumn.layoutMode =
       'VERTICAL'
-    this.nodeLeftColumn.primaryAxisSizingMode =
-      this.nodeRightColumn.primaryAxisSizingMode = 'AUTO'
     this.nodeLeftColumn.counterAxisSizingMode =
       this.nodeRightColumn.counterAxisSizingMode = 'FIXED'
-    this.nodeLeftColumn.layoutGrow = this.nodeRightColumn.layoutGrow = 1
+    this.nodeLeftColumn.layoutGrow =
+      this.nodeRightColumn.layoutGrow = 1
+    this.nodeLeftColumn.layoutSizingVertical =
+      this.nodeRightColumn.layoutSizingVertical = 'HUG'
     this.nodeLeftColumn.itemSpacing = this.nodeRightColumn.itemSpacing = 4
 
     // insert
@@ -453,9 +455,9 @@ export default class Properties {
 
     // layout
     this.node.layoutMode = 'VERTICAL'
-    this.node.primaryAxisSizingMode = 'FIXED'
     this.node.counterAxisSizingMode = 'FIXED'
     this.node.layoutAlign = 'STRETCH'
+    this.node.primaryAxisSizingMode = 'FIXED'
     this.node.layoutGrow = 1
     this.node.itemSpacing = 16
 
@@ -479,11 +481,11 @@ export default class Properties {
 
     // layout
     this.node.layoutMode = 'VERTICAL'
-    this.node.primaryAxisSizingMode = 'FIXED'
     this.node.counterAxisSizingMode = 'FIXED'
-    this.node.primaryAxisAlignItems = 'SPACE_BETWEEN'
     this.node.layoutAlign = 'STRETCH'
+    this.node.primaryAxisSizingMode = 'FIXED'
     this.node.layoutGrow = 1
+    this.node.primaryAxisAlignItems = 'SPACE_BETWEEN'
 
     // insert
     this.node.appendChild(this.makeNodeTopProps())
