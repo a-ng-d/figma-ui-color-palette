@@ -195,7 +195,7 @@ export default class Colors {
         this.parent.colorSpace,
         this.parent.view,
         this.parent.textColorsTheme
-      ).makeNodeName('RELATIVE', 100, 48)
+      ).makeNodeName('RELATIVE', 48, 48)
     )
 
     return this.nodeEmpty

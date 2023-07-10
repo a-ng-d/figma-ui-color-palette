@@ -62,13 +62,13 @@ export default class Sample {
       this.node.paddingBottom =
       this.node.paddingLeft =
         8
+    this.node.resize(width, height)
+
     if (mode === 'RELATIVE') {
       this.node.counterAxisSizingMode = 'FIXED'
       this.node.layoutGrow = 1
-      this.children = new Property('_title', this.name, 16).makeNode()
+      this.children = new Property('_large-label', this.name, 16).makeNode()
     } else if (mode === 'ABSOLUTE') {
-      this.node.resize(width, height)
-      this.node.layoutSizingHorizontal = 'FIXED'
       this.children = new Property('_label', this.name, 10).makeNode()
     }
 
@@ -109,7 +109,6 @@ export default class Sample {
       this.node.paddingBottom =
       this.node.paddingLeft =
         8
-    this.node.itemSpacing = 8
 
     // insert
     if (this.view.includes('PALETTE_WITH_PROPERTIES') && !isColorName) {
