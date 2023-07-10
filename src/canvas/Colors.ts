@@ -12,7 +12,6 @@ export default class Colors {
   nodeRow: FrameNode
   nodeRowSource: FrameNode
   nodeRowShades: FrameNode
-  nodeRowSlice: FrameNode
   nodeEmpty: FrameNode
   node: FrameNode
 
@@ -176,7 +175,7 @@ export default class Colors {
     // layout
     this.nodeEmpty.layoutMode = 'HORIZONTAL'
     this.nodeEmpty.primaryAxisSizingMode = 'FIXED'
-    this.nodeEmpty.counterAxisSizingMode = 'AUTO'
+    this.nodeEmpty.layoutSizingVertical = 'FIXED'
     this.nodeEmpty.layoutAlign = 'STRETCH'
     this.nodeEmpty.primaryAxisAlignItems = 'CENTER'
 
@@ -287,23 +286,6 @@ export default class Colors {
     this.palette.setPluginData('data', JSON.stringify(this.paletteData))
   }
 
-  makeNodeSlice(shades: Array<FrameNode>) {
-    // base
-    this.nodeRowSlice = figma.createFrame()
-    this.nodeRowSlice.name = '_slice'
-    this.nodeRowSlice.fills = []
-
-    // layout
-    this.nodeRowSlice.layoutMode = 'HORIZONTAL'
-    this.nodeRowSlice.primaryAxisSizingMode = 'AUTO'
-    this.nodeRowSlice.counterAxisSizingMode = 'AUTO'
-
-    // insert
-    shades.forEach((shade) => this.nodeRowSlice.appendChild(shade))
-
-    return this.nodeRowSlice
-  }
-
   makeNode = () => {
     // base
     this.node = figma.createFrame()
@@ -313,8 +295,8 @@ export default class Colors {
 
     // layout
     this.node.layoutMode = 'VERTICAL'
-    this.node.primaryAxisSizingMode = 'AUTO'
-    this.node.counterAxisSizingMode = 'AUTO'
+    this.node.layoutSizingHorizontal = 'HUG'
+    this.node.layoutSizingVertical = 'HUG'
 
     // insert
     this.node.appendChild(
@@ -327,7 +309,6 @@ export default class Colors {
     )
     this.node.appendChild(new Header(this.parent).makeNode())
     this.parent.colors.forEach((color) => {
-      let i = 1
       const sourceColor: Array<number> = chroma([
           color.rgb.r * 255,
           color.rgb.g * 255,
@@ -352,14 +333,14 @@ export default class Colors {
         this.nodeRowSource.layoutMode =
         this.nodeRowShades.layoutMode =
           'HORIZONTAL'
-      this.nodeRow.primaryAxisSizingMode =
-        this.nodeRowSource.primaryAxisSizingMode =
-        this.nodeRowShades.primaryAxisSizingMode =
-          'AUTO'
-      this.nodeRow.counterAxisSizingMode =
-        this.nodeRowSource.counterAxisSizingMode =
-        this.nodeRowShades.counterAxisSizingMode =
-          'AUTO'
+      this.nodeRow.layoutSizingHorizontal =
+        this.nodeRowSource.layoutSizingHorizontal =
+        this.nodeRowShades.layoutSizingHorizontal =
+          'HUG'
+      this.nodeRow.layoutSizingVertical =
+        this.nodeRowSource.layoutSizingVertical =
+        this.nodeRowShades.layoutSizingVertical =
+          'HUG'
 
       // insert
       this.nodeRowSource.appendChild(
@@ -449,8 +430,11 @@ export default class Colors {
               ).makeNodeShade(184, 248, scaleName)
             )
           } else {
-            this.nodeRowShades.layoutMode = 'VERTICAL'
-            samples.push(
+            this.nodeRowShades.layoutSizingHorizontal = 'FIXED'
+            this.nodeRowShades.layoutWrap = 'WRAP'
+            this.nodeRowShades.resize(322 * 4, 100)
+            this.nodeRowShades.layoutSizingVertical = 'HUG'
+            this.nodeRowShades.appendChild(
               new Sample(
                 color.name,
                 color.rgb,
@@ -462,17 +446,8 @@ export default class Colors {
                 { isClosestToRef: distance < 4 ? true : false }
               ).makeNodeRichShade(322, 434, scaleName)
             )
-            if (i % 4 == 0) {
-              this.nodeRowShades.appendChild(this.makeNodeSlice(samples))
-              samples.length = 0
-            }
           }
-          i++
         })
-      if (this.parent.view.includes('SHEET'))
-        this.nodeRowShades.appendChild(this.makeNodeSlice(samples))
-      samples.length = 0
-      i = 1
 
       this.nodeRow.appendChild(this.nodeRowSource)
       this.nodeRow.appendChild(this.nodeRowShades)

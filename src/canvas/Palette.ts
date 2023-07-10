@@ -53,8 +53,8 @@ export default class Palette {
 
     // layout
     this.node.layoutMode = 'VERTICAL'
-    this.node.primaryAxisSizingMode = 'AUTO'
-    this.node.counterAxisSizingMode = 'AUTO'
+    this.node.layoutSizingHorizontal = 'HUG'
+    this.node.layoutSizingVertical = 'HUG'
     this.node.paddingTop =
       this.node.paddingRight =
       this.node.paddingBottom =

@@ -20,9 +20,9 @@ export default class Property {
 
     // layout
     this.node.layoutMode = 'VERTICAL'
-    this.node.primaryAxisSizingMode = 'FIXED'
     this.node.counterAxisSizingMode = 'FIXED'
     this.node.layoutAlign = 'STRETCH'
+    this.node.primaryAxisSizingMode = 'FIXED'
     this.node.layoutGrow = 1
 
     // insert

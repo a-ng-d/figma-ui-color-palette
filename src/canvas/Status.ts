@@ -22,10 +22,8 @@ export default class Status {
     // layout
     this.node.layoutMode = 'HORIZONTAL'
     this.node.primaryAxisSizingMode = 'FIXED'
-    this.node.counterAxisSizingMode = 'AUTO'
-    this.node.primaryAxisAlignItems = 'SPACE_BETWEEN'
     this.node.layoutAlign = 'STRETCH'
-    this.node.layoutGrow = 0
+    this.node.layoutSizingVertical = 'HUG'
 
     if (this.status.isClosestToRef)
       this.node.appendChild(

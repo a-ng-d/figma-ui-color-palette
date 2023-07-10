@@ -19,8 +19,8 @@ export default class Header {
 
     // layout
     this.node.layoutMode = 'HORIZONTAL'
-    this.node.primaryAxisSizingMode = 'AUTO'
-    this.node.counterAxisSizingMode = 'AUTO'
+    this.node.layoutSizingHorizontal = 'HUG'
+    this.node.layoutSizingVertical = 'HUG'
 
     // insert
     this.node.appendChild(
