@@ -12,7 +12,7 @@ const processSelection = () => {
   const selection: ReadonlyArray<BaseNode> = figma.currentPage.selection
   currentSelection = figma.currentPage.selection
 
-  if (selection.length == 1 && selection[0].getPluginData('scale') != '') {
+  if (selection.length == 1 && selection[0].getPluginDataKeys().length > 0) {
     const palette: BaseNode = selection[0]
 
     // Migration
@@ -34,7 +34,7 @@ const processSelection = () => {
     })
   } else if (
     selection.length == 0 ||
-    (selection.length > 1 && selection[0].getPluginData('scale') != '')
+    (selection.length > 1 && selection[0].getPluginDataKeys().length != 0) || selection.find(element => (element as any).fills.length == 0)
   )
     figma.ui.postMessage({
       type: 'EMPTY_SELECTION',
@@ -49,7 +49,7 @@ const processSelection = () => {
     )
       if (
         element['fills'].filter((fill) => fill.type === 'SOLID').length != 0 &&
-        element.getPluginData('scale') === ''
+        element.getPluginDataKeys().length == 0 
       )
         figma.ui.postMessage({
           type: 'COLOR_SELECTED',
