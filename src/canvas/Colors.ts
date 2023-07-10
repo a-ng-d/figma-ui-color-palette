@@ -9,6 +9,9 @@ export default class Colors {
   parent: PaletteNode
   palette: FrameNode
   paletteData: Array<PaletteDataItem>
+  sampleScale: number
+  sampleRatio: number
+  sampleSize: number
   nodeRow: FrameNode
   nodeRowSource: FrameNode
   nodeRowShades: FrameNode
@@ -19,6 +22,9 @@ export default class Colors {
     this.parent = parent
     this.palette = palette
     this.paletteData = []
+    this.sampleScale = 1.75
+    this.sampleRatio = 3 / 2
+    this.sampleSize = 184
   }
 
   getShadeColorFromLch(
@@ -307,7 +313,12 @@ export default class Colors {
         this.parent
       ).makeNode()
     )
-    this.node.appendChild(new Header(this.parent).makeNode())
+    this.node.appendChild(
+      new Header(
+        this.parent,
+        this.sampleSize
+      ).makeNode()
+    )
     this.parent.colors.forEach((color) => {
       const sourceColor: Array<number> = chroma([
           color.rgb.r * 255,
@@ -353,7 +364,7 @@ export default class Colors {
               this.parent.colorSpace,
               this.parent.view,
               this.parent.textColorsTheme
-            ).makeNodeShade(184, 248, color.name, true)
+            ).makeNodeShade(this.sampleSize, this.sampleSize * this.sampleRatio, color.name, true)
           : new Sample(
               color.name,
               null,
@@ -362,7 +373,7 @@ export default class Colors {
               this.parent.colorSpace,
               this.parent.view,
               this.parent.textColorsTheme
-            ).makeNodeRichShade(184, 434, color.name, true)
+            ).makeNodeRichShade(this.sampleSize, this.sampleSize * this.sampleRatio * this.sampleScale, color.name, true)
       )
 
       Object.values(this.parent.scale)
@@ -427,12 +438,12 @@ export default class Colors {
                 this.parent.view,
                 this.parent.textColorsTheme,
                 { isClosestToRef: distance < 4 ? true : false }
-              ).makeNodeShade(184, 248, scaleName)
+              ).makeNodeShade(this.sampleSize, this.sampleSize * this.sampleRatio, scaleName)
             )
           } else {
             this.nodeRowShades.layoutSizingHorizontal = 'FIXED'
             this.nodeRowShades.layoutWrap = 'WRAP'
-            this.nodeRowShades.resize(322 * 4, 100)
+            this.nodeRowShades.resize(this.sampleSize * this.sampleScale * 4, 100)
             this.nodeRowShades.layoutSizingVertical = 'HUG'
             this.nodeRowShades.appendChild(
               new Sample(
@@ -444,7 +455,7 @@ export default class Colors {
                 this.parent.view,
                 this.parent.textColorsTheme,
                 { isClosestToRef: distance < 4 ? true : false }
-              ).makeNodeRichShade(322, 434, scaleName)
+              ).makeNodeRichShade(this.sampleSize * this.sampleScale, this.sampleSize * this.sampleRatio * this.sampleScale, scaleName)
             )
           }
         })
