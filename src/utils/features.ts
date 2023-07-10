@@ -195,6 +195,14 @@ const features: Array<Features> = [
     service: ['EDIT'],
   },
   {
+    name: 'THEMES',
+    description: 'Color themes configuration',
+    isActive: true,
+    isPro: false,
+    type: 'CONTEXT',
+    service: ['EDIT'],
+  },
+  {
     name: 'EXPORT',
     description: 'Palette export options',
     isActive: true,

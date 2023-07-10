@@ -16,6 +16,7 @@ export const locals = {
     contexts: {
       scale: 'Scale',
       colors: 'Colors',
+      themes: 'Themes',
       export: 'Export',
       settings: 'Settings',
       about: 'About',

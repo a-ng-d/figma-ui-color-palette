@@ -8,6 +8,7 @@ const setPaletteMigration = (palette: BaseNode) => {
     preset = palette.getPluginData('preset'),
     colors = palette.getPluginData('colors'),
     colorSpace = palette.getPluginData('colorSpace'),
+    themes = palette.getPluginData('themes'),
     captions = palette.getPluginData('captions'),
     properties = palette.getPluginData('properties'),
     textColorsTheme = palette.getPluginData('textColorsTheme'),
@@ -39,7 +40,12 @@ const setPaletteMigration = (palette: BaseNode) => {
   )
     palette.setPluginData('colorSpace', 'OKLCH')
 
-  if (colorSpace === '') palette.setPluginData('colorSpace', 'LCH')
+  if (colorSpace === '')
+    palette.setPluginData('colorSpace', 'LCH')
+  
+  // themes
+  if (themes === '')
+    palette.setPluginData('themes', '[]')
 
   // view
   if (captions == 'hasCaptions' || properties == 'hasProperties') {

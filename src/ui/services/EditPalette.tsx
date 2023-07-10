@@ -546,6 +546,11 @@ export default class EditPalette extends React.Component<Props> {
         label: locals[this.props.lang].contexts.colors,
         id: 'COLORS',
       })
+    if (features.find((feature) => feature.name === 'THEMES').isActive)
+      contexts.push({
+        label: locals[this.props.lang].contexts.themes,
+        id: 'THEMES',
+      })
     if (features.find((feature) => feature.name === 'EXPORT').isActive)
       contexts.push({
         label: locals[this.props.lang].contexts.export,
