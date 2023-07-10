@@ -34,7 +34,8 @@ interface Props {
   onChangeOrder: React.ChangeEventHandler
   onCreateLocalStyles: () => void
   onUpdateLocalStyles: () => void
-  onChangeView: React.ChangeEventHandler
+  onCreateLocalVariables: () => void
+  onUpdateLocalVariables: () => void
   onReopenHighlight: React.ChangeEventHandler
 }
 
@@ -54,7 +55,7 @@ export default class Colors extends React.Component<Props> {
               <Button
                 icon="plus"
                 type="icon"
-                feature="ADD"
+                feature="ADD_COLOR"
                 action={this.props.onAddColor}
               />
             </div>
@@ -98,16 +99,18 @@ export default class Colors extends React.Component<Props> {
             ))}
           </ul>
         </div>
-        <Actions
-          context="LOCAL_STYLES"
-          view={this.props.view}
-          editorType={this.props.editorType}
-          planStatus={this.props.planStatus}
-          lang={this.props.lang}
-          onCreateLocalStyles={this.props.onCreateLocalStyles}
-          onUpdateLocalStyles={this.props.onUpdateLocalStyles}
-          onChangeView={this.props.onChangeView}
-        />
+        {this.props.editorType === 'figma' ? (
+          <Actions
+            context="DEPLOY"
+            view={this.props.view}
+            planStatus={this.props.planStatus}
+            lang={this.props.lang}
+            onCreateLocalStyles={this.props.onCreateLocalStyles}
+            onUpdateLocalStyles={this.props.onUpdateLocalStyles}
+            onCreateLocalVariables={this.props.onCreateLocalVariables}
+            onUpdateLocalVariables={this.props.onUpdateLocalVariables}
+          />
+        ) : null}
         <Feature
           isActive={
             features.find((feature) => feature.name === 'SHORTCUTS').isActive

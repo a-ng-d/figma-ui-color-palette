@@ -10,6 +10,8 @@ import updateColors from './bridges/updateColors'
 import updateView from './bridges/updateView'
 import createLocalStyles from './bridges/createLocalStyles'
 import updateLocalStyles from './bridges/updateLocalStyles'
+import createLocalVariables from './bridges/createLocalVariables'
+import updateLocalVariables from './bridges/updateLocalVariables'
 import exportJson from './bridges/exportJson'
 import exportCss from './bridges/exportCss'
 import exportSwift from './bridges/exportSwift'
@@ -51,6 +53,8 @@ figma.ui.onmessage = async (msg) => {
     UPDATE_COLORS: () => updateColors(msg, palette),
     CREATE_LOCAL_STYLES: () => createLocalStyles(palette, i),
     UPDATE_LOCAL_STYLES: () => updateLocalStyles(palette, i),
+    CREATE_LOCAL_VARIABLES: () => createLocalVariables(palette, i),
+    UPDATE_LOCAL_VARIABLES: () => updateLocalVariables(palette, i),
     EXPORT_PALETTE: () => {
       msg.export === 'JSON' ? exportJson(palette) : null
       msg.export === 'CSS' ? exportCss(palette) : null

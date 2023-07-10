@@ -48,31 +48,42 @@ export const locals = {
       xml: 'XML (Android)',
     },
     settings: {
-      base: {
-        title: 'Base information',
-        name: 'Palette name',
-        defaultName: 'UI Color Palette',
+      global: {
+        title: 'Global',
+        name: {
+          label: 'Palette name',
+        },
+        views: {
+          label: 'Palette layout',
+          simple: 'Palette',
+          detailed: 'Palette with properties',
+          sheet: 'Color sheet',
+        },
       },
       contrast: {
         title: 'Contrast management',
-        textLightColor: 'Text light color',
-        textDarkColor: 'Text dark color',
-        textThemeColorsDescription:
-          'The light and dark text colors serve as a reference to simulate contrast and obtain both WCAG and APCA scores',
+        textColors: {
+          textLightColor: 'Text light color',
+          textDarkColor: 'Text dark color',
+          textThemeColorsDescription:
+            'The light and dark text colors serve as a reference to simulate contrast and obtain both WCAG and APCA scores',
+        }
       },
       color: {
         title: 'Color management',
-        colorSpace: 'Color space',
-        colorSpaceOptions: {
+        colorSpace: {
+          label: 'Color space',
           lch: 'LCH (Lightness, Chroma, Hue)',
           oklch: 'OKLCH (OK, Lightness, Chroma, Hue)',
           lab: 'CIELAB (CIE, Lightness, a﹡ axis, b﹡ axis)',
           oklab: 'OKLAB (OK, Lightness, a﹡ axis, b﹡ axis)',
           hsl: 'HSL (Hue, Saturation, Lightness)',
         },
-        newAlgorithm: 'Enable the new algorithm for creating color shades',
-        newAlgorithmDescription:
+        newAlgorithm: {
+          label: 'Enable the new algorithm for creating color shades',
+          description:
           'The Chroma values are harmonized to ensure consistent lightness across all shades, but this may make the colors look desaturated.',
+        }
       },
     },
     about: {
@@ -92,17 +103,17 @@ export const locals = {
         coffee: 'Buy me a coffee',
       },
     },
-    views: {
-      title: 'Layout',
-      simple: 'Palette',
-      detailed: 'Palette with properties',
-      sheet: 'Color sheet',
-    },
     actions: {
       createPalette: 'Create a UI Color Palette',
       createLocalStyles: 'Create local styles',
+      createLocalVariables: 'Create local variables',
       updateLocalStyles: 'Update the local styles',
+      updateLocalVariables: 'Update the local variables',
       export: 'Export the UI Color Palette to',
+      managePalette: {
+        localStyles: 'Manage local styles',
+        localVariables: 'Manage local variables',
+      },
     },
     plan: {
       getPro: 'Get pro',
@@ -116,16 +127,24 @@ export const locals = {
       fontSize: 'Minimum font sizes',
     },
     info: {
-      createdlocalStyle: 'local color style has been created',
-      createdlocalStyles: 'local color styles have been created',
-      updatedlocalStyle: 'local color style has been updated',
-      updatedlocalStyles: 'local color styles have been updated',
+      createdLocalStyle: 'local color style has been created',
+      createdLocalStyles: 'local color styles have been created',
+      updatedLocalStyle: 'local color style has been updated',
+      updatedLocalStyles: 'local color styles have been updated',
+      createdLocalVariable: 'local color variable has been created',
+      createdLocalVariables: 'local color variables have been created',
+      updatedLocalVariable: 'local color variable has been updated',
+      updatedLocalVariables: 'local color variables have been updated',
     },
     warning: {
-      createLocalStyles:
+      cannotCreateLocalStyles:
         'Local color styles already exist and cannot be created twice',
-      updateLocalStyles:
-        'No color has been updated because the UI Color Palette has not been edited',
+      cannotUpdateLocalStyles:
+        'No local color style has been updated because the UI Color Palette has not been edited',
+      cannotCreateLocalVariables:
+        'Local color variables already exist and cannot be created twice',
+      cannotUpdateLocalVariables:
+        'No local color variables has been updated because the UI Color Palette has not been edited',
       emptySourceColors:
         'There is not any source color. Add it manually in the Colors section.',
       hslColorSpace:

@@ -1,5 +1,5 @@
 import type { PaletteDataItem } from '../utils/types'
-import Style from './../canvas/Style'
+import LocalStyle from './../canvas/LocalStyle'
 import { locals, lang } from '../content/locals'
 
 const createLocalStyles = (palette, i: number) => {
@@ -13,27 +13,30 @@ const createLocalStyles = (palette, i: number) => {
       (color: PaletteDataItem) => {
         color.shades.forEach((shade) => {
           if (
-            localStyles.filter((e) => e.name === `${color.name}/${shade.name}`)
-              .length == 0
+            localStyles.find(
+              (localStyle) => localStyle.name === `${color.name}/${shade.name}`
+            ) == undefined
           ) {
-            const style: PaintStyle = new Style(
+            new LocalStyle(
               `${color.name}/${shade.name}`,
-              color.description != '' ? color.description.concat('﹒', shade.description) : shade.description,
+              color.description != ''
+                ? color.description.concat('﹒', shade.description)
+                : shade.description,
               {
                 r: shade.gl[0],
                 g: shade.gl[1],
                 b: shade.gl[2],
               }
-            ).makeNode()
+            ).makePaintStyle()
             i++
           }
         })
       }
     )
 
-    if (i > 1) figma.notify(`${i} ${locals[lang].info.createdlocalStyles}`)
-    else if (i == 1) figma.notify(`${i} ${locals[lang].info.createdlocalStyle}`)
-    else figma.notify(locals[lang].warning.createLocalStyles)
+    if (i > 1) figma.notify(`${i} ${locals[lang].info.createdLocalStyles}`)
+    else if (i == 1) figma.notify(`${i} ${locals[lang].info.createdLocalStyle}`)
+    else figma.notify(locals[lang].warning.cannotCreateLocalStyles)
   } else figma.notify(locals[lang].error.corruption)
 }
 

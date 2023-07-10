@@ -23,10 +23,11 @@ interface Props {
   onChangeScale: (e: string) => void
   onAddStop?: React.ReactEventHandler
   onRemoveStop?: React.ReactEventHandler
-  onChangeView: React.ChangeEventHandler
   onCreatePalette?: () => void
   onCreateLocalStyles?: () => void
   onUpdateLocalStyles?: () => void
+  onCreateLocalVariables?: () => void
+  onUpdateLocalVariables?: () => void
   onReopenHighlight: React.ChangeEventHandler
 }
 
@@ -137,7 +138,7 @@ export default class Scale extends React.Component<Props> {
                   <Button
                     icon="minus"
                     type="icon"
-                    feature="REMOVE"
+                    feature="REMOVE_STOP"
                     action={this.props.onRemoveStop}
                   />
                 ) : null}
@@ -148,7 +149,7 @@ export default class Scale extends React.Component<Props> {
                     state={
                       this.props.preset.scale.length == 24 ? 'disabled' : ''
                     }
-                    feature="ADD"
+                    feature="ADD_STOP"
                     action={this.props.onAddStop}
                   />
                 ) : null}
@@ -188,7 +189,6 @@ export default class Scale extends React.Component<Props> {
           planStatus={this.props.planStatus}
           lang={this.props.lang}
           onCreatePalette={this.props.onCreatePalette}
-          onChangeView={this.props.onChangeView}
         />
         <this.Shortcuts />
       </>
@@ -239,16 +239,18 @@ export default class Scale extends React.Component<Props> {
             />
           </Feature>
         </div>
-        <Actions
-          context="LOCAL_STYLES"
-          view={this.props.view}
-          editorType={this.props.editorType}
-          planStatus={this.props.planStatus}
-          lang={this.props.lang}
-          onCreateLocalStyles={this.props.onCreateLocalStyles}
-          onUpdateLocalStyles={this.props.onUpdateLocalStyles}
-          onChangeView={this.props.onChangeView}
-        />
+        {this.props.editorType === 'figma' ? (
+          <Actions
+            context="DEPLOY"
+            view={this.props.view}
+            planStatus={this.props.planStatus}
+            lang={this.props.lang}
+            onCreateLocalStyles={this.props.onCreateLocalStyles}
+            onUpdateLocalStyles={this.props.onUpdateLocalStyles}
+            onCreateLocalVariables={this.props.onCreateLocalVariables}
+            onUpdateLocalVariables={this.props.onUpdateLocalVariables}
+          />
+        ): null}
         <this.Shortcuts />
       </>
     )

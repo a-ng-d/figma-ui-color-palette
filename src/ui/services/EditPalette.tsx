@@ -323,15 +323,15 @@ export default class EditPalette extends React.Component<Props> {
     }
 
     const actions: ActionsList = {
-      HEX: () => updateHexCode(),
-      LIGHTNESS: () => updateLightnessProp(),
-      CHROMA: () => updateChromaProp(),
-      HUE: () => updateHueProp(),
-      ADD: () => addColor(),
-      REMOVE: () => removeColor(),
-      RENAME: () => renameColor(),
+      UPDATE_HEX: () => updateHexCode(),
+      UPDATE_LIGHTNESS: () => updateLightnessProp(),
+      UPDATE_CHROMA: () => updateChromaProp(),
+      UPDATE_HUE: () => updateHueProp(),
+      ADD_COLOR: () => addColor(),
+      REMOVE_COLOR: () => removeColor(),
+      RENAME_COLOR: () => renameColor(),
       SHIFT_HUE: () => setHueShifting(),
-      DESCRIPTION: () => updateColorDescription(),
+      UPDATE_DESCRIPTION: () => updateColorDescription(),
     }
 
     return actions[e.target.dataset.feature]?.()
@@ -445,9 +445,29 @@ export default class EditPalette extends React.Component<Props> {
   }
 
   // Direct actions
-  onCreate = () => {
+  onCreateStyles = () => {
+    parent.postMessage({ pluginMessage: { type: 'CREATE_LOCAL_STYLES' } }, '*')
+    this.setState({
+      selectedElement: {
+        id: '',
+        position: null,
+      },
+    })
+  }
+
+  onUpdateStyles = () => {
+    parent.postMessage({ pluginMessage: { type: 'UPDATE_LOCAL_STYLES' } }, '*')
+    this.setState({
+      selectedElement: {
+        id: '',
+        position: null,
+      },
+    })
+  }
+
+  onCreateVariables = () => {
     parent.postMessage(
-      { pluginMessage: { type: 'CREATE_LOCAL_STYLES', data: palette } },
+      { pluginMessage: { type: 'CREATE_LOCAL_VARIABLES' } },
       '*'
     )
     this.setState({
@@ -458,9 +478,9 @@ export default class EditPalette extends React.Component<Props> {
     })
   }
 
-  onUpdate = () => {
+  onUpdateVariables = () => {
     parent.postMessage(
-      { pluginMessage: { type: 'UPDATE_LOCAL_STYLES', data: palette } },
+      { pluginMessage: { type: 'UPDATE_LOCAL_VARIABLES' } },
       '*'
     )
     this.setState({
@@ -568,9 +588,10 @@ export default class EditPalette extends React.Component<Props> {
             editorType={this.props.editorType}
             lang={this.props.lang}
             onChangeScale={this.slideHandler}
-            onChangeView={this.viewHandler}
-            onCreateLocalStyles={this.onCreate}
-            onUpdateLocalStyles={this.onUpdate}
+            onCreateLocalStyles={this.onCreateStyles}
+            onUpdateLocalStyles={this.onUpdateStyles}
+            onCreateLocalVariables={this.onCreateVariables}
+            onUpdateLocalVariables={this.onUpdateVariables}
             onReopenHighlight={this.props.onReopenHighlight}
           />
         )
@@ -592,9 +613,10 @@ export default class EditPalette extends React.Component<Props> {
             onDragChange={this.dragHandler}
             onDropOutside={this.dropOutsideHandler}
             onChangeOrder={this.orderHandler}
-            onCreateLocalStyles={this.onCreate}
-            onUpdateLocalStyles={this.onUpdate}
-            onChangeView={this.viewHandler}
+            onCreateLocalStyles={this.onCreateStyles}
+            onUpdateLocalStyles={this.onUpdateStyles}
+            onCreateLocalVariables={this.onCreateVariables}
+            onUpdateLocalVariables={this.onUpdateVariables}
             onReopenHighlight={this.props.onReopenHighlight}
           />
         )
@@ -630,8 +652,10 @@ export default class EditPalette extends React.Component<Props> {
             editorType={this.props.editorType}
             lang={this.props.lang}
             onChangeSettings={this.settingsHandler}
-            onCreateLocalStyles={this.onCreate}
-            onUpdateLocalStyles={this.onUpdate}
+            onCreateLocalStyles={this.onCreateStyles}
+            onUpdateLocalStyles={this.onUpdateStyles}
+            onCreateLocalVariables={this.onCreateVariables}
+            onUpdateLocalVariables={this.onUpdateVariables}
             onChangeView={this.viewHandler}
             onReopenHighlight={this.props.onReopenHighlight}
           />

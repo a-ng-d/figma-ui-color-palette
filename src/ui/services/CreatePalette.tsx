@@ -67,7 +67,7 @@ export default class CreatePalette extends React.Component<Props> {
     })
 
   // Direct actions
-  onCreate = () =>
+  onCreatePalette = () =>
     parent.postMessage(
       { pluginMessage: { type: 'CREATE_PALETTE', data: palette } },
       '*'
@@ -122,8 +122,7 @@ export default class CreatePalette extends React.Component<Props> {
             onChangeScale={() => null}
             onAddStop={this.scaleHandler}
             onRemoveStop={this.scaleHandler}
-            onChangeView={this.viewHandler}
-            onCreatePalette={this.onCreate}
+            onCreatePalette={this.onCreatePalette}
             onReopenHighlight={this.props.onReopenHighlight}
           />
         )
@@ -140,7 +139,7 @@ export default class CreatePalette extends React.Component<Props> {
             planStatus={this.props.planStatus}
             lang={this.props.lang}
             onChangeSettings={this.settingsHandler}
-            onCreatePalette={this.onCreate}
+            onCreatePalette={this.onCreatePalette}
             onChangeView={this.viewHandler}
             onReopenHighlight={this.props.onReopenHighlight}
           />
