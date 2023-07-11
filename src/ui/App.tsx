@@ -20,7 +20,7 @@ import { v4 as uuidv4 } from 'uuid'
 import 'figma-plugin-ds/dist/figma-plugin-ds.css'
 import './stylesheets/app.css'
 import './stylesheets/app-components.css'
-import './stylesheets/components.css'
+import './stylesheets/figma-components.css'
 
 let isPaletteSelected = false
 const container = document.getElementById('react-page'),
