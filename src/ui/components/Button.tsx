@@ -21,6 +21,7 @@ export default class Button extends React.Component<Props> {
     return (
       <button
         className={`button button--${this.props.type}`}
+        data-feature={this.props.feature}
         onMouseDown={this.props.action}
       >
         {this.props.label}
@@ -30,8 +31,10 @@ export default class Button extends React.Component<Props> {
 
   LinkButton = () => {
     return (
-      <button className={`button button--${this.props.type}`}>
-        <a
+      <button
+        className={`button button--${this.props.type}`}
+        data-feature={this.props.feature}>
+      <a
           href={this.props.url}
           target="_blank"
           rel="noreferrer"

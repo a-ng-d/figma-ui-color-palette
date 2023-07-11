@@ -25,7 +25,7 @@ export default class Onboarding extends React.Component<Props> {
             />
             <div className="type">－ or －</div>
             <Message
-              icon="theme"
+              icon="layout-grid-uniform"
               messages={[locals[this.props.lang].onboarding.selectPalette]}
             />
           </div>

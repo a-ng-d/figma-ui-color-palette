@@ -512,8 +512,9 @@ div.popin__actions {
   padding: 0 var(--size-xsmall) var(--size-xsmall) var(--size-xsmall);
 }
 
-/* Colors */
+/* Colors and Themes */
 div.source-colors {
+  display: flex;
   flex: 1 0 176px;
   overflow: hidden;
   padding: var(--size-xxsmall) 0 0 0;
@@ -703,6 +704,23 @@ div.onboarding {
 
 div.onboarding .label {
   width: auto;
+}
+
+div.onboarding__callout {
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-xxxsmall);
+}
+
+div.onboarding__callout div.onboarding-tip {
+  justify-content: center;
+}
+
+div.onboarding__actions {
+  display: flex;
+  gap: var(--size-xxsmall);
+  justify-content: center;
+  padding: 0 calc(var(--size-xsmall) + var(--size-xxxsmall));
 }
 
 div.onboarding-tip {

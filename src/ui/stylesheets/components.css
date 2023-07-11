@@ -84,6 +84,11 @@
   -webkit-mask-image: url('data:image/svg+xml;charset=utf-8,%3Csvg%20fill%3D%22none%22%20height%3D%2232%22%20viewBox%3D%220%200%2032%2032%22%20width%3D%2232%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20clip-rule%3D%22evenodd%22%20d%3D%22m16%209%208%2014h-16zm-1%208.5v-3.5h2v3.5zm0%201.5v2h2v-2z%22%20fill%3D%22%23000%22%20fill-rule%3D%22evenodd%22%2F%3E%3C%2Fsvg%3E');
 }
 
+.icon--layout-grid-uniform {
+  mask-image: url('data:image/svg+xml;charset=utf-8,%3Csvg%20fill%3D%22none%22%20height%3D%2232%22%20viewBox%3D%220%200%2032%2032%22%20width%3D%2232%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cg%20fill%3D%22%23000%22%3E%3Cpath%20d%3D%22m9%209h3v3h-3z%22%2F%3E%3Cpath%20d%3D%22m20%209h3v3h-3z%22%2F%3E%3Cpath%20d%3D%22m14.5%209h3v3h-3z%22%2F%3E%3Cpath%20d%3D%22m9%2014.5h3v3h-3z%22%2F%3E%3Cpath%20d%3D%22m20%2014.5h3v3h-3z%22%2F%3E%3Cpath%20d%3D%22m14.5%2014.5h3v3h-3z%22%2F%3E%3Cpath%20d%3D%22m9%2020h3v3h-3z%22%2F%3E%3Cpath%20d%3D%22m20%2020h3v3h-3z%22%2F%3E%3Cpath%20d%3D%22m14.5%2020h3v3h-3z%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E');
+  -webkit-mask-image: url('data:image/svg+xml;charset=utf-8,%3Csvg%20fill%3D%22none%22%20height%3D%2232%22%20viewBox%3D%220%200%2032%2032%22%20width%3D%2232%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cg%20fill%3D%22%23000%22%3E%3Cpath%20d%3D%22m9%209h3v3h-3z%22%2F%3E%3Cpath%20d%3D%22m20%209h3v3h-3z%22%2F%3E%3Cpath%20d%3D%22m14.5%209h3v3h-3z%22%2F%3E%3Cpath%20d%3D%22m9%2014.5h3v3h-3z%22%2F%3E%3Cpath%20d%3D%22m20%2014.5h3v3h-3z%22%2F%3E%3Cpath%20d%3D%22m14.5%2014.5h3v3h-3z%22%2F%3E%3Cpath%20d%3D%22m9%2020h3v3h-3z%22%2F%3E%3Cpath%20d%3D%22m20%2020h3v3h-3z%22%2F%3E%3Cpath%20d%3D%22m14.5%2020h3v3h-3z%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E');
+}
+
 /* Checkbox */
 .checkbox__label:before {
   --black8: var(--figma-color-border-strong);

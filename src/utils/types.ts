@@ -94,7 +94,7 @@ export interface ScaleConfiguration {
 
 export interface ColorConfiguration {
   name: string
-  id: string | undefined
+  description: string
   rgb: {
     r: number
     g: number
@@ -102,7 +102,15 @@ export interface ColorConfiguration {
   }
   oklch: boolean
   hueShifting: number
+  id: string | undefined
+}
+
+export interface ThemeConfiguration {
+  name: string
   description: string
+  paletteBackground: string
+  isEnabled: boolean
+  id: string
 }
 
 export interface ExportConfiguration {

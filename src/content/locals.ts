@@ -23,14 +23,16 @@ export const locals = {
     },
     scale: {
       title: 'Lightness scale',
-      ctrl: 'Hold Ctrl ⌃ or Cmd ⌘ while dragging a stop to move them all',
-      shift:
-        "Hold Shift ⇧ while dragging the first or the last stop to distribute stops' horizontal spacing",
-      esc: 'Press Esc. after selecting a stop to unselect it',
-      nav: 'Press ← or → after selecting a stop to shift it',
-      edit: 'Double click a stop to type its value',
-      remove: 'Press Backspace ⌫ after selecting a stop to remove it',
-      add: 'Click on the slider range to add a stop',
+      tips: {
+        ctrl: 'Hold Ctrl ⌃ or Cmd ⌘ while dragging a stop to move them all',
+        shift:
+          "Hold Shift ⇧ while dragging the first or the last stop to distribute stops' horizontal spacing",
+        esc: 'Press Esc. after selecting a stop to unselect it',
+        nav: 'Press ← or → after selecting a stop to shift it',
+        edit: 'Double click a stop to type its value',
+        remove: 'Press Backspace ⌫ after selecting a stop to remove it',
+        add: 'Click on the slider range to add a stop',
+      }   
     },
     colors: {
       title: 'Source colors',
@@ -38,6 +40,13 @@ export const locals = {
       hueShifting: 'HUE',
       description: 'Description',
       descriptionTip: "What's it for?",
+    },
+    themes: {
+      title: 'Color themes',
+      tips : {
+        creation: 'Create a color theme to manage several color palette within one (light and dark theme)'
+      },
+      label: 'Create a color theme'
     },
     export: {
       format: 'File format',

@@ -38,20 +38,20 @@ export default class Scale extends React.Component<Props> {
 
     if (this.props.preset.name === 'Custom' && !this.props.hasPreset)
       messages.push(
-        locals[this.props.lang].scale.add,
-        locals[this.props.lang].scale.remove
+        locals[this.props.lang].scale.tips.add,
+        locals[this.props.lang].scale.tips.remove
       )
 
     if (!this.props.hasPreset)
       messages.push(
-        locals[this.props.lang].scale.edit,
-        locals[this.props.lang].scale.nav,
-        locals[this.props.lang].scale.esc
+        locals[this.props.lang].scale.tips.edit,
+        locals[this.props.lang].scale.tips.nav,
+        locals[this.props.lang].scale.tips.esc
       )
 
     messages.push(
-      locals[this.props.lang].scale.shift,
-      locals[this.props.lang].scale.ctrl
+      locals[this.props.lang].scale.tips.shift,
+      locals[this.props.lang].scale.tips.ctrl
     )
 
     return messages

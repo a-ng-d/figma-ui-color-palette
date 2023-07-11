@@ -27,6 +27,7 @@ const processSelection = () => {
         scale: JSON.parse(palette.getPluginData('scale')),
         colors: JSON.parse(palette.getPluginData('colors')),
         colorSpace: palette.getPluginData('colorSpace'),
+        themes: JSON.parse(palette.getPluginData('themes')),
         view: palette.getPluginData('view'),
         textColorsTheme: JSON.parse(palette.getPluginData('textColorsTheme')),
         algorithmVersion: palette.getPluginData('algorithmVersion'),

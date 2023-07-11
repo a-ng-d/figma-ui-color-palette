@@ -7,6 +7,7 @@ import type {
   PresetConfiguration,
   TextColorsThemeHexModel,
   ColorConfiguration,
+  ThemeConfiguration,
   ExportConfiguration,
   HoveredColor,
   SelectedColor,
@@ -18,6 +19,7 @@ import Dispatcher from '../modules/Dispatcher'
 import Tabs from '../components/Tabs'
 import Scale from '../modules/Scale'
 import Colors from '../modules/Colors'
+import Themes from '../modules/Themes'
 import Export from '../modules/Export'
 import Settings from '../modules/Settings'
 import About from '../modules/About'
@@ -32,6 +34,7 @@ interface Props {
   scale: ScaleConfiguration
   colors: Array<ColorConfiguration>
   colorSpace: string
+  themes: Array<ThemeConfiguration>
   view: string
   textColorsTheme: TextColorsThemeHexModel
   algorithmVersion: string
@@ -337,6 +340,10 @@ export default class EditPalette extends React.Component<Props> {
     return actions[e.target.dataset.feature]?.()
   }
 
+  themeHandler = () => {
+    
+  }
+
   orderHandler = () => {
     const source: SelectedColor = this.state['selectedElement'],
       target: HoveredColor = this.state['hoveredElement'],
@@ -614,6 +621,31 @@ export default class EditPalette extends React.Component<Props> {
             lang={this.props.lang}
             onChangeColor={this.colorHandler}
             onAddColor={this.colorHandler}
+            onChangeSelection={this.selectionHandler}
+            onDragChange={this.dragHandler}
+            onDropOutside={this.dropOutsideHandler}
+            onChangeOrder={this.orderHandler}
+            onCreateLocalStyles={this.onCreateStyles}
+            onUpdateLocalStyles={this.onUpdateStyles}
+            onCreateLocalVariables={this.onCreateVariables}
+            onUpdateLocalVariables={this.onUpdateVariables}
+            onReopenHighlight={this.props.onReopenHighlight}
+          />
+        )
+        break
+      }
+      case 'THEMES': {
+        controls = (
+          <Themes
+            themes={this.props.themes}
+            selectedElement={this.state['selectedElement']}
+            hoveredElement={this.state['hoveredElement']}
+            view={this.props.view}
+            planStatus={this.props.planStatus}
+            editorType={this.props.editorType}
+            lang={this.props.lang}
+            onChangeColor={this.colorHandler}
+            onAddTheme={this.themeHandler}
             onChangeSelection={this.selectionHandler}
             onDragChange={this.dragHandler}
             onDropOutside={this.dropOutsideHandler}

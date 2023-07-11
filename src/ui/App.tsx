@@ -57,6 +57,7 @@ class App extends React.Component {
       newScale: {},
       newColors: {},
       colorSpace: 'LCH',
+      themes: [],
       view: 'PALETTE_WITH_PROPERTIES',
       textColorsTheme: {
         lightColor: '#FFFFFF',
@@ -441,6 +442,7 @@ class App extends React.Component {
             newScale: e.data.pluginMessage.data.scale,
             newColors: putIdsOnColors,
             colorSpace: e.data.pluginMessage.data.colorSpace,
+            themes: e.data.pluginMessage.data.themes,
             view: e.data.pluginMessage.data.view,
             textColorsTheme: e.data.pluginMessage.data.textColorsTheme,
             algorithmVersion: e.data.pluginMessage.data.algorithmVersion,
@@ -567,6 +569,7 @@ class App extends React.Component {
               scale={this.state['newScale']}
               colors={this.state['newColors']}
               colorSpace={this.state['colorSpace']}
+              themes={this.state['themes']}
               view={this.state['view']}
               textColorsTheme={this.state['textColorsTheme']}
               algorithmVersion={this.state['algorithmVersion']}
