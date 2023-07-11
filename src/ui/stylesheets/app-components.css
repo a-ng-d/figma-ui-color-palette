@@ -596,6 +596,10 @@ div.onboarding-tip--blocked .icon {
   width: max-content;
 }
 
+.onboarding-tip__tips:hover {
+  animation-play-state: paused !important;
+}
+
 .callout .onboarding-tip__msg {
   white-space: nowrap;
 }
