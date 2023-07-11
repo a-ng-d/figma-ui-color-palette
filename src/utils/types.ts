@@ -110,6 +110,7 @@ export interface ThemeConfiguration {
   description: string
   paletteBackground: string
   isEnabled: boolean
+  scale: ScaleConfiguration
   id: string
 }
 
