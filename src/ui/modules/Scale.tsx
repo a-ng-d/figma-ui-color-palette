@@ -1,5 +1,5 @@
 import * as React from 'react'
-import type { PresetConfiguration, ScaleConfiguration } from '../../utils/types'
+import type { ActionsList, DispatchProcess, PresetConfiguration, ScaleConfiguration } from '../../utils/types'
 import Feature from '../components/Feature'
 import Button from '../components/Button'
 import Dropdown from '../components/Dropdown'
@@ -9,6 +9,7 @@ import Actions from './Actions'
 import { palette, presets } from '../../utils/palettePackage'
 import features from '../../utils/features'
 import { locals } from '../../content/locals'
+import Dispatcher from './Dispatcher'
 
 interface Props {
   hasPreset: boolean
@@ -19,7 +20,8 @@ interface Props {
   editorType?: string
   lang: string
   onChangePreset?: React.ReactEventHandler
-  onChangeScale: (e: string) => void
+  onChangeScale: () => void
+  onChangeStop?: () => void
   onAddStop?: React.ReactEventHandler
   onRemoveStop?: React.ReactEventHandler
   onCreatePalette?: () => void
@@ -30,6 +32,83 @@ interface Props {
 }
 
 export default class Scale extends React.Component<Props> {
+  dispatch: { [key: string]: DispatchProcess }
+
+  constructor(props) {
+    super(props)
+    this.dispatch = {
+      scale: new Dispatcher(
+        () =>
+          parent.postMessage(
+            {
+              pluginMessage: {
+                type: 'UPDATE_SCALE',
+                data: palette,
+                isEditedInRealTime: true,
+              },
+            },
+            '*'
+          ),
+        500
+      ),
+    }
+  }
+
+  // Handlers
+  slideHandler = (state: string) => {
+    const onReleaseStop = () => {
+      this.dispatch.scale.on.status = false
+      parent.postMessage(
+        {
+          pluginMessage: {
+            type: 'UPDATE_SCALE',
+            data: palette,
+            isEditedInRealTime: false,
+          },
+        },
+        '*'
+      )
+      this.props.onChangeScale()
+    }
+
+    const onChangeStop = () => {
+      parent.postMessage(
+        {
+          pluginMessage: {
+            type: 'UPDATE_SCALE',
+            data: palette,
+            isEditedInRealTime: false,
+          },
+        },
+        '*'
+      )
+      this.props.onChangeStop()
+    }
+
+    const onTypeStopValue = () => {
+      parent.postMessage(
+        {
+          pluginMessage: {
+            type: 'UPDATE_SCALE',
+            data: palette,
+            isEditedInRealTime: false,
+          },
+        },
+        '*'
+      )
+      this.props.onChangeStop()
+    }
+
+    const actions: ActionsList = {
+      RELEASED: () => onReleaseStop(),
+      SHIFTED: () => onChangeStop(),
+      TYPED: () => onTypeStopValue(),
+      UPDATING: () => (this.dispatch.scale.on.status = true),
+    }
+
+    return actions[state]?.()
+  }
+
   // Direct actions
   setOnboardingMessages = () => {
     const messages: Array<string> = []
@@ -132,7 +211,7 @@ export default class Scale extends React.Component<Props> {
               stops={this.props.preset.scale}
               min={this.props.preset.min}
               max={this.props.preset.max}
-              onChange={this.props.onChangeScale}
+              onChange={this.slideHandler}
             />
           </Feature>
           <Feature
@@ -187,7 +266,7 @@ export default class Scale extends React.Component<Props> {
               presetName={this.props.preset.name}
               stops={this.props.preset.scale}
               scale={this.props.scale}
-              onChange={this.props.onChangeScale}
+              onChange={this.slideHandler}
             />
           </Feature>
           <Feature

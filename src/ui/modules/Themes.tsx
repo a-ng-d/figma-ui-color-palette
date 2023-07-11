@@ -43,7 +43,7 @@ export default class Themes extends React.Component<Props> {
   constructor(props) {
     super(props)
     this.dispatch = {
-      themes: new Dispatcher (
+      themes: new Dispatcher(
         () => parent.postMessage({ pluginMessage: themeMessage }, '*'),
         500
       ),

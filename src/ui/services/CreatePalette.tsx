@@ -47,11 +47,10 @@ export default class CreatePalette extends React.Component<Props> {
   }
 
   // Handlers
-  presetHandler = (e) => this.props.onChangePreset(e)
-
-  scaleHandler = (e) => this.props.onCustomPreset(e)
-
-  settingsHandler = (e) => this.props.onChangeSettings(e)
+  navHandler = (e: React.SyntheticEvent) =>
+    this.setState({
+      context: (e.target as HTMLElement).dataset.feature,
+    })
 
   viewHandler = (e) => {
     if (e.target.dataset.isBlocked === 'false') {
@@ -59,12 +58,7 @@ export default class CreatePalette extends React.Component<Props> {
       this.props.onChangeView(e.target.dataset.value)
     }
   }
-
-  navHandler = (e: React.SyntheticEvent) =>
-    this.setState({
-      context: (e.target as HTMLElement).dataset.feature,
-    })
-
+  
   // Direct actions
   onCreatePalette = () =>
     parent.postMessage(
@@ -117,10 +111,10 @@ export default class CreatePalette extends React.Component<Props> {
             view={this.props.view}
             planStatus={this.props.planStatus}
             lang={this.props.lang}
-            onChangePreset={this.presetHandler}
+            onChangePreset={this.props.onChangePreset}
             onChangeScale={() => null}
-            onAddStop={this.scaleHandler}
-            onRemoveStop={this.scaleHandler}
+            onAddStop={this.props.onCustomPreset}
+            onRemoveStop={this.props.onCustomPreset}
             onCreatePalette={this.onCreatePalette}
           />
         )
@@ -136,7 +130,7 @@ export default class CreatePalette extends React.Component<Props> {
             view={this.props.view}
             planStatus={this.props.planStatus}
             lang={this.props.lang}
-            onChangeSettings={this.settingsHandler}
+            onChangeSettings={this.props.onChangeSettings}
             onCreatePalette={this.onCreatePalette}
             onChangeView={this.viewHandler}
           />

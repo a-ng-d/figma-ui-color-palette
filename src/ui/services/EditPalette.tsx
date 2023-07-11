@@ -7,11 +7,8 @@ import type {
   ColorConfiguration,
   ThemeConfiguration,
   ExportConfiguration,
-  DispatchProcess,
-  ActionsList,
   ScaleConfiguration,
 } from '../../utils/types'
-import Dispatcher from '../modules/Dispatcher'
 import Tabs from '../components/Tabs'
 import Scale from '../modules/Scale'
 import Colors from '../modules/Colors'
@@ -38,7 +35,7 @@ interface Props {
   planStatus: string
   lang: string
   onChangeScale: () => void
-  onChangeStop: () => void
+  onChangeStop?: () => void
   onChangeColor: (colors: Array<ColorConfiguration>) => void
   onChangeTheme: (themes: Array<ThemeConfiguration>) => void
   onChangeView: (view: string) => void
@@ -46,26 +43,8 @@ interface Props {
 }
 
 export default class EditPalette extends React.Component<Props> {
-  dispatch: { [key: string]: DispatchProcess }
-
   constructor(props) {
     super(props)
-    this.dispatch = {
-      scale: new Dispatcher(
-        () =>
-          parent.postMessage(
-            {
-              pluginMessage: {
-                type: 'UPDATE_SCALE',
-                data: palette,
-                isEditedInRealTime: true,
-              },
-            },
-            '*'
-          ),
-        500
-      ),
-    }
     this.state = {
       context:
         features.filter(
@@ -85,62 +64,6 @@ export default class EditPalette extends React.Component<Props> {
   }
 
   // Handlers
-  slideHandler = (state: string) => {
-    const onReleaseStop = () => {
-      this.dispatch.scale.on.status = false
-      parent.postMessage(
-        {
-          pluginMessage: {
-            type: 'UPDATE_SCALE',
-            data: palette,
-            isEditedInRealTime: false,
-          },
-        },
-        '*'
-      )
-      this.props.onChangeScale()
-    }
-
-    const onChangeStop = () => {
-      parent.postMessage(
-        {
-          pluginMessage: {
-            type: 'UPDATE_SCALE',
-            data: palette,
-            isEditedInRealTime: false,
-          },
-        },
-        '*'
-      )
-      this.props.onChangeStop()
-    }
-
-    const onTypeStopValue = () => {
-      parent.postMessage(
-        {
-          pluginMessage: {
-            type: 'UPDATE_SCALE',
-            data: palette,
-            isEditedInRealTime: false,
-          },
-        },
-        '*'
-      )
-      this.props.onChangeStop()
-    }
-
-    const actions: ActionsList = {
-      RELEASED: () => onReleaseStop(),
-      SHIFTED: () => onChangeStop(),
-      TYPED: () => onTypeStopValue(),
-      UPDATING: () => (this.dispatch.scale.on.status = true),
-    }
-
-    return actions[state]?.()
-  }
-
-  settingsHandler = (e) => this.props.onChangeSettings(e)
-
   navHandler = (e: React.SyntheticEvent) =>
     this.setState({
       context: (e.target as HTMLElement).dataset.feature,
@@ -311,7 +234,8 @@ export default class EditPalette extends React.Component<Props> {
             planStatus={this.props.planStatus}
             editorType={this.props.editorType}
             lang={this.props.lang}
-            onChangeScale={this.slideHandler}
+            onChangeScale={this.props.onChangeScale}
+            onChangeStop={this.props.onChangeStop}
             onCreateLocalStyles={this.onCreateStyles}
             onUpdateLocalStyles={this.onUpdateStyles}
             onCreateLocalVariables={this.onCreateVariables}
@@ -383,7 +307,7 @@ export default class EditPalette extends React.Component<Props> {
             planStatus={this.props.planStatus}
             editorType={this.props.editorType}
             lang={this.props.lang}
-            onChangeSettings={this.settingsHandler}
+            onChangeSettings={this.props.onChangeSettings}
             onCreateLocalStyles={this.onCreateStyles}
             onUpdateLocalStyles={this.onUpdateStyles}
             onCreateLocalVariables={this.onCreateVariables}
