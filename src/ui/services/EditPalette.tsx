@@ -710,7 +710,7 @@ export default class EditPalette extends React.Component<Props> {
           active={this.state['context']}
           action={this.navHandler}
         />
-        <section onMouseDown={this.unSelectColor}>
+        <section className="controller" onMouseDown={this.unSelectColor}>
           <div className="controls">{controls}</div>
         </section>
       </>
