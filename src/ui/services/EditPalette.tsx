@@ -14,7 +14,6 @@ import type {
   DispatchProcess,
   ActionsList,
   ScaleConfiguration,
-  ThemesMessage,
 } from '../../utils/types'
 import Dispatcher from '../modules/Dispatcher'
 import Tabs from '../components/Tabs'
@@ -53,11 +52,6 @@ interface Props {
 
 const colorsMessage: ColorsMessage = {
   type: 'UPDATE_COLORS',
-  data: [],
-  isEditedInRealTime: false,
-},
-themeMessage: ThemesMessage = {
-  type: 'UPDATE_THEMES',
   data: [],
   isEditedInRealTime: false,
 }
@@ -344,45 +338,6 @@ export default class EditPalette extends React.Component<Props> {
     }
 
     return actions[e.target.dataset.feature]?.()
-  }
-
-  themeHandler = (e) => {
-    let id: string
-    const element: HTMLElement | null = e.target.closest('.list__item')
-
-    element != null ? (id = element.getAttribute('data-id')) : null
-
-    colorsMessage.isEditedInRealTime = false
-
-    const addTheme = () => {
-      themeMessage.data = this.props.themes
-      const hasAlreadyNewUITheme = themeMessage.data.filter((color) =>
-        color.name.includes('New UI Theme')
-      )
-      themeMessage.data.push({
-        name: `New UI Theme ${hasAlreadyNewUITheme.length + 1}`,
-        description: '',
-        paletteBackground: '#FFFFFF',
-        isEnabled: this.props.themes.length == 0 ? true : false,
-        scale: this.props.scale,
-        id: uuidv4(),
-      })
-      this.props.onChangeTheme(themeMessage.data)
-      parent.postMessage({ pluginMessage: themeMessage }, '*')
-    }
-
-    const removeTheme = () => {
-      themeMessage.data = this.props.themes.filter((item) => item.id != id)
-      this.props.onChangeTheme(themeMessage.data)
-      parent.postMessage({ pluginMessage: themeMessage }, '*')
-    }
-
-    const actions: ActionsList = {
-      ADD_THEME: () => addTheme(),
-      REMOVE_THEME: () => removeTheme()
-    }
-
-    return actions[e.target.dataset.feature]?.()  
   }
 
   orderHandler = () => {
@@ -676,15 +631,15 @@ export default class EditPalette extends React.Component<Props> {
       case 'THEMES': {
         controls = (
           <Themes
-            themes={this.props.themes}
             selectedElement={this.state['selectedElement']}
             hoveredElement={this.state['hoveredElement']}
+            scale={this.props.scale}
+            themes={this.props.themes}
             view={this.props.view}
             planStatus={this.props.planStatus}
             editorType={this.props.editorType}
             lang={this.props.lang}
-            onChangeTheme={this.themeHandler}
-            onAddTheme={this.themeHandler}
+            onChangeTheme={this.props.onChangeTheme}
             onChangeSelection={this.selectionHandler}
             onDragChange={this.dragHandler}
             onDropOutside={this.dropOutsideHandler}

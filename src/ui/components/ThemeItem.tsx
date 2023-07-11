@@ -18,8 +18,8 @@ interface Props {
   guideAbove: boolean
   guideBelow: boolean
   lang: string
-  onChangeTheme: React.ChangeEventHandler
-  onChangeSelection: React.ChangeEventHandler
+  onChangeTheme: React.KeyboardEventHandler<HTMLInputElement | HTMLTextAreaElement> & React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement> & React.MouseEventHandler
+  onChangeSelection: React.MouseEventHandler<HTMLLIElement>
   onCancellationSelection: React.ChangeEventHandler
   onDragChange: (
     id: string,
@@ -41,19 +41,12 @@ export default class ThemeItem extends React.Component<Props> {
   }
 
   // Handlers
-  inputHandler = (e) => this.props.onChangeTheme(e)
-
   optionsHandler = (e) => {
     this.props.onCancellationSelection(e)
     this.setState({ hasMoreOptions: !this.state['hasMoreOptions'] })
   }
 
-  selectionHandler = (e: React.ChangeEvent) =>
-    this.props.onCancellationSelection(e)
-
   // Direct actions
-  onMouseDown = (e) => this.props.onChangeSelection(e)
-
   onDragStart = (e) => {
     this.setState({ isDragged: true })
     const clone = e.currentTarget.cloneNode(true)
@@ -119,7 +112,7 @@ export default class ThemeItem extends React.Component<Props> {
           this.props.guideBelow ? ' list__item--below' : ''
         }${this.state['hasMoreOptions'] ? ' list__item--emphasis' : ''}`}
         draggable={this.props.selected}
-        onMouseDown={this.onMouseDown}
+        onMouseDown={this.props.onChangeSelection}
         onDragStart={this.onDragStart}
         onDragEnd={this.onDragEnd}
         onDragOver={this.onDragOver}
@@ -137,10 +130,10 @@ export default class ThemeItem extends React.Component<Props> {
               type="TEXT"
               value={this.props.name}
               feature="RENAME_THEME"
-              onChange={this.inputHandler}
-              onFocus={this.selectionHandler}
-              onBlur={this.inputHandler}
-              onConfirm={this.inputHandler}
+              onChange={this.props.onChangeTheme}
+              onFocus={this.props.onCancellationSelection}
+              onBlur={this.props.onChangeTheme}
+              onConfirm={this.props.onChangeTheme}
             />
           </div>
         </Feature>
@@ -156,9 +149,9 @@ export default class ThemeItem extends React.Component<Props> {
               type="COLOR"
               value={this.props.paletteBackground}
               feature="UPDATE_PALETTE_BACKGROUND"
-              onChange={this.inputHandler}
-              onFocus={this.selectionHandler}
-              onBlur={this.inputHandler}
+              onChange={this.props.onChangeTheme}
+              onFocus={this.props.onCancellationSelection}
+              onBlur={this.props.onChangeTheme}
             />
           </div>
         </Feature>
@@ -181,7 +174,7 @@ export default class ThemeItem extends React.Component<Props> {
             icon="minus"
             type="icon"
             feature="REMOVE_THEME"
-            action={this.inputHandler}
+            action={this.props.onChangeTheme}
           />
         </div>
         {this.state['hasMoreOptions'] ? (
@@ -203,10 +196,10 @@ export default class ThemeItem extends React.Component<Props> {
                     value={this.props.description}
                     placeholder={locals[this.props.lang].colors.descriptionTip}
                     feature="UPDATE_DESCRIPTION"
-                    onChange={this.inputHandler}
-                    onFocus={this.selectionHandler}
-                    onBlur={this.inputHandler}
-                    onConfirm={this.inputHandler}
+                    onChange={this.props.onChangeTheme}
+                    onFocus={this.props.onCancellationSelection}
+                    onBlur={this.props.onChangeTheme}
+                    onConfirm={this.props.onChangeTheme}
                   />
                 </FormItem>
               </div>

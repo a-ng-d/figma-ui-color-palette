@@ -1,27 +1,31 @@
 import * as React from 'react'
 import chroma from 'chroma-js'
 import type {
+  ActionsList,
   HoveredColor,
+  ScaleConfiguration,
   SelectedColor,
   ThemeConfiguration,
+  ThemesMessage
 } from '../../utils/types'
 import Button from '../components/Button'
 import Message from '../components/Message'
 import ThemeItem from '../components/ThemeItem'
 import Actions from './Actions'
 import { locals } from '../../content/locals'
+import { v4 as uuidv4 } from 'uuid'
 
 interface Props {
-  themes: Array<ThemeConfiguration>
   selectedElement: SelectedColor
   hoveredElement: HoveredColor
+  scale: ScaleConfiguration
+  themes: Array<ThemeConfiguration>
   view: string
   editorType: string
   planStatus: string
   lang: string
-  onChangeTheme: React.ChangeEventHandler
-  onAddTheme: React.MouseEventHandler
-  onChangeSelection: React.ChangeEventHandler
+  onChangeTheme: (themes: Array<ThemeConfiguration>) => void
+  onChangeSelection: React.MouseEventHandler<HTMLLIElement> & React.ChangeEventHandler
   onDragChange: (
     id: string,
     hasGuideAbove: boolean,
@@ -36,7 +40,53 @@ interface Props {
   onUpdateLocalVariables: () => void
 }
 
+const themeMessage: ThemesMessage = {
+  type: 'UPDATE_THEMES',
+  data: [],
+  isEditedInRealTime: false,
+}
+
 export default class Themes extends React.Component<Props> {
+  // Handlers
+  themeHandler = (e) => {
+    let id: string
+    const element: HTMLElement | null = e.target.closest('.list__item')
+
+    element != null ? (id = element.getAttribute('data-id')) : null
+
+    themeMessage.isEditedInRealTime = false
+
+    const addTheme = () => {
+      themeMessage.data = this.props.themes
+      const hasAlreadyNewUITheme = themeMessage.data.filter((color) =>
+        color.name.includes('New UI Theme')
+      )
+      themeMessage.data.push({
+        name: `New UI Theme ${hasAlreadyNewUITheme.length + 1}`,
+        description: '',
+        paletteBackground: '#FFFFFF',
+        isEnabled: this.props.themes.length == 0 ? true : false,
+        scale: this.props.scale,
+        id: uuidv4(),
+      })
+      this.props.onChangeTheme(themeMessage.data)
+      parent.postMessage({ pluginMessage: themeMessage }, '*')
+    }
+
+    const removeTheme = () => {
+      themeMessage.data = this.props.themes.filter((item) => item.id != id)
+      this.props.onChangeTheme(themeMessage.data)
+      parent.postMessage({ pluginMessage: themeMessage }, '*')
+    }
+
+    const actions: ActionsList = {
+      ADD_THEME: () => addTheme(),
+      REMOVE_THEME: () => removeTheme()
+    }
+
+    return actions[e.target.dataset.feature]?.()  
+  }
+
   render() {
     console.log(this.props.themes)
     return (
@@ -54,7 +104,7 @@ export default class Themes extends React.Component<Props> {
                 icon="plus"
                 type="icon"
                 feature="ADD_THEME"
-                action={this.props.onAddTheme}
+                action={this.themeHandler}
               />
             </div>
           </div>
@@ -69,7 +119,7 @@ export default class Themes extends React.Component<Props> {
                   type='primary'
                   feature="ADD_THEME"
                   label={locals[this.props.lang].themes.label}
-                  action={this.props.onAddTheme}
+                  action={this.themeHandler}
                 />
               </div>
             </div>
@@ -97,7 +147,7 @@ export default class Themes extends React.Component<Props> {
                       : false
                   }
                   lang={this.props.lang}
-                  onChangeTheme={this.props.onChangeTheme}
+                  onChangeTheme={this.themeHandler}
                   onChangeSelection={this.props.onChangeSelection}
                   onCancellationSelection={this.props.onChangeSelection}
                   onDragChange={this.props.onDragChange}
