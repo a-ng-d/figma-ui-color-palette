@@ -14,6 +14,7 @@ import type {
   DispatchProcess,
   ActionsList,
   ScaleConfiguration,
+  ThemesMessage,
 } from '../../utils/types'
 import Dispatcher from '../modules/Dispatcher'
 import Tabs from '../components/Tabs'
@@ -45,12 +46,18 @@ interface Props {
   onChangeScale: () => void
   onChangeStop: () => void
   onChangeColor: (colors: Array<ColorConfiguration>) => void
+  onChangeTheme: (themes: Array<ThemeConfiguration>) => void
   onChangeView: (view: string) => void
   onChangeSettings: React.ChangeEventHandler
 }
 
 const colorsMessage: ColorsMessage = {
   type: 'UPDATE_COLORS',
+  data: [],
+  isEditedInRealTime: false,
+},
+themeMessage: ThemesMessage = {
+  type: 'UPDATE_THEMES',
   data: [],
   isEditedInRealTime: false,
 }
@@ -266,6 +273,7 @@ export default class EditPalette extends React.Component<Props> {
       )
       colorsMessage.data.push({
         name: `New UI Color ${hasAlreadyNewUIColor.length + 1}`,
+        description: '',
         rgb: {
           r: 0.53,
           g: 0.92,
@@ -274,7 +282,6 @@ export default class EditPalette extends React.Component<Props> {
         id: uuidv4(),
         oklch: false,
         hueShifting: 0,
-        description: '',
       })
       this.props.onChangeColor(colorsMessage.data)
       parent.postMessage({ pluginMessage: colorsMessage }, '*')
@@ -339,8 +346,29 @@ export default class EditPalette extends React.Component<Props> {
     return actions[e.target.dataset.feature]?.()
   }
 
-  themeHandler = () => {
-    
+  themeHandler = (e) => {
+    const addTheme = () => {
+      themeMessage.data = this.props.themes
+      const hasAlreadyNewUITheme = themeMessage.data.filter((color) =>
+        color.name.includes('New UI Theme')
+      )
+      themeMessage.data.push({
+        name: `New UI Theme ${hasAlreadyNewUITheme.length + 1}`,
+        description: '',
+        paletteBackground: '#FFFFFF',
+        isEnabled: this.props.themes.length == 0 ? true : false,
+        scale: this.props.scale,
+        id: uuidv4(),
+      })
+      this.props.onChangeTheme(themeMessage.data)
+      parent.postMessage({ pluginMessage: themeMessage }, '*')
+    }
+
+    const actions: ActionsList = {
+      ADD_THEME: () => addTheme(),
+    }
+
+    return actions[e.target.dataset.feature]?.()  
   }
 
   orderHandler = () => {
@@ -641,7 +669,7 @@ export default class EditPalette extends React.Component<Props> {
             planStatus={this.props.planStatus}
             editorType={this.props.editorType}
             lang={this.props.lang}
-            onChangeColor={this.colorHandler}
+            onChangeTheme={this.themeHandler}
             onAddTheme={this.themeHandler}
             onChangeSelection={this.selectionHandler}
             onDragChange={this.dragHandler}

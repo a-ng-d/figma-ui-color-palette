@@ -172,6 +172,12 @@ export interface ColorsMessage {
   isEditedInRealTime: boolean
 }
 
+export interface ThemesMessage {
+  type: string
+  data: Array<ThemeConfiguration>
+  isEditedInRealTime: boolean
+}
+
 export interface SettingsMessage {
   type: string
   data: {

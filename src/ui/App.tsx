@@ -5,6 +5,7 @@ import type {
   ColorConfiguration,
   DispatchProcess,
   SettingsMessage,
+  ThemeConfiguration,
 } from '../utils/types'
 import Dispatcher from './modules/Dispatcher'
 import Feature from './components/Feature'
@@ -201,6 +202,12 @@ class App extends React.Component {
     this.setState({
       newColors: colors,
       onGoingStep: 'color changed',
+    })
+  
+  themeHandler = (themes: Array<ThemeConfiguration>) =>
+    this.setState({
+      themes: themes,
+      onGoingStep: 'themes changed',
     })
 
   settingsHandler = (e) => {
@@ -582,6 +589,7 @@ class App extends React.Component {
               onChangeScale={this.slideHandler}
               onChangeStop={this.customSlideHandler}
               onChangeColor={this.colorHandler}
+              onChangeTheme={this.themeHandler}
               onChangeView={this.viewHandler}
               onChangeSettings={this.settingsHandler}
             />

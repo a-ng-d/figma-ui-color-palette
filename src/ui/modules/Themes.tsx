@@ -7,6 +7,7 @@ import type {
 } from '../../utils/types'
 import Button from '../components/Button'
 import Message from '../components/Message'
+import ThemeItem from '../components/ThemeItem'
 import Actions from './Actions'
 import { locals } from '../../content/locals'
 
@@ -18,7 +19,7 @@ interface Props {
   editorType: string
   planStatus: string
   lang: string
-  onChangeColor: React.ChangeEventHandler
+  onChangeTheme: React.ChangeEventHandler
   onAddTheme: React.MouseEventHandler
   onChangeSelection: React.ChangeEventHandler
   onDragChange: (
@@ -74,7 +75,36 @@ export default class Themes extends React.Component<Props> {
             </div>
           ) : (
             <ul className="list">
-            
+              {this.props.themes.map((theme, index) => (
+                <ThemeItem
+                  key={theme.id}
+                  name={theme.name}
+                  description={theme.description}
+                  index={index}
+                  paletteBackground={theme.paletteBackground}
+                  uuid={theme.id}
+                  selected={
+                    this.props.selectedElement.id === theme.id ? true : false
+                  }
+                  guideAbove={
+                    this.props.hoveredElement.id === theme.id
+                      ? this.props.hoveredElement.hasGuideAbove
+                      : false
+                  }
+                  guideBelow={
+                    this.props.hoveredElement.id === theme.id
+                      ? this.props.hoveredElement.hasGuideBelow
+                      : false
+                  }
+                  lang={this.props.lang}
+                  onChangeTheme={this.props.onChangeTheme}
+                  onChangeSelection={this.props.onChangeSelection}
+                  onCancellationSelection={this.props.onChangeSelection}
+                  onDragChange={this.props.onDragChange}
+                  onDropOutside={this.props.onDropOutside}
+                  onChangeOrder={this.props.onChangeOrder}
+                />
+              ))}
             </ul>
           )}      
         </div>
