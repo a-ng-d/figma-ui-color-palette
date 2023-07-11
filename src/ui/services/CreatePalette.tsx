@@ -161,7 +161,7 @@ export default class CreatePalette extends React.Component<Props> {
           active={this.state['context']}
           action={this.navHandler}
         />
-        <section>
+        <section className="controller">
           <div className="controls">{controls}</div>
         </section>
       </>

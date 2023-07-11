@@ -12,7 +12,7 @@ export default class Onboarding extends React.Component<Props> {
   render() {
     return (
       <>
-        <section>
+        <section className="controller">
           <div className="onboarding controls__control">
             <Icon size={48} />
             <Message
