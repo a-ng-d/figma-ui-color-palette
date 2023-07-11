@@ -399,7 +399,7 @@ div.onboarding-tip--blocked .icon {
   width: max-content;
 }
 
-.onboarding-tip__tips:hover {
+.onboarding-tip__ticker:hover .onboarding-tip__tips {
   animation-play-state: paused !important;
 }
 
