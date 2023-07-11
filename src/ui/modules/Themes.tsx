@@ -1,13 +1,14 @@
 import * as React from 'react'
-import chroma from 'chroma-js'
 import type {
   ActionsList,
+  DispatchProcess,
   HoveredColor,
   ScaleConfiguration,
   SelectedColor,
   ThemeConfiguration,
   ThemesMessage
 } from '../../utils/types'
+import Dispatcher from './Dispatcher'
 import Button from '../components/Button'
 import Message from '../components/Message'
 import ThemeItem from '../components/ThemeItem'
@@ -16,8 +17,6 @@ import { locals } from '../../content/locals'
 import { v4 as uuidv4 } from 'uuid'
 
 interface Props {
-  selectedElement: SelectedColor
-  hoveredElement: HoveredColor
   scale: ScaleConfiguration
   themes: Array<ThemeConfiguration>
   view: string
@@ -25,15 +24,6 @@ interface Props {
   planStatus: string
   lang: string
   onChangeTheme: (themes: Array<ThemeConfiguration>) => void
-  onChangeSelection: React.MouseEventHandler<HTMLLIElement> & React.ChangeEventHandler
-  onDragChange: (
-    id: string,
-    hasGuideAbove: boolean,
-    hasGuideBelow: boolean,
-    position: number
-  ) => void
-  onDropOutside: React.ChangeEventHandler
-  onChangeOrder: React.ChangeEventHandler
   onCreateLocalStyles: () => void
   onUpdateLocalStyles: () => void
   onCreateLocalVariables: () => void
@@ -47,6 +37,52 @@ const themeMessage: ThemesMessage = {
 }
 
 export default class Themes extends React.Component<Props> {
+  dispatch: { [key: string]: DispatchProcess }
+  listRef: any
+
+  constructor(props) {
+    super(props)
+    this.dispatch = {
+      themes: new Dispatcher (
+        () => parent.postMessage({ pluginMessage: themeMessage }, '*'),
+        500
+      ),
+    }
+    this.state = {
+      selectedElement: {
+        id: '',
+        position: null,
+      },
+      hoveredElement: {
+        id: '',
+        hasGuideAbove: false,
+        hasGuideBelow: false,
+        position: null,
+      },
+    }
+    this.listRef = React.createRef()
+    this.handleClickOutside = this.handleClickOutside.bind(this)
+  }
+
+  componentDidMount = () =>
+    document.addEventListener('mousedown', this.handleClickOutside)
+
+  componentWillUnmount = () =>
+    document.removeEventListener('mousedown', this.handleClickOutside)
+
+  handleClickOutside = (e) => {
+    if (
+      this.listRef &&
+      !this.listRef.current.contains(e.target)
+    )
+      this.setState({
+        selectedElement: {
+          id: '',
+          position: null,
+        },
+      })
+  }
+
   // Handlers
   themeHandler = (e) => {
     let id: string
@@ -87,6 +123,78 @@ export default class Themes extends React.Component<Props> {
     return actions[e.target.dataset.feature]?.()  
   }
 
+  orderHandler = () => {
+    const source: SelectedColor = this.state['selectedElement'],
+      target: HoveredColor = this.state['hoveredElement'],
+      colors = this.props.themes.map((el) => el)
+
+    let position: number
+
+    const colorsWithoutSource = colors.splice(source.position, 1)[0]
+
+    if (target.hasGuideAbove && target.position > source.position)
+      position = target.position - 1
+    else if (target.hasGuideBelow && target.position > source.position)
+      position = target.position
+    else if (target.hasGuideAbove && target.position < source.position)
+      position = target.position
+    else if (target.hasGuideBelow && target.position < source.position)
+      position = target.position + 1
+    else position = target.position
+
+    colors.splice(position, 0, colorsWithoutSource)
+    this.props.onChangeTheme(colors)
+    parent.postMessage(
+      {
+        pluginMessage: {
+          type: 'UPDATE_THEMES',
+          data: colors,
+          isEditedInRealTime: false,
+        },
+      },
+      '*'
+    )
+  }
+
+  selectionHandler = (e) => {
+    const target = e.currentTarget
+    if (target !== e.target) return
+    this.setState({
+      selectedElement: {
+        id: target.dataset.id,
+        position: target.dataset.position,
+      },
+    })
+  }
+
+  dragHandler = (
+    id: string,
+    hasGuideAbove: boolean,
+    hasGuideBelow: boolean,
+    position: number
+  ) => {
+    this.setState({
+      hoveredElement: {
+        id: id,
+        hasGuideAbove: hasGuideAbove,
+        hasGuideBelow: hasGuideBelow,
+        position: position,
+      },
+    })
+  }
+
+  dropOutsideHandler = (e) => {
+    const target = e.target,
+      parent: ParentNode = target.parentNode,
+      scrollY: number = (parent.parentNode.parentNode as HTMLElement).scrollTop,
+      parentRefTop: number = (parent as HTMLElement).offsetTop,
+      parentRefBottom: number =
+        parentRefTop + (parent as HTMLElement).clientHeight
+
+    if (e.pageY + scrollY < parentRefTop) this.orderHandler()
+    else if (e.pageY + scrollY > parentRefBottom) this.orderHandler()
+  }
+
   render() {
     console.log(this.props.themes)
     return (
@@ -124,7 +232,7 @@ export default class Themes extends React.Component<Props> {
               </div>
             </div>
           ) : (
-            <ul className="list">
+            <ul className="list" ref={this.listRef}>
               {this.props.themes.map((theme, index) => (
                 <ThemeItem
                   key={theme.id}
@@ -134,25 +242,25 @@ export default class Themes extends React.Component<Props> {
                   paletteBackground={theme.paletteBackground}
                   uuid={theme.id}
                   selected={
-                    this.props.selectedElement.id === theme.id ? true : false
+                    this.state['selectedElement'].id === theme.id ? true : false
                   }
                   guideAbove={
-                    this.props.hoveredElement.id === theme.id
-                      ? this.props.hoveredElement.hasGuideAbove
+                    this.state['hoveredElement'].id === theme.id
+                      ? this.state['hoveredElement'].hasGuideAbove
                       : false
                   }
                   guideBelow={
-                    this.props.hoveredElement.id === theme.id
-                      ? this.props.hoveredElement.hasGuideBelow
+                    this.state['hoveredElement'].id === theme.id
+                      ? this.state['hoveredElement'].hasGuideBelow
                       : false
                   }
                   lang={this.props.lang}
                   onChangeTheme={this.themeHandler}
-                  onChangeSelection={this.props.onChangeSelection}
-                  onCancellationSelection={this.props.onChangeSelection}
-                  onDragChange={this.props.onDragChange}
-                  onDropOutside={this.props.onDropOutside}
-                  onChangeOrder={this.props.onChangeOrder}
+                  onChangeSelection={this.selectionHandler}
+                  onCancellationSelection={this.selectionHandler}
+                  onDragChange={this.dragHandler}
+                  onDropOutside={this.dropOutsideHandler}
+                  onChangeOrder={this.orderHandler}
                 />
               ))}
             </ul>

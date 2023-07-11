@@ -20,13 +20,13 @@ export default class Dropdown extends React.Component<Props> {
 
   constructor(props) {
     super(props)
-    ;(this.state = {
+    this.state = {
       isListOpen: false,
       position: this.props.options.filter(
         (option) => option.value === this.props.selected
       )[0].position,
-    }),
-      (this.selectMenuRef = React.createRef())
+    }
+    this.selectMenuRef = React.createRef()
     this.listRef = React.createRef()
     this.handleClickOutside = this.handleClickOutside.bind(this)
   }
@@ -37,10 +37,10 @@ export default class Dropdown extends React.Component<Props> {
   componentWillUnmount = () =>
     document.removeEventListener('mousedown', this.handleClickOutside)
 
-  handleClickOutside(event) {
+  handleClickOutside = (e) => {
     if (
       this.selectMenuRef &&
-      !this.selectMenuRef.current.contains(event.target)
+      !this.selectMenuRef.current.contains(e.target)
     )
       this.setState({
         isListOpen: false,

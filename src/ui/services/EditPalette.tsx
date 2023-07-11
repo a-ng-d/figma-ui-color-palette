@@ -1,16 +1,12 @@
 import * as React from 'react'
-import chroma from 'chroma-js'
 import JSZip from 'JSZip'
 import FileSaver from 'file-saver'
 import type {
-  ColorsMessage,
   PresetConfiguration,
   TextColorsThemeHexModel,
   ColorConfiguration,
   ThemeConfiguration,
   ExportConfiguration,
-  HoveredColor,
-  SelectedColor,
   DispatchProcess,
   ActionsList,
   ScaleConfiguration,
@@ -26,7 +22,6 @@ import About from '../modules/About'
 import { palette } from '../../utils/palettePackage'
 import features from '../../utils/features'
 import { locals } from '../../content/locals'
-import { v4 as uuidv4 } from 'uuid'
 
 interface Props {
   name: string
@@ -50,12 +45,6 @@ interface Props {
   onChangeSettings: React.ChangeEventHandler
 }
 
-const colorsMessage: ColorsMessage = {
-  type: 'UPDATE_COLORS',
-  data: [],
-  isEditedInRealTime: false,
-}
-
 export default class EditPalette extends React.Component<Props> {
   dispatch: { [key: string]: DispatchProcess }
 
@@ -76,22 +65,8 @@ export default class EditPalette extends React.Component<Props> {
           ),
         500
       ),
-      colors: new Dispatcher(
-        () => parent.postMessage({ pluginMessage: colorsMessage }, '*'),
-        500
-      ),
     }
     this.state = {
-      selectedElement: {
-        id: '',
-        position: null,
-      },
-      hoveredElement: {
-        id: '',
-        hasGuideAbove: false,
-        hasGuideBelow: false,
-        position: null,
-      },
       context:
         features.filter(
           (feature) =>
@@ -162,265 +137,6 @@ export default class EditPalette extends React.Component<Props> {
     }
 
     return actions[state]?.()
-  }
-
-  colorHandler = (e) => {
-    let id: string
-    const element: HTMLElement | null = e.target.closest('.list__item')
-
-    element != null ? (id = element.getAttribute('data-id')) : null
-
-    colorsMessage.isEditedInRealTime = false
-
-    const updateHexCode = () => {
-      const code: string =
-        e.target.value.indexOf('#') == -1
-          ? '#' + e.target.value
-          : e.target.value
-      if (/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/i.test(code)) {
-        colorsMessage.data = this.props.colors.map((item) => {
-          const rgb = chroma(
-            e.target.value.indexOf('#') == -1
-              ? '#' + e.target.value
-              : e.target.value
-          )._rgb
-          if (item.id === id)
-            item.rgb = {
-              r: rgb[0] / 255,
-              g: rgb[1] / 255,
-              b: rgb[2] / 255,
-            }
-          return item
-        })
-        this.props.onChangeColor(colorsMessage.data)
-      }
-      if (e._reactName === 'onBlur') {
-        this.dispatch.colors.on.status = false
-        parent.postMessage({ pluginMessage: colorsMessage }, '*')
-      } else {
-        colorsMessage.isEditedInRealTime = true
-        this.dispatch.colors.on.status = true
-      }
-    }
-
-    const updateLightnessProp = () => {
-      colorsMessage.data = this.props.colors.map((item) => {
-        const rgb = chroma(
-          item.rgb.r * 255,
-          item.rgb.g * 255,
-          item.rgb.b * 255
-        ).set('lch.l', e.target.value)._rgb
-        if (item.id === id)
-          item.rgb = {
-            r: rgb[0] / 255,
-            g: rgb[1] / 255,
-            b: rgb[2] / 255,
-          }
-        return item
-      })
-      this.props.onChangeColor(colorsMessage.data)
-      parent.postMessage({ pluginMessage: colorsMessage }, '*')
-    }
-
-    const updateChromaProp = () => {
-      colorsMessage.data = this.props.colors.map((item) => {
-        const rgb = chroma(
-          item.rgb.r * 255,
-          item.rgb.g * 255,
-          item.rgb.b * 255
-        ).set('lch.c', e.target.value)._rgb
-        if (item.id === id)
-          item.rgb = {
-            r: rgb[0] / 255,
-            g: rgb[1] / 255,
-            b: rgb[2] / 255,
-          }
-        return item
-      })
-      this.props.onChangeColor(colorsMessage.data)
-      parent.postMessage({ pluginMessage: colorsMessage }, '*')
-    }
-
-    const updateHueProp = () => {
-      colorsMessage.data = this.props.colors.map((item) => {
-        const rgb = chroma(
-          item.rgb.r * 255,
-          item.rgb.g * 255,
-          item.rgb.b * 255
-        ).set('lch.h', e.target.value)._rgb
-        if (item.id === id)
-          item.rgb = {
-            r: rgb[0] / 255,
-            g: rgb[1] / 255,
-            b: rgb[2] / 255,
-          }
-        return item
-      })
-      this.props.onChangeColor(colorsMessage.data)
-      parent.postMessage({ pluginMessage: colorsMessage }, '*')
-    }
-
-    const addColor = () => {
-      colorsMessage.data = this.props.colors
-      const hasAlreadyNewUIColor = colorsMessage.data.filter((color) =>
-        color.name.includes('New UI Color')
-      )
-      colorsMessage.data.push({
-        name: `New UI Color ${hasAlreadyNewUIColor.length + 1}`,
-        description: '',
-        rgb: {
-          r: 0.53,
-          g: 0.92,
-          b: 0.97,
-        },
-        id: uuidv4(),
-        oklch: false,
-        hueShifting: 0,
-      })
-      this.props.onChangeColor(colorsMessage.data)
-      parent.postMessage({ pluginMessage: colorsMessage }, '*')
-    }
-
-    const removeColor = () => {
-      colorsMessage.data = this.props.colors.filter((item) => item.id != id)
-      this.props.onChangeColor(colorsMessage.data)
-      parent.postMessage({ pluginMessage: colorsMessage }, '*')
-    }
-
-    const renameColor = () => {
-      const hasSameName = this.props.colors.filter(
-        (color) => color.name === e.target.value
-      )
-      colorsMessage.data = this.props.colors.map((item) => {
-        if (item.id === id)
-          item.name =
-            hasSameName.length > 1 ? e.target.value + ' 2' : e.target.value
-        return item
-      })
-      this.props.onChangeColor(colorsMessage.data)
-      if (e._reactName === 'onBlur')
-        parent.postMessage({ pluginMessage: colorsMessage }, '*')
-      if (e.key === 'Enter')
-        parent.postMessage({ pluginMessage: colorsMessage }, '*')
-    }
-
-    const setHueShifting = () => {
-      colorsMessage.data = this.props.colors.map((item) => {
-        if (item.id === id) item.hueShifting = parseFloat(e.target.value)
-        return item
-      })
-      this.props.onChangeColor(colorsMessage.data)
-      parent.postMessage({ pluginMessage: colorsMessage }, '*')
-    }
-
-    const updateColorDescription = () => {
-      colorsMessage.data = this.props.colors.map((item) => {
-        if (item.id === id) item.description = e.target.value
-        return item
-      })
-      this.props.onChangeColor(colorsMessage.data)
-      if (e._reactName === 'onBlur')
-        parent.postMessage({ pluginMessage: colorsMessage }, '*')
-      if (e.key === 'Enter')
-        parent.postMessage({ pluginMessage: colorsMessage }, '*')
-    }
-
-    const actions: ActionsList = {
-      UPDATE_HEX: () => updateHexCode(),
-      UPDATE_LIGHTNESS: () => updateLightnessProp(),
-      UPDATE_CHROMA: () => updateChromaProp(),
-      UPDATE_HUE: () => updateHueProp(),
-      ADD_COLOR: () => addColor(),
-      REMOVE_COLOR: () => removeColor(),
-      RENAME_COLOR: () => renameColor(),
-      SHIFT_HUE: () => setHueShifting(),
-      UPDATE_DESCRIPTION: () => updateColorDescription(),
-    }
-
-    return actions[e.target.dataset.feature]?.()
-  }
-
-  orderHandler = () => {
-    const source: SelectedColor = this.state['selectedElement'],
-      target: HoveredColor = this.state['hoveredElement'],
-      colors = this.props.colors.map((el) => el)
-
-    let position: number
-
-    const colorsWithoutSource = colors.splice(source.position, 1)[0]
-
-    if (target.hasGuideAbove && target.position > source.position)
-      position = target.position - 1
-    else if (target.hasGuideBelow && target.position > source.position)
-      position = target.position
-    else if (target.hasGuideAbove && target.position < source.position)
-      position = target.position
-    else if (target.hasGuideBelow && target.position < source.position)
-      position = target.position + 1
-    else position = target.position
-
-    colors.splice(position, 0, colorsWithoutSource)
-    this.props.onChangeColor(colors)
-    parent.postMessage(
-      {
-        pluginMessage: {
-          type: 'UPDATE_COLORS',
-          data: colors,
-          isEditedInRealTime: false,
-        },
-      },
-      '*'
-    )
-  }
-
-  selectionHandler = (e) => {
-    const target = e.currentTarget
-    if (target !== e.target) return
-    this.setState({
-      selectedElement: {
-        id: target.dataset.id,
-        position: target.dataset.position,
-      },
-    })
-  }
-
-  unSelectColor = (e) => {
-    e.target.closest('li.list__item') == null
-      ? this.setState({
-          selectedElement: {
-            id: '',
-            position: null,
-          },
-        })
-      : null
-  }
-
-  dragHandler = (
-    id: string,
-    hasGuideAbove: boolean,
-    hasGuideBelow: boolean,
-    position: number
-  ) => {
-    this.setState({
-      hoveredElement: {
-        id: id,
-        hasGuideAbove: hasGuideAbove,
-        hasGuideBelow: hasGuideBelow,
-        position: position,
-      },
-    })
-  }
-
-  dropOutsideHandler = (e) => {
-    const target = e.target,
-      parent: ParentNode = target.parentNode,
-      scrollY: number = (parent.parentNode.parentNode as HTMLElement).scrollTop,
-      parentRefTop: number = (parent as HTMLElement).offsetTop,
-      parentRefBottom: number =
-        parentRefTop + (parent as HTMLElement).clientHeight
-
-    if (e.pageY + scrollY < parentRefTop) this.orderHandler()
-    else if (e.pageY + scrollY > parentRefBottom) this.orderHandler()
   }
 
   settingsHandler = (e) => this.props.onChangeSettings(e)
@@ -608,18 +324,11 @@ export default class EditPalette extends React.Component<Props> {
         controls = (
           <Colors
             colors={this.props.colors}
-            selectedElement={this.state['selectedElement']}
-            hoveredElement={this.state['hoveredElement']}
             view={this.props.view}
             planStatus={this.props.planStatus}
             editorType={this.props.editorType}
             lang={this.props.lang}
-            onChangeColor={this.colorHandler}
-            onAddColor={this.colorHandler}
-            onChangeSelection={this.selectionHandler}
-            onDragChange={this.dragHandler}
-            onDropOutside={this.dropOutsideHandler}
-            onChangeOrder={this.orderHandler}
+            onChangeColor={this.props.onChangeColor}
             onCreateLocalStyles={this.onCreateStyles}
             onUpdateLocalStyles={this.onUpdateStyles}
             onCreateLocalVariables={this.onCreateVariables}
@@ -631,8 +340,6 @@ export default class EditPalette extends React.Component<Props> {
       case 'THEMES': {
         controls = (
           <Themes
-            selectedElement={this.state['selectedElement']}
-            hoveredElement={this.state['hoveredElement']}
             scale={this.props.scale}
             themes={this.props.themes}
             view={this.props.view}
@@ -640,10 +347,6 @@ export default class EditPalette extends React.Component<Props> {
             editorType={this.props.editorType}
             lang={this.props.lang}
             onChangeTheme={this.props.onChangeTheme}
-            onChangeSelection={this.selectionHandler}
-            onDragChange={this.dragHandler}
-            onDropOutside={this.dropOutsideHandler}
-            onChangeOrder={this.orderHandler}
             onCreateLocalStyles={this.onCreateStyles}
             onUpdateLocalStyles={this.onUpdateStyles}
             onCreateLocalVariables={this.onCreateVariables}
@@ -707,7 +410,7 @@ export default class EditPalette extends React.Component<Props> {
           active={this.state['context']}
           action={this.navHandler}
         />
-        <section className="controller" onMouseDown={this.unSelectColor}>
+        <section className="controller">
           <div className="controls">{controls}</div>
         </section>
       </>
