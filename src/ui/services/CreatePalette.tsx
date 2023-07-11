@@ -19,7 +19,6 @@ interface Props {
   textColorsTheme: TextColorsThemeHexModel
   planStatus: string
   lang: string
-  onReopenHighlight: React.ChangeEventHandler
   onChangePreset: React.ChangeEventHandler
   onCustomPreset: React.ChangeEventHandler
   onChangeView: (view: string) => void
@@ -123,7 +122,6 @@ export default class CreatePalette extends React.Component<Props> {
             onAddStop={this.scaleHandler}
             onRemoveStop={this.scaleHandler}
             onCreatePalette={this.onCreatePalette}
-            onReopenHighlight={this.props.onReopenHighlight}
           />
         )
         break
@@ -141,7 +139,6 @@ export default class CreatePalette extends React.Component<Props> {
             onChangeSettings={this.settingsHandler}
             onCreatePalette={this.onCreatePalette}
             onChangeView={this.viewHandler}
-            onReopenHighlight={this.props.onReopenHighlight}
           />
         )
         break

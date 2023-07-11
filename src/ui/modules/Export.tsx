@@ -4,7 +4,6 @@ import Feature from '../components/Feature'
 import RadioButton from './../components/RadioButton'
 import Input from '../components/Input'
 import Actions from './Actions'
-import Shortcuts from './Shortcuts'
 import features from '../../utils/features'
 import isBlocked from '../../utils/isBlocked'
 import { locals } from '../../content/locals'
@@ -15,7 +14,6 @@ interface Props {
   exportType: string
   lang: string
   onExportPalette: () => void
-  onReopenHighlight: React.ChangeEventHandler
 }
 
 export default class Export extends React.Component<Props> {
@@ -283,36 +281,6 @@ export default class Export extends React.Component<Props> {
           lang={this.props.lang}
           onExportPalette={this.props.onExportPalette}
         />
-        <Feature
-          isActive={
-            features.find((feature) => feature.name === 'SHORTCUTS').isActive
-          }
-        >
-          <Shortcuts
-            actions={[
-              {
-                label: locals[this.props.lang].shortcuts.documentation,
-                isLink: true,
-                url: 'https://docs.ui-color-palette.com',
-                action: null,
-              },
-              {
-                label: locals[this.props.lang].shortcuts.feedback,
-                isLink: true,
-                url: 'https://uicp.link/feedback',
-                action: null,
-              },
-              {
-                label: locals[this.props.lang].shortcuts.news,
-                isLink: false,
-                url: '',
-                action: this.props.onReopenHighlight,
-              },
-            ]}
-            planStatus={this.props.planStatus}
-            lang={this.props.lang}
-          />
-        </Feature>
       </>
     )
   }

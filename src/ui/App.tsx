@@ -13,10 +13,12 @@ import CreatePalette from './services/CreatePalette'
 import EditPalette from './services/EditPalette'
 import Highlight from './modules/Highlight'
 import Dialog from './modules/Dialog'
+import Shortcuts from './modules/Shortcuts'
 import package_json from './../../package.json'
 import { palette, presets } from '../utils/palettePackage'
 import features from '../utils/features'
 import { v4 as uuidv4 } from 'uuid'
+import { locals } from '../content/locals'
 import 'figma-plugin-ds/dist/figma-plugin-ds.css'
 import './stylesheets/app.css'
 import './stylesheets/app-components.css'
@@ -548,7 +550,6 @@ class App extends React.Component {
               textColorsTheme={this.state['textColorsTheme']}
               planStatus={this.state['planStatus']}
               lang={this.state['lang']}
-              onReopenHighlight={this.highlightHandler('OPEN')}
               onChangePreset={this.presetHandler}
               onCustomPreset={this.customHandler}
               onChangeView={(view: string) =>
@@ -578,7 +579,6 @@ class App extends React.Component {
               editorType={this.state['editorType']}
               planStatus={this.state['planStatus']}
               lang={this.state['lang']}
-              onReopenHighlight={this.highlightHandler('OPEN')}
               onChangeScale={this.slideHandler}
               onChangeStop={this.customSlideHandler}
               onChangeColor={this.colorHandler}
@@ -596,7 +596,6 @@ class App extends React.Component {
             <Onboarding
               planStatus={this.state['planStatus']}
               lang={this.state['lang']}
-              onReopenHighlight={this.highlightHandler('OPEN')}
             />
           ) : null}
         </Feature>
@@ -623,6 +622,36 @@ class App extends React.Component {
               action={() => this.setState({ hasGetProPlanDialog: false })}
             />
           ) : null}
+        </Feature>
+        <Feature
+          isActive={
+            features.find((feature) => feature.name === 'SHORTCUTS').isActive
+          }
+        >
+          <Shortcuts
+            actions={[
+              {
+                label: locals[this.state['lang']].shortcuts.documentation,
+                isLink: true,
+                url: 'https://docs.ui-color-palette.com',
+                action: null,
+              },
+              {
+                label: locals[this.state['lang']].shortcuts.feedback,
+                isLink: true,
+                url: 'https://uicp.link/feedback',
+                action: null,
+              },
+              {
+                label: locals[this.state['lang']].shortcuts.news,
+                isLink: false,
+                url: '',
+                action: this.highlightHandler('OPEN'),
+              },
+            ]}
+            planStatus={this.state['planStatus']}
+            lang={this.state['lang']}
+          />
         </Feature>
       </main>
     )

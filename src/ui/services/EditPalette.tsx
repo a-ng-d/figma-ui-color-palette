@@ -42,7 +42,6 @@ interface Props {
   editorType: string
   planStatus: string
   lang: string
-  onReopenHighlight: React.ChangeEventHandler
   onChangeScale: () => void
   onChangeStop: () => void
   onChangeColor: (colors: Array<ColorConfiguration>) => void
@@ -604,7 +603,6 @@ export default class EditPalette extends React.Component<Props> {
             onUpdateLocalStyles={this.onUpdateStyles}
             onCreateLocalVariables={this.onCreateVariables}
             onUpdateLocalVariables={this.onUpdateVariables}
-            onReopenHighlight={this.props.onReopenHighlight}
           />
         )
         break
@@ -629,7 +627,6 @@ export default class EditPalette extends React.Component<Props> {
             onUpdateLocalStyles={this.onUpdateStyles}
             onCreateLocalVariables={this.onCreateVariables}
             onUpdateLocalVariables={this.onUpdateVariables}
-            onReopenHighlight={this.props.onReopenHighlight}
           />
         )
         break
@@ -654,7 +651,6 @@ export default class EditPalette extends React.Component<Props> {
             onUpdateLocalStyles={this.onUpdateStyles}
             onCreateLocalVariables={this.onCreateVariables}
             onUpdateLocalVariables={this.onUpdateVariables}
-            onReopenHighlight={this.props.onReopenHighlight}
           />
         )
         break
@@ -671,7 +667,6 @@ export default class EditPalette extends React.Component<Props> {
             exportType={this.props.export.format}
             lang={this.props.lang}
             onExportPalette={this.onExport}
-            onReopenHighlight={this.props.onReopenHighlight}
           />
         )
         break
@@ -694,7 +689,6 @@ export default class EditPalette extends React.Component<Props> {
             onCreateLocalVariables={this.onCreateVariables}
             onUpdateLocalVariables={this.onUpdateVariables}
             onChangeView={this.viewHandler}
-            onReopenHighlight={this.props.onReopenHighlight}
           />
         )
         break

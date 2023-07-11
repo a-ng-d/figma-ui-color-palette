@@ -6,7 +6,6 @@ import Input from './../components/Input'
 import Switch from '../components/Switch'
 import Message from '../components/Message'
 import Dropdown from '../components/Dropdown'
-import Shortcuts from './Shortcuts'
 import Actions from './Actions'
 import features from '../../utils/features'
 import isBlocked from '../../utils/isBlocked'
@@ -29,7 +28,6 @@ interface Props {
   onCreateLocalVariables?: () => void
   onUpdateLocalVariables?: () => void
   onChangeView: React.ChangeEventHandler
-  onReopenHighlight: React.ChangeEventHandler
 }
 
 export default class Settings extends React.Component<Props> {
@@ -459,36 +457,6 @@ export default class Settings extends React.Component<Props> {
             onUpdateLocalVariables={this.props.onUpdateLocalVariables}
           />
         ) : null}
-        <Feature
-          isActive={
-            features.find((feature) => feature.name === 'SHORTCUTS').isActive
-          }
-        >
-          <Shortcuts
-            actions={[
-              {
-                label: locals[this.props.lang].shortcuts.documentation,
-                isLink: true,
-                url: 'https://docs.ui-color-palette.com',
-                action: null,
-              },
-              {
-                label: locals[this.props.lang].shortcuts.feedback,
-                isLink: true,
-                url: 'https://uicp.link/feedback',
-                action: null,
-              },
-              {
-                label: locals[this.props.lang].shortcuts.news,
-                isLink: false,
-                url: '',
-                action: this.props.onReopenHighlight,
-              },
-            ]}
-            planStatus={this.props.planStatus}
-            lang={this.props.lang}
-          />
-        </Feature>
       </>
     )
   }

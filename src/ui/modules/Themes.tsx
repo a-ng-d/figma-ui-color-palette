@@ -5,13 +5,9 @@ import type {
   SelectedColor,
   ThemeConfiguration,
 } from '../../utils/types'
-import Feature from '../components/Feature'
 import Button from '../components/Button'
-import ColorItem from '../components/ColorItem'
 import Message from '../components/Message'
 import Actions from './Actions'
-import Shortcuts from './Shortcuts'
-import features from '../../utils/features'
 import { locals } from '../../content/locals'
 
 interface Props {
@@ -37,7 +33,6 @@ interface Props {
   onUpdateLocalStyles: () => void
   onCreateLocalVariables: () => void
   onUpdateLocalVariables: () => void
-  onReopenHighlight: React.ChangeEventHandler
 }
 
 export default class Themes extends React.Component<Props> {
@@ -95,36 +90,6 @@ export default class Themes extends React.Component<Props> {
             onUpdateLocalVariables={this.props.onUpdateLocalVariables}
           />
         ) : null}
-        <Feature
-          isActive={
-            features.find((feature) => feature.name === 'SHORTCUTS').isActive
-          }
-        >
-          <Shortcuts
-            actions={[
-              {
-                label: locals[this.props.lang].shortcuts.documentation,
-                isLink: true,
-                url: 'https://docs.ui-color-palette.com',
-                action: null,
-              },
-              {
-                label: locals[this.props.lang].shortcuts.feedback,
-                isLink: true,
-                url: 'https://uicp.link/feedback',
-                action: null,
-              },
-              {
-                label: locals[this.props.lang].shortcuts.news,
-                isLink: false,
-                url: '',
-                action: this.props.onReopenHighlight,
-              },
-            ]}
-            planStatus={this.props.planStatus}
-            lang={this.props.lang}
-          />
-        </Feature>
       </>
     )
   }
