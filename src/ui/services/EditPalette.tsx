@@ -347,6 +347,13 @@ export default class EditPalette extends React.Component<Props> {
   }
 
   themeHandler = (e) => {
+    let id: string
+    const element: HTMLElement | null = e.target.closest('.list__item')
+
+    element != null ? (id = element.getAttribute('data-id')) : null
+
+    colorsMessage.isEditedInRealTime = false
+
     const addTheme = () => {
       themeMessage.data = this.props.themes
       const hasAlreadyNewUITheme = themeMessage.data.filter((color) =>
@@ -364,8 +371,15 @@ export default class EditPalette extends React.Component<Props> {
       parent.postMessage({ pluginMessage: themeMessage }, '*')
     }
 
+    const removeTheme = () => {
+      themeMessage.data = this.props.themes.filter((item) => item.id != id)
+      this.props.onChangeTheme(themeMessage.data)
+      parent.postMessage({ pluginMessage: themeMessage }, '*')
+    }
+
     const actions: ActionsList = {
       ADD_THEME: () => addTheme(),
+      REMOVE_THEME: () => removeTheme()
     }
 
     return actions[e.target.dataset.feature]?.()  

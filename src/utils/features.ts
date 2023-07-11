@@ -179,6 +179,22 @@ const features: Array<Features> = [
     service: ['EDIT'],
   },
   {
+    name: 'COLORS_NAME',
+    description: 'Source color name',
+    isActive: true,
+    isPro: false,
+    type: 'ACTION',
+    service: ['EDIT'],
+  },
+  {
+    name: 'COLORS_PARAMS',
+    description: 'Source color parameters (hex and lch)',
+    isActive: true,
+    isPro: false,
+    type: 'ACTION',
+    service: ['EDIT'],
+  },
+  {
     name: 'COLORS_HUE_SHIFTING',
     description: 'Source color hue shifting number',
     isActive: true,
@@ -188,7 +204,7 @@ const features: Array<Features> = [
   },
   {
     name: 'COLORS_DESCRIPTION',
-    description: 'Description of the source colors purpose',
+    description: 'Source color description of the purpose',
     isActive: true,
     isPro: false,
     type: 'ACTION',
