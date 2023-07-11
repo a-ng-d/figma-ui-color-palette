@@ -20,8 +20,8 @@ interface Props {
   guideAbove: boolean
   guideBelow: boolean
   lang: string
-  onChangeColors: React.ChangeEventHandler
-  onChangeSelection: React.ChangeEventHandler
+  onChangeColors: React.KeyboardEventHandler<HTMLInputElement | HTMLTextAreaElement> & React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement> & React.MouseEventHandler
+  onChangeSelection: React.MouseEventHandler<HTMLLIElement>
   onCancellationSelection: React.ChangeEventHandler
   onDragChange: (
     id: string,
@@ -43,19 +43,12 @@ export default class ColorItem extends React.Component<Props> {
   }
 
   // Handlers
-  inputHandler = (e) => this.props.onChangeColors(e)
-
   optionsHandler = (e) => {
     this.props.onCancellationSelection(e)
     this.setState({ hasMoreOptions: !this.state['hasMoreOptions'] })
   }
 
-  selectionHandler = (e: React.ChangeEvent) =>
-    this.props.onCancellationSelection(e)
-
   // Direct actions
-  onMouseDown = (e) => this.props.onChangeSelection(e)
-
   onDragStart = (e) => {
     this.setState({ isDragged: true })
     const clone = e.currentTarget.cloneNode(true)
@@ -121,7 +114,7 @@ export default class ColorItem extends React.Component<Props> {
           this.props.guideBelow ? ' list__item--below' : ''
         }${this.state['hasMoreOptions'] ? ' list__item--emphasis' : ''}`}
         draggable={this.props.selected}
-        onMouseDown={this.onMouseDown}
+        onMouseDown={this.props.onChangeSelection}
         onDragStart={this.onDragStart}
         onDragEnd={this.onDragEnd}
         onDragOver={this.onDragOver}
@@ -132,10 +125,10 @@ export default class ColorItem extends React.Component<Props> {
             type="TEXT"
             value={this.props.name}
             feature="RENAME_COLOR"
-            onChange={this.inputHandler}
-            onFocus={this.selectionHandler}
-            onBlur={this.inputHandler}
-            onConfirm={this.inputHandler}
+            onChange={this.props.onChangeColors}
+            onFocus={this.props.onCancellationSelection}
+            onBlur={this.props.onChangeColors}
+            onConfirm={this.props.onChangeColors}
           />
         </div>
         <div className="colors__parameters">
@@ -143,9 +136,9 @@ export default class ColorItem extends React.Component<Props> {
             type="COLOR"
             value={this.props.hex}
             feature="UPDATE_HEX"
-            onChange={this.inputHandler}
-            onFocus={this.selectionHandler}
-            onBlur={this.inputHandler}
+            onChange={this.props.onChangeColors}
+            onFocus={this.props.onCancellationSelection}
+            onBlur={this.props.onChangeColors}
           />
           <div className="inputs">
             <div className="label">{locals[this.props.lang].colors.lch}</div>
@@ -156,9 +149,9 @@ export default class ColorItem extends React.Component<Props> {
                 min="0"
                 max="100"
                 feature="UPDATE_LIGHTNESS"
-                onChange={this.inputHandler}
-                onFocus={this.selectionHandler}
-                onBlur={this.inputHandler}
+                onChange={this.props.onChangeColors}
+                onFocus={this.props.onCancellationSelection}
+                onBlur={this.props.onChangeColors}
               />
               <Input
                 type="NUMBER"
@@ -166,9 +159,9 @@ export default class ColorItem extends React.Component<Props> {
                 min="0"
                 max="100"
                 feature="UPDATE_CHROMA"
-                onChange={this.inputHandler}
-                onFocus={this.selectionHandler}
-                onBlur={this.inputHandler}
+                onChange={this.props.onChangeColors}
+                onFocus={this.props.onCancellationSelection}
+                onBlur={this.props.onChangeColors}
               />
               <Input
                 type="NUMBER"
@@ -180,9 +173,9 @@ export default class ColorItem extends React.Component<Props> {
                 min="0"
                 max="360"
                 feature="UPDATE_HUE"
-                onChange={this.inputHandler}
-                onFocus={this.selectionHandler}
-                onBlur={this.inputHandler}
+                onChange={this.props.onChangeColors}
+                onFocus={this.props.onCancellationSelection}
+                onBlur={this.props.onChangeColors}
               />
             </div>
           </div>
@@ -208,7 +201,7 @@ export default class ColorItem extends React.Component<Props> {
             icon="minus"
             type="icon"
             feature="REMOVE_COLOR"
-            action={this.inputHandler}
+            action={this.props.onChangeColors}
           />
         </div>
         {this.state['hasMoreOptions'] ? (
@@ -231,9 +224,9 @@ export default class ColorItem extends React.Component<Props> {
                   min="-360"
                   max="360"
                   feature="SHIFT_HUE"
-                  onChange={this.inputHandler}
-                  onFocus={this.selectionHandler}
-                  onBlur={this.inputHandler}
+                  onChange={this.props.onChangeColors}
+                  onFocus={this.props.onCancellationSelection}
+                  onBlur={this.props.onChangeColors}
                 />
               </div>
             </Feature>
@@ -254,10 +247,10 @@ export default class ColorItem extends React.Component<Props> {
                     value={this.props.description}
                     placeholder={locals[this.props.lang].colors.descriptionTip}
                     feature="UPDATE_DESCRIPTION"
-                    onChange={this.inputHandler}
-                    onFocus={this.selectionHandler}
-                    onBlur={this.inputHandler}
-                    onConfirm={this.inputHandler}
+                    onChange={this.props.onChangeColors}
+                    onFocus={this.props.onCancellationSelection}
+                    onBlur={this.props.onChangeColors}
+                    onConfirm={this.props.onChangeColors}
                   />
                 </FormItem>
               </div>
