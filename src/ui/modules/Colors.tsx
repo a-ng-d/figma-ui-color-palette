@@ -21,7 +21,7 @@ interface Props {
   editorType: string
   planStatus: string
   lang: string
-  onChangeColor: (colors: Array<ColorConfiguration>) => void
+  onChangeColors: (colors: Array<ColorConfiguration>) => void
   onCreateLocalStyles: () => void
   onUpdateLocalStyles: () => void
   onCreateLocalVariables: () => void
@@ -110,7 +110,7 @@ export default class Colors extends React.Component<Props> {
             }
           return item
         })
-        this.props.onChangeColor(colorsMessage.data)
+        this.props.onChangeColors(colorsMessage.data)
       }
       if (e._reactName === 'onBlur') {
         this.dispatch.colors.on.status = false
@@ -136,7 +136,7 @@ export default class Colors extends React.Component<Props> {
           }
         return item
       })
-      this.props.onChangeColor(colorsMessage.data)
+      this.props.onChangeColors(colorsMessage.data)
       parent.postMessage({ pluginMessage: colorsMessage }, '*')
     }
 
@@ -155,7 +155,7 @@ export default class Colors extends React.Component<Props> {
           }
         return item
       })
-      this.props.onChangeColor(colorsMessage.data)
+      this.props.onChangeColors(colorsMessage.data)
       parent.postMessage({ pluginMessage: colorsMessage }, '*')
     }
 
@@ -174,7 +174,7 @@ export default class Colors extends React.Component<Props> {
           }
         return item
       })
-      this.props.onChangeColor(colorsMessage.data)
+      this.props.onChangeColors(colorsMessage.data)
       parent.postMessage({ pluginMessage: colorsMessage }, '*')
     }
 
@@ -195,13 +195,13 @@ export default class Colors extends React.Component<Props> {
         oklch: false,
         hueShifting: 0,
       })
-      this.props.onChangeColor(colorsMessage.data)
+      this.props.onChangeColors(colorsMessage.data)
       parent.postMessage({ pluginMessage: colorsMessage }, '*')
     }
 
     const removeColor = () => {
       colorsMessage.data = this.props.colors.filter((item) => item.id != id)
-      this.props.onChangeColor(colorsMessage.data)
+      this.props.onChangeColors(colorsMessage.data)
       parent.postMessage({ pluginMessage: colorsMessage }, '*')
     }
 
@@ -215,7 +215,7 @@ export default class Colors extends React.Component<Props> {
             hasSameName.length > 1 ? e.target.value + ' 2' : e.target.value
         return item
       })
-      this.props.onChangeColor(colorsMessage.data)
+      this.props.onChangeColors(colorsMessage.data)
       if (e._reactName === 'onBlur')
         parent.postMessage({ pluginMessage: colorsMessage }, '*')
       if (e.key === 'Enter')
@@ -227,7 +227,7 @@ export default class Colors extends React.Component<Props> {
         if (item.id === id) item.hueShifting = parseFloat(e.target.value)
         return item
       })
-      this.props.onChangeColor(colorsMessage.data)
+      this.props.onChangeColors(colorsMessage.data)
       parent.postMessage({ pluginMessage: colorsMessage }, '*')
     }
 
@@ -236,7 +236,7 @@ export default class Colors extends React.Component<Props> {
         if (item.id === id) item.description = e.target.value
         return item
       })
-      this.props.onChangeColor(colorsMessage.data)
+      this.props.onChangeColors(colorsMessage.data)
       if (e._reactName === 'onBlur')
         parent.postMessage({ pluginMessage: colorsMessage }, '*')
       if (e.key === 'Enter')
@@ -278,7 +278,7 @@ export default class Colors extends React.Component<Props> {
     else position = target.position
 
     colors.splice(position, 0, colorsWithoutSource)
-    this.props.onChangeColor(colors)
+    this.props.onChangeColors(colors)
     parent.postMessage(
       {
         pluginMessage: {
@@ -379,7 +379,7 @@ export default class Colors extends React.Component<Props> {
                     : false
                 }
                 lang={this.props.lang}
-                onChangeColor={this.colorHandler}
+                onChangeColors={this.colorHandler}
                 onChangeSelection={this.selectionHandler}
                 onCancellationSelection={this.selectionHandler}
                 onDragChange={this.dragHandler}

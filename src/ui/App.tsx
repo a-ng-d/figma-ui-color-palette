@@ -588,8 +588,8 @@ class App extends React.Component {
               lang={this.state['lang']}
               onChangeScale={this.slideHandler}
               onChangeStop={this.customSlideHandler}
-              onChangeColor={this.colorHandler}
-              onChangeTheme={this.themeHandler}
+              onChangeColors={this.colorHandler}
+              onChangeThemes={this.themeHandler}
               onChangeView={this.viewHandler}
               onChangeSettings={this.settingsHandler}
             />

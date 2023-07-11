@@ -20,7 +20,7 @@ interface Props {
   guideAbove: boolean
   guideBelow: boolean
   lang: string
-  onChangeColor: React.ChangeEventHandler
+  onChangeColors: React.ChangeEventHandler
   onChangeSelection: React.ChangeEventHandler
   onCancellationSelection: React.ChangeEventHandler
   onDragChange: (
@@ -43,7 +43,7 @@ export default class ColorItem extends React.Component<Props> {
   }
 
   // Handlers
-  inputHandler = (e) => this.props.onChangeColor(e)
+  inputHandler = (e) => this.props.onChangeColors(e)
 
   optionsHandler = (e) => {
     this.props.onCancellationSelection(e)

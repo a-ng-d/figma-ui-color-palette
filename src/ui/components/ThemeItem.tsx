@@ -18,7 +18,7 @@ interface Props {
   guideAbove: boolean
   guideBelow: boolean
   lang: string
-  onChangeTheme: React.KeyboardEventHandler<HTMLInputElement | HTMLTextAreaElement> & React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement> & React.MouseEventHandler
+  onChangeThemes: React.KeyboardEventHandler<HTMLInputElement | HTMLTextAreaElement> & React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement> & React.MouseEventHandler
   onChangeSelection: React.MouseEventHandler<HTMLLIElement>
   onCancellationSelection: React.ChangeEventHandler
   onDragChange: (
@@ -130,10 +130,10 @@ export default class ThemeItem extends React.Component<Props> {
               type="TEXT"
               value={this.props.name}
               feature="RENAME_THEME"
-              onChange={this.props.onChangeTheme}
+              onChange={this.props.onChangeThemes}
               onFocus={this.props.onCancellationSelection}
-              onBlur={this.props.onChangeTheme}
-              onConfirm={this.props.onChangeTheme}
+              onBlur={this.props.onChangeThemes}
+              onConfirm={this.props.onChangeThemes}
             />
           </div>
         </Feature>
@@ -149,9 +149,9 @@ export default class ThemeItem extends React.Component<Props> {
               type="COLOR"
               value={this.props.paletteBackground}
               feature="UPDATE_PALETTE_BACKGROUND"
-              onChange={this.props.onChangeTheme}
+              onChange={this.props.onChangeThemes}
               onFocus={this.props.onCancellationSelection}
-              onBlur={this.props.onChangeTheme}
+              onBlur={this.props.onChangeThemes}
             />
           </div>
         </Feature>
@@ -174,7 +174,7 @@ export default class ThemeItem extends React.Component<Props> {
             icon="minus"
             type="icon"
             feature="REMOVE_THEME"
-            action={this.props.onChangeTheme}
+            action={this.props.onChangeThemes}
           />
         </div>
         {this.state['hasMoreOptions'] ? (
@@ -196,10 +196,10 @@ export default class ThemeItem extends React.Component<Props> {
                     value={this.props.description}
                     placeholder={locals[this.props.lang].colors.descriptionTip}
                     feature="UPDATE_DESCRIPTION"
-                    onChange={this.props.onChangeTheme}
+                    onChange={this.props.onChangeThemes}
                     onFocus={this.props.onCancellationSelection}
-                    onBlur={this.props.onChangeTheme}
-                    onConfirm={this.props.onChangeTheme}
+                    onBlur={this.props.onChangeThemes}
+                    onConfirm={this.props.onChangeThemes}
                   />
                 </FormItem>
               </div>

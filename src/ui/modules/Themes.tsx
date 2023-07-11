@@ -23,7 +23,7 @@ interface Props {
   editorType: string
   planStatus: string
   lang: string
-  onChangeTheme: (themes: Array<ThemeConfiguration>) => void
+  onChangeThemes: (themes: Array<ThemeConfiguration>) => void
   onCreateLocalStyles: () => void
   onUpdateLocalStyles: () => void
   onCreateLocalVariables: () => void
@@ -105,13 +105,13 @@ export default class Themes extends React.Component<Props> {
         scale: this.props.scale,
         id: uuidv4(),
       })
-      this.props.onChangeTheme(themeMessage.data)
+      this.props.onChangeThemes(themeMessage.data)
       parent.postMessage({ pluginMessage: themeMessage }, '*')
     }
 
     const removeTheme = () => {
       themeMessage.data = this.props.themes.filter((item) => item.id != id)
-      this.props.onChangeTheme(themeMessage.data)
+      this.props.onChangeThemes(themeMessage.data)
       parent.postMessage({ pluginMessage: themeMessage }, '*')
     }
 
@@ -143,7 +143,7 @@ export default class Themes extends React.Component<Props> {
     else position = target.position
 
     colors.splice(position, 0, colorsWithoutSource)
-    this.props.onChangeTheme(colors)
+    this.props.onChangeThemes(colors)
     parent.postMessage(
       {
         pluginMessage: {
@@ -255,7 +255,7 @@ export default class Themes extends React.Component<Props> {
                       : false
                   }
                   lang={this.props.lang}
-                  onChangeTheme={this.themeHandler}
+                  onChangeThemes={this.themeHandler}
                   onChangeSelection={this.selectionHandler}
                   onCancellationSelection={this.selectionHandler}
                   onDragChange={this.dragHandler}

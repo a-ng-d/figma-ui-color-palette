@@ -36,8 +36,8 @@ interface Props {
   lang: string
   onChangeScale: () => void
   onChangeStop?: () => void
-  onChangeColor: (colors: Array<ColorConfiguration>) => void
-  onChangeTheme: (themes: Array<ThemeConfiguration>) => void
+  onChangeColors: (colors: Array<ColorConfiguration>) => void
+  onChangeThemes: (themes: Array<ThemeConfiguration>) => void
   onChangeView: (view: string) => void
   onChangeSettings: React.ChangeEventHandler
 }
@@ -252,7 +252,7 @@ export default class EditPalette extends React.Component<Props> {
             planStatus={this.props.planStatus}
             editorType={this.props.editorType}
             lang={this.props.lang}
-            onChangeColor={this.props.onChangeColor}
+            onChangeColors={this.props.onChangeColors}
             onCreateLocalStyles={this.onCreateStyles}
             onUpdateLocalStyles={this.onUpdateStyles}
             onCreateLocalVariables={this.onCreateVariables}
@@ -270,7 +270,7 @@ export default class EditPalette extends React.Component<Props> {
             planStatus={this.props.planStatus}
             editorType={this.props.editorType}
             lang={this.props.lang}
-            onChangeTheme={this.props.onChangeTheme}
+            onChangeThemes={this.props.onChangeThemes}
             onCreateLocalStyles={this.onCreateStyles}
             onUpdateLocalStyles={this.onUpdateStyles}
             onCreateLocalVariables={this.onCreateVariables}
