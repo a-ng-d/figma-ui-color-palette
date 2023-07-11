@@ -130,6 +130,44 @@ div.section-controls .select-menu {
   flex: 1;
 }
 
+/* Colors */
+li .colors__name {
+  grid-column: 1 / span 16;
+  grid-row: 1 / 1;
+}
+
+li .colors__parameters {
+  grid-column: 17 / span 33;
+  grid-row: 1 / 1;
+  display: flex;
+  gap: var(--size-xsmall);
+}
+
+li .colors__parameters > .input {
+  width: 88px;
+}
+
+li .colors__buttons {
+  grid-column: span 8 / 77;
+  grid-row: 1 / 1;
+  display: flex;
+  justify-content: flex-end;
+}
+
+li .colors__shift {
+  grid-column: 1 / span 16;
+  grid-row: 2 / 2;
+}
+
+li .colors__description {
+  grid-column: 17 / span 33;
+  grid-row: 2 / 2;
+}
+
+li .colors__shift > .input {
+  width: 88px;
+}
+
 /* Export */
 div.export-palette {
   flex-direction: row;

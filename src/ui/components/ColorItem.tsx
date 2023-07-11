@@ -115,11 +115,11 @@ export default class ColorItem extends React.Component<Props> {
         data-id={this.props.uuid}
         data-color={this.props.name.split(' ').join('-').toLowerCase()}
         data-position={this.props.index}
-        className={`colors__item${
-          this.state['isDragged'] ? ' colors__item--dragged' : ''
-        }${this.props.guideAbove ? ' colors__item--above' : ''}${
-          this.props.guideBelow ? ' colors__item--below' : ''
-        }${this.state['hasMoreOptions'] ? ' colors__item--emphasis' : ''}`}
+        className={`list__item${
+          this.state['isDragged'] ? ' list__item--dragged' : ''
+        }${this.props.guideAbove ? ' list__item--above' : ''}${
+          this.props.guideBelow ? ' list__item--below' : ''
+        }${this.state['hasMoreOptions'] ? ' list__item--emphasis' : ''}`}
         draggable={this.props.selected}
         onMouseDown={this.onMouseDown}
         onDragStart={this.onDragStart}

@@ -166,7 +166,7 @@ export default class EditPalette extends React.Component<Props> {
 
   colorHandler = (e) => {
     let id: string
-    const element: HTMLElement | null = e.target.closest('.colors__item')
+    const element: HTMLElement | null = e.target.closest('.list__item')
 
     element != null ? (id = element.getAttribute('data-id')) : null
 
@@ -389,7 +389,7 @@ export default class EditPalette extends React.Component<Props> {
   }
 
   unSelectColor = (e) => {
-    e.target.closest('li.colors__item') == null
+    e.target.closest('li.list__item') == null
       ? this.setState({
           selectedElement: {
             id: '',

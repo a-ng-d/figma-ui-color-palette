@@ -45,7 +45,7 @@ export default class Themes extends React.Component<Props> {
     console.log(this.props.themes)
     return (
       <>
-        <div className="source-colors controls__control">
+        <div className="list-controller controls__control">
           <div className="section-controls">
             <div className="section-controls__left-part">
               <div className="section-title">
@@ -78,7 +78,7 @@ export default class Themes extends React.Component<Props> {
               </div>
             </div>
           ) : (
-            <ul className="themes">
+            <ul className="list">
             
             </ul>
           )}      
