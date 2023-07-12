@@ -70,14 +70,14 @@ export default class Palette {
     this.node.setPluginData('preset', JSON.stringify(this.preset))
     this.node.setPluginData('scale', JSON.stringify(this.scale))
     this.node.setPluginData('colorSpace', this.colorSpace)
-    this.node.setPluginData('themes', JSON.stringify({
+    this.node.setPluginData('themes', JSON.stringify([{
       name: 'None',
       description: '',
       scale: this.scale,
       paletteBackground: '#FFFFFF',
       isEnabled: true,
       id: '00000000-0000-0000-0000-000000000000'
-    }))
+    }]))
     this.node.setPluginData('view', this.view)
     this.node.setPluginData(
       'textColorsTheme',
