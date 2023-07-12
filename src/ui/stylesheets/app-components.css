@@ -263,7 +263,6 @@ div.dialog .dialog__text {
 /* List */
 div.list-controller {
   display: flex;
-  flex: 1 0 176px;
   overflow: hidden;
   padding: var(--size-xxsmall) 0 0 0;
 }

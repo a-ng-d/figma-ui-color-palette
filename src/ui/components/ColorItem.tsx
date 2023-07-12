@@ -120,66 +120,82 @@ export default class ColorItem extends React.Component<Props> {
         onDragOver={this.onDragOver}
         onDrop={this.onDrop}
       >
-        <div className="colors__name">
-          <Input
-            type="TEXT"
-            value={this.props.name}
-            feature="RENAME_COLOR"
-            onChange={this.props.onChangeColors}
-            onFocus={this.props.onCancellationSelection}
-            onBlur={this.props.onChangeColors}
-            onConfirm={this.props.onChangeColors}
-          />
-        </div>
-        <div className="colors__parameters">
-          <Input
-            type="COLOR"
-            value={this.props.hex}
-            feature="UPDATE_HEX"
-            onChange={this.props.onChangeColors}
-            onFocus={this.props.onCancellationSelection}
-            onBlur={this.props.onChangeColors}
-          />
-          <div className="inputs">
-            <div className="label">{locals[this.props.lang].colors.lch.label}</div>
-            <div className="inputs__bar">
-              <Input
-                type="NUMBER"
-                value={chroma(this.props.hex).lch()[0].toFixed(0)}
-                min="0"
-                max="100"
-                feature="UPDATE_LIGHTNESS"
-                onChange={this.props.onChangeColors}
-                onFocus={this.props.onCancellationSelection}
-                onBlur={this.props.onChangeColors}
-              />
-              <Input
-                type="NUMBER"
-                value={chroma(this.props.hex).lch()[1].toFixed(0)}
-                min="0"
-                max="100"
-                feature="UPDATE_CHROMA"
-                onChange={this.props.onChangeColors}
-                onFocus={this.props.onCancellationSelection}
-                onBlur={this.props.onChangeColors}
-              />
-              <Input
-                type="NUMBER"
-                value={
-                  chroma(this.props.hex).lch()[2].toFixed(0) == 'NaN'
-                    ? 0
-                    : chroma(this.props.hex).lch()[2].toFixed(0)
-                }
-                min="0"
-                max="360"
-                feature="UPDATE_HUE"
-                onChange={this.props.onChangeColors}
-                onFocus={this.props.onCancellationSelection}
-                onBlur={this.props.onChangeColors}
-              />
+        <Feature
+          isActive={
+            features.find(
+              (feature) => feature.name === 'COLORS_NAME'
+            ).isActive
+          }
+        >
+          <div className="colors__name">
+            <Input
+              type="TEXT"
+              value={this.props.name}
+              feature="RENAME_COLOR"
+              onChange={this.props.onChangeColors}
+              onFocus={this.props.onCancellationSelection}
+              onBlur={this.props.onChangeColors}
+              onConfirm={this.props.onChangeColors}
+            />
+          </div>
+        </Feature>
+        <Feature
+          isActive={
+            features.find(
+              (feature) => feature.name === 'COLORS_PARAMS'
+            ).isActive
+          }
+        >
+          <div className="colors__parameters">
+            <Input
+              type="COLOR"
+              value={this.props.hex}
+              feature="UPDATE_HEX"
+              onChange={this.props.onChangeColors}
+              onFocus={this.props.onCancellationSelection}
+              onBlur={this.props.onChangeColors}
+            />
+            <div className="inputs">
+              <div className="label">{locals[this.props.lang].colors.lch.label}</div>
+              <div className="inputs__bar">
+                <Input
+                  type="NUMBER"
+                  value={chroma(this.props.hex).lch()[0].toFixed(0)}
+                  min="0"
+                  max="100"
+                  feature="UPDATE_LIGHTNESS"
+                  onChange={this.props.onChangeColors}
+                  onFocus={this.props.onCancellationSelection}
+                  onBlur={this.props.onChangeColors}
+                />
+                <Input
+                  type="NUMBER"
+                  value={chroma(this.props.hex).lch()[1].toFixed(0)}
+                  min="0"
+                  max="100"
+                  feature="UPDATE_CHROMA"
+                  onChange={this.props.onChangeColors}
+                  onFocus={this.props.onCancellationSelection}
+                  onBlur={this.props.onChangeColors}
+                />
+                <Input
+                  type="NUMBER"
+                  value={
+                    chroma(this.props.hex).lch()[2].toFixed(0) == 'NaN'
+                      ? 0
+                      : chroma(this.props.hex).lch()[2].toFixed(0)
+                  }
+                  min="0"
+                  max="360"
+                  feature="UPDATE_HUE"
+                  onChange={this.props.onChangeColors}
+                  onFocus={this.props.onCancellationSelection}
+                  onBlur={this.props.onChangeColors}
+                />
+              </div>
             </div>
           </div>
-        </div>
+        </Feature>
         <div className="list__item__buttons">
           <Feature
             isActive={
