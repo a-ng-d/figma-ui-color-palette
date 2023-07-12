@@ -82,7 +82,7 @@ export default class Colors extends React.Component<Props> {
   }
 
   // Handlers
-  colorHandler = (e) => {
+  colorsHandler = (e) => {
     let id: string
     const element: HTMLElement | null = e.target.closest('.list__item')
 
@@ -346,7 +346,7 @@ export default class Colors extends React.Component<Props> {
                 icon="plus"
                 type="icon"
                 feature="ADD_COLOR"
-                action={this.colorHandler}
+                action={this.colorsHandler}
               />
             </div>
           </div>
@@ -379,7 +379,7 @@ export default class Colors extends React.Component<Props> {
                     : false
                 }
                 lang={this.props.lang}
-                onChangeColors={this.colorHandler}
+                onChangeColors={this.colorsHandler}
                 onChangeSelection={this.selectionHandler}
                 onCancellationSelection={this.selectionHandler}
                 onDragChange={this.dragHandler}

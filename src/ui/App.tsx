@@ -83,7 +83,7 @@ class App extends React.Component {
   }
 
   // Handlers
-  presetHandler = (e: React.SyntheticEvent) => {
+  presetsHandler = (e: React.SyntheticEvent) => {
     const setMaterialDesignPreset = () =>
       this.setState({
         preset: presets.material,
@@ -198,13 +198,13 @@ class App extends React.Component {
       onGoingStep: 'stop changed',
     })
 
-  colorHandler = (colors: Array<ColorConfiguration>) =>
+  colorsHandler = (colors: Array<ColorConfiguration>) =>
     this.setState({
       newColors: colors,
       onGoingStep: 'color changed',
     })
   
-  themeHandler = (themes: Array<ThemeConfiguration>) =>
+  themesHandler = (themes: Array<ThemeConfiguration>) =>
     this.setState({
       themes: themes,
       onGoingStep: 'themes changed',
@@ -570,7 +570,7 @@ class App extends React.Component {
               textColorsTheme={this.state['textColorsTheme']}
               planStatus={this.state['planStatus']}
               lang={this.state['lang']}
-              onChangePreset={this.presetHandler}
+              onChangePreset={this.presetsHandler}
               onCustomPreset={this.customHandler}
               onChangeSettings={this.settingsHandler}
             />
@@ -598,8 +598,8 @@ class App extends React.Component {
               lang={this.state['lang']}
               onChangeScale={this.slideHandler}
               onChangeStop={this.customSlideHandler}
-              onChangeColors={this.colorHandler}
-              onChangeThemes={this.themeHandler}
+              onChangeColors={this.colorsHandler}
+              onChangeThemes={this.themesHandler}
               onChangeSettings={this.settingsHandler}
             />
           ) : null}

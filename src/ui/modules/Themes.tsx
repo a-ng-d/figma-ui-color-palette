@@ -84,7 +84,7 @@ export default class Themes extends React.Component<Props> {
   }
 
   // Handlers
-  themeHandler = (e) => {
+  themesHandler = (e) => {
     let id: string
     const element: HTMLElement | null = e.target.closest('.list__item')
 
@@ -212,7 +212,7 @@ export default class Themes extends React.Component<Props> {
                 icon="plus"
                 type="icon"
                 feature="ADD_THEME"
-                action={this.themeHandler}
+                action={this.themesHandler}
               />
             </div>
           </div>
@@ -227,7 +227,7 @@ export default class Themes extends React.Component<Props> {
                   type='primary'
                   feature="ADD_THEME"
                   label={locals[this.props.lang].themes.label}
-                  action={this.themeHandler}
+                  action={this.themesHandler}
                 />
               </div>
             </div>
@@ -255,7 +255,7 @@ export default class Themes extends React.Component<Props> {
                       : false
                   }
                   lang={this.props.lang}
-                  onChangeThemes={this.themeHandler}
+                  onChangeThemes={this.themesHandler}
                   onChangeSelection={this.selectionHandler}
                   onCancellationSelection={this.selectionHandler}
                   onDragChange={this.dragHandler}
