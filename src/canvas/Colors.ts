@@ -1,5 +1,5 @@
 import chroma from 'chroma-js'
-import type { PaletteNode, PaletteDataItem } from '../utils/types'
+import type { PaletteNode, PaletteDataItem, ScaleConfiguration } from '../utils/types'
 import Sample from './Sample'
 import Header from './Header'
 import Title from './Title'
@@ -9,6 +9,7 @@ export default class Colors {
   parent: PaletteNode
   palette: FrameNode
   paletteData: Array<PaletteDataItem>
+  currentScale: ScaleConfiguration
   sampleScale: number
   sampleRatio: number
   sampleSize: number
@@ -22,6 +23,7 @@ export default class Colors {
     this.parent = parent
     this.palette = palette
     this.paletteData = []
+    this.currentScale = this.parent.themes.find(theme => theme.isEnabled).scale
     this.sampleScale = 1.75
     this.sampleRatio = 3 / 2
     this.sampleSize = 184
@@ -227,7 +229,7 @@ export default class Colors {
         hsl: chroma(sourceColor).hsl(),
       })
 
-      Object.values(this.parent.scale)
+      Object.values(this.currentScale)
         .reverse()
         .forEach((lightness: number) => {
           let newColor: { _rgb: Array<number> }
@@ -268,8 +270,8 @@ export default class Colors {
               this.parent.algorithmVersion
             )
 
-          const scaleName: string = Object.keys(this.parent.scale)
-            .find((key) => this.parent.scale[key] === lightness)
+          const scaleName: string = Object.keys(this.currentScale)
+            .find((key) => this.currentScale[key] === lightness)
             .substr(10)
 
           paletteDataItem.shades.push({
@@ -376,7 +378,7 @@ export default class Colors {
             ).makeNodeRichShade(this.sampleSize, this.sampleSize * this.sampleRatio * this.sampleScale, color.name, true)
       )
 
-      Object.values(this.parent.scale)
+      Object.values(this.currentScale)
         .reverse()
         .forEach((lightness: number) => {
           let newColor: { _rgb: Array<number> }
@@ -423,8 +425,8 @@ export default class Colors {
             'rgb'
           )
 
-          const scaleName: string = Object.keys(this.parent.scale)
-            .find((key) => this.parent.scale[key] === lightness)
+          const scaleName: string = Object.keys(this.currentScale)
+            .find((key) => this.currentScale[key] === lightness)
             .substr(10)
 
           if (this.parent.view.includes('PALETTE')) {

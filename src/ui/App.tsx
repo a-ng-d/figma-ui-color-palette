@@ -206,6 +206,7 @@ class App extends React.Component {
   
   themesHandler = (themes: Array<ThemeConfiguration>) =>
     this.setState({
+      newScale: themes.find(theme => theme.isEnabled).scale,
       themes: themes,
       onGoingStep: 'themes changed',
     })

@@ -31,8 +31,9 @@ const updateScale = (msg, palette) => {
         palette.getPluginData('textColorsTheme')
       ),
       algorithmVersion: string = palette.getPluginData('algorithmVersion')
-
-    palette.setPluginData('scale', JSON.stringify(msg.data.scale))
+    
+    themes.find(theme => theme.isEnabled).scale = msg.data.scale
+    palette.setPluginData('themes', JSON.stringify(themes))
 
     if (Object.keys(msg.data.preset).length != 0)
       palette.setPluginData('preset', JSON.stringify(msg.data.preset))
