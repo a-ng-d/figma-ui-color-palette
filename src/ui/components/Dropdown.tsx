@@ -11,12 +11,21 @@ interface Props {
   }>
   selected: string
   feature: string
+  actions?: Array<{
+    label: string
+    isBlocked: boolean
+    action: React.MouseEventHandler
+  }>
   onChange: React.ChangeEventHandler
 }
 
 export default class Dropdown extends React.Component<Props> {
   selectMenuRef: any
   listRef: any
+
+  static defaultProps = {
+    actions: []
+  }
 
   constructor(props) {
     super(props)
@@ -74,6 +83,13 @@ export default class Dropdown extends React.Component<Props> {
     this.props.onChange(e)
   }
 
+  onSelectAction = (callback) => {
+    this.setState({
+      isListOpen: false,
+    })
+    callback()
+  } 
+
   render() {
     return (
       <div
@@ -123,6 +139,26 @@ export default class Dropdown extends React.Component<Props> {
                 </li>
               ) : null
             )}
+            {this.props.actions.length > 0 ? (
+              <>
+              <hr />
+                {this.props.actions.map((action, index) => (
+                  <li
+                    key={index}
+                    className={`select-menu__item${action.isBlocked ? ' select-menu__item--blocked' : ''}`}
+                    data-is-blocked={action.isBlocked}
+                    onMouseDown={() =>
+                      this.onSelectAction(action.action)
+                    }
+                  >
+                    <span className="select-menu__item-icon"></span>
+                    <span className="select-menu__item-label">
+                      {action.label}
+                    </span>
+                  </li>
+                ))}
+              </>
+            ) : null}
           </ul>
         ) : null}
       </div>

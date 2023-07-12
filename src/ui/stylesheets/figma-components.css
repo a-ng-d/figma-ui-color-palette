@@ -326,6 +326,12 @@ div.icon-button--disabled {
   outline-offset: -1px;
 }
 
+.select-menu hr {
+  height: 1px;
+  background-color: var(--figma-color-border);
+  border: none;
+}
+
 .select-menu--highlight,
 .select-menu__item:hover,
 .select-menu__item:focus {

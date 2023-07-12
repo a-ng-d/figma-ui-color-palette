@@ -341,6 +341,11 @@ export default class EditPalette extends React.Component<Props> {
                     }
                   })}
                   selected={this.props.themes.find(theme => theme.isEnabled).id}
+                  actions={[{
+                    label: 'Create a color theme',
+                    isBlocked: false,
+                    action: () => this.setState({ context: 'THEMES' }),
+                  }]}
                   feature="SWITCH_THEME"
                   onChange={this.switchThemeHandler}
                 />
