@@ -278,7 +278,7 @@ const features: Array<Features> = [
     name: 'EXPORT_SWIFT',
     description:
       'Palette export to SWIFT (macOS, iOS, iPadOS, watchOS, tvOS, visionOS)',
-    isActive: false,
+    isActive: true,
     isPro: false,
     type: 'ACTION',
     service: ['EDIT'],
@@ -286,7 +286,7 @@ const features: Array<Features> = [
   {
     name: 'EXPORT_XML',
     description: 'Palette export to XML (Android)',
-    isActive: false,
+    isActive: true,
     isPro: false,
     type: 'ACTION',
     service: ['EDIT'],
