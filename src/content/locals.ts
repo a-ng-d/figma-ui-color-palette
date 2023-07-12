@@ -3,6 +3,12 @@ export const lang = 'en-US'
 export const locals = {
   'en-US': {
     name: 'UI Color Palette',
+    global: {
+      description: {
+        label: 'Description',
+        placeholder: "What's it for?",
+      },
+    },
     onboarding: {
       selectColor:
         'Select your source colors (solid colors only) on the Figma/Figjam canvas to create a UI Color Palette',
@@ -36,17 +42,22 @@ export const locals = {
     },
     colors: {
       title: 'Source colors',
-      lch: 'LCH',
-      hueShifting: 'HUE',
-      description: 'Description',
-      descriptionTip: "What's it for?",
+      lch: {
+        label: 'LCH',
+      },
+      hueShifting: {
+        label: 'HUE',
+      },
     },
     themes: {
       title: 'Color themes',
-      tips : {
-        creation: 'Create a color theme to manage several color palette within one (light and dark theme)'
+      callout : {
+        message: 'Create a color theme to manage several color palette within one (light and dark theme)',
+        cta: 'Create a color theme',
       },
-      label: 'Create a color theme'
+      paletteBackgroundColor: {
+        label: 'Palette background color',
+      },
     },
     export: {
       format: 'File format',

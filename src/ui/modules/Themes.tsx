@@ -102,7 +102,7 @@ export default class Themes extends React.Component<Props> {
         name: `New UI Theme ${hasAlreadyNewUITheme.length + 1}`,
         description: '',
         paletteBackground: '#FFFFFF',
-        isEnabled: this.props.themes.length == 0 ? true : false,
+        isEnabled: false,
         scale: this.props.scale,
         id: uuidv4(),
       })
@@ -221,13 +221,13 @@ export default class Themes extends React.Component<Props> {
             <div className="onboarding__callout">
               <Message
                 icon="theme"
-                messages={[locals[this.props.lang].themes.tips.creation]}
+                messages={[locals[this.props.lang].themes.callout.message]}
               />
               <div className="onboarding__actions">
                 <Button
                   type='primary'
                   feature="ADD_THEME"
-                  label={locals[this.props.lang].themes.label}
+                  label={locals[this.props.lang].themes.callout.cta}
                   action={this.themesHandler}
                 />
               </div>

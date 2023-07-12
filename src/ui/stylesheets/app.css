@@ -147,25 +147,36 @@ li .colors__parameters > .input {
   width: 88px;
 }
 
-li .colors__buttons {
-  grid-column: span 8 / 77;
-  grid-row: 1 / 1;
-  display: flex;
-  justify-content: flex-end;
-}
-
 li .colors__shift {
   grid-column: 1 / span 16;
   grid-row: 2 / 2;
 }
 
 li .colors__description {
-  grid-column: 17 / span 33;
+  grid-column: 17 / span 49;
   grid-row: 2 / 2;
 }
 
 li .colors__shift > .input {
   width: 88px;
+}
+
+/* Themes */
+li .themes__name {
+  grid-column: 1 / span 16;
+  grid-row: 1 / 1;
+}
+
+li .themes__palette-background-color {
+  grid-column: 17 / span 33;
+  grid-row: 1 / 1;
+  display: flex;
+  gap: var(--size-xsmall);
+}
+
+li .themes__description {
+  grid-column: 1 / span 49;
+  grid-row: 2 / 2;
 }
 
 /* Export */

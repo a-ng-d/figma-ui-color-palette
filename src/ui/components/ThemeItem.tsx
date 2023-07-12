@@ -125,7 +125,7 @@ export default class ThemeItem extends React.Component<Props> {
             ).isActive
           }
         >
-          <div className="colors__name">
+          <div className="themes__name">
             <Input
               type="TEXT"
               value={this.props.name}
@@ -144,18 +144,24 @@ export default class ThemeItem extends React.Component<Props> {
             ).isActive
           }
         >
-          <div className="colors__parameters">
-            <Input
-              type="COLOR"
-              value={this.props.paletteBackground}
-              feature="UPDATE_PALETTE_BACKGROUND"
-              onChange={this.props.onChangeThemes}
-              onFocus={this.props.onCancellationSelection}
-              onBlur={this.props.onChangeThemes}
-            />
+          <div className="themes__palette-background-color">
+            <FormItem
+              id="palette-background-color"
+              label={locals[this.props.lang].themes.paletteBackgroundColor.label}
+              shouldFill={false}
+            >
+              <Input
+                type="COLOR"
+                value={this.props.paletteBackground}
+                feature="UPDATE_PALETTE_BACKGROUND"
+                onChange={this.props.onChangeThemes}
+                onFocus={this.props.onCancellationSelection}
+                onBlur={this.props.onChangeThemes}
+              />
+            </FormItem>
           </div>
         </Feature>
-        <div className="colors__buttons">
+        <div className="list__item__buttons">
           <Feature
             isActive={
               features.find((feature) => feature.name === 'THEMES_DESCRIPTION')
@@ -186,15 +192,16 @@ export default class ThemeItem extends React.Component<Props> {
                 ).isActive
               }
             >
-              <div className="colors__description">
+              <div className="themes__description">
                 <FormItem
-                  id="color-description"
-                  label={locals[this.props.lang].colors.description}
+                  id="theme-description"
+                  label={locals[this.props.lang].global.description.label}
+                  shouldFill={false}
                 >
                   <Input
                     type="TEXT"
                     value={this.props.description}
-                    placeholder={locals[this.props.lang].colors.descriptionTip}
+                    placeholder={locals[this.props.lang].global.description.placeholder}
                     feature="UPDATE_DESCRIPTION"
                     onChange={this.props.onChangeThemes}
                     onFocus={this.props.onCancellationSelection}

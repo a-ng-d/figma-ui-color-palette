@@ -141,7 +141,7 @@ export default class ColorItem extends React.Component<Props> {
             onBlur={this.props.onChangeColors}
           />
           <div className="inputs">
-            <div className="label">{locals[this.props.lang].colors.lch}</div>
+            <div className="label">{locals[this.props.lang].colors.lch.label}</div>
             <div className="inputs__bar">
               <Input
                 type="NUMBER"
@@ -180,7 +180,7 @@ export default class ColorItem extends React.Component<Props> {
             </div>
           </div>
         </div>
-        <div className="colors__buttons">
+        <div className="list__item__buttons">
           <Feature
             isActive={
               features.find((feature) => feature.name === 'COLORS_HUE_SHIFTING')
@@ -215,7 +215,7 @@ export default class ColorItem extends React.Component<Props> {
             >
               <div className="colors__shift inputs">
                 <div className="label">
-                  {locals[this.props.lang].colors.hueShifting}
+                  {locals[this.props.lang].colors.hueShifting.label}
                 </div>
                 <Input
                   type="NUMBER"
@@ -240,12 +240,13 @@ export default class ColorItem extends React.Component<Props> {
               <div className="colors__description">
                 <FormItem
                   id="color-description"
-                  label={locals[this.props.lang].colors.description}
+                  label={locals[this.props.lang].global.description.label}
+                  shouldFill={false}
                 >
                   <Input
                     type="TEXT"
                     value={this.props.description}
-                    placeholder={locals[this.props.lang].colors.descriptionTip}
+                    placeholder={locals[this.props.lang].global.description.placeholder}
                     feature="UPDATE_DESCRIPTION"
                     onChange={this.props.onChangeColors}
                     onFocus={this.props.onCancellationSelection}

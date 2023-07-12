@@ -149,13 +149,16 @@ div.form-item {
   position: relative;
 }
 
-div.form-item label {
-  flex: 1;
-}
-
+div.form-item--fill label,
 div.form-item .input,
 div.form-item .textarea,
 div.form-item .select-menu {
+  flex: 1;
+}
+
+div.form-item--fill .input,
+div.form-item--fill .textarea,
+div.form-item--fill .select-menu {
   flex: 4;
 }
 
@@ -313,6 +316,13 @@ li.list__item--above {
 li.list__item--below {
   box-shadow: 0 -1px 0 var(--figma-color-border-selected) inset,
     0 1px 0 var(--figma-color-border-selected);
+}
+
+li .list__item__buttons {
+  grid-column: span 8 / 77;
+  grid-row: 1 / 1;
+  display: flex;
+  justify-content: flex-end;
 }
 
 /* Callout */
