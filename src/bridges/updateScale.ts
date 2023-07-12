@@ -25,7 +25,7 @@ const updateScale = (msg, palette) => {
         palette.getPluginData('colors')
       ),
       colorSpace: string = palette.getPluginData('colorSpace'),
-      themes: Array<ThemeConfiguration> = JSON.parse(palette.getPluginData('theme')),
+      themes: Array<ThemeConfiguration> = JSON.parse(palette.getPluginData('themes')),
       view: string = palette.getPluginData('view'),
       textColorsTheme: TextColorsThemeHexModel = JSON.parse(
         palette.getPluginData('textColorsTheme')
