@@ -90,6 +90,27 @@ export default class Colors extends React.Component<Props> {
 
     colorsMessage.isEditedInRealTime = false
 
+    const addColor = () => {
+      colorsMessage.data = this.props.colors
+      const hasAlreadyNewUIColor = colorsMessage.data.filter((color) =>
+        color.name.includes('New UI Color')
+      )
+      colorsMessage.data.push({
+        name: `New UI Color ${hasAlreadyNewUIColor.length + 1}`,
+        description: '',
+        rgb: {
+          r: 0.53,
+          g: 0.92,
+          b: 0.97,
+        },
+        id: uuidv4(),
+        oklch: false,
+        hueShifting: 0,
+      })
+      this.props.onChangeColors(colorsMessage.data)
+      parent.postMessage({ pluginMessage: colorsMessage }, '*')
+    }
+
     const updateHexCode = () => {
       const code: string =
         e.target.value.indexOf('#') == -1
@@ -178,25 +199,25 @@ export default class Colors extends React.Component<Props> {
       parent.postMessage({ pluginMessage: colorsMessage }, '*')
     }
 
-    const addColor = () => {
-      colorsMessage.data = this.props.colors
-      const hasAlreadyNewUIColor = colorsMessage.data.filter((color) =>
-        color.name.includes('New UI Color')
-      )
-      colorsMessage.data.push({
-        name: `New UI Color ${hasAlreadyNewUIColor.length + 1}`,
-        description: '',
-        rgb: {
-          r: 0.53,
-          g: 0.92,
-          b: 0.97,
-        },
-        id: uuidv4(),
-        oklch: false,
-        hueShifting: 0,
+    const setHueShifting = () => {
+      colorsMessage.data = this.props.colors.map((item) => {
+        if (item.id === id) item.hueShifting = parseFloat(e.target.value)
+        return item
       })
       this.props.onChangeColors(colorsMessage.data)
       parent.postMessage({ pluginMessage: colorsMessage }, '*')
+    }
+
+    const updateColorDescription = () => {
+      colorsMessage.data = this.props.colors.map((item) => {
+        if (item.id === id) item.description = e.target.value
+        return item
+      })
+      this.props.onChangeColors(colorsMessage.data)
+      if (e._reactName === 'onBlur')
+        parent.postMessage({ pluginMessage: colorsMessage }, '*')
+      if (e.key === 'Enter')
+        parent.postMessage({ pluginMessage: colorsMessage }, '*')
     }
 
     const removeColor = () => {
@@ -222,37 +243,16 @@ export default class Colors extends React.Component<Props> {
         parent.postMessage({ pluginMessage: colorsMessage }, '*')
     }
 
-    const setHueShifting = () => {
-      colorsMessage.data = this.props.colors.map((item) => {
-        if (item.id === id) item.hueShifting = parseFloat(e.target.value)
-        return item
-      })
-      this.props.onChangeColors(colorsMessage.data)
-      parent.postMessage({ pluginMessage: colorsMessage }, '*')
-    }
-
-    const updateColorDescription = () => {
-      colorsMessage.data = this.props.colors.map((item) => {
-        if (item.id === id) item.description = e.target.value
-        return item
-      })
-      this.props.onChangeColors(colorsMessage.data)
-      if (e._reactName === 'onBlur')
-        parent.postMessage({ pluginMessage: colorsMessage }, '*')
-      if (e.key === 'Enter')
-        parent.postMessage({ pluginMessage: colorsMessage }, '*')
-    }
-
     const actions: ActionsList = {
+      ADD_COLOR: () => addColor(),
       UPDATE_HEX: () => updateHexCode(),
+      RENAME_COLOR: () => renameColor(),
       UPDATE_LIGHTNESS: () => updateLightnessProp(),
       UPDATE_CHROMA: () => updateChromaProp(),
       UPDATE_HUE: () => updateHueProp(),
-      ADD_COLOR: () => addColor(),
-      REMOVE_COLOR: () => removeColor(),
-      RENAME_COLOR: () => renameColor(),
       SHIFT_HUE: () => setHueShifting(),
       UPDATE_DESCRIPTION: () => updateColorDescription(),
+      REMOVE_COLOR: () => removeColor(),
     }
 
     return actions[e.target.dataset.feature]?.()

@@ -30,7 +30,7 @@ interface Props {
   onUpdateLocalVariables: () => void
 }
 
-const themeMessage: ThemesMessage = {
+const themesMessage: ThemesMessage = {
   type: 'UPDATE_THEMES',
   data: [],
   isEditedInRealTime: false,
@@ -44,7 +44,7 @@ export default class Themes extends React.Component<Props> {
     super(props)
     this.dispatch = {
       themes: new Dispatcher(
-        () => parent.postMessage({ pluginMessage: themeMessage }, '*'),
+        () => parent.postMessage({ pluginMessage: themesMessage }, '*'),
         500
       ),
     }
@@ -91,14 +91,14 @@ export default class Themes extends React.Component<Props> {
 
     element != null ? (id = element.getAttribute('data-id')) : null
 
-    themeMessage.isEditedInRealTime = false
+    themesMessage.isEditedInRealTime = false
 
     const addTheme = () => {
-      themeMessage.data = this.props.themes
-      const hasAlreadyNewUITheme = themeMessage.data.filter((color) =>
+      themesMessage.data = this.props.themes
+      const hasAlreadyNewUITheme = themesMessage.data.filter((color) =>
         color.name.includes('New UI Theme')
       )
-      themeMessage.data.push({
+      themesMessage.data.push({
         name: `New UI Theme ${hasAlreadyNewUITheme.length + 1}`,
         description: '',
         paletteBackground: '#FFFFFF',
@@ -106,19 +106,73 @@ export default class Themes extends React.Component<Props> {
         scale: this.props.scale,
         id: uuidv4(),
       })
-      this.props.onChangeThemes(themeMessage.data)
-      parent.postMessage({ pluginMessage: themeMessage }, '*')
+      this.props.onChangeThemes(themesMessage.data)
+      parent.postMessage({ pluginMessage: themesMessage }, '*')
+    }
+
+    const renameTheme = () => {
+      const hasSameName = this.props.themes.filter(
+        (color) => color.name === e.target.value
+      )
+      themesMessage.data = this.props.themes.map((item) => {
+        if (item.id === id)
+          item.name =
+            hasSameName.length > 1 ? e.target.value + ' 2' : e.target.value
+        return item
+      })
+      this.props.onChangeThemes(themesMessage.data)
+      if (e._reactName === 'onBlur')
+        parent.postMessage({ pluginMessage: themesMessage }, '*')
+      if (e.key === 'Enter')
+        parent.postMessage({ pluginMessage: themesMessage }, '*')
+    }
+
+    const updatePaletteBackgroundColor = () => {
+      const code: string =
+        e.target.value.indexOf('#') == -1
+          ? '#' + e.target.value
+          : e.target.value
+      if (/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/i.test(code)) {
+        themesMessage.data = this.props.themes.map((item) => {
+          if (item.id === id)
+            item.paletteBackground = code
+          return item
+        })
+        this.props.onChangeThemes(themesMessage.data)
+      }
+      if (e._reactName === 'onBlur') {
+        this.dispatch.themes.on.status = false
+        parent.postMessage({ pluginMessage: themesMessage }, '*')
+      } else {
+        themesMessage.isEditedInRealTime = true
+        this.dispatch.themes.on.status = true
+      }
+    }
+
+    const updateThemeDescription = () => {
+      themesMessage.data = this.props.themes.map((item) => {
+        if (item.id === id) item.description = e.target.value
+        return item
+      })
+      this.props.onChangeThemes(themesMessage.data)
+      if (e._reactName === 'onBlur')
+        parent.postMessage({ pluginMessage: themesMessage }, '*')
+      if (e.key === 'Enter')
+        parent.postMessage({ pluginMessage: themesMessage }, '*')
     }
 
     const removeTheme = () => {
-      themeMessage.data = this.props.themes.filter((item) => item.id != id)
-      this.props.onChangeThemes(themeMessage.data)
-      parent.postMessage({ pluginMessage: themeMessage }, '*')
+      themesMessage.data = this.props.themes.filter((item) => item.id != id)
+      this.props.onChangeThemes(themesMessage.data)
+      parent.postMessage({ pluginMessage: themesMessage }, '*')
     }
 
     const actions: ActionsList = {
       ADD_THEME: () => addTheme(),
-      REMOVE_THEME: () => removeTheme()
+      RENAME_THEME: () => renameTheme(),
+      UPDATE_PALETTE_BACKGROUND: () => updatePaletteBackgroundColor(),
+      UPDATE_DESCRIPTION: () => updateThemeDescription(),
+      REMOVE_THEME: () => removeTheme(),
     }
 
     return actions[e.target.dataset.feature]?.()  
