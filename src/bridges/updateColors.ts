@@ -2,6 +2,7 @@ import type {
   PresetConfiguration,
   ScaleConfiguration,
   TextColorsThemeHexModel,
+  ThemeConfiguration,
 } from '../utils/types'
 import Colors from './../canvas/Colors'
 import {
@@ -22,6 +23,7 @@ const updateColors = (msg, palette) => {
       preset: PresetConfiguration = JSON.parse(palette.getPluginData('preset')),
       scale: ScaleConfiguration = JSON.parse(palette.getPluginData('scale')),
       colorSpace: string = palette.getPluginData('colorSpace'),
+      themes: Array<ThemeConfiguration> = JSON.parse(palette.getPluginData(('themes'))),
       view: string = palette.getPluginData('view'),
       textColorsTheme: TextColorsThemeHexModel = JSON.parse(
         palette.getPluginData('textColorsTheme')
@@ -39,6 +41,7 @@ const updateColors = (msg, palette) => {
           scale: scale,
           colors: msg.data,
           colorSpace: colorSpace,
+          themes: themes,
           view:
             msg.isEditedInRealTime && view === 'PALETTE_WITH_PROPERTIES'
               ? 'PALETTE'

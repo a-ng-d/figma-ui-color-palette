@@ -2,6 +2,7 @@ import type {
   PresetConfiguration,
   TextColorsThemeHexModel,
   ColorConfiguration,
+  ThemeConfiguration,
 } from '../utils/types'
 import {
   previousSelection,
@@ -24,6 +25,7 @@ const updateScale = (msg, palette) => {
         palette.getPluginData('colors')
       ),
       colorSpace: string = palette.getPluginData('colorSpace'),
+      themes: Array<ThemeConfiguration> = JSON.parse(palette.getPluginData('theme')),
       view: string = palette.getPluginData('view'),
       textColorsTheme: TextColorsThemeHexModel = JSON.parse(
         palette.getPluginData('textColorsTheme')
@@ -44,6 +46,7 @@ const updateScale = (msg, palette) => {
           scale: msg.data.scale,
           colors: colors,
           colorSpace: colorSpace,
+          themes: themes,
           view:
             msg.isEditedInRealTime && view === 'PALETTE_WITH_PROPERTIES'
               ? 'PALETTE'

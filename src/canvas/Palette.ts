@@ -4,6 +4,7 @@ import type {
   TextColorsThemeHexModel,
   PaletteNode,
   ScaleConfiguration,
+  ThemeConfiguration,
 } from '../utils/types'
 import Colors from './Colors'
 import { locals, lang } from '../content/locals'
@@ -14,6 +15,7 @@ export default class Palette {
   scale: ScaleConfiguration
   colors: Array<ColorConfiguration>
   colorSpace: string
+  themes: Array<ThemeConfiguration>
   preset: PresetConfiguration
   view: string
   textColorsTheme: TextColorsThemeHexModel
@@ -38,6 +40,7 @@ export default class Palette {
     this.scale = scale
     this.colors = []
     this.colorSpace = colorSpace
+    this.themes = [],
     this.view = view
     this.algorithmVersion = algorithmVersion
     this.textColorsTheme = textColorsTheme
@@ -87,11 +90,11 @@ export default class Palette {
           fills.forEach((fill) =>
             this.colors.push({
               name: element.name,
+              description: '',
               rgb: fill.color,
               id: undefined,
               oklch: false,
               hueShifting: 0,
-              description: '',
             })
           )
         } else

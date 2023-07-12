@@ -1,15 +1,19 @@
 import type {
+  ColorConfiguration,
   PresetConfiguration,
   ScaleConfiguration,
   TextColorsThemeHexModel,
-  ColorConfiguration,
-  ThemeConfiguration,
 } from '../utils/types'
 import Colors from '../canvas/Colors'
+import {
+  previousSelection,
+  currentSelection,
+  isSelectionChanged,
+} from './processSelection'
 import { locals, lang } from '../content/locals'
 
-const updateView = (msg, palette) => {
-  palette = figma.currentPage.selection[0]
+const updateThemes = (msg, palette) => {
+  palette = isSelectionChanged ? previousSelection[0] : currentSelection[0]
 
   if (palette.children.length == 1) {
     const name: string =
@@ -18,17 +22,15 @@ const updateView = (msg, palette) => {
           : palette.getPluginData('name'),
       preset: PresetConfiguration = JSON.parse(palette.getPluginData('preset')),
       scale: ScaleConfiguration = JSON.parse(palette.getPluginData('scale')),
-      colors: Array<ColorConfiguration> = JSON.parse(
-        palette.getPluginData('colors')
-      ),
+      colors: Array<ColorConfiguration> = JSON.parse(palette.getPluginData('colors')),
       colorSpace: string = palette.getPluginData('colorSpace'),
-      themes: Array<ThemeConfiguration> = JSON.parse(palette.getPluginData(('themes'))),
+      view: string = palette.getPluginData('view'),
       textColorsTheme: TextColorsThemeHexModel = JSON.parse(
         palette.getPluginData('textColorsTheme')
       ),
       algorithmVersion: string = palette.getPluginData('algorithmVersion')
 
-    palette.setPluginData('view', msg.data.view)
+    palette.setPluginData('themes', JSON.stringify(msg.data))
 
     palette.children[0].remove()
     palette.appendChild(
@@ -39,8 +41,13 @@ const updateView = (msg, palette) => {
           scale: scale,
           colors: colors,
           colorSpace: colorSpace,
-          themes: themes,
-          view: msg.data.view,
+          themes: msg.data,
+          view:
+            msg.isEditedInRealTime && view === 'PALETTE_WITH_PROPERTIES'
+              ? 'PALETTE'
+              : msg.isEditedInRealTime && view === 'SHEET'
+              ? 'SHEET_SAFE_MODE'
+              : view,
           textColorsTheme: textColorsTheme,
           algorithmVersion: algorithmVersion,
         },
@@ -51,9 +58,9 @@ const updateView = (msg, palette) => {
     // palette migration
     palette.counterAxisSizingMode = 'AUTO'
     palette.name = `${name}﹒${preset.name}﹒${colorSpace} ${
-      msg.data.view.includes('PALETTE') ? 'Palette' : 'Sheet'
+      view.includes('PALETTE') ? 'Palette' : 'Sheet'
     }`
   } else figma.notify(locals[lang].error.corruption)
 }
 
-export default updateView
+export default updateThemes

@@ -1,18 +1,20 @@
-import Colors from '../canvas/Colors'
+import type { ColorConfiguration, PresetConfiguration, ScaleConfiguration, ThemeConfiguration } from '../utils/types'
 import {
   previousSelection,
   currentSelection,
   isSelectionChanged,
 } from './processSelection'
+import Colors from '../canvas/Colors'
 import { locals, lang } from '../content/locals'
 
 const updateSettings = (msg, palette) => {
   palette = isSelectionChanged ? previousSelection[0] : currentSelection[0]
 
   if (palette.children.length == 1) {
-    const preset = JSON.parse(palette.getPluginData('preset')),
-      scale = JSON.parse(palette.getPluginData('scale')),
-      colors = JSON.parse(palette.getPluginData('colors')),
+    const preset: PresetConfiguration = JSON.parse(palette.getPluginData('preset')),
+      scale: ScaleConfiguration = JSON.parse(palette.getPluginData('scale')),
+      colors: Array<ColorConfiguration> = JSON.parse(palette.getPluginData('colors')),
+      themes: Array<ThemeConfiguration> = JSON.parse(palette.getPluginData(('themes'))),
       view: string = palette.getPluginData('view')
 
     let name: string
@@ -42,6 +44,7 @@ const updateSettings = (msg, palette) => {
           scale: scale,
           colors: colors,
           colorSpace: msg.data.colorSpace,
+          themes: themes,
           view: view,
           textColorsTheme: msg.data.textColorsTheme,
           algorithmVersion: msg.data.algorithmVersion,
