@@ -251,7 +251,6 @@ export default class Themes extends React.Component<Props> {
   }
 
   render() {
-    console.log(this.props.themes)
     return (
       <>
         <div className="list-controller controls__control">
