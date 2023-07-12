@@ -164,6 +164,8 @@ export default class Themes extends React.Component<Props> {
 
     const removeTheme = () => {
       themesMessage.data = this.props.themes.filter((item) => item.id != id)
+      if (this.props.themes.find(theme => theme.id === id).isEnabled)
+        themesMessage.data.find(theme => theme.id === '00000000-0000-0000-0000-000000000000').isEnabled = true
       this.props.onChangeThemes(themesMessage.data)
       parent.postMessage({ pluginMessage: themesMessage }, '*')
     }
