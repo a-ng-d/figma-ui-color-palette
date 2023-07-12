@@ -280,6 +280,10 @@ div.icon-button--disabled {
 }
 
 /* Select menu */
+.select-menu {
+  min-width: 160px;
+}
+
 .select-menu__button {
   --white: var(--figma-color-bg);
   padding: 0 0 0 var(--size-xxsmall);

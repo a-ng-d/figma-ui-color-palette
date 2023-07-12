@@ -196,6 +196,7 @@ div.tabs .tabs__tab--active {
 div.main-menu {
   display: flex;
   justify-content: space-between;
+  align-items: baseline;
   height: var(--size-large);
   padding: 0 var(--size-xsmall);
   border-bottom: 1px solid var(--figma-color-border);

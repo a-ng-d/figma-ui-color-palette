@@ -58,6 +58,9 @@ export const locals = {
       paletteBackgroundColor: {
         label: 'Palette background color',
       },
+      switchTheme: {
+        label: 'Theme'
+      }
     },
     export: {
       format: 'File format',

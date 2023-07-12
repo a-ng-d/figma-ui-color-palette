@@ -9,6 +9,7 @@ import type {
   ExportConfiguration,
   ScaleConfiguration,
 } from '../../utils/types'
+import Feature from '../components/Feature'
 import MainMenu from '../components/MainMenu'
 import Tabs from '../components/Tabs'
 import Scale from '../modules/Scale'
@@ -17,6 +18,8 @@ import Themes from '../modules/Themes'
 import Export from '../modules/Export'
 import Settings from '../modules/Settings'
 import About from '../modules/About'
+import FormItem from '../components/FormItem'
+import Dropdown from '../components/Dropdown'
 import features from '../../utils/features'
 import { locals } from '../../content/locals'
 
@@ -67,6 +70,10 @@ export default class EditPalette extends React.Component<Props> {
     this.setState({
       context: (e.target as HTMLElement).dataset.feature,
     })
+  
+  switchThemeHandler = () => {
+
+  }
 
   // Direct actions
   onCreateStyles = () => {
@@ -299,6 +306,7 @@ export default class EditPalette extends React.Component<Props> {
         )
       }
     }
+    console.log(this.props.themes)
     return (
       <>
         <MainMenu
@@ -308,6 +316,36 @@ export default class EditPalette extends React.Component<Props> {
               active={this.state['context']}
               action={this.navHandler}
             />
+          }
+          rightPart={
+            <Feature
+              isActive={
+                features.find((feature) => feature.name === 'THEMES')
+                  .isActive
+              }
+            >
+              <FormItem
+                id="switch-theme"
+                label={locals[this.props.lang].themes.switchTheme.label}
+                shouldFill={false}
+              >
+                <Dropdown
+                  id="presets"
+                  options={Object.entries(this.props.themes).map((theme, index) => {
+                    return {
+                      label: theme[1].name,
+                      value: theme[1].id,
+                      position: index,
+                      isActive: true,
+                      isBlocked: false,
+                    }
+                  })}
+                  selected={this.props.themes.find(theme => theme.isEnabled).id}
+                  feature="SWITCH_THEME"
+                  onChange={this.switchThemeHandler}
+                />
+              </FormItem>
+            </Feature>
           }
         />
         <section className="controller">

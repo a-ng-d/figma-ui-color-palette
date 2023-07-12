@@ -109,9 +109,9 @@ export interface ColorConfiguration {
 export interface ThemeConfiguration {
   name: string
   description: string
+  scale: ScaleConfiguration
   paletteBackground: string
   isEnabled: boolean
-  scale: ScaleConfiguration
   id: string
 }
 

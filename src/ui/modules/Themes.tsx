@@ -101,9 +101,9 @@ export default class Themes extends React.Component<Props> {
       themesMessage.data.push({
         name: `New UI Theme ${hasAlreadyNewUITheme.length + 1}`,
         description: '',
+        scale: this.props.scale,
         paletteBackground: '#FFFFFF',
         isEnabled: false,
-        scale: this.props.scale,
         id: uuidv4(),
       })
       this.props.onChangeThemes(themesMessage.data)
@@ -259,7 +259,7 @@ export default class Themes extends React.Component<Props> {
               <div className="section-title">
                 {locals[this.props.lang].themes.title}
               </div>
-              <div className="type">{`(${this.props.themes.length})`}</div>
+              <div className="type">{`(${this.props.themes.length - 1})`}</div>
             </div>
             <div className="section-controls__right-part">
               <Button
@@ -270,7 +270,7 @@ export default class Themes extends React.Component<Props> {
               />
             </div>
           </div>
-          {this.props.themes.length == 0 ? (
+          {this.props.themes.length == 1 ? (
             <div className="onboarding__callout">
               <Message
                 icon="theme"
@@ -287,36 +287,39 @@ export default class Themes extends React.Component<Props> {
             </div>
           ) : (
             <ul className="list" ref={this.listRef}>
-              {this.props.themes.map((theme, index) => (
-                <ThemeItem
-                  key={theme.id}
-                  name={theme.name}
-                  description={theme.description}
-                  index={index}
-                  paletteBackground={theme.paletteBackground}
-                  uuid={theme.id}
-                  selected={
-                    this.state['selectedElement'].id === theme.id ? true : false
-                  }
-                  guideAbove={
-                    this.state['hoveredElement'].id === theme.id
-                      ? this.state['hoveredElement'].hasGuideAbove
-                      : false
-                  }
-                  guideBelow={
-                    this.state['hoveredElement'].id === theme.id
-                      ? this.state['hoveredElement'].hasGuideBelow
-                      : false
-                  }
-                  lang={this.props.lang}
-                  onChangeThemes={this.themesHandler}
-                  onChangeSelection={this.selectionHandler}
-                  onCancellationSelection={this.selectionHandler}
-                  onDragChange={this.dragHandler}
-                  onDropOutside={this.dropOutsideHandler}
-                  onChangeOrder={this.orderHandler}
-                />
-              ))}
+              {this.props.themes.map((theme, index) => {
+                if (theme.id != '00000000-0000-0000-0000-000000000000')
+                  return (
+                    <ThemeItem
+                      key={theme.id}
+                      name={theme.name}
+                      description={theme.description}
+                      index={index}
+                      paletteBackground={theme.paletteBackground}
+                      uuid={theme.id}
+                      selected={
+                        this.state['selectedElement'].id === theme.id ? true : false
+                      }
+                      guideAbove={
+                        this.state['hoveredElement'].id === theme.id
+                          ? this.state['hoveredElement'].hasGuideAbove
+                          : false
+                      }
+                      guideBelow={
+                        this.state['hoveredElement'].id === theme.id
+                          ? this.state['hoveredElement'].hasGuideBelow
+                          : false
+                      }
+                      lang={this.props.lang}
+                      onChangeThemes={this.themesHandler}
+                      onChangeSelection={this.selectionHandler}
+                      onCancellationSelection={this.selectionHandler}
+                      onDragChange={this.dragHandler}
+                      onDropOutside={this.dropOutsideHandler}
+                      onChangeOrder={this.orderHandler}
+                    />
+                  )
+              })}
             </ul>
           )}      
         </div>

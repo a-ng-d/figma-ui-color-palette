@@ -1,11 +1,12 @@
 import setData from './setData'
-import { presets } from './palettePackage'
 import Colors from '../canvas/Colors'
+import { presets } from './palettePackage'
 
 const setPaletteMigration = (palette: BaseNode) => {
   const min = palette.getPluginData('min'),
     max = palette.getPluginData('max'),
     preset = palette.getPluginData('preset'),
+    scale = palette.getPluginData('scale'),
     colors = palette.getPluginData('colors'),
     colorSpace = palette.getPluginData('colorSpace'),
     themes = palette.getPluginData('themes'),
@@ -42,10 +43,17 @@ const setPaletteMigration = (palette: BaseNode) => {
 
   if (colorSpace === '')
     palette.setPluginData('colorSpace', 'LCH')
-  
+
   // themes
   if (themes === '')
-    palette.setPluginData('themes', '[]')
+    palette.setPluginData('themes', JSON.stringify([{
+      name: 'None',
+      description: '',
+      scale: JSON.parse(scale),
+      paletteBackground: '#FFFFFF',
+      isEnabled: true,
+      id: '00000000-0000-0000-0000-000000000000'
+    }]))
 
   // view
   if (captions == 'hasCaptions' || properties == 'hasProperties') {
