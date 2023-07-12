@@ -3,6 +3,7 @@ import type {
   PresetConfiguration,
   TextColorsThemeHexModel,
 } from '../../utils/types'
+import MainMenu from '../components/MainMenu'
 import Tabs from '../components/Tabs'
 import Scale from '../modules/Scale'
 import Settings from '../modules/Settings'
@@ -58,7 +59,7 @@ export default class CreatePalette extends React.Component<Props> {
       '*'
     )
 
-  setPrimaryContexts = () => {
+  setContexts = () => {
     const contexts: Array<{
       label: string
       id: string
@@ -73,14 +74,6 @@ export default class CreatePalette extends React.Component<Props> {
         label: locals[this.props.lang].contexts.settings,
         id: 'SETTINGS',
       })
-    return contexts
-  }
-
-  setSecondaryContexts = () => {
-    const contexts: Array<{
-      label: string
-      id: string
-    }> = []
     if (features.find((feature) => feature.name === 'ABOUT').isActive)
       contexts.push({
         label: locals[this.props.lang].contexts.about,
@@ -140,11 +133,14 @@ export default class CreatePalette extends React.Component<Props> {
 
     return (
       <>
-        <Tabs
-          primaryTabs={this.setPrimaryContexts()}
-          secondaryTabs={this.setSecondaryContexts()}
-          active={this.state['context']}
-          action={this.navHandler}
+        <MainMenu
+          leftPart={
+            <Tabs
+              tabs={this.setContexts()}
+              active={this.state['context']}
+              action={this.navHandler}
+            />
+          }
         />
         <section className="controller">
           <div className="controls">{controls}</div>
