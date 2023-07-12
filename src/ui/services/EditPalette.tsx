@@ -8,6 +8,7 @@ import type {
   ThemeConfiguration,
   ExportConfiguration,
   ScaleConfiguration,
+  ThemesMessage,
 } from '../../utils/types'
 import Feature from '../components/Feature'
 import MainMenu from '../components/MainMenu'
@@ -45,6 +46,12 @@ interface Props {
   onChangeSettings: React.ChangeEventHandler
 }
 
+const themesMessage: ThemesMessage = {
+  type: 'UPDATE_THEMES',
+  data: [],
+  isEditedInRealTime: false,
+}
+
 export default class EditPalette extends React.Component<Props> {
   constructor(props) {
     super(props)
@@ -72,8 +79,17 @@ export default class EditPalette extends React.Component<Props> {
       context: (e.target as HTMLElement).dataset.feature,
     })
   
-  switchThemeHandler = () => {
-
+  switchThemeHandler = (e) => {
+    themesMessage.data = this.props.themes.map(theme => {
+      if (e.target.dataset.value === theme.id)
+        theme.isEnabled = true
+      else
+        theme.isEnabled = false
+      
+      return theme
+    })
+    parent.postMessage({ pluginMessage: themesMessage }, '*')
+    this.props.onChangeThemes(themesMessage.data)
   }
 
   // Direct actions
@@ -307,7 +323,6 @@ export default class EditPalette extends React.Component<Props> {
         )
       }
     }
-    console.log(this.props.themes)
     return (
       <>
         <MainMenu
