@@ -27,7 +27,6 @@ interface Props {
   onUpdateLocalStyles?: () => void
   onCreateLocalVariables?: () => void
   onUpdateLocalVariables?: () => void
-  onChangeView: React.ChangeEventHandler
 }
 
 export default class Settings extends React.Component<Props> {
@@ -134,7 +133,7 @@ export default class Settings extends React.Component<Props> {
               ]}
               selected={this.props.view}
               feature="UPDATE_VIEW"
-              onChange={this.props.onChangeView}
+              onChange={this.props.onChangeSettings}
             />
           </FormItem>
         </div>

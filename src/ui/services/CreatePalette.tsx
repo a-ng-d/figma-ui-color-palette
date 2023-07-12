@@ -21,7 +21,6 @@ interface Props {
   lang: string
   onChangePreset: React.ChangeEventHandler
   onCustomPreset: React.ChangeEventHandler
-  onChangeView: (view: string) => void
   onChangeSettings: React.ChangeEventHandler
 }
 
@@ -51,13 +50,6 @@ export default class CreatePalette extends React.Component<Props> {
     this.setState({
       context: (e.target as HTMLElement).dataset.feature,
     })
-
-  viewHandler = (e) => {
-    if (e.target.dataset.isBlocked === 'false') {
-      palette.view = e.target.dataset.value
-      this.props.onChangeView(e.target.dataset.value)
-    }
-  }
   
   // Direct actions
   onCreatePalette = () =>
@@ -132,7 +124,6 @@ export default class CreatePalette extends React.Component<Props> {
             lang={this.props.lang}
             onChangeSettings={this.props.onChangeSettings}
             onCreatePalette={this.onCreatePalette}
-            onChangeView={this.viewHandler}
           />
         )
         break

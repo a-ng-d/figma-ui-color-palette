@@ -16,7 +16,6 @@ import Themes from '../modules/Themes'
 import Export from '../modules/Export'
 import Settings from '../modules/Settings'
 import About from '../modules/About'
-import { palette } from '../../utils/palettePackage'
 import features from '../../utils/features'
 import { locals } from '../../content/locals'
 
@@ -38,7 +37,6 @@ interface Props {
   onChangeStop?: () => void
   onChangeColors: (colors: Array<ColorConfiguration>) => void
   onChangeThemes: (themes: Array<ThemeConfiguration>) => void
-  onChangeView: (view: string) => void
   onChangeSettings: React.ChangeEventHandler
 }
 
@@ -68,23 +66,6 @@ export default class EditPalette extends React.Component<Props> {
     this.setState({
       context: (e.target as HTMLElement).dataset.feature,
     })
-
-  viewHandler = (e) => {
-    if (e.target.dataset.isBlocked === 'false') {
-      this.props.onChangeView(e.target.dataset.value)
-      palette.view = e.target.dataset.value
-      parent.postMessage(
-        { pluginMessage: { type: 'UPDATE_VIEW', data: palette } },
-        '*'
-      )
-      this.setState({
-        selectedElement: {
-          id: '',
-          position: null,
-        },
-      })
-    }
-  }
 
   // Direct actions
   onCreateStyles = () => {
@@ -312,7 +293,6 @@ export default class EditPalette extends React.Component<Props> {
             onUpdateLocalStyles={this.onUpdateStyles}
             onCreateLocalVariables={this.onCreateVariables}
             onUpdateLocalVariables={this.onUpdateVariables}
-            onChangeView={this.viewHandler}
           />
         )
         break

@@ -229,6 +229,21 @@ class App extends React.Component {
         parent.postMessage({ pluginMessage: settingsMessage }, '*')
     }
 
+    const updateView = () => {
+      if (e.target.dataset.isBlocked === 'false') {
+        palette.view = e.target.dataset.value
+        this.setState({
+          view: e.target.dataset.value,
+          onGoingStep: 'view changed'
+        })
+        if (this.state['service'] === 'EDIT')
+          parent.postMessage(
+            { pluginMessage: { type: 'UPDATE_VIEW', data: palette } },
+            '*'
+          )
+      }
+    }
+
     const updateColorSpace = () => {
       settingsMessage.data.name = this.state['name']
       settingsMessage.data.colorSpace = e.target.dataset.value
@@ -313,6 +328,7 @@ class App extends React.Component {
 
     const actions: ActionsList = {
       RENAME_PALETTE: () => renamePalette(),
+      UPDATE_VIEW: () => updateView(),
       UPDATE_COLOR_SPACE: () => updateColorSpace(),
       UPDATE_ALGORITHM_VERSION: () => updateAlgorythmVersion(),
       CHANGE_TEXT_LIGHT_COLOR: () => updateTextLightColor(),
@@ -321,9 +337,6 @@ class App extends React.Component {
 
     return actions[e.target.dataset.feature]?.()
   }
-
-  viewHandler = (view: string) =>
-    this.setState({ view: view, onGoingStep: 'view changed' })
 
   highlightHandler = (action: string) => {
     const openHighlight = () => this.setState({ hasHighlight: true })
@@ -559,9 +572,6 @@ class App extends React.Component {
               lang={this.state['lang']}
               onChangePreset={this.presetHandler}
               onCustomPreset={this.customHandler}
-              onChangeView={(view: string) =>
-                this.setState({ view: view, onGoingStep: 'view changed' })
-              }
               onChangeSettings={this.settingsHandler}
             />
           ) : null}
@@ -590,7 +600,6 @@ class App extends React.Component {
               onChangeStop={this.customSlideHandler}
               onChangeColors={this.colorHandler}
               onChangeThemes={this.themeHandler}
-              onChangeView={this.viewHandler}
               onChangeSettings={this.settingsHandler}
             />
           ) : null}
