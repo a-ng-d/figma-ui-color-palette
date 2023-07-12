@@ -9,7 +9,7 @@ const updateLocalStyles = (palette, i: number) => {
 
   if (palette.children.length == 1) {
     i = 0
-    let j: number = 0
+    let j = 0
 
     JSON.parse(palette.getPluginData('data')).forEach(
       (color: PaletteDataItem) => {
