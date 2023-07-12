@@ -15,6 +15,7 @@ import ThemeItem from '../components/ThemeItem'
 import Actions from './Actions'
 import { locals } from '../../content/locals'
 import { v4 as uuidv4 } from 'uuid'
+import isBlocked from '../../utils/isBlocked'
 
 interface Props {
   scale: ScaleConfiguration
@@ -265,8 +266,15 @@ export default class Themes extends React.Component<Props> {
               <Button
                 icon="plus"
                 type="icon"
+                state={
+                  isBlocked('THEMES', this.props.planStatus) ? 'disabled' : ''
+                }
                 feature="ADD_THEME"
-                action={this.themesHandler}
+                action={
+                  isBlocked('THEMES', this.props.planStatus)
+                    ? () => null
+                    : this.themesHandler
+                }
               />
             </div>
           </div>
@@ -281,7 +289,12 @@ export default class Themes extends React.Component<Props> {
                   type='primary'
                   feature="ADD_THEME"
                   label={locals[this.props.lang].themes.callout.cta}
-                  action={this.themesHandler}
+                  isBlocked={isBlocked('THEMES', this.props.planStatus)}
+                  action={
+                    isBlocked('THEMES', this.props.planStatus)
+                      ? () => null
+                      : this.themesHandler
+                  }
                 />
               </div>
             </div>

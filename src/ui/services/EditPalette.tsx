@@ -22,6 +22,7 @@ import FormItem from '../components/FormItem'
 import Dropdown from '../components/Dropdown'
 import features from '../../utils/features'
 import { locals } from '../../content/locals'
+import isBlocked from '../../utils/isBlocked'
 
 interface Props {
   name: string
@@ -343,7 +344,7 @@ export default class EditPalette extends React.Component<Props> {
                   selected={this.props.themes.find(theme => theme.isEnabled).id}
                   actions={[{
                     label: 'Create a color theme',
-                    isBlocked: false,
+                    isBlocked: isBlocked('THEMES', this.props.planStatus),
                     action: () => this.setState({ context: 'THEMES' }),
                   }]}
                   feature="SWITCH_THEME"

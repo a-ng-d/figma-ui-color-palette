@@ -8,20 +8,23 @@ interface Props {
   isLink?: boolean
   url?: string
   feature?: string
+  isBlocked?: boolean
   action?: React.MouseEventHandler
 }
 
 export default class Button extends React.Component<Props> {
   static defaultProps = {
     isLink: false,
+    isBlocked: false
   }
 
   // Templates
   Button = () => {
     return (
       <button
-        className={`button button--${this.props.type}`}
+        className={`button button--${this.props.type}${this.props.isBlocked ? ' button--blocked' : ''}`}
         data-feature={this.props.feature}
+        disabled={this.props.isBlocked}
         onMouseDown={this.props.action}
       >
         {this.props.label}

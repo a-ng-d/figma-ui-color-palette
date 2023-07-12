@@ -207,6 +207,11 @@
   --black3: var(--figma-color-border-brand-strong);
 }
 
+.button--primary:disabled {
+  --black3: var(--figma-color-bg-disabled);
+  --white: var(--figma-color-text-ondisabled);
+}
+
 .button--secondary {
   --white: var(--figma-color-bg);
   --black8: var(--figma-color-text);
@@ -271,7 +276,7 @@
   background-color: var(--figma-color-bg-brand);
 }
 
-div.icon-button--disabled {
+.icon-button--disabled {
   opacity: 1;
 }
 
@@ -281,7 +286,7 @@ div.icon-button--disabled {
 
 /* Select menu */
 .select-menu {
-  min-width: 160px;
+  min-width: 200px;
 }
 
 .select-menu__button {
@@ -415,6 +420,7 @@ div.icon-button--disabled {
 }
 
 /* Blocked state */
+.button--blocked:after,
 .radio--blocked:after,
 .form-item--blocked:after,
 .switch--blocked:after,

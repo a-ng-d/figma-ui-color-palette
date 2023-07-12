@@ -192,7 +192,9 @@ export default class Scale extends React.Component<Props> {
                       this.props.preset.scale.length == 24 ? 'disabled' : ''
                     }
                     feature="ADD_STOP"
-                    action={this.props.onAddStop}
+                    action={this.props.preset.scale.length >= 24
+                      ? () => null
+                      : this.props.onAddStop}
                   />
                 ) : null}
               </Feature>
