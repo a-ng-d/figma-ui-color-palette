@@ -112,7 +112,10 @@ export default class Themes extends React.Component<Props> {
     themesMessage.isEditedInRealTime = false
 
     const addTheme = () => {
-      themesMessage.data = this.props.themes
+      themesMessage.data = this.props.themes.map(theme => {
+        theme.isEnabled = false
+        return theme
+      })
       const hasAlreadyNewUITheme = themesMessage.data.filter((color) =>
         color.name.includes('New UI Theme')
       )
@@ -121,7 +124,7 @@ export default class Themes extends React.Component<Props> {
         description: '',
         scale: this.doLightnessScale(this.props.preset),
         paletteBackground: '#FFFFFF',
-        isEnabled: false,
+        isEnabled: true,
         id: uuidv4(),
       })
       this.props.onChangeThemes(themesMessage.data)
