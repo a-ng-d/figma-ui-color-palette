@@ -3,6 +3,7 @@ import type {
   ActionsList,
   DispatchProcess,
   HoveredColor,
+  PresetConfiguration,
   ScaleConfiguration,
   SelectedColor,
   ThemeConfiguration,
@@ -16,8 +17,10 @@ import Actions from './Actions'
 import { locals } from '../../content/locals'
 import { v4 as uuidv4 } from 'uuid'
 import isBlocked from '../../utils/isBlocked'
+import doMap from '../../utils/doMap'
 
 interface Props {
+  preset: PresetConfiguration
   scale: ScaleConfiguration
   themes: Array<ThemeConfiguration>
   view: string
@@ -85,6 +88,20 @@ export default class Themes extends React.Component<Props> {
         })
   }
 
+  doLightnessScale = (preset) => {
+    let granularity = 1
+    const scale: ScaleConfiguration = {}
+
+    preset.scale.map((index) => {
+      scale[`lightness-${index}`] = parseFloat(
+        doMap(granularity, 0, 1, preset.min, preset.max).toFixed(1)
+      )
+      granularity -= 1 / (preset.scale.length - 1)
+    })
+
+    return scale
+  }
+
   // Handlers
   themesHandler = (e) => {
     let id: string
@@ -102,7 +119,7 @@ export default class Themes extends React.Component<Props> {
       themesMessage.data.push({
         name: `New UI Theme ${hasAlreadyNewUITheme.length + 1}`,
         description: '',
-        scale: this.props.scale,
+        scale: this.doLightnessScale(this.props.preset),
         paletteBackground: '#FFFFFF',
         isEnabled: false,
         id: uuidv4(),

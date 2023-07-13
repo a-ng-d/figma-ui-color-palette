@@ -262,6 +262,7 @@ export default class EditPalette extends React.Component<Props> {
       case 'THEMES': {
         controls = (
           <Themes
+            preset={this.props.preset}
             scale={this.props.scale}
             themes={this.props.themes}
             view={this.props.view}
