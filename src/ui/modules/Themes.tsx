@@ -94,7 +94,7 @@ export default class Themes extends React.Component<Props> {
 
     preset.scale.map((index) => {
       scale[`lightness-${index}`] = parseFloat(
-        doMap(granularity, 0, 1, preset.min, preset.max).toFixed(1)
+        doMap(granularity, 0, 1, preset.min == undefined ? 10 : preset.min, preset.max == undefined ? 90 : preset.max).toFixed(1)
       )
       granularity -= 1 / (preset.scale.length - 1)
     })
