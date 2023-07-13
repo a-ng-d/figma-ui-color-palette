@@ -70,6 +70,13 @@ export default class Title {
         12
       ).makeNodeTag()
     )
+    this.nodeProps.appendChild(
+      new Tag(
+        '_theme',
+        `Theme: ${this.parent.themes.find(theme => theme.isEnabled).name}`,
+        12
+      ).makeNodeTag()
+    )
 
     return this.nodeProps
   }
