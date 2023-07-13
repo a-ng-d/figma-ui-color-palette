@@ -10,6 +10,7 @@ export default class Colors {
   palette: FrameNode
   paletteData: Array<PaletteDataItem>
   currentScale: ScaleConfiguration
+  paletteBackgroundGl: Array<number>
   sampleScale: number
   sampleRatio: number
   sampleSize: number
@@ -24,6 +25,7 @@ export default class Colors {
     this.palette = palette
     this.paletteData = []
     this.currentScale = this.parent.themes.find(theme => theme.isEnabled).scale
+    this.paletteBackgroundGl = chroma(this.parent.themes.find(theme => theme.isEnabled).paletteBackground).gl()
     this.sampleScale = 1.75
     this.sampleRatio = 3 / 2
     this.sampleSize = 184
@@ -469,6 +471,17 @@ export default class Colors {
     this.makePaletteData()
     if (this.parent.colors.length == 0)
       this.node.appendChild(this.makeEmptyCase())
+    
+    this.palette.fills = [
+      {
+        type: 'SOLID',
+        color: {
+          r: this.paletteBackgroundGl[0],
+          g: this.paletteBackgroundGl[1],
+          b: this.paletteBackgroundGl[2]
+        }
+      }
+    ]
 
     return this.node
   }
