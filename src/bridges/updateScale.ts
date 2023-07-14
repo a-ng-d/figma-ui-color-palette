@@ -11,6 +11,7 @@ import {
 } from './processSelection'
 import Colors from './../canvas/Colors'
 import { locals, lang } from '../content/locals'
+import doLightnessScale from '../utils/doLightnessScale'
 
 const updateScale = (msg, palette) => {
   palette = isSelectionChanged ? previousSelection[0] : currentSelection[0]
@@ -33,6 +34,18 @@ const updateScale = (msg, palette) => {
       algorithmVersion: string = palette.getPluginData('algorithmVersion')
     
     themes.find(theme => theme.isEnabled).scale = msg.data.scale
+    if (msg.feature === 'ADD_STOP' || msg.feature === 'DELETE_STOP')
+      themes.forEach(theme => {
+        if (!theme.isEnabled) {
+          theme.scale = doLightnessScale(
+            Object.keys(msg.data.scale).map(stop => {
+              return parseFloat(stop.replace('lightness-', ''))
+            }),
+            theme.scale[Object.keys(theme.scale)[Object.keys(theme.scale).length - 1]],
+            theme.scale[Object.keys(theme.scale)[0]],
+          )
+        }
+      })
     palette.setPluginData('themes', JSON.stringify(themes))
 
     if (Object.keys(msg.data.preset).length != 0)

@@ -17,6 +17,7 @@ import Dialog from './modules/Dialog'
 import Shortcuts from './modules/Shortcuts'
 import package_json from './../../package.json'
 import { palette, presets } from '../utils/palettePackage'
+import doLightnessScale from '../utils/doLightnessScale'
 import features from '../utils/features'
 import { v4 as uuidv4 } from 'uuid'
 import { locals } from '../content/locals'
@@ -185,6 +186,11 @@ class App extends React.Component {
   slideHandler = () =>
     this.setState({
       newScale: palette.scale,
+      themes: this.state['themes'].map(theme => {
+        if (theme.isEnabled)
+          theme.scale = palette.scale
+        return theme
+      }),
       onGoingStep: 'scale changed',
     })
 
@@ -195,13 +201,26 @@ class App extends React.Component {
           ? this.state['preset']
           : palette.preset,
       newScale: palette.scale,
-      onGoingStep: 'stop changed',
+      themes: this.state['themes'].map(theme => {
+        if (theme.isEnabled)
+          theme.scale = palette.scale
+        else
+          theme.scale = doLightnessScale(
+            Object.keys(palette.scale).map(stop => {
+              return parseFloat(stop.replace('lightness-', ''))
+            }),
+            theme.scale[Object.keys(theme.scale)[Object.keys(theme.scale).length - 1]],
+            theme.scale[Object.keys(theme.scale)[0]],
+          )
+        return theme
+      }),
+      onGoingStep: 'stops changed',
     })
 
   colorsHandler = (colors: Array<ColorConfiguration>) =>
     this.setState({
       newColors: colors,
-      onGoingStep: 'color changed',
+      onGoingStep: 'colors changed',
     })
   
   themesHandler = (themes: Array<ThemeConfiguration>) =>

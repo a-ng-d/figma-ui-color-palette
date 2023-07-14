@@ -55,7 +55,7 @@ export default class Scale extends React.Component<Props> {
   }
 
   // Handlers
-  slideHandler = (state: string) => {
+  slideHandler = (state: string, feature?) => {
     const onReleaseStop = () => {
       this.dispatch.scale.on.status = false
       parent.postMessage(
@@ -78,6 +78,7 @@ export default class Scale extends React.Component<Props> {
             type: 'UPDATE_SCALE',
             data: palette,
             isEditedInRealTime: false,
+            feature: feature
           },
         },
         '*'

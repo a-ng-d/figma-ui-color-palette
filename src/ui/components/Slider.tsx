@@ -20,9 +20,7 @@ interface Props {
   scale?: ScaleConfiguration
   onChange: (
     state: string,
-    e?:
-      | React.FocusEvent<HTMLInputElement>
-      | React.KeyboardEvent<HTMLInputElement>
+    feature?: string
   ) => void
 }
 
@@ -287,7 +285,7 @@ export default class Slider extends React.Component<Props> {
         this.props.min,
         this.props.max
       )
-      this.props.onChange('SHIFTED')
+      this.props.onChange('SHIFTED', 'ADD_STOP')
     }
   }
 
@@ -305,7 +303,7 @@ export default class Slider extends React.Component<Props> {
         state: 'NORMAL',
       },
     })
-    this.props.onChange('SHIFTED')
+    this.props.onChange('SHIFTED', 'DELETE_STOP')
   }
 
   onShiftRight = (e: KeyboardEvent) => {

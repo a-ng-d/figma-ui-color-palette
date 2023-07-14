@@ -18,6 +18,7 @@ import { locals } from '../../content/locals'
 import { v4 as uuidv4 } from 'uuid'
 import isBlocked from '../../utils/isBlocked'
 import doMap from '../../utils/doMap'
+import doLightnessScale from '../../utils/doLightnessScale'
 
 interface Props {
   preset: PresetConfiguration
@@ -88,20 +89,6 @@ export default class Themes extends React.Component<Props> {
         })
   }
 
-  doLightnessScale = (preset) => {
-    let granularity = 1
-    const scale: ScaleConfiguration = {}
-
-    preset.scale.map((index) => {
-      scale[`lightness-${index}`] = parseFloat(
-        doMap(granularity, 0, 1, preset.min == undefined ? 10 : preset.min, preset.max == undefined ? 90 : preset.max).toFixed(1)
-      )
-      granularity -= 1 / (preset.scale.length - 1)
-    })
-
-    return scale
-  }
-
   // Handlers
   themesHandler = (e) => {
     let id: string
@@ -122,7 +109,11 @@ export default class Themes extends React.Component<Props> {
       themesMessage.data.push({
         name: `New UI Theme ${hasAlreadyNewUITheme.length + 1}`,
         description: '',
-        scale: this.doLightnessScale(this.props.preset),
+        scale: doLightnessScale(
+          this.props.preset.scale,
+          this.props.preset.min == undefined ? 10 : this.props.preset.min,
+          this.props.preset.max == undefined ? 90 : this.props.preset.max
+        ),
         paletteBackground: '#FFFFFF',
         isEnabled: true,
         id: uuidv4(),
