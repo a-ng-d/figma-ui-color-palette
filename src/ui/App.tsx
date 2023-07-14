@@ -59,7 +59,7 @@ class App extends React.Component {
       service: '',
       name: '',
       preset: presets.material,
-      newScale: {},
+      scale: {},
       newColors: {},
       colorSpace: 'LCH',
       themes: [],
@@ -185,7 +185,7 @@ class App extends React.Component {
 
   slideHandler = () =>
     this.setState({
-      newScale: palette.scale,
+      scale: palette.scale,
       themes: this.state['themes'].map(theme => {
         if (theme.isEnabled)
           theme.scale = palette.scale
@@ -200,7 +200,7 @@ class App extends React.Component {
         Object.keys(palette.preset).length == 0
           ? this.state['preset']
           : palette.preset,
-      newScale: palette.scale,
+      scale: palette.scale,
       themes: this.state['themes'].map(theme => {
         if (theme.isEnabled)
           theme.scale = palette.scale
@@ -225,7 +225,7 @@ class App extends React.Component {
   
   themesHandler = (themes: Array<ThemeConfiguration>) =>
     this.setState({
-      newScale: themes.find(theme => theme.isEnabled).scale,
+      scale: themes.find(theme => theme.isEnabled).scale,
       themes: themes,
       onGoingStep: 'themes changed',
     })
@@ -482,7 +482,7 @@ class App extends React.Component {
             service: 'EDIT',
             name: e.data.pluginMessage.data.name,
             preset: e.data.pluginMessage.data.preset,
-            newScale: e.data.pluginMessage.data.scale,
+            scale: e.data.pluginMessage.data.scale,
             newColors: putIdsOnColors,
             colorSpace: e.data.pluginMessage.data.colorSpace,
             themes: e.data.pluginMessage.data.themes,
@@ -605,7 +605,7 @@ class App extends React.Component {
             <EditPalette
               name={this.state['name']}
               preset={this.state['preset']}
-              scale={this.state['newScale']}
+              scale={this.state['scale']}
               colors={this.state['newColors']}
               colorSpace={this.state['colorSpace']}
               themes={this.state['themes']}
