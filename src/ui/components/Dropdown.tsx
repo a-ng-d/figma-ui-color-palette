@@ -67,7 +67,7 @@ export default class Dropdown extends React.Component<Props> {
       }
       if (
         this.listRef.current.getBoundingClientRect().bottom >
-        document.body.clientHeight - 16
+        document.body.clientHeight - 40
       ) {
         this.listRef.current.style.top = 'auto'
         this.listRef.current.style.bottom = '-6px'
