@@ -41,7 +41,7 @@ export default class Palette {
     this.colors = []
     this.colorSpace = colorSpace
     this.themes = [{
-      name: 'None',
+      name: locals[lang].themes.switchTheme.defaultTheme,
       description: '',
       scale: this.scale,
       paletteBackground: '#FFFFFF',

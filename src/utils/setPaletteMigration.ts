@@ -1,6 +1,7 @@
 import setData from './setData'
 import Colors from '../canvas/Colors'
 import { presets } from './palettePackage'
+import { lang, locals } from '../content/locals'
 
 const setPaletteMigration = (palette: BaseNode) => {
   const min = palette.getPluginData('min'),
@@ -47,7 +48,7 @@ const setPaletteMigration = (palette: BaseNode) => {
   // themes
   if (themes === '')
     palette.setPluginData('themes', JSON.stringify([{
-      name: 'None',
+      name: locals[lang].themes.switchTheme.defaultTheme,
       description: '',
       scale: JSON.parse(scale),
       paletteBackground: '#FFFFFF',
@@ -78,7 +79,8 @@ const setPaletteMigration = (palette: BaseNode) => {
   }
 
   // algorithm
-  if (algorithmVersion === '') palette.setPluginData('algorithmVersion', 'v1')
+  if (algorithmVersion === '')
+    palette.setPluginData('algorithmVersion', 'v1')
 
   // data
   if (
