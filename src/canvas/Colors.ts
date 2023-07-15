@@ -1,5 +1,5 @@
 import chroma from 'chroma-js'
-import type { PaletteNode, PaletteDataItem, ScaleConfiguration } from '../utils/types'
+import type { PaletteNode, ScaleConfiguration, PaletteDataThemeItem, PaletteDataColorItem, PaletteData } from '../utils/types'
 import Sample from './Sample'
 import Header from './Header'
 import Title from './Title'
@@ -8,7 +8,7 @@ import { locals, lang } from '../content/locals'
 export default class Colors {
   parent: PaletteNode
   palette: FrameNode
-  paletteData: Array<PaletteDataItem>
+  paletteData: PaletteData
   currentScale: ScaleConfiguration
   paletteBackgroundGl: Array<number>
   sampleScale: number
@@ -23,7 +23,11 @@ export default class Colors {
   constructor(parent?: PaletteNode, palette?: FrameNode) {
     this.parent = parent
     this.palette = palette
-    this.paletteData = []
+    this.paletteData = {
+      name: this.parent.name,
+      themes: [],
+      type: 'palette'
+    }
     this.currentScale = this.parent.themes.find(theme => theme.isEnabled).scale
     this.paletteBackgroundGl = chroma(this.parent.themes.find(theme => theme.isEnabled).paletteBackground).gl()
     this.sampleScale = 1.75
@@ -206,92 +210,104 @@ export default class Colors {
   }
 
   makePaletteData = () => {
-    this.parent.colors.forEach((color) => {
-      const paletteDataItem: PaletteDataItem = {
-          name: color.name,
-          description: color.description,
-          shades: [],
-        },
-        sourceColor: Array<number> = chroma([
-          color.rgb.r * 255,
-          color.rgb.g * 255,
-          color.rgb.b * 255,
-        ])._rgb
-
-      paletteDataItem.shades.push({
-        name: 'source',
-        description: 'Source color',
-        hex: chroma(sourceColor).hex(),
-        rgb: sourceColor,
-        gl: chroma(sourceColor).gl(),
-        lch: chroma(sourceColor).lch(),
-        oklch: chroma(sourceColor).oklch(),
-        lab: chroma(sourceColor).lab(),
-        oklab: chroma(sourceColor).oklab(),
-        hsl: chroma(sourceColor).hsl(),
-      })
-
-      Object.values(this.currentScale)
-        .reverse()
-        .forEach((lightness: number) => {
-          let newColor: { _rgb: Array<number> }
-
-          if (this.parent.colorSpace === 'LCH')
-            newColor = this.getShadeColorFromLch(
-              sourceColor,
-              lightness,
-              color.hueShifting,
-              this.parent.algorithmVersion
-            )
-          else if (this.parent.colorSpace === 'OKLCH')
-            newColor = this.getShadeColorFromOklch(
-              sourceColor,
-              lightness,
-              color.hueShifting,
-              this.parent.algorithmVersion
-            )
-          else if (this.parent.colorSpace === 'LAB')
-            newColor = this.getShadeColorFromLab(
-              sourceColor,
-              lightness,
-              color.hueShifting,
-              this.parent.algorithmVersion
-            )
-          else if (this.parent.colorSpace === 'OKLAB')
-            newColor = this.getShadeColorFromOklab(
-              sourceColor,
-              lightness,
-              color.hueShifting,
-              this.parent.algorithmVersion
-            )
-          else if (this.parent.colorSpace === 'HSL')
-            newColor = this.getShadeColorFromHsl(
-              sourceColor,
-              lightness,
-              color.hueShifting,
-              this.parent.algorithmVersion
-            )
-
-          const scaleName: string = Object.keys(this.currentScale)
-            .find((key) => this.currentScale[key] === lightness)
-            .substr(10)
-
-          paletteDataItem.shades.push({
-            name: scaleName,
-            description: 'Shade color with ' + lightness + '% of lightness',
-            hex: chroma(newColor).hex(),
-            rgb: newColor._rgb,
-            gl: chroma(newColor).gl(),
-            lch: chroma(newColor).lch(),
-            oklch: chroma(newColor).oklch(),
-            lab: chroma(newColor).lab(),
-            oklab: chroma(newColor).oklab(),
-            hsl: chroma(newColor).hsl(),
-          })
+    this.parent.themes.forEach((theme => {
+      const paletteDataThemeItem: PaletteDataThemeItem = {
+        name: theme.name,
+        description: theme.description,
+        colors: [],
+        type: theme.id === '00000000-0000-0000-0000-000000000000' ? 'default theme' : 'custom theme',
+      }
+      this.parent.colors.forEach((color) => {
+        const paletteDataColorItem: PaletteDataColorItem = {
+            name: color.name,
+            description: color.description,
+            shades: [],
+            type: 'color',
+          },
+          sourceColor: Array<number> = chroma([
+            color.rgb.r * 255,
+            color.rgb.g * 255,
+            color.rgb.b * 255,
+          ])._rgb
+  
+        paletteDataColorItem.shades.push({
+          name: 'source',
+          description: 'Source color',
+          hex: chroma(sourceColor).hex(),
+          rgb: sourceColor,
+          gl: chroma(sourceColor).gl(),
+          lch: chroma(sourceColor).lch(),
+          oklch: chroma(sourceColor).oklch(),
+          lab: chroma(sourceColor).lab(),
+          oklab: chroma(sourceColor).oklab(),
+          hsl: chroma(sourceColor).hsl(),
+          type: 'source color'
         })
-
-      this.paletteData.push(paletteDataItem)
-    })
+  
+        Object.values(theme.scale)
+          .reverse()
+          .forEach((lightness: number) => {
+            let newColor: { _rgb: Array<number> }
+  
+            if (this.parent.colorSpace === 'LCH')
+              newColor = this.getShadeColorFromLch(
+                sourceColor,
+                lightness,
+                color.hueShifting,
+                this.parent.algorithmVersion
+              )
+            else if (this.parent.colorSpace === 'OKLCH')
+              newColor = this.getShadeColorFromOklch(
+                sourceColor,
+                lightness,
+                color.hueShifting,
+                this.parent.algorithmVersion
+              )
+            else if (this.parent.colorSpace === 'LAB')
+              newColor = this.getShadeColorFromLab(
+                sourceColor,
+                lightness,
+                color.hueShifting,
+                this.parent.algorithmVersion
+              )
+            else if (this.parent.colorSpace === 'OKLAB')
+              newColor = this.getShadeColorFromOklab(
+                sourceColor,
+                lightness,
+                color.hueShifting,
+                this.parent.algorithmVersion
+              )
+            else if (this.parent.colorSpace === 'HSL')
+              newColor = this.getShadeColorFromHsl(
+                sourceColor,
+                lightness,
+                color.hueShifting,
+                this.parent.algorithmVersion
+              )
+  
+            const scaleName: string = Object.keys(theme.scale)
+              .find((key) => theme.scale[key] === lightness)
+              .substr(10)
+  
+            paletteDataColorItem.shades.push({
+              name: scaleName,
+              description: 'Shade color with ' + lightness + '% of lightness',
+              hex: chroma(newColor).hex(),
+              rgb: newColor._rgb,
+              gl: chroma(newColor).gl(),
+              lch: chroma(newColor).lch(),
+              oklch: chroma(newColor).oklch(),
+              lab: chroma(newColor).lab(),
+              oklab: chroma(newColor).oklab(),
+              hsl: chroma(newColor).hsl(),
+              type: 'color shade'
+            })
+          })
+  
+        paletteDataThemeItem.colors.push(paletteDataColorItem)
+      })
+      this.paletteData.themes.push(paletteDataThemeItem)
+    }))
 
     this.palette.setPluginData('data', JSON.stringify(this.paletteData))
   }

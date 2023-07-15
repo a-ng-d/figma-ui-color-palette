@@ -52,21 +52,38 @@ export interface PaletteNode {
   algorithmVersion: string
 }
 
-export interface PaletteDataItem {
+export interface PaletteData {
+  name: string
+  themes: Array<PaletteDataThemeItem>
+  type: string
+}
+
+export interface PaletteDataThemeItem {
   name: string
   description: string
-  shades: Array<{
-    name: string
-    description: string
-    hex: string
-    rgb: Array<number>
-    gl: Array<number>
-    lch: Array<number>
-    oklch: Array<number>
-    lab: Array<number>
-    oklab: Array<number>
-    hsl: Array<number>
-  }>
+  colors: Array<PaletteDataColorItem>
+  type: string
+}
+
+export interface PaletteDataColorItem {
+  name: string
+  description: string
+  shades: Array<PaletteDataShadeItem>
+  type: string
+}
+
+export interface PaletteDataShadeItem {
+  name: string
+  description: string
+  hex: string
+  rgb: Array<number>
+  gl: Array<number>
+  lch: Array<number>
+  oklch: Array<number>
+  lab: Array<number>
+  oklab: Array<number>
+  hsl: Array<number>
+  type: string
 }
 
 // Palette configurations
