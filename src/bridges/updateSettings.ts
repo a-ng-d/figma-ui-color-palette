@@ -17,17 +17,7 @@ const updateSettings = (msg, palette) => {
       themes: Array<ThemeConfiguration> = JSON.parse(palette.getPluginData(('themes'))),
       view: string = palette.getPluginData('view')
 
-    let name: string
-
     palette.setPluginData('name', msg.data.name)
-    ;(name =
-      palette.getPluginData('name') === '' ||
-      palette.getPluginData('name') == undefined
-        ? locals[lang].name
-        : palette.getPluginData('name')),
-      (palette.name = `${
-        msg.data.name === '' ? locals[lang].name : msg.data.name
-      }﹒${preset.name}﹒${view.includes('PALETTE') ? 'Palette' : 'Sheet'}`)
     palette.setPluginData('colorSpace', msg.data.colorSpace)
     palette.setPluginData(
       'textColorsTheme',
@@ -39,7 +29,7 @@ const updateSettings = (msg, palette) => {
     palette.appendChild(
       new Colors(
         {
-          name: name,
+          name: msg.data.name,
           preset: preset,
           scale: scale,
           colors: colors,
@@ -55,7 +45,7 @@ const updateSettings = (msg, palette) => {
 
     // palette migration
     palette.counterAxisSizingMode = 'AUTO'
-    palette.name = `${name}﹒${preset.name}﹒${msg.data.colorSpace} ${
+    palette.name = `${msg.data.name === '' ? locals[lang].name : msg.data.name}﹒${preset.name}﹒${msg.data.colorSpace} ${
       view.includes('PALETTE') ? 'Palette' : 'Sheet'
     }`
   } else figma.notify(locals[lang].error.corruption)

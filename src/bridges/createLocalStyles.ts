@@ -1,35 +1,62 @@
-import type { PaletteDataItem } from '../utils/types'
+import type { PaletteData, PaletteDataThemeItem } from '../utils/types'
 import LocalStyle from './../canvas/LocalStyle'
 import { locals, lang } from '../content/locals'
 
 const createLocalStyles = (palette, i: number) => {
   palette = figma.currentPage.selection[0] as FrameNode
-  const localStyles: Array<PaintStyle> = figma.getLocalPaintStyles()
+  const localStyles: Array<PaintStyle> = figma.getLocalPaintStyles(),
+  paletteData: PaletteData = JSON.parse(palette.getPluginData('data'))
 
   if (palette.children.length == 1) {
     i = 0
 
-    JSON.parse(palette.getPluginData('data')).forEach(
-      (color: PaletteDataItem) => {
-        color.shades.forEach((shade) => {
-          if (
-            localStyles.find(
-              (localStyle) => localStyle.name === `${color.name}/${shade.name}`
-            ) == undefined
-          ) {
-            new LocalStyle(
-              `${color.name}/${shade.name}`,
-              color.description != ''
-                ? color.description.concat('﹒', shade.description)
-                : shade.description,
-              {
-                r: shade.gl[0],
-                g: shade.gl[1],
-                b: shade.gl[2],
-              }
-            ).makePaintStyle()
-            i++
-          }
+    paletteData.themes.forEach(
+      (theme: PaletteDataThemeItem) => {
+        theme.colors.forEach((color) => {
+          color.shades.forEach((shade) => {
+            const name = paletteData.themes.length > 1
+              ? `${paletteData.name == '' ? '' : paletteData.name + '/'}${theme.name}/${color.name}/${shade.name}`
+              : `${color.name}/${shade.name}`
+            if (
+              paletteData.themes.length > 1 &&
+              theme.type == 'custom theme' &&
+              localStyles.find(
+                (localStyle) => localStyle.name === name
+              ) == undefined
+            ) {
+              new LocalStyle(
+                name,
+                color.description != ''
+                  ? color.description.concat('﹒', shade.description)
+                  : shade.description,
+                {
+                  r: shade.gl[0],
+                  g: shade.gl[1],
+                  b: shade.gl[2],
+                }
+              ).makePaintStyle()
+              i++
+            }
+            else if (
+              paletteData.themes.length == 1 &&
+              localStyles.find(
+                (localStyle) => localStyle.name === name
+              ) == undefined
+            ) {
+              new LocalStyle(
+                name,
+                color.description != ''
+                  ? color.description.concat('﹒', shade.description)
+                  : shade.description,
+                {
+                  r: shade.gl[0],
+                  g: shade.gl[1],
+                  b: shade.gl[2],
+                }
+              ).makePaintStyle()
+              i++
+            }
+          })
         })
       }
     )
