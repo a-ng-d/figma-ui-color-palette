@@ -70,6 +70,12 @@ export default class EditPalette extends React.Component<Props> {
                 feature.isActive
             )[0].name
           : '',
+      deploymentAction:
+        features.find(
+          (feature) => feature.name === 'LOCAL_STYLES'
+        ).isActive
+          ? 'LOCAL_STYLES'
+          : 'LOCAL_VARIABLES',
     }
   }
 
@@ -229,6 +235,7 @@ export default class EditPalette extends React.Component<Props> {
             preset={this.props.preset}
             scale={this.props.scale}
             view={this.props.view}
+            actions={this.state['deploymentAction']}
             planStatus={this.props.planStatus}
             editorType={this.props.editorType}
             lang={this.props.lang}
@@ -238,6 +245,9 @@ export default class EditPalette extends React.Component<Props> {
             onUpdateLocalStyles={this.onUpdateStyles}
             onCreateLocalVariables={this.onCreateVariables}
             onUpdateLocalVariables={this.onUpdateVariables}
+            onChangeActions={(value) => this.setState({
+              deploymentAction: value
+            })}
           />
         )
         break
@@ -246,7 +256,7 @@ export default class EditPalette extends React.Component<Props> {
         controls = (
           <Colors
             colors={this.props.colors}
-            view={this.props.view}
+            actions={this.state['deploymentAction']}
             planStatus={this.props.planStatus}
             editorType={this.props.editorType}
             lang={this.props.lang}
@@ -255,6 +265,9 @@ export default class EditPalette extends React.Component<Props> {
             onUpdateLocalStyles={this.onUpdateStyles}
             onCreateLocalVariables={this.onCreateVariables}
             onUpdateLocalVariables={this.onUpdateVariables}
+            onChangeActions={(value) => this.setState({
+              deploymentAction: value
+            })}
           />
         )
         break
@@ -265,7 +278,7 @@ export default class EditPalette extends React.Component<Props> {
             preset={this.props.preset}
             scale={this.props.scale}
             themes={this.props.themes}
-            view={this.props.view}
+            actions={this.state['deploymentAction']}
             planStatus={this.props.planStatus}
             editorType={this.props.editorType}
             lang={this.props.lang}
@@ -274,6 +287,9 @@ export default class EditPalette extends React.Component<Props> {
             onUpdateLocalStyles={this.onUpdateStyles}
             onCreateLocalVariables={this.onCreateVariables}
             onUpdateLocalVariables={this.onUpdateVariables}
+            onChangeActions={(value) => this.setState({
+              deploymentAction: value
+            })}
           />
         )
         break
@@ -300,9 +316,10 @@ export default class EditPalette extends React.Component<Props> {
             context="LOCAL_STYLES"
             name={this.props.name}
             colorSpace={this.props.colorSpace}
-            isNewAlgorithm={this.props.algorithmVersion == 'v2' ? true : false}
             textColorsTheme={this.props.textColorsTheme}
             view={this.props.view}
+            isNewAlgorithm={this.props.algorithmVersion == 'v2' ? true : false}
+            actions={this.state['deploymentAction']}
             planStatus={this.props.planStatus}
             editorType={this.props.editorType}
             lang={this.props.lang}
@@ -311,6 +328,9 @@ export default class EditPalette extends React.Component<Props> {
             onUpdateLocalStyles={this.onUpdateStyles}
             onCreateLocalVariables={this.onCreateVariables}
             onUpdateLocalVariables={this.onUpdateVariables}
+            onChangeActions={(value) => this.setState({
+              deploymentAction: value
+            })}
           />
         )
         break

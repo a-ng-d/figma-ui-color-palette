@@ -8,7 +8,7 @@ import { locals } from '../../content/locals'
 
 interface Props {
   context: string
-  view?: string
+  actions?: string
   exportType?: string | null
   planStatus?: string
   lang: string
@@ -18,20 +18,10 @@ interface Props {
   onCreateLocalVariables?: React.MouseEventHandler
   onUpdateLocalVariables?: React.MouseEventHandler
   onExportPalette?: React.MouseEventHandler
+  onChangeActions?: (value: string) => void
 }
 
 export default class Actions extends React.Component<Props> {
-  constructor(props) {
-    super(props)
-    this.state = {
-      deploymentAction: features.find(
-        (feature) => feature.name === 'LOCAL_STYLES'
-      ).isActive
-        ? 'LOCAL_STYLES'
-        : 'LOCAL_VARIABLES',
-    }
-  }
-
   // Templates
   LocalStyles = () => {
     return (
@@ -125,10 +115,11 @@ export default class Actions extends React.Component<Props> {
   }
 
   Deploy = () => {
+    console.log(this.props.actions)
     return (
       <div className="actions">
         <div className="actions__right">
-          {this.state['deploymentAction'] === 'LOCAL_STYLES' ? (
+          {this.props.actions === 'LOCAL_STYLES' ? (
             <this.LocalStyles />
           ) : (
             <this.LocalVariables />
@@ -159,13 +150,9 @@ export default class Actions extends React.Component<Props> {
                 isBlocked: isBlocked('LOCAL_VARIABLES', this.props.planStatus),
               },
             ]}
-            selected={this.state['deploymentAction']}
+            selected={this.props.actions}
             feature="UPDATE_DEPLOYMENT_ACTION"
-            onChange={(e) =>
-              this.setState({
-                deploymentAction: (e.target as HTMLElement).dataset.value,
-              })
-            }
+            onChange={(e) => this.props.onChangeActions((e.target as HTMLElement).dataset.value)}
           />
         </div>
       </div>

@@ -23,7 +23,7 @@ interface Props {
   preset: PresetConfiguration
   scale: ScaleConfiguration
   themes: Array<ThemeConfiguration>
-  view: string
+  actions: string
   editorType: string
   planStatus: string
   lang: string
@@ -32,6 +32,7 @@ interface Props {
   onUpdateLocalStyles: () => void
   onCreateLocalVariables: () => void
   onUpdateLocalVariables: () => void
+  onChangeActions: (value: string) => void
 }
 
 const themesMessage: ThemesMessage = {
@@ -351,13 +352,14 @@ export default class Themes extends React.Component<Props> {
         {this.props.editorType === 'figma' ? (
           <Actions
             context="DEPLOY"
-            view={this.props.view}
+            actions={this.props.actions}
             planStatus={this.props.planStatus}
             lang={this.props.lang}
             onCreateLocalStyles={this.props.onCreateLocalStyles}
             onUpdateLocalStyles={this.props.onUpdateLocalStyles}
             onCreateLocalVariables={this.props.onCreateLocalVariables}
             onUpdateLocalVariables={this.props.onUpdateLocalVariables}
+            onChangeActions={this.props.onChangeActions}
           />
         ) : null}
       </>

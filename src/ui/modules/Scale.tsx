@@ -16,6 +16,7 @@ interface Props {
   preset: PresetConfiguration
   scale?: ScaleConfiguration
   view: string
+  actions?: string
   planStatus: string
   editorType?: string
   lang: string
@@ -29,6 +30,7 @@ interface Props {
   onUpdateLocalStyles?: () => void
   onCreateLocalVariables?: () => void
   onUpdateLocalVariables?: () => void
+  onChangeActions: (value: string) => void
 }
 
 export default class Scale extends React.Component<Props> {
@@ -230,7 +232,6 @@ export default class Scale extends React.Component<Props> {
         </div>
         <Actions
           context="CREATE"
-          view={this.props.view}
           planStatus={this.props.planStatus}
           lang={this.props.lang}
           onCreatePalette={this.props.onCreatePalette}
@@ -286,13 +287,14 @@ export default class Scale extends React.Component<Props> {
         {this.props.editorType === 'figma' ? (
           <Actions
             context="DEPLOY"
-            view={this.props.view}
+            actions={this.props.actions}
             planStatus={this.props.planStatus}
             lang={this.props.lang}
             onCreateLocalStyles={this.props.onCreateLocalStyles}
             onUpdateLocalStyles={this.props.onUpdateLocalStyles}
             onCreateLocalVariables={this.props.onCreateLocalVariables}
             onUpdateLocalVariables={this.props.onUpdateLocalVariables}
+            onChangeActions={this.props.onChangeActions}
           />
         ): null}
       </>
