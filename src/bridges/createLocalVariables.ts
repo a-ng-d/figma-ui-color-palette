@@ -57,11 +57,7 @@ const createLocalVariables = (palette, i: number, j: number) => {
               const variable = new LocalVariable(
                 collection
               ).makeVariable(
-                `${color.name}/${color.name
-                  .toLowerCase()
-                  .split(' ')
-                  .join('-')
-                  .replace(/[@$^%#&!?,;:+=<>(){}"«»]/g, '-')}-${shade.name}`,
+                `${color.name}/${shade.name}`,
                 color.description != ''
                   ? color.description.concat('﹒', shade.description)
                   : shade.description,
