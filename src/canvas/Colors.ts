@@ -26,7 +26,8 @@ export default class Colors {
     this.paletteData = {
       name: this.parent.name,
       themes: [],
-      type: 'palette'
+      collectionId: '',
+      type: 'palette',
     }
     this.currentScale = this.parent.themes.find(theme => theme.isEnabled).scale
     this.paletteBackgroundGl = chroma(this.parent.themes.find(theme => theme.isEnabled).paletteBackground).gl()
@@ -209,19 +210,65 @@ export default class Colors {
     return this.nodeEmpty
   }
 
-  makePaletteData = () => {
-    this.parent.themes.forEach((theme => {
+  searchForModeId = (
+    themes: Array<PaletteDataThemeItem>,
+    themeId: string
+  ) => {
+    const themeMatch = themes
+      .find(record => record.id === themeId),
+    modeId = themeMatch == undefined
+      ? ''
+      : themeMatch.modeId
+    
+    return modeId
+  }
+
+  searchForShadeVariableId = (
+    themes: Array<PaletteDataThemeItem>,
+    themeId: string,
+    colorId: string,
+    shadeName: string
+  ) => {
+    const themeMatch = themes
+      .find(theme => theme.id === themeId),
+    colorMatch = themeMatch == undefined
+      ? undefined
+      : themeMatch.colors
+        .find(color => color.id === colorId),
+    shadeMatch = colorMatch == undefined
+      ? undefined
+      : colorMatch.shades
+        .find(shade => shade.name === shadeName),
+    variableId = shadeMatch == undefined
+      ? ''
+      : shadeMatch.variableId
+
+    return variableId
+  }
+
+  makePaletteData = (service: string) => {
+    let data = this.paletteData
+    if (service === 'EDIT') {
+      data = JSON.parse(this.palette.getPluginData('data'))
+      this.paletteData.collectionId = data.collectionId
+    }
+
+    this.parent.themes.forEach(theme => {
+      console.log(theme.id === '00000000000')
       const paletteDataThemeItem: PaletteDataThemeItem = {
         name: theme.name,
         description: theme.description,
         colors: [],
-        type: theme.id === '00000000-0000-0000-0000-000000000000' ? 'default theme' : 'custom theme',
+        modeId: service === 'EDIT' ? this.searchForModeId(data.themes, theme.id) : '',
+        id: theme.id,
+        type: theme.id === '00000000000' ? 'default theme' : 'custom theme',
       }
-      this.parent.colors.forEach((color) => {
+      this.parent.colors.forEach(color => {
         const paletteDataColorItem: PaletteDataColorItem = {
             name: color.name,
             description: color.description,
             shades: [],
+            id: color.id,
             type: 'color',
           },
           sourceColor: Array<number> = chroma([
@@ -241,6 +288,14 @@ export default class Colors {
           lab: chroma(sourceColor).lab(),
           oklab: chroma(sourceColor).oklab(),
           hsl: chroma(sourceColor).hsl(),
+          variableId: service === 'EDIT'
+            ? this.searchForShadeVariableId(
+              data.themes,
+              theme.id,
+              color.id,
+              'source'
+              )
+            : '',
           type: 'source color'
         })
   
@@ -300,6 +355,14 @@ export default class Colors {
               lab: chroma(newColor).lab(),
               oklab: chroma(newColor).oklab(),
               hsl: chroma(newColor).hsl(),
+              variableId: service === 'EDIT'
+                ? this.searchForShadeVariableId(
+                  data.themes,
+                  theme.id,
+                  color.id,
+                  scaleName
+                  )
+                : '',
               type: 'color shade'
             })
           })
@@ -307,7 +370,7 @@ export default class Colors {
         paletteDataThemeItem.colors.push(paletteDataColorItem)
       })
       this.paletteData.themes.push(paletteDataThemeItem)
-    }))
+    })
 
     this.palette.setPluginData('data', JSON.stringify(this.paletteData))
   }
@@ -484,7 +547,7 @@ export default class Colors {
       this.nodeRow.appendChild(this.nodeRowShades)
       this.node.appendChild(this.nodeRow)
     })
-    this.makePaletteData()
+    this.makePaletteData(this.parent.service)
     if (this.parent.colors.length == 0)
       this.node.appendChild(this.makeEmptyCase())
     

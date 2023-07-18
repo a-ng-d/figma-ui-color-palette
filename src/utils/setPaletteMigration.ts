@@ -100,7 +100,7 @@ const setPaletteMigration = (palette: BaseNode) => {
         algorithmVersion: palette.getPluginData('algorithmVersion'),
       },
       palette as FrameNode
-    ).makePaletteData()
+    ).makePaletteData('EDIT')
 }
 
 export default setPaletteMigration

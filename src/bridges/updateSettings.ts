@@ -38,6 +38,7 @@ const updateSettings = (msg, palette) => {
           view: view,
           textColorsTheme: msg.data.textColorsTheme,
           algorithmVersion: msg.data.algorithmVersion,
+          service: 'EDIT',
         },
         palette
       ).makeNode()

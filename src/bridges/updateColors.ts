@@ -50,6 +50,7 @@ const updateColors = (msg, palette) => {
               : view,
           textColorsTheme: textColorsTheme,
           algorithmVersion: algorithmVersion,
+          service: 'EDIT',
         },
         palette
       ).makeNode()

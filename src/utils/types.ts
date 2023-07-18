@@ -50,11 +50,13 @@ export interface PaletteNode {
   view: string
   textColorsTheme: TextColorsThemeHexModel
   algorithmVersion: string
+  service?: string
 }
 
 export interface PaletteData {
   name: string
   themes: Array<PaletteDataThemeItem>
+  collectionId: string
   type: string
 }
 
@@ -62,6 +64,8 @@ export interface PaletteDataThemeItem {
   name: string
   description: string
   colors: Array<PaletteDataColorItem>
+  modeId: string,
+  id: string,
   type: string
 }
 
@@ -69,6 +73,7 @@ export interface PaletteDataColorItem {
   name: string
   description: string
   shades: Array<PaletteDataShadeItem>
+  id: string,
   type: string
 }
 
@@ -83,6 +88,7 @@ export interface PaletteDataShadeItem {
   lab: Array<number>
   oklab: Array<number>
   hsl: Array<number>
+  variableId: string
   type: string
 }
 

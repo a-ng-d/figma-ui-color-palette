@@ -156,8 +156,12 @@ export const locals = {
       createdLocalStyles: 'local color styles have been created',
       updatedLocalStyle: 'local color style has been updated',
       updatedLocalStyles: 'local color styles have been updated',
-      createdLocalVariable: 'local color variable has been created',
-      createdLocalVariables: 'local color variables have been created',
+      noLocalVariable: 'No local color variable',
+      createdLocalVariable: 'local color variable',
+      createdLocalVariables: 'local color variables',
+      noLocalMode: 'No local color mode',
+      createdLocalMode: 'local collection mode',
+      createdLocalModes: 'local collection modes',
       updatedLocalVariable: 'local color variable has been updated',
       updatedLocalVariables: 'local color variables have been updated',
     },
@@ -166,8 +170,8 @@ export const locals = {
         'Local color styles already exist and cannot be created twice',
       cannotUpdateLocalStyles:
         'No local color style has been updated because the UI Color Palette has not been edited',
-      cannotCreateLocalVariables:
-        'Local color variables already exist and cannot be created twice',
+      cannotCreateLocalVariablesAndMode:
+        'Local color variables and collection modes already exist and cannot be created twice',
       cannotUpdateLocalVariables:
         'No local color variables has been updated because the UI Color Palette has not been edited',
       emptySourceColors:

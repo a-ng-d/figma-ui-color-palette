@@ -8,7 +8,7 @@ import type {
 } from '../utils/types'
 import Colors from './Colors'
 import { locals, lang } from '../content/locals'
-import { v5 as uuidv5 } from 'uuid'
+import { uid } from 'uid'
 
 export default class Palette {
   name: string
@@ -21,6 +21,7 @@ export default class Palette {
   view: string
   textColorsTheme: TextColorsThemeHexModel
   algorithmVersion: string
+  service: string
   children: PaletteNode
   node: FrameNode
 
@@ -52,6 +53,7 @@ export default class Palette {
     this.view = view
     this.algorithmVersion = algorithmVersion
     this.textColorsTheme = textColorsTheme
+    this.service = 'CREATE'
     this.children = null
   }
 

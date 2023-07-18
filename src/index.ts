@@ -44,7 +44,8 @@ figma.on('run', () => isHighlightRead(package_json.version))
 
 figma.ui.onmessage = async (msg) => {
   let palette: ReadonlyArray<SceneNode>
-  const i = 0
+  const i = 0,
+        j = 0
 
   const actions: ActionsList = {
     CLOSE_HIGHLIGHT: () => closeHighlight(msg),
@@ -55,7 +56,7 @@ figma.ui.onmessage = async (msg) => {
     UPDATE_THEMES: () => updateThemes(msg, palette),
     CREATE_LOCAL_STYLES: () => createLocalStyles(palette, i),
     UPDATE_LOCAL_STYLES: () => updateLocalStyles(palette, i),
-    CREATE_LOCAL_VARIABLES: () => createLocalVariables(palette, i),
+    CREATE_LOCAL_VARIABLES: () => createLocalVariables(palette, i, j),
     UPDATE_LOCAL_VARIABLES: () => updateLocalVariables(palette, i),
     EXPORT_PALETTE: () => {
       msg.export === 'JSON' ? exportJson(palette) : null

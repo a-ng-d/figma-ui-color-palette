@@ -43,6 +43,7 @@ const updateView = (msg, palette) => {
           view: msg.data.view,
           textColorsTheme: textColorsTheme,
           algorithmVersion: algorithmVersion,
+          service: 'EDIT',
         },
         palette
       ).makeNode()
