@@ -67,11 +67,22 @@ const createLocalVariables = (palette, i: number, j: number) => {
                   : shade.description,
               )
               shade.variableId = variable.id
-              variablesSet.push({
-                variable: variable,
-                colorName: color.name,
-                shadeName: shade.name,
-              })
+              if (themesList.length == 0) {
+                variable.setValueForMode(
+                  collection.modes[0].modeId,
+                  {
+                    r: shade.gl[0],
+                    g: shade.gl[1],
+                    b: shade.gl[2],
+                  }
+                )
+                j = 1
+              } else
+                variablesSet.push({
+                  variable: variable,
+                  colorName: color.name,
+                  shadeName: shade.name,
+                })
               i++
             } else
               variablesSet.push({
@@ -110,7 +121,7 @@ const createLocalVariables = (palette, i: number, j: number) => {
           {
             r: rightShade.gl[0],
             g: rightShade.gl[1],
-            b: rightShade.gl[2]
+            b: rightShade.gl[2],
           }
         )
       })
