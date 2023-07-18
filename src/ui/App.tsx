@@ -461,12 +461,6 @@ class App extends React.Component {
         }
 
         const updateWhilePaletteSelected = () => {
-          const putIdsOnColors = e.data.pluginMessage.data.colors.map(
-            (color) => {
-              color.id === undefined ? (color.id = uid()) : null
-              return color
-            }
-          )
           isPaletteSelected = true
           palette.preset = {}
           parent.postMessage(
@@ -483,7 +477,7 @@ class App extends React.Component {
             name: e.data.pluginMessage.data.name,
             preset: e.data.pluginMessage.data.preset,
             scale: e.data.pluginMessage.data.scale,
-            newColors: putIdsOnColors,
+            newColors: e.data.pluginMessage.data.colors,
             colorSpace: e.data.pluginMessage.data.colorSpace,
             themes: e.data.pluginMessage.data.themes,
             view: e.data.pluginMessage.data.view,

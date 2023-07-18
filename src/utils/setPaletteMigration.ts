@@ -2,13 +2,14 @@ import setData from './setData'
 import Colors from '../canvas/Colors'
 import { presets } from './palettePackage'
 import { lang, locals } from '../content/locals'
+import { uid } from 'uid'
 
 const setPaletteMigration = (palette: BaseNode) => {
   const min = palette.getPluginData('min'),
     max = palette.getPluginData('max'),
     preset = palette.getPluginData('preset'),
     scale = palette.getPluginData('scale'),
-    colors = palette.getPluginData('colors'),
+    colors = JSON.parse(palette.getPluginData('colors')),
     colorSpace = palette.getPluginData('colorSpace'),
     themes = palette.getPluginData('themes'),
     captions = palette.getPluginData('captions'),
@@ -27,15 +28,23 @@ const setPaletteMigration = (palette: BaseNode) => {
     palette.setPluginData('preset', JSON.stringify(presets.material))
 
   // colors
-  if (!colors.includes('hueShifting'))
+  if (!colors[0].hasOwnProperty('hueShifting'))
     palette.setPluginData('colors', setData(colors, 'hueShifting', 0))
 
-  if (!colors.includes('description'))
+  if (!colors[0].hasOwnProperty('description'))
     palette.setPluginData('colors', setData(colors, 'description', ''))
 
+  if (!colors[0].hasOwnProperty('id'))
+    palette.setPluginData('colors', JSON.stringify(
+      colors.map(color => {
+        color.id = uid()
+        return color
+      })
+    ))
+
   if (
-    JSON.parse(colors).filter((color) => color.oklch).length ==
-    JSON.parse(colors).length
+    colors.filter((color) => color.oklch).length ==
+    colors.length
   )
     palette.setPluginData('colorSpace', 'OKLCH')
 
@@ -97,7 +106,7 @@ const setPaletteMigration = (palette: BaseNode) => {
         algorithmVersion: palette.getPluginData('algorithmVersion'),
       },
       palette as FrameNode
-    ).makePaletteData('EDIT')
+    ).makePaletteData('CREATE')
 }
 
 export default setPaletteMigration
