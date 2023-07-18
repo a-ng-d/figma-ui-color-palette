@@ -254,7 +254,6 @@ export default class Colors {
     }
 
     this.parent.themes.forEach(theme => {
-      console.log(theme.id === '00000000000')
       const paletteDataThemeItem: PaletteDataThemeItem = {
         name: theme.name,
         description: theme.description,
