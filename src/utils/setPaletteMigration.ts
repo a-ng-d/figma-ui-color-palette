@@ -27,9 +27,6 @@ const setPaletteMigration = (palette: BaseNode) => {
     palette.setPluginData('preset', JSON.stringify(presets.material))
 
   // colors
-  if (!colors.includes('oklch'))
-    palette.setPluginData('colors', setData(colors, 'oklch', false))
-
   if (!colors.includes('hueShifting'))
     palette.setPluginData('colors', setData(colors, 'hueShifting', 0))
 
