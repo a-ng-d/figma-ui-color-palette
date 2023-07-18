@@ -13,7 +13,7 @@ import Button from '../components/Button'
 import ColorItem from '../components/ColorItem'
 import Actions from './Actions'
 import { locals } from '../../content/locals'
-import { v4 as uuidv4 } from 'uuid'
+import { uid } from 'uid'
 
 interface Props {
   colors: Array<ColorConfiguration>
@@ -103,7 +103,7 @@ export default class Colors extends React.Component<Props> {
           g: 0.92,
           b: 0.97,
         },
-        id: uuidv4(),
+        id: uid(),
         oklch: false,
         hueShifting: 0,
       })

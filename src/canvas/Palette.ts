@@ -8,6 +8,7 @@ import type {
 } from '../utils/types'
 import Colors from './Colors'
 import { locals, lang } from '../content/locals'
+import { v5 as uuidv5 } from 'uuid'
 
 export default class Palette {
   name: string
@@ -46,7 +47,7 @@ export default class Palette {
       scale: this.scale,
       paletteBackground: '#FFFFFF',
       isEnabled: true,
-      id: '00000000-0000-0000-0000-000000000000'
+      id: '00000000000'
     }],
     this.view = view
     this.algorithmVersion = algorithmVersion
@@ -100,7 +101,7 @@ export default class Palette {
               name: element.name,
               description: '',
               rgb: fill.color,
-              id: undefined,
+              id: uid(),
               oklch: false,
               hueShifting: 0,
             })

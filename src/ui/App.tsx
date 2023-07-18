@@ -19,8 +19,8 @@ import package_json from './../../package.json'
 import { palette, presets } from '../utils/palettePackage'
 import doLightnessScale from '../utils/doLightnessScale'
 import features from '../utils/features'
-import { v4 as uuidv4 } from 'uuid'
 import { locals } from '../content/locals'
+import { uid } from 'uid'
 import 'figma-plugin-ds/dist/figma-plugin-ds.css'
 import './stylesheets/app.css'
 import './stylesheets/app-components.css'
@@ -463,7 +463,7 @@ class App extends React.Component {
         const updateWhilePaletteSelected = () => {
           const putIdsOnColors = e.data.pluginMessage.data.colors.map(
             (color) => {
-              color.id === undefined ? (color.id = uuidv4()) : null
+              color.id === undefined ? (color.id = uid()) : null
               return color
             }
           )

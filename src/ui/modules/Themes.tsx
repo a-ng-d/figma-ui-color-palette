@@ -14,11 +14,10 @@ import Button from '../components/Button'
 import Message from '../components/Message'
 import ThemeItem from '../components/ThemeItem'
 import Actions from './Actions'
-import { locals } from '../../content/locals'
-import { v4 as uuidv4 } from 'uuid'
 import isBlocked from '../../utils/isBlocked'
-import doMap from '../../utils/doMap'
 import doLightnessScale from '../../utils/doLightnessScale'
+import { locals } from '../../content/locals'
+import { uid } from 'uid'
 
 interface Props {
   preset: PresetConfiguration
@@ -116,7 +115,7 @@ export default class Themes extends React.Component<Props> {
         ),
         paletteBackground: '#FFFFFF',
         isEnabled: true,
-        id: uuidv4(),
+        id: uid(),
       })
       this.props.onChangeThemes(themesMessage.data)
       parent.postMessage({ pluginMessage: themesMessage }, '*')
@@ -176,7 +175,7 @@ export default class Themes extends React.Component<Props> {
     const removeTheme = () => {
       themesMessage.data = this.props.themes.filter((item) => item.id != id)
       if (this.props.themes.find(theme => theme.id === id).isEnabled)
-        themesMessage.data.find(theme => theme.id === '00000000-0000-0000-0000-000000000000').isEnabled = true
+        themesMessage.data.find(theme => theme.id === '00000000000').isEnabled = true
       this.props.onChangeThemes(themesMessage.data)
       parent.postMessage({ pluginMessage: themesMessage }, '*')
     }
@@ -314,7 +313,7 @@ export default class Themes extends React.Component<Props> {
           ) : (
             <ul className="list" ref={this.listRef}>
               {this.props.themes.map((theme, index) => {
-                if (theme.id != '00000000-0000-0000-0000-000000000000')
+                if (theme.id != '00000000000')
                   return (
                     <ThemeItem
                       key={theme.id}
