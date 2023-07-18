@@ -34,7 +34,7 @@ const updateView = (msg, palette) => {
     palette.appendChild(
       new Colors(
         {
-          name: name,
+          name: palette.getPluginData('name'),
           preset: preset,
           scale: scale,
           colors: colors,

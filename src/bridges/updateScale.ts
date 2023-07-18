@@ -55,7 +55,7 @@ const updateScale = (msg, palette) => {
     palette.appendChild(
       new Colors(
         {
-          name: name,
+          name: palette.getPluginData('name'),
           preset: preset,
           scale: msg.data.scale,
           colors: colors,

@@ -36,7 +36,7 @@ const updateThemes = (msg, palette) => {
     palette.appendChild(
       new Colors(
         {
-          name: name,
+          name: palette.getPluginData('name'),
           preset: preset,
           scale: scale,
           colors: colors,
@@ -50,6 +50,7 @@ const updateThemes = (msg, palette) => {
               : view,
           textColorsTheme: textColorsTheme,
           algorithmVersion: algorithmVersion,
+          service: 'EDIT',
         },
         palette
       ).makeNode()
