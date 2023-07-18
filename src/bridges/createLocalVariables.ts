@@ -126,11 +126,11 @@ const createLocalVariables = (palette, i: number, j: number) => {
       notifications.push(locals[lang].info.noLocalVariable)
     
     if (j > 1)
-      notifications.push(`${j} ${locals[lang].info.createdLocalModes}`)
+      notifications.push(`${j} ${locals[lang].info.createdVariableModes}`)
     else if (j == 1)
-      notifications.push(`${j} ${locals[lang].info.createdLocalMode}`)
+      notifications.push(`${j} ${locals[lang].info.createdVariableMode}`)
     else if (j == 0)
-      notifications.push(locals[lang].info.noLocalMode)
+      notifications.push(locals[lang].info.noVariableMode)
 
     if (i > 1 || j > 1)
       figma.notify(`${notifications.join(' and ')} have been created`)
