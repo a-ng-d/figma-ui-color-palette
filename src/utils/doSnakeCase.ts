@@ -3,6 +3,6 @@ const doSnakeCase = (string: string) =>
     .toLowerCase()
     .split(' ')
     .join('_')
-    .replace(/[@/$^%#&!?,;:+=<>(){}"«»]/g, '_')
+    .replace(/[@/$^%#&!?,;:+=<>(){}"«»]/g, '')
 
 export default doSnakeCase
