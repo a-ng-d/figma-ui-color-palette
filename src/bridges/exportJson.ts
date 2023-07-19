@@ -5,13 +5,13 @@ const exportJson = (palette) => {
   palette = figma.currentPage.selection[0]
 
   const paletteData: PaletteData = JSON.parse(palette.getPluginData('data')),
-  json = {},
   workingThemes = paletteData.themes
     .filter(theme => theme.type === 'custom theme').length == 0
     ? paletteData.themes
-      .filter(theme => theme.type === 'default theme')
+    .filter(theme => theme.type === 'default theme')
     : paletteData.themes
-      .filter(theme => theme.type === 'custom theme')
+    .filter(theme => theme.type === 'custom theme'),
+  json = {}
   
   const model = (shade: PaletteDataShadeItem) => {
     return {
@@ -73,7 +73,7 @@ const exportJson = (palette) => {
       workingThemes.forEach(theme => {
         theme.colors.forEach(color => {
           json[color.name] = {}
-          color.shades.reverse().forEach(shade => {
+          color.shades.sort().forEach(shade => {
             json[color.name][shade.name] = model(shade)
           })
           json[color.name]['type'] = 'color'
