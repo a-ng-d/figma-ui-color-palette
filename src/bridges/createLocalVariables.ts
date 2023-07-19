@@ -4,8 +4,8 @@ import { locals, lang } from '../content/locals'
 
 const createLocalVariables = (palette, i: number, j: number) => {
   palette = figma.currentPage.selection[0] as FrameNode
-  const localVariables: Array<Variable> = figma.variables.getLocalVariables(),
-  paletteData: PaletteData = JSON.parse(palette.getPluginData('data')),
+
+  const paletteData: PaletteData = JSON.parse(palette.getPluginData('data')),
   variablesSet: Array<{
     variable: Variable
     colorName: string
@@ -16,6 +16,7 @@ const createLocalVariables = (palette, i: number, j: number) => {
   if (palette.children.length == 1) {
     i = 0
     j = 0
+
     const name: string =
         palette.getPluginData('name') === ''
           ? locals[lang].name
@@ -42,6 +43,8 @@ const createLocalVariables = (palette, i: number, j: number) => {
       paletteData.collectionId = collection.id
     }
 
+    const localVariables: Array<Variable> = figma.variables.getLocalVariables().filter(localVariable => localVariable.variableCollectionId === collection.id)
+
     // Create variables
     paletteData.themes
       .filter(theme => theme.type === 'default theme')
@@ -58,9 +61,7 @@ const createLocalVariables = (palette, i: number, j: number) => {
                 collection
               ).makeVariable(
                 `${color.name}/${shade.name}`,
-                color.description != ''
-                  ? color.description.concat('﹒', shade.description)
-                  : shade.description,
+                shade.description
               )
               shade.variableId = variable.id
               if (themesList.length == 0) {
@@ -72,6 +73,7 @@ const createLocalVariables = (palette, i: number, j: number) => {
                     b: shade.gl[2],
                   }
                 )
+                theme.modeId = collection.modes[0].modeId
                 j = 1
               } else
                 variablesSet.push({
@@ -126,25 +128,24 @@ const createLocalVariables = (palette, i: number, j: number) => {
     palette.setPluginData('data', JSON.stringify(paletteData))
     
     if (i > 1)
-      notifications.push(`${i} ${locals[lang].info.createdLocalVariables}`)
+      notifications.push(`${i} ${locals[lang].info.localVariables}`)
     else if (i == 1)
-      notifications.push(`${i} ${locals[lang].info.createdLocalVariable}`)
+      notifications.push(`${i} ${locals[lang].info.localVariable}`)
     else if (i == 0)
       notifications.push(locals[lang].info.noLocalVariable)
     
     if (j > 1)
-      notifications.push(`${j} ${locals[lang].info.createdVariableModes}`)
+      notifications.push(`${j} ${locals[lang].info.variableModes}`)
     else if (j == 1)
-      notifications.push(`${j} ${locals[lang].info.createdVariableMode}`)
+      notifications.push(`${j} ${locals[lang].info.variableMode}`)
     else if (j == 0)
       notifications.push(locals[lang].info.noVariableMode)
 
     if (i > 1 || j > 1)
       figma.notify(`${notifications.join(' and ')} have been created`)
     else if (i == 0 && j == 0)
-      figma.notify(locals[lang].warning.cannotCreateLocalVariablesAndMode)
-    else
-      figma.notify(`${notifications.join(' and ')} has been created`)
+      figma.notify(locals[lang].warning.cannotCreateLocalVariablesAndModes)
+    else figma.notify(`${notifications.join(' and ')} has been created`)
   } else figma.notify(locals[lang].error.corruption)
 }
 

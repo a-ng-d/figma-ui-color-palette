@@ -57,7 +57,7 @@ figma.ui.onmessage = async (msg) => {
     CREATE_LOCAL_STYLES: () => createLocalStyles(palette, i),
     UPDATE_LOCAL_STYLES: () => updateLocalStyles(palette, i),
     CREATE_LOCAL_VARIABLES: () => createLocalVariables(palette, i, j),
-    UPDATE_LOCAL_VARIABLES: () => updateLocalVariables(palette, i),
+    UPDATE_LOCAL_VARIABLES: () => updateLocalVariables(palette, i, j),
     EXPORT_PALETTE: () => {
       msg.export === 'JSON' ? exportJson(palette) : null
       msg.export === 'CSS' ? exportCss(palette) : null
