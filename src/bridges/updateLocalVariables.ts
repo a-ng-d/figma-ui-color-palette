@@ -4,6 +4,7 @@ import { locals, lang } from '../content/locals'
 
 const updateLocalVariables = (palette, i: number, j: number) => {
   palette = figma.currentPage.selection[0]
+  
   const paletteData: PaletteData = JSON.parse(palette.getPluginData('data'))
 
   if (palette.children.length == 1) {
