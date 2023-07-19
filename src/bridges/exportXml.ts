@@ -1,31 +1,45 @@
-import { PaletteDataItem } from '../utils/types'
+import type { PaletteData } from '../utils/types'
 import { locals, lang } from '../content/locals'
+import doSnakeCase from '../utils/doSnakeCase'
 
 const exportXml = (palette) => {
   palette = figma.currentPage.selection[0]
-  const resources: Array<string> = []
+  const paletteData: PaletteData = JSON.parse(palette.getPluginData('data')),
+  workingThemes = paletteData.themes
+    .filter(theme => theme.type === 'custom theme').length == 0
+    ? paletteData.themes
+    .filter(theme => theme.type === 'default theme')
+    : paletteData.themes
+    .filter(theme => theme.type === 'custom theme'),
+  resources: Array<string> = []
 
   if (palette.children.length == 1) {
-    JSON.parse(palette.getPluginData('data')).forEach(
-      (color: PaletteDataItem) => {
+    workingThemes.forEach(theme => {  
+      theme.colors.forEach(color => {
         const colors: Array<string> = []
-        colors.unshift(`<!--${color.name}-->`)
-        color.shades.forEach((shade) => {
+        colors.unshift(`<!--${
+          workingThemes[0].type === 'custom theme'
+            ? theme.name + ' - '
+            : ''
+        }${color.name}-->`)
+        color.shades.forEach(shade => {
           colors.unshift(
-            `<color name="${color.name
-              .toLowerCase()
-              .split(' ')
-              .join('_')
-              .replace(/[@/$^%#&!?,;:+=<>(){}"«»]/g, '_')}_${shade.name}">${
+            `<color name="${
+              workingThemes[0].type === 'custom theme'
+                ? doSnakeCase(theme.name + ' ' + color.name)
+                : doSnakeCase(color.name)
+            }_${shade.name}">${
               shade.hex
             }</color>`
           )
         })
         colors.unshift('')
         colors.reverse().forEach((color) => resources.push(color))
-      }
-    )
+      })
+    })
+
     resources.pop()
+
     figma.ui.postMessage({
       type: 'EXPORT_PALETTE_XML',
       data: resources,

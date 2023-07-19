@@ -1,5 +1,5 @@
 import type { PaletteData } from '../utils/types'
-import doSnakeCase from '../utils/doSnakeCase'
+import doKebabCase from '../utils/doKebabCase'
 import { locals, lang } from '../content/locals'
 
 const exportCss = (palette) => {
@@ -27,8 +27,8 @@ const exportCss = (palette) => {
           rowCss.unshift(
             `--${
               workingThemes[0].type === 'custom theme'
-                ? doSnakeCase(theme.name + ' ' + color.name)
-                : doSnakeCase(color.name)
+                ? doKebabCase(theme.name + ' ' + color.name)
+                : doKebabCase(color.name)
               }-${
               shade.name
             }: rgb(${

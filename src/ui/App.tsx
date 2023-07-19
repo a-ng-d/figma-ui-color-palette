@@ -524,7 +524,7 @@ class App extends React.Component {
             export: {
               format: 'XML',
               mimeType: 'text/xml',
-              data: `<resources>\n  ${e.data.pluginMessage.data.join(
+              data: `<?xml version="1.0" encoding="utf-8"?>\n<resources>\n  ${e.data.pluginMessage.data.join(
                 '\n  '
               )}\n</resources>`,
             },
