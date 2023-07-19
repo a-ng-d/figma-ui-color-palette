@@ -27,10 +27,8 @@ const exportCss = (palette) => {
           rowCss.unshift(
             `--${
               workingThemes[0].type === 'custom theme'
-                ? doSnakeCase(theme.name) + '-'
-                : ''
-              }${
-                doSnakeCase(color.name)
+                ? doSnakeCase(theme.name + ' ' + color.name)
+                : doSnakeCase(color.name)
               }-${
               shade.name
             }: rgb(${

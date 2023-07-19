@@ -1,34 +1,52 @@
-import { PaletteDataItem } from '../utils/types'
+import type { PaletteData } from '../utils/types'
 import { locals, lang } from '../content/locals'
+import doCamelCase from '../utils/doCamelCase'
 
 const exportSwift = (palette) => {
   palette = figma.currentPage.selection[0]
-  const swift: Array<string> = []
+
+  const paletteData: PaletteData = JSON.parse(palette.getPluginData('data')),
+  workingThemes = paletteData.themes
+    .filter(theme => theme.type === 'custom theme').length == 0
+    ? paletteData.themes
+    .filter(theme => theme.type === 'default theme')
+    : paletteData.themes
+    .filter(theme => theme.type === 'custom theme'),
+  swift: Array<string> = []
 
   if (palette.children.length == 1) {
-    JSON.parse(palette.getPluginData('data')).forEach(
-      (color: PaletteDataItem) => {
+    workingThemes.forEach(theme => {  
+      theme.colors.forEach(color => {
         const UIColors: Array<string> = []
-        UIColors.unshift(`// ${color.name}`)
-        color.shades.forEach((shade) => {
+        UIColors.unshift(`// ${
+          workingThemes[0].type === 'custom theme'
+            ? theme.name + ' - '
+            : ''
+        }${color.name}`)
+        color.shades.forEach(shade => {
           UIColors.unshift(
-            `static let ${color.name
-              .toLowerCase()
-              .replace(/[^a-zA-Z0-9]+(.)/g, (m, chr) => chr.toUpperCase())
-              .replace(/[@/$^%#&!?,;:+=<>(){}"«»]/g, '')}${
+            `static let ${
+              workingThemes[0].type === 'custom theme'
+                ? doCamelCase(theme.name + ' ' + color.name)
+                : doCamelCase(color.name)
+            }${
               shade.name === 'source' ? 'Source' : shade.name
-            } = Color(red: ${shade.gl[0].toFixed(
-              3
-            )}, green: ${shade.gl[1].toFixed(3)}, blue: ${shade.gl[2].toFixed(
-              3
-            )})`
+            } = Color(red: ${
+              shade.gl[0].toFixed(3)
+            }, green: ${
+              shade.gl[1].toFixed(3)
+            }, blue: ${
+              shade.gl[2].toFixed(3)
+            })`
           )
         })
         UIColors.unshift('')
         UIColors.reverse().forEach((UIColor) => swift.push(UIColor))
-      }
-    )
+      })
+    })
+
     swift.pop()
+
     figma.ui.postMessage({
       type: 'EXPORT_PALETTE_SWIFT',
       data: swift,
