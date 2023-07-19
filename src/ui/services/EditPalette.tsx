@@ -223,6 +223,13 @@ export default class EditPalette extends React.Component<Props> {
     return contexts
   }
 
+  workingThemes = () => {
+    if (this.props.themes.length > 1)
+      return this.props.themes.filter(theme => theme.type === 'custom theme')
+    else
+      return this.props.themes.filter(theme => theme.type === 'default theme')
+  }
+
   // Render
   render() {
     let controls
@@ -234,7 +241,6 @@ export default class EditPalette extends React.Component<Props> {
             hasPreset={false}
             preset={this.props.preset}
             scale={this.props.scale}
-            view={this.props.view}
             actions={this.state['deploymentAction']}
             planStatus={this.props.planStatus}
             editorType={this.props.editorType}
@@ -368,10 +374,10 @@ export default class EditPalette extends React.Component<Props> {
               >
                 <Dropdown
                   id="presets"
-                  options={Object.entries(this.props.themes).map((theme, index) => {
+                  options={(this.workingThemes()).map((theme, index) => {
                     return {
-                      label: theme[1].name,
-                      value: theme[1].id,
+                      label: theme.name,
+                      value: theme.id,
                       position: index,
                       isActive: true,
                       isBlocked: false,

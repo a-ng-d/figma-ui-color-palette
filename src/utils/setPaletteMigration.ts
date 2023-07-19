@@ -59,7 +59,8 @@ const setPaletteMigration = (palette: BaseNode) => {
       scale: JSON.parse(scale),
       paletteBackground: '#FFFFFF',
       isEnabled: true,
-      id: '00000000000'
+      id: '00000000000',
+      type: 'default theme',
     }]))
 
   // view

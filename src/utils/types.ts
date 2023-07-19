@@ -136,6 +136,7 @@ export interface ThemeConfiguration {
   paletteBackground: string
   isEnabled: boolean
   id: string
+  type: string
 }
 
 export interface ExportConfiguration {

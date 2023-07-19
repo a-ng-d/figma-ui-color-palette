@@ -117,6 +117,7 @@ export default class Themes extends React.Component<Props> {
         paletteBackground: '#FFFFFF',
         isEnabled: true,
         id: uid(),
+        type: 'custom theme',
       })
       this.props.onChangeThemes(themesMessage.data)
       parent.postMessage({ pluginMessage: themesMessage }, '*')
@@ -175,8 +176,10 @@ export default class Themes extends React.Component<Props> {
 
     const removeTheme = () => {
       themesMessage.data = this.props.themes.filter((item) => item.id != id)
-      if (this.props.themes.find(theme => theme.id === id).isEnabled)
-        themesMessage.data.find(theme => theme.id === '00000000000').isEnabled = true
+      if (themesMessage.data.length > 1)
+        themesMessage.data.filter(item => item.type === 'custom theme')[0].isEnabled = true
+      else
+        themesMessage.data.find(item => item.type === 'default theme').isEnabled = true
       this.props.onChangeThemes(themesMessage.data)
       parent.postMessage({ pluginMessage: themesMessage }, '*')
     }

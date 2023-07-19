@@ -260,7 +260,7 @@ export default class Colors {
         colors: [],
         modeId: service === 'EDIT' ? this.searchForModeId(data.themes, theme.id) : '',
         id: theme.id,
-        type: theme.id === '00000000000' ? 'default theme' : 'custom theme',
+        type: theme.type,
       }
       this.parent.colors.forEach(color => {
         const paletteDataColorItem: PaletteDataColorItem = {
