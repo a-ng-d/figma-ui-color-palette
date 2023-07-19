@@ -115,7 +115,6 @@ export default class Actions extends React.Component<Props> {
   }
 
   Deploy = () => {
-    console.log(this.props.actions)
     return (
       <div className="actions">
         <div className="actions__right">

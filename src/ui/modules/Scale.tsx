@@ -15,7 +15,6 @@ interface Props {
   hasPreset: boolean
   preset: PresetConfiguration
   scale?: ScaleConfiguration
-  view: string
   actions?: string
   planStatus: string
   editorType?: string
@@ -30,7 +29,7 @@ interface Props {
   onUpdateLocalStyles?: () => void
   onCreateLocalVariables?: () => void
   onUpdateLocalVariables?: () => void
-  onChangeActions: (value: string) => void
+  onChangeActions?: (value: string) => void
 }
 
 export default class Scale extends React.Component<Props> {

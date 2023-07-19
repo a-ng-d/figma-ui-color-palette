@@ -28,7 +28,7 @@ interface Props {
   onUpdateLocalStyles?: () => void
   onCreateLocalVariables?: () => void
   onUpdateLocalVariables?: () => void
-  onChangeActions: (value: string) => void
+  onChangeActions?: (value: string) => void
 }
 
 export default class Settings extends React.Component<Props> {

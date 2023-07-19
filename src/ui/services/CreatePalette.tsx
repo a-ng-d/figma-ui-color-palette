@@ -93,7 +93,6 @@ export default class CreatePalette extends React.Component<Props> {
           <Scale
             hasPreset={true}
             preset={this.props.preset}
-            view={this.props.view}
             planStatus={this.props.planStatus}
             lang={this.props.lang}
             onChangePreset={this.props.onChangePreset}
