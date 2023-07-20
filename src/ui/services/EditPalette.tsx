@@ -24,6 +24,7 @@ import Dropdown from '../components/Dropdown'
 import features from '../../utils/features'
 import { locals } from '../../content/locals'
 import isBlocked from '../../utils/isBlocked'
+import doSnakeCase from '../../utils/doSnakeCase'
 
 interface Props {
   name: string
@@ -148,12 +149,20 @@ export default class EditPalette extends React.Component<Props> {
   onExport = () => {
     if (this.props.export.format === 'CSV') {
       const zip = new JSZip()
-      this.props.export.data.forEach((item) =>
-        zip.file(
-          `${item.name.toLowerCase().replace(' ', '_').replace('/', '-')}.csv`,
-          item.csv
-        )
-      )
+      this.props.export.data.forEach((theme) => {
+        const folder = theme.type != 'default theme' ? zip.folder(theme.name) : null
+        theme.colors.forEach(color => {
+          theme.type != 'default theme'
+          ? folder.file(
+            `${doSnakeCase(color.name)}.csv`,
+            color.csv
+          )
+          : zip.file(
+            `${doSnakeCase(color.name)}.csv`,
+            color.csv
+          )
+        })
+      })
       zip
         .generateAsync({ type: 'blob' })
         .then((content) =>
@@ -161,11 +170,8 @@ export default class EditPalette extends React.Component<Props> {
             content,
             `${
               this.props.name === ''
-                ? locals[this.props.lang].name
-                    .toLowerCase()
-                    .split(' ')
-                    .join('_')
-                : this.props.name.toLowerCase().split(' ').join('_')
+                ? doSnakeCase(locals[this.props.lang].name)
+                : doSnakeCase(this.props.name)
             }-colors`
           )
         )
@@ -178,9 +184,13 @@ export default class EditPalette extends React.Component<Props> {
         blob,
         `${
           this.props.name === ''
-            ? locals[this.props.lang].name.toLowerCase().split(' ').join('_')
-            : this.props.name.toLowerCase().split(' ').join('_')
-        }-colors${this.props.export.format === 'SWIFT' ? '.swift' : ''}`
+            ? doSnakeCase(locals[this.props.lang].name)
+            : doSnakeCase(this.props.name)
+        }-colors${
+          this.props.export.format === 'SWIFT'
+          ? '.swift'
+          : ''
+        }`
       )
     }
   }
@@ -305,7 +315,7 @@ export default class EditPalette extends React.Component<Props> {
           <Export
             exportPreview={
               this.props.export.format === 'CSV'
-                ? this.props.export.data[0].csv
+                ? this.props.export.data[0].colors[0].csv
                 : this.props.export.data
             }
             planStatus={this.props.planStatus}

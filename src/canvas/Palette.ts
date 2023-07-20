@@ -48,7 +48,8 @@ export default class Palette {
       scale: this.scale,
       paletteBackground: '#FFFFFF',
       isEnabled: true,
-      id: '00000000000'
+      id: '00000000000',
+      type: 'default theme'
     }],
     this.view = view
     this.algorithmVersion = algorithmVersion
