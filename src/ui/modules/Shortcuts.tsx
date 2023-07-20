@@ -71,6 +71,9 @@ export default class Shortcuts extends React.Component<Props> {
                 </React.Fragment>
               )
             )}
+            <Button
+              type="icon"
+            />
           </div>
         }
         leftPart={

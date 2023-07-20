@@ -1,8 +1,8 @@
 import * as React from 'react'
 
 interface Props {
-  icon?: string
   type: string
+  icon?: string
   label?: string
   state?: string
   isLink?: boolean

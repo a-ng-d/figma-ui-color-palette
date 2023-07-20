@@ -24,8 +24,8 @@ export default class PopIn extends React.Component<Props> {
         <div className="popin__header">
           <p className="type type--large type--bold">{this.props.title}</p>
           <Button
-            icon="close"
             type="icon"
+            icon="close"
             feature="CLOSE_HIGHLIGHT"
             action={this.props.close}
           />

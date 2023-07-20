@@ -170,16 +170,16 @@ export default class ThemeItem extends React.Component<Props> {
             }
           >
             <Button
-              icon="adjust"
               type="icon"
+              icon="adjust"
               state={this.state['hasMoreOptions'] ? 'selected' : ''}
               feature="DISPLAY_MORE"
               action={this.optionsHandler}
             />
           </Feature>
           <Button
-            icon="minus"
             type="icon"
+            icon="minus"
             feature="REMOVE_THEME"
             action={this.props.onChangeThemes}
           />

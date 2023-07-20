@@ -280,8 +280,8 @@ export default class Themes extends React.Component<Props> {
             </div>
             <div className="section-controls__right-part">
               <Button
-                icon="plus"
                 type="icon"
+                icon="plus"
                 state={
                   isBlocked('THEMES', this.props.planStatus) ? 'disabled' : ''
                 }

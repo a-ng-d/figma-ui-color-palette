@@ -180,16 +180,16 @@ export default class Scale extends React.Component<Props> {
                 {this.props.preset.scale.length > 2 &&
                 this.props.preset.name === 'Custom' ? (
                   <Button
-                    icon="minus"
                     type="icon"
+                    icon="minus"
                     feature="REMOVE_STOP"
                     action={this.props.onRemoveStop}
                   />
                 ) : null}
                 {this.props.preset.name === 'Custom' ? (
                   <Button
-                    icon="plus"
                     type="icon"
+                    icon="plus"
                     state={
                       this.props.preset.scale.length == 24 ? 'disabled' : ''
                     }

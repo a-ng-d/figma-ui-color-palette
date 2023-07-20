@@ -344,8 +344,8 @@ export default class Colors extends React.Component<Props> {
             </div>
             <div className="section-controls__right-part">
               <Button
-                icon="plus"
                 type="icon"
+                icon="plus"
                 feature="ADD_COLOR"
                 action={this.colorsHandler}
               />
