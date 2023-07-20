@@ -150,6 +150,9 @@ export const locals = {
       pro: 'Pro plan',
       free: 'Free plan',
     },
+    proPlan: {
+      welcomeMessage: 'You have successfully upgraded to the Pro plan, unlocking a range of tools to enhance the accessibility, accuracy and deployment options.'
+    },
     properties: {
       base: 'Base',
       wcag: 'WCAG scores',

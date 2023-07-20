@@ -664,8 +664,7 @@ class App extends React.Component {
                 className="dialog__cover"
                 src=''
               />
-              <p className="dialog__text type">You have successfully upgraded to the Pro plan, unlocking a range of tools to enhance the accessibility, accuracy and deployment options."
-              label="Let's discover</p>
+              <p className="dialog__text type">{locals[this.state['lang']].proPlan.welcomeMessage}</p>
             </Dialog>
           ) : null}
         </Feature>
