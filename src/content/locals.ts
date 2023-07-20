@@ -112,6 +112,7 @@ export const locals = {
       },
     },
     about: {
+      title: 'About UI Color Palette',
       getHelp: {
         title: 'Get help',
         documentation: 'Read the documentation',
@@ -139,6 +140,10 @@ export const locals = {
         localStyles: 'Manage local styles',
         localVariables: 'Manage local variables',
       },
+    },
+    highlight: {
+      gotIt: 'Got it',
+      learnMore: 'Learn more',
     },
     plan: {
       getPro: 'Get pro',

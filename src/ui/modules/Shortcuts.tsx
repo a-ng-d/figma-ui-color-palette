@@ -10,6 +10,7 @@ interface Props {
   planStatus: string
   lang: string
   onReOpenHighlight: (action: string) => void
+  onReOpenAbout: () => void
 }
 
 export default class Shortcuts extends React.Component<Props> {
@@ -28,6 +29,12 @@ export default class Shortcuts extends React.Component<Props> {
           isLink: false,
           url: '',
           action: this.props.onReOpenHighlight('OPEN'),
+        },
+        {
+          label: locals[this.props.lang].contexts.about,
+          isLink: false,
+          url: '',
+          action: this.props.onReOpenAbout,
         },
       ] as Array<Shortcut>
     }

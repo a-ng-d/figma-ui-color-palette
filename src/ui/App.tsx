@@ -25,6 +25,7 @@ import 'figma-plugin-ds/dist/figma-plugin-ds.css'
 import './stylesheets/app.css'
 import './stylesheets/app-components.css'
 import './stylesheets/figma-components.css'
+import About from './modules/About'
 
 let isPaletteSelected = false
 const container = document.getElementById('react-page'),
@@ -75,10 +76,11 @@ class App extends React.Component {
         data: '',
       },
       editorType: 'figma',
-      hasHighlight: false,
       planStatus: 'UNPAID',
       lang: 'en-US',
-      hasGetProPlanDialog: false,
+      isHighlightRequested: false,
+      isGettingPro: false,
+      isAboutRequested: false,
       onGoingStep: '',
     }
   }
@@ -359,7 +361,7 @@ class App extends React.Component {
   }
 
   highlightHandler = (action: string) => {
-    const openHighlight = () => this.setState({ hasHighlight: true })
+    const openHighlight = () => this.setState({ isHighlightRequested: true })
 
     const closeHighlight = () => {
       parent.postMessage(
@@ -374,7 +376,7 @@ class App extends React.Component {
         },
         '*'
       )
-      this.setState({ hasHighlight: false })
+      this.setState({ isHighlightRequested: false })
     }
 
     const actions = {
@@ -394,7 +396,7 @@ class App extends React.Component {
 
         const checkHighlightStatus = () =>
           this.setState({
-            hasHighlight:
+            isHighlightRequested:
               e.data.pluginMessage.data === 'NO_RELEASE_NOTE' ||
               e.data.pluginMessage.data === 'READ_RELEASE_NOTE'
                 ? false
@@ -544,7 +546,7 @@ class App extends React.Component {
         const getProPlan = () =>
           this.setState({
             planStatus: e.data.pluginMessage.data,
-            hasGetProPlanDialog: true,
+            isGettingPro: true,
           })
 
         const actions: ActionsList = {
@@ -635,8 +637,11 @@ class App extends React.Component {
             features.find((feature) => feature.name === 'HIGHLIGHT').isActive
           }
         >
-          {this.state['hasHighlight'] ? (
-            <Highlight closeHighlight={this.highlightHandler('CLOSE')} />
+          {this.state['isHighlightRequested'] ? (
+            <Highlight
+              lang={this.state['lang']}
+              onCloseHighlight={this.highlightHandler('CLOSE')}
+            />
           ) : null}
         </Feature>
         <Feature
@@ -644,14 +649,42 @@ class App extends React.Component {
             features.find((feature) => feature.name === 'GET_PRO_PLAN').isActive
           }
         >
-          {this.state['hasGetProPlanDialog'] ? (
+          {this.state['isGettingPro'] ? (
             <Dialog
               title="Welcome to UI Color Palette Pro"
-              image=""
-              content="You have successfully upgraded to the Pro plan, unlocking a range of tools to enhance the accessibility, accuracy and deployment options."
-              label="Let's discover"
-              action={() => this.setState({ hasGetProPlanDialog: false })}
-            />
+              actions={{
+                primary: {
+                  label: "Let's discover",
+                  action: () => this.setState({ isGettingPro: false })
+                }
+              }}
+              onClose={() => this.setState({ isGettingPro: false })}
+            >
+              <img
+                className="dialog__cover"
+                src=''
+              />
+              <p className="dialog__text type">You have successfully upgraded to the Pro plan, unlocking a range of tools to enhance the accessibility, accuracy and deployment options."
+              label="Let's discover</p>
+            </Dialog>
+          ) : null}
+        </Feature>
+        <Feature
+          isActive={
+            features.find((feature) => feature.name === 'ABOUT').isActive
+          }
+        >
+          {this.state['isAboutRequested'] ? (
+            <Dialog
+              title={locals[this.state['lang']].about.title}
+              actions={{}}
+              onClose={() => this.setState({ isAboutRequested: false })}
+            >
+              <About
+                planStatus={this.state['planStatus']}
+                lang={this.state['lang']}
+              />
+            </Dialog>
           ) : null}
         </Feature>
         <Feature
@@ -661,6 +694,7 @@ class App extends React.Component {
         >
           <Shortcuts
             onReOpenHighlight={this.highlightHandler}
+            onReOpenAbout={() => this.setState({ isAboutRequested: true })}
             planStatus={this.state['planStatus']}
             lang={this.state['lang']}
           />
