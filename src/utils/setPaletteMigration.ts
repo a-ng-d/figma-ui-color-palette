@@ -28,19 +28,21 @@ const setPaletteMigration = (palette: BaseNode) => {
     palette.setPluginData('preset', JSON.stringify(presets.material))
 
   // colors
-  if (!colors[0].hasOwnProperty('hueShifting'))
+  if (colors.length != 0) {
+    if (!colors[0].hasOwnProperty('hueShifting'))
     palette.setPluginData('colors', setData(colors, 'hueShifting', 0))
 
-  if (!colors[0].hasOwnProperty('description'))
-    palette.setPluginData('colors', setData(colors, 'description', ''))
+    if (!colors[0].hasOwnProperty('description'))
+      palette.setPluginData('colors', setData(colors, 'description', ''))
 
-  if (!colors[0].hasOwnProperty('id'))
-    palette.setPluginData('colors', JSON.stringify(
-      colors.map(color => {
-        color.id = uid()
-        return color
-      })
-    ))
+    if (!colors[0].hasOwnProperty('id'))
+      palette.setPluginData('colors', JSON.stringify(
+        colors.map(color => {
+          color.id = uid()
+          return color
+        })
+      ))
+  }
 
   if (
     colors.filter((color) => color.oklch).length ==
