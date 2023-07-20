@@ -4,34 +4,56 @@ import { locals, lang } from '../content/locals'
 
 const updateLocalStyles = (palette, i: number) => {
   palette = figma.currentPage.selection[0]
-  const localStyles: Array<PaintStyle> = figma.getLocalPaintStyles(),
-  paletteData: PaletteData = JSON.parse(palette.getPluginData('data'))
-  let target: PaintStyle
+
+  const paletteData: PaletteData = JSON.parse(palette.getPluginData('data')),
+  localStyles: Array<PaintStyle> = figma.getLocalPaintStyles(),
+  workingThemes = paletteData.themes
+    .filter(theme => theme.type === 'custom theme').length == 0
+    ? paletteData.themes
+      .filter(theme => theme.type === 'default theme')
+    : paletteData.themes
+      .filter(theme => theme.type === 'custom theme')
 
   if (palette.children.length == 1) {
     i = 0
     let j = 0
 
-    paletteData.themes.forEach(
+    workingThemes.forEach(
       (theme: PaletteDataThemeItem) => {
-        theme.colors.forEach((color) => {
-          color.shades.forEach((shade) => {
-            const name = paletteData.themes.length > 1
+        theme.colors.forEach(color => {
+          color.shades.forEach(shade => {
+            const name = workingThemes[0].type === 'custom theme'
               ? `${paletteData.name == '' ? '' : paletteData.name + '/'}${theme.name}/${color.name}/${shade.name}`
               : `${color.name}/${shade.name}`
-            target = localStyles.find(
-              (localStyle) => localStyle.name === name
-            )
-            if (target != undefined) {
+
+            if (
+              localStyles.find(
+                (localStyle) => localStyle.id === shade.styleId
+              ) != undefined
+            ) {
+              const styleMatch = localStyles.find(
+                (localStyle) => localStyle.id === shade.styleId
+              )
+
+              if (styleMatch.name != name) {
+                styleMatch.name = name
+                j++
+              }
+                
+              if (styleMatch.description != shade.description) {
+                styleMatch.description = shade.description
+                j++
+              }
+
               if (
                 shade.hex !=
                 chroma([
-                  target.paints[0]['color'].r * 255,
-                  target.paints[0]['color'].g * 255,
-                  target.paints[0]['color'].b * 255,
+                  styleMatch.paints[0]['color'].r * 255,
+                  styleMatch.paints[0]['color'].g * 255,
+                  styleMatch.paints[0]['color'].b * 255,
                 ]).hex()
               ) {
-                target.paints = [
+                styleMatch.paints = [
                   {
                     type: 'SOLID',
                     color: {
@@ -43,15 +65,51 @@ const updateLocalStyles = (palette, i: number) => {
                 ]
                 j++
               }
-              if (color.description != '')
-                if (target.description.split('﹒')[0] != color.description) {
-                  target.description =
-                    color.description != ''
-                      ? color.description.concat('﹒', shade.description)
-                      : shade.description
-                  j++
-                }
+              
+              j > 0 ? i++ : i
+              j = 0
+            }
+            else if (
+              localStyles.find(
+                (localStyle) => localStyle.name === name
+              ) != undefined
+            ) {
+              const styleMatch = localStyles.find(
+                (localStyle) => localStyle.name === name
+              )
+              console.log(styleMatch.name, name)
 
+              if (styleMatch.name != name) {
+                styleMatch.name = name
+                j++
+              }
+                
+              if (styleMatch.description != shade.description) {
+                styleMatch.description = shade.description
+                j++
+              }
+
+              if (
+                shade.hex !=
+                chroma([
+                  styleMatch.paints[0]['color'].r * 255,
+                  styleMatch.paints[0]['color'].g * 255,
+                  styleMatch.paints[0]['color'].b * 255,
+                ]).hex()
+              ) {
+                styleMatch.paints = [
+                  {
+                    type: 'SOLID',
+                    color: {
+                      r: shade.gl[0],
+                      g: shade.gl[1],
+                      b: shade.gl[2],
+                    },
+                  },
+                ]
+                j++
+              }
+              
               j > 0 ? i++ : i
               j = 0
             }

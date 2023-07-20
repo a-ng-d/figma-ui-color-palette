@@ -89,6 +89,7 @@ export interface PaletteDataShadeItem {
   oklab: Array<number>
   hsl: Array<number>
   variableId: string
+  styleId: string
   type: string
 }
 

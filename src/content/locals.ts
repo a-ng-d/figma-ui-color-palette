@@ -165,15 +165,15 @@ export const locals = {
     },
     warning: {
       cannotCreateLocalStyles:
-        'Local color styles already exist and cannot be created twice',
+        'Local color styles have been already created',
       cannotUpdateLocalStyles:
-        'Edit the UI Color Palette to update the local color styles',
+        'Your UI Color Palette is up-to-date or local color styles must be created',
       cannotCreateLocalVariablesAndModes:
-        'Local color variables and variable modes already exist and cannot be created twice',
+        'Local color variables and variable modes have been already created',
       cannotUpdateLocalVariablesAndModes:
-        'Edit the UI Color Palette to update both the local color variables and the variable modes',
+        'Your UI Color Palette is up-to-date or local color variables and variable modes must be created',
       collectionDoesNotExist:
-        "The attached variables collection does not exist, let's create local variables first.",
+        "Variables collection must be created",
       emptySourceColors:
         'There is not any source color. Add it manually in the Colors section.',
       hslColorSpace:

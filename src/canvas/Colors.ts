@@ -220,7 +220,7 @@ export default class Colors {
       ? ''
       : themeMatch.modeId
     
-    return modeId
+    return modeId == undefined ? '' : modeId
   }
 
   searchForShadeVariableId = (
@@ -243,7 +243,30 @@ export default class Colors {
       ? ''
       : shadeMatch.variableId
 
-    return variableId
+    return variableId == undefined ? '' : variableId
+  }
+
+  searchForShadeStyleId = (
+    themes: Array<PaletteDataThemeItem>,
+    themeId: string,
+    colorId: string,
+    shadeName: string
+  ) => {
+    const themeMatch = themes
+      .find(theme => theme.id === themeId),
+    colorMatch = themeMatch == undefined
+      ? undefined
+      : themeMatch.colors
+        .find(color => color.id === colorId),
+    shadeMatch = colorMatch == undefined
+      ? undefined
+      : colorMatch.shades
+        .find(shade => shade.name === shadeName),
+    styleId = shadeMatch == undefined
+      ? ''
+      : shadeMatch.styleId
+
+    return styleId == undefined ? '' : styleId
   }
 
   makePaletteData = (service: string) => {
@@ -297,6 +320,14 @@ export default class Colors {
               'source'
               )
             : '',
+          styleId: service === 'EDIT'
+            ? this.searchForShadeStyleId(
+              data.themes,
+              theme.id,
+              color.id,
+              'source'
+              )
+            : '',
           type: 'source color'
         })
   
@@ -344,7 +375,7 @@ export default class Colors {
             const scaleName: string = Object.keys(theme.scale)
               .find((key) => theme.scale[key] === lightness)
               .substr(10)
-  
+
             paletteDataColorItem.shades.push({
               name: scaleName,
               description: color.description === ''
@@ -360,6 +391,14 @@ export default class Colors {
               hsl: chroma(newColor).hsl(),
               variableId: service === 'EDIT'
                 ? this.searchForShadeVariableId(
+                  data.themes,
+                  theme.id,
+                  color.id,
+                  scaleName
+                  )
+                : '',
+              styleId: service === 'EDIT'
+                ? this.searchForShadeStyleId(
                   data.themes,
                   theme.id,
                   color.id,
