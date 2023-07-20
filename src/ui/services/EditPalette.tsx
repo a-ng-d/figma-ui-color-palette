@@ -11,7 +11,7 @@ import type {
   ThemesMessage,
 } from '../../utils/types'
 import Feature from '../components/Feature'
-import MainMenu from '../components/MainMenu'
+import Bar from '../components/Bar'
 import Tabs from '../components/Tabs'
 import Scale from '../modules/Scale'
 import Colors from '../modules/Colors'
@@ -362,7 +362,7 @@ export default class EditPalette extends React.Component<Props> {
     }
     return (
       <>
-        <MainMenu
+        <Bar
           leftPart={
             <Tabs
               tabs={this.setContexts()}
@@ -405,6 +405,8 @@ export default class EditPalette extends React.Component<Props> {
               </FormItem>
             </Feature>
           }
+          border={['BOTTOM']}
+          isOnlyText={true}
         />
         <section className="controller">
           <div className="controls">{controls}</div>

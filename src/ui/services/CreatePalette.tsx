@@ -3,7 +3,7 @@ import type {
   PresetConfiguration,
   TextColorsThemeHexModel,
 } from '../../utils/types'
-import MainMenu from '../components/MainMenu'
+import Bar from '../components/Bar'
 import Tabs from '../components/Tabs'
 import Scale from '../modules/Scale'
 import Settings from '../modules/Settings'
@@ -132,7 +132,7 @@ export default class CreatePalette extends React.Component<Props> {
 
     return (
       <>
-        <MainMenu
+        <Bar
           leftPart={
             <Tabs
               tabs={this.setContexts()}
@@ -140,6 +140,8 @@ export default class CreatePalette extends React.Component<Props> {
               action={this.navHandler}
             />
           }
+          border={['BOTTOM']}
+          isOnlyText={true}
         />
         <section className="controller">
           <div className="controls">{controls}</div>

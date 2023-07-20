@@ -192,14 +192,21 @@ div.tabs .tabs__tab--active {
   color: var(--figma-color-text);
 }
 
-/* Main menu */
-div.main-menu {
+/* Bar */
+div.bar {
   display: flex;
   justify-content: space-between;
-  align-items: baseline;
+  align-items: center;
   height: var(--size-large);
   padding: 0 var(--size-xsmall);
-  border-bottom: 1px solid var(--figma-color-border);
+}
+
+div.bar--compact {
+  height: var(--size-medium);
+}
+
+div.bar--text-only {
+  align-items: baseline;
 }
 
 /* Pop in*/

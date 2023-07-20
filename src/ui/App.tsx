@@ -660,26 +660,7 @@ class App extends React.Component {
           }
         >
           <Shortcuts
-            actions={[
-              {
-                label: locals[this.state['lang']].shortcuts.documentation,
-                isLink: true,
-                url: 'https://docs.ui-color-palette.com',
-                action: null,
-              },
-              {
-                label: locals[this.state['lang']].shortcuts.feedback,
-                isLink: true,
-                url: 'https://uicp.link/feedback',
-                action: null,
-              },
-              {
-                label: locals[this.state['lang']].shortcuts.news,
-                isLink: false,
-                url: '',
-                action: this.highlightHandler('OPEN'),
-              },
-            ]}
+            onReOpenHighlight={this.highlightHandler}
             planStatus={this.state['planStatus']}
             lang={this.state['lang']}
           />
