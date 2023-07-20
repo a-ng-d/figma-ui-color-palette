@@ -18,12 +18,6 @@ export default class Shortcuts extends React.Component<Props> {
     this.state = {
      actions: [
         {
-          label: locals[this.props.lang].shortcuts.documentation,
-          isLink: true,
-          url: 'https://docs.ui-color-palette.com',
-          action: null,
-        },
-        {
           label: locals[this.props.lang].shortcuts.feedback,
           isLink: true,
           url: 'https://uicp.link/feedback',
@@ -35,7 +29,7 @@ export default class Shortcuts extends React.Component<Props> {
           url: '',
           action: this.props.onReOpenHighlight('OPEN'),
         },
-      ]
+      ] as Array<Shortcut>
     }
   }
   // Direct actions
@@ -71,8 +65,11 @@ export default class Shortcuts extends React.Component<Props> {
                 </React.Fragment>
               )
             )}
+            <span>﹒</span>
             <Button
               type="icon"
+              icon="library"
+              action={() => window.open('https://docs.ui-color-palette.com', '_blank')}
             />
           </div>
         }
