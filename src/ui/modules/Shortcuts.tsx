@@ -71,6 +71,11 @@ export default class Shortcuts extends React.Component<Props> {
               icon="library"
               action={() => window.open('https://docs.ui-color-palette.com', '_blank')}
             />
+            <Button
+              type="icon"
+              icon="repository"
+              action={() => window.open('https://github.com/inVoltag/figma-ui-color-palette', '_blank')}
+            />
           </div>
         }
         leftPart={
