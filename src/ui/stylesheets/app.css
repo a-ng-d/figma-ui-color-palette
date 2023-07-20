@@ -221,19 +221,24 @@ div.settings__item + div.settings__item {
 /* About */
 div.about {
   flex-direction: row;
-  align-items: baseline;
   padding: var(--size-xsmall) var(--size-small);
 }
 
 div.about > div {
   display: flex;
   flex-direction: column;
-  gap: var(--size-xsmall);
+  gap: var(--size-xxsmall);
   flex: 1;
 }
 
 div.about p {
   margin: 0;
+}
+
+div.about__basic {
+  display: flex;
+  align-items: center;
+  gap: var(--size-xsmall);
 }
 
 div.about__info {

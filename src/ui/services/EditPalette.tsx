@@ -18,7 +18,6 @@ import Colors from '../modules/Colors'
 import Themes from '../modules/Themes'
 import Export from '../modules/Export'
 import Settings from '../modules/Settings'
-import About from '../modules/About'
 import FormItem from '../components/FormItem'
 import Dropdown from '../components/Dropdown'
 import features from '../../utils/features'
@@ -225,11 +224,6 @@ export default class EditPalette extends React.Component<Props> {
         label: locals[this.props.lang].contexts.settings,
         id: 'SETTINGS',
       })
-    if (features.find((feature) => feature.name === 'ABOUT').isActive)
-      contexts.push({
-        label: locals[this.props.lang].contexts.about,
-        id: 'ABOUT',
-      })
     return contexts
   }
 
@@ -350,14 +344,6 @@ export default class EditPalette extends React.Component<Props> {
           />
         )
         break
-      }
-      case 'ABOUT': {
-        controls = (
-          <About
-            planStatus={this.props.planStatus}
-            lang={this.props.lang}
-          />
-        )
       }
     }
     return (

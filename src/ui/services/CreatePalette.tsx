@@ -7,7 +7,6 @@ import Bar from '../components/Bar'
 import Tabs from '../components/Tabs'
 import Scale from '../modules/Scale'
 import Settings from '../modules/Settings'
-import About from '../modules/About'
 import { palette } from '../../utils/palettePackage'
 import features from '../../utils/features'
 import { locals } from '../../content/locals'
@@ -74,11 +73,6 @@ export default class CreatePalette extends React.Component<Props> {
         label: locals[this.props.lang].contexts.settings,
         id: 'SETTINGS',
       })
-    if (features.find((feature) => feature.name === 'ABOUT').isActive)
-      contexts.push({
-        label: locals[this.props.lang].contexts.about,
-        id: 'ABOUT',
-      })
     return contexts
   }
 
@@ -119,14 +113,6 @@ export default class CreatePalette extends React.Component<Props> {
           />
         )
         break
-      }
-      case 'ABOUT': {
-        controls = (
-          <About
-            planStatus={this.props.planStatus}
-            lang={this.props.lang}
-          />
-        )
       }
     }
 
