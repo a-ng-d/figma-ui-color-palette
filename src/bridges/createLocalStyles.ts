@@ -1,4 +1,4 @@
-import type { PaletteData, PaletteDataThemeItem } from '../utils/types'
+import type { PaletteData} from '../utils/types'
 import LocalStyle from './../canvas/LocalStyle'
 import { locals, lang } from '../content/locals'
 

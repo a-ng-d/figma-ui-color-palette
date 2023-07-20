@@ -29,13 +29,13 @@ const setPaletteMigration = (palette: BaseNode) => {
 
   // colors
   if (colors.length != 0) {
-    if (!colors[0].hasOwnProperty('hueShifting'))
+    if (!Object.prototype.hasOwnProperty.call(colors[0], 'hueShifting'))
     palette.setPluginData('colors', setData(colors, 'hueShifting', 0))
 
-    if (!colors[0].hasOwnProperty('description'))
+    if (!Object.prototype.hasOwnProperty.call(colors[0], 'description'))
       palette.setPluginData('colors', setData(colors, 'description', ''))
 
-    if (!colors[0].hasOwnProperty('id'))
+    if (!Object.prototype.hasOwnProperty.call(colors[0], 'id'))
       palette.setPluginData('colors', JSON.stringify(
         colors.map(color => {
           color.id = uid()

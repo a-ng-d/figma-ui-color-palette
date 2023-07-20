@@ -1,5 +1,4 @@
 import * as React from 'react'
-import type { Shortcut } from '../../utils/types'
 import Feature from '../components/Feature'
 import Bar from '../components/Bar'
 import Button from '../components/Button'

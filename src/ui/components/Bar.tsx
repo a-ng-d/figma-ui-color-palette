@@ -15,7 +15,7 @@ export default class Bar extends React.Component<Props> {
   }
 
   setBorder = (orientation: Array<string>) => {
-    const property: string = '1px solid var(--figma-color-border)',
+    const property = '1px solid var(--figma-color-border)',
     style = {}
 
     orientation.forEach(entry => {

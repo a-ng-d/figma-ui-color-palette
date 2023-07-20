@@ -1,5 +1,3 @@
-import type { RgbModel } from '../utils/types'
-
 export default class LocalVariable {
   collection: VariableCollection
   variable: Variable

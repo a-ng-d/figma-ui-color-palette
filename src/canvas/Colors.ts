@@ -449,8 +449,7 @@ export default class Colors {
           color.rgb.r * 255,
           color.rgb.g * 255,
           color.rgb.b * 255,
-        ])._rgb,
-        samples: Array<FrameNode> = []
+        ])._rgb
 
       // base
       this.nodeRow = figma.createFrame()

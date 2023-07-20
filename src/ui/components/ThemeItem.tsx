@@ -1,5 +1,4 @@
 import * as React from 'react'
-import chroma from 'chroma-js'
 import Feature from './Feature'
 import Input from './Input'
 import Button from './Button'
