@@ -693,7 +693,7 @@ class App extends React.Component {
           }
         >
           <Shortcuts
-            onReOpenHighlight={this.highlightHandler}
+            onReOpenHighlight={this.highlightHandler('OPEN')}
             onReOpenAbout={() => this.setState({ isAboutRequested: true })}
             planStatus={this.state['planStatus']}
             lang={this.state['lang']}

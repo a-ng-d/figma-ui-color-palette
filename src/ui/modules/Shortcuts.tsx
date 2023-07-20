@@ -9,36 +9,11 @@ import { locals } from '../../content/locals'
 interface Props {
   planStatus: string
   lang: string
-  onReOpenHighlight: (action: string) => void
+  onReOpenHighlight: () => void
   onReOpenAbout: () => void
 }
 
 export default class Shortcuts extends React.Component<Props> {
-  constructor(props) {
-    super(props)
-    this.state = {
-     actions: [
-        {
-          label: locals[this.props.lang].shortcuts.feedback,
-          isLink: true,
-          url: 'https://uicp.link/feedback',
-          action: null,
-        },
-        {
-          label: locals[this.props.lang].shortcuts.news,
-          isLink: false,
-          url: '',
-          action: this.props.onReOpenHighlight('OPEN'),
-        },
-        {
-          label: locals[this.props.lang].contexts.about,
-          isLink: false,
-          url: '',
-          action: this.props.onReOpenAbout,
-        },
-      ] as Array<Shortcut>
-    }
-  }
   // Direct actions
   onGetProPlan = () =>
     parent.postMessage({ pluginMessage: { type: 'GET_PRO_PLAN' } }, '*')
@@ -48,30 +23,39 @@ export default class Shortcuts extends React.Component<Props> {
       <Bar
         rightPart={
           <div className="shortcuts">
-            {this.state['actions'].map((action, index) =>
-              index === this.state['actions'].length - 1 ? (
-                <React.Fragment key={action.label}>
-                  <Button
-                    type="tertiary"
-                    isLink={action.isLink}
-                    url={action.url}
-                    label={action.label}
-                    action={action.action}
-                  />
-                </React.Fragment>
-              ) : (
-                <React.Fragment key={action.label}>
-                  <Button
-                    type="tertiary"
-                    isLink={action.isLink}
-                    url={action.url}
-                    label={action.label}
-                    action={action.action}
-                  />
-                  <span>﹒</span>
-                </React.Fragment>
-              )
-            )}
+            <Button
+              type="tertiary"
+              isLink={true}
+              url="https://uicp.link/feedback"
+              label={locals[this.props.lang].shortcuts.feedback}
+              action={() => null}
+            />
+            <Feature
+              isActive={
+                features.find((feature) => feature.name === 'HIGHLIGHT')
+                  .isActive
+              }
+            >
+              <span>﹒</span>
+              <Button
+                type="tertiary"
+                label={locals[this.props.lang].shortcuts.news}
+                action={this.props.onReOpenHighlight}
+              />
+            </Feature>
+            <Feature
+              isActive={
+                features.find((feature) => feature.name === 'ABOUT')
+                  .isActive
+              }
+            >
+              <span>﹒</span>
+              <Button
+                type="tertiary"
+                label={locals[this.props.lang].contexts.about}
+                action={this.props.onReOpenAbout}
+              />
+            </Feature>
             <span>﹒</span>
             <Button
               type="icon"

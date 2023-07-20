@@ -15,9 +15,9 @@ export const locals = {
       selectPalette: 'Select a UI Color Palette to edit it',
     },
     shortcuts: {
-      documentation: 'Read the documentation',
       feedback: 'Give feedback',
       news: "What's new",
+      about: 'About',
     },
     contexts: {
       scale: 'Scale',
