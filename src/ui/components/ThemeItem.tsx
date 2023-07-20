@@ -130,6 +130,7 @@ export default class ThemeItem extends React.Component<Props> {
               type="TEXT"
               value={this.props.name}
               feature="RENAME_THEME"
+              charactersLimit={24}
               onChange={this.props.onChangeThemes}
               onFocus={this.props.onCancellationSelection}
               onBlur={this.props.onChangeThemes}

@@ -68,9 +68,9 @@ export const locals = {
       preview: 'Preview',
       json: 'JSON (Tokens)',
       css: 'CSS (Custom Properties)',
-      csv: 'CSV (LCH)',
-      swift: 'Swift (Apple OS)',
+      swift: 'SwiftUI (Apple OS)',
       xml: 'XML (Android)',
+      csv: 'CSV (LCH)',
     },
     settings: {
       global: {

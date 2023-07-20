@@ -10,9 +10,9 @@ interface Props {
   min?: string
   max?: string
   step?: string
+  feature?: string
   isReadOnly?: boolean
   isBlocked?: boolean
-  feature?: string
   isAutoFocus?: boolean
   onChange?: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>
   onFocus: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>
@@ -159,6 +159,7 @@ export default class Input extends React.Component<Props> {
         className="textarea"
         placeholder={this.props.placeholder}
         value={this.props.value}
+        autoFocus={this.props.isAutoFocus}
         onKeyPress={this.props.onConfirm}
         onChange={this.props.onChange}
         onFocus={this.props.onFocus}

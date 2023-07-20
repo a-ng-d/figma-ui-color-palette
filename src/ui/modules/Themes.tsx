@@ -317,7 +317,7 @@ export default class Themes extends React.Component<Props> {
           ) : (
             <ul className="list" ref={this.listRef}>
               {this.props.themes.map((theme, index) => {
-                if (theme.id != '00000000000')
+                if (theme.type != 'default theme')
                   return (
                     <ThemeItem
                       key={theme.id}

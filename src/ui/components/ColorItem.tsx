@@ -131,6 +131,7 @@ export default class ColorItem extends React.Component<Props> {
             <Input
               type="TEXT"
               value={this.props.name}
+              charactersLimit={24}
               feature="RENAME_COLOR"
               onChange={this.props.onChangeColors}
               onFocus={this.props.onCancellationSelection}
