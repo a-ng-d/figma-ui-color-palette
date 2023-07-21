@@ -42,16 +42,18 @@ export default class Palette {
     this.scale = scale
     this.colors = []
     this.colorSpace = colorSpace
-    this.themes = [{
-      name: locals[lang].themes.switchTheme.defaultTheme,
-      description: '',
-      scale: this.scale,
-      paletteBackground: '#FFFFFF',
-      isEnabled: true,
-      id: '00000000000',
-      type: 'default theme'
-    }],
-    this.view = view
+    ;(this.themes = [
+      {
+        name: locals[lang].themes.switchTheme.defaultTheme,
+        description: '',
+        scale: this.scale,
+        paletteBackground: '#FFFFFF',
+        isEnabled: true,
+        id: '00000000000',
+        type: 'default theme',
+      },
+    ]),
+      (this.view = view)
     this.algorithmVersion = algorithmVersion
     this.textColorsTheme = textColorsTheme
     this.service = 'CREATE'

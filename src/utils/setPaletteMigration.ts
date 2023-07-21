@@ -30,40 +30,44 @@ const setPaletteMigration = (palette: BaseNode) => {
   // colors
   if (colors.length != 0) {
     if (!Object.prototype.hasOwnProperty.call(colors[0], 'hueShifting'))
-    palette.setPluginData('colors', setData(colors, 'hueShifting', 0))
+      palette.setPluginData('colors', setData(colors, 'hueShifting', 0))
 
     if (!Object.prototype.hasOwnProperty.call(colors[0], 'description'))
       palette.setPluginData('colors', setData(colors, 'description', ''))
 
     if (!Object.prototype.hasOwnProperty.call(colors[0], 'id'))
-      palette.setPluginData('colors', JSON.stringify(
-        colors.map(color => {
-          color.id = uid()
-          return color
-        })
-      ))
+      palette.setPluginData(
+        'colors',
+        JSON.stringify(
+          colors.map((color) => {
+            color.id = uid()
+            return color
+          })
+        )
+      )
   }
 
-  if (
-    colors.filter((color) => color.oklch).length ==
-    colors.length
-  )
+  if (colors.filter((color) => color.oklch).length == colors.length)
     palette.setPluginData('colorSpace', 'OKLCH')
 
-  if (colorSpace === '')
-    palette.setPluginData('colorSpace', 'LCH')
+  if (colorSpace === '') palette.setPluginData('colorSpace', 'LCH')
 
   // themes
   if (themes === '')
-    palette.setPluginData('themes', JSON.stringify([{
-      name: locals[lang].themes.switchTheme.defaultTheme,
-      description: '',
-      scale: JSON.parse(scale),
-      paletteBackground: '#FFFFFF',
-      isEnabled: true,
-      id: '00000000000',
-      type: 'default theme',
-    }]))
+    palette.setPluginData(
+      'themes',
+      JSON.stringify([
+        {
+          name: locals[lang].themes.switchTheme.defaultTheme,
+          description: '',
+          scale: JSON.parse(scale),
+          paletteBackground: '#FFFFFF',
+          isEnabled: true,
+          id: '00000000000',
+          type: 'default theme',
+        },
+      ])
+    )
 
   // view
   if (captions == 'hasCaptions' || properties == 'hasProperties') {
@@ -88,8 +92,7 @@ const setPaletteMigration = (palette: BaseNode) => {
   }
 
   // algorithm
-  if (algorithmVersion === '')
-    palette.setPluginData('algorithmVersion', 'v1')
+  if (algorithmVersion === '') palette.setPluginData('algorithmVersion', 'v1')
 
   // data
   if (
@@ -103,7 +106,7 @@ const setPaletteMigration = (palette: BaseNode) => {
         scale: JSON.parse(palette.getPluginData('scale')),
         colors: JSON.parse(palette.getPluginData('colors')),
         colorSpace: palette.getPluginData('colorSpace'),
-        themes: JSON.parse(palette.getPluginData(('themes'))),
+        themes: JSON.parse(palette.getPluginData('themes')),
         view: 'SHEET',
         textColorsTheme: JSON.parse(palette.getPluginData('textColorsTheme')),
         algorithmVersion: palette.getPluginData('algorithmVersion'),

@@ -44,8 +44,7 @@ export default class Shortcuts extends React.Component<Props> {
             </Feature>
             <Feature
               isActive={
-                features.find((feature) => feature.name === 'ABOUT')
-                  .isActive
+                features.find((feature) => feature.name === 'ABOUT').isActive
               }
             >
               <span>﹒</span>
@@ -59,12 +58,19 @@ export default class Shortcuts extends React.Component<Props> {
             <Button
               type="icon"
               icon="library"
-              action={() => window.open('https://docs.ui-color-palette.com', '_blank')}
+              action={() =>
+                window.open('https://docs.ui-color-palette.com', '_blank')
+              }
             />
             <Button
               type="icon"
               icon="repository"
-              action={() => window.open('https://github.com/inVoltag/figma-ui-color-palette', '_blank')}
+              action={() =>
+                window.open(
+                  'https://github.com/inVoltag/figma-ui-color-palette',
+                  '_blank'
+                )
+              }
             />
           </div>
         }

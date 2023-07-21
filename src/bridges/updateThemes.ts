@@ -22,7 +22,9 @@ const updateThemes = (msg, palette) => {
           : palette.getPluginData('name'),
       preset: PresetConfiguration = JSON.parse(palette.getPluginData('preset')),
       scale: ScaleConfiguration = JSON.parse(palette.getPluginData('scale')),
-      colors: Array<ColorConfiguration> = JSON.parse(palette.getPluginData('colors')),
+      colors: Array<ColorConfiguration> = JSON.parse(
+        palette.getPluginData('colors')
+      ),
       colorSpace: string = palette.getPluginData('colorSpace'),
       view: string = palette.getPluginData('view'),
       textColorsTheme: TextColorsThemeHexModel = JSON.parse(

@@ -17,7 +17,11 @@ interface Props {
   guideAbove: boolean
   guideBelow: boolean
   lang: string
-  onChangeThemes: React.KeyboardEventHandler<HTMLInputElement | HTMLTextAreaElement> & React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement> & React.MouseEventHandler
+  onChangeThemes: React.KeyboardEventHandler<
+    HTMLInputElement | HTMLTextAreaElement
+  > &
+    React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement> &
+    React.MouseEventHandler
   onChangeSelection: React.MouseEventHandler<HTMLLIElement>
   onCancellationSelection: React.ChangeEventHandler
   onDragChange: (
@@ -119,9 +123,7 @@ export default class ThemeItem extends React.Component<Props> {
       >
         <Feature
           isActive={
-            features.find(
-              (feature) => feature.name === 'THEMES_NAME'
-            ).isActive
+            features.find((feature) => feature.name === 'THEMES_NAME').isActive
           }
         >
           <div className="themes__name">
@@ -139,15 +141,16 @@ export default class ThemeItem extends React.Component<Props> {
         </Feature>
         <Feature
           isActive={
-            features.find(
-              (feature) => feature.name === 'THEMES_PARAMS'
-            ).isActive
+            features.find((feature) => feature.name === 'THEMES_PARAMS')
+              .isActive
           }
         >
           <div className="themes__palette-background-color">
             <FormItem
               id="palette-background-color"
-              label={locals[this.props.lang].themes.paletteBackgroundColor.label}
+              label={
+                locals[this.props.lang].themes.paletteBackgroundColor.label
+              }
               shouldFill={false}
             >
               <Input
@@ -201,7 +204,9 @@ export default class ThemeItem extends React.Component<Props> {
                   <Input
                     type="TEXT"
                     value={this.props.description}
-                    placeholder={locals[this.props.lang].global.description.placeholder}
+                    placeholder={
+                      locals[this.props.lang].global.description.placeholder
+                    }
                     feature="UPDATE_DESCRIPTION"
                     onChange={this.props.onChangeThemes}
                     onFocus={this.props.onCancellationSelection}

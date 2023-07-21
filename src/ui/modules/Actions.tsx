@@ -151,7 +151,11 @@ export default class Actions extends React.Component<Props> {
             ]}
             selected={this.props.actions}
             feature="UPDATE_DEPLOYMENT_ACTION"
-            onChange={(e) => this.props.onChangeActions((e.target as HTMLElement).dataset.value)}
+            onChange={(e) =>
+              this.props.onChangeActions(
+                (e.target as HTMLElement).dataset.value
+              )
+            }
           />
         </div>
       </div>

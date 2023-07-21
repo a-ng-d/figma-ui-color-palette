@@ -19,10 +19,7 @@ interface Props {
   min?: number
   max?: number
   scale?: ScaleConfiguration
-  onChange: (
-    state: string,
-    feature?: string
-  ) => void
+  onChange: (state: string, feature?: string) => void
 }
 
 export default class Slider extends React.Component<Props> {

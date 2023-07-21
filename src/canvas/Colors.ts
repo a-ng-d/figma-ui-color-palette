@@ -1,5 +1,11 @@
 import chroma from 'chroma-js'
-import type { PaletteNode, ScaleConfiguration, PaletteDataThemeItem, PaletteDataColorItem, PaletteData } from '../utils/types'
+import type {
+  PaletteNode,
+  ScaleConfiguration,
+  PaletteDataThemeItem,
+  PaletteDataColorItem,
+  PaletteData,
+} from '../utils/types'
 import Sample from './Sample'
 import Header from './Header'
 import Title from './Title'
@@ -29,8 +35,12 @@ export default class Colors {
       collectionId: '',
       type: 'palette',
     }
-    this.currentScale = this.parent.themes.find(theme => theme.isEnabled).scale
-    this.paletteBackgroundGl = chroma(this.parent.themes.find(theme => theme.isEnabled).paletteBackground).gl()
+    this.currentScale = this.parent.themes.find(
+      (theme) => theme.isEnabled
+    ).scale
+    this.paletteBackgroundGl = chroma(
+      this.parent.themes.find((theme) => theme.isEnabled).paletteBackground
+    ).gl()
     this.sampleScale = 1.75
     this.sampleRatio = 3 / 2
     this.sampleSize = 184
@@ -210,16 +220,10 @@ export default class Colors {
     return this.nodeEmpty
   }
 
-  searchForModeId = (
-    themes: Array<PaletteDataThemeItem>,
-    themeId: string
-  ) => {
-    const themeMatch = themes
-      .find(record => record.id === themeId),
-    modeId = themeMatch == undefined
-      ? ''
-      : themeMatch.modeId
-    
+  searchForModeId = (themes: Array<PaletteDataThemeItem>, themeId: string) => {
+    const themeMatch = themes.find((record) => record.id === themeId),
+      modeId = themeMatch == undefined ? '' : themeMatch.modeId
+
     return modeId == undefined ? '' : modeId
   }
 
@@ -229,19 +233,16 @@ export default class Colors {
     colorId: string,
     shadeName: string
   ) => {
-    const themeMatch = themes
-      .find(theme => theme.id === themeId),
-    colorMatch = themeMatch == undefined
-      ? undefined
-      : themeMatch.colors
-        .find(color => color.id === colorId),
-    shadeMatch = colorMatch == undefined
-      ? undefined
-      : colorMatch.shades
-        .find(shade => shade.name === shadeName),
-    variableId = shadeMatch == undefined
-      ? ''
-      : shadeMatch.variableId
+    const themeMatch = themes.find((theme) => theme.id === themeId),
+      colorMatch =
+        themeMatch == undefined
+          ? undefined
+          : themeMatch.colors.find((color) => color.id === colorId),
+      shadeMatch =
+        colorMatch == undefined
+          ? undefined
+          : colorMatch.shades.find((shade) => shade.name === shadeName),
+      variableId = shadeMatch == undefined ? '' : shadeMatch.variableId
 
     return variableId == undefined ? '' : variableId
   }
@@ -252,19 +253,16 @@ export default class Colors {
     colorId: string,
     shadeName: string
   ) => {
-    const themeMatch = themes
-      .find(theme => theme.id === themeId),
-    colorMatch = themeMatch == undefined
-      ? undefined
-      : themeMatch.colors
-        .find(color => color.id === colorId),
-    shadeMatch = colorMatch == undefined
-      ? undefined
-      : colorMatch.shades
-        .find(shade => shade.name === shadeName),
-    styleId = shadeMatch == undefined
-      ? ''
-      : shadeMatch.styleId
+    const themeMatch = themes.find((theme) => theme.id === themeId),
+      colorMatch =
+        themeMatch == undefined
+          ? undefined
+          : themeMatch.colors.find((color) => color.id === colorId),
+      shadeMatch =
+        colorMatch == undefined
+          ? undefined
+          : colorMatch.shades.find((shade) => shade.name === shadeName),
+      styleId = shadeMatch == undefined ? '' : shadeMatch.styleId
 
     return styleId == undefined ? '' : styleId
   }
@@ -276,16 +274,17 @@ export default class Colors {
       this.paletteData.collectionId = data.collectionId
     }
 
-    this.parent.themes.forEach(theme => {
+    this.parent.themes.forEach((theme) => {
       const paletteDataThemeItem: PaletteDataThemeItem = {
         name: theme.name,
         description: theme.description,
         colors: [],
-        modeId: service === 'EDIT' ? this.searchForModeId(data.themes, theme.id) : '',
+        modeId:
+          service === 'EDIT' ? this.searchForModeId(data.themes, theme.id) : '',
         id: theme.id,
         type: theme.type,
       }
-      this.parent.colors.forEach(color => {
+      this.parent.colors.forEach((color) => {
         const paletteDataColorItem: PaletteDataColorItem = {
             name: color.name,
             description: color.description,
@@ -298,12 +297,13 @@ export default class Colors {
             color.rgb.g * 255,
             color.rgb.b * 255,
           ])._rgb
-  
+
         paletteDataColorItem.shades.push({
           name: 'source',
-          description: color.description === ''
-            ? 'Source color'
-            : `${color.description}﹒Source color`,
+          description:
+            color.description === ''
+              ? 'Source color'
+              : `${color.description}﹒Source color`,
           hex: chroma(sourceColor).hex(),
           rgb: sourceColor,
           gl: chroma(sourceColor).gl(),
@@ -312,30 +312,32 @@ export default class Colors {
           lab: chroma(sourceColor).lab(),
           oklab: chroma(sourceColor).oklab(),
           hsl: chroma(sourceColor).hsl(),
-          variableId: service === 'EDIT'
-            ? this.searchForShadeVariableId(
-              data.themes,
-              theme.id,
-              color.id,
-              'source'
-              )
-            : '',
-          styleId: service === 'EDIT'
-            ? this.searchForShadeStyleId(
-              data.themes,
-              theme.id,
-              color.id,
-              'source'
-              )
-            : '',
-          type: 'source color'
+          variableId:
+            service === 'EDIT'
+              ? this.searchForShadeVariableId(
+                  data.themes,
+                  theme.id,
+                  color.id,
+                  'source'
+                )
+              : '',
+          styleId:
+            service === 'EDIT'
+              ? this.searchForShadeStyleId(
+                  data.themes,
+                  theme.id,
+                  color.id,
+                  'source'
+                )
+              : '',
+          type: 'source color',
         })
-  
+
         Object.values(theme.scale)
           .reverse()
           .forEach((lightness: number) => {
             let newColor: { _rgb: Array<number> }
-  
+
             if (this.parent.colorSpace === 'LCH')
               newColor = this.getShadeColorFromLch(
                 sourceColor,
@@ -371,16 +373,17 @@ export default class Colors {
                 color.hueShifting,
                 this.parent.algorithmVersion
               )
-  
+
             const scaleName: string = Object.keys(theme.scale)
               .find((key) => theme.scale[key] === lightness)
               .substr(10)
 
             paletteDataColorItem.shades.push({
               name: scaleName,
-              description: color.description === ''
-                ? `Stop ${scaleName} shade color`
-                : `${color.description}﹒Stop ${scaleName} shade color`,
+              description:
+                color.description === ''
+                  ? `Stop ${scaleName} shade color`
+                  : `${color.description}﹒Stop ${scaleName} shade color`,
               hex: chroma(newColor).hex(),
               rgb: newColor._rgb,
               gl: chroma(newColor).gl(),
@@ -389,26 +392,28 @@ export default class Colors {
               lab: chroma(newColor).lab(),
               oklab: chroma(newColor).oklab(),
               hsl: chroma(newColor).hsl(),
-              variableId: service === 'EDIT'
-                ? this.searchForShadeVariableId(
-                  data.themes,
-                  theme.id,
-                  color.id,
-                  scaleName
-                  )
-                : '',
-              styleId: service === 'EDIT'
-                ? this.searchForShadeStyleId(
-                  data.themes,
-                  theme.id,
-                  color.id,
-                  scaleName
-                  )
-                : '',
-              type: 'color shade'
+              variableId:
+                service === 'EDIT'
+                  ? this.searchForShadeVariableId(
+                      data.themes,
+                      theme.id,
+                      color.id,
+                      scaleName
+                    )
+                  : '',
+              styleId:
+                service === 'EDIT'
+                  ? this.searchForShadeStyleId(
+                      data.themes,
+                      theme.id,
+                      color.id,
+                      scaleName
+                    )
+                  : '',
+              type: 'color shade',
             })
           })
-  
+
         paletteDataThemeItem.colors.push(paletteDataColorItem)
       })
       this.paletteData.themes.push(paletteDataThemeItem)
@@ -438,18 +443,13 @@ export default class Colors {
         this.parent
       ).makeNode()
     )
-    this.node.appendChild(
-      new Header(
-        this.parent,
-        this.sampleSize
-      ).makeNode()
-    )
+    this.node.appendChild(new Header(this.parent, this.sampleSize).makeNode())
     this.parent.colors.forEach((color) => {
       const sourceColor: Array<number> = chroma([
-          color.rgb.r * 255,
-          color.rgb.g * 255,
-          color.rgb.b * 255,
-        ])._rgb
+        color.rgb.r * 255,
+        color.rgb.g * 255,
+        color.rgb.b * 255,
+      ])._rgb
 
       // base
       this.nodeRow = figma.createFrame()
@@ -488,7 +488,12 @@ export default class Colors {
               this.parent.colorSpace,
               this.parent.view,
               this.parent.textColorsTheme
-            ).makeNodeShade(this.sampleSize, this.sampleSize * this.sampleRatio, color.name, true)
+            ).makeNodeShade(
+              this.sampleSize,
+              this.sampleSize * this.sampleRatio,
+              color.name,
+              true
+            )
           : new Sample(
               color.name,
               null,
@@ -497,7 +502,12 @@ export default class Colors {
               this.parent.colorSpace,
               this.parent.view,
               this.parent.textColorsTheme
-            ).makeNodeRichShade(this.sampleSize, this.sampleSize * this.sampleRatio * this.sampleScale, color.name, true)
+            ).makeNodeRichShade(
+              this.sampleSize,
+              this.sampleSize * this.sampleRatio * this.sampleScale,
+              color.name,
+              true
+            )
       )
 
       Object.values(this.currentScale)
@@ -562,12 +572,19 @@ export default class Colors {
                 this.parent.view,
                 this.parent.textColorsTheme,
                 { isClosestToRef: distance < 4 ? true : false }
-              ).makeNodeShade(this.sampleSize, this.sampleSize * this.sampleRatio, scaleName)
+              ).makeNodeShade(
+                this.sampleSize,
+                this.sampleSize * this.sampleRatio,
+                scaleName
+              )
             )
           } else {
             this.nodeRowShades.layoutSizingHorizontal = 'FIXED'
             this.nodeRowShades.layoutWrap = 'WRAP'
-            this.nodeRowShades.resize(this.sampleSize * this.sampleScale * 4, 100)
+            this.nodeRowShades.resize(
+              this.sampleSize * this.sampleScale * 4,
+              100
+            )
             this.nodeRowShades.layoutSizingVertical = 'HUG'
             this.nodeRowShades.appendChild(
               new Sample(
@@ -579,7 +596,11 @@ export default class Colors {
                 this.parent.view,
                 this.parent.textColorsTheme,
                 { isClosestToRef: distance < 4 ? true : false }
-              ).makeNodeRichShade(this.sampleSize * this.sampleScale, this.sampleSize * this.sampleRatio * this.sampleScale, scaleName)
+              ).makeNodeRichShade(
+                this.sampleSize * this.sampleScale,
+                this.sampleSize * this.sampleRatio * this.sampleScale,
+                scaleName
+              )
             )
           }
         })
@@ -591,16 +612,16 @@ export default class Colors {
     this.makePaletteData(this.parent.service)
     if (this.parent.colors.length == 0)
       this.node.appendChild(this.makeEmptyCase())
-    
+
     this.palette.fills = [
       {
         type: 'SOLID',
         color: {
           r: this.paletteBackgroundGl[0],
           g: this.paletteBackgroundGl[1],
-          b: this.paletteBackgroundGl[2]
-        }
-      }
+          b: this.paletteBackgroundGl[2],
+        },
+      },
     ]
 
     return this.node

@@ -20,7 +20,11 @@ interface Props {
   guideAbove: boolean
   guideBelow: boolean
   lang: string
-  onChangeColors: React.KeyboardEventHandler<HTMLInputElement | HTMLTextAreaElement> & React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement> & React.MouseEventHandler
+  onChangeColors: React.KeyboardEventHandler<
+    HTMLInputElement | HTMLTextAreaElement
+  > &
+    React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement> &
+    React.MouseEventHandler
   onChangeSelection: React.MouseEventHandler<HTMLLIElement>
   onCancellationSelection: React.ChangeEventHandler
   onDragChange: (
@@ -122,9 +126,7 @@ export default class ColorItem extends React.Component<Props> {
       >
         <Feature
           isActive={
-            features.find(
-              (feature) => feature.name === 'COLORS_NAME'
-            ).isActive
+            features.find((feature) => feature.name === 'COLORS_NAME').isActive
           }
         >
           <div className="colors__name">
@@ -142,9 +144,8 @@ export default class ColorItem extends React.Component<Props> {
         </Feature>
         <Feature
           isActive={
-            features.find(
-              (feature) => feature.name === 'COLORS_PARAMS'
-            ).isActive
+            features.find((feature) => feature.name === 'COLORS_PARAMS')
+              .isActive
           }
         >
           <div className="colors__parameters">
@@ -157,7 +158,9 @@ export default class ColorItem extends React.Component<Props> {
               onBlur={this.props.onChangeColors}
             />
             <div className="inputs">
-              <div className="label">{locals[this.props.lang].colors.lch.label}</div>
+              <div className="label">
+                {locals[this.props.lang].colors.lch.label}
+              </div>
               <div className="inputs__bar">
                 <Input
                   type="NUMBER"
@@ -263,7 +266,9 @@ export default class ColorItem extends React.Component<Props> {
                   <Input
                     type="TEXT"
                     value={this.props.description}
-                    placeholder={locals[this.props.lang].global.description.placeholder}
+                    placeholder={
+                      locals[this.props.lang].global.description.placeholder
+                    }
                     feature="UPDATE_DESCRIPTION"
                     onChange={this.props.onChangeColors}
                     onFocus={this.props.onCancellationSelection}

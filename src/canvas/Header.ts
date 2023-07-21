@@ -10,7 +10,9 @@ export default class Header {
 
   constructor(parent: PaletteNode, size: number) {
     this.parent = parent
-    this.currentScale = this.parent.themes.find(theme => theme.isEnabled).scale
+    this.currentScale = this.parent.themes.find(
+      (theme) => theme.isEnabled
+    ).scale
     this.sampleSize = size
   }
 

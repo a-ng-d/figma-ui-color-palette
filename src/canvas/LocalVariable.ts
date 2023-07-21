@@ -2,10 +2,7 @@ export default class LocalVariable {
   collection: VariableCollection
   variable: Variable
 
-  constructor(
-    collection?: VariableCollection,
-    variable?: Variable,
-  ) {
+  constructor(collection?: VariableCollection, variable?: Variable) {
     this.collection = collection
     this.variable = variable
   }

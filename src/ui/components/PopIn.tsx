@@ -30,9 +30,7 @@ export default class PopIn extends React.Component<Props> {
             action={this.props.OnClose}
           />
         </div>
-        <div className="popin__content">
-          {this.props.children}
-        </div>
+        <div className="popin__content">{this.props.children}</div>
         <div className="popin__actions">
           {this.props.actions.secondary != undefined ? (
             <Button

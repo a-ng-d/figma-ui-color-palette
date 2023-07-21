@@ -6,38 +6,31 @@ const exportCss = (palette) => {
   palette = figma.currentPage.selection[0]
 
   const paletteData: PaletteData = JSON.parse(palette.getPluginData('data')),
-  workingThemes = paletteData.themes
-    .filter(theme => theme.type === 'custom theme').length == 0
-    ? paletteData.themes
-    .filter(theme => theme.type === 'default theme')
-    : paletteData.themes
-    .filter(theme => theme.type === 'custom theme'),
-  css: Array<string> = []
+    workingThemes =
+      paletteData.themes.filter((theme) => theme.type === 'custom theme')
+        .length == 0
+        ? paletteData.themes.filter((theme) => theme.type === 'default theme')
+        : paletteData.themes.filter((theme) => theme.type === 'custom theme'),
+    css: Array<string> = []
 
   if (palette.children.length == 1) {
-    workingThemes.forEach(theme => {  
-      theme.colors.forEach(color => {
+    workingThemes.forEach((theme) => {
+      theme.colors.forEach((color) => {
         const rowCss: Array<string> = []
-        rowCss.unshift(`/* ${
-          workingThemes[0].type === 'custom theme'
-            ? theme.name + ' - '
-            : ''
-          }${color.name} */`)
-        color.shades.forEach(shade => {
+        rowCss.unshift(
+          `/* ${
+            workingThemes[0].type === 'custom theme' ? theme.name + ' - ' : ''
+          }${color.name} */`
+        )
+        color.shades.forEach((shade) => {
           rowCss.unshift(
             `--${
               workingThemes[0].type === 'custom theme'
                 ? doKebabCase(theme.name + ' ' + color.name)
                 : doKebabCase(color.name)
-              }-${
-              shade.name
-            }: rgb(${
-              Math.floor(shade.rgb[0])
-            },${
-              Math.floor(shade.rgb[1])
-            },${
-              Math.floor(shade.rgb[2])
-            });`
+            }-${shade.name}: rgb(${Math.floor(shade.rgb[0])},${Math.floor(
+              shade.rgb[1]
+            )},${Math.floor(shade.rgb[2])});`
           )
         })
         rowCss.unshift('')

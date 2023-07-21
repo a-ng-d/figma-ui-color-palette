@@ -1,4 +1,9 @@
-import type { ColorConfiguration, PresetConfiguration, ScaleConfiguration, ThemeConfiguration } from '../utils/types'
+import type {
+  ColorConfiguration,
+  PresetConfiguration,
+  ScaleConfiguration,
+  ThemeConfiguration,
+} from '../utils/types'
 import {
   previousSelection,
   currentSelection,
@@ -11,10 +16,16 @@ const updateSettings = (msg, palette) => {
   palette = isSelectionChanged ? previousSelection[0] : currentSelection[0]
 
   if (palette.children.length == 1) {
-    const preset: PresetConfiguration = JSON.parse(palette.getPluginData('preset')),
+    const preset: PresetConfiguration = JSON.parse(
+        palette.getPluginData('preset')
+      ),
       scale: ScaleConfiguration = JSON.parse(palette.getPluginData('scale')),
-      colors: Array<ColorConfiguration> = JSON.parse(palette.getPluginData('colors')),
-      themes: Array<ThemeConfiguration> = JSON.parse(palette.getPluginData(('themes'))),
+      colors: Array<ColorConfiguration> = JSON.parse(
+        palette.getPluginData('colors')
+      ),
+      themes: Array<ThemeConfiguration> = JSON.parse(
+        palette.getPluginData('themes')
+      ),
       view: string = palette.getPluginData('view')
 
     palette.setPluginData('name', msg.data.name)
@@ -46,7 +57,9 @@ const updateSettings = (msg, palette) => {
 
     // palette migration
     palette.counterAxisSizingMode = 'AUTO'
-    palette.name = `${msg.data.name === '' ? locals[lang].name : msg.data.name}﹒${preset.name}﹒${msg.data.colorSpace} ${
+    palette.name = `${
+      msg.data.name === '' ? locals[lang].name : msg.data.name
+    }﹒${preset.name}﹒${msg.data.colorSpace} ${
       view.includes('PALETTE') ? 'Palette' : 'Sheet'
     }`
   } else figma.notify(locals[lang].error.corruption)

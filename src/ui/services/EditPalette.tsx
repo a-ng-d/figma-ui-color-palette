@@ -72,12 +72,11 @@ export default class EditPalette extends React.Component<Props> {
                 feature.isActive
             )[0].name
           : '',
-      deploymentAction:
-        features.find(
-          (feature) => feature.name === 'LOCAL_STYLES'
-        ).isActive
-          ? 'LOCAL_STYLES'
-          : 'LOCAL_VARIABLES',
+      deploymentAction: features.find(
+        (feature) => feature.name === 'LOCAL_STYLES'
+      ).isActive
+        ? 'LOCAL_STYLES'
+        : 'LOCAL_VARIABLES',
     }
     this.themesRef = React.createRef()
   }
@@ -87,14 +86,12 @@ export default class EditPalette extends React.Component<Props> {
     this.setState({
       context: (e.target as HTMLElement).dataset.feature,
     })
-  
+
   switchThemeHandler = (e) => {
-    themesMessage.data = this.props.themes.map(theme => {
-      if (e.target.dataset.value === theme.id)
-        theme.isEnabled = true
-      else
-        theme.isEnabled = false
-      
+    themesMessage.data = this.props.themes.map((theme) => {
+      if (e.target.dataset.value === theme.id) theme.isEnabled = true
+      else theme.isEnabled = false
+
       return theme
     })
     parent.postMessage({ pluginMessage: themesMessage }, '*')
@@ -152,17 +149,12 @@ export default class EditPalette extends React.Component<Props> {
     if (this.props.export.format === 'CSV') {
       const zip = new JSZip()
       this.props.export.data.forEach((theme) => {
-        const folder = theme.type != 'default theme' ? zip.folder(theme.name) : null
-        theme.colors.forEach(color => {
+        const folder =
+          theme.type != 'default theme' ? zip.folder(theme.name) : null
+        theme.colors.forEach((color) => {
           theme.type != 'default theme'
-          ? folder.file(
-            `${doSnakeCase(color.name)}.csv`,
-            color.csv
-          )
-          : zip.file(
-            `${doSnakeCase(color.name)}.csv`,
-            color.csv
-          )
+            ? folder.file(`${doSnakeCase(color.name)}.csv`, color.csv)
+            : zip.file(`${doSnakeCase(color.name)}.csv`, color.csv)
         })
       })
       zip
@@ -188,11 +180,7 @@ export default class EditPalette extends React.Component<Props> {
           this.props.name === ''
             ? doSnakeCase(locals[this.props.lang].name)
             : doSnakeCase(this.props.name)
-        }-colors${
-          this.props.export.format === 'SWIFT'
-          ? '.swift'
-          : ''
-        }`
+        }-colors${this.props.export.format === 'SWIFT' ? '.swift' : ''}`
       )
     }
   }
@@ -232,9 +220,9 @@ export default class EditPalette extends React.Component<Props> {
 
   workingThemes = () => {
     if (this.props.themes.length > 1)
-      return this.props.themes.filter(theme => theme.type === 'custom theme')
+      return this.props.themes.filter((theme) => theme.type === 'custom theme')
     else
-      return this.props.themes.filter(theme => theme.type === 'default theme')
+      return this.props.themes.filter((theme) => theme.type === 'default theme')
   }
 
   // Render
@@ -258,9 +246,11 @@ export default class EditPalette extends React.Component<Props> {
             onUpdateLocalStyles={this.onUpdateStyles}
             onCreateLocalVariables={this.onCreateVariables}
             onUpdateLocalVariables={this.onUpdateVariables}
-            onChangeActions={(value) => this.setState({
-              deploymentAction: value
-            })}
+            onChangeActions={(value) =>
+              this.setState({
+                deploymentAction: value,
+              })
+            }
           />
         )
         break
@@ -278,9 +268,11 @@ export default class EditPalette extends React.Component<Props> {
             onUpdateLocalStyles={this.onUpdateStyles}
             onCreateLocalVariables={this.onCreateVariables}
             onUpdateLocalVariables={this.onUpdateVariables}
-            onChangeActions={(value) => this.setState({
-              deploymentAction: value
-            })}
+            onChangeActions={(value) =>
+              this.setState({
+                deploymentAction: value,
+              })
+            }
           />
         )
         break
@@ -301,9 +293,11 @@ export default class EditPalette extends React.Component<Props> {
             onUpdateLocalStyles={this.onUpdateStyles}
             onCreateLocalVariables={this.onCreateVariables}
             onUpdateLocalVariables={this.onUpdateVariables}
-            onChangeActions={(value) => this.setState({
-              deploymentAction: value
-            })}
+            onChangeActions={(value) =>
+              this.setState({
+                deploymentAction: value,
+              })
+            }
           />
         )
         break
@@ -342,9 +336,11 @@ export default class EditPalette extends React.Component<Props> {
             onUpdateLocalStyles={this.onUpdateStyles}
             onCreateLocalVariables={this.onCreateVariables}
             onUpdateLocalVariables={this.onUpdateVariables}
-            onChangeActions={(value) => this.setState({
-              deploymentAction: value
-            })}
+            onChangeActions={(value) =>
+              this.setState({
+                deploymentAction: value,
+              })
+            }
           />
         )
         break
@@ -363,8 +359,7 @@ export default class EditPalette extends React.Component<Props> {
           rightPart={
             <Feature
               isActive={
-                features.find((feature) => feature.name === 'THEMES')
-                  .isActive
+                features.find((feature) => feature.name === 'THEMES').isActive
               }
             >
               <FormItem
@@ -374,7 +369,7 @@ export default class EditPalette extends React.Component<Props> {
               >
                 <Dropdown
                   id="presets"
-                  options={(this.workingThemes()).map((theme, index) => {
+                  options={this.workingThemes().map((theme, index) => {
                     return {
                       label: theme.name,
                       value: theme.id,
@@ -383,16 +378,20 @@ export default class EditPalette extends React.Component<Props> {
                       isBlocked: false,
                     }
                   })}
-                  selected={this.props.themes.find(theme => theme.isEnabled).id}
-                  actions={[{
-                    label: 'Create a color theme',
-                    isBlocked: isBlocked('THEMES', this.props.planStatus),
-                    feature: 'ADD_THEME',
-                    action: () => {
-                      this.setState({ context: 'THEMES' })
-                      setTimeout(() => this.themesRef.current.onAddTheme(), 1)
+                  selected={
+                    this.props.themes.find((theme) => theme.isEnabled).id
+                  }
+                  actions={[
+                    {
+                      label: 'Create a color theme',
+                      isBlocked: isBlocked('THEMES', this.props.planStatus),
+                      feature: 'ADD_THEME',
+                      action: () => {
+                        this.setState({ context: 'THEMES' })
+                        setTimeout(() => this.themesRef.current.onAddTheme(), 1)
+                      },
                     },
-                  }]}
+                  ]}
                   feature="SWITCH_THEME"
                   onChange={this.switchThemeHandler}
                 />

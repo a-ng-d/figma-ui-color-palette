@@ -45,7 +45,7 @@ figma.on('run', () => isHighlightRead(package_json.version))
 figma.ui.onmessage = async (msg) => {
   let palette: ReadonlyArray<SceneNode>
   const i = 0,
-        j = 0
+    j = 0
 
   const actions: ActionsList = {
     CLOSE_HIGHLIGHT: () => closeHighlight(msg),

@@ -1,5 +1,10 @@
 import * as React from 'react'
-import type { ActionsList, DispatchProcess, PresetConfiguration, ScaleConfiguration } from '../../utils/types'
+import type {
+  ActionsList,
+  DispatchProcess,
+  PresetConfiguration,
+  ScaleConfiguration,
+} from '../../utils/types'
 import Feature from '../components/Feature'
 import Button from '../components/Button'
 import Dropdown from '../components/Dropdown'
@@ -79,7 +84,7 @@ export default class Scale extends React.Component<Props> {
             type: 'UPDATE_SCALE',
             data: palette,
             isEditedInRealTime: false,
-            feature: feature
+            feature: feature,
           },
         },
         '*'
@@ -194,9 +199,11 @@ export default class Scale extends React.Component<Props> {
                       this.props.preset.scale.length == 24 ? 'disabled' : ''
                     }
                     feature="ADD_STOP"
-                    action={this.props.preset.scale.length >= 24
-                      ? () => null
-                      : this.props.onAddStop}
+                    action={
+                      this.props.preset.scale.length >= 24
+                        ? () => null
+                        : this.props.onAddStop
+                    }
                   />
                 ) : null}
               </Feature>
@@ -295,7 +302,7 @@ export default class Scale extends React.Component<Props> {
             onUpdateLocalVariables={this.props.onUpdateLocalVariables}
             onChangeActions={this.props.onChangeActions}
           />
-        ): null}
+        ) : null}
       </>
     )
   }

@@ -15,14 +15,16 @@ interface Props {
 export default class Button extends React.Component<Props> {
   static defaultProps = {
     isLink: false,
-    isBlocked: false
+    isBlocked: false,
   }
 
   // Templates
   Button = () => {
     return (
       <button
-        className={`button button--${this.props.type}${this.props.isBlocked ? ' button--blocked' : ''}`}
+        className={`button button--${this.props.type}${
+          this.props.isBlocked ? ' button--blocked' : ''
+        }`}
         data-feature={this.props.feature}
         disabled={this.props.isBlocked}
         onMouseDown={this.props.action}

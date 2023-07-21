@@ -19,7 +19,9 @@ export default class About extends React.Component<Props> {
           <div className="about__basic">
             <Icon size={32} />
             <div>
-              <p className="type type--xlarge">{locals[this.props.lang].name}</p>
+              <p className="type type--xlarge">
+                {locals[this.props.lang].name}
+              </p>
               <div className="about__info">
                 <p className="type">{`Version ${
                   package_json.version.slice(0, 1) +
@@ -34,7 +36,9 @@ export default class About extends React.Component<Props> {
                   {this.props.planStatus === 'UNPAID' ? (
                     <>
                       <span>﹒</span>
-                      <p className="type">{locals[this.props.lang].plan.free}</p>
+                      <p className="type">
+                        {locals[this.props.lang].plan.free}
+                      </p>
                     </>
                   ) : (
                     <>
@@ -46,7 +50,7 @@ export default class About extends React.Component<Props> {
               </div>
             </div>
           </div>
-          <div >
+          <div>
             <p className="type">
               Created and maintained by{' '}
               <a

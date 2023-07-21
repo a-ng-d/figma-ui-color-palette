@@ -5,14 +5,13 @@ const exportJson = (palette) => {
   palette = figma.currentPage.selection[0]
 
   const paletteData: PaletteData = JSON.parse(palette.getPluginData('data')),
-  workingThemes = paletteData.themes
-    .filter(theme => theme.type === 'custom theme').length == 0
-    ? paletteData.themes
-    .filter(theme => theme.type === 'default theme')
-    : paletteData.themes
-    .filter(theme => theme.type === 'custom theme'),
-  json = {}
-  
+    workingThemes =
+      paletteData.themes.filter((theme) => theme.type === 'custom theme')
+        .length == 0
+        ? paletteData.themes.filter((theme) => theme.type === 'default theme')
+        : paletteData.themes.filter((theme) => theme.type === 'custom theme'),
+    json = {}
+
   const model = (shade: PaletteDataShadeItem) => {
     return {
       rgb: {
@@ -58,11 +57,11 @@ const exportJson = (palette) => {
 
   if (palette.children.length == 1) {
     if (workingThemes[0].type === 'custom theme')
-      workingThemes.forEach(theme => {
+      workingThemes.forEach((theme) => {
         json[theme.name] = {}
-        theme.colors.forEach(color => {
+        theme.colors.forEach((color) => {
           json[theme.name][color.name] = {}
-          color.shades.reverse().forEach(shade => {
+          color.shades.reverse().forEach((shade) => {
             json[theme.name][color.name][shade.name] = model(shade)
           })
           json[theme.name][color.name]['type'] = 'color'
@@ -70,10 +69,10 @@ const exportJson = (palette) => {
         json[theme.name]['type'] = 'color theme'
       })
     else
-      workingThemes.forEach(theme => {
-        theme.colors.forEach(color => {
+      workingThemes.forEach((theme) => {
+        theme.colors.forEach((color) => {
           json[color.name] = {}
-          color.shades.sort().forEach(shade => {
+          color.shades.sort().forEach((shade) => {
             json[color.name][shade.name] = model(shade)
           })
           json[color.name]['type'] = 'color'

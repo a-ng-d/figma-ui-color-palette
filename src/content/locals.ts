@@ -38,12 +38,13 @@ export const locals = {
         edit: 'Double click a stop to type its value',
         remove: 'Press Backspace ⌫ after selecting a stop to remove it',
         add: 'Click on the slider range to add a stop',
-      }   
+      },
     },
     colors: {
       title: 'Source colors',
-      callout : {
-        message: 'Create a source color to split it into multiple shades according to your lightness scale',
+      callout: {
+        message:
+          'Create a source color to split it into multiple shades according to your lightness scale',
         cta: 'Create a source color',
       },
       lch: {
@@ -55,8 +56,9 @@ export const locals = {
     },
     themes: {
       title: 'Color themes',
-      callout : {
-        message: 'Create color themes to manage multiple color palettes within one single (e.g. light and dark scheme)',
+      callout: {
+        message:
+          'Create color themes to manage multiple color palettes within one single (e.g. light and dark scheme)',
         cta: 'Create a color theme',
       },
       paletteBackgroundColor: {
@@ -64,8 +66,8 @@ export const locals = {
       },
       switchTheme: {
         label: 'Theme',
-        defaultTheme: 'None'
-      }
+        defaultTheme: 'None',
+      },
     },
     export: {
       format: 'File format',
@@ -96,7 +98,7 @@ export const locals = {
           textDarkColor: 'Text dark color',
           textThemeColorsDescription:
             'The light and dark text colors serve as a reference to simulate contrast and obtain both WCAG and APCA scores',
-        }
+        },
       },
       color: {
         title: 'Color management',
@@ -111,8 +113,8 @@ export const locals = {
         newAlgorithm: {
           label: 'Enable the new algorithm for creating color shades',
           description:
-          'The Chroma values are harmonized to ensure consistent lightness across all shades, but this may make the colors look desaturated.',
-        }
+            'The Chroma values are harmonized to ensure consistent lightness across all shades, but this may make the colors look desaturated.',
+        },
       },
     },
     about: {
@@ -155,7 +157,8 @@ export const locals = {
       free: 'Free plan',
     },
     proPlan: {
-      welcomeMessage: 'You have successfully upgraded to the Pro plan, unlocking a range of tools to enhance the accessibility, accuracy and deployment options.'
+      welcomeMessage:
+        'You have successfully upgraded to the Pro plan, unlocking a range of tools to enhance the accessibility, accuracy and deployment options.',
     },
     properties: {
       base: 'Base',
@@ -176,16 +179,14 @@ export const locals = {
       variableModes: 'variable modes',
     },
     warning: {
-      cannotCreateLocalStyles:
-        'Local color styles have been already created',
+      cannotCreateLocalStyles: 'Local color styles have been already created',
       cannotUpdateLocalStyles:
         'Your UI Color Palette is up-to-date or local color styles must be created',
       cannotCreateLocalVariablesAndModes:
         'Local color variables and variable modes have been already created',
       cannotUpdateLocalVariablesAndModes:
         'Your UI Color Palette is up-to-date or local color variables and variable modes must be created',
-      collectionDoesNotExist:
-        "Variables collection must be created",
+      collectionDoesNotExist: 'Variables collection must be created',
       emptySourceColors:
         'There is not any source color. Add it manually in the Colors section.',
       hslColorSpace:

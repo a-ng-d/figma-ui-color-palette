@@ -7,7 +7,7 @@ import type {
   ScaleConfiguration,
   SelectedColor,
   ThemeConfiguration,
-  ThemesMessage
+  ThemesMessage,
 } from '../../utils/types'
 import Dispatcher from './Dispatcher'
 import Button from '../components/Button'
@@ -77,10 +77,7 @@ export default class Themes extends React.Component<Props> {
 
   handleClickOutside = (e) => {
     if (this.listRef.current != null)
-      if (
-        (this.listRef &&
-        !this.listRef.current.contains(e.target))
-      )
+      if (this.listRef && !this.listRef.current.contains(e.target))
         this.setState({
           selectedElement: {
             id: '',
@@ -99,7 +96,7 @@ export default class Themes extends React.Component<Props> {
     themesMessage.isEditedInRealTime = false
 
     const addTheme = () => {
-      themesMessage.data = this.props.themes.map(theme => {
+      themesMessage.data = this.props.themes.map((theme) => {
         theme.isEnabled = false
         return theme
       })
@@ -147,8 +144,7 @@ export default class Themes extends React.Component<Props> {
           : e.target.value
       if (/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/i.test(code)) {
         themesMessage.data = this.props.themes.map((item) => {
-          if (item.id === id)
-            item.paletteBackground = code
+          if (item.id === id) item.paletteBackground = code
           return item
         })
         this.props.onChangeThemes(themesMessage.data)
@@ -177,9 +173,13 @@ export default class Themes extends React.Component<Props> {
     const removeTheme = () => {
       themesMessage.data = this.props.themes.filter((item) => item.id != id)
       if (themesMessage.data.length > 1)
-        themesMessage.data.filter(item => item.type === 'custom theme')[0].isEnabled = true
+        themesMessage.data.filter(
+          (item) => item.type === 'custom theme'
+        )[0].isEnabled = true
       else
-        themesMessage.data.find(item => item.type === 'default theme').isEnabled = true
+        themesMessage.data.find(
+          (item) => item.type === 'default theme'
+        ).isEnabled = true
       this.props.onChangeThemes(themesMessage.data)
       parent.postMessage({ pluginMessage: themesMessage }, '*')
     }
@@ -192,7 +192,7 @@ export default class Themes extends React.Component<Props> {
       REMOVE_THEME: () => removeTheme(),
     }
 
-    return actions[e.target.dataset.feature]?.()  
+    return actions[e.target.dataset.feature]?.()
   }
 
   orderHandler = () => {
@@ -269,7 +269,7 @@ export default class Themes extends React.Component<Props> {
 
   // Direct actions
   onAddTheme = () => {
-    themesMessage.data = this.props.themes.map(theme => {
+    themesMessage.data = this.props.themes.map((theme) => {
       theme.isEnabled = false
       return theme
     })
@@ -328,7 +328,7 @@ export default class Themes extends React.Component<Props> {
               />
               <div className="onboarding__actions">
                 <Button
-                  type='primary'
+                  type="primary"
                   feature="ADD_THEME"
                   label={locals[this.props.lang].themes.callout.cta}
                   isBlocked={isBlocked('THEMES', this.props.planStatus)}
@@ -341,7 +341,10 @@ export default class Themes extends React.Component<Props> {
               </div>
             </div>
           ) : (
-            <ul className="list" ref={this.listRef}>
+            <ul
+              className="list"
+              ref={this.listRef}
+            >
               {this.props.themes.map((theme, index) => {
                 if (theme.type != 'default theme')
                   return (
@@ -353,7 +356,9 @@ export default class Themes extends React.Component<Props> {
                       paletteBackground={theme.paletteBackground}
                       uuid={theme.id}
                       selected={
-                        this.state['selectedElement'].id === theme.id ? true : false
+                        this.state['selectedElement'].id === theme.id
+                          ? true
+                          : false
                       }
                       guideAbove={
                         this.state['hoveredElement'].id === theme.id
@@ -376,7 +381,7 @@ export default class Themes extends React.Component<Props> {
                   )
               })}
             </ul>
-          )}      
+          )}
         </div>
         {this.props.editorType === 'figma' ? (
           <Actions

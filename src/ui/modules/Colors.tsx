@@ -71,10 +71,7 @@ export default class Colors extends React.Component<Props> {
     document.removeEventListener('mousedown', this.handleClickOutside)
 
   handleClickOutside = (e) => {
-    if (
-      this.listRef &&
-      !this.listRef.current.contains(e.target)
-    )
+    if (this.listRef && !this.listRef.current.contains(e.target))
       this.setState({
         selectedElement: {
           id: '',
@@ -360,7 +357,7 @@ export default class Colors extends React.Component<Props> {
               />
               <div className="onboarding__actions">
                 <Button
-                  type='primary'
+                  type="primary"
                   feature="ADD_COLOR"
                   label={locals[this.props.lang].colors.callout.cta}
                   action={this.colorsHandler}
@@ -368,7 +365,10 @@ export default class Colors extends React.Component<Props> {
               </div>
             </div>
           ) : (
-            <ul className="list" ref={this.listRef}>
+            <ul
+              className="list"
+              ref={this.listRef}
+            >
               {this.props.colors.map((color, index) => (
                 <ColorItem
                   key={color.id}
@@ -406,7 +406,7 @@ export default class Colors extends React.Component<Props> {
                 />
               ))}
             </ul>
-        )}
+          )}
         </div>
         {this.props.editorType === 'figma' ? (
           <Actions

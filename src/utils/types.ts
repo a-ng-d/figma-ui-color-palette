@@ -64,8 +64,8 @@ export interface PaletteDataThemeItem {
   name: string
   description: string
   colors: Array<PaletteDataColorItem>
-  modeId: string,
-  id: string,
+  modeId: string
+  id: string
   type: string
 }
 
@@ -73,7 +73,7 @@ export interface PaletteDataColorItem {
   name: string
   description: string
   shades: Array<PaletteDataShadeItem>
-  id: string,
+  id: string
   type: string
 }
 

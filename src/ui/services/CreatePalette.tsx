@@ -50,7 +50,7 @@ export default class CreatePalette extends React.Component<Props> {
     this.setState({
       context: (e.target as HTMLElement).dataset.feature,
     })
-  
+
   // Direct actions
   onCreatePalette = () =>
     parent.postMessage(

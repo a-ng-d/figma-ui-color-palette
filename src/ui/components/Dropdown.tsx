@@ -25,7 +25,7 @@ export default class Dropdown extends React.Component<Props> {
   listRef: React.MutableRefObject<any>
 
   static defaultProps = {
-    actions: []
+    actions: [],
   }
 
   constructor(props) {
@@ -48,10 +48,7 @@ export default class Dropdown extends React.Component<Props> {
     document.removeEventListener('mousedown', this.handleClickOutside)
 
   handleClickOutside = (e) => {
-    if (
-      this.selectMenuRef &&
-      !this.selectMenuRef.current.contains(e.target)
-    )
+    if (this.selectMenuRef && !this.selectMenuRef.current.contains(e.target))
       this.setState({
         isListOpen: false,
       })
@@ -89,7 +86,7 @@ export default class Dropdown extends React.Component<Props> {
       isListOpen: false,
     })
     callback()
-  } 
+  }
 
   render() {
     return (
@@ -142,16 +139,16 @@ export default class Dropdown extends React.Component<Props> {
             )}
             {this.props.actions.length > 0 ? (
               <>
-              <hr />
+                <hr />
                 {this.props.actions.map((action, index) => (
                   <li
                     key={index}
-                    className={`select-menu__item${action.isBlocked ? ' select-menu__item--blocked' : ''}`}
+                    className={`select-menu__item${
+                      action.isBlocked ? ' select-menu__item--blocked' : ''
+                    }`}
                     data-feature={action.feature}
                     data-is-blocked={action.isBlocked}
-                    onMouseDown={() =>
-                      this.onSelectAction(action.action)
-                    }
+                    onMouseDown={() => this.onSelectAction(action.action)}
                   >
                     <span className="select-menu__item-icon"></span>
                     <span className="select-menu__item-label">

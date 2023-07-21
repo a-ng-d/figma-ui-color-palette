@@ -191,9 +191,8 @@ class App extends React.Component {
   slideHandler = () =>
     this.setState({
       scale: palette.scale,
-      themes: this.state['themes'].map(theme => {
-        if (theme.isEnabled)
-          theme.scale = palette.scale
+      themes: this.state['themes'].map((theme) => {
+        if (theme.isEnabled) theme.scale = palette.scale
         return theme
       }),
       onGoingStep: 'scale changed',
@@ -206,16 +205,17 @@ class App extends React.Component {
           ? this.state['preset']
           : palette.preset,
       scale: palette.scale,
-      themes: this.state['themes'].map(theme => {
-        if (theme.isEnabled)
-          theme.scale = palette.scale
+      themes: this.state['themes'].map((theme) => {
+        if (theme.isEnabled) theme.scale = palette.scale
         else
           theme.scale = doLightnessScale(
-            Object.keys(palette.scale).map(stop => {
+            Object.keys(palette.scale).map((stop) => {
               return parseFloat(stop.replace('lightness-', ''))
             }),
-            theme.scale[Object.keys(theme.scale)[Object.keys(theme.scale).length - 1]],
-            theme.scale[Object.keys(theme.scale)[0]],
+            theme.scale[
+              Object.keys(theme.scale)[Object.keys(theme.scale).length - 1]
+            ],
+            theme.scale[Object.keys(theme.scale)[0]]
           )
         return theme
       }),
@@ -227,10 +227,10 @@ class App extends React.Component {
       newColors: colors,
       onGoingStep: 'colors changed',
     })
-  
+
   themesHandler = (themes: Array<ThemeConfiguration>) =>
     this.setState({
-      scale: themes.find(theme => theme.isEnabled).scale,
+      scale: themes.find((theme) => theme.isEnabled).scale,
       themes: themes,
       onGoingStep: 'themes changed',
     })
@@ -259,7 +259,7 @@ class App extends React.Component {
         palette.view = e.target.dataset.value
         this.setState({
           view: e.target.dataset.value,
-          onGoingStep: 'view changed'
+          onGoingStep: 'view changed',
         })
         if (this.state['service'] === 'EDIT')
           parent.postMessage(
@@ -650,7 +650,8 @@ class App extends React.Component {
           </Feature>
           <Feature
             isActive={
-              features.find((feature) => feature.name === 'GET_PRO_PLAN').isActive
+              features.find((feature) => feature.name === 'GET_PRO_PLAN')
+                .isActive
             }
           >
             {this.state['isGettingPro'] ? (
@@ -659,16 +660,18 @@ class App extends React.Component {
                 actions={{
                   primary: {
                     label: "Let's discover",
-                    action: () => this.setState({ isGettingPro: false })
-                  }
+                    action: () => this.setState({ isGettingPro: false }),
+                  },
                 }}
                 onClose={() => this.setState({ isGettingPro: false })}
               >
                 <img
                   className="dialog__cover"
-                  src=''
+                  src=""
                 />
-                <p className="dialog__text type">{locals[this.state['lang']].proPlan.welcomeMessage}</p>
+                <p className="dialog__text type">
+                  {locals[this.state['lang']].proPlan.welcomeMessage}
+                </p>
               </Dialog>
             ) : null}
           </Feature>

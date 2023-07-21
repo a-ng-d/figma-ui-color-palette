@@ -160,9 +160,7 @@ export default class Settings extends React.Component<Props> {
               id="color-spaces"
               options={[
                 {
-                  label:
-                    locals[this.props.lang].settings.color.colorSpace
-                      .lch,
+                  label: locals[this.props.lang].settings.color.colorSpace.lch,
                   value: 'LCH',
                   position: 0,
                   isActive: features.find(
@@ -175,8 +173,7 @@ export default class Settings extends React.Component<Props> {
                 },
                 {
                   label:
-                    locals[this.props.lang].settings.color.colorSpace
-                      .oklch,
+                    locals[this.props.lang].settings.color.colorSpace.oklch,
                   value: 'OKLCH',
                   position: 1,
                   isActive: features.find(
@@ -188,9 +185,7 @@ export default class Settings extends React.Component<Props> {
                   ),
                 },
                 {
-                  label:
-                    locals[this.props.lang].settings.color.colorSpace
-                      .lab,
+                  label: locals[this.props.lang].settings.color.colorSpace.lab,
                   value: 'LAB',
                   position: 2,
                   isActive: features.find(
@@ -203,8 +198,7 @@ export default class Settings extends React.Component<Props> {
                 },
                 {
                   label:
-                    locals[this.props.lang].settings.color.colorSpace
-                      .oklab,
+                    locals[this.props.lang].settings.color.colorSpace.oklab,
                   value: 'OKLAB',
                   position: 3,
                   isActive: features.find(
@@ -216,9 +210,7 @@ export default class Settings extends React.Component<Props> {
                   ),
                 },
                 {
-                  label:
-                    locals[this.props.lang].settings.color.colorSpace
-                      .hsl,
+                  label: locals[this.props.lang].settings.color.colorSpace.hsl,
                   value: 'HSL',
                   position: 4,
                   isActive: features.find(
@@ -277,7 +269,7 @@ export default class Settings extends React.Component<Props> {
           <Message
             icon="library"
             messages={[
-              locals[this.props.lang].settings.color.newAlgorithm.description
+              locals[this.props.lang].settings.color.newAlgorithm.description,
             ]}
             isBlocked={isBlocked(
               'SETTINGS_NEW_ALGORITHM',
@@ -300,7 +292,10 @@ export default class Settings extends React.Component<Props> {
       >
         <div className="settings__item">
           <FormItem
-            label={locals[this.props.lang].settings.contrast.textColors.textLightColor}
+            label={
+              locals[this.props.lang].settings.contrast.textColors
+                .textLightColor
+            }
             id="change-text-light-color"
             isBlocked={isBlocked(
               'SETTINGS_TEXT_COLORS_THEME',
@@ -334,7 +329,9 @@ export default class Settings extends React.Component<Props> {
             />
           </FormItem>
           <FormItem
-            label={locals[this.props.lang].settings.contrast.textColors.textDarkColor}
+            label={
+              locals[this.props.lang].settings.contrast.textColors.textDarkColor
+            }
             id="change-text-dark-color"
             isBlocked={isBlocked(
               'SETTINGS_TEXT_COLORS_THEME',
