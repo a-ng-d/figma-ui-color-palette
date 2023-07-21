@@ -425,7 +425,7 @@ export default class Colors {
   }
 
   makeNodeShades = () => {
-    const gap: number = 32
+    const gap = 32
 
     // base
     this.nodeShades = figma.createFrame()

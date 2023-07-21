@@ -125,7 +125,7 @@ export default class Sample {
     height: number,
     name: string,
     isColorName = false,
-    description: string = ''
+    description = ''
   ) {
     // base
     this.node = figma.createFrame()
