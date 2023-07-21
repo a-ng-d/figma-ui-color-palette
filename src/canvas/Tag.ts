@@ -21,7 +21,7 @@ export default class Tag {
     this.nodeTag.fills = [
       {
         type: 'SOLID',
-        opacity: 0.6,
+        opacity: 0.5,
         color: {
           r: 1,
           g: 1,
@@ -35,8 +35,7 @@ export default class Tag {
     this.nodeTag.layoutMode = 'HORIZONTAL'
     this.nodeTag.layoutSizingHorizontal = 'HUG'
     this.nodeTag.layoutSizingVertical = 'HUG'
-    this.nodeTag.counterAxisAlignItems = 'CENTER'
-    this.nodeTag.horizontalPadding = this.fontSize / 2
+    this.nodeTag.horizontalPadding = 8
     this.nodeTag.verticalPadding = 4
     this.nodeTag.itemSpacing = 4
 
@@ -69,8 +68,7 @@ export default class Tag {
         value: this.url
       })
       this.nodeText.setRangeTextDecoration(0, this.content.length, "UNDERLINE")
-    }
-      
+    }     
     this.nodeText.fills = [
       {
         type: 'SOLID',

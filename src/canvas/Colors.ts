@@ -496,10 +496,11 @@ export default class Colors {
               this.parent.view,
               this.parent.textColorsTheme
             ).makeNodeRichShade(
-              this.sampleSize,
+              this.sampleSize * this.sampleRatio,
               this.sampleSize * this.sampleRatio * this.sampleScale,
               color.name,
-              true
+              true,
+              color.description
             )
       )
 

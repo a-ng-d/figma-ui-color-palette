@@ -1,4 +1,5 @@
 import type { TextColorsThemeHexModel } from '../utils/types'
+import Paragraph from './Paragraph'
 import Properties from './Properties'
 import Property from './Property'
 import Status from './Status'
@@ -123,7 +124,8 @@ export default class Sample {
     width: number,
     height: number,
     name: string,
-    isColorName = false
+    isColorName = false,
+    description: string = ''
   ) {
     // base
     this.node = figma.createFrame()
@@ -177,7 +179,17 @@ export default class Sample {
       )
 
     this.node.appendChild(this.nodeColor)
-    if (!this.view.includes('SHEET_SAFE_MODE') && !isColorName)
+    if (isColorName && description != '')
+      this.node.appendChild(
+        new Paragraph(
+          '_description',
+          description,
+          'FILL',
+          null,
+          8
+        ).makeNode()
+      )
+    else if (!this.view.includes('SHEET_SAFE_MODE') && !isColorName)
       this.node.appendChild(
         new Properties(
           this.scale,
