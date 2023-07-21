@@ -20,8 +20,8 @@ interface Props {
 }
 
 export default class Dropdown extends React.Component<Props> {
-  selectMenuRef: any
-  listRef: any
+  selectMenuRef: React.MutableRefObject<any>
+  listRef: React.MutableRefObject<any>
 
   static defaultProps = {
     actions: []

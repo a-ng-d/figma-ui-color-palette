@@ -38,7 +38,7 @@ const colorsMessage: ColorsMessage = {
 
 export default class Colors extends React.Component<Props> {
   dispatch: { [key: string]: DispatchProcess }
-  listRef: any
+  listRef: React.MutableRefObject<any>
 
   constructor(props) {
     super(props)
