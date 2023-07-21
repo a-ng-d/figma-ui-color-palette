@@ -340,7 +340,7 @@
 
 .select-menu hr {
   height: 1px;
-  background-color: var(--figma-color-border);
+  background-color: var(--black8-opaque);
   border: none;
 }
 
