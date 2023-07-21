@@ -7,6 +7,7 @@ import closeHighlight from './bridges/closeHighlight'
 import createPalette from './bridges/createPalette'
 import updateScale from './bridges/updateScale'
 import updateColors from './bridges/updateColors'
+import updateThemes from './bridges/updateThemes'
 import updateView from './bridges/updateView'
 import createLocalStyles from './bridges/createLocalStyles'
 import updateLocalStyles from './bridges/updateLocalStyles'
@@ -43,7 +44,8 @@ figma.on('run', () => isHighlightRead(package_json.version))
 
 figma.ui.onmessage = async (msg) => {
   let palette: ReadonlyArray<SceneNode>
-  const i = 0
+  const i = 0,
+    j = 0
 
   const actions: ActionsList = {
     CLOSE_HIGHLIGHT: () => closeHighlight(msg),
@@ -51,10 +53,11 @@ figma.ui.onmessage = async (msg) => {
     UPDATE_SCALE: () => updateScale(msg, palette),
     UPDATE_VIEW: () => updateView(msg, palette),
     UPDATE_COLORS: () => updateColors(msg, palette),
+    UPDATE_THEMES: () => updateThemes(msg, palette),
     CREATE_LOCAL_STYLES: () => createLocalStyles(palette, i),
     UPDATE_LOCAL_STYLES: () => updateLocalStyles(palette, i),
-    CREATE_LOCAL_VARIABLES: () => createLocalVariables(palette, i),
-    UPDATE_LOCAL_VARIABLES: () => updateLocalVariables(palette, i),
+    CREATE_LOCAL_VARIABLES: () => createLocalVariables(palette, i, j),
+    UPDATE_LOCAL_VARIABLES: () => updateLocalVariables(palette, i, j),
     EXPORT_PALETTE: () => {
       msg.export === 'JSON' ? exportJson(palette) : null
       msg.export === 'CSS' ? exportCss(palette) : null

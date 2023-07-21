@@ -1,31 +1,34 @@
-import Colors from '../canvas/Colors'
+import type {
+  ColorConfiguration,
+  PresetConfiguration,
+  ScaleConfiguration,
+  ThemeConfiguration,
+} from '../utils/types'
 import {
   previousSelection,
   currentSelection,
   isSelectionChanged,
 } from './processSelection'
+import Colors from '../canvas/Colors'
 import { locals, lang } from '../content/locals'
 
 const updateSettings = (msg, palette) => {
   palette = isSelectionChanged ? previousSelection[0] : currentSelection[0]
 
   if (palette.children.length == 1) {
-    const preset = JSON.parse(palette.getPluginData('preset')),
-      scale = JSON.parse(palette.getPluginData('scale')),
-      colors = JSON.parse(palette.getPluginData('colors')),
+    const preset: PresetConfiguration = JSON.parse(
+        palette.getPluginData('preset')
+      ),
+      scale: ScaleConfiguration = JSON.parse(palette.getPluginData('scale')),
+      colors: Array<ColorConfiguration> = JSON.parse(
+        palette.getPluginData('colors')
+      ),
+      themes: Array<ThemeConfiguration> = JSON.parse(
+        palette.getPluginData('themes')
+      ),
       view: string = palette.getPluginData('view')
 
-    let name: string
-
     palette.setPluginData('name', msg.data.name)
-    ;(name =
-      palette.getPluginData('name') === '' ||
-      palette.getPluginData('name') == undefined
-        ? locals[lang].name
-        : palette.getPluginData('name')),
-      (palette.name = `${
-        msg.data.name === '' ? locals[lang].name : msg.data.name
-      }﹒${preset.name}﹒${view.includes('PALETTE') ? 'Palette' : 'Sheet'}`)
     palette.setPluginData('colorSpace', msg.data.colorSpace)
     palette.setPluginData(
       'textColorsTheme',
@@ -37,14 +40,16 @@ const updateSettings = (msg, palette) => {
     palette.appendChild(
       new Colors(
         {
-          name: name,
+          name: msg.data.name,
           preset: preset,
           scale: scale,
           colors: colors,
           colorSpace: msg.data.colorSpace,
+          themes: themes,
           view: view,
           textColorsTheme: msg.data.textColorsTheme,
           algorithmVersion: msg.data.algorithmVersion,
+          service: 'EDIT',
         },
         palette
       ).makeNode()
@@ -52,7 +57,9 @@ const updateSettings = (msg, palette) => {
 
     // palette migration
     palette.counterAxisSizingMode = 'AUTO'
-    palette.name = `${name}﹒${preset.name}﹒${msg.data.colorSpace} ${
+    palette.name = `${
+      msg.data.name === '' ? locals[lang].name : msg.data.name
+    }﹒${preset.name}﹒${msg.data.colorSpace} ${
       view.includes('PALETTE') ? 'Palette' : 'Sheet'
     }`
   } else figma.notify(locals[lang].error.corruption)

@@ -3,6 +3,7 @@ import type {
   ScaleConfiguration,
   TextColorsThemeHexModel,
   ColorConfiguration,
+  ThemeConfiguration,
 } from '../utils/types'
 import Colors from '../canvas/Colors'
 import { locals, lang } from '../content/locals'
@@ -21,6 +22,9 @@ const updateView = (msg, palette) => {
         palette.getPluginData('colors')
       ),
       colorSpace: string = palette.getPluginData('colorSpace'),
+      themes: Array<ThemeConfiguration> = JSON.parse(
+        palette.getPluginData('themes')
+      ),
       textColorsTheme: TextColorsThemeHexModel = JSON.parse(
         palette.getPluginData('textColorsTheme')
       ),
@@ -32,14 +36,16 @@ const updateView = (msg, palette) => {
     palette.appendChild(
       new Colors(
         {
-          name: name,
+          name: palette.getPluginData('name'),
           preset: preset,
           scale: scale,
           colors: colors,
           colorSpace: colorSpace,
+          themes: themes,
           view: msg.data.view,
           textColorsTheme: textColorsTheme,
           algorithmVersion: algorithmVersion,
+          service: 'EDIT',
         },
         palette
       ).makeNode()

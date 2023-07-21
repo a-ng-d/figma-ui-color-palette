@@ -3,10 +3,10 @@ import type {
   PresetConfiguration,
   TextColorsThemeHexModel,
 } from '../../utils/types'
+import Bar from '../components/Bar'
 import Tabs from '../components/Tabs'
 import Scale from '../modules/Scale'
 import Settings from '../modules/Settings'
-import About from '../modules/About'
 import { palette } from '../../utils/palettePackage'
 import features from '../../utils/features'
 import { locals } from '../../content/locals'
@@ -19,10 +19,8 @@ interface Props {
   textColorsTheme: TextColorsThemeHexModel
   planStatus: string
   lang: string
-  onReopenHighlight: React.ChangeEventHandler
   onChangePreset: React.ChangeEventHandler
   onCustomPreset: React.ChangeEventHandler
-  onChangeView: (view: string) => void
   onChangeSettings: React.ChangeEventHandler
 }
 
@@ -48,19 +46,6 @@ export default class CreatePalette extends React.Component<Props> {
   }
 
   // Handlers
-  presetHandler = (e) => this.props.onChangePreset(e)
-
-  scaleHandler = (e) => this.props.onCustomPreset(e)
-
-  settingsHandler = (e) => this.props.onChangeSettings(e)
-
-  viewHandler = (e) => {
-    if (e.target.dataset.isBlocked === 'false') {
-      palette.view = e.target.dataset.value
-      this.props.onChangeView(e.target.dataset.value)
-    }
-  }
-
   navHandler = (e: React.SyntheticEvent) =>
     this.setState({
       context: (e.target as HTMLElement).dataset.feature,
@@ -73,7 +58,7 @@ export default class CreatePalette extends React.Component<Props> {
       '*'
     )
 
-  setPrimaryContexts = () => {
+  setContexts = () => {
     const contexts: Array<{
       label: string
       id: string
@@ -91,19 +76,6 @@ export default class CreatePalette extends React.Component<Props> {
     return contexts
   }
 
-  setSecondaryContexts = () => {
-    const contexts: Array<{
-      label: string
-      id: string
-    }> = []
-    if (features.find((feature) => feature.name === 'ABOUT').isActive)
-      contexts.push({
-        label: locals[this.props.lang].contexts.about,
-        id: 'ABOUT',
-      })
-    return contexts
-  }
-
   // Renders
   render() {
     palette.preset = this.props.preset
@@ -115,15 +87,13 @@ export default class CreatePalette extends React.Component<Props> {
           <Scale
             hasPreset={true}
             preset={this.props.preset}
-            view={this.props.view}
             planStatus={this.props.planStatus}
             lang={this.props.lang}
-            onChangePreset={this.presetHandler}
+            onChangePreset={this.props.onChangePreset}
             onChangeScale={() => null}
-            onAddStop={this.scaleHandler}
-            onRemoveStop={this.scaleHandler}
+            onAddStop={this.props.onCustomPreset}
+            onRemoveStop={this.props.onCustomPreset}
             onCreatePalette={this.onCreatePalette}
-            onReopenHighlight={this.props.onReopenHighlight}
           />
         )
         break
@@ -138,33 +108,28 @@ export default class CreatePalette extends React.Component<Props> {
             view={this.props.view}
             planStatus={this.props.planStatus}
             lang={this.props.lang}
-            onChangeSettings={this.settingsHandler}
+            onChangeSettings={this.props.onChangeSettings}
             onCreatePalette={this.onCreatePalette}
-            onChangeView={this.viewHandler}
-            onReopenHighlight={this.props.onReopenHighlight}
           />
         )
         break
-      }
-      case 'ABOUT': {
-        controls = (
-          <About
-            planStatus={this.props.planStatus}
-            lang={this.props.lang}
-          />
-        )
       }
     }
 
     return (
       <>
-        <Tabs
-          primaryTabs={this.setPrimaryContexts()}
-          secondaryTabs={this.setSecondaryContexts()}
-          active={this.state['context']}
-          action={this.navHandler}
+        <Bar
+          leftPart={
+            <Tabs
+              tabs={this.setContexts()}
+              active={this.state['context']}
+              action={this.navHandler}
+            />
+          }
+          border={['BOTTOM']}
+          isOnlyText={true}
         />
-        <section>
+        <section className="controller">
           <div className="controls">{controls}</div>
         </section>
       </>

@@ -22,6 +22,21 @@ div#react-page {
   user-select: none;
 }
 
+div#react-page:empty:before {
+  content: '';
+  width: var(--size-medium);
+  height: var(--size-medium);
+  position: absolute;
+  top: calc(50% - var(--size-xsmall));
+  left: calc(50% - var(--size-xsmall));
+  background: var(--figma-color-icon);
+  mask-position: center;
+  -webkit-mask-position: center;
+  mask-image: url('data:image/svg+xml;charset=utf8,%3Csvg%20fill%3D%22none%22%20height%3D%2232%22%20viewBox%3D%220%200%2032%2032%22%20width%3D%2232%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20clip-rule%3D%22evenodd%22%20d%3D%22m15.1645%208.52993c.0489.27178-.1318.53173-.4036.58061-1.3104.23568-2.5265.84022-3.5054%201.74266-.979.9025-1.68029%202.0654-2.0216%203.3524s-.3085%202.6446.09459%203.9136%201.15971%202.3967%202.18121%203.2508c1.0214.8541%202.2652%201.3992%203.5855%201.5713s2.6623-.0359%203.8685-.5997c1.2063-.5637%202.2267-1.4598%202.9416-2.583.715-1.1233%201.0947-2.4271%201.0947-3.7586%200-.2761.2239-.5.5-.5s.5.2239.5.5c0%201.5217-.434%203.0118-1.251%204.2955-.8171%201.2837-1.9833%202.3078-3.3619%202.9521-1.3785.6442-2.9122.882-4.4211.6853-1.509-.1967-2.9305-.8196-4.0978-1.7958-1.16736-.9761-2.0321-2.2649-2.49278-3.7152-.46068-1.4502-.49818-3.0018-.10811-4.4726.39007-1.4709%201.19154-2.8%202.31039-3.8313%201.1188-1.03141%202.5086-1.72232%204.0062-1.99167.2718-.04888.5317.13181.5806.4036z%22%20fill%3D%22%23000%22%20fill-rule%3D%22evenodd%22%2F%3E%3C%2Fsvg%3E');
+  -webkit-mask-image: url('data:image/svg+xml;charset=utf8,%3Csvg%20fill%3D%22none%22%20height%3D%2232%22%20viewBox%3D%220%200%2032%2032%22%20width%3D%2232%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20clip-rule%3D%22evenodd%22%20d%3D%22m15.1645%208.52993c.0489.27178-.1318.53173-.4036.58061-1.3104.23568-2.5265.84022-3.5054%201.74266-.979.9025-1.68029%202.0654-2.0216%203.3524s-.3085%202.6446.09459%203.9136%201.15971%202.3967%202.18121%203.2508c1.0214.8541%202.2652%201.3992%203.5855%201.5713s2.6623-.0359%203.8685-.5997c1.2063-.5637%202.2267-1.4598%202.9416-2.583.715-1.1233%201.0947-2.4271%201.0947-3.7586%200-.2761.2239-.5.5-.5s.5.2239.5.5c0%201.5217-.434%203.0118-1.251%204.2955-.8171%201.2837-1.9833%202.3078-3.3619%202.9521-1.3785.6442-2.9122.882-4.4211.6853-1.509-.1967-2.9305-.8196-4.0978-1.7958-1.16736-.9761-2.0321-2.2649-2.49278-3.7152-.46068-1.4502-.49818-3.0018-.10811-4.4726.39007-1.4709%201.19154-2.8%202.31039-3.8313%201.1188-1.03141%202.5086-1.72232%204.0062-1.99167.2718-.04888.5317.13181.5806.4036z%22%20fill%3D%22%23000%22%20fill-rule%3D%22evenodd%22%2F%3E%3C%2Fsvg%3E');
+  animation: rotating 1s linear infinite;
+}
+
 div#react-page.dragged-ghost {
   cursor: grabbing;
 }
@@ -32,30 +47,7 @@ main {
   flex-direction: column;
 }
 
-section {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-div.controls {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-}
-
-div.controls__control {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  justify-content: flex-start;
-  padding: var(--size-xxsmall) 0;
-}
-
-div.lightness-scale {
-  justify-content: space-between;
-}
-
+/* Actions */
 div.actions {
   width: 100%;
   height: var(--size-xxlarge);
@@ -82,48 +74,29 @@ div.actions__left > .select-menu {
   width: 200px;
 }
 
-div.shortcuts {
-  width: 100%;
-  height: var(--size-large);
-  display: flex;
-  justify-content: space-between;
-  padding: 0 var(--size-xsmall);
-  border-top: 1px solid var(--figma-color-border);
-}
-
-div.shortcuts__get-pro {
-  display: flex;
-  align-items: center;
-}
-
-div.shortcuts__links {
-  display: flex;
-  align-items: center;
-  gap: var(--size-xxxsmall);
-  color: var(--figma-color-text);
-}
-
-div.dialog {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 99;
-  padding: var(--size-medium);
-  background-color: rgba(0, 0, 0, 0.5);
-}
-
-div.dialog .dialog__cover {
-  height: 100%;
-}
-
-div.dialog .dialog__text {
-  padding: var(--size-xsmall);
-  margin: 0;
-}
-
 /* Controls */
+section.controller {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+div.controls {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  overflow: hidden;
+}
+
+div.controls__control {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: var(--size-xxsmall) 0;
+}
+
 div.section-controls {
   display: flex;
   align-items: center;
@@ -150,425 +123,12 @@ div.section-controls .select-menu {
   flex: 1;
 }
 
-/* Tabs */
-div.tabs {
-  display: flex;
+/* Scale */
+div.lightness-scale {
   justify-content: space-between;
-  align-items: stretch;
-  height: var(--size-large);
-  padding: 0 var(--size-xsmall);
-  border-bottom: 1px solid var(--figma-color-border);
-  user-select: none;
-}
-
-div.tabs .tabs__primary,
-div.tabs .tabs__secondary {
-  display: flex;
-}
-
-div.tabs .tabs__tab {
-  padding: 0 var(--size-xxsmall);
-  font-weight: var(--font-weight-medium);
-  color: var(--figma-color-text-secondary);
-  line-height: var(--size-large);
-}
-
-div.tabs .tabs__tab:hover {
-  color: var(--figma-color-text-hover);
-}
-
-div.tabs .tabs__tab--active {
-  font-weight: var(--font-weight-bold);
-  color: var(--figma-color-text);
-}
-
-/* Slider */
-div.slider {
-  display: flex;
-  align-items: center;
-  position: relative;
-  margin-top: var(--size-small);
-  padding: 0 var(--size-medium);
-}
-
-div.slider .slider__range {
-  flex: 1 1 auto;
-  height: var(--size-small);
-  background: linear-gradient(-90deg, var(--white) 0%, var(--black) 100%);
-  border-radius: var(--border-radius-large);
-  box-shadow: inset 0 0 0 1px var(--figma-color-border-disabled-strong);
-  position: relative;
-}
-
-div.slider .slider__knob {
-  width: var(--size-medium);
-  height: var(--size-xxlarge);
-  background: transparent;
-  transform: translateX(-50%) translateY(-50%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  position: absolute;
-  cursor: ew-resize;
-  z-index: 1;
-}
-
-div.slider .slider__label {
-  width: 100%;
-  height: var(--size-small);
-  border-radius: var(--border-radius-small);
-  background: var(--figma-color-bg);
-  box-shadow: 0 0 0 1px var(--figma-color-border-disabled-strong);
-  padding: var(--size-xxxsmall);
-  text-align: center;
-  position: relative;
-  pointer-events: none;
-}
-
-div.slider .slider__knob:hover .slider__label {
-  background: var(--figma-color-bg-hover);
-}
-
-div.slider .slider__knob--selected,
-div.slider .slider__knob--editing {
-  z-index: 2 !important;
-}
-
-div.slider .slider__knob--selected .slider__tooltip {
-  display: block !important;
-}
-
-div.slider .slider__knob:active .slider__label,
-div.slider .slider__knob--selected .slider__label {
-  box-shadow: 0 0 0 2px var(--figma-color-border-selected);
-}
-
-div.slider .slider__knob:active .slider__label:before,
-div.slider .slider__knob--selected .slider__label:before {
-  border-top-color: var(--figma-color-border-selected);
-  border-width: 6px;
-  left: calc(50% - 6px);
-  bottom: -12px;
-}
-
-div.slider .slider__knob:hover .slider__label:after,
-div.slider .slider__knob:active .slider__label:after,
-div.slider .slider__knob--selected .slider__label:after {
-  border-top-color: var(--figma-color-bg-hover);
-}
-
-div.slider .slider__label:before {
-  content: '';
-  width: 0;
-  height: 0;
-  border-style: solid;
-  border-width: var(--size-xxxsmall);
-  border-top-color: var(--figma-color-border-disabled-strong);
-  border-right-color: transparent;
-  border-bottom-color: transparent;
-  border-left-color: transparent;
-  position: absolute;
-  bottom: calc(var(--size-xxxsmall) * -2);
-  left: calc(50% - var(--size-xxxsmall));
-}
-
-div.slider .slider__label:after {
-  content: '';
-  width: 0;
-  height: 0;
-  border-style: solid;
-  border-width: 3px;
-  border-top-color: var(--figma-color-bg);
-  border-right-color: transparent;
-  border-bottom-color: transparent;
-  border-left-color: transparent;
-  position: absolute;
-  bottom: -6px;
-  left: calc(50% - 3px);
-}
-
-div.slider .slider__tooltip {
-  width: var(--size-medium);
-  padding: var(--size-xxxsmall);
-  background: var(--figma-color-bg-inverse);
-  color: var(--figma-color-text-oninverse);
-  position: absolute;
-  transform: translateX(-50%) translateY(-100%);
-  left: 50%;
-  top: calc(var(--size-xsmall) * -1);
-  text-align: center;
-  user-select: none;
-  display: none;
-}
-
-div.slider .slider__knob:hover .slider__tooltip {
-  display: block !important;
-}
-
-div.slider .slider__tooltip:after {
-  content: '';
-  width: 0;
-  height: 0;
-  border-style: solid;
-  border-width: var(--size-xxxsmall);
-  border-top-color: var(--figma-color-bg-inverse);
-  border-right-color: transparent;
-  border-bottom-color: transparent;
-  border-left-color: transparent;
-  position: absolute;
-  bottom: -8px;
-  left: calc(50% - var(--size-xxxsmall));
-}
-
-div.slider .slider__graduation {
-  width: 1px;
-  height: var(--size-xxxsmall);
-  background: var(--figma-color-border-disabled-strong);
-  pointer-events: none;
-}
-
-div.slider .slider__input {
-  position: absolute;
-  transform: translateX(-50%) translateY(-100%);
-  left: 50%;
-  top: calc(var(--size-xxsmall) * -1);
-  padding: 1px 2px;
-  z-index: 2;
-  width: var(--size-xlarge);
-  box-shadow: var(--shadow-floating-window);
-  border: 1px solid var(--figma-color-border);
-  border-radius: var(--border-radius-med);
-  background-color: var(--figma-color-bg);
-}
-
-/* Inputs */
-input[type='color' i] {
-  width: var(--size-xsmall);
-  height: var(--size-xsmall);
-  position: absolute;
-  top: var(--size-xxsmall);
-  left: var(--size-xxsmall);
-  z-index: 1;
-  background-color: transparent;
-  padding: 0;
-  appearance: none;
-  background-color: transparent;
-  appearance: none;
-  border: none;
-}
-
-input[type='color' i]::-webkit-color-swatch-wrapper {
-  padding: 0;
-}
-
-input[type='color' i]::-webkit-color-swatch {
-  border: none;
-  box-shadow: rgba(0, 0, 0, 0.1) 0 0 0 1px inset;
-}
-
-input[type='color' i]:focus {
-  outline: 1px solid var(--figma-color-border-selected);
-  outline-offset: -1px;
-}
-
-input[type='color' i]:focus ~ input {
-  border: 1px solid var(--figma-color-border-selected);
-  outline: 1px solid var(--figma-color-border-selected);
-  outline-offset: -2px;
-}
-
-input[type='number']::-webkit-inner-spin-button {
-  display: none;
-}
-
-div.inputs {
-  display: flex;
-  gap: var(--size-xxsmall);
-}
-
-div.inputs .label {
-  flex: 0;
-}
-
-div.inputs__bar {
-  display: flex;
-  padding: 0 1px;
-  position: relative;
-}
-
-div.inputs__bar .input {
-  width: 40px;
-  margin: 0 -0.5px;
-}
-
-div.inputs__bar input {
-  background-color: transparent;
-}
-
-div.inputs__bar input:focus {
-  border: 1px solid var(--figma-color-border);
-}
-
-div.inputs__bar:hover input {
-  border: 1px solid var(--figma-color-border);
-}
-
-div.inputs__bar:focus-within:before {
-  content: '';
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  box-shadow: inset 0 0 0 2px var(--figma-color-border-selected);
-  z-index: 2;
-  pointer-events: none;
-  border-radius: var(--border-radius-small);
-}
-
-div.inputs__bar:focus-within input {
-  border: 1px solid var(--figma-color-border);
-  outline: 1px solid transparent;
-  outline-offset: -2px;
-}
-
-div.select-menu__label {
-  margin-top: 0;
-}
-
-div.form-item {
-  display: flex;
-  align-items: baseline;
-  gap: var(--size-xxsmall);
-  padding: 0 0 0 var(--size-xxsmall);
-  position: relative;
-}
-
-div.form-item label {
-  flex: 1;
-}
-
-div.form-item .input,
-div.form-item .textarea,
-div.form-item .select-menu {
-  flex: 4;
-}
-
-div.form-item--blocked {
-  pointer-events: none;
-}
-
-div.form-item--blocked label {
-  color: var(--figma-color-text-disabled);
-}
-
-/* Icon buttons */
-div.icon-button {
-  cursor: default;
-}
-
-div.icon-button--disabled {
-  pointer-events: none;
-  opacity: 0.3;
-}
-
-div.icon {
-  pointer-events: none;
-}
-
-/* Pop in*/
-div.popin {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: 100%;
-  border-radius: var(--border-radius-small);
-  background-color: var(--figma-color-bg);
-  border: 1px solid var(--figma-color-border);
-  box-shadow: var(--shadow-floating-window);
-}
-
-div.popin__header {
-  display: flex;
-  flex: 0 1 var(--size-xlarge);
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  padding: 0 var(--size-xxsmall);
-  border-bottom: 1px solid var(--figma-color-border);
-}
-
-div.popin__content {
-  flex: 1;
-  display: flex;
-  width: 100%;
-  overflow-y: auto;
-}
-
-div.popin__actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 0 var(--size-xxsmall);
-  width: 100%;
-  padding: 0 var(--size-xsmall) var(--size-xsmall) var(--size-xsmall);
 }
 
 /* Colors */
-div.source-colors {
-  flex: 1 0 176px;
-  overflow: hidden;
-  padding: var(--size-xxsmall) 0 0 0;
-}
-
-ul.colors {
-  overflow-y: auto;
-  padding: 1px 0;
-}
-
-li.colors__item {
-  display: grid;
-  grid-template-columns: repeat(76, 1fr);
-  grid-template-rows: var(--size-medium);
-  padding: 2px var(--size-xsmall);
-  position: relative;
-  z-index: 2;
-}
-
-li.colors__item[draggable='true'] {
-  background-color: var(--figma-color-bg-selected);
-  z-index: 1;
-}
-
-li.colors__item[draggable='true'] .input__field,
-li.colors__item--emphasis .input__field {
-  --white: var(--figma-color-bg-selected);
-}
-
-li.colors__item[draggable='true']:active {
-  cursor: grabbing;
-}
-
-li.colors__item--dragged:active > div {
-  pointer-events: none;
-}
-
-li.colors__item--emphasis {
-  background-color: var(--figma-color-bg-pressed);
-}
-
-li.colors__item--emphasis .input__field {
-  --white: var(--figma-color-bg-pressed);
-}
-
-li.colors__item--above {
-  box-shadow: 0 1px 0 var(--figma-color-border-selected) inset,
-    0 -1px 0 var(--figma-color-border-selected);
-}
-
-li.colors__item--below {
-  box-shadow: 0 -1px 0 var(--figma-color-border-selected) inset,
-    0 1px 0 var(--figma-color-border-selected);
-}
-
 li .colors__name {
   grid-column: 1 / span 16;
   grid-row: 1 / 1;
@@ -585,20 +145,13 @@ li .colors__parameters > .input {
   width: 88px;
 }
 
-li .colors__buttons {
-  grid-column: span 8 / 77;
-  grid-row: 1 / 1;
-  display: flex;
-  justify-content: flex-end;
-}
-
 li .colors__shift {
   grid-column: 1 / span 16;
   grid-row: 2 / 2;
 }
 
 li .colors__description {
-  grid-column: 17 / span 33;
+  grid-column: 17 / span 49;
   grid-row: 2 / 2;
 }
 
@@ -606,10 +159,27 @@ li .colors__shift > .input {
   width: 88px;
 }
 
+/* Themes */
+li .themes__name {
+  grid-column: 1 / span 16;
+  grid-row: 1 / 1;
+}
+
+li .themes__palette-background-color {
+  grid-column: 17 / span 33;
+  grid-row: 1 / 1;
+  display: flex;
+  gap: var(--size-xsmall);
+}
+
+li .themes__description {
+  grid-column: 1 / span 49;
+  grid-row: 2 / 2;
+}
+
 /* Export */
 div.export-palette {
   flex-direction: row;
-  flex: 1 0 176px;
   overflow: hidden;
 }
 
@@ -643,7 +213,6 @@ ul.options li {
 
 /* Settings */
 div.settings {
-  flex: 1 0 176px;
   overflow-y: auto;
   padding: 0;
 }
@@ -667,19 +236,24 @@ div.settings__item + div.settings__item {
 /* About */
 div.about {
   flex-direction: row;
-  align-items: baseline;
   padding: var(--size-xsmall) var(--size-small);
 }
 
 div.about > div {
   display: flex;
   flex-direction: column;
-  gap: var(--size-xsmall);
+  gap: var(--size-xxsmall);
   flex: 1;
 }
 
 div.about p {
   margin: 0;
+}
+
+div.about__basic {
+  display: flex;
+  align-items: center;
+  gap: var(--size-xsmall);
 }
 
 div.about__info {
@@ -694,61 +268,10 @@ div.about__links {
   color: var(--figma-color-text);
 }
 
-/* Callout */
-div.onboarding {
-  gap: var(--size-xxsmall);
-  align-items: center;
-  justify-content: center;
-}
-
-div.onboarding .label {
-  width: auto;
-}
-
-div.onboarding-tip {
-  padding: 0 calc(var(--size-xsmall) + var(--size-xxxsmall));
-}
-
-div.onboarding-tip--blocked .onboarding-tip__msg {
-  color: var(--figma-color-text-disabled);
-}
-
-div.onboarding-tip--blocked .icon {
-  background: var(--figma-color-icon-disabled);
-}
-
-/* Get Pro button */
-button.get-pro-button {
-  height: var(--size-small);
+/* Shortcuts */
+div.shortcuts {
   display: flex;
   align-items: center;
-  border-radius: var(--border-radius-small);
-  background-color: var(--figma-color-bg-component);
-  border: 2px solid var(--figma-color-bg-component);
-  padding: 0 var(--size-xxsmall) 0 0;
-}
-
-button.get-pro-button:hover {
-  background-color: var(--figma-color-bg-component-hover);
-  border: 2px solid var(--figma-color-bg-component-hover);
-}
-
-button.get-pro-button:active {
-  background-color: var(--figma-color-bg-component-pressed);
-  border: 2px solid var(--figma-color-bg-component-pressed);
-}
-
-button.get-pro-button:focus,
-button.get-pro-button:focus-visible {
-  background-color: var(--figma-color-bg-component-pressed);
-  border: 2px solid var(--figma-color-border-component-strong);
-  outline: none;
-}
-
-button.get-pro-button .type {
-  color: var(--figma-color-text-oncomponent);
-}
-
-button.get-pro-button .icon {
-  background: var(--figma-color-icon-oncomponent);
+  gap: var(--size-xxxsmall);
+  color: var(--figma-color-text);
 }

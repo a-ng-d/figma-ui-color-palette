@@ -1,78 +1,106 @@
 import chroma from 'chroma-js'
-import type { PaletteDataItem } from '../utils/types'
+import type { PaletteData } from '../utils/types'
 import { locals, lang } from '../content/locals'
 
-const updateLocalVariables = (palette, i: number) => {
+const updateLocalVariables = (palette, i: number, j: number) => {
   palette = figma.currentPage.selection[0]
-  const localVariables: Array<Variable> = figma.variables.getLocalVariables()
+
+  const paletteData: PaletteData = JSON.parse(palette.getPluginData('data'))
 
   if (palette.children.length == 1) {
     i = 0
-    let j: number = 0
+    j = 0
+    let k = 0
 
     const name =
         palette.getPluginData('name') === ''
           ? 'UI Color Palette'
           : palette.getPluginData('name'),
-      collections: Array<VariableCollection> =
-        figma.variables.getLocalVariableCollections()
+      notifications: Array<string> = []
 
-    let collection: VariableCollection | undefined = collections.find(
-        (collection) => collection.name === name
-      ),
-      target: Variable
+    const collection: VariableCollection | undefined = figma.variables
+      .getLocalVariableCollections()
+      .find((collection) => collection.id === paletteData.collectionId)
 
-    JSON.parse(palette.getPluginData('data')).forEach(
-      (color: PaletteDataItem) => {
-        color.shades.forEach((shade) => {
-          target = localVariables.find(
-            (localVariable) =>
-              localVariable.name ===
-                `${color.name}/${color.name
-                  .toLowerCase()
-                  .split(' ')
-                  .join('-')
-                  .replace(/[@/$^%#&!?,;:+=<>(){}"«»]/g, '-')}-${shade.name}` &&
-              localVariable.variableCollectionId === collection.id
-          )
-          const targetValue = target.valuesByMode[collection.modes[0].modeId]
+    if (collection != undefined) {
+      const localVariables: Array<Variable> = figma.variables
+        .getLocalVariables()
+        .filter(
+          (localVariable) =>
+            localVariable.variableCollectionId === collection.id
+        )
 
-          if (target != undefined) {
-            if (
-              shade.hex !=
-              chroma([
-                targetValue['r'] * 255,
-                targetValue['g'] * 255,
-                targetValue['b'] * 255,
-              ]).hex()
-            ) {
-              target.setValueForMode(collection.modes[0].modeId, {
-                r: shade.gl[0],
-                g: shade.gl[1],
-                b: shade.gl[2],
-              })
-              j++
-            }
-            if (color.description != '')
-              if (target.description.split('﹒')[0] != color.description) {
-                target.description =
-                  color.description != ''
-                    ? color.description.concat('﹒', shade.description)
-                    : shade.description
-                j++
+      if (collection.name != name) collection.name = name
+
+      const workingThemes =
+        paletteData.themes.filter((theme) => theme.type === 'custom theme')
+          .length == 0
+          ? paletteData.themes.filter((theme) => theme.type === 'default theme')
+          : paletteData.themes.filter((theme) => theme.type === 'custom theme')
+
+      workingThemes.forEach((theme) => {
+        const modeMatch = collection.modes.find(
+          (mode) => mode.modeId === theme.modeId
+        )
+        if (modeMatch != undefined)
+          if (modeMatch.name != theme.name && theme.name != 'None') {
+            collection.renameMode(modeMatch.modeId, theme.name)
+            j++
+          }
+
+        theme.colors.forEach((color) => {
+          color.shades.forEach((shade) => {
+            const variableMatch = localVariables.find(
+              (localVariable) => localVariable.id === shade.variableId
+            )
+            if (variableMatch != undefined) {
+              if (variableMatch.name != `${color.name}/${shade.name}`) {
+                variableMatch.name = `${color.name}/${shade.name}`
+                k++
               }
 
-            j > 0 ? i++ : i
-            j = 0
-          }
-        })
-      }
-    )
+              if (variableMatch.description != shade.description) {
+                variableMatch.description = shade.description
+                k++
+              }
 
-    if (i > 1) figma.notify(`${i} ${locals[lang].info.updatedLocalVariables}`)
-    else if (i == 1)
-      figma.notify(`${i} ${locals[lang].info.updatedLocalVariable}`)
-    else figma.notify(locals[lang].warning.cannotUpdateLocalVariables)
+              if (
+                chroma([
+                  (variableMatch.valuesByMode[theme.modeId] as RGB).r * 255,
+                  (variableMatch.valuesByMode[theme.modeId] as RGB).g * 255,
+                  (variableMatch.valuesByMode[theme.modeId] as RGB).b * 255,
+                ]).hex() != shade.hex
+              ) {
+                variableMatch.setValueForMode(theme.modeId, {
+                  r: shade.gl[0],
+                  g: shade.gl[1],
+                  b: shade.gl[2],
+                })
+                k++
+              }
+            }
+            if (k > 0) i++
+            k = 0
+          })
+        })
+      })
+
+      if (i > 1) notifications.push(`${i} ${locals[lang].info.localVariables}`)
+      else if (i == 1)
+        notifications.push(`${i} ${locals[lang].info.localVariable}`)
+      else if (i == 0) notifications.push(locals[lang].info.noLocalVariable)
+
+      if (j > 1) notifications.push(`${j} ${locals[lang].info.variableModes}`)
+      else if (j == 1)
+        notifications.push(`${j} ${locals[lang].info.variableMode}`)
+      else if (j == 0) notifications.push(locals[lang].info.noVariableMode)
+
+      if (i > 1 || j > 1)
+        figma.notify(`${notifications.join(' and ')} have been updated`)
+      else if (i == 0 && j == 0)
+        figma.notify(locals[lang].warning.cannotUpdateLocalVariablesAndModes)
+      else figma.notify(`${notifications.join(' and ')} has been updated`)
+    } else figma.notify(locals[lang].warning.collectionDoesNotExist)
   } else figma.notify(locals[lang].error.corruption)
 }
 

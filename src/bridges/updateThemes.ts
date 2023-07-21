@@ -1,10 +1,10 @@
 import type {
+  ColorConfiguration,
   PresetConfiguration,
   ScaleConfiguration,
   TextColorsThemeHexModel,
-  ThemeConfiguration,
 } from '../utils/types'
-import Colors from './../canvas/Colors'
+import Colors from '../canvas/Colors'
 import {
   previousSelection,
   currentSelection,
@@ -12,7 +12,7 @@ import {
 } from './processSelection'
 import { locals, lang } from '../content/locals'
 
-const updateColors = (msg, palette) => {
+const updateThemes = (msg, palette) => {
   palette = isSelectionChanged ? previousSelection[0] : currentSelection[0]
 
   if (palette.children.length == 1) {
@@ -22,17 +22,17 @@ const updateColors = (msg, palette) => {
           : palette.getPluginData('name'),
       preset: PresetConfiguration = JSON.parse(palette.getPluginData('preset')),
       scale: ScaleConfiguration = JSON.parse(palette.getPluginData('scale')),
-      colorSpace: string = palette.getPluginData('colorSpace'),
-      themes: Array<ThemeConfiguration> = JSON.parse(
-        palette.getPluginData('themes')
+      colors: Array<ColorConfiguration> = JSON.parse(
+        palette.getPluginData('colors')
       ),
+      colorSpace: string = palette.getPluginData('colorSpace'),
       view: string = palette.getPluginData('view'),
       textColorsTheme: TextColorsThemeHexModel = JSON.parse(
         palette.getPluginData('textColorsTheme')
       ),
       algorithmVersion: string = palette.getPluginData('algorithmVersion')
 
-    palette.setPluginData('colors', JSON.stringify(msg.data))
+    palette.setPluginData('themes', JSON.stringify(msg.data))
 
     palette.children[0].remove()
     palette.appendChild(
@@ -41,9 +41,9 @@ const updateColors = (msg, palette) => {
           name: palette.getPluginData('name'),
           preset: preset,
           scale: scale,
-          colors: msg.data,
+          colors: colors,
           colorSpace: colorSpace,
-          themes: themes,
+          themes: msg.data,
           view:
             msg.isEditedInRealTime && view === 'PALETTE_WITH_PROPERTIES'
               ? 'PALETTE'
@@ -66,4 +66,4 @@ const updateColors = (msg, palette) => {
   } else figma.notify(locals[lang].error.corruption)
 }
 
-export default updateColors
+export default updateThemes

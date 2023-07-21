@@ -6,7 +6,6 @@ import Input from './../components/Input'
 import Switch from '../components/Switch'
 import Message from '../components/Message'
 import Dropdown from '../components/Dropdown'
-import Shortcuts from './Shortcuts'
 import Actions from './Actions'
 import features from '../../utils/features'
 import isBlocked from '../../utils/isBlocked'
@@ -17,8 +16,9 @@ interface Props {
   name: string
   textColorsTheme?: TextColorsThemeHexModel
   colorSpace: string
-  isNewAlgorithm?: boolean
   view: string
+  isNewAlgorithm?: boolean
+  actions?: string
   planStatus: string
   editorType?: string
   lang: string
@@ -28,8 +28,7 @@ interface Props {
   onUpdateLocalStyles?: () => void
   onCreateLocalVariables?: () => void
   onUpdateLocalVariables?: () => void
-  onChangeView: React.ChangeEventHandler
-  onReopenHighlight: React.ChangeEventHandler
+  onChangeActions?: (value: string) => void
 }
 
 export default class Settings extends React.Component<Props> {
@@ -136,7 +135,7 @@ export default class Settings extends React.Component<Props> {
               ]}
               selected={this.props.view}
               feature="UPDATE_VIEW"
-              onChange={this.props.onChangeView}
+              onChange={this.props.onChangeSettings}
             />
           </FormItem>
         </div>
@@ -161,9 +160,7 @@ export default class Settings extends React.Component<Props> {
               id="color-spaces"
               options={[
                 {
-                  label:
-                    locals[this.props.lang].settings.color.colorSpace
-                      .lch,
+                  label: locals[this.props.lang].settings.color.colorSpace.lch,
                   value: 'LCH',
                   position: 0,
                   isActive: features.find(
@@ -176,8 +173,7 @@ export default class Settings extends React.Component<Props> {
                 },
                 {
                   label:
-                    locals[this.props.lang].settings.color.colorSpace
-                      .oklch,
+                    locals[this.props.lang].settings.color.colorSpace.oklch,
                   value: 'OKLCH',
                   position: 1,
                   isActive: features.find(
@@ -189,9 +185,7 @@ export default class Settings extends React.Component<Props> {
                   ),
                 },
                 {
-                  label:
-                    locals[this.props.lang].settings.color.colorSpace
-                      .lab,
+                  label: locals[this.props.lang].settings.color.colorSpace.lab,
                   value: 'LAB',
                   position: 2,
                   isActive: features.find(
@@ -204,8 +198,7 @@ export default class Settings extends React.Component<Props> {
                 },
                 {
                   label:
-                    locals[this.props.lang].settings.color.colorSpace
-                      .oklab,
+                    locals[this.props.lang].settings.color.colorSpace.oklab,
                   value: 'OKLAB',
                   position: 3,
                   isActive: features.find(
@@ -217,9 +210,7 @@ export default class Settings extends React.Component<Props> {
                   ),
                 },
                 {
-                  label:
-                    locals[this.props.lang].settings.color.colorSpace
-                      .hsl,
+                  label: locals[this.props.lang].settings.color.colorSpace.hsl,
                   value: 'HSL',
                   position: 4,
                   isActive: features.find(
@@ -278,7 +269,7 @@ export default class Settings extends React.Component<Props> {
           <Message
             icon="library"
             messages={[
-              locals[this.props.lang].settings.color.newAlgorithm.description
+              locals[this.props.lang].settings.color.newAlgorithm.description,
             ]}
             isBlocked={isBlocked(
               'SETTINGS_NEW_ALGORITHM',
@@ -301,7 +292,10 @@ export default class Settings extends React.Component<Props> {
       >
         <div className="settings__item">
           <FormItem
-            label={locals[this.props.lang].settings.contrast.textColors.textLightColor}
+            label={
+              locals[this.props.lang].settings.contrast.textColors
+                .textLightColor
+            }
             id="change-text-light-color"
             isBlocked={isBlocked(
               'SETTINGS_TEXT_COLORS_THEME',
@@ -335,7 +329,9 @@ export default class Settings extends React.Component<Props> {
             />
           </FormItem>
           <FormItem
-            label={locals[this.props.lang].settings.contrast.textColors.textDarkColor}
+            label={
+              locals[this.props.lang].settings.contrast.textColors.textDarkColor
+            }
             id="change-text-dark-color"
             isBlocked={isBlocked(
               'SETTINGS_TEXT_COLORS_THEME',
@@ -442,7 +438,6 @@ export default class Settings extends React.Component<Props> {
         {this.props.context === 'CREATE' ? (
           <Actions
             context="CREATE"
-            view={this.props.view}
             planStatus={this.props.planStatus}
             lang={this.props.lang}
             onCreatePalette={this.props.onCreatePalette}
@@ -450,45 +445,16 @@ export default class Settings extends React.Component<Props> {
         ) : this.props.editorType === 'figma' ? (
           <Actions
             context="DEPLOY"
-            view={this.props.view}
+            actions={this.props.actions}
             planStatus={this.props.planStatus}
             lang={this.props.lang}
             onCreateLocalStyles={this.props.onCreateLocalStyles}
             onUpdateLocalStyles={this.props.onUpdateLocalStyles}
             onCreateLocalVariables={this.props.onCreateLocalVariables}
             onUpdateLocalVariables={this.props.onUpdateLocalVariables}
+            onChangeActions={this.props.onChangeActions}
           />
         ) : null}
-        <Feature
-          isActive={
-            features.find((feature) => feature.name === 'SHORTCUTS').isActive
-          }
-        >
-          <Shortcuts
-            actions={[
-              {
-                label: locals[this.props.lang].shortcuts.documentation,
-                isLink: true,
-                url: 'https://docs.ui-color-palette.com',
-                action: null,
-              },
-              {
-                label: locals[this.props.lang].shortcuts.feedback,
-                isLink: true,
-                url: 'https://uicp.link/feedback',
-                action: null,
-              },
-              {
-                label: locals[this.props.lang].shortcuts.news,
-                isLink: false,
-                url: '',
-                action: this.props.onReopenHighlight,
-              },
-            ]}
-            planStatus={this.props.planStatus}
-            lang={this.props.lang}
-          />
-        </Feature>
       </>
     )
   }

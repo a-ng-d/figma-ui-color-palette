@@ -1,14 +1,15 @@
 import * as React from 'react'
-import type { Shortcut } from '../../utils/types'
 import Feature from '../components/Feature'
+import Bar from '../components/Bar'
 import Button from '../components/Button'
 import features from '../../utils/features'
 import { locals } from '../../content/locals'
 
 interface Props {
-  actions: Array<Shortcut>
   planStatus: string
   lang: string
+  onReOpenHighlight: () => void
+  onReOpenAbout: () => void
 }
 
 export default class Shortcuts extends React.Component<Props> {
@@ -18,8 +19,62 @@ export default class Shortcuts extends React.Component<Props> {
 
   render() {
     return (
-      <div className="shortcuts">
-        <div className="shortcuts__get-pro">
+      <Bar
+        rightPart={
+          <div className="shortcuts">
+            <Button
+              type="tertiary"
+              isLink={true}
+              url="https://uicp.link/feedback"
+              label={locals[this.props.lang].shortcuts.feedback}
+              action={() => null}
+            />
+            <Feature
+              isActive={
+                features.find((feature) => feature.name === 'HIGHLIGHT')
+                  .isActive
+              }
+            >
+              <span>﹒</span>
+              <Button
+                type="tertiary"
+                label={locals[this.props.lang].shortcuts.news}
+                action={this.props.onReOpenHighlight}
+              />
+            </Feature>
+            <Feature
+              isActive={
+                features.find((feature) => feature.name === 'ABOUT').isActive
+              }
+            >
+              <span>﹒</span>
+              <Button
+                type="tertiary"
+                label={locals[this.props.lang].contexts.about}
+                action={this.props.onReOpenAbout}
+              />
+            </Feature>
+            <span>﹒</span>
+            <Button
+              type="icon"
+              icon="library"
+              action={() =>
+                window.open('https://docs.ui-color-palette.com', '_blank')
+              }
+            />
+            <Button
+              type="icon"
+              icon="repository"
+              action={() =>
+                window.open(
+                  'https://github.com/inVoltag/figma-ui-color-palette',
+                  '_blank'
+                )
+              }
+            />
+          </div>
+        }
+        leftPart={
           <Feature
             isActive={
               features.find((feature) => feature.name === 'GET_PRO_PLAN')
@@ -38,34 +93,9 @@ export default class Shortcuts extends React.Component<Props> {
               </button>
             ) : null}
           </Feature>
-        </div>
-        <div className="shortcuts__links">
-          {this.props.actions.map((action, index) =>
-            index === this.props.actions.length - 1 ? (
-              <React.Fragment key={action.label}>
-                <Button
-                  type="tertiary"
-                  isLink={action.isLink}
-                  url={action.url}
-                  label={action.label}
-                  action={action.action}
-                />
-              </React.Fragment>
-            ) : (
-              <React.Fragment key={action.label}>
-                <Button
-                  type="tertiary"
-                  isLink={action.isLink}
-                  url={action.url}
-                  label={action.label}
-                  action={action.action}
-                />
-                <span>﹒</span>
-              </React.Fragment>
-            )
-          )}
-        </div>
-      </div>
+        }
+        border={['TOP']}
+      />
     )
   }
 }

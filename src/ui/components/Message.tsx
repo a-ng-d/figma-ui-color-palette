@@ -31,11 +31,11 @@ export default class Message extends React.Component<Props> {
         <div>
           <div className="onboarding-tip">
             <div className={`icon icon--${this.props.icon}`}></div>
-            <div className="onboarding-tip__slider">
+            <div className="onboarding-tip__ticker">
               <div
-                className="onboarding-tip__slides"
+                className="onboarding-tip__tips"
                 style={{
-                  animation: `sliding-text ${
+                  animation: `ticker ${
                     this.props.messages.length * 5000
                   }ms 0ms linear infinite`,
                 }}
@@ -50,9 +50,9 @@ export default class Message extends React.Component<Props> {
                 })}
               </div>
               <div
-                className="onboarding-tip__slides"
+                className="onboarding-tip__tips"
                 style={{
-                  animation: `sliding-text ${
+                  animation: `ticker ${
                     this.props.messages.length * 5000
                   }ms 0ms linear infinite`,
                 }}

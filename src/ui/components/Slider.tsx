@@ -7,6 +7,7 @@ import deleteStop from './../handlers/deleteStop'
 import shiftLeftStop from './../handlers/shiftLeftStop'
 import shiftRightStop from './../handlers/shiftRightStop'
 import { palette } from '../../utils/palettePackage'
+import doLightnessScale from '../../utils/doLightnessScale'
 
 const safeGap = 2
 
@@ -18,12 +19,7 @@ interface Props {
   min?: number
   max?: number
   scale?: ScaleConfiguration
-  onChange: (
-    state: string,
-    e?:
-      | React.FocusEvent<HTMLInputElement>
-      | React.KeyboardEvent<HTMLInputElement>
-  ) => void
+  onChange: (state: string, feature?: string) => void
 }
 
 export default class Slider extends React.Component<Props> {
@@ -287,7 +283,7 @@ export default class Slider extends React.Component<Props> {
         this.props.min,
         this.props.max
       )
-      this.props.onChange('SHIFTED')
+      this.props.onChange('SHIFTED', 'ADD_STOP')
     }
   }
 
@@ -305,7 +301,7 @@ export default class Slider extends React.Component<Props> {
         state: 'NORMAL',
       },
     })
-    this.props.onChange('SHIFTED')
+    this.props.onChange('SHIFTED', 'DELETE_STOP')
   }
 
   onShiftRight = (e: KeyboardEvent) => {
@@ -331,19 +327,6 @@ export default class Slider extends React.Component<Props> {
   }
 
   // Utils
-  doLightnessScale = () => {
-    let granularity = 1
-
-    this.props.stops.map((index) => {
-      palette.scale[`lightness-${index}`] = parseFloat(
-        doMap(granularity, 0, 1, palette.min, palette.max).toFixed(1)
-      )
-      granularity -= 1 / (this.props.stops.length - 1)
-    })
-
-    return palette.scale
-  }
-
   updateLightnessScaleEntry = (key: string, value: number) => {
     palette.scale[key] = parseFloat(value.toFixed(1))
   }
@@ -363,7 +346,7 @@ export default class Slider extends React.Component<Props> {
     if (type === 'MIN') palette.min = value
     else if (type === 'MAX') palette.max = value
 
-    this.doLightnessScale()
+    palette.scale = doLightnessScale(this.props.stops, palette.min, palette.max)
 
     stops.forEach((stop) => {
       stop.style.left = palette.scale[stop.classList[1]] + '%'
@@ -459,9 +442,10 @@ export default class Slider extends React.Component<Props> {
   Equal = () => {
     palette.min = this.props.min
     palette.max = this.props.max
+    palette.scale = doLightnessScale(this.props.stops, palette.min, palette.max)
     return (
       <div className="slider__range">
-        {Object.entries(this.doLightnessScale()).map((lightness) => (
+        {Object.entries(palette.scale).map((lightness) => (
           <Knob
             key={lightness[0]}
             id={lightness[0]}

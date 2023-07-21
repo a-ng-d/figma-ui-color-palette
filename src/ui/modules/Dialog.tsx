@@ -3,10 +3,18 @@ import PopIn from '../components/PopIn'
 
 interface Props {
   title: string
-  image: string
-  content: string
-  label: string
-  action: React.ReactEventHandler
+  actions: {
+    primary?: {
+      label: string
+      action: React.ReactEventHandler | (() => void)
+    }
+    secondary?: {
+      label: string
+      action: React.ReactEventHandler | (() => void)
+    }
+  }
+  children: React.ReactNode
+  onClose: React.ReactEventHandler
 }
 
 export default class Dialog extends React.Component<Props> {
@@ -15,19 +23,10 @@ export default class Dialog extends React.Component<Props> {
       <div className="dialog">
         <PopIn
           title={this.props.title}
-          actions={{
-            primary: {
-              label: this.props.label,
-              action: this.props.action,
-            },
-          }}
-          close={this.props.action}
+          actions={this.props.actions}
+          OnClose={this.props.onClose}
         >
-          <img
-            className="dialog__cover"
-            src={this.props.image}
-          />
-          <p className="dialog__text type">{this.props.content}</p>
+          {this.props.children}
         </PopIn>
       </div>
     )

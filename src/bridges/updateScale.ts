@@ -2,6 +2,7 @@ import type {
   PresetConfiguration,
   TextColorsThemeHexModel,
   ColorConfiguration,
+  ThemeConfiguration,
 } from '../utils/types'
 import {
   previousSelection,
@@ -10,6 +11,7 @@ import {
 } from './processSelection'
 import Colors from './../canvas/Colors'
 import { locals, lang } from '../content/locals'
+import doLightnessScale from '../utils/doLightnessScale'
 
 const updateScale = (msg, palette) => {
   palette = isSelectionChanged ? previousSelection[0] : currentSelection[0]
@@ -24,13 +26,31 @@ const updateScale = (msg, palette) => {
         palette.getPluginData('colors')
       ),
       colorSpace: string = palette.getPluginData('colorSpace'),
+      themes: Array<ThemeConfiguration> = JSON.parse(
+        palette.getPluginData('themes')
+      ),
       view: string = palette.getPluginData('view'),
       textColorsTheme: TextColorsThemeHexModel = JSON.parse(
         palette.getPluginData('textColorsTheme')
       ),
       algorithmVersion: string = palette.getPluginData('algorithmVersion')
 
-    palette.setPluginData('scale', JSON.stringify(msg.data.scale))
+    themes.find((theme) => theme.isEnabled).scale = msg.data.scale
+    if (msg.feature === 'ADD_STOP' || msg.feature === 'DELETE_STOP')
+      themes.forEach((theme) => {
+        if (!theme.isEnabled) {
+          theme.scale = doLightnessScale(
+            Object.keys(msg.data.scale).map((stop) => {
+              return parseFloat(stop.replace('lightness-', ''))
+            }),
+            theme.scale[
+              Object.keys(theme.scale)[Object.keys(theme.scale).length - 1]
+            ],
+            theme.scale[Object.keys(theme.scale)[0]]
+          )
+        }
+      })
+    palette.setPluginData('themes', JSON.stringify(themes))
 
     if (Object.keys(msg.data.preset).length != 0)
       palette.setPluginData('preset', JSON.stringify(msg.data.preset))
@@ -39,11 +59,12 @@ const updateScale = (msg, palette) => {
     palette.appendChild(
       new Colors(
         {
-          name: name,
+          name: palette.getPluginData('name'),
           preset: preset,
           scale: msg.data.scale,
           colors: colors,
           colorSpace: colorSpace,
+          themes: themes,
           view:
             msg.isEditedInRealTime && view === 'PALETTE_WITH_PROPERTIES'
               ? 'PALETTE'
@@ -52,6 +73,7 @@ const updateScale = (msg, palette) => {
               : view,
           textColorsTheme: textColorsTheme,
           algorithmVersion: algorithmVersion,
+          service: 'EDIT',
         },
         palette
       ).makeNode()

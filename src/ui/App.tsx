@@ -5,6 +5,7 @@ import type {
   ColorConfiguration,
   DispatchProcess,
   SettingsMessage,
+  ThemeConfiguration,
 } from '../utils/types'
 import Dispatcher from './modules/Dispatcher'
 import Feature from './components/Feature'
@@ -13,13 +14,17 @@ import CreatePalette from './services/CreatePalette'
 import EditPalette from './services/EditPalette'
 import Highlight from './modules/Highlight'
 import Dialog from './modules/Dialog'
+import Shortcuts from './modules/Shortcuts'
 import package_json from './../../package.json'
 import { palette, presets } from '../utils/palettePackage'
+import doLightnessScale from '../utils/doLightnessScale'
 import features from '../utils/features'
-import { v4 as uuidv4 } from 'uuid'
+import { locals } from '../content/locals'
 import 'figma-plugin-ds/dist/figma-plugin-ds.css'
 import './stylesheets/app.css'
-import './stylesheets/components.css'
+import './stylesheets/app-components.css'
+import './stylesheets/figma-components.css'
+import About from './modules/About'
 
 let isPaletteSelected = false
 const container = document.getElementById('react-page'),
@@ -54,9 +59,10 @@ class App extends React.Component {
       service: '',
       name: '',
       preset: presets.material,
-      newScale: {},
+      scale: {},
       newColors: {},
       colorSpace: 'LCH',
+      themes: [],
       view: 'PALETTE_WITH_PROPERTIES',
       textColorsTheme: {
         lightColor: '#FFFFFF',
@@ -69,16 +75,21 @@ class App extends React.Component {
         data: '',
       },
       editorType: 'figma',
-      hasHighlight: false,
       planStatus: 'UNPAID',
       lang: 'en-US',
-      hasGetProPlanDialog: false,
+      isHighlightRequested: false,
+      isGettingPro: false,
+      isAboutRequested: false,
+      isLoaded: false,
       onGoingStep: '',
     }
   }
 
+  componentDidMount = () =>
+    setTimeout(() => this.setState({ isLoaded: true }), 1000)
+
   // Handlers
-  presetHandler = (e: React.SyntheticEvent) => {
+  presetsHandler = (e: React.SyntheticEvent) => {
     const setMaterialDesignPreset = () =>
       this.setState({
         preset: presets.material,
@@ -179,7 +190,11 @@ class App extends React.Component {
 
   slideHandler = () =>
     this.setState({
-      newScale: palette.scale,
+      scale: palette.scale,
+      themes: this.state['themes'].map((theme) => {
+        if (theme.isEnabled) theme.scale = palette.scale
+        return theme
+      }),
       onGoingStep: 'scale changed',
     })
 
@@ -189,14 +204,35 @@ class App extends React.Component {
         Object.keys(palette.preset).length == 0
           ? this.state['preset']
           : palette.preset,
-      newScale: palette.scale,
-      onGoingStep: 'stop changed',
+      scale: palette.scale,
+      themes: this.state['themes'].map((theme) => {
+        if (theme.isEnabled) theme.scale = palette.scale
+        else
+          theme.scale = doLightnessScale(
+            Object.keys(palette.scale).map((stop) => {
+              return parseFloat(stop.replace('lightness-', ''))
+            }),
+            theme.scale[
+              Object.keys(theme.scale)[Object.keys(theme.scale).length - 1]
+            ],
+            theme.scale[Object.keys(theme.scale)[0]]
+          )
+        return theme
+      }),
+      onGoingStep: 'stops changed',
     })
 
-  colorHandler = (colors: Array<ColorConfiguration>) =>
+  colorsHandler = (colors: Array<ColorConfiguration>) =>
     this.setState({
       newColors: colors,
-      onGoingStep: 'color changed',
+      onGoingStep: 'colors changed',
+    })
+
+  themesHandler = (themes: Array<ThemeConfiguration>) =>
+    this.setState({
+      scale: themes.find((theme) => theme.isEnabled).scale,
+      themes: themes,
+      onGoingStep: 'themes changed',
     })
 
   settingsHandler = (e) => {
@@ -216,6 +252,21 @@ class App extends React.Component {
         parent.postMessage({ pluginMessage: settingsMessage }, '*')
       else if (e.key === 'Enter' && this.state['service'] === 'EDIT')
         parent.postMessage({ pluginMessage: settingsMessage }, '*')
+    }
+
+    const updateView = () => {
+      if (e.target.dataset.isBlocked === 'false') {
+        palette.view = e.target.dataset.value
+        this.setState({
+          view: e.target.dataset.value,
+          onGoingStep: 'view changed',
+        })
+        if (this.state['service'] === 'EDIT')
+          parent.postMessage(
+            { pluginMessage: { type: 'UPDATE_VIEW', data: palette } },
+            '*'
+          )
+      }
     }
 
     const updateColorSpace = () => {
@@ -302,6 +353,7 @@ class App extends React.Component {
 
     const actions: ActionsList = {
       RENAME_PALETTE: () => renamePalette(),
+      UPDATE_VIEW: () => updateView(),
       UPDATE_COLOR_SPACE: () => updateColorSpace(),
       UPDATE_ALGORITHM_VERSION: () => updateAlgorythmVersion(),
       CHANGE_TEXT_LIGHT_COLOR: () => updateTextLightColor(),
@@ -311,11 +363,8 @@ class App extends React.Component {
     return actions[e.target.dataset.feature]?.()
   }
 
-  viewHandler = (view: string) =>
-    this.setState({ view: view, onGoingStep: 'view changed' })
-
   highlightHandler = (action: string) => {
-    const openHighlight = () => this.setState({ hasHighlight: true })
+    const openHighlight = () => this.setState({ isHighlightRequested: true })
 
     const closeHighlight = () => {
       parent.postMessage(
@@ -330,7 +379,7 @@ class App extends React.Component {
         },
         '*'
       )
-      this.setState({ hasHighlight: false })
+      this.setState({ isHighlightRequested: false })
     }
 
     const actions = {
@@ -350,7 +399,7 @@ class App extends React.Component {
 
         const checkHighlightStatus = () =>
           this.setState({
-            hasHighlight:
+            isHighlightRequested:
               e.data.pluginMessage.data === 'NO_RELEASE_NOTE' ||
               e.data.pluginMessage.data === 'READ_RELEASE_NOTE'
                 ? false
@@ -417,12 +466,6 @@ class App extends React.Component {
         }
 
         const updateWhilePaletteSelected = () => {
-          const putIdsOnColors = e.data.pluginMessage.data.colors.map(
-            (color) => {
-              color.id === undefined ? (color.id = uuidv4()) : null
-              return color
-            }
-          )
           isPaletteSelected = true
           palette.preset = {}
           parent.postMessage(
@@ -438,9 +481,10 @@ class App extends React.Component {
             service: 'EDIT',
             name: e.data.pluginMessage.data.name,
             preset: e.data.pluginMessage.data.preset,
-            newScale: e.data.pluginMessage.data.scale,
-            newColors: putIdsOnColors,
+            scale: e.data.pluginMessage.data.scale,
+            newColors: e.data.pluginMessage.data.colors,
             colorSpace: e.data.pluginMessage.data.colorSpace,
+            themes: e.data.pluginMessage.data.themes,
             view: e.data.pluginMessage.data.view,
             textColorsTheme: e.data.pluginMessage.data.textColorsTheme,
             algorithmVersion: e.data.pluginMessage.data.algorithmVersion,
@@ -485,7 +529,7 @@ class App extends React.Component {
             export: {
               format: 'XML',
               mimeType: 'text/xml',
-              data: `<resources>\n  ${e.data.pluginMessage.data.join(
+              data: `<?xml version="1.0" encoding="utf-8"?>\n<resources>\n  ${e.data.pluginMessage.data.join(
                 '\n  '
               )}\n</resources>`,
             },
@@ -505,7 +549,7 @@ class App extends React.Component {
         const getProPlan = () =>
           this.setState({
             planStatus: e.data.pluginMessage.data,
-            hasGetProPlanDialog: true,
+            isGettingPro: true,
           })
 
         const actions: ActionsList = {
@@ -529,99 +573,140 @@ class App extends React.Component {
       }
     }
 
-    return (
-      <main>
-        <Feature
-          isActive={
-            features.find((feature) => feature.name === 'CREATE').isActive
-          }
-        >
-          {this.state['service'] === 'CREATE' ? (
-            <CreatePalette
-              name={this.state['name']}
-              preset={this.state['preset']}
-              colorSpace={this.state['colorSpace']}
-              view={this.state['view']}
-              textColorsTheme={this.state['textColorsTheme']}
+    if (this.state['isLoaded'])
+      return (
+        <main>
+          <Feature
+            isActive={
+              features.find((feature) => feature.name === 'CREATE').isActive
+            }
+          >
+            {this.state['service'] === 'CREATE' ? (
+              <CreatePalette
+                name={this.state['name']}
+                preset={this.state['preset']}
+                colorSpace={this.state['colorSpace']}
+                view={this.state['view']}
+                textColorsTheme={this.state['textColorsTheme']}
+                planStatus={this.state['planStatus']}
+                lang={this.state['lang']}
+                onChangePreset={this.presetsHandler}
+                onCustomPreset={this.customHandler}
+                onChangeSettings={this.settingsHandler}
+              />
+            ) : null}
+          </Feature>
+          <Feature
+            isActive={
+              features.find((feature) => feature.name === 'EDIT').isActive
+            }
+          >
+            {this.state['service'] === 'EDIT' ? (
+              <EditPalette
+                name={this.state['name']}
+                preset={this.state['preset']}
+                scale={this.state['scale']}
+                colors={this.state['newColors']}
+                colorSpace={this.state['colorSpace']}
+                themes={this.state['themes']}
+                view={this.state['view']}
+                textColorsTheme={this.state['textColorsTheme']}
+                algorithmVersion={this.state['algorithmVersion']}
+                export={this.state['export']}
+                editorType={this.state['editorType']}
+                planStatus={this.state['planStatus']}
+                lang={this.state['lang']}
+                onChangeScale={this.slideHandler}
+                onChangeStop={this.customSlideHandler}
+                onChangeColors={this.colorsHandler}
+                onChangeThemes={this.themesHandler}
+                onChangeSettings={this.settingsHandler}
+              />
+            ) : null}
+          </Feature>
+          <Feature
+            isActive={
+              features.find((feature) => feature.name === 'ONBOARDING').isActive
+            }
+          >
+            {this.state['service'] === 'NONE' ? (
+              <Onboarding
+                planStatus={this.state['planStatus']}
+                lang={this.state['lang']}
+              />
+            ) : null}
+          </Feature>
+          <Feature
+            isActive={
+              features.find((feature) => feature.name === 'HIGHLIGHT').isActive
+            }
+          >
+            {this.state['isHighlightRequested'] ? (
+              <Highlight
+                lang={this.state['lang']}
+                onCloseHighlight={this.highlightHandler('CLOSE')}
+              />
+            ) : null}
+          </Feature>
+          <Feature
+            isActive={
+              features.find((feature) => feature.name === 'GET_PRO_PLAN')
+                .isActive
+            }
+          >
+            {this.state['isGettingPro'] ? (
+              <Dialog
+                title="Welcome to UI Color Palette Pro"
+                actions={{
+                  primary: {
+                    label: "Let's discover",
+                    action: () => this.setState({ isGettingPro: false }),
+                  },
+                }}
+                onClose={() => this.setState({ isGettingPro: false })}
+              >
+                <img
+                  className="dialog__cover"
+                  src=""
+                />
+                <p className="dialog__text type">
+                  {locals[this.state['lang']].proPlan.welcomeMessage}
+                </p>
+              </Dialog>
+            ) : null}
+          </Feature>
+          <Feature
+            isActive={
+              features.find((feature) => feature.name === 'ABOUT').isActive
+            }
+          >
+            {this.state['isAboutRequested'] ? (
+              <Dialog
+                title={locals[this.state['lang']].about.title}
+                actions={{}}
+                onClose={() => this.setState({ isAboutRequested: false })}
+              >
+                <About
+                  planStatus={this.state['planStatus']}
+                  lang={this.state['lang']}
+                />
+              </Dialog>
+            ) : null}
+          </Feature>
+          <Feature
+            isActive={
+              features.find((feature) => feature.name === 'SHORTCUTS').isActive
+            }
+          >
+            <Shortcuts
+              onReOpenHighlight={this.highlightHandler('OPEN')}
+              onReOpenAbout={() => this.setState({ isAboutRequested: true })}
               planStatus={this.state['planStatus']}
               lang={this.state['lang']}
-              onReopenHighlight={this.highlightHandler('OPEN')}
-              onChangePreset={this.presetHandler}
-              onCustomPreset={this.customHandler}
-              onChangeView={(view: string) =>
-                this.setState({ view: view, onGoingStep: 'view changed' })
-              }
-              onChangeSettings={this.settingsHandler}
             />
-          ) : null}
-        </Feature>
-        <Feature
-          isActive={
-            features.find((feature) => feature.name === 'EDIT').isActive
-          }
-        >
-          {this.state['service'] === 'EDIT' ? (
-            <EditPalette
-              name={this.state['name']}
-              preset={this.state['preset']}
-              scale={this.state['newScale']}
-              colors={this.state['newColors']}
-              colorSpace={this.state['colorSpace']}
-              view={this.state['view']}
-              textColorsTheme={this.state['textColorsTheme']}
-              algorithmVersion={this.state['algorithmVersion']}
-              export={this.state['export']}
-              editorType={this.state['editorType']}
-              planStatus={this.state['planStatus']}
-              lang={this.state['lang']}
-              onReopenHighlight={this.highlightHandler('OPEN')}
-              onChangeScale={this.slideHandler}
-              onChangeStop={this.customSlideHandler}
-              onChangeColor={this.colorHandler}
-              onChangeView={this.viewHandler}
-              onChangeSettings={this.settingsHandler}
-            />
-          ) : null}
-        </Feature>
-        <Feature
-          isActive={
-            features.find((feature) => feature.name === 'ONBOARDING').isActive
-          }
-        >
-          {this.state['service'] === 'NONE' ? (
-            <Onboarding
-              planStatus={this.state['planStatus']}
-              lang={this.state['lang']}
-              onReopenHighlight={this.highlightHandler('OPEN')}
-            />
-          ) : null}
-        </Feature>
-        <Feature
-          isActive={
-            features.find((feature) => feature.name === 'HIGHLIGHT').isActive
-          }
-        >
-          {this.state['hasHighlight'] ? (
-            <Highlight closeHighlight={this.highlightHandler('CLOSE')} />
-          ) : null}
-        </Feature>
-        <Feature
-          isActive={
-            features.find((feature) => feature.name === 'GET_PRO_PLAN').isActive
-          }
-        >
-          {this.state['hasGetProPlanDialog'] ? (
-            <Dialog
-              title="Welcome to UI Color Palette Pro"
-              image=""
-              content="You have successfully upgraded to the Pro plan, unlocking a range of tools to enhance the accessibility, accuracy and deployment options."
-              label="Let's discover"
-              action={() => this.setState({ hasGetProPlanDialog: false })}
-            />
-          ) : null}
-        </Feature>
-      </main>
-    )
+          </Feature>
+        </main>
+      )
   }
 }
 

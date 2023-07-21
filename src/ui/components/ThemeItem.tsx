@@ -1,26 +1,23 @@
 import * as React from 'react'
-import chroma from 'chroma-js'
 import Feature from './Feature'
 import Input from './Input'
 import Button from './Button'
 import FormItem from './FormItem'
-import doMap from './../../utils/doMap'
+import doMap from '../../utils/doMap'
 import features from '../../utils/features'
 import { locals } from '../../content/locals'
 
 interface Props {
   name: string
-  hex: string
-  oklch: boolean
-  shift: number
   description: string
+  paletteBackground: string
   uuid: string
   index: number
   selected: boolean
   guideAbove: boolean
   guideBelow: boolean
   lang: string
-  onChangeColors: React.KeyboardEventHandler<
+  onChangeThemes: React.KeyboardEventHandler<
     HTMLInputElement | HTMLTextAreaElement
   > &
     React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement> &
@@ -37,7 +34,7 @@ interface Props {
   onChangeOrder: React.ChangeEventHandler
 }
 
-export default class ColorItem extends React.Component<Props> {
+export default class ThemeItem extends React.Component<Props> {
   constructor(props) {
     super(props)
     this.state = {
@@ -110,7 +107,7 @@ export default class ColorItem extends React.Component<Props> {
       <li
         id={this.props.name.split(' ').join('-').toLowerCase()}
         data-id={this.props.uuid}
-        data-color={this.props.name.split(' ').join('-').toLowerCase()}
+        data-theme={this.props.name.split(' ').join('-').toLowerCase()}
         data-position={this.props.index}
         className={`list__item${
           this.state['isDragged'] ? ' list__item--dragged' : ''
@@ -126,86 +123,51 @@ export default class ColorItem extends React.Component<Props> {
       >
         <Feature
           isActive={
-            features.find((feature) => feature.name === 'COLORS_NAME').isActive
+            features.find((feature) => feature.name === 'THEMES_NAME').isActive
           }
         >
-          <div className="colors__name">
+          <div className="themes__name">
             <Input
               type="TEXT"
               value={this.props.name}
+              feature="RENAME_THEME"
               charactersLimit={24}
-              feature="RENAME_COLOR"
-              onChange={this.props.onChangeColors}
+              onChange={this.props.onChangeThemes}
               onFocus={this.props.onCancellationSelection}
-              onBlur={this.props.onChangeColors}
-              onConfirm={this.props.onChangeColors}
+              onBlur={this.props.onChangeThemes}
+              onConfirm={this.props.onChangeThemes}
             />
           </div>
         </Feature>
         <Feature
           isActive={
-            features.find((feature) => feature.name === 'COLORS_PARAMS')
+            features.find((feature) => feature.name === 'THEMES_PARAMS')
               .isActive
           }
         >
-          <div className="colors__parameters">
-            <Input
-              type="COLOR"
-              value={this.props.hex}
-              feature="UPDATE_HEX"
-              onChange={this.props.onChangeColors}
-              onFocus={this.props.onCancellationSelection}
-              onBlur={this.props.onChangeColors}
-            />
-            <div className="inputs">
-              <div className="label">
-                {locals[this.props.lang].colors.lch.label}
-              </div>
-              <div className="inputs__bar">
-                <Input
-                  type="NUMBER"
-                  value={chroma(this.props.hex).lch()[0].toFixed(0)}
-                  min="0"
-                  max="100"
-                  feature="UPDATE_LIGHTNESS"
-                  onChange={this.props.onChangeColors}
-                  onFocus={this.props.onCancellationSelection}
-                  onBlur={this.props.onChangeColors}
-                />
-                <Input
-                  type="NUMBER"
-                  value={chroma(this.props.hex).lch()[1].toFixed(0)}
-                  min="0"
-                  max="100"
-                  feature="UPDATE_CHROMA"
-                  onChange={this.props.onChangeColors}
-                  onFocus={this.props.onCancellationSelection}
-                  onBlur={this.props.onChangeColors}
-                />
-                <Input
-                  type="NUMBER"
-                  value={
-                    chroma(this.props.hex).lch()[2].toFixed(0) == 'NaN'
-                      ? 0
-                      : chroma(this.props.hex).lch()[2].toFixed(0)
-                  }
-                  min="0"
-                  max="360"
-                  feature="UPDATE_HUE"
-                  onChange={this.props.onChangeColors}
-                  onFocus={this.props.onCancellationSelection}
-                  onBlur={this.props.onChangeColors}
-                />
-              </div>
-            </div>
+          <div className="themes__palette-background-color">
+            <FormItem
+              id="palette-background-color"
+              label={
+                locals[this.props.lang].themes.paletteBackgroundColor.label
+              }
+              shouldFill={false}
+            >
+              <Input
+                type="COLOR"
+                value={this.props.paletteBackground}
+                feature="UPDATE_PALETTE_BACKGROUND"
+                onChange={this.props.onChangeThemes}
+                onFocus={this.props.onCancellationSelection}
+                onBlur={this.props.onChangeThemes}
+              />
+            </FormItem>
           </div>
         </Feature>
         <div className="list__item__buttons">
           <Feature
             isActive={
-              features.find((feature) => feature.name === 'COLORS_HUE_SHIFTING')
-                .isActive ||
-              features.find((feature) => feature.name === 'COLORS_DESCRIPTION')
+              features.find((feature) => feature.name === 'THEMES_DESCRIPTION')
                 .isActive
             }
           >
@@ -220,8 +182,8 @@ export default class ColorItem extends React.Component<Props> {
           <Button
             type="icon"
             icon="minus"
-            feature="REMOVE_COLOR"
-            action={this.props.onChangeColors}
+            feature="REMOVE_THEME"
+            action={this.props.onChangeThemes}
           />
         </div>
         {this.state['hasMoreOptions'] ? (
@@ -229,37 +191,13 @@ export default class ColorItem extends React.Component<Props> {
             <Feature
               isActive={
                 features.find(
-                  (feature) => feature.name === 'COLORS_HUE_SHIFTING'
+                  (feature) => feature.name === 'THEMES_DESCRIPTION'
                 ).isActive
               }
             >
-              <div className="colors__shift inputs">
-                <div className="label">
-                  {locals[this.props.lang].colors.hueShifting.label}
-                </div>
-                <Input
-                  type="NUMBER"
-                  icon={{ type: 'icon', value: 'arrow-left-right' }}
-                  value={this.props.shift.toString()}
-                  min="-360"
-                  max="360"
-                  feature="SHIFT_HUE"
-                  onChange={this.props.onChangeColors}
-                  onFocus={this.props.onCancellationSelection}
-                  onBlur={this.props.onChangeColors}
-                />
-              </div>
-            </Feature>
-            <Feature
-              isActive={
-                features.find(
-                  (feature) => feature.name === 'COLORS_DESCRIPTION'
-                ).isActive
-              }
-            >
-              <div className="colors__description">
+              <div className="themes__description">
                 <FormItem
-                  id="color-description"
+                  id="theme-description"
                   label={locals[this.props.lang].global.description.label}
                   shouldFill={false}
                 >
@@ -270,10 +208,10 @@ export default class ColorItem extends React.Component<Props> {
                       locals[this.props.lang].global.description.placeholder
                     }
                     feature="UPDATE_DESCRIPTION"
-                    onChange={this.props.onChangeColors}
+                    onChange={this.props.onChangeThemes}
                     onFocus={this.props.onCancellationSelection}
-                    onBlur={this.props.onChangeColors}
-                    onConfirm={this.props.onChangeColors}
+                    onBlur={this.props.onChangeThemes}
+                    onConfirm={this.props.onChangeThemes}
                   />
                 </FormItem>
               </div>

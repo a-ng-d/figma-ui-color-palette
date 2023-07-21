@@ -432,8 +432,7 @@ export default class Properties {
       'VERTICAL'
     this.nodeLeftColumn.counterAxisSizingMode =
       this.nodeRightColumn.counterAxisSizingMode = 'FIXED'
-    this.nodeLeftColumn.layoutGrow =
-      this.nodeRightColumn.layoutGrow = 1
+    this.nodeLeftColumn.layoutGrow = this.nodeRightColumn.layoutGrow = 1
     this.nodeLeftColumn.layoutSizingVertical =
       this.nodeRightColumn.layoutSizingVertical = 'HUG'
     this.nodeLeftColumn.itemSpacing = this.nodeRightColumn.itemSpacing = 4

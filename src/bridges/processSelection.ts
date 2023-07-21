@@ -17,6 +17,7 @@ const processSelection = () => {
 
     // Migration
     setPaletteMigration(palette)
+    console.log(JSON.parse(palette.getPluginData('colors')))
 
     // to UI
     figma.ui.postMessage({
@@ -24,9 +25,12 @@ const processSelection = () => {
       data: {
         name: palette.getPluginData('name'),
         preset: JSON.parse(palette.getPluginData('preset')),
-        scale: JSON.parse(palette.getPluginData('scale')),
+        scale: JSON.parse(palette.getPluginData('themes')).find(
+          (theme) => theme.isEnabled
+        ).scale,
         colors: JSON.parse(palette.getPluginData('colors')),
         colorSpace: palette.getPluginData('colorSpace'),
+        themes: JSON.parse(palette.getPluginData('themes')),
         view: palette.getPluginData('view'),
         textColorsTheme: JSON.parse(palette.getPluginData('textColorsTheme')),
         algorithmVersion: palette.getPluginData('algorithmVersion'),
@@ -34,7 +38,8 @@ const processSelection = () => {
     })
   } else if (
     selection.length == 0 ||
-    (selection.length > 1 && selection[0].getPluginDataKeys().length != 0) || selection.find(element => (element as any).fills.length == 0)
+    (selection.length > 1 && selection[0].getPluginDataKeys().length != 0) ||
+    selection.find((element) => (element as any).fills.length == 0)
   )
     figma.ui.postMessage({
       type: 'EMPTY_SELECTION',
@@ -49,7 +54,7 @@ const processSelection = () => {
     )
       if (
         element['fills'].filter((fill) => fill.type === 'SOLID').length != 0 &&
-        element.getPluginDataKeys().length == 0 
+        element.getPluginDataKeys().length == 0
       )
         figma.ui.postMessage({
           type: 'COLOR_SELECTED',

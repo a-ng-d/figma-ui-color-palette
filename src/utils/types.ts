@@ -46,26 +46,51 @@ export interface PaletteNode {
   scale: ScaleConfiguration
   colors: Array<ColorConfiguration>
   colorSpace: string
+  themes: Array<ThemeConfiguration>
   view: string
   textColorsTheme: TextColorsThemeHexModel
   algorithmVersion: string
+  service?: string
 }
 
-export interface PaletteDataItem {
+export interface PaletteData {
+  name: string
+  themes: Array<PaletteDataThemeItem>
+  collectionId: string
+  type: string
+}
+
+export interface PaletteDataThemeItem {
   name: string
   description: string
-  shades: Array<{
-    name: string
-    description: string
-    hex: string
-    rgb: Array<number>
-    gl: Array<number>
-    lch: Array<number>
-    oklch: Array<number>
-    lab: Array<number>
-    oklab: Array<number>
-    hsl: Array<number>
-  }>
+  colors: Array<PaletteDataColorItem>
+  modeId: string
+  id: string
+  type: string
+}
+
+export interface PaletteDataColorItem {
+  name: string
+  description: string
+  shades: Array<PaletteDataShadeItem>
+  id: string
+  type: string
+}
+
+export interface PaletteDataShadeItem {
+  name: string
+  description: string
+  hex: string
+  rgb: Array<number>
+  gl: Array<number>
+  lch: Array<number>
+  oklch: Array<number>
+  lab: Array<number>
+  oklab: Array<number>
+  hsl: Array<number>
+  variableId: string
+  styleId: string
+  type: string
 }
 
 // Palette configurations
@@ -94,7 +119,7 @@ export interface ScaleConfiguration {
 
 export interface ColorConfiguration {
   name: string
-  id: string | undefined
+  description: string
   rgb: {
     r: number
     g: number
@@ -102,7 +127,17 @@ export interface ColorConfiguration {
   }
   oklch: boolean
   hueShifting: number
+  id: string | undefined
+}
+
+export interface ThemeConfiguration {
+  name: string
   description: string
+  scale: ScaleConfiguration
+  paletteBackground: string
+  isEnabled: boolean
+  id: string
+  type: string
 }
 
 export interface ExportConfiguration {
@@ -160,6 +195,12 @@ export interface TextColorsThemeGLModel {
 export interface ColorsMessage {
   type: string
   data: Array<ColorConfiguration>
+  isEditedInRealTime: boolean
+}
+
+export interface ThemesMessage {
+  type: string
+  data: Array<ThemeConfiguration>
   isEditedInRealTime: boolean
 }
 

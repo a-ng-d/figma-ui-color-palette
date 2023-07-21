@@ -1,41 +1,37 @@
 import * as React from 'react'
-import type { ReleaseNote } from '../../utils/types'
-import PopIn from '../components/PopIn'
+import Dialog from './Dialog'
 import releaseNotes from '../../content/releaseNotes'
+import { locals } from '../../content/locals'
 
 interface Props {
-  closeHighlight: React.ReactEventHandler
+  lang: string
+  onCloseHighlight: React.ReactEventHandler
 }
 
 export default class Highlight extends React.Component<Props> {
-  openUrl = (currentNote: ReleaseNote) =>
-    window.open(currentNote['learnMore'], '_blank')
-
   render() {
     const currentNote = releaseNotes.filter((note) => note['isMostRecent'])[0]
     return (
-      <div className="dialog">
-        <PopIn
-          title={currentNote['title']}
-          actions={{
-            primary: {
-              label: 'Got it',
-              action: this.props.closeHighlight,
-            },
-            secondary: {
-              label: 'Learn more',
-              action: () => this.openUrl(currentNote),
-            },
-          }}
-          close={this.props.closeHighlight}
-        >
-          <img
-            className="dialog__cover"
-            src={currentNote['image']}
-          />
-          <p className="dialog__text type">{currentNote['content']}</p>
-        </PopIn>
-      </div>
+      <Dialog
+        title={currentNote['title']}
+        actions={{
+          primary: {
+            label: locals[this.props.lang].highlight.gotIt,
+            action: this.props.onCloseHighlight,
+          },
+          secondary: {
+            label: locals[this.props.lang].highlight.learnMore,
+            action: () => window.open(currentNote['learnMore'], '_blank'),
+          },
+        }}
+        onClose={this.props.onCloseHighlight}
+      >
+        <img
+          className="dialog__cover"
+          src={currentNote['image']}
+        />
+        <p className="dialog__text type">{currentNote['content']}</p>
+      </Dialog>
     )
   }
 }

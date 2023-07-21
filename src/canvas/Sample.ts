@@ -43,16 +43,7 @@ export default class Sample {
     // base
     this.node = figma.createFrame()
     this.node.name = this.name
-    this.node.fills = [
-      {
-        type: 'SOLID',
-        color: {
-          r: this.rgb[0] / 255,
-          g: this.rgb[1] / 255,
-          b: this.rgb[2] / 255,
-        },
-      },
-    ]
+    this.node.fills = []
 
     // layout
     this.node.layoutMode = 'HORIZONTAL'

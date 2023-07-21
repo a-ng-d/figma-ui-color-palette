@@ -4,9 +4,11 @@ import type {
   TextColorsThemeHexModel,
   PaletteNode,
   ScaleConfiguration,
+  ThemeConfiguration,
 } from '../utils/types'
 import Colors from './Colors'
 import { locals, lang } from '../content/locals'
+import { uid } from 'uid'
 
 export default class Palette {
   name: string
@@ -14,10 +16,12 @@ export default class Palette {
   scale: ScaleConfiguration
   colors: Array<ColorConfiguration>
   colorSpace: string
+  themes: Array<ThemeConfiguration>
   preset: PresetConfiguration
   view: string
   textColorsTheme: TextColorsThemeHexModel
   algorithmVersion: string
+  service: string
   children: PaletteNode
   node: FrameNode
 
@@ -38,9 +42,21 @@ export default class Palette {
     this.scale = scale
     this.colors = []
     this.colorSpace = colorSpace
-    this.view = view
+    ;(this.themes = [
+      {
+        name: locals[lang].themes.switchTheme.defaultTheme,
+        description: '',
+        scale: this.scale,
+        paletteBackground: '#FFFFFF',
+        isEnabled: true,
+        id: '00000000000',
+        type: 'default theme',
+      },
+    ]),
+      (this.view = view)
     this.algorithmVersion = algorithmVersion
     this.textColorsTheme = textColorsTheme
+    this.service = 'CREATE'
     this.children = null
   }
 
@@ -67,6 +83,7 @@ export default class Palette {
     this.node.setPluginData('preset', JSON.stringify(this.preset))
     this.node.setPluginData('scale', JSON.stringify(this.scale))
     this.node.setPluginData('colorSpace', this.colorSpace)
+    this.node.setPluginData('themes', JSON.stringify(this.themes))
     this.node.setPluginData('view', this.view)
     this.node.setPluginData(
       'textColorsTheme',
@@ -87,11 +104,11 @@ export default class Palette {
           fills.forEach((fill) =>
             this.colors.push({
               name: element.name,
+              description: '',
               rgb: fill.color,
-              id: undefined,
+              id: uid(),
               oklch: false,
               hueShifting: 0,
-              description: '',
             })
           )
         } else
