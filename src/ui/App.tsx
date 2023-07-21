@@ -80,9 +80,13 @@ class App extends React.Component {
       isHighlightRequested: false,
       isGettingPro: false,
       isAboutRequested: false,
+      isLoaded: false,
       onGoingStep: '',
     }
   }
+
+  componentDidMount = () =>
+    setTimeout(() => this.setState({ isLoaded: true }), 1000)
 
   // Handlers
   presetsHandler = (e: React.SyntheticEvent) => {
@@ -569,136 +573,137 @@ class App extends React.Component {
       }
     }
 
-    return (
-      <main>
-        <Feature
-          isActive={
-            features.find((feature) => feature.name === 'CREATE').isActive
-          }
-        >
-          {this.state['service'] === 'CREATE' ? (
-            <CreatePalette
-              name={this.state['name']}
-              preset={this.state['preset']}
-              colorSpace={this.state['colorSpace']}
-              view={this.state['view']}
-              textColorsTheme={this.state['textColorsTheme']}
-              planStatus={this.state['planStatus']}
-              lang={this.state['lang']}
-              onChangePreset={this.presetsHandler}
-              onCustomPreset={this.customHandler}
-              onChangeSettings={this.settingsHandler}
-            />
-          ) : null}
-        </Feature>
-        <Feature
-          isActive={
-            features.find((feature) => feature.name === 'EDIT').isActive
-          }
-        >
-          {this.state['service'] === 'EDIT' ? (
-            <EditPalette
-              name={this.state['name']}
-              preset={this.state['preset']}
-              scale={this.state['scale']}
-              colors={this.state['newColors']}
-              colorSpace={this.state['colorSpace']}
-              themes={this.state['themes']}
-              view={this.state['view']}
-              textColorsTheme={this.state['textColorsTheme']}
-              algorithmVersion={this.state['algorithmVersion']}
-              export={this.state['export']}
-              editorType={this.state['editorType']}
-              planStatus={this.state['planStatus']}
-              lang={this.state['lang']}
-              onChangeScale={this.slideHandler}
-              onChangeStop={this.customSlideHandler}
-              onChangeColors={this.colorsHandler}
-              onChangeThemes={this.themesHandler}
-              onChangeSettings={this.settingsHandler}
-            />
-          ) : null}
-        </Feature>
-        <Feature
-          isActive={
-            features.find((feature) => feature.name === 'ONBOARDING').isActive
-          }
-        >
-          {this.state['service'] === 'NONE' ? (
-            <Onboarding
-              planStatus={this.state['planStatus']}
-              lang={this.state['lang']}
-            />
-          ) : null}
-        </Feature>
-        <Feature
-          isActive={
-            features.find((feature) => feature.name === 'HIGHLIGHT').isActive
-          }
-        >
-          {this.state['isHighlightRequested'] ? (
-            <Highlight
-              lang={this.state['lang']}
-              onCloseHighlight={this.highlightHandler('CLOSE')}
-            />
-          ) : null}
-        </Feature>
-        <Feature
-          isActive={
-            features.find((feature) => feature.name === 'GET_PRO_PLAN').isActive
-          }
-        >
-          {this.state['isGettingPro'] ? (
-            <Dialog
-              title="Welcome to UI Color Palette Pro"
-              actions={{
-                primary: {
-                  label: "Let's discover",
-                  action: () => this.setState({ isGettingPro: false })
-                }
-              }}
-              onClose={() => this.setState({ isGettingPro: false })}
-            >
-              <img
-                className="dialog__cover"
-                src=''
+    if (this.state['isLoaded'])
+      return (
+        <main>
+          <Feature
+            isActive={
+              features.find((feature) => feature.name === 'CREATE').isActive
+            }
+          >
+            {this.state['service'] === 'CREATE' ? (
+              <CreatePalette
+                name={this.state['name']}
+                preset={this.state['preset']}
+                colorSpace={this.state['colorSpace']}
+                view={this.state['view']}
+                textColorsTheme={this.state['textColorsTheme']}
+                planStatus={this.state['planStatus']}
+                lang={this.state['lang']}
+                onChangePreset={this.presetsHandler}
+                onCustomPreset={this.customHandler}
+                onChangeSettings={this.settingsHandler}
               />
-              <p className="dialog__text type">{locals[this.state['lang']].proPlan.welcomeMessage}</p>
-            </Dialog>
-          ) : null}
-        </Feature>
-        <Feature
-          isActive={
-            features.find((feature) => feature.name === 'ABOUT').isActive
-          }
-        >
-          {this.state['isAboutRequested'] ? (
-            <Dialog
-              title={locals[this.state['lang']].about.title}
-              actions={{}}
-              onClose={() => this.setState({ isAboutRequested: false })}
-            >
-              <About
+            ) : null}
+          </Feature>
+          <Feature
+            isActive={
+              features.find((feature) => feature.name === 'EDIT').isActive
+            }
+          >
+            {this.state['service'] === 'EDIT' ? (
+              <EditPalette
+                name={this.state['name']}
+                preset={this.state['preset']}
+                scale={this.state['scale']}
+                colors={this.state['newColors']}
+                colorSpace={this.state['colorSpace']}
+                themes={this.state['themes']}
+                view={this.state['view']}
+                textColorsTheme={this.state['textColorsTheme']}
+                algorithmVersion={this.state['algorithmVersion']}
+                export={this.state['export']}
+                editorType={this.state['editorType']}
+                planStatus={this.state['planStatus']}
+                lang={this.state['lang']}
+                onChangeScale={this.slideHandler}
+                onChangeStop={this.customSlideHandler}
+                onChangeColors={this.colorsHandler}
+                onChangeThemes={this.themesHandler}
+                onChangeSettings={this.settingsHandler}
+              />
+            ) : null}
+          </Feature>
+          <Feature
+            isActive={
+              features.find((feature) => feature.name === 'ONBOARDING').isActive
+            }
+          >
+            {this.state['service'] === 'NONE' ? (
+              <Onboarding
                 planStatus={this.state['planStatus']}
                 lang={this.state['lang']}
               />
-            </Dialog>
-          ) : null}
-        </Feature>
-        <Feature
-          isActive={
-            features.find((feature) => feature.name === 'SHORTCUTS').isActive
-          }
-        >
-          <Shortcuts
-            onReOpenHighlight={this.highlightHandler('OPEN')}
-            onReOpenAbout={() => this.setState({ isAboutRequested: true })}
-            planStatus={this.state['planStatus']}
-            lang={this.state['lang']}
-          />
-        </Feature>
-      </main>
-    )
+            ) : null}
+          </Feature>
+          <Feature
+            isActive={
+              features.find((feature) => feature.name === 'HIGHLIGHT').isActive
+            }
+          >
+            {this.state['isHighlightRequested'] ? (
+              <Highlight
+                lang={this.state['lang']}
+                onCloseHighlight={this.highlightHandler('CLOSE')}
+              />
+            ) : null}
+          </Feature>
+          <Feature
+            isActive={
+              features.find((feature) => feature.name === 'GET_PRO_PLAN').isActive
+            }
+          >
+            {this.state['isGettingPro'] ? (
+              <Dialog
+                title="Welcome to UI Color Palette Pro"
+                actions={{
+                  primary: {
+                    label: "Let's discover",
+                    action: () => this.setState({ isGettingPro: false })
+                  }
+                }}
+                onClose={() => this.setState({ isGettingPro: false })}
+              >
+                <img
+                  className="dialog__cover"
+                  src=''
+                />
+                <p className="dialog__text type">{locals[this.state['lang']].proPlan.welcomeMessage}</p>
+              </Dialog>
+            ) : null}
+          </Feature>
+          <Feature
+            isActive={
+              features.find((feature) => feature.name === 'ABOUT').isActive
+            }
+          >
+            {this.state['isAboutRequested'] ? (
+              <Dialog
+                title={locals[this.state['lang']].about.title}
+                actions={{}}
+                onClose={() => this.setState({ isAboutRequested: false })}
+              >
+                <About
+                  planStatus={this.state['planStatus']}
+                  lang={this.state['lang']}
+                />
+              </Dialog>
+            ) : null}
+          </Feature>
+          <Feature
+            isActive={
+              features.find((feature) => feature.name === 'SHORTCUTS').isActive
+            }
+          >
+            <Shortcuts
+              onReOpenHighlight={this.highlightHandler('OPEN')}
+              onReOpenAbout={() => this.setState({ isAboutRequested: true })}
+              planStatus={this.state['planStatus']}
+              lang={this.state['lang']}
+            />
+          </Feature>
+        </main>
+      )
   }
 }
 
