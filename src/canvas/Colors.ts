@@ -6,9 +6,10 @@ import type {
   PaletteDataColorItem,
   PaletteData,
 } from '../utils/types'
-import Sample from './Sample'
-import Header from './Header'
 import Title from './Title'
+import Header from './Header'
+import Sample from './Sample'
+import Signature from './Signature'
 import { locals, lang } from '../content/locals'
 
 export default class Colors {
@@ -24,6 +25,7 @@ export default class Colors {
   nodeRowSource: FrameNode
   nodeRowShades: FrameNode
   nodeEmpty: FrameNode
+  nodeShades: FrameNode
   node: FrameNode
 
   constructor(parent?: PaletteNode, palette?: FrameNode) {
@@ -422,28 +424,19 @@ export default class Colors {
     this.palette.setPluginData('data', JSON.stringify(this.paletteData))
   }
 
-  makeNode = () => {
+  makeNodeShades = () => {
     // base
-    this.node = figma.createFrame()
-    this.node.name = '_colors﹒do not edit any layer'
-    this.node.fills = []
-    this.node.locked = true
+    this.nodeShades = figma.createFrame()
+    this.nodeShades.name = '_shades'
+    this.nodeShades.fills = []
 
     // layout
-    this.node.layoutMode = 'VERTICAL'
-    this.node.layoutSizingHorizontal = 'HUG'
-    this.node.layoutSizingVertical = 'HUG'
+    this.nodeShades.layoutMode = 'VERTICAL'
+    this.nodeShades.layoutSizingHorizontal = 'HUG'
+    this.nodeShades.layoutSizingVertical = 'HUG'
 
     // insert
-    this.node.appendChild(
-      new Title(
-        `${this.parent.name === '' ? locals[lang].name : this.parent.name} • ${
-          this.parent.preset.name
-        } • ${this.parent.view.includes('PALETTE') ? 'Palette' : 'Sheet'}`,
-        this.parent
-      ).makeNode()
-    )
-    this.node.appendChild(new Header(this.parent, this.sampleSize).makeNode())
+    this.nodeShades.appendChild(new Header(this.parent, this.sampleSize).makeNode())
     this.parent.colors.forEach((color) => {
       const sourceColor: Array<number> = chroma([
         color.rgb.r * 255,
@@ -607,11 +600,39 @@ export default class Colors {
 
       this.nodeRow.appendChild(this.nodeRowSource)
       this.nodeRow.appendChild(this.nodeRowShades)
-      this.node.appendChild(this.nodeRow)
+      this.nodeShades.appendChild(this.nodeRow)
     })
     this.makePaletteData(this.parent.service)
     if (this.parent.colors.length == 0)
-      this.node.appendChild(this.makeEmptyCase())
+      this.nodeShades.appendChild(this.makeEmptyCase())
+
+    return this.nodeShades
+  }
+
+  makeNode = () => {
+    // base
+    this.node = figma.createFrame()
+    this.node.name = '_colors﹒do not edit any layer'
+    this.node.fills = []
+    this.node.locked = true
+
+    // layout
+    this.node.layoutMode = 'VERTICAL'
+    this.node.layoutSizingHorizontal = 'HUG'
+    this.node.layoutSizingVertical = 'HUG'
+    this.node.itemSpacing = 16
+
+    // insert
+    this.node.appendChild(
+      new Title(
+        `${this.parent.name === '' ? locals[lang].name : this.parent.name} • ${
+          this.parent.preset.name
+        } • ${this.parent.view.includes('PALETTE') ? 'Palette' : 'Sheet'}`,
+        this.parent
+      ).makeNode()
+    )
+    this.node.appendChild(this.makeNodeShades())
+    this.node.appendChild(new Signature().makeNode())
 
     this.palette.fills = [
       {

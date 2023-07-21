@@ -2,14 +2,16 @@ export default class Tag {
   name: string
   content: string
   fontSize: number
+  url: string | null
   nodeTag: FrameNode
   nodeText: TextNode
   nodeIndicator: EllipseNode
 
-  constructor(name: string, content: string, fontSize = 8) {
+  constructor(name: string, content: string, fontSize = 8, url = null) {
     this.name = name
     this.content = content
     this.fontSize = fontSize
+    this.url = url
   }
 
   makeNodeTag(gl: Array<number> = [0, 0, 0, 1], hasIndicator = false) {
@@ -61,6 +63,14 @@ export default class Tag {
       unit: "PERCENT"
     })
     this.nodeText.textAlignHorizontal = 'CENTER'
+    if (this.url != null) {
+      this.nodeText.setRangeHyperlink(0, this.content.length, {
+        type: 'URL',
+        value: this.url
+      })
+      this.nodeText.setRangeTextDecoration(0, this.content.length, "UNDERLINE")
+    }
+      
     this.nodeText.fills = [
       {
         type: 'SOLID',
