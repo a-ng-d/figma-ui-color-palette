@@ -14,6 +14,7 @@ import ColorItem from '../components/ColorItem'
 import Actions from './Actions'
 import { locals } from '../../content/locals'
 import { uid } from 'uid'
+import Message from '../components/Message'
 
 interface Props {
   colors: Array<ColorConfiguration>
@@ -351,44 +352,61 @@ export default class Colors extends React.Component<Props> {
               />
             </div>
           </div>
-          <ul className="list" ref={this.listRef}>
-            {this.props.colors.map((color, index) => (
-              <ColorItem
-                key={color.id}
-                name={color.name}
-                index={index}
-                hex={chroma(
-                  color.rgb.r * 255,
-                  color.rgb.g * 255,
-                  color.rgb.b * 255
-                ).hex()}
-                oklch={color.oklch}
-                shift={color.hueShifting}
-                description={color.description}
-                uuid={color.id}
-                selected={
-                  this.state['selectedElement'].id === color.id ? true : false
-                }
-                guideAbove={
-                  this.state['hoveredElement'].id === color.id
-                    ? this.state['hoveredElement'].hasGuideAbove
-                    : false
-                }
-                guideBelow={
-                  this.state['hoveredElement'].id === color.id
-                    ? this.state['hoveredElement'].hasGuideBelow
-                    : false
-                }
-                lang={this.props.lang}
-                onChangeColors={this.colorsHandler}
-                onChangeSelection={this.selectionHandler}
-                onCancellationSelection={this.selectionHandler}
-                onDragChange={this.dragHandler}
-                onDropOutside={this.dropOutsideHandler}
-                onChangeOrder={this.orderHandler}
+          {this.props.colors.length == 0 ? (
+            <div className="onboarding__callout">
+              <Message
+                icon="list-tile"
+                messages={[locals[this.props.lang].colors.callout.message]}
               />
-            ))}
-          </ul>
+              <div className="onboarding__actions">
+                <Button
+                  type='primary'
+                  feature="ADD_COLOR"
+                  label={locals[this.props.lang].colors.callout.cta}
+                  action={this.colorsHandler}
+                />
+              </div>
+            </div>
+          ) : (
+            <ul className="list" ref={this.listRef}>
+              {this.props.colors.map((color, index) => (
+                <ColorItem
+                  key={color.id}
+                  name={color.name}
+                  index={index}
+                  hex={chroma(
+                    color.rgb.r * 255,
+                    color.rgb.g * 255,
+                    color.rgb.b * 255
+                  ).hex()}
+                  oklch={color.oklch}
+                  shift={color.hueShifting}
+                  description={color.description}
+                  uuid={color.id}
+                  selected={
+                    this.state['selectedElement'].id === color.id ? true : false
+                  }
+                  guideAbove={
+                    this.state['hoveredElement'].id === color.id
+                      ? this.state['hoveredElement'].hasGuideAbove
+                      : false
+                  }
+                  guideBelow={
+                    this.state['hoveredElement'].id === color.id
+                      ? this.state['hoveredElement'].hasGuideBelow
+                      : false
+                  }
+                  lang={this.props.lang}
+                  onChangeColors={this.colorsHandler}
+                  onChangeSelection={this.selectionHandler}
+                  onCancellationSelection={this.selectionHandler}
+                  onDragChange={this.dragHandler}
+                  onDropOutside={this.dropOutsideHandler}
+                  onChangeOrder={this.orderHandler}
+                />
+              ))}
+            </ul>
+        )}
         </div>
         {this.props.editorType === 'figma' ? (
           <Actions

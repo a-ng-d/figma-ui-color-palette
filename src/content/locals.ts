@@ -42,6 +42,10 @@ export const locals = {
     },
     colors: {
       title: 'Source colors',
+      callout : {
+        message: 'Create a source color to split it into multiple shades according to your lightness scale',
+        cta: 'Create a source color',
+      },
       lch: {
         label: 'LCH',
       },
@@ -52,7 +56,7 @@ export const locals = {
     themes: {
       title: 'Color themes',
       callout : {
-        message: 'Create a color theme to manage several color palette within one (light and dark theme)',
+        message: 'Create color themes to manage multiple color palettes within one single (e.g. light and dark scheme)',
         cta: 'Create a color theme',
       },
       paletteBackgroundColor: {
