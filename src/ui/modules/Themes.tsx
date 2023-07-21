@@ -267,6 +267,32 @@ export default class Themes extends React.Component<Props> {
     else if (e.pageY + scrollY > parentRefBottom) this.orderHandler()
   }
 
+  // Direct actions
+  onAddTheme = () => {
+    themesMessage.data = this.props.themes.map(theme => {
+      theme.isEnabled = false
+      return theme
+    })
+    const hasAlreadyNewUITheme = themesMessage.data.filter((color) =>
+      color.name.includes('New UI Theme')
+    )
+    themesMessage.data.push({
+      name: `New UI Theme ${hasAlreadyNewUITheme.length + 1}`,
+      description: '',
+      scale: doLightnessScale(
+        this.props.preset.scale,
+        this.props.preset.min == undefined ? 10 : this.props.preset.min,
+        this.props.preset.max == undefined ? 90 : this.props.preset.max
+      ),
+      paletteBackground: '#FFFFFF',
+      isEnabled: true,
+      id: uid(),
+      type: 'custom theme',
+    })
+    this.props.onChangeThemes(themesMessage.data)
+    parent.postMessage({ pluginMessage: themesMessage }, '*')
+  }
+
   render() {
     return (
       <>

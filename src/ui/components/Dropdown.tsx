@@ -14,6 +14,7 @@ interface Props {
   actions?: Array<{
     label: string
     isBlocked: boolean
+    feature: string
     action: React.MouseEventHandler
   }>
   onChange: React.ChangeEventHandler
@@ -146,6 +147,7 @@ export default class Dropdown extends React.Component<Props> {
                   <li
                     key={index}
                     className={`select-menu__item${action.isBlocked ? ' select-menu__item--blocked' : ''}`}
+                    data-feature={action.feature}
                     data-is-blocked={action.isBlocked}
                     onMouseDown={() =>
                       this.onSelectAction(action.action)

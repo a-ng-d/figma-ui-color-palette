@@ -53,6 +53,8 @@ const themesMessage: ThemesMessage = {
 }
 
 export default class EditPalette extends React.Component<Props> {
+  themesRef: React.MutableRefObject<any>
+
   constructor(props) {
     super(props)
     this.state = {
@@ -77,6 +79,7 @@ export default class EditPalette extends React.Component<Props> {
           ? 'LOCAL_STYLES'
           : 'LOCAL_VARIABLES',
     }
+    this.themesRef = React.createRef()
   }
 
   // Handlers
@@ -285,6 +288,7 @@ export default class EditPalette extends React.Component<Props> {
       case 'THEMES': {
         controls = (
           <Themes
+            ref={this.themesRef}
             preset={this.props.preset}
             scale={this.props.scale}
             themes={this.props.themes}
@@ -383,7 +387,11 @@ export default class EditPalette extends React.Component<Props> {
                   actions={[{
                     label: 'Create a color theme',
                     isBlocked: isBlocked('THEMES', this.props.planStatus),
-                    action: () => this.setState({ context: 'THEMES' }),
+                    feature: 'ADD_THEME',
+                    action: () => {
+                      this.setState({ context: 'THEMES' })
+                      setTimeout(() => this.themesRef.current.onAddTheme(), 1)
+                    },
                   }]}
                   feature="SWITCH_THEME"
                   onChange={this.switchThemeHandler}
