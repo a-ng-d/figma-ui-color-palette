@@ -52,7 +52,7 @@ export default class Tag {
     this.nodeText.name = '_text'
     this.nodeText.characters = this.content
     this.nodeText.fontName = {
-      family: 'Roboto Mono',
+      family: 'Red Hat Mono',
       style: 'Medium',
     }
     this.nodeText.fontSize = this.fontSize

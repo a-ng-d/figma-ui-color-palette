@@ -31,9 +31,7 @@ figma.showUI(__html__, {
 })
 figma.loadFontAsync({ family: 'Inter', style: 'Regular' })
 figma.loadFontAsync({ family: 'Inter', style: 'Medium' })
-figma.loadFontAsync({ family: 'Roboto', style: 'Regular' })
-figma.loadFontAsync({ family: 'Roboto Mono', style: 'Regular' })
-figma.loadFontAsync({ family: 'Roboto Mono', style: 'Medium' })
+figma.loadFontAsync({ family: 'Red Hat Mono', style: 'Medium' })
 
 figma.on('run', () => processSelection())
 figma.on('selectionchange', () => processSelection())
