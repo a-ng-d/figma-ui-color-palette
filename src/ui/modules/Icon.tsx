@@ -14,163 +14,25 @@ export default class Icon extends React.Component<Props> {
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >
-        <circle
-          cx="64"
-          cy="64"
-          r="56"
-          stroke="white"
-          strokeWidth="16"
-        />
-        <mask
-          id="path-1-inside-1_41_1896"
-          fill="white"
-        >
-          <path d="M64 8C75.826 8 87.3485 11.7439 96.916 18.695L64 64L64 8Z" />
-        </mask>
-        <path
-          d="M64 8C75.826 8 87.3485 11.7439 96.916 18.695L64 64L64 8Z"
-          fill="#A0FFFF"
-          stroke="black"
-          strokeWidth="2"
-          mask="url(#path-1-inside-1_41_1896)"
-        />
-        <mask
-          id="path-2-inside-2_41_1896"
-          fill="white"
-        >
-          <path d="M117.259 46.695C120.914 57.9423 120.914 70.0577 117.259 81.305L64 64L117.259 46.695Z" />
-        </mask>
-        <path
-          d="M117.259 46.695C120.914 57.9423 120.914 70.0577 117.259 81.305L64 64L117.259 46.695Z"
-          fill="#71D5E2"
-          stroke="black"
-          strokeWidth="2"
-          mask="url(#path-2-inside-2_41_1896)"
-        />
-        <mask
-          id="path-3-inside-3_41_1896"
-          fill="white"
-        >
-          <path d="M117.259 81.305C113.605 92.5522 106.483 102.354 96.916 109.305L64 64L117.259 81.305Z" />
-        </mask>
-        <path
-          d="M117.259 81.305C113.605 92.5522 106.483 102.354 96.916 109.305L64 64L117.259 81.305Z"
-          fill="#59BFCC"
-          stroke="black"
-          strokeWidth="2"
-          mask="url(#path-3-inside-3_41_1896)"
-        />
-        <mask
-          id="path-4-inside-4_41_1896"
-          fill="white"
-        >
-          <path d="M96.916 109.305C87.3485 116.256 75.826 120 64 120L64 64L96.916 109.305Z" />
-        </mask>
-        <path
-          d="M96.916 109.305C87.3485 116.256 75.826 120 64 120L64 64L96.916 109.305Z"
-          fill="#40A9B6"
-          stroke="black"
-          strokeWidth="2"
-          mask="url(#path-4-inside-4_41_1896)"
-        />
-        <mask
-          id="path-5-inside-5_41_1896"
-          fill="white"
-        >
-          <path d="M64 120C52.174 120 40.6515 116.256 31.084 109.305L64 64L64 120Z" />
-        </mask>
-        <path
-          d="M64 120C52.174 120 40.6515 116.256 31.084 109.305L64 64L64 120Z"
-          fill="#2194A0"
-          stroke="black"
-          strokeWidth="2"
-          mask="url(#path-5-inside-5_41_1896)"
-        />
-        <mask
-          id="path-6-inside-6_41_1896"
-          fill="white"
-        >
-          <path d="M31.084 109.305C21.5166 102.354 14.3953 92.5522 10.7408 81.3049L64 64L31.084 109.305Z" />
-        </mask>
-        <path
-          d="M31.084 109.305C21.5166 102.354 14.3953 92.5522 10.7408 81.3049L64 64L31.084 109.305Z"
-          fill="#007F8B"
-          stroke="black"
-          strokeWidth="2"
-          mask="url(#path-6-inside-6_41_1896)"
-        />
-        <mask
-          id="path-7-inside-7_41_1896"
-          fill="white"
-        >
-          <path d="M10.7408 81.3049C7.08638 70.0577 7.08638 57.9423 10.7408 46.695L64 64L10.7408 81.3049Z" />
-        </mask>
-        <path
-          d="M10.7408 81.3049C7.08638 70.0577 7.08638 57.9423 10.7408 46.695L64 64L10.7408 81.3049Z"
-          fill="#006A77"
-          stroke="black"
-          strokeWidth="2"
-          mask="url(#path-7-inside-7_41_1896)"
-        />
-        <mask
-          id="path-8-inside-8_41_1896"
-          fill="white"
-        >
-          <path d="M10.7408 46.695C14.3953 35.4478 21.5166 25.6462 31.084 18.695L64 64L10.7408 46.695Z" />
-        </mask>
-        <path
-          d="M10.7408 46.695C14.3953 35.4478 21.5166 25.6462 31.084 18.695L64 64L10.7408 46.695Z"
-          fill="#005763"
-          stroke="black"
-          strokeWidth="2"
-          mask="url(#path-8-inside-8_41_1896)"
-        />
-        <mask
-          id="path-9-inside-9_41_1896"
-          fill="white"
-        >
-          <path d="M31.084 18.695C40.6515 11.7439 52.174 8 64 8L64 64L31.084 18.695Z" />
-        </mask>
-        <path
-          d="M31.084 18.695C40.6515 11.7439 52.174 8 64 8L64 64L31.084 18.695Z"
-          fill="#004450"
-          stroke="black"
-          strokeWidth="2"
-          mask="url(#path-9-inside-9_41_1896)"
-        />
-        <mask
-          id="path-10-inside-10_41_1896"
-          fill="white"
-        >
-          <path d="M96.916 18.695C106.483 25.6462 113.605 35.4478 117.259 46.695L64 64L96.916 18.695Z" />
-        </mask>
-        <path
-          d="M96.916 18.695C106.483 25.6462 113.605 35.4478 117.259 46.695L64 64L96.916 18.695Z"
-          fill="#89ECF9"
-          stroke="black"
-          strokeWidth="2"
-          mask="url(#path-10-inside-10_41_1896)"
-        />
-        <circle
-          cx="64"
-          cy="64"
-          r="32"
-          fill="#88EBF9"
-        />
-        <circle
-          cx="64"
-          cy="64"
-          r="56"
-          stroke="black"
-          strokeWidth="4"
-        />
-        <circle
-          cx="64"
-          cy="64"
-          r="32"
-          stroke="black"
-          strokeWidth="4"
-        />
+        <rect x="4" width="120" height="128" rx="28" fill="white"/>
+        <g clip-path="url(#clip0_1975_2917)">
+        <rect x="44" width="40" height="43" fill="#BEDFE3" stroke="#00272F" stroke-width="2"/>
+        <rect x="44" y="43" width="40" height="42" fill="#E9F4F6" stroke="#00272F" stroke-width="2"/>
+        <rect x="44" y="85" width="40" height="43" fill="#0E8390" stroke="#00272F" stroke-width="2"/>
+        <rect x="8" width="36" height="43" fill="#003D47" stroke="#00272F" stroke-width="2"/>
+        <rect x="8" y="43" width="36" height="42" fill="#005460" stroke="#00272F" stroke-width="2"/>
+        <rect x="8" y="85" width="36" height="43" fill="#006C79" stroke="#00272F" stroke-width="2"/>
+        <rect x="84" width="36" height="43" fill="#93C9D0" stroke="#00272F" stroke-width="2"/>
+        <rect x="84" y="43" width="36" height="42" fill="#6AB2BC" stroke="#00272F" stroke-width="2"/>
+        <rect x="84" y="85" width="36" height="43" fill="#419BA7" stroke="#00272F" stroke-width="2"/>
+        </g>
+        <rect width="112" height="120" rx="24" transform="matrix(1 0 0 -1 8 124)" stroke="#00272F" stroke-width="4"/>
+        <rect x="36" y="28" width="56" height="72" rx="6" fill="#88EBF9" stroke="#00272F" stroke-width="4"/>
+        <defs>
+        <clipPath id="clip0_1975_2917">
+        <rect width="112" height="120" rx="24" transform="matrix(1 0 0 -1 8 124)" fill="white"/>
+        </clipPath>
+        </defs>
       </svg>
     )
   }
