@@ -7,9 +7,6 @@ export default class Signature {
   nodeVector: VectorNode
   node: FrameNode
 
-  constructor() {
-  }
-
   makeNodeInfo = () => {
     // base
     this.nodeInfo = figma.createFrame()
