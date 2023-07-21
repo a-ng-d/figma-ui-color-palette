@@ -56,11 +56,11 @@ export default class Sample {
         8
     this.node.resize(width, height)
 
-    if (mode === 'RELATIVE') {
+    if (mode === 'FILL') {
       this.node.counterAxisSizingMode = 'FIXED'
       this.node.layoutGrow = 1
       this.children = new Property('_large-label', this.name, 16).makeNode()
-    } else if (mode === 'ABSOLUTE') {
+    } else if (mode === 'FIXED') {
       this.children = new Property('_label', this.name, 10).makeNode()
     }
 

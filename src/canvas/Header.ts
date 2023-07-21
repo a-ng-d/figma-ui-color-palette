@@ -38,7 +38,7 @@ export default class Header {
         this.parent.colorSpace,
         this.parent.view,
         this.parent.textColorsTheme
-      ).makeNodeName('ABSOLUTE', this.sampleSize, 48)
+      ).makeNodeName('FIXED', this.sampleSize, 48)
     )
     if (this.parent.view.includes('PALETTE'))
       Object.values(this.currentScale)
@@ -55,7 +55,7 @@ export default class Header {
               this.parent.colorSpace,
               this.parent.view,
               this.parent.textColorsTheme
-            ).makeNodeName('ABSOLUTE', this.sampleSize, 48)
+            ).makeNodeName('FIXED', this.sampleSize, 48)
           )
         })
 
