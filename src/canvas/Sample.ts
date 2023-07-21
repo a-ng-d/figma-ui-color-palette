@@ -138,11 +138,6 @@ export default class Sample {
     this.node.layoutSizingHorizontal = 'FIXED'
     this.node.layoutSizingVertical = 'FIXED'
     this.node.primaryAxisAlignItems = 'MIN'
-    this.node.paddingTop =
-      this.node.paddingRight =
-      this.node.paddingBottom =
-      this.node.paddingLeft =
-        16
     this.node.itemSpacing = 8
 
     // color

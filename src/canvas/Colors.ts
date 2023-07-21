@@ -425,6 +425,8 @@ export default class Colors {
   }
 
   makeNodeShades = () => {
+    const gap: number = 32
+
     // base
     this.nodeShades = figma.createFrame()
     this.nodeShades.name = '_shades'
@@ -469,6 +471,8 @@ export default class Colors {
         this.nodeRowSource.layoutSizingVertical =
         this.nodeRowShades.layoutSizingVertical =
           'HUG'
+      if (!this.parent.view.includes('PALETTE'))
+        this.nodeRow.itemSpacing = gap
 
       // insert
       this.nodeRowSource.appendChild(
@@ -575,8 +579,9 @@ export default class Colors {
           } else {
             this.nodeRowShades.layoutSizingHorizontal = 'FIXED'
             this.nodeRowShades.layoutWrap = 'WRAP'
+            this.nodeRowShades.itemSpacing = gap
             this.nodeRowShades.resize(
-              this.sampleSize * this.sampleScale * 4,
+              this.sampleSize * this.sampleScale * 4 + (gap * 3),
               100
             )
             this.nodeRowShades.layoutSizingVertical = 'HUG'
