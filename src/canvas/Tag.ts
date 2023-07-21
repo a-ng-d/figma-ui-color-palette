@@ -19,7 +19,7 @@ export default class Tag {
     this.nodeTag.fills = [
       {
         type: 'SOLID',
-        opacity: 0.4,
+        opacity: 0.6,
         color: {
           r: 1,
           g: 1,
@@ -34,8 +34,8 @@ export default class Tag {
     this.nodeTag.layoutSizingHorizontal = 'HUG'
     this.nodeTag.layoutSizingVertical = 'HUG'
     this.nodeTag.counterAxisAlignItems = 'CENTER'
-    this.nodeTag.horizontalPadding = 4
-    this.nodeTag.verticalPadding = 2
+    this.nodeTag.horizontalPadding = this.fontSize / 2
+    this.nodeTag.verticalPadding = 4
     this.nodeTag.itemSpacing = 4
 
     // insert
@@ -56,14 +56,18 @@ export default class Tag {
       style: 'Medium',
     }
     this.nodeText.fontSize = this.fontSize
+    this.nodeText.setRangeLineHeight(0, this.content.length, {
+      value: 100,
+      unit: "PERCENT"
+    })
     this.nodeText.textAlignHorizontal = 'CENTER'
     this.nodeText.fills = [
       {
         type: 'SOLID',
         color: {
-          r: 0,
-          g: 0,
-          b: 0,
+          r: 16 / 255,
+          g: 35 / 255,
+          b: 37 / 255,
         },
       },
     ]
