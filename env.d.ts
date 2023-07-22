@@ -3,6 +3,8 @@ declare module '*.webp' {
   export = value
 }
 
+declare module 'JSZip'
+
 declare module 'react-dom/client'
 
 declare module 'apca-w3'
