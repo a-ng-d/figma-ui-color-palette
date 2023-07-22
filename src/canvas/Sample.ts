@@ -1,4 +1,8 @@
-import type { ColorSpaceConfiguration, TextColorsThemeHexModel, ViewConfiguration } from '../utils/types'
+import type {
+  ColorSpaceConfiguration,
+  TextColorsThemeHexModel,
+  ViewConfiguration,
+} from '../utils/types'
 import Paragraph from './Paragraph'
 import Properties from './Properties'
 import Property from './Property'
@@ -176,13 +180,7 @@ export default class Sample {
     this.node.appendChild(this.nodeColor)
     if (isColorName && description != '')
       this.node.appendChild(
-        new Paragraph(
-          '_description',
-          description,
-          'FILL',
-          null,
-          8
-        ).makeNode()
+        new Paragraph('_description', description, 'FILL', null, 8).makeNode()
       )
     else if (!this.view.includes('SHEET_SAFE_MODE') && !isColorName)
       this.node.appendChild(

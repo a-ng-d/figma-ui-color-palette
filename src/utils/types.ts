@@ -140,13 +140,22 @@ export interface ThemeConfiguration {
 
 export interface ExportConfiguration {
   format: 'JSON' | 'CSS' | 'SWIFT' | 'XML' | 'CSV'
-  mimeType: 'application/json' | 'text/css' | 'text/swift' | 'text/xml' | 'text/csv'
+  mimeType:
+    | 'application/json'
+    | 'text/css'
+    | 'text/swift'
+    | 'text/xml'
+    | 'text/csv'
   data: any
 }
 
 export type ColorSpaceConfiguration = 'LCH' | 'OKLCH' | 'LAB' | 'OKLAB' | 'HSL'
 
-export type ViewConfiguration = 'PALETTE_WITH_PROPERTIES' | 'PALETTE' | 'SHEET' | 'SHEET_SAFE_MODE'
+export type ViewConfiguration =
+  | 'PALETTE_WITH_PROPERTIES'
+  | 'PALETTE'
+  | 'SHEET'
+  | 'SHEET_SAFE_MODE'
 
 export type AlgorithmVersionConfiguration = 'v1' | 'v2'
 

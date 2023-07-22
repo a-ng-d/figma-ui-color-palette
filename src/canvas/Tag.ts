@@ -59,16 +59,16 @@ export default class Tag {
     this.nodeText.fontSize = this.fontSize
     this.nodeText.setRangeLineHeight(0, this.content.length, {
       value: 100,
-      unit: "PERCENT"
+      unit: 'PERCENT',
     })
     this.nodeText.textAlignHorizontal = 'CENTER'
     if (this.url != null) {
       this.nodeText.setRangeHyperlink(0, this.content.length, {
         type: 'URL',
-        value: this.url
+        value: this.url,
       })
-      this.nodeText.setRangeTextDecoration(0, this.content.length, "UNDERLINE")
-    }     
+      this.nodeText.setRangeTextDecoration(0, this.content.length, 'UNDERLINE')
+    }
     this.nodeText.fills = [
       {
         type: 'SOLID',

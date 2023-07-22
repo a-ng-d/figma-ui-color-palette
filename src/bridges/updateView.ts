@@ -30,7 +30,8 @@ const updateView = (msg, palette) => {
       textColorsTheme: TextColorsThemeHexModel = JSON.parse(
         palette.getPluginData('textColorsTheme')
       ),
-      algorithmVersion: AlgorithmVersionConfiguration = palette.getPluginData('algorithmVersion')
+      algorithmVersion: AlgorithmVersionConfiguration =
+        palette.getPluginData('algorithmVersion')
 
     palette.setPluginData('view', msg.data.view)
 

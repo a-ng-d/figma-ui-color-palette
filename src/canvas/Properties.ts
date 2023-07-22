@@ -1,4 +1,8 @@
-import type { ColorSpaceConfiguration, HexModel, TextColorsThemeHexModel } from '../utils/types'
+import type {
+  ColorSpaceConfiguration,
+  HexModel,
+  TextColorsThemeHexModel,
+} from '../utils/types'
 import chroma from 'chroma-js'
 import { APCAcontrast, sRGBtoY, fontLookupAPCA } from 'apca-w3'
 import Tag from './Tag'

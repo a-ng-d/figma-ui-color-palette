@@ -1,4 +1,8 @@
-import { AlgorithmVersionConfiguration, ColorConfiguration, ColorSpaceConfiguration } from './types'
+import type {
+  AlgorithmVersionConfiguration,
+  ColorConfiguration,
+  ColorSpaceConfiguration,
+} from './types'
 import setData from './setData'
 import Colors from '../canvas/Colors'
 import { presets } from './palettePackage'
@@ -10,7 +14,9 @@ const setPaletteMigration = (palette: BaseNode) => {
     max = palette.getPluginData('max'),
     preset = palette.getPluginData('preset'),
     scale = palette.getPluginData('scale'),
-    colors: Array<ColorConfiguration> = JSON.parse(palette.getPluginData('colors')),
+    colors: Array<ColorConfiguration> = JSON.parse(
+      palette.getPluginData('colors')
+    ),
     colorSpace = palette.getPluginData('colorSpace'),
     themes = palette.getPluginData('themes'),
     captions = palette.getPluginData('captions'),
@@ -106,11 +112,15 @@ const setPaletteMigration = (palette: BaseNode) => {
         preset: JSON.parse(palette.getPluginData('preset')),
         scale: JSON.parse(palette.getPluginData('scale')),
         colors: JSON.parse(palette.getPluginData('colors')),
-        colorSpace: palette.getPluginData('colorSpace') as ColorSpaceConfiguration,
+        colorSpace: palette.getPluginData(
+          'colorSpace'
+        ) as ColorSpaceConfiguration,
         themes: JSON.parse(palette.getPluginData('themes')),
         view: 'SHEET',
         textColorsTheme: JSON.parse(palette.getPluginData('textColorsTheme')),
-        algorithmVersion: palette.getPluginData('algorithmVersion') as AlgorithmVersionConfiguration,
+        algorithmVersion: palette.getPluginData(
+          'algorithmVersion'
+        ) as AlgorithmVersionConfiguration,
       },
       palette as FrameNode
     ).makePaletteData('CREATE')

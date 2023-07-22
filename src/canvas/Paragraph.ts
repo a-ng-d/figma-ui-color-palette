@@ -7,7 +7,13 @@ export default class Paragraph {
   nodeText: TextNode
   node: FrameNode
 
-  constructor(name: string, content: string, type: 'FILL' | 'FIXED', width?: number, fontSize = 12) {
+  constructor(
+    name: string,
+    content: string,
+    type: 'FILL' | 'FIXED',
+    width?: number,
+    fontSize = 12
+  ) {
     this.name = name
     this.content = content
     this.fontSize = fontSize
@@ -27,8 +33,8 @@ export default class Paragraph {
     this.nodeText.fontSize = this.fontSize
     this.nodeText.setRangeLineHeight(0, this.content.length, {
       value: 130,
-      unit: "PERCENT"
-    }) 
+      unit: 'PERCENT',
+    })
     this.nodeText.fills = [
       {
         type: 'SOLID',
@@ -62,13 +68,11 @@ export default class Paragraph {
       },
     ]
     this.node.cornerRadius = 16
-    if (this.type == 'FIXED')
-      this.node.resize(this.width, 100)
+    if (this.type == 'FIXED') this.node.resize(this.width, 100)
 
     // layout
     this.node.layoutMode = 'HORIZONTAL'
-    if (this.type == 'FIXED')
-      this.node.layoutSizingHorizontal = 'FIXED'
+    if (this.type == 'FIXED') this.node.layoutSizingHorizontal = 'FIXED'
     else {
       this.node.primaryAxisSizingMode = 'FIXED'
       this.node.layoutAlign = 'STRETCH'

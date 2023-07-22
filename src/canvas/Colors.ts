@@ -438,7 +438,9 @@ export default class Colors {
     this.nodeShades.layoutSizingVertical = 'HUG'
 
     // insert
-    this.nodeShades.appendChild(new Header(this.parent, this.sampleSize).makeNode())
+    this.nodeShades.appendChild(
+      new Header(this.parent, this.sampleSize).makeNode()
+    )
     this.parent.colors.forEach((color) => {
       const sourceColor: Array<number> = chroma([
         color.rgb.r * 255,
@@ -471,8 +473,7 @@ export default class Colors {
         this.nodeRowSource.layoutSizingVertical =
         this.nodeRowShades.layoutSizingVertical =
           'HUG'
-      if (!this.parent.view.includes('PALETTE'))
-        this.nodeRow.itemSpacing = gap
+      if (!this.parent.view.includes('PALETTE')) this.nodeRow.itemSpacing = gap
 
       // insert
       this.nodeRowSource.appendChild(
@@ -581,7 +582,7 @@ export default class Colors {
             this.nodeRowShades.layoutWrap = 'WRAP'
             this.nodeRowShades.itemSpacing = gap
             this.nodeRowShades.resize(
-              this.sampleSize * this.sampleScale * 4 + (gap * 3),
+              this.sampleSize * this.sampleScale * 4 + gap * 3,
               100
             )
             this.nodeRowShades.layoutSizingVertical = 'HUG'

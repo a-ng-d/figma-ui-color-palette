@@ -3,7 +3,8 @@ export const lang = 'en-US'
 export const locals = {
   'en-US': {
     name: 'UI Color Palette',
-    tagline: 'Create accessible UI Color Palettes with consistent lightness and contrast',
+    tagline:
+      'Create accessible UI Color Palettes with consistent lightness and contrast',
     url: 'www.ui-color-palette.com',
     global: {
       description: {

@@ -36,7 +36,8 @@ const updateScale = (msg, palette) => {
       textColorsTheme: TextColorsThemeHexModel = JSON.parse(
         palette.getPluginData('textColorsTheme')
       ),
-      algorithmVersion: AlgorithmVersionConfiguration = palette.getPluginData('algorithmVersion')
+      algorithmVersion: AlgorithmVersionConfiguration =
+        palette.getPluginData('algorithmVersion')
 
     themes.find((theme) => theme.isEnabled).scale = msg.data.scale
     if (msg.feature === 'ADD_STOP' || msg.feature === 'DELETE_STOP')

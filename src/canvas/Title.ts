@@ -37,8 +37,9 @@ export default class Title {
       ).makeNodeTag()
     )
     if (
-      this.parent.themes.find((theme) => theme.isEnabled).type != 'default theme'
-      && this.parent.themes.find((theme) => theme.isEnabled).description != ''
+      this.parent.themes.find((theme) => theme.isEnabled).type !=
+        'default theme' &&
+      this.parent.themes.find((theme) => theme.isEnabled).description != ''
     )
       this.nodeName.appendChild(
         new Paragraph(
@@ -86,7 +87,8 @@ export default class Title {
       ).makeNodeTag()
     )
     if (
-      this.parent.themes.find((theme) => theme.isEnabled).type != 'default theme'
+      this.parent.themes.find((theme) => theme.isEnabled).type !=
+      'default theme'
     )
       this.nodeProps.appendChild(
         new Tag(
