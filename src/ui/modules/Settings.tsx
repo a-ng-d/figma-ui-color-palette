@@ -1,5 +1,5 @@
 import * as React from 'react'
-import type { TextColorsThemeHexModel } from '../../utils/types'
+import type { Language, TextColorsThemeHexModel } from '../../utils/types'
 import Feature from '../components/Feature'
 import FormItem from './../components/FormItem'
 import Input from './../components/Input'
@@ -19,9 +19,9 @@ interface Props {
   view: string
   isNewAlgorithm?: boolean
   actions?: string
-  planStatus: string
+  planStatus: 'UNPAID' | 'PAID'
   editorType?: string
-  lang: 'EN-us'
+  lang: Language
   onChangeSettings: React.ReactEventHandler
   onCreatePalette?: () => void
   onCreateLocalStyles?: () => void

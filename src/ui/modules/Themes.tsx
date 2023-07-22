@@ -4,6 +4,7 @@ import type {
   DispatchProcess,
   HexModel,
   HoveredColor,
+  Language,
   PresetConfiguration,
   ScaleConfiguration,
   SelectedColor,
@@ -25,9 +26,9 @@ interface Props {
   scale: ScaleConfiguration
   themes: Array<ThemeConfiguration>
   actions: string
-  editorType: string
-  planStatus: string
-  lang: 'EN-us'
+  editorType: 'figma' | 'figjam'
+  planStatus: 'UNPAID' | 'PAID'
+  lang: Language
   onChangeThemes: (themes: Array<ThemeConfiguration>) => void
   onCreateLocalStyles: () => void
   onUpdateLocalStyles: () => void

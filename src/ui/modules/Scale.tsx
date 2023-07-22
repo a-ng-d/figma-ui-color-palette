@@ -2,6 +2,7 @@ import * as React from 'react'
 import type {
   ActionsList,
   DispatchProcess,
+  Language,
   PresetConfiguration,
   ScaleConfiguration,
 } from '../../utils/types'
@@ -21,9 +22,9 @@ interface Props {
   preset: PresetConfiguration
   scale?: ScaleConfiguration
   actions?: string
-  planStatus: string
+  planStatus: 'UNPAID' | 'PAID'
   editorType?: string
-  lang: 'EN-us'
+  lang: Language
   onChangePreset?: React.ReactEventHandler
   onChangeScale: () => void
   onChangeStop?: () => void

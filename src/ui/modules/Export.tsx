@@ -1,5 +1,5 @@
 import * as React from 'react'
-import type { ActionsList } from '../../utils/types'
+import type { ActionsList, Language } from '../../utils/types'
 import Feature from '../components/Feature'
 import RadioButton from './../components/RadioButton'
 import Input from '../components/Input'
@@ -10,9 +10,9 @@ import { locals } from '../../content/locals'
 
 interface Props {
   exportPreview: string
-  planStatus: string
+  planStatus: 'UNPAID' | 'PAID'
   exportType: string
-  lang: 'EN-us'
+  lang: Language
   onExportPalette: () => void
 }
 

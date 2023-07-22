@@ -9,6 +9,8 @@ export interface Feature {
 
 export type Service = 'ONBOARD' | 'CREATE' | 'EDIT'
 
+export type Language = 'en-US'
+
 export interface ReleaseNote {
   version: string
   isMostRecent: boolean

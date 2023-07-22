@@ -1,6 +1,6 @@
 import * as React from 'react'
 import chroma from 'chroma-js'
-import type { HexModel } from '../../utils/types'
+import type { HexModel, Language } from '../../utils/types'
 import Feature from './Feature'
 import Input from './Input'
 import Button from './Button'
@@ -20,7 +20,7 @@ interface Props {
   selected: boolean
   guideAbove: boolean
   guideBelow: boolean
-  lang: 'EN-us'
+  lang: Language
   onChangeColors: React.KeyboardEventHandler<
     HTMLInputElement | HTMLTextAreaElement
   > &
@@ -240,7 +240,7 @@ export default class ColorItem extends React.Component<Props> {
                 </div>
                 <Input
                   type="NUMBER"
-                  icon={{ type: 'icon', value: 'arrow-left-right' }}
+                  icon={{ type: 'ICON', value: 'arrow-left-right' }}
                   value={this.props.shift.toString()}
                   min="-360"
                   max="360"

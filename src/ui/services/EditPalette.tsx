@@ -9,6 +9,7 @@ import type {
   ExportConfiguration,
   ScaleConfiguration,
   ThemesMessage,
+  Language,
 } from '../../utils/types'
 import Feature from '../components/Feature'
 import Bar from '../components/Bar'
@@ -36,9 +37,9 @@ interface Props {
   textColorsTheme: TextColorsThemeHexModel
   algorithmVersion: string
   export: ExportConfiguration
-  editorType: string
-  planStatus: string
-  lang: 'EN-us'
+  editorType: 'figma' | 'figjam'
+  planStatus: 'UNPAID' | 'PAID'
+  lang: Language
   onChangeScale: () => void
   onChangeStop?: () => void
   onChangeColors: (colors: Array<ColorConfiguration>) => void

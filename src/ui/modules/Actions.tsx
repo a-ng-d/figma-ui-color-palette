@@ -1,4 +1,5 @@
 import * as React from 'react'
+import type { Language } from '../../utils/types'
 import Feature from '../components/Feature'
 import Button from '../components/Button'
 import Dropdown from '../components/Dropdown'
@@ -10,8 +11,8 @@ interface Props {
   context: string
   actions?: string
   exportType?: string | null
-  planStatus?: string
-  lang: 'EN-us'
+  planStatus?: 'UNPAID' | 'PAID'
+  lang: Language
   onCreatePalette?: React.MouseEventHandler
   onCreateLocalStyles?: React.MouseEventHandler
   onUpdateLocalStyles?: React.MouseEventHandler

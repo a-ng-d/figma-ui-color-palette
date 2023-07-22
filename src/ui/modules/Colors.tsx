@@ -8,6 +8,7 @@ import type {
   DispatchProcess,
   ActionsList,
   HexModel,
+  Language,
 } from '../../utils/types'
 import Dispatcher from './Dispatcher'
 import Button from '../components/Button'
@@ -20,9 +21,9 @@ import Message from '../components/Message'
 interface Props {
   colors: Array<ColorConfiguration>
   actions: string
-  editorType: string
-  planStatus: string
-  lang: 'EN-us'
+  editorType: 'figma' | 'figjam'
+  planStatus: 'UNPAID' | 'PAID'
+  lang: Language
   onChangeColors: (colors: Array<ColorConfiguration>) => void
   onCreateLocalStyles: () => void
   onUpdateLocalStyles: () => void

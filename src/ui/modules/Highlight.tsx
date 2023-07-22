@@ -1,10 +1,11 @@
 import * as React from 'react'
+import type { Language } from '../../utils/types'
 import Dialog from './Dialog'
 import releaseNotes from '../../content/releaseNotes'
 import { locals } from '../../content/locals'
 
 interface Props {
-  lang: 'EN-us'
+  lang: Language
   onCloseHighlight: React.ReactEventHandler
 }
 

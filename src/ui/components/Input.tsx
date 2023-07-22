@@ -2,8 +2,8 @@ import * as React from 'react'
 
 interface Props {
   id?: string
-  type: string
-  icon?: { type: string; value: string }
+  type: 'NUMBER' | 'COLOR' | 'TEXT' | 'LONG_TEXT'
+  icon?: { type: 'NONE' | 'LETTER' | 'ICON'; value: string }
   placeholder?: string
   value: string
   charactersLimit?: number
@@ -23,7 +23,7 @@ interface Props {
 export default class Input extends React.Component<Props> {
   static defaultProps = {
     icon: {
-      type: 'none',
+      type: 'NONE',
       value: null,
     },
     step: '1',
@@ -83,18 +83,18 @@ export default class Input extends React.Component<Props> {
     return (
       <div
         className={`input${this.props.isBlocked ? ' input--blocked' : ''}${
-          this.props.icon.type === 'none' ? '' : ' input--with-icon'
+          this.props.icon.type === 'NONE' ? '' : ' input--with-icon'
         }`}
       >
-        {this.props.icon.type != 'none' ? (
+        {this.props.icon.type != 'NONE' ? (
           <div
             className={`icon${
-              this.props.icon.type === 'icon'
+              this.props.icon.type === 'ICON'
                 ? ` icon--${this.props.icon.value}`
                 : ''
             }`}
           >
-            {this.props.icon.type === 'letter' ? this.props.icon.value : ''}
+            {this.props.icon.type === 'LETTER' ? this.props.icon.value : ''}
           </div>
         ) : null}
         <input
@@ -121,18 +121,18 @@ export default class Input extends React.Component<Props> {
     return (
       <div
         className={`input${this.props.isBlocked ? ' input--blocked' : ''}${
-          this.props.icon.type === 'none' ? '' : ' input--with-icon'
+          this.props.icon.type === 'NONE' ? '' : ' input--with-icon'
         }`}
       >
-        {this.props.icon.type != 'none' ? (
+        {this.props.icon.type != 'NONE' ? (
           <div
             className={`icon${
-              this.props.icon.type === 'icon'
+              this.props.icon.type === 'ICON'
                 ? ` icon--${this.props.icon.value}`
                 : ''
             }`}
           >
-            {this.props.icon.type === 'letter' ? this.props.icon.value : ''}
+            {this.props.icon.type === 'LETTER' ? this.props.icon.value : ''}
           </div>
         ) : null}
         <input

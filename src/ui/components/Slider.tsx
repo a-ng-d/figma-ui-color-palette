@@ -15,7 +15,7 @@ interface Props {
   stops: Array<number>
   hasPreset: boolean
   presetName: string
-  type: string
+  type: 'EQUAL' | 'CUSTOM'
   min?: number
   max?: number
   scale?: ScaleConfiguration
@@ -376,7 +376,7 @@ export default class Slider extends React.Component<Props> {
   }
 
   getState = (lightness: string) => {
-    let state: string
+    let state: 'SELECTED' | 'EDITING' | 'NORMAL'
     if (this.state['selectedStop']['stop'] != null)
       state =
         this.state['selectedStop']['stop'].classList[1] === lightness

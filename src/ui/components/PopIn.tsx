@@ -13,8 +13,8 @@ interface Props {
       action: React.MouseEventHandler
     }
   }
-  OnClose: React.MouseEventHandler
   children: React.ReactNode
+  OnClose: React.MouseEventHandler
 }
 
 export default class PopIn extends React.Component<Props> {

@@ -1,11 +1,12 @@
 import * as React from 'react'
+import type { Language } from '../../utils/types'
 import Icon from './../modules/Icon'
 import Message from '../components/Message'
 import { locals } from '../../content/locals'
 
 interface Props {
-  planStatus: string
-  lang: 'EN-us'
+  planStatus: 'UNPAID' | 'PAID'
+  lang: Language
 }
 
 export default class Onboarding extends React.Component<Props> {

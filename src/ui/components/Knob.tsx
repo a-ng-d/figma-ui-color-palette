@@ -6,7 +6,7 @@ interface Props {
   shortId: string
   value: string | number
   stopInputValue?: number
-  state?: string
+  state?: 'SELECTED' | 'EDITING' | 'NORMAL'
   min?: string
   max?: string
   onMouseDown: React.MouseEventHandler

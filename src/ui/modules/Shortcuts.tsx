@@ -1,4 +1,5 @@
 import * as React from 'react'
+import type { Language } from '../../utils/types'
 import Feature from '../components/Feature'
 import Bar from '../components/Bar'
 import Button from '../components/Button'
@@ -6,8 +7,8 @@ import features from '../../utils/features'
 import { locals } from '../../content/locals'
 
 interface Props {
-  planStatus: string
-  lang: 'EN-us'
+  planStatus: 'UNPAID' | 'PAID'
+  lang: Language
   onReOpenHighlight: () => void
   onReOpenAbout: () => void
 }

@@ -1,5 +1,6 @@
 import * as React from 'react'
 import type {
+  Language,
   PresetConfiguration,
   TextColorsThemeHexModel,
 } from '../../utils/types'
@@ -17,8 +18,8 @@ interface Props {
   colorSpace: string
   view: string
   textColorsTheme: TextColorsThemeHexModel
-  planStatus: string
-  lang: 'EN-us'
+  planStatus: 'UNPAID' | 'PAID'
+  lang: Language
   onChangePreset: React.ChangeEventHandler
   onCustomPreset: React.ChangeEventHandler
   onChangeSettings: React.ChangeEventHandler

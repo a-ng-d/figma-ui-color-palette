@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { HexModel, Language } from '../../utils/types'
 import Feature from './Feature'
 import Input from './Input'
 import Button from './Button'
@@ -10,13 +11,13 @@ import { locals } from '../../content/locals'
 interface Props {
   name: string
   description: string
-  paletteBackground: string
+  paletteBackground: HexModel
   uuid: string
   index: number
   selected: boolean
   guideAbove: boolean
   guideBelow: boolean
-  lang: 'EN-us'
+  lang: Language
   onChangeThemes: React.KeyboardEventHandler<
     HTMLInputElement | HTMLTextAreaElement
   > &
