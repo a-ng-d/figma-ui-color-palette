@@ -1,10 +1,10 @@
-import chroma from 'chroma-js'
+import chroma, { Color } from 'chroma-js'
 import type {
   PaletteNode,
   ScaleConfiguration,
   PaletteDataThemeItem,
   PaletteDataColorItem,
-  PaletteData,
+  PaletteData
 } from '../utils/types'
 import Title from './Title'
 import Header from './Header'
@@ -49,13 +49,13 @@ export default class Colors {
   }
 
   getShadeColorFromLch(
-    sourceColor: Array<number>,
+    sourceColor: [number, number, number],
     lightness: number,
     hueShifting: number,
     algorithmVersion: string
   ) {
-    const lch: Array<number> = chroma(sourceColor).lch(),
-      newColor: { _rgb: Array<number> } = chroma.lch(
+    const lch = chroma(sourceColor).lch(),
+      newColor = chroma.lch(
         lightness,
         algorithmVersion == 'v2'
           ? Math.sin((lightness / 100) * Math.PI) * lch[1]
@@ -71,13 +71,13 @@ export default class Colors {
   }
 
   getShadeColorFromOklch(
-    sourceColor: Array<number>,
+    sourceColor: [number, number, number],
     lightness: number,
     hueShifting: number,
     algorithmVersion: string
   ) {
-    const oklch: { _rgb: Array<number> } = chroma(sourceColor).oklch(),
-      newColor: { _rgb: Array<number> } = chroma.oklch(
+    const oklch = chroma(sourceColor).oklch(),
+      newColor = chroma.oklch(
         lightness / 100,
         algorithmVersion == 'v2'
           ? Math.sin((lightness / 100) * Math.PI) * oklch[1]
@@ -93,21 +93,21 @@ export default class Colors {
   }
 
   getShadeColorFromLab(
-    sourceColor: Array<number>,
+    sourceColor: [number, number, number],
     lightness: number,
     hueShifting: number,
     algorithmVersion: string
   ) {
-    const labA: number = chroma(sourceColor).get('lab.a'),
-      labB: number = chroma(sourceColor).get('lab.b'),
-      chr: number = Math.sqrt(labA ** 2 + labB ** 2)
-    let h: number = Math.atan(labB / labA) + hueShifting * (Math.PI / 180)
+    const labA = chroma(sourceColor).get('lab.a'),
+      labB = chroma(sourceColor).get('lab.b'),
+      chr = Math.sqrt(labA ** 2 + labB ** 2)
+    let h = Math.atan(labB / labA) + hueShifting * (Math.PI / 180)
 
     if (h > Math.PI) h = Math.PI
     else if (h < -Math.PI) h = Math.PI
 
-    let newLabA: number = chr * Math.cos(h),
-      newLabB: number = chr * Math.sin(h)
+    let newLabA = chr * Math.cos(h),
+      newLabB = chr * Math.sin(h)
 
     if (Math.sign(labA) == -1 && Math.sign(labB) == 1) {
       newLabA *= -1
@@ -118,7 +118,7 @@ export default class Colors {
       newLabB *= -1
     }
 
-    const newColor: { _rgb: Array<number> } = chroma.lab(
+    const newColor = chroma.lab(
       lightness,
       algorithmVersion == 'v2'
         ? Math.sin((lightness / 100) * Math.PI) * newLabA
@@ -132,21 +132,21 @@ export default class Colors {
   }
 
   getShadeColorFromOklab(
-    sourceColor: Array<number>,
+    sourceColor: [number, number, number],
     lightness: number,
     hueShifting: number,
     algorithmVersion: string
   ) {
-    const labA: number = chroma(sourceColor).get('oklab.a'),
-      labB: number = chroma(sourceColor).get('oklab.b'),
-      chr: number = Math.sqrt(labA ** 2 + labB ** 2)
-    let h: number = Math.atan(labB / labA) + hueShifting * (Math.PI / 180)
+    const labA = chroma(sourceColor).get('oklab.a'),
+      labB = chroma(sourceColor).get('oklab.b'),
+      chr = Math.sqrt(labA ** 2 + labB ** 2)
+    let h = Math.atan(labB / labA) + hueShifting * (Math.PI / 180)
 
     if (h > Math.PI) h = Math.PI
     else if (h < -Math.PI) h = Math.PI
 
-    let newLabA: number = chr * Math.cos(h),
-      newLabB: number = chr * Math.sin(h)
+    let newLabA = chr * Math.cos(h),
+      newLabB = chr * Math.sin(h)
 
     if (Math.sign(labA) == -1 && Math.sign(labB) == 1) {
       newLabA *= -1
@@ -157,7 +157,7 @@ export default class Colors {
       newLabB *= -1
     }
 
-    const newColor: { _rgb: Array<number> } = chroma.oklab(
+    const newColor = chroma.oklab(
       lightness / 100,
       algorithmVersion == 'v2'
         ? Math.sin((lightness / 100) * Math.PI) * newLabA
@@ -171,13 +171,13 @@ export default class Colors {
   }
 
   getShadeColorFromHsl(
-    sourceColor: Array<number>,
+    sourceColor: [number, number, number],
     lightness: number,
     hueShifting: number,
     algorithmVersion: string
   ) {
-    const hsl: Array<number> = chroma(sourceColor).hsl(),
-      newColor: { _rgb: Array<number> } = chroma.hsl(
+    const hsl = chroma(sourceColor).hsl(),
+      newColor = chroma.hsl(
         hsl[0] + hueShifting < 0
           ? 0
           : hsl[0] + hueShifting > 360
@@ -212,7 +212,11 @@ export default class Colors {
         locals[lang].warning.emptySourceColors,
         null,
         null,
-        [255, 255, 255],
+        [
+          255,
+          255,
+          255
+        ],
         this.parent.colorSpace,
         this.parent.view,
         this.parent.textColorsTheme
@@ -294,11 +298,11 @@ export default class Colors {
             id: color.id,
             type: 'color',
           },
-          sourceColor: Array<number> = chroma([
+          sourceColor: [number, number, number] = [
             color.rgb.r * 255,
             color.rgb.g * 255,
             color.rgb.b * 255,
-          ])._rgb
+          ]
 
         paletteDataColorItem.shades.push({
           name: 'source',
@@ -338,7 +342,7 @@ export default class Colors {
         Object.values(theme.scale)
           .reverse()
           .forEach((lightness: number) => {
-            let newColor: { _rgb: Array<number> }
+            let newColor: Color
 
             if (this.parent.colorSpace === 'LCH')
               newColor = this.getShadeColorFromLch(
@@ -442,11 +446,11 @@ export default class Colors {
       new Header(this.parent, this.sampleSize).makeNode()
     )
     this.parent.colors.forEach((color) => {
-      const sourceColor: Array<number> = chroma([
+      const sourceColor: [number, number, number] = [
         color.rgb.r * 255,
         color.rgb.g * 255,
         color.rgb.b * 255,
-      ])._rgb
+      ]
 
       // base
       this.nodeRow = figma.createFrame()
@@ -482,7 +486,11 @@ export default class Colors {
               color.name,
               null,
               null,
-              [color.rgb.r * 255, color.rgb.g * 255, color.rgb.b * 255],
+              [
+                color.rgb.r * 255,
+                color.rgb.g * 255,
+                color.rgb.b * 255
+              ],
               this.parent.colorSpace,
               this.parent.view,
               this.parent.textColorsTheme
@@ -496,7 +504,11 @@ export default class Colors {
               color.name,
               null,
               null,
-              [color.rgb.r * 255, color.rgb.g * 255, color.rgb.b * 255],
+              [
+                color.rgb.r * 255,
+                color.rgb.g * 255,
+                color.rgb.b * 255
+              ],
               this.parent.colorSpace,
               this.parent.view,
               this.parent.textColorsTheme
@@ -512,7 +524,7 @@ export default class Colors {
       Object.values(this.currentScale)
         .reverse()
         .forEach((lightness: number) => {
-          let newColor: { _rgb: Array<number> }
+          let newColor: Color
 
           if (this.parent.colorSpace === 'LCH')
             newColor = this.getShadeColorFromLch(
@@ -566,7 +578,11 @@ export default class Colors {
                 color.name,
                 color.rgb,
                 scaleName,
-                newColor._rgb,
+                [
+                  newColor._rgb[0],
+                  newColor._rgb[1],
+                  newColor._rgb[2],
+                ],
                 this.parent.colorSpace,
                 this.parent.view,
                 this.parent.textColorsTheme,
@@ -591,7 +607,11 @@ export default class Colors {
                 color.name,
                 color.rgb,
                 scaleName,
-                newColor._rgb,
+                [
+                  newColor._rgb[0],
+                  newColor._rgb[1],
+                  newColor._rgb[2],
+                ],
                 this.parent.colorSpace,
                 this.parent.view,
                 this.parent.textColorsTheme,

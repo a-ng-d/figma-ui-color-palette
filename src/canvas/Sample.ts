@@ -12,7 +12,7 @@ export default class Sample {
   name: string
   source: { [key: string]: number } | null
   scale: string | null
-  rgb: Array<number> | null
+  rgb: [number, number, number]
   colorSpace: ColorSpaceConfiguration
   view: ViewConfiguration
   textColorsTheme: TextColorsThemeHexModel
@@ -27,7 +27,7 @@ export default class Sample {
     name: string,
     source: { [key: string]: number } | null,
     scale: string | null,
-    rgb: Array<number> | null,
+    rgb: [number, number, number],
     colorSpace: ColorSpaceConfiguration,
     view: ViewConfiguration,
     textColorsTheme: TextColorsThemeHexModel,

@@ -69,13 +69,13 @@ export interface PaletteDataShadeItem {
   name: string
   description: string
   hex: HexModel
-  rgb: Array<number>
-  gl: Array<number>
-  lch: Array<number>
-  oklch: Array<number>
-  lab: Array<number>
-  oklab: Array<number>
-  hsl: Array<number>
+  rgb: [number, number, number] | { _unclipped: [number, number, number, number]; }
+  gl: [number, number, number, number]
+  lch: [number, number, number]
+  oklch: [number, number, number]
+  lab: [number, number, number]
+  oklab: [number, number, number]
+  hsl: [number, number, number]
   variableId: string
   styleId: string
   type: 'source color' | 'color shade'
@@ -188,7 +188,7 @@ export interface ActionsList {
 }
 
 // Models
-export type HexModel = `#${string}`
+export type HexModel = `#${string}` | string
 
 export interface RgbModel {
   r: number

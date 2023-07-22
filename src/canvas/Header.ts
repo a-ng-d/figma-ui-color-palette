@@ -34,7 +34,11 @@ export default class Header {
         locals[lang].colors.title,
         null,
         null,
-        [255, 255, 255],
+        [
+          255,
+          255,
+          255
+        ],
         this.parent.colorSpace,
         this.parent.view,
         this.parent.textColorsTheme
@@ -51,7 +55,11 @@ export default class Header {
                 .substr(10),
               null,
               null,
-              [255, 255, 255],
+              [
+                255,
+                255,
+                255
+              ],
               this.parent.colorSpace,
               this.parent.view,
               this.parent.textColorsTheme

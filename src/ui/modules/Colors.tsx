@@ -380,7 +380,7 @@ export default class Colors extends React.Component<Props> {
                     color.rgb.r * 255,
                     color.rgb.g * 255,
                     color.rgb.b * 255
-                  ).hex()}
+                  ).hex() as HexModel}
                   oklch={color.oklch}
                   shift={color.hueShifting}
                   description={color.description}

@@ -10,7 +10,7 @@ import { locals, lang } from '../content/locals'
 
 export default class Properties {
   name: string
-  rgb: Array<number>
+  rgb: [number, number, number]
   colorSpace: ColorSpaceConfiguration
   textColorsTheme: TextColorsThemeHexModel
   hex: HexModel
@@ -34,7 +34,7 @@ export default class Properties {
 
   constructor(
     name: string,
-    rgb: Array<number>,
+    rgb: [number, number, number],
     colorSpace: ColorSpaceConfiguration,
     textColorsTheme: TextColorsThemeHexModel
   ) {
@@ -52,7 +52,7 @@ export default class Properties {
 
   getContrast(textColor: string) {
     return chroma.contrast(
-      this.rgb,
+      chroma(this.rgb).hex(),
       textColor === 'DARK'
         ? this.textColorsTheme.darkColor
         : this.textColorsTheme.lightColor
