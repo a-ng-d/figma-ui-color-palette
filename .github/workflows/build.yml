@@ -2,9 +2,9 @@ name: Build the latest stable version of UI Color Palette
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "add-git-workflows" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "add-git-workflows" ]
 
 jobs:
   build:
