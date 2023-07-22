@@ -17,6 +17,7 @@ interface Props {
     feature: string
     action: React.MouseEventHandler
   }>
+  parentClassName?: string
   onChange: React.ChangeEventHandler
 }
 
@@ -58,19 +59,22 @@ export default class Dropdown extends React.Component<Props> {
     this.setState({
       isListOpen: true,
     })
-    setTimeout(() => {
-      if (this.listRef.current.getBoundingClientRect().top < 16) {
-        this.listRef.current.style.top = '-6px'
-        this.listRef.current.style.bottom = 'auto'
-      }
-      if (
-        this.listRef.current.getBoundingClientRect().bottom >
-        document.body.clientHeight - 40
-      ) {
-        this.listRef.current.style.top = 'auto'
-        this.listRef.current.style.bottom = '-6px'
-      }
-    }, 1)
+    if (this.props.parentClassName != undefined)
+      setTimeout(() => {
+        const diffTop: number = this.listRef.current.getBoundingClientRect().top - document.getElementsByClassName(this.props.parentClassName)[0].getBoundingClientRect().top,
+          diffBottom: number = this.listRef.current.getBoundingClientRect().bottom - document.getElementsByClassName(this.props.parentClassName)[0].getBoundingClientRect().bottom
+        
+        if (diffTop < -16) {
+          this.listRef.current.style.top = '-6px'
+          this.listRef.current.style.bottom = 'auto'
+        }
+        if (
+          diffBottom > -16
+        ) {
+          this.listRef.current.style.top = 'auto'
+          this.listRef.current.style.bottom = '-6px'
+        }
+      }, 1)
   }
 
   onSelectItem = (e) => {

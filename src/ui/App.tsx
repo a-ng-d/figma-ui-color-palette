@@ -576,7 +576,7 @@ class App extends React.Component {
 
     if (this.state['isLoaded'])
       return (
-        <main>
+        <main className="ui">
           <Feature
             isActive={
               features.find((feature) => feature.name === 'CREATE').isActive

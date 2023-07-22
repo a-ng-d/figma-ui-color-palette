@@ -394,6 +394,7 @@ export default class EditPalette extends React.Component<Props> {
                     },
                   ]}
                   feature="SWITCH_THEME"
+                  parentClassName="ui"
                   onChange={this.switchThemeHandler}
                 />
               </FormItem>

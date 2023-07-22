@@ -152,6 +152,7 @@ export default class Actions extends React.Component<Props> {
             ]}
             selected={this.props.actions}
             feature="UPDATE_DEPLOYMENT_ACTION"
+            parentClassName="controls"
             onChange={(e) =>
               this.props.onChangeActions(
                 (e.target as HTMLElement).dataset.value
