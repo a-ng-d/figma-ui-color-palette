@@ -91,7 +91,9 @@ export default class Settings extends React.Component<Props> {
   view = () => {
     return (
       <Feature
-        isActive={features.find((feature) => feature.name === 'VIEWS')?.isActive}
+        isActive={
+          features.find((feature) => feature.name === 'VIEWS')?.isActive
+        }
       >
         <div className="settings__item">
           <FormItem

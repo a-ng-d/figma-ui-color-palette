@@ -115,7 +115,9 @@ export default class Export extends React.Component<Props, any> {
     this.counter = 1
   }
 
-  selectPreview = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => e.target.select()
+  selectPreview = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => e.target.select()
 
   deSelectPreview = () => window.getSelection()!.removeAllRanges()
 

@@ -91,8 +91,10 @@ export default class Themes extends React.Component<Props, any> {
   // Handlers
   themesHandler = (e: any) => {
     let id: string | null
-    const element: HTMLElement | null = (e.target as HTMLElement).closest('.list__item'),
-    currentElement: HTMLInputElement = e.target as HTMLInputElement
+    const element: HTMLElement | null = (e.target as HTMLElement).closest(
+        '.list__item'
+      ),
+      currentElement: HTMLInputElement = e.target as HTMLInputElement
 
     element != null ? (id = element.getAttribute('data-id')) : null
 
@@ -130,7 +132,9 @@ export default class Themes extends React.Component<Props, any> {
       themesMessage.data = this.props.themes.map((item) => {
         if (item.id === id)
           item.name =
-            hasSameName.length > 1 ? currentElement.value + ' 2' : currentElement.value
+            hasSameName.length > 1
+              ? currentElement.value + ' 2'
+              : currentElement.value
         return item
       })
       this.props.onChangeThemes(themesMessage.data)
@@ -261,7 +265,8 @@ export default class Themes extends React.Component<Props, any> {
   dropOutsideHandler = (e: React.DragEvent<HTMLLIElement>) => {
     const target = e.target,
       parent: ParentNode = (target as HTMLElement).parentNode!,
-      scrollY: number = (parent.parentNode!.parentNode as HTMLElement).scrollTop,
+      scrollY: number = (parent.parentNode!.parentNode as HTMLElement)
+        .scrollTop,
       parentRefTop: number = (parent as HTMLElement).offsetTop,
       parentRefBottom: number =
         parentRefTop + (parent as HTMLElement).clientHeight

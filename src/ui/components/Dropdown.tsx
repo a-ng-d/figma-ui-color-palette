@@ -61,16 +61,22 @@ export default class Dropdown extends React.Component<Props, any> {
     })
     if (this.props.parentClassName != undefined)
       setTimeout(() => {
-        const diffTop: number = this.listRef.current.getBoundingClientRect().top - document.getElementsByClassName(this.props.parentClassName as string)[0].getBoundingClientRect().top,
-          diffBottom: number = this.listRef.current.getBoundingClientRect().bottom - document.getElementsByClassName(this.props.parentClassName as string)[0].getBoundingClientRect().bottom
-        
+        const diffTop: number =
+            this.listRef.current.getBoundingClientRect().top -
+            document
+              .getElementsByClassName(this.props.parentClassName as string)[0]
+              .getBoundingClientRect().top,
+          diffBottom: number =
+            this.listRef.current.getBoundingClientRect().bottom -
+            document
+              .getElementsByClassName(this.props.parentClassName as string)[0]
+              .getBoundingClientRect().bottom
+
         if (diffTop < -16) {
           this.listRef.current.style.top = '-6px'
           this.listRef.current.style.bottom = 'auto'
         }
-        if (
-          diffBottom > -16
-        ) {
+        if (diffBottom > -16) {
           this.listRef.current.style.top = 'auto'
           this.listRef.current.style.bottom = '-6px'
         }
@@ -141,31 +147,29 @@ export default class Dropdown extends React.Component<Props, any> {
                 </li>
               ) : null
             )}
-            {
-              this.props.actions != undefined ? 
-                this.props.actions.length > 0 ? (
-                  <>
-                    <hr />
-                    {this.props.actions.map((action, index) => (
-                      <li
-                        key={index}
-                        className={`select-menu__item${
-                          action.isBlocked ? ' select-menu__item--blocked' : ''
-                        }`}
-                        data-feature={action.feature}
-                        data-is-blocked={action.isBlocked}
-                        onMouseDown={() => this.onSelectAction(action.action)}
-                      >
-                        <span className="select-menu__item-icon"></span>
-                        <span className="select-menu__item-label">
-                          {action.label}
-                        </span>
-                      </li>
-                    ))}
-                  </>
-                ) : null
-              : null
-            }
+            {this.props.actions != undefined ? (
+              this.props.actions.length > 0 ? (
+                <>
+                  <hr />
+                  {this.props.actions.map((action, index) => (
+                    <li
+                      key={index}
+                      className={`select-menu__item${
+                        action.isBlocked ? ' select-menu__item--blocked' : ''
+                      }`}
+                      data-feature={action.feature}
+                      data-is-blocked={action.isBlocked}
+                      onMouseDown={() => this.onSelectAction(action.action)}
+                    >
+                      <span className="select-menu__item-icon"></span>
+                      <span className="select-menu__item-label">
+                        {action.label}
+                      </span>
+                    </li>
+                  ))}
+                </>
+              ) : null
+            ) : null}
           </ul>
         ) : null}
       </div>

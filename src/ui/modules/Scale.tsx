@@ -229,7 +229,8 @@ export default class Scale extends React.Component<Props, any> {
           </Feature>
           <Feature
             isActive={
-              features.find((feature) => feature.name === 'SCALE_TIPS')?.isActive
+              features.find((feature) => feature.name === 'SCALE_TIPS')
+                ?.isActive
             }
           >
             <Message
@@ -283,7 +284,8 @@ export default class Scale extends React.Component<Props, any> {
           </Feature>
           <Feature
             isActive={
-              features.find((feature) => feature.name === 'SCALE_TIPS')?.isActive
+              features.find((feature) => feature.name === 'SCALE_TIPS')
+                ?.isActive
             }
           >
             <Message

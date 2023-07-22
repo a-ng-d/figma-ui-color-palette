@@ -85,8 +85,10 @@ export default class Colors extends React.Component<Props, any> {
   // Handlers
   colorsHandler = (e: any) => {
     let id: string | null
-    const element: HTMLElement | null = (e.target as HTMLElement).closest('.list__item'),
-    currentElement: HTMLInputElement = e.target as HTMLInputElement
+    const element: HTMLElement | null = (e.target as HTMLElement).closest(
+        '.list__item'
+      ),
+      currentElement: HTMLInputElement = e.target as HTMLInputElement
 
     element != null ? (id = element.getAttribute('data-id')) : null
 
@@ -146,11 +148,9 @@ export default class Colors extends React.Component<Props, any> {
 
     const updateLightnessProp = () => {
       colorsMessage.data = this.props.colors.map((item) => {
-        const rgb = chroma(
-          item.rgb.r * 255,
-          item.rgb.g * 255,
-          item.rgb.b * 255
-        ).set('lch.l', currentElement.value).rgb()
+        const rgb = chroma(item.rgb.r * 255, item.rgb.g * 255, item.rgb.b * 255)
+          .set('lch.l', currentElement.value)
+          .rgb()
         if (item.id === id)
           item.rgb = {
             r: rgb[0] / 255,
@@ -165,11 +165,9 @@ export default class Colors extends React.Component<Props, any> {
 
     const updateChromaProp = () => {
       colorsMessage.data = this.props.colors.map((item) => {
-        const rgb = chroma(
-          item.rgb.r * 255,
-          item.rgb.g * 255,
-          item.rgb.b * 255
-        ).set('lch.c', currentElement.value).rgb()
+        const rgb = chroma(item.rgb.r * 255, item.rgb.g * 255, item.rgb.b * 255)
+          .set('lch.c', currentElement.value)
+          .rgb()
         if (item.id === id)
           item.rgb = {
             r: rgb[0] / 255,
@@ -184,11 +182,9 @@ export default class Colors extends React.Component<Props, any> {
 
     const updateHueProp = () => {
       colorsMessage.data = this.props.colors.map((item) => {
-        const rgb = chroma(
-          item.rgb.r * 255,
-          item.rgb.g * 255,
-          item.rgb.b * 255
-        ).set('lch.h', currentElement.value).rgb()
+        const rgb = chroma(item.rgb.r * 255, item.rgb.g * 255, item.rgb.b * 255)
+          .set('lch.h', currentElement.value)
+          .rgb()
         if (item.id === id)
           item.rgb = {
             r: rgb[0] / 255,
@@ -235,7 +231,9 @@ export default class Colors extends React.Component<Props, any> {
       colorsMessage.data = this.props.colors.map((item) => {
         if (item.id === id)
           item.name =
-            hasSameName.length > 1 ? currentElement.value + ' 2' : currentElement.value
+            hasSameName.length > 1
+              ? currentElement.value + ' 2'
+              : currentElement.value
         return item
       })
       this.props.onChangeColors(colorsMessage.data)
@@ -323,7 +321,8 @@ export default class Colors extends React.Component<Props, any> {
   dropOutsideHandler = (e: React.DragEvent<HTMLLIElement>) => {
     const target = e.target,
       parent: ParentNode = (target as HTMLElement).parentNode!,
-      scrollY: number = (parent.parentNode!.parentNode as HTMLElement).scrollTop,
+      scrollY: number = (parent.parentNode!.parentNode as HTMLElement)
+        .scrollTop,
       parentRefTop: number = (parent as HTMLElement).offsetTop,
       parentRefBottom: number =
         parentRefTop + (parent as HTMLElement).clientHeight
@@ -377,11 +376,13 @@ export default class Colors extends React.Component<Props, any> {
                   key={color.id}
                   name={color.name}
                   index={index}
-                  hex={chroma(
-                    color.rgb.r * 255,
-                    color.rgb.g * 255,
-                    color.rgb.b * 255
-                  ).hex() as HexModel}
+                  hex={
+                    chroma(
+                      color.rgb.r * 255,
+                      color.rgb.g * 255,
+                      color.rgb.b * 255
+                    ).hex() as HexModel
+                  }
                   oklch={color.oklch}
                   shift={color.hueShifting}
                   description={color.description}

@@ -4,7 +4,7 @@ import type {
   ScaleConfiguration,
   PaletteDataThemeItem,
   PaletteDataColorItem,
-  PaletteData
+  PaletteData,
 } from '../utils/types'
 import Title from './Title'
 import Header from './Header'
@@ -212,11 +212,7 @@ export default class Colors {
         locals[lang].warning.emptySourceColors,
         null,
         null,
-        [
-          255,
-          255,
-          255
-        ],
+        [255, 255, 255],
         this.parent.colorSpace,
         this.parent.view,
         this.parent.textColorsTheme
@@ -486,11 +482,7 @@ export default class Colors {
               color.name,
               null,
               null,
-              [
-                color.rgb.r * 255,
-                color.rgb.g * 255,
-                color.rgb.b * 255
-              ],
+              [color.rgb.r * 255, color.rgb.g * 255, color.rgb.b * 255],
               this.parent.colorSpace,
               this.parent.view,
               this.parent.textColorsTheme
@@ -504,11 +496,7 @@ export default class Colors {
               color.name,
               null,
               null,
-              [
-                color.rgb.r * 255,
-                color.rgb.g * 255,
-                color.rgb.b * 255
-              ],
+              [color.rgb.r * 255, color.rgb.g * 255, color.rgb.b * 255],
               this.parent.colorSpace,
               this.parent.view,
               this.parent.textColorsTheme
@@ -578,11 +566,7 @@ export default class Colors {
                 color.name,
                 color.rgb,
                 scaleName,
-                [
-                  newColor._rgb[0],
-                  newColor._rgb[1],
-                  newColor._rgb[2],
-                ],
+                [newColor._rgb[0], newColor._rgb[1], newColor._rgb[2]],
                 this.parent.colorSpace,
                 this.parent.view,
                 this.parent.textColorsTheme,
@@ -607,11 +591,7 @@ export default class Colors {
                 color.name,
                 color.rgb,
                 scaleName,
-                [
-                  newColor._rgb[0],
-                  newColor._rgb[1],
-                  newColor._rgb[2],
-                ],
+                [newColor._rgb[0], newColor._rgb[1], newColor._rgb[2]],
                 this.parent.colorSpace,
                 this.parent.view,
                 this.parent.textColorsTheme,

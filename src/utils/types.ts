@@ -69,7 +69,9 @@ export interface PaletteDataShadeItem {
   name: string
   description: string
   hex: HexModel
-  rgb: [number, number, number] | { _unclipped: [number, number, number, number]; }
+  rgb:
+    | [number, number, number]
+    | { _unclipped: [number, number, number, number] }
   gl: [number, number, number, number]
   lch: [number, number, number]
   oklch: [number, number, number]

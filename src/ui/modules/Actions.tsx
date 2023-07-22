@@ -137,7 +137,10 @@ export default class Actions extends React.Component<Props> {
                 isActive: features.find(
                   (feature) => feature.name === 'LOCAL_STYLES'
                 )?.isActive,
-                isBlocked: isBlocked('LOCAL_STYLES', this.props.planStatus ?? 'UNPAID'),
+                isBlocked: isBlocked(
+                  'LOCAL_STYLES',
+                  this.props.planStatus ?? 'UNPAID'
+                ),
               },
               {
                 label:
@@ -147,7 +150,10 @@ export default class Actions extends React.Component<Props> {
                 isActive: features.find(
                   (feature) => feature.name === 'LOCAL_VARIABLES'
                 )?.isActive,
-                isBlocked: isBlocked('LOCAL_VARIABLES', this.props.planStatus ?? 'UNPAID'),
+                isBlocked: isBlocked(
+                  'LOCAL_VARIABLES',
+                  this.props.planStatus ?? 'UNPAID'
+                ),
               },
             ]}
             selected={this.props.actions ?? ''}

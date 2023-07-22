@@ -27,7 +27,8 @@ interface Props {
     React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement> &
     React.MouseEventHandler
   onChangeSelection: React.MouseEventHandler<HTMLLIElement>
-  onCancellationSelection: React.MouseEventHandler<Element> & React.FocusEventHandler<HTMLInputElement>
+  onCancellationSelection: React.MouseEventHandler<Element> &
+    React.FocusEventHandler<HTMLInputElement>
   onDragChange: (
     id: string | undefined,
     hasGuideAbove: boolean,
@@ -56,11 +57,11 @@ export default class ColorItem extends React.Component<Props, any> {
   // Direct actions
   onDragStart = (e: React.DragEvent<HTMLLIElement>) => {
     this.setState({ isDragged: true })
-    const clone = e.currentTarget.cloneNode(true);
-    (clone as HTMLElement).style.opacity = '0';
-    (clone as HTMLElement).id = 'ghost'
+    const clone = e.currentTarget.cloneNode(true)
+    ;(clone as HTMLElement).style.opacity = '0'
+    ;(clone as HTMLElement).id = 'ghost'
     document.body.appendChild(clone)
-    e.dataTransfer.setDragImage((clone as Element), 0, 0)
+    e.dataTransfer.setDragImage(clone as Element, 0, 0)
     e.dataTransfer.effectAllowed = 'move'
     document.querySelector('#react-page')!.classList.add('dragged-ghost')
   }
@@ -145,7 +146,8 @@ export default class ColorItem extends React.Component<Props, any> {
         </Feature>
         <Feature
           isActive={
-            features.find((feature) => feature.name === 'COLORS_PARAMS')?.isActive
+            features.find((feature) => feature.name === 'COLORS_PARAMS')
+              ?.isActive
           }
         >
           <div className="colors__parameters">
@@ -203,8 +205,10 @@ export default class ColorItem extends React.Component<Props, any> {
         <div className="list__item__buttons">
           <Feature
             isActive={
-              features.find((feature) => feature.name === 'COLORS_HUE_SHIFTING')?.isActive ||
-              features.find((feature) => feature.name === 'COLORS_DESCRIPTION')?.isActive
+              features.find((feature) => feature.name === 'COLORS_HUE_SHIFTING')
+                ?.isActive ||
+              features.find((feature) => feature.name === 'COLORS_DESCRIPTION')
+                ?.isActive
             }
           >
             <Button
@@ -226,7 +230,9 @@ export default class ColorItem extends React.Component<Props, any> {
           <>
             <Feature
               isActive={
-                features.find((feature) => feature.name === 'COLORS_HUE_SHIFTING')?.isActive
+                features.find(
+                  (feature) => feature.name === 'COLORS_HUE_SHIFTING'
+                )?.isActive
               }
             >
               <div className="colors__shift inputs">
@@ -248,7 +254,9 @@ export default class ColorItem extends React.Component<Props, any> {
             </Feature>
             <Feature
               isActive={
-                features.find((feature) => feature.name === 'COLORS_DESCRIPTION')?.isActive
+                features.find(
+                  (feature) => feature.name === 'COLORS_DESCRIPTION'
+                )?.isActive
               }
             >
               <div className="colors__description">

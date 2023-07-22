@@ -90,7 +90,8 @@ export default class EditPalette extends React.Component<Props, any> {
 
   switchThemeHandler = (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
     themesMessage.data = this.props.themes.map((theme) => {
-      if ((e.target as HTMLElement).dataset.value === theme.id) theme.isEnabled = true
+      if ((e.target as HTMLElement).dataset.value === theme.id)
+        theme.isEnabled = true
       else theme.isEnabled = false
 
       return theme
@@ -149,15 +150,21 @@ export default class EditPalette extends React.Component<Props, any> {
   onExport = () => {
     if (this.props.export.format === 'CSV') {
       const zip = new JSZip()
-      this.props.export.data.forEach((theme: { name: string, type: string, colors: Array<{ name: string, csv: string }> }) => {
-        const folder =
-          theme.type != 'default theme' ? zip.folder(theme.name) : null
-        theme.colors.forEach((color) => {
-          theme.type != 'default theme'
-            ? folder!.file(`${doSnakeCase(color.name)}.csv`, color.csv)
-            : zip.file(`${doSnakeCase(color.name)}.csv`, color.csv)
-        })
-      })
+      this.props.export.data.forEach(
+        (theme: {
+          name: string
+          type: string
+          colors: Array<{ name: string; csv: string }>
+        }) => {
+          const folder =
+            theme.type != 'default theme' ? zip.folder(theme.name) : null
+          theme.colors.forEach((color) => {
+            theme.type != 'default theme'
+              ? folder!.file(`${doSnakeCase(color.name)}.csv`, color.csv)
+              : zip.file(`${doSnakeCase(color.name)}.csv`, color.csv)
+          })
+        }
+      )
       zip
         .generateAsync({ type: 'blob' })
         .then((content) =>
@@ -380,7 +387,8 @@ export default class EditPalette extends React.Component<Props, any> {
                     }
                   })}
                   selected={
-                    this.props.themes.find((theme) => theme.isEnabled)?.id ?? 'NULL'
+                    this.props.themes.find((theme) => theme.isEnabled)?.id ??
+                    'NULL'
                   }
                   actions={[
                     {

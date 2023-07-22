@@ -19,7 +19,7 @@ const addStop = (
         .getPropertyValue('padding-left')
     ),
     offset: number = doMap(e.clientX - sliderPadding, 0, rangeWidth, 0, 100),
-    newLightnessScale: { [key: string]:number } = {}
+    newLightnessScale: { [key: string]: number } = {}
 
   let newScale = []
 
