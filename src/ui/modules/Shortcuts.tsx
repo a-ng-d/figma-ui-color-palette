@@ -7,7 +7,7 @@ import { locals } from '../../content/locals'
 
 interface Props {
   planStatus: string
-  lang: string
+  lang: 'EN-us'
   onReOpenHighlight: () => void
   onReOpenAbout: () => void
 }

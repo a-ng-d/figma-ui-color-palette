@@ -3,7 +3,7 @@ import * as React from 'react'
 interface Props {
   rightPart?: React.ReactElement
   leftPart?: React.ReactElement
-  border: Array<string>
+  border: Array<'TOP' | 'LEFT' | 'BOTTOM' | 'RIGHT'>
   isCompact?: boolean
   isOnlyText?: boolean
 }
@@ -14,7 +14,7 @@ export default class Bar extends React.Component<Props> {
     isOnlyText: false,
   }
 
-  setBorder = (orientation: Array<string>) => {
+  setBorder = (orientation: Array<'TOP' | 'LEFT' | 'BOTTOM' | 'RIGHT'>) => {
     const property = '1px solid var(--figma-color-border)',
       style = {}
 

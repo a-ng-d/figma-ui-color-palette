@@ -7,6 +7,7 @@ import type {
   ColorsMessage,
   DispatchProcess,
   ActionsList,
+  HexModel,
 } from '../../utils/types'
 import Dispatcher from './Dispatcher'
 import Button from '../components/Button'
@@ -21,7 +22,7 @@ interface Props {
   actions: string
   editorType: string
   planStatus: string
-  lang: string
+  lang: 'EN-us'
   onChangeColors: (colors: Array<ColorConfiguration>) => void
   onCreateLocalStyles: () => void
   onUpdateLocalStyles: () => void
@@ -111,7 +112,7 @@ export default class Colors extends React.Component<Props> {
     }
 
     const updateHexCode = () => {
-      const code: string =
+      const code: HexModel =
         e.target.value.indexOf('#') == -1
           ? '#' + e.target.value
           : e.target.value

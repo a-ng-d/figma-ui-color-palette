@@ -18,7 +18,7 @@ interface Props {
   view: string
   textColorsTheme: TextColorsThemeHexModel
   planStatus: string
-  lang: string
+  lang: 'EN-us'
   onChangePreset: React.ChangeEventHandler
   onCustomPreset: React.ChangeEventHandler
   onChangeSettings: React.ChangeEventHandler

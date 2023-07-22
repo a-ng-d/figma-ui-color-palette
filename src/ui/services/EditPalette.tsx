@@ -38,7 +38,7 @@ interface Props {
   export: ExportConfiguration
   editorType: string
   planStatus: string
-  lang: string
+  lang: 'EN-us'
   onChangeScale: () => void
   onChangeStop?: () => void
   onChangeColors: (colors: Array<ColorConfiguration>) => void

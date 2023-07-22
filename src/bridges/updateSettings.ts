@@ -3,6 +3,7 @@ import type {
   PresetConfiguration,
   ScaleConfiguration,
   ThemeConfiguration,
+  ViewConfiguration,
 } from '../utils/types'
 import {
   previousSelection,
@@ -26,7 +27,7 @@ const updateSettings = (msg, palette) => {
       themes: Array<ThemeConfiguration> = JSON.parse(
         palette.getPluginData('themes')
       ),
-      view: string = palette.getPluginData('view')
+      view: ViewConfiguration = palette.getPluginData('view')
 
     palette.setPluginData('name', msg.data.name)
     palette.setPluginData('colorSpace', msg.data.colorSpace)

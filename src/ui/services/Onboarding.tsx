@@ -5,7 +5,7 @@ import { locals } from '../../content/locals'
 
 interface Props {
   planStatus: string
-  lang: string
+  lang: 'EN-us'
 }
 
 export default class Onboarding extends React.Component<Props> {

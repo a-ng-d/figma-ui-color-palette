@@ -1,8 +1,11 @@
 import type {
+  AlgorithmVersionConfiguration,
+  ColorSpaceConfiguration,
   PresetConfiguration,
   ScaleConfiguration,
   TextColorsThemeHexModel,
   ThemeConfiguration,
+  ViewConfiguration,
 } from '../utils/types'
 import Colors from './../canvas/Colors'
 import {
@@ -22,15 +25,15 @@ const updateColors = (msg, palette) => {
           : palette.getPluginData('name'),
       preset: PresetConfiguration = JSON.parse(palette.getPluginData('preset')),
       scale: ScaleConfiguration = JSON.parse(palette.getPluginData('scale')),
-      colorSpace: string = palette.getPluginData('colorSpace'),
+      colorSpace: ColorSpaceConfiguration = palette.getPluginData('colorSpace'),
       themes: Array<ThemeConfiguration> = JSON.parse(
         palette.getPluginData('themes')
       ),
-      view: string = palette.getPluginData('view'),
+      view: ViewConfiguration = palette.getPluginData('view'),
       textColorsTheme: TextColorsThemeHexModel = JSON.parse(
         palette.getPluginData('textColorsTheme')
       ),
-      algorithmVersion: string = palette.getPluginData('algorithmVersion')
+      algorithmVersion: AlgorithmVersionConfiguration = palette.getPluginData('algorithmVersion')
 
     palette.setPluginData('colors', JSON.stringify(msg.data))
 

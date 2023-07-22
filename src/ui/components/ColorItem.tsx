@@ -1,5 +1,6 @@
 import * as React from 'react'
 import chroma from 'chroma-js'
+import type { HexModel } from '../../utils/types'
 import Feature from './Feature'
 import Input from './Input'
 import Button from './Button'
@@ -10,7 +11,7 @@ import { locals } from '../../content/locals'
 
 interface Props {
   name: string
-  hex: string
+  hex: HexModel
   oklch: boolean
   shift: number
   description: string
@@ -19,7 +20,7 @@ interface Props {
   selected: boolean
   guideAbove: boolean
   guideBelow: boolean
-  lang: string
+  lang: 'EN-us'
   onChangeColors: React.KeyboardEventHandler<
     HTMLInputElement | HTMLTextAreaElement
   > &

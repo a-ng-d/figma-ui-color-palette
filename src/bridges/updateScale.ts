@@ -3,6 +3,9 @@ import type {
   TextColorsThemeHexModel,
   ColorConfiguration,
   ThemeConfiguration,
+  ColorSpaceConfiguration,
+  ViewConfiguration,
+  AlgorithmVersionConfiguration,
 } from '../utils/types'
 import {
   previousSelection,
@@ -25,15 +28,15 @@ const updateScale = (msg, palette) => {
       colors: Array<ColorConfiguration> = JSON.parse(
         palette.getPluginData('colors')
       ),
-      colorSpace: string = palette.getPluginData('colorSpace'),
+      colorSpace: ColorSpaceConfiguration = palette.getPluginData('colorSpace'),
       themes: Array<ThemeConfiguration> = JSON.parse(
         palette.getPluginData('themes')
       ),
-      view: string = palette.getPluginData('view'),
+      view: ViewConfiguration = palette.getPluginData('view'),
       textColorsTheme: TextColorsThemeHexModel = JSON.parse(
         palette.getPluginData('textColorsTheme')
       ),
-      algorithmVersion: string = palette.getPluginData('algorithmVersion')
+      algorithmVersion: AlgorithmVersionConfiguration = palette.getPluginData('algorithmVersion')
 
     themes.find((theme) => theme.isEnabled).scale = msg.data.scale
     if (msg.feature === 'ADD_STOP' || msg.feature === 'DELETE_STOP')

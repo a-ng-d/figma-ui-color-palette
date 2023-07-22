@@ -4,6 +4,8 @@ import type {
   TextColorsThemeHexModel,
   ColorConfiguration,
   ThemeConfiguration,
+  ColorSpaceConfiguration,
+  AlgorithmVersionConfiguration,
 } from '../utils/types'
 import Colors from '../canvas/Colors'
 import { locals, lang } from '../content/locals'
@@ -21,14 +23,14 @@ const updateView = (msg, palette) => {
       colors: Array<ColorConfiguration> = JSON.parse(
         palette.getPluginData('colors')
       ),
-      colorSpace: string = palette.getPluginData('colorSpace'),
+      colorSpace: ColorSpaceConfiguration = palette.getPluginData('colorSpace'),
       themes: Array<ThemeConfiguration> = JSON.parse(
         palette.getPluginData('themes')
       ),
       textColorsTheme: TextColorsThemeHexModel = JSON.parse(
         palette.getPluginData('textColorsTheme')
       ),
-      algorithmVersion: string = palette.getPluginData('algorithmVersion')
+      algorithmVersion: AlgorithmVersionConfiguration = palette.getPluginData('algorithmVersion')
 
     palette.setPluginData('view', msg.data.view)
 

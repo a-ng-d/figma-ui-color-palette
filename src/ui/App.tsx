@@ -4,6 +4,7 @@ import type {
   ActionsList,
   ColorConfiguration,
   DispatchProcess,
+  HexModel,
   SettingsMessage,
   ThemeConfiguration,
 } from '../utils/types'
@@ -34,12 +35,12 @@ const settingsMessage: SettingsMessage = {
   type: 'UPDATE_SETTINGS',
   data: {
     name: '',
-    colorSpace: '',
+    colorSpace: 'LCH',
     textColorsTheme: {
-      lightColor: '',
-      darkColor: '',
+      lightColor: '#FFFFFF',
+      darkColor: '#000000',
     },
-    algorithmVersion: '',
+    algorithmVersion: 'v2',
   },
   isEditedInRealTime: false,
 }
@@ -300,7 +301,7 @@ class App extends React.Component {
     }
 
     const updateTextLightColor = () => {
-      const code: string =
+      const code: HexModel =
         e.target.value.indexOf('#') == -1
           ? '#' + e.target.value
           : e.target.value
@@ -326,7 +327,7 @@ class App extends React.Component {
     }
 
     const updateTextDarkColor = () => {
-      const code: string =
+      const code: HexModel =
         e.target.value.indexOf('#') == -1
           ? '#' + e.target.value
           : e.target.value

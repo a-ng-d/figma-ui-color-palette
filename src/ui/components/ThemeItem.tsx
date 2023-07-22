@@ -16,7 +16,7 @@ interface Props {
   selected: boolean
   guideAbove: boolean
   guideBelow: boolean
-  lang: string
+  lang: 'EN-us'
   onChangeThemes: React.KeyboardEventHandler<
     HTMLInputElement | HTMLTextAreaElement
   > &

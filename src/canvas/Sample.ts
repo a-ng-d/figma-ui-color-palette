@@ -1,4 +1,4 @@
-import type { TextColorsThemeHexModel } from '../utils/types'
+import type { ColorSpaceConfiguration, TextColorsThemeHexModel, ViewConfiguration } from '../utils/types'
 import Paragraph from './Paragraph'
 import Properties from './Properties'
 import Property from './Property'
@@ -9,8 +9,8 @@ export default class Sample {
   source: { [key: string]: number } | null
   scale: string | null
   rgb: Array<number> | null
-  colorSpace: string
-  view: string
+  colorSpace: ColorSpaceConfiguration
+  view: ViewConfiguration
   textColorsTheme: TextColorsThemeHexModel
   status: {
     isClosestToRef: boolean
@@ -24,8 +24,8 @@ export default class Sample {
     source: { [key: string]: number } | null,
     scale: string | null,
     rgb: Array<number> | null,
-    colorSpace: string,
-    view: string,
+    colorSpace: ColorSpaceConfiguration,
+    view: ViewConfiguration,
     textColorsTheme: TextColorsThemeHexModel,
     status: { isClosestToRef: boolean } = { isClosestToRef: false }
   ) {

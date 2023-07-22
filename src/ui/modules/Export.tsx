@@ -12,7 +12,7 @@ interface Props {
   exportPreview: string
   planStatus: string
   exportType: string
-  lang: string
+  lang: 'EN-us'
   onExportPalette: () => void
 }
 

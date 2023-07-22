@@ -23,7 +23,7 @@ interface Props {
   actions?: string
   planStatus: string
   editorType?: string
-  lang: string
+  lang: 'EN-us'
   onChangePreset?: React.ReactEventHandler
   onChangeScale: () => void
   onChangeStop?: () => void

@@ -1,4 +1,4 @@
-import type { TextColorsThemeHexModel } from '../utils/types'
+import type { ColorSpaceConfiguration, HexModel, TextColorsThemeHexModel } from '../utils/types'
 import chroma from 'chroma-js'
 import { APCAcontrast, sRGBtoY, fontLookupAPCA } from 'apca-w3'
 import Tag from './Tag'
@@ -7,9 +7,9 @@ import { locals, lang } from '../content/locals'
 export default class Properties {
   name: string
   rgb: Array<number>
-  colorSpace: string
+  colorSpace: ColorSpaceConfiguration
   textColorsTheme: TextColorsThemeHexModel
-  hex: string
+  hex: HexModel
   lch: Array<number>
   oklch: Array<number>
   lab: Array<number>
@@ -31,7 +31,7 @@ export default class Properties {
   constructor(
     name: string,
     rgb: Array<number>,
-    colorSpace: string,
+    colorSpace: ColorSpaceConfiguration,
     textColorsTheme: TextColorsThemeHexModel
   ) {
     this.name = name

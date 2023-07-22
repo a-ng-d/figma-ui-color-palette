@@ -21,7 +21,7 @@ interface Props {
   actions?: string
   planStatus: string
   editorType?: string
-  lang: string
+  lang: 'EN-us'
   onChangeSettings: React.ReactEventHandler
   onCreatePalette?: () => void
   onCreateLocalStyles?: () => void

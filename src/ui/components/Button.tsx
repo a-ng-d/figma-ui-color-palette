@@ -1,10 +1,10 @@
 import * as React from 'react'
 
 interface Props {
-  type: string
+  type: 'primary' | 'secondary' | 'tertiary' | 'icon'
   icon?: string
   label?: string
-  state?: string
+  state?: 'disabled' | 'blocked' | 'selected' | '' | undefined
   isLink?: boolean
   url?: string
   feature?: string

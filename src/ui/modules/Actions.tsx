@@ -11,7 +11,7 @@ interface Props {
   actions?: string
   exportType?: string | null
   planStatus?: string
-  lang: string
+  lang: 'EN-us'
   onCreatePalette?: React.MouseEventHandler
   onCreateLocalStyles?: React.MouseEventHandler
   onUpdateLocalStyles?: React.MouseEventHandler

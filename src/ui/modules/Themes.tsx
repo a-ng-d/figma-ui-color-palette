@@ -2,6 +2,7 @@ import * as React from 'react'
 import type {
   ActionsList,
   DispatchProcess,
+  HexModel,
   HoveredColor,
   PresetConfiguration,
   ScaleConfiguration,
@@ -26,7 +27,7 @@ interface Props {
   actions: string
   editorType: string
   planStatus: string
-  lang: string
+  lang: 'EN-us'
   onChangeThemes: (themes: Array<ThemeConfiguration>) => void
   onCreateLocalStyles: () => void
   onUpdateLocalStyles: () => void
@@ -138,7 +139,7 @@ export default class Themes extends React.Component<Props> {
     }
 
     const updatePaletteBackgroundColor = () => {
-      const code: string =
+      const code: HexModel =
         e.target.value.indexOf('#') == -1
           ? '#' + e.target.value
           : e.target.value

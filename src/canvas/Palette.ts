@@ -5,6 +5,10 @@ import type {
   PaletteNode,
   ScaleConfiguration,
   ThemeConfiguration,
+  ColorSpaceConfiguration,
+  ViewConfiguration,
+  AlgorithmVersionConfiguration,
+  Service,
 } from '../utils/types'
 import Colors from './Colors'
 import { locals, lang } from '../content/locals'
@@ -15,13 +19,13 @@ export default class Palette {
   frameName: string
   scale: ScaleConfiguration
   colors: Array<ColorConfiguration>
-  colorSpace: string
+  colorSpace: ColorSpaceConfiguration
   themes: Array<ThemeConfiguration>
   preset: PresetConfiguration
-  view: string
+  view: ViewConfiguration
   textColorsTheme: TextColorsThemeHexModel
-  algorithmVersion: string
-  service: string
+  algorithmVersion: AlgorithmVersionConfiguration
+  service: Service
   children: PaletteNode
   node: FrameNode
 
@@ -29,10 +33,10 @@ export default class Palette {
     name: string,
     preset: PresetConfiguration,
     scale: ScaleConfiguration,
-    colorSpace: string,
-    view: string,
+    colorSpace: ColorSpaceConfiguration,
+    view: ViewConfiguration,
     textColorsTheme: TextColorsThemeHexModel,
-    algorithmVersion: string
+    algorithmVersion: AlgorithmVersionConfiguration
   ) {
     this.name = name
     this.frameName = `${name === '' ? locals[lang].name : name}﹒${

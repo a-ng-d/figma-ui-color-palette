@@ -4,7 +4,7 @@ import releaseNotes from '../../content/releaseNotes'
 import { locals } from '../../content/locals'
 
 interface Props {
-  lang: string
+  lang: 'EN-us'
   onCloseHighlight: React.ReactEventHandler
 }
 

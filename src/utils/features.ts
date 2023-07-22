@@ -1,6 +1,6 @@
-import type { Features } from './types'
+import type { Feature } from './types'
 
-const features: Array<Features> = [
+const features: Array<Feature> = [
   {
     name: 'ONBOARDING',
     description: 'Onboarding service when the selection is empty',
