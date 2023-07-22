@@ -53,10 +53,10 @@ const themesMessage: ThemesMessage = {
   isEditedInRealTime: false,
 }
 
-export default class EditPalette extends React.Component<Props> {
+export default class EditPalette extends React.Component<Props, any> {
   themesRef: React.MutableRefObject<any>
 
-  constructor(props) {
+  constructor(props: Props) {
     super(props)
     this.state = {
       context:
@@ -75,7 +75,7 @@ export default class EditPalette extends React.Component<Props> {
           : '',
       deploymentAction: features.find(
         (feature) => feature.name === 'LOCAL_STYLES'
-      ).isActive
+      )?.isActive
         ? 'LOCAL_STYLES'
         : 'LOCAL_VARIABLES',
     }
@@ -88,9 +88,9 @@ export default class EditPalette extends React.Component<Props> {
       context: (e.target as HTMLElement).dataset.feature,
     })
 
-  switchThemeHandler = (e) => {
+  switchThemeHandler = (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
     themesMessage.data = this.props.themes.map((theme) => {
-      if (e.target.dataset.value === theme.id) theme.isEnabled = true
+      if ((e.target as HTMLElement).dataset.value === theme.id) theme.isEnabled = true
       else theme.isEnabled = false
 
       return theme
@@ -149,12 +149,12 @@ export default class EditPalette extends React.Component<Props> {
   onExport = () => {
     if (this.props.export.format === 'CSV') {
       const zip = new JSZip()
-      this.props.export.data.forEach((theme) => {
+      this.props.export.data.forEach((theme: { name: string, type: string, colors: Array<{ name: string, csv: string }> }) => {
         const folder =
           theme.type != 'default theme' ? zip.folder(theme.name) : null
         theme.colors.forEach((color) => {
           theme.type != 'default theme'
-            ? folder.file(`${doSnakeCase(color.name)}.csv`, color.csv)
+            ? folder!.file(`${doSnakeCase(color.name)}.csv`, color.csv)
             : zip.file(`${doSnakeCase(color.name)}.csv`, color.csv)
         })
       })
@@ -191,27 +191,27 @@ export default class EditPalette extends React.Component<Props> {
       label: string
       id: string
     }> = []
-    if (features.find((feature) => feature.name === 'SCALE').isActive)
+    if (features.find((feature) => feature.name === 'SCALE')?.isActive)
       contexts.push({
         label: locals[this.props.lang].contexts.scale,
         id: 'SCALE',
       })
-    if (features.find((feature) => feature.name === 'COLORS').isActive)
+    if (features.find((feature) => feature.name === 'COLORS')?.isActive)
       contexts.push({
         label: locals[this.props.lang].contexts.colors,
         id: 'COLORS',
       })
-    if (features.find((feature) => feature.name === 'THEMES').isActive)
+    if (features.find((feature) => feature.name === 'THEMES')?.isActive)
       contexts.push({
         label: locals[this.props.lang].contexts.themes,
         id: 'THEMES',
       })
-    if (features.find((feature) => feature.name === 'EXPORT').isActive)
+    if (features.find((feature) => feature.name === 'EXPORT')?.isActive)
       contexts.push({
         label: locals[this.props.lang].contexts.export,
         id: 'EXPORT',
       })
-    if (features.find((feature) => feature.name === 'SETTINGS').isActive)
+    if (features.find((feature) => feature.name === 'SETTINGS')?.isActive)
       contexts.push({
         label: locals[this.props.lang].contexts.settings,
         id: 'SETTINGS',
@@ -360,7 +360,7 @@ export default class EditPalette extends React.Component<Props> {
           rightPart={
             <Feature
               isActive={
-                features.find((feature) => feature.name === 'THEMES').isActive
+                features.find((feature) => feature.name === 'THEMES')?.isActive
               }
             >
               <FormItem
@@ -380,7 +380,7 @@ export default class EditPalette extends React.Component<Props> {
                     }
                   })}
                   selected={
-                    this.props.themes.find((theme) => theme.isEnabled).id
+                    this.props.themes.find((theme) => theme.isEnabled)?.id ?? 'NULL'
                   }
                   actions={[
                     {
@@ -395,7 +395,7 @@ export default class EditPalette extends React.Component<Props> {
                   ]}
                   feature="SWITCH_THEME"
                   parentClassName="ui"
-                  onChange={this.switchThemeHandler}
+                  onChange={(e) => this.switchThemeHandler(e)}
                 />
               </FormItem>
             </Feature>

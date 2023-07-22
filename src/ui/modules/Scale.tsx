@@ -25,7 +25,7 @@ interface Props {
   planStatus: 'UNPAID' | 'PAID'
   editorType?: string
   lang: Language
-  onChangePreset?: React.ReactEventHandler
+  onChangePreset?: (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => void
   onChangeScale: () => void
   onChangeStop?: () => void
   onAddStop?: React.ReactEventHandler
@@ -35,13 +35,13 @@ interface Props {
   onUpdateLocalStyles?: () => void
   onCreateLocalVariables?: () => void
   onUpdateLocalVariables?: () => void
-  onChangeActions?: (value: string) => void
+  onChangeActions?: (value: string) => void | undefined
 }
 
-export default class Scale extends React.Component<Props> {
+export default class Scale extends React.Component<Props, any> {
   dispatch: { [key: string]: DispatchProcess }
 
-  constructor(props) {
+  constructor(props: Props) {
     super(props)
     this.dispatch = {
       scale: new Dispatcher(
@@ -57,12 +57,12 @@ export default class Scale extends React.Component<Props> {
             '*'
           ),
         500
-      ),
+      ) as DispatchProcess,
     }
   }
 
   // Handlers
-  slideHandler = (state: string, feature?) => {
+  slideHandler = (state: string, feature?: string) => {
     const onReleaseStop = () => {
       this.dispatch.scale.on.status = false
       parent.postMessage(
@@ -90,7 +90,7 @@ export default class Scale extends React.Component<Props> {
         },
         '*'
       )
-      this.props.onChangeStop()
+      this.props.onChangeStop?.()
     }
 
     const onTypeStopValue = () => {
@@ -104,7 +104,7 @@ export default class Scale extends React.Component<Props> {
         },
         '*'
       )
-      this.props.onChangeStop()
+      this.props.onChangeStop?.()
     }
 
     const actions: ActionsList = {
@@ -156,7 +156,7 @@ export default class Scale extends React.Component<Props> {
               <Feature
                 isActive={
                   features.find((feature) => feature.name === 'SCALE_PRESETS')
-                    .isActive
+                    ?.isActive
                 }
               >
                 <Dropdown
@@ -173,7 +173,7 @@ export default class Scale extends React.Component<Props> {
                   selected={this.props.preset.id}
                   feature="UPDATE_PRESET"
                   parentClassName="controls"
-                  onChange={this.props.onChangePreset}
+                  onChange={(e) => this.props.onChangePreset?.(e)}
                 />
               </Feature>
             </div>
@@ -181,7 +181,7 @@ export default class Scale extends React.Component<Props> {
               <Feature
                 isActive={
                   features.find((feature) => feature.name === 'SCALE_PRESETS')
-                    .isActive
+                    ?.isActive
                 }
               >
                 {this.props.preset.scale.length > 2 &&
@@ -214,7 +214,7 @@ export default class Scale extends React.Component<Props> {
           <Feature
             isActive={
               features.find((feature) => feature.name === 'SCALE_CONFIGURATION')
-                .isActive
+                ?.isActive
             }
           >
             <Slider
@@ -229,7 +229,7 @@ export default class Scale extends React.Component<Props> {
           </Feature>
           <Feature
             isActive={
-              features.find((feature) => feature.name === 'SCALE_TIPS').isActive
+              features.find((feature) => feature.name === 'SCALE_TIPS')?.isActive
             }
           >
             <Message
@@ -259,7 +259,7 @@ export default class Scale extends React.Component<Props> {
                 {locals[this.props.lang].scale.title}
               </div>
               <div className="type">{`(${
-                Object.entries(this.props.scale).length
+                Object.entries(this.props.scale ?? {}).length
               })`}</div>
             </div>
             <div className="section-controls__right-part">
@@ -269,7 +269,7 @@ export default class Scale extends React.Component<Props> {
           <Feature
             isActive={
               features.find((feature) => feature.name === 'SCALE_CONFIGURATION')
-                .isActive
+                ?.isActive
             }
           >
             <Slider
@@ -283,7 +283,7 @@ export default class Scale extends React.Component<Props> {
           </Feature>
           <Feature
             isActive={
-              features.find((feature) => feature.name === 'SCALE_TIPS').isActive
+              features.find((feature) => feature.name === 'SCALE_TIPS')?.isActive
             }
           >
             <Message

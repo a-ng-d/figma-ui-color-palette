@@ -36,12 +36,12 @@ export default class Input extends React.Component<Props> {
     if (e.shiftKey && e.key === 'ArrowUp')
       (e.target as HTMLInputElement).value = (
         parseFloat((e.target as HTMLInputElement).value) +
-        9 * parseFloat(this.props.step)
+        9 * parseFloat(this.props.step == undefined ? '1' : this.props.step)
       ).toString()
     else if (e.shiftKey && e.key === 'ArrowDown')
       (e.target as HTMLInputElement).value = (
         parseFloat((e.target as HTMLInputElement).value) -
-        9 * parseFloat(this.props.step)
+        9 * parseFloat(this.props.step == undefined ? '1' : this.props.step)
       ).toString()
   }
 
@@ -83,18 +83,18 @@ export default class Input extends React.Component<Props> {
     return (
       <div
         className={`input${this.props.isBlocked ? ' input--blocked' : ''}${
-          this.props.icon.type === 'NONE' ? '' : ' input--with-icon'
+          this.props.icon?.type === 'NONE' ? '' : ' input--with-icon'
         }`}
       >
-        {this.props.icon.type != 'NONE' ? (
+        {this.props.icon?.type != 'NONE' ? (
           <div
             className={`icon${
-              this.props.icon.type === 'ICON'
+              this.props.icon?.type === 'ICON'
                 ? ` icon--${this.props.icon.value}`
                 : ''
             }`}
           >
-            {this.props.icon.type === 'LETTER' ? this.props.icon.value : ''}
+            {this.props.icon?.type === 'LETTER' ? this.props.icon.value : ''}
           </div>
         ) : null}
         <input
@@ -121,18 +121,18 @@ export default class Input extends React.Component<Props> {
     return (
       <div
         className={`input${this.props.isBlocked ? ' input--blocked' : ''}${
-          this.props.icon.type === 'NONE' ? '' : ' input--with-icon'
+          this.props.icon?.type === 'NONE' ? '' : ' input--with-icon'
         }`}
       >
-        {this.props.icon.type != 'NONE' ? (
+        {this.props.icon?.type != 'NONE' ? (
           <div
             className={`icon${
-              this.props.icon.type === 'ICON'
-                ? ` icon--${this.props.icon.value}`
+              this.props.icon?.type === 'ICON'
+                ? ` icon--${this.props.icon?.value}`
                 : ''
             }`}
           >
-            {this.props.icon.type === 'LETTER' ? this.props.icon.value : ''}
+            {this.props.icon?.type === 'LETTER' ? this.props.icon?.value : ''}
           </div>
         ) : null}
         <input

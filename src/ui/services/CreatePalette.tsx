@@ -20,13 +20,13 @@ interface Props {
   textColorsTheme: TextColorsThemeHexModel
   planStatus: 'UNPAID' | 'PAID'
   lang: Language
-  onChangePreset: React.ChangeEventHandler
-  onCustomPreset: React.ChangeEventHandler
-  onChangeSettings: React.ChangeEventHandler
+  onChangePreset: (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => void
+  onCustomPreset: (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => void
+  onChangeSettings: (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => void
 }
 
-export default class CreatePalette extends React.Component<Props> {
-  constructor(props) {
+export default class CreatePalette extends React.Component<Props, any> {
+  constructor(props: Props) {
     super(props)
     this.state = {
       context:
@@ -64,12 +64,12 @@ export default class CreatePalette extends React.Component<Props> {
       label: string
       id: string
     }> = []
-    if (features.find((feature) => feature.name === 'SCALE').isActive)
+    if (features.find((feature) => feature.name === 'SCALE')?.isActive)
       contexts.push({
         label: locals[this.props.lang].contexts.scale,
         id: 'SCALE',
       })
-    if (features.find((feature) => feature.name === 'SETTINGS').isActive)
+    if (features.find((feature) => feature.name === 'SETTINGS')?.isActive)
       contexts.push({
         label: locals[this.props.lang].contexts.settings,
         id: 'SETTINGS',

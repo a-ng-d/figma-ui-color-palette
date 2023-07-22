@@ -28,7 +28,7 @@ interface Props {
   onUpdateLocalStyles?: () => void
   onCreateLocalVariables?: () => void
   onUpdateLocalVariables?: () => void
-  onChangeActions?: (value: string) => void
+  onChangeActions?: (value: string) => void | undefined
 }
 
 export default class Settings extends React.Component<Props> {
@@ -38,7 +38,7 @@ export default class Settings extends React.Component<Props> {
       <Feature
         isActive={
           features.find((feature) => feature.name === 'SETTINGS_PALETTE_NAME')
-            .isActive
+            ?.isActive
         }
       >
         <div className="settings__item">
@@ -91,7 +91,7 @@ export default class Settings extends React.Component<Props> {
   view = () => {
     return (
       <Feature
-        isActive={features.find((feature) => feature.name === 'VIEWS').isActive}
+        isActive={features.find((feature) => feature.name === 'VIEWS')?.isActive}
       >
         <div className="settings__item">
           <FormItem
@@ -108,7 +108,7 @@ export default class Settings extends React.Component<Props> {
                   isActive: features.find(
                     (feature) =>
                       feature.name === 'VIEWS_PALETTE_WITH_PROPERTIES'
-                  ).isActive,
+                  )?.isActive,
                   isBlocked: isBlocked(
                     'VIEWS_PALETTE_WITH_PROPERTIES',
                     this.props.planStatus
@@ -120,7 +120,7 @@ export default class Settings extends React.Component<Props> {
                   position: 1,
                   isActive: features.find(
                     (feature) => feature.name === 'VIEWS_PALETTE'
-                  ).isActive,
+                  )?.isActive,
                   isBlocked: isBlocked('VIEWS_PALETTE', this.props.planStatus),
                 },
                 {
@@ -129,7 +129,7 @@ export default class Settings extends React.Component<Props> {
                   position: 2,
                   isActive: features.find(
                     (feature) => feature.name === 'VIEWS_SHEET'
-                  ).isActive,
+                  )?.isActive,
                   isBlocked: isBlocked('VIEWS_SHEET', this.props.planStatus),
                 },
               ]}
@@ -148,7 +148,7 @@ export default class Settings extends React.Component<Props> {
       <Feature
         isActive={
           features.find((feature) => feature.name === 'SETTINGS_COLOR_SPACE')
-            .isActive
+            ?.isActive
         }
       >
         <div className="settings__item">
@@ -165,7 +165,7 @@ export default class Settings extends React.Component<Props> {
                   position: 0,
                   isActive: features.find(
                     (feature) => feature.name === 'SETTINGS_COLOR_SPACE_LCH'
-                  ).isActive,
+                  )?.isActive,
                   isBlocked: isBlocked(
                     'SETTINGS_COLOR_SPACE_LCH',
                     this.props.planStatus
@@ -178,7 +178,7 @@ export default class Settings extends React.Component<Props> {
                   position: 1,
                   isActive: features.find(
                     (feature) => feature.name === 'SETTINGS_COLOR_SPACE_OKLCH'
-                  ).isActive,
+                  )?.isActive,
                   isBlocked: isBlocked(
                     'SETTINGS_COLOR_SPACE_OKLCH',
                     this.props.planStatus
@@ -190,7 +190,7 @@ export default class Settings extends React.Component<Props> {
                   position: 2,
                   isActive: features.find(
                     (feature) => feature.name === 'SETTINGS_COLOR_SPACE_LAB'
-                  ).isActive,
+                  )?.isActive,
                   isBlocked: isBlocked(
                     'SETTINGS_COLOR_SPACE_LAB',
                     this.props.planStatus
@@ -203,7 +203,7 @@ export default class Settings extends React.Component<Props> {
                   position: 3,
                   isActive: features.find(
                     (feature) => feature.name === 'SETTINGS_COLOR_SPACE_OKLAB'
-                  ).isActive,
+                  )?.isActive,
                   isBlocked: isBlocked(
                     'SETTINGS_COLOR_SPACE_OKLAB',
                     this.props.planStatus
@@ -215,7 +215,7 @@ export default class Settings extends React.Component<Props> {
                   position: 4,
                   isActive: features.find(
                     (feature) => feature.name === 'SETTINGS_COLOR_SPACE_HSL'
-                  ).isActive,
+                  )?.isActive,
                   isBlocked: isBlocked(
                     'SETTINGS_COLOR_SPACE_HSL',
                     this.props.planStatus
@@ -247,14 +247,14 @@ export default class Settings extends React.Component<Props> {
       <Feature
         isActive={
           features.find((feature) => feature.name === 'SETTINGS_NEW_ALGORITHM')
-            .isActive
+            ?.isActive
         }
       >
         <div className="settings__item">
           <Switch
             id="update-algorithm"
             label={locals[this.props.lang].settings.color.newAlgorithm.label}
-            isChecked={this.props.isNewAlgorithm}
+            isChecked={this.props.isNewAlgorithm ?? true}
             isBlocked={isBlocked(
               'SETTINGS_NEW_ALGORITHM',
               this.props.planStatus
@@ -287,7 +287,7 @@ export default class Settings extends React.Component<Props> {
         isActive={
           features.find(
             (feature) => feature.name === 'SETTINGS_TEXT_COLORS_THEME'
-          ).isActive
+          )?.isActive
         }
       >
         <div className="settings__item">
@@ -305,7 +305,7 @@ export default class Settings extends React.Component<Props> {
             <Input
               id="change-text-light-color"
               type="COLOR"
-              value={this.props.textColorsTheme.lightColor}
+              value={this.props.textColorsTheme?.lightColor ?? '#FFFFFF'}
               isBlocked={isBlocked(
                 'SETTINGS_TEXT_COLORS_THEME',
                 this.props.planStatus
@@ -341,7 +341,7 @@ export default class Settings extends React.Component<Props> {
             <Input
               id="change-text-dark-color"
               type="COLOR"
-              value={this.props.textColorsTheme.darkColor}
+              value={this.props.textColorsTheme?.darkColor ?? '#OOOOOO'}
               isBlocked={isBlocked(
                 'SETTINGS_TEXT_COLORS_THEME',
                 this.props.planStatus

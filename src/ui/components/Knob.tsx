@@ -51,7 +51,7 @@ export default class Knob extends React.Component<Props> {
           <div className="slider__input">
             <Input
               type="NUMBER"
-              value={this.props.stopInputValue.toString()}
+              value={this.props.stopInputValue?.toString() ?? '0'}
               min={this.props.min}
               max={this.props.max}
               step="0.1"
@@ -59,13 +59,13 @@ export default class Knob extends React.Component<Props> {
               isAutoFocus={true}
               onChange={this.props.onChangeStopValue}
               onFocus={(e: React.FocusEvent<HTMLInputElement>) =>
-                this.props.onValidStopValue(this.props.shortId, e)
+                this.props.onValidStopValue?.(this.props.shortId, e)
               }
               onBlur={(e: React.FocusEvent<HTMLInputElement>) =>
-                this.props.onValidStopValue(this.props.shortId, e)
+                this.props.onValidStopValue?.(this.props.shortId, e)
               }
               onConfirm={(e: React.KeyboardEvent<HTMLInputElement>) =>
-                this.props.onValidStopValue(this.props.shortId, e)
+                this.props.onValidStopValue?.(this.props.shortId, e)
               }
             />
           </div>

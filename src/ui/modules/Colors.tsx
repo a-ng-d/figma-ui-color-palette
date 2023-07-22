@@ -1,5 +1,5 @@
 import * as React from 'react'
-import chroma from 'chroma-js'
+import chroma, { Color } from 'chroma-js'
 import type {
   HoveredColor,
   SelectedColor,
@@ -38,17 +38,17 @@ const colorsMessage: ColorsMessage = {
   isEditedInRealTime: false,
 }
 
-export default class Colors extends React.Component<Props> {
+export default class Colors extends React.Component<Props, any> {
   dispatch: { [key: string]: DispatchProcess }
   listRef: React.MutableRefObject<any>
 
-  constructor(props) {
+  constructor(props: Props) {
     super(props)
     this.dispatch = {
       colors: new Dispatcher(
         () => parent.postMessage({ pluginMessage: colorsMessage }, '*'),
         500
-      ),
+      ) as DispatchProcess,
     }
     this.state = {
       selectedElement: {
@@ -72,7 +72,7 @@ export default class Colors extends React.Component<Props> {
   componentWillUnmount = () =>
     document.removeEventListener('mousedown', this.handleClickOutside)
 
-  handleClickOutside = (e) => {
+  handleClickOutside = (e: Event) => {
     if (this.listRef && !this.listRef.current.contains(e.target))
       this.setState({
         selectedElement: {
@@ -83,9 +83,10 @@ export default class Colors extends React.Component<Props> {
   }
 
   // Handlers
-  colorsHandler = (e) => {
-    let id: string
-    const element: HTMLElement | null = e.target.closest('.list__item')
+  colorsHandler = (e: any) => {
+    let id: string | null
+    const element: HTMLElement | null = (e.target as HTMLElement).closest('.list__item'),
+    currentElement: HTMLInputElement = e.target as HTMLInputElement
 
     element != null ? (id = element.getAttribute('data-id')) : null
 
@@ -114,16 +115,16 @@ export default class Colors extends React.Component<Props> {
 
     const updateHexCode = () => {
       const code: HexModel =
-        e.target.value.indexOf('#') == -1
-          ? '#' + e.target.value
-          : e.target.value
+        currentElement.value.indexOf('#') == -1
+          ? '#' + currentElement.value
+          : currentElement.value
       if (/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/i.test(code)) {
         colorsMessage.data = this.props.colors.map((item) => {
           const rgb = chroma(
-            e.target.value.indexOf('#') == -1
-              ? '#' + e.target.value
-              : e.target.value
-          )._rgb
+            currentElement.value.indexOf('#') == -1
+              ? '#' + currentElement.value
+              : currentElement.value
+          ).rgb()
           if (item.id === id)
             item.rgb = {
               r: rgb[0] / 255,
@@ -149,7 +150,7 @@ export default class Colors extends React.Component<Props> {
           item.rgb.r * 255,
           item.rgb.g * 255,
           item.rgb.b * 255
-        ).set('lch.l', e.target.value)._rgb
+        ).set('lch.l', currentElement.value).rgb()
         if (item.id === id)
           item.rgb = {
             r: rgb[0] / 255,
@@ -168,7 +169,7 @@ export default class Colors extends React.Component<Props> {
           item.rgb.r * 255,
           item.rgb.g * 255,
           item.rgb.b * 255
-        ).set('lch.c', e.target.value)._rgb
+        ).set('lch.c', currentElement.value).rgb()
         if (item.id === id)
           item.rgb = {
             r: rgb[0] / 255,
@@ -187,7 +188,7 @@ export default class Colors extends React.Component<Props> {
           item.rgb.r * 255,
           item.rgb.g * 255,
           item.rgb.b * 255
-        ).set('lch.h', e.target.value)._rgb
+        ).set('lch.h', currentElement.value).rgb()
         if (item.id === id)
           item.rgb = {
             r: rgb[0] / 255,
@@ -202,7 +203,7 @@ export default class Colors extends React.Component<Props> {
 
     const setHueShifting = () => {
       colorsMessage.data = this.props.colors.map((item) => {
-        if (item.id === id) item.hueShifting = parseFloat(e.target.value)
+        if (item.id === id) item.hueShifting = parseFloat(currentElement.value)
         return item
       })
       this.props.onChangeColors(colorsMessage.data)
@@ -211,7 +212,7 @@ export default class Colors extends React.Component<Props> {
 
     const updateColorDescription = () => {
       colorsMessage.data = this.props.colors.map((item) => {
-        if (item.id === id) item.description = e.target.value
+        if (item.id === id) item.description = currentElement.value
         return item
       })
       this.props.onChangeColors(colorsMessage.data)
@@ -229,12 +230,12 @@ export default class Colors extends React.Component<Props> {
 
     const renameColor = () => {
       const hasSameName = this.props.colors.filter(
-        (color) => color.name === e.target.value
+        (color) => color.name === currentElement.value
       )
       colorsMessage.data = this.props.colors.map((item) => {
         if (item.id === id)
           item.name =
-            hasSameName.length > 1 ? e.target.value + ' 2' : e.target.value
+            hasSameName.length > 1 ? currentElement.value + ' 2' : currentElement.value
         return item
       })
       this.props.onChangeColors(colorsMessage.data)
@@ -256,7 +257,7 @@ export default class Colors extends React.Component<Props> {
       REMOVE_COLOR: () => removeColor(),
     }
 
-    return actions[e.target.dataset.feature]?.()
+    return actions[(e.target as HTMLInputElement).dataset.feature!]?.()
   }
 
   orderHandler = () => {
@@ -292,7 +293,7 @@ export default class Colors extends React.Component<Props> {
     )
   }
 
-  selectionHandler = (e) => {
+  selectionHandler = (e: any) => {
     const target = e.currentTarget
     if (target !== e.target) return
     this.setState({
@@ -304,10 +305,10 @@ export default class Colors extends React.Component<Props> {
   }
 
   dragHandler = (
-    id: string,
+    id: string | undefined,
     hasGuideAbove: boolean,
     hasGuideBelow: boolean,
-    position: number
+    position: number | string
   ) => {
     this.setState({
       hoveredElement: {
@@ -319,10 +320,10 @@ export default class Colors extends React.Component<Props> {
     })
   }
 
-  dropOutsideHandler = (e) => {
+  dropOutsideHandler = (e: React.DragEvent<HTMLLIElement>) => {
     const target = e.target,
-      parent: ParentNode = target.parentNode,
-      scrollY: number = (parent.parentNode.parentNode as HTMLElement).scrollTop,
+      parent: ParentNode = (target as HTMLElement).parentNode!,
+      scrollY: number = (parent.parentNode!.parentNode as HTMLElement).scrollTop,
       parentRefTop: number = (parent as HTMLElement).offsetTop,
       parentRefBottom: number =
         parentRefTop + (parent as HTMLElement).clientHeight
@@ -347,7 +348,7 @@ export default class Colors extends React.Component<Props> {
                 type="icon"
                 icon="plus"
                 feature="ADD_COLOR"
-                action={this.colorsHandler}
+                action={(e) => this.colorsHandler(e)}
               />
             </div>
           </div>
@@ -362,7 +363,7 @@ export default class Colors extends React.Component<Props> {
                   type="primary"
                   feature="ADD_COLOR"
                   label={locals[this.props.lang].colors.callout.cta}
-                  action={this.colorsHandler}
+                  action={(e) => this.colorsHandler(e)}
                 />
               </div>
             </div>
@@ -399,11 +400,11 @@ export default class Colors extends React.Component<Props> {
                       : false
                   }
                   lang={this.props.lang}
-                  onChangeColors={this.colorsHandler}
-                  onChangeSelection={this.selectionHandler}
-                  onCancellationSelection={this.selectionHandler}
+                  onChangeColors={(e) => this.colorsHandler(e)}
+                  onChangeSelection={(e) => this.selectionHandler(e)}
+                  onCancellationSelection={(e) => this.selectionHandler(e)}
                   onDragChange={this.dragHandler}
-                  onDropOutside={this.dropOutsideHandler}
+                  onDropOutside={(e) => this.dropOutsideHandler(e)}
                   onChangeOrder={this.orderHandler}
                 />
               ))}

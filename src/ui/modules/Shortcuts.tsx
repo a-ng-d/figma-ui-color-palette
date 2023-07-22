@@ -33,7 +33,7 @@ export default class Shortcuts extends React.Component<Props> {
             <Feature
               isActive={
                 features.find((feature) => feature.name === 'HIGHLIGHT')
-                  .isActive
+                  ?.isActive
               }
             >
               <span>﹒</span>
@@ -45,7 +45,7 @@ export default class Shortcuts extends React.Component<Props> {
             </Feature>
             <Feature
               isActive={
-                features.find((feature) => feature.name === 'ABOUT').isActive
+                features.find((feature) => feature.name === 'ABOUT')?.isActive
               }
             >
               <span>﹒</span>
@@ -79,7 +79,7 @@ export default class Shortcuts extends React.Component<Props> {
           <Feature
             isActive={
               features.find((feature) => feature.name === 'GET_PRO_PLAN')
-                .isActive
+                ?.isActive
             }
           >
             {this.props.planStatus === 'UNPAID' ? (

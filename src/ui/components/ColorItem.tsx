@@ -27,19 +27,19 @@ interface Props {
     React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement> &
     React.MouseEventHandler
   onChangeSelection: React.MouseEventHandler<HTMLLIElement>
-  onCancellationSelection: React.ChangeEventHandler
+  onCancellationSelection: React.MouseEventHandler<Element> & React.FocusEventHandler<HTMLInputElement>
   onDragChange: (
-    id: string,
+    id: string | undefined,
     hasGuideAbove: boolean,
     hasGuideBelow: boolean,
-    position: number
+    position: number | string
   ) => void
-  onDropOutside: React.ChangeEventHandler
-  onChangeOrder: React.ChangeEventHandler
+  onDropOutside: (e: React.DragEvent<HTMLLIElement>) => void
+  onChangeOrder: (e: React.DragEvent<HTMLLIElement>) => void
 }
 
-export default class ColorItem extends React.Component<Props> {
-  constructor(props) {
+export default class ColorItem extends React.Component<Props, any> {
+  constructor(props: Props) {
     super(props)
     this.state = {
       isDragged: false,
@@ -48,37 +48,37 @@ export default class ColorItem extends React.Component<Props> {
   }
 
   // Handlers
-  optionsHandler = (e) => {
+  optionsHandler = (e: React.MouseEvent<Element, MouseEvent>) => {
     this.props.onCancellationSelection(e)
     this.setState({ hasMoreOptions: !this.state['hasMoreOptions'] })
   }
 
   // Direct actions
-  onDragStart = (e) => {
+  onDragStart = (e: React.DragEvent<HTMLLIElement>) => {
     this.setState({ isDragged: true })
-    const clone = e.currentTarget.cloneNode(true)
-    clone.style.opacity = 0
-    clone.id = 'ghost'
+    const clone = e.currentTarget.cloneNode(true);
+    (clone as HTMLElement).style.opacity = '0';
+    (clone as HTMLElement).id = 'ghost'
     document.body.appendChild(clone)
-    e.dataTransfer.setDragImage(clone, 0, 0)
+    e.dataTransfer.setDragImage((clone as Element), 0, 0)
     e.dataTransfer.effectAllowed = 'move'
-    document.querySelector('#react-page').classList.add('dragged-ghost')
+    document.querySelector('#react-page')!.classList.add('dragged-ghost')
   }
 
-  onDragEnd = (e) => {
+  onDragEnd = (e: React.DragEvent<HTMLLIElement>) => {
     this.setState({ isDragged: false })
-    this.props.onDragChange('', false, false, undefined)
+    this.props.onDragChange('', false, false, 0)
     this.props.onDropOutside(e)
-    document.querySelector('#react-page').classList.remove('dragged-ghost')
-    document.querySelector('#ghost').remove()
+    document.querySelector('#react-page')!.classList.remove('dragged-ghost')
+    document.querySelector('#ghost')!.remove()
   }
 
-  onDragOver = (e) => {
+  onDragOver = (e: React.DragEvent<HTMLLIElement>) => {
     e.preventDefault()
     const target = e.currentTarget,
       height: number = target.clientHeight,
-      parentY: number = target.parentNode.offsetTop,
-      scrollY: number = target.parentNode.scrollTop,
+      parentY: number = (target.parentNode! as HTMLElement).offsetTop,
+      scrollY: number = (target.parentNode! as HTMLElement).scrollTop,
       refTop: number = target.offsetTop - parentY,
       refBottom: number = refTop + height,
       y: number = e.pageY - parentY + scrollY,
@@ -89,18 +89,18 @@ export default class ColorItem extends React.Component<Props> {
         target.dataset.id,
         true,
         false,
-        target.dataset.position
+        target.dataset.position ?? 0
       )
     else if (refY > height / 2 && refY <= height)
       this.props.onDragChange(
         target.dataset.id,
         false,
         true,
-        target.dataset.position
+        target?.dataset.position ?? 0
       )
   }
 
-  onDrop = (e) => {
+  onDrop = (e: React.DragEvent<HTMLLIElement>) => {
     e.preventDefault()
     this.props.onChangeOrder(e)
   }
@@ -120,14 +120,14 @@ export default class ColorItem extends React.Component<Props> {
         }${this.state['hasMoreOptions'] ? ' list__item--emphasis' : ''}`}
         draggable={this.props.selected}
         onMouseDown={this.props.onChangeSelection}
-        onDragStart={this.onDragStart}
-        onDragEnd={this.onDragEnd}
-        onDragOver={this.onDragOver}
-        onDrop={this.onDrop}
+        onDragStart={(e) => this.onDragStart(e)}
+        onDragEnd={(e) => this.onDragEnd(e)}
+        onDragOver={(e) => this.onDragOver(e)}
+        onDrop={(e) => this.onDrop(e)}
       >
         <Feature
           isActive={
-            features.find((feature) => feature.name === 'COLORS_NAME').isActive
+            features.find((feature) => feature.name === 'COLORS_NAME')?.isActive
           }
         >
           <div className="colors__name">
@@ -145,8 +145,7 @@ export default class ColorItem extends React.Component<Props> {
         </Feature>
         <Feature
           isActive={
-            features.find((feature) => feature.name === 'COLORS_PARAMS')
-              .isActive
+            features.find((feature) => feature.name === 'COLORS_PARAMS')?.isActive
           }
         >
           <div className="colors__parameters">
@@ -204,10 +203,8 @@ export default class ColorItem extends React.Component<Props> {
         <div className="list__item__buttons">
           <Feature
             isActive={
-              features.find((feature) => feature.name === 'COLORS_HUE_SHIFTING')
-                .isActive ||
-              features.find((feature) => feature.name === 'COLORS_DESCRIPTION')
-                .isActive
+              features.find((feature) => feature.name === 'COLORS_HUE_SHIFTING')?.isActive ||
+              features.find((feature) => feature.name === 'COLORS_DESCRIPTION')?.isActive
             }
           >
             <Button
@@ -215,7 +212,7 @@ export default class ColorItem extends React.Component<Props> {
               icon="adjust"
               state={this.state['hasMoreOptions'] ? 'selected' : ''}
               feature="DISPLAY_MORE"
-              action={this.optionsHandler}
+              action={(e) => this.optionsHandler(e)}
             />
           </Feature>
           <Button
@@ -229,9 +226,7 @@ export default class ColorItem extends React.Component<Props> {
           <>
             <Feature
               isActive={
-                features.find(
-                  (feature) => feature.name === 'COLORS_HUE_SHIFTING'
-                ).isActive
+                features.find((feature) => feature.name === 'COLORS_HUE_SHIFTING')?.isActive
               }
             >
               <div className="colors__shift inputs">
@@ -253,9 +248,7 @@ export default class ColorItem extends React.Component<Props> {
             </Feature>
             <Feature
               isActive={
-                features.find(
-                  (feature) => feature.name === 'COLORS_DESCRIPTION'
-                ).isActive
+                features.find((feature) => feature.name === 'COLORS_DESCRIPTION')?.isActive
               }
             >
               <div className="colors__description">

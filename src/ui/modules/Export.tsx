@@ -16,14 +16,14 @@ interface Props {
   onExportPalette: () => void
 }
 
-export default class Export extends React.Component<Props> {
+export default class Export extends React.Component<Props, any> {
   counter: number
 
   static defaultProps = {
     exportPreview: '',
   }
 
-  constructor(props) {
+  constructor(props: Props) {
     super(props)
     this.counter = 0
     this.state = {
@@ -96,7 +96,7 @@ export default class Export extends React.Component<Props> {
       },
     }
 
-    return actions[(e.target as HTMLElement).dataset.feature]?.()
+    return actions[(e.target as HTMLElement).dataset.feature!]?.()
   }
 
   // Direct actions
@@ -115,9 +115,9 @@ export default class Export extends React.Component<Props> {
     this.counter = 1
   }
 
-  selectPreview = (e) => e.target.select()
+  selectPreview = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => e.target.select()
 
-  deSelectPreview = () => window.getSelection().removeAllRanges()
+  deSelectPreview = () => window.getSelection()!.removeAllRanges()
 
   // Render
   render() {
@@ -138,7 +138,7 @@ export default class Export extends React.Component<Props> {
                 <Feature
                   isActive={
                     features.find((feature) => feature.name === 'EXPORT_JSON')
-                      .isActive
+                      ?.isActive
                   }
                 >
                   <li>
@@ -163,7 +163,7 @@ export default class Export extends React.Component<Props> {
                 <Feature
                   isActive={
                     features.find((feature) => feature.name === 'EXPORT_CSS')
-                      .isActive
+                      ?.isActive
                   }
                 >
                   <li>
@@ -185,7 +185,7 @@ export default class Export extends React.Component<Props> {
                 <Feature
                   isActive={
                     features.find((feature) => feature.name === 'EXPORT_SWIFT')
-                      .isActive
+                      ?.isActive
                   }
                 >
                   <li>
@@ -212,7 +212,7 @@ export default class Export extends React.Component<Props> {
                 <Feature
                   isActive={
                     features.find((feature) => feature.name === 'EXPORT_XML')
-                      .isActive
+                      ?.isActive
                   }
                 >
                   <li>
@@ -234,7 +234,7 @@ export default class Export extends React.Component<Props> {
                 <Feature
                   isActive={
                     features.find((feature) => feature.name === 'EXPORT_CSV')
-                      .isActive
+                      ?.isActive
                   }
                 >
                   <li>
@@ -270,7 +270,7 @@ export default class Export extends React.Component<Props> {
                 value={this.props.exportPreview}
                 isReadOnly={true}
                 onBlur={this.deSelectPreview}
-                onFocus={this.selectPreview}
+                onFocus={(e) => this.selectPreview(e)}
               />
             </div>
           </div>

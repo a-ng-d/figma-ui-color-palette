@@ -86,8 +86,8 @@ export interface PaletteConfiguration {
   name: string
   preset: PresetConfiguration | any
   scale: ScaleConfiguration
-  min: number
-  max: number
+  min: number | undefined
+  max: number | undefined
   colorSpace: ColorSpaceConfiguration
   view: ViewConfiguration
   textColorsTheme: TextColorsThemeHexModel
@@ -162,7 +162,6 @@ export type AlgorithmVersionConfiguration = 'v1' | 'v2'
 // Processes
 export interface DispatchProcess {
   time: number
-  callback: () => void
   on: {
     active: boolean
     blocked: boolean

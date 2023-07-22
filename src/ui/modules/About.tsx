@@ -31,7 +31,7 @@ export default class About extends React.Component<Props> {
                 <Feature
                   isActive={
                     features.find((feature) => feature.name === 'GET_PRO_PLAN')
-                      .isActive
+                      ?.isActive
                   }
                 >
                   {this.props.planStatus === 'UNPAID' ? (

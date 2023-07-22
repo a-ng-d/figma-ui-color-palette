@@ -16,15 +16,17 @@ export default class Bar extends React.Component<Props> {
 
   setBorder = (orientation: Array<'TOP' | 'LEFT' | 'BOTTOM' | 'RIGHT'>) => {
     const property = '1px solid var(--figma-color-border)',
-      style = {}
+      styles: { [ key: string ]: React.CSSProperties } = {
+        container : {}
+      }
 
     orientation.forEach((entry) => {
-      if (entry === 'TOP') style['borderTop'] = property
-      if (entry === 'LEFT') style['borderLeft'] = property
-      if (entry === 'BOTTOM') style['borderBottom'] = property
-      if (entry === 'RIGHT') style['borderRight'] = property
+      if (entry === 'TOP') styles.container['borderTop'] = property
+      if (entry === 'LEFT') styles.container['borderLeft'] = property
+      if (entry === 'BOTTOM') styles.container['borderBottom'] = property
+      if (entry === 'RIGHT') styles.container['borderRight'] = property
     })
-    return style
+    return styles
   }
 
   render() {
@@ -33,7 +35,7 @@ export default class Bar extends React.Component<Props> {
         className={`bar${this.props.isCompact ? ' bar--compact' : ''}${
           this.props.isOnlyText ? ' bar--text-only' : ''
         }`}
-        style={this.setBorder(this.props.border)}
+        style={this.setBorder(this.props.border).container}
       >
         <div className="bar__left">{this.props.leftPart}</div>
         <div className="bar__right">{this.props.rightPart}</div>

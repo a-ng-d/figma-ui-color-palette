@@ -4,7 +4,7 @@ interface Props {
   type: 'primary' | 'secondary' | 'tertiary' | 'icon'
   icon?: string
   label?: string
-  state?: 'disabled' | 'blocked' | 'selected' | '' | undefined
+  state?: 'disabled' | 'blocked' | 'selected' | ''
   isLink?: boolean
   url?: string
   feature?: string

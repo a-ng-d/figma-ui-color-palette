@@ -30,7 +30,7 @@ export default class Actions extends React.Component<Props> {
         <Feature
           isActive={
             features.find((feature) => feature.name === 'UPDATE_LOCAL_STYLES')
-              .isActive
+              ?.isActive
           }
         >
           <Button
@@ -43,7 +43,7 @@ export default class Actions extends React.Component<Props> {
         <Feature
           isActive={
             features.find((feature) => feature.name === 'CREATE_LOCAL_STYLES')
-              .isActive
+              ?.isActive
           }
         >
           <Button
@@ -64,7 +64,7 @@ export default class Actions extends React.Component<Props> {
           isActive={
             features.find(
               (feature) => feature.name === 'UPDATE_LOCAL_VARIABLES'
-            ).isActive
+            )?.isActive
           }
         >
           <Button
@@ -78,7 +78,7 @@ export default class Actions extends React.Component<Props> {
           isActive={
             features.find(
               (feature) => feature.name === 'CREATE_LOCAL_VARIABLES'
-            ).isActive
+            )?.isActive
           }
         >
           <Button
@@ -99,7 +99,7 @@ export default class Actions extends React.Component<Props> {
           <Feature
             isActive={
               features.find((feature) => feature.name === 'CREATE_PALETTE')
-                .isActive
+                ?.isActive
             }
           >
             <Button
@@ -136,8 +136,8 @@ export default class Actions extends React.Component<Props> {
                 position: 0,
                 isActive: features.find(
                   (feature) => feature.name === 'LOCAL_STYLES'
-                ).isActive,
-                isBlocked: isBlocked('LOCAL_STYLES', this.props.planStatus),
+                )?.isActive,
+                isBlocked: isBlocked('LOCAL_STYLES', this.props.planStatus ?? 'UNPAID'),
               },
               {
                 label:
@@ -146,16 +146,16 @@ export default class Actions extends React.Component<Props> {
                 position: 1,
                 isActive: features.find(
                   (feature) => feature.name === 'LOCAL_VARIABLES'
-                ).isActive,
-                isBlocked: isBlocked('LOCAL_VARIABLES', this.props.planStatus),
+                )?.isActive,
+                isBlocked: isBlocked('LOCAL_VARIABLES', this.props.planStatus ?? 'UNPAID'),
               },
             ]}
-            selected={this.props.actions}
+            selected={this.props.actions ?? ''}
             feature="UPDATE_DEPLOYMENT_ACTION"
             parentClassName="controls"
             onChange={(e) =>
-              this.props.onChangeActions(
-                (e.target as HTMLElement).dataset.value
+              this.props.onChangeActions?.(
+                (e.target as HTMLElement).dataset.value ?? 'NULL'
               )
             }
           />

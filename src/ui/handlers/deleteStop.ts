@@ -8,8 +8,8 @@ const deleteStop = (
   presetMin: number,
   presetMax: number
 ) => {
-  const newScale = [],
-    newLightnessScale = {}
+  const newScale: Array<number> = [],
+    newLightnessScale: { [key: string]:number } = {}
 
   Object.values(scale).forEach((scale) => {
     scale === parseFloat(selectedKnob.style.left) ? null : newScale.push(scale)

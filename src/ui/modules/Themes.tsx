@@ -43,17 +43,17 @@ const themesMessage: ThemesMessage = {
   isEditedInRealTime: false,
 }
 
-export default class Themes extends React.Component<Props> {
+export default class Themes extends React.Component<Props, any> {
   dispatch: { [key: string]: DispatchProcess }
   listRef: any
 
-  constructor(props) {
+  constructor(props: Props) {
     super(props)
     this.dispatch = {
       themes: new Dispatcher(
         () => parent.postMessage({ pluginMessage: themesMessage }, '*'),
         500
-      ),
+      ) as DispatchProcess,
     }
     this.state = {
       selectedElement: {
@@ -77,7 +77,7 @@ export default class Themes extends React.Component<Props> {
   componentWillUnmount = () =>
     document.removeEventListener('mousedown', this.handleClickOutside)
 
-  handleClickOutside = (e) => {
+  handleClickOutside = (e: Event) => {
     if (this.listRef.current != null)
       if (this.listRef && !this.listRef.current.contains(e.target))
         this.setState({
@@ -89,9 +89,10 @@ export default class Themes extends React.Component<Props> {
   }
 
   // Handlers
-  themesHandler = (e) => {
-    let id: string
-    const element: HTMLElement | null = e.target.closest('.list__item')
+  themesHandler = (e: any) => {
+    let id: string | null
+    const element: HTMLElement | null = (e.target as HTMLElement).closest('.list__item'),
+    currentElement: HTMLInputElement = e.target as HTMLInputElement
 
     element != null ? (id = element.getAttribute('data-id')) : null
 
@@ -124,12 +125,12 @@ export default class Themes extends React.Component<Props> {
 
     const renameTheme = () => {
       const hasSameName = this.props.themes.filter(
-        (color) => color.name === e.target.value
+        (color) => color.name === currentElement.value
       )
       themesMessage.data = this.props.themes.map((item) => {
         if (item.id === id)
           item.name =
-            hasSameName.length > 1 ? e.target.value + ' 2' : e.target.value
+            hasSameName.length > 1 ? currentElement.value + ' 2' : currentElement.value
         return item
       })
       this.props.onChangeThemes(themesMessage.data)
@@ -141,9 +142,9 @@ export default class Themes extends React.Component<Props> {
 
     const updatePaletteBackgroundColor = () => {
       const code: HexModel =
-        e.target.value.indexOf('#') == -1
-          ? '#' + e.target.value
-          : e.target.value
+        currentElement.value.indexOf('#') == -1
+          ? '#' + currentElement.value
+          : currentElement.value
       if (/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/i.test(code)) {
         themesMessage.data = this.props.themes.map((item) => {
           if (item.id === id) item.paletteBackground = code
@@ -162,7 +163,7 @@ export default class Themes extends React.Component<Props> {
 
     const updateThemeDescription = () => {
       themesMessage.data = this.props.themes.map((item) => {
-        if (item.id === id) item.description = e.target.value
+        if (item.id === id) item.description = currentElement.value
         return item
       })
       this.props.onChangeThemes(themesMessage.data)
@@ -181,7 +182,7 @@ export default class Themes extends React.Component<Props> {
       else
         themesMessage.data.find(
           (item) => item.type === 'default theme'
-        ).isEnabled = true
+        )!.isEnabled = true
       this.props.onChangeThemes(themesMessage.data)
       parent.postMessage({ pluginMessage: themesMessage }, '*')
     }
@@ -194,7 +195,7 @@ export default class Themes extends React.Component<Props> {
       REMOVE_THEME: () => removeTheme(),
     }
 
-    return actions[e.target.dataset.feature]?.()
+    return actions[currentElement.dataset.feature!]?.()
   }
 
   orderHandler = () => {
@@ -230,7 +231,7 @@ export default class Themes extends React.Component<Props> {
     )
   }
 
-  selectionHandler = (e) => {
+  selectionHandler = (e: any) => {
     const target = e.currentTarget
     if (target !== e.target) return
     this.setState({
@@ -242,10 +243,10 @@ export default class Themes extends React.Component<Props> {
   }
 
   dragHandler = (
-    id: string,
+    id: string | undefined,
     hasGuideAbove: boolean,
     hasGuideBelow: boolean,
-    position: number
+    position: number | string
   ) => {
     this.setState({
       hoveredElement: {
@@ -257,10 +258,10 @@ export default class Themes extends React.Component<Props> {
     })
   }
 
-  dropOutsideHandler = (e) => {
+  dropOutsideHandler = (e: React.DragEvent<HTMLLIElement>) => {
     const target = e.target,
-      parent: ParentNode = target.parentNode,
-      scrollY: number = (parent.parentNode.parentNode as HTMLElement).scrollTop,
+      parent: ParentNode = (target as HTMLElement).parentNode!,
+      scrollY: number = (parent.parentNode!.parentNode as HTMLElement).scrollTop,
       parentRefTop: number = (parent as HTMLElement).offsetTop,
       parentRefBottom: number =
         parentRefTop + (parent as HTMLElement).clientHeight
@@ -373,7 +374,7 @@ export default class Themes extends React.Component<Props> {
                           : false
                       }
                       lang={this.props.lang}
-                      onChangeThemes={this.themesHandler}
+                      onChangeThemes={(e) => this.themesHandler(e)}
                       onChangeSelection={this.selectionHandler}
                       onCancellationSelection={this.selectionHandler}
                       onDragChange={this.dragHandler}
