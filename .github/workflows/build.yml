@@ -2,9 +2,9 @@ name: UI Color Palette plugin builder
 
 on:
   push:
-    branches: [ github.ref ]
+    branches: [ '*' ]
   pull_request:
-    branches: [ github.ref ]
+    branches: [ '*' ]
 
 jobs:
   build:
