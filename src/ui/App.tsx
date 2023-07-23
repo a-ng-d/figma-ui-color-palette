@@ -45,16 +45,20 @@ const settingsMessage: SettingsMessage = {
   isEditedInRealTime: false,
 }
 
-class App extends React.Component {
+interface Props {
+   
+}
+
+class App extends React.Component<Props, any> {
   dispatch: { [key: string]: DispatchProcess }
 
-  constructor(props) {
+  constructor(props: Props) {
     super(props)
     this.dispatch = {
       textColorsTheme: new Dispatcher(
         () => parent.postMessage({ pluginMessage: settingsMessage }, '*'),
         500
-      ),
+      ) as DispatchProcess,
     }
     this.state = {
       service: '',
@@ -145,7 +149,7 @@ class App extends React.Component {
       CUSTOM: () => setCustomPreset(),
     }
 
-    return actions[(e.target as HTMLElement).dataset.value]?.()
+    return actions[(e.target as HTMLElement).dataset.value!]?.()
   }
 
   customHandler = (e: React.SyntheticEvent) => {
@@ -186,13 +190,13 @@ class App extends React.Component {
       REMOVE_STOP: () => removeStop(),
     }
 
-    return actions[(e.target as HTMLInputElement).dataset.feature]?.()
+    return actions[(e.target as HTMLInputElement).dataset.feature!]?.()
   }
 
   slideHandler = () =>
     this.setState({
       scale: palette.scale,
-      themes: this.state['themes'].map((theme) => {
+      themes: this.state['themes'].map((theme: ThemeConfiguration) => {
         if (theme.isEnabled) theme.scale = palette.scale
         return theme
       }),
@@ -206,7 +210,7 @@ class App extends React.Component {
           ? this.state['preset']
           : palette.preset,
       scale: palette.scale,
-      themes: this.state['themes'].map((theme) => {
+      themes: this.state['themes'].map((theme: ThemeConfiguration) => {
         if (theme.isEnabled) theme.scale = palette.scale
         else
           theme.scale = doLightnessScale(
@@ -231,12 +235,12 @@ class App extends React.Component {
 
   themesHandler = (themes: Array<ThemeConfiguration>) =>
     this.setState({
-      scale: themes.find((theme) => theme.isEnabled).scale,
+      scale: themes.find((theme) => theme.isEnabled)?.scale,
       themes: themes,
       onGoingStep: 'themes changed',
     })
 
-  settingsHandler = (e) => {
+  settingsHandler = (e: any) => {
     const renamePalette = () => {
       palette.name = e.target.value
       settingsMessage.data.name = e.target.value
@@ -383,7 +387,7 @@ class App extends React.Component {
       this.setState({ isHighlightRequested: false })
     }
 
-    const actions = {
+    const actions: ActionsList = {
       OPEN: () => openHighlight(),
       CLOSE: () => closeHighlight(),
     }
@@ -579,7 +583,7 @@ class App extends React.Component {
         <main className="ui">
           <Feature
             isActive={
-              features.find((feature) => feature.name === 'CREATE').isActive
+              features.find((feature) => feature.name === 'CREATE')?.isActive
             }
           >
             {this.state['service'] === 'CREATE' ? (
@@ -599,7 +603,7 @@ class App extends React.Component {
           </Feature>
           <Feature
             isActive={
-              features.find((feature) => feature.name === 'EDIT').isActive
+              features.find((feature) => feature.name === 'EDIT')?.isActive
             }
           >
             {this.state['service'] === 'EDIT' ? (
@@ -627,7 +631,7 @@ class App extends React.Component {
           </Feature>
           <Feature
             isActive={
-              features.find((feature) => feature.name === 'ONBOARDING').isActive
+              features.find((feature) => feature.name === 'ONBOARDING')?.isActive
             }
           >
             {this.state['service'] === 'NONE' ? (
@@ -639,7 +643,7 @@ class App extends React.Component {
           </Feature>
           <Feature
             isActive={
-              features.find((feature) => feature.name === 'HIGHLIGHT').isActive
+              features.find((feature) => feature.name === 'HIGHLIGHT')?.isActive
             }
           >
             {this.state['isHighlightRequested'] ? (
@@ -652,7 +656,7 @@ class App extends React.Component {
           <Feature
             isActive={
               features.find((feature) => feature.name === 'GET_PRO_PLAN')
-                .isActive
+                ?.isActive
             }
           >
             {this.state['isGettingPro'] ? (
@@ -678,7 +682,7 @@ class App extends React.Component {
           </Feature>
           <Feature
             isActive={
-              features.find((feature) => feature.name === 'ABOUT').isActive
+              features.find((feature) => feature.name === 'ABOUT')?.isActive
             }
           >
             {this.state['isAboutRequested'] ? (
@@ -696,7 +700,7 @@ class App extends React.Component {
           </Feature>
           <Feature
             isActive={
-              features.find((feature) => feature.name === 'SHORTCUTS').isActive
+              features.find((feature) => feature.name === 'SHORTCUTS')?.isActive
             }
           >
             <Shortcuts
