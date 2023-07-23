@@ -8,6 +8,7 @@ const isBlocked = (
 
   if (match != undefined)
     if (match.isPro && planStatus === 'PAID') return false
+    else if (!match.isPro && planStatus === 'UNPAID') return false
     else return true
   else return true
 }
