@@ -5,6 +5,7 @@ import type {
   PresetConfiguration,
   ScaleConfiguration,
   TextColorsThemeHexModel,
+  ThemesMessage,
   ViewConfiguration,
 } from '../utils/types'
 import Colors from '../canvas/Colors'
@@ -15,26 +16,26 @@ import {
 } from './processSelection'
 import { locals, lang } from '../content/locals'
 
-const updateThemes = (msg, palette) => {
-  palette = isSelectionChanged ? previousSelection[0] : currentSelection[0]
+const updateThemes = (msg: ThemesMessage, palette: SceneNode) => {
+  palette = isSelectionChanged ? previousSelection?.[0] as FrameNode : currentSelection[0] as FrameNode
 
   if (palette.children.length == 1) {
     const name: string =
         palette.getPluginData('name') === ''
           ? locals[lang].name
           : palette.getPluginData('name'),
-      preset: PresetConfiguration = JSON.parse(palette.getPluginData('preset')),
-      scale: ScaleConfiguration = JSON.parse(palette.getPluginData('scale')),
-      colors: Array<ColorConfiguration> = JSON.parse(
+      preset = JSON.parse(palette.getPluginData('preset')) as PresetConfiguration,
+      scale = JSON.parse(palette.getPluginData('scale')) as ScaleConfiguration,
+      colors = JSON.parse(
         palette.getPluginData('colors')
-      ),
-      colorSpace: ColorSpaceConfiguration = palette.getPluginData('colorSpace'),
-      view: ViewConfiguration = palette.getPluginData('view'),
-      textColorsTheme: TextColorsThemeHexModel = JSON.parse(
+      ) as Array<ColorConfiguration>,
+      colorSpace = palette.getPluginData('colorSpace') as ColorSpaceConfiguration,
+      view = palette.getPluginData('view') as ViewConfiguration,
+      textColorsTheme = JSON.parse(
         palette.getPluginData('textColorsTheme')
-      ),
-      algorithmVersion: AlgorithmVersionConfiguration =
-        palette.getPluginData('algorithmVersion')
+      ) as TextColorsThemeHexModel,
+      algorithmVersion =
+        palette.getPluginData('algorithmVersion') as AlgorithmVersionConfiguration
 
     palette.setPluginData('themes', JSON.stringify(msg.data))
 

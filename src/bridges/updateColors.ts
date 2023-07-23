@@ -1,6 +1,7 @@
 import type {
   AlgorithmVersionConfiguration,
   ColorSpaceConfiguration,
+  ColorsMessage,
   PresetConfiguration,
   ScaleConfiguration,
   TextColorsThemeHexModel,
@@ -15,26 +16,26 @@ import {
 } from './processSelection'
 import { locals, lang } from '../content/locals'
 
-const updateColors = (msg, palette) => {
-  palette = isSelectionChanged ? previousSelection[0] : currentSelection[0]
+const updateColors = (msg: ColorsMessage, palette: SceneNode) => {
+  palette = isSelectionChanged ? previousSelection?.[0] as FrameNode : currentSelection[0] as FrameNode
 
   if (palette.children.length == 1) {
     const name: string =
         palette.getPluginData('name') === ''
           ? locals[lang].name
           : palette.getPluginData('name'),
-      preset: PresetConfiguration = JSON.parse(palette.getPluginData('preset')),
-      scale: ScaleConfiguration = JSON.parse(palette.getPluginData('scale')),
-      colorSpace: ColorSpaceConfiguration = palette.getPluginData('colorSpace'),
-      themes: Array<ThemeConfiguration> = JSON.parse(
+      preset = JSON.parse(palette.getPluginData('preset')) as PresetConfiguration,
+      scale = JSON.parse(palette.getPluginData('scale')) as ScaleConfiguration,
+      colorSpace = palette.getPluginData('colorSpace') as ColorSpaceConfiguration,
+      themes = JSON.parse(
         palette.getPluginData('themes')
-      ),
-      view: ViewConfiguration = palette.getPluginData('view'),
-      textColorsTheme: TextColorsThemeHexModel = JSON.parse(
+      ) as Array<ThemeConfiguration>,
+      view = palette.getPluginData('view') as ViewConfiguration,
+      textColorsTheme = JSON.parse(
         palette.getPluginData('textColorsTheme')
-      ),
-      algorithmVersion: AlgorithmVersionConfiguration =
-        palette.getPluginData('algorithmVersion')
+      ) as TextColorsThemeHexModel,
+      algorithmVersion =
+        palette.getPluginData('algorithmVersion') as AlgorithmVersionConfiguration
 
     palette.setPluginData('colors', JSON.stringify(msg.data))
 

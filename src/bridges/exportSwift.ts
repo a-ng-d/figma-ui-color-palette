@@ -2,8 +2,8 @@ import type { PaletteData } from '../utils/types'
 import { locals, lang } from '../content/locals'
 import doCamelCase from '../utils/doCamelCase'
 
-const exportSwift = (palette) => {
-  palette = figma.currentPage.selection[0]
+const exportSwift = (palette: SceneNode) => {
+  palette = figma.currentPage.selection[0] as FrameNode
 
   const paletteData: PaletteData = JSON.parse(palette.getPluginData('data')),
     workingThemes =

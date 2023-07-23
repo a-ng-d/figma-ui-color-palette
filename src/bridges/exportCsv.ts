@@ -12,8 +12,8 @@ interface themeCsv {
   type: string
 }
 
-const exportCsv = (palette) => {
-  palette = figma.currentPage.selection[0]
+const exportCsv = (palette: SceneNode) => {
+  palette = figma.currentPage.selection[0] as FrameNode
 
   const paletteData: PaletteData = JSON.parse(palette.getPluginData('data')),
     workingThemes =

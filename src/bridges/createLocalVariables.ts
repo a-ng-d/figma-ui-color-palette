@@ -2,7 +2,7 @@ import type { PaletteData } from '../utils/types'
 import LocalVariable from '../canvas/LocalVariable'
 import { locals, lang } from '../content/locals'
 
-const createLocalVariables = (palette, i: number, j: number) => {
+const createLocalVariables = (palette: SceneNode, i: number, j: number) => {
   palette = figma.currentPage.selection[0] as FrameNode
 
   const paletteData: PaletteData = JSON.parse(palette.getPluginData('data')),
@@ -44,7 +44,7 @@ const createLocalVariables = (palette, i: number, j: number) => {
     const localVariables: Array<Variable> = figma.variables
       .getLocalVariables()
       .filter(
-        (localVariable) => localVariable.variableCollectionId === collection.id
+        (localVariable) => localVariable.variableCollectionId === collection?.id
       )
 
     // Create variables
@@ -63,12 +63,12 @@ const createLocalVariables = (palette, i: number, j: number) => {
               )
               shade.variableId = variable.id
               if (themesList.length == 0) {
-                variable.setValueForMode(collection.modes[0].modeId, {
+                variable.setValueForMode(collection!.modes[0].modeId, {
                   r: shade.gl[0],
                   g: shade.gl[1],
                   b: shade.gl[2],
                 })
-                theme.modeId = collection.modes[0].modeId
+                theme.modeId = collection?.modes[0].modeId ?? 'NULL'
                 j = 1
               } else
                 variablesSet.push({
@@ -90,37 +90,37 @@ const createLocalVariables = (palette, i: number, j: number) => {
     // Create modes and set values
     themesList.forEach((themeItem) => {
       if (
-        collection.modes.find((mode) => mode.modeId === themeItem.id) ==
+        collection?.modes.find((mode) => mode.modeId === themeItem?.id) ==
         undefined
       ) {
-        if (collection.modes[0].name === 'Mode 1') {
-          collection.renameMode(collection.modes[0].modeId, themeItem.name)
+        if (collection?.modes[0].name === 'Mode 1') {
+          collection?.renameMode(collection?.modes[0].modeId, themeItem!.name)
           j++
         } else {
-          collection.addMode(themeItem.name)
+          collection?.addMode(themeItem!.name)
           j++
         }
 
         paletteData.themes.find(
-          (theme) => theme.name === themeItem.name
-        ).modeId = collection.modes.find(
-          (mode) => mode.name === themeItem.name
-        ).modeId
+          (theme) => theme.name === themeItem?.name
+        )!.modeId = collection!.modes.find(
+          (mode) => mode.name === themeItem?.name
+        )!.modeId
       }
       variablesSet.forEach((variableSet) => {
         const rightShade = paletteData.themes
-          .find((theme) => theme.name === themeItem.name)
-          .colors.find((color) => color.name === variableSet.colorName)
-          .shades.find((shade) => shade.name === variableSet.shadeName)
+          .find((theme) => theme.name === themeItem?.name)
+          ?.colors.find((color) => color.name === variableSet.colorName)
+          ?.shades.find((shade) => shade.name === variableSet.shadeName)
 
-        rightShade.variableId = variableSet.variable.id
+        rightShade!.variableId = variableSet.variable.id
 
         variableSet.variable.setValueForMode(
-          collection.modes.find((mode) => mode.name === themeItem.name).modeId,
+          collection!.modes.find((mode) => mode.name === themeItem!.name)!.modeId,
           {
-            r: rightShade.gl[0],
-            g: rightShade.gl[1],
-            b: rightShade.gl[2],
+            r: rightShade?.gl[0] ?? 0,
+            g: rightShade?.gl[1] ?? 0,
+            b: rightShade?.gl[2] ?? 0,
           }
         )
       })

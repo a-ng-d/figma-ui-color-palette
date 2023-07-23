@@ -69,9 +69,7 @@ export interface PaletteDataShadeItem {
   name: string
   description: string
   hex: HexModel
-  rgb:
-    | [number, number, number]
-    | { _unclipped: [number, number, number, number] }
+  rgb: [number, number, number]
   gl: [number, number, number, number]
   lch: [number, number, number]
   oklch: [number, number, number]
@@ -208,6 +206,13 @@ export interface TextColorsThemeGLModel {
 }
 
 // Messages
+export interface ScaleMessage {
+  type: 'UPDATE_SCALE'
+  data: PaletteConfiguration
+  isEditedInRealTime: boolean
+  feature: 'ADD_STOP' | 'DELETE_STOP'
+}
+
 export interface ColorsMessage {
   type: 'UPDATE_COLORS'
   data: Array<ColorConfiguration>
@@ -217,6 +222,12 @@ export interface ColorsMessage {
 export interface ThemesMessage {
   type: 'UPDATE_THEMES'
   data: Array<ThemeConfiguration>
+  isEditedInRealTime: boolean
+}
+
+export interface ViewMessage {
+  type: 'UPDATE_VIEW'
+  data: PaletteConfiguration
   isEditedInRealTime: boolean
 }
 

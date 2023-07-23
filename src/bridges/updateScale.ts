@@ -6,6 +6,7 @@ import type {
   ColorSpaceConfiguration,
   ViewConfiguration,
   AlgorithmVersionConfiguration,
+  ScaleMessage,
 } from '../utils/types'
 import {
   previousSelection,
@@ -16,30 +17,30 @@ import Colors from './../canvas/Colors'
 import { locals, lang } from '../content/locals'
 import doLightnessScale from '../utils/doLightnessScale'
 
-const updateScale = (msg, palette) => {
-  palette = isSelectionChanged ? previousSelection[0] : currentSelection[0]
+const updateScale = (msg: ScaleMessage, palette: SceneNode) => {
+  palette = isSelectionChanged ? previousSelection?.[0] as FrameNode : currentSelection[0] as FrameNode
 
   if (palette.children.length == 1) {
     const name: string =
         palette.getPluginData('name') === ''
           ? locals[lang].name
           : palette.getPluginData('name'),
-      preset: PresetConfiguration = JSON.parse(palette.getPluginData('preset')),
-      colors: Array<ColorConfiguration> = JSON.parse(
+      preset = JSON.parse(palette.getPluginData('preset')) as PresetConfiguration,
+      colors = JSON.parse(
         palette.getPluginData('colors')
-      ),
-      colorSpace: ColorSpaceConfiguration = palette.getPluginData('colorSpace'),
-      themes: Array<ThemeConfiguration> = JSON.parse(
+      ) as Array<ColorConfiguration>,
+      colorSpace = palette.getPluginData('colorSpace') as ColorSpaceConfiguration,
+      themes = JSON.parse(
         palette.getPluginData('themes')
-      ),
-      view: ViewConfiguration = palette.getPluginData('view'),
-      textColorsTheme: TextColorsThemeHexModel = JSON.parse(
+      ) as Array<ThemeConfiguration>,
+      view = palette.getPluginData('view') as ViewConfiguration,
+      textColorsTheme = JSON.parse(
         palette.getPluginData('textColorsTheme')
-      ),
-      algorithmVersion: AlgorithmVersionConfiguration =
-        palette.getPluginData('algorithmVersion')
+      ) as TextColorsThemeHexModel,
+      algorithmVersion =
+        palette.getPluginData('algorithmVersion') as AlgorithmVersionConfiguration
 
-    themes.find((theme) => theme.isEnabled).scale = msg.data.scale
+    themes.find((theme) => theme.isEnabled)!.scale = msg.data.scale
     if (msg.feature === 'ADD_STOP' || msg.feature === 'DELETE_STOP')
       themes.forEach((theme) => {
         if (!theme.isEnabled) {

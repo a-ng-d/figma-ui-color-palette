@@ -2,6 +2,7 @@ import type {
   ColorConfiguration,
   PresetConfiguration,
   ScaleConfiguration,
+  SettingsMessage,
   ThemeConfiguration,
   ViewConfiguration,
 } from '../utils/types'
@@ -13,21 +14,21 @@ import {
 import Colors from '../canvas/Colors'
 import { locals, lang } from '../content/locals'
 
-const updateSettings = (msg, palette) => {
-  palette = isSelectionChanged ? previousSelection[0] : currentSelection[0]
+const updateSettings = (msg: SettingsMessage, palette: SceneNode) => {
+  palette = isSelectionChanged ? previousSelection?.[0] as FrameNode : currentSelection[0] as FrameNode
 
   if (palette.children.length == 1) {
-    const preset: PresetConfiguration = JSON.parse(
+    const preset = JSON.parse(
         palette.getPluginData('preset')
-      ),
-      scale: ScaleConfiguration = JSON.parse(palette.getPluginData('scale')),
-      colors: Array<ColorConfiguration> = JSON.parse(
+      ) as PresetConfiguration,
+      scale = JSON.parse(palette.getPluginData('scale')) as ScaleConfiguration,
+      colors = JSON.parse(
         palette.getPluginData('colors')
-      ),
-      themes: Array<ThemeConfiguration> = JSON.parse(
+      ) as Array<ColorConfiguration>,
+      themes = JSON.parse(
         palette.getPluginData('themes')
-      ),
-      view: ViewConfiguration = palette.getPluginData('view')
+      ) as Array<ThemeConfiguration>,
+      view = palette.getPluginData('view') as ViewConfiguration
 
     palette.setPluginData('name', msg.data.name)
     palette.setPluginData('colorSpace', msg.data.colorSpace)

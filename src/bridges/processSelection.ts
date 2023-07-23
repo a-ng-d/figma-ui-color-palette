@@ -1,7 +1,8 @@
+import type { ThemeConfiguration } from '../utils/types'
 import setPaletteMigration from '../utils/setPaletteMigration'
 
 export let currentSelection: ReadonlyArray<SceneNode>
-export let previousSelection: ReadonlyArray<SceneNode>
+export let previousSelection: ReadonlyArray<SceneNode> | undefined
 export let isSelectionChanged = false
 
 const processSelection = () => {
@@ -25,7 +26,7 @@ const processSelection = () => {
         name: palette.getPluginData('name'),
         preset: JSON.parse(palette.getPluginData('preset')),
         scale: JSON.parse(palette.getPluginData('themes')).find(
-          (theme) => theme.isEnabled
+          (theme: ThemeConfiguration) => theme.isEnabled
         ).scale,
         colors: JSON.parse(palette.getPluginData('colors')),
         colorSpace: palette.getPluginData('colorSpace'),
@@ -52,7 +53,7 @@ const processSelection = () => {
       element.type != 'EMBED'
     )
       if (
-        element['fills'].filter((fill) => fill.type === 'SOLID').length != 0 &&
+        (element as any).fills.filter((fill: Paint) => fill.type === 'SOLID').length != 0 &&
         element.getPluginDataKeys().length == 0
       )
         figma.ui.postMessage({

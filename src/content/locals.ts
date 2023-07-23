@@ -1,6 +1,6 @@
 export const lang = 'en-US'
 
-export const locals = {
+export const locals: any = {
   'en-US': {
     name: 'UI Color Palette',
     tagline:

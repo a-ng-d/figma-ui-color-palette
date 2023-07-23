@@ -6,32 +6,33 @@ import type {
   ThemeConfiguration,
   ColorSpaceConfiguration,
   AlgorithmVersionConfiguration,
+  ViewMessage,
 } from '../utils/types'
 import Colors from '../canvas/Colors'
 import { locals, lang } from '../content/locals'
 
-const updateView = (msg, palette) => {
-  palette = figma.currentPage.selection[0]
+const updateView = (msg: ViewMessage, palette: SceneNode) => {
+  palette = figma.currentPage.selection[0] as FrameNode
 
   if (palette.children.length == 1) {
     const name: string =
         palette.getPluginData('name') === ''
           ? locals[lang].name
           : palette.getPluginData('name'),
-      preset: PresetConfiguration = JSON.parse(palette.getPluginData('preset')),
-      scale: ScaleConfiguration = JSON.parse(palette.getPluginData('scale')),
-      colors: Array<ColorConfiguration> = JSON.parse(
+      preset = JSON.parse(palette.getPluginData('preset')) as PresetConfiguration,
+      scale = JSON.parse(palette.getPluginData('scale')) as ScaleConfiguration,
+      colors = JSON.parse(
         palette.getPluginData('colors')
-      ),
-      colorSpace: ColorSpaceConfiguration = palette.getPluginData('colorSpace'),
-      themes: Array<ThemeConfiguration> = JSON.parse(
+      ) as Array<ColorConfiguration>,
+      colorSpace = palette.getPluginData('colorSpace') as ColorSpaceConfiguration,
+      themes = JSON.parse(
         palette.getPluginData('themes')
-      ),
-      textColorsTheme: TextColorsThemeHexModel = JSON.parse(
+      ) as Array<ThemeConfiguration>,
+      textColorsTheme = JSON.parse(
         palette.getPluginData('textColorsTheme')
-      ),
-      algorithmVersion: AlgorithmVersionConfiguration =
-        palette.getPluginData('algorithmVersion')
+      ) as TextColorsThemeHexModel,
+      algorithmVersion =
+        palette.getPluginData('algorithmVersion') as AlgorithmVersionConfiguration
 
     palette.setPluginData('view', msg.data.view)
 

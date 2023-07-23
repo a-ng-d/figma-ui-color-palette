@@ -2,8 +2,8 @@ import type { PaletteData } from '../utils/types'
 import doKebabCase from '../utils/doKebabCase'
 import { locals, lang } from '../content/locals'
 
-const exportCss = (palette) => {
-  palette = figma.currentPage.selection[0]
+const exportCss = (palette: SceneNode) => {
+  palette = figma.currentPage.selection[0] as FrameNode
 
   const paletteData: PaletteData = JSON.parse(palette.getPluginData('data')),
     workingThemes =
