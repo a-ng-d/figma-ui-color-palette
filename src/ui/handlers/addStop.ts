@@ -3,7 +3,7 @@ import { palette } from '../../utils/palettePackage'
 import doMap from './../../utils/doMap'
 
 const addStop = (
-  e: MouseEvent,
+  e: React.MouseEvent<HTMLDivElement, MouseEvent>,
   scale: ScaleConfiguration,
   presetName: string,
   presetMin: number,
