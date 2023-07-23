@@ -4,6 +4,9 @@
     "src/**/*.tsx",
     "env.d.ts",
   ],
+  "paths": {
+    "jszip": ["node_modules/jszip/dist/jszip.min.js"]
+  },
   "compilerOptions": {
     "target": "es6",
     "lib": ["es6", "dom", "es2022"],

@@ -1,5 +1,5 @@
 import * as React from 'react'
-import JSZip from 'JSZip'
+import JSZip from 'jszip'
 import FileSaver from 'file-saver'
 import type {
   PresetConfiguration,
