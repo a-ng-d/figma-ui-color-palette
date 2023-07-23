@@ -458,8 +458,10 @@ export default class Colors {
         this.parent as PaletteNode,
         this.parent.view.includes('PALETTE')
           ? this.sampleSize
-          : (this.sampleSize * this.sampleScale * 4) + (this.sampleSize * this.sampleRatio) + (this.gap * 4)
-        ).makeNode()
+          : this.sampleSize * this.sampleScale * 4 +
+            this.sampleSize * this.sampleRatio +
+            this.gap * 4
+      ).makeNode()
     )
     this.parent.colors.forEach((color) => {
       const sourceColor: [number, number, number] = [
@@ -493,7 +495,8 @@ export default class Colors {
         this.nodeRowSource.layoutSizingVertical =
         this.nodeRowShades.layoutSizingVertical =
           'HUG'
-      if (!this.parent.view.includes('PALETTE')) this.nodeRow.itemSpacing = this.gap
+      if (!this.parent.view.includes('PALETTE'))
+        this.nodeRow.itemSpacing = this.gap
 
       // insert
       this.nodeRowSource.appendChild(
@@ -602,7 +605,7 @@ export default class Colors {
             this.nodeRowShades!.layoutWrap = 'WRAP'
             this.nodeRowShades!.itemSpacing = this.gap
             this.nodeRowShades!.resize(
-              (this.sampleSize * this.sampleScale * 4) + (this.gap * 3),
+              this.sampleSize * this.sampleScale * 4 + this.gap * 3,
               100
             )
             this.nodeRowShades!.layoutSizingVertical = 'HUG'
