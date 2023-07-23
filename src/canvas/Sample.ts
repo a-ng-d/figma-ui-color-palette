@@ -121,7 +121,9 @@ export default class Sample {
     } else if (isColorName)
       this.node.appendChild(new Property('_label', this.name, 10).makeNode())
     if (this.status.isClosestToRef)
-      this.node.appendChild(new Status(this.status, this.source ?? {}).makeNode())
+      this.node.appendChild(
+        new Status(this.status, this.source ?? {}).makeNode()
+      )
 
     return this.node
   }
@@ -182,7 +184,13 @@ export default class Sample {
     this.node.appendChild(this.nodeColor)
     if (isColorName && description != '')
       this.node.appendChild(
-        new Paragraph('_description', description, 'FILL', undefined, 8).makeNode()
+        new Paragraph(
+          '_description',
+          description,
+          'FILL',
+          undefined,
+          8
+        ).makeNode()
       )
     else if (!this.view.includes('SHEET_SAFE_MODE') && !isColorName)
       this.node.appendChild(

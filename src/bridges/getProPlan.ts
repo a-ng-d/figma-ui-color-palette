@@ -1,6 +1,6 @@
 const getProPlan = async () => {
-  await figma.payments!
-    .initiateCheckoutAsync({
+  await figma
+    .payments!.initiateCheckoutAsync({
       interstitial: 'SKIP',
     })
     .then(() => {

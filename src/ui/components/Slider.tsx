@@ -56,7 +56,8 @@ export default class Slider extends React.Component<Props, any> {
           stop: e.target,
           state: 'EDITING',
         },
-        stopInputValue: this.props.scale![(e.target as HTMLElement).classList[1]],
+        stopInputValue:
+          this.props.scale![(e.target as HTMLElement).classList[1]],
       })
     }
   }
@@ -346,7 +347,11 @@ export default class Slider extends React.Component<Props, any> {
     if (type === 'MIN') palette.min = value
     else if (type === 'MAX') palette.max = value
 
-    palette.scale = doLightnessScale(this.props.stops, palette.min ?? 0, palette.max ?? 100)
+    palette.scale = doLightnessScale(
+      this.props.stops,
+      palette.min ?? 0,
+      palette.max ?? 100
+    )
 
     stops.forEach((stop) => {
       stop.style.left = palette.scale[stop.classList[1]] + '%'
@@ -442,7 +447,11 @@ export default class Slider extends React.Component<Props, any> {
   Equal = () => {
     palette.min = this.props.min
     palette.max = this.props.max
-    palette.scale = doLightnessScale(this.props.stops, palette.min ?? 0, palette.max ?? 100)
+    palette.scale = doLightnessScale(
+      this.props.stops,
+      palette.min ?? 0,
+      palette.max ?? 100
+    )
     return (
       <div className="slider__range">
         {Object.entries(palette.scale).map((lightness) => (
@@ -466,32 +475,34 @@ export default class Slider extends React.Component<Props, any> {
         className="slider__range"
         onMouseDown={(e) => this.onAdd(e)}
       >
-        {Object.entries(this.props.scale ?? {}).map((lightness, index, original) => (
-          <Knob
-            key={lightness[0]}
-            id={lightness[0]}
-            shortId={lightness[0].replace('lightness-', '')}
-            value={lightness[1]}
-            stopInputValue={this.state['stopInputValue']}
-            state={this.getState(lightness[0])}
-            min={
-              original[index + 1] == undefined
-                ? '0'
-                : (original[index + 1][1] + safeGap).toString()
-            }
-            max={
-              original[index - 1] == undefined
-                ? '100'
-                : (original[index - 1][1] - safeGap).toString()
-            }
-            onMouseDown={(e) => this.onGrab(e)}
-            onClick={(e) => this.clickHandler(e)}
-            onChangeStopValue={(e) =>
-              this.setState({ stopInputValue: e.target.value })
-            }
-            onValidStopValue={(stopId, e) => this.validHandler(stopId, e)}
-          />
-        ))}
+        {Object.entries(this.props.scale ?? {}).map(
+          (lightness, index, original) => (
+            <Knob
+              key={lightness[0]}
+              id={lightness[0]}
+              shortId={lightness[0].replace('lightness-', '')}
+              value={lightness[1]}
+              stopInputValue={this.state['stopInputValue']}
+              state={this.getState(lightness[0])}
+              min={
+                original[index + 1] == undefined
+                  ? '0'
+                  : (original[index + 1][1] + safeGap).toString()
+              }
+              max={
+                original[index - 1] == undefined
+                  ? '100'
+                  : (original[index - 1][1] - safeGap).toString()
+              }
+              onMouseDown={(e) => this.onGrab(e)}
+              onClick={(e) => this.clickHandler(e)}
+              onChangeStopValue={(e) =>
+                this.setState({ stopInputValue: e.target.value })
+              }
+              onValidStopValue={(stopId, e) => this.validHandler(stopId, e)}
+            />
+          )
+        )}
       </div>
     )
   }

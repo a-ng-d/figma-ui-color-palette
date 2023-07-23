@@ -101,7 +101,9 @@ export default class Palette {
         element.type != 'GROUP' &&
         element.type != 'EMBED'
       ) {
-        const fills = (element as any).fills.filter((fill: SolidPaint) => fill.type === 'SOLID')
+        const fills = (element as any).fills.filter(
+          (fill: SolidPaint) => fill.type === 'SOLID'
+        )
 
         if (fills.length != 0) {
           fills.forEach((fill: SolidPaint) =>

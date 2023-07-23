@@ -53,7 +53,8 @@ const processSelection = () => {
       element.type != 'EMBED'
     )
       if (
-        (element as any).fills.filter((fill: Paint) => fill.type === 'SOLID').length != 0 &&
+        (element as any).fills.filter((fill: Paint) => fill.type === 'SOLID')
+          .length != 0 &&
         element.getPluginDataKeys().length == 0
       )
         figma.ui.postMessage({

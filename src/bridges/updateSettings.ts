@@ -15,7 +15,9 @@ import Colors from '../canvas/Colors'
 import { locals, lang } from '../content/locals'
 
 const updateSettings = (msg: SettingsMessage, palette: SceneNode) => {
-  palette = isSelectionChanged ? previousSelection?.[0] as FrameNode : currentSelection[0] as FrameNode
+  palette = isSelectionChanged
+    ? (previousSelection?.[0] as FrameNode)
+    : (currentSelection[0] as FrameNode)
 
   if (palette.children.length == 1) {
     const preset = JSON.parse(

@@ -10,7 +10,7 @@ const exportJson = (palette: SceneNode) => {
         .length == 0
         ? paletteData.themes.filter((theme) => theme.type === 'default theme')
         : paletteData.themes.filter((theme) => theme.type === 'custom theme'),
-    json: { [ key: string ]: any } = {}
+    json: { [key: string]: any } = {}
 
   const model = (shade: PaletteDataShadeItem) => {
     return {

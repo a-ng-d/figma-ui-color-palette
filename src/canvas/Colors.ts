@@ -37,9 +37,8 @@ export default class Colors {
       collectionId: '',
       type: 'palette',
     }
-    this.currentScale = this.parent.themes.find(
-      (theme) => theme.isEnabled
-    )?.scale ?? {}
+    this.currentScale =
+      this.parent.themes.find((theme) => theme.isEnabled)?.scale ?? {}
     this.paletteBackgroundGl = chroma(
       this.parent.themes.find((theme) => theme.isEnabled)!.paletteBackground
     ).gl()
@@ -61,17 +60,19 @@ export default class Colors {
     algorithmVersion: string
   ) {
     const lch = chroma(sourceColor).lch(),
-      newColor = chroma.lch(
-        lightness,
-        algorithmVersion == 'v2'
-          ? Math.sin((lightness / 100) * Math.PI) * lch[1]
-          : lch[1],
-        lch[2] + hueShifting < 0
-          ? 0
-          : lch[2] + hueShifting > 360
-          ? 360
-          : lch[2] + hueShifting
-      ).rgb()
+      newColor = chroma
+        .lch(
+          lightness,
+          algorithmVersion == 'v2'
+            ? Math.sin((lightness / 100) * Math.PI) * lch[1]
+            : lch[1],
+          lch[2] + hueShifting < 0
+            ? 0
+            : lch[2] + hueShifting > 360
+            ? 360
+            : lch[2] + hueShifting
+        )
+        .rgb()
 
     return newColor
   }
@@ -83,17 +84,19 @@ export default class Colors {
     algorithmVersion: string
   ) {
     const oklch = chroma(sourceColor).oklch(),
-      newColor = chroma.oklch(
-        lightness / 100,
-        algorithmVersion == 'v2'
-          ? Math.sin((lightness / 100) * Math.PI) * oklch[1]
-          : oklch[1],
-        oklch[2] + hueShifting < 0
-          ? 0
-          : oklch[2] + hueShifting > 360
-          ? 360
-          : oklch[2] + hueShifting
-      ).rgb()
+      newColor = chroma
+        .oklch(
+          lightness / 100,
+          algorithmVersion == 'v2'
+            ? Math.sin((lightness / 100) * Math.PI) * oklch[1]
+            : oklch[1],
+          oklch[2] + hueShifting < 0
+            ? 0
+            : oklch[2] + hueShifting > 360
+            ? 360
+            : oklch[2] + hueShifting
+        )
+        .rgb()
 
     return newColor
   }
@@ -124,15 +127,17 @@ export default class Colors {
       newLabB *= -1
     }
 
-    const newColor = chroma.lab(
-      lightness,
-      algorithmVersion == 'v2'
-        ? Math.sin((lightness / 100) * Math.PI) * newLabA
-        : newLabA,
-      algorithmVersion == 'v2'
-        ? Math.sin((lightness / 100) * Math.PI) * newLabB
-        : newLabB
-    ).rgb()
+    const newColor = chroma
+      .lab(
+        lightness,
+        algorithmVersion == 'v2'
+          ? Math.sin((lightness / 100) * Math.PI) * newLabA
+          : newLabA,
+        algorithmVersion == 'v2'
+          ? Math.sin((lightness / 100) * Math.PI) * newLabB
+          : newLabB
+      )
+      .rgb()
 
     return newColor
   }
@@ -163,15 +168,17 @@ export default class Colors {
       newLabB *= -1
     }
 
-    const newColor = chroma.oklab(
-      lightness / 100,
-      algorithmVersion == 'v2'
-        ? Math.sin((lightness / 100) * Math.PI) * newLabA
-        : newLabA,
-      algorithmVersion == 'v2'
-        ? Math.sin((lightness / 100) * Math.PI) * newLabB
-        : newLabB
-    ).rgb()
+    const newColor = chroma
+      .oklab(
+        lightness / 100,
+        algorithmVersion == 'v2'
+          ? Math.sin((lightness / 100) * Math.PI) * newLabA
+          : newLabA,
+        algorithmVersion == 'v2'
+          ? Math.sin((lightness / 100) * Math.PI) * newLabB
+          : newLabB
+      )
+      .rgb()
 
     return newColor
   }
@@ -183,17 +190,19 @@ export default class Colors {
     algorithmVersion: string
   ) {
     const hsl = chroma(sourceColor).hsl(),
-      newColor = chroma.hsl(
-        hsl[0] + hueShifting < 0
-          ? 0
-          : hsl[0] + hueShifting > 360
-          ? 360
-          : hsl[0] + hueShifting,
-        algorithmVersion == 'v2'
-          ? Math.sin((lightness / 100) * Math.PI) * hsl[1]
-          : hsl[1],
-        lightness / 100
-      ).rgb()
+      newColor = chroma
+        .hsl(
+          hsl[0] + hueShifting < 0
+            ? 0
+            : hsl[0] + hueShifting > 360
+            ? 360
+            : hsl[0] + hueShifting,
+          algorithmVersion == 'v2'
+            ? Math.sin((lightness / 100) * Math.PI) * hsl[1]
+            : hsl[1],
+          lightness / 100
+        )
+        .rgb()
 
     return newColor
   }
@@ -218,11 +227,7 @@ export default class Colors {
         locals[lang].warning.emptySourceColors,
         null,
         null,
-        [
-          255,
-          255,
-          255
-        ],
+        [255, 255, 255],
         this.parent.colorSpace,
         this.parent.view,
         this.parent.textColorsTheme
@@ -492,11 +497,7 @@ export default class Colors {
               color.name,
               null,
               null,
-              [
-                color.rgb.r * 255,
-                color.rgb.g * 255,
-                color.rgb.b * 255
-              ],
+              [color.rgb.r * 255, color.rgb.g * 255, color.rgb.b * 255],
               this.parent.colorSpace,
               this.parent.view,
               this.parent.textColorsTheme
@@ -510,11 +511,7 @@ export default class Colors {
               color.name,
               null,
               null,
-              [
-                color.rgb.r * 255,
-                color.rgb.g * 255,
-                color.rgb.b * 255
-              ],
+              [color.rgb.r * 255, color.rgb.g * 255, color.rgb.b * 255],
               this.parent.colorSpace,
               this.parent.view,
               this.parent.textColorsTheme
@@ -584,11 +581,7 @@ export default class Colors {
                 color.name,
                 color.rgb,
                 scaleName,
-                [
-                  newColor![0],
-                  newColor![1],
-                  newColor![2]
-                ],
+                [newColor![0], newColor![1], newColor![2]],
                 this.parent.colorSpace,
                 this.parent.view,
                 this.parent.textColorsTheme,
@@ -613,11 +606,7 @@ export default class Colors {
                 color.name,
                 color.rgb,
                 scaleName,
-                [
-                  newColor![0],
-                  newColor![1],
-                  newColor![2]
-                ],
+                [newColor![0], newColor![1], newColor![2]],
                 this.parent.colorSpace,
                 this.parent.view,
                 this.parent.textColorsTheme,

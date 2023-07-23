@@ -17,16 +17,22 @@ import {
 import { locals, lang } from '../content/locals'
 
 const updateColors = (msg: ColorsMessage, palette: SceneNode) => {
-  palette = isSelectionChanged ? previousSelection?.[0] as FrameNode : currentSelection[0] as FrameNode
+  palette = isSelectionChanged
+    ? (previousSelection?.[0] as FrameNode)
+    : (currentSelection[0] as FrameNode)
 
   if (palette.children.length == 1) {
     const name: string =
         palette.getPluginData('name') === ''
           ? locals[lang].name
           : palette.getPluginData('name'),
-      preset = JSON.parse(palette.getPluginData('preset')) as PresetConfiguration,
+      preset = JSON.parse(
+        palette.getPluginData('preset')
+      ) as PresetConfiguration,
       scale = JSON.parse(palette.getPluginData('scale')) as ScaleConfiguration,
-      colorSpace = palette.getPluginData('colorSpace') as ColorSpaceConfiguration,
+      colorSpace = palette.getPluginData(
+        'colorSpace'
+      ) as ColorSpaceConfiguration,
       themes = JSON.parse(
         palette.getPluginData('themes')
       ) as Array<ThemeConfiguration>,
@@ -34,8 +40,9 @@ const updateColors = (msg: ColorsMessage, palette: SceneNode) => {
       textColorsTheme = JSON.parse(
         palette.getPluginData('textColorsTheme')
       ) as TextColorsThemeHexModel,
-      algorithmVersion =
-        palette.getPluginData('algorithmVersion') as AlgorithmVersionConfiguration
+      algorithmVersion = palette.getPluginData(
+        'algorithmVersion'
+      ) as AlgorithmVersionConfiguration
 
     palette.setPluginData('colors', JSON.stringify(msg.data))
 

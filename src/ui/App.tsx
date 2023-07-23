@@ -627,7 +627,8 @@ class App extends React.Component<any, any> {
           </Feature>
           <Feature
             isActive={
-              features.find((feature) => feature.name === 'ONBOARDING')?.isActive
+              features.find((feature) => feature.name === 'ONBOARDING')
+                ?.isActive
             }
           >
             {this.state['service'] === 'NONE' ? (

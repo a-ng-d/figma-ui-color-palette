@@ -18,18 +18,24 @@ import { locals, lang } from '../content/locals'
 import doLightnessScale from '../utils/doLightnessScale'
 
 const updateScale = (msg: ScaleMessage, palette: SceneNode) => {
-  palette = isSelectionChanged ? previousSelection?.[0] as FrameNode : currentSelection[0] as FrameNode
+  palette = isSelectionChanged
+    ? (previousSelection?.[0] as FrameNode)
+    : (currentSelection[0] as FrameNode)
 
   if (palette.children.length == 1) {
     const name: string =
         palette.getPluginData('name') === ''
           ? locals[lang].name
           : palette.getPluginData('name'),
-      preset = JSON.parse(palette.getPluginData('preset')) as PresetConfiguration,
+      preset = JSON.parse(
+        palette.getPluginData('preset')
+      ) as PresetConfiguration,
       colors = JSON.parse(
         palette.getPluginData('colors')
       ) as Array<ColorConfiguration>,
-      colorSpace = palette.getPluginData('colorSpace') as ColorSpaceConfiguration,
+      colorSpace = palette.getPluginData(
+        'colorSpace'
+      ) as ColorSpaceConfiguration,
       themes = JSON.parse(
         palette.getPluginData('themes')
       ) as Array<ThemeConfiguration>,
@@ -37,8 +43,9 @@ const updateScale = (msg: ScaleMessage, palette: SceneNode) => {
       textColorsTheme = JSON.parse(
         palette.getPluginData('textColorsTheme')
       ) as TextColorsThemeHexModel,
-      algorithmVersion =
-        palette.getPluginData('algorithmVersion') as AlgorithmVersionConfiguration
+      algorithmVersion = palette.getPluginData(
+        'algorithmVersion'
+      ) as AlgorithmVersionConfiguration
 
     themes.find((theme) => theme.isEnabled)!.scale = msg.data.scale
     if (msg.feature === 'ADD_STOP' || msg.feature === 'DELETE_STOP')

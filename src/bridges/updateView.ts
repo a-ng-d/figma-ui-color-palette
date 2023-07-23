@@ -19,20 +19,25 @@ const updateView = (msg: ViewMessage, palette: SceneNode) => {
         palette.getPluginData('name') === ''
           ? locals[lang].name
           : palette.getPluginData('name'),
-      preset = JSON.parse(palette.getPluginData('preset')) as PresetConfiguration,
+      preset = JSON.parse(
+        palette.getPluginData('preset')
+      ) as PresetConfiguration,
       scale = JSON.parse(palette.getPluginData('scale')) as ScaleConfiguration,
       colors = JSON.parse(
         palette.getPluginData('colors')
       ) as Array<ColorConfiguration>,
-      colorSpace = palette.getPluginData('colorSpace') as ColorSpaceConfiguration,
+      colorSpace = palette.getPluginData(
+        'colorSpace'
+      ) as ColorSpaceConfiguration,
       themes = JSON.parse(
         palette.getPluginData('themes')
       ) as Array<ThemeConfiguration>,
       textColorsTheme = JSON.parse(
         palette.getPluginData('textColorsTheme')
       ) as TextColorsThemeHexModel,
-      algorithmVersion =
-        palette.getPluginData('algorithmVersion') as AlgorithmVersionConfiguration
+      algorithmVersion = palette.getPluginData(
+        'algorithmVersion'
+      ) as AlgorithmVersionConfiguration
 
     palette.setPluginData('view', msg.data.view)
 

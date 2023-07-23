@@ -91,7 +91,8 @@ const createLocalVariables = (palette: SceneNode, i: number, j: number) => {
     themesList.forEach((themeItem, index) => {
       if (
         collection?.modes.find((mode) => mode.modeId === themeItem?.id) ==
-        undefined && index < 4
+          undefined &&
+        index < 4
       ) {
         if (collection?.modes[0].name === 'Mode 1') {
           collection?.renameMode(collection?.modes[0].modeId, themeItem!.name)
@@ -112,10 +113,11 @@ const createLocalVariables = (palette: SceneNode, i: number, j: number) => {
             .find((theme) => theme.name === themeItem?.name)
             ?.colors.find((color) => color.name === variableSet.colorName)
             ?.shades.find((shade) => shade.name === variableSet.shadeName)
-  
+
           rightShade!.variableId = variableSet.variable.id
           variableSet.variable.setValueForMode(
-            collection!.modes.find((mode) => mode.name === themeItem!.name)!.modeId,
+            collection!.modes.find((mode) => mode.name === themeItem!.name)!
+              .modeId,
             {
               r: rightShade?.gl[0] ?? 0,
               g: rightShade?.gl[1] ?? 0,
