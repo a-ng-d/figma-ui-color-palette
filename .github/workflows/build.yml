@@ -2,9 +2,9 @@ name: UI Color Palette plugin builder
 
 on:
   push:
-    branches: [ "v24" ]
+    branches: [ github.ref ]
   pull_request:
-    branches: [ "v24" ]
+    branches: [ github.ref ]
 
 jobs:
   build:
@@ -22,7 +22,14 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
 
-    - name: Build
+    - name: Install and Build
       run: |
         npm install
         npm run build:prod
+    
+    - name: Archive production artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: dist
+        path: |
+          dist
