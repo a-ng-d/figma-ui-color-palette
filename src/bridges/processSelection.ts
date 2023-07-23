@@ -18,7 +18,6 @@ const processSelection = () => {
 
     // Migration
     setPaletteMigration(palette)
-    console.log(JSON.parse(palette.getPluginData('data')))
 
     // to UI
     figma.ui.postMessage({

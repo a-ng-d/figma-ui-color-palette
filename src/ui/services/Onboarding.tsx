@@ -15,16 +15,20 @@ export default class Onboarding extends React.Component<Props> {
       <>
         <section className="controller">
           <div className="onboarding controls__control">
-            <Icon size={64} />
-            <Message
-              icon="list-tile"
-              messages={[locals[this.props.lang].onboarding.selectColor]}
-            />
-            <div className="type">－ or －</div>
-            <Message
-              icon="layout-grid-uniform"
-              messages={[locals[this.props.lang].onboarding.selectPalette]}
-            />
+            <div className="onboarding__icon">
+              <Icon size={64} />
+            </div>
+            <div className="onboarding__messages">
+              <Message
+                icon="list-tile"
+                messages={[locals[this.props.lang].onboarding.selectColor]}
+              />
+              <div className="type">－ or －</div>
+              <Message
+                icon="layout-grid-uniform"
+                messages={[locals[this.props.lang].onboarding.selectPalette]}
+              />
+            </div>
           </div>
         </section>
       </>

@@ -332,12 +332,6 @@ li .list__item__buttons {
 }
 
 /* Callout */
-div.onboarding {
-  gap: var(--size-xxsmall);
-  align-items: center;
-  justify-content: center;
-}
-
 div.onboarding .label {
   width: auto;
 }
