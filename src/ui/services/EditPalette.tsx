@@ -167,7 +167,7 @@ export default class EditPalette extends React.Component<Props, any> {
       )
       zip
         .generateAsync({ type: 'blob' })
-        .then((content) =>
+        .then((content: any) =>
           FileSaver.saveAs(
             content,
             `${
@@ -177,7 +177,7 @@ export default class EditPalette extends React.Component<Props, any> {
             }-colors`
           )
         )
-        .catch((error) => console.error(error))
+        .catch((error: any) => console.error(error))
     } else {
       const blob = new Blob([this.props.export.data], {
         type: this.props.export.mimeType,
