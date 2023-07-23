@@ -21,6 +21,7 @@ export default class Colors {
   sampleScale: number
   sampleRatio: number
   sampleSize: number
+  gap: number
   nodeRow: FrameNode | null
   nodeRowSource: FrameNode | null
   nodeRowShades: FrameNode | null
@@ -45,6 +46,7 @@ export default class Colors {
     this.sampleScale = 1.75
     this.sampleRatio = 3 / 2
     this.sampleSize = 184
+    this.gap = 32
     this.nodeRow = null
     this.nodeRowSource = null
     this.nodeRowShades = null
@@ -440,8 +442,6 @@ export default class Colors {
   }
 
   makeNodeShades = () => {
-    const gap = 32
-
     // base
     this.nodeShades = figma.createFrame()
     this.nodeShades.name = '_shades'
@@ -454,7 +454,12 @@ export default class Colors {
 
     // insert
     this.nodeShades.appendChild(
-      new Header(this.parent as any, this.sampleSize).makeNode()
+      new Header(
+        this.parent as PaletteNode,
+        this.parent.view.includes('PALETTE')
+          ? this.sampleSize
+          : (this.sampleSize * this.sampleScale * 4) + (this.sampleSize * this.sampleRatio) + (this.gap * 4)
+        ).makeNode()
     )
     this.parent.colors.forEach((color) => {
       const sourceColor: [number, number, number] = [
@@ -488,7 +493,7 @@ export default class Colors {
         this.nodeRowSource.layoutSizingVertical =
         this.nodeRowShades.layoutSizingVertical =
           'HUG'
-      if (!this.parent.view.includes('PALETTE')) this.nodeRow.itemSpacing = gap
+      if (!this.parent.view.includes('PALETTE')) this.nodeRow.itemSpacing = this.gap
 
       // insert
       this.nodeRowSource.appendChild(
@@ -595,9 +600,9 @@ export default class Colors {
           } else {
             this.nodeRowShades!.layoutSizingHorizontal = 'FIXED'
             this.nodeRowShades!.layoutWrap = 'WRAP'
-            this.nodeRowShades!.itemSpacing = gap
+            this.nodeRowShades!.itemSpacing = this.gap
             this.nodeRowShades!.resize(
-              this.sampleSize * this.sampleScale * 4 + gap * 3,
+              (this.sampleSize * this.sampleScale * 4) + (this.gap * 3),
               100
             )
             this.nodeRowShades!.layoutSizingVertical = 'HUG'
