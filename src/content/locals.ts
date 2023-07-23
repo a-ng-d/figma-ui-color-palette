@@ -190,6 +190,7 @@ export const locals: any = {
       cannotUpdateLocalVariablesAndModes:
         'Your UI Color Palette is up-to-date or local color variables and variable modes must be created',
       collectionDoesNotExist: 'Variables collection must be created',
+      tooManyThemesToCreateModes: 'You cannot create more that 4 variable modes',
       emptySourceColors:
         'There is not any source color. Add it manually in the Colors section.',
       hslColorSpace:

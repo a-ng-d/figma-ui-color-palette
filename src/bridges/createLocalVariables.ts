@@ -88,10 +88,10 @@ const createLocalVariables = (palette: SceneNode, i: number, j: number) => {
       })
 
     // Create modes and set values
-    themesList.forEach((themeItem) => {
+    themesList.forEach((themeItem, index) => {
       if (
         collection?.modes.find((mode) => mode.modeId === themeItem?.id) ==
-        undefined
+        undefined && index < 4
       ) {
         if (collection?.modes[0].name === 'Mode 1') {
           collection?.renameMode(collection?.modes[0].modeId, themeItem!.name)
@@ -106,24 +106,24 @@ const createLocalVariables = (palette: SceneNode, i: number, j: number) => {
         )!.modeId = collection!.modes.find(
           (mode) => mode.name === themeItem?.name
         )!.modeId
+
+        variablesSet.forEach((variableSet) => {
+          const rightShade = paletteData.themes
+            .find((theme) => theme.name === themeItem?.name)
+            ?.colors.find((color) => color.name === variableSet.colorName)
+            ?.shades.find((shade) => shade.name === variableSet.shadeName)
+  
+          rightShade!.variableId = variableSet.variable.id
+          variableSet.variable.setValueForMode(
+            collection!.modes.find((mode) => mode.name === themeItem!.name)!.modeId,
+            {
+              r: rightShade?.gl[0] ?? 0,
+              g: rightShade?.gl[1] ?? 0,
+              b: rightShade?.gl[2] ?? 0,
+            }
+          )
+        })
       }
-      variablesSet.forEach((variableSet) => {
-        const rightShade = paletteData.themes
-          .find((theme) => theme.name === themeItem?.name)
-          ?.colors.find((color) => color.name === variableSet.colorName)
-          ?.shades.find((shade) => shade.name === variableSet.shadeName)
-
-        rightShade!.variableId = variableSet.variable.id
-
-        variableSet.variable.setValueForMode(
-          collection!.modes.find((mode) => mode.name === themeItem!.name)!.modeId,
-          {
-            r: rightShade?.gl[0] ?? 0,
-            g: rightShade?.gl[1] ?? 0,
-            b: rightShade?.gl[2] ?? 0,
-          }
-        )
-      })
     })
 
     palette.setPluginData('data', JSON.stringify(paletteData))
@@ -143,6 +143,9 @@ const createLocalVariables = (palette: SceneNode, i: number, j: number) => {
     else if (i == 0 && j == 0)
       figma.notify(locals[lang].warning.cannotCreateLocalVariablesAndModes)
     else figma.notify(`${notifications.join(' and ')} has been created`)
+
+    if (themesList.length > 4)
+      figma.notify(locals[lang].warning.tooManyThemesToCreateModes)
   } else figma.notify(locals[lang].error.corruption)
 }
 
