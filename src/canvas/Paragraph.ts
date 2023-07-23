@@ -4,8 +4,8 @@ export default class Paragraph {
   fontSize: number
   type: 'FILL' | 'FIXED'
   width?: number
-  nodeText: TextNode
-  node: FrameNode
+  nodeText: TextNode | null
+  node: FrameNode | null
 
   constructor(
     name: string,
@@ -19,6 +19,8 @@ export default class Paragraph {
     this.fontSize = fontSize
     this.type = type
     this.width = width
+    this.nodeText = null
+    this.node = null
   }
 
   makeNodeText = () => {
@@ -68,7 +70,7 @@ export default class Paragraph {
       },
     ]
     this.node.cornerRadius = 16
-    if (this.type == 'FIXED') this.node.resize(this.width, 100)
+    if (this.type == 'FIXED') this.node.resize(this.width ?? 100, 100)
 
     // layout
     this.node.layoutMode = 'HORIZONTAL'

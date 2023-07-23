@@ -3,15 +3,18 @@ export default class Tag {
   content: string
   fontSize: number
   url: string | null
-  nodeTag: FrameNode
-  nodeText: TextNode
-  nodeIndicator: EllipseNode
+  nodeTag: FrameNode | null
+  nodeText: TextNode | null
+  nodeIndicator: EllipseNode | null
 
-  constructor(name: string, content: string, fontSize = 8, url = null) {
+  constructor(name: string, content: string, fontSize = 8, url: string | null = null) {
     this.name = name
     this.content = content
     this.fontSize = fontSize
     this.url = url
+    this.nodeTag = null
+    this.nodeText = null
+    this.nodeIndicator = null
   }
 
   makeNodeTag(gl: Array<number> = [0, 0, 0, 1], hasIndicator = false) {

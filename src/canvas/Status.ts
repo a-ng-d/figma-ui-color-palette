@@ -3,7 +3,7 @@ import Tag from './Tag'
 export default class Status {
   status: { isClosestToRef: boolean }
   source: { [key: string]: number }
-  node: FrameNode
+  node: FrameNode | null
 
   constructor(
     status: { isClosestToRef: boolean },
@@ -11,6 +11,7 @@ export default class Status {
   ) {
     this.status = status
     this.source = source
+    this.node = null
   }
 
   makeNode = () => {

@@ -14,22 +14,22 @@ import { locals, lang } from '../content/locals'
 
 export default class Colors {
   parent: PaletteNode
-  palette: FrameNode
+  palette: FrameNode | undefined
   paletteData: PaletteData
   currentScale: ScaleConfiguration
   paletteBackgroundGl: Array<number>
   sampleScale: number
   sampleRatio: number
   sampleSize: number
-  nodeRow: FrameNode
-  nodeRowSource: FrameNode
-  nodeRowShades: FrameNode
-  nodeEmpty: FrameNode
-  nodeShades: FrameNode
-  node: FrameNode
+  nodeRow: FrameNode | null
+  nodeRowSource: FrameNode | null
+  nodeRowShades: FrameNode | null
+  nodeEmpty: FrameNode | null
+  nodeShades: FrameNode | null
+  node: FrameNode | null
 
-  constructor(parent?: PaletteNode, palette?: FrameNode) {
-    this.parent = parent
+  constructor(parent?: PaletteNode, palette?: FrameNode | undefined) {
+    this.parent = parent as PaletteNode
     this.palette = palette
     this.paletteData = {
       name: this.parent.name,
@@ -39,13 +39,19 @@ export default class Colors {
     }
     this.currentScale = this.parent.themes.find(
       (theme) => theme.isEnabled
-    ).scale
+    )?.scale ?? {}
     this.paletteBackgroundGl = chroma(
-      this.parent.themes.find((theme) => theme.isEnabled).paletteBackground
+      this.parent.themes.find((theme) => theme.isEnabled)!.paletteBackground
     ).gl()
     this.sampleScale = 1.75
     this.sampleRatio = 3 / 2
     this.sampleSize = 184
+    this.nodeRow = null
+    this.nodeRowSource = null
+    this.nodeRowShades = null
+    this.nodeEmpty = null
+    this.nodeShades = null
+    this.node = null
   }
 
   getShadeColorFromLch(
@@ -65,7 +71,7 @@ export default class Colors {
           : lch[2] + hueShifting > 360
           ? 360
           : lch[2] + hueShifting
-      )
+      ).rgb()
 
     return newColor
   }
@@ -87,7 +93,7 @@ export default class Colors {
           : oklch[2] + hueShifting > 360
           ? 360
           : oklch[2] + hueShifting
-      )
+      ).rgb()
 
     return newColor
   }
@@ -126,7 +132,7 @@ export default class Colors {
       algorithmVersion == 'v2'
         ? Math.sin((lightness / 100) * Math.PI) * newLabB
         : newLabB
-    )
+    ).rgb()
 
     return newColor
   }
@@ -165,7 +171,7 @@ export default class Colors {
       algorithmVersion == 'v2'
         ? Math.sin((lightness / 100) * Math.PI) * newLabB
         : newLabB
-    )
+    ).rgb()
 
     return newColor
   }
@@ -187,7 +193,7 @@ export default class Colors {
           ? Math.sin((lightness / 100) * Math.PI) * hsl[1]
           : hsl[1],
         lightness / 100
-      )
+      ).rgb()
 
     return newColor
   }
@@ -212,7 +218,11 @@ export default class Colors {
         locals[lang].warning.emptySourceColors,
         null,
         null,
-        [255, 255, 255],
+        [
+          255,
+          255,
+          255
+        ],
         this.parent.colorSpace,
         this.parent.view,
         this.parent.textColorsTheme
@@ -272,7 +282,7 @@ export default class Colors {
   makePaletteData = (service: string) => {
     let data = this.paletteData
     if (service === 'EDIT') {
-      data = JSON.parse(this.palette.getPluginData('data'))
+      data = JSON.parse(this.palette!.getPluginData('data'))
       this.paletteData.collectionId = data.collectionId
     }
 
@@ -338,7 +348,7 @@ export default class Colors {
         Object.values(theme.scale)
           .reverse()
           .forEach((lightness: number) => {
-            let newColor: Color
+            let newColor: [number, number, number]
 
             if (this.parent.colorSpace === 'LCH')
               newColor = this.getShadeColorFromLch(
@@ -377,7 +387,7 @@ export default class Colors {
               )
 
             const scaleName: string = Object.keys(theme.scale)
-              .find((key) => theme.scale[key] === lightness)
+              .find((key) => theme.scale[key] === lightness)!
               .substr(10)
 
             paletteDataColorItem.shades.push({
@@ -386,14 +396,14 @@ export default class Colors {
                 color.description === ''
                   ? `Stop ${scaleName} shade color`
                   : `${color.description}﹒Stop ${scaleName} shade color`,
-              hex: chroma(newColor).hex(),
-              rgb: newColor._rgb,
-              gl: chroma(newColor).gl(),
-              lch: chroma(newColor).lch(),
-              oklch: chroma(newColor).oklch(),
-              lab: chroma(newColor).lab(),
-              oklab: chroma(newColor).oklab(),
-              hsl: chroma(newColor).hsl(),
+              hex: chroma(newColor!).hex(),
+              rgb: chroma(newColor!).rgb(),
+              gl: chroma(newColor!).gl(),
+              lch: chroma(newColor!).lch(),
+              oklch: chroma(newColor!).oklch(),
+              lab: chroma(newColor!).lab(),
+              oklab: chroma(newColor!).oklab(),
+              hsl: chroma(newColor!).hsl(),
               variableId:
                 service === 'EDIT'
                   ? this.searchForShadeVariableId(
@@ -421,7 +431,7 @@ export default class Colors {
       this.paletteData.themes.push(paletteDataThemeItem)
     })
 
-    this.palette.setPluginData('data', JSON.stringify(this.paletteData))
+    this.palette?.setPluginData('data', JSON.stringify(this.paletteData))
   }
 
   makeNodeShades = () => {
@@ -439,7 +449,7 @@ export default class Colors {
 
     // insert
     this.nodeShades.appendChild(
-      new Header(this.parent, this.sampleSize).makeNode()
+      new Header(this.parent as any, this.sampleSize).makeNode()
     )
     this.parent.colors.forEach((color) => {
       const sourceColor: [number, number, number] = [
@@ -482,7 +492,11 @@ export default class Colors {
               color.name,
               null,
               null,
-              [color.rgb.r * 255, color.rgb.g * 255, color.rgb.b * 255],
+              [
+                color.rgb.r * 255,
+                color.rgb.g * 255,
+                color.rgb.b * 255
+              ],
               this.parent.colorSpace,
               this.parent.view,
               this.parent.textColorsTheme
@@ -496,7 +510,11 @@ export default class Colors {
               color.name,
               null,
               null,
-              [color.rgb.r * 255, color.rgb.g * 255, color.rgb.b * 255],
+              [
+                color.rgb.r * 255,
+                color.rgb.g * 255,
+                color.rgb.b * 255
+              ],
               this.parent.colorSpace,
               this.parent.view,
               this.parent.textColorsTheme
@@ -512,7 +530,7 @@ export default class Colors {
       Object.values(this.currentScale)
         .reverse()
         .forEach((lightness: number) => {
-          let newColor: Color
+          let newColor: [number, number, number]
 
           if (this.parent.colorSpace === 'LCH')
             newColor = this.getShadeColorFromLch(
@@ -552,21 +570,25 @@ export default class Colors {
 
           const distance: number = chroma.distance(
             chroma(sourceColor).hex(),
-            chroma(newColor).hex(),
+            chroma(newColor!).hex(),
             'rgb'
           )
 
           const scaleName: string = Object.keys(this.currentScale)
-            .find((key) => this.currentScale[key] === lightness)
+            .find((key) => this.currentScale[key] === lightness)!
             .substr(10)
 
           if (this.parent.view.includes('PALETTE')) {
-            this.nodeRowShades.appendChild(
+            this.nodeRowShades?.appendChild(
               new Sample(
                 color.name,
                 color.rgb,
                 scaleName,
-                [newColor._rgb[0], newColor._rgb[1], newColor._rgb[2]],
+                [
+                  newColor![0],
+                  newColor![1],
+                  newColor![2]
+                ],
                 this.parent.colorSpace,
                 this.parent.view,
                 this.parent.textColorsTheme,
@@ -578,20 +600,24 @@ export default class Colors {
               )
             )
           } else {
-            this.nodeRowShades.layoutSizingHorizontal = 'FIXED'
-            this.nodeRowShades.layoutWrap = 'WRAP'
-            this.nodeRowShades.itemSpacing = gap
-            this.nodeRowShades.resize(
+            this.nodeRowShades!.layoutSizingHorizontal = 'FIXED'
+            this.nodeRowShades!.layoutWrap = 'WRAP'
+            this.nodeRowShades!.itemSpacing = gap
+            this.nodeRowShades!.resize(
               this.sampleSize * this.sampleScale * 4 + gap * 3,
               100
             )
-            this.nodeRowShades.layoutSizingVertical = 'HUG'
-            this.nodeRowShades.appendChild(
+            this.nodeRowShades!.layoutSizingVertical = 'HUG'
+            this.nodeRowShades!.appendChild(
               new Sample(
                 color.name,
                 color.rgb,
                 scaleName,
-                [newColor._rgb[0], newColor._rgb[1], newColor._rgb[2]],
+                [
+                  newColor![0],
+                  newColor![1],
+                  newColor![2]
+                ],
                 this.parent.colorSpace,
                 this.parent.view,
                 this.parent.textColorsTheme,
@@ -607,9 +633,9 @@ export default class Colors {
 
       this.nodeRow.appendChild(this.nodeRowSource)
       this.nodeRow.appendChild(this.nodeRowShades)
-      this.nodeShades.appendChild(this.nodeRow)
+      this.nodeShades!.appendChild(this.nodeRow)
     })
-    this.makePaletteData(this.parent.service)
+    this.makePaletteData(this.parent.service ?? 'EDIT')
     if (this.parent.colors.length == 0)
       this.nodeShades.appendChild(this.makeEmptyCase())
 
@@ -641,7 +667,7 @@ export default class Colors {
     this.node.appendChild(this.makeNodeShades())
     this.node.appendChild(new Signature().makeNode())
 
-    this.palette.fills = [
+    this.palette!.fills = [
       {
         type: 'SOLID',
         color: {

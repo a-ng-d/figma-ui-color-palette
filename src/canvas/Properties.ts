@@ -19,18 +19,18 @@ export default class Properties {
   lab: Array<number>
   oklab: Array<number>
   hsl: Array<number>
-  nodeTopProps: FrameNode
-  nodeBottomProps: FrameNode
-  nodeBaseProps: FrameNode
-  nodeContrastScoresProps: FrameNode
-  nodeProperties: TextNode
-  nodeDetailedBaseProps: FrameNode
-  nodeDetailedWCAGScoresProps: FrameNode
-  nodeDetailedAPCAScoresProps: FrameNode
-  nodeColumns: FrameNode
-  nodeLeftColumn: FrameNode
-  nodeRightColumn: FrameNode
-  node: FrameNode
+  nodeTopProps: FrameNode | null
+  nodeBottomProps: FrameNode | null
+  nodeBaseProps: FrameNode | null
+  nodeContrastScoresProps: FrameNode | null
+  nodeProperties: TextNode | null
+  nodeDetailedBaseProps: FrameNode | null
+  nodeDetailedWCAGScoresProps: FrameNode | null
+  nodeDetailedAPCAScoresProps: FrameNode | null
+  nodeColumns: FrameNode | null
+  nodeLeftColumn: FrameNode | null
+  nodeRightColumn: FrameNode | null
+  node: FrameNode | null
 
   constructor(
     name: string,
@@ -48,6 +48,18 @@ export default class Properties {
     this.lab = chroma(rgb).lab()
     this.oklab = chroma(rgb).oklab()
     this.hsl = chroma(rgb).hsl()
+    this.nodeTopProps = null
+    this.nodeBottomProps = null
+    this.nodeBaseProps = null
+    this.nodeContrastScoresProps = null
+    this.nodeProperties = null
+    this.nodeDetailedBaseProps = null
+    this.nodeDetailedWCAGScoresProps = null
+    this.nodeDetailedAPCAScoresProps = null
+    this.nodeColumns = null
+    this.nodeLeftColumn = null
+    this.nodeRightColumn = null
+    this.node = null
   }
 
   getContrast(textColor: string) {
@@ -172,7 +184,7 @@ export default class Properties {
     this.nodeBaseProps.appendChild(
       new Tag('_hex', this.hex.toUpperCase()).makeNodeTag()
     )
-    this.nodeBaseProps.appendChild(basePropViaColorSpace)
+    this.nodeBaseProps.appendChild(basePropViaColorSpace as FrameNode)
 
     return this.nodeBaseProps
   }
@@ -281,7 +293,7 @@ export default class Properties {
     this.nodeDetailedBaseProps.appendChild(
       new Tag('_hex', this.hex.toUpperCase()).makeNodeTag()
     )
-    this.nodeDetailedBaseProps.appendChild(basePropViaColorSpace)
+    this.nodeDetailedBaseProps.appendChild(basePropViaColorSpace as FrameNode)
 
     return this.nodeDetailedBaseProps
   }
@@ -442,8 +454,8 @@ export default class Properties {
     this.nodeLeftColumn.itemSpacing = this.nodeRightColumn.itemSpacing = 4
 
     // insert
-    leftNodes.forEach((node) => this.nodeLeftColumn.appendChild(node))
-    rightNodes.forEach((node) => this.nodeRightColumn.appendChild(node))
+    leftNodes.forEach((node) => this.nodeLeftColumn?.appendChild(node))
+    rightNodes.forEach((node) => this.nodeRightColumn?.appendChild(node))
     this.nodeColumns.appendChild(this.nodeLeftColumn)
     this.nodeColumns.appendChild(this.nodeRightColumn)
 
@@ -492,10 +504,10 @@ export default class Properties {
 
     // insert
     this.node.appendChild(this.makeNodeTopProps())
-    this.nodeTopProps.appendChild(
+    this.nodeTopProps?.appendChild(
       new Tag('_scale', this.name, 10).makeNodeTag()
     )
-    this.nodeTopProps.appendChild(this.makeNodeBaseProps())
+    this.nodeTopProps?.appendChild(this.makeNodeBaseProps())
     this.node.appendChild(this.makeNodeBottomProps())
 
     return this.node

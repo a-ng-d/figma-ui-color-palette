@@ -2,8 +2,8 @@ import chroma from 'chroma-js'
 import type { PaletteData, PaletteDataThemeItem } from '../utils/types'
 import { locals, lang } from '../content/locals'
 
-const updateLocalStyles = (palette, i: number) => {
-  palette = figma.currentPage.selection[0]
+const updateLocalStyles = (palette: SceneNode, i: number) => {
+  palette = figma.currentPage.selection[0] as FrameNode
 
   const paletteData: PaletteData = JSON.parse(palette.getPluginData('data')),
     localStyles: Array<PaintStyle> = figma.getLocalPaintStyles(),
@@ -35,25 +35,25 @@ const updateLocalStyles = (palette, i: number) => {
               (localStyle) => localStyle.id === shade.styleId
             )
 
-            if (styleMatch.name != name) {
-              styleMatch.name = name
+            if (styleMatch?.name != name) {
+              styleMatch!.name = name
               j++
             }
 
-            if (styleMatch.description != shade.description) {
-              styleMatch.description = shade.description
+            if (styleMatch?.description != shade.description) {
+              styleMatch!.description = shade.description
               j++
             }
 
             if (
               shade.hex !=
               chroma([
-                styleMatch.paints[0]['color'].r * 255,
-                styleMatch.paints[0]['color'].g * 255,
-                styleMatch.paints[0]['color'].b * 255,
+                (styleMatch?.paints[0] as SolidPaint).color.r * 255,
+                (styleMatch?.paints[0] as SolidPaint).color.g * 255,
+                (styleMatch?.paints[0] as SolidPaint).color.b * 255,
               ]).hex()
             ) {
-              styleMatch.paints = [
+              styleMatch!.paints = [
                 {
                   type: 'SOLID',
                   color: {
@@ -75,27 +75,27 @@ const updateLocalStyles = (palette, i: number) => {
             const styleMatch = localStyles.find(
               (localStyle) => localStyle.name === name
             )
-            console.log(styleMatch.name, name)
+            console.log(styleMatch?.name, name)
 
-            if (styleMatch.name != name) {
-              styleMatch.name = name
+            if (styleMatch?.name != name) {
+              styleMatch!.name = name
               j++
             }
 
-            if (styleMatch.description != shade.description) {
-              styleMatch.description = shade.description
+            if (styleMatch?.description != shade.description) {
+              styleMatch!.description = shade.description
               j++
             }
 
             if (
               shade.hex !=
               chroma([
-                styleMatch.paints[0]['color'].r * 255,
-                styleMatch.paints[0]['color'].g * 255,
-                styleMatch.paints[0]['color'].b * 255,
+                (styleMatch?.paints[0] as SolidPaint).color.r * 255,
+                (styleMatch?.paints[0] as SolidPaint).color.g * 255,
+                (styleMatch?.paints[0] as SolidPaint).color.b * 255,
               ]).hex()
             ) {
-              styleMatch.paints = [
+              styleMatch!.paints = [
                 {
                   type: 'SOLID',
                   color: {

@@ -4,12 +4,13 @@ export default class Property {
   name: string
   content: string
   size: number
-  node: FrameNode
+  node: FrameNode | null
 
   constructor(name: string, content: string, size: number) {
     this.name = name
     this.content = content
     this.size = size
+    this.node = null
   }
 
   makeNode = () => {

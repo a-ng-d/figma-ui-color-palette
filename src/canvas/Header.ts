@@ -6,14 +6,15 @@ export default class Header {
   parent: PaletteNode
   currentScale: ScaleConfiguration
   sampleSize: number
-  node: FrameNode
+  node: FrameNode | null
 
   constructor(parent: PaletteNode, size: number) {
     this.parent = parent
     this.currentScale = this.parent.themes.find(
       (theme) => theme.isEnabled
-    ).scale
+    )!.scale
     this.sampleSize = size
+    this.node = null
   }
 
   makeNode = () => {
@@ -44,10 +45,10 @@ export default class Header {
       Object.values(this.currentScale)
         .reverse()
         .forEach((lightness) => {
-          this.node.appendChild(
+          this.node?.appendChild(
             new Sample(
-              Object.keys(this.currentScale)
-                .find((key) => this.currentScale[key] === lightness)
+              Object.keys(this.currentScale ?? {})
+                .find((key) => this.currentScale[key] === lightness)!
                 .substr(10),
               null,
               null,

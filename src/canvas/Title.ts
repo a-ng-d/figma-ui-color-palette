@@ -6,13 +6,16 @@ import { lang, locals } from '../content/locals'
 export default class Title {
   text: string
   parent: PaletteNode
-  nodeName: FrameNode
-  nodeProps: FrameNode
-  node: FrameNode
+  nodeName: FrameNode | null
+  nodeProps: FrameNode | null
+  node: FrameNode | null
 
   constructor(text: string, parent: PaletteNode) {
     this.text = text
     this.parent = parent
+    this.nodeName = null
+    this.nodeProps = null
+    this.node = null
   }
 
   makeNodeName = () => {
@@ -37,14 +40,14 @@ export default class Title {
       ).makeNodeTag()
     )
     if (
-      this.parent.themes.find((theme) => theme.isEnabled).type !=
+      this.parent.themes.find((theme) => theme.isEnabled)?.type !=
         'default theme' &&
-      this.parent.themes.find((theme) => theme.isEnabled).description != ''
+      this.parent.themes.find((theme) => theme.isEnabled)?.description != ''
     )
       this.nodeName.appendChild(
         new Paragraph(
           '_description',
-          this.parent.themes.find((theme) => theme.isEnabled).description,
+          this.parent.themes.find((theme) => theme.isEnabled)!.description,
           'FIXED',
           644,
           12
@@ -87,13 +90,13 @@ export default class Title {
       ).makeNodeTag()
     )
     if (
-      this.parent.themes.find((theme) => theme.isEnabled).type !=
+      this.parent.themes.find((theme) => theme.isEnabled)?.type !=
       'default theme'
     )
       this.nodeProps.appendChild(
         new Tag(
           '_theme',
-          `Theme: ${this.parent.themes.find((theme) => theme.isEnabled).name}`,
+          `Theme: ${this.parent.themes.find((theme) => theme.isEnabled)?.name}`,
           12
         ).makeNodeTag()
       )

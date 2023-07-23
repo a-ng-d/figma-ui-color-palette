@@ -19,9 +19,9 @@ export default class Sample {
   status: {
     isClosestToRef: boolean
   }
-  nodeColor: FrameNode
-  node: FrameNode
-  children: FrameNode
+  nodeColor: FrameNode | null
+  node: FrameNode | null
+  children: FrameNode | null
 
   constructor(
     name: string,
@@ -41,6 +41,8 @@ export default class Sample {
     this.view = view
     this.textColorsTheme = textColorsTheme
     this.status = status
+    this.nodeColor = null
+    this.node = null
     this.children = null
   }
 
@@ -69,7 +71,7 @@ export default class Sample {
     }
 
     // insert
-    this.node.appendChild(this.children)
+    this.node.appendChild(this.children as FrameNode)
 
     return this.node
   }
@@ -110,7 +112,7 @@ export default class Sample {
     if (this.view.includes('PALETTE_WITH_PROPERTIES') && !isColorName) {
       this.node.appendChild(
         new Properties(
-          this.scale,
+          this.scale ?? '0',
           this.rgb,
           this.colorSpace,
           this.textColorsTheme
@@ -119,7 +121,7 @@ export default class Sample {
     } else if (isColorName)
       this.node.appendChild(new Property('_label', this.name, 10).makeNode())
     if (this.status.isClosestToRef)
-      this.node.appendChild(new Status(this.status, this.source).makeNode())
+      this.node.appendChild(new Status(this.status, this.source ?? {}).makeNode())
 
     return this.node
   }
@@ -174,18 +176,18 @@ export default class Sample {
     this.nodeColor.appendChild(new Property('_label', name, 10).makeNode())
     if (this.status.isClosestToRef)
       this.nodeColor.appendChild(
-        new Status(this.status, this.source).makeNode()
+        new Status(this.status, this.source ?? {}).makeNode()
       )
 
     this.node.appendChild(this.nodeColor)
     if (isColorName && description != '')
       this.node.appendChild(
-        new Paragraph('_description', description, 'FILL', null, 8).makeNode()
+        new Paragraph('_description', description, 'FILL', undefined, 8).makeNode()
       )
     else if (!this.view.includes('SHEET_SAFE_MODE') && !isColorName)
       this.node.appendChild(
         new Properties(
-          this.scale,
+          this.scale ?? '0',
           this.rgb,
           this.colorSpace,
           this.textColorsTheme

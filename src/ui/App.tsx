@@ -45,14 +45,10 @@ const settingsMessage: SettingsMessage = {
   isEditedInRealTime: false,
 }
 
-interface Props {
-   
-}
-
-class App extends React.Component<Props, any> {
+class App extends React.Component<any, any> {
   dispatch: { [key: string]: DispatchProcess }
 
-  constructor(props: Props) {
+  constructor(props: any) {
     super(props)
     this.dispatch = {
       textColorsTheme: new Dispatcher(

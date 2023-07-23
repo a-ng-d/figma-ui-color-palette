@@ -4,12 +4,13 @@ export default class LocalStyle {
   name: string
   description: string
   rgb: RgbModel
-  paintStyle: PaintStyle
+  paintStyle: PaintStyle | null
 
   constructor(name: string, description: string, rgb: RgbModel) {
     this.name = name
     this.description = description
     this.rgb = rgb
+    this.paintStyle = null
   }
 
   makePaintStyle = () => {

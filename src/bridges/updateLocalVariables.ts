@@ -2,8 +2,8 @@ import chroma from 'chroma-js'
 import type { PaletteData } from '../utils/types'
 import { locals, lang } from '../content/locals'
 
-const updateLocalVariables = (palette, i: number, j: number) => {
-  palette = figma.currentPage.selection[0]
+const updateLocalVariables = (palette: SceneNode, i: number, j: number) => {
+  palette = figma.currentPage.selection[0] as FrameNode
 
   const paletteData: PaletteData = JSON.parse(palette.getPluginData('data'))
 

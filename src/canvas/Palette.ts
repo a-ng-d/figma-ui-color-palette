@@ -26,8 +26,7 @@ export default class Palette {
   textColorsTheme: TextColorsThemeHexModel
   algorithmVersion: AlgorithmVersionConfiguration
   service: Service
-  children: PaletteNode
-  node: FrameNode
+  node: FrameNode | null
 
   constructor(
     name: string,
@@ -61,7 +60,7 @@ export default class Palette {
     this.algorithmVersion = algorithmVersion
     this.textColorsTheme = textColorsTheme
     this.service = 'CREATE'
-    this.children = null
+    this.node = null
   }
 
   makeNode = () => {
@@ -102,10 +101,10 @@ export default class Palette {
         element.type != 'GROUP' &&
         element.type != 'EMBED'
       ) {
-        const fills = element['fills'].filter((fill) => fill.type === 'SOLID')
+        const fills = (element as any).fills.filter((fill: SolidPaint) => fill.type === 'SOLID')
 
         if (fills.length != 0) {
-          fills.forEach((fill) =>
+          fills.forEach((fill: SolidPaint) =>
             this.colors.push({
               name: element.name,
               description: '',
