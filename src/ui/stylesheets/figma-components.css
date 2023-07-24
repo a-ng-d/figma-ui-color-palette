@@ -20,7 +20,6 @@
 .type a {
   color: var(--figma-color-text-brand);
   text-decoration: none;
-  cursor: default;
 }
 
 .type a:focus-visible {
@@ -240,7 +239,6 @@
 .button--tertiary a {
   color: var(--figma-color-text-brand);
   text-decoration: none;
-  cursor: default;
 }
 
 .button--tertiary a:focus-visible {
