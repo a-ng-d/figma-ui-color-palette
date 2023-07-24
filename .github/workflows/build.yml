@@ -1,4 +1,4 @@
-name: UI Color Palette plugin builder
+name: Build and Download UI Color Palette
 
 on: workflow_dispatch
 
