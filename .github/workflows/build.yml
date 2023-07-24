@@ -1,11 +1,6 @@
 name: UI Color Palette plugin builder
 
-on:
-  push:
-    branches: [ '*' ]
-  pull_request:
-    branches: [ '*' ]
-  workflow_dispatch:
+on: workflow_dispatch
 
 jobs:
   build:
