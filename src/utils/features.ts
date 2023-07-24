@@ -382,7 +382,7 @@ const features: Array<Feature> = [
   {
     name: 'GET_PRO_PLAN',
     description: 'Access the subscription to get pro features',
-    isActive: true,
+    isActive: false,
     isPro: false,
     type: 'ACTION',
     service: ['ONBOARD', 'CREATE', 'EDIT'],
