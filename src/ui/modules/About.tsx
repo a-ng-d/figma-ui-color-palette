@@ -69,16 +69,15 @@ export default class About extends React.Component<Props> {
                 rel="noreferrer"
               >
                 Source code
-              </a>{' '}
-              is under{' '}
+              </a>
+              {' '}is licensed under{' '}
               <a
                 href="https://uicp.link/license"
                 target="_blank"
                 rel="noreferrer"
               >
-                CC BY 4.0
-              </a>{' '}
-              license
+                MIT
+              </a>
             </p>
           </div>
         </div>
@@ -118,8 +117,8 @@ export default class About extends React.Component<Props> {
               <Button
                 type="tertiary"
                 isLink={true}
-                url="https://uicp.link/feedback"
-                label={locals[this.props.lang].about.beInvolved.feedback}
+                url="https://uicp.link/discuss"
+                label={locals[this.props.lang].about.beInvolved.discuss}
               />
             </div>
           </div>

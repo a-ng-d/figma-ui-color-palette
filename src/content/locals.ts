@@ -130,7 +130,7 @@ export const locals: any = {
       beInvolved: {
         title: 'Be involved',
         issue: 'Open an issue',
-        feedback: 'Give feedback',
+        discuss: 'Start a discussion',
       },
       giveSupport: {
         title: 'Give support',
