@@ -175,7 +175,7 @@ export default class ThemeItem extends React.Component<Props, any> {
           >
             <Button
               type="icon"
-              icon="adjust"
+              icon="ellipsis"
               state={this.state['hasMoreOptions'] ? 'selected' : ''}
               feature="DISPLAY_MORE"
               action={(e) => this.optionsHandler(e)}

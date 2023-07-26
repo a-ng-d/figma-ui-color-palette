@@ -234,7 +234,7 @@ export default class Scale extends React.Component<Props, any> {
             }
           >
             <Message
-              icon="library"
+              icon="key"
               messages={this.setOnboardingMessages()}
             />
           </Feature>
@@ -289,7 +289,7 @@ export default class Scale extends React.Component<Props, any> {
             }
           >
             <Message
-              icon="library"
+              icon="key"
               messages={this.setOnboardingMessages()}
             />
           </Feature>
