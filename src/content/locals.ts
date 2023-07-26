@@ -61,7 +61,7 @@ export const locals: any = {
       title: 'Color themes',
       callout: {
         message:
-          'Create color themes to manage multiple color palettes within one single (e.g. light and dark scheme)',
+          'Create color themes to manage multiple color palettes within one single (e.g. light and dark modes)',
         cta: 'Create a color theme',
       },
       paletteBackgroundColor: {
