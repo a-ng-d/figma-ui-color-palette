@@ -142,8 +142,8 @@ export const locals: any = {
       createPalette: 'Create a UI Color Palette',
       createLocalStyles: 'Create local styles',
       createLocalVariables: 'Create local variables',
-      updateLocalStyles: 'Update the local styles',
-      updateLocalVariables: 'Update the local variables',
+      updateLocalStyles: 'Update the existing local styles',
+      updateLocalVariables: 'Update the existing local variables',
       export: 'Export the UI Color Palette to',
       managePalette: {
         localStyles: 'Manage local styles',
