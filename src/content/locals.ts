@@ -151,6 +151,7 @@ export const locals: any = {
       },
     },
     highlight: {
+      next: 'Next',
       gotIt: 'Got it',
       learnMore: 'Learn more',
     },

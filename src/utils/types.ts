@@ -14,16 +14,17 @@ export type Language = 'en-US'
 export interface ReleaseNote {
   version: string
   isMostRecent: boolean
-  title: string
-  image: string
-  content: string
-  learnMore: string
+  title: Array<string>
+  image: Array<string>
+  content: Array<string>
+  numberOfNotes: number,
+  learnMore: Array<`https://${string}`>
 }
 
 export interface Shortcut {
   label: string
   isLink: boolean
-  url: string
+  url: `https://${string}`
   action: any
 }
 
