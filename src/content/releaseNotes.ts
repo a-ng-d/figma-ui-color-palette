@@ -1,4 +1,6 @@
 import type { ReleaseNote } from '../utils/types'
+import rnv241 from './images/release_note_v24_1.webp'
+import rnv242 from './images/release_note_v24_2.webp'
 import rnv23 from './images/release_note_v23.webp'
 import rnv22 from './images/release_note_v22.webp'
 import rnv21 from './images/release_note_v21.webp'
@@ -7,8 +9,23 @@ import rnv19 from './images/release_note_v19.webp'
 
 const releaseNotes: Array<ReleaseNote> = [
   {
-    version: '2.3.0',
+    version: '2.4.0',
     isMostRecent: true,
+    title: [
+      'UI Color palette 24: Create Color System “like a Pro”',
+      'UI Color palette 24: Color themes management “like a Pro”'
+    ],
+    image: [rnv241, rnv242],
+    content: [
+      'UI Color Palette allows you to create free accessible color palettes, but the Pro plan offers more features such as color themes, additional export options, and a color sheet that turns your palette into a color system. Ready to try it out?',
+      'In the Pro plan, color themes can be managed within the same palette, allowing you to create as many variations of lightness scales as needed to build your color system. This feature can be helpful for managing both light and dark mode themes.'
+    ],
+    numberOfNotes: 2,
+    learnMore: [
+      'https://uicp.link/whats-new',
+      'https://uicp.link/whats-new'
+    ]
+  },
   {
     version: '2.3.0',
     isMostRecent: false,
