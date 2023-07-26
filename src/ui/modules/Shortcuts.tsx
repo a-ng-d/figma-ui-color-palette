@@ -60,7 +60,7 @@ export default class Shortcuts extends React.Component<Props> {
               type="icon"
               icon="library"
               action={() =>
-                window.open('https://docs.ui-color-palette.com', '_blank')
+                window.open('https://uicp.link/docs', '_blank')
               }
             />
             <Button
@@ -68,7 +68,7 @@ export default class Shortcuts extends React.Component<Props> {
               icon="repository"
               action={() =>
                 window.open(
-                  'https://github.com/inVoltag/figma-ui-color-palette',
+                  'https://uicp.link/repository',
                   '_blank'
                 )
               }

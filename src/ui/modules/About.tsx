@@ -64,7 +64,7 @@ export default class About extends React.Component<Props> {
             </p>
             <p className="type">
               <a
-                href="https://github.com/inVoltag/figma-ui-color-palette"
+                href="https://uicp.link/repository"
                 target="_blank"
                 rel="noreferrer"
               >
@@ -91,7 +91,7 @@ export default class About extends React.Component<Props> {
               <Button
                 type="tertiary"
                 isLink={true}
-                url="https://docs.ui-color-palette.com"
+                url="https://uicp.link/docs"
                 label={locals[this.props.lang].about.getHelp.documentation}
               />
               <span>﹒</span>
@@ -111,7 +111,7 @@ export default class About extends React.Component<Props> {
               <Button
                 type="tertiary"
                 isLink={true}
-                url="https://github.com/inVoltag/figma-ui-color-palette/issues/new/choose"
+                url="https://uicp.link/report"
                 label={locals[this.props.lang].about.beInvolved.issue}
               />
               <span>﹒</span>
@@ -131,7 +131,7 @@ export default class About extends React.Component<Props> {
               <Button
                 type="tertiary"
                 isLink={true}
-                url="https://www.linkedin.com/in/augrimaud"
+                url="https://uicp.link/network"
                 label={locals[this.props.lang].about.giveSupport.follow}
               />
               {this.props.planStatus === 'UNPAID' ? (
@@ -140,7 +140,7 @@ export default class About extends React.Component<Props> {
                   <Button
                     type="tertiary"
                     isLink={true}
-                    url="https://www.buymeacoffee.com/a_ng_d"
+                    url="https://uicp.link/donate"
                     label={locals[this.props.lang].about.giveSupport.coffee}
                   />
                 </>
