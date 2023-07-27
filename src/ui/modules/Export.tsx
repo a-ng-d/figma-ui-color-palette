@@ -58,6 +58,15 @@ export default class Export extends React.Component<Props, any> {
           '*'
         )
       },
+      EXPORT_TO_JSON_AMZN_STYLE_DICTIONARY: () => {
+        this.setState({
+          format: 'JSON_AMZN_STYLE_DICTIONARY',
+        })
+        parent.postMessage(
+          { pluginMessage: { type: 'EXPORT_PALETTE', export: 'JSON_AMZN_STYLE_DICTIONARY' } },
+          '*'
+        )
+      },
       EXPORT_TO_JSON_TOKENS_STUDIO: () => {
         this.setState({
           format: 'JSON_TOKENS_STUDIO',
@@ -165,6 +174,33 @@ export default class Export extends React.Component<Props, any> {
                       group="fileFormat"
                       onChange={
                         isBlocked('EXPORT_JSON', this.props.planStatus)
+                          ? () => null
+                          : this.exportHandler
+                      }
+                    />
+                  </li>
+                </Feature>
+                <Feature
+                  isActive={
+                    features.find((feature) => feature.name === 'EXPORT_JSON_AMZN_STYLE_DICTIONARY')
+                      ?.isActive
+                  }
+                >
+                  <li>
+                    <RadioButton
+                      id="options__json-amzn-style-dictionary"
+                      label={locals[this.props.lang].export.amznStyleDictionary}
+                      isChecked={
+                        this.state['format'] === 'JSON_AMZN_STYLE_DICTIONARY' ? true : false
+                      }
+                      isBlocked={isBlocked(
+                        'EXPORT_JSON_AMZN_STYLE_DICTIONARY',
+                        this.props.planStatus
+                      )}
+                      feature="EXPORT_TO_JSON_AMZN_STYLE_DICTIONARY"
+                      group="fileFormat"
+                      onChange={
+                        isBlocked('EXPORT_JSON_AMZN_STYLE_DICTIONARY', this.props.planStatus)
                           ? () => null
                           : this.exportHandler
                       }

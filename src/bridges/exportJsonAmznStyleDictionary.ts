@@ -1,7 +1,8 @@
+
 import type { PaletteData, PaletteDataColorItem, PaletteDataShadeItem } from '../utils/types'
 import { locals, lang } from '../content/locals'
 
-const exportJsonTokensStudio = (palette: SceneNode) => {
+const exportJsonAmznStyleDictionary = (palette: SceneNode) => {
   palette = figma.currentPage.selection[0] as FrameNode
 
   const paletteData: PaletteData = JSON.parse(palette.getPluginData('data')),
@@ -14,39 +15,40 @@ const exportJsonTokensStudio = (palette: SceneNode) => {
       palette.getPluginData('name') === ''
         ? locals[lang].name
         : palette.getPluginData('name'),
-    json: { [key: string]: any } = {}
+    json: { [key: string]: any } = {
+      color: {}
+    }
 
   const model = (color: PaletteDataColorItem, shade: PaletteDataShadeItem) => {
     return {
       value: shade.hex,
-      description: color.description != ''
+      comment: color.description != ''
         ? color.description + '﹒' + shade.description
         : shade.description,
-      type: 'color',
     }
   }
+
+  paletteData.themes[0].colors.forEach(color => {
+    json['color'][color.name] = {}
+  })
 
   if (palette.children.length == 1) {
     if (workingThemes[0].type === 'custom theme')
       workingThemes.forEach((theme) => {
-        json[name + ' - ' + theme.name] = {}
         theme.colors.forEach((color) => {
-          json[name + ' - ' + theme.name][color.name] = {}
+          json['color'][color.name][theme.name] = {}   
           color.shades.reverse().forEach((shade) => {
-            json[name + ' - ' + theme.name][color.name][shade.name] = model(color, shade)
+            json['color'][color.name][theme.name][shade.name] = model(color, shade)
           })
-          json[name + ' - ' + theme.name][color.name]['type'] = 'color'
         })
       })
     else
       workingThemes.forEach((theme) => {
-        json[name] = {}
         theme.colors.forEach((color) => {
-          json[name][color.name] = {}
+          json['color'][color.name] = {}
           color.shades.sort().forEach((shade) => {
-            json[name][color.name][shade.name] = model(color, shade)
+            json['color'][color.name][shade.name] = model(color, shade)
           })
-          json[name][color.name]['type'] = 'color'
         })
       })
 
@@ -57,4 +59,4 @@ const exportJsonTokensStudio = (palette: SceneNode) => {
   } else figma.notify(locals[lang].error.corruption)
 }
 
-export default exportJsonTokensStudio
+export default exportJsonAmznStyleDictionary

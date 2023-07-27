@@ -1,6 +1,6 @@
 export const lang = 'en-US'
 
-export const locals: any = {
+export const locals: { [key: string]: any } = {
   'en-US': {
     name: 'UI Color Palette',
     tagline:
@@ -75,8 +75,9 @@ export const locals: any = {
     export: {
       format: 'File format',
       preview: 'Preview',
-      json: 'JSON (Tokens)',
-      tokensStudio: 'JSON (Tokens Sudio)',
+      json: 'JSON (Global tokens)',
+      amznStyleDictionary: 'JSON (Amazon Style Dictionary)',
+      tokensStudio: 'JSON (Tokens Studio)',
       css: 'CSS (Custom Properties)',
       swift: 'SwiftUI (Apple OS)',
       xml: 'XML (Android)',
