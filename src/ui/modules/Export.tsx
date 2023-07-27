@@ -58,6 +58,15 @@ export default class Export extends React.Component<Props, any> {
           '*'
         )
       },
+      EXPORT_TO_JSON_TOKENS_STUDIO: () => {
+        this.setState({
+          format: 'JSON_TOKENS_STUDIO',
+        })
+        parent.postMessage(
+          { pluginMessage: { type: 'EXPORT_PALETTE', export: 'JSON_TOKENS_STUDIO' } },
+          '*'
+        )
+      },
       EXPORT_TO_CSS: () => {
         this.setState({
           format: 'CSS',
@@ -156,6 +165,33 @@ export default class Export extends React.Component<Props, any> {
                       group="fileFormat"
                       onChange={
                         isBlocked('EXPORT_JSON', this.props.planStatus)
+                          ? () => null
+                          : this.exportHandler
+                      }
+                    />
+                  </li>
+                </Feature>
+                <Feature
+                  isActive={
+                    features.find((feature) => feature.name === 'EXPORT_JSON_TOKENS_STUDIO')
+                      ?.isActive
+                  }
+                >
+                  <li>
+                    <RadioButton
+                      id="options__json-tokens-studio"
+                      label={locals[this.props.lang].export.tokensStudio}
+                      isChecked={
+                        this.state['format'] === 'JSON_TOKENS_STUDIO' ? true : false
+                      }
+                      isBlocked={isBlocked(
+                        'EXPORT_JSON_TOKENS_STUDIO',
+                        this.props.planStatus
+                      )}
+                      feature="EXPORT_TO_JSON_TOKENS_STUDIO"
+                      group="fileFormat"
+                      onChange={
+                        isBlocked('EXPORT_JSON_TOKENS_STUDIO', this.props.planStatus)
                           ? () => null
                           : this.exportHandler
                       }

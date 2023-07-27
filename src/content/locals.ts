@@ -76,6 +76,7 @@ export const locals: any = {
       format: 'File format',
       preview: 'Preview',
       json: 'JSON (Tokens)',
+      tokensStudio: 'JSON (Tokens Sudio)',
       css: 'CSS (Custom Properties)',
       swift: 'SwiftUI (Apple OS)',
       xml: 'XML (Android)',

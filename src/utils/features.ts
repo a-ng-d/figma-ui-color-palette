@@ -259,6 +259,14 @@ const features: Array<Feature> = [
     service: ['EDIT'],
   },
   {
+    name: 'EXPORT_JSON_TOKENS_STUDIO',
+    description: 'Palette export to the Tokens Studio plugin',
+    isActive: true,
+    isPro: false,
+    type: 'ACTION',
+    service: ['EDIT'],
+  },
+  {
     name: 'EXPORT_CSS',
     description: 'Palette export to CSS',
     isActive: true,
@@ -267,17 +275,9 @@ const features: Array<Feature> = [
     service: ['EDIT'],
   },
   {
-    name: 'EXPORT_CSV',
-    description: 'Palette LCH values export to CSV',
-    isActive: true,
-    isPro: false,
-    type: 'ACTION',
-    service: ['EDIT'],
-  },
-  {
     name: 'EXPORT_SWIFT',
     description:
-      'Palette export to SWIFT (macOS, iOS, iPadOS, watchOS, tvOS, visionOS)',
+    'Palette export to SWIFT (macOS, iOS, iPadOS, watchOS, tvOS, visionOS)',
     isActive: true,
     isPro: false,
     type: 'ACTION',
@@ -286,6 +286,14 @@ const features: Array<Feature> = [
   {
     name: 'EXPORT_XML',
     description: 'Palette export to XML (Android)',
+    isActive: true,
+    isPro: false,
+    type: 'ACTION',
+    service: ['EDIT'],
+  },
+  {
+    name: 'EXPORT_CSV',
+    description: 'Palette LCH values export to CSV',
     isActive: true,
     isPro: false,
     type: 'ACTION',

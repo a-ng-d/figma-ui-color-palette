@@ -15,6 +15,7 @@ import createLocalVariables from './bridges/createLocalVariables'
 import updateLocalVariables from './bridges/updateLocalVariables'
 import exportJson from './bridges/exportJson'
 import exportCss from './bridges/exportCss'
+import exportJsonTokensStudio from './bridges/exportJsonTokensStudio'
 import exportSwift from './bridges/exportSwift'
 import exportXml from './bridges/exportXml'
 import exportCsv from './bridges/exportCsv'
@@ -58,6 +59,7 @@ figma.ui.onmessage = async (msg) => {
     UPDATE_LOCAL_VARIABLES: () => updateLocalVariables(palette, i, j),
     EXPORT_PALETTE: () => {
       msg.export === 'JSON' ? exportJson(palette) : null
+      msg.export === 'JSON_TOKENS_STUDIO' ? exportJsonTokensStudio(palette) : null
       msg.export === 'CSS' ? exportCss(palette) : null
       msg.export === 'SWIFT' ? exportSwift(palette) : null
       msg.export === 'XML' ? exportXml(palette) : null
