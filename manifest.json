@@ -11,8 +11,8 @@
   ],
   "networkAccess": {
     "allowedDomains": [
-      "figma.com",
-      "rsms.me"
+      "https://figma.com",
+      "https://rsms.me"
     ]
   },
   "main": "dist/code.js",
