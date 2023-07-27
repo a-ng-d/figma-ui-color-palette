@@ -4,6 +4,7 @@ import type {
   TextColorsThemeHexModel,
 } from '../utils/types'
 import chroma from 'chroma-js'
+import { Hsluv } from 'hsluv'
 import { APCAcontrast, sRGBtoY, fontLookupAPCA } from 'apca-w3'
 import Tag from './Tag'
 import { locals, lang } from '../content/locals'
@@ -19,6 +20,7 @@ export default class Properties {
   lab: Array<number>
   oklab: Array<number>
   hsl: Array<number>
+  hsluv: Array<number>
   nodeTopProps: FrameNode | null
   nodeBottomProps: FrameNode | null
   nodeBaseProps: FrameNode | null
@@ -48,6 +50,7 @@ export default class Properties {
     this.lab = chroma(rgb).lab()
     this.oklab = chroma(rgb).oklab()
     this.hsl = chroma(rgb).hsl()
+    this.hsluv = this.getHsluv(rgb)
     this.nodeTopProps = null
     this.nodeBottomProps = null
     this.nodeBaseProps = null
@@ -92,6 +95,20 @@ export default class Properties {
 
   getMinFontSizes(textColor: string) {
     return fontLookupAPCA(this.getAPCAContrast(textColor))
+  }
+
+  getHsluv = (rgb: [number, number, number]) => {
+    const hsluv = new Hsluv()
+    hsluv.rgb_r = rgb[0] / 255
+    hsluv.rgb_g = rgb[1] / 255
+    hsluv.rgb_b = rgb[2] / 255
+    hsluv.rgbToHsluv()
+
+    return [
+      hsluv.hsluv_h,
+      hsluv.hsluv_s,
+      hsluv.hsluv_l
+    ]
   }
 
   makeNodeTopProps = () => {
@@ -173,10 +190,17 @@ export default class Properties {
       ).makeNodeTag()
     } else if (this.colorSpace === 'HSL') {
       basePropViaColorSpace = new Tag(
-        '_lab',
+        '_hsl',
         `H ${Math.floor(this.hsl[0])} • S ${Math.floor(
           this.hsl[1] * 100
         )} • L ${Math.floor(this.hsl[2] * 100)}`
+      ).makeNodeTag()
+    } else if (this.colorSpace === 'HSLUV') {
+      basePropViaColorSpace = new Tag(
+        '_hsluv',
+        `H ${Math.floor(this.hsluv[0])} • S ${Math.floor(
+          this.hsluv[1]
+        )} • L ${Math.floor(this.hsluv[2])}`
       ).makeNodeTag()
     }
 
@@ -283,6 +307,13 @@ export default class Properties {
         `H ${Math.floor(this.hsl[0])} • S ${Math.floor(
           this.hsl[1] * 100
         )} • L ${Math.floor(this.hsl[2] * 100)}`
+      ).makeNodeTag()
+    } else if (this.colorSpace === 'HSLUV') {
+      basePropViaColorSpace = new Tag(
+        '_hsluv',
+        `H ${Math.floor(this.hsluv[0])} • S ${Math.floor(
+          this.hsluv[1]
+        )} • L ${Math.floor(this.hsluv[2])}`
       ).makeNodeTag()
     }
 

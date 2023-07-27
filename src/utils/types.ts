@@ -154,7 +154,7 @@ export interface ExportConfiguration {
   data: any
 }
 
-export type ColorSpaceConfiguration = 'LCH' | 'OKLCH' | 'LAB' | 'OKLAB' | 'HSL'
+export type ColorSpaceConfiguration = 'LCH' | 'OKLCH' | 'LAB' | 'OKLAB' | 'HSL' | 'HSLUV'
 
 export type ViewConfiguration =
   | 'PALETTE_WITH_PROPERTIES'
