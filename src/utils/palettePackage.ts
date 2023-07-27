@@ -2,6 +2,7 @@ import type { PaletteConfiguration, Presets } from './types'
 
 export const palette: PaletteConfiguration = {
   name: '',
+  description: '',
   min: undefined,
   max: undefined,
   preset: {},

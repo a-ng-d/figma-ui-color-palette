@@ -115,6 +115,25 @@ export default class Colors extends React.Component<Props, any> {
       parent.postMessage({ pluginMessage: colorsMessage }, '*')
     }
 
+    const renameColor = () => {
+      const hasSameName = this.props.colors.filter(
+        (color) => color.name === currentElement.value
+      )
+      colorsMessage.data = this.props.colors.map((item) => {
+        if (item.id === id)
+          item.name =
+            hasSameName.length > 1
+              ? currentElement.value + ' 2'
+              : currentElement.value
+        return item
+      })
+      this.props.onChangeColors(colorsMessage.data)
+      if (e._reactName === 'onBlur')
+        parent.postMessage({ pluginMessage: colorsMessage }, '*')
+      if (e.key === 'Enter')
+        parent.postMessage({ pluginMessage: colorsMessage }, '*')
+    }
+
     const updateHexCode = () => {
       const code: HexModel =
         currentElement.value.indexOf('#') == -1
@@ -214,33 +233,12 @@ export default class Colors extends React.Component<Props, any> {
       this.props.onChangeColors(colorsMessage.data)
       if (e._reactName === 'onBlur')
         parent.postMessage({ pluginMessage: colorsMessage }, '*')
-      if (e.key === 'Enter')
-        parent.postMessage({ pluginMessage: colorsMessage }, '*')
     }
 
     const removeColor = () => {
       colorsMessage.data = this.props.colors.filter((item) => item.id != id)
       this.props.onChangeColors(colorsMessage.data)
       parent.postMessage({ pluginMessage: colorsMessage }, '*')
-    }
-
-    const renameColor = () => {
-      const hasSameName = this.props.colors.filter(
-        (color) => color.name === currentElement.value
-      )
-      colorsMessage.data = this.props.colors.map((item) => {
-        if (item.id === id)
-          item.name =
-            hasSameName.length > 1
-              ? currentElement.value + ' 2'
-              : currentElement.value
-        return item
-      })
-      this.props.onChangeColors(colorsMessage.data)
-      if (e._reactName === 'onBlur')
-        parent.postMessage({ pluginMessage: colorsMessage }, '*')
-      if (e.key === 'Enter')
-        parent.postMessage({ pluginMessage: colorsMessage }, '*')
     }
 
     const actions: ActionsList = {

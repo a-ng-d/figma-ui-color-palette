@@ -31,6 +31,7 @@ export interface Shortcut {
 // Palette
 export interface PaletteNode {
   name: string
+  description: string
   preset: PresetConfiguration
   scale: ScaleConfiguration
   colors: Array<ColorConfiguration>
@@ -44,6 +45,7 @@ export interface PaletteNode {
 
 export interface PaletteData {
   name: string
+  description: string
   themes: Array<PaletteDataThemeItem>
   collectionId: string
   type: 'palette'
@@ -85,6 +87,7 @@ export interface PaletteDataShadeItem {
 // Palette configurations
 export interface PaletteConfiguration {
   name: string
+  description: string
   preset: PresetConfiguration | any
   scale: ScaleConfiguration
   min: number | undefined
@@ -236,6 +239,7 @@ export interface SettingsMessage {
   type: 'UPDATE_SETTINGS'
   data: {
     name: string
+    description: string
     colorSpace: ColorSpaceConfiguration
     textColorsTheme: TextColorsThemeHexModel
     algorithmVersion: AlgorithmVersionConfiguration

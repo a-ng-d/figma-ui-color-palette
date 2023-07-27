@@ -27,6 +27,7 @@ const updateScale = (msg: ScaleMessage, palette: SceneNode) => {
         palette.getPluginData('name') === ''
           ? locals[lang].name
           : palette.getPluginData('name'),
+      description: string = palette.getPluginData('description'),
       preset = JSON.parse(
         palette.getPluginData('preset')
       ) as PresetConfiguration,
@@ -72,6 +73,7 @@ const updateScale = (msg: ScaleMessage, palette: SceneNode) => {
       new Colors(
         {
           name: palette.getPluginData('name'),
+          description: description,
           preset: preset,
           scale: msg.data.scale,
           colors: colors,

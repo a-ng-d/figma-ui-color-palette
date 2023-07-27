@@ -140,8 +140,6 @@ export default class Themes extends React.Component<Props, any> {
       this.props.onChangeThemes(themesMessage.data)
       if (e._reactName === 'onBlur')
         parent.postMessage({ pluginMessage: themesMessage }, '*')
-      if (e.key === 'Enter')
-        parent.postMessage({ pluginMessage: themesMessage }, '*')
     }
 
     const updatePaletteBackgroundColor = () => {

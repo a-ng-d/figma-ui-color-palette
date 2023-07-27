@@ -24,6 +24,7 @@ const processSelection = () => {
       type: 'PALETTE_SELECTED',
       data: {
         name: palette.getPluginData('name'),
+        description: palette.getPluginData('description'),
         preset: JSON.parse(palette.getPluginData('preset')),
         scale: JSON.parse(palette.getPluginData('themes')).find(
           (theme: ThemeConfiguration) => theme.isEnabled

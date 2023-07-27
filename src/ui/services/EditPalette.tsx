@@ -28,6 +28,7 @@ import doSnakeCase from '../../utils/doSnakeCase'
 
 interface Props {
   name: string
+  description: string
   preset: PresetConfiguration
   scale: ScaleConfiguration
   colors: Array<ColorConfiguration>
@@ -331,6 +332,7 @@ export default class EditPalette extends React.Component<Props, any> {
           <Settings
             context="LOCAL_STYLES"
             name={this.props.name}
+            description={this.props.description}
             colorSpace={this.props.colorSpace}
             textColorsTheme={this.props.textColorsTheme}
             view={this.props.view}

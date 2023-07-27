@@ -16,6 +16,7 @@ import { uid } from 'uid'
 
 export default class Palette {
   name: string
+  description: string
   frameName: string
   scale: ScaleConfiguration
   colors: Array<ColorConfiguration>
@@ -30,6 +31,7 @@ export default class Palette {
 
   constructor(
     name: string,
+    description: string,
     preset: PresetConfiguration,
     scale: ScaleConfiguration,
     colorSpace: ColorSpaceConfiguration,
@@ -38,6 +40,7 @@ export default class Palette {
     algorithmVersion: AlgorithmVersionConfiguration
   ) {
     this.name = name
+    this.description = description
     this.frameName = `${name === '' ? locals[lang].name : name}﹒${
       preset.name
     }﹒${colorSpace} ${view.includes('PALETTE') ? 'Palette' : 'Sheet'}`
@@ -83,6 +86,7 @@ export default class Palette {
     // data
     this.node.setRelaunchData({ edit: '' })
     this.node.setPluginData('name', this.name)
+    this.node.setPluginData('description', this.description)
     this.node.setPluginData('preset', JSON.stringify(this.preset))
     this.node.setPluginData('scale', JSON.stringify(this.scale))
     this.node.setPluginData('colorSpace', this.colorSpace)

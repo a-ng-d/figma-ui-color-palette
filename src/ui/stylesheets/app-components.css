@@ -149,17 +149,14 @@ div.form-item {
   position: relative;
 }
 
-div.form-item--fill label,
+div.form-item--fill label {
+  flex: 0 1 96px;
+}
+
 div.form-item .input,
 div.form-item .textarea,
 div.form-item .select-menu {
   flex: 1;
-}
-
-div.form-item--fill .input,
-div.form-item--fill .textarea,
-div.form-item--fill .select-menu {
-  flex: 4;
 }
 
 div.form-item--blocked {

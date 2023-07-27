@@ -204,11 +204,13 @@ export default class ThemeItem extends React.Component<Props, any> {
                   shouldFill={false}
                 >
                   <Input
-                    type="TEXT"
+                    id="theme-description"
+                    type="LONG_TEXT"
                     value={this.props.description}
                     placeholder={
                       locals[this.props.lang].global.description.placeholder
                     }
+                    isSansFont={true}
                     feature="UPDATE_DESCRIPTION"
                     onChange={this.props.onChangeThemes}
                     onFocus={this.props.onCancellationSelection}

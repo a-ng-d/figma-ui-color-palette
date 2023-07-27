@@ -14,6 +14,7 @@ import { locals } from '../../content/locals'
 
 interface Props {
   name: string
+  description: string
   preset: PresetConfiguration
   colorSpace: string
   view: string
@@ -104,6 +105,7 @@ export default class CreatePalette extends React.Component<Props, any> {
           <Settings
             context="CREATE"
             name={this.props.name}
+            description={this.props.description}
             colorSpace={this.props.colorSpace}
             textColorsTheme={this.props.textColorsTheme}
             view={this.props.view}

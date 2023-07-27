@@ -35,6 +35,7 @@ const settingsMessage: SettingsMessage = {
   type: 'UPDATE_SETTINGS',
   data: {
     name: '',
+    description: '',
     colorSpace: 'LCH',
     textColorsTheme: {
       lightColor: '#FFFFFF',
@@ -59,6 +60,7 @@ class App extends React.Component<any, any> {
     this.state = {
       service: '',
       name: '',
+      description: '',
       preset: presets.material,
       scale: {},
       newColors: {},
@@ -255,6 +257,23 @@ class App extends React.Component<any, any> {
         parent.postMessage({ pluginMessage: settingsMessage }, '*')
     }
 
+    const updateDescription = () => {
+      palette.description = e.target.value
+      settingsMessage.data.name = this.state['name']
+      settingsMessage.data.description = e.target.value
+      settingsMessage.data.colorSpace = this.state['colorSpace']
+      settingsMessage.data.textColorsTheme = this.state['textColorsTheme']
+      settingsMessage.data.algorithmVersion = this.state['algorithmVersion']
+
+      this.setState({
+        description: settingsMessage.data.description,
+        onGoingStep: 'settings changed',
+      })
+
+      if (e._reactName === 'onBlur' && this.state['service'] === 'EDIT')
+        parent.postMessage({ pluginMessage: settingsMessage }, '*')
+    }
+
     const updateView = () => {
       if (e.target.dataset.isBlocked === 'false') {
         palette.view = e.target.dataset.value
@@ -272,6 +291,7 @@ class App extends React.Component<any, any> {
 
     const updateColorSpace = () => {
       settingsMessage.data.name = this.state['name']
+      settingsMessage.data.description = this.state['description']
       settingsMessage.data.colorSpace = e.target.dataset.value
       palette.colorSpace = e.target.dataset.value
       settingsMessage.data.textColorsTheme = this.state['textColorsTheme']
@@ -288,6 +308,7 @@ class App extends React.Component<any, any> {
 
     const updateAlgorythmVersion = () => {
       settingsMessage.data.name = this.state['name']
+      settingsMessage.data.description = this.state['description']
       settingsMessage.data.colorSpace = this.state['colorSpace']
       settingsMessage.data.textColorsTheme = this.state['textColorsTheme']
       settingsMessage.data.algorithmVersion = !e.target.checked ? 'v1' : 'v2'
@@ -307,6 +328,7 @@ class App extends React.Component<any, any> {
           : e.target.value
       if (/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/i.test(code)) {
         settingsMessage.data.name = this.state['name']
+        settingsMessage.data.description = this.state['description']
         settingsMessage.data.colorSpace = this.state['colorSpace']
         settingsMessage.data.textColorsTheme.lightColor = code
         palette.textColorsTheme.lightColor = code
@@ -333,6 +355,7 @@ class App extends React.Component<any, any> {
           : e.target.value
       if (/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/i.test(code)) {
         settingsMessage.data.name = this.state['name']
+        settingsMessage.data.description = this.state['description']
         settingsMessage.data.colorSpace = this.state['colorSpace']
         settingsMessage.data.textColorsTheme.lightColor =
           this.state['textColorsTheme'].lightColor
@@ -354,6 +377,7 @@ class App extends React.Component<any, any> {
 
     const actions: ActionsList = {
       RENAME_PALETTE: () => renamePalette(),
+      UPDATE_DESCRIPTION: () => updateDescription(),
       UPDATE_VIEW: () => updateView(),
       UPDATE_COLOR_SPACE: () => updateColorSpace(),
       UPDATE_ALGORITHM_VERSION: () => updateAlgorythmVersion(),
@@ -416,6 +440,7 @@ class App extends React.Component<any, any> {
           this.setState({
             service: 'NONE',
             name: '',
+            description: '',
             preset: presets.material,
             colorSpace: 'LCH',
             view: 'PALETTE_WITH_PROPERTIES',
@@ -426,6 +451,7 @@ class App extends React.Component<any, any> {
             onGoingStep: 'selection empty',
           })
           palette.name = ''
+          palette.description = ''
           palette.preset = {}
           palette.colorSpace = 'LCH'
           palette.view = 'PALETTE_WITH_PROPERTIES'
@@ -441,6 +467,7 @@ class App extends React.Component<any, any> {
             this.setState({
               service: 'CREATE',
               name: '',
+              description: '',
               preset: presets.material,
               colorSpace: 'LCH',
               view: 'PALETTE_WITH_PROPERTIES',
@@ -451,6 +478,7 @@ class App extends React.Component<any, any> {
               onGoingStep: 'colors selected',
             })
             palette.name = ''
+            palette.description = ''
             palette.preset = presets.material
             palette.colorSpace = 'LCH'
             palette.view = 'PALETTE_WITH_PROPERTIES'
@@ -481,6 +509,7 @@ class App extends React.Component<any, any> {
           this.setState({
             service: 'EDIT',
             name: e.data.pluginMessage.data.name,
+            description: e.data.pluginMessage.data.description,
             preset: e.data.pluginMessage.data.preset,
             scale: e.data.pluginMessage.data.scale,
             newColors: e.data.pluginMessage.data.colors,
@@ -585,6 +614,7 @@ class App extends React.Component<any, any> {
             {this.state['service'] === 'CREATE' ? (
               <CreatePalette
                 name={this.state['name']}
+                description={this.state['description']}
                 preset={this.state['preset']}
                 colorSpace={this.state['colorSpace']}
                 view={this.state['view']}
@@ -605,6 +635,7 @@ class App extends React.Component<any, any> {
             {this.state['service'] === 'EDIT' ? (
               <EditPalette
                 name={this.state['name']}
+                description={this.state['description']}
                 preset={this.state['preset']}
                 scale={this.state['scale']}
                 colors={this.state['newColors']}

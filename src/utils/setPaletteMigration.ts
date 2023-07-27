@@ -12,6 +12,7 @@ import { uid } from 'uid'
 const setPaletteMigration = (palette: BaseNode) => {
   const min = palette.getPluginData('min'),
     max = palette.getPluginData('max'),
+    description = palette.getPluginData('description'),
     preset = palette.getPluginData('preset'),
     scale = palette.getPluginData('scale'),
     colors: Array<ColorConfiguration> = JSON.parse(
@@ -29,6 +30,10 @@ const setPaletteMigration = (palette: BaseNode) => {
     palette.setPluginData('min', '')
     palette.setPluginData('max', '')
   }
+
+  // description
+  if (description === '')
+    palette.setPluginData('description', '')
 
   // preset
   if (preset === '')
@@ -109,6 +114,7 @@ const setPaletteMigration = (palette: BaseNode) => {
     new Colors(
       {
         name: palette.getPluginData('name'),
+        description: palette.getPluginData('description'),
         preset: JSON.parse(palette.getPluginData('preset')),
         scale: JSON.parse(palette.getPluginData('scale')),
         colors: JSON.parse(palette.getPluginData('colors')),

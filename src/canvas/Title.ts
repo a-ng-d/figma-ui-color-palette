@@ -4,14 +4,12 @@ import Paragraph from './Paragraph'
 import { lang, locals } from '../content/locals'
 
 export default class Title {
-  text: string
   parent: PaletteNode
   nodeName: FrameNode | null
   nodeProps: FrameNode | null
   node: FrameNode | null
 
-  constructor(text: string, parent: PaletteNode) {
-    this.text = text
+  constructor(parent: PaletteNode) {
     this.parent = parent
     this.nodeName = null
     this.nodeProps = null
@@ -40,6 +38,19 @@ export default class Title {
       ).makeNodeTag()
     )
     if (
+      this.parent.description != ''
+    )
+      this.nodeName.appendChild(
+        new Paragraph(
+          '_description',
+          this.parent.description,
+          'FIXED',
+          644,
+          12
+        ).makeNode()
+      )
+
+    /*if (
       this.parent.themes.find((theme) => theme.isEnabled)?.type !=
         'default theme' &&
       this.parent.themes.find((theme) => theme.isEnabled)?.description != ''
@@ -52,7 +63,7 @@ export default class Title {
           644,
           12
         ).makeNode()
-      )
+      )*/
 
     return this.nodeName
   }

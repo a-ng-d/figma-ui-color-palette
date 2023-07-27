@@ -5,6 +5,7 @@ const createPalette = (msg: any, palette: SceneNode) => {
 
   palette = new Palette(
     msg.data.name,
+    msg.data.description,
     msg.data.preset,
     msg.data.scale,
     msg.data.colorSpace,

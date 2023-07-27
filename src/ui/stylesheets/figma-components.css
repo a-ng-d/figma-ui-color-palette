@@ -434,6 +434,10 @@
   --blue: var(--figma-color-border-selected);
 }
 
+.textarea--sans {
+  font-family: var(--font-stack);
+}
+
 /* Blocked state */
 .button--blocked:after,
 .radio--blocked:after,

@@ -33,6 +33,7 @@ const updateSettings = (msg: SettingsMessage, palette: SceneNode) => {
       view = palette.getPluginData('view') as ViewConfiguration
 
     palette.setPluginData('name', msg.data.name)
+    palette.setPluginData('description', msg.data.description)
     palette.setPluginData('colorSpace', msg.data.colorSpace)
     palette.setPluginData(
       'textColorsTheme',
@@ -45,6 +46,7 @@ const updateSettings = (msg: SettingsMessage, palette: SceneNode) => {
       new Colors(
         {
           name: msg.data.name,
+          description: msg.data.description,
           preset: preset,
           scale: scale,
           colors: colors,

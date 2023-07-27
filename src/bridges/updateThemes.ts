@@ -26,6 +26,7 @@ const updateThemes = (msg: ThemesMessage, palette: SceneNode) => {
         palette.getPluginData('name') === ''
           ? locals[lang].name
           : palette.getPluginData('name'),
+      description: string = palette.getPluginData('description'),
       preset = JSON.parse(
         palette.getPluginData('preset')
       ) as PresetConfiguration,
@@ -51,6 +52,7 @@ const updateThemes = (msg: ThemesMessage, palette: SceneNode) => {
       new Colors(
         {
           name: palette.getPluginData('name'),
+          description: description,
           preset: preset,
           scale: scale,
           colors: colors,

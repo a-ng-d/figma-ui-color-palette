@@ -78,7 +78,6 @@ const updateLocalStyles = (palette: SceneNode, i: number) => {
             const styleMatch = localStyles.find(
               (localStyle) => localStyle.name === name
             )
-            console.log(styleMatch?.name, name)
 
             if (styleMatch?.name != name) {
               styleMatch!.name = name

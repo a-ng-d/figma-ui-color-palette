@@ -34,6 +34,7 @@ export default class Colors {
     this.palette = palette
     this.paletteData = {
       name: this.parent.name,
+      description: this.parent.description,
       themes: [],
       collectionId: '',
       type: 'palette',
@@ -649,9 +650,6 @@ export default class Colors {
     // insert
     this.node.appendChild(
       new Title(
-        `${this.parent.name === '' ? locals[lang].name : this.parent.name} • ${
-          this.parent.preset.name
-        } • ${this.parent.view.includes('PALETTE') ? 'Palette' : 'Sheet'}`,
         this.parent
       ).makeNode()
     )

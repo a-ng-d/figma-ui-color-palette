@@ -7,6 +7,8 @@ interface Props {
   placeholder?: string
   value: string
   charactersLimit?: number
+  isSansFont?: boolean
+  rows?: number
   min?: string
   max?: string
   step?: string
@@ -27,6 +29,7 @@ export default class Input extends React.Component<Props> {
       value: null,
     },
     step: '1',
+    isSansFont: false,
     isBlocked: false,
     isAutoFocus: false,
   }
@@ -155,17 +158,23 @@ export default class Input extends React.Component<Props> {
 
   LongText = () => {
     return (
-      <textarea
-        className="textarea"
-        placeholder={this.props.placeholder}
-        value={this.props.value}
-        autoFocus={this.props.isAutoFocus}
-        onKeyPress={this.props.onConfirm}
-        onChange={this.props.onChange}
-        onFocus={this.props.onFocus}
-        onBlur={this.props.onBlur}
-        readOnly={this.props.isReadOnly}
-      ></textarea>
+      <div
+        className={`input${this.props.isBlocked ? ' input--blocked' : ''}`}
+      >
+        <textarea
+          id={this.props.id}
+          data-feature={this.props.feature}
+          className={`textarea input__field${this.props.isSansFont ? ' textarea--sans' : ''}`}
+          placeholder={this.props.placeholder}
+          value={this.props.value}
+          autoFocus={this.props.isAutoFocus}
+          onKeyPress={this.props.onConfirm}
+          onChange={this.props.onChange}
+          onFocus={this.props.onFocus}
+          onBlur={this.props.onBlur}
+          readOnly={this.props.isReadOnly}
+        ></textarea>
+      </div>
     )
   }
 

@@ -14,6 +14,7 @@ import { locals } from '../../content/locals'
 interface Props {
   context: string
   name: string
+  description: string
   textColorsTheme?: TextColorsThemeHexModel
   colorSpace: string
   view: string
@@ -33,7 +34,7 @@ interface Props {
 
 export default class Settings extends React.Component<Props> {
   // Templates
-  PaletteName = () => {
+  name = () => {
     return (
       <Feature
         isActive={
@@ -44,14 +45,14 @@ export default class Settings extends React.Component<Props> {
         <div className="settings__item">
           <FormItem
             label={locals[this.props.lang].settings.global.name.label}
-            id="rename-palette"
+            id="update-palette-name"
             isBlocked={isBlocked(
               'SETTINGS_PALETTE_NAME',
               this.props.planStatus
             )}
           >
             <Input
-              id="rename-palette"
+              id="update-palette-name"
               type="TEXT"
               placeholder={locals[this.props.lang].name}
               value={this.props.name != '' ? this.props.name : ''}
@@ -78,6 +79,61 @@ export default class Settings extends React.Component<Props> {
               }
               onConfirm={
                 isBlocked('SETTINGS_PALETTE_NAME', this.props.planStatus)
+                  ? () => null
+                  : this.props.onChangeSettings
+              }
+            />
+          </FormItem>
+        </div>
+      </Feature>
+    )
+  }
+
+  description = () => {
+    return (
+      <Feature
+        isActive={
+          features.find((feature) => feature.name === 'SETTINGS_PALETTE_DESCRIPTION')
+            ?.isActive
+        }
+      >
+        <div className="settings__item">
+          <FormItem
+            label={locals[this.props.lang].settings.global.description.label}
+            id="update-palette-description"
+            isBlocked={isBlocked(
+              'SETTINGS_PALETTE_DESCRIPTION',
+              this.props.planStatus
+            )}
+          >
+            <Input
+              id="update-palette-description"
+              type="LONG_TEXT"
+              placeholder={locals[this.props.lang].global.description.placeholder}
+              value={this.props.description}
+              isSansFont={true}
+              isBlocked={isBlocked(
+                'SETTINGS_PALETTE_DESCRIPTION',
+                this.props.planStatus
+              )}
+              feature="UPDATE_DESCRIPTION"
+              onChange={
+                isBlocked('SETTINGS_PALETTE_DESCRIPTION', this.props.planStatus)
+                  ? () => null
+                  : this.props.onChangeSettings
+              }
+              onFocus={
+                isBlocked('SETTINGS_PALETTE_DESCRIPTION', this.props.planStatus)
+                  ? () => null
+                  : this.props.onChangeSettings
+              }
+              onBlur={
+                isBlocked('SETTINGS_PALETTE_DESCRIPTION', this.props.planStatus)
+                  ? () => null
+                  : this.props.onChangeSettings
+              }
+              onConfirm={
+                isBlocked('SETTINGS_PALETTE_DESCRIPTION', this.props.planStatus)
                   ? () => null
                   : this.props.onChangeSettings
               }
@@ -392,7 +448,8 @@ export default class Settings extends React.Component<Props> {
             </div>
           </div>
         </div>
-        <this.PaletteName />
+        <this.name />
+        <this.description />
         <this.view />
       </div>
     )

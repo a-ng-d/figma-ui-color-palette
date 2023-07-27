@@ -84,12 +84,15 @@ export const locals: any = {
     },
     settings: {
       global: {
-        title: 'Global',
+        title: 'Palette global settings',
         name: {
-          label: 'Palette name',
+          label: 'Name',
+        },
+        description: {
+          label: 'Description',
         },
         views: {
-          label: 'Palette layout',
+          label: 'Layout',
           simple: 'Palette',
           detailed: 'Palette with properties',
           sheet: 'Color sheet',

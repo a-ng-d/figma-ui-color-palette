@@ -175,7 +175,7 @@ li .colors__shift {
 }
 
 li .colors__description {
-  grid-column: 17 / span 49;
+  grid-column: 17 / span 33;
   grid-row: 2 / 2;
 }
 
@@ -197,7 +197,7 @@ li .themes__palette-background-color {
 }
 
 li .themes__description {
-  grid-column: 1 / span 49;
+  grid-column: 17 / span 33;
   grid-row: 2 / 2;
 }
 
