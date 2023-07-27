@@ -60,23 +60,23 @@ export default class ThemeItem extends React.Component<Props, any> {
     document.body.appendChild(clone)
     e.dataTransfer.setDragImage(clone as Element, 0, 0)
     e.dataTransfer.effectAllowed = 'move'
-    document.querySelector('#react-page')!.classList.add('dragged-ghost')
+    document.querySelector('#react-page')?.classList.add('dragged-ghost')
   }
 
   onDragEnd = (e: React.DragEvent<HTMLLIElement>) => {
     this.setState({ isDragged: false })
     this.props.onDragChange('', false, false, 0)
     this.props.onDropOutside(e)
-    document.querySelector('#react-page')!.classList.remove('dragged-ghost')
-    document.querySelector('#ghost')!.remove()
+    document.querySelector('#react-page')?.classList.remove('dragged-ghost')
+    document.querySelector('#ghost')?.remove()
   }
 
   onDragOver = (e: React.DragEvent<HTMLLIElement>) => {
     e.preventDefault()
     const target = e.currentTarget,
       height: number = target.clientHeight,
-      parentY: number = (target.parentNode! as HTMLElement).offsetTop,
-      scrollY: number = (target.parentNode! as HTMLElement).scrollTop,
+      parentY: number = (target.parentNode as HTMLElement).offsetTop,
+      scrollY: number = (target.parentNode as HTMLElement).scrollTop,
       refTop: number = target.offsetTop - parentY,
       refBottom: number = refTop + height,
       y: number = e.pageY - parentY + scrollY,

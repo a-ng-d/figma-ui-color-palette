@@ -38,35 +38,37 @@ const updateLocalStyles = (palette: SceneNode, i: number) => {
               (localStyle) => localStyle.id === shade.styleId
             )
 
-            if (styleMatch?.name != name) {
-              styleMatch!.name = name
-              j++
-            }
+            if (styleMatch != undefined) {
+              if (styleMatch.name != name) {
+                styleMatch.name = name
+                j++
+              }
 
-            if (styleMatch?.description != description) {
-              styleMatch!.description = description
-              j++
-            }
+              if (styleMatch.description != description) {
+                styleMatch.description = description
+                j++
+              }
 
-            if (
-              shade.hex !=
-              chroma([
-                (styleMatch?.paints[0] as SolidPaint).color.r * 255,
-                (styleMatch?.paints[0] as SolidPaint).color.g * 255,
-                (styleMatch?.paints[0] as SolidPaint).color.b * 255,
-              ]).hex()
-            ) {
-              styleMatch!.paints = [
-                {
-                  type: 'SOLID',
-                  color: {
-                    r: shade.gl[0],
-                    g: shade.gl[1],
-                    b: shade.gl[2],
+              if (
+                shade.hex !=
+                chroma([
+                  (styleMatch.paints[0] as SolidPaint).color.r * 255,
+                  (styleMatch.paints[0] as SolidPaint).color.g * 255,
+                  (styleMatch.paints[0] as SolidPaint).color.b * 255,
+                ]).hex()
+              ) {
+                styleMatch.paints = [
+                  {
+                    type: 'SOLID',
+                    color: {
+                      r: shade.gl[0],
+                      g: shade.gl[1],
+                      b: shade.gl[2],
+                    },
                   },
-                },
-              ]
-              j++
+                ]
+                j++
+              }
             }
 
             j > 0 ? i++ : i
@@ -78,36 +80,38 @@ const updateLocalStyles = (palette: SceneNode, i: number) => {
             const styleMatch = localStyles.find(
               (localStyle) => localStyle.name === name
             )
+            
+            if (styleMatch != undefined) {
+              if (styleMatch.name != name) {
+                styleMatch.name = name
+                j++
+              }
 
-            if (styleMatch?.name != name) {
-              styleMatch!.name = name
-              j++
-            }
+              if (styleMatch.description != shade.description) {
+                styleMatch.description = shade.description
+                j++
+              }
 
-            if (styleMatch?.description != shade.description) {
-              styleMatch!.description = shade.description
-              j++
-            }
-
-            if (
-              shade.hex !=
-              chroma([
-                (styleMatch?.paints[0] as SolidPaint).color.r * 255,
-                (styleMatch?.paints[0] as SolidPaint).color.g * 255,
-                (styleMatch?.paints[0] as SolidPaint).color.b * 255,
-              ]).hex()
-            ) {
-              styleMatch!.paints = [
-                {
-                  type: 'SOLID',
-                  color: {
-                    r: shade.gl[0],
-                    g: shade.gl[1],
-                    b: shade.gl[2],
+              if (
+                shade.hex !=
+                chroma([
+                  (styleMatch.paints[0] as SolidPaint).color.r * 255,
+                  (styleMatch.paints[0] as SolidPaint).color.g * 255,
+                  (styleMatch.paints[0] as SolidPaint).color.b * 255,
+                ]).hex()
+              ) {
+                styleMatch.paints = [
+                  {
+                    type: 'SOLID',
+                    color: {
+                      r: shade.gl[0],
+                      g: shade.gl[1],
+                      b: shade.gl[2],
+                    },
                   },
-                },
-              ]
-              j++
+                ]
+                j++
+              }
             }
 
             j > 0 ? i++ : i

@@ -79,7 +79,7 @@ export default class Title {
       this.nodeDescriptions.appendChild(
         new Paragraph(
           '_theme-description',
-          'Theme description: ' + this.parent.themes.find((theme) => theme.isEnabled)!.description,
+          'Theme description: ' + this.parent.themes.find((theme) => theme.isEnabled)?.description,
           'FIXED',
           644,
           12

@@ -12,7 +12,7 @@ export default class Header {
     this.parent = parent
     this.currentScale = this.parent.themes.find(
       (theme) => theme.isEnabled
-    )!.scale
+    )?.scale ?? {}
     this.sampleSize = size
     this.node = null
   }
@@ -47,9 +47,9 @@ export default class Header {
         .forEach((lightness) => {
           this.node?.appendChild(
             new Sample(
-              Object.keys(this.currentScale ?? {})
-                .find((key) => this.currentScale[key] === lightness)!
-                .substr(10),
+              Object.keys(this.currentScale)
+                .find((key) => this.currentScale[key] === lightness)
+                ?.substr(10) ?? '0',
               null,
               null,
               [255, 255, 255],

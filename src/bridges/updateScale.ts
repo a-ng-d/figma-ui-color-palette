@@ -47,8 +47,11 @@ const updateScale = (msg: ScaleMessage, palette: SceneNode) => {
       algorithmVersion = palette.getPluginData(
         'algorithmVersion'
       ) as AlgorithmVersionConfiguration
+      
+    const theme = themes.find((theme) => theme.isEnabled)
+    if (theme != undefined)
+      theme.scale = msg.data.scale
 
-    themes.find((theme) => theme.isEnabled)!.scale = msg.data.scale
     if (msg.feature === 'ADD_STOP' || msg.feature === 'DELETE_STOP')
       themes.forEach((theme) => {
         if (!theme.isEnabled) {

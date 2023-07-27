@@ -251,9 +251,10 @@ export default class Colors extends React.Component<Props, any> {
       SHIFT_HUE: () => setHueShifting(),
       UPDATE_DESCRIPTION: () => updateColorDescription(),
       REMOVE_COLOR: () => removeColor(),
+      NULL: () => null
     }
 
-    return actions[(e.target as HTMLInputElement).dataset.feature!]?.()
+    return actions[(e.target as HTMLInputElement).dataset.feature ?? 'NULL']?.()
   }
 
   orderHandler = () => {
@@ -318,8 +319,8 @@ export default class Colors extends React.Component<Props, any> {
 
   dropOutsideHandler = (e: React.DragEvent<HTMLLIElement>) => {
     const target = e.target,
-      parent: ParentNode = (target as HTMLElement).parentNode!,
-      scrollY: number = (parent.parentNode!.parentNode as HTMLElement)
+      parent: ParentNode = (target as HTMLElement).parentNode ?? (target as HTMLElement),
+      scrollY: number = (parent.parentNode?.parentNode as HTMLElement)
         .scrollTop,
       parentRefTop: number = (parent as HTMLElement).offsetTop,
       parentRefBottom: number =

@@ -16,7 +16,7 @@ export default class LocalVariable {
   makeVariable = (name: string, description: string) => {
     this.variable = figma.variables.createVariable(
       name,
-      this.collection!.id,
+      this.collection != undefined ? this.collection.id : '',
       'COLOR'
     )
     this.variable.description = description

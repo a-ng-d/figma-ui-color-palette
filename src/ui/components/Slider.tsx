@@ -57,7 +57,9 @@ export default class Slider extends React.Component<Props, any> {
           state: 'EDITING',
         },
         stopInputValue:
-          this.props.scale![(e.target as HTMLElement).classList[1]],
+          this.props.scale != undefined
+            ? this.props.scale[(e.target as HTMLElement).classList[1]]
+            : {},
       })
     }
   }
@@ -79,7 +81,9 @@ export default class Slider extends React.Component<Props, any> {
         this.props.onChange('TYPED')
       } else
         this.setState({
-          stopInputValue: this.props.scale![`lightness-${stopId}`],
+          stopInputValue: this.props.scale != undefined
+          ? this.props.scale[`lightness-${stopId}`]
+          : {},
         })
     }
   }
@@ -267,7 +271,7 @@ export default class Slider extends React.Component<Props, any> {
   onAdd = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     if (
       (e.target as HTMLElement).classList[0] === 'slider__range' &&
-      Object.keys(this.props.scale!).length < 24 &&
+      Object.keys(this.props.scale != undefined ? this.props.scale : {}).length < 24 &&
       this.props.presetName === 'Custom' &&
       !this.props.hasPreset
     ) {

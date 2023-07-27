@@ -11,10 +11,6 @@ const exportJsonAmznStyleDictionary = (palette: SceneNode) => {
         .length == 0
         ? paletteData.themes.filter((theme) => theme.type === 'default theme')
         : paletteData.themes.filter((theme) => theme.type === 'custom theme'),
-    name: string =
-      palette.getPluginData('name') === ''
-        ? locals[lang].name
-        : palette.getPluginData('name'),
     json: { [key: string]: any } = {
       color: {}
     }

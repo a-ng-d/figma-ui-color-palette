@@ -157,13 +157,16 @@ export default class EditPalette extends React.Component<Props, any> {
           type: string
           colors: Array<{ name: string; csv: string }>
         }) => {
-          const folder =
-            theme.type != 'default theme' ? zip.folder(theme.name) : null
-          theme.colors.forEach((color) => {
-            theme.type != 'default theme'
-              ? folder!.file(`${doSnakeCase(color.name)}.csv`, color.csv)
-              : zip.file(`${doSnakeCase(color.name)}.csv`, color.csv)
-          })
+          if (theme.type != 'default theme') {
+            const folder = zip.folder(theme.name) ?? zip
+            theme.colors.forEach((color) => {
+              folder.file(`${doSnakeCase(color.name)}.csv`, color.csv)
+            })
+          }
+          else
+            theme.colors.forEach((color) => {
+              zip.file(`${doSnakeCase(color.name)}.csv`, color.csv)
+            })
         }
       )
       zip

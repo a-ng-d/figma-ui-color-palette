@@ -145,9 +145,10 @@ class App extends React.Component<any, any> {
       CARBON: () => setCarbonPreset(),
       BASE: () => setBasePreset(),
       CUSTOM: () => setCustomPreset(),
+      NULL: () => null
     }
 
-    return actions[(e.target as HTMLElement).dataset.value!]?.()
+    return actions[(e.target as HTMLElement).dataset.value ?? 'NULL']?.()
   }
 
   customHandler = (e: React.SyntheticEvent) => {
@@ -186,9 +187,10 @@ class App extends React.Component<any, any> {
     const actions: ActionsList = {
       ADD_STOP: () => addStop(),
       REMOVE_STOP: () => removeStop(),
+      NULL: () => null
     }
 
-    return actions[(e.target as HTMLInputElement).dataset.feature!]?.()
+    return actions[(e.target as HTMLInputElement).dataset.feature ?? 'NULL']?.()
   }
 
   slideHandler = () =>

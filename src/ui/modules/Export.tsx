@@ -112,9 +112,10 @@ export default class Export extends React.Component<Props, any> {
           '*'
         )
       },
+      NULL: () => null,
     }
 
-    return actions[(e.target as HTMLElement).dataset.feature!]?.()
+    return actions[(e.target as HTMLElement).dataset.feature ?? 'NULL']?.()
   }
 
   // Direct actions
@@ -137,7 +138,7 @@ export default class Export extends React.Component<Props, any> {
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => e.target.select()
 
-  deSelectPreview = () => window.getSelection()!.removeAllRanges()
+  deSelectPreview = () => window.getSelection()?.removeAllRanges()
 
   // Render
   render() {
