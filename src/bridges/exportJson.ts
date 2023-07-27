@@ -64,8 +64,10 @@ const exportJson = (palette: SceneNode) => {
           color.shades.reverse().forEach((shade) => {
             json[theme.name][color.name][shade.name] = model(shade)
           })
+          json[theme.name][color.name]['description'] = color.description
           json[theme.name][color.name]['type'] = 'color'
         })
+        json[theme.name]['description'] = theme.description
         json[theme.name]['type'] = 'color theme'
       })
     else
@@ -75,6 +77,7 @@ const exportJson = (palette: SceneNode) => {
           color.shades.sort().forEach((shade) => {
             json[color.name][shade.name] = model(shade)
           })
+          json[color.name]['description'] = color.description
           json[color.name]['type'] = 'color'
         })
       })
