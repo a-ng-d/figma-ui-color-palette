@@ -1,5 +1,5 @@
 import * as React from 'react'
-import chroma, { Color } from 'chroma-js'
+import chroma from 'chroma-js'
 import type {
   HoveredColor,
   SelectedColor,

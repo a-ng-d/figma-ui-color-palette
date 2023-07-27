@@ -49,6 +49,11 @@ const exportJson = (palette: SceneNode) => {
         s: Math.floor(shade.hsl[1] * 100),
         l: Math.floor(shade.hsl[2] * 100),
       },
+      hsluv: {
+        h: Math.floor(shade.hsluv[0]),
+        s: Math.floor(shade.hsluv[1]),
+        l: Math.floor(shade.hsluv[2]),
+      },
       hex: shade.hex,
       description: shade.description,
       type: 'color shade',

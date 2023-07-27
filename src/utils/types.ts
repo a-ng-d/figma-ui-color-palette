@@ -79,6 +79,7 @@ export interface PaletteDataShadeItem {
   lab: [number, number, number]
   oklab: [number, number, number]
   hsl: [number, number, number]
+  hsluv: [number, number, number]
   variableId: string
   styleId: string
   type: 'source color' | 'color shade'

@@ -117,6 +117,7 @@ export const locals: { [key: string]: any } = {
           lab: 'CIELAB (CIE, Lightness, a﹡ axis, b﹡ axis)',
           oklab: 'OKLAB (OK, Lightness, a﹡ axis, b﹡ axis)',
           hsl: 'HSL (Hue, Saturation, Lightness)',
+          hsluv: 'HSLuv (Hue, Saturation, Lightness, u* axis, v* axis)',
         },
         newAlgorithm: {
           label: 'Enable the new algorithm for creating color shades',

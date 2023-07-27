@@ -1,4 +1,5 @@
-import chroma, { Color } from 'chroma-js'
+import chroma from 'chroma-js'
+import { Hsluv } from 'hsluv'
 import type {
   PaletteNode,
   ScaleConfiguration,
@@ -210,6 +211,36 @@ export default class Colors {
     return newColor
   }
 
+  getShadeColorFromHsluv(
+    sourceColor: [number, number, number],
+    lightness: number,
+    hueShifting: number,
+    algorithmVersion: string
+  ) {
+    const lch = chroma(sourceColor).lch(),
+      hsluv = new Hsluv()
+
+    hsluv.lch_l = lightness
+    hsluv.lch_c = algorithmVersion == 'v2'
+      ? Math.sin((lightness / 100) * Math.PI) * lch[1]
+      : lch[1]
+    hsluv.lch_h = lch[2] + hueShifting < 0
+      ? 0
+      : lch[2] + hueShifting > 360
+      ? 360
+      : lch[2] + hueShifting
+    hsluv.lchToHsluv()
+    hsluv.hsluvToRgb()
+
+    const newColor: [number, number, number] = [
+      hsluv.rgb_r * 255,
+      hsluv.rgb_g * 255,
+      hsluv.rgb_b * 255,
+    ]
+
+    return newColor
+  }
+
   makeEmptyCase = () => {
     // base
     this.nodeEmpty = figma.createFrame()
@@ -317,6 +348,12 @@ export default class Colors {
             color.rgb.g * 255,
             color.rgb.b * 255,
           ]
+          
+        const sourceHsluv = new Hsluv()
+        sourceHsluv.rgb_r = color.rgb.r
+        sourceHsluv.rgb_g = color.rgb.g
+        sourceHsluv.rgb_b = color.rgb.b
+        sourceHsluv.rgbToHsluv()
 
         paletteDataColorItem.shades.push({
           name: 'source',
@@ -329,6 +366,11 @@ export default class Colors {
           lab: chroma(sourceColor).lab(),
           oklab: chroma(sourceColor).oklab(),
           hsl: chroma(sourceColor).hsl(),
+          hsluv: [
+            sourceHsluv.hsluv_h,
+            sourceHsluv.hsluv_s,
+            sourceHsluv.hsluv_l
+          ],
           variableId:
             service === 'EDIT'
               ? this.searchForShadeVariableId(
@@ -390,10 +432,23 @@ export default class Colors {
                 color.hueShifting,
                 this.parent.algorithmVersion
               )
+            else if (this.parent.colorSpace === 'HSLUV')
+              newColor = this.getShadeColorFromHsluv(
+                sourceColor,
+                lightness,
+                color.hueShifting,
+                this.parent.algorithmVersion
+              )
 
             const scaleName: string = Object.keys(theme.scale)
               .find((key) => theme.scale[key] === lightness)!
               .substr(10)
+            
+            const newHsluv = new Hsluv()
+            newHsluv.rgb_r = newColor![0] / 255
+            newHsluv.rgb_g = newColor![1] / 255
+            newHsluv.rgb_b = newColor![2] / 255
+            newHsluv.rgbToHsluv()
 
             paletteDataColorItem.shades.push({
               name: scaleName,
@@ -406,6 +461,11 @@ export default class Colors {
               lab: chroma(newColor!).lab(),
               oklab: chroma(newColor!).oklab(),
               hsl: chroma(newColor!).hsl(),
+              hsluv: [
+                newHsluv.hsluv_h,
+                newHsluv.hsluv_s,
+                newHsluv.hsluv_l
+              ],
               variableId:
                 service === 'EDIT'
                   ? this.searchForShadeVariableId(
@@ -562,6 +622,13 @@ export default class Colors {
             )
           else if (this.parent.colorSpace === 'HSL')
             newColor = this.getShadeColorFromHsl(
+              sourceColor,
+              lightness,
+              color.hueShifting,
+              this.parent.algorithmVersion
+            )
+          else if (this.parent.colorSpace === 'HSLUV')
+            newColor = this.getShadeColorFromHsluv(
               sourceColor,
               lightness,
               color.hueShifting,

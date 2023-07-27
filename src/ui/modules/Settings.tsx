@@ -279,6 +279,18 @@ export default class Settings extends React.Component<Props> {
                     this.props.planStatus
                   ),
                 },
+                {
+                  label: locals[this.props.lang].settings.color.colorSpace.hsluv,
+                  value: 'HSLUV',
+                  position: 5,
+                  isActive: features.find(
+                    (feature) => feature.name === 'SETTINGS_COLOR_SPACE_HSLUV'
+                  )?.isActive,
+                  isBlocked: isBlocked(
+                    'SETTINGS_COLOR_SPACE_HSLUV',
+                    this.props.planStatus
+                  ),
+                },
               ]}
               selected={this.props.colorSpace}
               feature="UPDATE_COLOR_SPACE"

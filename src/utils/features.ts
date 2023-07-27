@@ -380,6 +380,14 @@ const features: Array<Feature> = [
     service: ['CREATE', 'EDIT'],
   },
   {
+    name: 'SETTINGS_COLOR_SPACE_HSLUV',
+    description: 'HSLUV color space',
+    isActive: true,
+    isPro: false,
+    type: 'ACTION',
+    service: ['CREATE', 'EDIT'],
+  },
+  {
     name: 'SETTINGS_NEW_ALGORITHM',
     description: 'Color shades generation new algorithm toggle',
     isActive: true,
