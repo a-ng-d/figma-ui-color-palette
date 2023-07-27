@@ -1,4 +1,4 @@
-import type { PaletteData, PaletteDataShadeItem } from '../utils/types'
+import type { PaletteData, PaletteDataColorItem, PaletteDataShadeItem } from '../utils/types'
 import { locals, lang } from '../content/locals'
 
 const exportJsonTokensStudio = (palette: SceneNode) => {
@@ -16,10 +16,12 @@ const exportJsonTokensStudio = (palette: SceneNode) => {
         : palette.getPluginData('name'),
     json: { [key: string]: any } = {}
 
-  const model = (shade: PaletteDataShadeItem) => {
+  const model = (color: PaletteDataColorItem, shade: PaletteDataShadeItem) => {
     return {
       value: shade.hex,
-      description: shade.description,
+      description: color.description != ''
+      ? color.description + '﹒' + shade.description
+      : shade.description,
       type: 'color',
     }
   }
@@ -31,7 +33,7 @@ const exportJsonTokensStudio = (palette: SceneNode) => {
         theme.colors.forEach((color) => {
           json[name + ' - ' + theme.name][color.name] = {}
           color.shades.reverse().forEach((shade) => {
-            json[name + ' - ' + theme.name][color.name][shade.name] = model(shade)
+            json[name + ' - ' + theme.name][color.name][shade.name] = model(color, shade)
           })
           json[name + ' - ' + theme.name][color.name]['type'] = 'color'
         })
@@ -42,7 +44,7 @@ const exportJsonTokensStudio = (palette: SceneNode) => {
         theme.colors.forEach((color) => {
           json[name][color.name] = {}
           color.shades.sort().forEach((shade) => {
-            json[name][color.name][shade.name] = model(shade)
+            json[name][color.name][shade.name] = model(color, shade)
           })
           json[name][color.name]['type'] = 'color'
         })

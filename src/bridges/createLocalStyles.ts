@@ -28,7 +28,9 @@ const createLocalStyles = (palette: SceneNode, i: number) => {
                     theme.name
                   }/${color.name}/${shade.name}`
                 : `${color.name}/${shade.name}`,
-              shade.description,
+              color.description != ''
+                ? color.description + '﹒' + shade.description
+                : shade.description,
               {
                 r: shade.gl[0],
                 g: shade.gl[1],

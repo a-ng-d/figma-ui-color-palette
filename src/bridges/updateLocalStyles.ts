@@ -25,7 +25,10 @@ const updateLocalStyles = (palette: SceneNode, i: number) => {
               ? `${paletteData.name == '' ? '' : paletteData.name + '/'}${
                   theme.name
                 }/${color.name}/${shade.name}`
-              : `${color.name}/${shade.name}`
+              : `${color.name}/${shade.name}`,
+            description = color.description != ''
+              ? color.description + '﹒' + shade.description
+              : shade.description
 
           if (
             localStyles.find((localStyle) => localStyle.id === shade.styleId) !=
@@ -40,8 +43,8 @@ const updateLocalStyles = (palette: SceneNode, i: number) => {
               j++
             }
 
-            if (styleMatch?.description != shade.description) {
-              styleMatch!.description = shade.description
+            if (styleMatch?.description != description) {
+              styleMatch!.description = description
               j++
             }
 

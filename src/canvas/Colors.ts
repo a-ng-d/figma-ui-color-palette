@@ -319,10 +319,7 @@ export default class Colors {
 
         paletteDataColorItem.shades.push({
           name: 'source',
-          description:
-            color.description === ''
-              ? 'Source color'
-              : `${color.description}﹒Source color`,
+          description: 'Source color',
           hex: chroma(sourceColor).hex(),
           rgb: sourceColor,
           gl: chroma(sourceColor).gl(),
@@ -399,10 +396,7 @@ export default class Colors {
 
             paletteDataColorItem.shades.push({
               name: scaleName,
-              description:
-                color.description === ''
-                  ? `Stop ${scaleName} shade color`
-                  : `${color.description}﹒Stop ${scaleName} shade color`,
+              description: `Shade color with ${lightness}% of lightness`,
               hex: chroma(newColor!).hex(),
               rgb: chroma(newColor!).rgb(),
               gl: chroma(newColor!).gl(),

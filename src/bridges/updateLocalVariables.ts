@@ -52,15 +52,18 @@ const updateLocalVariables = (palette: SceneNode, i: number, j: number) => {
           color.shades.forEach((shade) => {
             const variableMatch = localVariables.find(
               (localVariable) => localVariable.id === shade.variableId
-            )
+            ),
+              description = color.description != ''
+                ? color.description + '﹒' + shade.description
+                : shade.description
             if (variableMatch != undefined) {
               if (variableMatch.name != `${color.name}/${shade.name}`) {
                 variableMatch.name = `${color.name}/${shade.name}`
                 k++
               }
 
-              if (variableMatch.description != shade.description) {
-                variableMatch.description = shade.description
+              if (variableMatch.description != description) {
+                variableMatch.description = description
                 k++
               }
 

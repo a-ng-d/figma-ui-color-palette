@@ -59,7 +59,9 @@ const createLocalVariables = (palette: SceneNode, i: number, j: number) => {
             if (boundVariable == undefined) {
               const variable = new LocalVariable(collection).makeVariable(
                 `${color.name}/${shade.name}`,
-                shade.description
+                color.description != ''
+                  ? color.description + '﹒' + shade.description
+                  : shade.description
               )
               shade.variableId = variable.id
               if (themesList.length == 0) {
