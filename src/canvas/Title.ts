@@ -38,7 +38,11 @@ export default class Title {
         20
       ).makeNodeTag()
     )
-    this.nodeGlobalInfo.appendChild(this.makeNodeDescriptions())
+    if (
+      this.parent.description != '' ||
+      this.parent.themes.find((theme) => theme.isEnabled)?.description != ''
+    )
+      this.nodeGlobalInfo.appendChild(this.makeNodeDescriptions())
 
     return this.nodeGlobalInfo
   }
@@ -68,8 +72,6 @@ export default class Title {
       )
 
     if (
-      this.parent.themes.find((theme) => theme.isEnabled)?.type !=
-        'default theme' &&
       this.parent.themes.find((theme) => theme.isEnabled)?.description != ''
     )
       this.nodeDescriptions.appendChild(
