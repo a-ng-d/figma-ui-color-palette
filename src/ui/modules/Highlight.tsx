@@ -49,6 +49,11 @@ export default class Highlight extends React.Component<Props, any> {
               ),
           },
         }}
+        indicator={
+          currentNote['numberOfNotes'] > 1
+            ? `${this.state['position'] + 1} of ${currentNote['numberOfNotes']}`
+            : undefined
+        }
         onClose={(e) => {
           this.props.onCloseHighlight(e)
           this.setState({ position: 0 })

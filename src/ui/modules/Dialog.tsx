@@ -13,6 +13,7 @@ interface Props {
       action: React.ReactEventHandler | (() => void)
     }
   }
+  indicator?: string
   children: React.ReactNode
   onClose: React.ReactEventHandler
 }
@@ -24,6 +25,7 @@ export default class Dialog extends React.Component<Props> {
         <PopIn
           title={this.props.title}
           actions={this.props.actions}
+          indicator={this.props.indicator}
           OnClose={this.props.onClose}
         >
           {this.props.children}
