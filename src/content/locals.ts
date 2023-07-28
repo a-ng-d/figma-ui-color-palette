@@ -157,9 +157,12 @@ export const locals: { [key: string]: any } = {
       },
     },
     highlight: {
-      next: 'Next',
-      gotIt: 'Got it',
-      learnMore: 'Learn more',
+      cta: {
+        next: 'Next',
+        gotIt: 'Got it',
+        learnMore: 'Learn more',
+      }
+      
     },
     plan: {
       getPro: 'Get pro',
@@ -167,8 +170,12 @@ export const locals: { [key: string]: any } = {
       free: 'Free plan',
     },
     proPlan: {
-      welcomeMessage:
-        'You have successfully upgraded to the Pro plan, unlocking a range of tools to enhance the accessibility, accuracy and deployment options.',
+      welcome: {
+        title: 'Welcome to UI Color Palette Pro!',
+        message: 'You have successfully upgraded to the Pro plan, unlocking a range of tools to enhance your color system and its deployment options.',
+        cta: "Let's discover"
+      }
+        
     },
     properties: {
       base: 'Base',

@@ -36,12 +36,12 @@ export default class Highlight extends React.Component<Props, any> {
           primary: {
             label:
               this.state['position'] + 1 < currentNote['numberOfNotes']
-                ? locals[this.props.lang].highlight.next
-                : locals[this.props.lang].highlight.gotIt,
+                ? locals[this.props.lang].highlight.cta.next
+                : locals[this.props.lang].highlight.cta.gotIt,
             action: (e) => this.goNextSlide(e, currentNote),
           },
           secondary: {
-            label: locals[this.props.lang].highlight.learnMore,
+            label: locals[this.props.lang].highlight.cta.learnMore,
             action: () =>
               window.open(
                 currentNote['learnMore'][this.state['position']],

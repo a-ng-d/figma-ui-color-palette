@@ -692,10 +692,10 @@ class App extends React.Component<any, any> {
           >
             {this.state['isGettingPro'] ? (
               <Dialog
-                title="Welcome to UI Color Palette Pro"
+                title={locals[this.state['lang']].proPlan.welcome.title}
                 actions={{
                   primary: {
-                    label: "Let's discover",
+                    label: locals[this.state['lang']].proPlan.welcome.cta,
                     action: () => this.setState({ isGettingPro: false }),
                   },
                 }}
@@ -706,7 +706,7 @@ class App extends React.Component<any, any> {
                   src={pp}
                 />
                 <p className="dialog__text type">
-                  {locals[this.state['lang']].proPlan.welcomeMessage}
+                  {locals[this.state['lang']].proPlan.welcome.message}
                 </p>
               </Dialog>
             ) : null}
