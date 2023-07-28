@@ -57,12 +57,12 @@ export default class Colors {
     this.node = null
   }
 
-  getShadeColorFromLch(
+  getShadeColorFromLch = (
     sourceColor: [number, number, number],
     lightness: number,
     hueShifting: number,
     algorithmVersion: string
-  ) {
+  ) => {
     const lch = chroma(sourceColor).lch(),
       newColor = chroma
         .lch(
@@ -81,12 +81,12 @@ export default class Colors {
     return newColor ?? [0, 0, 0]
   }
 
-  getShadeColorFromOklch(
+  getShadeColorFromOklch = (
     sourceColor: [number, number, number],
     lightness: number,
     hueShifting: number,
     algorithmVersion: string
-  ) {
+  ) => {
     const oklch = chroma(sourceColor).oklch(),
       newColor = chroma
         .oklch(
@@ -105,12 +105,12 @@ export default class Colors {
     return newColor ?? [0, 0, 0]
   }
 
-  getShadeColorFromLab(
+  getShadeColorFromLab = (
     sourceColor: [number, number, number],
     lightness: number,
     hueShifting: number,
     algorithmVersion: string
-  ) {
+  ) => {
     const labA = chroma(sourceColor).get('lab.a'),
       labB = chroma(sourceColor).get('lab.b'),
       chr = Math.sqrt(labA ** 2 + labB ** 2)
@@ -146,12 +146,12 @@ export default class Colors {
     return newColor ?? [0, 0, 0]
   }
 
-  getShadeColorFromOklab(
+  getShadeColorFromOklab = (
     sourceColor: [number, number, number],
     lightness: number,
     hueShifting: number,
     algorithmVersion: string
-  ) {
+  ) => {
     const labA = chroma(sourceColor).get('oklab.a'),
       labB = chroma(sourceColor).get('oklab.b'),
       chr = Math.sqrt(labA ** 2 + labB ** 2)
@@ -187,12 +187,12 @@ export default class Colors {
     return newColor ?? [0, 0, 0]
   }
 
-  getShadeColorFromHsl(
+  getShadeColorFromHsl = (
     sourceColor: [number, number, number],
     lightness: number,
     hueShifting: number,
     algorithmVersion: string
-  ) {
+  ) => {
     const hsl = chroma(sourceColor).hsl(),
       newColor = chroma
         .hsl(
@@ -211,12 +211,12 @@ export default class Colors {
     return newColor ?? [0, 0, 0]
   }
 
-  getShadeColorFromHsluv(
+  getShadeColorFromHsluv = (
     sourceColor: [number, number, number],
     lightness: number,
     hueShifting: number,
     algorithmVersion: string
-  ) {
+  ) => {
     const lch = chroma(sourceColor).lch(),
       hsluv = new Hsluv()
 

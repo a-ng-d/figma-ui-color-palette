@@ -22,7 +22,7 @@ export default class Tag {
     this.nodeIndicator = null
   }
 
-  makeNodeTag(gl: Array<number> = [0, 0, 0, 1], hasIndicator = false) {
+  makeNodeTag = (gl: Array<number> = [0, 0, 0, 1], hasIndicator = false) => {
     // base
     this.nodeTag = figma.createFrame()
     this.nodeTag.name = this.name
@@ -91,7 +91,7 @@ export default class Tag {
     return this.nodeText
   }
 
-  makeNodeIndicator(rgb: Array<number>) {
+  makeNodeIndicator = (rgb: Array<number>) => {
     // base
     this.nodeIndicator = figma.createEllipse()
     this.nodeIndicator.name = '_indicator'

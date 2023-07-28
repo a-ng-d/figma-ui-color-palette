@@ -65,7 +65,7 @@ export default class Properties {
     this.node = null
   }
 
-  getContrast(textColor: string) {
+  getContrast = (textColor: string) => {
     return chroma.contrast(
       chroma(this.rgb).hex(),
       textColor === 'DARK'
@@ -74,7 +74,7 @@ export default class Properties {
     )
   }
 
-  getAPCAContrast(textColor: string) {
+  getAPCAContrast = (textColor: string) => {
     return APCAcontrast(
       sRGBtoY(
         textColor === 'DARK'
@@ -85,7 +85,7 @@ export default class Properties {
     )
   }
 
-  getLevel(textColor: string) {
+  getLevel = (textColor: string) => {
     return this.getContrast(textColor) < 4.5
       ? 'A'
       : this.getContrast(textColor) >= 4.5 && this.getContrast(textColor) < 7
@@ -93,7 +93,7 @@ export default class Properties {
       : 'AAA'
   }
 
-  getMinFontSizes(textColor: string) {
+  getMinFontSizes = (textColor: string) => {
     return fontLookupAPCA(this.getAPCAContrast(textColor))
   }
 

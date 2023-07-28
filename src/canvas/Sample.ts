@@ -46,7 +46,7 @@ export default class Sample {
     this.children = null
   }
 
-  makeNodeName(mode: string, width: number, height: number) {
+  makeNodeName = (mode: string, width: number, height: number) => {
     // base
     this.node = figma.createFrame()
     this.node.name = this.name
@@ -76,12 +76,12 @@ export default class Sample {
     return this.node
   }
 
-  makeNodeShade(
+  makeNodeShade = (
     width: number,
     height: number,
     name: string,
     isColorName = false
-  ) {
+  ) => {
     // base
     this.node = figma.createFrame()
     this.node.name = name
@@ -128,13 +128,13 @@ export default class Sample {
     return this.node
   }
 
-  makeNodeRichShade(
+  makeNodeRichShade = (
     width: number,
     height: number,
     name: string,
     isColorName = false,
     description = ''
-  ) {
+  ) => {
     // base
     this.node = figma.createFrame()
     this.node.name = name
