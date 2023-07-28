@@ -93,8 +93,9 @@ export default class Settings extends React.Component<Props> {
     return (
       <Feature
         isActive={
-          features.find((feature) => feature.name === 'SETTINGS_PALETTE_DESCRIPTION')
-            ?.isActive
+          features.find(
+            (feature) => feature.name === 'SETTINGS_PALETTE_DESCRIPTION'
+          )?.isActive
         }
       >
         <div className="settings__item">
@@ -109,7 +110,9 @@ export default class Settings extends React.Component<Props> {
             <Input
               id="update-palette-description"
               type="LONG_TEXT"
-              placeholder={locals[this.props.lang].global.description.placeholder}
+              placeholder={
+                locals[this.props.lang].global.description.placeholder
+              }
               value={this.props.description}
               isSansFont={true}
               isBlocked={isBlocked(
@@ -280,7 +283,8 @@ export default class Settings extends React.Component<Props> {
                   ),
                 },
                 {
-                  label: locals[this.props.lang].settings.color.colorSpace.hsluv,
+                  label:
+                    locals[this.props.lang].settings.color.colorSpace.hsluv,
                   value: 'HSLUV',
                   position: 5,
                   isActive: features.find(

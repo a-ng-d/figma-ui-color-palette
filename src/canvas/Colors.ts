@@ -43,7 +43,8 @@ export default class Colors {
     this.currentScale =
       this.parent.themes.find((theme) => theme.isEnabled)?.scale ?? {}
     this.paletteBackgroundGl = chroma(
-      this.parent.themes.find((theme) => theme.isEnabled)?.paletteBackground ?? '#FFF'
+      this.parent.themes.find((theme) => theme.isEnabled)?.paletteBackground ??
+        '#FFF'
     ).gl()
     this.sampleScale = 1.75
     this.sampleRatio = 3 / 2
@@ -221,14 +222,16 @@ export default class Colors {
       hsluv = new Hsluv()
 
     hsluv.lch_l = lightness
-    hsluv.lch_c = algorithmVersion == 'v2'
-      ? Math.sin((lightness / 100) * Math.PI) * lch[1]
-      : lch[1]
-    hsluv.lch_h = lch[2] + hueShifting < 0
-      ? 0
-      : lch[2] + hueShifting > 360
-      ? 360
-      : lch[2] + hueShifting
+    hsluv.lch_c =
+      algorithmVersion == 'v2'
+        ? Math.sin((lightness / 100) * Math.PI) * lch[1]
+        : lch[1]
+    hsluv.lch_h =
+      lch[2] + hueShifting < 0
+        ? 0
+        : lch[2] + hueShifting > 360
+        ? 360
+        : lch[2] + hueShifting
     hsluv.lchToHsluv()
     hsluv.hsluvToRgb()
 
@@ -348,7 +351,7 @@ export default class Colors {
             color.rgb.g * 255,
             color.rgb.b * 255,
           ]
-          
+
         const sourceHsluv = new Hsluv()
         sourceHsluv.rgb_r = color.rgb.r
         sourceHsluv.rgb_g = color.rgb.g
@@ -369,7 +372,7 @@ export default class Colors {
           hsluv: [
             sourceHsluv.hsluv_h,
             sourceHsluv.hsluv_s,
-            sourceHsluv.hsluv_l
+            sourceHsluv.hsluv_l,
           ],
           variableId:
             service === 'EDIT'
@@ -440,10 +443,11 @@ export default class Colors {
                 this.parent.algorithmVersion
               )
 
-            const scaleName: string = Object.keys(theme.scale)
-              .find((key) => theme.scale[key] === lightness)
-              ?.substr(10) ?? '0'
-            
+            const scaleName: string =
+              Object.keys(theme.scale)
+                .find((key) => theme.scale[key] === lightness)
+                ?.substr(10) ?? '0'
+
             const newHsluv = new Hsluv()
             newHsluv.rgb_r = newColor[0] / 255
             newHsluv.rgb_g = newColor[1] / 255
@@ -461,11 +465,7 @@ export default class Colors {
               lab: chroma(newColor).lab(),
               oklab: chroma(newColor).oklab(),
               hsl: chroma(newColor).hsl(),
-              hsluv: [
-                newHsluv.hsluv_h,
-                newHsluv.hsluv_s,
-                newHsluv.hsluv_l
-              ],
+              hsluv: [newHsluv.hsluv_h, newHsluv.hsluv_s, newHsluv.hsluv_l],
               variableId:
                 service === 'EDIT'
                   ? this.searchForShadeVariableId(
@@ -641,9 +641,10 @@ export default class Colors {
             'rgb'
           )
 
-          const scaleName: string = Object.keys(this.currentScale)
-            .find((key) => this.currentScale[key] === lightness)
-            ?.substr(10) ?? '0'
+          const scaleName: string =
+            Object.keys(this.currentScale)
+              .find((key) => this.currentScale[key] === lightness)
+              ?.substr(10) ?? '0'
 
           if (this.parent.view.includes('PALETTE')) {
             this.nodeRowShades?.appendChild(
@@ -688,7 +689,7 @@ export default class Colors {
                   scaleName
                 )
               )
-            } 
+            }
           }
         })
 
@@ -717,11 +718,7 @@ export default class Colors {
     this.node.itemSpacing = 16
 
     // insert
-    this.node.appendChild(
-      new Title(
-        this.parent
-      ).makeNode()
-    )
+    this.node.appendChild(new Title(this.parent).makeNode())
     this.node.appendChild(this.makeNodeShades())
     this.node.appendChild(new Signature().makeNode())
 

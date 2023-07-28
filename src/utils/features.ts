@@ -285,7 +285,7 @@ const features: Array<Feature> = [
   {
     name: 'EXPORT_SWIFT',
     description:
-    'Palette export to SWIFT (macOS, iOS, iPadOS, watchOS, tvOS, visionOS)',
+      'Palette export to SWIFT (macOS, iOS, iPadOS, watchOS, tvOS, visionOS)',
     isActive: true,
     isPro: false,
     type: 'ACTION',

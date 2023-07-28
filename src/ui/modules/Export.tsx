@@ -63,7 +63,12 @@ export default class Export extends React.Component<Props, any> {
           format: 'JSON_AMZN_STYLE_DICTIONARY',
         })
         parent.postMessage(
-          { pluginMessage: { type: 'EXPORT_PALETTE', export: 'JSON_AMZN_STYLE_DICTIONARY' } },
+          {
+            pluginMessage: {
+              type: 'EXPORT_PALETTE',
+              export: 'JSON_AMZN_STYLE_DICTIONARY',
+            },
+          },
           '*'
         )
       },
@@ -72,7 +77,12 @@ export default class Export extends React.Component<Props, any> {
           format: 'JSON_TOKENS_STUDIO',
         })
         parent.postMessage(
-          { pluginMessage: { type: 'EXPORT_PALETTE', export: 'JSON_TOKENS_STUDIO' } },
+          {
+            pluginMessage: {
+              type: 'EXPORT_PALETTE',
+              export: 'JSON_TOKENS_STUDIO',
+            },
+          },
           '*'
         )
       },
@@ -183,8 +193,10 @@ export default class Export extends React.Component<Props, any> {
                 </Feature>
                 <Feature
                   isActive={
-                    features.find((feature) => feature.name === 'EXPORT_JSON_AMZN_STYLE_DICTIONARY')
-                      ?.isActive
+                    features.find(
+                      (feature) =>
+                        feature.name === 'EXPORT_JSON_AMZN_STYLE_DICTIONARY'
+                    )?.isActive
                   }
                 >
                   <li>
@@ -192,7 +204,9 @@ export default class Export extends React.Component<Props, any> {
                       id="options__json-amzn-style-dictionary"
                       label={locals[this.props.lang].export.amznStyleDictionary}
                       isChecked={
-                        this.state['format'] === 'JSON_AMZN_STYLE_DICTIONARY' ? true : false
+                        this.state['format'] === 'JSON_AMZN_STYLE_DICTIONARY'
+                          ? true
+                          : false
                       }
                       isBlocked={isBlocked(
                         'EXPORT_JSON_AMZN_STYLE_DICTIONARY',
@@ -201,7 +215,10 @@ export default class Export extends React.Component<Props, any> {
                       feature="EXPORT_TO_JSON_AMZN_STYLE_DICTIONARY"
                       group="fileFormat"
                       onChange={
-                        isBlocked('EXPORT_JSON_AMZN_STYLE_DICTIONARY', this.props.planStatus)
+                        isBlocked(
+                          'EXPORT_JSON_AMZN_STYLE_DICTIONARY',
+                          this.props.planStatus
+                        )
                           ? () => null
                           : this.exportHandler
                       }
@@ -210,8 +227,9 @@ export default class Export extends React.Component<Props, any> {
                 </Feature>
                 <Feature
                   isActive={
-                    features.find((feature) => feature.name === 'EXPORT_JSON_TOKENS_STUDIO')
-                      ?.isActive
+                    features.find(
+                      (feature) => feature.name === 'EXPORT_JSON_TOKENS_STUDIO'
+                    )?.isActive
                   }
                 >
                   <li>
@@ -219,7 +237,9 @@ export default class Export extends React.Component<Props, any> {
                       id="options__json-tokens-studio"
                       label={locals[this.props.lang].export.tokensStudio}
                       isChecked={
-                        this.state['format'] === 'JSON_TOKENS_STUDIO' ? true : false
+                        this.state['format'] === 'JSON_TOKENS_STUDIO'
+                          ? true
+                          : false
                       }
                       isBlocked={isBlocked(
                         'EXPORT_JSON_TOKENS_STUDIO',
@@ -228,7 +248,10 @@ export default class Export extends React.Component<Props, any> {
                       feature="EXPORT_TO_JSON_TOKENS_STUDIO"
                       group="fileFormat"
                       onChange={
-                        isBlocked('EXPORT_JSON_TOKENS_STUDIO', this.props.planStatus)
+                        isBlocked(
+                          'EXPORT_JSON_TOKENS_STUDIO',
+                          this.props.planStatus
+                        )
                           ? () => null
                           : this.exportHandler
                       }

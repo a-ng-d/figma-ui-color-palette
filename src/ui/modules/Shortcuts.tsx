@@ -59,18 +59,13 @@ export default class Shortcuts extends React.Component<Props> {
             <Button
               type="icon"
               icon="library"
-              action={() =>
-                window.open('https://uicp.link/docs', '_blank')
-              }
+              action={() => window.open('https://uicp.link/docs', '_blank')}
             />
             <Button
               type="icon"
               icon="repository"
               action={() =>
-                window.open(
-                  'https://uicp.link/repository',
-                  '_blank'
-                )
+                window.open('https://uicp.link/repository', '_blank')
               }
             />
           </div>

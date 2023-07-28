@@ -158,13 +158,13 @@ export default class Input extends React.Component<Props> {
 
   LongText = () => {
     return (
-      <div
-        className={`input${this.props.isBlocked ? ' input--blocked' : ''}`}
-      >
+      <div className={`input${this.props.isBlocked ? ' input--blocked' : ''}`}>
         <textarea
           id={this.props.id}
           data-feature={this.props.feature}
-          className={`textarea input__field${this.props.isSansFont ? ' textarea--sans' : ''}`}
+          className={`textarea input__field${
+            this.props.isSansFont ? ' textarea--sans' : ''
+          }`}
           placeholder={this.props.placeholder}
           value={this.props.value}
           autoFocus={this.props.isAutoFocus}

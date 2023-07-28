@@ -146,7 +146,7 @@ class App extends React.Component<any, any> {
       CARBON: () => setCarbonPreset(),
       BASE: () => setBasePreset(),
       CUSTOM: () => setCustomPreset(),
-      NULL: () => null
+      NULL: () => null,
     }
 
     return actions[(e.target as HTMLElement).dataset.value ?? 'NULL']?.()
@@ -188,7 +188,7 @@ class App extends React.Component<any, any> {
     const actions: ActionsList = {
       ADD_STOP: () => addStop(),
       REMOVE_STOP: () => removeStop(),
-      NULL: () => null
+      NULL: () => null,
     }
 
     return actions[(e.target as HTMLInputElement).dataset.feature ?? 'NULL']?.()

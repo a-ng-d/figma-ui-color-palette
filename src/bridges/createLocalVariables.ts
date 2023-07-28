@@ -20,15 +20,16 @@ const createLocalVariables = (palette: SceneNode, i: number, j: number) => {
         palette.getPluginData('name') === ''
           ? locals[lang].name
           : palette.getPluginData('name'),
-      themesList = paletteData.themes
-        .map((theme) => {
-          if (theme.type === 'custom theme')
-            return {
-              name: theme.name,
-              id: theme.modeId,
-            }
-        })
-        .slice(1) ?? [],
+      themesList =
+        paletteData.themes
+          .map((theme) => {
+            if (theme.type === 'custom theme')
+              return {
+                name: theme.name,
+                id: theme.modeId,
+              }
+          })
+          .slice(1) ?? [],
       notifications: Array<string> = []
 
     let collection: VariableCollection | undefined = figma.variables
@@ -104,21 +105,21 @@ const createLocalVariables = (palette: SceneNode, i: number, j: number) => {
             collection.addMode(themeItem.name)
             j++
           }
-          
+
           const theme = paletteData.themes.find(
             (theme) => theme.name === themeItem.name
           )
           if (theme != undefined)
-            theme.modeId = collection.modes.find(
-              (mode) => mode.name === themeItem.name
-            )?.modeId ?? ''
-  
+            theme.modeId =
+              collection.modes.find((mode) => mode.name === themeItem.name)
+                ?.modeId ?? ''
+
           variablesSet.forEach((variableSet) => {
             const rightShade = paletteData.themes
               .find((theme) => theme.name === themeItem?.name)
               ?.colors.find((color) => color.name === variableSet.colorName)
               ?.shades.find((shade) => shade.name === variableSet.shadeName)
-  
+
             if (rightShade != undefined && collection != undefined) {
               rightShade.variableId = variableSet.variable.id
               variableSet.variable.setValueForMode(
@@ -130,10 +131,10 @@ const createLocalVariables = (palette: SceneNode, i: number, j: number) => {
                   b: rightShade.gl[2],
                 }
               )
-            }      
+            }
           })
         }
-      } 
+      }
     })
 
     palette.setPluginData('data', JSON.stringify(paletteData))

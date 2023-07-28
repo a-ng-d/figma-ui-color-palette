@@ -51,11 +51,12 @@ const updateLocalVariables = (palette: SceneNode, i: number, j: number) => {
         theme.colors.forEach((color) => {
           color.shades.forEach((shade) => {
             const variableMatch = localVariables.find(
-              (localVariable) => localVariable.id === shade.variableId
-            ),
-              description = color.description != ''
-                ? color.description + '﹒' + shade.description
-                : shade.description
+                (localVariable) => localVariable.id === shade.variableId
+              ),
+              description =
+                color.description != ''
+                  ? color.description + '﹒' + shade.description
+                  : shade.description
             if (variableMatch != undefined) {
               if (variableMatch.name != `${color.name}/${shade.name}`) {
                 variableMatch.name = `${color.name}/${shade.name}`

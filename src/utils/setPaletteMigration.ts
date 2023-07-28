@@ -32,8 +32,7 @@ const setPaletteMigration = (palette: BaseNode) => {
   }
 
   // description
-  if (description === '')
-    palette.setPluginData('description', '')
+  if (description === '') palette.setPluginData('description', '')
 
   // preset
   if (preset === '')

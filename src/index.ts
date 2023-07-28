@@ -60,8 +60,12 @@ figma.ui.onmessage = async (msg) => {
     UPDATE_LOCAL_VARIABLES: () => updateLocalVariables(palette, i, j),
     EXPORT_PALETTE: () => {
       msg.export === 'JSON' ? exportJson(palette) : null
-      msg.export === 'JSON_AMZN_STYLE_DICTIONARY' ? exportJsonAmznStyleDictionary(palette) : null
-      msg.export === 'JSON_TOKENS_STUDIO' ? exportJsonTokensStudio(palette) : null
+      msg.export === 'JSON_AMZN_STYLE_DICTIONARY'
+        ? exportJsonAmznStyleDictionary(palette)
+        : null
+      msg.export === 'JSON_TOKENS_STUDIO'
+        ? exportJsonTokensStudio(palette)
+        : null
       msg.export === 'CSS' ? exportCss(palette) : null
       msg.export === 'SWIFT' ? exportSwift(palette) : null
       msg.export === 'XML' ? exportXml(palette) : null

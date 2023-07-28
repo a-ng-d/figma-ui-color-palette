@@ -86,7 +86,7 @@ const exportJson = (palette: SceneNode) => {
           json[color.name]['type'] = 'color'
         })
       })
-    
+
     json['descrption'] = paletteData.description
     json['type'] = 'color palette'
 

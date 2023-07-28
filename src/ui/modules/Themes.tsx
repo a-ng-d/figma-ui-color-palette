@@ -185,8 +185,7 @@ export default class Themes extends React.Component<Props, any> {
         const result = themesMessage.data.find(
           (item) => item.type === 'default theme'
         )
-        if (result != undefined)
-          result.isEnabled = true
+        if (result != undefined) result.isEnabled = true
       }
       this.props.onChangeThemes(themesMessage.data)
       parent.postMessage({ pluginMessage: themesMessage }, '*')
@@ -198,7 +197,7 @@ export default class Themes extends React.Component<Props, any> {
       UPDATE_PALETTE_BACKGROUND: () => updatePaletteBackgroundColor(),
       UPDATE_DESCRIPTION: () => updateThemeDescription(),
       REMOVE_THEME: () => removeTheme(),
-      NULL: () => null
+      NULL: () => null,
     }
 
     return actions[currentElement.dataset.feature ?? 'NULL']?.()
@@ -266,7 +265,8 @@ export default class Themes extends React.Component<Props, any> {
 
   dropOutsideHandler = (e: React.DragEvent<HTMLLIElement>) => {
     const target = e.target,
-      parent: ParentNode = (target as HTMLElement).parentNode ?? (target as HTMLElement),
+      parent: ParentNode =
+        (target as HTMLElement).parentNode ?? (target as HTMLElement),
       scrollY: number = (parent.parentNode?.parentNode as HTMLElement)
         .scrollTop,
       parentRefTop: number = (parent as HTMLElement).offsetTop,

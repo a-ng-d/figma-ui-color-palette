@@ -17,7 +17,7 @@ export interface ReleaseNote {
   title: Array<string>
   image: Array<string>
   content: Array<string>
-  numberOfNotes: number,
+  numberOfNotes: number
   learnMore: Array<`https://${string}`>
 }
 
@@ -154,7 +154,13 @@ export interface ExportConfiguration {
   data: any
 }
 
-export type ColorSpaceConfiguration = 'LCH' | 'OKLCH' | 'LAB' | 'OKLAB' | 'HSL' | 'HSLUV'
+export type ColorSpaceConfiguration =
+  | 'LCH'
+  | 'OKLCH'
+  | 'LAB'
+  | 'OKLAB'
+  | 'HSL'
+  | 'HSLUV'
 
 export type ViewConfiguration =
   | 'PALETTE_WITH_PROPERTIES'

@@ -69,8 +69,8 @@ export default class About extends React.Component<Props> {
                 rel="noreferrer"
               >
                 Source code
-              </a>
-              {' '}is licensed under{' '}
+              </a>{' '}
+              is licensed under{' '}
               <a
                 href="https://uicp.link/license"
                 target="_blank"

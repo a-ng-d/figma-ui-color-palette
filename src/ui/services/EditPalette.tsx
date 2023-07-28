@@ -162,8 +162,7 @@ export default class EditPalette extends React.Component<Props, any> {
             theme.colors.forEach((color) => {
               folder.file(`${doSnakeCase(color.name)}.csv`, color.csv)
             })
-          }
-          else
+          } else
             theme.colors.forEach((color) => {
               zip.file(`${doSnakeCase(color.name)}.csv`, color.csv)
             })

@@ -38,9 +38,7 @@ export default class Title {
         20
       ).makeNodeTag()
     )
-    this.nodeGlobalInfo.appendChild(
-      this.makeNodeDescriptions()
-    )
+    this.nodeGlobalInfo.appendChild(this.makeNodeDescriptions())
 
     return this.nodeGlobalInfo
   }
@@ -58,9 +56,7 @@ export default class Title {
     this.nodeDescriptions.itemSpacing = 8
 
     // insert
-    if (
-      this.parent.description != ''
-    )
+    if (this.parent.description != '')
       this.nodeDescriptions.appendChild(
         new Paragraph(
           '_palette-description',
@@ -79,7 +75,8 @@ export default class Title {
       this.nodeDescriptions.appendChild(
         new Paragraph(
           '_theme-description',
-          'Theme description: ' + this.parent.themes.find((theme) => theme.isEnabled)?.description,
+          'Theme description: ' +
+            this.parent.themes.find((theme) => theme.isEnabled)?.description,
           'FIXED',
           644,
           12

@@ -21,14 +21,15 @@ const updateLocalStyles = (palette: SceneNode, i: number) => {
       theme.colors.forEach((color) => {
         color.shades.forEach((shade) => {
           const name =
-            workingThemes[0].type === 'custom theme'
-              ? `${paletteData.name == '' ? '' : paletteData.name + '/'}${
-                  theme.name
-                }/${color.name}/${shade.name}`
-              : `${color.name}/${shade.name}`,
-            description = color.description != ''
-              ? color.description + '﹒' + shade.description
-              : shade.description
+              workingThemes[0].type === 'custom theme'
+                ? `${paletteData.name == '' ? '' : paletteData.name + '/'}${
+                    theme.name
+                  }/${color.name}/${shade.name}`
+                : `${color.name}/${shade.name}`,
+            description =
+              color.description != ''
+                ? color.description + '﹒' + shade.description
+                : shade.description
 
           if (
             localStyles.find((localStyle) => localStyle.id === shade.styleId) !=
@@ -80,7 +81,7 @@ const updateLocalStyles = (palette: SceneNode, i: number) => {
             const styleMatch = localStyles.find(
               (localStyle) => localStyle.name === name
             )
-            
+
             if (styleMatch != undefined) {
               if (styleMatch.name != name) {
                 styleMatch.name = name

@@ -104,11 +104,7 @@ export default class Properties {
     hsluv.rgb_b = rgb[2] / 255
     hsluv.rgbToHsluv()
 
-    return [
-      hsluv.hsluv_h,
-      hsluv.hsluv_s,
-      hsluv.hsluv_l
-    ]
+    return [hsluv.hsluv_h, hsluv.hsluv_s, hsluv.hsluv_l]
   }
 
   makeNodeTopProps = () => {
