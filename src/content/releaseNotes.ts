@@ -17,8 +17,8 @@ const releaseNotes: Array<ReleaseNote> = [
     ],
     image: [rnv241, rnv242],
     content: [
-      'UI Color Palette allows you to create free accessible color palettes, but the Pro plan offers more features such as color themes, additional export options, and a color sheet that turns your palette into a color system. Ready to try it out?',
-      'In the Pro plan, color themes can be managed within the same palette, allowing you to create as many variations of lightness scales as needed to build your color system. This feature can be helpful for managing both light and dark mode themes.',
+      'UI Color Palette allows you to create freely accessible color palettes. However, the Pro plan offers additional features such as color themes, more export options, and the ability to create variables that can transform your color palette into a color system. Are you ready to try it out?',
+      'With the Pro plan, you can manage color themes within the same palette, enabling you to create as many variations of lightness scales as needed to build your color system. This feature is useful for managing both light and dark mode themes.',
     ],
     numberOfNotes: 2,
     learnMore: ['https://uicp.link/whats-new', 'https://uicp.link/whats-new'],

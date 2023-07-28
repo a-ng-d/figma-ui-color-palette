@@ -172,8 +172,8 @@ export const locals: { [key: string]: any } = {
     proPlan: {
       welcome: {
         title: 'Welcome to UI Color Palette Pro!',
-        message: 'You have successfully upgraded to the Pro plan, unlocking a range of tools to enhance your color system and its deployment options.',
-        cta: "Let's discover"
+        message: 'You have successfully upgraded to the Pro plan, unlocking a range of tools to transform your color palette into a color system.',
+        cta: "Let's enhance it"
       }
         
     },
