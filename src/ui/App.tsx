@@ -15,17 +15,18 @@ import CreatePalette from './services/CreatePalette'
 import EditPalette from './services/EditPalette'
 import Highlight from './modules/Highlight'
 import Dialog from './modules/Dialog'
+import About from './modules/About'
 import Shortcuts from './modules/Shortcuts'
 import package_json from './../../package.json'
 import { palette, presets } from '../utils/palettePackage'
 import doLightnessScale from '../utils/doLightnessScale'
 import features from '../utils/features'
 import { locals } from '../content/locals'
+import pp from '../content/images/pro_plan.webp'
 import 'figma-plugin-ds/dist/figma-plugin-ds.css'
 import './stylesheets/app.css'
 import './stylesheets/app-components.css'
 import './stylesheets/figma-components.css'
-import About from './modules/About'
 
 let isPaletteSelected = false
 const container = document.getElementById('react-page'),
@@ -702,7 +703,7 @@ class App extends React.Component<any, any> {
               >
                 <img
                   className="dialog__cover"
-                  src=""
+                  src={pp}
                 />
                 <p className="dialog__text type">
                   {locals[this.state['lang']].proPlan.welcomeMessage}

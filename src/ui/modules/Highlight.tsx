@@ -28,6 +28,7 @@ export default class Highlight extends React.Component<Props, any> {
 
   render() {
     const currentNote = releaseNotes.filter((note) => note['isMostRecent'])[0]
+    console.log(currentNote)
     return (
       <Dialog
         title={currentNote['title'][this.state['position']]}
