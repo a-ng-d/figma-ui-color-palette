@@ -40,7 +40,7 @@ const processSelection = () => {
   } else if (
     selection.length == 0 ||
     (selection.length > 1 && selection[0].getPluginDataKeys().length != 0) ||
-    selection.find((element) => (element as any).fills.length == 0)
+    selection.find((element) => (element as any).fills) == undefined
   )
     figma.ui.postMessage({
       type: 'EMPTY_SELECTION',
@@ -48,6 +48,7 @@ const processSelection = () => {
     })
 
   selection.forEach((element) => {
+    console.log(element.type)
     if (
       element.type != 'CONNECTOR' &&
       element.type != 'GROUP' &&
