@@ -85,6 +85,7 @@ export default class Palette {
 
     // data
     this.node.setRelaunchData({ edit: '' })
+    this.node.setPluginData('type', 'UI_COLOR_PALETTE')
     this.node.setPluginData('name', this.name)
     this.node.setPluginData('description', this.description)
     this.node.setPluginData('preset', JSON.stringify(this.preset))

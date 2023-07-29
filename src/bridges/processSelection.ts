@@ -13,8 +13,7 @@ const processSelection = () => {
   const selection: ReadonlyArray<BaseNode> = figma.currentPage.selection
   currentSelection = figma.currentPage.selection
 
-  const palette: BaseNode = selection[0]
-
+  const palette: FrameNode | InstanceNode = selection[0] as FrameNode | InstanceNode
   const selectionHandler = (state: string) => {
     const actions: ActionsList = {
       PALETTE_SELECTED: () =>
@@ -51,18 +50,26 @@ const processSelection = () => {
   }
 
   if (
-    selection.length == 1 &&
-    selection[0].getPluginDataKeys().length > 0 &&
-    selection[0].type != 'INSTANCE'
+    (selection.length == 1 &&
+    palette.getPluginData('type') === 'UI_COLOR_PALETTE') &&
+    palette.type != 'INSTANCE'
   ) {
     setPaletteMigration(palette) // Migration
     selectionHandler('PALETTE_SELECTED')
   } else if (
+    selection.length == 1 &&
+    palette.getPluginDataKeys().length > 0 &&
+    palette.type != 'INSTANCE'
+  ) {
+    setPaletteMigration(palette) // Migration
+    selectionHandler('PALETTE_SELECTED')
+  }
+   else if (
     selection.length == 0
   )
     selectionHandler('EMPTY_SELECTION')
   else if (
-    (selection.length > 1 && selection[0].getPluginDataKeys().length != 0)
+    (selection.length > 1 && palette.getPluginDataKeys().length != 0)
   )
     selectionHandler('EMPTY_SELECTION')
   else if (
