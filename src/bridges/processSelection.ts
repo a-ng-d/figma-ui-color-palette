@@ -1,4 +1,4 @@
-import type { ThemeConfiguration } from '../utils/types'
+import type { ActionsList, ThemeConfiguration } from '../utils/types'
 import setPaletteMigration from '../utils/setPaletteMigration'
 
 export let currentSelection: ReadonlyArray<SceneNode>
@@ -13,42 +13,72 @@ const processSelection = () => {
   const selection: ReadonlyArray<BaseNode> = figma.currentPage.selection
   currentSelection = figma.currentPage.selection
 
-  if (selection.length == 1 && selection[0].getPluginDataKeys().length > 0) {
-    const palette: BaseNode = selection[0]
+  const palette: BaseNode = selection[0]
 
-    // Migration
-    setPaletteMigration(palette)
+  const selectionHandler = (state: string) => {
+    const actions: ActionsList = {
+      PALETTE_SELECTED: () =>
+        figma.ui.postMessage({
+          type: 'PALETTE_SELECTED',
+          data: {
+            name: palette.getPluginData('name'),
+            description: palette.getPluginData('description'),
+            preset: JSON.parse(palette.getPluginData('preset')),
+            scale: JSON.parse(palette.getPluginData('themes')).find(
+              (theme: ThemeConfiguration) => theme.isEnabled
+            ).scale,
+            colors: JSON.parse(palette.getPluginData('colors')),
+            colorSpace: palette.getPluginData('colorSpace'),
+            themes: JSON.parse(palette.getPluginData('themes')),
+            view: palette.getPluginData('view'),
+            textColorsTheme: JSON.parse(palette.getPluginData('textColorsTheme')),
+            algorithmVersion: palette.getPluginData('algorithmVersion'),
+          },
+        }),
+      EMPTY_SELECTION: () =>
+        figma.ui.postMessage({
+          type: 'EMPTY_SELECTION',
+          data: {},
+        }),
+      COLOR_SELECTED: () =>
+        figma.ui.postMessage({
+          type: 'COLOR_SELECTED',
+          data: {},
+        })
+    }
 
-    // to UI
-    figma.ui.postMessage({
-      type: 'PALETTE_SELECTED',
-      data: {
-        name: palette.getPluginData('name'),
-        description: palette.getPluginData('description'),
-        preset: JSON.parse(palette.getPluginData('preset')),
-        scale: JSON.parse(palette.getPluginData('themes')).find(
-          (theme: ThemeConfiguration) => theme.isEnabled
-        ).scale,
-        colors: JSON.parse(palette.getPluginData('colors')),
-        colorSpace: palette.getPluginData('colorSpace'),
-        themes: JSON.parse(palette.getPluginData('themes')),
-        view: palette.getPluginData('view'),
-        textColorsTheme: JSON.parse(palette.getPluginData('textColorsTheme')),
-        algorithmVersion: palette.getPluginData('algorithmVersion'),
-      },
-    })
+    return actions[state]?.()
+  }
+
+  if (
+    selection.length == 1 &&
+    selection[0].getPluginDataKeys().length > 0 &&
+    selection[0].type != 'INSTANCE'
+  ) {
+    setPaletteMigration(palette) // Migration
+    selectionHandler('PALETTE_SELECTED')
   } else if (
-    selection.length == 0 ||
-    (selection.length > 1 && selection[0].getPluginDataKeys().length != 0) ||
-    selection.find((element) => (element as any).fills) == undefined
+    selection.length == 0
   )
-    figma.ui.postMessage({
-      type: 'EMPTY_SELECTION',
-      data: {},
-    })
+    selectionHandler('EMPTY_SELECTION')
+  else if (
+    (selection.length > 1 && selection[0].getPluginDataKeys().length != 0)
+  )
+    selectionHandler('EMPTY_SELECTION')
+  else if (
+    selection[0].type === 'INSTANCE'
+  )
+    selectionHandler('EMPTY_SELECTION')
+  else if (
+    (selection[0] as any).fills == undefined
+  )
+    selectionHandler('EMPTY_SELECTION')
+  else if (
+    (selection[0] as any).fills.length == 0
+  )
+    selectionHandler('EMPTY_SELECTION')
 
   selection.forEach((element) => {
-    console.log(element.type)
     if (
       element.type != 'CONNECTOR' &&
       element.type != 'GROUP' &&
@@ -59,10 +89,7 @@ const processSelection = () => {
           .length != 0 &&
         element.getPluginDataKeys().length == 0
       )
-        figma.ui.postMessage({
-          type: 'COLOR_SELECTED',
-          data: {},
-        })
+        selectionHandler('COLOR_SELECTED')
   })
 
   setTimeout(() => (isSelectionChanged = false), 1000)

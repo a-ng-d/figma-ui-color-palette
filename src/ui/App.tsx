@@ -59,7 +59,7 @@ class App extends React.Component<any, any> {
       ) as DispatchProcess,
     }
     this.state = {
-      service: '',
+      service: 'ONBOARD',
       name: '',
       description: '',
       preset: presets.material,
@@ -441,7 +441,7 @@ class App extends React.Component<any, any> {
 
         const updateWhileEmptySelection = () => {
           this.setState({
-            service: 'NONE',
+            service: 'ONBOARD',
             name: '',
             description: '',
             preset: presets.material,
@@ -665,7 +665,7 @@ class App extends React.Component<any, any> {
                 ?.isActive
             }
           >
-            {this.state['service'] === 'NONE' ? (
+            {this.state['service'] === 'ONBOARD' ? (
               <Onboarding
                 planStatus={this.state['planStatus']}
                 lang={this.state['lang']}
