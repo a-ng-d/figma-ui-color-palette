@@ -341,7 +341,7 @@ export default class Settings extends React.Component<Props> {
             }
           />
           <Message
-            icon="library"
+            icon="key"
             messages={[
               locals[this.props.lang].settings.color.newAlgorithm.description,
             ]}
@@ -439,7 +439,7 @@ export default class Settings extends React.Component<Props> {
             />
           </FormItem>
           <Message
-            icon="library"
+            icon="key"
             messages={[
               locals[this.props.lang].settings.contrast.textColors
                 .textThemeColorsDescription,
