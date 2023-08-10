@@ -162,6 +162,7 @@ export default class Export extends React.Component<Props, any> {
                 <div className="section-title">
                   {locals[this.props.lang].export.format}
                 </div>
+                <div className="type">(7)</div>
               </div>
             </div>
             <div className="export-palette__options">
