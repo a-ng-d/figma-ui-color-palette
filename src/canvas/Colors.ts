@@ -218,21 +218,31 @@ export default class Colors {
     hueShifting: number,
     algorithmVersion: string
   ) => {
-    const lch = chroma(sourceColor).lch(),
-      hsluv = new Hsluv()
+    const hsluv = new Hsluv()
 
-    hsluv.lch_l = lightness
-    hsluv.lch_c =
+    hsluv.rgb_r = sourceColor[0] / 255
+    hsluv.rgb_g = sourceColor[1] / 255
+    hsluv.rgb_b = sourceColor[2] / 255
+
+    hsluv.rgbToHsluv()
+
+    hsluv.hsluv_l = lightness
+    hsluv.hsluv_s =
       algorithmVersion == 'v2'
-        ? Math.sin((lightness / 100) * Math.PI) * lch[1]
-        : lch[1]
-    hsluv.lch_h =
-      lch[2] + hueShifting < 0
+        ? Math.sin((lightness / 100) * Math.PI) * hsluv.hsluv_s
+        : hsluv.hsluv_s
+    hsluv.hsluv_h =
+      hsluv.hsluv_h + hueShifting < 0
         ? 0
-        : lch[2] + hueShifting > 360
+        : hsluv.hsluv_h + hueShifting > 360
         ? 360
-        : lch[2] + hueShifting
-    hsluv.lchToHsluv()
+        : hsluv.hsluv_h + hueShifting
+
+    if (Number.isNaN(hsluv.hsluv_s))
+      hsluv.hsluv_s = 0
+    if (Number.isNaN(hsluv.hsluv_h))
+      hsluv.hsluv_h = 0
+    
     hsluv.hsluvToRgb()
 
     const newColor: [number, number, number] = [
