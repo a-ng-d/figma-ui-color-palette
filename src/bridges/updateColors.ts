@@ -74,7 +74,11 @@ const updateColors = (msg: ColorsMessage, palette: SceneNode) => {
 
     // palette migration
     palette.counterAxisSizingMode = 'AUTO'
-    palette.name = `${name}﹒${preset.name}﹒${colorSpace} ${
+    palette.name = `${name}﹒${
+      themes.find(theme => theme.isEnabled)?.type === 'default theme'
+      ? ''
+      : themes.find(theme => theme.isEnabled)?.name + '﹒'
+    }${preset.name}${preset.name}﹒${colorSpace} ${
       view.includes('PALETTE') ? 'Palette' : 'Sheet'
     }`
   } else figma.notify(locals[lang].error.corruption)

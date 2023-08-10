@@ -65,7 +65,11 @@ const updateSettings = (msg: SettingsMessage, palette: SceneNode) => {
     palette.counterAxisSizingMode = 'AUTO'
     palette.name = `${
       msg.data.name === '' ? locals[lang].name : msg.data.name
-    }﹒${preset.name}﹒${msg.data.colorSpace} ${
+    }﹒${
+      themes.find(theme => theme.isEnabled)?.type === 'default theme'
+      ? ''
+      : themes.find(theme => theme.isEnabled)?.name + '﹒'
+    }${preset.name}﹒${msg.data.colorSpace} ${
       view.includes('PALETTE') ? 'Palette' : 'Sheet'
     }`
   } else figma.notify(locals[lang].error.corruption)
