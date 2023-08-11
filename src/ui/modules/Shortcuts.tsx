@@ -3,7 +3,7 @@ import type { Language } from '../../utils/types'
 import Feature from '../components/Feature'
 import Bar from '../components/Bar'
 import Button from '../components/Button'
-import features from '../../utils/features'
+import features from '../../utils/config'
 import { locals } from '../../content/locals'
 
 interface Props {

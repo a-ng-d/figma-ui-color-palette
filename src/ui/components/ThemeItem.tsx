@@ -5,7 +5,7 @@ import Input from './Input'
 import Button from './Button'
 import FormItem from './FormItem'
 import doMap from '../../utils/doMap'
-import features from '../../utils/features'
+import features from '../../utils/config'
 import { locals } from '../../content/locals'
 
 interface Props {

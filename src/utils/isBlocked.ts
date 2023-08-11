@@ -1,4 +1,4 @@
-import features from './features'
+import features from './config'
 
 const isBlocked = (
   featureName: string,

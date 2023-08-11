@@ -4,7 +4,7 @@ import Feature from '../components/Feature'
 import RadioButton from './../components/RadioButton'
 import Input from '../components/Input'
 import Actions from './Actions'
-import features from '../../utils/features'
+import features from '../../utils/config'
 import isBlocked from '../../utils/isBlocked'
 import { locals } from '../../content/locals'
 

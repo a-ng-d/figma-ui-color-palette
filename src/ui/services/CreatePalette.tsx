@@ -9,7 +9,7 @@ import Tabs from '../components/Tabs'
 import Scale from '../modules/Scale'
 import Settings from '../modules/Settings'
 import { palette } from '../../utils/palettePackage'
-import features from '../../utils/features'
+import features from '../../utils/config'
 import { locals } from '../../content/locals'
 
 interface Props {

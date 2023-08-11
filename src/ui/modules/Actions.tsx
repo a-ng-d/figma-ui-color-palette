@@ -3,7 +3,7 @@ import type { Language } from '../../utils/types'
 import Feature from '../components/Feature'
 import Button from '../components/Button'
 import Dropdown from '../components/Dropdown'
-import features from '../../utils/features'
+import features from '../../utils/config'
 import isBlocked from '../../utils/isBlocked'
 import { locals } from '../../content/locals'
 

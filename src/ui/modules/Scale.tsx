@@ -13,7 +13,7 @@ import Slider from '../components/Slider'
 import Message from '../components/Message'
 import Actions from './Actions'
 import { palette, presets } from '../../utils/palettePackage'
-import features from '../../utils/features'
+import features from '../../utils/config'
 import { locals } from '../../content/locals'
 import Dispatcher from './Dispatcher'
 

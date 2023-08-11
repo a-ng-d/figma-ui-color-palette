@@ -7,7 +7,7 @@ import Switch from '../components/Switch'
 import Message from '../components/Message'
 import Dropdown from '../components/Dropdown'
 import Actions from './Actions'
-import features from '../../utils/features'
+import features from '../../utils/config'
 import isBlocked from '../../utils/isBlocked'
 import { locals } from '../../content/locals'
 

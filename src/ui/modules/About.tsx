@@ -3,7 +3,7 @@ import type { Language } from '../../utils/types'
 import Feature from '../components/Feature'
 import Icon from './Icon'
 import Button from '../components/Button'
-import features from '../../utils/features'
+import features from '../../utils/config'
 import package_json from './../../../package.json'
 import { locals } from '../../content/locals'
 
