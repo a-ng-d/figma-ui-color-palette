@@ -15,7 +15,7 @@ export const locals: { [key: string]: any } = {
     onboarding: {
       selectColor:
         'Select your source colors (solid colors only) on the Figma/Figjam canvas to create a UI Color Palette',
-      selectPalette: 'Select a UI Color Palette to edit it',
+      selectPalette: 'Select a UI Color Palette to edit',
     },
     shortcuts: {
       feedback: 'Give feedback',
@@ -33,13 +33,13 @@ export const locals: { [key: string]: any } = {
     scale: {
       title: 'Lightness scale',
       tips: {
-        ctrl: 'Hold Ctrl ⌃ or Cmd ⌘ while dragging a stop to move them all',
+        ctrl: 'Hold Ctrl ⌃ or Cmd ⌘ while dragging a stop to move them',
         shift:
           "Hold Shift ⇧ while dragging the first or the last stop to distribute stops' horizontal spacing",
-        esc: 'Press Esc. after selecting a stop to unselect it',
-        nav: 'Press ← or → after selecting a stop to shift it',
+        esc: 'Press Esc. after selecting a stop to unselect',
+        nav: 'Press ← or → after selecting a stop to shift',
         edit: 'Double click a stop to type its value',
-        remove: 'Press Backspace ⌫ after selecting a stop to remove it',
+        remove: 'Press Backspace ⌫ after selecting a stop to remove',
         add: 'Click on the slider range to add a stop',
       },
     },
