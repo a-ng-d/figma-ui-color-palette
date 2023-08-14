@@ -4,7 +4,7 @@ export const locals: { [key: string]: any } = {
   'en-US': {
     name: 'UI Color Palette',
     tagline:
-      'Create accessible UI Color Palettes with consistent lightness and contrast',
+      'Create accessible color palettes for UI with consistent lightness and contrast',
     url: 'www.ui-color-palette.com',
     global: {
       description: {
