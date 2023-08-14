@@ -14,7 +14,7 @@ export const locals: { [key: string]: any } = {
     },
     onboarding: {
       selectColor:
-        'Select your source colors (solid colors only) on the Figma/Figjam canvas to create a UI Color Palette',
+        'Select your source colors (solid colors only) on the Figma/FigJam canvas to create a UI Color Palette',
       selectPalette: 'Select a UI Color Palette to edit',
     },
     shortcuts: {
