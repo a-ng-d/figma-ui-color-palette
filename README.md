@@ -22,19 +22,26 @@ Have you encountered a bug? Could a feature be improved?
 Go to the [Issues](https://uicp.link/report) section and browse the existing tickets or create a new one.
 
 ### Development
-- Clone this repository (or fork it)
-- Install dependencies with `npm install`
-- Run `npm run start` to watch in development mode
-- Go to Figma, then `Plugins` > `Development` > `Import plugin from manifest…` and choose `manifest.json` in the repository
-- Create a `Branch` and open a `Pull Request`
-- _Let's do this_
+- Clone this repository (or fork it).
+- Install dependencies with `npm install`.
+- Run `npm run start` to watch in development mode.
+- Go to Figma, then `Plugins` > `Development` > `Import plugin from manifest…` and choose `manifest.json` in the repository.
+- Create a `Branch` and open a `Pull Request`.
+- _Let's do this._
+
+### Beta test
+- Go to the [Actions](https://github.com/inVoltag/figma-ui-color-palette/actions) sections and access the `Build and Download UI Color Palette` tab.
+- Click `Run workflow`, then select a branch and confirm.
+- Wait a minute, and once finished, download the artifact (which is a ZIP file containing the plugin).
+- Go to Figma, then `Plugins` > `Development` > `Import plugin from manifest…` and choose `manifest.json` in the unzipped folder.
+- _Enjoy!_
 
 ## Attribution
-- The colors are managed thanks to the [chroma.js](https://github.com/gka/chroma.js) library by [Gregor Aisch](https://github.com/gka)
-- The APCA algorithm is provided thanks to the [apca-w3](https://www.npmjs.com/package/apca-w3) module by [Andrew Somers](https://github.com/Myndex)
-- The Figma components are emulated thanks to the [Figma Plugin DS](https://github.com/thomas-lowry/figma-plugin-ds) stylesheet by [Tom Lowry](https://github.com/thomas-lowry)
+- The colors are managed thanks to the [chroma.js](https://github.com/gka/chroma.js) library by [Gregor Aisch](https://github.com/gka).
+- The APCA algorithm is provided thanks to the [apca-w3](https://www.npmjs.com/package/apca-w3) module by [Andrew Somers](https://github.com/Myndex).
+- The Figma components are emulated thanks to the [Figma Plugin DS](https://github.com/thomas-lowry/figma-plugin-ds) stylesheet by [Tom Lowry](https://github.com/thomas-lowry).
 
 ## Support
-- [Follow my posts on LinkedIn 💼](https://uicp.link/network)
-- [Support me on Figma 🎨](https://uicp.link/author)
-- [Buy me a coffee ☕️](https://uicp.link/donate)
+- [Connect to my LinkedIn 💼](https://uicp.link/network).
+- [Support me on Figma 🎨](https://uicp.link/author).
+- [Buy me a coffee ☕️](https://uicp.link/donate).
