@@ -22,9 +22,8 @@ export default class Signature {
 
     // layout
     this.nodeInfo.layoutMode = 'VERTICAL'
-    this.nodeInfo.primaryAxisSizingMode = 'AUTO'
-    this.nodeInfo.counterAxisSizingMode = 'FIXED'
-    this.nodeInfo.layoutGrow = 1
+    this.nodeInfo.layoutSizingHorizontal = 'HUG'
+    this.nodeInfo.layoutSizingVertical = 'HUG'
     this.nodeInfo.itemSpacing = 4
 
     // insert
@@ -47,15 +46,25 @@ export default class Signature {
     // base
     this.nodeLogotype = figma.createFrame()
     this.nodeLogotype.name = '_logotype'
-    this.nodeLogotype.fills = []
+    this.nodeLogotype.fills = [
+      {
+        type: 'SOLID',
+        opacity: 0.5,
+        color: {
+          r: 1,
+          g: 1,
+          b: 1,
+        },
+      },
+    ]
+    this.nodeLogotype.cornerRadius = 8
 
     // layout
-    this.nodeLogotype.layoutMode = 'VERTICAL'
-    this.nodeLogotype.primaryAxisSizingMode = 'AUTO'
-    this.nodeLogotype.counterAxisSizingMode = 'FIXED'
-    this.nodeLogotype.counterAxisAlignItems = 'MAX'
-    this.nodeLogotype.layoutGrow = 1
-    this.nodeLogotype.verticalPadding = this.nodeLogotype.horizontalPadding = 2
+    this.nodeLogotype.layoutMode = 'HORIZONTAL'
+    this.nodeLogotype.layoutSizingHorizontal = 'HUG'
+    this.nodeLogotype.layoutSizingVertical = 'HUG'
+    this.nodeLogotype.horizontalPadding = 8
+    this.nodeLogotype.verticalPadding = 4
 
     // insert
     this.nodeLogotype.appendChild(this.makeNodeVector())
@@ -77,18 +86,7 @@ export default class Signature {
         },
       },
     ]
-    this.nodeVector.strokes = [
-      {
-        type: 'SOLID',
-        color: {
-          r: 1,
-          g: 1,
-          b: 1,
-        },
-      },
-    ]
     this.nodeVector.strokeAlign = 'OUTSIDE'
-    this.nodeVector.strokeWeight = 5
     this.nodeVector.vectorPaths = [
       {
         windingRule: 'EVENODD',
@@ -111,7 +109,7 @@ export default class Signature {
         data: 'M 24.571428298950195 0 C 10.959449768066406 0 0 11.145122528076172 0 24.799999237060547 L 0 87.19999694824219 C 0 100.85487365722656 10.959450721740723 112 24.571430206298828 112 L 79.42857360839844 112 C 93.0405502319336 112 104 100.85487365722656 104 87.19999694824219 L 104 24.799999237060547 C 104 11.145124435424805 93.0405502319336 0 79.42857360839844 0 L 24.571428298950195 0 Z M 8 24.799999237060547 C 8 15.479829788208008 15.460837364196777 8 24.571428298950195 8 L 34 8 L 34 28 C 30.686290740966797 28 28 30.68629264831543 28 34 L 28 38 L 8 38 L 8 24.799999237060547 Z M 28 42 L 8 42 L 8 70 L 28 70 L 28 42 Z M 28 74 L 8 74 L 8 87.19999694824219 C 8 96.52017211914062 15.460838317871094 104 24.571430206298828 104 L 34 104 L 34 84 C 30.686290740966797 84 28 81.31370544433594 28 78 L 28 74 Z M 38 84 L 38 104 L 66 104 L 66 84 L 38 84 Z M 38 28 L 66 28 L 66 8 L 38 8 L 38 28 Z M 70 28 C 73.31370544433594 28 76 30.686290740966797 76 34 L 76 38 L 96 38 L 96 24.799999237060547 C 96 15.47983169555664 88.5391616821289 8 79.42857360839844 8 L 70 8 L 70 28 Z M 76 42 L 76 70 L 96 70 L 96 42 L 76 42 Z M 76 74 L 76 78 C 76 81.31370544433594 73.31370544433594 84 70 84 L 70 104 L 79.42857360839844 104 C 88.5391616821289 104 96 96.52017211914062 96 87.19999694824219 L 96 74 L 76 74 Z',
       },
     ]
-    this.nodeVector.rescale(1 / this.nodeVector.strokeWeight)
+    this.nodeVector.rescale(1 / 4)
 
     return this.nodeVector
   }
@@ -127,6 +125,7 @@ export default class Signature {
     this.node.primaryAxisSizingMode = 'FIXED'
     this.node.counterAxisSizingMode = 'AUTO'
     this.node.layoutAlign = 'STRETCH'
+    this.node.primaryAxisAlignItems = 'SPACE_BETWEEN'
 
     // insert
     this.node.appendChild(this.makeNodeInfo())
