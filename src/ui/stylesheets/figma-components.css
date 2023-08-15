@@ -171,6 +171,10 @@
   --black8: var(--figma-color-border-strong);
 }
 
+.radio__label {
+  padding: 0 var(--size-xxxsmall) 0 var(--size-small);
+}
+
 .radio__button:checked + .radio__label:before {
   background-image: none;
 }
@@ -301,7 +305,7 @@
 
 /* Select menu */
 .select-menu {
-  min-width: 200px;
+  min-width: 224px;
 }
 
 .select-menu__button {

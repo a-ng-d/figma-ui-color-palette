@@ -70,10 +70,6 @@ div.actions__left {
   gap: var(--size-xxsmall);
 }
 
-div.actions__left > .select-menu {
-  width: 200px;
-}
-
 /* Controls */
 section.controller {
   flex: 1;
