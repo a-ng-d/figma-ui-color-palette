@@ -117,7 +117,7 @@ const features: Array<Feature> = [
     name: 'SYNC_LOCAL_VARIABLES',
     description: 'Sync local variables in the document',
     isActive: true,
-    isPro: false,
+    isPro: true,
     type: 'ACTION',
     service: ['EDIT'],
   },
