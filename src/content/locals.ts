@@ -207,7 +207,7 @@ export const locals: { [key: string]: any } = {
       tooManyThemesToCreateModes:
         'You cannot create more that 4 variable modes',
       emptySourceColors:
-        'There is not any source color. Add it manually in the Colors section.',
+        'There is no source color. Add them manually in the Colors section.',
       hslColorSpace:
         'The HSL color space may include the source colors in the palette, but this approach will not ensure consistency in lightness and contrast.',
     },
