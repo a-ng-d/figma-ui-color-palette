@@ -1,17 +1,33 @@
+import type {
+  AlgorithmVersionConfiguration,
+  ColorConfiguration,
+  ColorSpaceConfiguration,
+} from './types'
 import setData from './setData'
-import { presets } from './palettePackage'
 import Colors from '../canvas/Colors'
+import { presets } from './palettePackage'
+import { lang, locals } from '../content/locals'
+import { uid } from 'uid'
 
 const setPaletteMigration = (palette: BaseNode) => {
-  const min = palette.getPluginData('min'),
+  const type = palette.getPluginData('type'),
+    min = palette.getPluginData('min'),
     max = palette.getPluginData('max'),
+    description = palette.getPluginData('description'),
     preset = palette.getPluginData('preset'),
-    colors = palette.getPluginData('colors'),
+    scale = palette.getPluginData('scale'),
+    colors: Array<ColorConfiguration> = JSON.parse(
+      palette.getPluginData('colors')
+    ),
     colorSpace = palette.getPluginData('colorSpace'),
+    themes = palette.getPluginData('themes'),
     captions = palette.getPluginData('captions'),
     properties = palette.getPluginData('properties'),
     textColorsTheme = palette.getPluginData('textColorsTheme'),
     algorithmVersion = palette.getPluginData('algorithmVersion')
+
+  // type
+  if (type === '') palette.setPluginData('type', 'UI_COLOR_PALETTE')
 
   // min-max
   if (min != '' || max != '') {
@@ -19,24 +35,54 @@ const setPaletteMigration = (palette: BaseNode) => {
     palette.setPluginData('max', '')
   }
 
+  // description
+  if (description === '') palette.setPluginData('description', '')
+
   // preset
   if (preset === '')
     palette.setPluginData('preset', JSON.stringify(presets.material))
 
   // colors
-  if (!colors.includes('oklch'))
-    palette.setPluginData('colors', setData(colors, 'oklch', false))
+  if (colors.length != 0) {
+    if (!Object.prototype.hasOwnProperty.call(colors[0], 'hueShifting'))
+      palette.setPluginData('colors', setData(colors, 'hueShifting', 0))
 
-  if (!colors.includes('hueShifting'))
-    palette.setPluginData('colors', setData(colors, 'hueShifting', 0))
+    if (!Object.prototype.hasOwnProperty.call(colors[0], 'description'))
+      palette.setPluginData('colors', setData(colors, 'description', ''))
 
-  if (
-    JSON.parse(colors).filter((color) => color.oklch).length ==
-    JSON.parse(colors).length
-  )
+    if (!Object.prototype.hasOwnProperty.call(colors[0], 'id'))
+      palette.setPluginData(
+        'colors',
+        JSON.stringify(
+          colors.map((color) => {
+            color.id = uid()
+            return color
+          })
+        )
+      )
+  }
+
+  if (colors.filter((color) => color.oklch).length == colors.length)
     palette.setPluginData('colorSpace', 'OKLCH')
 
   if (colorSpace === '') palette.setPluginData('colorSpace', 'LCH')
+
+  // themes
+  if (themes === '')
+    palette.setPluginData(
+      'themes',
+      JSON.stringify([
+        {
+          name: locals[lang].themes.switchTheme.defaultTheme,
+          description: '',
+          scale: JSON.parse(scale),
+          paletteBackground: '#FFFFFF',
+          isEnabled: true,
+          id: '00000000000',
+          type: 'default theme',
+        },
+      ])
+    )
 
   // view
   if (captions == 'hasCaptions' || properties == 'hasProperties') {
@@ -64,20 +110,29 @@ const setPaletteMigration = (palette: BaseNode) => {
   if (algorithmVersion === '') palette.setPluginData('algorithmVersion', 'v1')
 
   // data
-  if (palette.getPluginData('data') === '')
+  if (
+    palette.getPluginData('data') === '' ||
+    JSON.parse(palette.getPluginData('data')).type == undefined
+  )
     new Colors(
       {
         name: palette.getPluginData('name'),
+        description: palette.getPluginData('description'),
         preset: JSON.parse(palette.getPluginData('preset')),
         scale: JSON.parse(palette.getPluginData('scale')),
         colors: JSON.parse(palette.getPluginData('colors')),
-        colorSpace: palette.getPluginData('colorSpace'),
+        colorSpace: palette.getPluginData(
+          'colorSpace'
+        ) as ColorSpaceConfiguration,
+        themes: JSON.parse(palette.getPluginData('themes')),
         view: 'SHEET',
         textColorsTheme: JSON.parse(palette.getPluginData('textColorsTheme')),
-        algorithmVersion: palette.getPluginData('algorithmVersion'),
+        algorithmVersion: palette.getPluginData(
+          'algorithmVersion'
+        ) as AlgorithmVersionConfiguration,
       },
       palette as FrameNode
-    ).makePaletteData()
+    ).makePaletteData('CREATE')
 }
 
 export default setPaletteMigration

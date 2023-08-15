@@ -1,31 +1,39 @@
-import Colors from '../canvas/Colors'
+import type {
+  ColorConfiguration,
+  PresetConfiguration,
+  ScaleConfiguration,
+  SettingsMessage,
+  ThemeConfiguration,
+  ViewConfiguration,
+} from '../utils/types'
 import {
   previousSelection,
   currentSelection,
   isSelectionChanged,
 } from './processSelection'
+import Colors from '../canvas/Colors'
 import { locals, lang } from '../content/locals'
 
-const updateSettings = (msg, palette) => {
-  palette = isSelectionChanged ? previousSelection[0] : currentSelection[0]
+const updateSettings = (msg: SettingsMessage, palette: SceneNode) => {
+  palette = isSelectionChanged
+    ? (previousSelection?.[0] as FrameNode)
+    : (currentSelection[0] as FrameNode)
 
   if (palette.children.length == 1) {
-    const preset = JSON.parse(palette.getPluginData('preset')),
-      scale = JSON.parse(palette.getPluginData('scale')),
-      colors = JSON.parse(palette.getPluginData('colors')),
-      view: string = palette.getPluginData('view')
-
-    let name: string
+    const preset = JSON.parse(
+        palette.getPluginData('preset')
+      ) as PresetConfiguration,
+      scale = JSON.parse(palette.getPluginData('scale')) as ScaleConfiguration,
+      colors = JSON.parse(
+        palette.getPluginData('colors')
+      ) as Array<ColorConfiguration>,
+      themes = JSON.parse(
+        palette.getPluginData('themes')
+      ) as Array<ThemeConfiguration>,
+      view = palette.getPluginData('view') as ViewConfiguration
 
     palette.setPluginData('name', msg.data.name)
-    ;(name =
-      palette.getPluginData('name') === '' ||
-      palette.getPluginData('name') == undefined
-        ? locals[lang].name
-        : palette.getPluginData('name')),
-      (palette.name = `${
-        msg.data.name === '' ? locals[lang].name : msg.data.name
-      }﹒${preset.name}﹒${view.includes('PALETTE') ? 'Palette' : 'Sheet'}`)
+    palette.setPluginData('description', msg.data.description)
     palette.setPluginData('colorSpace', msg.data.colorSpace)
     palette.setPluginData(
       'textColorsTheme',
@@ -37,14 +45,17 @@ const updateSettings = (msg, palette) => {
     palette.appendChild(
       new Colors(
         {
-          name: name,
+          name: msg.data.name,
+          description: msg.data.description,
           preset: preset,
           scale: scale,
           colors: colors,
           colorSpace: msg.data.colorSpace,
+          themes: themes,
           view: view,
           textColorsTheme: msg.data.textColorsTheme,
           algorithmVersion: msg.data.algorithmVersion,
+          service: 'EDIT',
         },
         palette
       ).makeNode()
@@ -52,7 +63,13 @@ const updateSettings = (msg, palette) => {
 
     // palette migration
     palette.counterAxisSizingMode = 'AUTO'
-    palette.name = `${name}﹒${preset.name}﹒${msg.data.colorSpace} ${
+    palette.name = `${
+      msg.data.name === '' ? locals[lang].name : msg.data.name
+    }﹒${
+      themes.find((theme) => theme.isEnabled)?.type === 'default theme'
+        ? ''
+        : themes.find((theme) => theme.isEnabled)?.name + '﹒'
+    }${preset.name}﹒${msg.data.colorSpace} ${
       view.includes('PALETTE') ? 'Palette' : 'Sheet'
     }`
   } else figma.notify(locals[lang].error.corruption)

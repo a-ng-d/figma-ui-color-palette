@@ -1,10 +1,9 @@
 export default class Dispatcher {
   time: number
-  callback: () => void
   on: {
     active: boolean
     blocked: boolean
-    interval: string
+    interval: number | string
     send: () => void
     stop: () => void
     status: boolean
@@ -15,7 +14,7 @@ export default class Dispatcher {
     this.on = {
       active: false,
       blocked: false,
-      interval: '',
+      interval: 0,
       send() {
         this.interval = setInterval(callback, time)
         this.blocked = true

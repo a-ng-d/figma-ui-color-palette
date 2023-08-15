@@ -1,37 +1,43 @@
-import type { TextColorsThemeHexModel } from '../utils/types'
+import type {
+  ColorSpaceConfiguration,
+  HexModel,
+  TextColorsThemeHexModel,
+} from '../utils/types'
 import chroma from 'chroma-js'
+import { Hsluv } from 'hsluv'
 import { APCAcontrast, sRGBtoY, fontLookupAPCA } from 'apca-w3'
 import Tag from './Tag'
 import { locals, lang } from '../content/locals'
 
 export default class Properties {
   name: string
-  rgb: Array<number>
-  colorSpace: string
+  rgb: [number, number, number]
+  colorSpace: ColorSpaceConfiguration
   textColorsTheme: TextColorsThemeHexModel
-  hex: string
+  hex: HexModel
   lch: Array<number>
   oklch: Array<number>
   lab: Array<number>
   oklab: Array<number>
   hsl: Array<number>
-  nodeTopProps: FrameNode
-  nodeBottomProps: FrameNode
-  nodeBaseProps: FrameNode
-  nodeContrastScoresProps: FrameNode
-  nodeProperties: TextNode
-  nodeDetailedBaseProps: FrameNode
-  nodeDetailedWCAGScoresProps: FrameNode
-  nodeDetailedAPCAScoresProps: FrameNode
-  nodeColumns: FrameNode
-  nodeLeftColumn: FrameNode
-  nodeRightColumn: FrameNode
-  node: FrameNode
+  hsluv: Array<number>
+  nodeTopProps: FrameNode | null
+  nodeBottomProps: FrameNode | null
+  nodeBaseProps: FrameNode | null
+  nodeContrastScoresProps: FrameNode | null
+  nodeProperties: TextNode | null
+  nodeDetailedBaseProps: FrameNode | null
+  nodeDetailedWCAGScoresProps: FrameNode | null
+  nodeDetailedAPCAScoresProps: FrameNode | null
+  nodeColumns: FrameNode | null
+  nodeLeftColumn: FrameNode | null
+  nodeRightColumn: FrameNode | null
+  node: FrameNode | null
 
   constructor(
     name: string,
-    rgb: Array<number>,
-    colorSpace: string,
+    rgb: [number, number, number],
+    colorSpace: ColorSpaceConfiguration,
     textColorsTheme: TextColorsThemeHexModel
   ) {
     this.name = name
@@ -44,18 +50,31 @@ export default class Properties {
     this.lab = chroma(rgb).lab()
     this.oklab = chroma(rgb).oklab()
     this.hsl = chroma(rgb).hsl()
+    this.hsluv = this.getHsluv(rgb)
+    this.nodeTopProps = null
+    this.nodeBottomProps = null
+    this.nodeBaseProps = null
+    this.nodeContrastScoresProps = null
+    this.nodeProperties = null
+    this.nodeDetailedBaseProps = null
+    this.nodeDetailedWCAGScoresProps = null
+    this.nodeDetailedAPCAScoresProps = null
+    this.nodeColumns = null
+    this.nodeLeftColumn = null
+    this.nodeRightColumn = null
+    this.node = null
   }
 
-  getContrast(textColor: string) {
+  getContrast = (textColor: string) => {
     return chroma.contrast(
-      this.rgb,
+      chroma(this.rgb).hex(),
       textColor === 'DARK'
         ? this.textColorsTheme.darkColor
         : this.textColorsTheme.lightColor
     )
   }
 
-  getAPCAContrast(textColor: string) {
+  getAPCAContrast = (textColor: string) => {
     return APCAcontrast(
       sRGBtoY(
         textColor === 'DARK'
@@ -66,7 +85,7 @@ export default class Properties {
     )
   }
 
-  getLevel(textColor: string) {
+  getLevel = (textColor: string) => {
     return this.getContrast(textColor) < 4.5
       ? 'A'
       : this.getContrast(textColor) >= 4.5 && this.getContrast(textColor) < 7
@@ -74,8 +93,18 @@ export default class Properties {
       : 'AAA'
   }
 
-  getMinFontSizes(textColor: string) {
+  getMinFontSizes = (textColor: string) => {
     return fontLookupAPCA(this.getAPCAContrast(textColor))
+  }
+
+  getHsluv = (rgb: [number, number, number]) => {
+    const hsluv = new Hsluv()
+    hsluv.rgb_r = rgb[0] / 255
+    hsluv.rgb_g = rgb[1] / 255
+    hsluv.rgb_b = rgb[2] / 255
+    hsluv.rgbToHsluv()
+
+    return [hsluv.hsluv_h, hsluv.hsluv_s, hsluv.hsluv_l]
   }
 
   makeNodeTopProps = () => {
@@ -87,8 +116,8 @@ export default class Properties {
     // layout
     this.nodeTopProps.layoutMode = 'HORIZONTAL'
     this.nodeTopProps.primaryAxisSizingMode = 'FIXED'
-    this.nodeTopProps.counterAxisSizingMode = 'AUTO'
     this.nodeTopProps.layoutAlign = 'STRETCH'
+    this.nodeTopProps.layoutSizingVertical = 'HUG'
 
     return this.nodeTopProps
   }
@@ -101,9 +130,9 @@ export default class Properties {
 
     // layout
     this.nodeBottomProps.layoutMode = 'VERTICAL'
-    this.nodeBottomProps.primaryAxisSizingMode = 'AUTO'
     this.nodeBottomProps.counterAxisSizingMode = 'FIXED'
     this.nodeBottomProps.layoutAlign = 'STRETCH'
+    this.nodeBottomProps.layoutSizingVertical = 'HUG'
 
     // insert
     this.nodeBottomProps.appendChild(this.makeNodeContrastScoresProps())
@@ -119,10 +148,10 @@ export default class Properties {
 
     // layout
     this.nodeBaseProps.layoutMode = 'VERTICAL'
-    this.nodeBaseProps.primaryAxisSizingMode = 'AUTO'
     this.nodeBaseProps.counterAxisSizingMode = 'FIXED'
-    this.nodeBaseProps.counterAxisAlignItems = 'MAX'
     this.nodeBaseProps.layoutGrow = 1
+    this.nodeBaseProps.layoutSizingVertical = 'HUG'
+    this.nodeBaseProps.counterAxisAlignItems = 'MAX'
     this.nodeBaseProps.itemSpacing = 4
 
     let basePropViaColorSpace
@@ -157,10 +186,17 @@ export default class Properties {
       ).makeNodeTag()
     } else if (this.colorSpace === 'HSL') {
       basePropViaColorSpace = new Tag(
-        '_lab',
+        '_hsl',
         `H ${Math.floor(this.hsl[0])} • S ${Math.floor(
           this.hsl[1] * 100
         )} • L ${Math.floor(this.hsl[2] * 100)}`
+      ).makeNodeTag()
+    } else if (this.colorSpace === 'HSLUV') {
+      basePropViaColorSpace = new Tag(
+        '_hsluv',
+        `H ${Math.floor(this.hsluv[0])} • S ${Math.floor(
+          this.hsluv[1]
+        )} • L ${Math.floor(this.hsluv[2])}`
       ).makeNodeTag()
     }
 
@@ -168,7 +204,7 @@ export default class Properties {
     this.nodeBaseProps.appendChild(
       new Tag('_hex', this.hex.toUpperCase()).makeNodeTag()
     )
-    this.nodeBaseProps.appendChild(basePropViaColorSpace)
+    this.nodeBaseProps.appendChild(basePropViaColorSpace as FrameNode)
 
     return this.nodeBaseProps
   }
@@ -181,9 +217,9 @@ export default class Properties {
 
     // layout
     this.nodeContrastScoresProps.layoutMode = 'VERTICAL'
-    this.nodeContrastScoresProps.primaryAxisSizingMode = 'AUTO'
     this.nodeContrastScoresProps.counterAxisSizingMode = 'FIXED'
     this.nodeContrastScoresProps.layoutAlign = 'STRETCH'
+    this.nodeContrastScoresProps.layoutSizingVertical = 'HUG'
     this.nodeContrastScoresProps.itemSpacing = 4
 
     // insert
@@ -226,8 +262,9 @@ export default class Properties {
 
     // layout
     this.nodeDetailedBaseProps.layoutMode = 'VERTICAL'
-    this.nodeDetailedBaseProps.primaryAxisSizingMode = 'AUTO'
+    this.nodeDetailedBaseProps.counterAxisSizingMode = 'FIXED'
     this.nodeDetailedBaseProps.layoutAlign = 'STRETCH'
+    this.nodeDetailedBaseProps.layoutSizingVertical = 'HUG'
     this.nodeDetailedBaseProps.itemSpacing = 4
 
     let basePropViaColorSpace
@@ -267,6 +304,13 @@ export default class Properties {
           this.hsl[1] * 100
         )} • L ${Math.floor(this.hsl[2] * 100)}`
       ).makeNodeTag()
+    } else if (this.colorSpace === 'HSLUV') {
+      basePropViaColorSpace = new Tag(
+        '_hsluv',
+        `H ${Math.floor(this.hsluv[0])} • S ${Math.floor(
+          this.hsluv[1]
+        )} • L ${Math.floor(this.hsluv[2])}`
+      ).makeNodeTag()
     }
 
     // insert
@@ -276,7 +320,7 @@ export default class Properties {
     this.nodeDetailedBaseProps.appendChild(
       new Tag('_hex', this.hex.toUpperCase()).makeNodeTag()
     )
-    this.nodeDetailedBaseProps.appendChild(basePropViaColorSpace)
+    this.nodeDetailedBaseProps.appendChild(basePropViaColorSpace as FrameNode)
 
     return this.nodeDetailedBaseProps
   }
@@ -288,8 +332,8 @@ export default class Properties {
 
     // layout
     this.nodeDetailedWCAGScoresProps.layoutMode = 'VERTICAL'
-    this.nodeDetailedWCAGScoresProps.primaryAxisSizingMode = 'AUTO'
     this.nodeDetailedWCAGScoresProps.layoutAlign = 'STRETCH'
+    this.nodeDetailedWCAGScoresProps.layoutSizingVertical = 'HUG'
     this.nodeDetailedWCAGScoresProps.itemSpacing = 4
 
     // insert
@@ -323,9 +367,9 @@ export default class Properties {
 
     // layout
     this.nodeDetailedAPCAScoresProps.layoutMode = 'VERTICAL'
-    this.nodeDetailedAPCAScoresProps.primaryAxisSizingMode = 'AUTO'
     this.nodeDetailedAPCAScoresProps.counterAxisSizingMode = 'FIXED'
     this.nodeDetailedAPCAScoresProps.layoutAlign = 'STRETCH'
+    this.nodeDetailedAPCAScoresProps.layoutSizingVertical = 'HUG'
     this.nodeDetailedAPCAScoresProps.itemSpacing = 4
 
     // insert
@@ -423,22 +467,22 @@ export default class Properties {
     // layout
     this.nodeColumns.layoutMode = 'HORIZONTAL'
     this.nodeColumns.primaryAxisSizingMode = 'FIXED'
-    this.nodeColumns.counterAxisSizingMode = 'AUTO'
     this.nodeColumns.layoutAlign = 'STRETCH'
+    this.nodeColumns.layoutSizingVertical = 'HUG'
     this.nodeColumns.itemSpacing = 8
 
     this.nodeLeftColumn.layoutMode = this.nodeRightColumn.layoutMode =
       'VERTICAL'
-    this.nodeLeftColumn.primaryAxisSizingMode =
-      this.nodeRightColumn.primaryAxisSizingMode = 'AUTO'
     this.nodeLeftColumn.counterAxisSizingMode =
       this.nodeRightColumn.counterAxisSizingMode = 'FIXED'
     this.nodeLeftColumn.layoutGrow = this.nodeRightColumn.layoutGrow = 1
+    this.nodeLeftColumn.layoutSizingVertical =
+      this.nodeRightColumn.layoutSizingVertical = 'HUG'
     this.nodeLeftColumn.itemSpacing = this.nodeRightColumn.itemSpacing = 4
 
     // insert
-    leftNodes.forEach((node) => this.nodeLeftColumn.appendChild(node))
-    rightNodes.forEach((node) => this.nodeRightColumn.appendChild(node))
+    leftNodes.forEach((node) => this.nodeLeftColumn?.appendChild(node))
+    rightNodes.forEach((node) => this.nodeRightColumn?.appendChild(node))
     this.nodeColumns.appendChild(this.nodeLeftColumn)
     this.nodeColumns.appendChild(this.nodeRightColumn)
 
@@ -453,9 +497,9 @@ export default class Properties {
 
     // layout
     this.node.layoutMode = 'VERTICAL'
-    this.node.primaryAxisSizingMode = 'FIXED'
     this.node.counterAxisSizingMode = 'FIXED'
     this.node.layoutAlign = 'STRETCH'
+    this.node.primaryAxisSizingMode = 'FIXED'
     this.node.layoutGrow = 1
     this.node.itemSpacing = 16
 
@@ -479,18 +523,18 @@ export default class Properties {
 
     // layout
     this.node.layoutMode = 'VERTICAL'
-    this.node.primaryAxisSizingMode = 'FIXED'
     this.node.counterAxisSizingMode = 'FIXED'
-    this.node.primaryAxisAlignItems = 'SPACE_BETWEEN'
     this.node.layoutAlign = 'STRETCH'
+    this.node.primaryAxisSizingMode = 'FIXED'
     this.node.layoutGrow = 1
+    this.node.primaryAxisAlignItems = 'SPACE_BETWEEN'
 
     // insert
     this.node.appendChild(this.makeNodeTopProps())
-    this.nodeTopProps.appendChild(
+    this.nodeTopProps?.appendChild(
       new Tag('_scale', this.name, 10).makeNodeTag()
     )
-    this.nodeTopProps.appendChild(this.makeNodeBaseProps())
+    this.nodeTopProps?.appendChild(this.makeNodeBaseProps())
     this.node.appendChild(this.makeNodeBottomProps())
 
     return this.node

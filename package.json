@@ -1,14 +1,16 @@
 {
   "name": "figma-ui-color-palette",
-  "version": "2.3.0",
+  "version": "2.4.0",
   "description": "Create accessible UI color palettes with consistent lightness and contrast",
   "main": "code.js",
   "scripts": {
+    "start": "npx webpack --mode=development --watch",
     "build": "npx webpack --mode=development",
     "build:prod": "npx webpack --mode=production",
-    "start": "npx webpack --mode=development --watch",
     "typecheck": "npx tsc --noEmit",
+    "typecheck:watch": "npx tsc --noEmit --watch",
     "lint": "npx eslint ./src/** --ext .ts,.tsx --fix",
+    "lint:watch": "esw ./src/** --ext .ts,.tsx --fix --watch",
     "pretty": "npx prettier './src' --write"
   },
   "keywords": [
@@ -26,7 +28,9 @@
   },
   "repository": "https://github.com/inVoltag/figma-ui-color-palette",
   "devDependencies": {
-    "@figma/plugin-typings": "^1.64.0",
+    "@figma/plugin-typings": "^1.70.0",
+    "@types/chroma-js": "^2.4.0",
+    "@types/file-saver": "^2.0.5",
     "@types/react": "^17.0.37",
     "@types/react-dom": "^17.0.11",
     "@typescript-eslint/eslint-plugin": "^5.59.0",
@@ -38,6 +42,7 @@
     "eslint-plugin-n": "^15.7.0",
     "eslint-plugin-promise": "^6.1.1",
     "eslint-plugin-react": "^7.25.3",
+    "eslint-watch": "^8.0.0",
     "figma-plugin-ds": "^1.0.1",
     "html-webpack-inline-source-plugin": "^1.0.0-beta.2",
     "html-webpack-plugin": "^5.5.0",
@@ -54,9 +59,10 @@
     "apca-w3": "^0.1.9",
     "chroma-js": "^2.4.2",
     "file-saver": "^2.0.5",
+    "hsluv": "^1.0.1",
     "jszip": "^3.10.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "uuid": "^8.3.2"
+    "uid": "^2.0.2"
   }
 }

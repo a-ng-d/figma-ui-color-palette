@@ -3,7 +3,7 @@ import { palette } from '../../utils/palettePackage'
 import doMap from './../../utils/doMap'
 
 const addStop = (
-  e: MouseEvent,
+  e: React.MouseEvent<HTMLDivElement, MouseEvent>,
   scale: ScaleConfiguration,
   presetName: string,
   presetMin: number,
@@ -19,7 +19,7 @@ const addStop = (
         .getPropertyValue('padding-left')
     ),
     offset: number = doMap(e.clientX - sliderPadding, 0, rangeWidth, 0, 100),
-    newLightnessScale = {}
+    newLightnessScale: { [key: string]: number } = {}
 
   let newScale = []
 

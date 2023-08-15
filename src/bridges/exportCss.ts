@@ -1,33 +1,45 @@
-import { PaletteDataItem } from '../utils/types'
+import type { PaletteData } from '../utils/types'
+import doKebabCase from '../utils/doKebabCase'
 import { locals, lang } from '../content/locals'
 
-const exportCss = (palette) => {
-  palette = figma.currentPage.selection[0]
-  const css: Array<string> = []
+const exportCss = (palette: SceneNode) => {
+  palette = figma.currentPage.selection[0] as FrameNode
+
+  const paletteData: PaletteData = JSON.parse(palette.getPluginData('data')),
+    workingThemes =
+      paletteData.themes.filter((theme) => theme.type === 'custom theme')
+        .length == 0
+        ? paletteData.themes.filter((theme) => theme.type === 'default theme')
+        : paletteData.themes.filter((theme) => theme.type === 'custom theme'),
+    css: Array<string> = []
 
   if (palette.children.length == 1) {
-    JSON.parse(palette.getPluginData('data')).forEach(
-      (color: PaletteDataItem) => {
+    workingThemes.forEach((theme) => {
+      theme.colors.forEach((color) => {
         const rowCss: Array<string> = []
-        rowCss.unshift(`/* ${color.name} */`)
+        rowCss.unshift(
+          `/* ${
+            workingThemes[0].type === 'custom theme' ? theme.name + ' - ' : ''
+          }${color.name} */`
+        )
         color.shades.forEach((shade) => {
           rowCss.unshift(
-            `--${color.name
-              .toLowerCase()
-              .split(' ')
-              .join('-')
-              .replace(/[@/$^%#&!?,;:+=<>(){}"«»]/g, '-')}-${
-              shade.name
-            }: rgb(${Math.floor(shade.rgb[0])}, ${Math.floor(
+            `--${
+              workingThemes[0].type === 'custom theme'
+                ? doKebabCase(theme.name + ' ' + color.name)
+                : doKebabCase(color.name)
+            }-${shade.name}: rgb(${Math.floor(shade.rgb[0])},${Math.floor(
               shade.rgb[1]
-            )}, ${Math.floor(shade.rgb[2])});`
+            )},${Math.floor(shade.rgb[2])});`
           )
         })
         rowCss.unshift('')
         rowCss.reverse().forEach((sampleCss) => css.push(sampleCss))
-      }
-    )
+      })
+    })
+
     css.pop()
+
     figma.ui.postMessage({
       type: 'EXPORT_PALETTE_CSS',
       data: css,

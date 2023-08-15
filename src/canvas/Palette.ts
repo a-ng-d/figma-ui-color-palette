@@ -4,33 +4,43 @@ import type {
   TextColorsThemeHexModel,
   PaletteNode,
   ScaleConfiguration,
+  ThemeConfiguration,
+  ColorSpaceConfiguration,
+  ViewConfiguration,
+  AlgorithmVersionConfiguration,
+  Service,
 } from '../utils/types'
 import Colors from './Colors'
 import { locals, lang } from '../content/locals'
+import { uid } from 'uid'
 
 export default class Palette {
   name: string
+  description: string
   frameName: string
   scale: ScaleConfiguration
   colors: Array<ColorConfiguration>
-  colorSpace: string
+  colorSpace: ColorSpaceConfiguration
+  themes: Array<ThemeConfiguration>
   preset: PresetConfiguration
-  view: string
+  view: ViewConfiguration
   textColorsTheme: TextColorsThemeHexModel
-  algorithmVersion: string
-  children: PaletteNode
-  node: FrameNode
+  algorithmVersion: AlgorithmVersionConfiguration
+  service: Service
+  node: FrameNode | null
 
   constructor(
     name: string,
+    description: string,
     preset: PresetConfiguration,
     scale: ScaleConfiguration,
-    colorSpace: string,
-    view: string,
+    colorSpace: ColorSpaceConfiguration,
+    view: ViewConfiguration,
     textColorsTheme: TextColorsThemeHexModel,
-    algorithmVersion: string
+    algorithmVersion: AlgorithmVersionConfiguration
   ) {
     this.name = name
+    this.description = description
     this.frameName = `${name === '' ? locals[lang].name : name}﹒${
       preset.name
     }﹒${colorSpace} ${view.includes('PALETTE') ? 'Palette' : 'Sheet'}`
@@ -38,10 +48,22 @@ export default class Palette {
     this.scale = scale
     this.colors = []
     this.colorSpace = colorSpace
-    this.view = view
+    ;(this.themes = [
+      {
+        name: locals[lang].themes.switchTheme.defaultTheme,
+        description: '',
+        scale: this.scale,
+        paletteBackground: '#FFFFFF',
+        isEnabled: true,
+        id: '00000000000',
+        type: 'default theme',
+      },
+    ]),
+      (this.view = view)
     this.algorithmVersion = algorithmVersion
     this.textColorsTheme = textColorsTheme
-    this.children = null
+    this.service = 'CREATE'
+    this.node = null
   }
 
   makeNode = () => {
@@ -53,8 +75,8 @@ export default class Palette {
 
     // layout
     this.node.layoutMode = 'VERTICAL'
-    this.node.primaryAxisSizingMode = 'AUTO'
-    this.node.counterAxisSizingMode = 'AUTO'
+    this.node.layoutSizingHorizontal = 'HUG'
+    this.node.layoutSizingVertical = 'HUG'
     this.node.paddingTop =
       this.node.paddingRight =
       this.node.paddingBottom =
@@ -63,10 +85,13 @@ export default class Palette {
 
     // data
     this.node.setRelaunchData({ edit: '' })
+    this.node.setPluginData('type', 'UI_COLOR_PALETTE')
     this.node.setPluginData('name', this.name)
+    this.node.setPluginData('description', this.description)
     this.node.setPluginData('preset', JSON.stringify(this.preset))
     this.node.setPluginData('scale', JSON.stringify(this.scale))
     this.node.setPluginData('colorSpace', this.colorSpace)
+    this.node.setPluginData('themes', JSON.stringify(this.themes))
     this.node.setPluginData('view', this.view)
     this.node.setPluginData(
       'textColorsTheme',
@@ -81,14 +106,17 @@ export default class Palette {
         element.type != 'GROUP' &&
         element.type != 'EMBED'
       ) {
-        const fills = element['fills'].filter((fill) => fill.type === 'SOLID')
+        const fills = (element as any).fills.filter(
+          (fill: SolidPaint) => fill.type === 'SOLID'
+        )
 
         if (fills.length != 0) {
-          fills.forEach((fill) =>
+          fills.forEach((fill: SolidPaint) =>
             this.colors.push({
               name: element.name,
+              description: '',
               rgb: fill.color,
-              id: undefined,
+              id: uid(),
               oklch: false,
               hueShifting: 0,
             })

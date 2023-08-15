@@ -3,7 +3,7 @@ import Tag from './Tag'
 export default class Status {
   status: { isClosestToRef: boolean }
   source: { [key: string]: number }
-  node: FrameNode
+  node: FrameNode | null
 
   constructor(
     status: { isClosestToRef: boolean },
@@ -11,6 +11,7 @@ export default class Status {
   ) {
     this.status = status
     this.source = source
+    this.node = null
   }
 
   makeNode = () => {
@@ -22,10 +23,8 @@ export default class Status {
     // layout
     this.node.layoutMode = 'HORIZONTAL'
     this.node.primaryAxisSizingMode = 'FIXED'
-    this.node.counterAxisSizingMode = 'AUTO'
-    this.node.primaryAxisAlignItems = 'SPACE_BETWEEN'
     this.node.layoutAlign = 'STRETCH'
-    this.node.layoutGrow = 0
+    this.node.layoutSizingVertical = 'HUG'
 
     if (this.status.isClosestToRef)
       this.node.appendChild(

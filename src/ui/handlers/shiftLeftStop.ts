@@ -8,7 +8,7 @@ const shiftLeftStop = (
   ctrl: boolean,
   gap: number
 ) => {
-  const stopsList = []
+  const stopsList: Array<string> = []
 
   Object.keys(scale).forEach((stop) => {
     stopsList.push(stop)

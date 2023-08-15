@@ -1,7 +1,12 @@
 import type {
+  AlgorithmVersionConfiguration,
+  ColorSpaceConfiguration,
+  ColorsMessage,
   PresetConfiguration,
   ScaleConfiguration,
   TextColorsThemeHexModel,
+  ThemeConfiguration,
+  ViewConfiguration,
 } from '../utils/types'
 import Colors from './../canvas/Colors'
 import {
@@ -11,22 +16,34 @@ import {
 } from './processSelection'
 import { locals, lang } from '../content/locals'
 
-const updateColors = (msg, palette) => {
-  palette = isSelectionChanged ? previousSelection[0] : currentSelection[0]
+const updateColors = (msg: ColorsMessage, palette: SceneNode) => {
+  palette = isSelectionChanged
+    ? (previousSelection?.[0] as FrameNode)
+    : (currentSelection[0] as FrameNode)
 
   if (palette.children.length == 1) {
     const name: string =
         palette.getPluginData('name') === ''
           ? locals[lang].name
           : palette.getPluginData('name'),
-      preset: PresetConfiguration = JSON.parse(palette.getPluginData('preset')),
-      scale: ScaleConfiguration = JSON.parse(palette.getPluginData('scale')),
-      colorSpace: string = palette.getPluginData('colorSpace'),
-      view: string = palette.getPluginData('view'),
-      textColorsTheme: TextColorsThemeHexModel = JSON.parse(
+      description: string = palette.getPluginData('description'),
+      preset = JSON.parse(
+        palette.getPluginData('preset')
+      ) as PresetConfiguration,
+      scale = JSON.parse(palette.getPluginData('scale')) as ScaleConfiguration,
+      colorSpace = palette.getPluginData(
+        'colorSpace'
+      ) as ColorSpaceConfiguration,
+      themes = JSON.parse(
+        palette.getPluginData('themes')
+      ) as Array<ThemeConfiguration>,
+      view = palette.getPluginData('view') as ViewConfiguration,
+      textColorsTheme = JSON.parse(
         palette.getPluginData('textColorsTheme')
-      ),
-      algorithmVersion: string = palette.getPluginData('algorithmVersion')
+      ) as TextColorsThemeHexModel,
+      algorithmVersion = palette.getPluginData(
+        'algorithmVersion'
+      ) as AlgorithmVersionConfiguration
 
     palette.setPluginData('colors', JSON.stringify(msg.data))
 
@@ -34,11 +51,13 @@ const updateColors = (msg, palette) => {
     palette.appendChild(
       new Colors(
         {
-          name: name,
+          name: palette.getPluginData('name'),
+          description: description,
           preset: preset,
           scale: scale,
           colors: msg.data,
           colorSpace: colorSpace,
+          themes: themes,
           view:
             msg.isEditedInRealTime && view === 'PALETTE_WITH_PROPERTIES'
               ? 'PALETTE'
@@ -47,6 +66,7 @@ const updateColors = (msg, palette) => {
               : view,
           textColorsTheme: textColorsTheme,
           algorithmVersion: algorithmVersion,
+          service: 'EDIT',
         },
         palette
       ).makeNode()
@@ -54,7 +74,11 @@ const updateColors = (msg, palette) => {
 
     // palette migration
     palette.counterAxisSizingMode = 'AUTO'
-    palette.name = `${name}﹒${preset.name}﹒${colorSpace} ${
+    palette.name = `${name}﹒${
+      themes.find((theme) => theme.isEnabled)?.type === 'default theme'
+        ? ''
+        : themes.find((theme) => theme.isEnabled)?.name + '﹒'
+    }${preset.name}${preset.name}﹒${colorSpace} ${
       view.includes('PALETTE') ? 'Palette' : 'Sheet'
     }`
   } else figma.notify(locals[lang].error.corruption)

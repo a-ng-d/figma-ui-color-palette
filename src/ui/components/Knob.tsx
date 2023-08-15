@@ -6,7 +6,7 @@ interface Props {
   shortId: string
   value: string | number
   stopInputValue?: number
-  state?: string
+  state?: 'SELECTED' | 'EDITING' | 'NORMAL'
   min?: string
   max?: string
   onMouseDown: React.MouseEventHandler
@@ -50,9 +50,8 @@ export default class Knob extends React.Component<Props> {
         {this.props.state === 'EDITING' ? (
           <div className="slider__input">
             <Input
-              type="number"
-              icon={{ type: 'none', value: null }}
-              value={this.props.stopInputValue.toString()}
+              type="NUMBER"
+              value={this.props.stopInputValue?.toString() ?? '0'}
               min={this.props.min}
               max={this.props.max}
               step="0.1"
@@ -60,13 +59,13 @@ export default class Knob extends React.Component<Props> {
               isAutoFocus={true}
               onChange={this.props.onChangeStopValue}
               onFocus={(e: React.FocusEvent<HTMLInputElement>) =>
-                this.props.onValidStopValue(this.props.shortId, e)
+                this.props.onValidStopValue?.(this.props.shortId, e)
               }
               onBlur={(e: React.FocusEvent<HTMLInputElement>) =>
-                this.props.onValidStopValue(this.props.shortId, e)
+                this.props.onValidStopValue?.(this.props.shortId, e)
               }
               onConfirm={(e: React.KeyboardEvent<HTMLInputElement>) =>
-                this.props.onValidStopValue(this.props.shortId, e)
+                this.props.onValidStopValue?.(this.props.shortId, e)
               }
             />
           </div>

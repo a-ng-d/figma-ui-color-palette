@@ -1,4 +1,9 @@
-import type { TextColorsThemeHexModel } from '../utils/types'
+import type {
+  ColorSpaceConfiguration,
+  TextColorsThemeHexModel,
+  ViewConfiguration,
+} from '../utils/types'
+import Paragraph from './Paragraph'
 import Properties from './Properties'
 import Property from './Property'
 import Status from './Status'
@@ -7,24 +12,24 @@ export default class Sample {
   name: string
   source: { [key: string]: number } | null
   scale: string | null
-  rgb: Array<number> | null
-  colorSpace: string
-  view: string
+  rgb: [number, number, number]
+  colorSpace: ColorSpaceConfiguration
+  view: ViewConfiguration
   textColorsTheme: TextColorsThemeHexModel
   status: {
     isClosestToRef: boolean
   }
-  nodeColor: FrameNode
-  node: FrameNode
-  children: FrameNode
+  nodeColor: FrameNode | null
+  node: FrameNode | null
+  children: FrameNode | null
 
   constructor(
     name: string,
     source: { [key: string]: number } | null,
     scale: string | null,
-    rgb: Array<number> | null,
-    colorSpace: string,
-    view: string,
+    rgb: [number, number, number],
+    colorSpace: ColorSpaceConfiguration,
+    view: ViewConfiguration,
     textColorsTheme: TextColorsThemeHexModel,
     status: { isClosestToRef: boolean } = { isClosestToRef: false }
   ) {
@@ -36,55 +41,47 @@ export default class Sample {
     this.view = view
     this.textColorsTheme = textColorsTheme
     this.status = status
+    this.nodeColor = null
+    this.node = null
     this.children = null
   }
 
-  makeNodeName(mode: string, width: number, height: number) {
+  makeNodeName = (mode: string, width: number, height: number) => {
     // base
     this.node = figma.createFrame()
     this.node.name = this.name
-    this.node.fills = [
-      {
-        type: 'SOLID',
-        color: {
-          r: this.rgb[0] / 255,
-          g: this.rgb[1] / 255,
-          b: this.rgb[2] / 255,
-        },
-      },
-    ]
+    this.node.fills = []
 
     // layout
     this.node.layoutMode = 'HORIZONTAL'
+    this.node.layoutSizingHorizontal = 'FIXED'
     this.node.paddingTop =
       this.node.paddingRight =
       this.node.paddingBottom =
       this.node.paddingLeft =
         8
-    this.node.counterAxisSizingMode = 'FIXED'
-    if (mode === 'RELATIVE') {
-      this.node.primaryAxisSizingMode = 'AUTO'
-      this.node.layoutAlign = 'STRETCH'
+    this.node.resize(width, height)
+
+    if (mode === 'FILL') {
+      this.node.counterAxisSizingMode = 'FIXED'
       this.node.layoutGrow = 1
-      this.children = new Property('_title', this.name, 16).makeNode()
-    } else if (mode === 'ABSOLUTE') {
-      this.node.resize(width, height)
-      this.node.primaryAxisSizingMode = 'FIXED'
+      this.children = new Property('_large-label', this.name, 16).makeNode()
+    } else if (mode === 'FIXED') {
       this.children = new Property('_label', this.name, 10).makeNode()
     }
 
     // insert
-    this.node.appendChild(this.children)
+    this.node.appendChild(this.children as FrameNode)
 
     return this.node
   }
 
-  makeNodeShade(
+  makeNodeShade = (
     width: number,
     height: number,
     name: string,
     isColorName = false
-  ) {
+  ) => {
     // base
     this.node = figma.createFrame()
     this.node.name = name
@@ -102,21 +99,20 @@ export default class Sample {
 
     // layout
     this.node.layoutMode = 'VERTICAL'
+    this.node.layoutSizingHorizontal = 'FIXED'
+    this.node.layoutSizingVertical = 'FIXED'
+    this.node.primaryAxisAlignItems = 'MAX'
     this.node.paddingTop =
       this.node.paddingRight =
       this.node.paddingBottom =
       this.node.paddingLeft =
         8
-    this.node.primaryAxisSizingMode = 'FIXED'
-    this.node.counterAxisSizingMode = 'FIXED'
-    this.node.primaryAxisAlignItems = 'MAX'
-    this.node.itemSpacing = 8
 
     // insert
     if (this.view.includes('PALETTE_WITH_PROPERTIES') && !isColorName) {
       this.node.appendChild(
         new Properties(
-          this.scale,
+          this.scale ?? '0',
           this.rgb,
           this.colorSpace,
           this.textColorsTheme
@@ -125,17 +121,20 @@ export default class Sample {
     } else if (isColorName)
       this.node.appendChild(new Property('_label', this.name, 10).makeNode())
     if (this.status.isClosestToRef)
-      this.node.appendChild(new Status(this.status, this.source).makeNode())
+      this.node.appendChild(
+        new Status(this.status, this.source ?? {}).makeNode()
+      )
 
     return this.node
   }
 
-  makeNodeRichShade(
+  makeNodeRichShade = (
     width: number,
     height: number,
     name: string,
-    isColorName = false
-  ) {
+    isColorName = false,
+    description = ''
+  ) => {
     // base
     this.node = figma.createFrame()
     this.node.name = name
@@ -144,13 +143,8 @@ export default class Sample {
 
     // layout
     this.node.layoutMode = 'VERTICAL'
-    this.node.paddingTop =
-      this.node.paddingRight =
-      this.node.paddingBottom =
-      this.node.paddingLeft =
-        16
-    this.node.primaryAxisSizingMode = 'FIXED'
-    this.node.counterAxisSizingMode = 'FIXED'
+    this.node.layoutSizingHorizontal = 'FIXED'
+    this.node.layoutSizingVertical = 'FIXED'
     this.node.primaryAxisAlignItems = 'MIN'
     this.node.itemSpacing = 8
 
@@ -158,8 +152,8 @@ export default class Sample {
     this.nodeColor = figma.createFrame()
     this.nodeColor.name = '_color'
     this.nodeColor.layoutMode = 'VERTICAL'
-    this.nodeColor.primaryAxisSizingMode = 'FIXED'
-    this.nodeColor.counterAxisSizingMode = 'FIXED'
+    this.nodeColor.layoutSizingHorizontal = 'FIXED'
+    this.nodeColor.layoutSizingVertical = 'FIXED'
     this.nodeColor.layoutAlign = 'STRETCH'
     this.nodeColor.resize(96, 96)
     this.nodeColor.paddingTop =
@@ -184,14 +178,24 @@ export default class Sample {
     this.nodeColor.appendChild(new Property('_label', name, 10).makeNode())
     if (this.status.isClosestToRef)
       this.nodeColor.appendChild(
-        new Status(this.status, this.source).makeNode()
+        new Status(this.status, this.source ?? {}).makeNode()
       )
 
     this.node.appendChild(this.nodeColor)
-    if (!this.view.includes('SHEET_SAFE_MODE') && !isColorName)
+    if (isColorName && description != '')
+      this.node.appendChild(
+        new Paragraph(
+          '_description',
+          description,
+          'FILL',
+          undefined,
+          8
+        ).makeNode()
+      )
+    else if (!this.view.includes('SHEET_SAFE_MODE') && !isColorName)
       this.node.appendChild(
         new Properties(
-          this.scale,
+          this.scale ?? '0',
           this.rgb,
           this.colorSpace,
           this.textColorsTheme

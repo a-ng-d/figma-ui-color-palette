@@ -1,10 +1,19 @@
 {
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "env.d.ts",
+  ],
+  "paths": {
+    "jszip": ["node_modules/jszip/dist/jszip.min.js"]
+  },
   "compilerOptions": {
     "target": "es6",
-    "lib": ["es6", "dom"],
+    "lib": ["es6", "dom", "es2022"],
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "esModuleInterop": true,
+    "strict": true,
     "typeRoots": [
       "./node_modules/@types",
       "./node_modules/@figma"

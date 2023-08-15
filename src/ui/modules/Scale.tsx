@@ -1,97 +1,148 @@
 import * as React from 'react'
-import type { PresetConfiguration, ScaleConfiguration } from '../../utils/types'
+import type {
+  ActionsList,
+  DispatchProcess,
+  Language,
+  PresetConfiguration,
+  ScaleConfiguration,
+} from '../../utils/types'
 import Feature from '../components/Feature'
 import Button from '../components/Button'
 import Dropdown from '../components/Dropdown'
 import Slider from '../components/Slider'
 import Message from '../components/Message'
 import Actions from './Actions'
-import Shortcuts from './Shortcuts'
 import { palette, presets } from '../../utils/palettePackage'
-import features from '../../utils/features'
+import features from '../../utils/config'
 import { locals } from '../../content/locals'
+import Dispatcher from './Dispatcher'
 
 interface Props {
   hasPreset: boolean
   preset: PresetConfiguration
   scale?: ScaleConfiguration
-  view: string
-  planStatus: string
+  actions?: string
+  planStatus: 'UNPAID' | 'PAID'
   editorType?: string
-  lang: string
-  onChangePreset?: React.ReactEventHandler
-  onChangeScale: (e: string) => void
+  lang: Language
+  onChangePreset?: (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => void
+  onChangeScale: () => void
+  onChangeStop?: () => void
   onAddStop?: React.ReactEventHandler
   onRemoveStop?: React.ReactEventHandler
-  onChangeView: React.ChangeEventHandler
   onCreatePalette?: () => void
   onCreateLocalStyles?: () => void
   onUpdateLocalStyles?: () => void
-  onReopenHighlight: React.ChangeEventHandler
+  onCreateLocalVariables?: () => void
+  onUpdateLocalVariables?: () => void
+  onChangeActions?: (value: string) => void | undefined
 }
 
-export default class Scale extends React.Component<Props> {
+export default class Scale extends React.Component<Props, any> {
+  dispatch: { [key: string]: DispatchProcess }
+
+  constructor(props: Props) {
+    super(props)
+    this.dispatch = {
+      scale: new Dispatcher(
+        () =>
+          parent.postMessage(
+            {
+              pluginMessage: {
+                type: 'UPDATE_SCALE',
+                data: palette,
+                isEditedInRealTime: true,
+              },
+            },
+            '*'
+          ),
+        500
+      ) as DispatchProcess,
+    }
+  }
+
+  // Handlers
+  slideHandler = (state: string, feature?: string) => {
+    const onReleaseStop = () => {
+      this.dispatch.scale.on.status = false
+      parent.postMessage(
+        {
+          pluginMessage: {
+            type: 'UPDATE_SCALE',
+            data: palette,
+            isEditedInRealTime: false,
+          },
+        },
+        '*'
+      )
+      this.props.onChangeScale()
+    }
+
+    const onChangeStop = () => {
+      parent.postMessage(
+        {
+          pluginMessage: {
+            type: 'UPDATE_SCALE',
+            data: palette,
+            isEditedInRealTime: false,
+            feature: feature,
+          },
+        },
+        '*'
+      )
+      this.props.onChangeStop?.()
+    }
+
+    const onTypeStopValue = () => {
+      parent.postMessage(
+        {
+          pluginMessage: {
+            type: 'UPDATE_SCALE',
+            data: palette,
+            isEditedInRealTime: false,
+          },
+        },
+        '*'
+      )
+      this.props.onChangeStop?.()
+    }
+
+    const actions: ActionsList = {
+      RELEASED: () => onReleaseStop(),
+      SHIFTED: () => onChangeStop(),
+      TYPED: () => onTypeStopValue(),
+      UPDATING: () => (this.dispatch.scale.on.status = true),
+    }
+
+    return actions[state]?.()
+  }
+
   // Direct actions
   setOnboardingMessages = () => {
     const messages: Array<string> = []
 
     if (this.props.preset.name === 'Custom' && !this.props.hasPreset)
       messages.push(
-        locals[this.props.lang].scale.add,
-        locals[this.props.lang].scale.remove
+        locals[this.props.lang].scale.tips.add,
+        locals[this.props.lang].scale.tips.remove
       )
 
     if (!this.props.hasPreset)
       messages.push(
-        locals[this.props.lang].scale.edit,
-        locals[this.props.lang].scale.nav,
-        locals[this.props.lang].scale.esc
+        locals[this.props.lang].scale.tips.edit,
+        locals[this.props.lang].scale.tips.nav,
+        locals[this.props.lang].scale.tips.esc
       )
 
     messages.push(
-      locals[this.props.lang].scale.shift,
-      locals[this.props.lang].scale.ctrl
+      locals[this.props.lang].scale.tips.shift,
+      locals[this.props.lang].scale.tips.ctrl
     )
 
     return messages
   }
 
   // Templates
-  Shortcuts = () => {
-    return (
-      <Feature
-        isActive={
-          features.find((feature) => feature.name === 'SHORTCUTS').isActive
-        }
-      >
-        <Shortcuts
-          actions={[
-            {
-              label: locals[this.props.lang].shortcuts.documentation,
-              isLink: true,
-              url: 'https://docs.ui-color-palette.com',
-              action: null,
-            },
-            {
-              label: locals[this.props.lang].shortcuts.feedback,
-              isLink: true,
-              url: 'https://uicp.link/feedback',
-              action: null,
-            },
-            {
-              label: locals[this.props.lang].shortcuts.news,
-              isLink: false,
-              url: '',
-              action: this.props.onReopenHighlight,
-            },
-          ]}
-          planStatus={this.props.planStatus}
-          lang={this.props.lang}
-        />
-      </Feature>
-    )
-  }
-
   Create = () => {
     palette.scale = {}
     return (
@@ -105,15 +156,15 @@ export default class Scale extends React.Component<Props> {
               <Feature
                 isActive={
                   features.find((feature) => feature.name === 'SCALE_PRESETS')
-                    .isActive
+                    ?.isActive
                 }
               >
                 <Dropdown
                   id="presets"
-                  options={Object.entries(presets).map((entry, index) => {
+                  options={Object.entries(presets).map((preset, index) => {
                     return {
-                      label: entry[1].name,
-                      value: entry[1].id,
+                      label: preset[1].name,
+                      value: preset[1].id,
                       position: index,
                       isActive: true,
                       isBlocked: false,
@@ -121,7 +172,8 @@ export default class Scale extends React.Component<Props> {
                   })}
                   selected={this.props.preset.id}
                   feature="UPDATE_PRESET"
-                  onChange={this.props.onChangePreset}
+                  parentClassName="controls"
+                  onChange={(e) => this.props.onChangePreset?.(e)}
                 />
               </Feature>
             </div>
@@ -129,27 +181,31 @@ export default class Scale extends React.Component<Props> {
               <Feature
                 isActive={
                   features.find((feature) => feature.name === 'SCALE_PRESETS')
-                    .isActive
+                    ?.isActive
                 }
               >
                 {this.props.preset.scale.length > 2 &&
                 this.props.preset.name === 'Custom' ? (
                   <Button
-                    icon="minus"
                     type="icon"
-                    feature="REMOVE"
+                    icon="minus"
+                    feature="REMOVE_STOP"
                     action={this.props.onRemoveStop}
                   />
                 ) : null}
                 {this.props.preset.name === 'Custom' ? (
                   <Button
-                    icon="plus"
                     type="icon"
+                    icon="plus"
                     state={
                       this.props.preset.scale.length == 24 ? 'disabled' : ''
                     }
-                    feature="ADD"
-                    action={this.props.onAddStop}
+                    feature="ADD_STOP"
+                    action={
+                      this.props.preset.scale.length >= 24
+                        ? () => null
+                        : this.props.onAddStop
+                    }
                   />
                 ) : null}
               </Feature>
@@ -158,7 +214,7 @@ export default class Scale extends React.Component<Props> {
           <Feature
             isActive={
               features.find((feature) => feature.name === 'SCALE_CONFIGURATION')
-                .isActive
+                ?.isActive
             }
           >
             <Slider
@@ -168,29 +224,27 @@ export default class Scale extends React.Component<Props> {
               stops={this.props.preset.scale}
               min={this.props.preset.min}
               max={this.props.preset.max}
-              onChange={this.props.onChangeScale}
+              onChange={this.slideHandler}
             />
           </Feature>
           <Feature
             isActive={
-              features.find((feature) => feature.name === 'SCALE_TIPS').isActive
+              features.find((feature) => feature.name === 'SCALE_TIPS')
+                ?.isActive
             }
           >
             <Message
-              icon="library"
+              icon="key"
               messages={this.setOnboardingMessages()}
             />
           </Feature>
         </div>
         <Actions
           context="CREATE"
-          view={this.props.view}
           planStatus={this.props.planStatus}
           lang={this.props.lang}
           onCreatePalette={this.props.onCreatePalette}
-          onChangeView={this.props.onChangeView}
         />
-        <this.Shortcuts />
       </>
     )
   }
@@ -206,7 +260,7 @@ export default class Scale extends React.Component<Props> {
                 {locals[this.props.lang].scale.title}
               </div>
               <div className="type">{`(${
-                Object.entries(this.props.scale).length
+                Object.entries(this.props.scale ?? {}).length
               })`}</div>
             </div>
             <div className="section-controls__right-part">
@@ -216,7 +270,7 @@ export default class Scale extends React.Component<Props> {
           <Feature
             isActive={
               features.find((feature) => feature.name === 'SCALE_CONFIGURATION')
-                .isActive
+                ?.isActive
             }
           >
             <Slider
@@ -225,31 +279,34 @@ export default class Scale extends React.Component<Props> {
               presetName={this.props.preset.name}
               stops={this.props.preset.scale}
               scale={this.props.scale}
-              onChange={this.props.onChangeScale}
+              onChange={this.slideHandler}
             />
           </Feature>
           <Feature
             isActive={
-              features.find((feature) => feature.name === 'SCALE_TIPS').isActive
+              features.find((feature) => feature.name === 'SCALE_TIPS')
+                ?.isActive
             }
           >
             <Message
-              icon="library"
+              icon="key"
               messages={this.setOnboardingMessages()}
             />
           </Feature>
         </div>
-        <Actions
-          context="LOCAL_STYLES"
-          view={this.props.view}
-          editorType={this.props.editorType}
-          planStatus={this.props.planStatus}
-          lang={this.props.lang}
-          onCreateLocalStyles={this.props.onCreateLocalStyles}
-          onUpdateLocalStyles={this.props.onUpdateLocalStyles}
-          onChangeView={this.props.onChangeView}
-        />
-        <this.Shortcuts />
+        {this.props.editorType === 'figma' ? (
+          <Actions
+            context="DEPLOY"
+            actions={this.props.actions}
+            planStatus={this.props.planStatus}
+            lang={this.props.lang}
+            onCreateLocalStyles={this.props.onCreateLocalStyles}
+            onUpdateLocalStyles={this.props.onUpdateLocalStyles}
+            onCreateLocalVariables={this.props.onCreateLocalVariables}
+            onUpdateLocalVariables={this.props.onUpdateLocalVariables}
+            onChangeActions={this.props.onChangeActions}
+          />
+        ) : null}
       </>
     )
   }

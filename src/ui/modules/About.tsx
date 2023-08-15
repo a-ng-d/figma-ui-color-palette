@@ -1,14 +1,15 @@
 import * as React from 'react'
+import type { Language } from '../../utils/types'
 import Feature from '../components/Feature'
 import Icon from './Icon'
 import Button from '../components/Button'
-import features from '../../utils/features'
+import features from '../../utils/config'
 import package_json from './../../../package.json'
 import { locals } from '../../content/locals'
 
 interface Props {
-  planStatus: string
-  lang: string
+  planStatus: 'UNPAID' | 'PAID'
+  lang: Language
 }
 
 export default class About extends React.Component<Props> {
@@ -16,39 +17,45 @@ export default class About extends React.Component<Props> {
     return (
       <div className="about controls__control">
         <div>
-          <Icon size={32} />
-          <div>
-            <p className="type type--xlarge">{locals[this.props.lang].name}</p>
-            <div className="about__info">
-              <p className="type">{`Version ${
-                package_json.version.slice(0, 1) +
-                package_json.version.slice(2, 3)
-              }`}</p>
-              <Feature
-                isActive={
-                  features.find((feature) => feature.name === 'GET_PRO_PLAN')
-                    .isActive
-                }
-              >
-                {this.props.planStatus === 'UNPAID' ? (
-                  <>
-                    <span>﹒</span>
-                    <p className="type">{locals[this.props.lang].plan.free}</p>
-                  </>
-                ) : (
-                  <>
-                    <span>﹒</span>
-                    <p className="type">{locals[this.props.lang].plan.pro}</p>
-                  </>
-                )}
-              </Feature>
+          <div className="about__basic">
+            <Icon size={32} />
+            <div>
+              <p className="type type--xlarge">
+                {locals[this.props.lang].name}
+              </p>
+              <div className="about__info">
+                <p className="type">{`Version ${
+                  package_json.version.slice(0, 1) +
+                  package_json.version.slice(2, 3)
+                }`}</p>
+                <Feature
+                  isActive={
+                    features.find((feature) => feature.name === 'GET_PRO_PLAN')
+                      ?.isActive
+                  }
+                >
+                  {this.props.planStatus === 'UNPAID' ? (
+                    <>
+                      <span>﹒</span>
+                      <p className="type">
+                        {locals[this.props.lang].plan.free}
+                      </p>
+                    </>
+                  ) : (
+                    <>
+                      <span>﹒</span>
+                      <p className="type">{locals[this.props.lang].plan.pro}</p>
+                    </>
+                  )}
+                </Feature>
+              </div>
             </div>
           </div>
           <div>
             <p className="type">
               Created and maintained by{' '}
               <a
-                href="https://an.gd"
+                href="https://uicp.link/author"
                 target="_blank"
                 rel="noreferrer"
               >
@@ -57,21 +64,20 @@ export default class About extends React.Component<Props> {
             </p>
             <p className="type">
               <a
-                href="https://github.com/inVoltag/figma-ui-color-palette"
+                href="https://uicp.link/repository"
                 target="_blank"
                 rel="noreferrer"
               >
                 Source code
               </a>{' '}
-              is under{' '}
+              is licensed under{' '}
               <a
-                href="https://creativecommons.org/licenses/by/4.0"
+                href="https://uicp.link/license"
                 target="_blank"
                 rel="noreferrer"
               >
-                CC BY 4.0
-              </a>{' '}
-              license
+                MIT
+              </a>
             </p>
           </div>
         </div>
@@ -84,14 +90,14 @@ export default class About extends React.Component<Props> {
               <Button
                 type="tertiary"
                 isLink={true}
-                url="https://docs.ui-color-palette.com"
+                url="https://uicp.link/docs"
                 label={locals[this.props.lang].about.getHelp.documentation}
               />
               <span>﹒</span>
               <Button
                 type="tertiary"
                 isLink={true}
-                url="mailto:hello@ui-color-palette.com"
+                url="https://uicp.link/send-message"
                 label={locals[this.props.lang].about.getHelp.email}
               />
             </div>
@@ -104,15 +110,15 @@ export default class About extends React.Component<Props> {
               <Button
                 type="tertiary"
                 isLink={true}
-                url="https://github.com/inVoltag/figma-ui-color-palette/issues/new"
-                label={locals[this.props.lang].about.beInvolved.issue}
+                url="https://uicp.link/discuss"
+                label={locals[this.props.lang].about.beInvolved.discuss}
               />
               <span>﹒</span>
               <Button
                 type="tertiary"
                 isLink={true}
-                url="https://uicp.link/feedback"
-                label={locals[this.props.lang].about.beInvolved.feedback}
+                url="https://uicp.link/report"
+                label={locals[this.props.lang].about.beInvolved.issue}
               />
             </div>
           </div>
@@ -124,16 +130,20 @@ export default class About extends React.Component<Props> {
               <Button
                 type="tertiary"
                 isLink={true}
-                url="https://www.linkedin.com/in/augrimaud"
+                url="https://uicp.link/network"
                 label={locals[this.props.lang].about.giveSupport.follow}
               />
-              <span>﹒</span>
-              <Button
-                type="tertiary"
-                isLink={true}
-                url="https://www.buymeacoffee.com/a_ng_d"
-                label={locals[this.props.lang].about.giveSupport.coffee}
-              />
+              {this.props.planStatus === 'UNPAID' ? (
+                <>
+                  <span>﹒</span>
+                  <Button
+                    type="tertiary"
+                    isLink={true}
+                    url="https://uicp.link/donate"
+                    label={locals[this.props.lang].about.giveSupport.coffee}
+                  />
+                </>
+              ) : null}
             </div>
           </div>
         </div>

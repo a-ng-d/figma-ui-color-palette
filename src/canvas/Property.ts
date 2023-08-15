@@ -4,12 +4,13 @@ export default class Property {
   name: string
   content: string
   size: number
-  node: FrameNode
+  node: FrameNode | null
 
   constructor(name: string, content: string, size: number) {
     this.name = name
     this.content = content
     this.size = size
+    this.node = null
   }
 
   makeNode = () => {
@@ -20,9 +21,9 @@ export default class Property {
 
     // layout
     this.node.layoutMode = 'VERTICAL'
-    this.node.primaryAxisSizingMode = 'FIXED'
     this.node.counterAxisSizingMode = 'FIXED'
     this.node.layoutAlign = 'STRETCH'
+    this.node.primaryAxisSizingMode = 'FIXED'
     this.node.layoutGrow = 1
 
     // insert

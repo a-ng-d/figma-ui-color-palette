@@ -1,0 +1,588 @@
+/* Icon buttons */
+div.icon-button {
+  cursor: default;
+}
+
+div.icon-button--disabled {
+  pointer-events: none;
+  opacity: 0.3;
+}
+
+div.icon {
+  pointer-events: none;
+}
+
+/* Get Pro button */
+button.get-pro-button {
+  height: var(--size-small);
+  display: flex;
+  align-items: center;
+  border-radius: var(--border-radius-small);
+  background-color: var(--figma-color-bg-component);
+  border: 2px solid var(--figma-color-bg-component);
+  padding: 0 var(--size-xxsmall) 0 0;
+}
+
+button.get-pro-button:hover {
+  background-color: var(--figma-color-bg-component-hover);
+  border: 2px solid var(--figma-color-bg-component-hover);
+}
+
+button.get-pro-button:active {
+  background-color: var(--figma-color-bg-component-pressed);
+  border: 2px solid var(--figma-color-bg-component-pressed);
+}
+
+button.get-pro-button:focus,
+button.get-pro-button:focus-visible {
+  background-color: var(--figma-color-bg-component-pressed);
+  border: 2px solid var(--figma-color-border-component-strong);
+  outline: none;
+}
+
+button.get-pro-button .type {
+  color: var(--figma-color-text-oncomponent);
+}
+
+button.get-pro-button .icon {
+  background: var(--figma-color-icon-oncomponent);
+}
+
+/* Form components */
+input[type='color' i] {
+  width: var(--size-xsmall);
+  height: var(--size-xsmall);
+  position: absolute;
+  top: var(--size-xxsmall);
+  left: var(--size-xxsmall);
+  z-index: 1;
+  background-color: transparent;
+  padding: 0;
+  appearance: none;
+  background-color: transparent;
+  appearance: none;
+  border: none;
+}
+
+input[type='color' i]::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+input[type='color' i]::-webkit-color-swatch {
+  border: none;
+  box-shadow: rgba(0, 0, 0, 0.1) 0 0 0 1px inset;
+}
+
+input[type='color' i]:focus {
+  outline: 1px solid var(--figma-color-border-selected);
+  outline-offset: -1px;
+}
+
+input[type='color' i]:focus ~ input {
+  border: 1px solid var(--figma-color-border-selected);
+  outline: 1px solid var(--figma-color-border-selected);
+  outline-offset: -2px;
+}
+
+input[type='number']::-webkit-inner-spin-button {
+  display: none;
+}
+
+div.inputs {
+  display: flex;
+  gap: var(--size-xxsmall);
+}
+
+div.inputs .label {
+  flex: 0;
+}
+
+div.inputs__bar {
+  display: flex;
+  padding: 0 1px;
+  position: relative;
+}
+
+div.inputs__bar .input {
+  width: 40px;
+  margin: 0 -0.5px;
+}
+
+div.inputs__bar input {
+  background-color: transparent;
+}
+
+div.inputs__bar input:focus {
+  border: 1px solid var(--figma-color-border);
+}
+
+div.inputs__bar:hover input {
+  border: 1px solid var(--figma-color-border);
+}
+
+div.inputs__bar:focus-within:before {
+  content: '';
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  box-shadow: inset 0 0 0 2px var(--figma-color-border-selected);
+  z-index: 2;
+  pointer-events: none;
+  border-radius: var(--border-radius-small);
+}
+
+div.inputs__bar:focus-within input {
+  border: 1px solid var(--figma-color-border);
+  outline: 1px solid transparent;
+  outline-offset: -2px;
+}
+
+div.select-menu__label {
+  margin-top: 0;
+}
+
+div.form-item {
+  display: flex;
+  align-items: baseline;
+  gap: var(--size-xxsmall);
+  padding: 0 0 0 var(--size-xxsmall);
+  position: relative;
+}
+
+div.form-item--fill label {
+  flex: 0 1 96px;
+}
+
+div.form-item .input,
+div.form-item .textarea,
+div.form-item .select-menu {
+  flex: 1;
+}
+
+div.form-item--blocked {
+  pointer-events: none;
+}
+
+div.form-item--blocked label {
+  color: var(--figma-color-text-disabled);
+}
+
+/* Tabs */
+div.tabs {
+  display: flex;
+  align-items: stretch;
+}
+
+div.tabs .tabs__tab {
+  padding: 0 var(--size-xxsmall);
+  font-weight: var(--font-weight-medium);
+  color: var(--figma-color-text-secondary);
+  line-height: var(--size-large);
+}
+
+div.tabs .tabs__tab:hover {
+  color: var(--figma-color-text-hover);
+}
+
+div.tabs .tabs__tab--active {
+  font-weight: var(--font-weight-bold);
+  color: var(--figma-color-text);
+}
+
+/* Bar */
+div.bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: var(--size-large);
+  padding: 0 var(--size-xsmall);
+}
+
+div.bar--compact {
+  height: var(--size-medium);
+}
+
+div.bar--text-only {
+  align-items: baseline;
+}
+
+/* Pop in*/
+div.popin {
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
+  width: 100%;
+  height: 100%;
+  border-radius: var(--border-radius-small);
+  background-color: var(--figma-color-bg);
+  border: 1px solid var(--figma-color-border);
+  box-shadow: var(--shadow-floating-window);
+}
+
+div.popin__header {
+  display: flex;
+  flex: 0 1 var(--size-xlarge);
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--size-xxsmall);
+  border-bottom: 1px solid var(--figma-color-border);
+}
+
+div.popin__content {
+  flex: 1;
+  display: flex;
+  overflow-y: auto;
+}
+
+div.popin__footer {
+  display: flex;
+  justify-content: space-between;
+  height: var(--size-xlarge);
+  padding: 0 var(--size-xsmall) var(--size-xsmall) var(--size-xsmall);
+}
+
+div.popin__actions {
+  display: flex;
+  gap: 0 var(--size-xxsmall);
+}
+
+/* Dialog */
+div.dialog {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 99;
+  padding: var(--size-medium);
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+div.dialog .dialog__cover {
+  height: 100%;
+}
+
+div.dialog .dialog__text {
+  padding: var(--size-xsmall);
+  margin: 0;
+}
+
+/* List */
+div.list-controller {
+  display: flex;
+  overflow: hidden;
+  padding: var(--size-xxsmall) 0 0 0;
+}
+
+ul.list {
+  overflow-y: auto;
+  padding: 1px 0;
+}
+
+li.list__item {
+  display: grid;
+  grid-template-columns: repeat(76, 1fr);
+  grid-template-rows: var(--size-medium);
+  padding: 2px var(--size-xsmall);
+  position: relative;
+  z-index: 2;
+}
+
+li.list__item[draggable='true'] {
+  background-color: var(--figma-color-bg-selected);
+  z-index: 1;
+}
+
+li.list__item[draggable='true'] .input__field,
+li.list__item--emphasis .input__field {
+  --white: var(--figma-color-bg-selected);
+}
+
+li.list__item[draggable='true']:active {
+  cursor: grabbing;
+}
+
+li.list__item--dragged:active > div {
+  pointer-events: none;
+}
+
+li.list__item--emphasis {
+  background-color: var(--figma-color-bg-pressed);
+}
+
+li.list__item--emphasis .input__field {
+  --white: var(--figma-color-bg-pressed);
+}
+
+li.list__item--above {
+  box-shadow: 0 1px 0 var(--figma-color-border-selected) inset,
+    0 -1px 0 var(--figma-color-border-selected);
+}
+
+li.list__item--below {
+  box-shadow: 0 -1px 0 var(--figma-color-border-selected) inset,
+    0 1px 0 var(--figma-color-border-selected);
+}
+
+li .list__item__buttons {
+  grid-column: span 8 / 77;
+  grid-row: 1 / 1;
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* Callout */
+div.onboarding .label {
+  width: auto;
+}
+
+div.onboarding__callout {
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-xxxsmall);
+}
+
+div.onboarding__callout div.onboarding-tip {
+  justify-content: center;
+}
+
+div.onboarding__actions {
+  display: flex;
+  gap: var(--size-xxsmall);
+  justify-content: center;
+  padding: 0 calc(var(--size-xsmall) + var(--size-xxxsmall));
+}
+
+div.onboarding-tip {
+  padding: 0 calc(var(--size-xsmall) + var(--size-xxxsmall));
+}
+
+div.onboarding-tip--blocked .onboarding-tip__msg {
+  color: var(--figma-color-text-disabled);
+}
+
+div.onboarding-tip--blocked .icon {
+  background: var(--figma-color-icon-disabled);
+}
+
+/* Tips ticker */
+.onboarding-tip__ticker {
+  flex: 1;
+  display: flex;
+  position: relative;
+  overflow: hidden;
+}
+
+.onboarding-tip__ticker:before,
+.onboarding-tip__ticker:after {
+  content: '';
+  position: absolute;
+  width: var(--size-xsmall);
+  height: 100%;
+  z-index: 2;
+}
+
+.onboarding-tip__ticker:before {
+  left: 0;
+  background: linear-gradient(
+    90deg,
+    var(--figma-color-bg) 0%,
+    transparent 100%
+  );
+}
+
+.onboarding-tip__ticker:after {
+  right: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--figma-color-bg) 100%
+  );
+}
+
+.onboarding-tip__tips {
+  display: inline-flex;
+  align-items: center;
+  gap: 0 var(--size-medium);
+  padding: 0 var(--size-xsmall);
+  position: relative;
+  width: max-content;
+}
+
+.onboarding-tip__ticker:hover .onboarding-tip__tips {
+  animation-play-state: paused !important;
+}
+
+.callout .onboarding-tip__msg {
+  white-space: nowrap;
+}
+
+@keyframes ticker {
+  0% {
+    transform: translateX(0%);
+  }
+
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+/* Slider */
+div.slider {
+  display: flex;
+  align-items: center;
+  position: relative;
+  margin-top: var(--size-small);
+  padding: 0 var(--size-medium);
+}
+
+div.slider .slider__range {
+  flex: 1 1 auto;
+  height: var(--size-small);
+  background: linear-gradient(-90deg, var(--white) 0%, var(--black) 100%);
+  border-radius: var(--border-radius-large);
+  box-shadow: inset 0 0 0 1px var(--figma-color-border-disabled-strong);
+  position: relative;
+}
+
+div.slider .slider__knob {
+  width: var(--size-medium);
+  height: var(--size-xxlarge);
+  background: transparent;
+  transform: translateX(-50%) translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  position: absolute;
+  cursor: ew-resize;
+  z-index: 1;
+}
+
+div.slider .slider__label {
+  width: 100%;
+  height: var(--size-small);
+  border-radius: var(--border-radius-small);
+  background: var(--figma-color-bg);
+  box-shadow: 0 0 0 1px var(--figma-color-border-disabled-strong);
+  padding: var(--size-xxxsmall);
+  text-align: center;
+  position: relative;
+  pointer-events: none;
+}
+
+div.slider .slider__knob:hover .slider__label {
+  background: var(--figma-color-bg-hover);
+}
+
+div.slider .slider__knob--selected,
+div.slider .slider__knob--editing {
+  z-index: 2 !important;
+}
+
+div.slider .slider__knob--selected .slider__tooltip {
+  display: block !important;
+}
+
+div.slider .slider__knob:active .slider__label,
+div.slider .slider__knob--selected .slider__label {
+  box-shadow: 0 0 0 2px var(--figma-color-border-selected);
+}
+
+div.slider .slider__knob:active .slider__label:before,
+div.slider .slider__knob--selected .slider__label:before {
+  border-top-color: var(--figma-color-border-selected);
+  border-width: 6px;
+  left: calc(50% - 6px);
+  bottom: -12px;
+}
+
+div.slider .slider__knob:hover .slider__label:after,
+div.slider .slider__knob:active .slider__label:after,
+div.slider .slider__knob--selected .slider__label:after {
+  border-top-color: var(--figma-color-bg-hover);
+}
+
+div.slider .slider__label:before {
+  content: '';
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: var(--size-xxxsmall);
+  border-top-color: var(--figma-color-border-disabled-strong);
+  border-right-color: transparent;
+  border-bottom-color: transparent;
+  border-left-color: transparent;
+  position: absolute;
+  bottom: calc(var(--size-xxxsmall) * -2);
+  left: calc(50% - var(--size-xxxsmall));
+}
+
+div.slider .slider__label:after {
+  content: '';
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 3px;
+  border-top-color: var(--figma-color-bg);
+  border-right-color: transparent;
+  border-bottom-color: transparent;
+  border-left-color: transparent;
+  position: absolute;
+  bottom: -6px;
+  left: calc(50% - 3px);
+}
+
+div.slider .slider__tooltip {
+  width: var(--size-medium);
+  padding: var(--size-xxxsmall);
+  background: var(--figma-color-bg-inverse);
+  color: var(--figma-color-text-oninverse);
+  position: absolute;
+  transform: translateX(-50%) translateY(-100%);
+  left: 50%;
+  top: calc(var(--size-xsmall) * -1);
+  text-align: center;
+  user-select: none;
+  display: none;
+}
+
+div.slider .slider__knob:hover .slider__tooltip {
+  display: block !important;
+}
+
+div.slider .slider__tooltip:after {
+  content: '';
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: var(--size-xxxsmall);
+  border-top-color: var(--figma-color-bg-inverse);
+  border-right-color: transparent;
+  border-bottom-color: transparent;
+  border-left-color: transparent;
+  position: absolute;
+  bottom: -8px;
+  left: calc(50% - var(--size-xxxsmall));
+}
+
+div.slider .slider__graduation {
+  width: 1px;
+  height: var(--size-xxxsmall);
+  background: var(--figma-color-border-disabled-strong);
+  pointer-events: none;
+}
+
+div.slider .slider__input {
+  position: absolute;
+  transform: translateX(-50%) translateY(-100%);
+  left: 50%;
+  top: calc(var(--size-xxsmall) * -1);
+  padding: 1px 2px;
+  z-index: 2;
+  width: var(--size-xlarge);
+  box-shadow: var(--shadow-floating-window);
+  border: 1px solid var(--figma-color-border);
+  border-radius: var(--border-radius-med);
+  background-color: var(--figma-color-bg);
+}

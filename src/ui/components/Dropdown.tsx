@@ -11,22 +11,33 @@ interface Props {
   }>
   selected: string
   feature: string
-  onChange: React.ChangeEventHandler
+  actions?: Array<{
+    label: string
+    isBlocked: boolean
+    feature: string
+    action: () => void
+  }>
+  parentClassName?: string
+  onChange: (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => void
 }
 
-export default class Dropdown extends React.Component<Props> {
-  selectMenuRef: any
-  listRef: any
+export default class Dropdown extends React.Component<Props, any> {
+  selectMenuRef: React.MutableRefObject<any>
+  listRef: React.MutableRefObject<any>
 
-  constructor(props) {
+  static defaultProps = {
+    actions: [],
+  }
+
+  constructor(props: Props) {
     super(props)
-    ;(this.state = {
+    this.state = {
       isListOpen: false,
       position: this.props.options.filter(
         (option) => option.value === this.props.selected
       )[0].position,
-    }),
-      (this.selectMenuRef = React.createRef())
+    }
+    this.selectMenuRef = React.createRef()
     this.listRef = React.createRef()
     this.handleClickOutside = this.handleClickOutside.bind(this)
   }
@@ -37,11 +48,8 @@ export default class Dropdown extends React.Component<Props> {
   componentWillUnmount = () =>
     document.removeEventListener('mousedown', this.handleClickOutside)
 
-  handleClickOutside(event) {
-    if (
-      this.selectMenuRef &&
-      !this.selectMenuRef.current.contains(event.target)
-    )
+  handleClickOutside = (e: Event) => {
+    if (this.selectMenuRef && !this.selectMenuRef.current.contains(e.target))
       this.setState({
         isListOpen: false,
       })
@@ -51,27 +59,43 @@ export default class Dropdown extends React.Component<Props> {
     this.setState({
       isListOpen: true,
     })
-    setTimeout(() => {
-      if (this.listRef.current.getBoundingClientRect().top < 16) {
-        this.listRef.current.style.top = '-6px'
-        this.listRef.current.style.bottom = 'auto'
-      }
-      if (
-        this.listRef.current.getBoundingClientRect().bottom >
-        document.body.clientHeight - 16
-      ) {
-        this.listRef.current.style.top = 'auto'
-        this.listRef.current.style.bottom = '-6px'
-      }
-    }, 1)
+    if (this.props.parentClassName != undefined)
+      setTimeout(() => {
+        const diffTop: number =
+            this.listRef.current.getBoundingClientRect().top -
+            document
+              .getElementsByClassName(this.props.parentClassName as string)[0]
+              .getBoundingClientRect().top,
+          diffBottom: number =
+            this.listRef.current.getBoundingClientRect().bottom -
+            document
+              .getElementsByClassName(this.props.parentClassName as string)[0]
+              .getBoundingClientRect().bottom
+
+        if (diffTop < -16) {
+          this.listRef.current.style.top = '-6px'
+          this.listRef.current.style.bottom = 'auto'
+        }
+        if (diffBottom > -16) {
+          this.listRef.current.style.top = 'auto'
+          this.listRef.current.style.bottom = '-6px'
+        }
+      }, 1)
   }
 
-  onSelectItem = (e) => {
+  onSelectItem = (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
     this.setState({
       isListOpen: false,
-      position: e.target.dataset.position,
+      position: (e.target as HTMLLIElement).dataset.position,
     })
     this.props.onChange(e)
+  }
+
+  onSelectAction = (callback: () => void) => {
+    this.setState({
+      isListOpen: false,
+    })
+    callback()
   }
 
   render() {
@@ -114,7 +138,7 @@ export default class Dropdown extends React.Component<Props> {
                   data-position={option.position}
                   data-is-blocked={option.isBlocked}
                   data-feature={this.props.feature}
-                  onMouseDown={this.onSelectItem}
+                  onMouseDown={(e) => this.onSelectItem(e)}
                 >
                   <span className="select-menu__item-icon"></span>
                   <span className="select-menu__item-label">
@@ -123,6 +147,29 @@ export default class Dropdown extends React.Component<Props> {
                 </li>
               ) : null
             )}
+            {this.props.actions != undefined ? (
+              this.props.actions.length > 0 ? (
+                <>
+                  <hr />
+                  {this.props.actions.map((action, index) => (
+                    <li
+                      key={index}
+                      className={`select-menu__item${
+                        action.isBlocked ? ' select-menu__item--blocked' : ''
+                      }`}
+                      data-feature={action.feature}
+                      data-is-blocked={action.isBlocked}
+                      onMouseDown={() => this.onSelectAction(action.action)}
+                    >
+                      <span className="select-menu__item-icon"></span>
+                      <span className="select-menu__item-label">
+                        {action.label}
+                      </span>
+                    </li>
+                  ))}
+                </>
+              ) : null
+            ) : null}
           </ul>
         ) : null}
       </div>

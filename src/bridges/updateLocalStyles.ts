@@ -1,49 +1,130 @@
 import chroma from 'chroma-js'
-import type { PaletteDataItem } from '../utils/types'
+import type { PaletteData, PaletteDataThemeItem } from '../utils/types'
 import { locals, lang } from '../content/locals'
 
-const updateLocalStyles = (palette, i: number) => {
-  palette = figma.currentPage.selection[0]
-  const localStyles: Array<PaintStyle> = figma.getLocalPaintStyles()
-  let target: PaintStyle
+const updateLocalStyles = (palette: SceneNode, i: number) => {
+  palette = figma.currentPage.selection[0] as FrameNode
+
+  const paletteData: PaletteData = JSON.parse(palette.getPluginData('data')),
+    localStyles: Array<PaintStyle> = figma.getLocalPaintStyles(),
+    workingThemes =
+      paletteData.themes.filter((theme) => theme.type === 'custom theme')
+        .length == 0
+        ? paletteData.themes.filter((theme) => theme.type === 'default theme')
+        : paletteData.themes.filter((theme) => theme.type === 'custom theme')
 
   if (palette.children.length == 1) {
     i = 0
+    let j = 0
 
-    JSON.parse(palette.getPluginData('data')).forEach(
-      (color: PaletteDataItem) => {
+    workingThemes.forEach((theme: PaletteDataThemeItem) => {
+      theme.colors.forEach((color) => {
         color.shades.forEach((shade) => {
-          target = localStyles.filter(
-            (localStyle) => localStyle.name === `${color.name}/${shade.name}`
-          )[0]
-          if (target != undefined)
-            if (
-              shade.hex !=
-              chroma([
-                target.paints[0]['color'].r * 255,
-                target.paints[0]['color'].g * 255,
-                target.paints[0]['color'].b * 255,
-              ]).hex()
-            ) {
-              target.paints = [
-                {
-                  type: 'SOLID',
-                  color: {
-                    r: shade.gl[0],
-                    g: shade.gl[1],
-                    b: shade.gl[2],
-                  },
-                },
-              ]
-              i++
-            }
-        })
-      }
-    )
+          const name =
+              workingThemes[0].type === 'custom theme'
+                ? `${paletteData.name == '' ? '' : paletteData.name + '/'}${
+                    theme.name
+                  }/${color.name}/${shade.name}`
+                : `${color.name}/${shade.name}`,
+            description =
+              color.description != ''
+                ? color.description + '﹒' + shade.description
+                : shade.description
 
-    if (i > 1) figma.notify(`${i} ${locals[lang].info.updatedlocalStyles}`)
-    else if (i == 1) figma.notify(`${i} ${locals[lang].info.updatedlocalStyle}`)
-    else figma.notify(locals[lang].warning.updateLocalStyles)
+          if (
+            localStyles.find((localStyle) => localStyle.id === shade.styleId) !=
+            undefined
+          ) {
+            const styleMatch = localStyles.find(
+              (localStyle) => localStyle.id === shade.styleId
+            )
+
+            if (styleMatch != undefined) {
+              if (styleMatch.name != name) {
+                styleMatch.name = name
+                j++
+              }
+
+              if (styleMatch.description != description) {
+                styleMatch.description = description
+                j++
+              }
+
+              if (
+                shade.hex !=
+                chroma([
+                  (styleMatch.paints[0] as SolidPaint).color.r * 255,
+                  (styleMatch.paints[0] as SolidPaint).color.g * 255,
+                  (styleMatch.paints[0] as SolidPaint).color.b * 255,
+                ]).hex()
+              ) {
+                styleMatch.paints = [
+                  {
+                    type: 'SOLID',
+                    color: {
+                      r: shade.gl[0],
+                      g: shade.gl[1],
+                      b: shade.gl[2],
+                    },
+                  },
+                ]
+                j++
+              }
+            }
+
+            j > 0 ? i++ : i
+            j = 0
+          } else if (
+            localStyles.find((localStyle) => localStyle.name === name) !=
+            undefined
+          ) {
+            const styleMatch = localStyles.find(
+              (localStyle) => localStyle.name === name
+            )
+
+            if (styleMatch != undefined) {
+              if (styleMatch.name != name) {
+                styleMatch.name = name
+                j++
+              }
+
+              if (styleMatch.description != shade.description) {
+                styleMatch.description = shade.description
+                j++
+              }
+
+              if (
+                shade.hex !=
+                chroma([
+                  (styleMatch.paints[0] as SolidPaint).color.r * 255,
+                  (styleMatch.paints[0] as SolidPaint).color.g * 255,
+                  (styleMatch.paints[0] as SolidPaint).color.b * 255,
+                ]).hex()
+              ) {
+                styleMatch.paints = [
+                  {
+                    type: 'SOLID',
+                    color: {
+                      r: shade.gl[0],
+                      g: shade.gl[1],
+                      b: shade.gl[2],
+                    },
+                  },
+                ]
+                j++
+              }
+            }
+
+            j > 0 ? i++ : i
+            j = 0
+          }
+        })
+      })
+    })
+
+    if (i > 1) figma.notify(`${i} ${locals[lang].info.updatedLocalStyles}`)
+    else if (i == 1) figma.notify(`${i} ${locals[lang].info.updatedLocalStyle}`)
+    else figma.notify(locals[lang].warning.cannotUpdateLocalStyles)
   } else figma.notify(locals[lang].error.corruption)
 }
 

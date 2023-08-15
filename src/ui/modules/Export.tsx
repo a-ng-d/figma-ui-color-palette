@@ -1,30 +1,29 @@
 import * as React from 'react'
-import type { ActionsList } from '../../utils/types'
+import type { ActionsList, Language } from '../../utils/types'
 import Feature from '../components/Feature'
 import RadioButton from './../components/RadioButton'
+import Input from '../components/Input'
 import Actions from './Actions'
-import Shortcuts from './Shortcuts'
-import features from '../../utils/features'
+import features from '../../utils/config'
 import isBlocked from '../../utils/isBlocked'
 import { locals } from '../../content/locals'
 
 interface Props {
   exportPreview: string
-  planStatus: string
+  planStatus: 'UNPAID' | 'PAID'
   exportType: string
-  lang: string
+  lang: Language
   onExportPalette: () => void
-  onReopenHighlight: React.ChangeEventHandler
 }
 
-export default class Export extends React.Component<Props> {
+export default class Export extends React.Component<Props, any> {
   counter: number
 
   static defaultProps = {
     exportPreview: '',
   }
 
-  constructor(props) {
+  constructor(props: Props) {
     super(props)
     this.counter = 0
     this.state = {
@@ -56,6 +55,34 @@ export default class Export extends React.Component<Props> {
         })
         parent.postMessage(
           { pluginMessage: { type: 'EXPORT_PALETTE', export: 'JSON' } },
+          '*'
+        )
+      },
+      EXPORT_TO_JSON_AMZN_STYLE_DICTIONARY: () => {
+        this.setState({
+          format: 'JSON_AMZN_STYLE_DICTIONARY',
+        })
+        parent.postMessage(
+          {
+            pluginMessage: {
+              type: 'EXPORT_PALETTE',
+              export: 'JSON_AMZN_STYLE_DICTIONARY',
+            },
+          },
+          '*'
+        )
+      },
+      EXPORT_TO_JSON_TOKENS_STUDIO: () => {
+        this.setState({
+          format: 'JSON_TOKENS_STUDIO',
+        })
+        parent.postMessage(
+          {
+            pluginMessage: {
+              type: 'EXPORT_PALETTE',
+              export: 'JSON_TOKENS_STUDIO',
+            },
+          },
           '*'
         )
       },
@@ -95,9 +122,10 @@ export default class Export extends React.Component<Props> {
           '*'
         )
       },
+      NULL: () => null,
     }
 
-    return actions[(e.target as HTMLElement).dataset.feature]?.()
+    return actions[(e.target as HTMLElement).dataset.feature ?? 'NULL']?.()
   }
 
   // Direct actions
@@ -116,9 +144,11 @@ export default class Export extends React.Component<Props> {
     this.counter = 1
   }
 
-  selectPreview = (e) => e.target.select()
+  selectPreview = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => e.target.select()
 
-  deSelectPreview = () => window.getSelection().removeAllRanges()
+  deSelectPreview = () => window.getSelection()?.removeAllRanges()
 
   // Render
   render() {
@@ -132,6 +162,7 @@ export default class Export extends React.Component<Props> {
                 <div className="section-title">
                   {locals[this.props.lang].export.format}
                 </div>
+                <div className="type">(7)</div>
               </div>
             </div>
             <div className="export-palette__options">
@@ -139,7 +170,7 @@ export default class Export extends React.Component<Props> {
                 <Feature
                   isActive={
                     features.find((feature) => feature.name === 'EXPORT_JSON')
-                      .isActive
+                      ?.isActive
                   }
                 >
                   <li>
@@ -163,8 +194,75 @@ export default class Export extends React.Component<Props> {
                 </Feature>
                 <Feature
                   isActive={
+                    features.find(
+                      (feature) =>
+                        feature.name === 'EXPORT_JSON_AMZN_STYLE_DICTIONARY'
+                    )?.isActive
+                  }
+                >
+                  <li>
+                    <RadioButton
+                      id="options__json-amzn-style-dictionary"
+                      label={locals[this.props.lang].export.amznStyleDictionary}
+                      isChecked={
+                        this.state['format'] === 'JSON_AMZN_STYLE_DICTIONARY'
+                          ? true
+                          : false
+                      }
+                      isBlocked={isBlocked(
+                        'EXPORT_JSON_AMZN_STYLE_DICTIONARY',
+                        this.props.planStatus
+                      )}
+                      feature="EXPORT_TO_JSON_AMZN_STYLE_DICTIONARY"
+                      group="fileFormat"
+                      onChange={
+                        isBlocked(
+                          'EXPORT_JSON_AMZN_STYLE_DICTIONARY',
+                          this.props.planStatus
+                        )
+                          ? () => null
+                          : this.exportHandler
+                      }
+                    />
+                  </li>
+                </Feature>
+                <Feature
+                  isActive={
+                    features.find(
+                      (feature) => feature.name === 'EXPORT_JSON_TOKENS_STUDIO'
+                    )?.isActive
+                  }
+                >
+                  <li>
+                    <RadioButton
+                      id="options__json-tokens-studio"
+                      label={locals[this.props.lang].export.tokensStudio}
+                      isChecked={
+                        this.state['format'] === 'JSON_TOKENS_STUDIO'
+                          ? true
+                          : false
+                      }
+                      isBlocked={isBlocked(
+                        'EXPORT_JSON_TOKENS_STUDIO',
+                        this.props.planStatus
+                      )}
+                      feature="EXPORT_TO_JSON_TOKENS_STUDIO"
+                      group="fileFormat"
+                      onChange={
+                        isBlocked(
+                          'EXPORT_JSON_TOKENS_STUDIO',
+                          this.props.planStatus
+                        )
+                          ? () => null
+                          : this.exportHandler
+                      }
+                    />
+                  </li>
+                </Feature>
+                <Feature
+                  isActive={
                     features.find((feature) => feature.name === 'EXPORT_CSS')
-                      .isActive
+                      ?.isActive
                   }
                 >
                   <li>
@@ -186,7 +284,7 @@ export default class Export extends React.Component<Props> {
                 <Feature
                   isActive={
                     features.find((feature) => feature.name === 'EXPORT_SWIFT')
-                      .isActive
+                      ?.isActive
                   }
                 >
                   <li>
@@ -213,7 +311,7 @@ export default class Export extends React.Component<Props> {
                 <Feature
                   isActive={
                     features.find((feature) => feature.name === 'EXPORT_XML')
-                      .isActive
+                      ?.isActive
                   }
                 >
                   <li>
@@ -235,7 +333,7 @@ export default class Export extends React.Component<Props> {
                 <Feature
                   isActive={
                     features.find((feature) => feature.name === 'EXPORT_CSV')
-                      .isActive
+                      ?.isActive
                   }
                 >
                   <li>
@@ -266,13 +364,13 @@ export default class Export extends React.Component<Props> {
               </div>
             </div>
             <div className="export-palette__options">
-              <textarea
-                className="export-palette__preview textarea"
+              <Input
+                type="LONG_TEXT"
                 value={this.props.exportPreview}
+                isReadOnly={true}
                 onBlur={this.deSelectPreview}
-                onFocus={this.selectPreview}
-                readOnly
-              ></textarea>
+                onFocus={(e) => this.selectPreview(e)}
+              />
             </div>
           </div>
         </div>
@@ -282,36 +380,6 @@ export default class Export extends React.Component<Props> {
           lang={this.props.lang}
           onExportPalette={this.props.onExportPalette}
         />
-        <Feature
-          isActive={
-            features.find((feature) => feature.name === 'SHORTCUTS').isActive
-          }
-        >
-          <Shortcuts
-            actions={[
-              {
-                label: locals[this.props.lang].shortcuts.documentation,
-                isLink: true,
-                url: 'https://docs.ui-color-palette.com',
-                action: null,
-              },
-              {
-                label: locals[this.props.lang].shortcuts.feedback,
-                isLink: true,
-                url: 'https://uicp.link/feedback',
-                action: null,
-              },
-              {
-                label: locals[this.props.lang].shortcuts.news,
-                isLink: false,
-                url: '',
-                action: this.props.onReopenHighlight,
-              },
-            ]}
-            planStatus={this.props.planStatus}
-            lang={this.props.lang}
-          />
-        </Feature>
       </>
     )
   }

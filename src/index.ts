@@ -7,10 +7,15 @@ import closeHighlight from './bridges/closeHighlight'
 import createPalette from './bridges/createPalette'
 import updateScale from './bridges/updateScale'
 import updateColors from './bridges/updateColors'
+import updateThemes from './bridges/updateThemes'
 import updateView from './bridges/updateView'
 import createLocalStyles from './bridges/createLocalStyles'
 import updateLocalStyles from './bridges/updateLocalStyles'
+import createLocalVariables from './bridges/createLocalVariables'
+import updateLocalVariables from './bridges/updateLocalVariables'
 import exportJson from './bridges/exportJson'
+import exportJsonAmznStyleDictionary from './bridges/exportJsonAmznStyleDictionary'
+import exportJsonTokensStudio from './bridges/exportJsonTokensStudio'
 import exportCss from './bridges/exportCss'
 import exportSwift from './bridges/exportSwift'
 import exportXml from './bridges/exportXml'
@@ -28,20 +33,19 @@ figma.showUI(__html__, {
 })
 figma.loadFontAsync({ family: 'Inter', style: 'Regular' })
 figma.loadFontAsync({ family: 'Inter', style: 'Medium' })
-figma.loadFontAsync({ family: 'Roboto', style: 'Regular' })
-figma.loadFontAsync({ family: 'Roboto Mono', style: 'Regular' })
-figma.loadFontAsync({ family: 'Roboto Mono', style: 'Medium' })
+figma.loadFontAsync({ family: 'Red Hat Mono', style: 'Medium' })
 
 figma.on('run', () => processSelection())
 figma.on('selectionchange', () => processSelection())
 
 figma.on('run', () => checkEditorType())
 figma.on('run', () => isHighlightRead(package_json.version))
-// figma.on('run', async () => await checkPlanStatus())
+figma.on('run', async () => await checkPlanStatus())
 
 figma.ui.onmessage = async (msg) => {
-  let palette: ReadonlyArray<SceneNode>
-  const i = 0
+  let palette: SceneNode
+  const i = 0,
+    j = 0
 
   const actions: ActionsList = {
     CLOSE_HIGHLIGHT: () => closeHighlight(msg),
@@ -49,10 +53,19 @@ figma.ui.onmessage = async (msg) => {
     UPDATE_SCALE: () => updateScale(msg, palette),
     UPDATE_VIEW: () => updateView(msg, palette),
     UPDATE_COLORS: () => updateColors(msg, palette),
+    UPDATE_THEMES: () => updateThemes(msg, palette),
     CREATE_LOCAL_STYLES: () => createLocalStyles(palette, i),
     UPDATE_LOCAL_STYLES: () => updateLocalStyles(palette, i),
+    CREATE_LOCAL_VARIABLES: () => createLocalVariables(palette, i, j),
+    UPDATE_LOCAL_VARIABLES: () => updateLocalVariables(palette, i, j),
     EXPORT_PALETTE: () => {
       msg.export === 'JSON' ? exportJson(palette) : null
+      msg.export === 'JSON_AMZN_STYLE_DICTIONARY'
+        ? exportJsonAmznStyleDictionary(palette)
+        : null
+      msg.export === 'JSON_TOKENS_STUDIO'
+        ? exportJsonTokensStudio(palette)
+        : null
       msg.export === 'CSS' ? exportCss(palette) : null
       msg.export === 'SWIFT' ? exportSwift(palette) : null
       msg.export === 'XML' ? exportXml(palette) : null

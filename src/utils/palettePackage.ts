@@ -2,8 +2,9 @@ import type { PaletteConfiguration, Presets } from './types'
 
 export const palette: PaletteConfiguration = {
   name: '',
-  min: null,
-  max: null,
+  description: '',
+  min: undefined,
+  max: undefined,
   preset: {},
   scale: {},
   colorSpace: 'LCH',

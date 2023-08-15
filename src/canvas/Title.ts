@@ -1,41 +1,89 @@
 import type { PaletteNode } from '../utils/types'
 import Tag from './Tag'
+import Paragraph from './Paragraph'
 import { lang, locals } from '../content/locals'
 
 export default class Title {
-  text: string
   parent: PaletteNode
-  nodeName: FrameNode
-  nodeProps: FrameNode
-  node: FrameNode
+  nodeGlobalInfo: FrameNode | null
+  nodeDescriptions: FrameNode | null
+  nodeProps: FrameNode | null
+  node: FrameNode | null
 
-  constructor(text: string, parent: PaletteNode) {
-    this.text = text
+  constructor(parent: PaletteNode) {
     this.parent = parent
+    this.nodeGlobalInfo = null
+    this.nodeDescriptions = null
+    this.nodeProps = null
+    this.node = null
   }
 
-  makeNodeName = () => {
+  makeNodeGlobalInfo = () => {
     // base
-    this.nodeName = figma.createFrame()
-    this.nodeName.name = '_palette-name'
-    this.nodeName.fills = []
+    this.nodeGlobalInfo = figma.createFrame()
+    this.nodeGlobalInfo.name = '_palette-global'
+    this.nodeGlobalInfo.fills = []
 
     // layout
-    this.nodeName.layoutMode = 'VERTICAL'
-    this.nodeName.primaryAxisSizingMode = 'AUTO'
-    this.nodeName.counterAxisSizingMode = 'FIXED'
-    this.nodeName.layoutGrow = 1
+    this.nodeGlobalInfo.layoutMode = 'VERTICAL'
+    this.nodeGlobalInfo.layoutSizingHorizontal = 'HUG'
+    this.nodeGlobalInfo.layoutSizingVertical = 'HUG'
+    this.nodeGlobalInfo.itemSpacing = 8
 
     // insert
-    this.nodeName.appendChild(
+    this.nodeGlobalInfo.appendChild(
       new Tag(
         '_name',
         this.parent.name === '' ? locals[lang].name : this.parent.name,
         20
       ).makeNodeTag()
     )
+    if (
+      this.parent.description != '' ||
+      this.parent.themes.find((theme) => theme.isEnabled)?.description != ''
+    )
+      this.nodeGlobalInfo.appendChild(this.makeNodeDescriptions())
 
-    return this.nodeName
+    return this.nodeGlobalInfo
+  }
+
+  makeNodeDescriptions = () => {
+    // base
+    this.nodeDescriptions = figma.createFrame()
+    this.nodeDescriptions.name = '_palette-description(s)'
+    this.nodeDescriptions.fills = []
+
+    // layout
+    this.nodeDescriptions.layoutMode = 'HORIZONTAL'
+    this.nodeDescriptions.layoutSizingHorizontal = 'HUG'
+    this.nodeDescriptions.layoutSizingVertical = 'HUG'
+    this.nodeDescriptions.itemSpacing = 8
+
+    // insert
+    if (this.parent.description != '')
+      this.nodeDescriptions.appendChild(
+        new Paragraph(
+          '_palette-description',
+          this.parent.description,
+          'FIXED',
+          644,
+          12
+        ).makeNode()
+      )
+
+    if (this.parent.themes.find((theme) => theme.isEnabled)?.description != '')
+      this.nodeDescriptions.appendChild(
+        new Paragraph(
+          '_theme-description',
+          'Theme description: ' +
+            this.parent.themes.find((theme) => theme.isEnabled)?.description,
+          'FIXED',
+          644,
+          12
+        ).makeNode()
+      )
+
+    return this.nodeDescriptions
   }
 
   makeNodeProps = () => {
@@ -46,11 +94,10 @@ export default class Title {
 
     // layout
     this.nodeProps.layoutMode = 'VERTICAL'
-    this.nodeProps.primaryAxisSizingMode = 'AUTO'
-    this.nodeProps.counterAxisSizingMode = 'FIXED'
+    this.nodeProps.layoutSizingHorizontal = 'HUG'
+    this.nodeProps.layoutSizingVertical = 'HUG'
     this.nodeProps.counterAxisAlignItems = 'MAX'
-    this.nodeProps.itemSpacing = 4
-    this.nodeProps.layoutGrow = 1
+    this.nodeProps.itemSpacing = 8
 
     // insert
     this.nodeProps.appendChild(
@@ -70,6 +117,17 @@ export default class Title {
         12
       ).makeNodeTag()
     )
+    if (
+      this.parent.themes.find((theme) => theme.isEnabled)?.type !=
+      'default theme'
+    )
+      this.nodeProps.appendChild(
+        new Tag(
+          '_theme',
+          `Theme: ${this.parent.themes.find((theme) => theme.isEnabled)?.name}`,
+          12
+        ).makeNodeTag()
+      )
 
     return this.nodeProps
   }
@@ -83,11 +141,12 @@ export default class Title {
     // layout
     this.node.layoutMode = 'HORIZONTAL'
     this.node.primaryAxisSizingMode = 'FIXED'
-    this.node.counterAxisSizingMode = 'AUTO'
     this.node.layoutAlign = 'STRETCH'
+    this.node.counterAxisSizingMode = 'AUTO'
+    this.node.primaryAxisAlignItems = 'SPACE_BETWEEN'
 
     // insert
-    this.node.appendChild(this.makeNodeName())
+    this.node.appendChild(this.makeNodeGlobalInfo())
     this.node.appendChild(this.makeNodeProps())
 
     return this.node

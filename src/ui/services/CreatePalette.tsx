@@ -1,33 +1,33 @@
 import * as React from 'react'
 import type {
+  Language,
   PresetConfiguration,
   TextColorsThemeHexModel,
 } from '../../utils/types'
+import Bar from '../components/Bar'
 import Tabs from '../components/Tabs'
 import Scale from '../modules/Scale'
 import Settings from '../modules/Settings'
-import About from '../modules/About'
 import { palette } from '../../utils/palettePackage'
-import features from '../../utils/features'
+import features from '../../utils/config'
 import { locals } from '../../content/locals'
 
 interface Props {
   name: string
+  description: string
   preset: PresetConfiguration
   colorSpace: string
   view: string
   textColorsTheme: TextColorsThemeHexModel
-  planStatus: string
-  lang: string
-  onReopenHighlight: React.ChangeEventHandler
-  onChangePreset: React.ChangeEventHandler
-  onCustomPreset: React.ChangeEventHandler
-  onChangeView: (view: string) => void
-  onChangeSettings: React.ChangeEventHandler
+  planStatus: 'UNPAID' | 'PAID'
+  lang: Language
+  onChangePreset: (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => void
+  onCustomPreset: (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => void
+  onChangeSettings: (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => void
 }
 
-export default class CreatePalette extends React.Component<Props> {
-  constructor(props) {
+export default class CreatePalette extends React.Component<Props, any> {
+  constructor(props: Props) {
     super(props)
     this.state = {
       context:
@@ -48,58 +48,32 @@ export default class CreatePalette extends React.Component<Props> {
   }
 
   // Handlers
-  presetHandler = (e) => this.props.onChangePreset(e)
-
-  scaleHandler = (e) => this.props.onCustomPreset(e)
-
-  settingsHandler = (e) => this.props.onChangeSettings(e)
-
-  viewHandler = (e) => {
-    if (e.target.dataset.isBlocked === 'false') {
-      palette.view = e.target.dataset.value
-      this.props.onChangeView(e.target.dataset.value)
-    }
-  }
-
   navHandler = (e: React.SyntheticEvent) =>
     this.setState({
       context: (e.target as HTMLElement).dataset.feature,
     })
 
   // Direct actions
-  onCreate = () =>
+  onCreatePalette = () =>
     parent.postMessage(
       { pluginMessage: { type: 'CREATE_PALETTE', data: palette } },
       '*'
     )
 
-  setPrimaryContexts = () => {
+  setContexts = () => {
     const contexts: Array<{
       label: string
       id: string
     }> = []
-    if (features.find((feature) => feature.name === 'SCALE').isActive)
+    if (features.find((feature) => feature.name === 'SCALE')?.isActive)
       contexts.push({
         label: locals[this.props.lang].contexts.scale,
         id: 'SCALE',
       })
-    if (features.find((feature) => feature.name === 'SETTINGS').isActive)
+    if (features.find((feature) => feature.name === 'SETTINGS')?.isActive)
       contexts.push({
         label: locals[this.props.lang].contexts.settings,
         id: 'SETTINGS',
-      })
-    return contexts
-  }
-
-  setSecondaryContexts = () => {
-    const contexts: Array<{
-      label: string
-      id: string
-    }> = []
-    if (features.find((feature) => feature.name === 'ABOUT').isActive)
-      contexts.push({
-        label: locals[this.props.lang].contexts.about,
-        id: 'ABOUT',
       })
     return contexts
   }
@@ -115,16 +89,13 @@ export default class CreatePalette extends React.Component<Props> {
           <Scale
             hasPreset={true}
             preset={this.props.preset}
-            view={this.props.view}
             planStatus={this.props.planStatus}
             lang={this.props.lang}
-            onChangePreset={this.presetHandler}
+            onChangePreset={this.props.onChangePreset}
             onChangeScale={() => null}
-            onAddStop={this.scaleHandler}
-            onRemoveStop={this.scaleHandler}
-            onChangeView={this.viewHandler}
-            onCreatePalette={this.onCreate}
-            onReopenHighlight={this.props.onReopenHighlight}
+            onAddStop={this.props.onCustomPreset}
+            onRemoveStop={this.props.onCustomPreset}
+            onCreatePalette={this.onCreatePalette}
           />
         )
         break
@@ -134,38 +105,34 @@ export default class CreatePalette extends React.Component<Props> {
           <Settings
             context="CREATE"
             name={this.props.name}
+            description={this.props.description}
             colorSpace={this.props.colorSpace}
             textColorsTheme={this.props.textColorsTheme}
             view={this.props.view}
             planStatus={this.props.planStatus}
             lang={this.props.lang}
-            onChangeSettings={this.settingsHandler}
-            onCreatePalette={this.onCreate}
-            onChangeView={this.viewHandler}
-            onReopenHighlight={this.props.onReopenHighlight}
+            onChangeSettings={this.props.onChangeSettings}
+            onCreatePalette={this.onCreatePalette}
           />
         )
         break
-      }
-      case 'ABOUT': {
-        controls = (
-          <About
-            planStatus={this.props.planStatus}
-            lang={this.props.lang}
-          />
-        )
       }
     }
 
     return (
       <>
-        <Tabs
-          primaryTabs={this.setPrimaryContexts()}
-          secondaryTabs={this.setSecondaryContexts()}
-          active={this.state['context']}
-          action={this.navHandler}
+        <Bar
+          leftPart={
+            <Tabs
+              tabs={this.setContexts()}
+              active={this.state['context']}
+              action={this.navHandler}
+            />
+          }
+          border={['BOTTOM']}
+          isOnlyText={true}
         />
-        <section>
+        <section className="controller">
           <div className="controls">{controls}</div>
         </section>
       </>

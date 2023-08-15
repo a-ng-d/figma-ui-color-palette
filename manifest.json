@@ -9,10 +9,11 @@
   "relaunchButtons": [
     { "command": "edit", "name": "Edit the UI Color Palette" }
   ],
+  "permissions": ["payments"],
   "networkAccess": {
     "allowedDomains": [
-      "figma.com",
-      "rsms.me"
+      "https://figma.com",
+      "https://rsms.me"
     ]
   },
   "main": "dist/code.js",

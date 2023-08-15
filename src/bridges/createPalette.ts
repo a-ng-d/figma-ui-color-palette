@@ -1,10 +1,11 @@
 import Palette from './../canvas/Palette'
 
-const createPalette = (msg, palette) => {
+const createPalette = (msg: any, palette: SceneNode) => {
   const scene: SceneNode[] = []
 
   palette = new Palette(
     msg.data.name,
+    msg.data.description,
     msg.data.preset,
     msg.data.scale,
     msg.data.colorSpace,

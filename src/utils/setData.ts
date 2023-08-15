@@ -1,11 +1,10 @@
 const setData = (
-  data: string,
+  data: Array<any>,
   entry: string,
   value: boolean | string | number
 ): string => {
-  const parsedData = JSON.parse(data)
-  parsedData.forEach((record) => (record[entry] = value))
-  return JSON.stringify(parsedData)
+  data.forEach((record) => (record[entry] = value))
+  return JSON.stringify(data)
 }
 
 export default setData
