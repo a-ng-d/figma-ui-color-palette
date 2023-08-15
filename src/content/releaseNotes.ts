@@ -12,7 +12,7 @@ const releaseNotes: Array<ReleaseNote> = [
     version: '2.4.0',
     isMostRecent: true,
     title: [
-      'UI Color palette 24: Create Color System “like a Pro”',
+      'UI Color palette 24: Create Color systems “like a Pro”',
       'UI Color palette 24: Color themes management “like a Pro”',
     ],
     image: [rnv241, rnv242],
