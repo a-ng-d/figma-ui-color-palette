@@ -71,9 +71,7 @@ export default class Title {
         ).makeNode()
       )
 
-    if (
-      this.parent.themes.find((theme) => theme.isEnabled)?.description != ''
-    )
+    if (this.parent.themes.find((theme) => theme.isEnabled)?.description != '')
       this.nodeDescriptions.appendChild(
         new Paragraph(
           '_theme-description',

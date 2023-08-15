@@ -32,7 +32,8 @@ export default class PopIn extends React.Component<Props> {
           />
         </div>
         <div className="popin__content">{this.props.children}</div>
-        {Object.keys(this.props.actions).length > 0 || this.props.indicator != undefined ? (
+        {Object.keys(this.props.actions).length > 0 ||
+        this.props.indicator != undefined ? (
           <div className="popin__footer">
             <div className="popin__indicator">
               {this.props.indicator != undefined ? (
@@ -58,8 +59,8 @@ export default class PopIn extends React.Component<Props> {
               ) : null}
             </div>
           </div>
-        ) : null} 
-      </div>   
+        ) : null}
+      </div>
     )
   }
 }

@@ -73,13 +73,14 @@ export default class Colors extends React.Component<Props, any> {
     document.removeEventListener('mousedown', this.handleClickOutside)
 
   handleClickOutside = (e: Event) => {
-    if (this.listRef && !this.listRef.current.contains(e.target))
-      this.setState({
-        selectedElement: {
-          id: '',
-          position: null,
-        },
-      })
+    if (this.listRef.current != null)
+      if (this.listRef && !this.listRef.current.contains(e.target))
+        this.setState({
+          selectedElement: {
+            id: '',
+            position: null,
+          },
+        })
   }
 
   // Handlers

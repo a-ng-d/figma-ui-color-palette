@@ -75,9 +75,9 @@ const updateThemes = (msg: ThemesMessage, palette: SceneNode) => {
     // palette migration
     palette.counterAxisSizingMode = 'AUTO'
     palette.name = `${name}﹒${
-      msg.data.find(theme => theme.isEnabled)?.type === 'default theme'
-      ? ''
-      : msg.data.find(theme => theme.isEnabled)?.name + '﹒'
+      msg.data.find((theme) => theme.isEnabled)?.type === 'default theme'
+        ? ''
+        : msg.data.find((theme) => theme.isEnabled)?.name + '﹒'
     }${preset.name}﹒${colorSpace} ${
       view.includes('PALETTE') ? 'Palette' : 'Sheet'
     }`

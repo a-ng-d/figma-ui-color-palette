@@ -161,8 +161,7 @@ export const locals: { [key: string]: any } = {
         next: 'Next',
         gotIt: 'Got it',
         learnMore: 'Learn more',
-      }
-      
+      },
     },
     plan: {
       getPro: 'Get pro',
@@ -172,10 +171,10 @@ export const locals: { [key: string]: any } = {
     proPlan: {
       welcome: {
         title: 'Welcome to UI Color Palette Pro!',
-        message: 'You have successfully upgraded to the Pro plan, unlocking a range of tools to transform your color palette into a color system.',
-        cta: "Let's enhance"
-      }
-        
+        message:
+          'You have successfully upgraded to the Pro plan, unlocking a range of tools to transform your color palette into a color system.',
+        cta: "Let's enhance",
+      },
     },
     properties: {
       base: 'Base',

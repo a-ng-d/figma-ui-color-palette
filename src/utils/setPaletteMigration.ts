@@ -27,9 +27,8 @@ const setPaletteMigration = (palette: BaseNode) => {
     algorithmVersion = palette.getPluginData('algorithmVersion')
 
   // type
-  if (type === '')
-    palette.setPluginData('type', 'UI_COLOR_PALETTE')
-  
+  if (type === '') palette.setPluginData('type', 'UI_COLOR_PALETTE')
+
   // min-max
   if (min != '' || max != '') {
     palette.setPluginData('min', '')

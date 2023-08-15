@@ -238,11 +238,9 @@ export default class Colors {
         ? 360
         : hsluv.hsluv_h + hueShifting
 
-    if (Number.isNaN(hsluv.hsluv_s))
-      hsluv.hsluv_s = 0
-    if (Number.isNaN(hsluv.hsluv_h))
-      hsluv.hsluv_h = 0
-    
+    if (Number.isNaN(hsluv.hsluv_s)) hsluv.hsluv_s = 0
+    if (Number.isNaN(hsluv.hsluv_h)) hsluv.hsluv_h = 0
+
     hsluv.hsluvToRgb()
 
     const newColor: [number, number, number] = [
