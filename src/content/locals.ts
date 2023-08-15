@@ -139,8 +139,8 @@ export const locals: { [key: string]: any } = {
         discuss: 'Start a discussion',
       },
       giveSupport: {
-        title: 'Give support',
-        follow: 'Follow my actvity',
+        title: 'Follow the author',
+        follow: 'Connect to my LinkedIn',
         coffee: 'Buy me a coffee',
       },
     },
