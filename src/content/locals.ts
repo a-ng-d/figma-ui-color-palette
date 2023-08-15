@@ -129,12 +129,12 @@ export const locals: { [key: string]: any } = {
     about: {
       title: 'About UI Color Palette',
       getHelp: {
-        title: 'Get help',
+        title: 'Support',
         documentation: 'Read the documentation',
         email: 'Send an email',
       },
       beInvolved: {
-        title: 'Be involved',
+        title: 'Help us',
         issue: 'Open an issue',
         discuss: 'Start a discussion',
       },
