@@ -7,7 +7,6 @@ import Actions from './Actions'
 import features from '../../utils/config'
 import isBlocked from '../../utils/isBlocked'
 import { locals } from '../../content/locals'
-import FormItem from '../components/FormItem'
 import Dropdown from '../components/Dropdown'
 
 interface Props {
