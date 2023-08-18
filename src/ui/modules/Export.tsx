@@ -131,6 +131,217 @@ export default class Export extends React.Component<Props, any> {
     return actions[(e.target as HTMLElement).dataset.feature ?? 'NULL']?.()
   }
 
+  // Templates
+  TokensFamily = () => (
+    <>
+      <Feature
+        isActive={
+          features.find((feature) => feature.name === 'EXPORT_JSON')
+            ?.isActive
+        }
+      >
+        <li>
+          <RadioButton
+            id="options__json"
+            label={locals[this.props.lang].export.json}
+            isChecked={this.state['format'] === 'JSON' ? true : false}
+            isBlocked={isBlocked(
+              'EXPORT_JSON',
+              this.props.planStatus
+            )}
+            feature="EXPORT_TO_JSON"
+            group="fileFormat"
+            onChange={
+              isBlocked('EXPORT_JSON', this.props.planStatus)
+                ? () => null
+                : this.exportHandler
+            }
+          />
+        </li>
+      </Feature>
+      <Feature
+        isActive={
+          features.find(
+            (feature) =>
+              feature.name === 'EXPORT_JSON_AMZN_STYLE_DICTIONARY'
+          )?.isActive
+        }
+      >
+        <li>
+          <RadioButton
+            id="options__json-amzn-style-dictionary"
+            label={locals[this.props.lang].export.amznStyleDictionary}
+            isChecked={
+              this.state['format'] === 'JSON_AMZN_STYLE_DICTIONARY'
+                ? true
+                : false
+            }
+            isBlocked={isBlocked(
+              'EXPORT_JSON_AMZN_STYLE_DICTIONARY',
+              this.props.planStatus
+            )}
+            feature="EXPORT_TO_JSON_AMZN_STYLE_DICTIONARY"
+            group="fileFormat"
+            onChange={
+              isBlocked(
+                'EXPORT_JSON_AMZN_STYLE_DICTIONARY',
+                this.props.planStatus
+              )
+                ? () => null
+                : this.exportHandler
+            }
+          />
+        </li>
+      </Feature>
+      <Feature
+        isActive={
+          features.find(
+            (feature) => feature.name === 'EXPORT_JSON_TOKENS_STUDIO'
+          )?.isActive
+        }
+      >
+        <li>
+          <RadioButton
+            id="options__json-tokens-studio"
+            label={locals[this.props.lang].export.tokensStudio}
+            isChecked={
+              this.state['format'] === 'JSON_TOKENS_STUDIO'
+                ? true
+                : false
+            }
+            isBlocked={isBlocked(
+              'EXPORT_JSON_TOKENS_STUDIO',
+              this.props.planStatus
+            )}
+            feature="EXPORT_TO_JSON_TOKENS_STUDIO"
+            group="fileFormat"
+            onChange={
+              isBlocked(
+                'EXPORT_JSON_TOKENS_STUDIO',
+                this.props.planStatus
+              )
+                ? () => null
+                : this.exportHandler
+            }
+          />
+        </li>
+      </Feature>
+    </>
+  )
+
+  CssFamily = () => (
+    <>
+      <Feature
+        isActive={
+          features.find((feature) => feature.name === 'EXPORT_CSS')
+            ?.isActive
+        }
+      >
+        <li>
+          <RadioButton
+            id="options__css"
+            label={locals[this.props.lang].export.css}
+            isChecked={this.state['format'] === 'CSS' ? true : false}
+            isBlocked={isBlocked('EXPORT_CSS', this.props.planStatus)}
+            feature="EXPORT_TO_CSS"
+            group="fileFormat"
+            onChange={
+              isBlocked('EXPORT_CSS', this.props.planStatus)
+                ? () => null
+                : this.exportHandler
+            }
+          />
+        </li>
+      </Feature>
+    </>
+  )
+
+  AppleFamily = () => (
+    <>
+      <Feature
+        isActive={
+          features.find((feature) => feature.name === 'EXPORT_SWIFT')
+            ?.isActive
+        }
+      >
+        <li>
+          <RadioButton
+            id="options__swift"
+            label={locals[this.props.lang].export.swift}
+            isChecked={
+              this.state['format'] === 'SWIFT' ? true : false
+            }
+            isBlocked={isBlocked(
+              'EXPORT_SWIFT',
+              this.props.planStatus
+            )}
+            feature="EXPORT_TO_SWIFT"
+            group="fileFormat"
+            onChange={
+              isBlocked('EXPORT_SWIFT', this.props.planStatus)
+                ? () => null
+                : this.exportHandler
+            }
+          />
+        </li>
+      </Feature>
+    </>
+  )
+
+  AndroidFamily = () => (
+    <>   
+      <Feature
+        isActive={
+          features.find((feature) => feature.name === 'EXPORT_XML')
+            ?.isActive
+        }
+      >
+        <li>
+          <RadioButton
+            id="options__xml"
+            label={locals[this.props.lang].export.xml}
+            isChecked={this.state['format'] === 'XML' ? true : false}
+            isBlocked={isBlocked('EXPORT_XML', this.props.planStatus)}
+            feature="EXPORT_TO_XML"
+            group="fileFormat"
+            onChange={
+              isBlocked('EXPORT_XML', this.props.planStatus)
+                ? () => null
+                : this.exportHandler
+            }
+          />
+        </li>
+      </Feature>
+    </>
+  )
+
+  SpreadsheetFamily = () => (
+    <>   
+      <Feature
+        isActive={
+          features.find((feature) => feature.name === 'EXPORT_CSV')
+            ?.isActive
+        }
+      >
+        <li>
+          <RadioButton
+            id="options__csv"
+            label={locals[this.props.lang].export.csv}
+            isChecked={this.state['format'] === 'CSV' ? true : false}
+            isBlocked={isBlocked('EXPORT_CSV', this.props.planStatus)}
+            feature="EXPORT_TO_CSV"
+            group="fileFormat"
+            onChange={
+              isBlocked('EXPORT_CSV', this.props.planStatus)
+                ? () => null
+                : this.exportHandler
+            }
+          />
+        </li>
+      </Feature>
+    </>
+  )
+
   // Direct actions
   setFirstPreview = () => {
     this.counter == 0 && this.state['format'] != ''
@@ -218,191 +429,11 @@ export default class Export extends React.Component<Props, any> {
             </div>
             <div className="export-palette__options">
               <ul>
-                <Feature
-                  isActive={
-                    features.find((feature) => feature.name === 'EXPORT_JSON')
-                      ?.isActive
-                  }
-                >
-                  <li>
-                    <RadioButton
-                      id="options__json"
-                      label={locals[this.props.lang].export.json}
-                      isChecked={this.state['format'] === 'JSON' ? true : false}
-                      isBlocked={isBlocked(
-                        'EXPORT_JSON',
-                        this.props.planStatus
-                      )}
-                      feature="EXPORT_TO_JSON"
-                      group="fileFormat"
-                      onChange={
-                        isBlocked('EXPORT_JSON', this.props.planStatus)
-                          ? () => null
-                          : this.exportHandler
-                      }
-                    />
-                  </li>
-                </Feature>
-                <Feature
-                  isActive={
-                    features.find(
-                      (feature) =>
-                        feature.name === 'EXPORT_JSON_AMZN_STYLE_DICTIONARY'
-                    )?.isActive
-                  }
-                >
-                  <li>
-                    <RadioButton
-                      id="options__json-amzn-style-dictionary"
-                      label={locals[this.props.lang].export.amznStyleDictionary}
-                      isChecked={
-                        this.state['format'] === 'JSON_AMZN_STYLE_DICTIONARY'
-                          ? true
-                          : false
-                      }
-                      isBlocked={isBlocked(
-                        'EXPORT_JSON_AMZN_STYLE_DICTIONARY',
-                        this.props.planStatus
-                      )}
-                      feature="EXPORT_TO_JSON_AMZN_STYLE_DICTIONARY"
-                      group="fileFormat"
-                      onChange={
-                        isBlocked(
-                          'EXPORT_JSON_AMZN_STYLE_DICTIONARY',
-                          this.props.planStatus
-                        )
-                          ? () => null
-                          : this.exportHandler
-                      }
-                    />
-                  </li>
-                </Feature>
-                <Feature
-                  isActive={
-                    features.find(
-                      (feature) => feature.name === 'EXPORT_JSON_TOKENS_STUDIO'
-                    )?.isActive
-                  }
-                >
-                  <li>
-                    <RadioButton
-                      id="options__json-tokens-studio"
-                      label={locals[this.props.lang].export.tokensStudio}
-                      isChecked={
-                        this.state['format'] === 'JSON_TOKENS_STUDIO'
-                          ? true
-                          : false
-                      }
-                      isBlocked={isBlocked(
-                        'EXPORT_JSON_TOKENS_STUDIO',
-                        this.props.planStatus
-                      )}
-                      feature="EXPORT_TO_JSON_TOKENS_STUDIO"
-                      group="fileFormat"
-                      onChange={
-                        isBlocked(
-                          'EXPORT_JSON_TOKENS_STUDIO',
-                          this.props.planStatus
-                        )
-                          ? () => null
-                          : this.exportHandler
-                      }
-                    />
-                  </li>
-                </Feature>
-                <Feature
-                  isActive={
-                    features.find((feature) => feature.name === 'EXPORT_CSS')
-                      ?.isActive
-                  }
-                >
-                  <li>
-                    <RadioButton
-                      id="options__css"
-                      label={locals[this.props.lang].export.css}
-                      isChecked={this.state['format'] === 'CSS' ? true : false}
-                      isBlocked={isBlocked('EXPORT_CSS', this.props.planStatus)}
-                      feature="EXPORT_TO_CSS"
-                      group="fileFormat"
-                      onChange={
-                        isBlocked('EXPORT_CSS', this.props.planStatus)
-                          ? () => null
-                          : this.exportHandler
-                      }
-                    />
-                  </li>
-                </Feature>
-                <Feature
-                  isActive={
-                    features.find((feature) => feature.name === 'EXPORT_SWIFT')
-                      ?.isActive
-                  }
-                >
-                  <li>
-                    <RadioButton
-                      id="options__swift"
-                      label={locals[this.props.lang].export.swift}
-                      isChecked={
-                        this.state['format'] === 'SWIFT' ? true : false
-                      }
-                      isBlocked={isBlocked(
-                        'EXPORT_SWIFT',
-                        this.props.planStatus
-                      )}
-                      feature="EXPORT_TO_SWIFT"
-                      group="fileFormat"
-                      onChange={
-                        isBlocked('EXPORT_SWIFT', this.props.planStatus)
-                          ? () => null
-                          : this.exportHandler
-                      }
-                    />
-                  </li>
-                </Feature>
-                <Feature
-                  isActive={
-                    features.find((feature) => feature.name === 'EXPORT_XML')
-                      ?.isActive
-                  }
-                >
-                  <li>
-                    <RadioButton
-                      id="options__xml"
-                      label={locals[this.props.lang].export.xml}
-                      isChecked={this.state['format'] === 'XML' ? true : false}
-                      isBlocked={isBlocked('EXPORT_XML', this.props.planStatus)}
-                      feature="EXPORT_TO_XML"
-                      group="fileFormat"
-                      onChange={
-                        isBlocked('EXPORT_XML', this.props.planStatus)
-                          ? () => null
-                          : this.exportHandler
-                      }
-                    />
-                  </li>
-                </Feature>
-                <Feature
-                  isActive={
-                    features.find((feature) => feature.name === 'EXPORT_CSV')
-                      ?.isActive
-                  }
-                >
-                  <li>
-                    <RadioButton
-                      id="options__csv"
-                      label={locals[this.props.lang].export.csv}
-                      isChecked={this.state['format'] === 'CSV' ? true : false}
-                      isBlocked={isBlocked('EXPORT_CSV', this.props.planStatus)}
-                      feature="EXPORT_TO_CSV"
-                      group="fileFormat"
-                      onChange={
-                        isBlocked('EXPORT_CSV', this.props.planStatus)
-                          ? () => null
-                          : this.exportHandler
-                      }
-                    />
-                  </li>
-                </Feature>
+                {this.state['exportsFamily'] === 'TOKENS' ? <this.TokensFamily/> : null}
+                {this.state['exportsFamily'] === 'CSS' ? <this.CssFamily/> : null}
+                {this.state['exportsFamily'] === 'APPLE' ? <this.AppleFamily/> : null}
+                {this.state['exportsFamily'] === 'ANDROID' ? <this.AndroidFamily/> : null}
+                {this.state['exportsFamily'] === 'SPREADSHEET' ? <this.SpreadsheetFamily/> : null}
               </ul>
             </div>
           </div>
