@@ -206,6 +206,10 @@ div.bar--text-only {
   align-items: baseline;
 }
 
+div.bar .select-menu {
+  min-width: 224px;
+}
+
 /* Pop in*/
 div.popin {
   display: flex;

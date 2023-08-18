@@ -7,6 +7,8 @@ import Actions from './Actions'
 import features from '../../utils/config'
 import isBlocked from '../../utils/isBlocked'
 import { locals } from '../../content/locals'
+import FormItem from '../components/FormItem'
+import Dropdown from '../components/Dropdown'
 
 interface Props {
   exportPreview: string
@@ -43,6 +45,7 @@ export default class Export extends React.Component<Props, any> {
               )[0]
               .name.slice(7)
           : '',
+      exportsFamily: 'TOKENS'
     }
   }
 
@@ -163,6 +166,54 @@ export default class Export extends React.Component<Props, any> {
                   {locals[this.props.lang].export.format}
                 </div>
                 <div className="type">(7)</div>
+                <Dropdown
+                  id="exports-family"
+                  options={[
+                    {
+                      label: 'Tokens',
+                      value: 'TOKENS',
+                      position: 0,
+                      isActive: true,
+                      isBlocked: false,
+                    },
+                    {
+                      label: 'CSS',
+                      value: 'CSS',
+                      position: 1,
+                      isActive: true,
+                      isBlocked: false,
+                    },
+                    {
+                      label: 'Apple',
+                      value: 'APPLE',
+                      position: 2,
+                      isActive: true,
+                      isBlocked: false,
+                    },
+                    {
+                      label: 'Android',
+                      value: 'ANDROID',
+                      position: 3,
+                      isActive: true,
+                      isBlocked: false,
+                    },
+                    {
+                      label: 'Speadsheet',
+                      value: 'SPREADSHEET',
+                      position: 4,
+                      isActive: true,
+                      isBlocked: false,
+                    },
+                  ]}
+                  selected={this.state['exportsFamily'] ?? ''}
+                  feature="SELECT_EXPORTS_FAMILY"
+                  parentClassName="controls"
+                  onChange={(e) =>
+                    this.setState({
+                      exportsFamily: (e.target as HTMLInputElement).dataset.value
+                    })
+                  }
+                />
               </div>
             </div>
             <div className="export-palette__options">
