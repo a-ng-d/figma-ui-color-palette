@@ -44,7 +44,7 @@ export default class Export extends React.Component<Props, any> {
               )[0]
               .name.slice(7)
           : '',
-      exportsFamily: 'TOKENS'
+      exportsGroup: 'TOKENS'
     }
   }
 
@@ -131,7 +131,7 @@ export default class Export extends React.Component<Props, any> {
   }
 
   // Templates
-  TokensFamily = () => (
+  TokensGroup = () => (
     <>
       <Feature
         isActive={
@@ -228,7 +228,7 @@ export default class Export extends React.Component<Props, any> {
     </>
   )
 
-  CssFamily = () => (
+  CssGroup = () => (
     <>
       <Feature
         isActive={
@@ -255,7 +255,7 @@ export default class Export extends React.Component<Props, any> {
     </>
   )
 
-  AppleFamily = () => (
+  AppleGroup = () => (
     <>
       <Feature
         isActive={
@@ -287,7 +287,7 @@ export default class Export extends React.Component<Props, any> {
     </>
   )
 
-  AndroidFamily = () => (
+  AndroidGroup = () => (
     <>   
       <Feature
         isActive={
@@ -314,7 +314,7 @@ export default class Export extends React.Component<Props, any> {
     </>
   )
 
-  SpreadsheetFamily = () => (
+  SpreadsheetGroup = () => (
     <>   
       <Feature
         isActive={
@@ -377,50 +377,50 @@ export default class Export extends React.Component<Props, any> {
                 </div>
                 <div className="type">(7)</div>
                 <Dropdown
-                  id="exports-family"
+                  id="exports-Group"
                   options={[
                     {
                       label: 'Tokens',
-                      value: 'TOKENS',
+                      value: 'TOKENS_GROUP',
                       position: 0,
                       isActive: true,
                       isBlocked: false,
                     },
                     {
                       label: 'CSS',
-                      value: 'CSS',
+                      value: 'CSS_GROUP',
                       position: 1,
                       isActive: true,
                       isBlocked: false,
                     },
                     {
                       label: 'Apple',
-                      value: 'APPLE',
+                      value: 'APPLE_GROUP',
                       position: 2,
                       isActive: true,
                       isBlocked: false,
                     },
                     {
                       label: 'Android',
-                      value: 'ANDROID',
+                      value: 'ANDROID_GROUP',
                       position: 3,
                       isActive: true,
                       isBlocked: false,
                     },
                     {
                       label: 'Speadsheet',
-                      value: 'SPREADSHEET',
+                      value: 'SPREADSHEET_GROUP',
                       position: 4,
                       isActive: true,
                       isBlocked: false,
                     },
                   ]}
-                  selected={this.state['exportsFamily'] ?? ''}
-                  feature="SELECT_EXPORTS_FAMILY"
+                  selected={this.state['exportsGroup'] ?? ''}
+                  feature="SELECT_EXPORTS_GROUP"
                   parentClassName="controls"
                   onChange={(e) =>
                     this.setState({
-                      exportsFamily: (e.target as HTMLInputElement).dataset.value
+                      exportsGroup: (e.target as HTMLInputElement).dataset.value
                     })
                   }
                 />
@@ -428,11 +428,11 @@ export default class Export extends React.Component<Props, any> {
             </div>
             <div className="export-palette__options">
               <ul>
-                {this.state['exportsFamily'] === 'TOKENS' ? <this.TokensFamily/> : null}
-                {this.state['exportsFamily'] === 'CSS' ? <this.CssFamily/> : null}
-                {this.state['exportsFamily'] === 'APPLE' ? <this.AppleFamily/> : null}
-                {this.state['exportsFamily'] === 'ANDROID' ? <this.AndroidFamily/> : null}
-                {this.state['exportsFamily'] === 'SPREADSHEET' ? <this.SpreadsheetFamily/> : null}
+                {this.state['exportsGroup'] === 'TOKENS_GROUP' ? <this.TokensGroup/> : null}
+                {this.state['exportsGroup'] === 'CSS_GROUP' ? <this.CssGroup/> : null}
+                {this.state['exportsGroup'] === 'APPLE_GROUP' ? <this.AppleGroup/> : null}
+                {this.state['exportsGroup'] === 'ANDROID_GROUP' ? <this.AndroidGroup/> : null}
+                {this.state['exportsGroup'] === 'SPREADSHEET_GROUP' ? <this.SpreadsheetGroup/> : null}
               </ul>
             </div>
           </div>
