@@ -44,7 +44,7 @@ export default class Export extends React.Component<Props, any> {
               )[0]
               .name.slice(7)
           : '',
-      exportsGroup: 'TOKENS'
+      exportsGroup: 'TOKENS_GROUP'
     }
   }
 
@@ -376,7 +376,9 @@ export default class Export extends React.Component<Props, any> {
                   {locals[this.props.lang].export.format}
                 </div>
                 <div className="type">(7)</div>
-                <Dropdown
+              </div>
+              <div className="section-controls__right-part">
+              <Dropdown
                   id="exports-Group"
                   options={[
                     {
