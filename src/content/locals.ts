@@ -164,9 +164,12 @@ export const locals: { [key: string]: any } = {
       },
     },
     plan: {
-      getPro: 'Get pro',
+      getPro: 'Get Pro',
+      tryPro: 'Try Pro',
       pro: 'Pro plan',
       free: 'Free plan',
+      trial: 'Trial',
+      trialEnded: 'Your trial has ended',
     },
     proPlan: {
       welcome: {

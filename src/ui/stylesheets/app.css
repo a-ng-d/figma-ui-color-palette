@@ -289,7 +289,7 @@ div.about__links {
 }
 
 /* Shortcuts */
-div.shortcuts {
+div.shortcuts, div.pro-zone {
   display: flex;
   align-items: center;
   gap: var(--size-xxxsmall);

@@ -76,22 +76,32 @@ export default class Shortcuts extends React.Component<Props> {
                 ?.isActive
             }
           >
-            {this.props.planStatus === 'UNPAID' || this.props.trialStatus != 'PENDING' ? (
-              <button
-                className="get-pro-button"
-                onMouseDown={this.props.onGetProPlan}
-              >
-                <div className="icon icon--lock-off"></div>
-                <div className="type">
-                  {locals[this.props.lang].plan.getPro}
+            <div className="pro-zone">
+              {this.props.planStatus === 'UNPAID' && this.props.trialStatus != 'PENDING' ? (
+                <button
+                  className="get-pro-button"
+                  onMouseDown={this.props.onGetProPlan}
+                >
+                  <div className="icon icon--lock-off"></div>
+                  <div className="type">
+                    {this.props.trialStatus === 'UNUSED'
+                      ? locals[this.props.lang].plan.tryPro
+                      : locals[this.props.lang].plan.getPro
+                    }
+                  </div>
+                </button>
+              ) : null}
+              {this.props.trialStatus === 'PENDING' ? (
+                <div className="label">
+                  <div className="type--bold">{this.props.trialRemainingTime}</div>
+                  <div>{this.props.trialRemainingTime <= 1 ? 'hour' : 'hours'} trial left</div>
                 </div>
-              </button>
-            ) : this.props.trialStatus === 'PENDING' ? (
-              <div className="label">
-                <div className="type--bold">{this.props.trialRemainingTime}</div>
-                <div>{this.props.trialRemainingTime == 1 ? 'hour' : 'hours'} trial left</div>
-              </div>
-            ) : null}
+              ) : this.props.trialStatus === 'EXPIRED' && this.props.planStatus != 'PAID' ? (
+                <div className="label">
+                  {locals[this.props.lang].plan.trialEnded}
+                </div>
+              ) : null}
+            </div>
           </Feature>
         }
         border={['TOP']}
