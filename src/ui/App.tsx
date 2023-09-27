@@ -80,7 +80,7 @@ class App extends React.Component<any, any> {
       },
       editorType: 'figma',
       planStatus: 'UNPAID',
-      trialStatus: 'UNDEFINED',
+      trialStatus: 'UNUSED',
       trialRemainingTime: 72,
       lang: 'en-US',
       isTrialRequested: false,
@@ -787,7 +787,11 @@ class App extends React.Component<any, any> {
               lang={this.state['lang']}
               onReOpenHighlight={this.highlightHandler('OPEN')}
               onReOpenAbout={() => this.setState({ isAboutRequested: true })}
-              onGetProPlan={() => this.setState({ isTrialRequested: true })}
+              onGetProPlan={() => {
+                if (this.state['trialStatus'] === 'EXPIRED')
+                  parent.postMessage({ pluginMessage: { type: 'GET_PRO_PLAN' } }, '*')
+                else this.setState({ isTrialRequested: true })
+              }}
             />
           </Feature>
         </main>
