@@ -7,7 +7,7 @@ const checkPlanStatus = async () => {
 
   if (trialStartDate != undefined) {
     remainingTime = (new Date().getTime() - trialStartDate) / 1000 / (60 * 60)
-    trialStatus = remainingTime > trialTime
+    trialStatus = remainingTime >= trialTime
     ? 'EXPIRED'
     : 'PENDING'
   }
