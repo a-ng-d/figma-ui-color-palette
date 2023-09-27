@@ -1,6 +1,6 @@
 import releaseNotes from '../content/releaseNotes'
 
-const isHighlightRead = async (version: string) => {
+const checkHighlightStatus = async (version: string) => {
   // figma.clientStorage.deleteAsync(`${version}_isRead`)
   const mostRecentReleaseNoteVersion: string = releaseNotes.filter(
     (note) => note['isMostRecent']
@@ -28,4 +28,4 @@ const isHighlightRead = async (version: string) => {
   }
 }
 
-export default isHighlightRead
+export default checkHighlightStatus

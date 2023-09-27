@@ -1,6 +1,6 @@
 import type { ActionsList } from './utils/types'
 import processSelection from './bridges/processSelection'
-import isHighlightRead from './bridges/isHighlightRead'
+import checkHighlightStatus from './bridges/checkHighlightStatus'
 import checkEditorType from './bridges/checkEditorType'
 import checkPlanStatus from './bridges/checkPlanStatus'
 import closeHighlight from './bridges/closeHighlight'
@@ -41,7 +41,7 @@ figma.on('selectionchange', () => processSelection())
 
 figma.on('run', () => checkEditorType())
 
-figma.on('run', () => isHighlightRead(package_json.version))
+figma.on('run', () => checkHighlightStatus(package_json.version))
 
 figma.on('run', async () => await checkPlanStatus())
 figma.on('selectionchange', async () => await checkPlanStatus())
