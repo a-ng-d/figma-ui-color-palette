@@ -19,7 +19,8 @@ const checkPlanStatus = async () => {
     type: 'PLAN_STATUS',
     data: {
       planStatus: trialStatus === 'PENDING' ? 'PAID' : figma.payments?.status.type,
-      trialStatus: trialStatus
+      trialStatus: trialStatus,
+      trialRemainingTime: Math.round(trialTime - remainingTime)
     }
   })
 }
