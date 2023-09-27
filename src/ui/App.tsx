@@ -80,7 +80,9 @@ class App extends React.Component<any, any> {
       },
       editorType: 'figma',
       planStatus: 'UNPAID',
+      trialStatus: 'UNDEFINED',
       lang: 'en-US',
+      isTrialRequested: false,
       isHighlightRequested: false,
       isGettingPro: false,
       isAboutRequested: false,
@@ -583,6 +585,15 @@ class App extends React.Component<any, any> {
           this.setState({
             planStatus: e.data.pluginMessage.data,
             isGettingPro: true,
+            isTrialRequested: false
+          })
+        
+        const enableTrial = () =>
+          this.setState({
+            planStatus: 'PAID',
+            trialStatus: 'PENDING',
+            isGettingPro: true,
+            isTrialRequested: false
           })
 
         const actions: ActionsList = {
@@ -598,6 +609,7 @@ class App extends React.Component<any, any> {
           EXPORT_PALETTE_XML: () => exportPaletteToXml(),
           EXPORT_PALETTE_CSV: () => exportPaletteToCsv(),
           GET_PRO_PLAN: () => getProPlan(),
+          ENABLE_TRIAL: () => enableTrial()
         }
 
         return actions[e.data.pluginMessage.type]?.()
@@ -690,6 +702,37 @@ class App extends React.Component<any, any> {
                 ?.isActive
             }
           >
+            {this.state['isTrialRequested'] ? (
+              <Dialog
+                title={locals[this.state['lang']].proPlan.trial.title}
+                actions={{
+                  primary: {
+                    label: locals[this.state['lang']].proPlan.trial.cta,
+                    action: () => parent.postMessage({ pluginMessage: { type: 'ENABLE_TRIAL' } }, '*'),
+                  },
+                  secondary: {
+                    label: locals[this.state['lang']].proPlan.trial.option,
+                    action: () => parent.postMessage({ pluginMessage: { type: 'GET_PRO_PLAN' } }, '*'),
+                  },
+                }}
+                onClose={() => this.setState({ isTrialRequested: false })}
+              >
+                <img
+                  className="dialog__cover"
+                  src={pp}
+                />
+                <p className="dialog__text type">
+                  {locals[this.state['lang']].proPlan.trial.message}
+                </p>
+              </Dialog>
+            ) : null}
+          </Feature>
+          <Feature
+            isActive={
+              features.find((feature) => feature.name === 'GET_PRO_PLAN')
+                ?.isActive
+            }
+          >
             {this.state['isGettingPro'] ? (
               <Dialog
                 title={locals[this.state['lang']].proPlan.welcome.title}
@@ -737,7 +780,9 @@ class App extends React.Component<any, any> {
             <Shortcuts
               onReOpenHighlight={this.highlightHandler('OPEN')}
               onReOpenAbout={() => this.setState({ isAboutRequested: true })}
+              onGetProPlan={() => this.setState({ isTrialRequested: true })}
               planStatus={this.state['planStatus']}
+              trialStatus={this.state['trialStatus']}
               lang={this.state['lang']}
             />
           </Feature>
