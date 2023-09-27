@@ -1,5 +1,5 @@
 import * as React from 'react'
-import type { Language } from '../../utils/types'
+import type { Language, Trial } from '../../utils/types'
 import Feature from '../components/Feature'
 import Bar from '../components/Bar'
 import Button from '../components/Button'
@@ -8,16 +8,14 @@ import { locals } from '../../content/locals'
 
 interface Props {
   planStatus: 'UNPAID' | 'PAID'
+  trialStatus: Trial
   lang: Language
   onReOpenHighlight: () => void
   onReOpenAbout: () => void
+  onGetProPlan: () => void
 }
 
 export default class Shortcuts extends React.Component<Props> {
-  // Direct actions
-  onGetProPlan = () =>
-    parent.postMessage({ pluginMessage: { type: 'GET_PRO_PLAN' } }, '*')
-
   render() {
     return (
       <Bar
@@ -77,10 +75,10 @@ export default class Shortcuts extends React.Component<Props> {
                 ?.isActive
             }
           >
-            {this.props.planStatus === 'UNPAID' ? (
+            {this.props.planStatus === 'UNPAID' || this.props.trialStatus != 'PENDING' ? (
               <button
                 className="get-pro-button"
-                onMouseDown={this.onGetProPlan}
+                onMouseDown={this.props.onGetProPlan}
               >
                 <div className="icon icon--lock-off"></div>
                 <div className="type">

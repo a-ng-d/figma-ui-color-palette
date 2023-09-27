@@ -11,6 +11,8 @@ export type Service = 'ONBOARD' | 'CREATE' | 'EDIT'
 
 export type Language = 'en-US'
 
+export type Trial = 'UNUSED' | 'PENDING' | 'EXPIRED'
+
 export interface ReleaseNote {
   version: string
   isMostRecent: boolean

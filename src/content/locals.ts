@@ -175,6 +175,13 @@ export const locals: { [key: string]: any } = {
           'You have successfully upgraded to the Pro plan, unlocking a range of tools to transform your color palette into a color system.',
         cta: "Let's enhance",
       },
+      trial: {
+        title: 'Would you like to upgrade to Pro for up to 3 days?',
+        message:
+          'Explore the potential of synchronizing your color palette with variables and exporting it as design tokens, app resources, files for Tokens Studio, and more.',
+        cta: 'Enable the 3-day trial',
+        option: 'Get Pro'
+      }
     },
     properties: {
       base: 'Base',
@@ -204,7 +211,7 @@ export const locals: { [key: string]: any } = {
         'Your UI Color Palette is up-to-date or local color variables and variable modes must be created',
       collectionDoesNotExist: 'Variables collection must be created',
       tooManyThemesToCreateModes:
-        'You cannot create more that 4 variable modes',
+        'You cannot create more than 4 variable modes',
       emptySourceColors:
         'There is no source color. Add them manually in the Colors section.',
       hslColorSpace:
