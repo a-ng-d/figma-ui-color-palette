@@ -81,6 +81,7 @@ class App extends React.Component<any, any> {
       editorType: 'figma',
       planStatus: 'UNPAID',
       trialStatus: 'UNDEFINED',
+      trialRemainingTime: 72,
       lang: 'en-US',
       isTrialRequested: false,
       isHighlightRequested: false,
@@ -440,6 +441,7 @@ class App extends React.Component<any, any> {
           this.setState({
             planStatus: e.data.pluginMessage.data.planStatus,
             trialStatus: e.data.pluginMessage.data.trialStatus,
+            trialRemainingTime: e.data.pluginMessage.data.trialRemainingTime
           })
 
         const updateWhileEmptySelection = () => {
@@ -779,12 +781,13 @@ class App extends React.Component<any, any> {
             }
           >
             <Shortcuts
+              planStatus={this.state['planStatus']}
+              trialStatus={this.state['trialStatus']}
+              trialRemainingTime={this.state['trialRemainingTime']}
+              lang={this.state['lang']}
               onReOpenHighlight={this.highlightHandler('OPEN')}
               onReOpenAbout={() => this.setState({ isAboutRequested: true })}
               onGetProPlan={() => this.setState({ isTrialRequested: true })}
-              planStatus={this.state['planStatus']}
-              trialStatus={this.state['trialStatus']}
-              lang={this.state['lang']}
             />
           </Feature>
         </main>

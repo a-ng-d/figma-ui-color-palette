@@ -15,6 +15,7 @@
 
 .label {
   color: var(--figma-color-text-tertiary);
+  gap: var(--size-xxxsmall)
 }
 
 .type a {

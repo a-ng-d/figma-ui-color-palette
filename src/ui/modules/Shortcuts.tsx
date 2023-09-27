@@ -9,6 +9,7 @@ import { locals } from '../../content/locals'
 interface Props {
   planStatus: 'UNPAID' | 'PAID'
   trialStatus: Trial
+  trialRemainingTime: number
   lang: Language
   onReOpenHighlight: () => void
   onReOpenAbout: () => void
@@ -85,6 +86,11 @@ export default class Shortcuts extends React.Component<Props> {
                   {locals[this.props.lang].plan.getPro}
                 </div>
               </button>
+            ) : this.props.trialStatus === 'PENDING' ? (
+              <div className="label">
+                <div className="type--bold">{this.props.trialRemainingTime}</div>
+                <div>{this.props.trialRemainingTime == 1 ? 'hour' : 'hours'} trial left</div>
+              </div>
             ) : null}
           </Feature>
         }
