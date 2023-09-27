@@ -1,5 +1,5 @@
 import * as React from 'react'
-import type { Language } from '../../utils/types'
+import type { Language, Trial } from '../../utils/types'
 import Feature from '../components/Feature'
 import Icon from './Icon'
 import Button from '../components/Button'
@@ -9,6 +9,7 @@ import { locals } from '../../content/locals'
 
 interface Props {
   planStatus: 'UNPAID' | 'PAID'
+  trialStatus: Trial
   lang: Language
 }
 
@@ -34,19 +35,15 @@ export default class About extends React.Component<Props> {
                       ?.isActive
                   }
                 >
-                  {this.props.planStatus === 'UNPAID' ? (
-                    <>
-                      <span>﹒</span>
-                      <p className="type">
-                        {locals[this.props.lang].plan.free}
-                      </p>
-                    </>
-                  ) : (
-                    <>
-                      <span>﹒</span>
-                      <p className="type">{locals[this.props.lang].plan.pro}</p>
-                    </>
-                  )}
+                  <span>﹒</span>
+                  <p className="type">
+                    {this.props.planStatus === 'UNPAID' ?
+                      locals[this.props.lang].plan.free :
+                      this.props.planStatus === 'PAID' && this.props.trialStatus === 'PENDING' ?
+                      locals[this.props.lang].plan.trial :
+                      locals[this.props.lang].plan.pro
+                    }
+                  </p>
                 </Feature>
               </div>
             </div>
