@@ -438,7 +438,8 @@ class App extends React.Component<any, any> {
 
         const checkPlanStatus = () =>
           this.setState({
-            planStatus: e.data.pluginMessage.data,
+            planStatus: e.data.pluginMessage.data.planStatus,
+            trialStatus: e.data.pluginMessage.data.trialStatus,
           })
 
         const updateWhileEmptySelection = () => {
