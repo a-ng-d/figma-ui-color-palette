@@ -770,6 +770,7 @@ class App extends React.Component<any, any> {
               >
                 <About
                   planStatus={this.state['planStatus']}
+                  trialStatus={this.state['trialStatus']}
                   lang={this.state['lang']}
                 />
               </Dialog>
