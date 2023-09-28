@@ -25,8 +25,7 @@ export default class PriorityContainer extends React.Component<Props, any> {
     return (
       <Feature
         isActive={
-          features.find((feature) => feature.name === 'GET_PRO_PLAN')
-            ?.isActive
+          features.find((feature) => feature.name === 'GET_PRO_PLAN')?.isActive
         }
       >
         <Dialog
@@ -34,11 +33,19 @@ export default class PriorityContainer extends React.Component<Props, any> {
           actions={{
             primary: {
               label: locals[this.props.lang].proPlan.trial.cta,
-              action: () => parent.postMessage({ pluginMessage: { type: 'ENABLE_TRIAL' } }, '*'),
+              action: () =>
+                parent.postMessage(
+                  { pluginMessage: { type: 'ENABLE_TRIAL' } },
+                  '*'
+                ),
             },
             secondary: {
               label: locals[this.props.lang].proPlan.trial.option,
-              action: () => parent.postMessage({ pluginMessage: { type: 'GET_PRO_PLAN' } }, '*'),
+              action: () =>
+                parent.postMessage(
+                  { pluginMessage: { type: 'GET_PRO_PLAN' } },
+                  '*'
+                ),
             },
           }}
           onClose={this.props.onClose}
@@ -58,60 +65,58 @@ export default class PriorityContainer extends React.Component<Props, any> {
   WelcomeToTrial = () => {
     return (
       <Feature
-      isActive={
-        features.find((feature) => feature.name === 'GET_PRO_PLAN')
-          ?.isActive
-      }
-    >
-      <Dialog
-        title={locals[this.props.lang].proPlan.welcome.title}
-        actions={{
-          primary: {
-            label: locals[this.props.lang].proPlan.welcome.cta,
-            action: this.props.onClose,
-          },
-        }}
-        onClose={this.props.onClose}
+        isActive={
+          features.find((feature) => feature.name === 'GET_PRO_PLAN')?.isActive
+        }
       >
-        <img
-          className="dialog__cover"
-          src={t}
-        />
-        <p className="dialog__text type">
-          {locals[this.props.lang].proPlan.welcome.trial}
-        </p>
-      </Dialog>
-    </Feature>
+        <Dialog
+          title={locals[this.props.lang].proPlan.welcome.title}
+          actions={{
+            primary: {
+              label: locals[this.props.lang].proPlan.welcome.cta,
+              action: this.props.onClose,
+            },
+          }}
+          onClose={this.props.onClose}
+        >
+          <img
+            className="dialog__cover"
+            src={t}
+          />
+          <p className="dialog__text type">
+            {locals[this.props.lang].proPlan.welcome.trial}
+          </p>
+        </Dialog>
+      </Feature>
     )
   }
 
   WelcomeToPro = () => {
     return (
       <Feature
-      isActive={
-        features.find((feature) => feature.name === 'GET_PRO_PLAN')
-          ?.isActive
-      }
-    >
-      <Dialog
-        title={locals[this.props.lang].proPlan.welcome.title}
-        actions={{
-          primary: {
-            label: locals[this.props.lang].proPlan.welcome.cta,
-            action: this.props.onClose,
-          },
-        }}
-        onClose={this.props.onClose}
+        isActive={
+          features.find((feature) => feature.name === 'GET_PRO_PLAN')?.isActive
+        }
       >
-        <img
-          className="dialog__cover"
-          src={pp}
-        />
-        <p className="dialog__text type">
-          {locals[this.props.lang].proPlan.welcome.message}
-        </p>
-      </Dialog>
-    </Feature>
+        <Dialog
+          title={locals[this.props.lang].proPlan.welcome.title}
+          actions={{
+            primary: {
+              label: locals[this.props.lang].proPlan.welcome.cta,
+              action: this.props.onClose,
+            },
+          }}
+          onClose={this.props.onClose}
+        >
+          <img
+            className="dialog__cover"
+            src={pp}
+          />
+          <p className="dialog__text type">
+            {locals[this.props.lang].proPlan.welcome.message}
+          </p>
+        </Dialog>
+      </Feature>
     )
   }
 
@@ -167,13 +172,15 @@ export default class PriorityContainer extends React.Component<Props, any> {
   }
 
   render() {
-    return(
+    return (
       <>
-        {this.props.context === 'TRY' ? (<this.TryPro />) : null}
-        {this.props.context === 'WELCOME_TO_TRIAL' ? (<this.WelcomeToTrial />) : null}
-        {this.props.context === 'WELCOME_TO_PRO' ? (<this.WelcomeToPro />) : null}
-        {this.props.context === 'HIGHLIGHT' ? (<this.Highlight />) : null}
-        {this.props.context === 'ABOUT' ? (<this.About />) : null}
+        {this.props.context === 'TRY' ? <this.TryPro /> : null}
+        {this.props.context === 'WELCOME_TO_TRIAL' ? (
+          <this.WelcomeToTrial />
+        ) : null}
+        {this.props.context === 'WELCOME_TO_PRO' ? <this.WelcomeToPro /> : null}
+        {this.props.context === 'HIGHLIGHT' ? <this.Highlight /> : null}
+        {this.props.context === 'ABOUT' ? <this.About /> : null}
       </>
     )
   }

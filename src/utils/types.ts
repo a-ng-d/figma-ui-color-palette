@@ -13,7 +13,13 @@ export type Language = 'en-US'
 
 export type TrialStatus = 'UNUSED' | 'PENDING' | 'EXPIRED'
 
-export type PriorityContext = 'EMPTY' | 'HIGHLIGHT' | 'WELCOME_TO_PRO' | 'WELCOME_TO_TRIAL' | 'TRY' | 'ABOUT'
+export type PriorityContext =
+  | 'EMPTY'
+  | 'HIGHLIGHT'
+  | 'WELCOME_TO_PRO'
+  | 'WELCOME_TO_TRIAL'
+  | 'TRY'
+  | 'ABOUT'
 
 export interface ReleaseNote {
   version: string

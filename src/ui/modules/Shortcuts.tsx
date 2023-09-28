@@ -77,7 +77,8 @@ export default class Shortcuts extends React.Component<Props> {
             }
           >
             <div className="pro-zone">
-              {this.props.planStatus === 'UNPAID' && this.props.trialStatus != 'PENDING' ? (
+              {this.props.planStatus === 'UNPAID' &&
+              this.props.trialStatus != 'PENDING' ? (
                 <button
                   className="get-pro-button"
                   onMouseDown={this.props.onGetProPlan}
@@ -86,17 +87,22 @@ export default class Shortcuts extends React.Component<Props> {
                   <div className="type">
                     {this.props.trialStatus === 'UNUSED'
                       ? locals[this.props.lang].plan.tryPro
-                      : locals[this.props.lang].plan.getPro
-                    }
+                      : locals[this.props.lang].plan.getPro}
                   </div>
                 </button>
               ) : null}
               {this.props.trialStatus === 'PENDING' ? (
                 <div className="label">
-                  <div className="type--bold">{this.props.trialRemainingTime}</div>
-                  <div>{this.props.trialRemainingTime <= 1 ? 'hour' : 'hours'} left in this trial</div>
+                  <div className="type--bold">
+                    {this.props.trialRemainingTime}
+                  </div>
+                  <div>
+                    {this.props.trialRemainingTime <= 1 ? 'hour' : 'hours'} left
+                    in this trial
+                  </div>
                 </div>
-              ) : this.props.trialStatus === 'EXPIRED' && this.props.planStatus != 'PAID' ? (
+              ) : this.props.trialStatus === 'EXPIRED' &&
+                this.props.planStatus != 'PAID' ? (
                 <div className="label">
                   {locals[this.props.lang].plan.trialEnded}
                 </div>
