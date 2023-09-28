@@ -399,14 +399,14 @@ class App extends React.Component<any, any> {
               e.data.pluginMessage.data === 'NO_RELEASE_NOTE' ||
               e.data.pluginMessage.data === 'READ_RELEASE_NOTE'
                 ? 'EMPTY'
-                : 'HIGHLIGHT'
+                : 'HIGHLIGHT',
           })
 
         const checkPlanStatus = () =>
           this.setState({
             planStatus: e.data.pluginMessage.data.planStatus,
             trialStatus: e.data.pluginMessage.data.trialStatus,
-            trialRemainingTime: e.data.pluginMessage.data.trialRemainingTime
+            trialRemainingTime: e.data.pluginMessage.data.trialRemainingTime,
           })
 
         const updateWhileEmptySelection = () => {
@@ -552,14 +552,14 @@ class App extends React.Component<any, any> {
         const getProPlan = () =>
           this.setState({
             planStatus: e.data.pluginMessage.data,
-            priorityContainerContext: 'WELCOME_TO_PRO'
+            priorityContainerContext: 'WELCOME_TO_PRO',
           })
-        
+
         const enableTrial = () =>
           this.setState({
             planStatus: 'PAID',
             trialStatus: 'PENDING',
-            priorityContainerContext: 'WELCOME_TO_TRIAL'
+            priorityContainerContext: 'WELCOME_TO_TRIAL',
           })
 
         const actions: ActionsList = {
@@ -575,7 +575,7 @@ class App extends React.Component<any, any> {
           EXPORT_PALETTE_XML: () => exportPaletteToXml(),
           EXPORT_PALETTE_CSV: () => exportPaletteToCsv(),
           GET_PRO_PLAN: () => getProPlan(),
-          ENABLE_TRIAL: () => enableTrial()
+          ENABLE_TRIAL: () => enableTrial(),
         }
 
         return actions[e.data.pluginMessage.type]?.()
@@ -667,11 +667,18 @@ class App extends React.Component<any, any> {
               trialStatus={this.state['trialStatus']}
               trialRemainingTime={this.state['trialRemainingTime']}
               lang={this.state['lang']}
-              onReOpenHighlight={() => this.setState({ priorityContainerContext: 'HIGHLIGHT' })}
-              onReOpenAbout={() => this.setState({ priorityContainerContext: 'ABOUT' })}
+              onReOpenHighlight={() =>
+                this.setState({ priorityContainerContext: 'HIGHLIGHT' })
+              }
+              onReOpenAbout={() =>
+                this.setState({ priorityContainerContext: 'ABOUT' })
+              }
               onGetProPlan={() => {
                 if (this.state['trialStatus'] === 'EXPIRED')
-                  parent.postMessage({ pluginMessage: { type: 'GET_PRO_PLAN' } }, '*')
+                  parent.postMessage(
+                    { pluginMessage: { type: 'GET_PRO_PLAN' } },
+                    '*'
+                  )
                 else this.setState({ priorityContainerContext: 'TRY' })
               }}
             />
