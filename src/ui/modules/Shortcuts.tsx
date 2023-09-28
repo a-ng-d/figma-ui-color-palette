@@ -94,7 +94,7 @@ export default class Shortcuts extends React.Component<Props> {
               {this.props.trialStatus === 'PENDING' ? (
                 <div className="label">
                   <div className="type--bold">{this.props.trialRemainingTime}</div>
-                  <div>{this.props.trialRemainingTime <= 1 ? 'hour' : 'hours'} trial left</div>
+                  <div>{this.props.trialRemainingTime <= 1 ? 'hour' : 'hours'} left in this trial</div>
                 </div>
               ) : this.props.trialStatus === 'EXPIRED' && this.props.planStatus != 'PAID' ? (
                 <div className="label">

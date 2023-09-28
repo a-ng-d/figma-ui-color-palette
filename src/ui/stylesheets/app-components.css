@@ -42,6 +42,7 @@ button.get-pro-button:focus-visible {
 
 button.get-pro-button .type {
   color: var(--figma-color-text-oncomponent);
+  white-space: nowrap;
 }
 
 button.get-pro-button .icon {
