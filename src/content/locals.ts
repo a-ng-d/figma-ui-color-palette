@@ -164,16 +164,29 @@ export const locals: { [key: string]: any } = {
       },
     },
     plan: {
-      getPro: 'Get pro',
+      getPro: 'Get Pro',
+      tryPro: 'Try Pro',
       pro: 'Pro plan',
       free: 'Free plan',
+      trial: 'Trial',
+      trialEnded: 'Your trial has ended',
     },
     proPlan: {
       welcome: {
         title: 'Welcome to UI Color Palette Pro!',
         message:
-          'You have successfully upgraded to the Pro plan, unlocking a range of tools to transform your color palette into a color system.',
-        cta: "Let's enhance",
+          'This upgrade will unlock a range of tools that enable you to convert your color palette into a color system. We hope you will enjoy the benefits.',
+        trial:
+          'This upgrade will unlock a range of tools that enable you to convert your color palette into a color system. We hope you will enjoy the benefits for the next 72 hours.',
+        cta: "Let's build",
+      },
+      trial: {
+        title:
+          'Would you like to upgrade to the Pro plan within the next 72 hours?',
+        message:
+          'Explore the potential of synchronizing your color palette with variables and exporting it as design tokens, app resources, or files for Tokens Studio.',
+        cta: 'Enable the 72-hour trial',
+        option: 'Purchase',
       },
     },
     properties: {
@@ -204,7 +217,7 @@ export const locals: { [key: string]: any } = {
         'Your UI Color Palette is up-to-date or local color variables and variable modes must be created',
       collectionDoesNotExist: 'Variables collection must be created',
       tooManyThemesToCreateModes:
-        'You cannot create more that 4 variable modes',
+        'You cannot create more than 4 variable modes',
       emptySourceColors:
         'There is no source color. Add them manually in the Colors section.',
       hslColorSpace:
