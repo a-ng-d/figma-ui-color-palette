@@ -4,7 +4,9 @@ import Feature from '../components/Feature'
 import Dialog from './Dialog'
 import Highlight from './Highlight'
 import About from './About'
+import cp from '../../content/images/choose_plan.webp'
 import pp from '../../content/images/pro_plan.webp'
+import t from '../../content/images/trial.webp'
 import { locals } from '../../content/locals'
 import features from '../../utils/config'
 import package_json from '../../../package.json'
@@ -43,7 +45,7 @@ export default class PriorityContainer extends React.Component<Props, any> {
         >
           <img
             className="dialog__cover"
-            src={pp}
+            src={cp}
           />
           <p className="dialog__text type">
             {locals[this.props.lang].proPlan.trial.message}
@@ -73,7 +75,7 @@ export default class PriorityContainer extends React.Component<Props, any> {
       >
         <img
           className="dialog__cover"
-          src={pp}
+          src={t}
         />
         <p className="dialog__text type">
           {locals[this.props.lang].proPlan.welcome.trial}
