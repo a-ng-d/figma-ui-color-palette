@@ -79,7 +79,6 @@ class App extends React.Component<any, any> {
       trialRemainingTime: 72,
       lang: 'en-US',
       priorityContainerContext: 'EMPTY',
-      isHighlightRequested: false,
       isLoaded: false,
       onGoingStep: '',
     }
@@ -396,15 +395,11 @@ class App extends React.Component<any, any> {
 
         const checkHighlightStatus = () =>
           this.setState({
-            isHighlightRequested:
+            priorityContainerContext:
               e.data.pluginMessage.data === 'NO_RELEASE_NOTE' ||
               e.data.pluginMessage.data === 'READ_RELEASE_NOTE'
-                ? this.setState({
-                  priorityContainerContext: 'EMPTY'
-                })
-                : this.setState({
-                  priorityContainerContext: 'HIGHLIGHT'
-                })
+                ? 'EMPTY'
+                : 'HIGHLIGHT'
           })
 
         const checkPlanStatus = () =>
