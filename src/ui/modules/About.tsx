@@ -1,5 +1,5 @@
 import * as React from 'react'
-import type { Language, Trial } from '../../utils/types'
+import type { Language, TrialStatus } from '../../utils/types'
 import Feature from '../components/Feature'
 import Icon from './Icon'
 import Button from '../components/Button'
@@ -9,7 +9,7 @@ import { locals } from '../../content/locals'
 
 interface Props {
   planStatus: 'UNPAID' | 'PAID'
-  trialStatus: Trial
+  trialStatus: TrialStatus
   lang: Language
 }
 

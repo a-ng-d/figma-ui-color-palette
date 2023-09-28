@@ -11,7 +11,9 @@ export type Service = 'ONBOARD' | 'CREATE' | 'EDIT'
 
 export type Language = 'en-US'
 
-export type Trial = 'UNUSED' | 'PENDING' | 'EXPIRED'
+export type TrialStatus = 'UNUSED' | 'PENDING' | 'EXPIRED'
+
+export type PriorityContext = 'EMPTY' | 'HIGHLIGHT' | 'WELCOME_TO_PRO' | 'WELCOME_TO_TRIAL' | 'TRY' | 'ABOUT'
 
 export interface ReleaseNote {
   version: string
