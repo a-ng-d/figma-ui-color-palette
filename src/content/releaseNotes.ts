@@ -23,7 +23,7 @@ const releaseNotes: Array<ReleaseNote> = [
     content: [
       'Within 72 hours, all the tools will be available for you to test how you can distribute your color palettes among design and development teams. Our ambition is to make color palettes accessible, easy to handle, and publishable.',
       'Stay connected with our announcements and sharing, and help us spread good practices in building color palettes and systems.',
-      'Ratings are a good measure of satisfaction. Your experience matters, whether it is good or bad, as it indicates whether our decisions have resolved your problem. You can leave your rating on the plugin page or in the Resources tool.',
+      'Ratings are a good measure of satisfaction. Your experience matters, whether it is good or bad, as it indicates whether our decisions have resolved your problem. You can leave your rating on the plugin page or in the Resources drawer.',
     ],
     numberOfNotes: 3,
     learnMore: ['https://uicp.link/whats-new', 'https://uicp.link/network', 'https://www.figma.com/community/plugin/1063959496693642315'],
