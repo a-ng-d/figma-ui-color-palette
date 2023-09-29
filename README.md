@@ -1,7 +1,9 @@
 ![GitHub package.json version](https://img.shields.io/github/package-json/v/inVoltag/figma-ui-color-palette?color=informational) ![GitHub last commit](https://img.shields.io/github/last-commit/inVoltag/figma-ui-color-palette?color=informational) ![GitHub](https://img.shields.io/github/license/inVoltag/figma-ui-color-palette?color=informational) ![Twitter Follow](https://img.shields.io/twitter/follow/a_ng_d?style=social)
 
 # UI Color Palette
-UI Color Palette is a Figma and FigJam plugin creating consistent and accessible color palettes specifically for UI. The plugin uses the alternative color space from `RGB` and `HSL`, like `LCH`, `OKLCH`, `CIELAB`, `OKLAB`, and `HSLuv`, to create color shades according to the chosen lightness scale. These spaces are relevant to make these shades compliant with the [WCAG standards](https://www.w3.org/WAI/standards-guidelines/wcag/) and guarantee enough contrast between the information and its background color. The idea to make this Figma plugin comes from the article: [Accessible Palette: stop using HSL for color systems](https://wildbit.com/blog/accessible-palette-stop-using-hsl-for-color-systems).
+UI Color Palette is a Figma and FigJam plugin that creates consistent and accessible color palettes specifically for UI. The plugin uses alternative color spaces, like `LCH`, `OKLCH`, `CIELAB`, `OKLAB`, and `HSLuv`, to create color shades based on the configured lightness scale. These spaces ensure [WCAG standards](https://www.w3.org/WAI/standards-guidelines/wcag/) compliance and sufficient contrast between information and background color.
+
+The idea to make this Figma plugin comes from the article: [Accessible Palette: stop using HSL for color systems](https://wildbit.com/blog/accessible-palette-stop-using-hsl-for-color-systems).
 
 This plugin will allow you to:
 - Create a complete palette from any existing color to help you build a color system.

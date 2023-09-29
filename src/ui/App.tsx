@@ -13,16 +13,11 @@ import Feature from './components/Feature'
 import Onboarding from './services/Onboarding'
 import CreatePalette from './services/CreatePalette'
 import EditPalette from './services/EditPalette'
-import Highlight from './modules/Highlight'
-import Dialog from './modules/Dialog'
-import About from './modules/About'
+import PriorityContainer from './modules/PriorityContainer'
 import Shortcuts from './modules/Shortcuts'
-import package_json from './../../package.json'
 import { palette, presets } from '../utils/palettePackage'
 import doLightnessScale from '../utils/doLightnessScale'
 import features from '../utils/config'
-import { locals } from '../content/locals'
-import pp from '../content/images/pro_plan.webp'
 import 'figma-plugin-ds/dist/figma-plugin-ds.css'
 import './stylesheets/app.css'
 import './stylesheets/app-components.css'
@@ -80,10 +75,10 @@ class App extends React.Component<any, any> {
       },
       editorType: 'figma',
       planStatus: 'UNPAID',
+      trialStatus: 'UNUSED',
+      trialRemainingTime: 72,
       lang: 'en-US',
-      isHighlightRequested: false,
-      isGettingPro: false,
-      isAboutRequested: false,
+      priorityContainerContext: 'EMPTY',
       isLoaded: false,
       onGoingStep: '',
     }
@@ -391,33 +386,6 @@ class App extends React.Component<any, any> {
     return actions[e.target.dataset.feature]?.()
   }
 
-  highlightHandler = (action: string) => {
-    const openHighlight = () => this.setState({ isHighlightRequested: true })
-
-    const closeHighlight = () => {
-      parent.postMessage(
-        {
-          pluginMessage: {
-            type: 'CLOSE_HIGHLIGHT',
-            data: {
-              version: package_json.version,
-              isRead: true,
-            },
-          },
-        },
-        '*'
-      )
-      this.setState({ isHighlightRequested: false })
-    }
-
-    const actions: ActionsList = {
-      OPEN: () => openHighlight(),
-      CLOSE: () => closeHighlight(),
-    }
-
-    return actions[action]
-  }
-
   // Render
   render() {
     onmessage = (e: MessageEvent) => {
@@ -427,16 +395,18 @@ class App extends React.Component<any, any> {
 
         const checkHighlightStatus = () =>
           this.setState({
-            isHighlightRequested:
+            priorityContainerContext:
               e.data.pluginMessage.data === 'NO_RELEASE_NOTE' ||
               e.data.pluginMessage.data === 'READ_RELEASE_NOTE'
-                ? false
-                : true,
+                ? 'EMPTY'
+                : 'HIGHLIGHT',
           })
 
         const checkPlanStatus = () =>
           this.setState({
-            planStatus: e.data.pluginMessage.data,
+            planStatus: e.data.pluginMessage.data.planStatus,
+            trialStatus: e.data.pluginMessage.data.trialStatus,
+            trialRemainingTime: e.data.pluginMessage.data.trialRemainingTime,
           })
 
         const updateWhileEmptySelection = () => {
@@ -582,7 +552,14 @@ class App extends React.Component<any, any> {
         const getProPlan = () =>
           this.setState({
             planStatus: e.data.pluginMessage.data,
-            isGettingPro: true,
+            priorityContainerContext: 'WELCOME_TO_PRO',
+          })
+
+        const enableTrial = () =>
+          this.setState({
+            planStatus: 'PAID',
+            trialStatus: 'PENDING',
+            priorityContainerContext: 'WELCOME_TO_TRIAL',
           })
 
         const actions: ActionsList = {
@@ -598,6 +575,7 @@ class App extends React.Component<any, any> {
           EXPORT_PALETTE_XML: () => exportPaletteToXml(),
           EXPORT_PALETTE_CSV: () => exportPaletteToCsv(),
           GET_PRO_PLAN: () => getProPlan(),
+          ENABLE_TRIAL: () => enableTrial(),
         }
 
         return actions[e.data.pluginMessage.type]?.()
@@ -672,73 +650,37 @@ class App extends React.Component<any, any> {
               />
             ) : null}
           </Feature>
-          <Feature
-            isActive={
-              features.find((feature) => feature.name === 'HIGHLIGHT')?.isActive
-            }
-          >
-            {this.state['isHighlightRequested'] ? (
-              <Highlight
-                lang={this.state['lang']}
-                onCloseHighlight={this.highlightHandler('CLOSE')}
-              />
-            ) : null}
-          </Feature>
-          <Feature
-            isActive={
-              features.find((feature) => feature.name === 'GET_PRO_PLAN')
-                ?.isActive
-            }
-          >
-            {this.state['isGettingPro'] ? (
-              <Dialog
-                title={locals[this.state['lang']].proPlan.welcome.title}
-                actions={{
-                  primary: {
-                    label: locals[this.state['lang']].proPlan.welcome.cta,
-                    action: () => this.setState({ isGettingPro: false }),
-                  },
-                }}
-                onClose={() => this.setState({ isGettingPro: false })}
-              >
-                <img
-                  className="dialog__cover"
-                  src={pp}
-                />
-                <p className="dialog__text type">
-                  {locals[this.state['lang']].proPlan.welcome.message}
-                </p>
-              </Dialog>
-            ) : null}
-          </Feature>
-          <Feature
-            isActive={
-              features.find((feature) => feature.name === 'ABOUT')?.isActive
-            }
-          >
-            {this.state['isAboutRequested'] ? (
-              <Dialog
-                title={locals[this.state['lang']].about.title}
-                actions={{}}
-                onClose={() => this.setState({ isAboutRequested: false })}
-              >
-                <About
-                  planStatus={this.state['planStatus']}
-                  lang={this.state['lang']}
-                />
-              </Dialog>
-            ) : null}
-          </Feature>
+          <PriorityContainer
+            context={this.state['priorityContainerContext']}
+            planStatus={this.state['planStatus']}
+            trialStatus={this.state['trialStatus']}
+            lang={this.state['lang']}
+            onClose={() => this.setState({ priorityContainerContext: 'EMPTY' })}
+          />
           <Feature
             isActive={
               features.find((feature) => feature.name === 'SHORTCUTS')?.isActive
             }
           >
             <Shortcuts
-              onReOpenHighlight={this.highlightHandler('OPEN')}
-              onReOpenAbout={() => this.setState({ isAboutRequested: true })}
               planStatus={this.state['planStatus']}
+              trialStatus={this.state['trialStatus']}
+              trialRemainingTime={this.state['trialRemainingTime']}
               lang={this.state['lang']}
+              onReOpenHighlight={() =>
+                this.setState({ priorityContainerContext: 'HIGHLIGHT' })
+              }
+              onReOpenAbout={() =>
+                this.setState({ priorityContainerContext: 'ABOUT' })
+              }
+              onGetProPlan={() => {
+                if (this.state['trialStatus'] === 'EXPIRED')
+                  parent.postMessage(
+                    { pluginMessage: { type: 'GET_PRO_PLAN' } },
+                    '*'
+                  )
+                else this.setState({ priorityContainerContext: 'TRY' })
+              }}
             />
           </Feature>
         </main>

@@ -1,5 +1,5 @@
 import * as React from 'react'
-import type { Language } from '../../utils/types'
+import type { Language, TrialStatus } from '../../utils/types'
 import Feature from '../components/Feature'
 import Icon from './Icon'
 import Button from '../components/Button'
@@ -9,6 +9,7 @@ import { locals } from '../../content/locals'
 
 interface Props {
   planStatus: 'UNPAID' | 'PAID'
+  trialStatus: TrialStatus
   lang: Language
 }
 
@@ -34,19 +35,15 @@ export default class About extends React.Component<Props> {
                       ?.isActive
                   }
                 >
-                  {this.props.planStatus === 'UNPAID' ? (
-                    <>
-                      <span>﹒</span>
-                      <p className="type">
-                        {locals[this.props.lang].plan.free}
-                      </p>
-                    </>
-                  ) : (
-                    <>
-                      <span>﹒</span>
-                      <p className="type">{locals[this.props.lang].plan.pro}</p>
-                    </>
-                  )}
+                  <span>﹒</span>
+                  <p className="type">
+                    {this.props.planStatus === 'UNPAID'
+                      ? locals[this.props.lang].plan.free
+                      : this.props.planStatus === 'PAID' &&
+                        this.props.trialStatus === 'PENDING'
+                      ? locals[this.props.lang].plan.trial
+                      : locals[this.props.lang].plan.pro}
+                  </p>
                 </Feature>
               </div>
             </div>
@@ -133,17 +130,13 @@ export default class About extends React.Component<Props> {
                 url="https://uicp.link/network"
                 label={locals[this.props.lang].about.giveSupport.follow}
               />
-              {this.props.planStatus === 'UNPAID' ? (
-                <>
-                  <span>﹒</span>
-                  <Button
-                    type="tertiary"
-                    isLink={true}
-                    url="https://uicp.link/donate"
-                    label={locals[this.props.lang].about.giveSupport.coffee}
-                  />
-                </>
-              ) : null}
+              <span>﹒</span>
+              <Button
+                type="tertiary"
+                isLink={true}
+                url="https://www.figma.com/community/plugin/1063959496693642315/ui-color-palette"
+                label={locals[this.props.lang].about.giveSupport.rate}
+              />
             </div>
           </div>
         </div>

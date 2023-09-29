@@ -1,6 +1,6 @@
 import type { ActionsList } from './utils/types'
 import processSelection from './bridges/processSelection'
-import isHighlightRead from './bridges/isHighlightRead'
+import checkHighlightStatus from './bridges/checkHighlightStatus'
 import checkEditorType from './bridges/checkEditorType'
 import checkPlanStatus from './bridges/checkPlanStatus'
 import closeHighlight from './bridges/closeHighlight'
@@ -22,6 +22,7 @@ import exportXml from './bridges/exportXml'
 import exportCsv from './bridges/exportCsv'
 import updateSettings from './bridges/updateSettings'
 import getProPlan from './bridges/getProPlan'
+import enableTrial from './bridges/enableTrial'
 import package_json from './../package.json'
 import { locals, lang } from './content/locals'
 
@@ -39,8 +40,11 @@ figma.on('run', () => processSelection())
 figma.on('selectionchange', () => processSelection())
 
 figma.on('run', () => checkEditorType())
-figma.on('run', () => isHighlightRead(package_json.version))
+
+figma.on('run', () => checkHighlightStatus(package_json.version))
+
 figma.on('run', async () => await checkPlanStatus())
+figma.on('selectionchange', async () => await checkPlanStatus())
 
 figma.ui.onmessage = async (msg) => {
   let palette: SceneNode
@@ -73,6 +77,7 @@ figma.ui.onmessage = async (msg) => {
     },
     UPDATE_SETTINGS: () => updateSettings(msg, palette),
     GET_PRO_PLAN: async () => await getProPlan(),
+    ENABLE_TRIAL: async () => await enableTrial(),
   }
 
   return actions[msg.type]?.()
