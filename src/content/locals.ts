@@ -129,19 +129,19 @@ export const locals: { [key: string]: any } = {
     about: {
       title: 'About UI Color Palette',
       getHelp: {
-        title: 'Support',
+        title: 'Have help',
         documentation: 'Read the documentation',
         email: 'Send an email',
       },
       beInvolved: {
-        title: 'Help us',
+        title: 'Get involved',
         issue: 'Open an issue',
         discuss: 'Start a discussion',
       },
       giveSupport: {
-        title: 'Follow the author',
-        follow: 'Connect to my LinkedIn',
-        coffee: 'Buy me a coffee',
+        title: 'Give support',
+        follow: 'Follow our LinkedIn page',
+        rate: 'Rate us',
       },
     },
     actions: {

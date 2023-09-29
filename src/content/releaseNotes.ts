@@ -1,4 +1,7 @@
 import type { ReleaseNote } from '../utils/types'
+import rnv251 from './images/release_note_v25_1.webp'
+import rnv252 from './images/release_note_v25_2.webp'
+import rnv253 from './images/release_note_v25_3.webp'
 import rnv241 from './images/release_note_v24_1.webp'
 import rnv242 from './images/release_note_v24_2.webp'
 import rnv23 from './images/release_note_v23.webp'
@@ -9,8 +12,25 @@ import rnv19 from './images/release_note_v19.webp'
 
 const releaseNotes: Array<ReleaseNote> = [
   {
-    version: '2.4.0',
+    version: '2.5.0',
     isMostRecent: true,
+    title: [
+      '72-hour trial period to spread your palettes',
+      'UI Color Palette is on LinkedIn',
+      'Top or Flop: Leave your rating',
+    ],
+    image: [rnv251, rnv252, rnv253],
+    content: [
+      'Within 72 hours, all the tools will be available for you to test how you can distribute your color palettes among design and development teams. Our ambition is to make color palettes accessible, easy to handle, and publishable.',
+      'Stay connected with our announcements and sharing, and help us spread good practices in building color palettes and systems.',
+      'Ratings are a good measure of satisfaction. Your experience matters, whether it is good or bad, as it indicates whether our decisions have resolved your problem. You can leave your rating on the plugin page or in the Resources drawer.',
+    ],
+    numberOfNotes: 3,
+    learnMore: ['https://uicp.link/whats-new', 'https://uicp.link/network', 'https://www.figma.com/community/plugin/1063959496693642315'],
+  },
+  {
+    version: '2.4.0',
+    isMostRecent: false,
     title: [
       'UI Color palette 24: Create Color systems “like a Pro”',
       'UI Color palette 24: Color themes management “like a Pro”',
@@ -32,7 +52,7 @@ const releaseNotes: Array<ReleaseNote> = [
       'Color spaces can be managed throughout the UI Color Palette. This allows you to select and switch between a variety of color spaces such as LCH, OKLCH, LAB, OKLAB, and HSL.',
     ],
     numberOfNotes: 1,
-    learnMore: ['https://uicp.link/whats-new', 'https://uicp.link/whats-new'],
+    learnMore: ['https://uicp.link/whats-new'],
   },
   {
     version: '2.2.0',
@@ -43,7 +63,7 @@ const releaseNotes: Array<ReleaseNote> = [
       'Newly extended to Figjam, the UI Color Palette plugin empowers designers to create and customize their UI color schemes at the start of the design process, providing greater flexibility to their workflow and enhancing their creative potential.',
     ],
     numberOfNotes: 1,
-    learnMore: ['https://uicp.link/whats-new', 'https://uicp.link/whats-new'],
+    learnMore: ['https://uicp.link/whats-new'],
   },
   {
     version: '2.1.0',
@@ -54,7 +74,7 @@ const releaseNotes: Array<ReleaseNote> = [
       "Enhance your palette customization by editing the text colors used for the contrast score, surpassing the restrictions of using pure black and white. This ensures that your palette remains accessible, aligns with your brand's style, and complies with the WCAG and APCA standards.",
     ],
     numberOfNotes: 1,
-    learnMore: ['https://uicp.link/whats-new', 'https://uicp.link/whats-new'],
+    learnMore: ['https://uicp.link/whats-new'],
   },
   {
     version: '2.0.0',
@@ -65,7 +85,7 @@ const releaseNotes: Array<ReleaseNote> = [
       "The color shades generation has been updated to improve the consistency of your palette's lightness and saturation. The new algorithm is automatically used for new palettes, and can be enabled for existing palettes in the settings.",
     ],
     numberOfNotes: 1,
-    learnMore: ['https://uicp.link/whats-new', 'https://uicp.link/whats-new'],
+    learnMore: ['https://uicp.link/whats-new'],
   },
   {
     version: '1.9.0',
@@ -76,7 +96,7 @@ const releaseNotes: Array<ReleaseNote> = [
       'Automatically identify the closest color shade to the source color when editing a palette. This feature aims to obtain the sRGB version of the source color that may not be natively within the gamut, making it easier to use in your UI.',
     ],
     numberOfNotes: 1,
-    learnMore: ['https://uicp.link/whats-new', 'https://uicp.link/whats-new'],
+    learnMore: ['https://uicp.link/whats-new'],
   },
 ]
 

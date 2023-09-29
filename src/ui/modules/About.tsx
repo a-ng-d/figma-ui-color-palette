@@ -130,17 +130,13 @@ export default class About extends React.Component<Props> {
                 url="https://uicp.link/network"
                 label={locals[this.props.lang].about.giveSupport.follow}
               />
-              {this.props.planStatus === 'UNPAID' ? (
-                <>
-                  <span>﹒</span>
-                  <Button
-                    type="tertiary"
-                    isLink={true}
-                    url="https://uicp.link/donate"
-                    label={locals[this.props.lang].about.giveSupport.coffee}
-                  />
-                </>
-              ) : null}
+              <span>﹒</span>
+              <Button
+                type="tertiary"
+                isLink={true}
+                url="https://www.figma.com/community/plugin/1063959496693642315/ui-color-palette"
+                label={locals[this.props.lang].about.giveSupport.rate}
+              />
             </div>
           </div>
         </div>
