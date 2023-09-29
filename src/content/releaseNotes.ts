@@ -15,7 +15,7 @@ const releaseNotes: Array<ReleaseNote> = [
     version: '2.5.0',
     isMostRecent: true,
     title: [
-      '3-day trial period to spread your palettes',
+      '72-hour trial period to spread your palettes',
       'UI Color Palette is on LinkedIn',
       'Top or Flop: Leave your rating',
     ],
