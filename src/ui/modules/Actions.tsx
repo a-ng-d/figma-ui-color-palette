@@ -127,7 +127,7 @@ export default class Actions extends React.Component<Props> {
         </div>
         <div className="actions__left">
           <Dropdown
-            id="types"
+            id="sync-mode"
             options={[
               {
                 label:

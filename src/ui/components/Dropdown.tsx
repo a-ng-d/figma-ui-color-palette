@@ -101,6 +101,7 @@ export default class Dropdown extends React.Component<Props, any> {
   render() {
     return (
       <div
+        id={this.props.id}
         className="select-menu"
         ref={this.selectMenuRef}
       >

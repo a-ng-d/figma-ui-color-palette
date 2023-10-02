@@ -380,7 +380,7 @@ export default class EditPalette extends React.Component<Props, any> {
                 shouldFill={false}
               >
                 <Dropdown
-                  id="presets"
+                  id="switch-theme"
                   options={this.workingThemes().map((theme, index) => {
                     return {
                       label: theme.name,
