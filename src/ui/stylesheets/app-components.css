@@ -142,6 +142,10 @@ div.select-menu__label {
   margin-top: 0;
 }
 
+div.select-menu {
+  min-width: 224px;
+}
+
 div.form-item {
   display: flex;
   align-items: baseline;
@@ -205,10 +209,6 @@ div.bar--compact {
 
 div.bar--text-only {
   align-items: baseline;
-}
-
-div.bar .select-menu {
-  min-width: 224px;
 }
 
 /* Pop in*/

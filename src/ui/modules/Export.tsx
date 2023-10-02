@@ -369,92 +369,71 @@ export default class Export extends React.Component<Props, any> {
     return (
       <>
         <div className="export-palette controls__control">
-          <div>
-            <div className="section-controls">
-              <div className="section-controls__left-part">
-                <div className="section-title">
-                  {locals[this.props.lang].export.format}
-                </div>
+          <div className="section-controls">
+            <div className="section-controls__left-part">
+              <div className="section-title">
+                {locals[this.props.lang].export.format}
                 <div className="type">(7)</div>
               </div>
-              <div className="section-controls__right-part">
               <Dropdown
-                  id="exports-Group"
-                  options={[
-                    {
-                      label: 'Tokens',
-                      value: 'TOKENS_GROUP',
-                      position: 0,
-                      isActive: true,
-                      isBlocked: false,
-                    },
-                    {
-                      label: 'CSS',
-                      value: 'CSS_GROUP',
-                      position: 1,
-                      isActive: true,
-                      isBlocked: false,
-                    },
-                    {
-                      label: 'Apple',
-                      value: 'APPLE_GROUP',
-                      position: 2,
-                      isActive: true,
-                      isBlocked: false,
-                    },
-                    {
-                      label: 'Android',
-                      value: 'ANDROID_GROUP',
-                      position: 3,
-                      isActive: true,
-                      isBlocked: false,
-                    },
-                    {
-                      label: 'Speadsheet',
-                      value: 'SPREADSHEET_GROUP',
-                      position: 4,
-                      isActive: true,
-                      isBlocked: false,
-                    },
-                  ]}
-                  selected={this.state['exportsGroup'] ?? ''}
-                  feature="SELECT_EXPORTS_GROUP"
-                  parentClassName="controls"
-                  onChange={(e) =>
-                    this.setState({
-                      exportsGroup: (e.target as HTMLInputElement).dataset.value
-                    })
-                  }
-                />
-              </div>
-            </div>
-            <div className="export-palette__options">
-              <ul>
-                {this.state['exportsGroup'] === 'TOKENS_GROUP' ? <this.TokensGroup/> : null}
-                {this.state['exportsGroup'] === 'CSS_GROUP' ? <this.CssGroup/> : null}
-                {this.state['exportsGroup'] === 'APPLE_GROUP' ? <this.AppleGroup/> : null}
-                {this.state['exportsGroup'] === 'ANDROID_GROUP' ? <this.AndroidGroup/> : null}
-                {this.state['exportsGroup'] === 'SPREADSHEET_GROUP' ? <this.SpreadsheetGroup/> : null}
-              </ul>
-            </div>
-          </div>
-          <div>
-            <div className="section-controls">
-              <div className="section-controls__left-part">
-                <div className="section-title">
-                  {locals[this.props.lang].export.preview}
-                </div>
-              </div>
-            </div>
-            <div className="export-palette__options">
-              <Input
-                type="LONG_TEXT"
-                value={this.props.exportPreview}
-                isReadOnly={true}
-                onBlur={this.deSelectPreview}
-                onFocus={(e) => this.selectPreview(e)}
+                id="exports-list"
+                options={[
+                  {
+                    label: 'Tokens',
+                    value: 'TOKENS_GROUP',
+                    position: 0,
+                    isActive: true,
+                    isBlocked: false,
+                  },
+                  {
+                    label: 'CSS',
+                    value: 'CSS_GROUP',
+                    position: 1,
+                    isActive: true,
+                    isBlocked: false,
+                  },
+                  {
+                    label: 'Apple',
+                    value: 'APPLE_GROUP',
+                    position: 2,
+                    isActive: true,
+                    isBlocked: false,
+                  },
+                  {
+                    label: 'Android',
+                    value: 'ANDROID_GROUP',
+                    position: 3,
+                    isActive: true,
+                    isBlocked: false,
+                  },
+                  {
+                    label: 'Speadsheet',
+                    value: 'SPREADSHEET_GROUP',
+                    position: 4,
+                    isActive: true,
+                    isBlocked: false,
+                  },
+                ]}
+                selected={this.state['exportsGroup'] ?? ''}
+                feature="SELECT_EXPORTS_GROUP"
+                parentClassName="controls"
+                onChange={(e) =>
+                  this.setState({
+                    exportsGroup: (e.target as HTMLInputElement).dataset.value
+                  })
+                }
               />
             </div>
+            <div className="section-controls__right-part"></div>
+          </div>
+          <div className="export-palette__preview">
+            <Input
+              type="LONG_TEXT"
+              value={this.props.exportPreview}
+              isReadOnly={true}
+              onBlur={this.deSelectPreview}
+              onFocus={(e) => this.selectPreview(e)}
+            />
           </div>
         </div>
         <Actions

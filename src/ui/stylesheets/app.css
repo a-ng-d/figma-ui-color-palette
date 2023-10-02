@@ -204,36 +204,22 @@ li .themes__description {
 
 /* Export */
 div.export-palette {
-  flex-direction: row;
   overflow: hidden;
 }
 
-div.export-palette > div {
+div.export-palette {
   display: flex;
-  flex-direction: column;
 }
 
-div.export-palette > div:first-child {
-  flex: 2;
-}
-
-div.export-palette > div:last-child {
-  flex: 3;
-}
-
-div.export-palette__options {
+div.export-palette__preview {
   padding: 0 var(--size-xsmall);
   flex: 1;
   overflow-y: auto;
 }
 
-div.export-palette__options textarea {
+div.export-palette__preview textarea {
   height: 100%;
   margin: 0;
-}
-
-ul.options li {
-  display: block;
 }
 
 /* Settings */
@@ -300,4 +286,9 @@ div.pro-zone {
   align-items: center;
   gap: var(--size-xxxsmall);
   color: var(--figma-color-text);
+}
+
+/* Dropdown */
+#switch-presets, #exports-list {
+  flex: 1;
 }
