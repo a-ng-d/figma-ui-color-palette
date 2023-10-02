@@ -119,8 +119,9 @@ div.section-controls .label {
   width: auto;
 }
 
-div.section-controls .select-menu {
-  flex: 1;
+div.section-controls .section-title {
+  display: flex;
+  gap: var(--size-xxxsmall)
 }
 
 /* Onboarding */

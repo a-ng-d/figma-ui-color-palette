@@ -258,10 +258,10 @@ export default class Scale extends React.Component<Props, any> {
             <div className="section-controls__left-part">
               <div className="section-title">
                 {locals[this.props.lang].scale.title}
+                <div className="type">{`(${
+                  Object.entries(this.props.scale ?? {}).length
+                })`}</div>
               </div>
-              <div className="type">{`(${
-                Object.entries(this.props.scale ?? {}).length
-              })`}</div>
             </div>
             <div className="section-controls__right-part">
               <div className="label">{this.props.preset.name}</div>

@@ -340,8 +340,8 @@ export default class Colors extends React.Component<Props, any> {
             <div className="section-controls__left-part">
               <div className="section-title">
                 {locals[this.props.lang].colors.title}
+                <div className="type">{`(${this.props.colors.length})`}</div>
               </div>
-              <div className="type">{`(${this.props.colors.length})`}</div>
             </div>
             <div className="section-controls__right-part">
               <Button
