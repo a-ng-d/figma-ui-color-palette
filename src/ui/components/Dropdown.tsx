@@ -24,6 +24,7 @@ interface Props {
 
 export default class Dropdown extends React.Component<Props, any> {
   selectMenuRef: React.MutableRefObject<any>
+  buttonRef: React.MutableRefObject<any>
   listRef: React.MutableRefObject<any>
 
   static defaultProps = {
@@ -40,6 +41,7 @@ export default class Dropdown extends React.Component<Props, any> {
       )[0].position,
     }
     this.selectMenuRef = React.createRef()
+    this.buttonRef = React.createRef()
     this.listRef = React.createRef()
     this.handleClickOutside = this.handleClickOutside.bind(this)
   }
@@ -51,7 +53,11 @@ export default class Dropdown extends React.Component<Props, any> {
     document.removeEventListener('mousedown', this.handleClickOutside)
 
   handleClickOutside = (e: Event) => {
-    if (this.selectMenuRef && !this.selectMenuRef.current.contains(e.target))
+    if (e.target ===  this.buttonRef.current)
+      this.setState({
+        isListOpen: true,
+      })
+    else if (e.target !=  this.listRef.current)
       this.setState({
         isListOpen: false,
       })
@@ -112,6 +118,7 @@ export default class Dropdown extends React.Component<Props, any> {
             this.state['isListOpen'] ? ' select-menu__button--active' : ''
           }`}
           onMouseDown={this.onOpenList}
+          ref={this.buttonRef}
         >
           <span className="select-menu__label">
             {
