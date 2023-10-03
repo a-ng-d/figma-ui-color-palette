@@ -287,8 +287,3 @@ div.pro-zone {
   gap: var(--size-xxxsmall);
   color: var(--figma-color-text);
 }
-
-/* Dropdown */
-#switch-presets, #exports-list {
-  flex: 1;
-}

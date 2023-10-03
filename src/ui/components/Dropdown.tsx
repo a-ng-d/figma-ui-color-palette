@@ -18,6 +18,7 @@ interface Props {
     action: () => void
   }>
   parentClassName?: string
+  alignment?: 'RIGHT' | 'LEFT' | 'FILL'
   onChange: (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => void
 }
 
@@ -27,6 +28,7 @@ export default class Dropdown extends React.Component<Props, any> {
 
   static defaultProps = {
     actions: [],
+    alignment: 'LEFT'
   }
 
   constructor(props: Props) {
@@ -102,7 +104,7 @@ export default class Dropdown extends React.Component<Props, any> {
     return (
       <div
         id={this.props.id}
-        className="select-menu"
+        className={`select-menu${this.props.alignment === 'LEFT' ? ' select-menu--left' : this.props.alignment === 'RIGHT' ? ' select-menu--right' : ' select-menu--fill'}`}
         ref={this.selectMenuRef}
       >
         <button
