@@ -375,7 +375,9 @@ export default class Export extends React.Component<Props, any> {
                 {locals[this.props.lang].export.format}
                 <div className="type">(7)</div>
               </div>
-              <Dropdown
+            </div>
+            <div className="section-controls__right-part">
+            <Dropdown
                 id="exports-list"
                 options={[
                   {
@@ -417,6 +419,7 @@ export default class Export extends React.Component<Props, any> {
                 selected={this.state['exportsGroup'] ?? ''}
                 feature="SELECT_EXPORTS_GROUP"
                 parentClassName="controls"
+                alignment="RIGHT"
                 onChange={(e) =>
                   this.setState({
                     exportsGroup: (e.target as HTMLInputElement).dataset.value
@@ -424,7 +427,6 @@ export default class Export extends React.Component<Props, any> {
                 }
               />
             </div>
-            <div className="section-controls__right-part"></div>
           </div>
           <div className="export-palette__preview">
             <Input

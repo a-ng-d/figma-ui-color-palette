@@ -407,6 +407,7 @@ export default class EditPalette extends React.Component<Props, any> {
                   ]}
                   feature="SWITCH_THEME"
                   parentClassName="ui"
+                  alignment="RIGHT"
                   onChange={(e) => this.switchThemeHandler(e)}
                 />
               </FormItem>

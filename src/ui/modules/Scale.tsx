@@ -153,6 +153,8 @@ export default class Scale extends React.Component<Props, any> {
               <div className="section-title">
                 {locals[this.props.lang].scale.title}
               </div>
+            </div>
+            <div className="section-controls__right-part">
               <Feature
                 isActive={
                   features.find((feature) => feature.name === 'SCALE_PRESETS')
@@ -173,11 +175,10 @@ export default class Scale extends React.Component<Props, any> {
                   selected={this.props.preset.id}
                   feature="UPDATE_PRESET"
                   parentClassName="controls"
+                  alignment="RIGHT"
                   onChange={(e) => this.props.onChangePreset?.(e)}
                 />
               </Feature>
-            </div>
-            <div className="section-controls__right-part">
               <Feature
                 isActive={
                   features.find((feature) => feature.name === 'SCALE_PRESETS')
