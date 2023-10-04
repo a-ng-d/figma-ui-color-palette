@@ -28,23 +28,7 @@ export default class Export extends React.Component<Props, any> {
     super(props)
     this.counter = 0
     this.state = {
-      format:
-        features.filter(
-          (feature) =>
-            feature.name.includes('EXPORT') &&
-            feature.type === 'ACTION' &&
-            feature.isActive
-        )[0] != undefined
-          ? features
-              .filter(
-                (feature) =>
-                  feature.name.includes('EXPORT') &&
-                  feature.type === 'ACTION' &&
-                  feature.isActive
-              )[0]
-              .name.slice(7)
-          : '',
-      exportsGroup: 'TOKENS_GROUP'
+      format: 'EXPORT_TO_JSON'
     }
   }
 
@@ -53,7 +37,7 @@ export default class Export extends React.Component<Props, any> {
     const actions: ActionsList = {
       EXPORT_TO_JSON: () => {
         this.setState({
-          format: 'JSON',
+          format: 'EXPORT_TO_JSON',
         })
         parent.postMessage(
           { pluginMessage: { type: 'EXPORT_PALETTE', export: 'JSON' } },
@@ -62,7 +46,7 @@ export default class Export extends React.Component<Props, any> {
       },
       EXPORT_TO_JSON_AMZN_STYLE_DICTIONARY: () => {
         this.setState({
-          format: 'JSON_AMZN_STYLE_DICTIONARY',
+          format: 'EXPORT_TO_JSON_AMZN_STYLE_DICTIONARY',
         })
         parent.postMessage(
           {
@@ -76,7 +60,7 @@ export default class Export extends React.Component<Props, any> {
       },
       EXPORT_TO_JSON_TOKENS_STUDIO: () => {
         this.setState({
-          format: 'JSON_TOKENS_STUDIO',
+          format: 'EXPORT_TO_JSON_TOKENS_STUDIO',
         })
         parent.postMessage(
           {
@@ -90,7 +74,7 @@ export default class Export extends React.Component<Props, any> {
       },
       EXPORT_TO_CSS: () => {
         this.setState({
-          format: 'CSS',
+          format: 'EXPORT_TO_CSS',
         })
         parent.postMessage(
           { pluginMessage: { type: 'EXPORT_PALETTE', export: 'CSS' } },
@@ -99,7 +83,7 @@ export default class Export extends React.Component<Props, any> {
       },
       EXPORT_TO_SWIFT: () => {
         this.setState({
-          format: 'SWIFT',
+          format: 'EXPORT_TO_SWIFT',
         })
         parent.postMessage(
           { pluginMessage: { type: 'EXPORT_PALETTE', export: 'SWIFT' } },
@@ -108,7 +92,7 @@ export default class Export extends React.Component<Props, any> {
       },
       EXPORT_TO_XML: () => {
         this.setState({
-          format: 'XML',
+          format: 'EXPORT_TO_XML',
         })
         parent.postMessage(
           { pluginMessage: { type: 'EXPORT_PALETTE', export: 'XML' } },
@@ -117,7 +101,7 @@ export default class Export extends React.Component<Props, any> {
       },
       EXPORT_TO_CSV: () => {
         this.setState({
-          format: 'CSV',
+          format: 'EXPORT_TO_CSV',
         })
         parent.postMessage(
           { pluginMessage: { type: 'EXPORT_PALETTE', export: 'CSV' } },
@@ -127,228 +111,17 @@ export default class Export extends React.Component<Props, any> {
       NULL: () => null,
     }
 
-    return actions[(e.target as HTMLElement).dataset.feature ?? 'NULL']?.()
+    return actions[(e.target as HTMLElement).dataset.value ?? 'NULL']?.()
   }
-
-  // Templates
-  TokensGroup = () => (
-    <>
-      <Feature
-        isActive={
-          features.find((feature) => feature.name === 'EXPORT_JSON')
-            ?.isActive
-        }
-      >
-        <li>
-          <RadioButton
-            id="options__json"
-            label={locals[this.props.lang].export.json}
-            isChecked={this.state['format'] === 'JSON' ? true : false}
-            isBlocked={isBlocked(
-              'EXPORT_JSON',
-              this.props.planStatus
-            )}
-            feature="EXPORT_TO_JSON"
-            group="fileFormat"
-            onChange={
-              isBlocked('EXPORT_JSON', this.props.planStatus)
-                ? () => null
-                : this.exportHandler
-            }
-          />
-        </li>
-      </Feature>
-      <Feature
-        isActive={
-          features.find(
-            (feature) =>
-              feature.name === 'EXPORT_JSON_AMZN_STYLE_DICTIONARY'
-          )?.isActive
-        }
-      >
-        <li>
-          <RadioButton
-            id="options__json-amzn-style-dictionary"
-            label={locals[this.props.lang].export.amznStyleDictionary}
-            isChecked={
-              this.state['format'] === 'JSON_AMZN_STYLE_DICTIONARY'
-                ? true
-                : false
-            }
-            isBlocked={isBlocked(
-              'EXPORT_JSON_AMZN_STYLE_DICTIONARY',
-              this.props.planStatus
-            )}
-            feature="EXPORT_TO_JSON_AMZN_STYLE_DICTIONARY"
-            group="fileFormat"
-            onChange={
-              isBlocked(
-                'EXPORT_JSON_AMZN_STYLE_DICTIONARY',
-                this.props.planStatus
-              )
-                ? () => null
-                : this.exportHandler
-            }
-          />
-        </li>
-      </Feature>
-      <Feature
-        isActive={
-          features.find(
-            (feature) => feature.name === 'EXPORT_JSON_TOKENS_STUDIO'
-          )?.isActive
-        }
-      >
-        <li>
-          <RadioButton
-            id="options__json-tokens-studio"
-            label={locals[this.props.lang].export.tokensStudio}
-            isChecked={
-              this.state['format'] === 'JSON_TOKENS_STUDIO'
-                ? true
-                : false
-            }
-            isBlocked={isBlocked(
-              'EXPORT_JSON_TOKENS_STUDIO',
-              this.props.planStatus
-            )}
-            feature="EXPORT_TO_JSON_TOKENS_STUDIO"
-            group="fileFormat"
-            onChange={
-              isBlocked(
-                'EXPORT_JSON_TOKENS_STUDIO',
-                this.props.planStatus
-              )
-                ? () => null
-                : this.exportHandler
-            }
-          />
-        </li>
-      </Feature>
-    </>
-  )
-
-  CssGroup = () => (
-    <>
-      <Feature
-        isActive={
-          features.find((feature) => feature.name === 'EXPORT_CSS')
-            ?.isActive
-        }
-      >
-        <li>
-          <RadioButton
-            id="options__css"
-            label={locals[this.props.lang].export.css}
-            isChecked={this.state['format'] === 'CSS' ? true : false}
-            isBlocked={isBlocked('EXPORT_CSS', this.props.planStatus)}
-            feature="EXPORT_TO_CSS"
-            group="fileFormat"
-            onChange={
-              isBlocked('EXPORT_CSS', this.props.planStatus)
-                ? () => null
-                : this.exportHandler
-            }
-          />
-        </li>
-      </Feature>
-    </>
-  )
-
-  AppleGroup = () => (
-    <>
-      <Feature
-        isActive={
-          features.find((feature) => feature.name === 'EXPORT_SWIFT')
-            ?.isActive
-        }
-      >
-        <li>
-          <RadioButton
-            id="options__swift"
-            label={locals[this.props.lang].export.swift}
-            isChecked={
-              this.state['format'] === 'SWIFT' ? true : false
-            }
-            isBlocked={isBlocked(
-              'EXPORT_SWIFT',
-              this.props.planStatus
-            )}
-            feature="EXPORT_TO_SWIFT"
-            group="fileFormat"
-            onChange={
-              isBlocked('EXPORT_SWIFT', this.props.planStatus)
-                ? () => null
-                : this.exportHandler
-            }
-          />
-        </li>
-      </Feature>
-    </>
-  )
-
-  AndroidGroup = () => (
-    <>   
-      <Feature
-        isActive={
-          features.find((feature) => feature.name === 'EXPORT_XML')
-            ?.isActive
-        }
-      >
-        <li>
-          <RadioButton
-            id="options__xml"
-            label={locals[this.props.lang].export.xml}
-            isChecked={this.state['format'] === 'XML' ? true : false}
-            isBlocked={isBlocked('EXPORT_XML', this.props.planStatus)}
-            feature="EXPORT_TO_XML"
-            group="fileFormat"
-            onChange={
-              isBlocked('EXPORT_XML', this.props.planStatus)
-                ? () => null
-                : this.exportHandler
-            }
-          />
-        </li>
-      </Feature>
-    </>
-  )
-
-  SpreadsheetGroup = () => (
-    <>   
-      <Feature
-        isActive={
-          features.find((feature) => feature.name === 'EXPORT_CSV')
-            ?.isActive
-        }
-      >
-        <li>
-          <RadioButton
-            id="options__csv"
-            label={locals[this.props.lang].export.csv}
-            isChecked={this.state['format'] === 'CSV' ? true : false}
-            isBlocked={isBlocked('EXPORT_CSV', this.props.planStatus)}
-            feature="EXPORT_TO_CSV"
-            group="fileFormat"
-            onChange={
-              isBlocked('EXPORT_CSV', this.props.planStatus)
-                ? () => null
-                : this.exportHandler
-            }
-          />
-        </li>
-      </Feature>
-    </>
-  )
 
   // Direct actions
   setFirstPreview = () => {
-    this.counter == 0 && this.state['format'] != ''
+    this.counter == 0
       ? parent.postMessage(
           {
             pluginMessage: {
               type: 'EXPORT_PALETTE',
-              export: this.state['format'],
+              export: this.state['format'].replace('EXPORT_TO_', ''),
             },
           },
           '*'
@@ -386,45 +159,71 @@ export default class Export extends React.Component<Props, any> {
                     position: 0,
                     isActive: true,
                     isBlocked: false,
+                    children: [
+                      {
+                        label: locals[this.props.lang].export.json,
+                        value: 'EXPORT_TO_JSON',
+                        position: 0,
+                        isActive: true,
+                        isBlocked: false,
+                        children: [],
+                      },
+                      {
+                        label: locals[this.props.lang].export.amznStyleDictionary,
+                        value: 'EXPORT_TO_JSON_AMZN_STYLE_DICTIONARY',
+                        position: 0,
+                        isActive: true,
+                        isBlocked: false,
+                        children: [],
+                      },
+                      {
+                        label: locals[this.props.lang].export.tokensStudio,
+                        value: 'EXPORT_TO_JSON_TOKENS_STUDIO',
+                        position: 0,
+                        isActive: true,
+                        isBlocked: false,
+                        children: [],
+                      },
+                    ]
                   },
                   {
-                    label: 'CSS',
-                    value: 'CSS_GROUP',
+                    label: locals[this.props.lang].export.css,
+                    value: 'EXPORT_TO_CSS',
                     position: 1,
                     isActive: true,
                     isBlocked: false,
+                    children: [],
                   },
                   {
-                    label: 'Apple',
-                    value: 'APPLE_GROUP',
+                    label: locals[this.props.lang].export.swift,
+                    value: 'EXPORT_TO_SWIFT',
                     position: 2,
                     isActive: true,
                     isBlocked: false,
+                    children: [],
                   },
                   {
-                    label: 'Android',
-                    value: 'ANDROID_GROUP',
+                    label: locals[this.props.lang].export.xml,
+                    value: 'EXPORT_TO_XML',
                     position: 3,
                     isActive: true,
                     isBlocked: false,
+                    children: [],
                   },
                   {
-                    label: 'Speadsheet',
-                    value: 'SPREADSHEET_GROUP',
+                    label: locals[this.props.lang].export.csv,
+                    value: 'EXPORT_TO_CSV',
                     position: 4,
                     isActive: true,
                     isBlocked: false,
+                    children: [],
                   },
                 ]}
-                selected={this.state['exportsGroup'] ?? ''}
-                feature="SELECT_EXPORTS_GROUP"
+                selected={this.state['format'] ?? ''}
+                feature="SELECT_EXPORT_FILE"
                 parentClassName="controls"
                 alignment="RIGHT"
-                onChange={(e) =>
-                  this.setState({
-                    exportsGroup: (e.target as HTMLInputElement).dataset.value
-                  })
-                }
+                onChange={this.exportHandler}
               />
             </div>
           </div>

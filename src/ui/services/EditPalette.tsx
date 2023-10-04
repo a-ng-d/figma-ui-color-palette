@@ -388,6 +388,7 @@ export default class EditPalette extends React.Component<Props, any> {
                       position: index,
                       isActive: true,
                       isBlocked: false,
+                      children: []
                     }
                   })}
                   selected={

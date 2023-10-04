@@ -339,6 +339,10 @@
   margin-top: 0;
 }
 
+.select-menu__item-label {
+  flex: 1;
+}
+
 .select-menu__caret {
   mask-image: url('data:image/svg+xml;utf8,%3Csvg%20fill%3D%22none%22%20height%3D%2230%22%20viewBox%3D%220%200%2030%2030%22%20width%3D%2230%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20clip-rule%3D%22evenodd%22%20d%3D%22m15%2016.7071-3-3%20.7071-.7071%202.6465%202.6464%202.6464-2.6464.7071.7071-3%203-.3535.3536z%22%20fill%3D%22%23000%22%20fill-rule%3D%22evenodd%22%2F%3E%3C%2Fsvg%3E');
   -webkit-mask-image: url('data:image/svg+xml;utf8,%3Csvg%20fill%3D%22none%22%20height%3D%2230%22%20viewBox%3D%220%200%2030%2030%22%20width%3D%2230%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20clip-rule%3D%22evenodd%22%20d%3D%22m15%2016.7071-3-3%20.7071-.7071%202.6465%202.6464%202.6464-2.6464.7071.7071-3%203-.3535.3536z%22%20fill%3D%22%23000%22%20fill-rule%3D%22evenodd%22%2F%3E%3C%2Fsvg%3E');
@@ -360,15 +364,32 @@
   background: transparent;
 }
 
-.select-menu__item--selected .select-menu__item-icon {
+.select-menu__item-carret {
+  width: var(--size-xsmall);
+  height: var(--size-xsmall);
+  margin-left: var(--size-xxsmall);
+  pointer-events: none;
+}
+
+.select-menu__item-carret {
+  mask-image: url('data:image/svg+xml;charset=utf8,%3Csvg fill="none" height="32" viewBox="0 0 32 32" width="32" xmlns="http://www.w3.org/2000/svg"%3E%3Cpath d="m19 16-4-3v6z" fill="%23000"/%3E%3C/svg%3E');
+  mask-position: center;
+  -webkit-mask-image: url('data:image/svg+xml;charset=utf8,%3Csvg fill="none" height="32" viewBox="0 0 32 32" width="32" xmlns="http://www.w3.org/2000/svg"%3E%3Cpath d="m19 16-4-3v6z" fill="%23000"/%3E%3C/svg%3E');
+  -webkit-mask-position: center;
+  background: transparent;
+}
+
+.select-menu__item--selected .select-menu__item-icon,
+.select-menu__item-carret {
   background: var(--figma-color-icon-onselected-strong);
 }
 
 .select-menu__menu {
   outline: 1px solid rgba(255, 255, 255, 0.1);
   outline-offset: -1px;
-  width: auto;
+  width: fit-content;
   min-width: 224px;
+  overflow: visible;
 }
 
 .select-menu--right .select-menu__menu {
@@ -383,6 +404,17 @@
 .select-menu--fill .select-menu__menu {
   right: 0;
   left: auto;
+}
+
+.select-menu--right .select-menu__submenu {
+  left: 0;
+  transform: translateX(-100%);
+}
+
+.select-menu--left .select-menu__submenu {
+  right: 0;
+  left: auto;
+  transform: translateX(100%);
 }
 
 .select-menu hr {

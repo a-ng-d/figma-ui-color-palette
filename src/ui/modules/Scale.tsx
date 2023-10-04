@@ -170,6 +170,7 @@ export default class Scale extends React.Component<Props, any> {
                       position: index,
                       isActive: true,
                       isBlocked: false,
+                      children: [],
                     }
                   })}
                   selected={this.props.preset.id}

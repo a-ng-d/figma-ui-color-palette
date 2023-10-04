@@ -141,6 +141,7 @@ export default class Actions extends React.Component<Props> {
                   'LOCAL_STYLES',
                   this.props.planStatus ?? 'UNPAID'
                 ),
+                children: [],
               },
               {
                 label:
@@ -154,6 +155,7 @@ export default class Actions extends React.Component<Props> {
                   'LOCAL_VARIABLES',
                   this.props.planStatus ?? 'UNPAID'
                 ),
+                children: [],
               },
             ]}
             selected={this.props.actions ?? ''}
