@@ -1,6 +1,7 @@
 import type { PaletteData } from '../utils/types'
 import LocalStyle from './../canvas/LocalStyle'
 import { locals, lang } from '../content/locals'
+import { notifications } from '../utils/palettePackage'
 
 const createLocalStyles = (palette: SceneNode, i: number) => {
   palette = figma.currentPage.selection[0] as FrameNode
@@ -46,10 +47,9 @@ const createLocalStyles = (palette: SceneNode, i: number) => {
 
     palette.setPluginData('data', JSON.stringify(paletteData))
 
-    if (i > 1) figma.notify(`${i} ${locals[lang].info.createdLocalStyles}`)
-    else if (i == 1) figma.notify(`${i} ${locals[lang].info.createdLocalStyle}`)
-    else figma.notify(locals[lang].warning.cannotCreateLocalStyles)
-  } else figma.notify(locals[lang].error.corruption)
+    if (i > 1) notifications.push(`${i} ${locals[lang].info.createdLocalStyles}`)
+    else notifications.push(`${i} ${locals[lang].info.createdLocalStyle}`)
+  } else notifications.splice(0, notifications.length).push(locals[lang].error.corruption)
 }
 
 export default createLocalStyles

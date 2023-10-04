@@ -1,6 +1,7 @@
 import type { PaletteData } from '../utils/types'
 import LocalVariable from '../canvas/LocalVariable'
 import { locals, lang } from '../content/locals'
+import { notifications } from '../utils/palettePackage'
 
 const createLocalVariables = (palette: SceneNode, i: number, j: number) => {
   palette = figma.currentPage.selection[0] as FrameNode
@@ -30,7 +31,7 @@ const createLocalVariables = (palette: SceneNode, i: number, j: number) => {
               }
           })
           .slice(1) ?? [],
-      notifications: Array<string> = []
+      messages: Array<string> = []
 
     let collection: VariableCollection | undefined = figma.variables
       .getLocalVariableCollections()
@@ -60,9 +61,7 @@ const createLocalVariables = (palette: SceneNode, i: number, j: number) => {
             if (boundVariable == undefined) {
               const variable = new LocalVariable(collection).makeVariable(
                 `${color.name}/${shade.name}`,
-                color.description != ''
-                  ? color.description + '﹒' + shade.description
-                  : shade.description
+                color.description
               )
               shade.variableId = variable.id
               if (themesList.length == 0 && collection != undefined) {
@@ -139,25 +138,20 @@ const createLocalVariables = (palette: SceneNode, i: number, j: number) => {
 
     palette.setPluginData('data', JSON.stringify(paletteData))
 
-    if (i > 1) notifications.push(`${i} ${locals[lang].info.localVariables}`)
-    else if (i == 1)
-      notifications.push(`${i} ${locals[lang].info.localVariable}`)
-    else if (i == 0) notifications.push(locals[lang].info.noLocalVariable)
+    if (i > 1) messages.push(`${i} ${locals[lang].info.localVariables}`)
+    else
+      messages.push(`${i} ${locals[lang].info.localVariable}`)
 
-    if (j > 1) notifications.push(`${j} ${locals[lang].info.variableModes}`)
-    else if (j == 1)
-      notifications.push(`${j} ${locals[lang].info.variableMode}`)
-    else if (j == 0) notifications.push(locals[lang].info.noVariableMode)
+    if (j > 1) messages.push(`${j} ${locals[lang].info.variableModes}`)
+    else
+      messages.push(`${j} ${locals[lang].info.variableMode}`)
 
-    if (i > 1 || j > 1)
-      figma.notify(`${notifications.join(' and ')} have been created`)
-    else if (i == 0 && j == 0)
-      figma.notify(locals[lang].warning.cannotCreateLocalVariablesAndModes)
-    else figma.notify(`${notifications.join(' and ')} has been created`)
+    notifications.push(`${messages.join(', ')} created`)
 
     if (themesList.length > 4)
       figma.notify(locals[lang].warning.tooManyThemesToCreateModes)
-  } else figma.notify(locals[lang].error.corruption)
+
+  } else notifications.splice(0, notifications.length).push(locals[lang].error.corruption)
 }
 
 export default createLocalVariables

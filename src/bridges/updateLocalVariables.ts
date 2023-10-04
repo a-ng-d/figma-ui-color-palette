@@ -1,6 +1,7 @@
 import chroma from 'chroma-js'
 import type { PaletteData } from '../utils/types'
 import { locals, lang } from '../content/locals'
+import { notifications } from '../utils/palettePackage'
 
 const updateLocalVariables = (palette: SceneNode, i: number, j: number) => {
   palette = figma.currentPage.selection[0] as FrameNode
@@ -16,7 +17,7 @@ const updateLocalVariables = (palette: SceneNode, i: number, j: number) => {
         palette.getPluginData('name') === ''
           ? 'UI Color Palette'
           : palette.getPluginData('name'),
-      notifications: Array<string> = []
+      messages: Array<string> = []
 
     const collection: VariableCollection | undefined = figma.variables
       .getLocalVariableCollections()
@@ -53,10 +54,7 @@ const updateLocalVariables = (palette: SceneNode, i: number, j: number) => {
             const variableMatch = localVariables.find(
                 (localVariable) => localVariable.id === shade.variableId
               ),
-              description =
-                color.description != ''
-                  ? color.description + '﹒' + shade.description
-                  : shade.description
+              description = color.description.endsWith(' ') ? color.description.slice(0, -1) : color.description
             if (variableMatch != undefined) {
               if (variableMatch.name != `${color.name}/${shade.name}`) {
                 variableMatch.name = `${color.name}/${shade.name}`
@@ -89,23 +87,18 @@ const updateLocalVariables = (palette: SceneNode, i: number, j: number) => {
         })
       })
 
-      if (i > 1) notifications.push(`${i} ${locals[lang].info.localVariables}`)
-      else if (i == 1)
-        notifications.push(`${i} ${locals[lang].info.localVariable}`)
-      else if (i == 0) notifications.push(locals[lang].info.noLocalVariable)
+      if (i > 1) messages.push(`${i} ${locals[lang].info.localVariables}`)
+      else
+        messages.push(`${i} ${locals[lang].info.localVariable}`)
 
-      if (j > 1) notifications.push(`${j} ${locals[lang].info.variableModes}`)
-      else if (j == 1)
-        notifications.push(`${j} ${locals[lang].info.variableMode}`)
-      else if (j == 0) notifications.push(locals[lang].info.noVariableMode)
+      if (j > 1) messages.push(`${j} ${locals[lang].info.variableModes}`)
+      else
+        messages.push(`${j} ${locals[lang].info.variableMode}`)
 
-      if (i > 1 || j > 1)
-        figma.notify(`${notifications.join(' and ')} have been updated`)
-      else if (i == 0 && j == 0)
-        figma.notify(locals[lang].warning.cannotUpdateLocalVariablesAndModes)
-      else figma.notify(`${notifications.join(' and ')} has been updated`)
-    } else figma.notify(locals[lang].warning.collectionDoesNotExist)
-  } else figma.notify(locals[lang].error.corruption)
+      notifications.push(`${messages.join(', ')} updated`)
+
+    } else notifications.splice(0, notifications.length).push(locals[lang].warning.collectionDoesNotExist)
+  } else notifications.splice(0, notifications.length).push(locals[lang].error.corruption)
 }
 
 export default updateLocalVariables
