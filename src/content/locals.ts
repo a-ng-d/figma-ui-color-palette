@@ -85,7 +85,7 @@ export const locals: { [key: string]: any } = {
     },
     settings: {
       global: {
-        title: 'Palette global settings',
+        title: 'Global settings',
         name: {
           label: 'Name',
         },
@@ -112,12 +112,12 @@ export const locals: { [key: string]: any } = {
         title: 'Color management',
         colorSpace: {
           label: 'Color space',
-          lch: 'LCH (Lightness, Chroma, Hue)',
-          oklch: 'OKLCH (OK, Lightness, Chroma, Hue)',
-          lab: 'CIELAB (CIE, Lightness, a﹡ axis, b﹡ axis)',
-          oklab: 'OKLAB (OK, Lightness, a﹡ axis, b﹡ axis)',
-          hsl: 'HSL (Hue, Saturation, Lightness)',
-          hsluv: 'HSLuv (Hue, Saturation, Lightness, u* axis, v* axis)',
+          lch: 'LCH',
+          oklch: 'OKLCH',
+          lab: 'CIELAB',
+          oklab: 'OKLAB',
+          hsl: 'HSL',
+          hsluv: 'HSLuv',
         },
         newAlgorithm: {
           label: 'Enable the new algorithm for creating color shades',
