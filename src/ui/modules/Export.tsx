@@ -1,7 +1,5 @@
 import * as React from 'react'
 import type { ActionsList, Language } from '../../utils/types'
-import Feature from '../components/Feature'
-import RadioButton from './../components/RadioButton'
 import Input from '../components/Input'
 import Actions from './Actions'
 import features from '../../utils/config'
@@ -164,24 +162,42 @@ export default class Export extends React.Component<Props, any> {
                         label: locals[this.props.lang].export.json,
                         value: 'EXPORT_TO_JSON',
                         position: 0,
-                        isActive: true,
-                        isBlocked: false,
+                        isActive: features.find(
+                          (feature) =>
+                            feature.name === 'EXPORT_JSON'
+                        )?.isActive,
+                        isBlocked: isBlocked(
+                          'EXPORT_JSON',
+                          this.props.planStatus
+                        ),
                         children: [],
                       },
                       {
                         label: locals[this.props.lang].export.amznStyleDictionary,
                         value: 'EXPORT_TO_JSON_AMZN_STYLE_DICTIONARY',
                         position: 0,
-                        isActive: true,
-                        isBlocked: false,
+                        isActive: features.find(
+                          (feature) =>
+                            feature.name === 'EXPORT_JSON_AMZN_STYLE_DICTIONARY'
+                        )?.isActive,
+                        isBlocked: isBlocked(
+                          'EXPORT_JSON_AMZN_STYLE_DICTIONARY',
+                          this.props.planStatus
+                        ),
                         children: [],
                       },
                       {
                         label: locals[this.props.lang].export.tokensStudio,
                         value: 'EXPORT_TO_JSON_TOKENS_STUDIO',
                         position: 0,
-                        isActive: true,
-                        isBlocked: false,
+                        isActive: features.find(
+                          (feature) =>
+                            feature.name === 'EXPORT_JSON_TOKENS_STUDIO'
+                        )?.isActive,
+                        isBlocked: isBlocked(
+                          'EXPORT_JSON_TOKENS_STUDIO',
+                          this.props.planStatus
+                        ),
                         children: [],
                       },
                     ]
@@ -190,32 +206,56 @@ export default class Export extends React.Component<Props, any> {
                     label: locals[this.props.lang].export.css,
                     value: 'EXPORT_TO_CSS',
                     position: 1,
-                    isActive: true,
-                    isBlocked: false,
+                    isActive: features.find(
+                      (feature) =>
+                        feature.name === 'EXPORT_CSS'
+                    )?.isActive,
+                    isBlocked: isBlocked(
+                      'EXPORT_CSS',
+                      this.props.planStatus
+                    ),
                     children: [],
                   },
                   {
                     label: locals[this.props.lang].export.swift,
                     value: 'EXPORT_TO_SWIFT',
                     position: 2,
-                    isActive: true,
-                    isBlocked: false,
+                    isActive: features.find(
+                      (feature) =>
+                        feature.name === 'EXPORT_SWIFT'
+                    )?.isActive,
+                    isBlocked: isBlocked(
+                      'EXPORT_SWIFT',
+                      this.props.planStatus
+                    ),
                     children: [],
                   },
                   {
                     label: locals[this.props.lang].export.xml,
                     value: 'EXPORT_TO_XML',
                     position: 3,
-                    isActive: true,
-                    isBlocked: false,
+                    isActive: features.find(
+                      (feature) =>
+                        feature.name === 'EXPORT_XML'
+                    )?.isActive,
+                    isBlocked: isBlocked(
+                      'EXPORT_XML',
+                      this.props.planStatus
+                    ),
                     children: [],
                   },
                   {
                     label: locals[this.props.lang].export.csv,
                     value: 'EXPORT_TO_CSV',
                     position: 4,
-                    isActive: true,
-                    isBlocked: false,
+                    isActive: features.find(
+                      (feature) =>
+                        feature.name === 'EXPORT_CSV'
+                    )?.isActive,
+                    isBlocked: isBlocked(
+                      'EXPORT_CSV',
+                      this.props.planStatus
+                    ),
                     children: [],
                   },
                 ]}
