@@ -380,7 +380,7 @@ export default class EditPalette extends React.Component<Props, any> {
                 shouldFill={false}
               >
                 <Dropdown
-                  id="presets"
+                  id="switch-theme"
                   options={this.workingThemes().map((theme, index) => {
                     return {
                       label: theme.name,
@@ -388,6 +388,7 @@ export default class EditPalette extends React.Component<Props, any> {
                       position: index,
                       isActive: true,
                       isBlocked: false,
+                      children: []
                     }
                   })}
                   selected={
@@ -407,6 +408,7 @@ export default class EditPalette extends React.Component<Props, any> {
                   ]}
                   feature="SWITCH_THEME"
                   parentClassName="ui"
+                  alignment="RIGHT"
                   onChange={(e) => this.switchThemeHandler(e)}
                 />
               </FormItem>

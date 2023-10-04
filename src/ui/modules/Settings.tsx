@@ -174,6 +174,7 @@ export default class Settings extends React.Component<Props> {
                     'VIEWS_PALETTE_WITH_PROPERTIES',
                     this.props.planStatus
                   ),
+                  children: [],
                 },
                 {
                   label: locals[this.props.lang].settings.global.views.simple,
@@ -183,6 +184,7 @@ export default class Settings extends React.Component<Props> {
                     (feature) => feature.name === 'VIEWS_PALETTE'
                   )?.isActive,
                   isBlocked: isBlocked('VIEWS_PALETTE', this.props.planStatus),
+                  children: [],
                 },
                 {
                   label: locals[this.props.lang].settings.global.views.sheet,
@@ -192,6 +194,7 @@ export default class Settings extends React.Component<Props> {
                     (feature) => feature.name === 'VIEWS_SHEET'
                   )?.isActive,
                   isBlocked: isBlocked('VIEWS_SHEET', this.props.planStatus),
+                  children: [],
                 },
               ]}
               selected={this.props.view}
@@ -231,6 +234,7 @@ export default class Settings extends React.Component<Props> {
                     'SETTINGS_COLOR_SPACE_LCH',
                     this.props.planStatus
                   ),
+                  children: [],
                 },
                 {
                   label:
@@ -244,6 +248,7 @@ export default class Settings extends React.Component<Props> {
                     'SETTINGS_COLOR_SPACE_OKLCH',
                     this.props.planStatus
                   ),
+                  children: [],
                 },
                 {
                   label: locals[this.props.lang].settings.color.colorSpace.lab,
@@ -256,6 +261,7 @@ export default class Settings extends React.Component<Props> {
                     'SETTINGS_COLOR_SPACE_LAB',
                     this.props.planStatus
                   ),
+                  children: [],
                 },
                 {
                   label:
@@ -269,6 +275,7 @@ export default class Settings extends React.Component<Props> {
                     'SETTINGS_COLOR_SPACE_OKLAB',
                     this.props.planStatus
                   ),
+                  children: [],
                 },
                 {
                   label: locals[this.props.lang].settings.color.colorSpace.hsl,
@@ -281,6 +288,7 @@ export default class Settings extends React.Component<Props> {
                     'SETTINGS_COLOR_SPACE_HSL',
                     this.props.planStatus
                   ),
+                  children: [],
                 },
                 {
                   label:
@@ -294,6 +302,7 @@ export default class Settings extends React.Component<Props> {
                     'SETTINGS_COLOR_SPACE_HSLUV',
                     this.props.planStatus
                   ),
+                  children: [],
                 },
               ]}
               selected={this.props.colorSpace}

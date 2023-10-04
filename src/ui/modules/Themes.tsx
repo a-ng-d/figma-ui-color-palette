@@ -311,8 +311,8 @@ export default class Themes extends React.Component<Props, any> {
             <div className="section-controls__left-part">
               <div className="section-title">
                 {locals[this.props.lang].themes.title}
+                <div className="type">{`(${this.props.themes.length - 1})`}</div>
               </div>
-              <div className="type">{`(${this.props.themes.length - 1})`}</div>
             </div>
             <div className="section-controls__right-part">
               <Button

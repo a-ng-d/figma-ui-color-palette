@@ -1,43 +1,35 @@
 import * as React from 'react'
+import type { DropdownAction, DropdownOption } from '../../utils/types'
 
 interface Props {
   id: string
-  options: Array<{
-    label: string
-    value: string
-    position: number
-    isActive?: boolean
-    isBlocked?: boolean
-  }>
+  options: Array<DropdownOption>
   selected: string
   feature: string
-  actions?: Array<{
-    label: string
-    isBlocked: boolean
-    feature: string
-    action: () => void
-  }>
+  actions?: Array<DropdownAction>
   parentClassName?: string
+  alignment?: 'RIGHT' | 'LEFT' | 'FILL'
   onChange: (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => void
 }
 
 export default class Dropdown extends React.Component<Props, any> {
   selectMenuRef: React.MutableRefObject<any>
+  buttonRef: React.MutableRefObject<any>
   listRef: React.MutableRefObject<any>
 
   static defaultProps = {
     actions: [],
+    alignment: 'LEFT'
   }
 
   constructor(props: Props) {
     super(props)
     this.state = {
-      isListOpen: false,
-      position: this.props.options.filter(
-        (option) => option.value === this.props.selected
-      )[0].position,
+      isMenuOpen: false,
+      position: 0
     }
     this.selectMenuRef = React.createRef()
+    this.buttonRef = React.createRef()
     this.listRef = React.createRef()
     this.handleClickOutside = this.handleClickOutside.bind(this)
   }
@@ -49,15 +41,20 @@ export default class Dropdown extends React.Component<Props, any> {
     document.removeEventListener('mousedown', this.handleClickOutside)
 
   handleClickOutside = (e: Event) => {
-    if (this.selectMenuRef && !this.selectMenuRef.current.contains(e.target))
+    if (e.target ===  this.buttonRef.current)
       this.setState({
-        isListOpen: false,
+        isMenuOpen: true,
+      })
+    else if (e.target !=  this.listRef.current)
+      this.setState({
+        isMenuOpen: false,
       })
   }
 
-  onOpenList = () => {
+  // Direct actions
+  onOpenMenu = () => {
     this.setState({
-      isListOpen: true,
+      isMenuOpen: true,
     })
     if (this.props.parentClassName != undefined)
       setTimeout(() => {
@@ -85,7 +82,7 @@ export default class Dropdown extends React.Component<Props, any> {
 
   onSelectItem = (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
     this.setState({
-      isListOpen: false,
+      isMenuOpen: false,
       position: (e.target as HTMLLIElement).dataset.position,
     })
     this.props.onChange(e)
@@ -93,84 +90,208 @@ export default class Dropdown extends React.Component<Props, any> {
 
   onSelectAction = (callback: () => void) => {
     this.setState({
-      isListOpen: false,
+      isMenuOpen: false,
     })
     callback()
+  }
+
+  findSelectedOption = (options: Array<DropdownOption>) =>
+    options.map(option => {
+      if (option.value === this.props.selected)
+        return option
+      else
+        return option.children?.find(child =>
+          child.value === this.props.selected
+        )
+    }).find(item => item != null)
+
+  // Templates
+  Menu = (props: {
+    options: Array<DropdownOption> | undefined;
+    actions?: Array<DropdownAction> | undefined;
+  }) => {
+    return(
+      <ul
+        className="select-menu__menu select-menu__menu--active"
+        style={{ top: `${this.state['position'] * -24 - 6}px` }}
+        ref={this.listRef}
+      >
+        {props.options?.map((option, index) =>
+          option.isActive ?
+            option.children!.length > 0 ? (
+              <this.MenuGroup
+                key={'group-' + index}
+                option={option}
+              />
+            ) : (
+              <this.MenuOption
+                key={'option-' + index}
+                option={option}
+              />
+            )
+          : null
+        )}
+        {props.actions != undefined ? (
+          props.actions.length > 0 ? (
+            <>
+              <hr />
+              {props.actions.map((action, index) => (
+                <this.MenuAction
+                  key={index}
+                  action={action}
+                />
+              ))}
+            </>
+          ) : null
+        ) : null}
+      </ul>
+    )
+  }
+
+  SubMenu = (props: {
+    options: Array<DropdownOption> | undefined;
+  }) => {
+    return(
+      <ul
+        className="select-menu__menu select-menu__submenu select-menu__menu--active"
+      >
+        {props.options?.map((option, index) =>
+          option.isActive ?
+            option.children!.length > 0 ? (
+              <this.MenuGroup
+                key={'group-' + index}
+                option={option}
+              />
+            ) : (
+              <this.MenuOption
+                key={'option-' + index}
+                option={option}
+              />
+            )
+          : null
+        )}
+      </ul>
+    )
+  }
+
+  MenuGroup = (props: {
+    option: DropdownOption
+  }) => {
+    return (
+      <li
+        className={`select-menu__item${props.option.isBlocked ? ' select-menu__item--blocked' : ''}`}
+        data-position={props.option.position}
+        data-is-blocked={props.option.isBlocked}
+        onMouseOver={(e) => this.setState({ openedGroup: props.option.value })}
+        onMouseOut={(e) => this.setState({ openedGroup: props.option.value })}
+      >
+        <span className="select-menu__item-icon"></span>
+        <span className="select-menu__item-label">
+          {props.option.label}
+        </span>
+        <span className="select-menu__item-carret"></span>
+        {this.state['openedGroup'] === props.option.value ? (
+          <this.SubMenu
+            options={props.option.children}
+          />
+        ) : null}
+      </li>
+    )
+  }
+
+  MenuOption = (props: {
+    option: DropdownOption
+  }) => {
+    return (
+      <li
+        className={`select-menu__item${
+          props.option.value === this.props.selected
+            ? ' select-menu__item--selected'
+            : ''
+        }${props.option.isBlocked ? ' select-menu__item--blocked' : ''}`}
+        data-value={props.option.value}
+        data-position={props.option.position}
+        data-is-blocked={props.option.isBlocked}
+        data-feature={this.props.feature}
+        onMouseDown={(e) => this.onSelectItem(e)}
+      >
+        <span className="select-menu__item-icon"></span>
+        <span className="select-menu__item-label">
+          {props.option.label}
+        </span>
+      </li>
+    )
+  }
+
+  MenuSubOption = (props: {
+    option: DropdownOption
+  }) => {
+    console.log(props.option.position)
+    return (
+      <li
+        className={`select-menu__item${
+          props.option.value === this.props.selected
+            ? ' select-menu__item--selected'
+            : ''
+        }${props.option.isBlocked ? ' select-menu__item--blocked' : ''}`}
+        data-value={props.option.value}
+        data-position={props.option.position}
+        data-is-blocked={props.option.isBlocked}
+        data-feature={this.props.feature}
+        onMouseDown={(e) => this.onSelectItem(e)}
+      >
+        <span className="select-menu__item-icon"></span>
+        <span className="select-menu__item-label">
+          {props.option.label}
+        </span>
+      </li>
+    )
+  }
+
+  MenuAction = (props: {
+    action: DropdownAction
+  }) => {
+    return (
+      <li
+        className={`select-menu__item${
+          props.action.isBlocked ? ' select-menu__item--blocked' : ''
+        }`}
+        data-feature={props.action.feature}
+        data-is-blocked={props.action.isBlocked}
+        onMouseDown={() => this.onSelectAction(props.action.action)}
+      >
+        <span className="select-menu__item-icon"></span>
+        <span className="select-menu__item-label">
+          {props.action.label}
+        </span>
+      </li>
+    )
   }
 
   render() {
     return (
       <div
-        className="select-menu"
+        id={this.props.id}
+        className={`select-menu${this.props.alignment === 'LEFT' ? ' select-menu--left' : this.props.alignment === 'RIGHT' ? ' select-menu--right' : ' select-menu--fill'}`}
         ref={this.selectMenuRef}
       >
         <button
           className={`select-menu__button${
-            this.state['isListOpen'] ? ' select-menu__button--active' : ''
+            this.state['isMenuOpen'] ? ' select-menu__button--active' : ''
           }`}
-          onMouseDown={this.onOpenList}
+          onMouseDown={this.onOpenMenu}
+          ref={this.buttonRef}
         >
           <span className="select-menu__label">
-            {
-              this.props.options.filter(
-                (option) => option.value === this.props.selected
-              )[0].label
-            }
+            {this.findSelectedOption(this.props.options)?.label}
           </span>
           <span className="select-menu__caret"></span>
         </button>
-        {this.state['isListOpen'] ? (
-          <ul
-            className="select-menu__menu select-menu__menu--active"
-            style={{ top: `${this.state['position'] * -24 - 6}px` }}
-            ref={this.listRef}
-          >
-            {this.props.options.map((option, index) =>
-              option.isActive ? (
-                <li
-                  key={index}
-                  className={`select-menu__item${
-                    option.value === this.props.selected
-                      ? ' select-menu__item--selected'
-                      : ''
-                  }${option.isBlocked ? ' select-menu__item--blocked' : ''}`}
-                  data-value={option.value}
-                  data-position={option.position}
-                  data-is-blocked={option.isBlocked}
-                  data-feature={this.props.feature}
-                  onMouseDown={(e) => this.onSelectItem(e)}
-                >
-                  <span className="select-menu__item-icon"></span>
-                  <span className="select-menu__item-label">
-                    {option.label}
-                  </span>
-                </li>
-              ) : null
-            )}
-            {this.props.actions != undefined ? (
-              this.props.actions.length > 0 ? (
-                <>
-                  <hr />
-                  {this.props.actions.map((action, index) => (
-                    <li
-                      key={index}
-                      className={`select-menu__item${
-                        action.isBlocked ? ' select-menu__item--blocked' : ''
-                      }`}
-                      data-feature={action.feature}
-                      data-is-blocked={action.isBlocked}
-                      onMouseDown={() => this.onSelectAction(action.action)}
-                    >
-                      <span className="select-menu__item-icon"></span>
-                      <span className="select-menu__item-label">
-                        {action.label}
-                      </span>
-                    </li>
-                  ))}
-                </>
-              ) : null
-            ) : null}
-          </ul>
+        {this.state['isMenuOpen'] ? (
+          <this.Menu
+            options={this.props.options}
+            actions={this.props.actions}
+          />
         ) : null}
       </div>
     )

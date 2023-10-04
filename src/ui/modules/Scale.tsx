@@ -153,6 +153,8 @@ export default class Scale extends React.Component<Props, any> {
               <div className="section-title">
                 {locals[this.props.lang].scale.title}
               </div>
+            </div>
+            <div className="section-controls__right-part">
               <Feature
                 isActive={
                   features.find((feature) => feature.name === 'SCALE_PRESETS')
@@ -160,7 +162,7 @@ export default class Scale extends React.Component<Props, any> {
                 }
               >
                 <Dropdown
-                  id="presets"
+                  id="switch-presets"
                   options={Object.entries(presets).map((preset, index) => {
                     return {
                       label: preset[1].name,
@@ -168,16 +170,16 @@ export default class Scale extends React.Component<Props, any> {
                       position: index,
                       isActive: true,
                       isBlocked: false,
+                      children: [],
                     }
                   })}
                   selected={this.props.preset.id}
                   feature="UPDATE_PRESET"
                   parentClassName="controls"
+                  alignment="RIGHT"
                   onChange={(e) => this.props.onChangePreset?.(e)}
                 />
               </Feature>
-            </div>
-            <div className="section-controls__right-part">
               <Feature
                 isActive={
                   features.find((feature) => feature.name === 'SCALE_PRESETS')
@@ -258,10 +260,10 @@ export default class Scale extends React.Component<Props, any> {
             <div className="section-controls__left-part">
               <div className="section-title">
                 {locals[this.props.lang].scale.title}
+                <div className="type">{`(${
+                  Object.entries(this.props.scale ?? {}).length
+                })`}</div>
               </div>
-              <div className="type">{`(${
-                Object.entries(this.props.scale ?? {}).length
-              })`}</div>
             </div>
             <div className="section-controls__right-part">
               <div className="label">{this.props.preset.name}</div>
