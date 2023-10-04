@@ -73,15 +73,15 @@ export const locals: { [key: string]: any } = {
       },
     },
     export: {
-      format: 'File format',
+      format: 'Code',
       preview: 'Preview',
-      json: 'JSON (Global tokens)',
-      amznStyleDictionary: 'JSON (Amazon Style Dictionary)',
-      tokensStudio: 'JSON (Tokens Studio)',
-      css: 'CSS (Custom Properties)',
-      swift: 'SwiftUI (Apple OS)',
-      xml: 'XML (Android)',
-      csv: 'CSV (LCH)',
+      json: 'Global (JSON)',
+      amznStyleDictionary: 'Amazon Style Dictionary (JSON)',
+      tokensStudio: 'Tokens Studio (JSON)',
+      css: 'Custom Properties (CSS)',
+      swift: 'iOS (SwiftUI)',
+      xml: 'Android (XML)',
+      csv: 'Spreadsheet (CSV)',
     },
     settings: {
       global: {
