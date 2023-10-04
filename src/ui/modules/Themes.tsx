@@ -30,10 +30,8 @@ interface Props {
   planStatus: 'UNPAID' | 'PAID'
   lang: Language
   onChangeThemes: (themes: Array<ThemeConfiguration>) => void
-  onCreateLocalStyles: () => void
-  onUpdateLocalStyles: () => void
-  onCreateLocalVariables: () => void
-  onUpdateLocalVariables: () => void
+  onSyncLocalStyles: () => void
+  onSyncLocalVariables: () => void
   onChangeActions: (value: string) => void
 }
 
@@ -399,10 +397,8 @@ export default class Themes extends React.Component<Props, any> {
             actions={this.props.actions}
             planStatus={this.props.planStatus}
             lang={this.props.lang}
-            onCreateLocalStyles={this.props.onCreateLocalStyles}
-            onUpdateLocalStyles={this.props.onUpdateLocalStyles}
-            onCreateLocalVariables={this.props.onCreateLocalVariables}
-            onUpdateLocalVariables={this.props.onUpdateLocalVariables}
+            onSyncLocalStyles={this.props.onSyncLocalStyles}
+            onSyncLocalVariables={this.props.onSyncLocalVariables}
             onChangeActions={this.props.onChangeActions}
           />
         ) : null}

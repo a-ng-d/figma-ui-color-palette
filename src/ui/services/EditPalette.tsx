@@ -102,8 +102,8 @@ export default class EditPalette extends React.Component<Props, any> {
   }
 
   // Direct actions
-  onCreateStyles = () => {
-    parent.postMessage({ pluginMessage: { type: 'CREATE_LOCAL_STYLES' } }, '*')
+  onSyncStyles = () => {
+    parent.postMessage({ pluginMessage: { type: 'SYNC_LOCAL_STYLES' } }, '*')
     this.setState({
       selectedElement: {
         id: '',
@@ -112,32 +112,9 @@ export default class EditPalette extends React.Component<Props, any> {
     })
   }
 
-  onUpdateStyles = () => {
-    parent.postMessage({ pluginMessage: { type: 'UPDATE_LOCAL_STYLES' } }, '*')
-    this.setState({
-      selectedElement: {
-        id: '',
-        position: null,
-      },
-    })
-  }
-
-  onCreateVariables = () => {
+  onSyncVariables = () => {
     parent.postMessage(
-      { pluginMessage: { type: 'CREATE_LOCAL_VARIABLES' } },
-      '*'
-    )
-    this.setState({
-      selectedElement: {
-        id: '',
-        position: null,
-      },
-    })
-  }
-
-  onUpdateVariables = () => {
-    parent.postMessage(
-      { pluginMessage: { type: 'UPDATE_LOCAL_VARIABLES' } },
+      { pluginMessage: { type: 'SYNC_LOCAL_VARIABLES' } },
       '*'
     )
     this.setState({
@@ -253,10 +230,8 @@ export default class EditPalette extends React.Component<Props, any> {
             lang={this.props.lang}
             onChangeScale={this.props.onChangeScale}
             onChangeStop={this.props.onChangeStop}
-            onCreateLocalStyles={this.onCreateStyles}
-            onUpdateLocalStyles={this.onUpdateStyles}
-            onCreateLocalVariables={this.onCreateVariables}
-            onUpdateLocalVariables={this.onUpdateVariables}
+            onSyncLocalStyles={this.onSyncStyles}
+            onSyncLocalVariables={this.onSyncVariables}
             onChangeActions={(value) =>
               this.setState({
                 deploymentAction: value,
@@ -275,10 +250,8 @@ export default class EditPalette extends React.Component<Props, any> {
             editorType={this.props.editorType}
             lang={this.props.lang}
             onChangeColors={this.props.onChangeColors}
-            onCreateLocalStyles={this.onCreateStyles}
-            onUpdateLocalStyles={this.onUpdateStyles}
-            onCreateLocalVariables={this.onCreateVariables}
-            onUpdateLocalVariables={this.onUpdateVariables}
+            onSyncLocalStyles={this.onSyncStyles}
+            onSyncLocalVariables={this.onSyncVariables}
             onChangeActions={(value) =>
               this.setState({
                 deploymentAction: value,
@@ -300,10 +273,8 @@ export default class EditPalette extends React.Component<Props, any> {
             editorType={this.props.editorType}
             lang={this.props.lang}
             onChangeThemes={this.props.onChangeThemes}
-            onCreateLocalStyles={this.onCreateStyles}
-            onUpdateLocalStyles={this.onUpdateStyles}
-            onCreateLocalVariables={this.onCreateVariables}
-            onUpdateLocalVariables={this.onUpdateVariables}
+            onSyncLocalStyles={this.onSyncStyles}
+            onSyncLocalVariables={this.onSyncVariables}
             onChangeActions={(value) =>
               this.setState({
                 deploymentAction: value,
@@ -344,10 +315,8 @@ export default class EditPalette extends React.Component<Props, any> {
             editorType={this.props.editorType}
             lang={this.props.lang}
             onChangeSettings={this.props.onChangeSettings}
-            onCreateLocalStyles={this.onCreateStyles}
-            onUpdateLocalStyles={this.onUpdateStyles}
-            onCreateLocalVariables={this.onCreateVariables}
-            onUpdateLocalVariables={this.onUpdateVariables}
+            onSyncLocalStyles={this.onSyncStyles}
+            onSyncLocalVariables={this.onSyncVariables}
             onChangeActions={(value) =>
               this.setState({
                 deploymentAction: value,

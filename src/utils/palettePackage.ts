@@ -69,3 +69,5 @@ export const presets: Presets = {
     id: 'CUSTOM',
   },
 }
+
+export const notifications: Array<string> = []
