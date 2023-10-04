@@ -209,6 +209,7 @@ div.export-palette {
 
 div.export-palette {
   display: flex;
+  gap: var(--size-xxxsmall);
 }
 
 div.export-palette__preview {
@@ -230,6 +231,9 @@ div.settings {
 
 div.settings__group {
   padding: var(--size-xxsmall) 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-xxxsmall);
 }
 
 div.settings__group + div.settings__group {
@@ -238,10 +242,6 @@ div.settings__group + div.settings__group {
 
 div.settings__item {
   padding: 0 var(--size-xsmall);
-}
-
-div.settings__item + div.settings__item {
-  margin-top: 2px;
 }
 
 /* About */
