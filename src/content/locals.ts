@@ -198,6 +198,8 @@ export const locals: { [key: string]: any } = {
     info: {
       createdLocalStyle: 'local color style created',
       createdLocalStyles: 'local color styles created',
+      updatedLocalStyle: 'local color style updated',
+      updatedLocalStyles: 'local color styles updated',
       localVariable: 'local color variable',
       localVariables: 'local color variables',
       variableMode: 'variable mode',
