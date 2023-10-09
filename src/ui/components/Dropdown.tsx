@@ -116,21 +116,22 @@ export default class Dropdown extends React.Component<Props, any> {
         style={{ top: `${this.state['position'] * -24 - 6}px` }}
         ref={this.listRef}
       >
-        {props.options?.map((option, index) =>
-          option.isActive ?
-            option.children!.length > 0 ? (
+        {props.options?.map((option, index) => {
+          if (option.children != undefined) {
+            if (option.isActive && option.children.length > 0) return (
               <this.MenuGroup
                 key={'group-' + index}
                 option={option}
               />
-            ) : (
+            )
+            else return (
               <this.MenuOption
                 key={'option-' + index}
                 option={option}
               />
             )
-          : null
-        )}
+          }
+        })}
         {props.actions != undefined ? (
           props.actions.length > 0 ? (
             <>
@@ -155,21 +156,22 @@ export default class Dropdown extends React.Component<Props, any> {
       <ul
         className="select-menu__menu select-menu__submenu select-menu__menu--active"
       >
-        {props.options?.map((option, index) =>
-          option.isActive ?
-            option.children!.length > 0 ? (
+        {props.options?.map((option, index) => {
+          if (option.children != undefined) {
+            if (option.isActive && option.children.length > 0) return (
               <this.MenuGroup
                 key={'group-' + index}
                 option={option}
               />
-            ) : (
+            )
+            else return (
               <this.MenuOption
                 key={'option-' + index}
                 option={option}
               />
             )
-          : null
-        )}
+          }
+        })}
       </ul>
     )
   }
@@ -182,8 +184,8 @@ export default class Dropdown extends React.Component<Props, any> {
         className={`select-menu__item${props.option.isBlocked ? ' select-menu__item--blocked' : ''}`}
         data-position={props.option.position}
         data-is-blocked={props.option.isBlocked}
-        onMouseOver={(e) => this.setState({ openedGroup: props.option.value })}
-        onMouseOut={(e) => this.setState({ openedGroup: 'EMPTY' })}
+        onMouseOver={() => this.setState({ openedGroup: props.option.value })}
+        onMouseOut={() => this.setState({ openedGroup: 'EMPTY' })}
       >
         <span className="select-menu__item-icon"></span>
         <span className="select-menu__item-label">
