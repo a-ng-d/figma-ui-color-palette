@@ -25,6 +25,7 @@ import getProPlan from './bridges/getProPlan'
 import enableTrial from './bridges/enableTrial'
 import package_json from './../package.json'
 import { locals, lang } from './content/locals'
+import { notifications } from './utils/palettePackage'
 
 figma.showUI(__html__, {
   width: 640,
@@ -58,10 +59,18 @@ figma.ui.onmessage = async (msg) => {
     UPDATE_VIEW: () => updateView(msg, palette),
     UPDATE_COLORS: () => updateColors(msg, palette),
     UPDATE_THEMES: () => updateThemes(msg, palette),
-    CREATE_LOCAL_STYLES: () => createLocalStyles(palette, i),
-    UPDATE_LOCAL_STYLES: () => updateLocalStyles(palette, i),
-    CREATE_LOCAL_VARIABLES: () => createLocalVariables(palette, i, j),
-    UPDATE_LOCAL_VARIABLES: () => updateLocalVariables(palette, i, j),
+    SYNC_LOCAL_STYLES: () => {
+      notifications.splice(0, notifications.length)
+      createLocalStyles(palette, i)
+      updateLocalStyles(palette, i)
+      figma.notify(notifications.join('﹒'))
+    },
+    SYNC_LOCAL_VARIABLES: () => {
+      notifications.splice(0, notifications.length)
+      createLocalVariables(palette, i, j)
+      updateLocalVariables(palette, i, j)
+      figma.notify(notifications.join('﹒'))
+    },
     EXPORT_PALETTE: () => {
       msg.export === 'JSON' ? exportJson(palette) : null
       msg.export === 'JSON_AMZN_STYLE_DICTIONARY'

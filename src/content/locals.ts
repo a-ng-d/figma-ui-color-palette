@@ -146,8 +146,8 @@ export const locals: { [key: string]: any } = {
     },
     actions: {
       createPalette: 'Create a UI Color Palette',
-      createLocalStyles: 'Create local styles',
-      createLocalVariables: 'Create local variables',
+      createLocalStyles: 'Sync with the local styles',
+      createLocalVariables: 'Sync with the local variables',
       updateLocalStyles: 'Update the existing local styles',
       updateLocalVariables: 'Update the existing local variables',
       export: 'Export the UI Color Palette to',
@@ -196,26 +196,16 @@ export const locals: { [key: string]: any } = {
       fontSize: 'Minimum font sizes',
     },
     info: {
-      createdLocalStyle: 'local color style has been created',
-      createdLocalStyles: 'local color styles have been created',
-      updatedLocalStyle: 'local color style has been updated',
-      updatedLocalStyles: 'local color styles have been updated',
-      noLocalVariable: 'No local color variable',
+      createdLocalStyle: 'local color style created',
+      createdLocalStyles: 'local color styles created',
+      updatedLocalStyle: 'local color style updated',
+      updatedLocalStyles: 'local color styles updated',
       localVariable: 'local color variable',
       localVariables: 'local color variables',
-      noVariableMode: 'No variable mode',
       variableMode: 'variable mode',
       variableModes: 'variable modes',
     },
     warning: {
-      cannotCreateLocalStyles: 'Local color styles have been already created',
-      cannotUpdateLocalStyles:
-        'Your UI Color Palette is up-to-date or local color styles must be created',
-      cannotCreateLocalVariablesAndModes:
-        'Local color variables and variable modes have been already created',
-      cannotUpdateLocalVariablesAndModes:
-        'Your UI Color Palette is up-to-date or local color variables and variable modes must be created',
-      collectionDoesNotExist: 'Variables collection must be created',
       tooManyThemesToCreateModes:
         'You cannot create more than 4 variable modes',
       emptySourceColors:
