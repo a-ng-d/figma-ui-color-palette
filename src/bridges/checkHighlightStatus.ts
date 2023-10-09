@@ -18,7 +18,11 @@ const checkHighlightStatus = async (version: string) => {
     )
       await figma.ui.postMessage({
         type: 'HIGHLIGHT_STATUS',
-        data: 'UNREAD_RELEASE_NOTE',
+        data: figma.payments != undefined
+          ? figma.payments.getUserFirstRanSecondsAgo() > 60 
+          ? 'UNREAD_RELEASE_NOTE'
+          : 'READ_RELEASE_NOTE'
+          : 'READ_RELEASE_NOTE',
       })
     else
       await figma.ui.postMessage({
