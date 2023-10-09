@@ -113,10 +113,7 @@ export default class EditPalette extends React.Component<Props, any> {
   }
 
   onSyncVariables = () => {
-    parent.postMessage(
-      { pluginMessage: { type: 'SYNC_LOCAL_VARIABLES' } },
-      '*'
-    )
+    parent.postMessage({ pluginMessage: { type: 'SYNC_LOCAL_VARIABLES' } }, '*')
     this.setState({
       selectedElement: {
         id: '',
@@ -357,7 +354,7 @@ export default class EditPalette extends React.Component<Props, any> {
                       position: index,
                       isActive: true,
                       isBlocked: false,
-                      children: []
+                      children: [],
                     }
                   })}
                   selected={

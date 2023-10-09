@@ -26,7 +26,11 @@ const releaseNotes: Array<ReleaseNote> = [
       'Ratings are a good measure of satisfaction. Your experience matters, whether it is good or bad, as it indicates whether our decisions have resolved your problem. You can leave your rating on the plugin page or in the Resources drawer.',
     ],
     numberOfNotes: 3,
-    learnMore: ['https://uicp.link/whats-new', 'https://uicp.link/network', 'https://www.figma.com/community/plugin/1063959496693642315'],
+    learnMore: [
+      'https://uicp.link/whats-new',
+      'https://uicp.link/network',
+      'https://www.figma.com/community/plugin/1063959496693642315',
+    ],
   },
   {
     version: '2.4.0',

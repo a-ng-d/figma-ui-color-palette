@@ -121,7 +121,7 @@ div.section-controls .label {
 
 div.section-controls .section-title {
   display: flex;
-  gap: var(--size-xxxsmall)
+  gap: var(--size-xxxsmall);
 }
 
 /* Onboarding */

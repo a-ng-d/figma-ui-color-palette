@@ -26,7 +26,7 @@ export default class Export extends React.Component<Props, any> {
     super(props)
     this.counter = 0
     this.state = {
-      format: 'EXPORT_TO_JSON'
+      format: 'EXPORT_TO_JSON',
     }
   }
 
@@ -148,7 +148,7 @@ export default class Export extends React.Component<Props, any> {
               </div>
             </div>
             <div className="section-controls__right-part">
-            <Dropdown
+              <Dropdown
                 id="exports-list"
                 options={[
                   {
@@ -163,8 +163,7 @@ export default class Export extends React.Component<Props, any> {
                         value: 'EXPORT_TO_JSON',
                         position: 0,
                         isActive: features.find(
-                          (feature) =>
-                            feature.name === 'EXPORT_JSON'
+                          (feature) => feature.name === 'EXPORT_JSON'
                         )?.isActive,
                         isBlocked: isBlocked(
                           'EXPORT_JSON',
@@ -173,7 +172,8 @@ export default class Export extends React.Component<Props, any> {
                         children: [],
                       },
                       {
-                        label: locals[this.props.lang].export.amznStyleDictionary,
+                        label:
+                          locals[this.props.lang].export.amznStyleDictionary,
                         value: 'EXPORT_TO_JSON_AMZN_STYLE_DICTIONARY',
                         position: 0,
                         isActive: features.find(
@@ -200,20 +200,16 @@ export default class Export extends React.Component<Props, any> {
                         ),
                         children: [],
                       },
-                    ]
+                    ],
                   },
                   {
                     label: locals[this.props.lang].export.css,
                     value: 'EXPORT_TO_CSS',
                     position: 1,
                     isActive: features.find(
-                      (feature) =>
-                        feature.name === 'EXPORT_CSS'
+                      (feature) => feature.name === 'EXPORT_CSS'
                     )?.isActive,
-                    isBlocked: isBlocked(
-                      'EXPORT_CSS',
-                      this.props.planStatus
-                    ),
+                    isBlocked: isBlocked('EXPORT_CSS', this.props.planStatus),
                     children: [],
                   },
                   {
@@ -221,13 +217,9 @@ export default class Export extends React.Component<Props, any> {
                     value: 'EXPORT_TO_SWIFT',
                     position: 2,
                     isActive: features.find(
-                      (feature) =>
-                        feature.name === 'EXPORT_SWIFT'
+                      (feature) => feature.name === 'EXPORT_SWIFT'
                     )?.isActive,
-                    isBlocked: isBlocked(
-                      'EXPORT_SWIFT',
-                      this.props.planStatus
-                    ),
+                    isBlocked: isBlocked('EXPORT_SWIFT', this.props.planStatus),
                     children: [],
                   },
                   {
@@ -235,13 +227,9 @@ export default class Export extends React.Component<Props, any> {
                     value: 'EXPORT_TO_XML',
                     position: 3,
                     isActive: features.find(
-                      (feature) =>
-                        feature.name === 'EXPORT_XML'
+                      (feature) => feature.name === 'EXPORT_XML'
                     )?.isActive,
-                    isBlocked: isBlocked(
-                      'EXPORT_XML',
-                      this.props.planStatus
-                    ),
+                    isBlocked: isBlocked('EXPORT_XML', this.props.planStatus),
                     children: [],
                   },
                   {
@@ -249,13 +237,9 @@ export default class Export extends React.Component<Props, any> {
                     value: 'EXPORT_TO_CSV',
                     position: 4,
                     isActive: features.find(
-                      (feature) =>
-                        feature.name === 'EXPORT_CSV'
+                      (feature) => feature.name === 'EXPORT_CSV'
                     )?.isActive,
-                    isBlocked: isBlocked(
-                      'EXPORT_CSV',
-                      this.props.planStatus
-                    ),
+                    isBlocked: isBlocked('EXPORT_CSV', this.props.planStatus),
                     children: [],
                   },
                 ]}

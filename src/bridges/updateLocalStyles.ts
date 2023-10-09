@@ -26,7 +26,9 @@ const updateLocalStyles = (palette: SceneNode, i: number) => {
                 ? `${paletteData.name == '' ? '' : paletteData.name + '/'}${
                     theme.name
                   }/${color.name}/${shade.name}`
-                : `${paletteData.name === '' ? '' : paletteData.name}/${color.name}/${shade.name}`,
+                : `${paletteData.name === '' ? '' : paletteData.name}/${
+                    color.name
+                  }/${shade.name}`,
             description =
               color.description != ''
                 ? color.description + '﹒' + shade.description
@@ -123,9 +125,13 @@ const updateLocalStyles = (palette: SceneNode, i: number) => {
       })
     })
 
-    if (i > 1) notifications.push(`${i} ${locals[lang].info.updatedLocalStyles}`)
+    if (i > 1)
+      notifications.push(`${i} ${locals[lang].info.updatedLocalStyles}`)
     else notifications.push(`${i} ${locals[lang].info.updatedLocalStyle}`)
-  } else notifications.splice(0, notifications.length).push(locals[lang].error.corruption)
+  } else
+    notifications
+      .splice(0, notifications.length)
+      .push(locals[lang].error.corruption)
 }
 
 export default updateLocalStyles

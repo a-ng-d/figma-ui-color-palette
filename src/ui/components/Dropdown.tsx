@@ -19,14 +19,14 @@ export default class Dropdown extends React.Component<Props, any> {
 
   static defaultProps = {
     actions: [],
-    alignment: 'LEFT'
+    alignment: 'LEFT',
   }
 
   constructor(props: Props) {
     super(props)
     this.state = {
       isMenuOpen: false,
-      position: 0
+      position: 0,
     }
     this.selectMenuRef = React.createRef()
     this.buttonRef = React.createRef()
@@ -41,11 +41,11 @@ export default class Dropdown extends React.Component<Props, any> {
     document.removeEventListener('mousedown', this.handleClickOutside)
 
   handleClickOutside = (e: Event) => {
-    if (e.target ===  this.buttonRef.current)
+    if (e.target === this.buttonRef.current)
       this.setState({
         isMenuOpen: true,
       })
-    else if (e.target !=  this.listRef.current)
+    else if (e.target != this.listRef.current)
       this.setState({
         isMenuOpen: false,
       })
@@ -96,21 +96,22 @@ export default class Dropdown extends React.Component<Props, any> {
   }
 
   findSelectedOption = (options: Array<DropdownOption>) =>
-    options.map(option => {
-      if (option.value === this.props.selected)
-        return option
-      else
-        return option.children?.find(child =>
-          child.value === this.props.selected
-        )
-    }).find(item => item != null)
+    options
+      .map((option) => {
+        if (option.value === this.props.selected) return option
+        else
+          return option.children?.find(
+            (child) => child.value === this.props.selected
+          )
+      })
+      .find((item) => item != null)
 
   // Templates
   Menu = (props: {
-    options: Array<DropdownOption> | undefined;
-    actions?: Array<DropdownAction> | undefined;
+    options: Array<DropdownOption> | undefined
+    actions?: Array<DropdownAction> | undefined
   }) => {
-    return(
+    return (
       <ul
         className="select-menu__menu select-menu__menu--active"
         style={{ top: `${this.state['position'] * -24 - 6}px` }}
@@ -118,18 +119,20 @@ export default class Dropdown extends React.Component<Props, any> {
       >
         {props.options?.map((option, index) => {
           if (option.children != undefined) {
-            if (option.isActive && option.children.length > 0) return (
-              <this.MenuGroup
-                key={'group-' + index}
-                option={option}
-              />
-            )
-            else return (
-              <this.MenuOption
-                key={'option-' + index}
-                option={option}
-              />
-            )
+            if (option.isActive && option.children.length > 0)
+              return (
+                <this.MenuGroup
+                  key={'group-' + index}
+                  option={option}
+                />
+              )
+            else
+              return (
+                <this.MenuOption
+                  key={'option-' + index}
+                  option={option}
+                />
+              )
           }
         })}
         {props.actions != undefined ? (
@@ -149,61 +152,53 @@ export default class Dropdown extends React.Component<Props, any> {
     )
   }
 
-  SubMenu = (props: {
-    options: Array<DropdownOption> | undefined;
-  }) => {
-    return(
-      <ul
-        className="select-menu__menu select-menu__submenu select-menu__menu--active"
-      >
+  SubMenu = (props: { options: Array<DropdownOption> | undefined }) => {
+    return (
+      <ul className="select-menu__menu select-menu__submenu select-menu__menu--active">
         {props.options?.map((option, index) => {
           if (option.children != undefined) {
-            if (option.isActive && option.children.length > 0) return (
-              <this.MenuGroup
-                key={'group-' + index}
-                option={option}
-              />
-            )
-            else return (
-              <this.MenuOption
-                key={'option-' + index}
-                option={option}
-              />
-            )
+            if (option.isActive && option.children.length > 0)
+              return (
+                <this.MenuGroup
+                  key={'group-' + index}
+                  option={option}
+                />
+              )
+            else
+              return (
+                <this.MenuOption
+                  key={'option-' + index}
+                  option={option}
+                />
+              )
           }
         })}
       </ul>
     )
   }
 
-  MenuGroup = (props: {
-    option: DropdownOption
-  }) => {
+  MenuGroup = (props: { option: DropdownOption }) => {
     return (
       <li
-        className={`select-menu__item${props.option.isBlocked ? ' select-menu__item--blocked' : ''}`}
+        className={`select-menu__item${
+          props.option.isBlocked ? ' select-menu__item--blocked' : ''
+        }`}
         data-position={props.option.position}
         data-is-blocked={props.option.isBlocked}
         onMouseOver={() => this.setState({ openedGroup: props.option.value })}
         onMouseOut={() => this.setState({ openedGroup: 'EMPTY' })}
       >
         <span className="select-menu__item-icon"></span>
-        <span className="select-menu__item-label">
-          {props.option.label}
-        </span>
+        <span className="select-menu__item-label">{props.option.label}</span>
         <span className="select-menu__item-carret"></span>
         {this.state['openedGroup'] === props.option.value ? (
-          <this.SubMenu
-            options={props.option.children}
-          />
+          <this.SubMenu options={props.option.children} />
         ) : null}
       </li>
     )
   }
 
-  MenuOption = (props: {
-    option: DropdownOption
-  }) => {
+  MenuOption = (props: { option: DropdownOption }) => {
     return (
       <li
         className={`select-menu__item${
@@ -218,16 +213,12 @@ export default class Dropdown extends React.Component<Props, any> {
         onMouseDown={(e) => this.onSelectItem(e)}
       >
         <span className="select-menu__item-icon"></span>
-        <span className="select-menu__item-label">
-          {props.option.label}
-        </span>
+        <span className="select-menu__item-label">{props.option.label}</span>
       </li>
     )
   }
 
-  MenuSubOption = (props: {
-    option: DropdownOption
-  }) => {
+  MenuSubOption = (props: { option: DropdownOption }) => {
     console.log(props.option.position)
     return (
       <li
@@ -243,16 +234,12 @@ export default class Dropdown extends React.Component<Props, any> {
         onMouseDown={(e) => this.onSelectItem(e)}
       >
         <span className="select-menu__item-icon"></span>
-        <span className="select-menu__item-label">
-          {props.option.label}
-        </span>
+        <span className="select-menu__item-label">{props.option.label}</span>
       </li>
     )
   }
 
-  MenuAction = (props: {
-    action: DropdownAction
-  }) => {
+  MenuAction = (props: { action: DropdownAction }) => {
     return (
       <li
         className={`select-menu__item${
@@ -263,9 +250,7 @@ export default class Dropdown extends React.Component<Props, any> {
         onMouseDown={() => this.onSelectAction(props.action.action)}
       >
         <span className="select-menu__item-icon"></span>
-        <span className="select-menu__item-label">
-          {props.action.label}
-        </span>
+        <span className="select-menu__item-label">{props.action.label}</span>
       </li>
     )
   }
@@ -274,7 +259,13 @@ export default class Dropdown extends React.Component<Props, any> {
     return (
       <div
         id={this.props.id}
-        className={`select-menu${this.props.alignment === 'LEFT' ? ' select-menu--left' : this.props.alignment === 'RIGHT' ? ' select-menu--right' : ' select-menu--fill'}`}
+        className={`select-menu${
+          this.props.alignment === 'LEFT'
+            ? ' select-menu--left'
+            : this.props.alignment === 'RIGHT'
+            ? ' select-menu--right'
+            : ' select-menu--fill'
+        }`}
         ref={this.selectMenuRef}
       >
         <button

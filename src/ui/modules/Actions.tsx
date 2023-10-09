@@ -44,9 +44,8 @@ export default class Actions extends React.Component<Props> {
     return (
       <Feature
         isActive={
-          features.find(
-            (feature) => feature.name === 'SYNC_LOCAL_VARIABLES'
-          )?.isActive
+          features.find((feature) => feature.name === 'SYNC_LOCAL_VARIABLES')
+            ?.isActive
         }
       >
         <Button

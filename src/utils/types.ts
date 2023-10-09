@@ -208,12 +208,12 @@ export interface ActionsList {
 }
 
 export interface DropdownOption {
-    label: string
-    value: string
-    position: number
-    isActive?: boolean
-    isBlocked?: boolean
-    children?: Array<DropdownOption> | []
+  label: string
+  value: string
+  position: number
+  isActive?: boolean
+  isBlocked?: boolean
+  children?: Array<DropdownOption> | []
 }
 
 export interface DropdownAction {

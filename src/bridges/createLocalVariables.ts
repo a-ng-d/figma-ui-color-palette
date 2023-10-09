@@ -139,19 +139,19 @@ const createLocalVariables = (palette: SceneNode, i: number, j: number) => {
     palette.setPluginData('data', JSON.stringify(paletteData))
 
     if (i > 1) messages.push(`${i} ${locals[lang].info.localVariables}`)
-    else
-      messages.push(`${i} ${locals[lang].info.localVariable}`)
+    else messages.push(`${i} ${locals[lang].info.localVariable}`)
 
     if (j > 1) messages.push(`${j} ${locals[lang].info.variableModes}`)
-    else
-      messages.push(`${j} ${locals[lang].info.variableMode}`)
+    else messages.push(`${j} ${locals[lang].info.variableMode}`)
 
     notifications.push(`${messages.join(', ')} created`)
 
     if (themesList.length > 4)
       figma.notify(locals[lang].warning.tooManyThemesToCreateModes)
-
-  } else notifications.splice(0, notifications.length).push(locals[lang].error.corruption)
+  } else
+    notifications
+      .splice(0, notifications.length)
+      .push(locals[lang].error.corruption)
 }
 
 export default createLocalVariables

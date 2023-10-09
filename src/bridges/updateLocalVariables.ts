@@ -54,7 +54,9 @@ const updateLocalVariables = (palette: SceneNode, i: number, j: number) => {
             const variableMatch = localVariables.find(
                 (localVariable) => localVariable.id === shade.variableId
               ),
-              description = color.description.endsWith(' ') ? color.description.slice(0, -1) : color.description
+              description = color.description.endsWith(' ')
+                ? color.description.slice(0, -1)
+                : color.description
             if (variableMatch != undefined) {
               if (variableMatch.name != `${color.name}/${shade.name}`) {
                 variableMatch.name = `${color.name}/${shade.name}`
@@ -88,17 +90,20 @@ const updateLocalVariables = (palette: SceneNode, i: number, j: number) => {
       })
 
       if (i > 1) messages.push(`${i} ${locals[lang].info.localVariables}`)
-      else
-        messages.push(`${i} ${locals[lang].info.localVariable}`)
+      else messages.push(`${i} ${locals[lang].info.localVariable}`)
 
       if (j > 1) messages.push(`${j} ${locals[lang].info.variableModes}`)
-      else
-        messages.push(`${j} ${locals[lang].info.variableMode}`)
+      else messages.push(`${j} ${locals[lang].info.variableMode}`)
 
       notifications.push(`${messages.join(', ')} updated`)
-
-    } else notifications.splice(0, notifications.length).push(locals[lang].warning.collectionDoesNotExist)
-  } else notifications.splice(0, notifications.length).push(locals[lang].error.corruption)
+    } else
+      notifications
+        .splice(0, notifications.length)
+        .push(locals[lang].warning.collectionDoesNotExist)
+  } else
+    notifications
+      .splice(0, notifications.length)
+      .push(locals[lang].error.corruption)
 }
 
 export default updateLocalVariables
