@@ -15,6 +15,7 @@ export type TrialStatus = 'UNUSED' | 'PENDING' | 'EXPIRED'
 
 export type PriorityContext =
   | 'EMPTY'
+  | 'FEEDBACK'
   | 'HIGHLIGHT'
   | 'WELCOME_TO_PRO'
   | 'WELCOME_TO_TRIAL'

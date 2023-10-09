@@ -126,6 +126,9 @@ export const locals: { [key: string]: any } = {
         },
       },
     },
+    feedback: {
+      title: 'Tell your experience',
+    },
     about: {
       title: 'About UI Color Palette',
       getHelp: {

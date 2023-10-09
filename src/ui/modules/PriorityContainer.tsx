@@ -91,6 +91,30 @@ export default class PriorityContainer extends React.Component<Props, any> {
     )
   }
 
+  Feedback = () => {
+    return (
+      <Feature
+        isActive={
+          features.find((feature) => feature.name === 'GET_PRO_PLAN')?.isActive
+        }
+      >
+        <Dialog
+          title={locals[this.props.lang].feedback.title}
+          actions={{}}
+          onClose={this.props.onClose}
+        >
+          <iframe
+            style={{
+              border: 'none',
+              width: '100%'
+            }}
+            src="https://noteforms.com/forms/voice-of-the-ui-color-palette-users">
+          </iframe>
+        </Dialog>
+      </Feature>
+    )
+  }
+
   WelcomeToPro = () => {
     return (
       <Feature
@@ -179,6 +203,7 @@ export default class PriorityContainer extends React.Component<Props, any> {
           <this.WelcomeToTrial />
         ) : null}
         {this.props.context === 'WELCOME_TO_PRO' ? <this.WelcomeToPro /> : null}
+        {this.props.context === 'FEEDBACK' ? <this.Feedback /> : null}
         {this.props.context === 'HIGHLIGHT' ? <this.Highlight /> : null}
         {this.props.context === 'ABOUT' ? <this.About /> : null}
       </>
