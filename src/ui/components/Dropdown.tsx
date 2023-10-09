@@ -183,7 +183,7 @@ export default class Dropdown extends React.Component<Props, any> {
         data-position={props.option.position}
         data-is-blocked={props.option.isBlocked}
         onMouseOver={(e) => this.setState({ openedGroup: props.option.value })}
-        onMouseOut={(e) => this.setState({ openedGroup: props.option.value })}
+        onMouseOut={(e) => this.setState({ openedGroup: 'EMPTY' })}
       >
         <span className="select-menu__item-icon"></span>
         <span className="select-menu__item-label">
