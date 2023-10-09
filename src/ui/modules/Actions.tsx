@@ -26,7 +26,7 @@ export default class Actions extends React.Component<Props> {
     return (
       <Feature
         isActive={
-          features.find((feature) => feature.name === 'CREATE_LOCAL_STYLES')
+          features.find((feature) => feature.name === 'SYNC_LOCAL_STYLES')
             ?.isActive
         }
       >
@@ -45,7 +45,7 @@ export default class Actions extends React.Component<Props> {
       <Feature
         isActive={
           features.find(
-            (feature) => feature.name === 'CREATE_LOCAL_VARIABLES'
+            (feature) => feature.name === 'SYNC_LOCAL_VARIABLES'
           )?.isActive
         }
       >
