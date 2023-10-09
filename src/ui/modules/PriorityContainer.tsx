@@ -106,10 +106,10 @@ export default class PriorityContainer extends React.Component<Props, any> {
           <iframe
             style={{
               border: 'none',
-              width: '100%'
+              width: '100%',
             }}
-            src="https://noteforms.com/forms/voice-of-the-ui-color-palette-users">
-          </iframe>
+            src="https://noteforms.com/forms/voice-of-the-ui-color-palette-users"
+          ></iframe>
         </Dialog>
       </Feature>
     )
