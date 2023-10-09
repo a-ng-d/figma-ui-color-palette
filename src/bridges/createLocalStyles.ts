@@ -25,10 +25,10 @@ const createLocalStyles = (palette: SceneNode, i: number) => {
           ) {
             const style = new LocalStyle(
               workingThemes[0].type === 'custom theme'
-                ? `${paletteData.name == '' ? '' : paletteData.name + '/'}${
+                ? `${paletteData.name === '' ? '' : paletteData.name + '/'}${
                     theme.name
                   }/${color.name}/${shade.name}`
-                : `${color.name}/${shade.name}`,
+                : `${paletteData.name === '' ? '' : paletteData.name}/${color.name}/${shade.name}`,
               color.description != ''
                 ? color.description + '﹒' + shade.description
                 : shade.description,

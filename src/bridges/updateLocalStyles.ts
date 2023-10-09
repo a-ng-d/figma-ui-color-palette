@@ -26,7 +26,7 @@ const updateLocalStyles = (palette: SceneNode, i: number) => {
                 ? `${paletteData.name == '' ? '' : paletteData.name + '/'}${
                     theme.name
                   }/${color.name}/${shade.name}`
-                : `${color.name}/${shade.name}`,
+                : `${paletteData.name === '' ? '' : paletteData.name}/${color.name}/${shade.name}`,
             description =
               color.description != ''
                 ? color.description + '﹒' + shade.description
