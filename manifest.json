@@ -9,12 +9,16 @@
   "relaunchButtons": [
     { "command": "edit", "name": "Edit the UI Color Palette" }
   ],
-  "permissions": ["payments"],
+  "permissions": [
+    "payments",
+    "currentuser"
+  ],
   "networkAccess": {
     "allowedDomains": [
       "https://figma.com",
       "https://rsms.me",
-      "https://noteforms.com"
+      "https://noteforms.com",
+      "https://corsproxy.io"
     ]
   },
   "main": "dist/code.js",
