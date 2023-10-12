@@ -46,6 +46,7 @@
     "figma-plugin-ds": "^1.0.1",
     "html-webpack-inline-source-plugin": "^1.0.0-beta.2",
     "html-webpack-plugin": "^5.5.0",
+    "postcss": "^8.4.31",
     "preact": "^10.6.4",
     "prettier": "^2.8.3",
     "style-loader": "^3.3.1",
