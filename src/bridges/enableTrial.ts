@@ -1,4 +1,5 @@
-import { NOTION_API_KEY, NOTION_TRIAL_TABLE_ID } from './../../env.s'
+import { notionOptions } from '../utils/fetch'
+import { NOTION_TRIAL_TABLE_ID } from './../../env.s'
 
 const enableTrial = async () => {
   const date = new Date()
@@ -16,14 +17,7 @@ const enableTrial = async () => {
           encodeURIComponent('https://api.notion.com/v1/pages'),
         {
           method: 'POST',
-          headers: {
-            Authorization: `Bearer ${NOTION_API_KEY}`,
-            Accept: 'application/json',
-            'Access-Control-Allow-Origin': 'https://www.figma.com/**/*',
-            'Access-Control-Allow-Methods': 'POST',
-            'Notion-Version': '2022-06-28',
-            'content-type': 'application/json',
-          },
+          headers: notionOptions,
           body: JSON.stringify({
             parent: {
               database_id: NOTION_TRIAL_TABLE_ID,
