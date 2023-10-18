@@ -17,19 +17,16 @@ const releaseNotes: Array<ReleaseNote> = [
     title: [
       '72-hour trial period to spread your palettes',
       'UI Color Palette is on LinkedIn',
-      'Top or Flop: Leave your rating',
     ],
-    image: [rnv251, rnv252, rnv253],
+    image: [rnv251, rnv252],
     content: [
       'Within 72 hours, all the tools will be available for you to test how you can distribute your color palettes among design and development teams. Our ambition is to make color palettes accessible, easy to handle, and publishable.',
       'Stay connected with our announcements and sharing, and help us spread good practices in building color palettes and systems.',
-      'Ratings are a good measure of satisfaction. Your experience matters, whether it is good or bad, as it indicates whether our decisions have resolved your problem. You can leave your rating on the plugin page or in the Resources drawer.',
     ],
-    numberOfNotes: 3,
+    numberOfNotes: 2,
     learnMore: [
       'https://uicp.link/whats-new',
       'https://uicp.link/network',
-      'https://www.figma.com/community/plugin/1063959496693642315',
     ],
   },
   {
