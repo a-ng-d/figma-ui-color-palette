@@ -24,10 +24,7 @@ const releaseNotes: Array<ReleaseNote> = [
       'Stay connected with our announcements and sharing, and help us spread good practices in building color palettes and systems.',
     ],
     numberOfNotes: 2,
-    learnMore: [
-      'https://uicp.link/whats-new',
-      'https://uicp.link/network',
-    ],
+    learnMore: ['https://uicp.link/whats-new', 'https://uicp.link/network'],
   },
   {
     version: '2.4.0',

@@ -1,5 +1,5 @@
 const checkPlanStatus = async () => {
-  // figma.clientStorage.deleteAsync('trial_start_date')
+  figma.clientStorage.deleteAsync('trial_start_date')
   const trialStartDate: number | undefined = await figma.clientStorage.getAsync(
       'trial_start_date'
     ),
@@ -12,9 +12,9 @@ const checkPlanStatus = async () => {
     trialStatus = remainingTime >= trialTime ? 'EXPIRED' : 'PENDING'
   }
 
-  /*await figma.payments?.setPaymentStatusInDevelopment({
+  await figma.payments?.setPaymentStatusInDevelopment({
     type: 'UNPAID',
-  })*/
+  })
   await figma.ui.postMessage({
     type: 'PLAN_STATUS',
     data: {

@@ -168,7 +168,10 @@ export default class Scale extends React.Component<Props, any> {
                       value: preset[1].id,
                       position: index,
                       isActive: true,
-                      isBlocked: isBlocked(`PRESET_${preset[1].id}`, this.props.planStatus),
+                      isBlocked: isBlocked(
+                        `PRESET_${preset[1].id}`,
+                        this.props.planStatus
+                      ),
                       children: [],
                     }
                   })}
