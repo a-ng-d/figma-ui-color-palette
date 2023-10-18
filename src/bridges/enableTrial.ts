@@ -23,7 +23,7 @@ const enableTrial = async () => {
               database_id: NOTION_TRIAL_TABLE_ID,
             },
             properties: {
-              Utilisateur: {
+              "Nom de l'utilisateur": {
                 title: [
                   {
                     type: 'text',
@@ -43,6 +43,27 @@ const enableTrial = async () => {
                     href: null,
                   },
                 ],
+              },
+              "Id de l'utilisateur": {
+                "rich_text": [
+                  {
+                    "type": "text",
+                    "text": {
+                      "content": figma.currentUser?.id ?? 'NC',
+                      "link": null
+                    },
+                    "annotations": {
+                      "bold": false,
+                      "italic": false,
+                      "strikethrough": false,
+                      "underline": false,
+                      "code": false,
+                      "color": "default"
+                    },
+                    "plain_text": figma.currentUser?.id ?? 'NC',
+                    "href": null
+                  },
+                ]
               },
               "Période de l'essai": {
                 date: {
