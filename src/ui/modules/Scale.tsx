@@ -14,6 +14,7 @@ import Message from '../components/Message'
 import Actions from './Actions'
 import { palette, presets } from '../../utils/palettePackage'
 import features from '../../utils/config'
+import isBlocked from '../../utils/isBlocked'
 import { locals } from '../../content/locals'
 import Dispatcher from './Dispatcher'
 
@@ -167,7 +168,7 @@ export default class Scale extends React.Component<Props, any> {
                       value: preset[1].id,
                       position: index,
                       isActive: true,
-                      isBlocked: false,
+                      isBlocked: isBlocked(`PRESET_${preset[1].id}`, this.props.planStatus),
                       children: [],
                     }
                   })}
