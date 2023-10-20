@@ -73,19 +73,19 @@ export const locals: { [key: string]: any } = {
       },
     },
     export: {
-      format: 'File format',
+      format: 'Code',
       preview: 'Preview',
-      json: 'JSON (Global tokens)',
-      amznStyleDictionary: 'JSON (Amazon Style Dictionary)',
-      tokensStudio: 'JSON (Tokens Studio)',
-      css: 'CSS (Custom Properties)',
-      swift: 'SwiftUI (Apple OS)',
-      xml: 'XML (Android)',
-      csv: 'CSV (LCH)',
+      json: 'Global (JSON)',
+      amznStyleDictionary: 'Amazon Style Dictionary (JSON)',
+      tokensStudio: 'Tokens Studio (JSON)',
+      css: 'Custom Properties (CSS)',
+      swift: 'iOS (SwiftUI)',
+      xml: 'Android (XML)',
+      csv: 'Spreadsheet (CSV)',
     },
     settings: {
       global: {
-        title: 'Palette global settings',
+        title: 'Global settings',
         name: {
           label: 'Name',
         },
@@ -112,12 +112,12 @@ export const locals: { [key: string]: any } = {
         title: 'Color management',
         colorSpace: {
           label: 'Color space',
-          lch: 'LCH (Lightness, Chroma, Hue)',
-          oklch: 'OKLCH (OK, Lightness, Chroma, Hue)',
-          lab: 'CIELAB (CIE, Lightness, a﹡ axis, b﹡ axis)',
-          oklab: 'OKLAB (OK, Lightness, a﹡ axis, b﹡ axis)',
-          hsl: 'HSL (Hue, Saturation, Lightness)',
-          hsluv: 'HSLuv (Hue, Saturation, Lightness, u* axis, v* axis)',
+          lch: 'LCH',
+          oklch: 'OKLCH',
+          lab: 'CIELAB',
+          oklab: 'OKLAB',
+          hsl: 'HSL',
+          hsluv: 'HSLuv',
         },
         newAlgorithm: {
           label: 'Enable the new algorithm for creating color shades',
@@ -125,6 +125,9 @@ export const locals: { [key: string]: any } = {
             'The Chroma values are harmonized to ensure consistent lightness across all shades, but this may make the colors look desaturated.',
         },
       },
+    },
+    feedback: {
+      title: 'Tell your experience',
     },
     about: {
       title: 'About UI Color Palette',
@@ -146,8 +149,8 @@ export const locals: { [key: string]: any } = {
     },
     actions: {
       createPalette: 'Create a UI Color Palette',
-      createLocalStyles: 'Create local styles',
-      createLocalVariables: 'Create local variables',
+      createLocalStyles: 'Sync with the local styles',
+      createLocalVariables: 'Sync with the local variables',
       updateLocalStyles: 'Update the existing local styles',
       updateLocalVariables: 'Update the existing local variables',
       export: 'Export the UI Color Palette to',
@@ -196,26 +199,16 @@ export const locals: { [key: string]: any } = {
       fontSize: 'Minimum font sizes',
     },
     info: {
-      createdLocalStyle: 'local color style has been created',
-      createdLocalStyles: 'local color styles have been created',
-      updatedLocalStyle: 'local color style has been updated',
-      updatedLocalStyles: 'local color styles have been updated',
-      noLocalVariable: 'No local color variable',
+      createdLocalStyle: 'local color style created',
+      createdLocalStyles: 'local color styles created',
+      updatedLocalStyle: 'local color style updated',
+      updatedLocalStyles: 'local color styles updated',
       localVariable: 'local color variable',
       localVariables: 'local color variables',
-      noVariableMode: 'No variable mode',
       variableMode: 'variable mode',
       variableModes: 'variable modes',
     },
     warning: {
-      cannotCreateLocalStyles: 'Local color styles have been already created',
-      cannotUpdateLocalStyles:
-        'Your UI Color Palette is up-to-date or local color styles must be created',
-      cannotCreateLocalVariablesAndModes:
-        'Local color variables and variable modes have been already created',
-      cannotUpdateLocalVariablesAndModes:
-        'Your UI Color Palette is up-to-date or local color variables and variable modes must be created',
-      collectionDoesNotExist: 'Variables collection must be created',
       tooManyThemesToCreateModes:
         'You cannot create more than 4 variable modes',
       emptySourceColors:

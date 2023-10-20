@@ -44,6 +44,5 @@ Go to the [Issues](https://uicp.link/report) section and browse the existing tic
 - The Figma components are emulated thanks to the [Figma Plugin DS](https://github.com/thomas-lowry/figma-plugin-ds) stylesheet by [Tom Lowry](https://github.com/thomas-lowry).
 
 ## Support
-- [Connect to my LinkedIn 💼](https://uicp.link/network).
-- [Support me on Figma 🎨](https://uicp.link/author).
-- [Buy me a coffee ☕️](https://uicp.link/donate).
+- [Follow the plugin LinkedIn page](https://uicp.link/network).
+- [Connect to my LinkedIn](https://uicp.link/author).

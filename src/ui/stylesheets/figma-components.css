@@ -306,12 +306,25 @@
 
 /* Select menu */
 .select-menu {
-  min-width: 224px;
+  display: flex;
+}
+
+.select-menu--right {
+  justify-content: flex-end;
+}
+
+.select-menu--left {
+  justify-content: flex-start;
+}
+
+.select-menu--fill {
+  justify-content: stretch;
 }
 
 .select-menu__button {
   --white: var(--figma-color-bg);
   padding: 0 0 0 var(--size-xxsmall);
+  width: auto;
 }
 
 .select-menu__button:hover {
@@ -320,6 +333,14 @@
 
 .select-menu__button:focus {
   --blue: var(--figma-color-border-selected);
+}
+
+.select-menu__label {
+  margin-top: 0;
+}
+
+.select-menu__item-label {
+  flex: 1;
 }
 
 .select-menu__caret {
@@ -332,6 +353,7 @@
 .select-menu__button:hover .select-menu__caret,
 .select-menu__button:focus .select-menu__caret {
   background: var(--figma-color-icon);
+  margin-left: -12px;
 }
 
 .select-menu__item-icon {
@@ -342,13 +364,57 @@
   background: transparent;
 }
 
-.select-menu__item--selected .select-menu__item-icon {
+.select-menu__item-carret {
+  width: var(--size-xsmall);
+  height: var(--size-xsmall);
+  margin-left: var(--size-xxsmall);
+  pointer-events: none;
+}
+
+.select-menu__item-carret {
+  mask-image: url('data:image/svg+xml;charset=utf8,%3Csvg fill="none" height="32" viewBox="0 0 32 32" width="32" xmlns="http://www.w3.org/2000/svg"%3E%3Cpath d="m19 16-4-3v6z" fill="%23000"/%3E%3C/svg%3E');
+  mask-position: center;
+  -webkit-mask-image: url('data:image/svg+xml;charset=utf8,%3Csvg fill="none" height="32" viewBox="0 0 32 32" width="32" xmlns="http://www.w3.org/2000/svg"%3E%3Cpath d="m19 16-4-3v6z" fill="%23000"/%3E%3C/svg%3E');
+  -webkit-mask-position: center;
+  background: transparent;
+}
+
+.select-menu__item--selected .select-menu__item-icon,
+.select-menu__item-carret {
   background: var(--figma-color-icon-onselected-strong);
 }
 
 .select-menu__menu {
   outline: 1px solid rgba(255, 255, 255, 0.1);
   outline-offset: -1px;
+  width: fit-content;
+  min-width: 224px;
+  overflow: visible;
+}
+
+.select-menu--right .select-menu__menu {
+  right: 0;
+  left: auto;
+}
+
+.select-menu--left .select-menu__menu {
+  left: 0;
+}
+
+.select-menu--fill .select-menu__menu {
+  right: 0;
+  left: auto;
+}
+
+.select-menu--right .select-menu__submenu {
+  left: 0;
+  transform: translateX(-100%);
+}
+
+.select-menu--left .select-menu__submenu {
+  right: 0;
+  left: auto;
+  transform: translateX(100%);
 }
 
 .select-menu hr {

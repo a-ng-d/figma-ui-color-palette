@@ -15,6 +15,7 @@ export type TrialStatus = 'UNUSED' | 'PENDING' | 'EXPIRED'
 
 export type PriorityContext =
   | 'EMPTY'
+  | 'FEEDBACK'
   | 'HIGHLIGHT'
   | 'WELCOME_TO_PRO'
   | 'WELCOME_TO_TRIAL'
@@ -205,6 +206,22 @@ export interface HoveredColor extends SelectedColor {
 
 export interface ActionsList {
   [action: string]: () => void
+}
+
+export interface DropdownOption {
+  label: string
+  value: string
+  position: number
+  isActive?: boolean
+  isBlocked?: boolean
+  children?: Array<DropdownOption> | []
+}
+
+export interface DropdownAction {
+  label: string
+  isBlocked: boolean
+  feature: string
+  action: () => void
 }
 
 // Models

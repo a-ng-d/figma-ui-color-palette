@@ -667,6 +667,9 @@ class App extends React.Component<any, any> {
               trialStatus={this.state['trialStatus']}
               trialRemainingTime={this.state['trialRemainingTime']}
               lang={this.state['lang']}
+              onReOpenFeedback={() =>
+                this.setState({ priorityContainerContext: 'FEEDBACK' })
+              }
               onReOpenHighlight={() =>
                 this.setState({ priorityContainerContext: 'HIGHLIGHT' })
               }

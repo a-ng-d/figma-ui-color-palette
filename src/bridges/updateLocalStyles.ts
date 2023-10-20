@@ -1,6 +1,7 @@
 import chroma from 'chroma-js'
 import type { PaletteData, PaletteDataThemeItem } from '../utils/types'
 import { locals, lang } from '../content/locals'
+import { notifications } from '../utils/palettePackage'
 
 const updateLocalStyles = (palette: SceneNode, i: number) => {
   palette = figma.currentPage.selection[0] as FrameNode
@@ -25,7 +26,9 @@ const updateLocalStyles = (palette: SceneNode, i: number) => {
                 ? `${paletteData.name == '' ? '' : paletteData.name + '/'}${
                     theme.name
                   }/${color.name}/${shade.name}`
-                : `${color.name}/${shade.name}`,
+                : `${paletteData.name === '' ? '' : paletteData.name}/${
+                    color.name
+                  }/${shade.name}`,
             description =
               color.description != ''
                 ? color.description + '﹒' + shade.description
@@ -122,10 +125,13 @@ const updateLocalStyles = (palette: SceneNode, i: number) => {
       })
     })
 
-    if (i > 1) figma.notify(`${i} ${locals[lang].info.updatedLocalStyles}`)
-    else if (i == 1) figma.notify(`${i} ${locals[lang].info.updatedLocalStyle}`)
-    else figma.notify(locals[lang].warning.cannotUpdateLocalStyles)
-  } else figma.notify(locals[lang].error.corruption)
+    if (i > 1)
+      notifications.push(`${i} ${locals[lang].info.updatedLocalStyles}`)
+    else notifications.push(`${i} ${locals[lang].info.updatedLocalStyle}`)
+  } else
+    notifications
+      .splice(0, notifications.length)
+      .push(locals[lang].error.corruption)
 }
 
 export default updateLocalStyles

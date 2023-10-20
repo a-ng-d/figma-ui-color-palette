@@ -102,8 +102,8 @@ export default class EditPalette extends React.Component<Props, any> {
   }
 
   // Direct actions
-  onCreateStyles = () => {
-    parent.postMessage({ pluginMessage: { type: 'CREATE_LOCAL_STYLES' } }, '*')
+  onSyncStyles = () => {
+    parent.postMessage({ pluginMessage: { type: 'SYNC_LOCAL_STYLES' } }, '*')
     this.setState({
       selectedElement: {
         id: '',
@@ -112,34 +112,8 @@ export default class EditPalette extends React.Component<Props, any> {
     })
   }
 
-  onUpdateStyles = () => {
-    parent.postMessage({ pluginMessage: { type: 'UPDATE_LOCAL_STYLES' } }, '*')
-    this.setState({
-      selectedElement: {
-        id: '',
-        position: null,
-      },
-    })
-  }
-
-  onCreateVariables = () => {
-    parent.postMessage(
-      { pluginMessage: { type: 'CREATE_LOCAL_VARIABLES' } },
-      '*'
-    )
-    this.setState({
-      selectedElement: {
-        id: '',
-        position: null,
-      },
-    })
-  }
-
-  onUpdateVariables = () => {
-    parent.postMessage(
-      { pluginMessage: { type: 'UPDATE_LOCAL_VARIABLES' } },
-      '*'
-    )
+  onSyncVariables = () => {
+    parent.postMessage({ pluginMessage: { type: 'SYNC_LOCAL_VARIABLES' } }, '*')
     this.setState({
       selectedElement: {
         id: '',
@@ -253,10 +227,8 @@ export default class EditPalette extends React.Component<Props, any> {
             lang={this.props.lang}
             onChangeScale={this.props.onChangeScale}
             onChangeStop={this.props.onChangeStop}
-            onCreateLocalStyles={this.onCreateStyles}
-            onUpdateLocalStyles={this.onUpdateStyles}
-            onCreateLocalVariables={this.onCreateVariables}
-            onUpdateLocalVariables={this.onUpdateVariables}
+            onSyncLocalStyles={this.onSyncStyles}
+            onSyncLocalVariables={this.onSyncVariables}
             onChangeActions={(value) =>
               this.setState({
                 deploymentAction: value,
@@ -275,10 +247,8 @@ export default class EditPalette extends React.Component<Props, any> {
             editorType={this.props.editorType}
             lang={this.props.lang}
             onChangeColors={this.props.onChangeColors}
-            onCreateLocalStyles={this.onCreateStyles}
-            onUpdateLocalStyles={this.onUpdateStyles}
-            onCreateLocalVariables={this.onCreateVariables}
-            onUpdateLocalVariables={this.onUpdateVariables}
+            onSyncLocalStyles={this.onSyncStyles}
+            onSyncLocalVariables={this.onSyncVariables}
             onChangeActions={(value) =>
               this.setState({
                 deploymentAction: value,
@@ -300,10 +270,8 @@ export default class EditPalette extends React.Component<Props, any> {
             editorType={this.props.editorType}
             lang={this.props.lang}
             onChangeThemes={this.props.onChangeThemes}
-            onCreateLocalStyles={this.onCreateStyles}
-            onUpdateLocalStyles={this.onUpdateStyles}
-            onCreateLocalVariables={this.onCreateVariables}
-            onUpdateLocalVariables={this.onUpdateVariables}
+            onSyncLocalStyles={this.onSyncStyles}
+            onSyncLocalVariables={this.onSyncVariables}
             onChangeActions={(value) =>
               this.setState({
                 deploymentAction: value,
@@ -344,10 +312,8 @@ export default class EditPalette extends React.Component<Props, any> {
             editorType={this.props.editorType}
             lang={this.props.lang}
             onChangeSettings={this.props.onChangeSettings}
-            onCreateLocalStyles={this.onCreateStyles}
-            onUpdateLocalStyles={this.onUpdateStyles}
-            onCreateLocalVariables={this.onCreateVariables}
-            onUpdateLocalVariables={this.onUpdateVariables}
+            onSyncLocalStyles={this.onSyncStyles}
+            onSyncLocalVariables={this.onSyncVariables}
             onChangeActions={(value) =>
               this.setState({
                 deploymentAction: value,
@@ -380,7 +346,7 @@ export default class EditPalette extends React.Component<Props, any> {
                 shouldFill={false}
               >
                 <Dropdown
-                  id="presets"
+                  id="switch-theme"
                   options={this.workingThemes().map((theme, index) => {
                     return {
                       label: theme.name,
@@ -388,6 +354,7 @@ export default class EditPalette extends React.Component<Props, any> {
                       position: index,
                       isActive: true,
                       isBlocked: false,
+                      children: [],
                     }
                   })}
                   selected={
@@ -407,6 +374,7 @@ export default class EditPalette extends React.Component<Props, any> {
                   ]}
                   feature="SWITCH_THEME"
                   parentClassName="ui"
+                  alignment="RIGHT"
                   onChange={(e) => this.switchThemeHandler(e)}
                 />
               </FormItem>

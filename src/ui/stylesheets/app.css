@@ -70,6 +70,10 @@ div.actions__left {
   gap: var(--size-xxsmall);
 }
 
+div.actions .select-menu {
+  min-width: 224px;
+}
+
 /* Controls */
 section.controller {
   flex: 1;
@@ -115,8 +119,9 @@ div.section-controls .label {
   width: auto;
 }
 
-div.section-controls .select-menu {
-  flex: 1;
+div.section-controls .section-title {
+  display: flex;
+  gap: var(--size-xxxsmall);
 }
 
 /* Onboarding */
@@ -199,36 +204,23 @@ li .themes__description {
 
 /* Export */
 div.export-palette {
-  flex-direction: row;
   overflow: hidden;
 }
 
-div.export-palette > div {
+div.export-palette {
   display: flex;
-  flex-direction: column;
+  gap: var(--size-xxxsmall);
 }
 
-div.export-palette > div:first-child {
-  flex: 2;
-}
-
-div.export-palette > div:last-child {
-  flex: 3;
-}
-
-div.export-palette__options {
+div.export-palette__preview {
   padding: 0 var(--size-xsmall);
   flex: 1;
   overflow-y: auto;
 }
 
-div.export-palette__options textarea {
+div.export-palette__preview textarea {
   height: 100%;
   margin: 0;
-}
-
-ul.options li {
-  display: block;
 }
 
 /* Settings */
@@ -239,6 +231,9 @@ div.settings {
 
 div.settings__group {
   padding: var(--size-xxsmall) 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-xxxsmall);
 }
 
 div.settings__group + div.settings__group {
@@ -247,10 +242,6 @@ div.settings__group + div.settings__group {
 
 div.settings__item {
   padding: 0 var(--size-xsmall);
-}
-
-div.settings__item + div.settings__item {
-  margin-top: 2px;
 }
 
 /* About */

@@ -14,10 +14,8 @@ interface Props {
   planStatus?: 'UNPAID' | 'PAID'
   lang: Language
   onCreatePalette?: React.MouseEventHandler
-  onCreateLocalStyles?: React.MouseEventHandler
-  onUpdateLocalStyles?: React.MouseEventHandler
-  onCreateLocalVariables?: React.MouseEventHandler
-  onUpdateLocalVariables?: React.MouseEventHandler
+  onSyncLocalStyles?: React.MouseEventHandler
+  onSyncLocalVariables?: React.MouseEventHandler
   onExportPalette?: React.MouseEventHandler
   onChangeActions?: (value: string) => void
 }
@@ -26,69 +24,37 @@ export default class Actions extends React.Component<Props> {
   // Templates
   LocalStyles = () => {
     return (
-      <>
-        <Feature
-          isActive={
-            features.find((feature) => feature.name === 'UPDATE_LOCAL_STYLES')
-              ?.isActive
-          }
-        >
-          <Button
-            type="secondary"
-            label={locals[this.props.lang].actions.updateLocalStyles}
-            feature="UPDATE_LOCAL_STYLES"
-            action={this.props.onUpdateLocalStyles}
-          />
-        </Feature>
-        <Feature
-          isActive={
-            features.find((feature) => feature.name === 'CREATE_LOCAL_STYLES')
-              ?.isActive
-          }
-        >
-          <Button
-            type="primary"
-            label={locals[this.props.lang].actions.createLocalStyles}
-            feature="CREATE_LOCAL_STYLES"
-            action={this.props.onCreateLocalStyles}
-          />
-        </Feature>
-      </>
+      <Feature
+        isActive={
+          features.find((feature) => feature.name === 'SYNC_LOCAL_STYLES')
+            ?.isActive
+        }
+      >
+        <Button
+          type="primary"
+          label={locals[this.props.lang].actions.createLocalStyles}
+          feature="SYNC_LOCAL_STYLES"
+          action={this.props.onSyncLocalStyles}
+        />
+      </Feature>
     )
   }
 
   LocalVariables = () => {
     return (
-      <>
-        <Feature
-          isActive={
-            features.find(
-              (feature) => feature.name === 'UPDATE_LOCAL_VARIABLES'
-            )?.isActive
-          }
-        >
-          <Button
-            type="secondary"
-            label={locals[this.props.lang].actions.updateLocalVariables}
-            feature="UPDATE_LOCAL_VARIABLES"
-            action={this.props.onUpdateLocalVariables}
-          />
-        </Feature>
-        <Feature
-          isActive={
-            features.find(
-              (feature) => feature.name === 'CREATE_LOCAL_VARIABLES'
-            )?.isActive
-          }
-        >
-          <Button
-            type="primary"
-            label={locals[this.props.lang].actions.createLocalVariables}
-            feature="CREATE_LOCAL_VARIABLES"
-            action={this.props.onCreateLocalVariables}
-          />
-        </Feature>
-      </>
+      <Feature
+        isActive={
+          features.find((feature) => feature.name === 'SYNC_LOCAL_VARIABLES')
+            ?.isActive
+        }
+      >
+        <Button
+          type="primary"
+          label={locals[this.props.lang].actions.createLocalVariables}
+          feature="SYNC_LOCAL_VARIABLES"
+          action={this.props.onSyncLocalVariables}
+        />
+      </Feature>
     )
   }
 
@@ -127,7 +93,7 @@ export default class Actions extends React.Component<Props> {
         </div>
         <div className="actions__left">
           <Dropdown
-            id="types"
+            id="sync-mode"
             options={[
               {
                 label:
@@ -141,6 +107,7 @@ export default class Actions extends React.Component<Props> {
                   'LOCAL_STYLES',
                   this.props.planStatus ?? 'UNPAID'
                 ),
+                children: [],
               },
               {
                 label:
@@ -154,6 +121,7 @@ export default class Actions extends React.Component<Props> {
                   'LOCAL_VARIABLES',
                   this.props.planStatus ?? 'UNPAID'
                 ),
+                children: [],
               },
             ]}
             selected={this.props.actions ?? ''}

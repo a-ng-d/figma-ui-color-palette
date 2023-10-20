@@ -14,6 +14,7 @@ import Message from '../components/Message'
 import Actions from './Actions'
 import { palette, presets } from '../../utils/palettePackage'
 import features from '../../utils/config'
+import isBlocked from '../../utils/isBlocked'
 import { locals } from '../../content/locals'
 import Dispatcher from './Dispatcher'
 
@@ -31,10 +32,8 @@ interface Props {
   onAddStop?: React.ReactEventHandler
   onRemoveStop?: React.ReactEventHandler
   onCreatePalette?: () => void
-  onCreateLocalStyles?: () => void
-  onUpdateLocalStyles?: () => void
-  onCreateLocalVariables?: () => void
-  onUpdateLocalVariables?: () => void
+  onSyncLocalStyles?: () => void
+  onSyncLocalVariables?: () => void
   onChangeActions?: (value: string) => void | undefined
 }
 
@@ -153,6 +152,8 @@ export default class Scale extends React.Component<Props, any> {
               <div className="section-title">
                 {locals[this.props.lang].scale.title}
               </div>
+            </div>
+            <div className="section-controls__right-part">
               <Feature
                 isActive={
                   features.find((feature) => feature.name === 'SCALE_PRESETS')
@@ -160,24 +161,27 @@ export default class Scale extends React.Component<Props, any> {
                 }
               >
                 <Dropdown
-                  id="presets"
+                  id="switch-presets"
                   options={Object.entries(presets).map((preset, index) => {
                     return {
                       label: preset[1].name,
                       value: preset[1].id,
                       position: index,
                       isActive: true,
-                      isBlocked: false,
+                      isBlocked: isBlocked(
+                        `PRESET_${preset[1].id}`,
+                        this.props.planStatus
+                      ),
+                      children: [],
                     }
                   })}
                   selected={this.props.preset.id}
                   feature="UPDATE_PRESET"
                   parentClassName="controls"
+                  alignment="RIGHT"
                   onChange={(e) => this.props.onChangePreset?.(e)}
                 />
               </Feature>
-            </div>
-            <div className="section-controls__right-part">
               <Feature
                 isActive={
                   features.find((feature) => feature.name === 'SCALE_PRESETS')
@@ -258,10 +262,10 @@ export default class Scale extends React.Component<Props, any> {
             <div className="section-controls__left-part">
               <div className="section-title">
                 {locals[this.props.lang].scale.title}
+                <div className="type">{`(${
+                  Object.entries(this.props.scale ?? {}).length
+                })`}</div>
               </div>
-              <div className="type">{`(${
-                Object.entries(this.props.scale ?? {}).length
-              })`}</div>
             </div>
             <div className="section-controls__right-part">
               <div className="label">{this.props.preset.name}</div>
@@ -300,10 +304,8 @@ export default class Scale extends React.Component<Props, any> {
             actions={this.props.actions}
             planStatus={this.props.planStatus}
             lang={this.props.lang}
-            onCreateLocalStyles={this.props.onCreateLocalStyles}
-            onUpdateLocalStyles={this.props.onUpdateLocalStyles}
-            onCreateLocalVariables={this.props.onCreateLocalVariables}
-            onUpdateLocalVariables={this.props.onUpdateLocalVariables}
+            onSyncLocalStyles={this.props.onSyncLocalStyles}
+            onSyncLocalVariables={this.props.onSyncLocalVariables}
             onChangeActions={this.props.onChangeActions}
           />
         ) : null}

@@ -138,10 +138,6 @@ div.inputs__bar:focus-within input {
   outline-offset: -2px;
 }
 
-div.select-menu__label {
-  margin-top: 0;
-}
-
 div.form-item {
   display: flex;
   align-items: baseline;

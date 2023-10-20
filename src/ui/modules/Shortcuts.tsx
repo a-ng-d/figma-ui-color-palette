@@ -11,6 +11,7 @@ interface Props {
   trialStatus: TrialStatus
   trialRemainingTime: number
   lang: Language
+  onReOpenFeedback: () => void
   onReOpenHighlight: () => void
   onReOpenAbout: () => void
   onGetProPlan: () => void
@@ -24,10 +25,8 @@ export default class Shortcuts extends React.Component<Props> {
           <div className="shortcuts">
             <Button
               type="tertiary"
-              isLink={true}
-              url="https://uicp.link/feedback"
               label={locals[this.props.lang].shortcuts.feedback}
-              action={() => null}
+              action={this.props.onReOpenFeedback}
             />
             <Feature
               isActive={
