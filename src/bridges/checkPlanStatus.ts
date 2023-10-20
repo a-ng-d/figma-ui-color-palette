@@ -12,9 +12,9 @@ const checkPlanStatus = async () => {
     trialStatus = remainingTime >= trialTime ? 'EXPIRED' : 'PENDING'
   }
 
-  /*await figma.payments?.setPaymentStatusInDevelopment({
+  /* await figma.payments?.setPaymentStatusInDevelopment({
     type: 'UNPAID',
-  })*/
+  }) */
   await figma.ui.postMessage({
     type: 'PLAN_STATUS',
     data: {

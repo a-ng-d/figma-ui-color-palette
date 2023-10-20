@@ -48,25 +48,25 @@ const getProPlan = async () => {
                 ],
               },
               "Id de l'utilisateur": {
-                "rich_text": [
+                rich_text: [
                   {
-                    "type": "text",
-                    "text": {
-                      "content": figma.currentUser?.id ?? 'NC',
-                      "link": null
+                    type: 'text',
+                    text: {
+                      content: figma.currentUser?.id ?? 'NC',
+                      link: null,
                     },
-                    "annotations": {
-                      "bold": false,
-                      "italic": false,
-                      "strikethrough": false,
-                      "underline": false,
-                      "code": false,
-                      "color": "default"
+                    annotations: {
+                      bold: false,
+                      italic: false,
+                      strikethrough: false,
+                      underline: false,
+                      code: false,
+                      color: 'default',
                     },
-                    "plain_text": figma.currentUser?.id ?? 'NC',
-                    "href": null
+                    plain_text: figma.currentUser?.id ?? 'NC',
+                    href: null,
                   },
-                ]
+                ],
               },
               "Souscription à l'abonnement": {
                 checkbox: true,
