@@ -19,7 +19,9 @@ li {
 
 div#react-page {
   height: 100%;
+  cursor: default;
   user-select: none;
+  -webkit-user-select: none;
 }
 
 div#react-page:empty:before {
