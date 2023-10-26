@@ -498,6 +498,7 @@
   --white: var(--figma-color-bg);
   --black1: var(--figma-color-border);
   cursor: default;
+  font-family: var(--font-stack);
 }
 
 .textarea:active,
