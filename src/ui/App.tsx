@@ -411,7 +411,7 @@ class App extends React.Component<any, any> {
 
         const updateWhileEmptySelection = () => {
           this.setState({
-            service: 'ONBOARD',
+            service: 'CREATE',
             name: '',
             description: '',
             preset: presets.material,
