@@ -122,6 +122,22 @@ const features: Array<Feature> = [
     service: ['EDIT'],
   },
   {
+    name: 'SOURCE',
+    description: 'Choose the source colors to create the palette',
+    isActive: true,
+    isPro: false,
+    type: 'CONTEXT',
+    service: ['CREATE'],
+  },
+  {
+    name: 'SOURCE_COOLORS',
+    description: 'Import the source colors from a Coolors palette',
+    isActive: true,
+    isPro: false,
+    type: 'CONTEXT',
+    service: ['CREATE'],
+  },
+  {
     name: 'SCALE',
     description: 'Lightness scale configuration',
     isActive: true,

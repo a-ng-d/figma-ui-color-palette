@@ -23,6 +23,7 @@ export const locals: { [key: string]: any } = {
       about: 'About',
     },
     contexts: {
+      source: 'Source',
       scale: 'Scale',
       colors: 'Colors',
       themes: 'Themes',
