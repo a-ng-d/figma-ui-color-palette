@@ -24,7 +24,7 @@ const exportSwift = (palette: SceneNode) => {
         )
         color.shades.forEach((shade) => {
           UIColors.unshift(
-            `static let ${
+            `public let ${
               workingThemes[0].type === 'custom theme'
                 ? doCamelCase(theme.name + ' ' + color.name)
                 : doCamelCase(color.name)

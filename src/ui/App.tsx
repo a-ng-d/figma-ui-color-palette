@@ -520,9 +520,9 @@ class App extends React.Component<any, any> {
             export: {
               format: 'SWIFT',
               mimeType: 'text/swift',
-              data: `import SwiftUI\n\nextension Color {\n  ${e.data.pluginMessage.data.join(
-                '\n  '
-              )}\n}`,
+              data: `import SwiftUI\n\npublic extension Color {\n\n  static let Token = Color.TokenColor()\n\n  struct TokenColor {\n    ${e.data.pluginMessage.data.join(
+                '\n    '
+              )}\n  }\n}`,
             },
             onGoingStep: 'export previewed',
           })
