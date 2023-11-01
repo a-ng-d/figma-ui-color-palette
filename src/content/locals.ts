@@ -144,7 +144,7 @@ export const locals: { [key: string]: any } = {
       giveSupport: {
         title: 'Give support',
         follow: 'Follow our LinkedIn page',
-        rate: 'Rate us',
+        rate: 'Like us',
       },
     },
     actions: {
