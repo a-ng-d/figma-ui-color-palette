@@ -107,6 +107,7 @@ export default class Sample {
       this.node.paddingBottom =
       this.node.paddingLeft =
         8
+    this.node.itemSpacing = 8
 
     // insert
     if (this.view.includes('PALETTE_WITH_PROPERTIES') && !isColorName) {
