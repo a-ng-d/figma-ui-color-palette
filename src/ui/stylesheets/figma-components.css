@@ -507,8 +507,8 @@
   --blue: var(--figma-color-border-selected);
 }
 
-.textarea--sans {
-  font-family: var(--font-stack);
+.textarea--monospace {
+  font-family: monospace;
 }
 
 /* Blocked state */

@@ -256,6 +256,7 @@ export default class Export extends React.Component<Props, any> {
               type="LONG_TEXT"
               value={this.props.exportPreview}
               isReadOnly={true}
+              isMonospaceFont={true}
               onBlur={this.deSelectPreview}
               onFocus={(e) => this.selectPreview(e)}
             />
