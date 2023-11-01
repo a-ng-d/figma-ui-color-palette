@@ -112,7 +112,6 @@ export default class Settings extends React.Component<Props> {
                 locals[this.props.lang].global.description.placeholder
               }
               value={this.props.description}
-              isSansFont={true}
               isBlocked={isBlocked(
                 'SETTINGS_PALETTE_DESCRIPTION',
                 this.props.planStatus

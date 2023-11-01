@@ -7,7 +7,7 @@ interface Props {
   placeholder?: string
   value: string
   charactersLimit?: number
-  isSansFont?: boolean
+  isMonospaceFont?: boolean
   rows?: number
   min?: string
   max?: string
@@ -29,7 +29,7 @@ export default class Input extends React.Component<Props> {
       value: null,
     },
     step: '1',
-    isSansFont: false,
+    isMonospaceFont: false,
     isBlocked: false,
     isAutoFocus: false,
   }
@@ -163,7 +163,7 @@ export default class Input extends React.Component<Props> {
           id={this.props.id}
           data-feature={this.props.feature}
           className={`textarea input__field${
-            this.props.isSansFont ? ' textarea--sans' : ''
+            this.props.isMonospaceFont ? ' textarea--monospace' : ''
           }`}
           placeholder={this.props.placeholder}
           value={this.props.value}
