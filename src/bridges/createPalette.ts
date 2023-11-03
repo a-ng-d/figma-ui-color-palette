@@ -4,13 +4,14 @@ const createPalette = (msg: any, palette: SceneNode) => {
   const scene: SceneNode[] = []
 
   palette = new Palette(
-    msg.data.name,
-    msg.data.description,
-    msg.data.preset,
-    msg.data.scale,
-    msg.data.colorSpace,
-    msg.data.view,
-    msg.data.textColorsTheme,
+    msg.data.sourceColors,
+    msg.data.palette.name,
+    msg.data.palette.description,
+    msg.data.palette.preset,
+    msg.data.palette.scale,
+    msg.data.palette.colorSpace,
+    msg.data.palette.view,
+    msg.data.palette.textColorsTheme,
     'v2'
   ).makeNode()
 

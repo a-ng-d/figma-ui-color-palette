@@ -97,6 +97,12 @@ export interface PaletteDataShadeItem {
 }
 
 // Palette configurations
+export interface SourceColorConfiguration {
+  name: string
+  rgb: RgbModel
+  source: 'CANVAS' | 'COOLORS'
+}
+
 export interface PaletteConfiguration {
   name: string
   description: string
