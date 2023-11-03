@@ -1,4 +1,6 @@
 import type {
+  Service,
+  SourceColorConfiguration,
   ColorConfiguration,
   PresetConfiguration,
   TextColorsThemeHexModel,
@@ -8,13 +10,13 @@ import type {
   ColorSpaceConfiguration,
   ViewConfiguration,
   AlgorithmVersionConfiguration,
-  Service,
 } from '../utils/types'
 import Colors from './Colors'
 import { locals, lang } from '../content/locals'
 import { uid } from 'uid'
 
 export default class Palette {
+  sourceColors: Array<SourceColorConfiguration>
   name: string
   description: string
   frameName: string
@@ -30,6 +32,7 @@ export default class Palette {
   node: FrameNode | null
 
   constructor(
+    sourceColors: Array<SourceColorConfiguration>,
     name: string,
     description: string,
     preset: PresetConfiguration,
@@ -39,6 +42,7 @@ export default class Palette {
     textColorsTheme: TextColorsThemeHexModel,
     algorithmVersion: AlgorithmVersionConfiguration
   ) {
+    this.sourceColors = sourceColors
     this.name = name
     this.description = description
     this.frameName = `${name === '' ? locals[lang].name : name}﹒${
@@ -100,33 +104,16 @@ export default class Palette {
     this.node.setPluginData('algorithmVersion', this.algorithmVersion)
 
     // insert
-    figma.currentPage.selection.forEach((element) => {
-      if (
-        element.type != 'CONNECTOR' &&
-        element.type != 'GROUP' &&
-        element.type != 'EMBED'
-      ) {
-        const fills = (element as any).fills.filter(
-          (fill: SolidPaint) => fill.type === 'SOLID'
-        )
-
-        if (fills.length != 0) {
-          fills.forEach((fill: SolidPaint) =>
-            this.colors.push({
-              name: element.name,
-              description: '',
-              rgb: fill.color,
-              id: uid(),
-              oklch: false,
-              hueShifting: 0,
-            })
-          )
-        } else
-          figma.notify(
-            `The layer '${element.name}' must get at least one solid color`
-          )
-      }
-    })
+    this.sourceColors.forEach(sourceColor =>
+      this.colors.push({
+        name: sourceColor.name,
+        description: '',
+        rgb: sourceColor.rgb,
+        id: uid(),
+        oklch: false,
+        hueShifting: 0,
+      })
+    )
 
     this.colors.sort((a, b) => {
       if (a.name.localeCompare(b.name) > 0) return 1

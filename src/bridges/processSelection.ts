@@ -46,7 +46,13 @@ const processSelection = () => {
       COLOR_SELECTED: () =>
         figma.ui.postMessage({
           type: 'COLOR_SELECTED',
-          data: {},
+          data: selection.map(element => {
+            return {
+              name: (element as any).name,
+              rgb: (element as any).fills[0].color,
+              source: 'CANVAS'
+            }
+          }),
         }),
     }
 

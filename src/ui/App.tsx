@@ -55,6 +55,7 @@ class App extends React.Component<any, any> {
     }
     this.state = {
       service: 'ONBOARD',
+      sourceColors: [],
       name: '',
       description: '',
       preset: presets.material,
@@ -412,6 +413,7 @@ class App extends React.Component<any, any> {
         const updateWhileEmptySelection = () => {
           this.setState({
             service: 'CREATE',
+            sourceColors: [],
             name: '',
             description: '',
             preset: presets.material,
@@ -438,7 +440,6 @@ class App extends React.Component<any, any> {
         const updateWhileColorSelected = () => {
           if (isPaletteSelected) {
             this.setState({
-              service: 'CREATE',
               name: '',
               description: '',
               preset: presets.material,
@@ -448,7 +449,6 @@ class App extends React.Component<any, any> {
                 lightColor: '#FFFFFF',
                 darkColor: '#000000',
               },
-              onGoingStep: 'colors selected',
             })
             palette.name = ''
             palette.description = ''
@@ -459,11 +459,12 @@ class App extends React.Component<any, any> {
               lightColor: '#FFFFFF',
               darkColor: '#000000',
             }
-          } else
-            this.setState({
-              service: 'CREATE',
-              onGoingStep: 'colors selected',
-            })
+          }
+          this.setState({
+            service: 'CREATE',
+            sourceColors: e.data.pluginMessage.data,
+            onGoingStep: 'colors selected',
+          })
           isPaletteSelected = false
         }
 
@@ -481,6 +482,7 @@ class App extends React.Component<any, any> {
           )
           this.setState({
             service: 'EDIT',
+            sourceColors: [],
             name: e.data.pluginMessage.data.name,
             description: e.data.pluginMessage.data.description,
             preset: e.data.pluginMessage.data.preset,
@@ -594,6 +596,7 @@ class App extends React.Component<any, any> {
           >
             {this.state['service'] === 'CREATE' ? (
               <CreatePalette
+                sourceColors={this.state['sourceColors']}
                 name={this.state['name']}
                 description={this.state['description']}
                 preset={this.state['preset']}
