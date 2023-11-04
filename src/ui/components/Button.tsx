@@ -4,7 +4,7 @@ interface Props {
   type: 'primary' | 'secondary' | 'tertiary' | 'icon'
   icon?: string
   label?: string
-  state?: 'disabled' | 'blocked' | 'selected' | ''
+  state?: 'default' | 'disabled' | 'blocked' | 'selected' | ''
   isLink?: boolean
   url?: string
   feature?: string
@@ -26,7 +26,7 @@ export default class Button extends React.Component<Props> {
           this.props.isBlocked ? ' button--blocked' : ''
         }`}
         data-feature={this.props.feature}
-        disabled={this.props.isBlocked}
+        disabled={this.props.state === 'disabled' ? true : false}
         onMouseDown={this.props.action}
       >
         {this.props.label}
