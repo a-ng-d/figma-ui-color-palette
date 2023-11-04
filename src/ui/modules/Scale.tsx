@@ -5,6 +5,7 @@ import type {
   Language,
   PresetConfiguration,
   ScaleConfiguration,
+  SourceColorConfiguration,
 } from '../../utils/types'
 import Feature from '../components/Feature'
 import Button from '../components/Button'
@@ -19,6 +20,7 @@ import { locals } from '../../content/locals'
 import Dispatcher from './Dispatcher'
 
 interface Props {
+  sourceColors?: Array<SourceColorConfiguration>
   hasPreset: boolean
   preset: PresetConfiguration
   scale?: ScaleConfiguration
@@ -245,6 +247,7 @@ export default class Scale extends React.Component<Props, any> {
         </div>
         <Actions
           context="CREATE"
+          sourceColors={this.props.sourceColors}
           planStatus={this.props.planStatus}
           lang={this.props.lang}
           onCreatePalette={this.props.onCreatePalette}
