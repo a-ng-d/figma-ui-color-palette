@@ -303,8 +303,8 @@ export default class Themes extends React.Component<Props, any> {
 
   render() {
     return (
-      <>
-        <div className="list-controller controls__control">
+      <div className="controls__control">
+        <div className="control__block control__block--list">
           <div className="section-controls">
             <div className="section-controls__left-part">
               <div className="section-title">
@@ -405,7 +405,7 @@ export default class Themes extends React.Component<Props, any> {
             onChangeActions={this.props.onChangeActions}
           />
         ) : null}
-      </>
+      </div>
     )
   }
 }
