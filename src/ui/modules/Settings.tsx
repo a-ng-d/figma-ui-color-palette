@@ -1,5 +1,5 @@
 import * as React from 'react'
-import type { Language, TextColorsThemeHexModel } from '../../utils/types'
+import type { Language, SourceColorConfiguration, TextColorsThemeHexModel } from '../../utils/types'
 import Feature from '../components/Feature'
 import FormItem from './../components/FormItem'
 import Input from './../components/Input'
@@ -13,6 +13,7 @@ import { locals } from '../../content/locals'
 
 interface Props {
   context: string
+  sourceColors?: Array<SourceColorConfiguration>
   name: string
   description: string
   textColorsTheme?: TextColorsThemeHexModel
@@ -519,6 +520,7 @@ export default class Settings extends React.Component<Props> {
         {this.props.context === 'CREATE' ? (
           <Actions
             context="CREATE"
+            sourceColors={this.props.sourceColors}
             planStatus={this.props.planStatus}
             lang={this.props.lang}
             onCreatePalette={this.props.onCreatePalette}
