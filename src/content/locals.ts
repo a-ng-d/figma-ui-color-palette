@@ -31,6 +31,15 @@ export const locals: { [key: string]: any } = {
       settings: 'Settings',
       about: 'About',
     },
+    source: {
+      title: 'Source colors',
+      canvas: {
+        title: 'Selected colors',
+      },
+      coolors: {
+        title: 'Import from Coolors',
+      },
+    },
     scale: {
       title: 'Lightness scale',
       tips: {
