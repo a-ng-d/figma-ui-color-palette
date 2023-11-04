@@ -6,6 +6,7 @@ import type {
   DispatchProcess,
   HexModel,
   SettingsMessage,
+  SourceColorConfiguration,
   ThemeConfiguration,
 } from '../utils/types'
 import Dispatcher from './modules/Dispatcher'
@@ -89,6 +90,12 @@ class App extends React.Component<any, any> {
     setTimeout(() => this.setState({ isLoaded: true }), 1000)
 
   // Handlers
+  importCoolorsHandler = (sourceColorsFromCoolers: Array<SourceColorConfiguration>) => {
+    this.setState({
+      sourceColors: this.state['sourceColors'].concat(sourceColorsFromCoolers)
+    })
+  }
+
   presetsHandler = (e: React.SyntheticEvent) => {
     const setMaterialDesignPreset = () =>
       this.setState({
@@ -605,6 +612,7 @@ class App extends React.Component<any, any> {
                 textColorsTheme={this.state['textColorsTheme']}
                 planStatus={this.state['planStatus']}
                 lang={this.state['lang']}
+                onImportCoolors={this.importCoolorsHandler}
                 onChangePreset={this.presetsHandler}
                 onCustomPreset={this.customHandler}
                 onChangeSettings={this.settingsHandler}
