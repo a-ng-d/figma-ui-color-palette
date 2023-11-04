@@ -18,6 +18,10 @@
   gap: var(--size-xxxsmall);
 }
 
+.type--secondary {
+  color: var(--figma-color-text-tertiary);
+}
+
 .type a {
   color: var(--figma-color-text-brand);
   text-decoration: none;
