@@ -15,6 +15,7 @@ import { palette } from '../../utils/palettePackage'
 import features from '../../utils/config'
 import { locals } from '../../content/locals'
 import Actions from '../modules/Actions'
+import doLightnessScale from '../../utils/doLightnessScale'
 
 interface Props {
   sourceColors: Array<SourceColorConfiguration> | []
@@ -97,6 +98,11 @@ export default class CreatePalette extends React.Component<Props, any> {
   // Renders
   render() {
     palette.preset = this.props.preset
+    palette.scale = doLightnessScale(
+      this.props.preset.scale,
+      this.props.preset.min ?? 0,
+      this.props.preset.max ?? 100
+    )
     let controls
 
     switch (this.state['context']) {
