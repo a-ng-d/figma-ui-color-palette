@@ -147,8 +147,8 @@ export default class Scale extends React.Component<Props, any> {
   Create = () => {
     palette.scale = {}
     return (
-      <>
-        <div className="lightness-scale controls__control">
+      <div className='controls__control'>
+        <div className="control__block control__block--distributed">
           <div className="section-controls">
             <div className="section-controls__left-part">
               <div className="section-title">
@@ -252,15 +252,15 @@ export default class Scale extends React.Component<Props, any> {
           lang={this.props.lang}
           onCreatePalette={this.props.onCreatePalette}
         />
-      </>
+      </div>
     )
   }
 
   Edit = () => {
     palette.scale = {}
     return (
-      <>
-        <div className="lightness-scale controls__control">
+      <div className='controls__control'>
+        <div className="control__block control__block--distributed">
           <div className="section-controls">
             <div className="section-controls__left-part">
               <div className="section-title">
@@ -312,7 +312,7 @@ export default class Scale extends React.Component<Props, any> {
             onChangeActions={this.props.onChangeActions}
           />
         ) : null}
-      </>
+      </div>
     )
   }
 

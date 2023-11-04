@@ -138,8 +138,8 @@ export default class Export extends React.Component<Props, any> {
   render() {
     this.setFirstPreview()
     return (
-      <>
-        <div className="export-palette controls__control">
+      <div className="controls__control">
+        <div className="control__block">
           <div className="section-controls">
             <div className="section-controls__left-part">
               <div className="section-title">
@@ -268,7 +268,7 @@ export default class Export extends React.Component<Props, any> {
           lang={this.props.lang}
           onExportPalette={this.props.onExportPalette}
         />
-      </>
+      </div>
     )
   }
 }

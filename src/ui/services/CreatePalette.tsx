@@ -109,8 +109,8 @@ export default class CreatePalette extends React.Component<Props, any> {
       case 'SOURCE': {
         controls = (
           <>
-            <div className="list-controller controls__control controls__control--horizontal">
-              <div className="controls__control__part">
+            <div className="controls__control controls__control--horizontal">
+              <div className="control__block control__block--list">
                 <div className="section-controls">
                   <div className="section-controls__left-part">
                     <div className="section-title">
@@ -164,7 +164,7 @@ export default class CreatePalette extends React.Component<Props, any> {
                   )
                 }   
               </div>
-              <div className="controls__control__part">
+              <div className="control__block control__block--list">
                 <div className="section-controls">
                   <div className="section-controls__left-part">
                     <div className="section-title">

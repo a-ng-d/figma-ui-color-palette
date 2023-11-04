@@ -511,8 +511,8 @@ export default class Settings extends React.Component<Props> {
 
   render() {
     return (
-      <>
-        <div className="settings controls__control">
+      <div className="controls__control">
+        <div className="control__block control__block--no-padding">
           <this.Global />
           <this.ColorManagement />
           <this.ContrastManagement />
@@ -536,7 +536,7 @@ export default class Settings extends React.Component<Props> {
             onChangeActions={this.props.onChangeActions}
           />
         ) : null}
-      </>
+      </div>
     )
   }
 }
