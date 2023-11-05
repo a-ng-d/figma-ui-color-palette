@@ -18,7 +18,7 @@ const processSelection = () => {
   const selection: ReadonlyArray<BaseNode> = figma.currentPage.selection
   currentSelection = figma.currentPage.selection
 
-  const readyToCreatePaletteSelection: Array<SourceColorConfiguration> = []
+  const viableSelection: Array<SourceColorConfiguration> = []
 
   const palette: FrameNode | InstanceNode = selection[0] as
     | FrameNode
@@ -53,7 +53,7 @@ const processSelection = () => {
       COLOR_SELECTED: () => {
         figma.ui.postMessage({
           type: 'COLOR_SELECTED',
-          data: readyToCreatePaletteSelection,
+          data: viableSelection,
         })
       },
     }
@@ -95,7 +95,7 @@ const processSelection = () => {
           .length != 0 &&
         element.getPluginDataKeys().length == 0
       ) {
-        readyToCreatePaletteSelection.push({
+        viableSelection.push({
           name: (element as any).name,
           rgb: (element as any).fills[0].color,
           source: 'CANVAS',
