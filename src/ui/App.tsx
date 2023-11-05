@@ -420,7 +420,8 @@ class App extends React.Component<any, any> {
         const updateWhileEmptySelection = () => {
           this.setState({
             service: 'CREATE',
-            sourceColors: [],
+            sourceColors: this.state['sourceColors']
+              .filter((sourceColor: SourceColorConfiguration) => sourceColor.source != 'CANVAS'),
             name: '',
             description: '',
             preset: presets.material,
@@ -469,7 +470,7 @@ class App extends React.Component<any, any> {
           }
           this.setState({
             service: 'CREATE',
-            sourceColors: e.data.pluginMessage.data,
+            sourceColors: this.state['sourceColors'].concat(e.data.pluginMessage.data),
             onGoingStep: 'colors selected',
           })
           isPaletteSelected = false
