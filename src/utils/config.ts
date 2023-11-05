@@ -130,6 +130,14 @@ const features: Array<Feature> = [
     service: ['CREATE'],
   },
   {
+    name: 'SOURCE_CANVAS',
+    description: 'Selected colors from the Figma or Figjam canvas',
+    isActive: true,
+    isPro: false,
+    type: 'CONTEXT',
+    service: ['CREATE'],
+  },
+  {
     name: 'SOURCE_COOLORS',
     description: 'Import the source colors from a Coolors palette',
     isActive: true,
