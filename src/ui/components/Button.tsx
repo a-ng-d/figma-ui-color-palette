@@ -22,9 +22,11 @@ export default class Button extends React.Component<Props> {
   Button = () => {
     return (
       <button
-        className={`button button--${this.props.type}${
-          this.props.isBlocked ? ' button--blocked' : ''
-        }`}
+        className={[
+          'button',
+          'button--' + this.props.type,
+          this.props.isBlocked ? 'button--blocked' : null
+        ].filter(n => n).join(' ')}
         data-feature={this.props.feature}
         disabled={this.props.state === 'disabled' ? true : false}
         onMouseDown={this.props.action}
@@ -37,7 +39,10 @@ export default class Button extends React.Component<Props> {
   LinkButton = () => {
     return (
       <button
-        className={`button button--${this.props.type}`}
+        className={[
+          'button',
+          'button--' + this.props.type,
+        ].filter(n => n).join(' ')}
         data-feature={this.props.feature}
       >
         <a
@@ -55,14 +60,20 @@ export default class Button extends React.Component<Props> {
     return (
       <div
         data-feature={this.props.feature}
-        className={`icon-button${
-          this.props.state != undefined
-            ? ` icon-button--${this.props.state}`
-            : ''
-        }`}
+        className={[
+          'icon-button',
+          this.props.state != undefined && this.props.state != ''
+            ? 'icon-button--' + this.props.state
+            : null,
+        ].filter(n => n).join(' ')}
         onMouseDown={this.props.action}
       >
-        <div className={`icon icon--${this.props.icon}`}></div>
+        <div
+          className={[
+            'icon',
+            'icon--' + this.props.icon,
+          ].filter(n => n).join(' ')}
+        ></div>
       </div>
     )
   }

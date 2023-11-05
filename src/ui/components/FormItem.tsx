@@ -23,9 +23,11 @@ export default class FormItem extends React.Component<Props> {
     return (
       <>
         <div
-          className={`form-item form-item${
-            this.props.shouldFill ? '--fill' : ''
-          }${this.props.isBlocked ? ' form-item--blocked' : ''}`}
+          className={[
+            'form-item',
+            this.props.shouldFill ? 'form-item--fill' : null,
+            this.props.isBlocked ? 'form-item--blocked' : null,
+          ].filter(n => n).join(' ')}
         >
           <label
             className="type"

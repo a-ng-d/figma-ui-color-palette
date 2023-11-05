@@ -54,9 +54,11 @@ export default class Input extends React.Component<Props> {
   Color = () => {
     return (
       <div
-        className={`input input--with-icon${
-          this.props.isBlocked ? ' input--blocked' : ''
-        }`}
+        className={[
+          'input',
+          'input--with-icon',
+          this.props.isBlocked ? 'input--blocked' : null
+        ].filter(n => n).join(' ')}
       >
         <input
           id={this.props.id}
@@ -87,17 +89,20 @@ export default class Input extends React.Component<Props> {
   Number = () => {
     return (
       <div
-        className={`input${this.props.isBlocked ? ' input--blocked' : ''}${
-          this.props.icon?.type === 'NONE' ? '' : ' input--with-icon'
-        }`}
+        className={[
+          'input',
+          this.props.icon?.type === 'NONE' ? null : 'input--with-icon',
+          this.props.isBlocked ? 'input--blocked' : null
+        ].filter(n => n).join(' ')}
       >
         {this.props.icon?.type != 'NONE' ? (
           <div
-            className={`icon${
+            className={[
+              'icon',
               this.props.icon?.type === 'ICON'
-                ? ` icon--${this.props.icon.value}`
-                : ''
-            }`}
+                ? 'icon--' + this.props.icon.value
+                : null,
+            ].filter(n => n).join(' ')}
           >
             {this.props.icon?.type === 'LETTER' ? this.props.icon.value : ''}
           </div>
@@ -125,17 +130,20 @@ export default class Input extends React.Component<Props> {
   Text = () => {
     return (
       <div
-        className={`input${this.props.isBlocked ? ' input--blocked' : ''}${
-          this.props.icon?.type === 'NONE' ? '' : ' input--with-icon'
-        }`}
+        className={[
+          'input',
+          this.props.icon?.type === 'NONE' ? null : 'input--with-icon',
+          this.props.isBlocked ? 'input--blocked' : null
+        ].filter(n => n).join(' ')}
       >
         {this.props.icon?.type != 'NONE' ? (
           <div
-            className={`icon${
+            className={[
+              'icon',
               this.props.icon?.type === 'ICON'
-                ? ` icon--${this.props.icon?.value}`
-                : ''
-            }`}
+                ? 'icon--' + this.props.icon.value
+                : null,
+            ].filter(n => n).join(' ')}
           >
             {this.props.icon?.type === 'LETTER' ? this.props.icon?.value : ''}
           </div>
@@ -147,7 +155,7 @@ export default class Input extends React.Component<Props> {
           className={[
             'input__field',
             this.props.state === 'ERROR' ? 'input__field--error' : null
-          ].join(' ')}
+          ].filter(n => n).join(' ')}
           placeholder={this.props.placeholder}
           value={this.props.value}
           maxLength={this.props.charactersLimit}
@@ -163,13 +171,20 @@ export default class Input extends React.Component<Props> {
 
   LongText = () => {
     return (
-      <div className={`input${this.props.isBlocked ? ' input--blocked' : ''}`}>
+      <div
+        className={[
+          'input',
+          this.props.isBlocked ? 'input--blocked' : null
+        ].filter(n => n).join(' ')}
+      >
         <textarea
           id={this.props.id}
           data-feature={this.props.feature}
-          className={`textarea input__field${
-            this.props.isMonospaceFont ? ' textarea--monospace' : ''
-          }`}
+          className={[
+            'textarea',
+            'input__field',
+            this.props.isMonospaceFont ? 'textarea--monospace' : null,
+          ].filter(n => n).join(' ')}
           placeholder={this.props.placeholder}
           value={this.props.value}
           autoFocus={this.props.isAutoFocus}
