@@ -2,6 +2,7 @@ import * as React from 'react'
 import type {
   ActionsList,
   DispatchProcess,
+  EditorType,
   HexModel,
   HoveredColor,
   Language,
@@ -26,8 +27,8 @@ interface Props {
   scale: ScaleConfiguration
   themes: Array<ThemeConfiguration>
   actions: string
-  editorType: 'figma' | 'figjam'
   planStatus: 'UNPAID' | 'PAID'
+  editorType: EditorType
   lang: Language
   onChangeThemes: (themes: Array<ThemeConfiguration>) => void
   onSyncLocalStyles: () => void

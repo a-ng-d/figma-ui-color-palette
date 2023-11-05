@@ -2,6 +2,7 @@ import * as React from 'react'
 import type {
   ActionsList,
   DispatchProcess,
+  EditorType,
   Language,
   PresetConfiguration,
   ScaleConfiguration,
@@ -26,7 +27,7 @@ interface Props {
   scale?: ScaleConfiguration
   actions?: string
   planStatus: 'UNPAID' | 'PAID'
-  editorType?: string
+  editorType?: EditorType
   lang: Language
   onChangePreset?: (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => void
   onChangeScale: () => void

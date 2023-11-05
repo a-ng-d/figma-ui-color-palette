@@ -9,9 +9,13 @@ export interface Feature {
 
 export type Service = 'ONBOARD' | 'CREATE' | 'EDIT'
 
-export type Language = 'en-US'
+export type EditorType = 'figma' | 'figjam'
+
+export type PlanStatus = 'UNPAID' | 'PAID' | 'NOT_SUPPORTED' | undefined
 
 export type TrialStatus = 'UNUSED' | 'PENDING' | 'EXPIRED'
+
+export type Language = 'en-US'
 
 export type PriorityContext =
   | 'EMPTY'
