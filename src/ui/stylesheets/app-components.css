@@ -284,7 +284,7 @@ li.list__item {
 }
 
 li.list__item--compact {
-  grid-template-columns: repeat(38, 1fr);
+  grid-template-columns: repeat(36, 1fr);
 }
 
 li.list__item[draggable='true'] {
@@ -330,8 +330,12 @@ li .list__item__buttons {
   justify-content: flex-end;
 }
 
+li .list__item__buttons--compact {
+  grid-column: span 4 / 37;
+}
+
 li .single-color {
-  grid-column: 2 / span 30;
+  grid-column: 2 / span 31;
   grid-row: 1 / 1;
   display: flex;
   align-items: center;
