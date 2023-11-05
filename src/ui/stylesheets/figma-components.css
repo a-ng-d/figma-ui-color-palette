@@ -468,7 +468,7 @@
 }
 
 .input__field--error {
-  border: 1px solid var(--figma-color-border-danger)
+  border: 1px solid var(--figma-color-border-danger);
 }
 
 .input__field--error:hover,

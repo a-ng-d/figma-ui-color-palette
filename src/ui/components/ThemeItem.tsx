@@ -116,8 +116,10 @@ export default class ThemeItem extends React.Component<Props, any> {
           this.state['isDragged'] ? 'list__item--dragged' : null,
           this.props.guideAbove ? 'list__item--above' : null,
           this.props.guideBelow ? 'list__item--below' : null,
-          this.state['hasMoreOptions'] ? 'list__item--emphasis' : null
-        ].filter(n => n).join(' ')}
+          this.state['hasMoreOptions'] ? 'list__item--emphasis' : null,
+        ]
+          .filter((n) => n)
+          .join(' ')}
         draggable={this.props.selected}
         onMouseDown={this.props.onChangeSelection}
         onDragStart={(e) => this.onDragStart(e)}

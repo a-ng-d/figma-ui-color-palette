@@ -20,7 +20,9 @@ export default class Tabs extends React.Component<Props> {
               'tabs__tab',
               'type',
               this.props.active === tab.id ? 'tabs__tab--active' : null,
-            ].filter(n => n).join(' ')}
+            ]
+              .filter((n) => n)
+              .join(' ')}
             data-feature={tab.id}
             onMouseDown={this.props.action}
           >

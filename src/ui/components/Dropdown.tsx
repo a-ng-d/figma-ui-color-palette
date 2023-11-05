@@ -182,8 +182,10 @@ export default class Dropdown extends React.Component<Props, any> {
       <li
         className={[
           'select-menu__item',
-          props.option.isBlocked ? ' select-menu__item--blocked' : null
-        ].filter(n => n).join(' ')}
+          props.option.isBlocked ? ' select-menu__item--blocked' : null,
+        ]
+          .filter((n) => n)
+          .join(' ')}
         data-position={props.option.position}
         data-is-blocked={props.option.isBlocked}
         onMouseOver={() => this.setState({ openedGroup: props.option.value })}
@@ -207,8 +209,10 @@ export default class Dropdown extends React.Component<Props, any> {
           props.option.value === this.props.selected
             ? 'select-menu__item--selected'
             : null,
-            props.option.isBlocked ? 'select-menu__item--blocked' : null
-        ].filter(n => n).join(' ')}
+          props.option.isBlocked ? 'select-menu__item--blocked' : null,
+        ]
+          .filter((n) => n)
+          .join(' ')}
         data-value={props.option.value}
         data-position={props.option.position}
         data-is-blocked={props.option.isBlocked}
@@ -230,8 +234,10 @@ export default class Dropdown extends React.Component<Props, any> {
           props.option.value === this.props.selected
             ? 'select-menu__item--selected'
             : null,
-            props.option.isBlocked ? 'select-menu__item--blocked' : null
-        ].filter(n => n).join(' ')}
+          props.option.isBlocked ? 'select-menu__item--blocked' : null,
+        ]
+          .filter((n) => n)
+          .join(' ')}
         data-value={props.option.value}
         data-position={props.option.position}
         data-is-blocked={props.option.isBlocked}
@@ -249,8 +255,10 @@ export default class Dropdown extends React.Component<Props, any> {
       <li
         className={[
           'select-menu__item',
-          props.action.isBlocked ? 'select-menu__item--blocked' : null
-        ].filter(n => n).join(' ')}
+          props.action.isBlocked ? 'select-menu__item--blocked' : null,
+        ]
+          .filter((n) => n)
+          .join(' ')}
         data-feature={props.action.feature}
         data-is-blocked={props.action.isBlocked}
         onMouseDown={() => this.onSelectAction(props.action.action)}
@@ -271,15 +279,19 @@ export default class Dropdown extends React.Component<Props, any> {
             ? 'select-menu--left'
             : this.props.alignment === 'RIGHT'
             ? 'select-menu--right'
-            : 'select-menu--fill'
-        ].filter(n => n).join(' ')}
+            : 'select-menu--fill',
+        ]
+          .filter((n) => n)
+          .join(' ')}
         ref={this.selectMenuRef}
       >
         <button
           className={[
             'select-menu__button',
-            this.state['isMenuOpen'] ? 'select-menu__button--active' : null
-          ].filter(n => n).join(' ')}
+            this.state['isMenuOpen'] ? 'select-menu__button--active' : null,
+          ]
+            .filter((n) => n)
+            .join(' ')}
           onMouseDown={this.onOpenMenu}
           ref={this.buttonRef}
         >

@@ -148,7 +148,7 @@ export default class Scale extends React.Component<Props, any> {
   Create = () => {
     palette.scale = {}
     return (
-      <div className='controls__control'>
+      <div className="controls__control">
         <div className="control__block control__block--distributed">
           <div className="section-controls">
             <div className="section-controls__left-part">
@@ -260,7 +260,7 @@ export default class Scale extends React.Component<Props, any> {
   Edit = () => {
     palette.scale = {}
     return (
-      <div className='controls__control'>
+      <div className="controls__control">
         <div className="control__block control__block--distributed">
           <div className="section-controls">
             <div className="section-controls__left-part">

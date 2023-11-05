@@ -61,7 +61,8 @@ export default class EditPalette extends React.Component<Props, any> {
   constructor(props: Props) {
     super(props)
     this.state = {
-      context: this.setContexts()[0] != undefined ? this.setContexts()[0].id : '',
+      context:
+        this.setContexts()[0] != undefined ? this.setContexts()[0].id : '',
       deploymentAction: features.find(
         (feature) => feature.name === 'LOCAL_STYLES'
       )?.isActive

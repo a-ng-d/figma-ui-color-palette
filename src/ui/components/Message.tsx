@@ -18,12 +18,15 @@ export default class Message extends React.Component<Props> {
         className={[
           'onboarding-tip',
           this.props.isBlocked ? 'onboarding-tip--blocked' : null,
-        ].filter(n => n).join(' ')}
+        ]
+          .filter((n) => n)
+          .join(' ')}
       >
-        <div className={[
-          'icon',
-          'icon--' + this.props.icon
-        ].filter(n => n).join(' ')}></div>
+        <div
+          className={['icon', 'icon--' + this.props.icon]
+            .filter((n) => n)
+            .join(' ')}
+        ></div>
         <div className="onboarding-tip__msg">{this.props.messages[0]}</div>
       </div>
     )
@@ -35,12 +38,10 @@ export default class Message extends React.Component<Props> {
         <div>
           <div className="onboarding-tip">
             <div
-              className={[
-                'icon',
-                'icon--' + this.props.icon,
-              ].filter(n => n).join(' ')}
-            >
-            </div>
+              className={['icon', 'icon--' + this.props.icon]
+                .filter((n) => n)
+                .join(' ')}
+            ></div>
             <div className="onboarding-tip__ticker">
               <div
                 className="onboarding-tip__tips"

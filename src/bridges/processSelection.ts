@@ -1,5 +1,9 @@
 import { uid } from 'uid'
-import type { ActionsList, SourceColorConfiguration, ThemeConfiguration } from '../utils/types'
+import type {
+  ActionsList,
+  SourceColorConfiguration,
+  ThemeConfiguration,
+} from '../utils/types'
 import setPaletteMigration from '../utils/setPaletteMigration'
 
 export let currentSelection: ReadonlyArray<SceneNode>
@@ -49,10 +53,9 @@ const processSelection = () => {
       COLOR_SELECTED: () => {
         figma.ui.postMessage({
           type: 'COLOR_SELECTED',
-          data: readyToCreatePaletteSelection
+          data: readyToCreatePaletteSelection,
         })
-      }
-        
+      },
     }
 
     return actions[state]?.()
@@ -96,11 +99,10 @@ const processSelection = () => {
           name: (element as any).name,
           rgb: (element as any).fills[0].color,
           source: 'CANVAS',
-          id: uid()
+          id: uid(),
         })
         selectionHandler('COLOR_SELECTED')
       }
-        
   })
 
   setTimeout(() => (isSelectionChanged = false), 1000)

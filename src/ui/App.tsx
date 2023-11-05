@@ -101,11 +101,16 @@ class App extends React.Component<any, any> {
     setTimeout(() => this.setState({ isLoaded: true }), 1000)
 
   // Handlers
-  colorsFromCoolorsHandler = (sourceColorsFromCoolers: Array<SourceColorConfiguration>) => {
+  colorsFromCoolorsHandler = (
+    sourceColorsFromCoolers: Array<SourceColorConfiguration>
+  ) => {
     this.setState({
       sourceColors: this.state['sourceColors']
-        .filter((sourceColors: SourceColorConfiguration) => sourceColors.source != 'COOLORS')
-        .concat(sourceColorsFromCoolers)
+        .filter(
+          (sourceColors: SourceColorConfiguration) =>
+            sourceColors.source != 'COOLORS'
+        )
+        .concat(sourceColorsFromCoolers),
     })
   }
 
@@ -433,8 +438,10 @@ class App extends React.Component<any, any> {
         const updateWhileEmptySelection = () => {
           this.setState({
             service: 'CREATE',
-            sourceColors: this.state['sourceColors']
-              .filter((sourceColor: SourceColorConfiguration) => sourceColor.source != 'CANVAS'),
+            sourceColors: this.state['sourceColors'].filter(
+              (sourceColor: SourceColorConfiguration) =>
+                sourceColor.source != 'CANVAS'
+            ),
             name: '',
             description: '',
             preset: presets.material,
@@ -484,7 +491,10 @@ class App extends React.Component<any, any> {
           this.setState({
             service: 'CREATE',
             sourceColors: this.state['sourceColors']
-              .filter((sourceColor: SourceColorConfiguration) => sourceColor.source != 'CANVAS')
+              .filter(
+                (sourceColor: SourceColorConfiguration) =>
+                  sourceColor.source != 'CANVAS'
+              )
               .concat(e.data.pluginMessage.data),
             onGoingStep: 'colors selected',
           })

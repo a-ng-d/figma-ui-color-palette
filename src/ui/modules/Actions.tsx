@@ -23,7 +23,7 @@ interface Props {
 
 export default class Actions extends React.Component<Props> {
   static defaultProps = {
-    sourceColors: []
+    sourceColors: [],
   }
 
   // Templates
@@ -76,16 +76,19 @@ export default class Actions extends React.Component<Props> {
             <Button
               type="primary"
               label={locals[this.props.lang].actions.createPalette}
-              state={this.props.sourceColors.length > 0 ? 'default' : 'disabled'}
+              state={
+                this.props.sourceColors.length > 0 ? 'default' : 'disabled'
+              }
               feature="CREATE_PALETTE"
               action={this.props.onCreatePalette}
             />
           </Feature>
         </div>
         <div className="actions__left">
-          <div className="type">{`${this.props.sourceColors.length} ${this.props.sourceColors.length > 1 ?
-            locals[this.props.lang].actions.sourceColorsNumber.several :
-            locals[this.props.lang].actions.sourceColorsNumber.single
+          <div className="type">{`${this.props.sourceColors.length} ${
+            this.props.sourceColors.length > 1
+              ? locals[this.props.lang].actions.sourceColorsNumber.several
+              : locals[this.props.lang].actions.sourceColorsNumber.single
           }`}</div>
         </div>
       </div>

@@ -95,7 +95,7 @@ export default class Themes extends React.Component<Props, any> {
       ),
       currentElement: HTMLInputElement = e.target as HTMLInputElement
 
-    element != null ? (id = element.getAttribute('data-id')) : id = null
+    element != null ? (id = element.getAttribute('data-id')) : (id = null)
 
     themesMessage.isEditedInRealTime = false
 
@@ -342,7 +342,11 @@ export default class Themes extends React.Component<Props, any> {
                   type="primary"
                   feature="ADD_THEME"
                   label={locals[this.props.lang].themes.callout.cta}
-                  state={isBlocked('THEMES', this.props.planStatus) ? 'disabled' : 'default'}
+                  state={
+                    isBlocked('THEMES', this.props.planStatus)
+                      ? 'disabled'
+                      : 'default'
+                  }
                   isBlocked={isBlocked('THEMES', this.props.planStatus)}
                   action={
                     isBlocked('THEMES', this.props.planStatus)
