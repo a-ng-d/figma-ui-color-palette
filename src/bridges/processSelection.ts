@@ -1,3 +1,4 @@
+import { uid } from 'uid'
 import type { ActionsList, ThemeConfiguration } from '../utils/types'
 import setPaletteMigration from '../utils/setPaletteMigration'
 
@@ -50,7 +51,8 @@ const processSelection = () => {
             return {
               name: (element as any).name,
               rgb: (element as any).fills[0].color,
-              source: 'CANVAS'
+              source: 'CANVAS',
+              id: uid()
             }
           }),
         }),
