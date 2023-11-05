@@ -29,39 +29,72 @@ export default class Source extends React.Component<Props, any> {
   constructor(props: Props) {
     super(props)
     this.state = {
-      coolorsUrl: ''
+      coolorsUrl: {
+        value: '' as string,
+        state: 'DEFAULT' as 'DEFAULT' | 'ERROR',
+        canBeSubmitted: false
+      }
     }
   }
 
-  // Handlers
-  importColorsFromCoolorsHandler = (e: React.SyntheticEvent) => {
-    const url = (e.target as HTMLInputElement).value,
-      domain = url.split('/')[3],
-      hexs = url.split('/').at(-1)
-
-    if (hexs != undefined)
-      if (/[A-Za-z0-9]+-[A-Za-z0-9]+/i.test(hexs)) {
-        this.props.onChangeColorsFromCoolors(
-          hexs
-            .split('-')
-            .map(hex => {
-              const gl = chroma(hex).gl()
-              return {
-                name: hex,
-                rgb: {
-                  r: gl[0],
-                  g: gl[1],
-                  b: gl[2]
-                },
-                source: 'COOLORS',
-                id: uid()
-              }
-            }
-        ))
-        this.setState({
-          coolorsUrl: ''
-        })
+  componentWillUnmount(): void {
+    this.setState({
+      coolorsUrl: {
+        value: '',
+        state: 'DEFAULT',
+        canBeSubmitted: false
       }
+    })
+  }
+
+  // Handlers
+  isTypingHandler = (e: React.SyntheticEvent) =>
+    this.setState({
+      coolorsUrl: {
+        value: (e.target as HTMLInputElement).value,
+        state: (e.target as HTMLInputElement).value.length == 0 ? '' : this.state['coolorsUrl'].state,
+        canBeSubmitted: (e.target as HTMLInputElement).value.includes('https://coolors.co') ? true : false
+      }
+    })
+
+  importColorsFromCoolorsHandler = (e: React.SyntheticEvent) => {
+      const url: string = this.state['coolorsUrl'].value,
+      hexs: string | undefined = url.split('/').at(-1)
+
+      if (hexs != undefined)
+        if (/[A-Za-z0-9]+-[A-Za-z0-9]+/i.test(hexs)) {
+          this.props.onChangeColorsFromCoolors(
+            hexs
+              .split('-')
+              .map(hex => {
+                const gl = chroma(hex).gl()
+                return {
+                  name: hex,
+                  rgb: {
+                    r: gl[0],
+                    g: gl[1],
+                    b: gl[2]
+                  },
+                  source: 'COOLORS',
+                  id: uid()
+                }
+              }
+          ))
+          this.setState({
+            coolorsUrl: {
+              value: '',
+              state: 'DEFAULT',
+              canBeSubmitted: false,
+            }
+          })
+        } else
+          this.setState({
+            coolorsUrl: {
+              value: this.state['coolorsUrl'].value,
+              state: 'ERROR',
+              canBeSubmitted: this.state['coolorsUrl'].canBeSubmitted
+            }
+          })
   }
 
   removeColorsFromCoolorsHandler = (e: React.SyntheticEvent) =>
@@ -142,16 +175,31 @@ export default class Source extends React.Component<Props, any> {
           >
             <Input
               type="TEXT"
+              state={this.state['coolorsUrl'].state}
               placeholder={locals[this.props.lang].source.coolors.url.placeholder}
-              value={this.state['coolorsUrl']}
-              feature="UPLOAD_COLORS_FROM_URL"
-              onChange={(e: React.SyntheticEvent) => this.setState({
-                coolorsUrl: (e.target as HTMLInputElement).value
-              })}
+              value={this.state['coolorsUrl'].value}
+              onChange={this.isTypingHandler}
               onFocus={() => null}
-              onBlur={this.importColorsFromCoolorsHandler}
-              onConfirm={this.importColorsFromCoolorsHandler}
+              onBlur={() => null}
+              onConfirm={(e) => {
+                if (e.key === 'Enter' && this.state['coolorsUrl'].canBeSubmitted) {
+                  this.importColorsFromCoolorsHandler(e)
+                }
+              }}
             />
+            <div
+              style={{
+                alignSelf: 'center'
+              }}
+            >
+              <Button
+                type="icon"
+                state={this.state['coolorsUrl'].canBeSubmitted ? 'default' : 'disabled'}
+                icon="plus"
+                feature="IMPORT_COLORS_FROM_URL"
+                action={this.importColorsFromCoolorsHandler}
+              />
+            </div>
           </FormItem>
         </div>
         <ul className="list">
