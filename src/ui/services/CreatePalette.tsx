@@ -84,6 +84,9 @@ export default class CreatePalette extends React.Component<Props, any> {
             }
           }
         ))
+        this.setState({
+          coolorsUrl: ''
+        })
       }
 
   }
