@@ -40,7 +40,8 @@ export const locals: { [key: string]: any } = {
         title: 'Import from Coolors',
         url: {
           label: 'Palette URL',
-          placeholder: 'https://coolors.co/…'
+          placeholder: 'https://coolors.co/…',
+          errorMessage: 'The end of the URL must match with several hexadecimal codes (e.g. 8ecae6-…-219ebc).'
         }
       },
     },
