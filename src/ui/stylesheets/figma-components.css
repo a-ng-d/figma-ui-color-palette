@@ -467,6 +467,20 @@
   --black1: var(--figma-color-border);
 }
 
+.input__field--error {
+  border: 1px solid var(--figma-color-border-danger)
+}
+
+.input__field--error:hover,
+.input__field--error:placeholder-shown:hover {
+  --black1: var(--figma-color-border-danger);
+}
+
+.input__field--error:active,
+.input__field--error:focus {
+  --blue: var(--figma-color-border-danger);
+}
+
 .input__field::placeholder {
   color: var(--figma-color-text-secondary);
 }

@@ -4,6 +4,7 @@ interface Props {
   id?: string
   type: 'NUMBER' | 'COLOR' | 'TEXT' | 'LONG_TEXT'
   icon?: { type: 'NONE' | 'LETTER' | 'ICON'; value: string }
+  state: 'DEFAULT' | 'ERROR'
   placeholder?: string
   value: string
   charactersLimit?: number
@@ -28,6 +29,7 @@ export default class Input extends React.Component<Props> {
       type: 'NONE',
       value: null,
     },
+    state: 'DEFAULT',
     step: '1',
     isMonospaceFont: false,
     isBlocked: false,
@@ -142,7 +144,10 @@ export default class Input extends React.Component<Props> {
           id={this.props.id}
           data-feature={this.props.feature}
           type="text"
-          className="input__field"
+          className={[
+            'input__field',
+            this.props.state === 'ERROR' ? 'input__field--error' : null
+          ].join(' ')}
           placeholder={this.props.placeholder}
           value={this.props.value}
           maxLength={this.props.charactersLimit}
