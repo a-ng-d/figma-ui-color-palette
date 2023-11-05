@@ -11,6 +11,7 @@ import Message from '../components/Message'
 import Actions from './Actions'
 import FormItem from '../components/FormItem'
 import Input from '../components/Input'
+import Button from '../components/Button'
 import CompactColorItem from '../components/CompactColorItem'
 import features from '../../utils/config'
 import { locals } from '../../content/locals'
@@ -20,7 +21,7 @@ interface Props {
   planStatus: 'UNPAID' | 'PAID'
   editorType?: EditorType
   lang: Language
-  onImportCoolors: (sourceColorsFromCoolers: Array<SourceColorConfiguration>) => void
+  onChangeColorsFromCoolors: (sourceColorsFromCoolers: Array<SourceColorConfiguration>) => void
   onCreatePalette: () => void
 }
 
@@ -33,37 +34,38 @@ export default class Source extends React.Component<Props, any> {
   }
 
   // Handlers
-  importCoolorsHandler = (e: React.SyntheticEvent) => {
+  importColorsFromCoolorsHandler = (e: React.SyntheticEvent) => {
     const url = (e.target as HTMLInputElement).value,
       domain = url.split('/')[3],
       hexs = url.split('/').at(-1)
 
     if (hexs != undefined)
       if (/[A-Za-z0-9]+-[A-Za-z0-9]+/i.test(hexs)) {
-        this.props.onImportCoolors(
-          hexs.split('-').map(hex => {
-            const gl = chroma(hex).gl()
-            return {
-              name: hex,
-              rgb: {
-                r: gl[0],
-                g: gl[1],
-                b: gl[2]
-              },
-              source: 'COOLORS',
-              id: uid()
+        this.props.onChangeColorsFromCoolors(
+          hexs
+            .split('-')
+            .map(hex => {
+              const gl = chroma(hex).gl()
+              return {
+                name: hex,
+                rgb: {
+                  r: gl[0],
+                  g: gl[1],
+                  b: gl[2]
+                },
+                source: 'COOLORS',
+                id: uid()
+              }
             }
-          }
         ))
         this.setState({
           coolorsUrl: ''
         })
       }
-
   }
 
-  // Direct actions
-
+  removeColorsFromCoolorsHandler = (e: React.SyntheticEvent) =>
+    this.props.onChangeColorsFromCoolors([])
 
   // Templates
   SelectedColors = () => {
@@ -122,6 +124,15 @@ export default class Source extends React.Component<Props, any> {
             <div className="type">{`(${this.props.sourceColors.filter(sourceColor => sourceColor.source === 'COOLORS').length})`}</div>
           </div>
           <div className="section-controls__right-part">
+            {this.props.sourceColors.filter(sourceColor => sourceColor.source === 'COOLORS').length > 0 ? (
+              <Button
+                type="icon"
+                icon="minus"
+                feature="REMOVE_COLORS"
+                action={this.removeColorsFromCoolorsHandler}
+              />
+              ) : null
+            }
           </div>
         </div>
         <div>
@@ -133,12 +144,13 @@ export default class Source extends React.Component<Props, any> {
               type="TEXT"
               placeholder="https://coolors.co/…"
               value={this.state['coolorsUrl']}
+              feature="UPLOAD_COLORS_FROM_URL"
               onChange={(e: React.SyntheticEvent) => this.setState({
                 coolorsUrl: (e.target as HTMLInputElement).value
               })}
               onFocus={() => null}
-              onBlur={this.importCoolorsHandler}
-              onConfirm={() => null}
+              onBlur={this.importColorsFromCoolorsHandler}
+              onConfirm={this.importColorsFromCoolorsHandler}
             />
           </FormItem>
         </div>
@@ -154,9 +166,7 @@ export default class Source extends React.Component<Props, any> {
                     .toUpperCase()
                 }
                 uuid={sourceColor.id}
-                canBeRemoved
                 lang={this.props.lang}
-                onRemoveColor={() => null}
               />
             )
           })}
