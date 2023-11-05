@@ -32,7 +32,8 @@ export default class Source extends React.Component<Props, any> {
       coolorsUrl: {
         value: '' as string,
         state: 'DEFAULT' as 'DEFAULT' | 'ERROR',
-        canBeSubmitted: false
+        canBeSubmitted: false,
+        helper: undefined
       }
     }
   }
@@ -42,7 +43,8 @@ export default class Source extends React.Component<Props, any> {
       coolorsUrl: {
         value: '',
         state: 'DEFAULT',
-        canBeSubmitted: false
+        canBeSubmitted: false,
+        helper: undefined
       }
     })
   }
@@ -52,8 +54,9 @@ export default class Source extends React.Component<Props, any> {
     this.setState({
       coolorsUrl: {
         value: (e.target as HTMLInputElement).value,
-        state: (e.target as HTMLInputElement).value.length == 0 ? '' : this.state['coolorsUrl'].state,
-        canBeSubmitted: (e.target as HTMLInputElement).value.includes('https://coolors.co') ? true : false
+        state: !(e.target as HTMLInputElement).value.includes('https://coolors.co') ? '' : this.state['coolorsUrl'].state,
+        canBeSubmitted: (e.target as HTMLInputElement).value.includes('https://coolors.co') ? true : false,
+        helper: !(e.target as HTMLInputElement).value.includes('https://coolors.co') ? undefined : this.state['coolorsUrl'].helper
       }
     })
 
@@ -85,6 +88,7 @@ export default class Source extends React.Component<Props, any> {
               value: '',
               state: 'DEFAULT',
               canBeSubmitted: false,
+              helper: undefined
             }
           })
         } else
@@ -92,7 +96,11 @@ export default class Source extends React.Component<Props, any> {
             coolorsUrl: {
               value: this.state['coolorsUrl'].value,
               state: 'ERROR',
-              canBeSubmitted: this.state['coolorsUrl'].canBeSubmitted
+              canBeSubmitted: this.state['coolorsUrl'].canBeSubmitted,
+              helper: {
+                type: 'ERROR',
+                message: locals[this.props.lang].source.coolors.url.errorMessage
+              }
             }
           })
   }
@@ -172,6 +180,7 @@ export default class Source extends React.Component<Props, any> {
           <FormItem
             id="coolors-palette-urn"
             label={locals[this.props.lang].source.coolors.url.label}
+            helper={this.state['coolorsUrl'].helper}
           >
             <Input
               type="TEXT"
