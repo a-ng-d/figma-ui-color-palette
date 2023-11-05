@@ -1,5 +1,5 @@
 import * as React from 'react'
-import type { Language, SourceColorConfiguration, TextColorsThemeHexModel } from '../../utils/types'
+import type { EditorType, Language, SourceColorConfiguration, TextColorsThemeHexModel } from '../../utils/types'
 import Feature from '../components/Feature'
 import FormItem from './../components/FormItem'
 import Input from './../components/Input'
@@ -22,7 +22,7 @@ interface Props {
   isNewAlgorithm?: boolean
   actions?: string
   planStatus: 'UNPAID' | 'PAID'
-  editorType?: string
+  editorType?: EditorType
   lang: Language
   onChangeSettings: React.ReactEventHandler
   onCreatePalette?: () => void
