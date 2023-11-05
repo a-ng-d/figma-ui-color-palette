@@ -65,7 +65,7 @@ export default class Source extends React.Component<Props, any> {
       hexs: string | undefined = url.split('/').at(-1)
 
       if (hexs != undefined)
-        if (/[A-Za-z0-9]+-[A-Za-z0-9]+/i.test(hexs)) {
+        if (/^(?:[0-9a-fA-F]{6}-)+[0-9a-fA-F]{6}$/i.test(hexs)) {
           this.props.onChangeColorsFromCoolors(
             hexs
               .split('-')
