@@ -2,14 +2,6 @@ import type { Feature } from './types'
 
 const features: Array<Feature> = [
   {
-    name: 'ONBOARDING',
-    description: 'Onboarding service when the selection is empty',
-    isActive: true,
-    isPro: false,
-    type: 'SERVICE',
-    service: [],
-  },
-  {
     name: 'CREATE',
     description: 'Palette creation service when several colors are selected',
     isActive: true,
@@ -31,7 +23,7 @@ const features: Array<Feature> = [
     isActive: true,
     isPro: false,
     type: 'DIVISION',
-    service: ['ONBOARD', 'CREATE', 'EDIT'],
+    service: ['CREATE', 'EDIT'],
   },
   {
     name: 'SHORTCUTS',
@@ -39,7 +31,7 @@ const features: Array<Feature> = [
     isActive: true,
     isPro: false,
     type: 'DIVISION',
-    service: ['ONBOARD', 'CREATE', 'EDIT'],
+    service: ['CREATE', 'EDIT'],
   },
   {
     name: 'PROPERTIES',
@@ -228,7 +220,7 @@ const features: Array<Feature> = [
   {
     name: 'SCALE_TIPS',
     description:
-      'Tip message to ONBOARD users about how to configure the lightness scale',
+      'Tip message to onboard users about how to configure the lightness scale',
     isActive: true,
     isPro: false,
     type: 'DIVISION',
@@ -481,7 +473,7 @@ const features: Array<Feature> = [
     isActive: true,
     isPro: false,
     type: 'ACTION',
-    service: ['ONBOARD', 'CREATE', 'EDIT'],
+    service: ['CREATE', 'EDIT'],
   },
 ]
 

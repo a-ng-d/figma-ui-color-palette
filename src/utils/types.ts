@@ -7,7 +7,7 @@ export interface Feature {
   service: Array<Service>
 }
 
-export type Service = 'ONBOARD' | 'CREATE' | 'EDIT'
+export type Service = 'CREATE' | 'EDIT'
 
 export type EditorType = 'figma' | 'figjam'
 

@@ -22,7 +22,6 @@ import type {
 } from '../utils/types'
 import Dispatcher from './modules/Dispatcher'
 import Feature from './components/Feature'
-import Onboarding from './services/Onboarding'
 import CreatePalette from './services/CreatePalette'
 import EditPalette from './services/EditPalette'
 import PriorityContainer from './modules/PriorityContainer'
@@ -66,7 +65,7 @@ class App extends React.Component<any, any> {
       ) as DispatchProcess,
     }
     this.state = {
-      service: 'ONBOARD',
+      service: 'CREATE',
       sourceColors: [] as SourceColorConfiguration | [],
       name: '',
       description: '',
@@ -671,19 +670,6 @@ class App extends React.Component<any, any> {
                 onChangeColors={this.colorsHandler}
                 onChangeThemes={this.themesHandler}
                 onChangeSettings={this.settingsHandler}
-              />
-            ) : null}
-          </Feature>
-          <Feature
-            isActive={
-              features.find((feature) => feature.name === 'ONBOARDING')
-                ?.isActive
-            }
-          >
-            {this.state['service'] === 'ONBOARD' ? (
-              <Onboarding
-                planStatus={this.state['planStatus']}
-                lang={this.state['lang']}
               />
             ) : null}
           </Feature>
