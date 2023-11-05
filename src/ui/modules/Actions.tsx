@@ -82,7 +82,9 @@ export default class Actions extends React.Component<Props> {
             />
           </Feature>
         </div>
-        <div className="actions__left"></div>
+        <div className="actions__left">
+          <div className="type">{`${this.props.sourceColors.length} ${this.props.sourceColors.length > 0 ? 'source colors' : 'source color'}`}</div>
+        </div>
       </div>
     )
   }
