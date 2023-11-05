@@ -135,14 +135,14 @@ export default class Source extends React.Component<Props, any> {
             }
           </div>
         </div>
-        <div>
+        <div className="settings__item">
           <FormItem
             id="coolors-palette-urn"
-            label="Paste your palette URL"
+            label={locals[this.props.lang].source.coolors.url.label}
           >
             <Input
               type="TEXT"
-              placeholder="https://coolors.co/…"
+              placeholder={locals[this.props.lang].source.coolors.url.placeholder}
               value={this.state['coolorsUrl']}
               feature="UPLOAD_COLORS_FROM_URL"
               onChange={(e: React.SyntheticEvent) => this.setState({

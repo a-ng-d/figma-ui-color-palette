@@ -38,6 +38,10 @@ export const locals: { [key: string]: any } = {
       },
       coolors: {
         title: 'Import from Coolors',
+        url: {
+          label: 'Palette URL',
+          placeholder: 'https://coolors.co/…'
+        }
       },
     },
     scale: {
@@ -168,6 +172,10 @@ export const locals: { [key: string]: any } = {
         localStyles: 'Manage local styles',
         localVariables: 'Manage local variables',
       },
+      sourceColorsNumber: {
+        single: 'source color',
+        several: 'source colors'
+      }
     },
     highlight: {
       cta: {
