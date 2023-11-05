@@ -95,7 +95,7 @@ export default class Themes extends React.Component<Props, any> {
       ),
       currentElement: HTMLInputElement = e.target as HTMLInputElement
 
-    element != null ? (id = element.getAttribute('data-id')) : null
+    element != null ? (id = element.getAttribute('data-id')) : id = null
 
     themesMessage.isEditedInRealTime = false
 
