@@ -101,9 +101,11 @@ class App extends React.Component<any, any> {
     setTimeout(() => this.setState({ isLoaded: true }), 1000)
 
   // Handlers
-  importCoolorsHandler = (sourceColorsFromCoolers: Array<SourceColorConfiguration>) => {
+  colorsFromCoolorsHandler = (sourceColorsFromCoolers: Array<SourceColorConfiguration>) => {
     this.setState({
-      sourceColors: this.state['sourceColors'].concat(sourceColorsFromCoolers)
+      sourceColors: this.state['sourceColors']
+        .filter((sourceColors: SourceColorConfiguration) => sourceColors.source != 'COOLORS')
+        .concat(sourceColorsFromCoolers)
     })
   }
 
@@ -626,7 +628,7 @@ class App extends React.Component<any, any> {
                 textColorsTheme={this.state['textColorsTheme']}
                 planStatus={this.state['planStatus']}
                 lang={this.state['lang']}
-                onImportCoolors={this.importCoolorsHandler}
+                onChangeColorsFromCoolors={this.colorsFromCoolorsHandler}
                 onChangePreset={this.presetsHandler}
                 onCustomPreset={this.customHandler}
                 onChangeSettings={this.settingsHandler}
