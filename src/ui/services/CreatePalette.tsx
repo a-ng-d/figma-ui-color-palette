@@ -36,20 +36,7 @@ export default class CreatePalette extends React.Component<Props, any> {
   constructor(props: Props) {
     super(props)
     this.state = {
-      context:
-        features.filter(
-          (feature) =>
-            feature.type === 'CONTEXT' &&
-            feature.service.includes('CREATE') &&
-            feature.isActive
-        )[0] != undefined
-          ? features.filter(
-              (feature) =>
-                feature.type === 'CONTEXT' &&
-                feature.service.includes('CREATE') &&
-                feature.isActive
-            )[0].name
-          : '',
+      context: this.setContexts()[0] != undefined ? this.setContexts()[0].id : '',
       coolorsUrl: ''
     }
   }
