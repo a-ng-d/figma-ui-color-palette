@@ -26,7 +26,9 @@ interface Props {
   textColorsTheme: TextColorsThemeHexModel
   planStatus: 'UNPAID' | 'PAID'
   lang: Language
-  onChangeColorsFromCoolors: (sourceColorsFromCoolers: Array<SourceColorConfiguration>) => void
+  onChangeColorsFromCoolors: (
+    sourceColorsFromCoolers: Array<SourceColorConfiguration>
+  ) => void
   onChangePreset: (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => void
   onCustomPreset: (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => void
   onChangeSettings: (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => void
@@ -36,8 +38,9 @@ export default class CreatePalette extends React.Component<Props, any> {
   constructor(props: Props) {
     super(props)
     this.state = {
-      context: this.setContexts()[0] != undefined ? this.setContexts()[0].id : '',
-      coolorsUrl: ''
+      context:
+        this.setContexts()[0] != undefined ? this.setContexts()[0].id : '',
+      coolorsUrl: '',
     }
   }
 
@@ -49,14 +52,16 @@ export default class CreatePalette extends React.Component<Props, any> {
 
   // Direct actions
   onCreatePalette = () =>
-    parent.postMessage({
-      pluginMessage: {
-        type: 'CREATE_PALETTE',
-        data: {
-          sourceColors: this.props.sourceColors,
-          palette: palette,
-        }
-      }},
+    parent.postMessage(
+      {
+        pluginMessage: {
+          type: 'CREATE_PALETTE',
+          data: {
+            sourceColors: this.props.sourceColors,
+            palette: palette,
+          },
+        },
+      },
       '*'
     )
 
@@ -100,7 +105,7 @@ export default class CreatePalette extends React.Component<Props, any> {
             sourceColors={this.props.sourceColors}
             planStatus={this.props.planStatus}
             lang={this.props.lang}
-            onChangeColorsFromCoolors={(this.props.onChangeColorsFromCoolors)}
+            onChangeColorsFromCoolors={this.props.onChangeColorsFromCoolors}
             onCreatePalette={this.onCreatePalette}
           />
         )

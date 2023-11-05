@@ -21,7 +21,9 @@ interface Props {
   planStatus: 'UNPAID' | 'PAID'
   editorType?: EditorType
   lang: Language
-  onChangeColorsFromCoolors: (sourceColorsFromCoolers: Array<SourceColorConfiguration>) => void
+  onChangeColorsFromCoolors: (
+    sourceColorsFromCoolers: Array<SourceColorConfiguration>
+  ) => void
   onCreatePalette: () => void
 }
 
@@ -33,8 +35,8 @@ export default class Source extends React.Component<Props, any> {
         value: '' as string,
         state: 'DEFAULT' as 'DEFAULT' | 'ERROR',
         canBeSubmitted: false,
-        helper: undefined
-      }
+        helper: undefined,
+      },
     }
   }
 
@@ -44,8 +46,8 @@ export default class Source extends React.Component<Props, any> {
         value: '',
         state: 'DEFAULT',
         canBeSubmitted: false,
-        helper: undefined
-      }
+        helper: undefined,
+      },
     })
   }
 
@@ -54,55 +56,65 @@ export default class Source extends React.Component<Props, any> {
     this.setState({
       coolorsUrl: {
         value: (e.target as HTMLInputElement).value,
-        state: !(e.target as HTMLInputElement).value.includes('https://coolors.co') ? '' : this.state['coolorsUrl'].state,
-        canBeSubmitted: (e.target as HTMLInputElement).value.includes('https://coolors.co') ? true : false,
-        helper: !(e.target as HTMLInputElement).value.includes('https://coolors.co') ? undefined : this.state['coolorsUrl'].helper
-      }
+        state: !(e.target as HTMLInputElement).value.includes(
+          'https://coolors.co'
+        )
+          ? ''
+          : this.state['coolorsUrl'].state,
+        canBeSubmitted: (e.target as HTMLInputElement).value.includes(
+          'https://coolors.co'
+        )
+          ? true
+          : false,
+        helper: !(e.target as HTMLInputElement).value.includes(
+          'https://coolors.co'
+        )
+          ? undefined
+          : this.state['coolorsUrl'].helper,
+      },
     })
 
   importColorsFromCoolorsHandler = (e: React.SyntheticEvent) => {
-      const url: string = this.state['coolorsUrl'].value,
+    const url: string = this.state['coolorsUrl'].value,
       hexs: string | undefined = url.split('/').at(-1)
 
-      if (hexs != undefined)
-        if (/^(?:[0-9a-fA-F]{6}-)+[0-9a-fA-F]{6}$/i.test(hexs)) {
-          this.props.onChangeColorsFromCoolors(
-            hexs
-              .split('-')
-              .map(hex => {
-                const gl = chroma(hex).gl()
-                return {
-                  name: hex,
-                  rgb: {
-                    r: gl[0],
-                    g: gl[1],
-                    b: gl[2]
-                  },
-                  source: 'COOLORS',
-                  id: uid()
-                }
-              }
-          ))
-          this.setState({
-            coolorsUrl: {
-              value: '',
-              state: 'DEFAULT',
-              canBeSubmitted: false,
-              helper: undefined
+    if (hexs != undefined)
+      if (/^(?:[0-9a-fA-F]{6}-)+[0-9a-fA-F]{6}$/i.test(hexs)) {
+        this.props.onChangeColorsFromCoolors(
+          hexs.split('-').map((hex) => {
+            const gl = chroma(hex).gl()
+            return {
+              name: hex,
+              rgb: {
+                r: gl[0],
+                g: gl[1],
+                b: gl[2],
+              },
+              source: 'COOLORS',
+              id: uid(),
             }
           })
-        } else
-          this.setState({
-            coolorsUrl: {
-              value: this.state['coolorsUrl'].value,
-              state: 'ERROR',
-              canBeSubmitted: this.state['coolorsUrl'].canBeSubmitted,
-              helper: {
-                type: 'ERROR',
-                message: locals[this.props.lang].source.coolors.url.errorMessage
-              }
-            }
-          })
+        )
+        this.setState({
+          coolorsUrl: {
+            value: '',
+            state: 'DEFAULT',
+            canBeSubmitted: false,
+            helper: undefined,
+          },
+        })
+      } else
+        this.setState({
+          coolorsUrl: {
+            value: this.state['coolorsUrl'].value,
+            state: 'ERROR',
+            canBeSubmitted: this.state['coolorsUrl'].canBeSubmitted,
+            helper: {
+              type: 'ERROR',
+              message: locals[this.props.lang].source.coolors.url.errorMessage,
+            },
+          },
+        })
   }
 
   removeColorsFromCoolorsHandler = (e: React.SyntheticEvent) =>
@@ -117,39 +129,44 @@ export default class Source extends React.Component<Props, any> {
             <div className="section-title">
               {locals[this.props.lang].source.canvas.title}
             </div>
-            <div className="type">{`(${this.props.sourceColors.filter(sourceColor => sourceColor.source === 'CANVAS').length})`}</div>
+            <div className="type">{`(${
+              this.props.sourceColors.filter(
+                (sourceColor) => sourceColor.source === 'CANVAS'
+              ).length
+            })`}</div>
           </div>
-          <div className="section-controls__right-part">
-          </div>
+          <div className="section-controls__right-part"></div>
         </div>
-        {
-          this.props.sourceColors.filter(sourceColor => sourceColor.source === 'CANVAS').length > 0
-          ? (
-            <ul className="list">
-              {this.props.sourceColors.filter(sourceColor => sourceColor.source === 'CANVAS').map((sourceColor, index) => {
+        {this.props.sourceColors.filter(
+          (sourceColor) => sourceColor.source === 'CANVAS'
+        ).length > 0 ? (
+          <ul className="list">
+            {this.props.sourceColors
+              .filter((sourceColor) => sourceColor.source === 'CANVAS')
+              .map((sourceColor, index) => {
                 return (
                   <CompactColorItem
                     key={sourceColor.id}
                     name={sourceColor.name}
-                    hex={
-                      chroma(sourceColor.rgb.r * 255, sourceColor.rgb.g * 255, sourceColor.rgb.b * 255)
-                        .hex()
-                        .toUpperCase()
-                    }
+                    hex={chroma(
+                      sourceColor.rgb.r * 255,
+                      sourceColor.rgb.g * 255,
+                      sourceColor.rgb.b * 255
+                    )
+                      .hex()
+                      .toUpperCase()}
                     uuid={sourceColor.id}
                     lang={this.props.lang}
                   />
                 )
               })}
-            </ul>
-          )
-          : (
-            <Message
-              icon="list-tile"
-              messages={[locals[this.props.lang].source.canvas.tip]}
-            />
-          )
-        }   
+          </ul>
+        ) : (
+          <Message
+            icon="list-tile"
+            messages={[locals[this.props.lang].source.canvas.tip]}
+          />
+        )}
       </div>
     )
   }
@@ -162,18 +179,23 @@ export default class Source extends React.Component<Props, any> {
             <div className="section-title">
               {locals[this.props.lang].source.coolors.title}
             </div>
-            <div className="type">{`(${this.props.sourceColors.filter(sourceColor => sourceColor.source === 'COOLORS').length})`}</div>
+            <div className="type">{`(${
+              this.props.sourceColors.filter(
+                (sourceColor) => sourceColor.source === 'COOLORS'
+              ).length
+            })`}</div>
           </div>
           <div className="section-controls__right-part">
-            {this.props.sourceColors.filter(sourceColor => sourceColor.source === 'COOLORS').length > 0 ? (
+            {this.props.sourceColors.filter(
+              (sourceColor) => sourceColor.source === 'COOLORS'
+            ).length > 0 ? (
               <Button
                 type="icon"
                 icon="minus"
                 feature="REMOVE_COLORS"
                 action={this.removeColorsFromCoolorsHandler}
               />
-              ) : null
-            }
+            ) : null}
           </div>
         </div>
         <div className="settings__item">
@@ -185,25 +207,34 @@ export default class Source extends React.Component<Props, any> {
             <Input
               type="TEXT"
               state={this.state['coolorsUrl'].state}
-              placeholder={locals[this.props.lang].source.coolors.url.placeholder}
+              placeholder={
+                locals[this.props.lang].source.coolors.url.placeholder
+              }
               value={this.state['coolorsUrl'].value}
               onChange={this.isTypingHandler}
               onFocus={() => null}
               onBlur={() => null}
               onConfirm={(e) => {
-                if (e.key === 'Enter' && this.state['coolorsUrl'].canBeSubmitted) {
+                if (
+                  e.key === 'Enter' &&
+                  this.state['coolorsUrl'].canBeSubmitted
+                ) {
                   this.importColorsFromCoolorsHandler(e)
                 }
               }}
             />
             <div
               style={{
-                alignSelf: 'center'
+                alignSelf: 'center',
               }}
             >
               <Button
                 type="icon"
-                state={this.state['coolorsUrl'].canBeSubmitted ? 'default' : 'disabled'}
+                state={
+                  this.state['coolorsUrl'].canBeSubmitted
+                    ? 'default'
+                    : 'disabled'
+                }
                 icon="plus"
                 feature="IMPORT_COLORS_FROM_URL"
                 action={this.importColorsFromCoolorsHandler}
@@ -212,21 +243,25 @@ export default class Source extends React.Component<Props, any> {
           </FormItem>
         </div>
         <ul className="list">
-          {this.props.sourceColors.filter(sourceColor => sourceColor.source === 'COOLORS').map((sourceColor, index) => {
-            return (
-              <CompactColorItem
-                key={sourceColor.id}
-                name={sourceColor.name}
-                hex={
-                  chroma(sourceColor.rgb.r * 255, sourceColor.rgb.g * 255, sourceColor.rgb.b * 255)
+          {this.props.sourceColors
+            .filter((sourceColor) => sourceColor.source === 'COOLORS')
+            .map((sourceColor, index) => {
+              return (
+                <CompactColorItem
+                  key={sourceColor.id}
+                  name={sourceColor.name}
+                  hex={chroma(
+                    sourceColor.rgb.r * 255,
+                    sourceColor.rgb.g * 255,
+                    sourceColor.rgb.b * 255
+                  )
                     .hex()
-                    .toUpperCase()
-                }
-                uuid={sourceColor.id}
-                lang={this.props.lang}
-              />
-            )
-          })}
+                    .toUpperCase()}
+                  uuid={sourceColor.id}
+                  lang={this.props.lang}
+                />
+              )
+            })}
         </ul>
       </div>
     )
@@ -259,7 +294,11 @@ export default class Source extends React.Component<Props, any> {
           sourceColors={this.props.sourceColors}
           planStatus={this.props.planStatus}
           lang={this.props.lang}
-          onCreatePalette={this.props.sourceColors.length > 0 ? this.props.onCreatePalette : () => null}
+          onCreatePalette={
+            this.props.sourceColors.length > 0
+              ? this.props.onCreatePalette
+              : () => null
+          }
         />
       </>
     )

@@ -13,7 +13,7 @@ interface Props {
 
 export default class CompactColorItem extends React.Component<Props, any> {
   static defaultProps = {
-    canBeRemoved: false
+    canBeRemoved: false,
   }
 
   // Render
@@ -27,16 +27,12 @@ export default class CompactColorItem extends React.Component<Props, any> {
           <div
             className="single-color__thumbnail"
             style={{
-              backgroundColor: this.props.hex
+              backgroundColor: this.props.hex,
             }}
           ></div>
           <div className="single-color__name">
-            <div className="type">
-              {this.props.name}
-            </div>
-            <div className="type type--secondary">
-              {this.props.hex}
-            </div>
+            <div className="type">{this.props.name}</div>
+            <div className="type type--secondary">{this.props.hex}</div>
           </div>
         </div>
         {this.props.canBeRemoved ? (

@@ -35,8 +35,10 @@ export default class Bar extends React.Component<Props> {
         className={[
           'bar',
           this.props.isCompact ? 'bar--compact' : null,
-          this.props.isOnlyText ? 'bar--text-only' : null
-        ].filter(n => n).join(' ')}
+          this.props.isOnlyText ? 'bar--text-only' : null,
+        ]
+          .filter((n) => n)
+          .join(' ')}
         style={this.setBorder(this.props.border).container}
       >
         <div className="bar__left">{this.props.leftPart}</div>

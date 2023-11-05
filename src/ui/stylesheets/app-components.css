@@ -343,7 +343,7 @@ li .single-color {
   grid-row: 1 / 1;
   display: flex;
   align-items: center;
-  gap: var(--size-xxsmall)
+  gap: var(--size-xxsmall);
 }
 
 li .single-color__thumbnail {

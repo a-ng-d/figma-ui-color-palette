@@ -20,10 +20,9 @@ export default class RadioButton extends React.Component<Props> {
   render() {
     return (
       <div
-        className={[
-          'radio',
-          this.props.isBlocked ? 'radio--blocked' : null,
-        ].filter(n => n).join(' ')}
+        className={['radio', this.props.isBlocked ? 'radio--blocked' : null]
+          .filter((n) => n)
+          .join(' ')}
       >
         <input
           data-feature={this.props.feature}

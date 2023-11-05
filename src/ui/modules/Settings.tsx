@@ -1,5 +1,10 @@
 import * as React from 'react'
-import type { EditorType, Language, SourceColorConfiguration, TextColorsThemeHexModel } from '../../utils/types'
+import type {
+  EditorType,
+  Language,
+  SourceColorConfiguration,
+  TextColorsThemeHexModel,
+} from '../../utils/types'
 import Feature from '../components/Feature'
 import FormItem from './../components/FormItem'
 import Input from './../components/Input'

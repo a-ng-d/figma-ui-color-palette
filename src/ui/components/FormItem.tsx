@@ -27,7 +27,9 @@ export default class FormItem extends React.Component<Props> {
             'form-item',
             this.props.shouldFill ? 'form-item--fill' : null,
             this.props.isBlocked ? 'form-item--blocked' : null,
-          ].filter(n => n).join(' ')}
+          ]
+            .filter((n) => n)
+            .join(' ')}
         >
           <label
             className="type"
@@ -35,7 +37,7 @@ export default class FormItem extends React.Component<Props> {
           >
             {this.props.label}
           </label>
-          {this.props.children}        
+          {this.props.children}
         </div>
         {this.props.helper != undefined ? (
           <div className="form-item__helper">
@@ -44,8 +46,7 @@ export default class FormItem extends React.Component<Props> {
               messages={[this.props.helper.message]}
             />
           </div>
-          ) : null
-        }
+        ) : null}
       </>
     )
   }

@@ -104,7 +104,7 @@ export default class Palette {
     this.node.setPluginData('algorithmVersion', this.algorithmVersion)
 
     // insert
-    this.sourceColors.forEach(sourceColor =>
+    this.sourceColors.forEach((sourceColor) =>
       this.colors.push({
         name: sourceColor.name,
         description: '',
