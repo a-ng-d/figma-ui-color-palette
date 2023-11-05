@@ -1,5 +1,6 @@
 import * as React from 'react'
 import chroma from 'chroma-js'
+import { uid } from 'uid'
 import type {
   EditorType,
   Language,
@@ -8,12 +9,11 @@ import type {
 import Feature from '../components/Feature'
 import Message from '../components/Message'
 import Actions from './Actions'
-import { palette, presets } from '../../utils/palettePackage'
-import features from '../../utils/config'
-import isBlocked from '../../utils/isBlocked'
-import { locals } from '../../content/locals'
 import FormItem from '../components/FormItem'
 import Input from '../components/Input'
+import CompactColorItem from '../components/CompactColorItem'
+import features from '../../utils/config'
+import { locals } from '../../content/locals'
 
 interface Props {
   sourceColors: Array<SourceColorConfiguration>
@@ -50,7 +50,8 @@ export default class Source extends React.Component<Props, any> {
                 g: gl[1],
                 b: gl[2]
               },
-              source: 'COOLORS'
+              source: 'COOLORS',
+              id: uid()
             }
           }
         ))
@@ -84,31 +85,17 @@ export default class Source extends React.Component<Props, any> {
             <ul className="list">
               {this.props.sourceColors.filter(sourceColor => sourceColor.source === 'CANVAS').map((sourceColor, index) => {
                 return (
-                  <li
-                    key={index}
-                    className="list__item"
-                  >
-                    <div className="source-colors">
-                      <div
-                        className="source-colors__thumbnail"
-                        style={{
-                          backgroundColor: `rgb(${sourceColor.rgb.r * 255}, ${sourceColor.rgb.g * 255}, ${sourceColor.rgb.b * 255})`
-                        }}
-                      ></div>
-                      <div className="source-colors__name">
-                        <div className="type">
-                          {sourceColor.name}
-                        </div>
-                        <div className="type type--secondary">
-                          {`(${
-                            chroma(sourceColor.rgb.r * 255, sourceColor.rgb.g * 255, sourceColor.rgb.b * 255)
-                              .hex()
-                              .toUpperCase()
-                          })`}
-                        </div>
-                      </div>
-                    </div>
-                  </li>
+                  <CompactColorItem
+                    key={sourceColor.id}
+                    name={sourceColor.name}
+                    hex={
+                      chroma(sourceColor.rgb.r * 255, sourceColor.rgb.g * 255, sourceColor.rgb.b * 255)
+                        .hex()
+                        .toUpperCase()
+                    }
+                    uuid={sourceColor.id}
+                    lang={this.props.lang}
+                  />
                 )
               })}
             </ul>
@@ -158,31 +145,17 @@ export default class Source extends React.Component<Props, any> {
         <ul className="list">
           {this.props.sourceColors.filter(sourceColor => sourceColor.source === 'COOLORS').map((sourceColor, index) => {
             return (
-              <li
-                key={index}
-                className="list__item"
-              >
-                <div className="source-colors">
-                  <div
-                    className="source-colors__thumbnail"
-                    style={{
-                      backgroundColor: `rgb(${sourceColor.rgb.r * 255}, ${sourceColor.rgb.g * 255}, ${sourceColor.rgb.b * 255})`
-                    }}
-                  ></div>
-                  <div className="source-colors__name">
-                    <div className="type">
-                      {sourceColor.name}
-                    </div>
-                    <div className="type type--secondary">
-                      {`(${
-                        chroma(sourceColor.rgb.r * 255, sourceColor.rgb.g * 255, sourceColor.rgb.b * 255)
-                          .hex()
-                          .toUpperCase()
-                      })`}
-                    </div>
-                  </div>
-                </div>
-              </li>
+              <CompactColorItem
+                key={sourceColor.id}
+                name={sourceColor.name}
+                hex={
+                  chroma(sourceColor.rgb.r * 255, sourceColor.rgb.g * 255, sourceColor.rgb.b * 255)
+                    .hex()
+                    .toUpperCase()
+                }
+                uuid={sourceColor.id}
+                lang={this.props.lang}
+              />
             )
           })}
         </ul>
