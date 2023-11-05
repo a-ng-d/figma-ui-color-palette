@@ -1,14 +1,21 @@
 import * as React from 'react'
 import type { HexModel, Language } from '../../utils/types'
+import Button from './Button'
 
 interface Props {
   name: string
   hex: HexModel
   uuid: string
+  canBeRemoved: boolean
   lang: Language
+  onRemoveColor?: React.ReactEventHandler
 }
 
 export default class CompactColorItem extends React.Component<Props, any> {
+  static defaultProps = {
+    canBeRemoved: false
+  }
+
   // Render
   render() {
     return (
@@ -32,6 +39,16 @@ export default class CompactColorItem extends React.Component<Props, any> {
             </div>
           </div>
         </div>
+        {this.props.canBeRemoved ? (
+          <div className="list__item__buttons list__item__buttons--compact">
+            <Button
+              type="icon"
+              icon="minus"
+              feature="REMOVE_COLOR"
+              action={this.props.onRemoveColor}
+            />
+          </div>
+        ) : null}
       </li>
     )
   }

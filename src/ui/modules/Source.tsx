@@ -154,7 +154,9 @@ export default class Source extends React.Component<Props, any> {
                     .toUpperCase()
                 }
                 uuid={sourceColor.id}
+                canBeRemoved
                 lang={this.props.lang}
+                onRemoveColor={() => null}
               />
             )
           })}
