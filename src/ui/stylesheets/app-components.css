@@ -160,6 +160,10 @@ div.form-item .select-menu {
   flex: 1;
 }
 
+div.form-item__helper .onboarding-tip {
+  padding: 0;
+}
+
 div.form-item--blocked {
   pointer-events: none;
 }
