@@ -269,12 +269,6 @@ div.dialog .dialog__text {
 }
 
 /* List */
-div.list-controller {
-  display: flex;
-  overflow: hidden;
-  padding: var(--size-xxsmall) 0 0 0;
-}
-
 ul.list {
   overflow-y: auto;
   padding: 1px 0;
@@ -287,6 +281,10 @@ li.list__item {
   padding: 2px var(--size-xsmall);
   position: relative;
   z-index: 2;
+}
+
+li.list__item--compact {
+  grid-template-columns: repeat(38, 1fr);
 }
 
 li.list__item[draggable='true'] {
@@ -330,6 +328,35 @@ li .list__item__buttons {
   grid-row: 1 / 1;
   display: flex;
   justify-content: flex-end;
+}
+
+li .single-color {
+  grid-column: 2 / span 30;
+  grid-row: 1 / 1;
+  display: flex;
+  align-items: center;
+  gap: var(--size-xxsmall)
+}
+
+li .single-color__thumbnail {
+  flex: 0 0 var(--size-xsmall);
+  width: var(--size-xsmall);
+  height: var(--size-xsmall);
+  border-radius: var(--size-xxsmall);
+  box-shadow: rgba(0, 0, 0, 0.1) 0 0 0 1px inset;
+}
+
+li .single-color__name {
+  display: flex;
+  align-items: center;
+  column-gap: var(--size-xxxsmall);
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+li .single-color__name .type:not(.type--secondary) {
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* Callout */

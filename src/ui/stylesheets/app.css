@@ -183,28 +183,6 @@ div.onboarding__messages .type {
   padding: 0 var(--size-xxlarge);
 }
 
-/* Source colors */
-div.source-colors {
-  grid-column: 3 / span 60;
-  grid-row: 1 / 1;
-  display: flex;
-  align-items: center;
-  gap: var(--size-xxsmall)
-}
-
-div.source-colors__name {
-  display: flex;
-  align-items: center;
-  column-gap: var(--size-xxxsmall);
-}
-
-div.source-colors__thumbnail {
-  width: var(--size-xsmall);
-  height: var(--size-xsmall);
-  border-radius: var(--size-xxsmall);
-  box-shadow: rgba(0, 0, 0, 0.1) 0 0 0 1px inset;
-}
-
 /* Colors */
 li .colors__name {
   grid-column: 1 / span 16;
