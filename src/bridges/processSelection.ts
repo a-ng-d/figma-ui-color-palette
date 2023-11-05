@@ -1,5 +1,5 @@
 import { uid } from 'uid'
-import type { ActionsList, ThemeConfiguration } from '../utils/types'
+import type { ActionsList, SourceColorConfiguration, ThemeConfiguration } from '../utils/types'
 import setPaletteMigration from '../utils/setPaletteMigration'
 
 export let currentSelection: ReadonlyArray<SceneNode>
@@ -13,6 +13,8 @@ const processSelection = () => {
 
   const selection: ReadonlyArray<BaseNode> = figma.currentPage.selection
   currentSelection = figma.currentPage.selection
+
+  const readyToCreatePaletteSelection: Array<SourceColorConfiguration> = []
 
   const palette: FrameNode | InstanceNode = selection[0] as
     | FrameNode
@@ -44,18 +46,13 @@ const processSelection = () => {
           type: 'EMPTY_SELECTION',
           data: {},
         }),
-      COLOR_SELECTED: () =>
+      COLOR_SELECTED: () => {
         figma.ui.postMessage({
           type: 'COLOR_SELECTED',
-          data: selection.map(element => {
-            return {
-              name: (element as any).name,
-              rgb: (element as any).fills[0].color,
-              source: 'CANVAS',
-              id: uid()
-            }
-          }),
-        }),
+          data: readyToCreatePaletteSelection
+        })
+      }
+        
     }
 
     return actions[state]?.()
@@ -94,8 +91,16 @@ const processSelection = () => {
         (element as any).fills.filter((fill: Paint) => fill.type === 'SOLID')
           .length != 0 &&
         element.getPluginDataKeys().length == 0
-      )
+      ) {
+        readyToCreatePaletteSelection.push({
+          name: (element as any).name,
+          rgb: (element as any).fills[0].color,
+          source: 'CANVAS',
+          id: uid()
+        })
         selectionHandler('COLOR_SELECTED')
+      }
+        
   })
 
   setTimeout(() => (isSelectionChanged = false), 1000)
