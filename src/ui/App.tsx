@@ -481,7 +481,9 @@ class App extends React.Component<any, any> {
           }
           this.setState({
             service: 'CREATE',
-            sourceColors: this.state['sourceColors'].concat(e.data.pluginMessage.data),
+            sourceColors: this.state['sourceColors']
+              .filter((sourceColor: SourceColorConfiguration) => sourceColor.source != 'CANVAS')
+              .concat(e.data.pluginMessage.data),
             onGoingStep: 'colors selected',
           })
           isPaletteSelected = false
