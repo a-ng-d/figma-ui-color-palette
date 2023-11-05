@@ -35,13 +35,14 @@ export const locals: { [key: string]: any } = {
       title: 'Source colors',
       canvas: {
         title: 'Selected colors',
+        tip: 'The selected solid colors from the Figma/FigJam canvas will be displayed here'
       },
       coolors: {
         title: 'Import from Coolors',
         url: {
           label: 'Palette URL',
           placeholder: 'https://coolors.co/…',
-          errorMessage: 'The end of the URL must match with several hexadecimal codes (e.g. 8ecae6-…-219ebc).'
+          errorMessage: 'The end of the URL must match with several hexadecimal codes (e.g. 8ecae6-…-219ebc)'
         }
       },
     },

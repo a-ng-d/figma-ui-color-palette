@@ -146,7 +146,7 @@ export default class Source extends React.Component<Props, any> {
           : (
             <Message
               icon="list-tile"
-              messages={[locals[this.props.lang].onboarding.selectColor]}
+              messages={[locals[this.props.lang].source.canvas.tip]}
             />
           )
         }   
