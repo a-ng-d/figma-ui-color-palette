@@ -195,8 +195,22 @@ export default class Source extends React.Component<Props, any> {
     return (
       <>
         <div className="controls__control controls__control--horizontal">
-          <this.SelectedColors />
-          <this.CoolorsColors />
+          <Feature
+            isActive={
+              features.find((feature) => feature.name === 'SOURCE_CANVAS')
+                ?.isActive
+            }
+          >
+            <this.SelectedColors />
+          </Feature>
+          <Feature
+            isActive={
+              features.find((feature) => feature.name === 'SOURCE_COOLORS')
+                ?.isActive
+            }
+          >
+            <this.CoolorsColors />
+          </Feature>
         </div>
         <Actions
           context="CREATE"
