@@ -128,16 +128,6 @@ export interface PresetConfiguration {
   id: string
 }
 
-export interface Presets {
-  material: PresetConfiguration
-  ant: PresetConfiguration
-  atlassian: PresetConfiguration
-  atlassianNeutral: PresetConfiguration
-  carbon: PresetConfiguration
-  base: PresetConfiguration
-  custom: PresetConfiguration
-}
-
 export interface ScaleConfiguration {
   [key: string]: number
 }
