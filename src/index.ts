@@ -25,30 +25,104 @@ import getProPlan from './bridges/getProPlan'
 import enableTrial from './bridges/enableTrial'
 import package_json from './../package.json'
 import { locals, lang } from './content/locals'
-import { notifications } from './utils/palettePackage'
+import { notifications, presets } from './utils/palettePackage'
+import doLightnessScale from './utils/doLightnessScale'
 
-figma.showUI(__html__, {
-  width: 640,
-  height: 320,
-  title: locals[lang].name,
-  themeColors: true,
-})
+let palette: SceneNode
+
 figma.loadFontAsync({ family: 'Inter', style: 'Regular' })
 figma.loadFontAsync({ family: 'Inter', style: 'Medium' })
 figma.loadFontAsync({ family: 'Red Hat Mono', style: 'Medium' })
 
-figma.on('run', () => processSelection())
-figma.on('selectionchange', () => processSelection())
+figma.parameters.on(
+  'input',
+  ({ parameters, key, query, result }: ParameterInputEvent) => {
+    const viableSelection = figma.currentPage.selection
+      .filter(element =>
+        element.type != 'GROUP' &&
+        element.type != 'EMBED' &&
+        element.type != 'CONNECTOR' &&
+        element.getPluginDataKeys().length == 0 &&
+        (element as any).fills.filter((fill: Paint) => fill.type === 'SOLID')
+          .length != 0
+      )
+    switch (key) {
+      case 'preset':
+        const scale = presets.map(preset => preset.name)
+        if (viableSelection.length > 0)
+          result.setSuggestions(scale.filter(s => s.includes(query)))
+        else
+          result.setError('Select a layer that is filled with at least one solid color')
+        break
 
-figma.on('run', () => checkEditorType())
+      default:
+        return
+    }
+  }
+)
 
-figma.on('run', () => checkHighlightStatus(package_json.version))
+figma.on('run', ({ command, parameters }: RunEvent) => {
+  if (parameters == undefined) {
+    figma.showUI(__html__, {
+      width: 640,
+      height: 320,
+      title: locals[lang].name,
+      themeColors: true,
+    })
+    figma.on('run', () => {
+      processSelection()
+      checkEditorType()
+      checkHighlightStatus(package_json.version)
+    })
+    figma.on('selectionchange', () => processSelection())
 
-figma.on('run', async () => await checkPlanStatus())
-figma.on('selectionchange', async () => await checkPlanStatus())
+    figma.on('run', async () => await checkPlanStatus())
+    figma.on('selectionchange', async () => await checkPlanStatus())
+  } else {
+    const selectedPreset = presets.find(preset => preset.name === parameters.preset)
+    createPalette(
+      {
+        data: {
+          sourceColors: figma.currentPage.selection
+          .filter(element =>
+            element.type != 'GROUP' &&
+            element.type != 'EMBED' &&
+            element.type != 'CONNECTOR' &&
+            element.getPluginDataKeys().length == 0 &&
+            (element as any).fills.filter((fill: Paint) => fill.type === 'SOLID')
+              .length != 0
+          ).map(element => {
+            return {
+              name: element.name,
+              rgb: (element as any).fills[0].color,
+              source: 'CANVAS',
+              id: ''
+            }
+          }),
+          palette: {
+            name: parameters.name,
+            description: '',
+            preset: presets.find(preset => preset.name === parameters.preset),
+            scale: doLightnessScale(
+              selectedPreset!.scale,
+              selectedPreset!.min,
+              selectedPreset!.max
+            ),
+            colorSpace: 'LCH',
+            view: 'PALETTE',
+            textColorsTheme: {
+              lightColor: '#FFFFFF',
+              darkColor: '#000000',
+            }
+          }
+        }
+      },
+      palette
+    )
+  }
+})
 
 figma.ui.onmessage = async (msg) => {
-  let palette: SceneNode
   const i = 0,
     j = 0
 

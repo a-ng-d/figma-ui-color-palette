@@ -21,6 +21,20 @@
       "https://corsproxy.io"
     ]
   },
+  "parameters": [
+    {
+      "name": "Select preset",
+      "key": "preset",
+      "description": "Select a color system"
+    },
+    {
+      "name": "Palette name",
+      "key": "name",
+      "allowFreeform": true,
+      "optional": true
+    }
+  ],
+  "parameterOnly": false,
   "main": "dist/code.js",
   "ui": "dist/ui.html"
 }
