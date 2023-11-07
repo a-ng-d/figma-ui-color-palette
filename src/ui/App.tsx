@@ -69,7 +69,7 @@ class App extends React.Component<any, any> {
       sourceColors: [] as SourceColorConfiguration | [],
       name: '',
       description: '',
-      preset: presets.material as PresetConfiguration,
+      preset: presets.find(preset => preset.id === 'MATERIAL') as PresetConfiguration,
       scale: {} as ScaleConfiguration,
       newColors: [] as Array<ColorConfiguration> | [],
       colorSpace: 'LCH' as ColorSpaceConfiguration,
@@ -116,44 +116,44 @@ class App extends React.Component<any, any> {
   presetsHandler = (e: React.SyntheticEvent) => {
     const setMaterialDesignPreset = () =>
       this.setState({
-        preset: presets.material,
+        preset: presets.find(preset => preset.id === 'MATERIAL'),
         onGoingStep: 'preset changed',
       })
 
     const setAntDesignPreset = () =>
       this.setState({
-        preset: presets.ant,
+        preset: presets.find(preset => preset.id === 'ANT'),
         onGoingStep: 'preset changed',
       })
 
     const setAdsPreset = () =>
       this.setState({
-        preset: presets.atlassian,
+        preset: presets.find(preset => preset.id === 'ADS'),
         onGoingStep: 'preset changed',
       })
 
     const setAdsNeutralPreset = () =>
       this.setState({
-        preset: presets.atlassianNeutral,
+        preset: presets.find(preset => preset.id === 'ADS_NEUTRAL'),
         onGoingStep: 'preset changed',
       })
 
     const setCarbonPreset = () =>
       this.setState({
-        preset: presets.carbon,
+        preset: presets.find(preset => preset.id === 'CARBON'),
         onGoingStep: 'preset changed',
       })
 
     const setBasePreset = () =>
       this.setState({
-        preset: presets.base,
+        preset: presets.find(preset => preset.id === 'BASE'),
         onGoingStep: 'preset changed',
       })
 
     const setCustomPreset = () => {
-      presets.custom.scale = [1, 2]
+      presets.find(preset => preset.id === 'CUSTOM')!.scale = [1, 2]
       this.setState({
-        preset: presets.custom,
+        preset: presets.find(preset => preset.id === 'CUSTOM'),
         onGoingStep: 'preset changed',
       })
     }
@@ -180,11 +180,11 @@ class App extends React.Component<any, any> {
         scale.push(scale.length + 1)
         this.setState({
           preset: {
-            name: presets.custom.name,
+            name: presets.find(preset => preset.id === 'CUSTOM')?.name,
             scale: scale,
             min: palette.min,
             max: palette.max,
-            id: presets.custom.id,
+            id: presets.find(preset => preset.id === 'CUSTOM')?.id,
           },
         })
       }
@@ -195,11 +195,11 @@ class App extends React.Component<any, any> {
         scale.pop()
         this.setState({
           preset: {
-            name: presets.custom.name,
+            name: presets.find(preset => preset.id === 'CUSTOM')?.name,
             scale: scale,
             min: palette.min,
             max: palette.max,
-            id: presets.custom.id,
+            id: presets.find(preset => preset.id === 'CUSTOM')?.id,
           },
         })
       }
@@ -443,7 +443,7 @@ class App extends React.Component<any, any> {
             ),
             name: '',
             description: '',
-            preset: presets.material,
+            preset: presets.find(preset => preset.id === 'MATERIAL'),
             colorSpace: 'LCH',
             view: 'PALETTE_WITH_PROPERTIES',
             textColorsTheme: {
@@ -469,7 +469,7 @@ class App extends React.Component<any, any> {
             this.setState({
               name: '',
               description: '',
-              preset: presets.material,
+              preset: presets.find(preset => preset.id === 'MATERIAL'),
               colorSpace: 'LCH',
               view: 'PALETTE_WITH_PROPERTIES',
               textColorsTheme: {
@@ -479,7 +479,7 @@ class App extends React.Component<any, any> {
             })
             palette.name = ''
             palette.description = ''
-            palette.preset = presets.material
+            palette.preset = presets.find(preset => preset.id === 'MATERIAL')
             palette.colorSpace = 'LCH'
             palette.view = 'PALETTE_WITH_PROPERTIES'
             palette.textColorsTheme = {
