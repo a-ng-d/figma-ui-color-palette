@@ -23,9 +23,19 @@
   },
   "parameters": [
     {
-      "name": "Select preset",
+      "name": "Preset",
       "key": "preset",
       "description": "Select a color system"
+    },
+    {
+      "name": "Color space",
+      "key": "space",
+      "description": "Select a specific color space"
+    },
+    {
+      "name": "Palette layout",
+      "key": "view",
+      "description": "Select a specific layout"
     },
     {
       "name": "Palette name",
