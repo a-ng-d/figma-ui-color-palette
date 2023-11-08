@@ -27,6 +27,8 @@ import package_json from './../package.json'
 import { locals, lang } from './content/locals'
 import { notifications, presets } from './utils/palettePackage'
 import doLightnessScale from './utils/doLightnessScale'
+import features from './utils/config'
+import isBlocked from './utils/isBlocked'
 
 let palette: SceneNode
 
@@ -46,36 +48,47 @@ figma.parameters.on(
         (element as any).fills.filter((fill: Paint) => fill.type === 'SOLID')
           .length != 0
       )
+
     switch (key) {
       case 'preset': {
+        const suggestionsList = presets
+          .filter(preset => !isBlocked(`PRESET_${preset.id}`, (figma.payments?.status.type as 'PAID' | 'UNPAID')))
+          .map(preset => preset.name) as Array<string>
+
         if (viableSelection.length > 0)
-          result.setSuggestions(presets.map(preset => preset.name).filter(s => s.includes(query)))
+          result.setSuggestions(suggestionsList)
         else
           result.setError('Select a layer that is filled with at least one solid color')
-        result.setLoadingMessage('Palette presets will be displayed here')
         break
       }
 
       case 'space': {
-        result.setSuggestions([
-          'LCH',
-          'OKLCH',
-          'LAB',
-          'OKLAB',
-          'HSL',
-          'HSLuv'
-        ])
-        result.setLoadingMessage('Color spaces will be displayed here')
+        const suggestionsList= [
+          isAvailableAndBlocked('SETTINGS_COLOR_SPACE_LCH', 'LCH'),
+          isAvailableAndBlocked('SETTINGS_COLOR_SPACE_OKLCH', 'OKLCH'),
+          isAvailableAndBlocked('SETTINGS_COLOR_SPACE_LAB', 'LAB'),
+          isAvailableAndBlocked('SETTINGS_COLOR_SPACE_OKLAB', 'OKLAB'),
+          isAvailableAndBlocked('SETTINGS_COLOR_SPACE_HSL', 'HSL'),
+          isAvailableAndBlocked('SETTINGS_COLOR_SPACE_HSLUV', 'HSLuv'),
+        ].filter(n => n) as Array<string>
+
+        result.setSuggestions(suggestionsList)
         break
       }
 
       case 'view': {
-        result.setSuggestions([
-          'Palette',
-          'Palette with properties',
-          'Color sheet',
-        ])
-        result.setLoadingMessage('Palette layouts will be displayed here')
+        const suggestionsList = [
+          isAvailableAndBlocked('VIEWS_PALETTE', 'Palette'),
+          isAvailableAndBlocked('VIEWS_PALETTE_WITH_PROPERTIES', 'Palette with properties'),
+          isAvailableAndBlocked('VIEWS_SHEET', 'Color sheet')
+        ].filter(n => n) as Array<string>
+
+        result.setSuggestions(suggestionsList)
+        break
+      }
+
+      case 'name': {
+        result.setLoadingMessage('64 characters max is recommended')
         break
       }
 
@@ -85,8 +98,17 @@ figma.parameters.on(
   }
 )
 
+const isAvailableAndBlocked = (featureName: string, suggestion: string) => {
+  if (features.find(feature => feature.name === featureName)?.isActive)
+    if (!isBlocked(featureName, (figma.payments?.status.type as 'PAID' | 'UNPAID')))
+      return suggestion
+    else
+      return null
+  else
+    return null
+}
 
-figma.on('run', ({ parameters }: RunEvent) => {
+figma.on('run', async ({ parameters }: RunEvent) => {
   if (parameters == undefined) {
     figma.showUI(__html__, {
       width: 640,
@@ -95,14 +117,11 @@ figma.on('run', ({ parameters }: RunEvent) => {
       themeColors: true,
     })
 
-    figma.on('run', () => processSelection())
-    figma.on('run', () => checkEditorType())
-    figma.on('run', () => checkHighlightStatus(package_json.version))
+    processSelection()
+    checkEditorType()
+    checkHighlightStatus(package_json.version)
 
-    figma.on('selectionchange', () => processSelection())
-
-    figma.on('run', async () => await checkPlanStatus())
-    figma.on('selectionchange', async () => await checkPlanStatus())
+    await checkPlanStatus()
 
     figma.ui.onmessage = async (msg) => {
       const i = 0,
@@ -191,3 +210,6 @@ figma.on('run', ({ parameters }: RunEvent) => {
     figma.closePlugin()
   }
 })
+
+figma.on('selectionchange', () => processSelection())
+figma.on('selectionchange', async () => await checkPlanStatus())
