@@ -16,9 +16,13 @@ export default class Tabs extends React.Component<Props> {
         {this.props.tabs.map((tab) => (
           <div
             key={tab.label.toLowerCase()}
-            className={`tabs__tab type${
-              this.props.active === tab.id ? ' tabs__tab--active' : ''
-            }`}
+            className={[
+              'tabs__tab',
+              'type',
+              this.props.active === tab.id ? 'tabs__tab--active' : null,
+            ]
+              .filter((n) => n)
+              .join(' ')}
             data-feature={tab.id}
             onMouseDown={this.props.action}
           >

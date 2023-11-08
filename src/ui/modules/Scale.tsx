@@ -2,9 +2,11 @@ import * as React from 'react'
 import type {
   ActionsList,
   DispatchProcess,
+  EditorType,
   Language,
   PresetConfiguration,
   ScaleConfiguration,
+  SourceColorConfiguration,
 } from '../../utils/types'
 import Feature from '../components/Feature'
 import Button from '../components/Button'
@@ -19,12 +21,13 @@ import { locals } from '../../content/locals'
 import Dispatcher from './Dispatcher'
 
 interface Props {
+  sourceColors?: Array<SourceColorConfiguration>
   hasPreset: boolean
   preset: PresetConfiguration
   scale?: ScaleConfiguration
   actions?: string
   planStatus: 'UNPAID' | 'PAID'
-  editorType?: string
+  editorType?: EditorType
   lang: Language
   onChangePreset?: (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => void
   onChangeScale: () => void
@@ -145,8 +148,8 @@ export default class Scale extends React.Component<Props, any> {
   Create = () => {
     palette.scale = {}
     return (
-      <>
-        <div className="lightness-scale controls__control">
+      <div className="controls__control">
+        <div className="control__block control__block--distributed">
           <div className="section-controls">
             <div className="section-controls__left-part">
               <div className="section-title">
@@ -245,19 +248,20 @@ export default class Scale extends React.Component<Props, any> {
         </div>
         <Actions
           context="CREATE"
+          sourceColors={this.props.sourceColors}
           planStatus={this.props.planStatus}
           lang={this.props.lang}
           onCreatePalette={this.props.onCreatePalette}
         />
-      </>
+      </div>
     )
   }
 
   Edit = () => {
     palette.scale = {}
     return (
-      <>
-        <div className="lightness-scale controls__control">
+      <div className="controls__control">
+        <div className="control__block control__block--distributed">
           <div className="section-controls">
             <div className="section-controls__left-part">
               <div className="section-title">
@@ -309,7 +313,7 @@ export default class Scale extends React.Component<Props, any> {
             onChangeActions={this.props.onChangeActions}
           />
         ) : null}
-      </>
+      </div>
     )
   }
 

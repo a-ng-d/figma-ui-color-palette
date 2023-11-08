@@ -76,7 +76,7 @@ div.actions .select-menu {
   min-width: 224px;
 }
 
-/* Controls */
+/* Layout */
 section.controller {
   flex: 1;
   display: flex;
@@ -96,7 +96,40 @@ div.controls__control {
   flex: 1;
   flex-direction: column;
   justify-content: flex-start;
+  overflow: hidden;
+}
+
+div.controls__control--horizontal {
+  flex-direction: row;
+}
+
+div.control__block {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: flex-start;
   padding: var(--size-xxsmall) 0;
+  overflow-y: auto;
+}
+
+div.control__block--list {
+  padding: var(--size-xxsmall) 0 0 0;
+}
+
+div.control__block--no-padding {
+  padding: 0;
+}
+
+div.control__block--distributed {
+  justify-content: space-between;
+}
+
+div.controls__control--horizontal div.control__block {
+  align-self: stretch;
+}
+
+div.controls__control--horizontal .control__block + .control__block {
+  border-left: 1px solid var(--figma-color-border-disabled);
 }
 
 div.section-controls {
@@ -150,11 +183,6 @@ div.onboarding__messages .type {
   padding: 0 var(--size-xxlarge);
 }
 
-/* Scale */
-div.lightness-scale {
-  justify-content: space-between;
-}
-
 /* Colors */
 li .colors__name {
   grid-column: 1 / span 16;
@@ -205,15 +233,6 @@ li .themes__description {
 }
 
 /* Export */
-div.export-palette {
-  overflow: hidden;
-}
-
-div.export-palette {
-  display: flex;
-  gap: var(--size-xxxsmall);
-}
-
 div.export-palette__preview {
   padding: 0 var(--size-xsmall);
   flex: 1;
@@ -226,11 +245,6 @@ div.export-palette__preview textarea {
 }
 
 /* Settings */
-div.settings {
-  overflow-y: auto;
-  padding: 0;
-}
-
 div.settings__group {
   padding: var(--size-xxsmall) 0;
   display: flex;

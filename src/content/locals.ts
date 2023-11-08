@@ -23,12 +23,29 @@ export const locals: { [key: string]: any } = {
       about: 'About',
     },
     contexts: {
+      source: 'Source',
       scale: 'Scale',
       colors: 'Colors',
       themes: 'Themes',
       export: 'Export',
       settings: 'Settings',
       about: 'About',
+    },
+    source: {
+      title: 'Source colors',
+      canvas: {
+        title: 'Selected colors',
+        tip: 'The selected solid colors from the Figma/FigJam canvas will be displayed here',
+      },
+      coolors: {
+        title: 'Import from Coolors',
+        url: {
+          label: 'Palette URL',
+          placeholder: 'https://coolors.co/…',
+          errorMessage:
+            'The end of the URL must match with several hexadecimal codes (e.g. 8ecae6-…-219ebc)',
+        },
+      },
     },
     scale: {
       title: 'Lightness scale',
@@ -157,6 +174,10 @@ export const locals: { [key: string]: any } = {
       managePalette: {
         localStyles: 'Manage local styles',
         localVariables: 'Manage local variables',
+      },
+      sourceColorsNumber: {
+        single: 'source color',
+        several: 'source colors',
       },
     },
     highlight: {

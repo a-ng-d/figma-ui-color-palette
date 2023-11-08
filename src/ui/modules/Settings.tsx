@@ -1,5 +1,10 @@
 import * as React from 'react'
-import type { Language, TextColorsThemeHexModel } from '../../utils/types'
+import type {
+  EditorType,
+  Language,
+  SourceColorConfiguration,
+  TextColorsThemeHexModel,
+} from '../../utils/types'
 import Feature from '../components/Feature'
 import FormItem from './../components/FormItem'
 import Input from './../components/Input'
@@ -13,6 +18,7 @@ import { locals } from '../../content/locals'
 
 interface Props {
   context: string
+  sourceColors?: Array<SourceColorConfiguration>
   name: string
   description: string
   textColorsTheme?: TextColorsThemeHexModel
@@ -21,7 +27,7 @@ interface Props {
   isNewAlgorithm?: boolean
   actions?: string
   planStatus: 'UNPAID' | 'PAID'
-  editorType?: string
+  editorType?: EditorType
   lang: Language
   onChangeSettings: React.ReactEventHandler
   onCreatePalette?: () => void
@@ -510,8 +516,8 @@ export default class Settings extends React.Component<Props> {
 
   render() {
     return (
-      <>
-        <div className="settings controls__control">
+      <div className="controls__control">
+        <div className="control__block control__block--no-padding">
           <this.Global />
           <this.ColorManagement />
           <this.ContrastManagement />
@@ -519,6 +525,7 @@ export default class Settings extends React.Component<Props> {
         {this.props.context === 'CREATE' ? (
           <Actions
             context="CREATE"
+            sourceColors={this.props.sourceColors}
             planStatus={this.props.planStatus}
             lang={this.props.lang}
             onCreatePalette={this.props.onCreatePalette}
@@ -534,7 +541,7 @@ export default class Settings extends React.Component<Props> {
             onChangeActions={this.props.onChangeActions}
           />
         ) : null}
-      </>
+      </div>
     )
   }
 }

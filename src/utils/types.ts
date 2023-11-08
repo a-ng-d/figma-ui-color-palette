@@ -7,11 +7,15 @@ export interface Feature {
   service: Array<Service>
 }
 
-export type Service = 'ONBOARD' | 'CREATE' | 'EDIT'
+export type Service = 'CREATE' | 'EDIT'
 
-export type Language = 'en-US'
+export type EditorType = 'figma' | 'figjam'
+
+export type PlanStatus = 'UNPAID' | 'PAID' | 'NOT_SUPPORTED' | undefined
 
 export type TrialStatus = 'UNUSED' | 'PENDING' | 'EXPIRED'
+
+export type Language = 'en-US'
 
 export type PriorityContext =
   | 'EMPTY'
@@ -97,6 +101,13 @@ export interface PaletteDataShadeItem {
 }
 
 // Palette configurations
+export interface SourceColorConfiguration {
+  name: string
+  rgb: RgbModel
+  source: 'CANVAS' | 'COOLORS'
+  id: string
+}
+
 export interface PaletteConfiguration {
   name: string
   description: string

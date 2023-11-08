@@ -1,5 +1,5 @@
 import * as React from 'react'
-import type { Language } from '../../utils/types'
+import type { Language, SourceColorConfiguration } from '../../utils/types'
 import Feature from '../components/Feature'
 import Button from '../components/Button'
 import Dropdown from '../components/Dropdown'
@@ -10,6 +10,7 @@ import { locals } from '../../content/locals'
 interface Props {
   context: string
   actions?: string
+  sourceColors: Array<SourceColorConfiguration> | []
   exportType?: string | null
   planStatus?: 'UNPAID' | 'PAID'
   lang: Language
@@ -21,6 +22,10 @@ interface Props {
 }
 
 export default class Actions extends React.Component<Props> {
+  static defaultProps = {
+    sourceColors: [],
+  }
+
   // Templates
   LocalStyles = () => {
     return (
@@ -71,12 +76,21 @@ export default class Actions extends React.Component<Props> {
             <Button
               type="primary"
               label={locals[this.props.lang].actions.createPalette}
+              state={
+                this.props.sourceColors.length > 0 ? 'default' : 'disabled'
+              }
               feature="CREATE_PALETTE"
               action={this.props.onCreatePalette}
             />
           </Feature>
         </div>
-        <div className="actions__left"></div>
+        <div className="actions__left">
+          <div className="type">{`${this.props.sourceColors.length} ${
+            this.props.sourceColors.length > 1
+              ? locals[this.props.lang].actions.sourceColorsNumber.several
+              : locals[this.props.lang].actions.sourceColorsNumber.single
+          }`}</div>
+        </div>
       </div>
     )
   }

@@ -111,11 +111,15 @@ export default class ThemeItem extends React.Component<Props, any> {
         data-id={this.props.uuid}
         data-theme={this.props.name.split(' ').join('-').toLowerCase()}
         data-position={this.props.index}
-        className={`list__item${
-          this.state['isDragged'] ? ' list__item--dragged' : ''
-        }${this.props.guideAbove ? ' list__item--above' : ''}${
-          this.props.guideBelow ? ' list__item--below' : ''
-        }${this.state['hasMoreOptions'] ? ' list__item--emphasis' : ''}`}
+        className={[
+          'list__item',
+          this.state['isDragged'] ? 'list__item--dragged' : null,
+          this.props.guideAbove ? 'list__item--above' : null,
+          this.props.guideBelow ? 'list__item--below' : null,
+          this.state['hasMoreOptions'] ? 'list__item--emphasis' : null,
+        ]
+          .filter((n) => n)
+          .join(' ')}
         draggable={this.props.selected}
         onMouseDown={this.props.onChangeSelection}
         onDragStart={(e) => this.onDragStart(e)}

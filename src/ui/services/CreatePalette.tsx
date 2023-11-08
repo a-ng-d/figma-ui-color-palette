@@ -1,7 +1,9 @@
 import * as React from 'react'
+import chroma from 'chroma-js'
 import type {
   Language,
   PresetConfiguration,
+  SourceColorConfiguration,
   TextColorsThemeHexModel,
 } from '../../utils/types'
 import Bar from '../components/Bar'
@@ -11,8 +13,11 @@ import Settings from '../modules/Settings'
 import { palette } from '../../utils/palettePackage'
 import features from '../../utils/config'
 import { locals } from '../../content/locals'
+import doLightnessScale from '../../utils/doLightnessScale'
+import Source from '../modules/Source'
 
 interface Props {
+  sourceColors: Array<SourceColorConfiguration> | []
   name: string
   description: string
   preset: PresetConfiguration
@@ -21,6 +26,9 @@ interface Props {
   textColorsTheme: TextColorsThemeHexModel
   planStatus: 'UNPAID' | 'PAID'
   lang: Language
+  onChangeColorsFromCoolors: (
+    sourceColorsFromCoolers: Array<SourceColorConfiguration>
+  ) => void
   onChangePreset: (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => void
   onCustomPreset: (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => void
   onChangeSettings: (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => void
@@ -31,19 +39,8 @@ export default class CreatePalette extends React.Component<Props, any> {
     super(props)
     this.state = {
       context:
-        features.filter(
-          (feature) =>
-            feature.type === 'CONTEXT' &&
-            feature.service.includes('CREATE') &&
-            feature.isActive
-        )[0] != undefined
-          ? features.filter(
-              (feature) =>
-                feature.type === 'CONTEXT' &&
-                feature.service.includes('CREATE') &&
-                feature.isActive
-            )[0].name
-          : '',
+        this.setContexts()[0] != undefined ? this.setContexts()[0].id : '',
+      coolorsUrl: '',
     }
   }
 
@@ -56,7 +53,15 @@ export default class CreatePalette extends React.Component<Props, any> {
   // Direct actions
   onCreatePalette = () =>
     parent.postMessage(
-      { pluginMessage: { type: 'CREATE_PALETTE', data: palette } },
+      {
+        pluginMessage: {
+          type: 'CREATE_PALETTE',
+          data: {
+            sourceColors: this.props.sourceColors,
+            palette: palette,
+          },
+        },
+      },
       '*'
     )
 
@@ -65,6 +70,11 @@ export default class CreatePalette extends React.Component<Props, any> {
       label: string
       id: string
     }> = []
+    if (features.find((feature) => feature.name === 'SOURCE')?.isActive)
+      contexts.push({
+        label: locals[this.props.lang].contexts.source,
+        id: 'SOURCE',
+      })
     if (features.find((feature) => feature.name === 'SCALE')?.isActive)
       contexts.push({
         label: locals[this.props.lang].contexts.scale,
@@ -81,12 +91,30 @@ export default class CreatePalette extends React.Component<Props, any> {
   // Renders
   render() {
     palette.preset = this.props.preset
+    palette.scale = doLightnessScale(
+      this.props.preset.scale,
+      this.props.preset.min ?? 0,
+      this.props.preset.max ?? 100
+    )
     let controls
 
     switch (this.state['context']) {
+      case 'SOURCE': {
+        controls = (
+          <Source
+            sourceColors={this.props.sourceColors}
+            planStatus={this.props.planStatus}
+            lang={this.props.lang}
+            onChangeColorsFromCoolors={this.props.onChangeColorsFromCoolors}
+            onCreatePalette={this.onCreatePalette}
+          />
+        )
+        break
+      }
       case 'SCALE': {
         controls = (
           <Scale
+            sourceColors={this.props.sourceColors}
             hasPreset={true}
             preset={this.props.preset}
             planStatus={this.props.planStatus}
@@ -104,6 +132,7 @@ export default class CreatePalette extends React.Component<Props, any> {
         controls = (
           <Settings
             context="CREATE"
+            sourceColors={this.props.sourceColors}
             name={this.props.name}
             description={this.props.description}
             colorSpace={this.props.colorSpace}

@@ -89,7 +89,7 @@ export default class Colors extends React.Component<Props, any> {
       ),
       currentElement: HTMLInputElement = e.target as HTMLInputElement
 
-    element != null ? (id = element.getAttribute('data-id')) : null
+    element != null ? (id = element.getAttribute('data-id')) : (id = null)
 
     colorsMessage.isEditedInRealTime = false
 
@@ -332,8 +332,8 @@ export default class Colors extends React.Component<Props, any> {
 
   render() {
     return (
-      <>
-        <div className="list-controller controls__control">
+      <div className="controls__control">
+        <div className="control__block control__block--list">
           <div className="section-controls">
             <div className="section-controls__left-part">
               <div className="section-title">
@@ -422,7 +422,7 @@ export default class Colors extends React.Component<Props, any> {
             onChangeActions={this.props.onChangeActions}
           />
         ) : null}
-      </>
+      </div>
     )
   }
 }

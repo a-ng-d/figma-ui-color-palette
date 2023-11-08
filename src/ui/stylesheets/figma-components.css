@@ -18,6 +18,10 @@
   gap: var(--size-xxxsmall);
 }
 
+.type--secondary {
+  color: var(--figma-color-text-tertiary);
+}
+
 .type a {
   color: var(--figma-color-text-brand);
   text-decoration: none;
@@ -461,6 +465,20 @@
 
 .input__field:placeholder-shown {
   --black1: var(--figma-color-border);
+}
+
+.input__field--error {
+  border: 1px solid var(--figma-color-border-danger);
+}
+
+.input__field--error:hover,
+.input__field--error:placeholder-shown:hover {
+  --black1: var(--figma-color-border-danger);
+}
+
+.input__field--error:active,
+.input__field--error:focus {
+  --blue: var(--figma-color-border-danger);
 }
 
 .input__field::placeholder {

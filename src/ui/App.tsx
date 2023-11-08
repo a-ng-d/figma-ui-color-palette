@@ -2,15 +2,26 @@ import * as React from 'react'
 import { createRoot } from 'react-dom/client'
 import type {
   ActionsList,
+  AlgorithmVersionConfiguration,
   ColorConfiguration,
+  ColorSpaceConfiguration,
   DispatchProcess,
+  EditorType,
   HexModel,
+  Language,
+  PlanStatus,
+  PresetConfiguration,
+  PriorityContext,
+  ScaleConfiguration,
   SettingsMessage,
+  SourceColorConfiguration,
+  TextColorsThemeHexModel,
   ThemeConfiguration,
+  TrialStatus,
+  ViewConfiguration,
 } from '../utils/types'
 import Dispatcher from './modules/Dispatcher'
 import Feature from './components/Feature'
-import Onboarding from './services/Onboarding'
 import CreatePalette from './services/CreatePalette'
 import EditPalette from './services/EditPalette'
 import PriorityContainer from './modules/PriorityContainer'
@@ -54,31 +65,32 @@ class App extends React.Component<any, any> {
       ) as DispatchProcess,
     }
     this.state = {
-      service: 'ONBOARD',
+      service: 'CREATE',
+      sourceColors: [] as SourceColorConfiguration | [],
       name: '',
       description: '',
-      preset: presets.material,
-      scale: {},
-      newColors: {},
-      colorSpace: 'LCH',
-      themes: [],
-      view: 'PALETTE_WITH_PROPERTIES',
+      preset: presets.material as PresetConfiguration,
+      scale: {} as ScaleConfiguration,
+      newColors: [] as Array<ColorConfiguration> | [],
+      colorSpace: 'LCH' as ColorSpaceConfiguration,
+      themes: [] as ThemeConfiguration | [],
+      view: 'PALETTE_WITH_PROPERTIES' as ViewConfiguration,
       textColorsTheme: {
         lightColor: '#FFFFFF',
         darkColor: '#000000',
-      },
-      algorithmVersion: 'v1',
+      } as TextColorsThemeHexModel,
+      algorithmVersion: 'v1' as AlgorithmVersionConfiguration,
       export: {
         format: '',
         mimeType: '',
         data: '',
       },
-      editorType: 'figma',
-      planStatus: 'UNPAID',
-      trialStatus: 'UNUSED',
+      editorType: 'figma' as EditorType,
+      planStatus: 'UNPAID' as PlanStatus,
+      trialStatus: 'UNUSED' as TrialStatus,
       trialRemainingTime: 72,
-      lang: 'en-US',
-      priorityContainerContext: 'EMPTY',
+      lang: 'en-US' as Language,
+      priorityContainerContext: 'EMPTY' as PriorityContext,
       isLoaded: false,
       onGoingStep: '',
     }
@@ -88,6 +100,19 @@ class App extends React.Component<any, any> {
     setTimeout(() => this.setState({ isLoaded: true }), 1000)
 
   // Handlers
+  colorsFromCoolorsHandler = (
+    sourceColorsFromCoolers: Array<SourceColorConfiguration>
+  ) => {
+    this.setState({
+      sourceColors: this.state['sourceColors']
+        .filter(
+          (sourceColors: SourceColorConfiguration) =>
+            sourceColors.source != 'COOLORS'
+        )
+        .concat(sourceColorsFromCoolers),
+    })
+  }
+
   presetsHandler = (e: React.SyntheticEvent) => {
     const setMaterialDesignPreset = () =>
       this.setState({
@@ -411,7 +436,11 @@ class App extends React.Component<any, any> {
 
         const updateWhileEmptySelection = () => {
           this.setState({
-            service: 'ONBOARD',
+            service: 'CREATE',
+            sourceColors: this.state['sourceColors'].filter(
+              (sourceColor: SourceColorConfiguration) =>
+                sourceColor.source != 'CANVAS'
+            ),
             name: '',
             description: '',
             preset: presets.material,
@@ -438,7 +467,6 @@ class App extends React.Component<any, any> {
         const updateWhileColorSelected = () => {
           if (isPaletteSelected) {
             this.setState({
-              service: 'CREATE',
               name: '',
               description: '',
               preset: presets.material,
@@ -448,7 +476,6 @@ class App extends React.Component<any, any> {
                 lightColor: '#FFFFFF',
                 darkColor: '#000000',
               },
-              onGoingStep: 'colors selected',
             })
             palette.name = ''
             palette.description = ''
@@ -459,11 +486,17 @@ class App extends React.Component<any, any> {
               lightColor: '#FFFFFF',
               darkColor: '#000000',
             }
-          } else
-            this.setState({
-              service: 'CREATE',
-              onGoingStep: 'colors selected',
-            })
+          }
+          this.setState({
+            service: 'CREATE',
+            sourceColors: this.state['sourceColors']
+              .filter(
+                (sourceColor: SourceColorConfiguration) =>
+                  sourceColor.source != 'CANVAS'
+              )
+              .concat(e.data.pluginMessage.data),
+            onGoingStep: 'colors selected',
+          })
           isPaletteSelected = false
         }
 
@@ -481,6 +514,7 @@ class App extends React.Component<any, any> {
           )
           this.setState({
             service: 'EDIT',
+            sourceColors: [],
             name: e.data.pluginMessage.data.name,
             description: e.data.pluginMessage.data.description,
             preset: e.data.pluginMessage.data.preset,
@@ -594,6 +628,7 @@ class App extends React.Component<any, any> {
           >
             {this.state['service'] === 'CREATE' ? (
               <CreatePalette
+                sourceColors={this.state['sourceColors']}
                 name={this.state['name']}
                 description={this.state['description']}
                 preset={this.state['preset']}
@@ -602,6 +637,7 @@ class App extends React.Component<any, any> {
                 textColorsTheme={this.state['textColorsTheme']}
                 planStatus={this.state['planStatus']}
                 lang={this.state['lang']}
+                onChangeColorsFromCoolors={this.colorsFromCoolorsHandler}
                 onChangePreset={this.presetsHandler}
                 onCustomPreset={this.customHandler}
                 onChangeSettings={this.settingsHandler}
@@ -634,19 +670,6 @@ class App extends React.Component<any, any> {
                 onChangeColors={this.colorsHandler}
                 onChangeThemes={this.themesHandler}
                 onChangeSettings={this.settingsHandler}
-              />
-            ) : null}
-          </Feature>
-          <Feature
-            isActive={
-              features.find((feature) => feature.name === 'ONBOARDING')
-                ?.isActive
-            }
-          >
-            {this.state['service'] === 'ONBOARD' ? (
-              <Onboarding
-                planStatus={this.state['planStatus']}
-                lang={this.state['lang']}
               />
             ) : null}
           </Feature>
