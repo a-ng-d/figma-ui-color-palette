@@ -1,30 +1,30 @@
-import { lang, locals } from "../content/locals"
-import { notifications } from "../utils/palettePackage"
-import { ActionsList } from "../utils/types"
-import checkEditorType from "./checkEditorType"
-import checkHighlightStatus from "./checkHighlightStatus"
-import checkPlanStatus from "./checkPlanStatus"
-import closeHighlight from "./closeHighlight"
-import createLocalStyles from "./createLocalStyles"
-import createLocalVariables from "./createLocalVariables"
-import createPalette from "./createPalette"
-import enableTrial from "./enableTrial"
-import exportCss from "./exportCss"
-import exportCsv from "./exportCsv"
-import exportJson from "./exportJson"
-import exportJsonAmznStyleDictionary from "./exportJsonAmznStyleDictionary"
-import exportJsonTokensStudio from "./exportJsonTokensStudio"
-import exportSwift from "./exportSwift"
-import exportXml from "./exportXml"
-import getProPlan from "./getProPlan"
-import processSelection from "./processSelection"
-import updateColors from "./updateColors"
-import updateLocalStyles from "./updateLocalStyles"
-import updateLocalVariables from "./updateLocalVariables"
-import updateScale from "./updateScale"
-import updateSettings from "./updateSettings"
-import updateThemes from "./updateThemes"
-import updateView from "./updateView"
+import { lang, locals } from '../content/locals'
+import { notifications } from '../utils/palettePackage'
+import { ActionsList } from '../utils/types'
+import checkEditorType from './checkEditorType'
+import checkHighlightStatus from './checkHighlightStatus'
+import checkPlanStatus from './checkPlanStatus'
+import closeHighlight from './closeHighlight'
+import createLocalStyles from './createLocalStyles'
+import createLocalVariables from './createLocalVariables'
+import createPalette from './createPalette'
+import enableTrial from './enableTrial'
+import exportCss from './exportCss'
+import exportCsv from './exportCsv'
+import exportJson from './exportJson'
+import exportJsonAmznStyleDictionary from './exportJsonAmznStyleDictionary'
+import exportJsonTokensStudio from './exportJsonTokensStudio'
+import exportSwift from './exportSwift'
+import exportXml from './exportXml'
+import getProPlan from './getProPlan'
+import processSelection from './processSelection'
+import updateColors from './updateColors'
+import updateLocalStyles from './updateLocalStyles'
+import updateLocalVariables from './updateLocalVariables'
+import updateScale from './updateScale'
+import updateSettings from './updateSettings'
+import updateThemes from './updateThemes'
+import updateView from './updateView'
 import package_json from './../../package.json'
 
 const loadUI = async (palette: SceneNode) => {
@@ -44,7 +44,7 @@ const loadUI = async (palette: SceneNode) => {
   figma.ui.onmessage = async (msg) => {
     const i = 0,
       j = 0
-  
+
     const actions: ActionsList = {
       CLOSE_HIGHLIGHT: () => closeHighlight(msg),
       CREATE_PALETTE: () => createPalette(msg, palette),
@@ -81,7 +81,7 @@ const loadUI = async (palette: SceneNode) => {
       GET_PRO_PLAN: async () => await getProPlan(),
       ENABLE_TRIAL: async () => await enableTrial(),
     }
-  
+
     return actions[msg.type]?.()
   }
 }
