@@ -122,6 +122,7 @@ div.control__block--no-padding {
 
 div.control__block--distributed {
   justify-content: space-between;
+  overflow-y: revert;
 }
 
 div.controls__control--horizontal div.control__block {
