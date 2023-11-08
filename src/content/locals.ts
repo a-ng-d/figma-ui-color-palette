@@ -236,6 +236,9 @@ export const locals: { [key: string]: any } = {
         'There is no source color. Add them manually in the Colors section.',
       hslColorSpace:
         'The HSL color space may include the source colors in the palette, but this approach will not ensure consistency in lightness and contrast.',
+      unselectedColor:
+        'Select a layer that is filled with at least one solid color',
+      paletteNameRecommendation: '64 characters max is recommended',
     },
     error: {
       corruption:
