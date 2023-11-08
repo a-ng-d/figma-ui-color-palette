@@ -23,7 +23,7 @@ const loadParameters = ({ key, result }: ParameterInputEvent) => {
       if (viableSelection.length > 0)
         result.setSuggestions(suggestionsList)
       else
-        result.setError('Select a layer that is filled with at least one solid color')
+        result.setError(locals[lang].warning.unselectedColor)
       break
     }
 
@@ -53,7 +53,7 @@ const loadParameters = ({ key, result }: ParameterInputEvent) => {
     }
 
     case 'name': {
-      result.setLoadingMessage('64 characters max is recommended')
+      result.setLoadingMessage(locals[lang].warning.paletteNameRecommendation)
       break
     }
 
