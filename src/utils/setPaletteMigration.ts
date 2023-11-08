@@ -40,7 +40,7 @@ const setPaletteMigration = (palette: BaseNode) => {
 
   // preset
   if (preset === '')
-    palette.setPluginData('preset', JSON.stringify(presets.material))
+    palette.setPluginData('preset', JSON.stringify(presets.find(preset => preset.id === 'MATERIAL')))
 
   // colors
   if (colors.length != 0) {
