@@ -1,35 +1,9 @@
 import { lang, locals } from "../content/locals"
-import { notifications, presets } from "../utils/palettePackage"
-import { ActionsList } from "../utils/types"
-import checkEditorType from "./checkEditorType"
-import checkHighlightStatus from "./checkHighlightStatus"
-import checkPlanStatus from "./checkPlanStatus"
-import closeHighlight from "./closeHighlight"
-import createLocalStyles from "./createLocalStyles"
-import createLocalVariables from "./createLocalVariables"
-import createPalette from "./createPalette"
-import enableTrial from "./enableTrial"
-import exportCss from "./exportCss"
-import exportCsv from "./exportCsv"
-import exportJson from "./exportJson"
-import exportJsonAmznStyleDictionary from "./exportJsonAmznStyleDictionary"
-import exportJsonTokensStudio from "./exportJsonTokensStudio"
-import exportSwift from "./exportSwift"
-import exportXml from "./exportXml"
-import getProPlan from "./getProPlan"
-import processSelection from "./processSelection"
-import updateColors from "./updateColors"
-import updateLocalStyles from "./updateLocalStyles"
-import updateLocalVariables from "./updateLocalVariables"
-import updateScale from "./updateScale"
-import updateSettings from "./updateSettings"
-import updateThemes from "./updateThemes"
-import updateView from "./updateView"
-import package_json from '../../package.json'
+import { presets } from "../utils/palettePackage"
 import isBlocked from "../utils/isBlocked"
 import isAvailableAndBlocked from "../utils/isAvailableAndBlocked"
 
-const loadParameters = ({ parameters, key, query, result }: ParameterInputEvent) => {
+const loadParameters = ({ key, result }: ParameterInputEvent) => {
   const viableSelection = figma.currentPage.selection
   .filter(element =>
     element.type != 'GROUP' &&

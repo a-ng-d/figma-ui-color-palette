@@ -1,7 +1,6 @@
 import type { ReleaseNote } from '../utils/types'
 import rnv251 from './images/release_note_v25_1.webp'
 import rnv252 from './images/release_note_v25_2.webp'
-import rnv253 from './images/release_note_v25_3.webp'
 import rnv241 from './images/release_note_v24_1.webp'
 import rnv242 from './images/release_note_v24_2.webp'
 import rnv23 from './images/release_note_v23.webp'

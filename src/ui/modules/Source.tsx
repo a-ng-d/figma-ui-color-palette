@@ -74,7 +74,7 @@ export default class Source extends React.Component<Props, any> {
       },
     })
 
-  importColorsFromCoolorsHandler = (e: React.SyntheticEvent) => {
+  importColorsFromCoolorsHandler = () => {
     const url: string = this.state['coolorsUrl'].value,
       hexs: string | undefined = url.split('/').at(-1)
 
@@ -117,7 +117,7 @@ export default class Source extends React.Component<Props, any> {
         })
   }
 
-  removeColorsFromCoolorsHandler = (e: React.SyntheticEvent) =>
+  removeColorsFromCoolorsHandler = () =>
     this.props.onChangeColorsFromCoolors([])
 
   // Templates
@@ -143,7 +143,7 @@ export default class Source extends React.Component<Props, any> {
           <ul className="list">
             {this.props.sourceColors
               .filter((sourceColor) => sourceColor.source === 'CANVAS')
-              .map((sourceColor, index) => {
+              .map((sourceColor) => {
                 return (
                   <CompactColorItem
                     key={sourceColor.id}
@@ -219,7 +219,7 @@ export default class Source extends React.Component<Props, any> {
                   e.key === 'Enter' &&
                   this.state['coolorsUrl'].canBeSubmitted
                 ) {
-                  this.importColorsFromCoolorsHandler(e)
+                  this.importColorsFromCoolorsHandler()
                 }
               }}
             />
@@ -245,7 +245,7 @@ export default class Source extends React.Component<Props, any> {
         <ul className="list">
           {this.props.sourceColors
             .filter((sourceColor) => sourceColor.source === 'COOLORS')
-            .map((sourceColor, index) => {
+            .map((sourceColor) => {
               return (
                 <CompactColorItem
                   key={sourceColor.id}
