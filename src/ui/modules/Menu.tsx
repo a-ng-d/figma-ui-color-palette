@@ -48,7 +48,7 @@ export default class Menu extends React.Component<Props, any> {
         className="select-menu__menu select-menu__menu--active"
       >
         {props.actions?.map((action, index) => {
-          if (!action.isSeparator || action.isSeparator == undefined)
+          if (!action.isSeparator && action.isActive)
             return (
               <li
                 key={'action-' + index}
@@ -70,8 +70,10 @@ export default class Menu extends React.Component<Props, any> {
                 <span className="select-menu__item-label">{action.label}</span>
               </li>
             )
-          else
+          else if (action.isActive)
             return (<hr key={'action-' + index} />)
+          else
+            return null
         })}
       </ul>
     )
