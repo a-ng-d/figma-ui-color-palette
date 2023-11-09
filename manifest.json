@@ -17,8 +17,9 @@
     "allowedDomains": [
       "https://figma.com",
       "https://rsms.me",
-      "https://noteforms.com",
+      "https://tally.so",
       "https://corsproxy.io"
+      
     ]
   },
   "parameters": [
