@@ -26,42 +26,6 @@ export default class Shortcuts extends React.Component<Props> {
         rightPart={
           <div className="shortcuts">
             <Button
-              type="tertiary"
-              label={locals[this.props.lang].shortcuts.feedback}
-              action={this.props.onReOpenFeedback}
-            />
-            <Feature
-              isActive={
-                features.find((feature) => feature.name === 'HIGHLIGHT')
-                  ?.isActive
-              }
-            >
-              <span>﹒</span>
-              <Button
-                type="tertiary"
-                label={locals[this.props.lang].shortcuts.news}
-                action={this.props.onReOpenHighlight}
-              />
-            </Feature>
-            <Feature
-              isActive={
-                features.find((feature) => feature.name === 'ABOUT')?.isActive
-              }
-            >
-              <span>﹒</span>
-              <Button
-                type="tertiary"
-                label={locals[this.props.lang].contexts.about}
-                action={this.props.onReOpenAbout}
-              />
-            </Feature>
-            <span>﹒</span>
-            <Button
-              type="icon"
-              icon="library"
-              action={() => window.open('https://uicp.link/docs', '_blank')}
-            />
-            <Button
               type="icon"
               icon="repository"
               action={() =>
