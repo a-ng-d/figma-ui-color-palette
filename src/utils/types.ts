@@ -220,8 +220,10 @@ export interface DropdownOption {
 
 export interface DropdownAction {
   label: string
+  isActive?: boolean
   isBlocked: boolean
-  feature: string
+  feature?: string
+  isSeparator?: boolean
   action: () => void
 }
 

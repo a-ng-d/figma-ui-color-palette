@@ -3,8 +3,10 @@ import type { Language, TrialStatus } from '../../utils/types'
 import Feature from '../components/Feature'
 import Bar from '../components/Bar'
 import Button from '../components/Button'
+import Menu from './Menu'
 import features from '../../utils/config'
 import { locals } from '../../content/locals'
+import isBlocked from '../../utils/isBlocked'
 
 interface Props {
   planStatus: 'UNPAID' | 'PAID'
@@ -65,6 +67,83 @@ export default class Shortcuts extends React.Component<Props> {
               action={() =>
                 window.open('https://uicp.link/repository', '_blank')
               }
+            />
+            <Menu
+              icon="info"
+              actions={[
+                {
+                  label: locals[this.props.lang].shortcuts.news,
+                  isActive: features.find(feature => feature.name === 'SHORTCUTS_HIGHTLIGHT')?.isActive ?? true,
+                  isBlocked: isBlocked('SHORTCUTS_HIGHLIGHT', this.props.planStatus),
+                  isSeparator: false,
+                  action: () => this.props.onReOpenHighlight()
+                },
+                {
+                  label: locals[this.props.lang].about.getHelp.documentation,
+                  isActive: features.find(feature => feature.name === 'SHORTCUTS_DOCUMENTATION')?.isActive ?? true,
+                  isBlocked: isBlocked('SHORTCUTS_DOCUMENTATION', this.props.planStatus),
+                  isSeparator: false,
+                  action: () => window.open('https://uicp.link/docs', '_blank')
+                },
+                {
+                  label: locals[this.props.lang].about.getHelp.email,
+                  isActive: features.find(feature => feature.name === 'SHORTCUTS_EMAIL')?.isActive ?? true,
+                  isBlocked: isBlocked('SHORTCUTS_EMAIL', this.props.planStatus),
+                  isSeparator: false,
+                  action: () => window.open('https://uicp.link/send-message', '_blank')
+                },
+                {
+                  label: '',
+                  isActive: true,
+                  isBlocked: false,
+                  isSeparator: true,
+                  action: () => null
+                },
+                {
+                  label: locals[this.props.lang].shortcuts.feedback,
+                  isActive: features.find(feature => feature.name === 'SHORTCUTS_FEEDBACK')?.isActive ?? true,
+                  isBlocked: isBlocked('SHORTCUTS_FEEDBACK', this.props.planStatus),
+                  isSeparator: false,
+                  action: () => this.props.onReOpenFeedback()
+                },
+                {
+                  label: locals[this.props.lang].about.beInvolved.issue,
+                  isActive: features.find(feature => feature.name === 'SHORTCUTS_REPORTING')?.isActive ?? true,
+                  isBlocked: isBlocked('SHORTCUTS_REPORTING', this.props.planStatus),
+                  isSeparator: false,
+                  action: () => window.open('https://uicp.link/report', '_blank')
+                },
+                {
+                  label: locals[this.props.lang].about.beInvolved.discuss,
+                  isActive: features.find(feature => feature.name === 'SHORTCUTS_DISCUSSION')?.isActive ?? true,
+                  isBlocked: isBlocked('SHORTCUTS_DISCUSSION', this.props.planStatus),
+                  isSeparator: false,
+                  action: () => window.open('https://uicp.link/discuss', '_blank')
+                },
+                {
+                  label: '',
+                  isActive: true,
+                  isBlocked: false,
+                  isSeparator: true,
+                  action: () => null
+                },
+                {
+                  label: locals[this.props.lang].about.title,
+                  isActive: features.find(feature => feature.name === 'SHORTCUTS_ABOUT')?.isActive ?? true,
+                  isBlocked: isBlocked('SHORTCUTS_ABOUT', this.props.planStatus),
+                  isSeparator: false,
+                  action: this.props.onReOpenAbout
+                },
+                {
+                  label: locals[this.props.lang].about.giveSupport.follow,
+                  isActive: features.find(feature => feature.name === 'SHORTCUTS_NETWORKING')?.isActive ?? true,
+                  isBlocked: isBlocked('SHORTCUTS_NETWORKING', this.props.planStatus),
+                  isSeparator: false,
+                  action: () => window.open('https://uicp.link/network', '_blank')
+                },
+
+              ]}
+              alignment="TOP_RIGHT"
             />
           </div>
         }
