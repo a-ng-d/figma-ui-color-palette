@@ -150,7 +150,7 @@ export default class PriorityContainer extends React.Component<Props, any> {
     return (
       <Feature
         isActive={
-          features.find((feature) => feature.name === 'HIGHLIGHT')?.isActive
+          features.find((feature) => feature.name === 'SHORTCUTS_HIGHLIGHT')?.isActive
         }
       >
         <Highlight
@@ -179,7 +179,7 @@ export default class PriorityContainer extends React.Component<Props, any> {
     return (
       <Feature
         isActive={
-          features.find((feature) => feature.name === 'ABOUT')?.isActive
+          features.find((feature) => feature.name === 'SHORTCUTS_ABOUT')?.isActive
         }
       >
         <Dialog
