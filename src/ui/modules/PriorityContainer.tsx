@@ -95,7 +95,7 @@ export default class PriorityContainer extends React.Component<Props, any> {
     return (
       <Feature
         isActive={
-          features.find((feature) => feature.name === 'GET_PRO_PLAN')?.isActive
+          features.find((feature) => feature.name === 'SHORTCUTS_FEEDBACK')?.isActive
         }
       >
         <Dialog
