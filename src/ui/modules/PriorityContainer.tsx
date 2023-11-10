@@ -95,7 +95,8 @@ export default class PriorityContainer extends React.Component<Props, any> {
     return (
       <Feature
         isActive={
-          features.find((feature) => feature.name === 'SHORTCUTS_FEEDBACK')?.isActive
+          features.find((feature) => feature.name === 'SHORTCUTS_FEEDBACK')
+            ?.isActive
         }
       >
         <Dialog
@@ -109,7 +110,7 @@ export default class PriorityContainer extends React.Component<Props, any> {
               width: '100%',
               height: '100%',
             }}
-            title='Voice of the UI Color Palette Users'
+            title="Voice of the UI Color Palette Users"
             src="https://tally.so/r/w7KBNL"
           ></iframe>
         </Dialog>
@@ -150,7 +151,8 @@ export default class PriorityContainer extends React.Component<Props, any> {
     return (
       <Feature
         isActive={
-          features.find((feature) => feature.name === 'SHORTCUTS_HIGHLIGHT')?.isActive
+          features.find((feature) => feature.name === 'SHORTCUTS_HIGHLIGHT')
+            ?.isActive
         }
       >
         <Highlight
@@ -179,7 +181,8 @@ export default class PriorityContainer extends React.Component<Props, any> {
     return (
       <Feature
         isActive={
-          features.find((feature) => feature.name === 'SHORTCUTS_ABOUT')?.isActive
+          features.find((feature) => feature.name === 'SHORTCUTS_ABOUT')
+            ?.isActive
         }
       >
         <Dialog

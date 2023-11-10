@@ -40,13 +40,9 @@ export default class Menu extends React.Component<Props, any> {
   }
 
   // Templates
-  Menu = (props: {
-    actions: Array<DropdownAction>
-  }) => {
+  Menu = (props: { actions: Array<DropdownAction> }) => {
     return (
-      <ul
-        className="select-menu__menu select-menu__menu--active"
-      >
+      <ul className="select-menu__menu select-menu__menu--active">
         {props.actions?.map((action, index) => {
           if (!action.isSeparator && action.isActive)
             return (
@@ -62,7 +58,7 @@ export default class Menu extends React.Component<Props, any> {
                 onMouseDown={() => {
                   action.action()
                   this.setState({
-                    isMenuOpen: false
+                    isMenuOpen: false,
                   })
                 }}
               >
@@ -70,10 +66,8 @@ export default class Menu extends React.Component<Props, any> {
                 <span className="select-menu__item-label">{action.label}</span>
               </li>
             )
-          else if (action.isActive)
-            return (<hr key={'action-' + index} />)
-          else
-            return null
+          else if (action.isActive) return <hr key={'action-' + index} />
+          else return null
         })}
       </ul>
     )
@@ -84,7 +78,8 @@ export default class Menu extends React.Component<Props, any> {
       <div
         className={[
           'menu',
-          'menu--' + this.props.alignment?.toLocaleLowerCase().replace('_', '-')
+          'menu--' +
+            this.props.alignment?.toLocaleLowerCase().replace('_', '-'),
         ]
           .filter((n) => n)
           .join(' ')}
@@ -93,14 +88,14 @@ export default class Menu extends React.Component<Props, any> {
           type="icon"
           icon={this.props.icon}
           state={this.state['isMenuOpen'] ? 'selected' : ''}
-          action={() => this.setState({
-            isMenuOpen: !this.state['isMenuOpen']
-          })}
+          action={() =>
+            this.setState({
+              isMenuOpen: !this.state['isMenuOpen'],
+            })
+          }
         />
         {this.state['isMenuOpen'] ? (
-          <this.Menu
-            actions={this.props.actions}
-          />
+          <this.Menu actions={this.props.actions} />
         ) : null}
       </div>
     )

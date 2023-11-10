@@ -612,7 +612,7 @@ class App extends React.Component<any, any> {
           EXPORT_PALETTE_CSV: () => exportPaletteToCsv(),
           GET_PRO_PLAN: () => getProPlan(),
           ENABLE_TRIAL: () => enableTrial(),
-          DEFAULT: () => null
+          DEFAULT: () => null,
         }
 
         return actions[e.data.pluginMessage?.type ?? 'DEFAULT']?.()
