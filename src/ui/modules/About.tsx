@@ -78,68 +78,6 @@ export default class About extends React.Component<Props> {
             </p>
           </div>
         </div>
-        <div>
-          <div>
-            <div className="type type--bold">
-              {locals[this.props.lang].about.getHelp.title}
-            </div>
-            <div className="about__links">
-              <Button
-                type="tertiary"
-                isLink={true}
-                url="https://uicp.link/docs"
-                label={locals[this.props.lang].about.getHelp.documentation}
-              />
-              <span>﹒</span>
-              <Button
-                type="tertiary"
-                isLink={true}
-                url="https://uicp.link/send-message"
-                label={locals[this.props.lang].about.getHelp.email}
-              />
-            </div>
-          </div>
-          <div>
-            <div className="type type--bold">
-              {locals[this.props.lang].about.beInvolved.title}
-            </div>
-            <div className="about__links">
-              <Button
-                type="tertiary"
-                isLink={true}
-                url="https://uicp.link/discuss"
-                label={locals[this.props.lang].about.beInvolved.discuss}
-              />
-              <span>﹒</span>
-              <Button
-                type="tertiary"
-                isLink={true}
-                url="https://uicp.link/report"
-                label={locals[this.props.lang].about.beInvolved.issue}
-              />
-            </div>
-          </div>
-          <div>
-            <div className="type type--bold">
-              {locals[this.props.lang].about.giveSupport.title}
-            </div>
-            <div className="about__links">
-              <Button
-                type="tertiary"
-                isLink={true}
-                url="https://uicp.link/network"
-                label={locals[this.props.lang].about.giveSupport.follow}
-              />
-              <span>﹒</span>
-              <Button
-                type="tertiary"
-                isLink={true}
-                url="https://www.figma.com/community/plugin/1063959496693642315/ui-color-palette"
-                label={locals[this.props.lang].about.giveSupport.rate}
-              />
-            </div>
-          </div>
-        </div>
       </div>
     )
   }

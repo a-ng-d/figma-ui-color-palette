@@ -265,13 +265,14 @@ div.settings__item {
 div.about {
   flex-direction: row;
   padding: var(--size-xsmall) var(--size-small);
+  justify-content: center;
+  align-items: center;
 }
 
 div.about > div {
   display: flex;
   flex-direction: column;
   gap: var(--size-xxsmall);
-  flex: 1;
 }
 
 div.about p {
