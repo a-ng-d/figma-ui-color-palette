@@ -20,7 +20,7 @@ const loadParameters = ({ key, result }: ParameterInputEvent) => {
         .filter(
           (preset) =>
             !isBlocked(
-              `PRESET_${preset.id}`,
+              `PRESETS_${preset.id}`,
               figma.payments?.status.type as 'PAID' | 'UNPAID'
             )
         )
