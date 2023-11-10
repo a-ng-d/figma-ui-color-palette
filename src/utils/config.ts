@@ -203,8 +203,7 @@ const features: Array<Feature> = [
   },
   {
     name: 'SCALE_TIPS',
-    description:
-      'Tip messages to onboard users',
+    description: 'Tip messages to onboard users',
     isActive: true,
     isPro: false,
     type: 'DIVISION',
