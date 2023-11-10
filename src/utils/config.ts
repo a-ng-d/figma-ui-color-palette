@@ -27,7 +27,7 @@ const features: Array<Feature> = [
   },
   {
     name: 'VIEWS',
-    description: 'Different types of information arrangement',
+    description: 'Information arrangement',
     isActive: true,
     isPro: false,
     type: 'DIVISION',
@@ -67,7 +67,7 @@ const features: Array<Feature> = [
   },
   {
     name: 'LOCAL_STYLES',
-    description: 'Manage local styles in the document',
+    description: 'Styles local management',
     isActive: true,
     isPro: false,
     type: 'ACTION',
@@ -75,7 +75,7 @@ const features: Array<Feature> = [
   },
   {
     name: 'SYNC_LOCAL_STYLES',
-    description: 'Sync local styles in the document',
+    description: 'Local styles synchronization with the document',
     isActive: true,
     isPro: false,
     type: 'ACTION',
@@ -83,7 +83,7 @@ const features: Array<Feature> = [
   },
   {
     name: 'LOCAL_VARIABLES',
-    description: 'Manage local variable in the document',
+    description: 'Variable local management',
     isActive: true,
     isPro: false,
     type: 'ACTION',
@@ -91,7 +91,7 @@ const features: Array<Feature> = [
   },
   {
     name: 'SYNC_LOCAL_VARIABLES',
-    description: 'Sync local variables in the document',
+    description: 'Local variables synchronization with the document',
     isActive: true,
     isPro: false,
     type: 'ACTION',
@@ -99,7 +99,7 @@ const features: Array<Feature> = [
   },
   {
     name: 'SOURCE',
-    description: 'Choose the source colors to create the palette',
+    description: 'Raw source colors',
     isActive: true,
     isPro: false,
     type: 'CONTEXT',
@@ -115,7 +115,7 @@ const features: Array<Feature> = [
   },
   {
     name: 'SOURCE_COOLORS',
-    description: 'Import the source colors from a Coolors palette',
+    description: 'Imported colors from a Coolors palette',
     isActive: true,
     isPro: false,
     type: 'CONTEXT',
@@ -139,7 +139,7 @@ const features: Array<Feature> = [
   },
   {
     name: 'PRESETS_MATERIAL',
-    description: 'Material color system',
+    description: 'Material Design color system',
     isActive: true,
     isPro: false,
     type: 'ACTION',
@@ -171,7 +171,7 @@ const features: Array<Feature> = [
   },
   {
     name: 'PRESETS_CARBON',
-    description: 'Carbon color system',
+    description: 'IBM Carbon color system',
     isActive: true,
     isPro: false,
     type: 'ACTION',
@@ -179,7 +179,7 @@ const features: Array<Feature> = [
   },
   {
     name: 'PRESETS_BASE',
-    description: 'Uber color system',
+    description: 'Uber Base color system',
     isActive: true,
     isPro: false,
     type: 'ACTION',
@@ -187,7 +187,7 @@ const features: Array<Feature> = [
   },
   {
     name: 'PRESETS_CUSTOM',
-    description: 'Custom color system',
+    description: 'Customized color system',
     isActive: true,
     isPro: false,
     type: 'ACTION',
@@ -195,7 +195,7 @@ const features: Array<Feature> = [
   },
   {
     name: 'SCALE_CONFIGURATION',
-    description: 'The lightness stops on a range slider',
+    description: 'Lightness stops on a range slider',
     isActive: true,
     isPro: false,
     type: 'ACTION',
@@ -204,7 +204,7 @@ const features: Array<Feature> = [
   {
     name: 'SCALE_TIPS',
     description:
-      'Tip message to onboard users about how to configure the lightness scale',
+      'Tip messages to onboard users',
     isActive: true,
     isPro: false,
     type: 'DIVISION',
@@ -357,7 +357,7 @@ const features: Array<Feature> = [
   },
   {
     name: 'SETTINGS_PALETTE_NAME',
-    description: 'Palette name text field',
+    description: 'Palette name',
     isActive: true,
     isPro: false,
     type: 'ACTION',
@@ -365,7 +365,7 @@ const features: Array<Feature> = [
   },
   {
     name: 'SETTINGS_PALETTE_DESCRIPTION',
-    description: 'Palette description text field',
+    description: 'Palette description',
     isActive: true,
     isPro: false,
     type: 'ACTION',
@@ -429,7 +429,7 @@ const features: Array<Feature> = [
   },
   {
     name: 'SETTINGS_NEW_ALGORITHM',
-    description: 'Color shades generation new algorithm toggle',
+    description: 'Color shades generation algorithm',
     isActive: true,
     isPro: false,
     type: 'ACTION',
@@ -437,7 +437,7 @@ const features: Array<Feature> = [
   },
   {
     name: 'SETTINGS_TEXT_COLORS_THEME',
-    description: 'Text colors customization to better check contrast',
+    description: 'Text colors customization',
     isActive: true,
     isPro: false,
     type: 'ACTION',
@@ -445,7 +445,7 @@ const features: Array<Feature> = [
   },
   {
     name: 'SHORTCUTS',
-    description: 'Quick links and access',
+    description: 'Quick useful links',
     isActive: true,
     isPro: false,
     type: 'DIVISION',
@@ -453,7 +453,7 @@ const features: Array<Feature> = [
   },
   {
     name: 'SHORTCUTS_HIGHLIGHT',
-    description: 'Release note that highlights the key feature',
+    description: 'Release notes',
     isActive: true,
     isPro: false,
     type: 'DIVISION',
@@ -477,7 +477,7 @@ const features: Array<Feature> = [
   },
   {
     name: 'SHORTCUTS_FEEDBACK',
-    description: 'Feedback form to get NPS',
+    description: 'NPS and feedback form to get NPS',
     isActive: true,
     isPro: false,
     type: 'DIVISION',
@@ -517,7 +517,7 @@ const features: Array<Feature> = [
   },
   {
     name: 'GET_PRO_PLAN',
-    description: 'Access the subscription to get pro features',
+    description: 'Pro plan subscription',
     isActive: true,
     isPro: false,
     type: 'ACTION',
