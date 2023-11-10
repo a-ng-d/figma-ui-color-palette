@@ -170,9 +170,9 @@ export default class Scale extends React.Component<Props, any> {
                       label: preset[1].name,
                       value: preset[1].id,
                       position: index,
-                      isActive: true,
+                      isActive: features.find(feature => feature.name === `PRESETS_${preset[1].id}`)?.isActive,
                       isBlocked: isBlocked(
-                        `PRESET_${preset[1].id}`,
+                        `PRESETS_${preset[1].id}`,
                         this.props.planStatus
                       ),
                       children: [],

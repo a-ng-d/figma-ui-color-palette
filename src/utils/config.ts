@@ -138,7 +138,7 @@ const features: Array<Feature> = [
     service: ['CREATE'],
   },
   {
-    name: 'PRESET_MATERIAL',
+    name: 'PRESETS_MATERIAL',
     description: 'Material color system',
     isActive: true,
     isPro: false,
@@ -146,7 +146,7 @@ const features: Array<Feature> = [
     service: ['CREATE'],
   },
   {
-    name: 'PRESET_ANT',
+    name: 'PRESETS_ANT',
     description: 'Ant Design color system',
     isActive: true,
     isPro: false,
@@ -154,7 +154,7 @@ const features: Array<Feature> = [
     service: ['CREATE'],
   },
   {
-    name: 'PRESET_ADS',
+    name: 'PRESETS_ADS',
     description: 'ADS Foundation color system',
     isActive: true,
     isPro: true,
@@ -162,7 +162,7 @@ const features: Array<Feature> = [
     service: ['CREATE'],
   },
   {
-    name: 'PRESET_ADS_NEUTRAL',
+    name: 'PRESETS_ADS_NEUTRAL',
     description: 'ADS Foundation Neutral color system',
     isActive: true,
     isPro: true,
@@ -170,7 +170,7 @@ const features: Array<Feature> = [
     service: ['CREATE'],
   },
   {
-    name: 'PRESET_CARBON',
+    name: 'PRESETS_CARBON',
     description: 'Carbon color system',
     isActive: true,
     isPro: true,
@@ -178,7 +178,7 @@ const features: Array<Feature> = [
     service: ['CREATE'],
   },
   {
-    name: 'PRESET_BASE',
+    name: 'PRESETS_BASE',
     description: 'Uber color system',
     isActive: true,
     isPro: true,
@@ -186,7 +186,7 @@ const features: Array<Feature> = [
     service: ['CREATE'],
   },
   {
-    name: 'PRESET_CUSTOM',
+    name: 'PRESETS_CUSTOM',
     description: 'Custom color system',
     isActive: true,
     isPro: false,
