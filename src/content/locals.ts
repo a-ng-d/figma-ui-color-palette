@@ -73,6 +73,9 @@ export const locals: { [key: string]: any } = {
       hueShifting: {
         label: 'HUE',
       },
+      lock: {
+        label: 'Lock color',
+      },
     },
     themes: {
       title: 'Color themes',

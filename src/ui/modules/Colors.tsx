@@ -108,6 +108,7 @@ export default class Colors extends React.Component<Props, any> {
         },
         id: uid(),
         oklch: false,
+        isLocked: false,
         hueShifting: 0,
       })
       this.props.onChangeColors(colorsMessage.data)
@@ -215,6 +216,15 @@ export default class Colors extends React.Component<Props, any> {
       parent.postMessage({ pluginMessage: colorsMessage }, '*')
     }
 
+    const lockColor = () => {
+      colorsMessage.data = this.props.colors.map((item) => {
+        if (item.id === id) item.isLocked = currentElement.checked
+        return item
+      })
+      this.props.onChangeColors(colorsMessage.data)
+      parent.postMessage({ pluginMessage: colorsMessage }, '*')
+    }
+
     const setHueShifting = () => {
       colorsMessage.data = this.props.colors.map((item) => {
         if (item.id === id) item.hueShifting = parseFloat(currentElement.value)
@@ -247,6 +257,7 @@ export default class Colors extends React.Component<Props, any> {
       UPDATE_LIGHTNESS: () => updateLightnessProp(),
       UPDATE_CHROMA: () => updateChromaProp(),
       UPDATE_HUE: () => updateHueProp(),
+      LOCK_COLOR: () => lockColor(),
       SHIFT_HUE: () => setHueShifting(),
       UPDATE_DESCRIPTION: () => updateColorDescription(),
       REMOVE_COLOR: () => removeColor(),
@@ -382,7 +393,7 @@ export default class Colors extends React.Component<Props, any> {
                       color.rgb.b * 255
                     ).hex() as HexModel
                   }
-                  oklch={color.oklch}
+                  isLocked={color.isLocked}
                   shift={color.hueShifting}
                   description={color.description}
                   uuid={color.id}
