@@ -52,6 +52,9 @@ const setPaletteMigration = (palette: BaseNode) => {
 
     if (!Object.prototype.hasOwnProperty.call(colors[0], 'description'))
       palette.setPluginData('colors', setData(colors, 'description', ''))
+    
+    if (!Object.prototype.hasOwnProperty.call(colors[0], 'isLocked'))
+      palette.setPluginData('colors', setData(colors, 'isLocked', false))
 
     if (!Object.prototype.hasOwnProperty.call(colors[0], 'id'))
       palette.setPluginData(
