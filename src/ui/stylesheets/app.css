@@ -198,18 +198,24 @@ li .colors__parameters {
 }
 
 li .colors__parameters > .input {
-  width: 88px;
+  min-width: 88px;
 }
 
-li .colors__shift {
+li .colors__lock {
   grid-column: 1 / span 16;
   grid-row: 2 / 2;
 }
 
-li .colors__description {
-  grid-column: 17 / span 33;
+li .colors__shift {
+  grid-column: 17 / span 11;
   grid-row: 2 / 2;
 }
+
+li .colors__description {
+  grid-column: 30 / span 37;
+  grid-row: 2 / 2;
+}
+
 
 li .colors__shift > .input {
   width: 88px;

@@ -250,6 +250,14 @@ const features: Array<Feature> = [
     service: ['EDIT'],
   },
   {
+    name: 'COLORS_LOCK',
+    description: 'Source color lock',
+    isActive: true,
+    isPro: false,
+    type: 'ACTION',
+    service: ['EDIT'],
+  },
+  {
     name: 'THEMES',
     description: 'Color themes configuration',
     isActive: true,

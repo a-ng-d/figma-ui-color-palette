@@ -112,6 +112,7 @@ export default class Palette {
         id: uid(),
         oklch: false,
         hueShifting: 0,
+        isLocked: false
       })
     )
 

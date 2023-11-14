@@ -140,9 +140,10 @@ export interface ColorConfiguration {
     g: number
     b: number
   }
+  id: string
   oklch: boolean
   hueShifting: number
-  id: string
+  isLocked: boolean
 }
 
 export interface ThemeConfiguration {

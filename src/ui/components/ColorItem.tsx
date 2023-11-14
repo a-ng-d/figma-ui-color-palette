@@ -5,6 +5,7 @@ import Feature from './Feature'
 import Input from './Input'
 import Button from './Button'
 import FormItem from './FormItem'
+import Switch from './Switch'
 import doMap from './../../utils/doMap'
 import features from '../../utils/config'
 import { locals } from '../../content/locals'
@@ -12,7 +13,7 @@ import { locals } from '../../content/locals'
 interface Props {
   name: string
   hex: HexModel
-  oklch: boolean
+  isLocked: boolean
   shift: number
   description: string
   uuid: string
@@ -235,14 +236,28 @@ export default class ColorItem extends React.Component<Props, any> {
             <Feature
               isActive={
                 features.find(
+                  (feature) => feature.name === 'COLORS_LOCK'
+                )?.isActive
+              }
+            >
+              <div className="colors__lock">
+                <Switch
+                  id="color-lock"
+                  label={locals[this.props.lang].colors.lock.label}
+                  isChecked={this.props.isLocked}
+                  feature="LOCK_COLOR"
+                  onChange={this.props.onChangeColors}
+                />
+              </div>
+            </Feature>
+            <Feature
+              isActive={
+                features.find(
                   (feature) => feature.name === 'COLORS_HUE_SHIFTING'
                 )?.isActive
               }
             >
               <div className="colors__shift inputs">
-                <div className="label">
-                  {locals[this.props.lang].colors.hueShifting.label}
-                </div>
                 <Input
                   type="NUMBER"
                   icon={{ type: 'ICON', value: 'arrow-left-right' }}
