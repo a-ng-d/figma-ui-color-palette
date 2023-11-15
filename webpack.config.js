@@ -1,6 +1,7 @@
 const HtmlWebpackInlineSourcePlugin = require('html-webpack-inline-source-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const path = require('path')
+const Dotenv = require('dotenv-webpack')
 
 module.exports = (env, argv) => ({
   mode: argv.mode === 'production' ? 'production' : 'development',
@@ -27,7 +28,9 @@ module.exports = (env, argv) => ({
   },
 
   // Webpack tries these extensions for you if you omit the extension like "import './file'"
-  resolve: { extensions: ['.tsx', '.ts', '.jsx', '.js'] },
+  resolve: {
+    extensions: ['.tsx', '.ts', '.jsx', '.js'],
+  },
 
   output: {
     filename: '[name].js',
@@ -46,5 +49,6 @@ module.exports = (env, argv) => ({
       cache: false
     }),
     new HtmlWebpackInlineSourcePlugin(HtmlWebpackPlugin),
+    new Dotenv()
   ],
 })
