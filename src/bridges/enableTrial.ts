@@ -1,5 +1,4 @@
 import { notionOptions } from '../utils/fetch'
-import { NOTION_TRIAL_TABLE_ID } from './../../env.s'
 
 const enableTrial = async () => {
   const date = new Date()
@@ -20,7 +19,7 @@ const enableTrial = async () => {
           headers: notionOptions,
           body: JSON.stringify({
             parent: {
-              database_id: NOTION_TRIAL_TABLE_ID,
+              database_id: process.env.REACT_APP_NOTION_TRIAL_TABLE_ID,
             },
             properties: {
               "Nom de l'utilisateur": {
