@@ -2,8 +2,13 @@ name: Build and Download UI Color Palette
 
 on: workflow_dispatch
 
+env:
+  REACT_APP_NOTION_API_KEY: ${{ secrets.NOTION_API_KEY }}
+  REACT_APP_NOTION_TRIAL_TABLE_ID: ${{ vars.NOTION_TRIAL_TABLE_ID }}
+
 jobs:
   build:
+    name: Build with Node
     runs-on: ubuntu-latest
 
     strategy:
@@ -12,12 +17,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-
-    - name: Make envfile
-      uses: SpicyPizza/create-envfile@v2.0
-      with:
-        envkey_REACT_APP_NOTION_API_KEY: ${{ secrets.NOTION_API_KEY }},
-        envkey_REACT_APP_NOTION_TRIAL_TABLE_ID: ${{ vars.NOTION_TRIAL_TABLE_ID }}
 
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
