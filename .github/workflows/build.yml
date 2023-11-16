@@ -2,10 +2,6 @@ name: Build and Download UI Color Palette
 
 on: workflow_dispatch
 
-env:
-  REACT_APP_NOTION_API_KEY: ${{ secrets.NOTION_API_KEY }}
-  REACT_APP_NOTION_TRIAL_TABLE_ID: ${{ vars.NOTION_TRIAL_TABLE_ID }}
-
 jobs:
   build:
     name: Build with Node
@@ -22,6 +18,13 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
+
+    - name: 'Create .env file'
+      run: |
+        touch .env
+        echo REACT_APP_NOTION_API_KEY="${{ secrets.NOTION_API_KEY }}" >> .env
+        echo REACT_APP_NOTION_TRIAL_TABLE_ID="${{ vars.NOTION_TRIAL_TABLE_ID }}" >> .env
+        cat .env
 
     - name: Install and Build
       run: |
