@@ -96,6 +96,10 @@ input[type='color' i]:focus ~ input {
   outline-offset: -2px;
 }
 
+input[type='color'] ~ input {
+  max-width: 96px;
+}
+
 input[type='number']::-webkit-inner-spin-button {
   display: none;
 }
@@ -338,11 +342,28 @@ li.list__item--below {
     0 1px 0 var(--figma-color-border-selected);
 }
 
-li .list__item__buttons {
-  grid-column: span 8 / 77;
+li .list__item__primary {
+  grid-column: 1 / 77;
   grid-row: 1 / 1;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
+}
+
+li .list__item__secondary {
+  grid-column: 1 / 77;
+  grid-row: 2 / 2;
+  display: flex;
+  flex-direction: column;
+}
+
+li .list__item__left-part,
+li .list__item__right-part {
+  display: flex;
+}
+
+li .list__item__param--compact {
+  width: 112px;
+  min-width: 112px;
 }
 
 li .list__item__buttons--compact {
