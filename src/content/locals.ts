@@ -71,7 +71,7 @@ export const locals: { [key: string]: any } = {
         label: 'LCH',
       },
       hueShifting: {
-        label: 'HUE',
+        label: 'Shift the hue',
       },
     },
     themes: {
