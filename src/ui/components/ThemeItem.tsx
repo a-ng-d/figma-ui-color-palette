@@ -127,73 +127,77 @@ export default class ThemeItem extends React.Component<Props, any> {
         onDragOver={(e) => this.onDragOver(e)}
         onDrop={(e) => this.onDrop(e)}
       >
-        <Feature
-          isActive={
-            features.find((feature) => feature.name === 'THEMES_NAME')?.isActive
-          }
-        >
-          <div className="themes__name">
-            <Input
-              type="TEXT"
-              value={this.props.name}
-              feature="RENAME_THEME"
-              charactersLimit={24}
-              onChange={this.props.onChangeThemes}
-              onFocus={this.props.onCancellationSelection}
-              onBlur={this.props.onChangeThemes}
-              onConfirm={this.props.onChangeThemes}
-            />
-          </div>
-        </Feature>
-        <Feature
-          isActive={
-            features.find((feature) => feature.name === 'THEMES_PARAMS')
-              ?.isActive
-          }
-        >
-          <div className="themes__palette-background-color">
-            <FormItem
-              id="palette-background-color"
-              label={
-                locals[this.props.lang].themes.paletteBackgroundColor.label
+        <div className="list__item__primary">
+          <div className="list__item__left-part">
+            <Feature
+              isActive={
+                features.find((feature) => feature.name === 'THEMES_NAME')?.isActive
               }
-              shouldFill={false}
             >
-              <Input
-                type="COLOR"
-                value={this.props.paletteBackground}
-                feature="UPDATE_PALETTE_BACKGROUND"
-                onChange={this.props.onChangeThemes}
-                onFocus={this.props.onCancellationSelection}
-                onBlur={this.props.onChangeThemes}
-              />
-            </FormItem>
+              <div className="list__item__param--compact">
+                <Input
+                  type="TEXT"
+                  value={this.props.name}
+                  feature="RENAME_THEME"
+                  charactersLimit={24}
+                  onChange={this.props.onChangeThemes}
+                  onFocus={this.props.onCancellationSelection}
+                  onBlur={this.props.onChangeThemes}
+                  onConfirm={this.props.onChangeThemes}
+                />
+              </div>
+            </Feature>
+            <Feature
+              isActive={
+                features.find((feature) => feature.name === 'THEMES_PARAMS')
+                  ?.isActive
+              }
+            >
+              <div className="list__item__param">
+                <FormItem
+                  id="palette-background-color"
+                  label={
+                    locals[this.props.lang].themes.paletteBackgroundColor.label
+                  }
+                  shouldFill={false}
+                >
+                  <Input
+                    type="COLOR"
+                    value={this.props.paletteBackground}
+                    feature="UPDATE_PALETTE_BACKGROUND"
+                    onChange={this.props.onChangeThemes}
+                    onFocus={this.props.onCancellationSelection}
+                    onBlur={this.props.onChangeThemes}
+                  />
+                </FormItem>
+              </div>
+            </Feature>
           </div>
-        </Feature>
-        <div className="list__item__buttons">
-          <Feature
-            isActive={
-              features.find((feature) => feature.name === 'THEMES_DESCRIPTION')
-                ?.isActive
-            }
-          >
+          <div className="list__item__right-part">
+            <Feature
+              isActive={
+                features.find((feature) => feature.name === 'THEMES_DESCRIPTION')
+                  ?.isActive
+              }
+            >
+              <Button
+                type="icon"
+                icon="ellipsis"
+                state={this.state['hasMoreOptions'] ? 'selected' : ''}
+                feature="DISPLAY_MORE"
+                action={(e) => this.optionsHandler(e)}
+              />
+            </Feature>
             <Button
               type="icon"
-              icon="ellipsis"
-              state={this.state['hasMoreOptions'] ? 'selected' : ''}
-              feature="DISPLAY_MORE"
-              action={(e) => this.optionsHandler(e)}
+              icon="minus"
+              feature="REMOVE_THEME"
+              action={this.props.onChangeThemes}
             />
-          </Feature>
-          <Button
-            type="icon"
-            icon="minus"
-            feature="REMOVE_THEME"
-            action={this.props.onChangeThemes}
-          />
+          </div>
         </div>
         {this.state['hasMoreOptions'] ? (
-          <>
+          <div className="list__item__secondary">
             <Feature
               isActive={
                 features.find(
@@ -201,11 +205,10 @@ export default class ThemeItem extends React.Component<Props, any> {
                 )?.isActive
               }
             >
-              <div className="themes__description">
+              <div className="list__item__param">
                 <FormItem
                   id="theme-description"
                   label={locals[this.props.lang].global.description.label}
-                  shouldFill={false}
                 >
                   <Input
                     id="theme-description"
@@ -223,7 +226,7 @@ export default class ThemeItem extends React.Component<Props, any> {
                 </FormItem>
               </div>
             </Feature>
-          </>
+          </div>
         ) : null}
       </li>
     )

@@ -130,12 +130,14 @@ export default class ColorItem extends React.Component<Props, any> {
         onDragOver={(e) => this.onDragOver(e)}
         onDrop={(e) => this.onDrop(e)}
       >
+        <div className="list__item__primary">
+        <div className="list__item__left-part">
         <Feature
           isActive={
             features.find((feature) => feature.name === 'COLORS_NAME')?.isActive
           }
         >
-          <div className="colors__name">
+          <div className="list__item__param--compact">
             <Input
               type="TEXT"
               value={this.props.name}
@@ -154,16 +156,18 @@ export default class ColorItem extends React.Component<Props, any> {
               ?.isActive
           }
         >
-          <div className="colors__parameters">
-            <Input
-              type="COLOR"
-              value={this.props.hex}
-              feature="UPDATE_HEX"
-              onChange={this.props.onChangeColors}
-              onFocus={this.props.onCancellationSelection}
-              onBlur={this.props.onChangeColors}
-            />
-            <div className="inputs">
+          <>
+            <div className="list__item__param--compact">
+              <Input
+                type="COLOR"
+                value={this.props.hex}
+                feature="UPDATE_HEX"
+                onChange={this.props.onChangeColors}
+                onFocus={this.props.onCancellationSelection}
+                onBlur={this.props.onChangeColors}
+              />
+            </div>
+            <div className="list__item__param inputs">
               <div className="label">
                 {locals[this.props.lang].colors.lch.label}
               </div>
@@ -204,9 +208,10 @@ export default class ColorItem extends React.Component<Props, any> {
                 />
               </div>
             </div>
-          </div>
+          </>
         </Feature>
-        <div className="list__item__buttons">
+        </div>
+        <div className="list__item__right-part">
           <Feature
             isActive={
               features.find((feature) => feature.name === 'COLORS_HUE_SHIFTING')
@@ -230,8 +235,9 @@ export default class ColorItem extends React.Component<Props, any> {
             action={this.props.onChangeColors}
           />
         </div>
+        </div>
         {this.state['hasMoreOptions'] ? (
-          <>
+          <div className="list__item__secondary">
             <Feature
               isActive={
                 features.find(
@@ -239,10 +245,11 @@ export default class ColorItem extends React.Component<Props, any> {
                 )?.isActive
               }
             >
-              <div className="colors__shift inputs">
-                <div className="label">
-                  {locals[this.props.lang].colors.hueShifting.label}
-                </div>
+              <div className="list__item__param">
+                <FormItem
+                  id="color-description"
+                  label={locals[this.props.lang].colors.hueShifting.label}
+                >
                 <Input
                   type="NUMBER"
                   icon={{ type: 'ICON', value: 'arrow-left-right' }}
@@ -254,6 +261,7 @@ export default class ColorItem extends React.Component<Props, any> {
                   onFocus={this.props.onCancellationSelection}
                   onBlur={this.props.onChangeColors}
                 />
+                </FormItem>
               </div>
             </Feature>
             <Feature
@@ -263,11 +271,10 @@ export default class ColorItem extends React.Component<Props, any> {
                 )?.isActive
               }
             >
-              <div className="colors__description">
+              <div className="list__item__param">
                 <FormItem
                   id="color-description"
                   label={locals[this.props.lang].global.description.label}
-                  shouldFill={false}
                 >
                   <Input
                     id="color-description"
@@ -285,7 +292,7 @@ export default class ColorItem extends React.Component<Props, any> {
                 </FormItem>
               </div>
             </Feature>
-          </>
+          </div>
         ) : null}
       </li>
     )
