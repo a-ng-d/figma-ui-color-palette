@@ -291,13 +291,13 @@ export default class Colors extends React.Component<Props, any> {
 
   selectionHandler = (e: any) => {
     const target = e.currentTarget
-    if (target !== e.target) return
-    this.setState({
-      selectedElement: {
-        id: target.dataset.id,
-        position: target.dataset.position,
-      },
-    })
+    if (e.target.dataset.feature === 'DISPLAY_MORE') return
+      this.setState({
+        selectedElement: {
+          id: target.dataset.id,
+          position: target.dataset.position,
+        },
+      })
   }
 
   dragHandler = (
