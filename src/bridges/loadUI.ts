@@ -29,13 +29,13 @@ import package_json from './../../package.json'
 
 const loadUI = async (palette: SceneNode) => {
   const windowSize = {
-    x: await figma.clientStorage.getAsync('plugin_window_width') ?? 640,
-    y: await figma.clientStorage.getAsync('plugin_window_width') ?? 320
+    w: await figma.clientStorage.getAsync('plugin_window_width') ?? 640,
+    h: await figma.clientStorage.getAsync('plugin_window_width') ?? 320
   }
 
   figma.showUI(__html__, {
-    width: windowSize.x,
-    height: windowSize.y,
+    width: windowSize.w,
+    height: windowSize.h,
     title: locals[lang].name,
     themeColors: true,
   })
@@ -51,10 +51,10 @@ const loadUI = async (palette: SceneNode) => {
       j = 0
 
     const actions: ActionsList = {
-      RESIZE_UI: () => {
-        windowSize.x = windowSize.x + msg.movement.x
-        windowSize.y = windowSize.y + msg.movement.y
-        figma.ui.resize(windowSize.x, windowSize.y)
+      RESIZE_UI: async () => {
+        windowSize.w += msg.movement.x
+        windowSize.h += msg.movement.y
+        figma.ui.resize(windowSize.w, windowSize.h)
       },
       CLOSE_HIGHLIGHT: () => closeHighlight(msg),
       CREATE_PALETTE: () => createPalette(msg, palette),
