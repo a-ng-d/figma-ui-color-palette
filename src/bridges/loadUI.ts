@@ -54,6 +54,8 @@ const loadUI = async (palette: SceneNode) => {
       RESIZE_UI: async () => {
         windowSize.w += msg.movement.x
         windowSize.h += msg.movement.y
+        await figma.clientStorage.setAsync('plugin_window_width', windowSize.w)
+        await figma.clientStorage.setAsync('plugin_window_height', windowSize.h)
         figma.ui.resize(windowSize.w, windowSize.h)
       },
       CLOSE_HIGHLIGHT: () => closeHighlight(msg),
