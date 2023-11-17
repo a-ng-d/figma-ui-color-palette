@@ -1,3 +1,14 @@
+/* Box resizer grip */
+.box-resizer-grip {
+  width: var(--size-xsmall);
+  height: var(--size-xsmall);
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  cursor: nwse-resize;
+  background: var(--figma-color-icon);
+}
+
 /* Icon buttons */
 div.icon-button {
   cursor: default;

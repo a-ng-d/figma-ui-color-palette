@@ -19,11 +19,57 @@ interface Props {
   onGetProPlan: () => void
 }
 
-export default class Shortcuts extends React.Component<Props> {
+export default class Shortcuts extends React.Component<Props, any> {
+  constructor(props: Props) {
+    super(props)
+    this.state = {
+      canBeResized: false
+    }
+  }
+
+  onHold = (e: React.MouseEvent<HTMLDivElement>) => {
+    this.setState({
+      canBeResized: true
+    })
+  }
+
+  onResize = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (this.state['canBeResized']) {
+      parent.postMessage({ pluginMessage: {
+        type: 'RESIZE_UI',
+        origin: {
+          x: e.nativeEvent.screenX - e.nativeEvent.clientX,
+          y: e.nativeEvent.screenY - e.nativeEvent.clientY
+        },
+        shift: {
+          x: (e as any).nativeEvent.layerX,
+          y: (e as any).nativeEvent.layerY
+        },
+        cursor: {
+          x: e.nativeEvent.screenX,
+          y: e.nativeEvent.screenY
+        },
+        movement: {
+          x: e.nativeEvent.movementX,
+          y: e.nativeEvent.movementY
+        }
+      } }, '*')
+    }
+  }
+
+  onReleased = (e: React.MouseEvent<HTMLDivElement>) => {
+    this.setState({
+      canBeResized: false
+    })
+    e.target.removeEventListener('mouseleave', () => this.onResize)
+    e.target.removeEventListener('mouseup', () => this.onResize)
+  }
+
   render() {
     return (
       <Bar
         rightPart={
+          <>
           <div className="shortcuts">
             <Button
               type="icon"
@@ -154,6 +200,14 @@ export default class Shortcuts extends React.Component<Props> {
               alignment="TOP_RIGHT"
             />
           </div>
+          <div
+            className="box-resizer-grip icon--resize-grip"
+            onMouseDown={this.onHold.bind(this)}
+            onMouseMove={this.onResize.bind(this)}
+            onMouseUp={this.onReleased.bind(this)}
+            onMouseLeave={this.onReleased.bind(this)}
+          ></div>
+          </>
         }
         leftPart={
           <Feature
