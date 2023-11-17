@@ -237,7 +237,7 @@ export default class Themes extends React.Component<Props, any> {
 
   selectionHandler = (e: any) => {
     const target = e.currentTarget
-    if (target !== e.target) return
+    if (e.target.dataset.feature === 'DISPLAY_MORE') return
     this.setState({
       selectedElement: {
         id: target.dataset.id,
