@@ -30,7 +30,7 @@ import package_json from './../../package.json'
 const loadUI = async (palette: SceneNode) => {
   const windowSize = {
     w: await figma.clientStorage.getAsync('plugin_window_width') ?? 640,
-    h: await figma.clientStorage.getAsync('plugin_window_width') ?? 320
+    h: await figma.clientStorage.getAsync('plugin_window_height') ?? 320
   }
 
   figma.showUI(__html__, {
