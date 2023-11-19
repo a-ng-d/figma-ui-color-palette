@@ -203,6 +203,7 @@ export default class Source extends React.Component<Props, any> {
             id="coolors-palette-urn"
             label={locals[this.props.lang].source.coolors.url.label}
             helper={this.state['coolorsUrl'].helper}
+            shouldFill={false}
           >
             <Input
               type="TEXT"
