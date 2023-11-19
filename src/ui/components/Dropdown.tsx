@@ -9,7 +9,7 @@ interface Props {
   actions?: Array<DropdownAction>
   parentClassName?: string
   alignment?: 'RIGHT' | 'LEFT' | 'FILL'
-  onChange: (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => void
+  onChange: (e: React.MouseEvent<HTMLLIElement, MouseEvent> | React.KeyboardEvent) => void
 }
 
 export default class Dropdown extends React.Component<Props, any> {
@@ -80,7 +80,7 @@ export default class Dropdown extends React.Component<Props, any> {
       }, 1)
   }
 
-  onSelectItem = (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
+  onSelectItem = (e: React.MouseEvent<HTMLLIElement, MouseEvent> | React.KeyboardEvent) => {
     this.setState({
       isMenuOpen: false,
       position: (e.target as HTMLLIElement).dataset.position,
@@ -166,7 +166,7 @@ export default class Dropdown extends React.Component<Props, any> {
               )
             else
               return (
-                <this.MenuOption
+                <this.MenuSubOption
                   key={'option-' + index}
                   option={option}
                 />
@@ -188,6 +188,11 @@ export default class Dropdown extends React.Component<Props, any> {
           .join(' ')}
         data-position={props.option.position}
         data-is-blocked={props.option.isBlocked}
+        tabIndex={0}
+        onKeyDown={(e) => {
+          e.key === ' ' || e.key === 'Enter' ? this.setState({ openedGroup: props.option.value }) : null
+          e.key === 'Escape' ? this.setState({ openedGroup: 'EMPTY' }) : null
+        }}
         onMouseOver={() => this.setState({ openedGroup: props.option.value })}
         onMouseOut={() => this.setState({ openedGroup: 'EMPTY' })}
       >
@@ -217,6 +222,11 @@ export default class Dropdown extends React.Component<Props, any> {
         data-position={props.option.position}
         data-is-blocked={props.option.isBlocked}
         data-feature={this.props.feature}
+        tabIndex={0}
+        onKeyDown={(e) => {
+          e.key === ' ' || e.key === 'Enter' ? this.onSelectItem(e) : null
+          e.key === 'Escape' ? this.setState({ isMenuOpen: false }) : null
+        }}
         onMouseDown={(e) => this.onSelectItem(e)}
       >
         <span className="select-menu__item-icon"></span>
@@ -226,7 +236,6 @@ export default class Dropdown extends React.Component<Props, any> {
   }
 
   MenuSubOption = (props: { option: DropdownOption }) => {
-    console.log(props.option.position)
     return (
       <li
         className={[
@@ -242,6 +251,11 @@ export default class Dropdown extends React.Component<Props, any> {
         data-position={props.option.position}
         data-is-blocked={props.option.isBlocked}
         data-feature={this.props.feature}
+        tabIndex={0}
+        onKeyDown={(e) => {
+          e.key === ' ' || e.key === 'Enter' ? this.onSelectItem(e) : null
+          e.key === 'Escape' ? this.setState({ openedGroup: 'EMPTY' }) : null
+        }}
         onMouseDown={(e) => this.onSelectItem(e)}
       >
         <span className="select-menu__item-icon"></span>
@@ -261,6 +275,11 @@ export default class Dropdown extends React.Component<Props, any> {
           .join(' ')}
         data-feature={props.action.feature}
         data-is-blocked={props.action.isBlocked}
+        tabIndex={0}
+        onKeyDown={(e) => {
+          e.key === ' ' || e.key === 'Enter' ? this.onSelectAction(props.action.action) : null
+          e.key === 'Escape' ? this.setState({ isMenuOpen: false }) : null
+        }}
         onMouseDown={() => this.onSelectAction(props.action.action)}
       >
         <span className="select-menu__item-icon"></span>
@@ -292,6 +311,8 @@ export default class Dropdown extends React.Component<Props, any> {
           ]
             .filter((n) => n)
             .join(' ')}
+          tabIndex={0}
+          onKeyDown={(e) => e.key === ' ' || e.key === 'Enter' ? this.onOpenMenu?.() : null}
           onMouseDown={this.onOpenMenu}
           ref={this.buttonRef}
         >
