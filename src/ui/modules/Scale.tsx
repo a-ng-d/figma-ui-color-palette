@@ -29,7 +29,7 @@ interface Props {
   planStatus: 'UNPAID' | 'PAID'
   editorType?: EditorType
   lang: Language
-  onChangePreset?: (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => void
+  onChangePreset?: (e: React.MouseEvent<HTMLLIElement, MouseEvent> | React.KeyboardEvent) => void
   onChangeScale: () => void
   onChangeStop?: () => void
   onAddStop?: React.ReactEventHandler

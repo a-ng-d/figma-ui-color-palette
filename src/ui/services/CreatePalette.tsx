@@ -28,7 +28,7 @@ interface Props {
   onChangeColorsFromCoolors: (
     sourceColorsFromCoolers: Array<SourceColorConfiguration>
   ) => void
-  onChangePreset: (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => void
+  onChangePreset: (e: React.MouseEvent<HTMLLIElement, MouseEvent> | React.KeyboardEvent) => void
   onCustomPreset: (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => void
   onChangeSettings: (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => void
 }
