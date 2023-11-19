@@ -14,10 +14,10 @@ interface Props {
   exportType?: string | null
   planStatus?: 'UNPAID' | 'PAID'
   lang: Language
-  onCreatePalette?: React.MouseEventHandler
-  onSyncLocalStyles?: React.MouseEventHandler
-  onSyncLocalVariables?: React.MouseEventHandler
-  onExportPalette?: React.MouseEventHandler
+  onCreatePalette?: React.MouseEventHandler & React.KeyboardEventHandler
+  onSyncLocalStyles?: React.MouseEventHandler & React.KeyboardEventHandler
+  onSyncLocalVariables?: React.MouseEventHandler & React.KeyboardEventHandler
+  onExportPalette?: React.MouseEventHandler & React.KeyboardEventHandler
   onChangeActions?: (value: string) => void
 }
 

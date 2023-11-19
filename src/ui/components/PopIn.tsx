@@ -6,16 +6,16 @@ interface Props {
   actions: {
     primary?: {
       label: string
-      action: React.MouseEventHandler
+      action: React.MouseEventHandler & React.KeyboardEventHandler
     }
     secondary?: {
       label: string
-      action: React.MouseEventHandler
+      action: React.MouseEventHandler & React.KeyboardEventHandler
     }
   }
   indicator?: string
   children: React.ReactNode
-  OnClose: React.MouseEventHandler
+  OnClose: React.MouseEventHandler & React.KeyboardEventHandler
 }
 
 export default class PopIn extends React.Component<Props> {
