@@ -96,8 +96,9 @@ input[type='color' i]:focus ~ input {
   outline-offset: -2px;
 }
 
-input[type='color'] ~ input {
-  max-width: 96px;
+input[type='color'] ~ input,
+input[type='number'] {
+  max-width: 112px;
 }
 
 input[type='number']::-webkit-inner-spin-button {
@@ -111,6 +112,7 @@ input[type='number'] {
 div.inputs {
   display: flex;
   gap: var(--size-xxsmall);
+  align-items: center;
 }
 
 div.inputs .label {
@@ -124,7 +126,7 @@ div.inputs__bar {
 }
 
 div.inputs__bar .input {
-  width: 40px;
+  width: var(--size-xlarge);
   margin: 0 -0.5px;
 }
 
@@ -359,6 +361,12 @@ li .list__item__secondary {
 li .list__item__left-part,
 li .list__item__right-part {
   display: flex;
+  max-width: 100%;
+}
+
+li .list__item__param {
+  white-space: nowrap;
+  max-width: 100%;
 }
 
 li .list__item__param--compact {
@@ -368,35 +376,6 @@ li .list__item__param--compact {
 
 li .list__item__buttons--compact {
   grid-column: span 4 / 37;
-}
-
-li .single-color {
-  grid-column: 2 / span 31;
-  grid-row: 1 / 1;
-  display: flex;
-  align-items: center;
-  gap: var(--size-xxsmall);
-}
-
-li .single-color__thumbnail {
-  flex: 0 0 var(--size-xsmall);
-  width: var(--size-xsmall);
-  height: var(--size-xsmall);
-  border-radius: var(--size-xxsmall);
-  box-shadow: rgba(0, 0, 0, 0.1) 0 0 0 1px inset;
-}
-
-li .single-color__name {
-  display: flex;
-  align-items: center;
-  column-gap: var(--size-xxxsmall);
-  overflow: hidden;
-  white-space: nowrap;
-}
-
-li .single-color__name .type:not(.type--secondary) {
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 /* Callout */
