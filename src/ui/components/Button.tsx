@@ -9,7 +9,7 @@ interface Props {
   url?: string
   feature?: string
   isBlocked?: boolean
-  action?: React.MouseEventHandler
+  action?: React.MouseEventHandler & React.KeyboardEventHandler
 }
 
 export default class Button extends React.Component<Props> {
@@ -31,6 +31,8 @@ export default class Button extends React.Component<Props> {
           .join(' ')}
         data-feature={this.props.feature}
         disabled={this.props.state === 'disabled' ? true : false}
+        tabIndex={this.props.state === 'disabled' ? -1 : 0}
+        onKeyDown={(e) => e.key === ' ' || e.key === 'Enter' ? this.props.action?.(e) : null}
         onMouseDown={this.props.action}
       >
         {this.props.label}
@@ -69,6 +71,8 @@ export default class Button extends React.Component<Props> {
         ]
           .filter((n) => n)
           .join(' ')}
+        tabIndex={this.props.state === 'disabled' ? -1 : 0}
+        onKeyDown={(e) => e.key === ' ' || e.key === 'Enter' ? this.props.action?.(e) : null}
         onMouseDown={this.props.action}
       >
         <div

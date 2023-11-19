@@ -342,6 +342,10 @@
   background: var(--figma-color-icon-disabled);
 }
 
+.icon-button--disabled:focus {
+  border: 2px solid transparent;
+}
+
 /* Select menu */
 .select-menu {
   display: flex;
