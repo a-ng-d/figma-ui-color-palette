@@ -1,6 +1,6 @@
 import { lang, locals } from '../content/locals'
 import { notifications } from '../utils/palettePackage'
-import { ActionsList } from '../utils/types'
+import { ActionsList, windowSize } from '../utils/types'
 import checkEditorType from './checkEditorType'
 import checkHighlightStatus from './checkHighlightStatus'
 import checkPlanStatus from './checkPlanStatus'
@@ -28,7 +28,7 @@ import updateView from './updateView'
 import package_json from './../../package.json'
 
 const loadUI = async (palette: SceneNode) => {
-  const windowSize = {
+  const windowSize: windowSize = {
     w: await figma.clientStorage.getAsync('plugin_window_width') ?? 640,
     h: await figma.clientStorage.getAsync('plugin_window_height') ?? 320
   }
@@ -52,10 +52,12 @@ const loadUI = async (palette: SceneNode) => {
 
     const actions: ActionsList = {
       RESIZE_UI: async () => {
-        windowSize.w += msg.movement.x
-        windowSize.h += msg.movement.y
+        windowSize.w < 540 ? windowSize.w = 540 : windowSize.w += msg.movement.x
+        windowSize.h < 300 ? windowSize.h = 300 : windowSize.h = windowSize.h += msg.movement.y
+
         await figma.clientStorage.setAsync('plugin_window_width', windowSize.w)
         await figma.clientStorage.setAsync('plugin_window_height', windowSize.h)
+
         figma.ui.resize(windowSize.w, windowSize.h)
       },
       CLOSE_HIGHLIGHT: () => closeHighlight(msg),

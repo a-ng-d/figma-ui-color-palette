@@ -26,6 +26,11 @@ export type PriorityContext =
   | 'TRY'
   | 'ABOUT'
 
+export interface windowSize {
+  w: number
+  h: number
+}
+
 export interface ReleaseNote {
   version: string
   isMostRecent: boolean
