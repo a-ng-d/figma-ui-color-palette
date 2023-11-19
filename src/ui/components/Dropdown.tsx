@@ -312,7 +312,10 @@ export default class Dropdown extends React.Component<Props, any> {
             .filter((n) => n)
             .join(' ')}
           tabIndex={0}
-          onKeyDown={(e) => e.key === ' ' || e.key === 'Enter' ? this.onOpenMenu?.() : null}
+          onKeyDown={(e) => {
+            e.key === ' ' || e.key === 'Enter' ? this.onOpenMenu?.() : null
+            e.key === 'Escape' ? (e.target as HTMLElement).blur() : null
+          }}
           onMouseDown={this.onOpenMenu}
           ref={this.buttonRef}
         >

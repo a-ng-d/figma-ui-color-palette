@@ -34,6 +34,7 @@ export default class Button extends React.Component<Props> {
         tabIndex={this.props.state === 'disabled' ? -1 : 0}
         onKeyDown={(e) => {
           e.key === ' ' || e.key === 'Enter' ? this.props.action?.(e) : null
+          e.key === 'Escape' ? (e.target as HTMLElement).blur() : null
         }}
         onMouseDown={this.props.action}
       >
@@ -76,6 +77,7 @@ export default class Button extends React.Component<Props> {
         tabIndex={this.props.state === 'disabled' ? -1 : 0}
         onKeyDown={(e) => {
           e.key === ' ' || e.key === 'Enter' ? this.props.action?.(e) : null
+          e.key === 'Escape' ? (e.target as HTMLElement).blur() : null
         }}
         onMouseDown={this.props.action}
       >
