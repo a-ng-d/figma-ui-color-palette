@@ -39,6 +39,12 @@ export default class Menu extends React.Component<Props, any> {
       })
   }
 
+  // Direct actions
+  closeMenu = (action: void) => {
+    () => action
+    this.setState({ isMenuOpen: false })
+  }
+
   // Templates
   Menu = (props: { actions: Array<DropdownAction> }) => {
     return (
@@ -55,12 +61,12 @@ export default class Menu extends React.Component<Props, any> {
                   .filter((n) => n)
                   .join(' ')}
                 data-is-blocked={action.isBlocked}
-                onMouseDown={() => {
-                  action.action()
-                  this.setState({
-                    isMenuOpen: false,
-                  })
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  e.key === ' ' || e.key === 'Enter' ? this.closeMenu(action.action()) : null
+                  e.key === 'Escape' ? this.setState({ isMenuOpen: false }) : null
                 }}
+                onMouseDown={() => this.closeMenu(action.action())}
               >
                 <span className="select-menu__item-icon"></span>
                 <span className="select-menu__item-label">{action.label}</span>
