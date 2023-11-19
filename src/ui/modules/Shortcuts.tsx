@@ -23,43 +23,48 @@ export default class Shortcuts extends React.Component<Props, any> {
   constructor(props: Props) {
     super(props)
     this.state = {
-      canBeResized: false
+      canBeResized: false,
     }
   }
 
   onHold = (e: React.MouseEvent<HTMLDivElement>) => {
     this.setState({
-      canBeResized: true
+      canBeResized: true,
     })
   }
 
   onResize = (e: React.MouseEvent<HTMLDivElement>) => {
     if (this.state['canBeResized']) {
-      parent.postMessage({ pluginMessage: {
-        type: 'RESIZE_UI',
-        origin: {
-          x: e.nativeEvent.screenX - e.nativeEvent.clientX,
-          y: e.nativeEvent.screenY - e.nativeEvent.clientY
+      parent.postMessage(
+        {
+          pluginMessage: {
+            type: 'RESIZE_UI',
+            origin: {
+              x: e.nativeEvent.screenX - e.nativeEvent.clientX,
+              y: e.nativeEvent.screenY - e.nativeEvent.clientY,
+            },
+            shift: {
+              x: (e as any).nativeEvent.layerX,
+              y: (e as any).nativeEvent.layerY,
+            },
+            cursor: {
+              x: e.nativeEvent.screenX,
+              y: e.nativeEvent.screenY,
+            },
+            movement: {
+              x: e.nativeEvent.movementX,
+              y: e.nativeEvent.movementY,
+            },
+          },
         },
-        shift: {
-          x: (e as any).nativeEvent.layerX,
-          y: (e as any).nativeEvent.layerY
-        },
-        cursor: {
-          x: e.nativeEvent.screenX,
-          y: e.nativeEvent.screenY
-        },
-        movement: {
-          x: e.nativeEvent.movementX,
-          y: e.nativeEvent.movementY
-        }
-      } }, '*')
+        '*'
+      )
     }
   }
 
   onReleased = (e: React.MouseEvent<HTMLDivElement>) => {
     this.setState({
-      canBeResized: false
+      canBeResized: false,
     })
     e.target.removeEventListener('mouseleave', () => this.onResize)
     e.target.removeEventListener('mouseup', () => this.onResize)
@@ -70,143 +75,144 @@ export default class Shortcuts extends React.Component<Props, any> {
       <Bar
         rightPart={
           <>
-          <div className="shortcuts">
-            <Button
-              type="icon"
-              icon="repository"
-              action={() =>
-                window.open('https://uicp.link/repository', '_blank')
-              }
-            />
-            <Menu
-              icon="info"
-              actions={[
-                {
-                  label: locals[this.props.lang].shortcuts.news,
-                  isActive:
-                    features.find(
-                      (feature) => feature.name === 'SHORTCUTS_HIGHTLIGHT'
-                    )?.isActive ?? true,
-                  isBlocked: isBlocked(
-                    'SHORTCUTS_HIGHLIGHT',
-                    this.props.planStatus
-                  ),
-                  isSeparator: false,
-                  action: () => this.props.onReOpenHighlight(),
-                },
-                {
-                  label: locals[this.props.lang].about.getHelp.documentation,
-                  isActive: features.find(
-                    (feature) => feature.name === 'SHORTCUTS_DOCUMENTATION'
-                  )?.isActive,
-                  isBlocked: isBlocked(
-                    'SHORTCUTS_DOCUMENTATION',
-                    this.props.planStatus
-                  ),
-                  isSeparator: false,
-                  action: () => window.open('https://uicp.link/docs', '_blank'),
-                },
-                {
-                  label: locals[this.props.lang].about.getHelp.email,
-                  isActive: features.find(
-                    (feature) => feature.name === 'SHORTCUTS_EMAIL'
-                  )?.isActive,
-                  isBlocked: isBlocked(
-                    'SHORTCUTS_EMAIL',
-                    this.props.planStatus
-                  ),
-                  isSeparator: false,
-                  action: () =>
-                    window.open('https://uicp.link/send-message', '_blank'),
-                },
-                {
-                  label: '',
-                  isActive: true,
-                  isBlocked: false,
-                  isSeparator: true,
-                  action: () => null,
-                },
-                {
-                  label: locals[this.props.lang].shortcuts.feedback,
-                  isActive: features.find(
-                    (feature) => feature.name === 'SHORTCUTS_FEEDBACK'
-                  )?.isActive,
-                  isBlocked: isBlocked(
-                    'SHORTCUTS_FEEDBACK',
-                    this.props.planStatus
-                  ),
-                  isSeparator: false,
-                  action: () => this.props.onReOpenFeedback(),
-                },
-                {
-                  label: locals[this.props.lang].about.beInvolved.issue,
-                  isActive: features.find(
-                    (feature) => feature.name === 'SHORTCUTS_REPORTING'
-                  )?.isActive,
-                  isBlocked: isBlocked(
-                    'SHORTCUTS_REPORTING',
-                    this.props.planStatus
-                  ),
-                  isSeparator: false,
-                  action: () =>
-                    window.open('https://uicp.link/report', '_blank'),
-                },
-                {
-                  label: locals[this.props.lang].about.beInvolved.discuss,
-                  isActive: features.find(
-                    (feature) => feature.name === 'SHORTCUTS_DISCUSSION'
-                  )?.isActive,
-                  isBlocked: isBlocked(
-                    'SHORTCUTS_DISCUSSION',
-                    this.props.planStatus
-                  ),
-                  isSeparator: false,
-                  action: () =>
-                    window.open('https://uicp.link/discuss', '_blank'),
-                },
-                {
-                  label: '',
-                  isActive: true,
-                  isBlocked: false,
-                  isSeparator: true,
-                  action: () => null,
-                },
-                {
-                  label: locals[this.props.lang].about.title,
-                  isActive: features.find(
-                    (feature) => feature.name === 'SHORTCUTS_ABOUT'
-                  )?.isActive,
-                  isBlocked: isBlocked(
-                    'SHORTCUTS_ABOUT',
-                    this.props.planStatus
-                  ),
-                  isSeparator: false,
-                  action: this.props.onReOpenAbout,
-                },
-                {
-                  label: locals[this.props.lang].about.giveSupport.follow,
-                  isActive: features.find(
-                    (feature) => feature.name === 'SHORTCUTS_NETWORKING'
-                  )?.isActive,
-                  isBlocked: isBlocked(
-                    'SHORTCUTS_NETWORKING',
-                    this.props.planStatus
-                  ),
-                  isSeparator: false,
-                  action: () =>
-                    window.open('https://uicp.link/network', '_blank'),
-                },
-              ]}
-              alignment="TOP_RIGHT"
-            />
-          </div>
-          <div
-            className="box-resizer-grip icon--resize-grip"
-            onMouseDown={this.onHold.bind(this)}
-            onMouseMove={this.onResize.bind(this)}
-            onMouseUp={this.onReleased.bind(this)}
-            onMouseLeave={this.onReleased.bind(this)}
-          ></div>
+            <div className="shortcuts">
+              <Button
+                type="icon"
+                icon="repository"
+                action={() =>
+                  window.open('https://uicp.link/repository', '_blank')
+                }
+              />
+              <Menu
+                icon="info"
+                actions={[
+                  {
+                    label: locals[this.props.lang].shortcuts.news,
+                    isActive:
+                      features.find(
+                        (feature) => feature.name === 'SHORTCUTS_HIGHTLIGHT'
+                      )?.isActive ?? true,
+                    isBlocked: isBlocked(
+                      'SHORTCUTS_HIGHLIGHT',
+                      this.props.planStatus
+                    ),
+                    isSeparator: false,
+                    action: () => this.props.onReOpenHighlight(),
+                  },
+                  {
+                    label: locals[this.props.lang].about.getHelp.documentation,
+                    isActive: features.find(
+                      (feature) => feature.name === 'SHORTCUTS_DOCUMENTATION'
+                    )?.isActive,
+                    isBlocked: isBlocked(
+                      'SHORTCUTS_DOCUMENTATION',
+                      this.props.planStatus
+                    ),
+                    isSeparator: false,
+                    action: () =>
+                      window.open('https://uicp.link/docs', '_blank'),
+                  },
+                  {
+                    label: locals[this.props.lang].about.getHelp.email,
+                    isActive: features.find(
+                      (feature) => feature.name === 'SHORTCUTS_EMAIL'
+                    )?.isActive,
+                    isBlocked: isBlocked(
+                      'SHORTCUTS_EMAIL',
+                      this.props.planStatus
+                    ),
+                    isSeparator: false,
+                    action: () =>
+                      window.open('https://uicp.link/send-message', '_blank'),
+                  },
+                  {
+                    label: '',
+                    isActive: true,
+                    isBlocked: false,
+                    isSeparator: true,
+                    action: () => null,
+                  },
+                  {
+                    label: locals[this.props.lang].shortcuts.feedback,
+                    isActive: features.find(
+                      (feature) => feature.name === 'SHORTCUTS_FEEDBACK'
+                    )?.isActive,
+                    isBlocked: isBlocked(
+                      'SHORTCUTS_FEEDBACK',
+                      this.props.planStatus
+                    ),
+                    isSeparator: false,
+                    action: () => this.props.onReOpenFeedback(),
+                  },
+                  {
+                    label: locals[this.props.lang].about.beInvolved.issue,
+                    isActive: features.find(
+                      (feature) => feature.name === 'SHORTCUTS_REPORTING'
+                    )?.isActive,
+                    isBlocked: isBlocked(
+                      'SHORTCUTS_REPORTING',
+                      this.props.planStatus
+                    ),
+                    isSeparator: false,
+                    action: () =>
+                      window.open('https://uicp.link/report', '_blank'),
+                  },
+                  {
+                    label: locals[this.props.lang].about.beInvolved.discuss,
+                    isActive: features.find(
+                      (feature) => feature.name === 'SHORTCUTS_DISCUSSION'
+                    )?.isActive,
+                    isBlocked: isBlocked(
+                      'SHORTCUTS_DISCUSSION',
+                      this.props.planStatus
+                    ),
+                    isSeparator: false,
+                    action: () =>
+                      window.open('https://uicp.link/discuss', '_blank'),
+                  },
+                  {
+                    label: '',
+                    isActive: true,
+                    isBlocked: false,
+                    isSeparator: true,
+                    action: () => null,
+                  },
+                  {
+                    label: locals[this.props.lang].about.title,
+                    isActive: features.find(
+                      (feature) => feature.name === 'SHORTCUTS_ABOUT'
+                    )?.isActive,
+                    isBlocked: isBlocked(
+                      'SHORTCUTS_ABOUT',
+                      this.props.planStatus
+                    ),
+                    isSeparator: false,
+                    action: this.props.onReOpenAbout,
+                  },
+                  {
+                    label: locals[this.props.lang].about.giveSupport.follow,
+                    isActive: features.find(
+                      (feature) => feature.name === 'SHORTCUTS_NETWORKING'
+                    )?.isActive,
+                    isBlocked: isBlocked(
+                      'SHORTCUTS_NETWORKING',
+                      this.props.planStatus
+                    ),
+                    isSeparator: false,
+                    action: () =>
+                      window.open('https://uicp.link/network', '_blank'),
+                  },
+                ]}
+                alignment="TOP_RIGHT"
+              />
+            </div>
+            <div
+              className="box-resizer-grip icon--resize-grip"
+              onMouseDown={this.onHold.bind(this)}
+              onMouseMove={this.onResize.bind(this)}
+              onMouseUp={this.onReleased.bind(this)}
+              onMouseLeave={this.onReleased.bind(this)}
+            ></div>
           </>
         }
         leftPart={

@@ -29,8 +29,8 @@ import package_json from './../../package.json'
 
 const loadUI = async (palette: SceneNode) => {
   const windowSize: windowSize = {
-    w: await figma.clientStorage.getAsync('plugin_window_width') ?? 640,
-    h: await figma.clientStorage.getAsync('plugin_window_height') ?? 320
+    w: (await figma.clientStorage.getAsync('plugin_window_width')) ?? 640,
+    h: (await figma.clientStorage.getAsync('plugin_window_height')) ?? 320,
   }
 
   figma.showUI(__html__, {
@@ -52,8 +52,12 @@ const loadUI = async (palette: SceneNode) => {
 
     const actions: ActionsList = {
       RESIZE_UI: async () => {
-        windowSize.w < 540 ? windowSize.w = 540 : windowSize.w += msg.movement.x
-        windowSize.h < 300 ? windowSize.h = 300 : windowSize.h = windowSize.h += msg.movement.y
+        windowSize.w < 540
+          ? (windowSize.w = 540)
+          : (windowSize.w += msg.movement.x)
+        windowSize.h < 300
+          ? (windowSize.h = 300)
+          : (windowSize.h = windowSize.h += msg.movement.y)
 
         await figma.clientStorage.setAsync('plugin_window_width', windowSize.w)
         await figma.clientStorage.setAsync('plugin_window_height', windowSize.h)
