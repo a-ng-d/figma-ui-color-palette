@@ -20,31 +20,39 @@ export default class CompactColorItem extends React.Component<Props, any> {
   render() {
     return (
       <li
-        className="list__item list__item--compact"
+        className="list__item"
         data-id={this.props.uuid}
       >
-        <div className="single-color">
-          <div
-            className="single-color__thumbnail"
-            style={{
-              backgroundColor: this.props.hex,
-            }}
-          ></div>
-          <div className="single-color__name">
-            <div className="type">{this.props.name}</div>
-            <div className="type type--secondary">{this.props.hex}</div>
+        <div className="list__item__primary">
+          <div className="list__item__left-part">
+            <div className="list__item__param inputs">
+              <div
+                className="color"
+              >
+                <div
+                  className="color__icon color__icon--circle"
+                  style={{
+                    backgroundColor: this.props.hex,
+                  }}
+              ></div>
+              </div>
+              <div className="type type--truncated">{this.props.name}</div>
+              <div className="type type--secondary">{this.props.hex}</div>
+            </div>
+          </div>
+          <div className="list_item_right-part">
+            {this.props.canBeRemoved ? (
+              <div className="list__item__param">
+                <Button
+                  type="icon"
+                  icon="minus"
+                  feature="REMOVE_COLOR"
+                  action={this.props.onRemoveColor}
+                />
+              </div>
+            ) : null}
           </div>
         </div>
-        {this.props.canBeRemoved ? (
-          <div className="list__item__buttons list__item__buttons--compact">
-            <Button
-              type="icon"
-              icon="minus"
-              feature="REMOVE_COLOR"
-              action={this.props.onRemoveColor}
-            />
-          </div>
-        ) : null}
       </li>
     )
   }
