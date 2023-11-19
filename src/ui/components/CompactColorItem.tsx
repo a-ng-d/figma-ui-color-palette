@@ -26,15 +26,13 @@ export default class CompactColorItem extends React.Component<Props, any> {
         <div className="list__item__primary">
           <div className="list__item__left-part">
             <div className="list__item__param inputs">
-              <div
-                className="color"
-              >
+              <div className="color">
                 <div
                   className="color__icon color__icon--circle"
                   style={{
                     backgroundColor: this.props.hex,
                   }}
-              ></div>
+                ></div>
               </div>
               <div className="type type--truncated">{this.props.name}</div>
               <div className="type type--secondary">{this.props.hex}</div>

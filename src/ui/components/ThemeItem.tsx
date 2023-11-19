@@ -131,7 +131,8 @@ export default class ThemeItem extends React.Component<Props, any> {
           <div className="list__item__left-part">
             <Feature
               isActive={
-                features.find((feature) => feature.name === 'THEMES_NAME')?.isActive
+                features.find((feature) => feature.name === 'THEMES_NAME')
+                  ?.isActive
               }
             >
               <div className="list__item__param--compact">
@@ -176,8 +177,9 @@ export default class ThemeItem extends React.Component<Props, any> {
           <div className="list__item__right-part">
             <Feature
               isActive={
-                features.find((feature) => feature.name === 'THEMES_DESCRIPTION')
-                  ?.isActive
+                features.find(
+                  (feature) => feature.name === 'THEMES_DESCRIPTION'
+                )?.isActive
               }
             >
               <Button
