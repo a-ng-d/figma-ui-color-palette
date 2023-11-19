@@ -46,8 +46,8 @@ export default class ThemeItem extends React.Component<Props, any> {
   }
 
   // Handlers
-  optionsHandler = (e: React.MouseEvent<Element, MouseEvent> & React.KeyboardEvent) => {
-    this.props.onCancellationSelection(e)
+  optionsHandler = () => {
+    this.props.onCancellationSelection
     this.setState({ hasMoreOptions: !this.state['hasMoreOptions'] })
   }
 
@@ -187,7 +187,7 @@ export default class ThemeItem extends React.Component<Props, any> {
                 icon="ellipsis"
                 state={this.state['hasMoreOptions'] ? 'selected' : ''}
                 feature="DISPLAY_MORE"
-                action={(e) => this.optionsHandler.bind(e)}
+                action={this.optionsHandler}
               />
             </Feature>
             <Button
