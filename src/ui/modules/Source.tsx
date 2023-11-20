@@ -216,10 +216,7 @@ export default class Source extends React.Component<Props, any> {
               onFocus={() => null}
               onBlur={() => null}
               onConfirm={(e) => {
-                if (
-                  e.key === 'Enter' &&
-                  this.state['coolorsUrl'].canBeSubmitted
-                ) {
+                if (this.state['coolorsUrl'].canBeSubmitted) {
                   this.importColorsFromCoolorsHandler()
                 }
               }}

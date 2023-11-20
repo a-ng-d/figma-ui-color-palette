@@ -168,9 +168,7 @@ export default class Themes extends React.Component<Props, any> {
         return item
       })
       this.props.onChangeThemes(themesMessage.data)
-      if (e._reactName === 'onBlur')
-        parent.postMessage({ pluginMessage: themesMessage }, '*')
-      if (e.key === 'Enter')
+      if (e._reactName === 'onBlur' || e.key === 'Enter')
         parent.postMessage({ pluginMessage: themesMessage }, '*')
     }
 
