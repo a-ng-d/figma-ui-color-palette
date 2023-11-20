@@ -127,9 +127,7 @@ export default class Colors extends React.Component<Props, any> {
         return item
       })
       this.props.onChangeColors(colorsMessage.data)
-      if (e._reactName === 'onBlur')
-        parent.postMessage({ pluginMessage: colorsMessage }, '*')
-      if (e.key === 'Enter')
+      if (e._reactName === 'onBlur' || e.key === 'Enter')
         parent.postMessage({ pluginMessage: colorsMessage }, '*')
     }
 

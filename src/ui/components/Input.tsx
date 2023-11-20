@@ -37,7 +37,7 @@ export default class Input extends React.Component<Props> {
   }
 
   // Direct actions
-  onNudge = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  onKeyDown = (e: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     if (e.shiftKey && e.key === 'ArrowUp')
       (e.target as HTMLInputElement).value = (
         parseFloat((e.target as HTMLInputElement).value) +
@@ -48,6 +48,10 @@ export default class Input extends React.Component<Props> {
         parseFloat((e.target as HTMLInputElement).value) -
         9 * parseFloat(this.props.step == undefined ? '1' : this.props.step)
       ).toString()
+    else if (e.key === 'Enter')
+      this.props.onConfirm?.(e)
+    else if (e.key === 'Escape')
+      (e.target as HTMLElement).blur()
   }
 
   // Templates
@@ -123,8 +127,7 @@ export default class Input extends React.Component<Props> {
           max={this.props.max}
           step={this.props.step}
           autoFocus={this.props.isAutoFocus}
-          onKeyDown={this.onNudge}
-          onKeyPress={this.props.onConfirm}
+          onKeyDown={this.onKeyDown}
           onChange={this.props.onChange}
           onFocus={this.props.onFocus}
           onBlur={this.props.onBlur}
@@ -172,7 +175,7 @@ export default class Input extends React.Component<Props> {
           value={this.props.value}
           maxLength={this.props.charactersLimit}
           autoFocus={this.props.isAutoFocus}
-          onKeyPress={this.props.onConfirm}
+          onKeyDown={this.onKeyDown}
           onChange={this.props.onChange}
           onFocus={this.props.onFocus}
           onBlur={this.props.onBlur}
@@ -201,7 +204,7 @@ export default class Input extends React.Component<Props> {
           placeholder={this.props.placeholder}
           value={this.props.value}
           autoFocus={this.props.isAutoFocus}
-          onKeyPress={this.props.onConfirm}
+          onKeyDown={this.onKeyDown}
           onChange={this.props.onChange}
           onFocus={this.props.onFocus}
           onBlur={this.props.onBlur}
