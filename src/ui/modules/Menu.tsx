@@ -41,7 +41,7 @@ export default class Menu extends React.Component<Props, any> {
 
   // Direct actions
   closeMenu = (action: void) => {
-    () => action
+    ;() => action
     this.setState({ isMenuOpen: false })
   }
 
@@ -63,8 +63,12 @@ export default class Menu extends React.Component<Props, any> {
                 data-is-blocked={action.isBlocked}
                 tabIndex={0}
                 onKeyDown={(e) => {
-                  e.key === ' ' || e.key === 'Enter' ? this.closeMenu(action.action()) : null
-                  e.key === 'Escape' ? this.setState({ isMenuOpen: false }) : null
+                  e.key === ' ' || e.key === 'Enter'
+                    ? this.closeMenu(action.action())
+                    : null
+                  e.key === 'Escape'
+                    ? this.setState({ isMenuOpen: false })
+                    : null
                 }}
                 onMouseDown={() => this.closeMenu(action.action())}
               >

@@ -78,7 +78,9 @@ export default class EditPalette extends React.Component<Props, any> {
       context: (e.target as HTMLElement).dataset.feature,
     })
 
-  switchThemeHandler = (e: React.MouseEvent<HTMLLIElement, MouseEvent> | React.KeyboardEvent) => {
+  switchThemeHandler = (
+    e: React.MouseEvent<HTMLLIElement, MouseEvent> | React.KeyboardEvent
+  ) => {
     themesMessage.data = this.props.themes.map((theme) => {
       if ((e.target as HTMLElement).dataset.value === theme.id)
         theme.isEnabled = true

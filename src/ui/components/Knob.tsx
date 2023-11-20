@@ -26,7 +26,7 @@ export default class Knob extends React.Component<Props, any> {
     super(props)
     this.state = {
       isStopInputOpen: false,
-      stopInputValue: this.props.value
+      stopInputValue: this.props.value,
     }
   }
 
@@ -34,12 +34,10 @@ export default class Knob extends React.Component<Props, any> {
   keyboardHandler = (action: string, e: React.KeyboardEvent) => {
     const actions: ActionsList = {
       ArrowRight: () => {
-        if (this.props.onShiftRight != undefined)
-          this.props.onShiftRight(e)
+        if (this.props.onShiftRight != undefined) this.props.onShiftRight(e)
       },
       ArrowLeft: () => {
-        if (this.props.onShiftLeft != undefined)
-          this.props.onShiftLeft(e)
+        if (this.props.onShiftLeft != undefined) this.props.onShiftLeft(e)
       },
       Enter: () => {
         if (this.props.canBeTyped)
@@ -48,24 +46,22 @@ export default class Knob extends React.Component<Props, any> {
           })
       },
       Escape: () => {
-        (e.target as HTMLElement).blur()
+        ;(e.target as HTMLElement).blur()
         this.setState({ isStopInputOpen: false })
       },
       Backspace: () => {
-        if (this.props.onDelete != undefined)
-          this.props.onDelete(e)
-      }
+        if (this.props.onDelete != undefined) this.props.onDelete(e)
+      },
     }
 
-    if (e.currentTarget === e.target)
-      return actions[action]?.()
+    if (e.currentTarget === e.target) return actions[action]?.()
   }
 
   clickHandler = (e: React.MouseEvent) => {
     if (e.detail == 2 && this.props.canBeTyped)
       this.setState({
         isStopInputOpen: true,
-        stopInputValue: this.props.value
+        stopInputValue: this.props.value,
       })
   }
 
@@ -84,9 +80,7 @@ export default class Knob extends React.Component<Props, any> {
         className={[
           'slider__knob',
           this.props.id,
-          this.state['isStopInputOpen']
-            ? 'slider__knob--editing'
-            : null,
+          this.state['isStopInputOpen'] ? 'slider__knob--editing' : null,
         ]
           .filter((n) => n)
           .join(' ')}
@@ -109,10 +103,12 @@ export default class Knob extends React.Component<Props, any> {
               step="0.1"
               feature="TYPE_STOP_VALUE"
               isAutoFocus={true}
-              onChange={(e) => this.setState({ stopInputValue: e.target.value })}
+              onChange={(e) =>
+                this.setState({ stopInputValue: e.target.value })
+              }
               onFocus={(e: React.FocusEvent<HTMLInputElement>) =>
                 this.setState({
-                  stopInputValue: this.props.value
+                  stopInputValue: this.props.value,
                 })
               }
               onBlur={(e: React.FocusEvent<HTMLInputElement>) => {

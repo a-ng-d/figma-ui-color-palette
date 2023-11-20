@@ -320,7 +320,7 @@
 
 .icon-button:active {
   border: 1px solid transparent;
-  background-color: var(--figma-color-bg-hover);  
+  background-color: var(--figma-color-bg-hover);
 }
 
 .icon-button--selected {
