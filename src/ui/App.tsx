@@ -267,6 +267,7 @@ class App extends React.Component<any, any> {
     const renamePalette = () => {
       palette.name = e.target.value
       settingsMessage.data.name = e.target.value
+      settingsMessage.data.description = this.state['description']
       settingsMessage.data.colorSpace = this.state['colorSpace']
       settingsMessage.data.textColorsTheme = this.state['textColorsTheme']
       settingsMessage.data.algorithmVersion = this.state['algorithmVersion']
