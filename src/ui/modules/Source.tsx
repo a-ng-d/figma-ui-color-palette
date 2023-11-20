@@ -215,7 +215,7 @@ export default class Source extends React.Component<Props, any> {
               onChange={this.isTypingHandler}
               onFocus={() => null}
               onBlur={() => null}
-              onConfirm={(e) => {
+              onConfirm={() => {
                 if (this.state['coolorsUrl'].canBeSubmitted) {
                   this.importColorsFromCoolorsHandler()
                 }

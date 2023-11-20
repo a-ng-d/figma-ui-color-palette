@@ -27,7 +27,7 @@ export default class Shortcuts extends React.Component<Props, any> {
     }
   }
 
-  onHold = (e: React.MouseEvent<HTMLDivElement>) => {
+  onHold = () => {
     this.setState({
       canBeResized: true,
     })
