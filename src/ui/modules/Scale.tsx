@@ -108,15 +108,20 @@ export default class Scale extends React.Component<Props, any> {
       )
       this.props.onChangeStop?.()
     }
+    
+    const onUpdatingStop = () => {
+      this.dispatch.scale.on.status = true
+    }
 
     const actions: ActionsList = {
       RELEASED: () => onReleaseStop(),
       SHIFTED: () => onChangeStop(),
       TYPED: () => onTypeStopValue(),
-      UPDATING: () => (this.dispatch.scale.on.status = true),
+      UPDATING: () => onUpdatingStop(),
     }
 
-    return actions[state]?.()
+    if (!this.props.hasPreset)
+      return actions[state]?.()
   }
 
   // Direct actions
