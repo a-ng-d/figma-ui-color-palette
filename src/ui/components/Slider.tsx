@@ -31,8 +31,7 @@ export default class Slider extends React.Component<Props> {
         palette.scale[`lightness-${stopId}`] = parseFloat(e.target.min)
       else if (parseFloat(e.target.value) > parseFloat(e.target.max))
         palette.scale[`lightness-${stopId}`] = parseFloat(e.target.max)
-      else
-        palette.scale[`lightness-${stopId}`] = parseFloat(e.target.value)
+      else palette.scale[`lightness-${stopId}`] = parseFloat(e.target.value)
       this.props.onChange('TYPED')
     }
   }
@@ -225,24 +224,12 @@ export default class Slider extends React.Component<Props> {
   }
 
   onShiftRight = (knob: HTMLElement, isMeta: boolean, isCtrl: boolean) => {
-    shiftRightStop(
-      this.props.scale ?? {},
-      knob,
-      isMeta,
-      isCtrl,
-      safeGap
-    )
+    shiftRightStop(this.props.scale ?? {}, knob, isMeta, isCtrl, safeGap)
     this.props.onChange('SHIFTED')
   }
 
   onShiftLeft = (knob: HTMLElement, isMeta: boolean, isCtrl: boolean) => {
-    shiftLeftStop(
-      this.props.scale ?? {},
-      knob,
-      isMeta,
-      isCtrl,
-      safeGap
-    )
+    shiftLeftStop(this.props.scale ?? {}, knob, isMeta, isCtrl, safeGap)
     this.props.onChange('SHIFTED')
   }
 
@@ -356,12 +343,16 @@ export default class Slider extends React.Component<Props> {
                 this.onShiftLeft(e.target as HTMLElement, e.metaKey, e.ctrlKey)
               }}
               onDelete={(e) => {
-                if (this.props.stops.length > 2 && this.props.presetName === 'Custom' && !this.props.hasPreset)
+                if (
+                  this.props.stops.length > 2 &&
+                  this.props.presetName === 'Custom' &&
+                  !this.props.hasPreset
+                )
                   this.onDelete(e.target as HTMLElement)
               }}
               onMouseDown={(e) => {
-                this.onGrab(e);
-                (e.target as HTMLElement).focus()
+                this.onGrab(e)
+                ;(e.target as HTMLElement).focus()
               }}
               onValidStopValue={(stopId, e) => this.validHandler(stopId, e)}
             />

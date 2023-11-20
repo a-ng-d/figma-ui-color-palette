@@ -29,7 +29,9 @@ interface Props {
   planStatus: 'UNPAID' | 'PAID'
   editorType?: EditorType
   lang: Language
-  onChangePreset?: (e: React.MouseEvent<HTMLLIElement, MouseEvent> | React.KeyboardEvent) => void
+  onChangePreset?: (
+    e: React.MouseEvent<HTMLLIElement, MouseEvent> | React.KeyboardEvent
+  ) => void
   onChangeScale: () => void
   onChangeStop?: () => void
   onAddStop?: React.ReactEventHandler
@@ -108,7 +110,7 @@ export default class Scale extends React.Component<Props, any> {
       )
       this.props.onChangeStop?.()
     }
-    
+
     const onUpdatingStop = () => {
       this.dispatch.scale.on.status = true
     }
@@ -120,8 +122,7 @@ export default class Scale extends React.Component<Props, any> {
       UPDATING: () => onUpdatingStop(),
     }
 
-    if (!this.props.hasPreset)
-      return actions[state]?.()
+    if (!this.props.hasPreset) return actions[state]?.()
   }
 
   // Direct actions
