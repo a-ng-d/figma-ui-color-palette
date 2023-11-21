@@ -256,7 +256,7 @@ div.popin__content {
   flex: 1;
   display: flex;
   overflow-y: auto;
-  padding: 0 0 var(--size-xxsmall) 0;
+  padding: 0 0 var(--size-xsmall) 0;
 }
 
 div.popin__footer {
