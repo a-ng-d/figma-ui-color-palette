@@ -13,6 +13,7 @@ import FormItem from '../components/FormItem'
 import Input from '../components/Input'
 import Button from '../components/Button'
 import CompactColorItem from '../components/CompactColorItem'
+import Accordion from '../components/Accordion'
 import features from '../../utils/config'
 import { locals } from '../../content/locals'
 
@@ -37,6 +38,7 @@ export default class Source extends React.Component<Props, any> {
         canBeSubmitted: false,
         helper: undefined,
       },
+      isCoolorsImportOpen: false
     }
   }
 
@@ -117,13 +119,10 @@ export default class Source extends React.Component<Props, any> {
         })
   }
 
-  removeColorsFromCoolorsHandler = () =>
-    this.props.onChangeColorsFromCoolors([])
-
   // Templates
   SelectedColors = () => {
     return (
-      <div className="control__block control__block--list">
+      <>
         <div className="section-controls">
           <div className="section-controls__left-part">
             <div className="section-title">
@@ -167,101 +166,97 @@ export default class Source extends React.Component<Props, any> {
             messages={[locals[this.props.lang].source.canvas.tip]}
           />
         )}
-      </div>
+      </>
     )
   }
 
   CoolorsColors = () => {
     return (
-      <div className="control__block control__block--list">
-        <div className="section-controls">
-          <div className="section-controls__left-part">
-            <div className="section-title">
-              {locals[this.props.lang].source.coolors.title}
-            </div>
-            <div className="type">{`(${
-              this.props.sourceColors.filter(
-                (sourceColor) => sourceColor.source === 'COOLORS'
-              ).length
-            })`}</div>
-          </div>
-          <div className="section-controls__right-part">
-            {this.props.sourceColors.filter(
+      <>
+        <Accordion
+          label={locals[this.props.lang].source.coolors.title}
+          indicator={
+            this.props.sourceColors.filter(
               (sourceColor) => sourceColor.source === 'COOLORS'
-            ).length > 0 ? (
-              <Button
-                type="icon"
-                icon="minus"
-                feature="REMOVE_COLORS"
-                action={this.removeColorsFromCoolorsHandler}
-              />
-            ) : null}
-          </div>
-        </div>
-        <div className="settings__item">
-          <FormItem
-            id="coolors-palette-urn"
-            label={locals[this.props.lang].source.coolors.url.label}
-            helper={this.state['coolorsUrl'].helper}
-            shouldFill={false}
-          >
-            <Input
-              type="TEXT"
-              state={this.state['coolorsUrl'].state}
-              placeholder={
-                locals[this.props.lang].source.coolors.url.placeholder
-              }
-              value={this.state['coolorsUrl'].value}
-              onChange={this.isTypingHandler}
-              onFocus={() => null}
-              onBlur={() => null}
-              onConfirm={() => {
-                if (this.state['coolorsUrl'].canBeSubmitted) {
-                  this.importColorsFromCoolorsHandler()
-                }
-              }}
-            />
-            <div
-              style={{
-                alignSelf: 'center',
-              }}
+            ).length
+          }
+          itemHandler={this.state['isCoolorsImportOpen'] ? 'REMOVE' : 'ADD'}
+          isExpanded={this.state['isCoolorsImportOpen']}
+          onAdd={() => {
+            console.log('add')
+            this.setState({ isCoolorsImportOpen: true })
+          }}
+          onEmpty={() => {
+            console.log('remove')
+            this.props.onChangeColorsFromCoolors([])
+            this.setState({ isCoolorsImportOpen: false })
+          }}
+        >
+          <div className="settings__item">
+            <FormItem
+              id="coolors-palette-urn"
+              label={locals[this.props.lang].source.coolors.url.label}
+              helper={this.state['coolorsUrl'].helper}
+              shouldFill={false}
             >
-              <Button
-                type="icon"
-                state={
-                  this.state['coolorsUrl'].canBeSubmitted
-                    ? 'default'
-                    : 'disabled'
+              <Input
+                type="TEXT"
+                state={this.state['coolorsUrl'].state}
+                placeholder={
+                  locals[this.props.lang].source.coolors.url.placeholder
                 }
-                icon="plus"
-                feature="IMPORT_COLORS_FROM_URL"
-                action={this.importColorsFromCoolorsHandler}
+                value={this.state['coolorsUrl'].value}
+                onChange={this.isTypingHandler}
+                onFocus={() => null}
+                onBlur={() => null}
+                onConfirm={() => {
+                  if (this.state['coolorsUrl'].canBeSubmitted) {
+                    this.importColorsFromCoolorsHandler()
+                  }
+                }}
               />
-            </div>
-          </FormItem>
-        </div>
-        <ul className="list">
-          {this.props.sourceColors
-            .filter((sourceColor) => sourceColor.source === 'COOLORS')
-            .map((sourceColor) => {
-              return (
-                <CompactColorItem
-                  key={sourceColor.id}
-                  name={sourceColor.name}
-                  hex={chroma(
-                    sourceColor.rgb.r * 255,
-                    sourceColor.rgb.g * 255,
-                    sourceColor.rgb.b * 255
-                  )
-                    .hex()
-                    .toUpperCase()}
-                  uuid={sourceColor.id}
-                  lang={this.props.lang}
+              <div
+                style={{
+                  alignSelf: 'center',
+                }}
+              >
+                <Button
+                  type="icon"
+                  state={
+                    this.state['coolorsUrl'].canBeSubmitted
+                      ? 'default'
+                      : 'disabled'
+                  }
+                  icon="plus"
+                  feature="IMPORT_COLORS_FROM_URL"
+                  action={this.importColorsFromCoolorsHandler}
                 />
-              )
-            })}
-        </ul>
-      </div>
+              </div>
+            </FormItem>
+          </div>
+          <ul className="list">
+            {this.props.sourceColors
+              .filter((sourceColor) => sourceColor.source === 'COOLORS')
+              .map((sourceColor) => {
+                return (
+                  <CompactColorItem
+                    key={sourceColor.id}
+                    name={sourceColor.name}
+                    hex={chroma(
+                      sourceColor.rgb.r * 255,
+                      sourceColor.rgb.g * 255,
+                      sourceColor.rgb.b * 255
+                    )
+                      .hex()
+                      .toUpperCase()}
+                    uuid={sourceColor.id}
+                    lang={this.props.lang}
+                  />
+                )
+              })}
+          </ul>
+        </Accordion>
+      </>
     )
   }
 
@@ -270,22 +265,26 @@ export default class Source extends React.Component<Props, any> {
     return (
       <>
         <div className="controls__control controls__control--horizontal">
-          <Feature
-            isActive={
-              features.find((feature) => feature.name === 'SOURCE_CANVAS')
-                ?.isActive
-            }
-          >
-            <this.SelectedColors />
-          </Feature>
-          <Feature
-            isActive={
-              features.find((feature) => feature.name === 'SOURCE_COOLORS')
-                ?.isActive
-            }
-          >
-            <this.CoolorsColors />
-          </Feature>
+          <div className="control__block control__block--list">
+            <Feature
+              isActive={
+                features.find((feature) => feature.name === 'SOURCE_CANVAS')
+                  ?.isActive
+              }
+            >
+              <this.SelectedColors />
+            </Feature>
+          </div>
+          <div className="control__block control__block--no-padding">
+            <Feature
+              isActive={
+                features.find((feature) => feature.name === 'SOURCE_COOLORS')
+                  ?.isActive
+              }
+            >
+              <this.CoolorsColors />
+            </Feature>
+          </div>
         </div>
         <Actions
           context="CREATE"
