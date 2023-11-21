@@ -6,6 +6,7 @@ interface Props {
   indicator: number
   itemHandler: 'ADD' | 'REMOVE'
   isExpanded: boolean
+  isBlocked: boolean
   children: React.ReactNode
   onAdd: React.MouseEventHandler<Element> & React.KeyboardEventHandler<Element>
   onEmpty: React.MouseEventHandler<Element> & React.KeyboardEventHandler<Element>
@@ -18,12 +19,13 @@ export default class Accordion extends React.Component<Props> {
       <div
         className={[
           'accordion',
-          this.props.isExpanded ? 'accordion--expanded' : null
+          this.props.isExpanded ? 'accordion--expanded' : null,
+          this.props.isBlocked ? 'accordion--blocked' : null,
         ]
           .filter((n) => n)
           .join(' ')}
         onMouseDown={(e) => {
-          if ((e.target as HTMLElement).dataset.feature != 'ADD_ITEM' && !this.props.isExpanded)
+          if ((e.target as HTMLElement).dataset.feature != 'ADD_ITEM' && !this.props.isExpanded && !this.props.isBlocked)
             this.props.onAdd(e as React.MouseEvent<HTMLDivElement, MouseEvent>)
         }}
       >
@@ -41,6 +43,7 @@ export default class Accordion extends React.Component<Props> {
               <Button
                 type="icon"
                 icon="minus"
+                state={this.props.isBlocked ? 'disabled' : 'default'}
                 feature="EMPTY_ITEM"
                 action={this.props.onEmpty}
               />
@@ -48,8 +51,11 @@ export default class Accordion extends React.Component<Props> {
               <Button
                 type="icon"
                 icon="plus"
+                state={this.props.isBlocked ? 'disabled' : 'default'}
                 feature="ADD_ITEM"
-                action={this.props.onAdd}
+                action={() => {
+                  !this.props.isBlocked ? this.props.onAdd : null
+                }}
               />
             )}
           </div>
