@@ -39,7 +39,7 @@ export default class Source extends React.Component<Props, any> {
         canBeSubmitted: false,
         helper: undefined,
       },
-      isCoolorsImportOpen: false
+      isCoolorsImportOpen: false,
     }
   }
 

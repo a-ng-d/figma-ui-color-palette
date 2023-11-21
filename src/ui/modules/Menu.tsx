@@ -41,7 +41,7 @@ export default class Menu extends React.Component<Props, any> {
 
   // Direct actions
   closeMenu = (action: void) => {
-    () => action
+    ;() => action
     this.setState({ isMenuOpen: false })
   }
 
