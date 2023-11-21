@@ -679,3 +679,30 @@ div.menu--bottom-left .select-menu__menu {
   left: 0;
   bottom: calc(var(--size-xxsmall) * -1);
 }
+
+/* Accordion */
+div.accordion {
+  padding: var(--size-xxsmall);
+  outline: 1px solid var(--figma-color-border-disabled);
+}
+
+div.accordion .section-controls .section-title,
+div.accordion .section-controls .type {
+  color: var(--figma-color-text-secondary)
+}
+
+div.accordion:hover .section-controls .section-title,
+div.accordion:hover .section-controls .type,
+div.accordion--expanded .section-controls .section-title,
+div.accordion--expanded .section-controls .type {
+  color: var(--figma-color-text)
+}
+
+div.accordion .section-controls .icon {
+  background: var(--figma-color-icon-secondary)
+}
+
+div.accordion:hover .section-controls .icon,
+div.accordion--expanded .section-controls .icon {
+  background: var(--figma-color-icon)
+}
