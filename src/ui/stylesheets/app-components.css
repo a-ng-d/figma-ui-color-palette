@@ -682,7 +682,7 @@ div.menu--bottom-left .select-menu__menu {
 
 /* Accordion */
 div.accordion {
-  padding: var(--size-xxsmall);
+  padding: var(--size-xxsmall) 0;
   outline: 1px solid var(--figma-color-border-disabled);
 }
 
