@@ -227,6 +227,11 @@ export default class Shortcuts extends React.Component<Props, any> {
               this.props.trialStatus != 'PENDING' ? (
                 <button
                   className="get-pro-button"
+                  onKeyDown={(e) => {
+                    if (e.key == 'Enter') return this.props.onGetProPlan()
+                    if (e.key == ' ') return this.props.onGetProPlan()
+                    if (e.key == 'Escape') return (e.target as HTMLElement).blur()
+                  }}
                   onMouseDown={this.props.onGetProPlan}
                 >
                   <div className="icon icon--lock-off"></div>
