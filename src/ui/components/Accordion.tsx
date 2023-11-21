@@ -25,7 +25,11 @@ export default class Accordion extends React.Component<Props> {
           .filter((n) => n)
           .join(' ')}
         onMouseDown={(e) => {
-          if ((e.target as HTMLElement).dataset.feature != 'ADD_ITEM' && !this.props.isExpanded && !this.props.isBlocked)
+          if (
+            (e.target as HTMLElement).dataset.feature != 'ADD_ITEM' &&
+            !this.props.isExpanded &&
+            !this.props.isBlocked
+          )
             this.props.onAdd(e as React.MouseEvent<HTMLDivElement, MouseEvent>)
         }}
       >
@@ -53,8 +57,8 @@ export default class Accordion extends React.Component<Props> {
                 icon="plus"
                 state={this.props.isBlocked ? 'disabled' : 'default'}
                 feature="ADD_ITEM"
-                action={() => {
-                  !this.props.isBlocked ? this.props.onAdd : null
+                action={(e) => {
+                  !this.props.isBlocked ? this.props.onAdd(e as React.MouseEvent<HTMLDivElement, MouseEvent>) : null
                 }}
               />
             )}
