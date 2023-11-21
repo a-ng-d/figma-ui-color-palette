@@ -9,7 +9,8 @@ interface Props {
   isBlocked: boolean
   children: React.ReactNode
   onAdd: React.MouseEventHandler<Element> & React.KeyboardEventHandler<Element>
-  onEmpty: React.MouseEventHandler<Element> & React.KeyboardEventHandler<Element>
+  onEmpty: React.MouseEventHandler<Element> &
+    React.KeyboardEventHandler<Element>
 }
 
 export default class Accordion extends React.Component<Props> {
@@ -35,12 +36,8 @@ export default class Accordion extends React.Component<Props> {
       >
         <div className="section-controls">
           <div className="section-controls__left-part">
-            <div className="section-title">
-              {this.props.label}
-            </div>
-            <div className="type">{`(${
-              this.props.indicator
-            })`}</div>
+            <div className="section-title">{this.props.label}</div>
+            <div className="type">{`(${this.props.indicator})`}</div>
           </div>
           <div className="section-controls__right-part">
             {this.props.itemHandler === 'REMOVE' ? (
@@ -58,18 +55,17 @@ export default class Accordion extends React.Component<Props> {
                 state={this.props.isBlocked ? 'disabled' : 'default'}
                 feature="ADD_ITEM"
                 action={(e) => {
-                  !this.props.isBlocked ? this.props.onAdd(e as React.MouseEvent<HTMLDivElement, MouseEvent>) : null
+                  !this.props.isBlocked
+                    ? this.props.onAdd(
+                        e as React.MouseEvent<HTMLDivElement, MouseEvent>
+                      )
+                    : null
                 }}
               />
             )}
           </div>
         </div>
-        {this.props.isExpanded ? (
-          <div>
-            {this.props.children}
-          </div>
-          ) : null
-        }
+        {this.props.isExpanded ? <div>{this.props.children}</div> : null}
       </div>
     )
   }

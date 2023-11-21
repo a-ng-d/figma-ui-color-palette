@@ -230,7 +230,8 @@ export default class Shortcuts extends React.Component<Props, any> {
                   onKeyDown={(e) => {
                     if (e.key == 'Enter') return this.props.onGetProPlan()
                     if (e.key == ' ') return this.props.onGetProPlan()
-                    if (e.key == 'Escape') return (e.target as HTMLElement).blur()
+                    if (e.key == 'Escape')
+                      return (e.target as HTMLElement).blur()
                   }}
                   onMouseDown={this.props.onGetProPlan}
                 >

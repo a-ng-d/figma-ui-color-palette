@@ -688,33 +688,33 @@ div.accordion {
 
 div.accordion .section-controls .section-title,
 div.accordion .section-controls .type {
-  color: var(--figma-color-text-secondary)
+  color: var(--figma-color-text-secondary);
 }
 
 div.accordion:hover .section-controls .section-title,
 div.accordion:hover .section-controls .type,
 div.accordion--expanded .section-controls .section-title,
 div.accordion--expanded .section-controls .type {
-  color: var(--figma-color-text)
+  color: var(--figma-color-text);
 }
 
 div.accordion .section-controls .icon {
-  background: var(--figma-color-icon-secondary)
+  background: var(--figma-color-icon-secondary);
 }
 
 div.accordion:hover .section-controls .icon,
 div.accordion--expanded .section-controls .icon {
-  background: var(--figma-color-icon)
+  background: var(--figma-color-icon);
 }
 
 div.accordion--blocked .section-controls .section-title,
 div.accordion--blocked .section-controls .type,
 div.accordion--blocked:hover .section-controls .section-title,
 div.accordion--blocked:hover .section-controls .type {
-  color: var(--figma-color-text-disabled)
+  color: var(--figma-color-text-disabled);
 }
 
 div.accordion--blocked .section-controls .icon,
 div.accordion--blocked:hover .section-controls .icon {
-  background: var(--figma-color-icon-disabled)
+  background: var(--figma-color-icon-disabled);
 }
