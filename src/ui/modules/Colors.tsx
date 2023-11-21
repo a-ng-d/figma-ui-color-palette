@@ -289,7 +289,7 @@ export default class Colors extends React.Component<Props, any> {
 
   selectionHandler = (e: any) => {
     const target = e.currentTarget
-    if (e.target.dataset.feature === 'DISPLAY_MORE') return
+    if (e.target.dataset.feature != undefined) return
     this.setState({
       selectedElement: {
         id: target.dataset.id,

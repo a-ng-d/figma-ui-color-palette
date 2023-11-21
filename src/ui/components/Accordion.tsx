@@ -26,7 +26,7 @@ export default class Accordion extends React.Component<Props> {
           .join(' ')}
         onMouseDown={(e) => {
           if (
-            (e.target as HTMLElement).dataset.feature != 'ADD_ITEM' &&
+            (e.target as HTMLElement).dataset.feature == undefined &&
             !this.props.isExpanded &&
             !this.props.isBlocked
           )
