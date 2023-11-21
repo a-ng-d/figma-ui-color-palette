@@ -15,6 +15,7 @@ import Button from '../components/Button'
 import CompactColorItem from '../components/CompactColorItem'
 import Accordion from '../components/Accordion'
 import features from '../../utils/config'
+import isBlocked from '../../utils/isBlocked'
 import { locals } from '../../content/locals'
 
 interface Props {
@@ -182,6 +183,7 @@ export default class Source extends React.Component<Props, any> {
           }
           itemHandler={this.state['isCoolorsImportOpen'] ? 'REMOVE' : 'ADD'}
           isExpanded={this.state['isCoolorsImportOpen']}
+          isBlocked={isBlocked('SOURCE_COOLORS', this.props.planStatus)}
           onAdd={() => {
             console.log('add')
             this.setState({ isCoolorsImportOpen: true })

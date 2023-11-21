@@ -706,3 +706,15 @@ div.accordion:hover .section-controls .icon,
 div.accordion--expanded .section-controls .icon {
   background: var(--figma-color-icon)
 }
+
+div.accordion--blocked .section-controls .section-title,
+div.accordion--blocked .section-controls .type,
+div.accordion--blocked:hover .section-controls .section-title,
+div.accordion--blocked:hover .section-controls .type {
+  color: var(--figma-color-text-disabled)
+}
+
+div.accordion--blocked .section-controls .icon,
+div.accordion--blocked:hover .section-controls .icon {
+  background: var(--figma-color-icon-disabled)
+}
