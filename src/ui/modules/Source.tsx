@@ -189,7 +189,15 @@ export default class Source extends React.Component<Props, any> {
           }}
           onEmpty={() => {
             this.props.onChangeColorsFromCoolors([])
-            this.setState({ isCoolorsImportOpen: false })
+            this.setState({
+              isCoolorsImportOpen: false,
+              coolorsUrl: {
+                value: '',
+                state: 'DEFAULT',
+                canBeSubmitted: false,
+                helper: undefined,
+              },
+            })
           }}
         >
           <div className="settings__item">
