@@ -14,6 +14,7 @@ interface Props {
   trialRemainingTime: number
   lang: Language
   onReOpenFeedback: () => void
+  onReOpenTrialFeedback: () => void
   onReOpenHighlight: () => void
   onReOpenAbout: () => void
   onGetProPlan: () => void
@@ -255,9 +256,17 @@ export default class Shortcuts extends React.Component<Props, any> {
                 </div>
               ) : this.props.trialStatus === 'EXPIRED' &&
                 this.props.planStatus != 'PAID' ? (
-                <div className="label">
-                  {locals[this.props.lang].plan.trialEnded}
-                </div>
+                <>
+                  <div className="label">
+                    {locals[this.props.lang].plan.trialEnded}
+                  </div>
+                  <span className="type type--secondary">﹒</span>
+                  <Button
+                    type="tertiary"
+                    label={locals[this.props.lang].shortcuts.trialFeedback}
+                    action={this.props.onReOpenTrialFeedback}
+                  />
+                </>
               ) : null}
             </div>
           </Feature>

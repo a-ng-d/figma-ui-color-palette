@@ -19,6 +19,7 @@ export const locals: { [key: string]: any } = {
     },
     shortcuts: {
       feedback: 'Give feedback',
+      trialFeedback: 'How was it?',
       news: "What's new",
       about: 'About',
     },
@@ -142,9 +143,6 @@ export const locals: { [key: string]: any } = {
             'The Chroma values are harmonized to ensure consistent lightness across all shades, but this may make the colors look desaturated.',
         },
       },
-    },
-    feedback: {
-      title: 'Tell your experience',
     },
     about: {
       title: 'About UI Color Palette',
