@@ -100,7 +100,7 @@ export default class PriorityContainer extends React.Component<Props, any> {
         }
       >
         <Dialog
-          title={locals[this.props.lang].feedback.title}
+          title={locals[this.props.lang].shortcuts.feedback}
           actions={{}}
           onClose={this.props.onClose}
         >
@@ -111,7 +111,36 @@ export default class PriorityContainer extends React.Component<Props, any> {
               height: '100%',
             }}
             title="Voice of the UI Color Palette Users"
-            src="https://tally.so/r/w7KBNL"
+            loading="lazy"
+            src="https://tally.so/embed/w7KBNL?hideTitle=1"
+          ></iframe>
+        </Dialog>
+      </Feature>
+    )
+  }
+
+  TrialFeedback = () => {
+    return (
+      <Feature
+        isActive={
+          features.find((feature) => feature.name === 'SHORTCUTS_FEEDBACK')
+            ?.isActive
+        }
+      >
+        <Dialog
+          title={locals[this.props.lang].shortcuts.trialFeedback}
+          actions={{}}
+          onClose={this.props.onClose}
+        >
+          <iframe
+            style={{
+              border: 'none',
+              width: '100%',
+              height: '100%',
+            }}
+            title="Voice of the UI Color Palette Users"
+            loading="lazy"
+            src="https://tally.so/embed/w2Krvp?hideTitle=1"
           ></iframe>
         </Dialog>
       </Feature>
@@ -209,6 +238,7 @@ export default class PriorityContainer extends React.Component<Props, any> {
         ) : null}
         {this.props.context === 'WELCOME_TO_PRO' ? <this.WelcomeToPro /> : null}
         {this.props.context === 'FEEDBACK' ? <this.Feedback /> : null}
+        {this.props.context === 'TRIAL_FEEDBACK' ? <this.TrialFeedback /> : null}
         {this.props.context === 'HIGHLIGHT' ? <this.Highlight /> : null}
         {this.props.context === 'ABOUT' ? <this.About /> : null}
       </>
