@@ -192,7 +192,7 @@ export default class Dropdown extends React.Component<Props, any> {
           .join(' ')}
         data-position={props.option.position}
         data-is-blocked={props.option.isBlocked}
-        tabIndex={0}
+        tabIndex={props.option.isBlocked ? -1 : 0}
         onKeyDown={(e) => {
           e.key === ' ' || e.key === 'Enter'
             ? this.setState({ openedGroup: props.option.value })
@@ -228,7 +228,7 @@ export default class Dropdown extends React.Component<Props, any> {
         data-position={props.option.position}
         data-is-blocked={props.option.isBlocked}
         data-feature={this.props.feature}
-        tabIndex={0}
+        tabIndex={props.option.isBlocked ? -1 : 0}
         onKeyDown={(e) => {
           e.key === ' ' || e.key === 'Enter' ? this.onSelectItem(e) : null
           e.key === 'Escape' ? this.setState({ isMenuOpen: false }) : null
@@ -257,7 +257,7 @@ export default class Dropdown extends React.Component<Props, any> {
         data-position={props.option.position}
         data-is-blocked={props.option.isBlocked}
         data-feature={this.props.feature}
-        tabIndex={0}
+        tabIndex={props.option.isBlocked ? -1 : 0}
         onKeyDown={(e) => {
           e.key === ' ' || e.key === 'Enter' ? this.onSelectItem(e) : null
           e.key === 'Escape' ? this.setState({ openedGroup: 'EMPTY' }) : null
@@ -281,7 +281,7 @@ export default class Dropdown extends React.Component<Props, any> {
           .join(' ')}
         data-feature={props.action.feature}
         data-is-blocked={props.action.isBlocked}
-        tabIndex={0}
+        tabIndex={props.action.isBlocked ? -1 : 0}
         onKeyDown={(e) => {
           e.key === ' ' || e.key === 'Enter'
             ? this.onSelectAction(props.action.action)
