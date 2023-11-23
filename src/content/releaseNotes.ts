@@ -28,7 +28,11 @@ const releaseNotes: Array<ReleaseNote> = [
       'You can create a color palette using the quick action feature in just a few steps. Simply select the colors, choose the preset, specify the color space, and finally, name it using a simple input field.',
     ],
     numberOfNotes: 3,
-    learnMore: ['https://uicp.link/black-friday', 'https://uicp.link/whats-new', 'https://uicp.link/whats-new'],
+    learnMore: [
+      'https://uicp.link/black-friday',
+      'https://uicp.link/whats-new',
+      'https://uicp.link/whats-new',
+    ],
   },
   {
     version: '2.5.0',
