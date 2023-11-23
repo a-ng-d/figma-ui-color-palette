@@ -57,6 +57,10 @@ export default class Actions extends React.Component<Props> {
           type="primary"
           label={locals[this.props.lang].actions.createLocalVariables}
           feature="SYNC_LOCAL_VARIABLES"
+          isBlocked={isBlocked(
+            'SYNC_VARIABLES',
+            this.props.planStatus ?? 'UNPAID'
+          )}
           action={this.props.onSyncLocalVariables}
         />
       </Feature>
