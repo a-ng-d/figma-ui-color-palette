@@ -27,7 +27,7 @@ const releaseNotes: Array<ReleaseNote> = [
       "In the Source context when creating, you can view the selected colors (from the document canvas). Additionally, you're able to paste a URL from a Coolors palette to supplement your color collection prior to scaling.",
       'You can create a color palette using the quick action feature in just a few steps. Simply select the colors, choose the preset, specify the color space, and finally, name it using a simple input field.',
     ],
-    numberOfNotes: 2,
+    numberOfNotes: 3,
     learnMore: ['https://uicp.link/black-friday', 'https://uicp.link/whats-new', 'https://uicp.link/whats-new'],
   },
   {
