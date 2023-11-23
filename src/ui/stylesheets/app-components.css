@@ -264,7 +264,8 @@ div.popin__footer {
   justify-content: space-between;
   align-items: center;
   height: var(--size-xxlarge);
-  padding: var(--size-xsmall) var(--size-xsmall) var(--size-xsmall) var(--size-xsmall);
+  padding: var(--size-xsmall) var(--size-xsmall) var(--size-xsmall)
+    var(--size-xsmall);
 }
 
 div.popin__actions {
