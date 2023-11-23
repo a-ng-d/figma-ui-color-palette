@@ -1,4 +1,7 @@
 import type { ReleaseNote } from '../utils/types'
+import rnv281 from './images/release_note_v28_1.webp'
+import rnv282 from './images/release_note_v28_2.webp'
+import rnv283 from './images/release_note_v28_3.webp'
 import rnv251 from './images/release_note_v25_1.webp'
 import rnv252 from './images/release_note_v25_2.webp'
 import rnv241 from './images/release_note_v24_1.webp'
@@ -11,8 +14,29 @@ import rnv19 from './images/release_note_v19.webp'
 
 const releaseNotes: Array<ReleaseNote> = [
   {
-    version: '2.5.0',
+    version: '2.8.0',
     isMostRecent: true,
+    title: [
+      'Black Friday Offer',
+      'Import colors from Coolors',
+      'Create a palette in fewer steps',
+    ],
+    image: [rnv283, rnv281, rnv282],
+    content: [
+      'The Pro plan for UI Color Palette is 90% off when billed yearly for the next two weeks. Happy Thanksgiving to our fellow Americans 🇺🇸!',
+      "In the Source context when creating, you can view the selected colors (from the document canvas). Additionally, you're able to paste a URL from a Coolors palette to supplement your color collection prior to scaling.",
+      'You can create a color palette using the quick action feature in just a few steps. Simply select the colors, choose the preset, specify the color space, and finally, name it using a simple input field.',
+    ],
+    numberOfNotes: 3,
+    learnMore: [
+      'https://uicp.link/black-friday',
+      'https://uicp.link/whats-new',
+      'https://uicp.link/whats-new',
+    ],
+  },
+  {
+    version: '2.5.0',
+    isMostRecent: false,
     title: [
       '72-hour trial period to spread your palettes',
       'UI Color Palette is on LinkedIn',

@@ -256,15 +256,16 @@ div.popin__content {
   flex: 1;
   display: flex;
   overflow-y: auto;
-  padding: 0 0 var(--size-xsmall) 0;
+  padding: 0;
 }
 
 div.popin__footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: var(--size-xlarge);
-  padding: 0 var(--size-xsmall) var(--size-xsmall) var(--size-xsmall);
+  height: var(--size-xxlarge);
+  padding: var(--size-xsmall) var(--size-xsmall) var(--size-xsmall)
+    var(--size-xsmall);
 }
 
 div.popin__actions {

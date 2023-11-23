@@ -697,6 +697,9 @@ class App extends React.Component<any, any> {
               onReOpenFeedback={() =>
                 this.setState({ priorityContainerContext: 'FEEDBACK' })
               }
+              onReOpenTrialFeedback={() =>
+                this.setState({ priorityContainerContext: 'TRIAL_FEEDBACK' })
+              }
               onReOpenHighlight={() =>
                 this.setState({ priorityContainerContext: 'HIGHLIGHT' })
               }

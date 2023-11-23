@@ -20,6 +20,7 @@ export type Language = 'en-US'
 export type PriorityContext =
   | 'EMPTY'
   | 'FEEDBACK'
+  | 'TRIAL_FEEDBACK'
   | 'HIGHLIGHT'
   | 'WELCOME_TO_PRO'
   | 'WELCOME_TO_TRIAL'
