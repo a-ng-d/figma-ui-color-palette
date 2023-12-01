@@ -60,7 +60,7 @@
     "webpack-cli": "^4.9.1"
   },
   "dependencies": {
-    "@a-ng-d/figmug.actions.button": "^0.0.1",
+    "@a-ng-d/figmug.actions.button": "^0.0.2",
     "apca-w3": "^0.1.9",
     "chroma-js": "^2.4.2",
     "file-saver": "^2.0.5",
