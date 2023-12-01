@@ -9,11 +9,6 @@
   background: var(--figma-color-icon);
 }
 
-/* Icons */
-div.icon {
-  pointer-events: none;
-}
-
 /* Get Pro button */
 button.get-pro-button {
   height: var(--size-small);
