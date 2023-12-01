@@ -13,7 +13,7 @@ import type {
   ThemesMessage,
 } from '../../utils/types'
 import Dispatcher from './Dispatcher'
-import Button from '../components/Button'
+import { Button } from '@a-ng-d/figmug.actions.button'
 import Message from '../components/Message'
 import ThemeItem from '../components/ThemeItem'
 import Actions from './Actions'

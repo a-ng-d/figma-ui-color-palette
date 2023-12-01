@@ -1,6 +1,6 @@
 import * as React from 'react'
 import type { HexModel, Language } from '../../utils/types'
-import Button from './Button'
+import { Button } from '@a-ng-d/figmug.actions.button'
 
 interface Props {
   name: string

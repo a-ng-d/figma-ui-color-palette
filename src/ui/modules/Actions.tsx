@@ -1,7 +1,7 @@
 import * as React from 'react'
 import type { Language, SourceColorConfiguration } from '../../utils/types'
 import Feature from '../components/Feature'
-import Button from '../components/Button'
+import { Button } from '@a-ng-d/figmug.actions.button'
 import Dropdown from '../components/Dropdown'
 import features from '../../utils/config'
 import isBlocked from '../../utils/isBlocked'

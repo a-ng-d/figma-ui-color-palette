@@ -11,7 +11,7 @@ import type {
   Language,
 } from '../../utils/types'
 import Dispatcher from './Dispatcher'
-import Button from '../components/Button'
+import { Button } from '@a-ng-d/figmug.actions.button'
 import ColorItem from '../components/ColorItem'
 import Actions from './Actions'
 import { locals } from '../../content/locals'

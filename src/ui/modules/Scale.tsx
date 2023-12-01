@@ -9,7 +9,7 @@ import type {
   SourceColorConfiguration,
 } from '../../utils/types'
 import Feature from '../components/Feature'
-import Button from '../components/Button'
+import { Button } from '@a-ng-d/figmug.actions.button'
 import Dropdown from '../components/Dropdown'
 import Slider from '../components/Slider'
 import Message from '../components/Message'

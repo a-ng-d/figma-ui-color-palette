@@ -1,5 +1,5 @@
 import * as React from 'react'
-import Button from './Button'
+import { Button } from '@a-ng-d/figmug.actions.button'
 
 interface Props {
   label: string

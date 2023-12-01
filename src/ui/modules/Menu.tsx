@@ -1,6 +1,6 @@
 import * as React from 'react'
 import type { DropdownAction } from '../../utils/types'
-import Button from '../components/Button'
+import { Button } from '@a-ng-d/figmug.actions.button'
 
 interface Props {
   icon: string
