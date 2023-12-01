@@ -9,16 +9,7 @@
   background: var(--figma-color-icon);
 }
 
-/* Icon buttons */
-div.icon-button {
-  cursor: default;
-}
-
-div.icon-button--disabled {
-  pointer-events: none;
-  opacity: 0.3;
-}
-
+/* Icons */
 div.icon {
   pointer-events: none;
 }

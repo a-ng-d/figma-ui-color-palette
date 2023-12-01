@@ -245,108 +245,6 @@
   background-color: var(--figma-color-icon-disabled);
 }
 
-/* Button */
-.button--primary {
-  --blue: var(--figma-color-bg-brand);
-  --white: var(--figma-color-text-onbrand);
-}
-
-.button--primary:enabled:hover {
-  background-color: var(--figma-color-bg-brand-hover);
-}
-
-.button--primary:enabled:active {
-  --blue: var(--figma-color-bg-brand-pressed);
-  --black3: var(--figma-color-bg-brand-pressed);
-}
-
-.button--primary:enabled:focus {
-  --blue: var(--figma-color-bg-brand-pressed);
-  --black3: var(--figma-color-border-brand-strong);
-}
-
-.button--primary:disabled {
-  --black3: var(--figma-color-bg-disabled);
-  --white: var(--figma-color-text-ondisabled);
-}
-
-.button--secondary {
-  --white: var(--figma-color-bg);
-  --black8: var(--figma-color-text);
-}
-
-.button--secondary:hover {
-  --white: var(--figma-color-bg-hover);
-}
-
-.button--secondary:enabled:focus {
-  --blue: var(--figma-color-border-selected);
-}
-
-.button--secondary:enabled:active {
-  --white: var(--figma-color-bg-hover);
-  --blue: var(--figma-color-border-selected);
-}
-
-.button--tertiary,
-.button--tertiary a {
-  color: var(--figma-color-text-brand);
-  text-decoration: none;
-}
-
-.button--tertiary a:focus-visible {
-  outline: none;
-  text-decoration: underline;
-}
-
-.icon-button {
-  background-clip: padding-box !important;
-  border-radius: 3px;
-  border: 1px solid transparent;
-}
-
-.icon-button * {
-  filter: none;
-}
-
-.icon-button:hover {
-  background: transparent;
-  background-color: var(--figma-color-bg-hover);
-}
-
-.icon-button:focus {
-  border: 2px solid var(--figma-color-border-selected);
-}
-
-.icon-button:active {
-  border: 1px solid transparent;
-  background-color: var(--figma-color-bg-hover);
-}
-
-.icon-button--selected {
-  --blue: var(--figma-color-bg-brand);
-}
-
-.icon-button--selected .icon {
-  background: var(--figma-color-icon-onbrand);
-}
-
-.icon-button--selected:hover {
-  background-color: var(--figma-color-bg-brand);
-}
-
-.icon-button--disabled {
-  opacity: 1;
-}
-
-.icon-button--disabled .icon {
-  background: var(--figma-color-icon-disabled);
-}
-
-.icon-button--disabled:focus {
-  border: 2px solid transparent;
-}
-
 /* Select menu */
 .select-menu {
   display: flex;
@@ -569,8 +467,7 @@
 }
 
 /* Blocked state */
-.button--blocked:after,
-.radio--blocked:after,
+.radio--blockxed:after,
 .form-item--blocked:after,
 .switch--blocked:after,
 .select-menu__item--blocked:after,
