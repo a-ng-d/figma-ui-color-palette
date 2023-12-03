@@ -115,7 +115,7 @@ export default class Knob extends React.Component<Props, any> {
               }}
               onConfirm={(e: React.KeyboardEvent<HTMLInputElement>) => {
                 this.props.onValidStopValue?.(this.props.shortId, e)
-                this.setState({ isStopInputOpen: false })
+                if (e.key === 'Enter') this.setState({ isStopInputOpen: false })
               }}
             />
           </div>
