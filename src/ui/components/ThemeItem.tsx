@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { HexModel, Language } from '../../utils/types'
 import Feature from './Feature'
-import Input from './Input'
+import { Input } from '@a-ng-d/figmug.inputs.input'
 import { Button } from '@a-ng-d/figmug.actions.button'
 import FormItem from './FormItem'
 import doMap from '../../utils/doMap'
@@ -141,7 +141,6 @@ export default class ThemeItem extends React.Component<Props, any> {
                   value={this.props.name}
                   feature="RENAME_THEME"
                   charactersLimit={24}
-                  onChange={this.props.onChangeThemes}
                   onFocus={this.props.onCancellationSelection}
                   onBlur={this.props.onChangeThemes}
                   onConfirm={this.props.onChangeThemes}
@@ -220,7 +219,6 @@ export default class ThemeItem extends React.Component<Props, any> {
                       locals[this.props.lang].global.description.placeholder
                     }
                     feature="UPDATE_DESCRIPTION"
-                    onChange={this.props.onChangeThemes}
                     onFocus={this.props.onCancellationSelection}
                     onBlur={this.props.onChangeThemes}
                     onConfirm={this.props.onChangeThemes}

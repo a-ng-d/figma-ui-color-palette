@@ -1,6 +1,6 @@
 import * as React from 'react'
 import type { ActionsList } from '../../utils/types'
-import Input from './Input'
+import { Input } from '@a-ng-d/figmug.inputs.input'
 
 interface Props {
   id: string
@@ -43,6 +43,7 @@ export default class Knob extends React.Component<Props, any> {
         if (this.props.canBeTyped)
           this.setState({
             isStopInputOpen: true,
+            stopInputValue: this.props.value,
           })
       },
       Escape: () => {
@@ -103,9 +104,6 @@ export default class Knob extends React.Component<Props, any> {
               step="0.1"
               feature="TYPE_STOP_VALUE"
               isAutoFocus={true}
-              onChange={(e) =>
-                this.setState({ stopInputValue: e.target.value })
-              }
               onFocus={() =>
                 this.setState({
                   stopInputValue: this.props.value,

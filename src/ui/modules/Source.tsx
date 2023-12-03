@@ -10,7 +10,7 @@ import Feature from '../components/Feature'
 import Message from '../components/Message'
 import Actions from './Actions'
 import FormItem from '../components/FormItem'
-import Input from '../components/Input'
+import { Input } from '@a-ng-d/figmug.inputs.input'
 import { Button } from '@a-ng-d/figmug.actions.button'
 import CompactColorItem from '../components/CompactColorItem'
 import Accordion from '../components/Accordion'
@@ -215,8 +215,6 @@ export default class Source extends React.Component<Props, any> {
                 }
                 value={this.state['coolorsUrl'].value}
                 onChange={this.isTypingHandler}
-                onFocus={() => null}
-                onBlur={() => null}
                 onConfirm={() => {
                   if (this.state['coolorsUrl'].canBeSubmitted) {
                     this.importColorsFromCoolorsHandler()

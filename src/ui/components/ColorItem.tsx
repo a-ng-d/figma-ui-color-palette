@@ -2,7 +2,7 @@ import * as React from 'react'
 import chroma from 'chroma-js'
 import type { HexModel, Language } from '../../utils/types'
 import Feature from './Feature'
-import Input from './Input'
+import { Input } from '@a-ng-d/figmug.inputs.input'
 import { Button } from '@a-ng-d/figmug.actions.button'
 import FormItem from './FormItem'
 import doMap from './../../utils/doMap'
@@ -144,7 +144,6 @@ export default class ColorItem extends React.Component<Props, any> {
                   value={this.props.name}
                   charactersLimit={24}
                   feature="RENAME_COLOR"
-                  onChange={this.props.onChangeColors}
                   onFocus={this.props.onCancellationSelection}
                   onBlur={this.props.onChangeColors}
                   onConfirm={this.props.onChangeColors}
@@ -179,9 +178,9 @@ export default class ColorItem extends React.Component<Props, any> {
                       min="0"
                       max="100"
                       feature="UPDATE_LIGHTNESS"
-                      onChange={this.props.onChangeColors}
                       onFocus={this.props.onCancellationSelection}
                       onBlur={this.props.onChangeColors}
+                      onConfirm={this.props.onChangeColors}
                     />
                     <Input
                       type="NUMBER"
@@ -189,9 +188,9 @@ export default class ColorItem extends React.Component<Props, any> {
                       min="0"
                       max="100"
                       feature="UPDATE_CHROMA"
-                      onChange={this.props.onChangeColors}
                       onFocus={this.props.onCancellationSelection}
                       onBlur={this.props.onChangeColors}
+                      onConfirm={this.props.onChangeColors}
                     />
                     <Input
                       type="NUMBER"
@@ -203,9 +202,9 @@ export default class ColorItem extends React.Component<Props, any> {
                       min="0"
                       max="360"
                       feature="UPDATE_HUE"
-                      onChange={this.props.onChangeColors}
                       onFocus={this.props.onCancellationSelection}
                       onBlur={this.props.onChangeColors}
+                      onConfirm={this.props.onChangeColors}
                     />
                   </div>
                 </div>
@@ -260,9 +259,9 @@ export default class ColorItem extends React.Component<Props, any> {
                     min="-360"
                     max="360"
                     feature="SHIFT_HUE"
-                    onChange={this.props.onChangeColors}
                     onFocus={this.props.onCancellationSelection}
                     onBlur={this.props.onChangeColors}
+                    onConfirm={this.props.onChangeColors}
                   />
                 </FormItem>
               </div>
@@ -287,7 +286,6 @@ export default class ColorItem extends React.Component<Props, any> {
                       locals[this.props.lang].global.description.placeholder
                     }
                     feature="UPDATE_DESCRIPTION"
-                    onChange={this.props.onChangeColors}
                     onFocus={this.props.onCancellationSelection}
                     onBlur={this.props.onChangeColors}
                     onConfirm={this.props.onChangeColors}

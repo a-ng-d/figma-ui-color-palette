@@ -7,7 +7,7 @@ import type {
 } from '../../utils/types'
 import Feature from '../components/Feature'
 import FormItem from './../components/FormItem'
-import Input from './../components/Input'
+import { Input } from '@a-ng-d/figmug.inputs.input'
 import Switch from '../components/Switch'
 import Message from '../components/Message'
 import Dropdown from '../components/Dropdown'
@@ -123,11 +123,6 @@ export default class Settings extends React.Component<Props> {
                 this.props.planStatus
               )}
               feature="UPDATE_DESCRIPTION"
-              onChange={
-                isBlocked('SETTINGS_PALETTE_DESCRIPTION', this.props.planStatus)
-                  ? () => null
-                  : this.props.onChangeSettings
-              }
               onFocus={
                 isBlocked('SETTINGS_PALETTE_DESCRIPTION', this.props.planStatus)
                   ? () => null
