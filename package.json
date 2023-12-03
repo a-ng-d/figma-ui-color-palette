@@ -61,7 +61,8 @@
   },
   "dependencies": {
     "@a-ng-d/figmug.actions.button": "^0.0.8",
-    "@a-ng-d/figmug.inputs.input": "^0.0.14",
+    "@a-ng-d/figmug.inputs.input": "^0.0.24",
+    "@a-ng-d/figmug.inputs.select": "^0.0.5",
     "apca-w3": "^0.1.9",
     "chroma-js": "^2.4.2",
     "file-saver": "^2.0.5",
