@@ -2,9 +2,6 @@
 .onboarding-tip__msg,
 .type,
 .section-title,
-.checkbox__label,
-.switch__label,
-.radio__label,
 .select-menu__label {
   color: var(--figma-color-text);
 }
@@ -141,108 +138,6 @@
 
 .color__icon--circle {
   border-radius: var(--size-xxsmall);
-}
-
-/* Checkbox */
-.checkbox__label:before {
-  --black8: var(--figma-color-border-strong);
-}
-
-.checkbox__box:checked + .checkbox__label:before {
-  --blue: var(--figma-color-bg-brand);
-}
-
-/* Switch */
-.switch__label:before {
-  --white: var(--figma-color-bg-disabled-secondary);
-}
-
-.switch__label:before,
-.switch__label:after {
-  --black8-opaque: var(--figma-color-bg-disabled-secondary);
-}
-
-.switch__toggle:checked + .switch__label:before {
-  --white: var(--figma-color-bg-brand);
-}
-
-.switch__toggle:checked + .switch__label:before,
-.switch__toggle:checked + .switch__label:after {
-  --black8-opaque: var(--figma-color-bg-brand);
-}
-
-.switch--blocked {
-  pointer-events: none;
-}
-
-.switch--blocked .switch__label {
-  color: var(--figma-color-text-disabled);
-}
-
-.switch--blocked .switch__label:before {
-  --white: var(--figma-color-bg-disabled);
-}
-
-.switch--blocked .switch__label:after {
-  --white: var(--figma-color-bg-disabled-secondary);
-}
-
-.switch--blocked .switch__label:before,
-.switch--blocked .switch__label:after {
-  --black8-opaque: var(--figma-color-bg-disabled);
-}
-
-.switch--blocked .switch__toggle:checked + .switch__label:before {
-  --white: var(--figma-color-icon-brand-secondary);
-}
-
-.switch--blocked .switch__toggle:checked + .switch__label:after {
-  --white: var(--figma-color-icon-onbrand-secondary);
-}
-
-.switch--blocked .switch__toggle:checked + .switch__label:before,
-.switch--blocked .switch__toggle:checked + .switch__label:after {
-  --black8-opaque: var(--figma-color-icon-brand-secondary);
-}
-
-/* Radio */
-.radio__label:before {
-  --black8: var(--figma-color-border-strong);
-}
-
-.radio__label {
-  padding: 0 var(--size-xxxsmall) 0 var(--size-small);
-}
-
-.radio__button:checked + .radio__label:before {
-  background-image: none;
-}
-
-.radio__button:checked + .radio__label:after {
-  content: '';
-  width: 6px;
-  height: 6px;
-  background-color: var(--figma-color-icon);
-  position: absolute;
-  left: 13px;
-  border-radius: 50%;
-  top: 14px;
-}
-
-.radio--blocked {
-  pointer-events: none;
-}
-
-.radio--blocked .radio__label {
-  color: var(--figma-color-text-disabled);
-}
-
-.radio--blocked .radio__label:before {
-  --black8: var(--figma-color-border-disabled);
-}
-
-.radio--blocked .radio__button:checked + .radio__label:after {
-  background-color: var(--figma-color-icon-disabled);
 }
 
 /* Select menu */
@@ -383,9 +278,7 @@
 }
 
 /* Blocked state */
-.radio--blockxed:after,
 .form-item--blocked:after,
-.switch--blocked:after,
 .select-menu__item--blocked:after,
 .accordion--blocked .section-controls__left-part:after {
   content: 'Pro';

@@ -8,7 +8,7 @@ import type {
 import Feature from '../components/Feature'
 import FormItem from './../components/FormItem'
 import { Input } from '@a-ng-d/figmug.inputs.input'
-import Switch from '../components/Switch'
+import { Select } from '@a-ng-d/figmug.inputs.select'
 import Message from '../components/Message'
 import Dropdown from '../components/Dropdown'
 import Actions from './Actions'
@@ -332,8 +332,10 @@ export default class Settings extends React.Component<Props> {
         }
       >
         <div className="settings__item">
-          <Switch
+          <Select
             id="update-algorithm"
+            type="SWITCH_BUTTON"
+            name="algorythm"
             label={locals[this.props.lang].settings.color.newAlgorithm.label}
             isChecked={this.props.isNewAlgorithm ?? true}
             isBlocked={isBlocked(
