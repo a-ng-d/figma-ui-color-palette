@@ -60,9 +60,13 @@
     "webpack-cli": "^4.9.1"
   },
   "dependencies": {
-    "@a-ng-d/figmug.actions.button": "^0.0.8",
-    "@a-ng-d/figmug.inputs.input": "^0.0.24",
-    "@a-ng-d/figmug.inputs.select": "^0.0.5",
+    "@a-ng-d/figmug.actions.button": "^0.0.9",
+    "@a-ng-d/figmug.inputs.input": "^0.0.26",
+    "@a-ng-d/figmug.inputs.select": "^0.0.6",
+    "@a-ng-d/figmug.actions.tabs": "^0.0.1",
+    "@a-ng-d/figmug.layouts.bar": "^0.0.1",
+    "@a-ng-d/figmug.stylesheets.icons": "^0.0.6",
+    "@a-ng-d/figmug.stylesheets.texts": "^0.0.1",
     "apca-w3": "^0.1.9",
     "chroma-js": "^2.4.2",
     "file-saver": "^2.0.5",
