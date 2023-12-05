@@ -393,6 +393,10 @@ export default class Settings extends React.Component<Props> {
                 'SETTINGS_TEXT_COLORS_THEME',
                 this.props.planStatus
               )}
+              isDisabled={isBlocked(
+                'SETTINGS_TEXT_COLORS_THEME',
+                this.props.planStatus
+              )}
               feature="CHANGE_TEXT_LIGHT_COLOR"
               onChange={
                 isBlocked('SETTINGS_TEXT_COLORS_THEME', this.props.planStatus)
@@ -426,6 +430,10 @@ export default class Settings extends React.Component<Props> {
               type="COLOR"
               value={this.props.textColorsTheme?.darkColor ?? '#OOOOOO'}
               isBlocked={isBlocked(
+                'SETTINGS_TEXT_COLORS_THEME',
+                this.props.planStatus
+              )}
+              isDisabled={isBlocked(
                 'SETTINGS_TEXT_COLORS_THEME',
                 this.props.planStatus
               )}

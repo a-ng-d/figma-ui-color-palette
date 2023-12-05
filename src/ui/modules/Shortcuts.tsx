@@ -1,7 +1,7 @@
 import * as React from 'react'
 import type { Language, TrialStatus } from '../../utils/types'
 import Feature from '../components/Feature'
-import Bar from '../components/Bar'
+import { Bar } from '@a-ng-d/figmug.layouts.bar'
 import { Button } from '@a-ng-d/figmug.actions.button'
 import Menu from './Menu'
 import features from '../../utils/config'

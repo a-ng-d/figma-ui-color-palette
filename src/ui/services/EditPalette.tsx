@@ -13,8 +13,8 @@ import type {
   EditorType,
 } from '../../utils/types'
 import Feature from '../components/Feature'
-import Bar from '../components/Bar'
-import Tabs from '../components/Tabs'
+import { Bar } from '@a-ng-d/figmug.layouts.bar'
+import { Tabs } from '@a-ng-d/figmug.actions.tabs'
 import Scale from '../modules/Scale'
 import Colors from '../modules/Colors'
 import Themes from '../modules/Themes'

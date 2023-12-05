@@ -77,45 +77,6 @@ div.form-item--blocked label {
   color: var(--figma-color-text-disabled);
 }
 
-/* Tabs */
-div.tabs {
-  display: flex;
-  align-items: stretch;
-}
-
-div.tabs .tabs__tab {
-  padding: 0 var(--size-xxsmall);
-  font-weight: var(--font-weight-medium);
-  color: var(--figma-color-text-secondary);
-  line-height: var(--size-large);
-}
-
-div.tabs .tabs__tab:hover {
-  color: var(--figma-color-text-hover);
-}
-
-div.tabs .tabs__tab--active {
-  font-weight: var(--font-weight-bold);
-  color: var(--figma-color-text);
-}
-
-/* Bar */
-div.bar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  height: var(--size-large);
-  padding: 0 var(--size-xsmall);
-}
-
-div.bar--compact {
-  height: var(--size-medium);
-}
-
-div.bar--text-only {
-  align-items: baseline;
-}
-
 /* Pop in*/
 div.popin {
   display: flex;

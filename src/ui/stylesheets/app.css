@@ -4,6 +4,7 @@ body {
   overflow: hidden;
 }
 
+
 ul {
   padding: 0;
   margin: 0;
@@ -160,7 +161,7 @@ div.section-controls .section-title {
 div.export-palette__preview {
   padding: 0 var(--size-xsmall);
   flex: 1;
-  overflow-y: auto;
+  display: grid;
 }
 
 div.export-palette__preview textarea {

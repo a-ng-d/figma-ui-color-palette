@@ -61,6 +61,10 @@ export default class Actions extends React.Component<Props> {
             'SYNC_VARIABLES',
             this.props.planStatus ?? 'UNPAID'
           )}
+          isDisabled={isBlocked(
+            'SYNC_VARIABLES',
+            this.props.planStatus ?? 'UNPAID'
+          )}
           action={this.props.onSyncLocalVariables}
         />
       </Feature>
@@ -80,10 +84,10 @@ export default class Actions extends React.Component<Props> {
             <Button
               type="primary"
               label={locals[this.props.lang].actions.createPalette}
-              state={
-                this.props.sourceColors.length > 0 ? 'default' : 'disabled'
-              }
               feature="CREATE_PALETTE"
+              isDisabled={
+                this.props.sourceColors.length > 0 ? false : true
+              }
               action={this.props.onCreatePalette}
             />
           </Feature>
