@@ -46,37 +46,6 @@ button.get-pro-button .icon {
   background: var(--figma-color-icon-oncomponent);
 }
 
-/* Form components */
-div.form-item {
-  display: flex;
-  align-items: baseline;
-  gap: var(--size-xxsmall);
-  padding: 0 0 0 var(--size-xxsmall);
-  position: relative;
-}
-
-div.form-item--fill label {
-  flex: 0 1 96px;
-}
-
-div.form-item .input,
-div.form-item .textarea,
-div.form-item .select-menu {
-  flex: 1;
-}
-
-div.form-item__helper .onboarding-tip {
-  padding: 0;
-}
-
-div.form-item--blocked {
-  pointer-events: none;
-}
-
-div.form-item--blocked label {
-  color: var(--figma-color-text-disabled);
-}
-
 /* Pop in*/
 div.popin {
   display: flex;
@@ -255,80 +224,6 @@ div.onboarding__actions {
   gap: var(--size-xxsmall);
   justify-content: center;
   padding: 0 calc(var(--size-xsmall) + var(--size-xxxsmall));
-}
-
-div.onboarding-tip {
-  padding: 0 calc(var(--size-xsmall) + var(--size-xxxsmall));
-}
-
-div.onboarding-tip--blocked .onboarding-tip__msg {
-  color: var(--figma-color-text-disabled);
-}
-
-div.onboarding-tip--blocked .icon {
-  background: var(--figma-color-icon-disabled);
-}
-
-/* Tips ticker */
-.onboarding-tip__ticker {
-  flex: 1;
-  display: flex;
-  position: relative;
-  overflow: hidden;
-}
-
-.onboarding-tip__ticker:before,
-.onboarding-tip__ticker:after {
-  content: '';
-  position: absolute;
-  width: var(--size-xsmall);
-  height: 100%;
-  z-index: 2;
-}
-
-.onboarding-tip__ticker:before {
-  left: 0;
-  background: linear-gradient(
-    90deg,
-    var(--figma-color-bg) 0%,
-    transparent 100%
-  );
-}
-
-.onboarding-tip__ticker:after {
-  right: 0;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    var(--figma-color-bg) 100%
-  );
-}
-
-.onboarding-tip__tips {
-  display: inline-flex;
-  align-items: center;
-  gap: 0 var(--size-medium);
-  padding: 0 var(--size-xsmall);
-  position: relative;
-  width: max-content;
-}
-
-.onboarding-tip__ticker:hover .onboarding-tip__tips {
-  animation-play-state: paused !important;
-}
-
-.callout .onboarding-tip__msg {
-  white-space: nowrap;
-}
-
-@keyframes ticker {
-  0% {
-    transform: translateX(0%);
-  }
-
-  100% {
-    transform: translateX(-100%);
-  }
 }
 
 /* Slider */
@@ -528,43 +423,4 @@ div.menu--bottom-right .select-menu__menu {
 div.menu--bottom-left .select-menu__menu {
   left: 0;
   bottom: calc(var(--size-xxsmall) * -1);
-}
-
-/* Accordion */
-div.accordion {
-  padding: var(--size-xxsmall) 0;
-  outline: 1px solid var(--figma-color-border-disabled);
-}
-
-div.accordion .section-controls .section-title,
-div.accordion .section-controls .type {
-  color: var(--figma-color-text-secondary);
-}
-
-div.accordion:hover .section-controls .section-title,
-div.accordion:hover .section-controls .type,
-div.accordion--expanded .section-controls .section-title,
-div.accordion--expanded .section-controls .type {
-  color: var(--figma-color-text);
-}
-
-div.accordion .section-controls .icon {
-  background: var(--figma-color-icon-secondary);
-}
-
-div.accordion:hover .section-controls .icon,
-div.accordion--expanded .section-controls .icon {
-  background: var(--figma-color-icon);
-}
-
-div.accordion--blocked .section-controls .section-title,
-div.accordion--blocked .section-controls .type,
-div.accordion--blocked:hover .section-controls .section-title,
-div.accordion--blocked:hover .section-controls .type {
-  color: var(--figma-color-text-disabled);
-}
-
-div.accordion--blocked .section-controls .icon,
-div.accordion--blocked:hover .section-controls .icon {
-  background: var(--figma-color-icon-disabled);
 }

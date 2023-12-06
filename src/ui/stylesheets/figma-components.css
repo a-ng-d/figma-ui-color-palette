@@ -278,9 +278,7 @@
 }
 
 /* Blocked state */
-.form-item--blocked:after,
-.select-menu__item--blocked:after,
-.accordion--blocked .section-controls__left-part:after {
+.select-menu__item--blocked:after {
   content: 'Pro';
   height: var(--size-xsmall);
   margin: 0 0 0 var(--size-xxsmall);
