@@ -14,9 +14,9 @@ import Dispatcher from './Dispatcher'
 import { Button } from '@a-ng-d/figmug.actions.button'
 import ColorItem from '../components/ColorItem'
 import Actions from './Actions'
+import { Message } from '@a-ng-d/figmug.dialog.message'
 import { locals } from '../../content/locals'
 import { uid } from 'uid'
-import Message from '../components/Message'
 
 interface Props {
   colors: Array<ColorConfiguration>

@@ -6,10 +6,10 @@ import type {
   TextColorsThemeHexModel,
 } from '../../utils/types'
 import Feature from '../components/Feature'
-import FormItem from './../components/FormItem'
+import { FormItem } from '@a-ng-d/figmug.inputs.form-item'
 import { Input } from '@a-ng-d/figmug.inputs.input'
 import { Select } from '@a-ng-d/figmug.inputs.select'
-import Message from '../components/Message'
+import { Message } from '@a-ng-d/figmug.dialog.message'
 import Dropdown from '../components/Dropdown'
 import Actions from './Actions'
 import features from '../../utils/config'
