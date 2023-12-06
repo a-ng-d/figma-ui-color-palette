@@ -317,9 +317,8 @@ export default class Themes extends React.Component<Props, any> {
               <Button
                 type="icon"
                 icon="plus"
-                state={
-                  isBlocked('THEMES', this.props.planStatus) ? 'disabled' : ''
-                }
+                isBlocked={isBlocked('THEMES', this.props.planStatus)}
+                isDisabled={isBlocked('THEMES', this.props.planStatus)}
                 feature="ADD_THEME"
                 action={
                   isBlocked('THEMES', this.props.planStatus)
@@ -340,12 +339,8 @@ export default class Themes extends React.Component<Props, any> {
                   type="primary"
                   feature="ADD_THEME"
                   label={locals[this.props.lang].themes.callout.cta}
-                  state={
-                    isBlocked('THEMES', this.props.planStatus)
-                      ? 'disabled'
-                      : 'default'
-                  }
                   isBlocked={isBlocked('THEMES', this.props.planStatus)}
+                  isDisabled={isBlocked('THEMES', this.props.planStatus)}
                   action={
                     isBlocked('THEMES', this.props.planStatus)
                       ? () => null

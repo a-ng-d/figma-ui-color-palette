@@ -7,13 +7,13 @@ import type {
   SourceColorConfiguration,
 } from '../../utils/types'
 import Feature from '../components/Feature'
-import Message from '../components/Message'
+import { Message } from '@a-ng-d/figmug.dialog.message'
 import Actions from './Actions'
-import FormItem from '../components/FormItem'
+import { FormItem } from '@a-ng-d/figmug.inputs.form-item'
 import { Input } from '@a-ng-d/figmug.inputs.input'
 import { Button } from '@a-ng-d/figmug.actions.button'
 import CompactColorItem from '../components/CompactColorItem'
-import Accordion from '../components/Accordion'
+import { Accordion } from '@a-ng-d/figmug.layouts.accordion'
 import features from '../../utils/config'
 import isBlocked from '../../utils/isBlocked'
 import { locals } from '../../content/locals'
@@ -228,11 +228,7 @@ export default class Source extends React.Component<Props, any> {
               >
                 <Button
                   type="icon"
-                  state={
-                    this.state['coolorsUrl'].canBeSubmitted
-                      ? 'default'
-                      : 'disabled'
-                  }
+                  isDisabled={!this.state['coolorsUrl'].canBeSubmitted}
                   icon="plus"
                   feature="IMPORT_COLORS_FROM_URL"
                   action={this.importColorsFromCoolorsHandler}

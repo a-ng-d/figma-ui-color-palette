@@ -212,9 +212,7 @@ export default class Scale extends React.Component<Props, any> {
                   <Button
                     type="icon"
                     icon="plus"
-                    state={
-                      this.props.preset.scale.length == 24 ? 'disabled' : ''
-                    }
+                    isDisabled={this.props.preset.scale.length == 24}
                     feature="ADD_STOP"
                     action={
                       this.props.preset.scale.length >= 24
