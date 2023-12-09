@@ -226,23 +226,16 @@ export default class Shortcuts extends React.Component<Props, any> {
             <div className="pro-zone">
               {this.props.planStatus === 'UNPAID' &&
               this.props.trialStatus != 'PENDING' ? (
-                <button
-                  className="get-pro-button"
-                  onKeyDown={(e) => {
-                    if (e.key == 'Enter') return this.props.onGetProPlan()
-                    if (e.key == ' ') return this.props.onGetProPlan()
-                    if (e.key == 'Escape')
-                      return (e.target as HTMLElement).blur()
-                  }}
-                  onMouseDown={this.props.onGetProPlan}
-                >
-                  <div className="icon icon--lock-off"></div>
-                  <div className="type">
-                    {this.props.trialStatus === 'UNUSED'
+                <Button
+                  type="compact"
+                  icon="lock-off"
+                  label={
+                    this.props.trialStatus === 'UNUSED'
                       ? locals[this.props.lang].plan.tryPro
-                      : locals[this.props.lang].plan.getPro}
-                  </div>
-                </button>
+                      : locals[this.props.lang].plan.getPro
+                  }
+                  action={this.props.onGetProPlan}
+                />
               ) : null}
               {this.props.trialStatus === 'PENDING' ? (
                 <div className="label">
