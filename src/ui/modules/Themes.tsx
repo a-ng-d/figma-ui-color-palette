@@ -14,7 +14,7 @@ import type {
 } from '../../utils/types'
 import Dispatcher from './Dispatcher'
 import { Button } from '@a-ng-d/figmug.actions.button'
-import { Message } from '@a-ng-d/figmug.dialog.message'
+import { Message } from '@a-ng-d/figmug.dialogs.message'
 import ThemeItem from '../components/ThemeItem'
 import Actions from './Actions'
 import isBlocked from '../../utils/isBlocked'

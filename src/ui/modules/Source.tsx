@@ -7,9 +7,9 @@ import type {
   SourceColorConfiguration,
 } from '../../utils/types'
 import Feature from '../components/Feature'
-import { Message } from '@a-ng-d/figmug.dialog.message'
+import { Message } from '@a-ng-d/figmug.dialogs.message'
 import Actions from './Actions'
-import { FormItem } from '@a-ng-d/figmug.inputs.form-item'
+import { FormItem } from '@a-ng-d/figmug.layouts.form-item'
 import { Input } from '@a-ng-d/figmug.inputs.input'
 import { Button } from '@a-ng-d/figmug.actions.button'
 import CompactColorItem from '../components/CompactColorItem'
