@@ -90,7 +90,7 @@ const loadUI = async (palette: SceneNode) => {
         msg.export === 'JSON_TOKENS_STUDIO'
           ? exportJsonTokensStudio(palette)
           : null
-        msg.export === 'CSS' ? exportCss(palette) : null
+        msg.export === 'CSS' ? exportCss(palette, msg.colorSpace) : null
         msg.export === 'SWIFT' ? exportSwift(palette) : null
         msg.export === 'XML' ? exportXml(palette) : null
         msg.export === 'CSV' ? exportCsv(palette) : null

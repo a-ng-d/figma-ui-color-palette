@@ -28,6 +28,10 @@ export default class Export extends React.Component<Props, any> {
     this.counter = 0
     this.state = {
       format: 'EXPORT_TO_JSON',
+      colorSpace: {
+        selected: '',
+        options: [],
+      }
     }
   }
 
@@ -74,9 +78,114 @@ export default class Export extends React.Component<Props, any> {
       EXPORT_TO_CSS: () => {
         this.setState({
           format: 'EXPORT_TO_CSS',
+          colorSpace: {
+            selected: 'RGB',
+            options: [
+              {
+                label: "RGB",
+                value: 'EXPORT_TO_CSS_RGB',
+                position: 0,
+                isActive: features.find(
+                  (feature) => feature.name === 'EXPORT_JSON'
+                )?.isActive,
+                isBlocked: isBlocked(
+                  'EXPORT_JSON',
+                  this.props.planStatus
+                ),
+                children: [],
+              },
+              {
+                label: "HEX",
+                value: 'EXPORT_TO_CSS_HEX',
+                position: 1,
+                isActive: features.find(
+                  (feature) => feature.name === 'EXPORT_JSON'
+                )?.isActive,
+                isBlocked: isBlocked(
+                  'EXPORT_JSON',
+                  this.props.planStatus
+                ),
+                children: [],
+              },
+              {
+                label: "LCH",
+                value: 'EXPORT_TO_CSS_LCH',
+                position: 2,
+                isActive: features.find(
+                  (feature) => feature.name === 'EXPORT_JSON'
+                )?.isActive,
+                isBlocked: isBlocked(
+                  'EXPORT_JSON',
+                  this.props.planStatus
+                ),
+                children: [],
+              },
+              {
+                label: "P3",
+                value: 'EXPORT_TO_CSS_P3',
+                position: 3,
+                isActive: features.find(
+                  (feature) => feature.name === 'EXPORT_JSON'
+                )?.isActive,
+                isBlocked: isBlocked(
+                  'EXPORT_JSON',
+                  this.props.planStatus
+                ),
+                children: [],
+              },
+            ],
+          }
         })
         parent.postMessage(
-          { pluginMessage: { type: 'EXPORT_PALETTE', export: 'CSS' } },
+          { pluginMessage: { type: 'EXPORT_PALETTE', export: 'CSS', colorSpace: 'RGB' } },
+          '*'
+        )
+      },
+      EXPORT_TO_CSS_RGB: () => {
+        this.setState({
+          colorSpace: {
+            selected: 'RGB',
+            options: this.state['colorSpace'].options,
+          }
+        })
+        parent.postMessage(
+          { pluginMessage: { type: 'EXPORT_PALETTE', export: 'CSS', colorSpace: 'RGB' } },
+          '*'
+        )
+      },
+      EXPORT_TO_CSS_LCH: () => {
+        this.setState({
+          colorSpace: {
+            selected: 'LCH',
+            options: this.state['colorSpace'].options,
+          }
+        })
+        parent.postMessage(
+          { pluginMessage: { type: 'EXPORT_PALETTE', export: 'CSS', colorSpace: 'LCH' } },
+          '*'
+        )
+      },
+      EXPORT_TO_CSS_P3: () => {
+        this.setState({
+          colorSpace: {
+            selected: 'P3',
+            options: this.state['colorSpace'].options,
+          }
+        })
+        parent.postMessage(
+          { pluginMessage: { type: 'EXPORT_PALETTE', export: 'CSS', colorSpace: 'P3' } },
+          '*'
+        )
+      },
+      EXPORT_TO_CSS_HEX: () => {
+        this.setState({
+          colorSpace: {
+            selected: 'HEX',
+            options: this.state['colorSpace'].options,
+          }
+        })
+        parent.postMessage(
+          { pluginMessage: { type: 'EXPORT_PALETTE', export: 'CSS', colorSpace: 'HEX' } },
           '*'
         )
       },
@@ -250,6 +359,17 @@ export default class Export extends React.Component<Props, any> {
                 alignment="RIGHT"
                 onChange={this.exportHandler}
               />
+              {this.state['format'] === 'EXPORT_TO_CSS' ? (
+                <Dropdown
+                  id="select-color-space"
+                  options={this.state['colorSpace'].options}
+                  selected={`${this.state['format']}_${this.state['colorSpace'].selected}`}
+                  feature="SELECT_COLOR_SPACE"
+                  parentClassName="controls"
+                  alignment="RIGHT"
+                  onChange={this.exportHandler}
+                />
+              ) : null}
             </div>
           </div>
           <div className="export-palette__preview">
