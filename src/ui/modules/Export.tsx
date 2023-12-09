@@ -86,10 +86,10 @@ export default class Export extends React.Component<Props, any> {
                 value: 'EXPORT_TO_CSS_RGB',
                 position: 0,
                 isActive: features.find(
-                  (feature) => feature.name === 'EXPORT_JSON'
+                  (feature) => feature.name === 'EXPORT_CSS_RGB'
                 )?.isActive,
                 isBlocked: isBlocked(
-                  'EXPORT_JSON',
+                  'EXPORT_CSS_RGB',
                   this.props.planStatus
                 ),
                 children: [],
@@ -99,10 +99,10 @@ export default class Export extends React.Component<Props, any> {
                 value: 'EXPORT_TO_CSS_HEX',
                 position: 1,
                 isActive: features.find(
-                  (feature) => feature.name === 'EXPORT_JSON'
+                  (feature) => feature.name === 'EXPORT_CSS_HEX'
                 )?.isActive,
                 isBlocked: isBlocked(
-                  'EXPORT_JSON',
+                  'EXPORT_CSS_HEX',
                   this.props.planStatus
                 ),
                 children: [],
@@ -112,10 +112,10 @@ export default class Export extends React.Component<Props, any> {
                 value: 'EXPORT_TO_CSS_LCH',
                 position: 2,
                 isActive: features.find(
-                  (feature) => feature.name === 'EXPORT_JSON'
+                  (feature) => feature.name === 'EXPORT_CSS_LCH'
                 )?.isActive,
                 isBlocked: isBlocked(
-                  'EXPORT_JSON',
+                  'EXPORT_CSS_LCH',
                   this.props.planStatus
                 ),
                 children: [],
@@ -125,10 +125,10 @@ export default class Export extends React.Component<Props, any> {
                 value: 'EXPORT_TO_CSS_P3',
                 position: 3,
                 isActive: features.find(
-                  (feature) => feature.name === 'EXPORT_JSON'
+                  (feature) => feature.name === 'EXPORT_CSS_P3'
                 )?.isActive,
                 isBlocked: isBlocked(
-                  'EXPORT_JSON',
+                  'EXPORT_CSS_P3',
                   this.props.planStatus
                 ),
                 children: [],
