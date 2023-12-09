@@ -1,9 +1,11 @@
 import * as React from 'react'
 import type { Language, TrialStatus } from '../../utils/types'
 import Feature from '../components/Feature'
-import Bar from '../components/Bar'
-import Button from '../components/Button'
-import Menu from './Menu'
+import { Bar } from '@a-ng-d/figmug.layouts.bar'
+import { Button } from '@a-ng-d/figmug.actions.button'
+import { Menu } from '@a-ng-d/figmug.navigation.menu'
+import { icons } from '@a-ng-d/figmug.stylesheets.icons'
+import { texts } from '@a-ng-d/figmug.stylesheets.texts'
 import features from '../../utils/config'
 import { locals } from '../../content/locals'
 import isBlocked from '../../utils/isBlocked'
@@ -208,7 +210,7 @@ export default class Shortcuts extends React.Component<Props, any> {
               />
             </div>
             <div
-              className="box-resizer-grip icon--resize-grip"
+              className={`box-resizer-grip ${icons['icon--resize-grip']}`}
               onMouseDown={this.onHold.bind(this)}
               onMouseMove={this.onResize.bind(this)}
               onMouseUp={this.onReleased.bind(this)}
@@ -226,26 +228,19 @@ export default class Shortcuts extends React.Component<Props, any> {
             <div className="pro-zone">
               {this.props.planStatus === 'UNPAID' &&
               this.props.trialStatus != 'PENDING' ? (
-                <button
-                  className="get-pro-button"
-                  onKeyDown={(e) => {
-                    if (e.key == 'Enter') return this.props.onGetProPlan()
-                    if (e.key == ' ') return this.props.onGetProPlan()
-                    if (e.key == 'Escape')
-                      return (e.target as HTMLElement).blur()
-                  }}
-                  onMouseDown={this.props.onGetProPlan}
-                >
-                  <div className="icon icon--lock-off"></div>
-                  <div className="type">
-                    {this.props.trialStatus === 'UNUSED'
+                <Button
+                  type="compact"
+                  icon="lock-off"
+                  label={
+                    this.props.trialStatus === 'UNUSED'
                       ? locals[this.props.lang].plan.tryPro
-                      : locals[this.props.lang].plan.getPro}
-                  </div>
-                </button>
+                      : locals[this.props.lang].plan.getPro
+                  }
+                  action={this.props.onGetProPlan}
+                />
               ) : null}
               {this.props.trialStatus === 'PENDING' ? (
-                <div className="label">
+                <div className={`label ${texts.label}`}>
                   <div className="type--bold">
                     {this.props.trialRemainingTime}
                   </div>
@@ -257,10 +252,14 @@ export default class Shortcuts extends React.Component<Props, any> {
               ) : this.props.trialStatus === 'EXPIRED' &&
                 this.props.planStatus != 'PAID' ? (
                 <>
-                  <div className="label">
+                  <div className={`label ${texts.label}`}>
                     {locals[this.props.lang].plan.trialEnded}
                   </div>
-                  <span className="type type--secondary">﹒</span>
+                  <span
+                    className={`type ${texts.type} ${texts['type--secondary']}`}
+                  >
+                    ﹒
+                  </span>
                   <Button
                     type="tertiary"
                     label={locals[this.props.lang].shortcuts.trialFeedback}

@@ -1,11 +1,12 @@
 import * as React from 'react'
 import type { ActionsList, Language } from '../../utils/types'
-import Input from '../components/Input'
+import { Input } from '@a-ng-d/figmug.inputs.input'
+import { Dropdown } from '@a-ng-d/figmug.inputs.dropdown'
 import Actions from './Actions'
+import { texts } from '@a-ng-d/figmug.stylesheets.texts'
 import features from '../../utils/config'
 import isBlocked from '../../utils/isBlocked'
 import { locals } from '../../content/locals'
-import Dropdown from '../components/Dropdown'
 
 interface Props {
   exportPreview: string
@@ -142,9 +143,9 @@ export default class Export extends React.Component<Props, any> {
         <div className="control__block">
           <div className="section-controls">
             <div className="section-controls__left-part">
-              <div className="section-title">
+              <div className={`section-title ${texts['section-title']}`}>
                 {locals[this.props.lang].export.format}
-                <div className="type">(7)</div>
+                <div className={`type ${texts.type}`}>(7)</div>
               </div>
             </div>
             <div className="section-controls__right-part">
@@ -253,12 +254,9 @@ export default class Export extends React.Component<Props, any> {
           </div>
           <div className="export-palette__preview">
             <Input
-              type="LONG_TEXT"
+              id="code-snippet-dragging"
+              type="CODE"
               value={this.props.exportPreview}
-              isReadOnly={true}
-              isMonospaceFont={true}
-              onBlur={this.deSelectPreview}
-              onFocus={(e) => this.selectPreview(e)}
             />
           </div>
         </div>

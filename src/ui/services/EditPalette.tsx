@@ -13,19 +13,19 @@ import type {
   EditorType,
 } from '../../utils/types'
 import Feature from '../components/Feature'
-import Bar from '../components/Bar'
-import Tabs from '../components/Tabs'
+import { Bar } from '@a-ng-d/figmug.layouts.bar'
+import { Tabs } from '@a-ng-d/figmug.actions.tabs'
 import Scale from '../modules/Scale'
 import Colors from '../modules/Colors'
 import Themes from '../modules/Themes'
 import Export from '../modules/Export'
 import Settings from '../modules/Settings'
-import FormItem from '../components/FormItem'
-import Dropdown from '../components/Dropdown'
+import { FormItem } from '@a-ng-d/figmug.layouts.form-item'
+import { Dropdown } from '@a-ng-d/figmug.inputs.dropdown'
 import features from '../../utils/config'
 import { locals } from '../../content/locals'
 import isBlocked from '../../utils/isBlocked'
-import doSnakeCase from '../../utils/doSnakeCase'
+import { doSnakeCase } from '@a-ng-d/figmug.modules.do-snake-case'
 
 interface Props {
   name: string

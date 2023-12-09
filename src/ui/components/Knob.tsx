@@ -1,6 +1,7 @@
 import * as React from 'react'
 import type { ActionsList } from '../../utils/types'
-import Input from './Input'
+import { Input } from '@a-ng-d/figmug.inputs.input'
+import { texts } from '@a-ng-d/figmug.stylesheets.texts'
 
 interface Props {
   id: string
@@ -43,6 +44,7 @@ export default class Knob extends React.Component<Props, any> {
         if (this.props.canBeTyped)
           this.setState({
             isStopInputOpen: true,
+            stopInputValue: this.props.value,
           })
       },
       Escape: () => {
@@ -90,7 +92,7 @@ export default class Knob extends React.Component<Props, any> {
         onMouseDown={this.props.onMouseDown}
         onClick={(e) => this.clickHandler(e)}
       >
-        <div className="type type--inverse slider__tooltip">
+        <div className={`type ${texts.type} type--inverse slider__tooltip`}>
           {this.transformStopValue(this.props.value)}
         </div>
         {this.state['isStopInputOpen'] ? (
@@ -103,9 +105,6 @@ export default class Knob extends React.Component<Props, any> {
               step="0.1"
               feature="TYPE_STOP_VALUE"
               isAutoFocus={true}
-              onChange={(e) =>
-                this.setState({ stopInputValue: e.target.value })
-              }
               onFocus={() =>
                 this.setState({
                   stopInputValue: this.props.value,
@@ -117,12 +116,14 @@ export default class Knob extends React.Component<Props, any> {
               }}
               onConfirm={(e: React.KeyboardEvent<HTMLInputElement>) => {
                 this.props.onValidStopValue?.(this.props.shortId, e)
-                this.setState({ isStopInputOpen: false })
+                if (e.key === 'Enter') this.setState({ isStopInputOpen: false })
               }}
             />
           </div>
         ) : null}
-        <div className="type slider__label">{this.props.shortId}</div>
+        <div className={`type ${texts.type} slider__label`}>
+          {this.props.shortId}
+        </div>
         <div className="slider__graduation"></div>
       </div>
     )

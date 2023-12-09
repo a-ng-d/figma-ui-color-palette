@@ -1,8 +1,9 @@
 import * as React from 'react'
 import type { Language, SourceColorConfiguration } from '../../utils/types'
 import Feature from '../components/Feature'
-import Button from '../components/Button'
-import Dropdown from '../components/Dropdown'
+import { Button } from '@a-ng-d/figmug.actions.button'
+import { Dropdown } from '@a-ng-d/figmug.inputs.dropdown'
+import { texts } from '@a-ng-d/figmug.stylesheets.texts'
 import features from '../../utils/config'
 import isBlocked from '../../utils/isBlocked'
 import { locals } from '../../content/locals'
@@ -58,7 +59,11 @@ export default class Actions extends React.Component<Props> {
           label={locals[this.props.lang].actions.createLocalVariables}
           feature="SYNC_LOCAL_VARIABLES"
           isBlocked={isBlocked(
-            'SYNC_VARIABLES',
+            'SYNC_LOCAL_VARIABLES',
+            this.props.planStatus ?? 'UNPAID'
+          )}
+          isDisabled={isBlocked(
+            'SYNC_LOCAL_VARIABLES',
             this.props.planStatus ?? 'UNPAID'
           )}
           action={this.props.onSyncLocalVariables}
@@ -80,16 +85,16 @@ export default class Actions extends React.Component<Props> {
             <Button
               type="primary"
               label={locals[this.props.lang].actions.createPalette}
-              state={
-                this.props.sourceColors.length > 0 ? 'default' : 'disabled'
-              }
               feature="CREATE_PALETTE"
+              isDisabled={this.props.sourceColors.length > 0 ? false : true}
               action={this.props.onCreatePalette}
             />
           </Feature>
         </div>
         <div className="actions__left">
-          <div className="type">{`${this.props.sourceColors.length} ${
+          <div className={`type ${texts.type}`}>{`${
+            this.props.sourceColors.length
+          } ${
             this.props.sourceColors.length > 1
               ? locals[this.props.lang].actions.sourceColorsNumber.several
               : locals[this.props.lang].actions.sourceColorsNumber.single

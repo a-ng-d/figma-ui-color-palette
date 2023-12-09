@@ -6,12 +6,13 @@ import type {
   TextColorsThemeHexModel,
 } from '../../utils/types'
 import Feature from '../components/Feature'
-import FormItem from './../components/FormItem'
-import Input from './../components/Input'
-import Switch from '../components/Switch'
-import Message from '../components/Message'
-import Dropdown from '../components/Dropdown'
+import { FormItem } from '@a-ng-d/figmug.layouts.form-item'
+import { Input } from '@a-ng-d/figmug.inputs.input'
+import { Select } from '@a-ng-d/figmug.inputs.select'
+import { Message } from '@a-ng-d/figmug.dialogs.message'
+import { Dropdown } from '@a-ng-d/figmug.inputs.dropdown'
 import Actions from './Actions'
+import { texts } from '@a-ng-d/figmug.stylesheets.texts'
 import features from '../../utils/config'
 import isBlocked from '../../utils/isBlocked'
 import { locals } from '../../content/locals'
@@ -123,11 +124,6 @@ export default class Settings extends React.Component<Props> {
                 this.props.planStatus
               )}
               feature="UPDATE_DESCRIPTION"
-              onChange={
-                isBlocked('SETTINGS_PALETTE_DESCRIPTION', this.props.planStatus)
-                  ? () => null
-                  : this.props.onChangeSettings
-              }
               onFocus={
                 isBlocked('SETTINGS_PALETTE_DESCRIPTION', this.props.planStatus)
                   ? () => null
@@ -337,8 +333,10 @@ export default class Settings extends React.Component<Props> {
         }
       >
         <div className="settings__item">
-          <Switch
+          <Select
             id="update-algorithm"
+            type="SWITCH_BUTTON"
+            name="algorythm"
             label={locals[this.props.lang].settings.color.newAlgorithm.label}
             isChecked={this.props.isNewAlgorithm ?? true}
             isBlocked={isBlocked(
@@ -396,6 +394,10 @@ export default class Settings extends React.Component<Props> {
                 'SETTINGS_TEXT_COLORS_THEME',
                 this.props.planStatus
               )}
+              isDisabled={isBlocked(
+                'SETTINGS_TEXT_COLORS_THEME',
+                this.props.planStatus
+              )}
               feature="CHANGE_TEXT_LIGHT_COLOR"
               onChange={
                 isBlocked('SETTINGS_TEXT_COLORS_THEME', this.props.planStatus)
@@ -429,6 +431,10 @@ export default class Settings extends React.Component<Props> {
               type="COLOR"
               value={this.props.textColorsTheme?.darkColor ?? '#OOOOOO'}
               isBlocked={isBlocked(
+                'SETTINGS_TEXT_COLORS_THEME',
+                this.props.planStatus
+              )}
+              isDisabled={isBlocked(
                 'SETTINGS_TEXT_COLORS_THEME',
                 this.props.planStatus
               )}
@@ -471,7 +477,7 @@ export default class Settings extends React.Component<Props> {
       <div className="settings__group">
         <div className="section-controls">
           <div className="section-controls__left-part">
-            <div className="section-title">
+            <div className={`section-title ${texts['section-title']}`}>
               {locals[this.props.lang].settings.global.title}
             </div>
           </div>
@@ -488,7 +494,7 @@ export default class Settings extends React.Component<Props> {
       <div className="settings__group">
         <div className="section-controls">
           <div className="section-controls__left-part">
-            <div className="section-title">
+            <div className={`section-title ${texts['section-title']}`}>
               {locals[this.props.lang].settings.color.title}
             </div>
           </div>
@@ -504,7 +510,7 @@ export default class Settings extends React.Component<Props> {
       <div className="settings__group">
         <div className="section-controls">
           <div className="section-controls__left-part">
-            <div className="section-title">
+            <div className={`section-title ${texts['section-title']}`}>
               {locals[this.props.lang].settings.contrast.title}
             </div>
           </div>

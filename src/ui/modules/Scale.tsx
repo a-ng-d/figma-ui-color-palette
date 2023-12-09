@@ -9,11 +9,12 @@ import type {
   SourceColorConfiguration,
 } from '../../utils/types'
 import Feature from '../components/Feature'
-import Button from '../components/Button'
-import Dropdown from '../components/Dropdown'
+import { Button } from '@a-ng-d/figmug.actions.button'
+import { Dropdown } from '@a-ng-d/figmug.inputs.dropdown'
 import Slider from '../components/Slider'
-import Message from '../components/Message'
+import { Message } from '@a-ng-d/figmug.dialogs.message'
 import Actions from './Actions'
+import { texts } from '@a-ng-d/figmug.stylesheets.texts'
 import { palette, presets } from '../../utils/palettePackage'
 import features from '../../utils/config'
 import isBlocked from '../../utils/isBlocked'
@@ -158,7 +159,7 @@ export default class Scale extends React.Component<Props, any> {
         <div className="control__block control__block--distributed">
           <div className="section-controls">
             <div className="section-controls__left-part">
-              <div className="section-title">
+              <div className={`section-title ${texts['section-title']}`}>
                 {locals[this.props.lang].scale.title}
               </div>
             </div>
@@ -212,9 +213,7 @@ export default class Scale extends React.Component<Props, any> {
                   <Button
                     type="icon"
                     icon="plus"
-                    state={
-                      this.props.preset.scale.length == 24 ? 'disabled' : ''
-                    }
+                    isDisabled={this.props.preset.scale.length == 24}
                     feature="ADD_STOP"
                     action={
                       this.props.preset.scale.length >= 24
@@ -272,15 +271,17 @@ export default class Scale extends React.Component<Props, any> {
         <div className="control__block control__block--distributed">
           <div className="section-controls">
             <div className="section-controls__left-part">
-              <div className="section-title">
+              <div className={`section-title ${texts['section-title']}`}>
                 {locals[this.props.lang].scale.title}
-                <div className="type">{`(${
+                <div className={`type ${texts.type}`}>{`(${
                   Object.entries(this.props.scale ?? {}).length
                 })`}</div>
               </div>
             </div>
             <div className="section-controls__right-part">
-              <div className="label">{this.props.preset.name}</div>
+              <div className={`label ${texts.label}`}>
+                {this.props.preset.name}
+              </div>
             </div>
           </div>
           <Feature

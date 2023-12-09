@@ -1,7 +1,7 @@
 import * as React from 'react'
 import type { Language, PriorityContext, TrialStatus } from '../../utils/types'
 import Feature from '../components/Feature'
-import Dialog from './Dialog'
+import { Dialog } from '@a-ng-d/figmug.dialogs.dialog'
 import Highlight from './Highlight'
 import About from './About'
 import cp from '../../content/images/choose_plan.webp'

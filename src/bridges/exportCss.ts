@@ -1,5 +1,5 @@
 import type { PaletteData } from '../utils/types'
-import doKebabCase from '../utils/doKebabCase'
+import { doKebabCase } from '@a-ng-d/figmug.modules.do-kebab-case'
 import { locals, lang } from '../content/locals'
 
 const exportCss = (palette: SceneNode) => {

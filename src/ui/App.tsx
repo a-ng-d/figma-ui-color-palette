@@ -32,10 +32,9 @@ import features from '../utils/config'
 import 'figma-plugin-ds/dist/figma-plugin-ds.css'
 import './stylesheets/app.css'
 import './stylesheets/app-components.css'
-import './stylesheets/figma-components.css'
 
 let isPaletteSelected = false
-const container = document.getElementById('react-page'),
+const container = document.getElementById('app'),
   root = createRoot(container)
 
 const settingsMessage: SettingsMessage = {
@@ -153,9 +152,10 @@ class App extends React.Component<any, any> {
       })
 
     const setCustomPreset = () => {
-      presets.find((preset) => preset.id === 'CUSTOM')!.scale = [1, 2]
+      const customPreset = presets.find((preset) => preset.id === 'CUSTOM')
+      if (customPreset != undefined) customPreset.scale = [1, 2]
       this.setState({
-        preset: presets.find((preset) => preset.id === 'CUSTOM'),
+        preset: customPreset,
         onGoingStep: 'preset changed',
       })
     }
