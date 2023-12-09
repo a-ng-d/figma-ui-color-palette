@@ -154,6 +154,14 @@ const features: Array<Feature> = [
     service: ['CREATE'],
   },
   {
+    name: 'PRESETS_TAILWIND',
+    description: 'Tailwind color system',
+    isActive: true,
+    isPro: false,
+    type: 'ACTION',
+    service: ['CREATE'],
+  },
+  {
     name: 'PRESETS_ANT',
     description: 'Ant Design color system',
     isActive: true,

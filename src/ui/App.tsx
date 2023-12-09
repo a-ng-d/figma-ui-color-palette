@@ -126,6 +126,12 @@ class App extends React.Component<any, any> {
         preset: presets.find((preset) => preset.id === 'MATERIAL_3'),
         onGoingStep: 'preset changed',
       })
+    
+    const setTailwindPreset = () =>
+      this.setState({
+        preset: presets.find((preset) => preset.id === 'TAILWIND'),
+        onGoingStep: 'preset changed',
+      })
 
     const setAntDesignPreset = () =>
       this.setState({
@@ -169,6 +175,7 @@ class App extends React.Component<any, any> {
     const actions: ActionsList = {
       MATERIAL: () => setMaterialDesignPreset(),
       MATERIAL_3: () => setMaterial3Preset(),
+      TAILWIND: () => setTailwindPreset(),
       ANT: () => setAntDesignPreset(),
       ADS: () => setAdsPreset(),
       ADS_NEUTRAL: () => setAdsNeutralPreset(),

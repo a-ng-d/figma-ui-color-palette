@@ -33,6 +33,14 @@ export const presets: Array<PresetConfiguration> = [
     id: 'MATERIAL_3',
   },
   {
+    name: 'Tailwind 50-950',
+    scale: [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950],
+    min: 16,
+    max: 96,
+    isDistributed: true,
+    id: 'TAILWIND',
+  },
+  {
     name: 'Ant Design 1-10',
     scale: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
     min: 24,
