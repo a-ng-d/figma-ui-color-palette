@@ -151,6 +151,14 @@ export default class Scale extends React.Component<Props, any> {
     return messages
   }
 
+  setLightnessScale = (scale: Array<Number>) => {
+    const lightnessScale: ScaleConfiguration = {}
+    this.props.preset.scale.forEach(scale =>
+      lightnessScale[`lightness-${scale}`] = scale
+    )
+    return lightnessScale
+  }
+
   // Templates
   Create = () => {
     palette.scale = {}
@@ -231,15 +239,27 @@ export default class Scale extends React.Component<Props, any> {
                 ?.isActive
             }
           >
-            <Slider
-              type="EQUAL"
-              hasPreset={this.props.hasPreset}
-              presetName={this.props.preset.name}
-              stops={this.props.preset.scale}
-              min={this.props.preset.min}
-              max={this.props.preset.max}
-              onChange={this.slideHandler}
-            />
+            {this.props.preset.isDistributed ? (
+              <Slider
+                type="EQUAL"
+                hasPreset={this.props.hasPreset}
+                presetName={this.props.preset.name}
+                stops={this.props.preset.scale}
+                min={this.props.preset.min}
+                max={this.props.preset.max}
+                onChange={this.slideHandler}
+              />
+            ) : (
+              <Slider
+                type="CUSTOM"
+                hasPreset={this.props.hasPreset}
+                presetName={this.props.preset.name}
+                stops={this.props.preset.scale}
+                scale={this.setLightnessScale(this.props.preset.scale)}
+                onChange={this.slideHandler}
+              />
+            )}
+            
           </Feature>
           <Feature
             isActive={

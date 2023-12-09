@@ -21,13 +21,23 @@ export const presets: Array<PresetConfiguration> = [
     scale: [50, 100, 200, 300, 400, 500, 600, 700, 800, 900],
     min: 24,
     max: 96,
+    isDistributed: true,
     id: 'MATERIAL',
+  },
+  {
+    name: 'Material 3 100-0 (Google)',
+    scale: [100, 99, 95, 90, 80, 70, 60, 50, 40, 30, 20, 10, 0],
+    min: 0,
+    max: 100,
+    isDistributed: false,
+    id: 'MATERIAL_3',
   },
   {
     name: 'Ant Design 1-10',
     scale: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
     min: 24,
     max: 96,
+    isDistributed: true,
     id: 'ANT',
   },
   {
@@ -35,6 +45,7 @@ export const presets: Array<PresetConfiguration> = [
     scale: [50, 75, 100, 200, 300, 400, 500],
     min: 24,
     max: 96,
+    isDistributed: true,
     id: 'ADS',
   },
   {
@@ -45,6 +56,7 @@ export const presets: Array<PresetConfiguration> = [
     ],
     min: 8,
     max: 100,
+    isDistributed: true,
     id: 'ADS_NEUTRAL',
   },
   {
@@ -52,6 +64,7 @@ export const presets: Array<PresetConfiguration> = [
     scale: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
     min: 24,
     max: 96,
+    isDistributed: true,
     id: 'CARBON',
   },
   {
@@ -59,6 +72,7 @@ export const presets: Array<PresetConfiguration> = [
     scale: [50, 100, 200, 300, 400, 500, 600, 700],
     min: 24,
     max: 96,
+    isDistributed: true,
     id: 'BASE',
   },
   {
@@ -66,6 +80,7 @@ export const presets: Array<PresetConfiguration> = [
     scale: [1, 2],
     min: 10,
     max: 90,
+    isDistributed: true,
     id: 'CUSTOM',
   },
 ]

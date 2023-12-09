@@ -146,6 +146,14 @@ const features: Array<Feature> = [
     service: ['CREATE'],
   },
   {
+    name: 'PRESETS_MATERIAL_3',
+    description: 'Material 3 color system',
+    isActive: true,
+    isPro: false,
+    type: 'ACTION',
+    service: ['CREATE'],
+  },
+  {
     name: 'PRESETS_ANT',
     description: 'Ant Design color system',
     isActive: true,

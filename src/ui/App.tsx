@@ -121,6 +121,12 @@ class App extends React.Component<any, any> {
         onGoingStep: 'preset changed',
       })
 
+    const setMaterial3Preset = () =>
+      this.setState({
+        preset: presets.find((preset) => preset.id === 'MATERIAL_3'),
+        onGoingStep: 'preset changed',
+      })
+
     const setAntDesignPreset = () =>
       this.setState({
         preset: presets.find((preset) => preset.id === 'ANT'),
@@ -162,6 +168,7 @@ class App extends React.Component<any, any> {
 
     const actions: ActionsList = {
       MATERIAL: () => setMaterialDesignPreset(),
+      MATERIAL_3: () => setMaterial3Preset(),
       ANT: () => setAntDesignPreset(),
       ADS: () => setAdsPreset(),
       ADS_NEUTRAL: () => setAdsNeutralPreset(),
@@ -186,6 +193,7 @@ class App extends React.Component<any, any> {
             scale: scale,
             min: palette.min,
             max: palette.max,
+            isDistributed: true,
             id: presets.find((preset) => preset.id === 'CUSTOM')?.id,
           },
         })
@@ -201,6 +209,7 @@ class App extends React.Component<any, any> {
             scale: scale,
             min: palette.min,
             max: palette.max,
+            isDistributed: true,
             id: presets.find((preset) => preset.id === 'CUSTOM')?.id,
           },
         })

@@ -131,6 +131,7 @@ export interface PresetConfiguration {
   scale: Array<number>
   min: number
   max: number
+  isDistributed: boolean
   id: string
 }
 
