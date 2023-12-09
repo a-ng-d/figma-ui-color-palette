@@ -56,7 +56,8 @@ figma.on('run', async ({ parameters }: RunEvent) => {
             scale: doLightnessScale(
               selectedPreset?.scale ?? [1, 2],
               selectedPreset?.min ?? 0,
-              selectedPreset?.max ?? 100
+              selectedPreset?.max ?? 100,
+              selectedPreset?.isDistributed ? true : false
             ),
             colorSpace: parameters.space.toUpperCase().replace(' ', '_'),
             view: parameters.view.toUpperCase().replace(' ', '_'),

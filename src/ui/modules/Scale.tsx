@@ -18,6 +18,7 @@ import { texts } from '@a-ng-d/figmug.stylesheets.texts'
 import { palette, presets } from '../../utils/palettePackage'
 import features from '../../utils/config'
 import isBlocked from '../../utils/isBlocked'
+import doLightnessScale from '../../utils/doLightnessScale'
 import { locals } from '../../content/locals'
 import Dispatcher from './Dispatcher'
 
@@ -151,14 +152,6 @@ export default class Scale extends React.Component<Props, any> {
     return messages
   }
 
-  setLightnessScale = (scale: Array<Number>) => {
-    const lightnessScale: ScaleConfiguration = {}
-    this.props.preset.scale.forEach(scale =>
-      lightnessScale[`lightness-${scale}`] = scale
-    )
-    return lightnessScale
-  }
-
   // Templates
   Create = () => {
     palette.scale = {}
@@ -255,7 +248,12 @@ export default class Scale extends React.Component<Props, any> {
                 hasPreset={this.props.hasPreset}
                 presetName={this.props.preset.name}
                 stops={this.props.preset.scale}
-                scale={this.setLightnessScale(this.props.preset.scale)}
+                scale={doLightnessScale(
+                  this.props.preset.scale,
+                  this.props.preset.min,
+                  this.props.preset.max,
+                  false
+                )}
                 onChange={this.slideHandler}
               />
             )}
