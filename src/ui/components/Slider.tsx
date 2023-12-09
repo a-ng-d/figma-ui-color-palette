@@ -1,7 +1,7 @@
 import * as React from 'react'
 import type { ScaleConfiguration } from '../../utils/types'
 import Knob from './Knob'
-import { doMap } from '@a-ng-d/figmug.modules.do-map'
+import { doMap } from '@a-ng-d/figmug.modules.do-map'
 import addStop from './../handlers/addStop'
 import deleteStop from './../handlers/deleteStop'
 import shiftLeftStop from './../handlers/shiftLeftStop'

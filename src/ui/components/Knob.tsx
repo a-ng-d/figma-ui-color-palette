@@ -121,7 +121,9 @@ export default class Knob extends React.Component<Props, any> {
             />
           </div>
         ) : null}
-        <div className={`type ${texts.type} slider__label`}>{this.props.shortId}</div>
+        <div className={`type ${texts.type} slider__label`}>
+          {this.props.shortId}
+        </div>
         <div className="slider__graduation"></div>
       </div>
     )

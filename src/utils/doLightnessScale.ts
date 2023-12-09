@@ -1,5 +1,5 @@
 import type { ScaleConfiguration } from './types'
-import { doMap } from '@a-ng-d/figmug.modules.do-map'
+import { doMap } from '@a-ng-d/figmug.modules.do-map'
 
 const doLightnessScale = (stops: Array<number>, min: number, max: number) => {
   let granularity = 1

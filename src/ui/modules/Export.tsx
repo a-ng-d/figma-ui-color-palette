@@ -253,11 +253,11 @@ export default class Export extends React.Component<Props, any> {
             </div>
           </div>
           <div className="export-palette__preview">
-          <Input
-            id="code-snippet-dragging"
-            type="CODE"
-            value={this.props.exportPreview}
-          />
+            <Input
+              id="code-snippet-dragging"
+              type="CODE"
+              value={this.props.exportPreview}
+            />
           </div>
         </div>
         <Actions

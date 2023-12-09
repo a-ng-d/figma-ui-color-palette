@@ -86,15 +86,15 @@ export default class Actions extends React.Component<Props> {
               type="primary"
               label={locals[this.props.lang].actions.createPalette}
               feature="CREATE_PALETTE"
-              isDisabled={
-                this.props.sourceColors.length > 0 ? false : true
-              }
+              isDisabled={this.props.sourceColors.length > 0 ? false : true}
               action={this.props.onCreatePalette}
             />
           </Feature>
         </div>
         <div className="actions__left">
-          <div className={`type ${texts.type}`}>{`${this.props.sourceColors.length} ${
+          <div className={`type ${texts.type}`}>{`${
+            this.props.sourceColors.length
+          } ${
             this.props.sourceColors.length > 1
               ? locals[this.props.lang].actions.sourceColorsNumber.several
               : locals[this.props.lang].actions.sourceColorsNumber.single

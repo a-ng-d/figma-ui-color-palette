@@ -279,7 +279,9 @@ export default class Scale extends React.Component<Props, any> {
               </div>
             </div>
             <div className="section-controls__right-part">
-              <div className={`label ${texts.label}`}>{this.props.preset.name}</div>
+              <div className={`label ${texts.label}`}>
+                {this.props.preset.name}
+              </div>
             </div>
           </div>
           <Feature

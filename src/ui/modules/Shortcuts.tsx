@@ -255,7 +255,11 @@ export default class Shortcuts extends React.Component<Props, any> {
                   <div className={`label ${texts.label}`}>
                     {locals[this.props.lang].plan.trialEnded}
                   </div>
-                  <span className={`type ${texts.type} ${texts['type--secondary']}`}>﹒</span>
+                  <span
+                    className={`type ${texts.type} ${texts['type--secondary']}`}
+                  >
+                    ﹒
+                  </span>
                   <Button
                     type="tertiary"
                     label={locals[this.props.lang].shortcuts.trialFeedback}
