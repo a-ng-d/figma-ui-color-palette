@@ -4,7 +4,6 @@ body {
   overflow: hidden;
 }
 
-
 ul {
   padding: 0;
   margin: 0;
@@ -14,14 +13,14 @@ li {
   display: block;
 }
 
-div#react-page {
+div#app {
   height: 100%;
   cursor: default;
   user-select: none;
   -webkit-user-select: none;
 }
 
-div#react-page:empty:before {
+div#app:empty:before {
   content: '';
   width: var(--size-medium);
   height: var(--size-medium);
@@ -36,7 +35,7 @@ div#react-page:empty:before {
   animation: rotating 1s linear infinite;
 }
 
-div#react-page.dragged-ghost {
+div#app.dragged-ghost {
   cursor: grabbing;
 }
 

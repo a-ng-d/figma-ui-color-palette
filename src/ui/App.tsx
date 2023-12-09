@@ -35,7 +35,7 @@ import './stylesheets/app-components.css'
 import './stylesheets/figma-components.css'
 
 let isPaletteSelected = false
-const container = document.getElementById('react-page'),
+const container = document.getElementById('app'),
   root = createRoot(container)
 
 const settingsMessage: SettingsMessage = {
