@@ -25,7 +25,7 @@ export const presets: Array<PresetConfiguration> = [
     id: 'MATERIAL',
   },
   {
-    name: 'Material 3 100-0 (Google)',
+    name: 'Material 3 0-100 (Google)',
     scale: [100, 99, 95, 90, 80, 70, 60, 50, 40, 30, 20, 10, 0],
     min: 0,
     max: 100,
