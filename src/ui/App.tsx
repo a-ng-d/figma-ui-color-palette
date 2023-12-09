@@ -152,9 +152,10 @@ class App extends React.Component<any, any> {
       })
 
     const setCustomPreset = () => {
-      presets.find((preset) => preset.id === 'CUSTOM')!.scale = [1, 2]
+      const customPreset = presets.find((preset) => preset.id === 'CUSTOM')
+      if (customPreset != undefined) customPreset.scale = [1, 2]
       this.setState({
-        preset: presets.find((preset) => preset.id === 'CUSTOM'),
+        preset: customPreset,
         onGoingStep: 'preset changed',
       })
     }
