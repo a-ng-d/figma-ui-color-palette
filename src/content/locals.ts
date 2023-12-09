@@ -149,7 +149,7 @@ export const locals: { [key: string]: any } = {
       getHelp: {
         title: 'Have help',
         documentation: 'Read the documentation',
-        email: 'Send an email',
+        email: 'Contact support',
       },
       beInvolved: {
         title: 'Get involved',
