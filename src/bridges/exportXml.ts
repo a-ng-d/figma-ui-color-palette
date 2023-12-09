@@ -1,6 +1,6 @@
 import type { PaletteData } from '../utils/types'
 import { locals, lang } from '../content/locals'
-import doSnakeCase from '../utils/doSnakeCase'
+import { doSnakeCase } from '@a-ng-d/figmug.modules.do-snake-case'
 
 const exportXml = (palette: SceneNode) => {
   palette = figma.currentPage.selection[0] as FrameNode

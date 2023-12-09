@@ -1,6 +1,6 @@
 import type { ScaleConfiguration } from '../../utils/types'
 import { palette } from '../../utils/palettePackage'
-import doMap from './../../utils/doMap'
+import { doMap } from '@a-ng-d/figmug.modules.do-map'
 
 const addStop = (
   e: React.MouseEvent<HTMLDivElement, MouseEvent>,

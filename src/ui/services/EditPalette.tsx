@@ -25,7 +25,7 @@ import { Dropdown } from '@a-ng-d/figmug.inputs.dropdown'
 import features from '../../utils/config'
 import { locals } from '../../content/locals'
 import isBlocked from '../../utils/isBlocked'
-import doSnakeCase from '../../utils/doSnakeCase'
+import { doSnakeCase } from '@a-ng-d/figmug.modules.do-snake-case'
 
 interface Props {
   name: string

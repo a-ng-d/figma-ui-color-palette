@@ -4,7 +4,7 @@ import Feature from './Feature'
 import { Input } from '@a-ng-d/figmug.inputs.input'
 import { Button } from '@a-ng-d/figmug.actions.button'
 import { FormItem } from '@a-ng-d/figmug.inputs.form-item'
-import doMap from '../../utils/doMap'
+import { doMap } from '@a-ng-d/figmug.modules.do-map'
 import features from '../../utils/config'
 import { locals } from '../../content/locals'
 
