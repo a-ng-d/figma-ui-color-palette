@@ -338,6 +338,14 @@ const features: Array<Feature> = [
     service: ['EDIT'],
   },
   {
+    name: 'EXPORT_TAILWIND',
+    description: 'Palette export to Tailwind',
+    isActive: true,
+    isPro: false,
+    type: 'ACTION',
+    service: ['EDIT'],
+  },
+  {
     name: 'EXPORT_SWIFT',
     description:
       'Palette export to SWIFT (macOS, iOS, iPadOS, watchOS, tvOS, visionOS)',

@@ -10,6 +10,7 @@ import createLocalVariables from './createLocalVariables'
 import createPalette from './createPalette'
 import enableTrial from './enableTrial'
 import exportCss from './exportCss'
+import exportTailwind from './exportTailwind'
 import exportCsv from './exportCsv'
 import exportJson from './exportJson'
 import exportJsonAmznStyleDictionary from './exportJsonAmznStyleDictionary'
@@ -91,6 +92,7 @@ const loadUI = async (palette: SceneNode) => {
           ? exportJsonTokensStudio(palette)
           : null
         msg.export === 'CSS' ? exportCss(palette, msg.colorSpace) : null
+        msg.export === 'TAILWIND' ? exportTailwind(palette) : null
         msg.export === 'SWIFT' ? exportSwift(palette) : null
         msg.export === 'XML' ? exportXml(palette) : null
         msg.export === 'CSV' ? exportCsv(palette) : null

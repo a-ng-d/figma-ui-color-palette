@@ -97,6 +97,7 @@ export const locals: { [key: string]: any } = {
       amznStyleDictionary: 'Amazon Style Dictionary (JSON)',
       tokensStudio: 'Tokens Studio (JSON)',
       css: 'Custom Properties (CSS)',
+      tailwind: 'Tailwind (JS)',
       swift: 'iOS (SwiftUI)',
       xml: 'Android (XML)',
       csv: 'Spreadsheet (CSV)',

@@ -114,6 +114,9 @@ export default class EditPalette extends React.Component<Props, any> {
   }
 
   onExport = () => {
+    const blob = new Blob([this.props.export.data], {
+      type: this.props.export.mimeType,
+    })
     if (this.props.export.format === 'CSV') {
       const zip = new JSZip()
       this.props.export.data.forEach(
@@ -138,25 +141,32 @@ export default class EditPalette extends React.Component<Props, any> {
         .then((content: any) =>
           FileSaver.saveAs(
             content,
-            `${
-              this.props.name === ''
-                ? doSnakeCase(locals[this.props.lang].name)
-                : doSnakeCase(this.props.name)
-            }-colors`
+            this.props.name === ''
+              ? doSnakeCase(locals[this.props.lang].name)
+              : doSnakeCase(this.props.name)
           )
         )
         .catch((error: any) => console.error(error))
-    } else {
-      const blob = new Blob([this.props.export.data], {
-        type: this.props.export.mimeType,
-      })
+    } else if (this.props.export.format === 'TAILWIND') {
+      FileSaver.saveAs(
+        blob,
+        'tailwind.config.js'
+      )
+    } else if (this.props.export.format === 'SWIFT') {
       FileSaver.saveAs(
         blob,
         `${
           this.props.name === ''
             ? doSnakeCase(locals[this.props.lang].name)
             : doSnakeCase(this.props.name)
-        }-colors${this.props.export.format === 'SWIFT' ? '.swift' : ''}`
+        }.swift`
+      )
+    } else {
+      FileSaver.saveAs(
+        blob,
+        this.props.name === ''
+            ? doSnakeCase(locals[this.props.lang].name)
+            : doSnakeCase(this.props.name)
       )
     }
   }

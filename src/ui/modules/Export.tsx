@@ -189,6 +189,15 @@ export default class Export extends React.Component<Props, any> {
           '*'
         )
       },
+      EXPORT_TO_TAILWIND: () => {
+        this.setState({
+          format: 'EXPORT_TO_TAILWIND',
+        })
+        parent.postMessage(
+          { pluginMessage: { type: 'EXPORT_PALETTE', export: 'TAILWIND' } },
+          '*'
+        )
+      },
       EXPORT_TO_SWIFT: () => {
         this.setState({
           format: 'EXPORT_TO_SWIFT',
@@ -323,9 +332,19 @@ export default class Export extends React.Component<Props, any> {
                     children: [],
                   },
                   {
+                    label: locals[this.props.lang].export.tailwind,
+                    value: 'EXPORT_TO_TAILWIND',
+                    position: 2,
+                    isActive: features.find(
+                      (feature) => feature.name === 'EXPORT_TAILWIND'
+                    )?.isActive,
+                    isBlocked: isBlocked('EXPORT_TAILWIND', this.props.planStatus),
+                    children: [],
+                  },
+                  {
                     label: locals[this.props.lang].export.swift,
                     value: 'EXPORT_TO_SWIFT',
-                    position: 2,
+                    position: 3,
                     isActive: features.find(
                       (feature) => feature.name === 'EXPORT_SWIFT'
                     )?.isActive,
@@ -335,7 +354,7 @@ export default class Export extends React.Component<Props, any> {
                   {
                     label: locals[this.props.lang].export.xml,
                     value: 'EXPORT_TO_XML',
-                    position: 3,
+                    position: 4,
                     isActive: features.find(
                       (feature) => feature.name === 'EXPORT_XML'
                     )?.isActive,
@@ -345,7 +364,7 @@ export default class Export extends React.Component<Props, any> {
                   {
                     label: locals[this.props.lang].export.csv,
                     value: 'EXPORT_TO_CSV',
-                    position: 4,
+                    position: 5,
                     isActive: features.find(
                       (feature) => feature.name === 'EXPORT_CSV'
                     )?.isActive,

@@ -567,6 +567,20 @@ class App extends React.Component<any, any> {
             },
             onGoingStep: 'export previewed',
           })
+        
+        const exportPaletteToTaiwind = () =>
+          this.setState({
+            export: {
+              format: 'TAILWIND',
+              mimeType: 'text/javascript',
+              data: `/** @type {import('tailwindcss').Config} */\nmodule.exports = ${
+                JSON.stringify(
+                  e.data.pluginMessage.data, null, '  '
+                )
+              }`,
+            },
+            onGoingStep: 'export previewed',
+          })
 
         const exportPaletteToSwift = () =>
           this.setState({
@@ -624,6 +638,7 @@ class App extends React.Component<any, any> {
           PALETTE_SELECTED: () => updateWhilePaletteSelected(),
           EXPORT_PALETTE_JSON: () => exportPaletteToJson(),
           EXPORT_PALETTE_CSS: () => exportPaletteToCss(),
+          EXPORT_PALETTE_TAILWIND: () => exportPaletteToTaiwind(),
           EXPORT_PALETTE_SWIFT: () => exportPaletteToSwift(),
           EXPORT_PALETTE_XML: () => exportPaletteToXml(),
           EXPORT_PALETTE_CSV: () => exportPaletteToCsv(),
