@@ -1,6 +1,6 @@
 import * as React from 'react'
 import type { Language, ReleaseNote } from '../../utils/types'
-import Dialog from './Dialog'
+import { Dialog } from '@a-ng-d/figmug.dialogs.dialog'
 import releaseNotes from '../../content/releaseNotes'
 import { locals } from '../../content/locals'
 

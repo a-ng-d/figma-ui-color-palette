@@ -46,30 +46,6 @@ button.get-pro-button .icon {
   background: var(--figma-color-icon-oncomponent);
 }
 
-/* Dialog */
-div.dialog {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 99;
-  padding: var(--size-medium);
-  background-color: rgba(0, 0, 0, 0.5);
-}
-
-div.dialog .dialog__cover {
-  height: 100%;
-}
-
-div.dialog .dialog__text {
-  padding: var(--size-xsmall);
-  margin: 0;
-}
-
 /* List */
 ul.list {
   overflow-y: auto;
