@@ -257,7 +257,6 @@ export default class Scale extends React.Component<Props, any> {
                 onChange={this.slideHandler}
               />
             )}
-            
           </Feature>
           <Feature
             isActive={

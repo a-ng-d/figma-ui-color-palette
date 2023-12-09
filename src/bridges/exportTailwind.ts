@@ -1,6 +1,4 @@
-import type {
-  PaletteData
-} from '../utils/types'
+import type { PaletteData } from '../utils/types'
 import { locals, lang } from '../content/locals'
 import { doKebabCase } from '@a-ng-d/figmug.modules.do-kebab-case'
 
@@ -15,7 +13,7 @@ const exportTailwind = (palette: SceneNode) => {
         : paletteData.themes.filter((theme) => theme.type === 'custom theme'),
     json: { [key: string]: any } = {
       theme: {
-        colors: {}
+        colors: {},
       },
     }
 
@@ -27,9 +25,13 @@ const exportTailwind = (palette: SceneNode) => {
     if (workingThemes[0].type === 'custom theme')
       workingThemes.forEach((theme) => {
         theme.colors.forEach((color) => {
-          json['theme']['colors'][doKebabCase(color.name)][doKebabCase(theme.name)] = {}
+          json['theme']['colors'][doKebabCase(color.name)][
+            doKebabCase(theme.name)
+          ] = {}
           color.shades.reverse().forEach((shade) => {
-            json['theme']['colors'][doKebabCase(color.name)][doKebabCase(theme.name)][doKebabCase(shade.name)] = shade.hex
+            json['theme']['colors'][doKebabCase(color.name)][
+              doKebabCase(theme.name)
+            ][doKebabCase(shade.name)] = shade.hex
           })
         })
       })
@@ -38,7 +40,9 @@ const exportTailwind = (palette: SceneNode) => {
         theme.colors.forEach((color) => {
           json['theme']['colors'][doKebabCase(color.name)] = {}
           color.shades.sort().forEach((shade) => {
-            json['theme']['colors'][doKebabCase(color.name)][doKebabCase(shade.name)] = shade.hex
+            json['theme']['colors'][doKebabCase(color.name)][
+              doKebabCase(shade.name)
+            ] = shade.hex
           })
         })
       })

@@ -148,10 +148,7 @@ export default class EditPalette extends React.Component<Props, any> {
         )
         .catch((error: any) => console.error(error))
     } else if (this.props.export.format === 'TAILWIND') {
-      FileSaver.saveAs(
-        blob,
-        'tailwind.config.js'
-      )
+      FileSaver.saveAs(blob, 'tailwind.config.js')
     } else if (this.props.export.format === 'SWIFT') {
       FileSaver.saveAs(
         blob,
@@ -165,8 +162,8 @@ export default class EditPalette extends React.Component<Props, any> {
       FileSaver.saveAs(
         blob,
         this.props.name === ''
-            ? doSnakeCase(locals[this.props.lang].name)
-            : doSnakeCase(this.props.name)
+          ? doSnakeCase(locals[this.props.lang].name)
+          : doSnakeCase(this.props.name)
       )
     }
   }

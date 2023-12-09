@@ -31,7 +31,7 @@ export default class Export extends React.Component<Props, any> {
       colorSpace: {
         selected: '',
         options: [],
-      }
+      },
     }
   }
 
@@ -82,62 +82,56 @@ export default class Export extends React.Component<Props, any> {
             selected: 'RGB',
             options: [
               {
-                label: "RGB",
+                label: 'RGB',
                 value: 'EXPORT_TO_CSS_RGB',
                 position: 0,
                 isActive: features.find(
                   (feature) => feature.name === 'EXPORT_CSS_RGB'
                 )?.isActive,
-                isBlocked: isBlocked(
-                  'EXPORT_CSS_RGB',
-                  this.props.planStatus
-                ),
+                isBlocked: isBlocked('EXPORT_CSS_RGB', this.props.planStatus),
                 children: [],
               },
               {
-                label: "HEX",
+                label: 'HEX',
                 value: 'EXPORT_TO_CSS_HEX',
                 position: 1,
                 isActive: features.find(
                   (feature) => feature.name === 'EXPORT_CSS_HEX'
                 )?.isActive,
-                isBlocked: isBlocked(
-                  'EXPORT_CSS_HEX',
-                  this.props.planStatus
-                ),
+                isBlocked: isBlocked('EXPORT_CSS_HEX', this.props.planStatus),
                 children: [],
               },
               {
-                label: "LCH",
+                label: 'LCH',
                 value: 'EXPORT_TO_CSS_LCH',
                 position: 2,
                 isActive: features.find(
                   (feature) => feature.name === 'EXPORT_CSS_LCH'
                 )?.isActive,
-                isBlocked: isBlocked(
-                  'EXPORT_CSS_LCH',
-                  this.props.planStatus
-                ),
+                isBlocked: isBlocked('EXPORT_CSS_LCH', this.props.planStatus),
                 children: [],
               },
               {
-                label: "P3",
+                label: 'P3',
                 value: 'EXPORT_TO_CSS_P3',
                 position: 3,
                 isActive: features.find(
                   (feature) => feature.name === 'EXPORT_CSS_P3'
                 )?.isActive,
-                isBlocked: isBlocked(
-                  'EXPORT_CSS_P3',
-                  this.props.planStatus
-                ),
+                isBlocked: isBlocked('EXPORT_CSS_P3', this.props.planStatus),
                 children: [],
               },
             ],
-          }
+          },
         })
         parent.postMessage(
-          { pluginMessage: { type: 'EXPORT_PALETTE', export: 'CSS', colorSpace: 'RGB' } },
+          {
+            pluginMessage: {
+              type: 'EXPORT_PALETTE',
+              export: 'CSS',
+              colorSpace: 'RGB',
+            },
+          },
           '*'
         )
       },
@@ -146,10 +140,16 @@ export default class Export extends React.Component<Props, any> {
           colorSpace: {
             selected: 'RGB',
             options: this.state['colorSpace'].options,
-          }
+          },
         })
         parent.postMessage(
-          { pluginMessage: { type: 'EXPORT_PALETTE', export: 'CSS', colorSpace: 'RGB' } },
+          {
+            pluginMessage: {
+              type: 'EXPORT_PALETTE',
+              export: 'CSS',
+              colorSpace: 'RGB',
+            },
+          },
           '*'
         )
       },
@@ -158,10 +158,16 @@ export default class Export extends React.Component<Props, any> {
           colorSpace: {
             selected: 'LCH',
             options: this.state['colorSpace'].options,
-          }
+          },
         })
         parent.postMessage(
-          { pluginMessage: { type: 'EXPORT_PALETTE', export: 'CSS', colorSpace: 'LCH' } },
+          {
+            pluginMessage: {
+              type: 'EXPORT_PALETTE',
+              export: 'CSS',
+              colorSpace: 'LCH',
+            },
+          },
           '*'
         )
       },
@@ -170,10 +176,16 @@ export default class Export extends React.Component<Props, any> {
           colorSpace: {
             selected: 'P3',
             options: this.state['colorSpace'].options,
-          }
+          },
         })
         parent.postMessage(
-          { pluginMessage: { type: 'EXPORT_PALETTE', export: 'CSS', colorSpace: 'P3' } },
+          {
+            pluginMessage: {
+              type: 'EXPORT_PALETTE',
+              export: 'CSS',
+              colorSpace: 'P3',
+            },
+          },
           '*'
         )
       },
@@ -182,10 +194,16 @@ export default class Export extends React.Component<Props, any> {
           colorSpace: {
             selected: 'HEX',
             options: this.state['colorSpace'].options,
-          }
+          },
         })
         parent.postMessage(
-          { pluginMessage: { type: 'EXPORT_PALETTE', export: 'CSS', colorSpace: 'HEX' } },
+          {
+            pluginMessage: {
+              type: 'EXPORT_PALETTE',
+              export: 'CSS',
+              colorSpace: 'HEX',
+            },
+          },
           '*'
         )
       },
@@ -338,7 +356,10 @@ export default class Export extends React.Component<Props, any> {
                     isActive: features.find(
                       (feature) => feature.name === 'EXPORT_TAILWIND'
                     )?.isActive,
-                    isBlocked: isBlocked('EXPORT_TAILWIND', this.props.planStatus),
+                    isBlocked: isBlocked(
+                      'EXPORT_TAILWIND',
+                      this.props.planStatus
+                    ),
                     children: [],
                   },
                   {

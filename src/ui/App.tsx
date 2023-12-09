@@ -126,7 +126,7 @@ class App extends React.Component<any, any> {
         preset: presets.find((preset) => preset.id === 'MATERIAL_3'),
         onGoingStep: 'preset changed',
       })
-    
+
     const setTailwindPreset = () =>
       this.setState({
         preset: presets.find((preset) => preset.id === 'TAILWIND'),
@@ -567,17 +567,17 @@ class App extends React.Component<any, any> {
             },
             onGoingStep: 'export previewed',
           })
-        
+
         const exportPaletteToTaiwind = () =>
           this.setState({
             export: {
               format: 'TAILWIND',
               mimeType: 'text/javascript',
-              data: `/** @type {import('tailwindcss').Config} */\nmodule.exports = ${
-                JSON.stringify(
-                  e.data.pluginMessage.data, null, '  '
-                )
-              }`,
+              data: `/** @type {import('tailwindcss').Config} */\nmodule.exports = ${JSON.stringify(
+                e.data.pluginMessage.data,
+                null,
+                '  '
+              )}`,
             },
             onGoingStep: 'export previewed',
           })
