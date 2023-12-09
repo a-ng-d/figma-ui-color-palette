@@ -1,5 +1,5 @@
 import * as React from 'react'
-import PopIn from '../components/PopIn'
+import { PopIn } from '@a-ng-d/figmug.layouts.popin'
 
 interface Props {
   title: string
@@ -26,7 +26,7 @@ export default class Dialog extends React.Component<Props> {
           title={this.props.title}
           actions={this.props.actions}
           indicator={this.props.indicator}
-          OnClose={this.props.onClose}
+          onClose={this.props.onClose}
         >
           {this.props.children}
         </PopIn>
