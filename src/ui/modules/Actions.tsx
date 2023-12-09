@@ -3,6 +3,7 @@ import type { Language, SourceColorConfiguration } from '../../utils/types'
 import Feature from '../components/Feature'
 import { Button } from '@a-ng-d/figmug.actions.button'
 import { Dropdown } from '@a-ng-d/figmug.inputs.dropdown'
+import { texts } from '@a-ng-d/figmug.stylesheets.texts'
 import features from '../../utils/config'
 import isBlocked from '../../utils/isBlocked'
 import { locals } from '../../content/locals'
@@ -93,7 +94,7 @@ export default class Actions extends React.Component<Props> {
           </Feature>
         </div>
         <div className="actions__left">
-          <div className="type">{`${this.props.sourceColors.length} ${
+          <div className={`type ${texts.type}`}>{`${this.props.sourceColors.length} ${
             this.props.sourceColors.length > 1
               ? locals[this.props.lang].actions.sourceColorsNumber.several
               : locals[this.props.lang].actions.sourceColorsNumber.single

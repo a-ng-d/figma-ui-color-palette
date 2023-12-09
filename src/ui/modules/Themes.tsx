@@ -17,6 +17,7 @@ import { Button } from '@a-ng-d/figmug.actions.button'
 import { Message } from '@a-ng-d/figmug.dialogs.message'
 import ThemeItem from '../components/ThemeItem'
 import Actions from './Actions'
+import { texts } from '@a-ng-d/figmug.stylesheets.texts'
 import isBlocked from '../../utils/isBlocked'
 import doLightnessScale from '../../utils/doLightnessScale'
 import { locals } from '../../content/locals'
@@ -306,9 +307,9 @@ export default class Themes extends React.Component<Props, any> {
         <div className="control__block control__block--list">
           <div className="section-controls">
             <div className="section-controls__left-part">
-              <div className="section-title">
+              <div className={`section-title ${texts['section-title']}`}>
                 {locals[this.props.lang].themes.title}
-                <div className="type">{`(${
+                <div className={`type ${texts.type}`}>{`(${
                   this.props.themes.length - 1
                 })`}</div>
               </div>

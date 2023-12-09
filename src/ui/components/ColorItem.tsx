@@ -5,6 +5,7 @@ import Feature from './Feature'
 import { Input } from '@a-ng-d/figmug.inputs.input'
 import { Button } from '@a-ng-d/figmug.actions.button'
 import { FormItem } from '@a-ng-d/figmug.layouts.form-item'
+import { texts } from '@a-ng-d/figmug.stylesheets.texts'
 import { doMap } from '@a-ng-d/figmug.modules.do-map'
 import features from '../../utils/config'
 import { locals } from '../../content/locals'
@@ -168,7 +169,7 @@ export default class ColorItem extends React.Component<Props, any> {
                   />
                 </div>
                 <div className="list__item__param inputs">
-                  <div className="label">
+                  <div className={`label ${texts.label}`}>
                     {locals[this.props.lang].colors.lch.label}
                   </div>
                   <div className="inputs__bar">

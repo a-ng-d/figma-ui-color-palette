@@ -1,6 +1,7 @@
 import * as React from 'react'
 import type { ActionsList } from '../../utils/types'
 import { Input } from '@a-ng-d/figmug.inputs.input'
+import { texts } from '@a-ng-d/figmug.stylesheets.texts'
 
 interface Props {
   id: string
@@ -91,7 +92,7 @@ export default class Knob extends React.Component<Props, any> {
         onMouseDown={this.props.onMouseDown}
         onClick={(e) => this.clickHandler(e)}
       >
-        <div className="type type--inverse slider__tooltip">
+        <div className={`type ${texts.type} type--inverse slider__tooltip`}>
           {this.transformStopValue(this.props.value)}
         </div>
         {this.state['isStopInputOpen'] ? (
@@ -120,7 +121,7 @@ export default class Knob extends React.Component<Props, any> {
             />
           </div>
         ) : null}
-        <div className="type slider__label">{this.props.shortId}</div>
+        <div className={`type ${texts.type} slider__label`}>{this.props.shortId}</div>
         <div className="slider__graduation"></div>
       </div>
     )

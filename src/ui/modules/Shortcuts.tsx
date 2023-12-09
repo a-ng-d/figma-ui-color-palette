@@ -4,6 +4,8 @@ import Feature from '../components/Feature'
 import { Bar } from '@a-ng-d/figmug.layouts.bar'
 import { Button } from '@a-ng-d/figmug.actions.button'
 import { Menu } from '@a-ng-d/figmug.navigation.menu'
+import { icons } from '@a-ng-d/figmug.stylesheets.icons'
+import { texts } from '@a-ng-d/figmug.stylesheets.texts'
 import features from '../../utils/config'
 import { locals } from '../../content/locals'
 import isBlocked from '../../utils/isBlocked'
@@ -208,7 +210,7 @@ export default class Shortcuts extends React.Component<Props, any> {
               />
             </div>
             <div
-              className="box-resizer-grip icon--resize-grip"
+              className={`box-resizer-grip ${icons['icon--resize-grip']}`}
               onMouseDown={this.onHold.bind(this)}
               onMouseMove={this.onResize.bind(this)}
               onMouseUp={this.onReleased.bind(this)}
@@ -238,7 +240,7 @@ export default class Shortcuts extends React.Component<Props, any> {
                 />
               ) : null}
               {this.props.trialStatus === 'PENDING' ? (
-                <div className="label">
+                <div className={`label ${texts.label}`}>
                   <div className="type--bold">
                     {this.props.trialRemainingTime}
                   </div>
@@ -250,10 +252,10 @@ export default class Shortcuts extends React.Component<Props, any> {
               ) : this.props.trialStatus === 'EXPIRED' &&
                 this.props.planStatus != 'PAID' ? (
                 <>
-                  <div className="label">
+                  <div className={`label ${texts.label}`}>
                     {locals[this.props.lang].plan.trialEnded}
                   </div>
-                  <span className="type type--secondary">﹒</span>
+                  <span className={`type ${texts.type} ${texts['type--secondary']}`}>﹒</span>
                   <Button
                     type="tertiary"
                     label={locals[this.props.lang].shortcuts.trialFeedback}

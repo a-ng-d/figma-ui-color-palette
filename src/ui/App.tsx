@@ -32,7 +32,6 @@ import features from '../utils/config'
 import 'figma-plugin-ds/dist/figma-plugin-ds.css'
 import './stylesheets/app.css'
 import './stylesheets/app-components.css'
-import './stylesheets/figma-components.css'
 
 let isPaletteSelected = false
 const container = document.getElementById('app'),

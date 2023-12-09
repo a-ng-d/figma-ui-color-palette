@@ -1,6 +1,7 @@
 import * as React from 'react'
 import type { HexModel, Language } from '../../utils/types'
 import { Button } from '@a-ng-d/figmug.actions.button'
+import { texts } from '@a-ng-d/figmug.stylesheets.texts'
 
 interface Props {
   name: string
@@ -34,8 +35,8 @@ export default class CompactColorItem extends React.Component<Props, any> {
                   }}
                 ></div>
               </div>
-              <div className="type type--truncated">{this.props.name}</div>
-              <div className="type type--secondary">{this.props.hex}</div>
+              <div className={`type ${texts.type} ${texts['type--truncated']}`}>{this.props.name}</div>
+              <div className={`type ${texts.type} ${texts['type--secondary']}`}>{this.props.hex}</div>
             </div>
           </div>
           <div className="list_item_right-part">
