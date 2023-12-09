@@ -391,36 +391,3 @@ div.slider .slider__input {
   border-radius: var(--border-radius-med);
   background-color: var(--figma-color-bg);
 }
-
-/* Menu */
-div.menu {
-  position: relative;
-}
-
-div.menu .select-menu__menu {
-  position: absolute;
-}
-
-div.menu--top-right .select-menu__menu {
-  right: 0;
-  left: unset;
-  top: calc(var(--size-xxsmall) * -1);
-  transform: translateY(-100%);
-}
-
-div.menu--top-left .select-menu__menu {
-  left: 0;
-  top: calc(var(--size-xxsmall) * -1);
-  transform: translateY(-100%);
-}
-
-div.menu--bottom-right .select-menu__menu {
-  right: 0;
-  left: unset;
-  bottom: calc(var(--size-xxsmall) * -1);
-}
-
-div.menu--bottom-left .select-menu__menu {
-  left: 0;
-  bottom: calc(var(--size-xxsmall) * -1);
-}

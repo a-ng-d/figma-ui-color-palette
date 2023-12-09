@@ -10,7 +10,7 @@ import type {
 } from '../../utils/types'
 import Feature from '../components/Feature'
 import { Button } from '@a-ng-d/figmug.actions.button'
-import Dropdown from '../components/Dropdown'
+import { Dropdown } from '@a-ng-d/figmug.inputs.dropdown'
 import Slider from '../components/Slider'
 import { Message } from '@a-ng-d/figmug.dialog.message'
 import Actions from './Actions'

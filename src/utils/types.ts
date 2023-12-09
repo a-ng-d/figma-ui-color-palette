@@ -215,24 +215,6 @@ export interface ActionsList {
   [action: string]: () => void
 }
 
-export interface DropdownOption {
-  label: string
-  value: string
-  position: number
-  isActive?: boolean
-  isBlocked?: boolean
-  children?: Array<DropdownOption> | []
-}
-
-export interface DropdownAction {
-  label: string
-  isActive?: boolean
-  isBlocked: boolean
-  feature?: string
-  isSeparator?: boolean
-  action: () => void
-}
-
 // Models
 export type HexModel = `#${string}` | string
 

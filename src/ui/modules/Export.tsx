@@ -1,11 +1,11 @@
 import * as React from 'react'
 import type { ActionsList, Language } from '../../utils/types'
 import { Input } from '@a-ng-d/figmug.inputs.input'
+import { Dropdown } from '@a-ng-d/figmug.inputs.dropdown'
 import Actions from './Actions'
 import features from '../../utils/config'
 import isBlocked from '../../utils/isBlocked'
 import { locals } from '../../content/locals'
-import Dropdown from '../components/Dropdown'
 
 interface Props {
   exportPreview: string
