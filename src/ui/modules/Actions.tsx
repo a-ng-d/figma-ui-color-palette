@@ -122,7 +122,9 @@ export default class Actions extends React.Component<Props> {
                 label:
                   locals[this.props.lang].actions.managePalette.localStyles,
                 value: 'LOCAL_STYLES',
+                feature: 'UPDATE_DEPLOYMENT_ACTION',
                 position: 0,
+                type: 'OPTION',
                 isActive: features.find(
                   (feature) => feature.name === 'LOCAL_STYLES'
                 )?.isActive,
@@ -131,12 +133,18 @@ export default class Actions extends React.Component<Props> {
                   this.props.planStatus ?? 'UNPAID'
                 ),
                 children: [],
+                action: (e) =>
+                  this.props.onChangeActions?.(
+                    (e.target as HTMLElement).dataset.value ?? 'NULL'
+                  )
               },
               {
                 label:
                   locals[this.props.lang].actions.managePalette.localVariables,
                 value: 'LOCAL_VARIABLES',
+                feature: 'UPDATE_DEPLOYMENT_ACTION',
                 position: 1,
+                type: 'OPTION',
                 isActive: features.find(
                   (feature) => feature.name === 'LOCAL_VARIABLES'
                 )?.isActive,
@@ -145,16 +153,14 @@ export default class Actions extends React.Component<Props> {
                   this.props.planStatus ?? 'UNPAID'
                 ),
                 children: [],
+                action: (e) =>
+                  this.props.onChangeActions?.(
+                    (e.target as HTMLElement).dataset.value ?? 'NULL'
+                  )
               },
             ]}
             selected={this.props.actions ?? ''}
-            feature="UPDATE_DEPLOYMENT_ACTION"
             parentClassName="controls"
-            onChange={(e) =>
-              this.props.onChangeActions?.(
-                (e.target as HTMLElement).dataset.value ?? 'NULL'
-              )
-            }
           />
         </div>
       </div>

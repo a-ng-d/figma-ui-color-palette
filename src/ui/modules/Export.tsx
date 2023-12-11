@@ -84,42 +84,54 @@ export default class Export extends React.Component<Props, any> {
               {
                 label: 'RGB',
                 value: 'EXPORT_TO_CSS_RGB',
+                feature: 'SELECT_COLOR_SPACE',
                 position: 0,
+                type: 'OPTION',
                 isActive: features.find(
                   (feature) => feature.name === 'EXPORT_CSS_RGB'
                 )?.isActive,
                 isBlocked: isBlocked('EXPORT_CSS_RGB', this.props.planStatus),
                 children: [],
+                action: this.exportHandler
               },
               {
                 label: 'HEX',
                 value: 'EXPORT_TO_CSS_HEX',
+                feature: 'SELECT_COLOR_SPACE',
                 position: 1,
+                type: 'OPTION',
                 isActive: features.find(
                   (feature) => feature.name === 'EXPORT_CSS_HEX'
                 )?.isActive,
                 isBlocked: isBlocked('EXPORT_CSS_HEX', this.props.planStatus),
                 children: [],
+                action: this.exportHandler
               },
               {
                 label: 'LCH',
                 value: 'EXPORT_TO_CSS_LCH',
+                feature: 'SELECT_COLOR_SPACE',
                 position: 2,
+                type: 'OPTION',
                 isActive: features.find(
                   (feature) => feature.name === 'EXPORT_CSS_LCH'
                 )?.isActive,
                 isBlocked: isBlocked('EXPORT_CSS_LCH', this.props.planStatus),
                 children: [],
+                action: this.exportHandler
               },
               {
                 label: 'P3',
                 value: 'EXPORT_TO_CSS_P3',
+                feature: 'SELECT_COLOR_SPACE',
                 position: 3,
+                type: 'OPTION',
                 isActive: features.find(
                   (feature) => feature.name === 'EXPORT_CSS_P3'
                 )?.isActive,
                 isBlocked: isBlocked('EXPORT_CSS_P3', this.props.planStatus),
                 children: [],
+                action: this.exportHandler
               },
             ],
           },
@@ -291,14 +303,18 @@ export default class Export extends React.Component<Props, any> {
                   {
                     label: 'Tokens',
                     value: 'TOKENS_GROUP',
+                    feature: 'SELECT_EXPORT_FILE',
                     position: 0,
+                    type: 'OPTION',
                     isActive: true,
                     isBlocked: false,
                     children: [
                       {
                         label: locals[this.props.lang].export.json,
                         value: 'EXPORT_TO_JSON',
+                        feature: 'SELECT_EXPORT_FILE',
                         position: 0,
+                        type: 'OPTION',
                         isActive: features.find(
                           (feature) => feature.name === 'EXPORT_JSON'
                         )?.isActive,
@@ -307,12 +323,15 @@ export default class Export extends React.Component<Props, any> {
                           this.props.planStatus
                         ),
                         children: [],
+                        action: this.exportHandler
                       },
                       {
                         label:
                           locals[this.props.lang].export.amznStyleDictionary,
                         value: 'EXPORT_TO_JSON_AMZN_STYLE_DICTIONARY',
+                        feature: 'SELECT_EXPORT_FILE',
                         position: 0,
+                        type: 'OPTION',
                         isActive: features.find(
                           (feature) =>
                             feature.name === 'EXPORT_JSON_AMZN_STYLE_DICTIONARY'
@@ -322,11 +341,14 @@ export default class Export extends React.Component<Props, any> {
                           this.props.planStatus
                         ),
                         children: [],
+                        action: this.exportHandler
                       },
                       {
                         label: locals[this.props.lang].export.tokensStudio,
                         value: 'EXPORT_TO_JSON_TOKENS_STUDIO',
+                        feature: 'SELECT_EXPORT_FILE',
                         position: 0,
+                        type: 'OPTION',
                         isActive: features.find(
                           (feature) =>
                             feature.name === 'EXPORT_JSON_TOKENS_STUDIO'
@@ -336,23 +358,30 @@ export default class Export extends React.Component<Props, any> {
                           this.props.planStatus
                         ),
                         children: [],
+                        action: this.exportHandler
                       },
                     ],
+                    action: () => null
                   },
                   {
                     label: locals[this.props.lang].export.css,
                     value: 'EXPORT_TO_CSS',
+                    feature: 'SELECT_EXPORT_FILE',
                     position: 1,
+                    type: 'OPTION',
                     isActive: features.find(
                       (feature) => feature.name === 'EXPORT_CSS'
                     )?.isActive,
                     isBlocked: isBlocked('EXPORT_CSS', this.props.planStatus),
                     children: [],
+                    action: this.exportHandler
                   },
                   {
                     label: locals[this.props.lang].export.tailwind,
                     value: 'EXPORT_TO_TAILWIND',
+                    feature: 'SELECT_EXPORT_FILE',
                     position: 2,
+                    type: 'OPTION',
                     isActive: features.find(
                       (feature) => feature.name === 'EXPORT_TAILWIND'
                     )?.isActive,
@@ -361,53 +390,59 @@ export default class Export extends React.Component<Props, any> {
                       this.props.planStatus
                     ),
                     children: [],
+                    action: this.exportHandler
                   },
                   {
                     label: locals[this.props.lang].export.swift,
                     value: 'EXPORT_TO_SWIFT',
+                    feature: 'SELECT_EXPORT_FILE',
                     position: 3,
+                    type: 'OPTION',
                     isActive: features.find(
                       (feature) => feature.name === 'EXPORT_SWIFT'
                     )?.isActive,
                     isBlocked: isBlocked('EXPORT_SWIFT', this.props.planStatus),
                     children: [],
+                    action: this.exportHandler
                   },
                   {
                     label: locals[this.props.lang].export.xml,
                     value: 'EXPORT_TO_XML',
+                    feature: 'SELECT_EXPORT_FILE',
                     position: 4,
+                    type: 'OPTION',
                     isActive: features.find(
                       (feature) => feature.name === 'EXPORT_XML'
                     )?.isActive,
                     isBlocked: isBlocked('EXPORT_XML', this.props.planStatus),
                     children: [],
+                    action: this.exportHandler
                   },
                   {
                     label: locals[this.props.lang].export.csv,
                     value: 'EXPORT_TO_CSV',
+                    feature: 'SELECT_EXPORT_FILE',
                     position: 5,
+                    type: 'OPTION',
                     isActive: features.find(
                       (feature) => feature.name === 'EXPORT_CSV'
                     )?.isActive,
                     isBlocked: isBlocked('EXPORT_CSV', this.props.planStatus),
                     children: [],
+                    action: this.exportHandler
                   },
                 ]}
                 selected={this.state['format'] ?? ''}
-                feature="SELECT_EXPORT_FILE"
                 parentClassName="controls"
                 alignment="RIGHT"
-                onChange={this.exportHandler}
               />
               {this.state['format'] === 'EXPORT_TO_CSS' ? (
                 <Dropdown
                   id="select-color-space"
                   options={this.state['colorSpace'].options}
                   selected={`${this.state['format']}_${this.state['colorSpace'].selected}`}
-                  feature="SELECT_COLOR_SPACE"
                   parentClassName="controls"
                   alignment="RIGHT"
-                  onChange={this.exportHandler}
                 />
               ) : null}
             </div>

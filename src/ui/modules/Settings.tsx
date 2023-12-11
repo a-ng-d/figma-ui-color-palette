@@ -164,7 +164,9 @@ export default class Settings extends React.Component<Props> {
                 {
                   label: locals[this.props.lang].settings.global.views.detailed,
                   value: 'PALETTE_WITH_PROPERTIES',
+                  feature: 'UPDATE_VIEW',
                   position: 0,
+                  type: 'OPTION',
                   isActive: features.find(
                     (feature) =>
                       feature.name === 'VIEWS_PALETTE_WITH_PROPERTIES'
@@ -174,31 +176,36 @@ export default class Settings extends React.Component<Props> {
                     this.props.planStatus
                   ),
                   children: [],
+                  action: this.props.onChangeSettings
                 },
                 {
                   label: locals[this.props.lang].settings.global.views.simple,
                   value: 'PALETTE',
+                  feature: 'UPDATE_VIEW',
                   position: 1,
+                  type: 'OPTION',
                   isActive: features.find(
                     (feature) => feature.name === 'VIEWS_PALETTE'
                   )?.isActive,
                   isBlocked: isBlocked('VIEWS_PALETTE', this.props.planStatus),
                   children: [],
+                  action: this.props.onChangeSettings
                 },
                 {
                   label: locals[this.props.lang].settings.global.views.sheet,
                   value: 'SHEET',
+                  feature: 'UPDATE_VIEW',
                   position: 2,
+                  type: 'OPTION',
                   isActive: features.find(
                     (feature) => feature.name === 'VIEWS_SHEET'
                   )?.isActive,
                   isBlocked: isBlocked('VIEWS_SHEET', this.props.planStatus),
                   children: [],
+                  action: this.props.onChangeSettings
                 },
               ]}
               selected={this.props.view}
-              feature="UPDATE_VIEW"
-              onChange={this.props.onChangeSettings}
             />
           </FormItem>
         </div>
@@ -225,7 +232,9 @@ export default class Settings extends React.Component<Props> {
                 {
                   label: locals[this.props.lang].settings.color.colorSpace.lch,
                   value: 'LCH',
+                  feature: 'UPDATE_COLOR_SPACE',
                   position: 0,
+                  type: 'OPTION',
                   isActive: features.find(
                     (feature) => feature.name === 'SETTINGS_COLOR_SPACE_LCH'
                   )?.isActive,
@@ -234,12 +243,15 @@ export default class Settings extends React.Component<Props> {
                     this.props.planStatus
                   ),
                   children: [],
+                  action: this.props.onChangeSettings
                 },
                 {
                   label:
                     locals[this.props.lang].settings.color.colorSpace.oklch,
                   value: 'OKLCH',
+                  feature: 'UPDATE_COLOR_SPACE',
                   position: 1,
+                  type: 'OPTION',
                   isActive: features.find(
                     (feature) => feature.name === 'SETTINGS_COLOR_SPACE_OKLCH'
                   )?.isActive,
@@ -248,11 +260,14 @@ export default class Settings extends React.Component<Props> {
                     this.props.planStatus
                   ),
                   children: [],
+                  action: this.props.onChangeSettings
                 },
                 {
                   label: locals[this.props.lang].settings.color.colorSpace.lab,
                   value: 'LAB',
+                  feature: 'UPDATE_COLOR_SPACE',
                   position: 2,
+                  type: 'OPTION',
                   isActive: features.find(
                     (feature) => feature.name === 'SETTINGS_COLOR_SPACE_LAB'
                   )?.isActive,
@@ -261,12 +276,15 @@ export default class Settings extends React.Component<Props> {
                     this.props.planStatus
                   ),
                   children: [],
+                  action: this.props.onChangeSettings
                 },
                 {
                   label:
                     locals[this.props.lang].settings.color.colorSpace.oklab,
                   value: 'OKLAB',
+                  feature: 'UPDATE_COLOR_SPACE',
                   position: 3,
+                  type: 'OPTION',
                   isActive: features.find(
                     (feature) => feature.name === 'SETTINGS_COLOR_SPACE_OKLAB'
                   )?.isActive,
@@ -275,11 +293,14 @@ export default class Settings extends React.Component<Props> {
                     this.props.planStatus
                   ),
                   children: [],
+                  action: this.props.onChangeSettings
                 },
                 {
                   label: locals[this.props.lang].settings.color.colorSpace.hsl,
                   value: 'HSL',
+                  feature: 'UPDATE_COLOR_SPACE',
                   position: 4,
+                  type: 'OPTION',
                   isActive: features.find(
                     (feature) => feature.name === 'SETTINGS_COLOR_SPACE_HSL'
                   )?.isActive,
@@ -288,12 +309,15 @@ export default class Settings extends React.Component<Props> {
                     this.props.planStatus
                   ),
                   children: [],
+                  action: this.props.onChangeSettings
                 },
                 {
                   label:
                     locals[this.props.lang].settings.color.colorSpace.hsluv,
                   value: 'HSLUV',
+                  feature: 'UPDATE_COLOR_SPACE',
                   position: 5,
+                  type: 'OPTION',
                   isActive: features.find(
                     (feature) => feature.name === 'SETTINGS_COLOR_SPACE_HSLUV'
                   )?.isActive,
@@ -302,11 +326,10 @@ export default class Settings extends React.Component<Props> {
                     this.props.planStatus
                   ),
                   children: [],
+                  action: this.props.onChangeSettings
                 },
               ]}
               selected={this.props.colorSpace}
-              feature="UPDATE_COLOR_SPACE"
-              onChange={this.props.onChangeSettings}
             />
           </FormItem>
           {this.props.colorSpace === 'HSL' ? (

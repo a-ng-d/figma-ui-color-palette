@@ -87,10 +87,15 @@ export default class Shortcuts extends React.Component<Props, any> {
                 }
               />
               <Menu
+                id="shortcuts-menu"
                 icon="info"
-                actions={[
+                options={[
                   {
                     label: locals[this.props.lang].shortcuts.news,
+                    value: null,
+                    feature: null,
+                    position: 0,
+                    type: 'OPTION',
                     isActive:
                       features.find(
                         (feature) => feature.name === 'SHORTCUTS_HIGHTLIGHT'
@@ -99,11 +104,15 @@ export default class Shortcuts extends React.Component<Props, any> {
                       'SHORTCUTS_HIGHLIGHT',
                       this.props.planStatus
                     ),
-                    isSeparator: false,
+                    children: [],
                     action: () => this.props.onReOpenHighlight(),
                   },
                   {
                     label: locals[this.props.lang].about.getHelp.documentation,
+                    value: null,
+                    feature: null,
+                    position: 0,
+                    type: 'OPTION',
                     isActive: features.find(
                       (feature) => feature.name === 'SHORTCUTS_DOCUMENTATION'
                     )?.isActive,
@@ -111,12 +120,16 @@ export default class Shortcuts extends React.Component<Props, any> {
                       'SHORTCUTS_DOCUMENTATION',
                       this.props.planStatus
                     ),
-                    isSeparator: false,
+                    children: [],
                     action: () =>
                       window.open('https://uicp.link/docs', '_blank'),
                   },
                   {
                     label: locals[this.props.lang].about.getHelp.email,
+                    value: null,
+                    feature: null,
+                    position: 0,
+                    type: 'OPTION',
                     isActive: features.find(
                       (feature) => feature.name === 'SHORTCUTS_EMAIL'
                     )?.isActive,
@@ -124,19 +137,27 @@ export default class Shortcuts extends React.Component<Props, any> {
                       'SHORTCUTS_EMAIL',
                       this.props.planStatus
                     ),
-                    isSeparator: false,
+                    children: [],
                     action: () =>
                       window.open('https://uicp.link/send-message', '_blank'),
                   },
                   {
                     label: '',
+                    value: null,
+                    feature: null,
+                    position: 0,
+                    type: 'SEPARATOR',
                     isActive: true,
                     isBlocked: false,
-                    isSeparator: true,
+                    children: [],
                     action: () => null,
                   },
                   {
                     label: locals[this.props.lang].shortcuts.feedback,
+                    value: null,
+                    feature: null,
+                    position: 0,
+                    type: 'OPTION',
                     isActive: features.find(
                       (feature) => feature.name === 'SHORTCUTS_FEEDBACK'
                     )?.isActive,
@@ -144,11 +165,15 @@ export default class Shortcuts extends React.Component<Props, any> {
                       'SHORTCUTS_FEEDBACK',
                       this.props.planStatus
                     ),
-                    isSeparator: false,
+                    children: [],
                     action: () => this.props.onReOpenFeedback(),
                   },
                   {
                     label: locals[this.props.lang].about.beInvolved.issue,
+                    value: null,
+                    feature: null,
+                    position: 0,
+                    type: 'OPTION',
                     isActive: features.find(
                       (feature) => feature.name === 'SHORTCUTS_REPORTING'
                     )?.isActive,
@@ -156,12 +181,16 @@ export default class Shortcuts extends React.Component<Props, any> {
                       'SHORTCUTS_REPORTING',
                       this.props.planStatus
                     ),
-                    isSeparator: false,
+                    children: [],
                     action: () =>
                       window.open('https://uicp.link/report', '_blank'),
                   },
                   {
                     label: locals[this.props.lang].about.beInvolved.discuss,
+                    value: null,
+                    feature: null,
+                    position: 0,
+                    type: 'OPTION',
                     isActive: features.find(
                       (feature) => feature.name === 'SHORTCUTS_DISCUSSION'
                     )?.isActive,
@@ -169,19 +198,27 @@ export default class Shortcuts extends React.Component<Props, any> {
                       'SHORTCUTS_DISCUSSION',
                       this.props.planStatus
                     ),
-                    isSeparator: false,
+                    children: [],
                     action: () =>
                       window.open('https://uicp.link/discuss', '_blank'),
                   },
                   {
                     label: '',
+                    value: null,
+                    feature: null,
+                    position: 0,
+                    type: 'SEPARATOR',
                     isActive: true,
                     isBlocked: false,
-                    isSeparator: true,
+                    children: [],
                     action: () => null,
                   },
                   {
                     label: locals[this.props.lang].about.title,
+                    value: null,
+                    feature: null,
+                    position: 0,
+                    type: 'OPTION',
                     isActive: features.find(
                       (feature) => feature.name === 'SHORTCUTS_ABOUT'
                     )?.isActive,
@@ -189,11 +226,15 @@ export default class Shortcuts extends React.Component<Props, any> {
                       'SHORTCUTS_ABOUT',
                       this.props.planStatus
                     ),
-                    isSeparator: false,
+                    children: [],
                     action: this.props.onReOpenAbout,
                   },
                   {
                     label: locals[this.props.lang].about.giveSupport.follow,
+                    value: null,
+                    feature: null,
+                    position: 0,
+                    type: 'OPTION',
                     isActive: features.find(
                       (feature) => feature.name === 'SHORTCUTS_NETWORKING'
                     )?.isActive,
@@ -201,7 +242,7 @@ export default class Shortcuts extends React.Component<Props, any> {
                       'SHORTCUTS_NETWORKING',
                       this.props.planStatus
                     ),
-                    isSeparator: false,
+                    children: [],
                     action: () =>
                       window.open('https://uicp.link/network', '_blank'),
                   },

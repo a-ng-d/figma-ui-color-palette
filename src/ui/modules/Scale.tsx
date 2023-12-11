@@ -177,7 +177,9 @@ export default class Scale extends React.Component<Props, any> {
                     return {
                       label: preset[1].name,
                       value: preset[1].id,
+                      feature: 'UPDATE_PRESET',
                       position: index,
+                      type: 'OPTION',
                       isActive: features.find(
                         (feature) => feature.name === `PRESETS_${preset[1].id}`
                       )?.isActive,
@@ -186,13 +188,12 @@ export default class Scale extends React.Component<Props, any> {
                         this.props.planStatus
                       ),
                       children: [],
+                      action: (e) => this.props.onChangePreset?.(e)
                     }
                   })}
                   selected={this.props.preset.id}
-                  feature="UPDATE_PRESET"
                   parentClassName="controls"
                   alignment="RIGHT"
-                  onChange={(e) => this.props.onChangePreset?.(e)}
                 />
               </Feature>
               <Feature

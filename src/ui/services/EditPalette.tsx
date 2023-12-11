@@ -12,6 +12,9 @@ import type {
   Language,
   EditorType,
 } from '../../utils/types'
+import type {
+  DropdownOption
+} from '@a-ng-d/figmug.modules.types'
 import Feature from '../components/Feature'
 import { Bar } from '@a-ng-d/figmug.layouts.bar'
 import { Tabs } from '@a-ng-d/figmug.actions.tabs'
@@ -201,6 +204,53 @@ export default class EditPalette extends React.Component<Props, any> {
     return contexts
   }
 
+  setThemes = (): Array<DropdownOption> => {
+    const themes = 
+      this.workingThemes().map((theme, index) => {
+        return {
+          label: theme.name,
+          value: theme.id,
+          feature: 'SWITCH_THEME',
+          position: index,
+          type: 'OPTION',
+          isActive: true,
+          isBlocked: false,
+          children: [],
+          action: (e: any) => this.switchThemeHandler(e)
+        } as DropdownOption
+      })
+    const actions: Array<DropdownOption> = [
+      {
+        label: null,
+        value: null,
+        feature: null,
+        position: 0,
+        type: 'SEPARATOR',
+        isActive: isBlocked('THEMES', this.props.planStatus),
+        isBlocked: false,
+        children: [],
+        action: () => null,
+      },
+      {
+        label: 'Create a color theme',
+        value: 'CREATE_A_COLOR_THEME',
+        feature: 'ADD_THEME',
+        position: 0,
+        type: 'OPTION',
+        isActive: isBlocked('THEMES', this.props.planStatus),
+        isBlocked: isBlocked('THEMES', this.props.planStatus),
+        children: [],
+        action: () => {
+          this.setState({ context: 'THEMES' })
+          setTimeout(() => this.themesRef.current.onAddTheme(), 1)
+        },
+      },
+    ]
+
+    return themes.concat(actions)
+
+  }
+
   workingThemes = () => {
     if (this.props.themes.length > 1)
       return this.props.themes.filter((theme) => theme.type === 'custom theme')
@@ -345,35 +395,13 @@ export default class EditPalette extends React.Component<Props, any> {
               >
                 <Dropdown
                   id="switch-theme"
-                  options={this.workingThemes().map((theme, index) => {
-                    return {
-                      label: theme.name,
-                      value: theme.id,
-                      position: index,
-                      isActive: true,
-                      isBlocked: false,
-                      children: [],
-                    }
-                  })}
+                  options={this.setThemes()}
                   selected={
                     this.props.themes.find((theme) => theme.isEnabled)?.id ??
                     'NULL'
                   }
-                  actions={[
-                    {
-                      label: 'Create a color theme',
-                      isBlocked: isBlocked('THEMES', this.props.planStatus),
-                      feature: 'ADD_THEME',
-                      action: () => {
-                        this.setState({ context: 'THEMES' })
-                        setTimeout(() => this.themesRef.current.onAddTheme(), 1)
-                      },
-                    },
-                  ]}
-                  feature="SWITCH_THEME"
                   parentClassName="ui"
                   alignment="RIGHT"
-                  onChange={(e) => this.switchThemeHandler(e)}
                 />
               </FormItem>
             </Feature>
