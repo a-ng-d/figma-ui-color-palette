@@ -7,6 +7,7 @@ import { texts } from '@a-ng-d/figmug.stylesheets.texts'
 import features from '../../utils/config'
 import isBlocked from '../../utils/isBlocked'
 import { locals } from '../../content/locals'
+import { Menu } from '@a-ng-d/figmug.navigation.menu'
 
 interface Props {
   exportPreview: string
@@ -81,6 +82,17 @@ export default class Export extends React.Component<Props, any> {
           colorSpace: {
             selected: 'RGB',
             options: [
+              {
+                label: 'Color space',
+                value: null,
+                feature: null,
+                position: 0,
+                type: 'TITLE',
+                isActive: true,
+                isBlocked: false,
+                children: [],
+                action: () => null
+              },
               {
                 label: 'RGB',
                 value: 'EXPORT_TO_CSS_RGB',
@@ -437,12 +449,12 @@ export default class Export extends React.Component<Props, any> {
                 alignment="RIGHT"
               />
               {this.state['format'] === 'EXPORT_TO_CSS' ? (
-                <Dropdown
+                <Menu
+                  icon="adjust"
                   id="select-color-space"
                   options={this.state['colorSpace'].options}
                   selected={`${this.state['format']}_${this.state['colorSpace'].selected}`}
-                  parentClassName="controls"
-                  alignment="RIGHT"
+                  alignment="BOTTOM_RIGHT"
                 />
               ) : null}
             </div>
