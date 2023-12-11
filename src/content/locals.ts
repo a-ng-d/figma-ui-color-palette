@@ -137,6 +137,9 @@ export const locals: { [key: string]: any } = {
           oklab: 'OKLAB',
           hsl: 'HSL',
           hsluv: 'HSLuv',
+          hex: 'HEX',
+          rgb: 'RGB',
+          p3: 'P3'
         },
         newAlgorithm: {
           label: 'Enable the new algorithm for creating color shades',
