@@ -83,7 +83,7 @@ export default class Export extends React.Component<Props, any> {
             selected: 'RGB',
             options: [
               {
-                label: locals[this.props.lang].settings.color.colorSpace.label,
+                label: locals[this.props.lang].export.colorSpace.label,
                 value: null,
                 feature: null,
                 position: 0,
@@ -94,7 +94,7 @@ export default class Export extends React.Component<Props, any> {
                 action: () => null
               },
               {
-                label: locals[this.props.lang].settings.color.colorSpace.rgb,
+                label: locals[this.props.lang].export.colorSpace.rgb,
                 value: 'EXPORT_TO_CSS_RGB',
                 feature: 'SELECT_COLOR_SPACE',
                 position: 0,
@@ -107,7 +107,7 @@ export default class Export extends React.Component<Props, any> {
                 action: this.exportHandler
               },
               {
-                label: locals[this.props.lang].settings.color.colorSpace.hex,
+                label: locals[this.props.lang].export.colorSpace.hex,
                 value: 'EXPORT_TO_CSS_HEX',
                 feature: 'SELECT_COLOR_SPACE',
                 position: 1,
@@ -120,7 +120,7 @@ export default class Export extends React.Component<Props, any> {
                 action: this.exportHandler
               },
               {
-                label: locals[this.props.lang].settings.color.colorSpace.lch,
+                label: locals[this.props.lang].export.colorSpace.lch,
                 value: 'EXPORT_TO_CSS_LCH',
                 feature: 'SELECT_COLOR_SPACE',
                 position: 2,
@@ -133,7 +133,7 @@ export default class Export extends React.Component<Props, any> {
                 action: this.exportHandler
               },
               {
-                label: locals[this.props.lang].settings.color.colorSpace.p3,
+                label: locals[this.props.lang].export.colorSpace.p3,
                 value: 'EXPORT_TO_CSS_P3',
                 feature: 'SELECT_COLOR_SPACE',
                 position: 3,

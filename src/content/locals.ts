@@ -1,5 +1,20 @@
 export const lang = 'en-US'
 
+const glossary: {
+  [key: string]: string
+} = {
+  colorSpace: 'Color space',
+  lch: 'LCH',
+  oklch: 'OKLCH',
+  lab: 'CIELAB',
+  oklab: 'OKLAB',
+  hsl: 'HSL',
+  hsluv: 'HSLuv',
+  hex: 'HEX',
+  rgb: 'RGB',
+  p3: 'P3'
+}
+
 export const locals: { [key: string]: any } = {
   'en-US': {
     name: 'UI Color Palette',
@@ -97,6 +112,13 @@ export const locals: { [key: string]: any } = {
       amznStyleDictionary: 'Amazon Style Dictionary (JSON)',
       tokensStudio: 'Tokens Studio (JSON)',
       css: 'Custom Properties (CSS)',
+      colorSpace: {
+        label: glossary.colorSpace,
+        rgb: glossary.rgb,
+        hex: glossary.hex,
+        lch: glossary.lch,
+        p3: glossary.p3
+      },
       tailwind: 'Tailwind (JS)',
       swift: 'iOS (SwiftUI)',
       xml: 'Android (XML)',
@@ -130,16 +152,16 @@ export const locals: { [key: string]: any } = {
       color: {
         title: 'Color management',
         colorSpace: {
-          label: 'Color space',
-          lch: 'LCH',
-          oklch: 'OKLCH',
-          lab: 'CIELAB',
-          oklab: 'OKLAB',
-          hsl: 'HSL',
-          hsluv: 'HSLuv',
-          hex: 'HEX',
-          rgb: 'RGB',
-          p3: 'P3'
+          label: glossary.colorSpace,
+          lch: glossary.lch,
+          oklch: glossary.oklch,
+          lab: glossary.lab,
+          oklab: glossary.oklab,
+          hsl: glossary.hsl,
+          hsluv: glossary.hsluv,
+          hex: glossary.hex,
+          rgb: glossary.rgb,
+          p3: glossary.p3
         },
         newAlgorithm: {
           label: 'Enable the new algorithm for creating color shades',
