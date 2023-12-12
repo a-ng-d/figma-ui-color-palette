@@ -8,6 +8,7 @@ import cp from '../../content/images/choose_plan.webp'
 import pp from '../../content/images/pro_plan.webp'
 import t from '../../content/images/trial.webp'
 import { locals } from '../../content/locals'
+import { texts } from '@a-ng-d/figmug.stylesheets.texts'
 import features from '../../utils/config'
 import package_json from '../../../package.json'
 
@@ -54,7 +55,7 @@ export default class PriorityContainer extends React.Component<Props, any> {
             className="dialog__cover"
             src={cp}
           />
-          <p className="dialog__text type">
+          <p className={`dialog__text type ${texts.type}`}>
             {locals[this.props.lang].proPlan.trial.message}
           </p>
         </Dialog>
@@ -83,7 +84,7 @@ export default class PriorityContainer extends React.Component<Props, any> {
             className="dialog__cover"
             src={t}
           />
-          <p className="dialog__text type">
+          <p className={`dialog__text type ${texts.type}`}>
             {locals[this.props.lang].proPlan.welcome.trial}
           </p>
         </Dialog>
@@ -168,7 +169,7 @@ export default class PriorityContainer extends React.Component<Props, any> {
             className="dialog__cover"
             src={pp}
           />
-          <p className="dialog__text type">
+          <p className={`dialog__text type ${texts.type}`}>
             {locals[this.props.lang].proPlan.welcome.message}
           </p>
         </Dialog>
