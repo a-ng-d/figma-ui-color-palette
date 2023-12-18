@@ -91,7 +91,7 @@ export default class Export extends React.Component<Props, any> {
                 isActive: true,
                 isBlocked: false,
                 children: [],
-                action: () => null
+                action: () => null,
               },
               {
                 label: locals[this.props.lang].export.colorSpace.rgb,
@@ -104,7 +104,7 @@ export default class Export extends React.Component<Props, any> {
                 )?.isActive,
                 isBlocked: isBlocked('EXPORT_CSS_RGB', this.props.planStatus),
                 children: [],
-                action: this.exportHandler
+                action: this.exportHandler,
               },
               {
                 label: locals[this.props.lang].export.colorSpace.hex,
@@ -117,7 +117,7 @@ export default class Export extends React.Component<Props, any> {
                 )?.isActive,
                 isBlocked: isBlocked('EXPORT_CSS_HEX', this.props.planStatus),
                 children: [],
-                action: this.exportHandler
+                action: this.exportHandler,
               },
               {
                 label: locals[this.props.lang].export.colorSpace.lch,
@@ -130,7 +130,7 @@ export default class Export extends React.Component<Props, any> {
                 )?.isActive,
                 isBlocked: isBlocked('EXPORT_CSS_LCH', this.props.planStatus),
                 children: [],
-                action: this.exportHandler
+                action: this.exportHandler,
               },
               {
                 label: locals[this.props.lang].export.colorSpace.p3,
@@ -143,7 +143,7 @@ export default class Export extends React.Component<Props, any> {
                 )?.isActive,
                 isBlocked: isBlocked('EXPORT_CSS_P3', this.props.planStatus),
                 children: [],
-                action: this.exportHandler
+                action: this.exportHandler,
               },
             ],
           },
@@ -335,7 +335,7 @@ export default class Export extends React.Component<Props, any> {
                           this.props.planStatus
                         ),
                         children: [],
-                        action: this.exportHandler
+                        action: this.exportHandler,
                       },
                       {
                         label:
@@ -353,7 +353,7 @@ export default class Export extends React.Component<Props, any> {
                           this.props.planStatus
                         ),
                         children: [],
-                        action: this.exportHandler
+                        action: this.exportHandler,
                       },
                       {
                         label: locals[this.props.lang].export.tokensStudio,
@@ -370,10 +370,10 @@ export default class Export extends React.Component<Props, any> {
                           this.props.planStatus
                         ),
                         children: [],
-                        action: this.exportHandler
+                        action: this.exportHandler,
                       },
                     ],
-                    action: () => null
+                    action: () => null,
                   },
                   {
                     label: locals[this.props.lang].export.css,
@@ -386,7 +386,7 @@ export default class Export extends React.Component<Props, any> {
                     )?.isActive,
                     isBlocked: isBlocked('EXPORT_CSS', this.props.planStatus),
                     children: [],
-                    action: this.exportHandler
+                    action: this.exportHandler,
                   },
                   {
                     label: locals[this.props.lang].export.tailwind,
@@ -402,7 +402,7 @@ export default class Export extends React.Component<Props, any> {
                       this.props.planStatus
                     ),
                     children: [],
-                    action: this.exportHandler
+                    action: this.exportHandler,
                   },
                   {
                     label: locals[this.props.lang].export.swift,
@@ -415,7 +415,7 @@ export default class Export extends React.Component<Props, any> {
                     )?.isActive,
                     isBlocked: isBlocked('EXPORT_SWIFT', this.props.planStatus),
                     children: [],
-                    action: this.exportHandler
+                    action: this.exportHandler,
                   },
                   {
                     label: locals[this.props.lang].export.xml,
@@ -428,7 +428,7 @@ export default class Export extends React.Component<Props, any> {
                     )?.isActive,
                     isBlocked: isBlocked('EXPORT_XML', this.props.planStatus),
                     children: [],
-                    action: this.exportHandler
+                    action: this.exportHandler,
                   },
                   {
                     label: locals[this.props.lang].export.csv,
@@ -441,7 +441,7 @@ export default class Export extends React.Component<Props, any> {
                     )?.isActive,
                     isBlocked: isBlocked('EXPORT_CSV', this.props.planStatus),
                     children: [],
-                    action: this.exportHandler
+                    action: this.exportHandler,
                   },
                 ]}
                 selected={this.state['format'] ?? ''}

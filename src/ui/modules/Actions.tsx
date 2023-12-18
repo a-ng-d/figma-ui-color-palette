@@ -136,7 +136,7 @@ export default class Actions extends React.Component<Props> {
                 action: (e) =>
                   this.props.onChangeActions?.(
                     (e.target as HTMLElement).dataset.value ?? 'NULL'
-                  )
+                  ),
               },
               {
                 label:
@@ -156,7 +156,7 @@ export default class Actions extends React.Component<Props> {
                 action: (e) =>
                   this.props.onChangeActions?.(
                     (e.target as HTMLElement).dataset.value ?? 'NULL'
-                  )
+                  ),
               },
             ]}
             selected={this.props.actions ?? ''}
