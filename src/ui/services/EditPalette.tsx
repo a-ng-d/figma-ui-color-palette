@@ -12,9 +12,7 @@ import type {
   Language,
   EditorType,
 } from '../../utils/types'
-import type {
-  DropdownOption
-} from '@a-ng-d/figmug.modules.types'
+import type { DropdownOption } from '@a-ng-d/figmug.modules.types'
 import Feature from '../components/Feature'
 import { Bar } from '@a-ng-d/figmug.layouts.bar'
 import { Tabs } from '@a-ng-d/figmug.actions.tabs'
@@ -205,20 +203,19 @@ export default class EditPalette extends React.Component<Props, any> {
   }
 
   setThemes = (): Array<DropdownOption> => {
-    const themes = 
-      this.workingThemes().map((theme, index) => {
-        return {
-          label: theme.name,
-          value: theme.id,
-          feature: 'SWITCH_THEME',
-          position: index,
-          type: 'OPTION',
-          isActive: true,
-          isBlocked: false,
-          children: [],
-          action: (e: any) => this.switchThemeHandler(e)
-        } as DropdownOption
-      })
+    const themes = this.workingThemes().map((theme, index) => {
+      return {
+        label: theme.name,
+        value: theme.id,
+        feature: 'SWITCH_THEME',
+        position: index,
+        type: 'OPTION',
+        isActive: true,
+        isBlocked: false,
+        children: [],
+        action: (e: any) => this.switchThemeHandler(e),
+      } as DropdownOption
+    })
     const actions: Array<DropdownOption> = [
       {
         label: null,
@@ -237,7 +234,8 @@ export default class EditPalette extends React.Component<Props, any> {
         feature: 'ADD_THEME',
         position: themes.length + 1,
         type: 'OPTION',
-        isActive: features.find((feature) => feature.name === 'THEMES')?.isActive,
+        isActive: features.find((feature) => feature.name === 'THEMES')
+          ?.isActive,
         isBlocked: isBlocked('THEMES', this.props.planStatus),
         children: [],
         action: () => {
@@ -248,7 +246,6 @@ export default class EditPalette extends React.Component<Props, any> {
     ]
 
     return themes.concat(actions)
-
   }
 
   workingThemes = () => {

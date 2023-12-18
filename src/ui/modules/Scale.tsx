@@ -188,7 +188,7 @@ export default class Scale extends React.Component<Props, any> {
                         this.props.planStatus
                       ),
                       children: [],
-                      action: (e) => this.props.onChangePreset?.(e)
+                      action: (e) => this.props.onChangePreset?.(e),
                     }
                   })}
                   selected={this.props.preset.id}

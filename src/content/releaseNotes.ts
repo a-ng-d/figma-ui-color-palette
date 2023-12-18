@@ -18,20 +18,14 @@ const releaseNotes: Array<ReleaseNote> = [
   {
     version: '2.9.0',
     isMostRecent: true,
-    title: [
-      'Use your palettes for Tailwind',
-      'Happy Xmas!',
-    ],
+    title: ['Use your palettes for Tailwind', 'Happy Xmas!'],
     image: [rnv291, rnv292],
     content: [
       'You can now set your new palettes using the Tailwind color system and export all the shades and themes to a JSON file that complies with its configuration.',
       "For Christmas, we're providing a special discount as an end-of-year gift.",
     ],
     numberOfNotes: 2,
-    learnMore: [
-      'https://uicp.link/whats-new',
-      'https://uicp.link/whats-new',
-    ],
+    learnMore: ['https://uicp.link/whats-new', 'https://uicp.link/whats-new'],
   },
   {
     version: '2.8.0',

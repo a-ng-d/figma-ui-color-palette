@@ -12,7 +12,7 @@ const glossary: {
   hsluv: 'HSLuv',
   hex: 'HEX',
   rgb: 'RGB',
-  p3: 'P3'
+  p3: 'P3',
 }
 
 export const locals: { [key: string]: any } = {
@@ -117,7 +117,7 @@ export const locals: { [key: string]: any } = {
         rgb: glossary.rgb,
         hex: glossary.hex,
         lch: glossary.lch,
-        p3: glossary.p3
+        p3: glossary.p3,
       },
       tailwind: 'Tailwind (JS)',
       swift: 'iOS (SwiftUI)',
@@ -161,7 +161,7 @@ export const locals: { [key: string]: any } = {
           hsluv: glossary.hsluv,
           hex: glossary.hex,
           rgb: glossary.rgb,
-          p3: glossary.p3
+          p3: glossary.p3,
         },
         newAlgorithm: {
           label: 'Enable the new algorithm for creating color shades',

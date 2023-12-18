@@ -176,7 +176,7 @@ export default class Settings extends React.Component<Props> {
                     this.props.planStatus
                   ),
                   children: [],
-                  action: this.props.onChangeSettings
+                  action: this.props.onChangeSettings,
                 },
                 {
                   label: locals[this.props.lang].settings.global.views.simple,
@@ -189,7 +189,7 @@ export default class Settings extends React.Component<Props> {
                   )?.isActive,
                   isBlocked: isBlocked('VIEWS_PALETTE', this.props.planStatus),
                   children: [],
-                  action: this.props.onChangeSettings
+                  action: this.props.onChangeSettings,
                 },
                 {
                   label: locals[this.props.lang].settings.global.views.sheet,
@@ -202,7 +202,7 @@ export default class Settings extends React.Component<Props> {
                   )?.isActive,
                   isBlocked: isBlocked('VIEWS_SHEET', this.props.planStatus),
                   children: [],
-                  action: this.props.onChangeSettings
+                  action: this.props.onChangeSettings,
                 },
               ]}
               selected={this.props.view}
@@ -243,7 +243,7 @@ export default class Settings extends React.Component<Props> {
                     this.props.planStatus
                   ),
                   children: [],
-                  action: this.props.onChangeSettings
+                  action: this.props.onChangeSettings,
                 },
                 {
                   label:
@@ -260,7 +260,7 @@ export default class Settings extends React.Component<Props> {
                     this.props.planStatus
                   ),
                   children: [],
-                  action: this.props.onChangeSettings
+                  action: this.props.onChangeSettings,
                 },
                 {
                   label: locals[this.props.lang].settings.color.colorSpace.lab,
@@ -276,7 +276,7 @@ export default class Settings extends React.Component<Props> {
                     this.props.planStatus
                   ),
                   children: [],
-                  action: this.props.onChangeSettings
+                  action: this.props.onChangeSettings,
                 },
                 {
                   label:
@@ -293,7 +293,7 @@ export default class Settings extends React.Component<Props> {
                     this.props.planStatus
                   ),
                   children: [],
-                  action: this.props.onChangeSettings
+                  action: this.props.onChangeSettings,
                 },
                 {
                   label: locals[this.props.lang].settings.color.colorSpace.hsl,
@@ -309,7 +309,7 @@ export default class Settings extends React.Component<Props> {
                     this.props.planStatus
                   ),
                   children: [],
-                  action: this.props.onChangeSettings
+                  action: this.props.onChangeSettings,
                 },
                 {
                   label:
@@ -326,7 +326,7 @@ export default class Settings extends React.Component<Props> {
                     this.props.planStatus
                   ),
                   children: [],
-                  action: this.props.onChangeSettings
+                  action: this.props.onChangeSettings,
                 },
               ]}
               selected={this.props.colorSpace}
