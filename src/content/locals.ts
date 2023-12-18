@@ -51,7 +51,7 @@ export const locals: { [key: string]: any } = {
       title: 'Source colors',
       canvas: {
         title: 'Selected colors',
-        tip: 'Select a frame or a shape (filled with color) on the Figma/FigJam canvas, then create a UI Color Palette',
+        tip: 'Select a frame or a shape (filled with color) on the Figma/FigJam canvas, then create a UI Color Palette.',
       },
       coolors: {
         title: 'Import from Coolors',
