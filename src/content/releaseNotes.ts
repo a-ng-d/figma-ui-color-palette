@@ -1,4 +1,6 @@
 import type { ReleaseNote } from '../utils/types'
+import rnv291 from './images/release_note_v29_1.webp'
+import rnv292 from './images/release_note_v29_2.webp'
 import rnv281 from './images/release_note_v28_1.webp'
 import rnv282 from './images/release_note_v28_2.webp'
 import rnv283 from './images/release_note_v28_3.webp'
@@ -14,8 +16,26 @@ import rnv19 from './images/release_note_v19.webp'
 
 const releaseNotes: Array<ReleaseNote> = [
   {
-    version: '2.8.0',
+    version: '2.9.0',
     isMostRecent: true,
+    title: [
+      'Use your palettes for Tailwind',
+      'Happy Xmas!',
+    ],
+    image: [rnv291, rnv292],
+    content: [
+      'You can now set your new palettes using the Tailwind color system and export all the shades and themes to a JSON file that complies with its configuration.',
+      "For Christmas, we're providing a special discount as an end-of-year gift.",
+    ],
+    numberOfNotes: 2,
+    learnMore: [
+      'https://uicp.link/whats-new',
+      'https://uicp.link/whats-new',
+    ],
+  },
+  {
+    version: '2.8.0',
+    isMostRecent: false,
     title: [
       'Black Friday Offer',
       'Import colors from Coolors',
