@@ -165,7 +165,7 @@ const features: Array<Feature> = [
     name: 'PRESETS_ANT',
     description: 'Ant Design color system',
     isActive: true,
-    isPro: false,
+    isPro: true,
     type: 'ACTION',
     service: ['CREATE'],
   },
