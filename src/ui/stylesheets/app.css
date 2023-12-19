@@ -4,10 +4,6 @@ body {
   overflow: hidden;
 }
 
-input {
-  cursor: default;
-}
-
 ul {
   padding: 0;
   margin: 0;
@@ -17,14 +13,14 @@ li {
   display: block;
 }
 
-div#react-page {
+div#app {
   height: 100%;
   cursor: default;
   user-select: none;
   -webkit-user-select: none;
 }
 
-div#react-page:empty:before {
+div#app:empty:before {
   content: '';
   width: var(--size-medium);
   height: var(--size-medium);
@@ -39,7 +35,7 @@ div#react-page:empty:before {
   animation: rotating 1s linear infinite;
 }
 
-div#react-page.dragged-ghost {
+div#app.dragged-ghost {
   cursor: grabbing;
 }
 
@@ -70,10 +66,6 @@ div.actions__left {
   display: flex;
   align-items: center;
   gap: var(--size-xxsmall);
-}
-
-div.actions .select-menu {
-  min-width: 224px;
 }
 
 /* Layout */
@@ -164,7 +156,7 @@ div.section-controls .section-title {
 div.export-palette__preview {
   padding: 0 var(--size-xsmall);
   flex: 1;
-  overflow-y: auto;
+  display: grid;
 }
 
 div.export-palette__preview textarea {

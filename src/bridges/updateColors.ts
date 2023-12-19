@@ -78,7 +78,7 @@ const updateColors = (msg: ColorsMessage, palette: SceneNode) => {
       themes.find((theme) => theme.isEnabled)?.type === 'default theme'
         ? ''
         : themes.find((theme) => theme.isEnabled)?.name + '﹒'
-    }${preset.name}${preset.name}﹒${colorSpace} ${
+    }${preset.name}﹒${colorSpace} ${
       view.includes('PALETTE') ? 'Palette' : 'Sheet'
     }`
   } else figma.notify(locals[lang].error.corruption)

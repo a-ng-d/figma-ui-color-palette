@@ -131,6 +131,7 @@ export interface PresetConfiguration {
   scale: Array<number>
   min: number
   max: number
+  isDistributed: boolean
   id: string
 }
 
@@ -162,7 +163,7 @@ export interface ThemeConfiguration {
 }
 
 export interface ExportConfiguration {
-  format: 'JSON' | 'CSS' | 'SWIFT' | 'XML' | 'CSV'
+  format: 'JSON' | 'CSS' | 'TAILWIND' | 'SWIFT' | 'XML' | 'CSV'
   mimeType:
     | 'application/json'
     | 'text/css'
@@ -213,24 +214,6 @@ export interface HoveredColor extends SelectedColor {
 
 export interface ActionsList {
   [action: string]: () => void
-}
-
-export interface DropdownOption {
-  label: string
-  value: string
-  position: number
-  isActive?: boolean
-  isBlocked?: boolean
-  children?: Array<DropdownOption> | []
-}
-
-export interface DropdownAction {
-  label: string
-  isActive?: boolean
-  isBlocked: boolean
-  feature?: string
-  isSeparator?: boolean
-  action: () => void
 }
 
 // Models

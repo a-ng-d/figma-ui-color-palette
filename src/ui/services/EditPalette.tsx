@@ -12,20 +12,21 @@ import type {
   Language,
   EditorType,
 } from '../../utils/types'
+import type { DropdownOption } from '@a-ng-d/figmug.modules.types'
 import Feature from '../components/Feature'
-import Bar from '../components/Bar'
-import Tabs from '../components/Tabs'
+import { Bar } from '@a-ng-d/figmug.layouts.bar'
+import { Tabs } from '@a-ng-d/figmug.actions.tabs'
 import Scale from '../modules/Scale'
 import Colors from '../modules/Colors'
 import Themes from '../modules/Themes'
 import Export from '../modules/Export'
 import Settings from '../modules/Settings'
-import FormItem from '../components/FormItem'
-import Dropdown from '../components/Dropdown'
+import { FormItem } from '@a-ng-d/figmug.layouts.form-item'
+import { Dropdown } from '@a-ng-d/figmug.inputs.dropdown'
 import features from '../../utils/config'
 import { locals } from '../../content/locals'
 import isBlocked from '../../utils/isBlocked'
-import doSnakeCase from '../../utils/doSnakeCase'
+import { doSnakeCase } from '@a-ng-d/figmug.modules.do-snake-case'
 
 interface Props {
   name: string
@@ -114,6 +115,9 @@ export default class EditPalette extends React.Component<Props, any> {
   }
 
   onExport = () => {
+    const blob = new Blob([this.props.export.data], {
+      type: this.props.export.mimeType,
+    })
     if (this.props.export.format === 'CSV') {
       const zip = new JSZip()
       this.props.export.data.forEach(
@@ -138,25 +142,29 @@ export default class EditPalette extends React.Component<Props, any> {
         .then((content: any) =>
           FileSaver.saveAs(
             content,
-            `${
-              this.props.name === ''
-                ? doSnakeCase(locals[this.props.lang].name)
-                : doSnakeCase(this.props.name)
-            }-colors`
+            this.props.name === ''
+              ? doSnakeCase(locals[this.props.lang].name)
+              : doSnakeCase(this.props.name)
           )
         )
         .catch((error: any) => console.error(error))
-    } else {
-      const blob = new Blob([this.props.export.data], {
-        type: this.props.export.mimeType,
-      })
+    } else if (this.props.export.format === 'TAILWIND') {
+      FileSaver.saveAs(blob, 'tailwind.config.js')
+    } else if (this.props.export.format === 'SWIFT') {
       FileSaver.saveAs(
         blob,
         `${
           this.props.name === ''
             ? doSnakeCase(locals[this.props.lang].name)
             : doSnakeCase(this.props.name)
-        }-colors${this.props.export.format === 'SWIFT' ? '.swift' : ''}`
+        }.swift`
+      )
+    } else {
+      FileSaver.saveAs(
+        blob,
+        this.props.name === ''
+          ? doSnakeCase(locals[this.props.lang].name)
+          : doSnakeCase(this.props.name)
       )
     }
   }
@@ -192,6 +200,52 @@ export default class EditPalette extends React.Component<Props, any> {
         id: 'SETTINGS',
       })
     return contexts
+  }
+
+  setThemes = (): Array<DropdownOption> => {
+    const themes = this.workingThemes().map((theme, index) => {
+      return {
+        label: theme.name,
+        value: theme.id,
+        feature: 'SWITCH_THEME',
+        position: index,
+        type: 'OPTION',
+        isActive: true,
+        isBlocked: false,
+        children: [],
+        action: (e: any) => this.switchThemeHandler(e),
+      } as DropdownOption
+    })
+    const actions: Array<DropdownOption> = [
+      {
+        label: null,
+        value: null,
+        feature: null,
+        position: themes.length,
+        type: 'SEPARATOR',
+        isActive: true,
+        isBlocked: false,
+        children: [],
+        action: () => null,
+      },
+      {
+        label: 'Create a color theme',
+        value: null,
+        feature: 'ADD_THEME',
+        position: themes.length + 1,
+        type: 'OPTION',
+        isActive: features.find((feature) => feature.name === 'THEMES')
+          ?.isActive,
+        isBlocked: isBlocked('THEMES', this.props.planStatus),
+        children: [],
+        action: () => {
+          this.setState({ context: 'THEMES' })
+          setTimeout(() => this.themesRef.current.onAddTheme(), 1)
+        },
+      },
+    ]
+
+    return themes.concat(actions)
   }
 
   workingThemes = () => {
@@ -338,35 +392,13 @@ export default class EditPalette extends React.Component<Props, any> {
               >
                 <Dropdown
                   id="switch-theme"
-                  options={this.workingThemes().map((theme, index) => {
-                    return {
-                      label: theme.name,
-                      value: theme.id,
-                      position: index,
-                      isActive: true,
-                      isBlocked: false,
-                      children: [],
-                    }
-                  })}
+                  options={this.setThemes()}
                   selected={
                     this.props.themes.find((theme) => theme.isEnabled)?.id ??
                     'NULL'
                   }
-                  actions={[
-                    {
-                      label: 'Create a color theme',
-                      isBlocked: isBlocked('THEMES', this.props.planStatus),
-                      feature: 'ADD_THEME',
-                      action: () => {
-                        this.setState({ context: 'THEMES' })
-                        setTimeout(() => this.themesRef.current.onAddTheme(), 1)
-                      },
-                    },
-                  ]}
-                  feature="SWITCH_THEME"
                   parentClassName="ui"
                   alignment="RIGHT"
-                  onChange={(e) => this.switchThemeHandler(e)}
                 />
               </FormItem>
             </Feature>

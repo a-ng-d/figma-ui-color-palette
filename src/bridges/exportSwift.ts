@@ -1,6 +1,6 @@
 import type { PaletteData } from '../utils/types'
 import { locals, lang } from '../content/locals'
-import doCamelCase from '../utils/doCamelCase'
+import { doCamelCase } from '@a-ng-d/figmug.modules.do-camel-case'
 
 const exportSwift = (palette: SceneNode) => {
   palette = figma.currentPage.selection[0] as FrameNode

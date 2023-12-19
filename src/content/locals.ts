@@ -1,5 +1,20 @@
 export const lang = 'en-US'
 
+const glossary: {
+  [key: string]: string
+} = {
+  colorSpace: 'Color space',
+  lch: 'LCH',
+  oklch: 'OKLCH',
+  lab: 'CIELAB',
+  oklab: 'OKLAB',
+  hsl: 'HSL',
+  hsluv: 'HSLuv',
+  hex: 'HEX',
+  rgb: 'RGB',
+  p3: 'P3',
+}
+
 export const locals: { [key: string]: any } = {
   'en-US': {
     name: 'UI Color Palette',
@@ -36,7 +51,7 @@ export const locals: { [key: string]: any } = {
       title: 'Source colors',
       canvas: {
         title: 'Selected colors',
-        tip: 'The selected solid colors from the Figma/FigJam canvas will be displayed here',
+        tip: 'Select a frame or a shape (filled with color) on the Figma/FigJam canvas, then create a UI Color Palette.',
       },
       coolors: {
         title: 'Import from Coolors',
@@ -97,6 +112,14 @@ export const locals: { [key: string]: any } = {
       amznStyleDictionary: 'Amazon Style Dictionary (JSON)',
       tokensStudio: 'Tokens Studio (JSON)',
       css: 'Custom Properties (CSS)',
+      colorSpace: {
+        label: glossary.colorSpace,
+        rgb: glossary.rgb,
+        hex: glossary.hex,
+        lch: glossary.lch,
+        p3: glossary.p3,
+      },
+      tailwind: 'Tailwind (JS)',
       swift: 'iOS (SwiftUI)',
       xml: 'Android (XML)',
       csv: 'Spreadsheet (CSV)',
@@ -129,13 +152,16 @@ export const locals: { [key: string]: any } = {
       color: {
         title: 'Color management',
         colorSpace: {
-          label: 'Color space',
-          lch: 'LCH',
-          oklch: 'OKLCH',
-          lab: 'CIELAB',
-          oklab: 'OKLAB',
-          hsl: 'HSL',
-          hsluv: 'HSLuv',
+          label: glossary.colorSpace,
+          lch: glossary.lch,
+          oklch: glossary.oklch,
+          lab: glossary.lab,
+          oklab: glossary.oklab,
+          hsl: glossary.hsl,
+          hsluv: glossary.hsluv,
+          hex: glossary.hex,
+          rgb: glossary.rgb,
+          p3: glossary.p3,
         },
         newAlgorithm: {
           label: 'Enable the new algorithm for creating color shades',
@@ -149,7 +175,7 @@ export const locals: { [key: string]: any } = {
       getHelp: {
         title: 'Have help',
         documentation: 'Read the documentation',
-        email: 'Send an email',
+        email: 'Contact support',
       },
       beInvolved: {
         title: 'Get involved',

@@ -7,13 +7,14 @@ import type {
   SourceColorConfiguration,
 } from '../../utils/types'
 import Feature from '../components/Feature'
-import Message from '../components/Message'
+import { Message } from '@a-ng-d/figmug.dialogs.message'
 import Actions from './Actions'
-import FormItem from '../components/FormItem'
-import Input from '../components/Input'
-import Button from '../components/Button'
+import { FormItem } from '@a-ng-d/figmug.layouts.form-item'
+import { Input } from '@a-ng-d/figmug.inputs.input'
+import { Button } from '@a-ng-d/figmug.actions.button'
 import CompactColorItem from '../components/CompactColorItem'
-import Accordion from '../components/Accordion'
+import { Accordion } from '@a-ng-d/figmug.layouts.accordion'
+import { texts } from '@a-ng-d/figmug.stylesheets.texts'
 import features from '../../utils/config'
 import isBlocked from '../../utils/isBlocked'
 import { locals } from '../../content/locals'
@@ -126,10 +127,10 @@ export default class Source extends React.Component<Props, any> {
       <>
         <div className="section-controls">
           <div className="section-controls__left-part">
-            <div className="section-title">
+            <div className={`section-title ${texts['section-title']}`}>
               {locals[this.props.lang].source.canvas.title}
             </div>
-            <div className="type">{`(${
+            <div className={`type ${texts.type}`}>{`(${
               this.props.sourceColors.filter(
                 (sourceColor) => sourceColor.source === 'CANVAS'
               ).length
@@ -215,8 +216,6 @@ export default class Source extends React.Component<Props, any> {
                 }
                 value={this.state['coolorsUrl'].value}
                 onChange={this.isTypingHandler}
-                onFocus={() => null}
-                onBlur={() => null}
                 onConfirm={() => {
                   if (this.state['coolorsUrl'].canBeSubmitted) {
                     this.importColorsFromCoolorsHandler()
@@ -230,11 +229,7 @@ export default class Source extends React.Component<Props, any> {
               >
                 <Button
                   type="icon"
-                  state={
-                    this.state['coolorsUrl'].canBeSubmitted
-                      ? 'default'
-                      : 'disabled'
-                  }
+                  isDisabled={!this.state['coolorsUrl'].canBeSubmitted}
                   icon="plus"
                   feature="IMPORT_COLORS_FROM_URL"
                   action={this.importColorsFromCoolorsHandler}

@@ -9,14 +9,16 @@ import type {
   SourceColorConfiguration,
 } from '../../utils/types'
 import Feature from '../components/Feature'
-import Button from '../components/Button'
-import Dropdown from '../components/Dropdown'
+import { Button } from '@a-ng-d/figmug.actions.button'
+import { Dropdown } from '@a-ng-d/figmug.inputs.dropdown'
 import Slider from '../components/Slider'
-import Message from '../components/Message'
+import { Message } from '@a-ng-d/figmug.dialogs.message'
 import Actions from './Actions'
+import { texts } from '@a-ng-d/figmug.stylesheets.texts'
 import { palette, presets } from '../../utils/palettePackage'
 import features from '../../utils/config'
 import isBlocked from '../../utils/isBlocked'
+import doLightnessScale from '../../utils/doLightnessScale'
 import { locals } from '../../content/locals'
 import Dispatcher from './Dispatcher'
 
@@ -158,7 +160,7 @@ export default class Scale extends React.Component<Props, any> {
         <div className="control__block control__block--distributed">
           <div className="section-controls">
             <div className="section-controls__left-part">
-              <div className="section-title">
+              <div className={`section-title ${texts['section-title']}`}>
                 {locals[this.props.lang].scale.title}
               </div>
             </div>
@@ -175,7 +177,9 @@ export default class Scale extends React.Component<Props, any> {
                     return {
                       label: preset[1].name,
                       value: preset[1].id,
+                      feature: 'UPDATE_PRESET',
                       position: index,
+                      type: 'OPTION',
                       isActive: features.find(
                         (feature) => feature.name === `PRESETS_${preset[1].id}`
                       )?.isActive,
@@ -184,13 +188,12 @@ export default class Scale extends React.Component<Props, any> {
                         this.props.planStatus
                       ),
                       children: [],
+                      action: (e) => this.props.onChangePreset?.(e),
                     }
                   })}
                   selected={this.props.preset.id}
-                  feature="UPDATE_PRESET"
                   parentClassName="controls"
                   alignment="RIGHT"
-                  onChange={(e) => this.props.onChangePreset?.(e)}
                 />
               </Feature>
               <Feature
@@ -212,9 +215,7 @@ export default class Scale extends React.Component<Props, any> {
                   <Button
                     type="icon"
                     icon="plus"
-                    state={
-                      this.props.preset.scale.length == 24 ? 'disabled' : ''
-                    }
+                    isDisabled={this.props.preset.scale.length == 24}
                     feature="ADD_STOP"
                     action={
                       this.props.preset.scale.length >= 24
@@ -232,15 +233,31 @@ export default class Scale extends React.Component<Props, any> {
                 ?.isActive
             }
           >
-            <Slider
-              type="EQUAL"
-              hasPreset={this.props.hasPreset}
-              presetName={this.props.preset.name}
-              stops={this.props.preset.scale}
-              min={this.props.preset.min}
-              max={this.props.preset.max}
-              onChange={this.slideHandler}
-            />
+            {this.props.preset.isDistributed ? (
+              <Slider
+                type="EQUAL"
+                hasPreset={this.props.hasPreset}
+                presetName={this.props.preset.name}
+                stops={this.props.preset.scale}
+                min={this.props.preset.min}
+                max={this.props.preset.max}
+                onChange={this.slideHandler}
+              />
+            ) : (
+              <Slider
+                type="CUSTOM"
+                hasPreset={this.props.hasPreset}
+                presetName={this.props.preset.name}
+                stops={this.props.preset.scale}
+                scale={doLightnessScale(
+                  this.props.preset.scale,
+                  this.props.preset.min,
+                  this.props.preset.max,
+                  false
+                )}
+                onChange={this.slideHandler}
+              />
+            )}
           </Feature>
           <Feature
             isActive={
@@ -272,15 +289,17 @@ export default class Scale extends React.Component<Props, any> {
         <div className="control__block control__block--distributed">
           <div className="section-controls">
             <div className="section-controls__left-part">
-              <div className="section-title">
+              <div className={`section-title ${texts['section-title']}`}>
                 {locals[this.props.lang].scale.title}
-                <div className="type">{`(${
+                <div className={`type ${texts.type}`}>{`(${
                   Object.entries(this.props.scale ?? {}).length
                 })`}</div>
               </div>
             </div>
             <div className="section-controls__right-part">
-              <div className="label">{this.props.preset.name}</div>
+              <div className={`label ${texts.label}`}>
+                {this.props.preset.name}
+              </div>
             </div>
           </div>
           <Feature

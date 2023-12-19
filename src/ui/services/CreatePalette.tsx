@@ -5,8 +5,8 @@ import type {
   SourceColorConfiguration,
   TextColorsThemeHexModel,
 } from '../../utils/types'
-import Bar from '../components/Bar'
-import Tabs from '../components/Tabs'
+import { Bar } from '@a-ng-d/figmug.layouts.bar'
+import { Tabs } from '@a-ng-d/figmug.actions.tabs'
 import Scale from '../modules/Scale'
 import Settings from '../modules/Settings'
 import { palette } from '../../utils/palettePackage'

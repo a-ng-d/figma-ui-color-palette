@@ -1,8 +1,12 @@
-import type { PaletteData } from '../utils/types'
-import doKebabCase from '../utils/doKebabCase'
+import type {
+  ActionsList,
+  PaletteData,
+  PaletteDataShadeItem,
+} from '../utils/types'
+import { doKebabCase } from '@a-ng-d/figmug.modules.do-kebab-case'
 import { locals, lang } from '../content/locals'
 
-const exportCss = (palette: SceneNode) => {
+const exportCss = (palette: SceneNode, colorSpace: 'RGB' | 'LCH' | 'P3') => {
   palette = figma.currentPage.selection[0] as FrameNode
 
   const paletteData: PaletteData = JSON.parse(palette.getPluginData('data')),
@@ -12,6 +16,26 @@ const exportCss = (palette: SceneNode) => {
         ? paletteData.themes.filter((theme) => theme.type === 'default theme')
         : paletteData.themes.filter((theme) => theme.type === 'custom theme'),
     css: Array<string> = []
+
+  const setValueAccordingToColorSpace = (shade: PaletteDataShadeItem) => {
+    const actions: ActionsList = {
+      RGB: () =>
+        `rgb(${Math.floor(shade.rgb[0])}, ${Math.floor(
+          shade.rgb[1]
+        )}, ${Math.floor(shade.rgb[2])})`,
+      LCH: () =>
+        `lch(${Math.floor(shade.lch[0])}% ${Math.floor(
+          shade.lch[1]
+        )} ${Math.floor(shade.lch[2])})`,
+      P3: () =>
+        `color(display-p3 ${shade.gl[0].toFixed(3)} ${shade.gl[1].toFixed(
+          3
+        )} ${shade.gl[2].toFixed(3)})`,
+      HEX: () => shade.hex,
+    }
+
+    return actions[colorSpace ?? 'RGB']?.()
+  }
 
   if (palette.children.length == 1) {
     workingThemes.forEach((theme) => {
@@ -28,9 +52,7 @@ const exportCss = (palette: SceneNode) => {
               workingThemes[0].type === 'custom theme'
                 ? doKebabCase(theme.name + ' ' + color.name)
                 : doKebabCase(color.name)
-            }-${shade.name}: rgb(${Math.floor(shade.rgb[0])},${Math.floor(
-              shade.rgb[1]
-            )},${Math.floor(shade.rgb[2])});`
+            }-${shade.name}: ${setValueAccordingToColorSpace(shade)};`
           )
         })
         rowCss.unshift('')

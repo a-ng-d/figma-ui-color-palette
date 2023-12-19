@@ -6,12 +6,13 @@ import type {
   TextColorsThemeHexModel,
 } from '../../utils/types'
 import Feature from '../components/Feature'
-import FormItem from './../components/FormItem'
-import Input from './../components/Input'
-import Switch from '../components/Switch'
-import Message from '../components/Message'
-import Dropdown from '../components/Dropdown'
+import { FormItem } from '@a-ng-d/figmug.layouts.form-item'
+import { Input } from '@a-ng-d/figmug.inputs.input'
+import { Select } from '@a-ng-d/figmug.inputs.select'
+import { Message } from '@a-ng-d/figmug.dialogs.message'
+import { Dropdown } from '@a-ng-d/figmug.inputs.dropdown'
 import Actions from './Actions'
+import { texts } from '@a-ng-d/figmug.stylesheets.texts'
 import features from '../../utils/config'
 import isBlocked from '../../utils/isBlocked'
 import { locals } from '../../content/locals'
@@ -123,11 +124,6 @@ export default class Settings extends React.Component<Props> {
                 this.props.planStatus
               )}
               feature="UPDATE_DESCRIPTION"
-              onChange={
-                isBlocked('SETTINGS_PALETTE_DESCRIPTION', this.props.planStatus)
-                  ? () => null
-                  : this.props.onChangeSettings
-              }
               onFocus={
                 isBlocked('SETTINGS_PALETTE_DESCRIPTION', this.props.planStatus)
                   ? () => null
@@ -168,7 +164,9 @@ export default class Settings extends React.Component<Props> {
                 {
                   label: locals[this.props.lang].settings.global.views.detailed,
                   value: 'PALETTE_WITH_PROPERTIES',
+                  feature: 'UPDATE_VIEW',
                   position: 0,
+                  type: 'OPTION',
                   isActive: features.find(
                     (feature) =>
                       feature.name === 'VIEWS_PALETTE_WITH_PROPERTIES'
@@ -178,31 +176,36 @@ export default class Settings extends React.Component<Props> {
                     this.props.planStatus
                   ),
                   children: [],
+                  action: this.props.onChangeSettings,
                 },
                 {
                   label: locals[this.props.lang].settings.global.views.simple,
                   value: 'PALETTE',
+                  feature: 'UPDATE_VIEW',
                   position: 1,
+                  type: 'OPTION',
                   isActive: features.find(
                     (feature) => feature.name === 'VIEWS_PALETTE'
                   )?.isActive,
                   isBlocked: isBlocked('VIEWS_PALETTE', this.props.planStatus),
                   children: [],
+                  action: this.props.onChangeSettings,
                 },
                 {
                   label: locals[this.props.lang].settings.global.views.sheet,
                   value: 'SHEET',
+                  feature: 'UPDATE_VIEW',
                   position: 2,
+                  type: 'OPTION',
                   isActive: features.find(
                     (feature) => feature.name === 'VIEWS_SHEET'
                   )?.isActive,
                   isBlocked: isBlocked('VIEWS_SHEET', this.props.planStatus),
                   children: [],
+                  action: this.props.onChangeSettings,
                 },
               ]}
               selected={this.props.view}
-              feature="UPDATE_VIEW"
-              onChange={this.props.onChangeSettings}
             />
           </FormItem>
         </div>
@@ -229,7 +232,9 @@ export default class Settings extends React.Component<Props> {
                 {
                   label: locals[this.props.lang].settings.color.colorSpace.lch,
                   value: 'LCH',
+                  feature: 'UPDATE_COLOR_SPACE',
                   position: 0,
+                  type: 'OPTION',
                   isActive: features.find(
                     (feature) => feature.name === 'SETTINGS_COLOR_SPACE_LCH'
                   )?.isActive,
@@ -238,12 +243,15 @@ export default class Settings extends React.Component<Props> {
                     this.props.planStatus
                   ),
                   children: [],
+                  action: this.props.onChangeSettings,
                 },
                 {
                   label:
                     locals[this.props.lang].settings.color.colorSpace.oklch,
                   value: 'OKLCH',
+                  feature: 'UPDATE_COLOR_SPACE',
                   position: 1,
+                  type: 'OPTION',
                   isActive: features.find(
                     (feature) => feature.name === 'SETTINGS_COLOR_SPACE_OKLCH'
                   )?.isActive,
@@ -252,11 +260,14 @@ export default class Settings extends React.Component<Props> {
                     this.props.planStatus
                   ),
                   children: [],
+                  action: this.props.onChangeSettings,
                 },
                 {
                   label: locals[this.props.lang].settings.color.colorSpace.lab,
                   value: 'LAB',
+                  feature: 'UPDATE_COLOR_SPACE',
                   position: 2,
+                  type: 'OPTION',
                   isActive: features.find(
                     (feature) => feature.name === 'SETTINGS_COLOR_SPACE_LAB'
                   )?.isActive,
@@ -265,12 +276,15 @@ export default class Settings extends React.Component<Props> {
                     this.props.planStatus
                   ),
                   children: [],
+                  action: this.props.onChangeSettings,
                 },
                 {
                   label:
                     locals[this.props.lang].settings.color.colorSpace.oklab,
                   value: 'OKLAB',
+                  feature: 'UPDATE_COLOR_SPACE',
                   position: 3,
+                  type: 'OPTION',
                   isActive: features.find(
                     (feature) => feature.name === 'SETTINGS_COLOR_SPACE_OKLAB'
                   )?.isActive,
@@ -279,11 +293,14 @@ export default class Settings extends React.Component<Props> {
                     this.props.planStatus
                   ),
                   children: [],
+                  action: this.props.onChangeSettings,
                 },
                 {
                   label: locals[this.props.lang].settings.color.colorSpace.hsl,
                   value: 'HSL',
+                  feature: 'UPDATE_COLOR_SPACE',
                   position: 4,
+                  type: 'OPTION',
                   isActive: features.find(
                     (feature) => feature.name === 'SETTINGS_COLOR_SPACE_HSL'
                   )?.isActive,
@@ -292,12 +309,15 @@ export default class Settings extends React.Component<Props> {
                     this.props.planStatus
                   ),
                   children: [],
+                  action: this.props.onChangeSettings,
                 },
                 {
                   label:
                     locals[this.props.lang].settings.color.colorSpace.hsluv,
                   value: 'HSLUV',
+                  feature: 'UPDATE_COLOR_SPACE',
                   position: 5,
+                  type: 'OPTION',
                   isActive: features.find(
                     (feature) => feature.name === 'SETTINGS_COLOR_SPACE_HSLUV'
                   )?.isActive,
@@ -306,11 +326,10 @@ export default class Settings extends React.Component<Props> {
                     this.props.planStatus
                   ),
                   children: [],
+                  action: this.props.onChangeSettings,
                 },
               ]}
               selected={this.props.colorSpace}
-              feature="UPDATE_COLOR_SPACE"
-              onChange={this.props.onChangeSettings}
             />
           </FormItem>
           {this.props.colorSpace === 'HSL' ? (
@@ -337,8 +356,10 @@ export default class Settings extends React.Component<Props> {
         }
       >
         <div className="settings__item">
-          <Switch
+          <Select
             id="update-algorithm"
+            type="SWITCH_BUTTON"
+            name="algorythm"
             label={locals[this.props.lang].settings.color.newAlgorithm.label}
             isChecked={this.props.isNewAlgorithm ?? true}
             isBlocked={isBlocked(
@@ -396,6 +417,10 @@ export default class Settings extends React.Component<Props> {
                 'SETTINGS_TEXT_COLORS_THEME',
                 this.props.planStatus
               )}
+              isDisabled={isBlocked(
+                'SETTINGS_TEXT_COLORS_THEME',
+                this.props.planStatus
+              )}
               feature="CHANGE_TEXT_LIGHT_COLOR"
               onChange={
                 isBlocked('SETTINGS_TEXT_COLORS_THEME', this.props.planStatus)
@@ -429,6 +454,10 @@ export default class Settings extends React.Component<Props> {
               type="COLOR"
               value={this.props.textColorsTheme?.darkColor ?? '#OOOOOO'}
               isBlocked={isBlocked(
+                'SETTINGS_TEXT_COLORS_THEME',
+                this.props.planStatus
+              )}
+              isDisabled={isBlocked(
                 'SETTINGS_TEXT_COLORS_THEME',
                 this.props.planStatus
               )}
@@ -471,7 +500,7 @@ export default class Settings extends React.Component<Props> {
       <div className="settings__group">
         <div className="section-controls">
           <div className="section-controls__left-part">
-            <div className="section-title">
+            <div className={`section-title ${texts['section-title']}`}>
               {locals[this.props.lang].settings.global.title}
             </div>
           </div>
@@ -488,7 +517,7 @@ export default class Settings extends React.Component<Props> {
       <div className="settings__group">
         <div className="section-controls">
           <div className="section-controls__left-part">
-            <div className="section-title">
+            <div className={`section-title ${texts['section-title']}`}>
               {locals[this.props.lang].settings.color.title}
             </div>
           </div>
@@ -504,7 +533,7 @@ export default class Settings extends React.Component<Props> {
       <div className="settings__group">
         <div className="section-controls">
           <div className="section-controls__left-part">
-            <div className="section-title">
+            <div className={`section-title ${texts['section-title']}`}>
               {locals[this.props.lang].settings.contrast.title}
             </div>
           </div>

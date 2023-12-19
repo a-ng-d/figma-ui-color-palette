@@ -1,8 +1,9 @@
 import * as React from 'react'
 import type { Language, ReleaseNote } from '../../utils/types'
-import Dialog from './Dialog'
+import { Dialog } from '@a-ng-d/figmug.dialogs.dialog'
 import releaseNotes from '../../content/releaseNotes'
 import { locals } from '../../content/locals'
+import { texts } from '@a-ng-d/figmug.stylesheets.texts'
 
 interface Props {
   lang: Language
@@ -62,7 +63,7 @@ export default class Highlight extends React.Component<Props, any> {
           className="dialog__cover"
           src={currentNote['image'][this.state['position']]}
         />
-        <p className="dialog__text type">
+        <p className={`dialog__text type ${texts.type}`}>
           {currentNote['content'][this.state['position']]}
         </p>
       </Dialog>

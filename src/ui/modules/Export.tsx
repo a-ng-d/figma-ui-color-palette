@@ -1,11 +1,13 @@
 import * as React from 'react'
 import type { ActionsList, Language } from '../../utils/types'
-import Input from '../components/Input'
+import { Input } from '@a-ng-d/figmug.inputs.input'
+import { Dropdown } from '@a-ng-d/figmug.inputs.dropdown'
 import Actions from './Actions'
+import { texts } from '@a-ng-d/figmug.stylesheets.texts'
 import features from '../../utils/config'
 import isBlocked from '../../utils/isBlocked'
 import { locals } from '../../content/locals'
-import Dropdown from '../components/Dropdown'
+import { Menu } from '@a-ng-d/figmug.navigation.menu'
 
 interface Props {
   exportPreview: string
@@ -27,6 +29,10 @@ export default class Export extends React.Component<Props, any> {
     this.counter = 0
     this.state = {
       format: 'EXPORT_TO_JSON',
+      colorSpace: {
+        selected: '',
+        options: [],
+      },
     }
   }
 
@@ -73,9 +79,164 @@ export default class Export extends React.Component<Props, any> {
       EXPORT_TO_CSS: () => {
         this.setState({
           format: 'EXPORT_TO_CSS',
+          colorSpace: {
+            selected: 'RGB',
+            options: [
+              {
+                label: locals[this.props.lang].export.colorSpace.label,
+                value: null,
+                feature: null,
+                position: 0,
+                type: 'TITLE',
+                isActive: true,
+                isBlocked: false,
+                children: [],
+                action: () => null,
+              },
+              {
+                label: locals[this.props.lang].export.colorSpace.rgb,
+                value: 'EXPORT_TO_CSS_RGB',
+                feature: 'SELECT_COLOR_SPACE',
+                position: 0,
+                type: 'OPTION',
+                isActive: features.find(
+                  (feature) => feature.name === 'EXPORT_CSS_RGB'
+                )?.isActive,
+                isBlocked: isBlocked('EXPORT_CSS_RGB', this.props.planStatus),
+                children: [],
+                action: this.exportHandler,
+              },
+              {
+                label: locals[this.props.lang].export.colorSpace.hex,
+                value: 'EXPORT_TO_CSS_HEX',
+                feature: 'SELECT_COLOR_SPACE',
+                position: 1,
+                type: 'OPTION',
+                isActive: features.find(
+                  (feature) => feature.name === 'EXPORT_CSS_HEX'
+                )?.isActive,
+                isBlocked: isBlocked('EXPORT_CSS_HEX', this.props.planStatus),
+                children: [],
+                action: this.exportHandler,
+              },
+              {
+                label: locals[this.props.lang].export.colorSpace.lch,
+                value: 'EXPORT_TO_CSS_LCH',
+                feature: 'SELECT_COLOR_SPACE',
+                position: 2,
+                type: 'OPTION',
+                isActive: features.find(
+                  (feature) => feature.name === 'EXPORT_CSS_LCH'
+                )?.isActive,
+                isBlocked: isBlocked('EXPORT_CSS_LCH', this.props.planStatus),
+                children: [],
+                action: this.exportHandler,
+              },
+              {
+                label: locals[this.props.lang].export.colorSpace.p3,
+                value: 'EXPORT_TO_CSS_P3',
+                feature: 'SELECT_COLOR_SPACE',
+                position: 3,
+                type: 'OPTION',
+                isActive: features.find(
+                  (feature) => feature.name === 'EXPORT_CSS_P3'
+                )?.isActive,
+                isBlocked: isBlocked('EXPORT_CSS_P3', this.props.planStatus),
+                children: [],
+                action: this.exportHandler,
+              },
+            ],
+          },
         })
         parent.postMessage(
-          { pluginMessage: { type: 'EXPORT_PALETTE', export: 'CSS' } },
+          {
+            pluginMessage: {
+              type: 'EXPORT_PALETTE',
+              export: 'CSS',
+              colorSpace: 'RGB',
+            },
+          },
+          '*'
+        )
+      },
+      EXPORT_TO_CSS_RGB: () => {
+        this.setState({
+          colorSpace: {
+            selected: 'RGB',
+            options: this.state['colorSpace'].options,
+          },
+        })
+        parent.postMessage(
+          {
+            pluginMessage: {
+              type: 'EXPORT_PALETTE',
+              export: 'CSS',
+              colorSpace: 'RGB',
+            },
+          },
+          '*'
+        )
+      },
+      EXPORT_TO_CSS_LCH: () => {
+        this.setState({
+          colorSpace: {
+            selected: 'LCH',
+            options: this.state['colorSpace'].options,
+          },
+        })
+        parent.postMessage(
+          {
+            pluginMessage: {
+              type: 'EXPORT_PALETTE',
+              export: 'CSS',
+              colorSpace: 'LCH',
+            },
+          },
+          '*'
+        )
+      },
+      EXPORT_TO_CSS_P3: () => {
+        this.setState({
+          colorSpace: {
+            selected: 'P3',
+            options: this.state['colorSpace'].options,
+          },
+        })
+        parent.postMessage(
+          {
+            pluginMessage: {
+              type: 'EXPORT_PALETTE',
+              export: 'CSS',
+              colorSpace: 'P3',
+            },
+          },
+          '*'
+        )
+      },
+      EXPORT_TO_CSS_HEX: () => {
+        this.setState({
+          colorSpace: {
+            selected: 'HEX',
+            options: this.state['colorSpace'].options,
+          },
+        })
+        parent.postMessage(
+          {
+            pluginMessage: {
+              type: 'EXPORT_PALETTE',
+              export: 'CSS',
+              colorSpace: 'HEX',
+            },
+          },
+          '*'
+        )
+      },
+      EXPORT_TO_TAILWIND: () => {
+        this.setState({
+          format: 'EXPORT_TO_TAILWIND',
+        })
+        parent.postMessage(
+          { pluginMessage: { type: 'EXPORT_PALETTE', export: 'TAILWIND' } },
           '*'
         )
       },
@@ -142,9 +303,9 @@ export default class Export extends React.Component<Props, any> {
         <div className="control__block">
           <div className="section-controls">
             <div className="section-controls__left-part">
-              <div className="section-title">
+              <div className={`section-title ${texts['section-title']}`}>
                 {locals[this.props.lang].export.format}
-                <div className="type">(7)</div>
+                <div className={`type ${texts.type}`}>(7)</div>
               </div>
             </div>
             <div className="section-controls__right-part">
@@ -154,14 +315,18 @@ export default class Export extends React.Component<Props, any> {
                   {
                     label: 'Tokens',
                     value: 'TOKENS_GROUP',
+                    feature: 'SELECT_EXPORT_FILE',
                     position: 0,
+                    type: 'OPTION',
                     isActive: true,
                     isBlocked: false,
                     children: [
                       {
                         label: locals[this.props.lang].export.json,
                         value: 'EXPORT_TO_JSON',
+                        feature: 'SELECT_EXPORT_FILE',
                         position: 0,
+                        type: 'OPTION',
                         isActive: features.find(
                           (feature) => feature.name === 'EXPORT_JSON'
                         )?.isActive,
@@ -170,12 +335,15 @@ export default class Export extends React.Component<Props, any> {
                           this.props.planStatus
                         ),
                         children: [],
+                        action: this.exportHandler,
                       },
                       {
                         label:
                           locals[this.props.lang].export.amznStyleDictionary,
                         value: 'EXPORT_TO_JSON_AMZN_STYLE_DICTIONARY',
+                        feature: 'SELECT_EXPORT_FILE',
                         position: 0,
+                        type: 'OPTION',
                         isActive: features.find(
                           (feature) =>
                             feature.name === 'EXPORT_JSON_AMZN_STYLE_DICTIONARY'
@@ -185,11 +353,14 @@ export default class Export extends React.Component<Props, any> {
                           this.props.planStatus
                         ),
                         children: [],
+                        action: this.exportHandler,
                       },
                       {
                         label: locals[this.props.lang].export.tokensStudio,
                         value: 'EXPORT_TO_JSON_TOKENS_STUDIO',
+                        feature: 'SELECT_EXPORT_FILE',
                         position: 0,
+                        type: 'OPTION',
                         isActive: features.find(
                           (feature) =>
                             feature.name === 'EXPORT_JSON_TOKENS_STUDIO'
@@ -199,66 +370,100 @@ export default class Export extends React.Component<Props, any> {
                           this.props.planStatus
                         ),
                         children: [],
+                        action: this.exportHandler,
                       },
                     ],
+                    action: () => null,
                   },
                   {
                     label: locals[this.props.lang].export.css,
                     value: 'EXPORT_TO_CSS',
+                    feature: 'SELECT_EXPORT_FILE',
                     position: 1,
+                    type: 'OPTION',
                     isActive: features.find(
                       (feature) => feature.name === 'EXPORT_CSS'
                     )?.isActive,
                     isBlocked: isBlocked('EXPORT_CSS', this.props.planStatus),
                     children: [],
+                    action: this.exportHandler,
+                  },
+                  {
+                    label: locals[this.props.lang].export.tailwind,
+                    value: 'EXPORT_TO_TAILWIND',
+                    feature: 'SELECT_EXPORT_FILE',
+                    position: 2,
+                    type: 'OPTION',
+                    isActive: features.find(
+                      (feature) => feature.name === 'EXPORT_TAILWIND'
+                    )?.isActive,
+                    isBlocked: isBlocked(
+                      'EXPORT_TAILWIND',
+                      this.props.planStatus
+                    ),
+                    children: [],
+                    action: this.exportHandler,
                   },
                   {
                     label: locals[this.props.lang].export.swift,
                     value: 'EXPORT_TO_SWIFT',
-                    position: 2,
+                    feature: 'SELECT_EXPORT_FILE',
+                    position: 3,
+                    type: 'OPTION',
                     isActive: features.find(
                       (feature) => feature.name === 'EXPORT_SWIFT'
                     )?.isActive,
                     isBlocked: isBlocked('EXPORT_SWIFT', this.props.planStatus),
                     children: [],
+                    action: this.exportHandler,
                   },
                   {
                     label: locals[this.props.lang].export.xml,
                     value: 'EXPORT_TO_XML',
-                    position: 3,
+                    feature: 'SELECT_EXPORT_FILE',
+                    position: 4,
+                    type: 'OPTION',
                     isActive: features.find(
                       (feature) => feature.name === 'EXPORT_XML'
                     )?.isActive,
                     isBlocked: isBlocked('EXPORT_XML', this.props.planStatus),
                     children: [],
+                    action: this.exportHandler,
                   },
                   {
                     label: locals[this.props.lang].export.csv,
                     value: 'EXPORT_TO_CSV',
-                    position: 4,
+                    feature: 'SELECT_EXPORT_FILE',
+                    position: 5,
+                    type: 'OPTION',
                     isActive: features.find(
                       (feature) => feature.name === 'EXPORT_CSV'
                     )?.isActive,
                     isBlocked: isBlocked('EXPORT_CSV', this.props.planStatus),
                     children: [],
+                    action: this.exportHandler,
                   },
                 ]}
                 selected={this.state['format'] ?? ''}
-                feature="SELECT_EXPORT_FILE"
                 parentClassName="controls"
                 alignment="RIGHT"
-                onChange={this.exportHandler}
               />
+              {this.state['format'] === 'EXPORT_TO_CSS' ? (
+                <Menu
+                  icon="adjust"
+                  id="select-color-space"
+                  options={this.state['colorSpace'].options}
+                  selected={`${this.state['format']}_${this.state['colorSpace'].selected}`}
+                  alignment="BOTTOM_RIGHT"
+                />
+              ) : null}
             </div>
           </div>
           <div className="export-palette__preview">
             <Input
-              type="LONG_TEXT"
+              id="code-snippet-dragging"
+              type="CODE"
               value={this.props.exportPreview}
-              isReadOnly={true}
-              isMonospaceFont={true}
-              onBlur={this.deSelectPreview}
-              onFocus={(e) => this.selectPreview(e)}
             />
           </div>
         </div>

@@ -32,10 +32,9 @@ import features from '../utils/config'
 import 'figma-plugin-ds/dist/figma-plugin-ds.css'
 import './stylesheets/app.css'
 import './stylesheets/app-components.css'
-import './stylesheets/figma-components.css'
 
 let isPaletteSelected = false
-const container = document.getElementById('react-page'),
+const container = document.getElementById('app'),
   root = createRoot(container)
 
 const settingsMessage: SettingsMessage = {
@@ -122,6 +121,18 @@ class App extends React.Component<any, any> {
         onGoingStep: 'preset changed',
       })
 
+    const setMaterial3Preset = () =>
+      this.setState({
+        preset: presets.find((preset) => preset.id === 'MATERIAL_3'),
+        onGoingStep: 'preset changed',
+      })
+
+    const setTailwindPreset = () =>
+      this.setState({
+        preset: presets.find((preset) => preset.id === 'TAILWIND'),
+        onGoingStep: 'preset changed',
+      })
+
     const setAntDesignPreset = () =>
       this.setState({
         preset: presets.find((preset) => preset.id === 'ANT'),
@@ -153,15 +164,18 @@ class App extends React.Component<any, any> {
       })
 
     const setCustomPreset = () => {
-      presets.find((preset) => preset.id === 'CUSTOM')!.scale = [1, 2]
+      const customPreset = presets.find((preset) => preset.id === 'CUSTOM')
+      if (customPreset != undefined) customPreset.scale = [1, 2]
       this.setState({
-        preset: presets.find((preset) => preset.id === 'CUSTOM'),
+        preset: customPreset,
         onGoingStep: 'preset changed',
       })
     }
 
     const actions: ActionsList = {
       MATERIAL: () => setMaterialDesignPreset(),
+      MATERIAL_3: () => setMaterial3Preset(),
+      TAILWIND: () => setTailwindPreset(),
       ANT: () => setAntDesignPreset(),
       ADS: () => setAdsPreset(),
       ADS_NEUTRAL: () => setAdsNeutralPreset(),
@@ -186,6 +200,7 @@ class App extends React.Component<any, any> {
             scale: scale,
             min: palette.min,
             max: palette.max,
+            isDistributed: true,
             id: presets.find((preset) => preset.id === 'CUSTOM')?.id,
           },
         })
@@ -201,6 +216,7 @@ class App extends React.Component<any, any> {
             scale: scale,
             min: palette.min,
             max: palette.max,
+            isDistributed: true,
             id: presets.find((preset) => preset.id === 'CUSTOM')?.id,
           },
         })
@@ -552,6 +568,20 @@ class App extends React.Component<any, any> {
             onGoingStep: 'export previewed',
           })
 
+        const exportPaletteToTaiwind = () =>
+          this.setState({
+            export: {
+              format: 'TAILWIND',
+              mimeType: 'text/javascript',
+              data: `/** @type {import('tailwindcss').Config} */\nmodule.exports = ${JSON.stringify(
+                e.data.pluginMessage.data,
+                null,
+                '  '
+              )}`,
+            },
+            onGoingStep: 'export previewed',
+          })
+
         const exportPaletteToSwift = () =>
           this.setState({
             export: {
@@ -608,6 +638,7 @@ class App extends React.Component<any, any> {
           PALETTE_SELECTED: () => updateWhilePaletteSelected(),
           EXPORT_PALETTE_JSON: () => exportPaletteToJson(),
           EXPORT_PALETTE_CSS: () => exportPaletteToCss(),
+          EXPORT_PALETTE_TAILWIND: () => exportPaletteToTaiwind(),
           EXPORT_PALETTE_SWIFT: () => exportPaletteToSwift(),
           EXPORT_PALETTE_XML: () => exportPaletteToXml(),
           EXPORT_PALETTE_CSV: () => exportPaletteToCsv(),
