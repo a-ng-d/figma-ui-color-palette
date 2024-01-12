@@ -93,7 +93,7 @@ const createLocalVariables = (palette: SceneNode, i: number, j: number) => {
               theme != undefined ? theme.modeId = modeId : null
               j++
             } catch {
-              figma.notify('Your current plan limits the number of variable modes')
+              figma.notify(locals[lang].warning.tooManyThemesToCreateModes)
             }
           }
         }
