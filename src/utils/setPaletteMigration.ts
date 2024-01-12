@@ -72,7 +72,7 @@ const setPaletteMigration = (palette: BaseNode) => {
 
   if (colorSpace === '') palette.setPluginData('colorSpace', 'LCH')
 
-  if (colorBlindMode === '') palette.setPluginData('colorBlindMode', 'NORMAL')
+  if (colorBlindMode === '') palette.setPluginData('colorBlindMode', 'NONE')
 
   // themes
   if (themes === '')
