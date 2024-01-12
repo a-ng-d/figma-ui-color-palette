@@ -43,6 +43,7 @@ const settingsMessage: SettingsMessage = {
     name: '',
     description: '',
     colorSpace: 'LCH',
+    colorBlindMode: 'NORMAL',
     textColorsTheme: {
       lightColor: '#FFFFFF',
       darkColor: '#000000',

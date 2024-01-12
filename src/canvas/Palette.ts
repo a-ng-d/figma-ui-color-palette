@@ -10,6 +10,7 @@ import type {
   ColorSpaceConfiguration,
   ViewConfiguration,
   AlgorithmVersionConfiguration,
+  ColorBlindModeConfiguration,
 } from '../utils/types'
 import Colors from './Colors'
 import { locals, lang } from '../content/locals'
@@ -23,6 +24,7 @@ export default class Palette {
   scale: ScaleConfiguration
   colors: Array<ColorConfiguration>
   colorSpace: ColorSpaceConfiguration
+  colorBlindMode: ColorBlindModeConfiguration
   themes: Array<ThemeConfiguration>
   preset: PresetConfiguration
   view: ViewConfiguration
@@ -38,6 +40,7 @@ export default class Palette {
     preset: PresetConfiguration,
     scale: ScaleConfiguration,
     colorSpace: ColorSpaceConfiguration,
+    colorBlindMode: ColorBlindModeConfiguration,
     view: ViewConfiguration,
     textColorsTheme: TextColorsThemeHexModel,
     algorithmVersion: AlgorithmVersionConfiguration
@@ -52,6 +55,7 @@ export default class Palette {
     this.scale = scale
     this.colors = []
     this.colorSpace = colorSpace
+    this.colorBlindMode = colorBlindMode
     ;(this.themes = [
       {
         name: locals[lang].themes.switchTheme.defaultTheme,
