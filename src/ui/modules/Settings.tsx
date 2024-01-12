@@ -466,7 +466,7 @@ export default class Settings extends React.Component<Props> {
                 },
                 {
                   label:
-                    locals[this.props.lang].settings.color.colorBlindMode.tritanipia,
+                    locals[this.props.lang].settings.color.colorBlindMode.tritanopia,
                   value: 'TRITANOPIA',
                   feature: 'UPDATE_COLOR_BLIND_MODE',
                   position: 6,
