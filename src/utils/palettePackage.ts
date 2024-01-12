@@ -8,6 +8,7 @@ export const palette: PaletteConfiguration = {
   preset: {},
   scale: {},
   colorSpace: 'LCH',
+  colorBlindMode: 'NORMAL',
   view: 'PALETTE_WITH_PROPERTIES',
   textColorsTheme: {
     lightColor: '#FFFFFF',

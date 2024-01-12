@@ -7,6 +7,7 @@ import type {
   ColorSpaceConfiguration,
   AlgorithmVersionConfiguration,
   ViewMessage,
+  ColorBlindModeConfiguration,
 } from '../utils/types'
 import Colors from '../canvas/Colors'
 import { locals, lang } from '../content/locals'
@@ -30,6 +31,9 @@ const updateView = (msg: ViewMessage, palette: SceneNode) => {
       colorSpace = palette.getPluginData(
         'colorSpace'
       ) as ColorSpaceConfiguration,
+      colorBlindMode = palette.getPluginData(
+        'colorBlindMode'
+      ) as ColorBlindModeConfiguration,
       themes = JSON.parse(
         palette.getPluginData('themes')
       ) as Array<ThemeConfiguration>,
@@ -52,6 +56,7 @@ const updateView = (msg: ViewMessage, palette: SceneNode) => {
           scale: scale,
           colors: colors,
           colorSpace: colorSpace,
+          colorBlindMode: colorBlindMode,
           themes: themes,
           view: msg.data.view,
           textColorsTheme: textColorsTheme,

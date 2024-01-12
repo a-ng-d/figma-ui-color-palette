@@ -51,6 +51,7 @@ const updateSettings = (msg: SettingsMessage, palette: SceneNode) => {
           scale: scale,
           colors: colors,
           colorSpace: msg.data.colorSpace,
+          colorBlindMode: msg.data.colorBlindMode,
           themes: themes,
           view: view,
           textColorsTheme: msg.data.textColorsTheme,

@@ -57,6 +57,7 @@ export interface PaletteNode {
   scale: ScaleConfiguration
   colors: Array<ColorConfiguration>
   colorSpace: ColorSpaceConfiguration
+  colorBlindMode: ColorBlindModeConfiguration
   themes: Array<ThemeConfiguration>
   view: ViewConfiguration
   textColorsTheme: TextColorsThemeHexModel
@@ -122,6 +123,7 @@ export interface PaletteConfiguration {
   min: number | undefined
   max: number | undefined
   colorSpace: ColorSpaceConfiguration
+  colorBlindMode: ColorBlindModeConfiguration
   view: ViewConfiguration
   textColorsTheme: TextColorsThemeHexModel
 }
@@ -180,6 +182,17 @@ export type ColorSpaceConfiguration =
   | 'OKLAB'
   | 'HSL'
   | 'HSLUV'
+
+export type ColorBlindModeConfiguration =
+  | 'NORMAL'
+  | 'PROTANOMALY'
+  | 'PROTANOPIA'
+  | 'DEUTERANOMALY'
+  | 'DEUTERANOPIA'
+  | 'TRITANOMALY'
+  | 'TRITANOPIA'
+  | 'ACHROMATOMALY'
+  | 'ACHROMATOPSIA'
 
 export type ViewConfiguration =
   | 'PALETTE_WITH_PROPERTIES'
@@ -267,6 +280,7 @@ export interface SettingsMessage {
     name: string
     description: string
     colorSpace: ColorSpaceConfiguration
+    colorBlindMode: ColorBlindModeConfiguration
     textColorsTheme: TextColorsThemeHexModel
     algorithmVersion: AlgorithmVersionConfiguration
   }
