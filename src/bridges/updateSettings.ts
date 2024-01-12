@@ -35,6 +35,7 @@ const updateSettings = (msg: SettingsMessage, palette: SceneNode) => {
     palette.setPluginData('name', msg.data.name)
     palette.setPluginData('description', msg.data.description)
     palette.setPluginData('colorSpace', msg.data.colorSpace)
+    palette.setPluginData('colorBlindMode', msg.data.colorBlindMode)
     palette.setPluginData(
       'textColorsTheme',
       JSON.stringify(msg.data.textColorsTheme)

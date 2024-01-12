@@ -99,6 +99,7 @@ export default class Palette {
     this.node.setPluginData('preset', JSON.stringify(this.preset))
     this.node.setPluginData('scale', JSON.stringify(this.scale))
     this.node.setPluginData('colorSpace', this.colorSpace)
+    this.node.setPluginData('colorBlindMode', this.colorBlindMode)
     this.node.setPluginData('themes', JSON.stringify(this.themes))
     this.node.setPluginData('view', this.view)
     this.node.setPluginData(
