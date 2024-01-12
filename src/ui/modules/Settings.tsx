@@ -350,7 +350,6 @@ export default class Settings extends React.Component<Props> {
   }
 
   colorBlindMode = () => {
-    console.log(this.props.colorBlindMode)
     return (
       <Feature
         isActive={
