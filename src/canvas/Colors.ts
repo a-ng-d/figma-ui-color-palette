@@ -1,4 +1,5 @@
 import chroma from 'chroma-js'
+const blinder = require('color-blind')
 import { Hsluv } from 'hsluv'
 import type {
   PaletteNode,
@@ -6,6 +7,8 @@ import type {
   PaletteDataThemeItem,
   PaletteDataColorItem,
   PaletteData,
+  ColorBlindModeConfiguration,
+  ActionsList,
 } from '../utils/types'
 import Title from './Title'
 import Header from './Header'
@@ -79,7 +82,7 @@ export default class Colors {
         )
         .rgb()
 
-    return newColor ?? [0, 0, 0]
+    return this.simulateColorBlind(newColor, this.parent.colorBlindMode)
   }
 
   getShadeColorFromOklch = (
@@ -103,7 +106,7 @@ export default class Colors {
         )
         .rgb()
 
-    return newColor ?? [0, 0, 0]
+    return this.simulateColorBlind(newColor, this.parent.colorBlindMode)
   }
 
   getShadeColorFromLab = (
@@ -144,7 +147,7 @@ export default class Colors {
       )
       .rgb()
 
-    return newColor ?? [0, 0, 0]
+    return this.simulateColorBlind(newColor, this.parent.colorBlindMode)
   }
 
   getShadeColorFromOklab = (
@@ -185,7 +188,7 @@ export default class Colors {
       )
       .rgb()
 
-    return newColor ?? [0, 0, 0]
+    return this.simulateColorBlind(newColor, this.parent.colorBlindMode)
   }
 
   getShadeColorFromHsl = (
@@ -209,7 +212,7 @@ export default class Colors {
         )
         .rgb()
 
-    return newColor ?? [0, 0, 0]
+    return this.simulateColorBlind(newColor, this.parent.colorBlindMode)
   }
 
   getShadeColorFromHsluv = (
@@ -249,7 +252,51 @@ export default class Colors {
       hsluv.rgb_b * 255,
     ]
 
-    return newColor ?? [0, 0, 0]
+    return this.simulateColorBlind(newColor, this.parent.colorBlindMode)
+  }
+
+  simulateColorBlind = (
+    sourceColor: [number, number, number],
+    colorBlindMode: ColorBlindModeConfiguration
+  ): [number, number, number] => {
+    const actions: ActionsList = {
+      NONE: () => sourceColor,
+      PROTANOMALY: () => chroma(
+        blinder.protanomaly(
+          chroma(sourceColor).hex()
+        )).rgb(false),
+      PROTANOPIA: () => chroma(
+        blinder.protanopia(
+          chroma(sourceColor).hex()
+        )).rgb(false),
+      DEUTERANOMALY: () => chroma(
+        blinder.deuteranomaly(
+          chroma(sourceColor).hex()
+        )).rgb(false),
+      DEUTERANOPIA: () => chroma(
+        blinder.deuteranopia(
+          chroma(sourceColor).hex()
+        )).rgb(false),
+      TRITANOMALY: () => chroma(
+        blinder.tritanomaly(
+          chroma(sourceColor).hex()
+        )).rgb(false),
+      TRITANOPIA: () => chroma(
+        blinder.tritanopia(
+          chroma(sourceColor).hex()
+        )).rgb(false),
+      ACHROMATOMALY: () => chroma(
+        blinder.achromatomaly(
+          chroma(sourceColor).hex()
+        )).rgb(false),
+      ACHROMATOPSIA: () => chroma(
+        blinder.achromatopsia(
+          chroma(sourceColor).hex()
+        )).rgb(false),
+    }
+
+    const result = actions[colorBlindMode]?.();
+    return result !== undefined ? result : [0, 0, 0];
   }
 
   makeEmptyCase = () => {
