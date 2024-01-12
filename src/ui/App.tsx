@@ -288,6 +288,7 @@ class App extends React.Component<any, any> {
       settingsMessage.data.name = e.target.value
       settingsMessage.data.description = this.state['description']
       settingsMessage.data.colorSpace = this.state['colorSpace']
+      settingsMessage.data.colorBlindMode = this.state['colorBlindMode']
       settingsMessage.data.textColorsTheme = this.state['textColorsTheme']
       settingsMessage.data.algorithmVersion = this.state['algorithmVersion']
 
@@ -307,6 +308,7 @@ class App extends React.Component<any, any> {
       settingsMessage.data.name = this.state['name']
       settingsMessage.data.description = e.target.value
       settingsMessage.data.colorSpace = this.state['colorSpace']
+      settingsMessage.data.colorBlindMode = this.state['colorBlindMode']
       settingsMessage.data.textColorsTheme = this.state['textColorsTheme']
       settingsMessage.data.algorithmVersion = this.state['algorithmVersion']
 
@@ -335,10 +337,11 @@ class App extends React.Component<any, any> {
     }
 
     const updateColorSpace = () => {
+      palette.colorSpace = e.target.dataset.value
       settingsMessage.data.name = this.state['name']
       settingsMessage.data.description = this.state['description']
       settingsMessage.data.colorSpace = e.target.dataset.value
-      palette.colorSpace = e.target.dataset.value
+      settingsMessage.data.colorBlindMode = this.state['colorBlindMode']
       settingsMessage.data.textColorsTheme = this.state['textColorsTheme']
       settingsMessage.data.algorithmVersion = this.state['algorithmVersion']
 
@@ -351,10 +354,29 @@ class App extends React.Component<any, any> {
         parent.postMessage({ pluginMessage: settingsMessage }, '*')
     }
 
+    const updateColorBlindMode = () => {
+      palette.colorBlindMode = e.target.dataset.value
+      settingsMessage.data.name = this.state['name']
+      settingsMessage.data.description = this.state['description']
+      settingsMessage.data.colorSpace = this.state['colorSpace']
+      settingsMessage.data.colorBlindMode = e.target.dataset.value
+      settingsMessage.data.textColorsTheme = this.state['textColorsTheme']
+      settingsMessage.data.algorithmVersion = this.state['algorithmVersion']
+
+      this.setState({
+        colorBlindMode: settingsMessage.data.colorBlindMode,
+        onGoingStep: 'settings changed',
+      })
+
+      if (this.state['service'] === 'EDIT')
+        parent.postMessage({ pluginMessage: settingsMessage }, '*')
+    }
+
     const updateAlgorythmVersion = () => {
       settingsMessage.data.name = this.state['name']
       settingsMessage.data.description = this.state['description']
       settingsMessage.data.colorSpace = this.state['colorSpace']
+      settingsMessage.data.colorBlindMode = this.state['colorBlindMode']
       settingsMessage.data.textColorsTheme = this.state['textColorsTheme']
       settingsMessage.data.algorithmVersion = !e.target.checked ? 'v1' : 'v2'
 
@@ -375,6 +397,7 @@ class App extends React.Component<any, any> {
         settingsMessage.data.name = this.state['name']
         settingsMessage.data.description = this.state['description']
         settingsMessage.data.colorSpace = this.state['colorSpace']
+        settingsMessage.data.colorBlindMode = this.state['colorBlindMode']
         settingsMessage.data.textColorsTheme.lightColor = code
         palette.textColorsTheme.lightColor = code
         settingsMessage.data.textColorsTheme.darkColor =
@@ -402,6 +425,7 @@ class App extends React.Component<any, any> {
         settingsMessage.data.name = this.state['name']
         settingsMessage.data.description = this.state['description']
         settingsMessage.data.colorSpace = this.state['colorSpace']
+        settingsMessage.data.colorBlindMode = this.state['colorBlindMode']
         settingsMessage.data.textColorsTheme.lightColor =
           this.state['textColorsTheme'].lightColor
         settingsMessage.data.textColorsTheme.darkColor = code
@@ -425,6 +449,7 @@ class App extends React.Component<any, any> {
       UPDATE_DESCRIPTION: () => updateDescription(),
       UPDATE_VIEW: () => updateView(),
       UPDATE_COLOR_SPACE: () => updateColorSpace(),
+      UPDATE_COLOR_BLIND_SIMULATION: () => updateColorBlindMode(),
       UPDATE_ALGORITHM_VERSION: () => updateAlgorythmVersion(),
       CHANGE_TEXT_LIGHT_COLOR: () => updateTextLightColor(),
       CHANGE_TEXT_DARK_COLOR: () => updateTextDarkColor(),
