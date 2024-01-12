@@ -492,6 +492,7 @@ class App extends React.Component<any, any> {
             description: '',
             preset: presets.find((preset) => preset.id === 'MATERIAL'),
             colorSpace: 'LCH',
+            colorBlindMode: 'NONE',
             view: 'PALETTE_WITH_PROPERTIES',
             textColorsTheme: {
               lightColor: '#FFFFFF',
@@ -503,6 +504,7 @@ class App extends React.Component<any, any> {
           palette.description = ''
           palette.preset = {}
           palette.colorSpace = 'LCH'
+          palette.colorBlindMode = 'NONE'
           palette.view = 'PALETTE_WITH_PROPERTIES'
           palette.textColorsTheme = {
             lightColor: '#FFFFFF',
@@ -518,6 +520,7 @@ class App extends React.Component<any, any> {
               description: '',
               preset: presets.find((preset) => preset.id === 'MATERIAL'),
               colorSpace: 'LCH',
+              colorBlindMode: 'NONE',
               view: 'PALETTE_WITH_PROPERTIES',
               textColorsTheme: {
                 lightColor: '#FFFFFF',
@@ -528,6 +531,7 @@ class App extends React.Component<any, any> {
             palette.description = ''
             palette.preset = presets.find((preset) => preset.id === 'MATERIAL')
             palette.colorSpace = 'LCH'
+            palette.colorBlindMode = 'NONE'
             palette.view = 'PALETTE_WITH_PROPERTIES'
             palette.textColorsTheme = {
               lightColor: '#FFFFFF',
@@ -568,6 +572,7 @@ class App extends React.Component<any, any> {
             scale: e.data.pluginMessage.data.scale,
             newColors: e.data.pluginMessage.data.colors,
             colorSpace: e.data.pluginMessage.data.colorSpace,
+            colorBlindMode: e.data.pluginMessage.data.colorBlindMode,
             themes: e.data.pluginMessage.data.themes,
             view: e.data.pluginMessage.data.view,
             textColorsTheme: e.data.pluginMessage.data.textColorsTheme,
