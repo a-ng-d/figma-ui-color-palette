@@ -19,7 +19,7 @@ const glossary: {
   deuteranomaly: 'Deuteranomaly',
   deuteranopia: 'Deuteranopia',
   tritanomaly: 'Tritanomaly',
-  tritanipia: 'Tritanipia',
+  tritanopia: 'Tritanopia',
   achromatomaly: 'Achromatomaly',
   achromatopsia: 'Achromatopsia'
 }
@@ -184,7 +184,7 @@ export const locals: { [key: string]: any } = {
           deuteranomaly: glossary.deuteranomaly,
           deuteranopia: glossary.deuteranopia,
           tritanomaly: glossary.tritanomaly,
-          tritanipia: glossary.tritanipia,
+          tritanopia: glossary.tritanopia,
           achromatomaly: glossary.achromatomaly,
           achromatopsia: glossary.achromatopsia,
         },
