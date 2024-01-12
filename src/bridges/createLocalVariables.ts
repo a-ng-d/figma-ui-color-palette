@@ -69,7 +69,11 @@ const createLocalVariables = (palette: SceneNode, i: number, j: number) => {
                 j = 1
               }
               i++
-            } else if (themesList.length == 0 && collection?.modes[0].name != 'Mode 1' && collection != undefined) {
+            } else if (
+              themesList.length == 0 &&
+              collection?.modes[0].name != 'Mode 1' &&
+              collection != undefined
+            ) {
               collection.renameMode(collection.defaultModeId, 'Mode 1')
             }
           })
@@ -80,17 +84,23 @@ const createLocalVariables = (palette: SceneNode, i: number, j: number) => {
     if (themesList.length > 0) {
       themesList.forEach((themeItem) => {
         if (themeItem != undefined && collection != undefined) {
-          const theme = paletteData.themes.find((theme) => theme.name === themeItem.name)
+          const theme = paletteData.themes.find(
+            (theme) => theme.name === themeItem.name
+          )
           if (collection?.modes[0].name === 'Mode 1') {
             collection.renameMode(collection.defaultModeId, themeItem.name)
             themeItem.id = collection.defaultModeId
-            theme != undefined ? theme.modeId = collection.defaultModeId : null
-          }
-          else if (collection.modes.find((mode) => mode.modeId === themeItem.id) == undefined) {   
+            theme != undefined
+              ? (theme.modeId = collection.defaultModeId)
+              : null
+          } else if (
+            collection.modes.find((mode) => mode.modeId === themeItem.id) ==
+            undefined
+          ) {
             try {
               const modeId = collection.addMode(themeItem.name)
               themeItem.id = modeId
-              theme != undefined ? theme.modeId = modeId : null
+              theme != undefined ? (theme.modeId = modeId) : null
               j++
             } catch {
               figma.notify(locals[lang].warning.tooManyThemesToCreateModes)
@@ -99,14 +109,15 @@ const createLocalVariables = (palette: SceneNode, i: number, j: number) => {
         }
       })
     }
-    
+
     // Set values
     themesList.forEach((themeItem) => {
       if (collection != undefined && themeItem != undefined) {
         const localVariables: Array<Variable> = figma.variables
           .getLocalVariables()
           .filter(
-            (localVariable) => localVariable.variableCollectionId === collection?.id
+            (localVariable) =>
+              localVariable.variableCollectionId === collection?.id
           )
 
         localVariables.forEach((variable) => {
@@ -116,7 +127,6 @@ const createLocalVariables = (palette: SceneNode, i: number, j: number) => {
             ?.shades.find((shade) => shade.name === variable.name.split('/')[1])
           if (rightShade != undefined && collection != undefined) {
             rightShade.variableId = variable.id
-
           }
         })
       }
