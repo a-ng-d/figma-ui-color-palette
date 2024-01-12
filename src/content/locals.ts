@@ -13,6 +13,15 @@ const glossary: {
   hex: 'HEX',
   rgb: 'RGB',
   p3: 'P3',
+  colorBlindMode: 'Color blind simulation',
+  protanomaly: 'Protanomaly',
+  protanopia: 'Protanopia',
+  deuteranomaly: 'Deuteranomaly',
+  deuteranopia: 'Deuteranopia',
+  tritanomaly: 'Tritanomaly',
+  tritanipia: 'Tritanipia',
+  achromatomaly: 'Achromatomaly',
+  achromatopsia: 'Achromatopsia'
 }
 
 export const locals: { [key: string]: any } = {
@@ -162,6 +171,18 @@ export const locals: { [key: string]: any } = {
           hex: glossary.hex,
           rgb: glossary.rgb,
           p3: glossary.p3,
+        },
+        colorBlindMode: {
+          label: glossary.colorBlindMode,
+          none: 'None',
+          protanomaly: glossary.protanomaly,
+          protanopia: glossary.protanopia,
+          deuteranomaly: glossary.deuteranomaly,
+          deuteranopia: glossary.deuteranopia,
+          tritanomaly: glossary.tritanomaly,
+          tritanipia: glossary.tritanipia,
+          achromatomaly: glossary.achromatomaly,
+          achromatopsia: glossary.achromatopsia,
         },
         newAlgorithm: {
           label: 'Enable the new algorithm for creating color shades',

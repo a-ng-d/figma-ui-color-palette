@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client'
 import type {
   ActionsList,
   AlgorithmVersionConfiguration,
+  ColorBlindModeConfiguration,
   ColorConfiguration,
   ColorSpaceConfiguration,
   DispatchProcess,
@@ -75,6 +76,7 @@ class App extends React.Component<any, any> {
       scale: {} as ScaleConfiguration,
       newColors: [] as Array<ColorConfiguration> | [],
       colorSpace: 'LCH' as ColorSpaceConfiguration,
+      colorBlindMode: 'NONE' as ColorBlindModeConfiguration,
       themes: [] as ThemeConfiguration | [],
       view: 'PALETTE_WITH_PROPERTIES' as ViewConfiguration,
       textColorsTheme: {
@@ -669,6 +671,7 @@ class App extends React.Component<any, any> {
                 description={this.state['description']}
                 preset={this.state['preset']}
                 colorSpace={this.state['colorSpace']}
+                colorBlindMode={this.state['colorBlindMode']}
                 view={this.state['view']}
                 textColorsTheme={this.state['textColorsTheme']}
                 planStatus={this.state['planStatus']}
@@ -693,6 +696,7 @@ class App extends React.Component<any, any> {
                 scale={this.state['scale']}
                 colors={this.state['newColors']}
                 colorSpace={this.state['colorSpace']}
+                colorBlindMode={this.state['colorBlindMode']}
                 themes={this.state['themes']}
                 view={this.state['view']}
                 textColorsTheme={this.state['textColorsTheme']}
