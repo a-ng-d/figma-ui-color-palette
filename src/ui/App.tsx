@@ -449,7 +449,7 @@ class App extends React.Component<any, any> {
       UPDATE_DESCRIPTION: () => updateDescription(),
       UPDATE_VIEW: () => updateView(),
       UPDATE_COLOR_SPACE: () => updateColorSpace(),
-      UPDATE_COLOR_BLIND_SIMULATION: () => updateColorBlindMode(),
+      UPDATE_COLOR_BLIND_MODE: () => updateColorBlindMode(),
       UPDATE_ALGORITHM_VERSION: () => updateAlgorythmVersion(),
       CHANGE_TEXT_LIGHT_COLOR: () => updateTextLightColor(),
       CHANGE_TEXT_DARK_COLOR: () => updateTextDarkColor(),
