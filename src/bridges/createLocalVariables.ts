@@ -6,12 +6,7 @@ import { notifications } from '../utils/palettePackage'
 const createLocalVariables = (palette: SceneNode, i: number, j: number) => {
   palette = figma.currentPage.selection[0] as FrameNode
 
-  const paletteData: PaletteData = JSON.parse(palette.getPluginData('data')),
-    variablesSet: Array<{
-      variable: Variable
-      colorName: string
-      shadeName: string
-    }> = []
+  const paletteData: PaletteData = JSON.parse(palette.getPluginData('data'))
 
   if (palette.children.length == 1) {
     i = 0
@@ -72,19 +67,11 @@ const createLocalVariables = (palette: SceneNode, i: number, j: number) => {
                 })
                 theme.modeId = collection?.defaultModeId
                 j = 1
-              } else
-                variablesSet.push({
-                  variable: variable,
-                  colorName: color.name,
-                  shadeName: shade.name,
-                })
+              }
               i++
-            } else
-              variablesSet.push({
-                variable: boundVariable,
-                colorName: color.name,
-                shadeName: shade.name,
-              })
+            } else if (themesList.length == 0 && collection?.modes[0].name != 'Mode 1' && collection != undefined) {
+              collection.renameMode(collection.defaultModeId, 'Mode 1')
+            }
           })
         })
       })
