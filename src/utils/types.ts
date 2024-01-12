@@ -184,7 +184,7 @@ export type ColorSpaceConfiguration =
   | 'HSLUV'
 
 export type ColorBlindModeConfiguration =
-  | 'NORMAL'
+  | 'NONE'
   | 'PROTANOMALY'
   | 'PROTANOPIA'
   | 'DEUTERANOMALY'
