@@ -70,7 +70,7 @@ const createLocalVariables = (palette: SceneNode, i: number, j: number) => {
                   g: shade.gl[1],
                   b: shade.gl[2],
                 })
-                theme.modeId = collection?.modes[0].modeId ?? 'NULL'
+                theme.modeId = collection?.defaultModeId
                 j = 1
               } else
                 variablesSet.push({
