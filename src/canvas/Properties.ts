@@ -1,9 +1,12 @@
 import type {
+  ActionsList,
+  ColorBlindModeConfiguration,
   ColorSpaceConfiguration,
   HexModel,
   TextColorsThemeHexModel,
 } from '../utils/types'
 import chroma from 'chroma-js'
+const blinder = require('color-blind')
 import { Hsluv } from 'hsluv'
 import { APCAcontrast, sRGBtoY, fontLookupAPCA } from 'apca-w3'
 import Tag from './Tag'
@@ -13,6 +16,7 @@ export default class Properties {
   name: string
   rgb: [number, number, number]
   colorSpace: ColorSpaceConfiguration
+  colorBlindMode: ColorBlindModeConfiguration
   textColorsTheme: TextColorsThemeHexModel
   hex: HexModel
   lch: Array<number>
@@ -38,11 +42,13 @@ export default class Properties {
     name: string,
     rgb: [number, number, number],
     colorSpace: ColorSpaceConfiguration,
+    colorBlindMode: ColorBlindModeConfiguration,
     textColorsTheme: TextColorsThemeHexModel
   ) {
     this.name = name
     this.rgb = rgb
     this.colorSpace = colorSpace
+    this.colorBlindMode = colorBlindMode
     this.textColorsTheme = textColorsTheme
     this.hex = chroma(rgb).hex()
     this.lch = chroma(rgb).lch()
@@ -65,12 +71,56 @@ export default class Properties {
     this.node = null
   }
 
+  simulateColorBlind = (
+    sourceColor: string,
+    colorBlindMode: ColorBlindModeConfiguration
+  ): string => {
+    const actions: ActionsList = {
+      NONE: () => sourceColor,
+      PROTANOMALY: () => chroma(
+        blinder.protanomaly(
+          sourceColor
+        )),
+      PROTANOPIA: () => chroma(
+        blinder.protanopia(
+          sourceColor
+        )),
+      DEUTERANOMALY: () => chroma(
+        blinder.deuteranomaly(
+          sourceColor
+        )),
+      DEUTERANOPIA: () => chroma(
+        blinder.deuteranopia(
+          sourceColor
+        )),
+      TRITANOMALY: () => chroma(
+        blinder.tritanomaly(
+          sourceColor
+        )),
+      TRITANOPIA: () => chroma(
+        blinder.tritanopia(
+          sourceColor
+        )),
+      ACHROMATOMALY: () => chroma(
+        blinder.achromatomaly(
+          sourceColor
+        )),
+      ACHROMATOPSIA: () => chroma(
+        blinder.achromatopsia(
+          sourceColor
+        )),
+    }
+
+    const result = actions[colorBlindMode]?.();
+    return result !== undefined ? result : '#000000';
+  }
+
   getContrast = (textColor: string) => {
     return chroma.contrast(
       chroma(this.rgb).hex(),
       textColor === 'DARK'
-        ? this.textColorsTheme.darkColor
-        : this.textColorsTheme.lightColor
+        ? this.simulateColorBlind(this.textColorsTheme.darkColor, this.colorBlindMode)
+        : this.simulateColorBlind(this.textColorsTheme.lightColor, this.colorBlindMode)
     )
   }
 
@@ -78,8 +128,8 @@ export default class Properties {
     return APCAcontrast(
       sRGBtoY(
         textColor === 'DARK'
-          ? chroma(this.textColorsTheme.darkColor).rgb()
-          : chroma(this.textColorsTheme.lightColor).rgb()
+          ? chroma(this.simulateColorBlind(this.textColorsTheme.darkColor, this.colorBlindMode)).rgb()
+          : chroma(this.simulateColorBlind(this.textColorsTheme.lightColor, this.colorBlindMode)).rgb()
       ),
       sRGBtoY(this.rgb)
     )
@@ -227,13 +277,13 @@ export default class Properties {
       new Tag(
         '_wcag21-light',
         `${this.getContrast('LIGHT').toFixed(2)} • ${this.getLevel('LIGHT')}`
-      ).makeNodeTag(chroma(this.textColorsTheme.lightColor).gl(), true)
+      ).makeNodeTag(chroma(this.simulateColorBlind(this.textColorsTheme.lightColor, this.colorBlindMode)).gl(), true)
     )
     this.nodeContrastScoresProps.appendChild(
       new Tag(
         '_wcag21-dark',
         `${this.getContrast('DARK').toFixed(2)} • ${this.getLevel('DARK')}`
-      ).makeNodeTag(chroma(this.textColorsTheme.darkColor).gl(), true)
+      ).makeNodeTag(chroma(this.simulateColorBlind(this.textColorsTheme.darkColor, this.colorBlindMode)).gl(), true)
     )
     this.nodeContrastScoresProps.appendChild(
       new Tag(
@@ -241,7 +291,7 @@ export default class Properties {
         `Lc ${this.getAPCAContrast('LIGHT').toFixed(1)} • ${
           this.getMinFontSizes('LIGHT')[4]
         }pt (400)`
-      ).makeNodeTag(chroma(this.textColorsTheme.lightColor).gl(), true)
+      ).makeNodeTag(chroma(this.simulateColorBlind(this.textColorsTheme.lightColor, this.colorBlindMode)).gl(), true)
     )
     this.nodeContrastScoresProps.appendChild(
       new Tag(
@@ -249,7 +299,7 @@ export default class Properties {
         `Lc ${this.getAPCAContrast('DARK').toFixed(1)} • ${
           this.getMinFontSizes('DARK')[4]
         }pt (400)`
-      ).makeNodeTag(chroma(this.textColorsTheme.darkColor).gl(), true)
+      ).makeNodeTag(chroma(this.simulateColorBlind(this.textColorsTheme.darkColor, this.colorBlindMode)).gl(), true)
     )
 
     return this.nodeContrastScoresProps
