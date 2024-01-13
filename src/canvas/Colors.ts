@@ -321,6 +321,7 @@ export default class Colors {
         null,
         [255, 255, 255],
         this.parent.colorSpace,
+        this.parent.colorBlindMode,
         this.parent.view,
         this.parent.textColorsTheme
       ).makeNodeName('FILL', 48, 48)
@@ -617,6 +618,7 @@ export default class Colors {
               null,
               [color.rgb.r * 255, color.rgb.g * 255, color.rgb.b * 255],
               this.parent.colorSpace,
+              this.parent.colorBlindMode,
               this.parent.view,
               this.parent.textColorsTheme
             ).makeNodeShade(
@@ -631,6 +633,7 @@ export default class Colors {
               null,
               [color.rgb.r * 255, color.rgb.g * 255, color.rgb.b * 255],
               this.parent.colorSpace,
+              this.parent.colorBlindMode,
               this.parent.view,
               this.parent.textColorsTheme
             ).makeNodeRichShade(
@@ -709,6 +712,7 @@ export default class Colors {
                 scaleName,
                 [newColor[0], newColor[1], newColor[2]],
                 this.parent.colorSpace,
+                this.parent.colorBlindMode,
                 this.parent.view,
                 this.parent.textColorsTheme,
                 { isClosestToRef: distance < 4 ? true : false }
@@ -735,6 +739,7 @@ export default class Colors {
                   scaleName,
                   [newColor[0], newColor[1], newColor[2]],
                   this.parent.colorSpace,
+                  this.parent.colorBlindMode,
                   this.parent.view,
                   this.parent.textColorsTheme,
                   { isClosestToRef: distance < 4 ? true : false }
