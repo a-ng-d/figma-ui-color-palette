@@ -16,6 +16,7 @@ import exportJson from './exportJson'
 import exportJsonAmznStyleDictionary from './exportJsonAmznStyleDictionary'
 import exportJsonTokensStudio from './exportJsonTokensStudio'
 import exportSwift from './exportSwift'
+import exportKt from './exportKt'
 import exportXml from './exportXml'
 import getProPlan from './getProPlan'
 import processSelection from './processSelection'
@@ -94,6 +95,7 @@ const loadUI = async (palette: SceneNode) => {
         msg.export === 'CSS' ? exportCss(palette, msg.colorSpace) : null
         msg.export === 'TAILWIND' ? exportTailwind(palette) : null
         msg.export === 'SWIFT' ? exportSwift(palette) : null
+        msg.export === 'KT' ? exportKt(palette) : null
         msg.export === 'XML' ? exportXml(palette) : null
         msg.export === 'CSV' ? exportCsv(palette) : null
       },

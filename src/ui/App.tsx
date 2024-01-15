@@ -627,6 +627,16 @@ class App extends React.Component<any, any> {
             onGoingStep: 'export previewed',
           })
 
+        const exportPaletteToKt = () =>
+          this.setState({
+            export: {
+              format: 'KT',
+              mimeType: 'text/x-kotlin',
+              data: `import androidx.compose.ui.graphics.Color\n\n${e.data.pluginMessage.data.join('\n')}`,
+            },
+            onGoingStep: 'export previewed',
+          })
+
         const exportPaletteToXml = () =>
           this.setState({
             export: {
@@ -673,6 +683,7 @@ class App extends React.Component<any, any> {
           EXPORT_PALETTE_CSS: () => exportPaletteToCss(),
           EXPORT_PALETTE_TAILWIND: () => exportPaletteToTaiwind(),
           EXPORT_PALETTE_SWIFT: () => exportPaletteToSwift(),
+          EXPORT_PALETTE_KT: () => exportPaletteToKt(),
           EXPORT_PALETTE_XML: () => exportPaletteToXml(),
           EXPORT_PALETTE_CSV: () => exportPaletteToCsv(),
           GET_PRO_PLAN: () => getProPlan(),

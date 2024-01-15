@@ -249,6 +249,15 @@ export default class Export extends React.Component<Props, any> {
           '*'
         )
       },
+      EXPORT_TO_ANDROID_COMPOSE: () => {
+        this.setState({
+          format: 'EXPORT_TO_ANDROID_COMPOSE',
+        })
+        parent.postMessage(
+          { pluginMessage: { type: 'EXPORT_PALETTE', export: 'KT' } },
+          '*'
+        )
+      },
       EXPORT_TO_ANDROID_XML: () => {
         this.setState({
           format: 'EXPORT_TO_ANDROID_XML',
