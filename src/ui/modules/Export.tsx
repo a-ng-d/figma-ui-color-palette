@@ -435,24 +435,6 @@ export default class Export extends React.Component<Props, any> {
                     children: [
                       {
                         label:
-                          locals[this.props.lang].export.android.xml,
-                        value: 'EXPORT_TO_ANDROID_XML',
-                        feature: 'SELECT_EXPORT_FILE',
-                        position: 0,
-                        type: 'OPTION',
-                        isActive: features.find(
-                          (feature) =>
-                            feature.name === 'EXPORT_ANDROID_XML'
-                        )?.isActive,
-                        isBlocked: isBlocked(
-                          'EXPORT_ANDROID_XML',
-                          this.props.planStatus
-                        ),
-                        children: [],
-                        action: this.exportHandler,
-                      },
-                      {
-                        label:
                           locals[this.props.lang].export.android.compose,
                         value: 'EXPORT_TO_ANDROID_COMPOSE',
                         feature: 'SELECT_EXPORT_FILE',
@@ -464,6 +446,24 @@ export default class Export extends React.Component<Props, any> {
                         )?.isActive,
                         isBlocked: isBlocked(
                           'EXPORT_ANDROID_COMPOSE',
+                          this.props.planStatus
+                        ),
+                        children: [],
+                        action: this.exportHandler,
+                      },
+                      {
+                        label:
+                          locals[this.props.lang].export.android.xml,
+                        value: 'EXPORT_TO_ANDROID_XML',
+                        feature: 'SELECT_EXPORT_FILE',
+                        position: 0,
+                        type: 'OPTION',
+                        isActive: features.find(
+                          (feature) =>
+                            feature.name === 'EXPORT_ANDROID_XML'
+                        )?.isActive,
+                        isBlocked: isBlocked(
+                          'EXPORT_ANDROID_XML',
                           this.props.planStatus
                         ),
                         children: [],
