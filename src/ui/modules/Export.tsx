@@ -322,7 +322,7 @@ export default class Export extends React.Component<Props, any> {
                 id="exports-list"
                 options={[
                   {
-                    label: 'Tokens',
+                    label: locals[this.props.lang].export.tokens.label,
                     value: 'TOKENS_GROUP',
                     feature: 'SELECT_EXPORT_FILE',
                     position: 0,
@@ -336,7 +336,7 @@ export default class Export extends React.Component<Props, any> {
                     ),
                     children: [
                       {
-                        label: locals[this.props.lang].export.json,
+                        label: locals[this.props.lang].export.tokens.global,
                         value: 'EXPORT_TO_JSON',
                         feature: 'SELECT_EXPORT_FILE',
                         position: 0,
@@ -353,7 +353,7 @@ export default class Export extends React.Component<Props, any> {
                       },
                       {
                         label:
-                          locals[this.props.lang].export.amznStyleDictionary,
+                          locals[this.props.lang].export.tokens.amznStyleDictionary,
                         value: 'EXPORT_TO_JSON_AMZN_STYLE_DICTIONARY',
                         feature: 'SELECT_EXPORT_FILE',
                         position: 0,
@@ -370,7 +370,7 @@ export default class Export extends React.Component<Props, any> {
                         action: this.exportHandler,
                       },
                       {
-                        label: locals[this.props.lang].export.tokensStudio,
+                        label: locals[this.props.lang].export.tokens.tokensStudio,
                         value: 'EXPORT_TO_JSON_TOKENS_STUDIO',
                         feature: 'SELECT_EXPORT_FILE',
                         position: 0,
@@ -390,7 +390,7 @@ export default class Export extends React.Component<Props, any> {
                     action: () => null,
                   },
                   {
-                    label: locals[this.props.lang].export.css,
+                    label: locals[this.props.lang].export.css.customProperties,
                     value: 'EXPORT_TO_CSS',
                     feature: 'SELECT_EXPORT_FILE',
                     position: 1,
@@ -403,7 +403,7 @@ export default class Export extends React.Component<Props, any> {
                     action: this.exportHandler,
                   },
                   {
-                    label: locals[this.props.lang].export.tailwind,
+                    label: locals[this.props.lang].export.tailwind.config,
                     value: 'EXPORT_TO_TAILWIND',
                     feature: 'SELECT_EXPORT_FILE',
                     position: 2,
@@ -419,7 +419,7 @@ export default class Export extends React.Component<Props, any> {
                     action: this.exportHandler,
                   },
                   {
-                    label: locals[this.props.lang].export.swift,
+                    label: locals[this.props.lang].export.apple.swift,
                     value: 'EXPORT_TO_SWIFT',
                     feature: 'SELECT_EXPORT_FILE',
                     position: 3,
