@@ -4,7 +4,6 @@ import { doCamelCase } from '@a-ng-d/figmug.modules.do-camel-case'
 
 const exportUIKit = (palette: SceneNode) => {
   palette = figma.currentPage.selection[0] as FrameNode
-  console.log('ok')
 
   const paletteData: PaletteData = JSON.parse(palette.getPluginData('data')),
     workingThemes =
