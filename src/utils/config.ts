@@ -314,7 +314,7 @@ const features: Array<Feature> = [
     service: ['EDIT'],
   },
   {
-    name: 'EXPORT_JSON',
+    name: 'EXPORT_TOKENS_JSON',
     description: 'Palette export to JSON',
     isActive: true,
     isPro: false,
@@ -322,7 +322,7 @@ const features: Array<Feature> = [
     service: ['EDIT'],
   },
   {
-    name: 'EXPORT_JSON_AMZN_STYLE_DICTIONARY',
+    name: 'EXPORT_TOKENS_JSON_AMZN_STYLE_DICTIONARY',
     description: 'Palette export for the Amazon Style Dictionary',
     isActive: true,
     isPro: false,
@@ -330,7 +330,7 @@ const features: Array<Feature> = [
     service: ['EDIT'],
   },
   {
-    name: 'EXPORT_JSON_TOKENS_STUDIO',
+    name: 'EXPORT_TOKENS_JSON_TOKENS_STUDIO',
     description: 'Palette export to the Tokens Studio plugin',
     isActive: true,
     isPro: false,

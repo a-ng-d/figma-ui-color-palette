@@ -333,10 +333,10 @@ export default class Export extends React.Component<Props, any> {
                         position: 0,
                         type: 'OPTION',
                         isActive: features.find(
-                          (feature) => feature.name === 'EXPORT_JSON'
+                          (feature) => feature.name === 'EXPORT_TOKENS_JSON'
                         )?.isActive,
                         isBlocked: isBlocked(
-                          'EXPORT_JSON',
+                          'EXPORT_TOKENS_JSON',
                           this.props.planStatus
                         ),
                         children: [],
@@ -351,10 +351,10 @@ export default class Export extends React.Component<Props, any> {
                         type: 'OPTION',
                         isActive: features.find(
                           (feature) =>
-                            feature.name === 'EXPORT_JSON_AMZN_STYLE_DICTIONARY'
+                            feature.name === 'EXPORT_TOKENS_JSON_AMZN_STYLE_DICTIONARY'
                         )?.isActive,
                         isBlocked: isBlocked(
-                          'EXPORT_JSON_AMZN_STYLE_DICTIONARY',
+                          'EXPORT_TOKENS_JSON_AMZN_STYLE_DICTIONARY',
                           this.props.planStatus
                         ),
                         children: [],
@@ -368,10 +368,10 @@ export default class Export extends React.Component<Props, any> {
                         type: 'OPTION',
                         isActive: features.find(
                           (feature) =>
-                            feature.name === 'EXPORT_JSON_TOKENS_STUDIO'
+                            feature.name === 'EXPORT_TOKENS_JSON_TOKENS_STUDIO'
                         )?.isActive,
                         isBlocked: isBlocked(
-                          'EXPORT_JSON_TOKENS_STUDIO',
+                          'EXPORT_TOKENS_JSON_TOKENS_STUDIO',
                           this.props.planStatus
                         ),
                         children: [],
