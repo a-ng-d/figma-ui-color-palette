@@ -584,7 +584,7 @@ class App extends React.Component<any, any> {
         const exportPaletteToJson = () =>
           this.setState({
             export: {
-              format: 'JSON',
+              format: 'Tokens (JSON)',
               mimeType: 'application/json',
               data: JSON.stringify(e.data.pluginMessage.data, null, '  '),
             },
@@ -594,7 +594,7 @@ class App extends React.Component<any, any> {
         const exportPaletteToCss = () =>
           this.setState({
             export: {
-              format: 'CSS',
+              format: 'Custom Properties (CSS)',
               mimeType: 'text/css',
               data: `:root {\n  ${e.data.pluginMessage.data.join('\n  ')}\n}`,
             },
@@ -604,7 +604,7 @@ class App extends React.Component<any, any> {
         const exportPaletteToTaiwind = () =>
           this.setState({
             export: {
-              format: 'TAILWIND',
+              format: 'Tailwind (JS)',
               mimeType: 'text/javascript',
               data: `/** @type {import('tailwindcss').Config} */\nmodule.exports = ${JSON.stringify(
                 e.data.pluginMessage.data,
@@ -630,7 +630,7 @@ class App extends React.Component<any, any> {
         const exportPaletteToKt = () =>
           this.setState({
             export: {
-              format: 'KT',
+              format: 'Compose (KT)',
               mimeType: 'text/x-kotlin',
               data: `import androidx.compose.ui.graphics.Color\n\n${e.data.pluginMessage.data.join('\n')}`,
             },
@@ -652,7 +652,7 @@ class App extends React.Component<any, any> {
         const exportPaletteToCsv = () =>
           this.setState({
             export: {
-              format: 'CSV',
+              format: 'Spreadsheet (CSV)',
               mimeType: 'text/csv',
               data: e.data.pluginMessage.data,
             },
