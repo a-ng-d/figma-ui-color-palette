@@ -7,6 +7,7 @@ import type {
   ViewConfiguration,
   AlgorithmVersionConfiguration,
   ScaleMessage,
+  ColorBlindModeConfiguration,
 } from '../utils/types'
 import {
   previousSelection,
@@ -37,6 +38,9 @@ const updateScale = (msg: ScaleMessage, palette: SceneNode) => {
       colorSpace = palette.getPluginData(
         'colorSpace'
       ) as ColorSpaceConfiguration,
+      colorBlindMode = palette.getPluginData(
+        'colorBlindMode'
+      ) as ColorBlindModeConfiguration,
       themes = JSON.parse(
         palette.getPluginData('themes')
       ) as Array<ThemeConfiguration>,
@@ -80,6 +84,7 @@ const updateScale = (msg: ScaleMessage, palette: SceneNode) => {
           scale: msg.data.scale,
           colors: colors,
           colorSpace: colorSpace,
+          colorBlindMode: colorBlindMode,
           themes: themes,
           view:
             msg.isEditedInRealTime && view === 'PALETTE_WITH_PROPERTIES'

@@ -1,5 +1,6 @@
 import type {
   AlgorithmVersionConfiguration,
+  ColorBlindModeConfiguration,
   ColorSpaceConfiguration,
   ColorsMessage,
   PresetConfiguration,
@@ -34,6 +35,9 @@ const updateColors = (msg: ColorsMessage, palette: SceneNode) => {
       colorSpace = palette.getPluginData(
         'colorSpace'
       ) as ColorSpaceConfiguration,
+      colorBlindMode = palette.getPluginData(
+        'colorBlindMode'
+      ) as ColorBlindModeConfiguration,
       themes = JSON.parse(
         palette.getPluginData('themes')
       ) as Array<ThemeConfiguration>,
@@ -57,6 +61,7 @@ const updateColors = (msg: ColorsMessage, palette: SceneNode) => {
           scale: scale,
           colors: msg.data,
           colorSpace: colorSpace,
+          colorBlindMode: colorBlindMode,
           themes: themes,
           view:
             msg.isEditedInRealTime && view === 'PALETTE_WITH_PROPERTIES'

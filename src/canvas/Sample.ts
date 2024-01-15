@@ -1,4 +1,5 @@
 import type {
+  ColorBlindModeConfiguration,
   ColorSpaceConfiguration,
   TextColorsThemeHexModel,
   ViewConfiguration,
@@ -14,6 +15,7 @@ export default class Sample {
   scale: string | null
   rgb: [number, number, number]
   colorSpace: ColorSpaceConfiguration
+  colorBlindMode: ColorBlindModeConfiguration
   view: ViewConfiguration
   textColorsTheme: TextColorsThemeHexModel
   status: {
@@ -29,6 +31,7 @@ export default class Sample {
     scale: string | null,
     rgb: [number, number, number],
     colorSpace: ColorSpaceConfiguration,
+    colorBlindMode: ColorBlindModeConfiguration,
     view: ViewConfiguration,
     textColorsTheme: TextColorsThemeHexModel,
     status: { isClosestToRef: boolean } = { isClosestToRef: false }
@@ -38,6 +41,7 @@ export default class Sample {
     this.scale = scale
     this.rgb = rgb
     this.colorSpace = colorSpace
+    this.colorBlindMode = colorBlindMode
     this.view = view
     this.textColorsTheme = textColorsTheme
     this.status = status
@@ -116,6 +120,7 @@ export default class Sample {
           this.scale ?? '0',
           this.rgb,
           this.colorSpace,
+          this.colorBlindMode,
           this.textColorsTheme
         ).makeNode()
       )
@@ -199,6 +204,7 @@ export default class Sample {
           this.scale ?? '0',
           this.rgb,
           this.colorSpace,
+          this.colorBlindMode,
           this.textColorsTheme
         ).makeNodeDetailed()
       )
