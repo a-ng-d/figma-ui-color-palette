@@ -448,7 +448,7 @@ export default class Export extends React.Component<Props, any> {
                       },
                       {
                         label:
-                          locals[this.props.lang].export.android.xml,
+                          locals[this.props.lang].export.android.compose,
                         value: 'EXPORT_TO_ANDROID_COMPOSE',
                         feature: 'SELECT_EXPORT_FILE',
                         position: 0,

@@ -132,7 +132,7 @@ export const locals: { [key: string]: any } = {
       swift: 'iOS (SwiftUI)',
       android: {
         label: 'Android',
-        compose: 'Compose',
+        compose: 'Compose (TK)',
         xml: 'XML',
       },
       csv: 'Spreadsheet (CSV)',
