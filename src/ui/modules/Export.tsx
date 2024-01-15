@@ -28,7 +28,7 @@ export default class Export extends React.Component<Props, any> {
     super(props)
     this.counter = 0
     this.state = {
-      format: 'EXPORT_JSON',
+      format: 'EXPORT_TOKENS_GLOBAL',
       colorSpace: {
         selected: '',
         options: [],
@@ -39,38 +39,38 @@ export default class Export extends React.Component<Props, any> {
   // Handlers
   exportHandler = (e: React.SyntheticEvent) => {
     const actions: ActionsList = {
-      EXPORT_JSON: () => {
+      EXPORT_TOKENS_GLOBAL: () => {
         this.setState({
-          format: 'EXPORT_JSON',
+          format: 'EXPORT_TOKENS_GLOBAL',
         })
         parent.postMessage(
-          { pluginMessage: { type: 'EXPORT_PALETTE', export: 'JSON' } },
+          { pluginMessage: { type: 'EXPORT_PALETTE', export: 'TOKENS_GLOBAL' } },
           '*'
         )
       },
-      EXPORT_JSON_AMZN_STYLE_DICTIONARY: () => {
+      EXPORT_TOKENS_AMZN_STYLE_DICTIONARY: () => {
         this.setState({
-          format: 'EXPORT_JSON_AMZN_STYLE_DICTIONARY',
+          format: 'EXPORT_TOKENS_AMZN_STYLE_DICTIONARY',
         })
         parent.postMessage(
           {
             pluginMessage: {
               type: 'EXPORT_PALETTE',
-              export: 'JSON_AMZN_STYLE_DICTIONARY',
+              export: 'TOKENS_AMZN_STYLE_DICTIONARY',
             },
           },
           '*'
         )
       },
-      EXPORT_JSON_TOKENS_STUDIO: () => {
+      EXPORT_TOKENS_TOKENS_STUDIO: () => {
         this.setState({
-          format: 'EXPORT_JSON_TOKENS_STUDIO',
+          format: 'EXPORT_TOKENS_TOKENS_STUDIO',
         })
         parent.postMessage(
           {
             pluginMessage: {
               type: 'EXPORT_PALETTE',
-              export: 'JSON_TOKENS_STUDIO',
+              export: 'TOKENS_TOKENS_STUDIO',
             },
           },
           '*'
@@ -254,7 +254,7 @@ export default class Export extends React.Component<Props, any> {
           format: 'EXPORT_ANDROID_COMPOSE',
         })
         parent.postMessage(
-          { pluginMessage: { type: 'EXPORT_PALETTE', export: 'KT' } },
+          { pluginMessage: { type: 'EXPORT_PALETTE', export: 'ANDROID_COMPOSE' } },
           '*'
         )
       },
@@ -263,7 +263,7 @@ export default class Export extends React.Component<Props, any> {
           format: 'EXPORT_ANDROID_XML',
         })
         parent.postMessage(
-          { pluginMessage: { type: 'EXPORT_PALETTE', export: 'XML' } },
+          { pluginMessage: { type: 'EXPORT_PALETTE', export: 'ANDROID_XML' } },
           '*'
         )
       },
@@ -307,6 +307,7 @@ export default class Export extends React.Component<Props, any> {
   // Render
   render() {
     this.setFirstPreview()
+    console.log(this.state['format'])
     return (
       <div className="controls__control">
         <div className="control__block">
@@ -337,7 +338,7 @@ export default class Export extends React.Component<Props, any> {
                     children: [
                       {
                         label: locals[this.props.lang].export.tokens.global,
-                        value: 'EXPORT_JSON',
+                        value: 'EXPORT_TOKENS_GLOBAL',
                         feature: 'SELECT_EXPORT_FILE',
                         position: 0,
                         type: 'OPTION',
@@ -354,7 +355,7 @@ export default class Export extends React.Component<Props, any> {
                       {
                         label:
                           locals[this.props.lang].export.tokens.amznStyleDictionary,
-                        value: 'EXPORT_JSON_AMZN_STYLE_DICTIONARY',
+                        value: 'EXPORT_TOKENS_AMZN_STYLE_DICTIONARY',
                         feature: 'SELECT_EXPORT_FILE',
                         position: 0,
                         type: 'OPTION',
@@ -371,7 +372,7 @@ export default class Export extends React.Component<Props, any> {
                       },
                       {
                         label: locals[this.props.lang].export.tokens.tokensStudio,
-                        value: 'EXPORT_JSON_TOKENS_STUDIO',
+                        value: 'EXPORT_TOKENS_TOKENS_STUDIO',
                         feature: 'SELECT_EXPORT_FILE',
                         position: 0,
                         type: 'OPTION',
