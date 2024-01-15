@@ -652,7 +652,7 @@ class App extends React.Component<any, any> {
         const exportPaletteToXml = () =>
           this.setState({
             export: {
-              format: 'XML',
+              format: 'Resources (XML)',
               mimeType: 'text/xml',
               data: `<?xml version="1.0" encoding="utf-8"?>\n<resources>\n  ${e.data.pluginMessage.data.join(
                 '\n  '
