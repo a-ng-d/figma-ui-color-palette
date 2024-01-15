@@ -249,9 +249,9 @@ export default class Export extends React.Component<Props, any> {
           '*'
         )
       },
-      EXPORT_TO_XML: () => {
+      EXPORT_TO_ANDROID_XML: () => {
         this.setState({
-          format: 'EXPORT_TO_XML',
+          format: 'EXPORT_TO_ANDROID_XML',
         })
         parent.postMessage(
           { pluginMessage: { type: 'EXPORT_PALETTE', export: 'XML' } },
@@ -318,8 +318,13 @@ export default class Export extends React.Component<Props, any> {
                     feature: 'SELECT_EXPORT_FILE',
                     position: 0,
                     type: 'OPTION',
-                    isActive: true,
-                    isBlocked: false,
+                    isActive: features.find(
+                      (feature) => feature.name === 'EXPORT_TOKENS'
+                    )?.isActive,
+                    isBlocked: isBlocked(
+                      'EXPORT_TOKENS',
+                      this.props.planStatus
+                    ),
                     children: [
                       {
                         label: locals[this.props.lang].export.json,
@@ -424,14 +429,14 @@ export default class Export extends React.Component<Props, any> {
                     position: 4,
                     type: 'OPTION',
                     isActive: features.find(
-                      (feature) => feature.name === 'EXPORT_XML'
+                      (feature) => feature.name === 'EXPORT_ANDROID'
                     )?.isActive,
-                    isBlocked: isBlocked('EXPORT_XML', this.props.planStatus),
+                    isBlocked: isBlocked('EXPORT_ANDROID', this.props.planStatus),
                     children: [
                       {
                         label:
                           locals[this.props.lang].export.android.xml,
-                        value: 'EXPORT_TO_XML',
+                        value: 'EXPORT_TO_ANDROID_XML',
                         feature: 'SELECT_EXPORT_FILE',
                         position: 0,
                         type: 'OPTION',

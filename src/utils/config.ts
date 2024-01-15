@@ -306,6 +306,14 @@ const features: Array<Feature> = [
     service: ['EDIT'],
   },
   {
+    name: 'EXPORT_TOKENS',
+    description: 'Palette export to a tokens file',
+    isActive: true,
+    isPro: false,
+    type: 'ACTION',
+    service: ['EDIT'],
+  },
+  {
     name: 'EXPORT_JSON',
     description: 'Palette export to JSON',
     isActive: true,
@@ -381,6 +389,14 @@ const features: Array<Feature> = [
     name: 'EXPORT_SWIFT',
     description:
       'Palette export to SWIFT (macOS, iOS, iPadOS, watchOS, tvOS, visionOS)',
+    isActive: true,
+    isPro: false,
+    type: 'ACTION',
+    service: ['EDIT'],
+  },
+  {
+    name: 'EXPORT_ANDROID',
+    description: 'Palette export to Android file',
     isActive: true,
     isPro: false,
     type: 'ACTION',
