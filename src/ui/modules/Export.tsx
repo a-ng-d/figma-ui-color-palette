@@ -28,7 +28,7 @@ export default class Export extends React.Component<Props, any> {
     super(props)
     this.counter = 0
     this.state = {
-      format: 'EXPORT_TO_JSON',
+      format: 'EXPORT_TOKENS_GLOBAL',
       colorSpace: {
         selected: '',
         options: [],
@@ -39,46 +39,46 @@ export default class Export extends React.Component<Props, any> {
   // Handlers
   exportHandler = (e: React.SyntheticEvent) => {
     const actions: ActionsList = {
-      EXPORT_TO_JSON: () => {
+      EXPORT_TOKENS_GLOBAL: () => {
         this.setState({
-          format: 'EXPORT_TO_JSON',
+          format: 'EXPORT_TOKENS_GLOBAL',
         })
         parent.postMessage(
-          { pluginMessage: { type: 'EXPORT_PALETTE', export: 'JSON' } },
+          { pluginMessage: { type: 'EXPORT_PALETTE', export: 'TOKENS_GLOBAL' } },
           '*'
         )
       },
-      EXPORT_TO_JSON_AMZN_STYLE_DICTIONARY: () => {
+      EXPORT_TOKENS_AMZN_STYLE_DICTIONARY: () => {
         this.setState({
-          format: 'EXPORT_TO_JSON_AMZN_STYLE_DICTIONARY',
-        })
-        parent.postMessage(
-          {
-            pluginMessage: {
-              type: 'EXPORT_PALETTE',
-              export: 'JSON_AMZN_STYLE_DICTIONARY',
-            },
-          },
-          '*'
-        )
-      },
-      EXPORT_TO_JSON_TOKENS_STUDIO: () => {
-        this.setState({
-          format: 'EXPORT_TO_JSON_TOKENS_STUDIO',
+          format: 'EXPORT_TOKENS_AMZN_STYLE_DICTIONARY',
         })
         parent.postMessage(
           {
             pluginMessage: {
               type: 'EXPORT_PALETTE',
-              export: 'JSON_TOKENS_STUDIO',
+              export: 'TOKENS_AMZN_STYLE_DICTIONARY',
             },
           },
           '*'
         )
       },
-      EXPORT_TO_CSS: () => {
+      EXPORT_TOKENS_TOKENS_STUDIO: () => {
         this.setState({
-          format: 'EXPORT_TO_CSS',
+          format: 'EXPORT_TOKENS_TOKENS_STUDIO',
+        })
+        parent.postMessage(
+          {
+            pluginMessage: {
+              type: 'EXPORT_PALETTE',
+              export: 'TOKENS_TOKENS_STUDIO',
+            },
+          },
+          '*'
+        )
+      },
+      EXPORT_CSS: () => {
+        this.setState({
+          format: 'EXPORT_CSS',
           colorSpace: {
             selected: 'RGB',
             options: [
@@ -95,7 +95,7 @@ export default class Export extends React.Component<Props, any> {
               },
               {
                 label: locals[this.props.lang].export.colorSpace.rgb,
-                value: 'EXPORT_TO_CSS_RGB',
+                value: 'EXPORT_CSS_RGB',
                 feature: 'SELECT_COLOR_SPACE',
                 position: 0,
                 type: 'OPTION',
@@ -108,7 +108,7 @@ export default class Export extends React.Component<Props, any> {
               },
               {
                 label: locals[this.props.lang].export.colorSpace.hex,
-                value: 'EXPORT_TO_CSS_HEX',
+                value: 'EXPORT_CSS_HEX',
                 feature: 'SELECT_COLOR_SPACE',
                 position: 1,
                 type: 'OPTION',
@@ -121,7 +121,7 @@ export default class Export extends React.Component<Props, any> {
               },
               {
                 label: locals[this.props.lang].export.colorSpace.lch,
-                value: 'EXPORT_TO_CSS_LCH',
+                value: 'EXPORT_CSS_LCH',
                 feature: 'SELECT_COLOR_SPACE',
                 position: 2,
                 type: 'OPTION',
@@ -134,7 +134,7 @@ export default class Export extends React.Component<Props, any> {
               },
               {
                 label: locals[this.props.lang].export.colorSpace.p3,
-                value: 'EXPORT_TO_CSS_P3',
+                value: 'EXPORT_CSS_P3',
                 feature: 'SELECT_COLOR_SPACE',
                 position: 3,
                 type: 'OPTION',
@@ -159,7 +159,7 @@ export default class Export extends React.Component<Props, any> {
           '*'
         )
       },
-      EXPORT_TO_CSS_RGB: () => {
+      EXPORT_CSS_RGB: () => {
         this.setState({
           colorSpace: {
             selected: 'RGB',
@@ -177,7 +177,7 @@ export default class Export extends React.Component<Props, any> {
           '*'
         )
       },
-      EXPORT_TO_CSS_LCH: () => {
+      EXPORT_CSS_LCH: () => {
         this.setState({
           colorSpace: {
             selected: 'LCH',
@@ -195,7 +195,7 @@ export default class Export extends React.Component<Props, any> {
           '*'
         )
       },
-      EXPORT_TO_CSS_P3: () => {
+      EXPORT_CSS_P3: () => {
         this.setState({
           colorSpace: {
             selected: 'P3',
@@ -213,7 +213,7 @@ export default class Export extends React.Component<Props, any> {
           '*'
         )
       },
-      EXPORT_TO_CSS_HEX: () => {
+      EXPORT_CSS_HEX: () => {
         this.setState({
           colorSpace: {
             selected: 'HEX',
@@ -231,36 +231,45 @@ export default class Export extends React.Component<Props, any> {
           '*'
         )
       },
-      EXPORT_TO_TAILWIND: () => {
+      EXPORT_TAILWIND: () => {
         this.setState({
-          format: 'EXPORT_TO_TAILWIND',
+          format: 'EXPORT_TAILWIND',
         })
         parent.postMessage(
           { pluginMessage: { type: 'EXPORT_PALETTE', export: 'TAILWIND' } },
           '*'
         )
       },
-      EXPORT_TO_SWIFT: () => {
+      EXPORT_SWIFT: () => {
         this.setState({
-          format: 'EXPORT_TO_SWIFT',
+          format: 'EXPORT_SWIFT',
         })
         parent.postMessage(
           { pluginMessage: { type: 'EXPORT_PALETTE', export: 'SWIFT' } },
           '*'
         )
       },
-      EXPORT_TO_XML: () => {
+      EXPORT_ANDROID_COMPOSE: () => {
         this.setState({
-          format: 'EXPORT_TO_XML',
+          format: 'EXPORT_ANDROID_COMPOSE',
         })
         parent.postMessage(
-          { pluginMessage: { type: 'EXPORT_PALETTE', export: 'XML' } },
+          { pluginMessage: { type: 'EXPORT_PALETTE', export: 'ANDROID_COMPOSE' } },
           '*'
         )
       },
-      EXPORT_TO_CSV: () => {
+      EXPORT_ANDROID_XML: () => {
         this.setState({
-          format: 'EXPORT_TO_CSV',
+          format: 'EXPORT_ANDROID_XML',
+        })
+        parent.postMessage(
+          { pluginMessage: { type: 'EXPORT_PALETTE', export: 'ANDROID_XML' } },
+          '*'
+        )
+      },
+      EXPORT_CSV: () => {
+        this.setState({
+          format: 'EXPORT_CSV',
         })
         parent.postMessage(
           { pluginMessage: { type: 'EXPORT_PALETTE', export: 'CSV' } },
@@ -280,7 +289,7 @@ export default class Export extends React.Component<Props, any> {
           {
             pluginMessage: {
               type: 'EXPORT_PALETTE',
-              export: this.state['format'].replace('EXPORT_TO_', ''),
+              export: this.state['format'].replace('EXPORT_', ''),
             },
           },
           '*'
@@ -298,6 +307,7 @@ export default class Export extends React.Component<Props, any> {
   // Render
   render() {
     this.setFirstPreview()
+    console.log(this.state['format'])
     return (
       <div className="controls__control">
         <div className="control__block">
@@ -313,25 +323,30 @@ export default class Export extends React.Component<Props, any> {
                 id="exports-list"
                 options={[
                   {
-                    label: 'Tokens',
+                    label: locals[this.props.lang].export.tokens.label,
                     value: 'TOKENS_GROUP',
                     feature: 'SELECT_EXPORT_FILE',
                     position: 0,
                     type: 'OPTION',
-                    isActive: true,
-                    isBlocked: false,
+                    isActive: features.find(
+                      (feature) => feature.name === 'EXPORT_TOKENS'
+                    )?.isActive,
+                    isBlocked: isBlocked(
+                      'EXPORT_TOKENS',
+                      this.props.planStatus
+                    ),
                     children: [
                       {
-                        label: locals[this.props.lang].export.json,
-                        value: 'EXPORT_TO_JSON',
+                        label: locals[this.props.lang].export.tokens.global,
+                        value: 'EXPORT_TOKENS_GLOBAL',
                         feature: 'SELECT_EXPORT_FILE',
                         position: 0,
                         type: 'OPTION',
                         isActive: features.find(
-                          (feature) => feature.name === 'EXPORT_JSON'
+                          (feature) => feature.name === 'EXPORT_TOKENS_JSON'
                         )?.isActive,
                         isBlocked: isBlocked(
-                          'EXPORT_JSON',
+                          'EXPORT_TOKENS_JSON',
                           this.props.planStatus
                         ),
                         children: [],
@@ -339,34 +354,34 @@ export default class Export extends React.Component<Props, any> {
                       },
                       {
                         label:
-                          locals[this.props.lang].export.amznStyleDictionary,
-                        value: 'EXPORT_TO_JSON_AMZN_STYLE_DICTIONARY',
+                          locals[this.props.lang].export.tokens.amznStyleDictionary,
+                        value: 'EXPORT_TOKENS_AMZN_STYLE_DICTIONARY',
                         feature: 'SELECT_EXPORT_FILE',
                         position: 0,
                         type: 'OPTION',
                         isActive: features.find(
                           (feature) =>
-                            feature.name === 'EXPORT_JSON_AMZN_STYLE_DICTIONARY'
+                            feature.name === 'EXPORT_TOKENS_JSON_AMZN_STYLE_DICTIONARY'
                         )?.isActive,
                         isBlocked: isBlocked(
-                          'EXPORT_JSON_AMZN_STYLE_DICTIONARY',
+                          'EXPORT_TOKENS_JSON_AMZN_STYLE_DICTIONARY',
                           this.props.planStatus
                         ),
                         children: [],
                         action: this.exportHandler,
                       },
                       {
-                        label: locals[this.props.lang].export.tokensStudio,
-                        value: 'EXPORT_TO_JSON_TOKENS_STUDIO',
+                        label: locals[this.props.lang].export.tokens.tokensStudio,
+                        value: 'EXPORT_TOKENS_TOKENS_STUDIO',
                         feature: 'SELECT_EXPORT_FILE',
                         position: 0,
                         type: 'OPTION',
                         isActive: features.find(
                           (feature) =>
-                            feature.name === 'EXPORT_JSON_TOKENS_STUDIO'
+                            feature.name === 'EXPORT_TOKENS_JSON_TOKENS_STUDIO'
                         )?.isActive,
                         isBlocked: isBlocked(
-                          'EXPORT_JSON_TOKENS_STUDIO',
+                          'EXPORT_TOKENS_JSON_TOKENS_STUDIO',
                           this.props.planStatus
                         ),
                         children: [],
@@ -376,8 +391,8 @@ export default class Export extends React.Component<Props, any> {
                     action: () => null,
                   },
                   {
-                    label: locals[this.props.lang].export.css,
-                    value: 'EXPORT_TO_CSS',
+                    label: locals[this.props.lang].export.css.customProperties,
+                    value: 'EXPORT_CSS',
                     feature: 'SELECT_EXPORT_FILE',
                     position: 1,
                     type: 'OPTION',
@@ -389,8 +404,8 @@ export default class Export extends React.Component<Props, any> {
                     action: this.exportHandler,
                   },
                   {
-                    label: locals[this.props.lang].export.tailwind,
-                    value: 'EXPORT_TO_TAILWIND',
+                    label: locals[this.props.lang].export.tailwind.config,
+                    value: 'EXPORT_TAILWIND',
                     feature: 'SELECT_EXPORT_FILE',
                     position: 2,
                     type: 'OPTION',
@@ -405,8 +420,8 @@ export default class Export extends React.Component<Props, any> {
                     action: this.exportHandler,
                   },
                   {
-                    label: locals[this.props.lang].export.swift,
-                    value: 'EXPORT_TO_SWIFT',
+                    label: locals[this.props.lang].export.apple.swift,
+                    value: 'EXPORT_SWIFT',
                     feature: 'SELECT_EXPORT_FILE',
                     position: 3,
                     type: 'OPTION',
@@ -418,21 +433,58 @@ export default class Export extends React.Component<Props, any> {
                     action: this.exportHandler,
                   },
                   {
-                    label: locals[this.props.lang].export.xml,
-                    value: 'EXPORT_TO_XML',
+                    label: locals[this.props.lang].export.android.label,
+                    value: 'ANDROID_GROUP',
                     feature: 'SELECT_EXPORT_FILE',
                     position: 4,
                     type: 'OPTION',
                     isActive: features.find(
-                      (feature) => feature.name === 'EXPORT_XML'
+                      (feature) => feature.name === 'EXPORT_ANDROID'
                     )?.isActive,
-                    isBlocked: isBlocked('EXPORT_XML', this.props.planStatus),
-                    children: [],
+                    isBlocked: isBlocked('EXPORT_ANDROID', this.props.planStatus),
+                    children: [
+                      {
+                        label:
+                          locals[this.props.lang].export.android.compose,
+                        value: 'EXPORT_ANDROID_COMPOSE',
+                        feature: 'SELECT_EXPORT_FILE',
+                        position: 0,
+                        type: 'OPTION',
+                        isActive: features.find(
+                          (feature) =>
+                            feature.name === 'EXPORT_ANDROID_COMPOSE'
+                        )?.isActive,
+                        isBlocked: isBlocked(
+                          'EXPORT_ANDROID_COMPOSE',
+                          this.props.planStatus
+                        ),
+                        children: [],
+                        action: this.exportHandler,
+                      },
+                      {
+                        label:
+                          locals[this.props.lang].export.android.xml,
+                        value: 'EXPORT_ANDROID_XML',
+                        feature: 'SELECT_EXPORT_FILE',
+                        position: 0,
+                        type: 'OPTION',
+                        isActive: features.find(
+                          (feature) =>
+                            feature.name === 'EXPORT_ANDROID_XML'
+                        )?.isActive,
+                        isBlocked: isBlocked(
+                          'EXPORT_ANDROID_XML',
+                          this.props.planStatus
+                        ),
+                        children: [],
+                        action: this.exportHandler,
+                      },
+                    ],
                     action: this.exportHandler,
                   },
                   {
                     label: locals[this.props.lang].export.csv,
-                    value: 'EXPORT_TO_CSV',
+                    value: 'EXPORT_CSV',
                     feature: 'SELECT_EXPORT_FILE',
                     position: 5,
                     type: 'OPTION',
@@ -448,7 +500,7 @@ export default class Export extends React.Component<Props, any> {
                 parentClassName="controls"
                 alignment="RIGHT"
               />
-              {this.state['format'] === 'EXPORT_TO_CSS' ? (
+              {this.state['format'] === 'EXPORT_CSS' ? (
                 <Menu
                   icon="adjust"
                   id="select-color-space"

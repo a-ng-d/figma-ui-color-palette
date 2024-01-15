@@ -16,6 +16,7 @@ import exportJson from './exportJson'
 import exportJsonAmznStyleDictionary from './exportJsonAmznStyleDictionary'
 import exportJsonTokensStudio from './exportJsonTokensStudio'
 import exportSwift from './exportSwift'
+import exportKt from './exportKt'
 import exportXml from './exportXml'
 import getProPlan from './getProPlan'
 import processSelection from './processSelection'
@@ -84,17 +85,18 @@ const loadUI = async (palette: SceneNode) => {
         figma.notify(notifications.join('﹒'))
       },
       EXPORT_PALETTE: () => {
-        msg.export === 'JSON' ? exportJson(palette) : null
-        msg.export === 'JSON_AMZN_STYLE_DICTIONARY'
+        msg.export === 'TOKENS_GLOBAL' ? exportJson(palette) : null
+        msg.export === 'TOKENS_AMZN_STYLE_DICTIONARY'
           ? exportJsonAmznStyleDictionary(palette)
           : null
-        msg.export === 'JSON_TOKENS_STUDIO'
+        msg.export === 'TOKENS_TOKENS_STUDIO'
           ? exportJsonTokensStudio(palette)
           : null
         msg.export === 'CSS' ? exportCss(palette, msg.colorSpace) : null
         msg.export === 'TAILWIND' ? exportTailwind(palette) : null
         msg.export === 'SWIFT' ? exportSwift(palette) : null
-        msg.export === 'XML' ? exportXml(palette) : null
+        msg.export === 'ANDROID_COMPOSE' ? exportKt(palette) : null
+        msg.export === 'ANDROID_XML' ? exportXml(palette) : null
         msg.export === 'CSV' ? exportCsv(palette) : null
       },
       UPDATE_SETTINGS: () => updateSettings(msg, palette),

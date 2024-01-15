@@ -117,10 +117,28 @@ export const locals: { [key: string]: any } = {
     export: {
       format: 'Code',
       preview: 'Preview',
-      json: 'Global (JSON)',
-      amznStyleDictionary: 'Amazon Style Dictionary (JSON)',
-      tokensStudio: 'Tokens Studio (JSON)',
-      css: 'Custom Properties (CSS)',
+      tokens: {
+        label: 'Tokens',
+        global: 'Global (JSON)',
+        amznStyleDictionary: 'Amazon Style Dictionary (JSON)',
+        tokensStudio: 'Tokens Studio (JSON)',
+      },
+      css: {
+        customProperties: 'Custom Properties (CSS)',
+      },
+      tailwind: {
+        config: 'Tailwind (JS)'
+      },
+      apple: {
+        label: 'Apple',
+        swift: 'iOS (SwiftUI)',
+      },
+      android: {
+        label: 'Android',
+        compose: 'Compose (KT)',
+        xml: 'XML',
+      },
+      csv: 'Spreadsheet (CSV)',
       colorSpace: {
         label: glossary.colorSpace,
         rgb: glossary.rgb,
@@ -128,10 +146,6 @@ export const locals: { [key: string]: any } = {
         lch: glossary.lch,
         p3: glossary.p3,
       },
-      tailwind: 'Tailwind (JS)',
-      swift: 'iOS (SwiftUI)',
-      xml: 'Android (XML)',
-      csv: 'Spreadsheet (CSV)',
     },
     settings: {
       global: {
