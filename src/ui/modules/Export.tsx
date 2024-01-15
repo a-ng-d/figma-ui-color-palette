@@ -418,8 +418,8 @@ export default class Export extends React.Component<Props, any> {
                     action: this.exportHandler,
                   },
                   {
-                    label: locals[this.props.lang].export.xml,
-                    value: 'EXPORT_TO_XML',
+                    label: locals[this.props.lang].export.android.label,
+                    value: 'ANDROID_GROUP',
                     feature: 'SELECT_EXPORT_FILE',
                     position: 4,
                     type: 'OPTION',
@@ -427,7 +427,44 @@ export default class Export extends React.Component<Props, any> {
                       (feature) => feature.name === 'EXPORT_XML'
                     )?.isActive,
                     isBlocked: isBlocked('EXPORT_XML', this.props.planStatus),
-                    children: [],
+                    children: [
+                      {
+                        label:
+                          locals[this.props.lang].export.android.xml,
+                        value: 'EXPORT_TO_XML',
+                        feature: 'SELECT_EXPORT_FILE',
+                        position: 0,
+                        type: 'OPTION',
+                        isActive: features.find(
+                          (feature) =>
+                            feature.name === 'EXPORT_XML'
+                        )?.isActive,
+                        isBlocked: isBlocked(
+                          'EXPORT_XML',
+                          this.props.planStatus
+                        ),
+                        children: [],
+                        action: this.exportHandler,
+                      },
+                      {
+                        label:
+                          locals[this.props.lang].export.android.xml,
+                        value: 'EXPORT_TO_ANDROID_COMPOSE',
+                        feature: 'SELECT_EXPORT_FILE',
+                        position: 0,
+                        type: 'OPTION',
+                        isActive: features.find(
+                          (feature) =>
+                            feature.name === 'EXPORT_ANDROID_COMPOSE'
+                        )?.isActive,
+                        isBlocked: isBlocked(
+                          'EXPORT_ANDROID_COMPOSE',
+                          this.props.planStatus
+                        ),
+                        children: [],
+                        action: this.exportHandler,
+                      },
+                    ],
                     action: this.exportHandler,
                   },
                   {

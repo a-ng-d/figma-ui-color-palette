@@ -121,7 +121,11 @@ export const locals: { [key: string]: any } = {
       },
       tailwind: 'Tailwind (JS)',
       swift: 'iOS (SwiftUI)',
-      xml: 'Android (XML)',
+      android: {
+        label: 'Android',
+        compose: 'Compose',
+        xml: 'XML',
+      },
       csv: 'Spreadsheet (CSV)',
     },
     settings: {
