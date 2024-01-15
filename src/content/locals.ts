@@ -255,7 +255,7 @@ export const locals: { [key: string]: any } = {
     },
     warning: {
       tooManyThemesToCreateModes:
-        'You cannot create more than 4 variable modes',
+        'You must upgrade your plan to create more variable modes',
       emptySourceColors:
         'There is no source color. Add them manually in the Colors section.',
       hslColorSpace:

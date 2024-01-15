@@ -57,7 +57,8 @@ const updateLocalVariables = (palette: SceneNode, i: number, j: number) => {
               description = color.description.endsWith(' ')
                 ? color.description.slice(0, -1)
                 : color.description
-            if (variableMatch != undefined) {
+
+            if (variableMatch != undefined && modeMatch != undefined) {
               if (variableMatch.name != `${color.name}/${shade.name}`) {
                 variableMatch.name = `${color.name}/${shade.name}`
                 k++

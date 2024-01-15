@@ -6,12 +6,7 @@ import { notifications } from '../utils/palettePackage'
 const createLocalVariables = (palette: SceneNode, i: number, j: number) => {
   palette = figma.currentPage.selection[0] as FrameNode
 
-  const paletteData: PaletteData = JSON.parse(palette.getPluginData('data')),
-    variablesSet: Array<{
-      variable: Variable
-      colorName: string
-      shadeName: string
-    }> = []
+  const paletteData: PaletteData = JSON.parse(palette.getPluginData('data'))
 
   if (palette.children.length == 1) {
     i = 0
@@ -70,69 +65,70 @@ const createLocalVariables = (palette: SceneNode, i: number, j: number) => {
                   g: shade.gl[1],
                   b: shade.gl[2],
                 })
-                theme.modeId = collection?.modes[0].modeId ?? 'NULL'
+                theme.modeId = collection?.defaultModeId
                 j = 1
-              } else
-                variablesSet.push({
-                  variable: variable,
-                  colorName: color.name,
-                  shadeName: shade.name,
-                })
+              }
               i++
-            } else
-              variablesSet.push({
-                variable: boundVariable,
-                colorName: color.name,
-                shadeName: shade.name,
-              })
+            } else if (
+              themesList.length == 0 &&
+              collection?.modes[0].name != 'Mode 1' &&
+              collection != undefined
+            ) {
+              collection.renameMode(collection.defaultModeId, 'Mode 1')
+            }
           })
         })
       })
 
-    // Create modes and set values
-    themesList.forEach((themeItem, index) => {
-      if (collection != undefined && themeItem != undefined) {
-        if (
-          collection.modes.find((mode) => mode.modeId === themeItem.id) ==
-            undefined &&
-          index < 4
-        ) {
-          if (collection.modes[0].name === 'Mode 1') {
-            collection.renameMode(collection.modes[0].modeId, themeItem.name)
-            j++
-          } else {
-            collection.addMode(themeItem.name)
-            j++
-          }
-
+    // Create modes
+    if (themesList.length > 0) {
+      themesList.forEach((themeItem) => {
+        if (themeItem != undefined && collection != undefined) {
           const theme = paletteData.themes.find(
             (theme) => theme.name === themeItem.name
           )
-          if (theme != undefined)
-            theme.modeId =
-              collection.modes.find((mode) => mode.name === themeItem.name)
-                ?.modeId ?? ''
-
-          variablesSet.forEach((variableSet) => {
-            const rightShade = paletteData.themes
-              .find((theme) => theme.name === themeItem?.name)
-              ?.colors.find((color) => color.name === variableSet.colorName)
-              ?.shades.find((shade) => shade.name === variableSet.shadeName)
-
-            if (rightShade != undefined && collection != undefined) {
-              rightShade.variableId = variableSet.variable.id
-              variableSet.variable.setValueForMode(
-                collection.modes.find((mode) => mode.name === themeItem.name)
-                  ?.modeId ?? '',
-                {
-                  r: rightShade.gl[0],
-                  g: rightShade.gl[1],
-                  b: rightShade.gl[2],
-                }
-              )
+          if (collection?.modes[0].name === 'Mode 1') {
+            collection.renameMode(collection.defaultModeId, themeItem.name)
+            themeItem.id = collection.defaultModeId
+            theme != undefined
+              ? (theme.modeId = collection.defaultModeId)
+              : null
+          } else if (
+            collection.modes.find((mode) => mode.modeId === themeItem.id) ==
+            undefined
+          ) {
+            try {
+              const modeId = collection.addMode(themeItem.name)
+              themeItem.id = modeId
+              theme != undefined ? (theme.modeId = modeId) : null
+              j++
+            } catch {
+              figma.notify(locals[lang].warning.tooManyThemesToCreateModes)
             }
-          })
+          }
         }
+      })
+    }
+
+    // Set values
+    themesList.forEach((themeItem) => {
+      if (collection != undefined && themeItem != undefined) {
+        const localVariables: Array<Variable> = figma.variables
+          .getLocalVariables()
+          .filter(
+            (localVariable) =>
+              localVariable.variableCollectionId === collection?.id
+          )
+
+        localVariables.forEach((variable) => {
+          const rightShade = paletteData.themes
+            .find((theme) => theme.name === themeItem?.name)
+            ?.colors.find((color) => color.name === variable.name.split('/')[0])
+            ?.shades.find((shade) => shade.name === variable.name.split('/')[1])
+          if (rightShade != undefined && collection != undefined) {
+            rightShade.variableId = variable.id
+          }
+        })
       }
     })
 
