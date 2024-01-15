@@ -131,12 +131,13 @@ export const locals: { [key: string]: any } = {
       },
       apple: {
         label: 'Apple',
-        swift: 'iOS (SwiftUI)',
+        swiftui: 'SwiftUI (SWIFT)',
+        uikit: 'UIkit (SWIFT)'
       },
       android: {
         label: 'Android',
         compose: 'Compose (KT)',
-        xml: 'XML',
+        xml: 'Resources (XML)',
       },
       csv: 'Spreadsheet (CSV)',
       colorSpace: {

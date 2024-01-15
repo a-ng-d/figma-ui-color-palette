@@ -240,12 +240,21 @@ export default class Export extends React.Component<Props, any> {
           '*'
         )
       },
-      EXPORT_SWIFT: () => {
+      EXPORT_APPLE_SWIFTUI: () => {
         this.setState({
-          format: 'EXPORT_SWIFT',
+          format: 'EXPORT_APPLE_SWIFTUI',
         })
         parent.postMessage(
-          { pluginMessage: { type: 'EXPORT_PALETTE', export: 'SWIFT' } },
+          { pluginMessage: { type: 'EXPORT_PALETTE', export: 'APPLE_SWIFTUI' } },
+          '*'
+        )
+      },
+      EXPORT_APPLE_UIKIT: () => {
+        this.setState({
+          format: 'EXPORT_APPLE_UIKIT',
+        })
+        parent.postMessage(
+          { pluginMessage: { type: 'EXPORT_PALETTE', export: 'APPLE_UIKIT' } },
           '*'
         )
       },
@@ -307,7 +316,6 @@ export default class Export extends React.Component<Props, any> {
   // Render
   render() {
     this.setFirstPreview()
-    console.log(this.state['format'])
     return (
       <div className="controls__control">
         <div className="control__block">
@@ -420,16 +428,53 @@ export default class Export extends React.Component<Props, any> {
                     action: this.exportHandler,
                   },
                   {
-                    label: locals[this.props.lang].export.apple.swift,
-                    value: 'EXPORT_SWIFT',
+                    label: locals[this.props.lang].export.apple.label,
+                    value: 'APPLE_GROUP',
                     feature: 'SELECT_EXPORT_FILE',
                     position: 3,
                     type: 'OPTION',
                     isActive: features.find(
-                      (feature) => feature.name === 'EXPORT_SWIFT'
+                      (feature) => feature.name === 'EXPORT_APPLE'
                     )?.isActive,
-                    isBlocked: isBlocked('EXPORT_SWIFT', this.props.planStatus),
-                    children: [],
+                    isBlocked: isBlocked('EXPORT_APPLE', this.props.planStatus),
+                    children: [
+                      {
+                        label:
+                          locals[this.props.lang].export.apple.swiftui,
+                        value: 'EXPORT_APPLE_SWIFTUI',
+                        feature: 'SELECT_EXPORT_FILE',
+                        position: 0,
+                        type: 'OPTION',
+                        isActive: features.find(
+                          (feature) =>
+                            feature.name === 'EXPORT_APPLE_SWIFTUI'
+                        )?.isActive,
+                        isBlocked: isBlocked(
+                          'EXPORT_APPLE_SWIFTUI',
+                          this.props.planStatus
+                        ),
+                        children: [],
+                        action: this.exportHandler,
+                      },
+                      {
+                        label:
+                          locals[this.props.lang].export.apple.uikit,
+                        value: 'EXPORT_APPLE_UIKIT',
+                        feature: 'SELECT_EXPORT_FILE',
+                        position: 1,
+                        type: 'OPTION',
+                        isActive: features.find(
+                          (feature) =>
+                            feature.name === 'EXPORT_APPLE_UIKIT'
+                        )?.isActive,
+                        isBlocked: isBlocked(
+                          'EXPORT_APPLE_UIKIT',
+                          this.props.planStatus
+                        ),
+                        children: [],
+                        action: this.exportHandler,
+                      },
+                    ],
                     action: this.exportHandler,
                   },
                   {
@@ -466,7 +511,7 @@ export default class Export extends React.Component<Props, any> {
                           locals[this.props.lang].export.android.xml,
                         value: 'EXPORT_ANDROID_XML',
                         feature: 'SELECT_EXPORT_FILE',
-                        position: 0,
+                        position: 1,
                         type: 'OPTION',
                         isActive: features.find(
                           (feature) =>

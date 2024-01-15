@@ -2,7 +2,7 @@ import type { PaletteData } from '../utils/types'
 import { locals, lang } from '../content/locals'
 import { doCamelCase } from '@a-ng-d/figmug.modules.do-camel-case'
 
-const exportSwift = (palette: SceneNode) => {
+const exportSwiftUI = (palette: SceneNode) => {
   palette = figma.currentPage.selection[0] as FrameNode
 
   const paletteData: PaletteData = JSON.parse(palette.getPluginData('data')),
@@ -16,14 +16,14 @@ const exportSwift = (palette: SceneNode) => {
   if (palette.children.length == 1) {
     workingThemes.forEach((theme) => {
       theme.colors.forEach((color) => {
-        const UIColors: Array<string> = []
-        UIColors.unshift(
+        const Colors: Array<string> = []
+        Colors.unshift(
           `// ${
             workingThemes[0].type === 'custom theme' ? theme.name + ' - ' : ''
           }${color.name}`
         )
         color.shades.forEach((shade) => {
-          UIColors.unshift(
+          Colors.unshift(
             `public let ${
               workingThemes[0].type === 'custom theme'
                 ? doCamelCase(theme.name + ' ' + color.name)
@@ -37,18 +37,18 @@ const exportSwift = (palette: SceneNode) => {
             )})`
           )
         })
-        UIColors.unshift('')
-        UIColors.reverse().forEach((UIColor) => swift.push(UIColor))
+        Colors.unshift('')
+        Colors.reverse().forEach((color) => swift.push(color))
       })
     })
 
     swift.pop()
 
     figma.ui.postMessage({
-      type: 'EXPORT_PALETTE_SWIFT',
+      type: 'EXPORT_PALETTE_SWIFTUI',
       data: swift,
     })
   } else figma.notify(locals[lang].error.corruption)
 }
 
-export default exportSwift
+export default exportSwiftUI

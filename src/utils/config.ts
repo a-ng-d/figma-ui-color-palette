@@ -386,9 +386,27 @@ const features: Array<Feature> = [
     service: ['EDIT'],
   },
   {
-    name: 'EXPORT_SWIFT',
+    name: 'EXPORT_APPLE',
     description:
-      'Palette export to SWIFT (macOS, iOS, iPadOS, watchOS, tvOS, visionOS)',
+      'Palette export for Apple projects',
+    isActive: true,
+    isPro: false,
+    type: 'ACTION',
+    service: ['EDIT'],
+  },
+  {
+    name: 'EXPORT_APPLE_SWIFTUI',
+    description:
+      'Palette export to SwiftUI (Apple)',
+    isActive: true,
+    isPro: false,
+    type: 'ACTION',
+    service: ['EDIT'],
+  },
+  {
+    name: 'EXPORT_APPLE_UIKIT',
+    description:
+      'Palette export to UIkit (Apple)',
     isActive: true,
     isPro: false,
     type: 'ACTION',
@@ -396,7 +414,7 @@ const features: Array<Feature> = [
   },
   {
     name: 'EXPORT_ANDROID',
-    description: 'Palette export to Android file',
+    description: 'Palette export for Android projects',
     isActive: true,
     isPro: false,
     type: 'ACTION',

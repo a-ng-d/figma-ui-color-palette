@@ -615,14 +615,26 @@ class App extends React.Component<any, any> {
             onGoingStep: 'export previewed',
           })
 
-        const exportPaletteToSwift = () =>
+        const exportPaletteToSwiftUI = () =>
           this.setState({
             export: {
-              format: 'SWIFT',
+              format: 'SwitchUI (SWIFT)',
               mimeType: 'text/swift',
               data: `import SwiftUI\n\npublic extension Color {\n\n  static let Token = Color.TokenColor()\n\n  struct TokenColor {\n    ${e.data.pluginMessage.data.join(
                 '\n    '
               )}\n  }\n}`,
+            },
+            onGoingStep: 'export previewed',
+          })
+        
+        const exportPaletteToUIKit = () =>
+          this.setState({
+            export: {
+              format: 'UIKit (SWIFT)',
+              mimeType: 'text/swift',
+              data: `import UIKit\n\nstruct Color {\n  ${e.data.pluginMessage.data.join(
+                '\n\n  '
+              )}\n}`,
             },
             onGoingStep: 'export previewed',
           })
@@ -682,7 +694,8 @@ class App extends React.Component<any, any> {
           EXPORT_PALETTE_JSON: () => exportPaletteToJson(),
           EXPORT_PALETTE_CSS: () => exportPaletteToCss(),
           EXPORT_PALETTE_TAILWIND: () => exportPaletteToTaiwind(),
-          EXPORT_PALETTE_SWIFT: () => exportPaletteToSwift(),
+          EXPORT_PALETTE_SWIFTUI: () => exportPaletteToSwiftUI(),
+          EXPORT_PALETTE_UIKIT: () => exportPaletteToUIKit(),
           EXPORT_PALETTE_KT: () => exportPaletteToKt(),
           EXPORT_PALETTE_XML: () => exportPaletteToXml(),
           EXPORT_PALETTE_CSV: () => exportPaletteToCsv(),
