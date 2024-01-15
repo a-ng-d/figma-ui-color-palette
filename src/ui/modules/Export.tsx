@@ -437,10 +437,10 @@ export default class Export extends React.Component<Props, any> {
                         type: 'OPTION',
                         isActive: features.find(
                           (feature) =>
-                            feature.name === 'EXPORT_XML'
+                            feature.name === 'EXPORT_ANDROID_XML'
                         )?.isActive,
                         isBlocked: isBlocked(
-                          'EXPORT_XML',
+                          'EXPORT_ANDROID_XML',
                           this.props.planStatus
                         ),
                         children: [],

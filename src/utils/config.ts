@@ -387,7 +387,15 @@ const features: Array<Feature> = [
     service: ['EDIT'],
   },
   {
-    name: 'EXPORT_XML',
+    name: 'EXPORT_ANDROID_COMPOSE',
+    description: 'Palette export to Compose (Android)',
+    isActive: true,
+    isPro: false,
+    type: 'ACTION',
+    service: ['EDIT'],
+  },
+  {
+    name: 'EXPORT_ANDROID_XML',
     description: 'Palette export to XML (Android)',
     isActive: true,
     isPro: false,
