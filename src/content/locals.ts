@@ -50,12 +50,12 @@ export const locals: { [key: string]: any } = {
     relaunch: {
       create: {
         label: 'Create a UI Color Palette',
-        description: 'Scale the selected colors'
+        description: 'Scale the selected colors',
       },
       edit: {
         label: 'Edit a UI Color Palette',
-        description: 'Manage, publish, transfer shades'
-      }
+        description: 'Manage, publish, transfer shades',
+      },
     },
     contexts: {
       source: 'Source',

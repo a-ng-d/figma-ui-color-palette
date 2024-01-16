@@ -47,7 +47,9 @@ const processSelection = () => {
             algorithmVersion: palette.getPluginData('algorithmVersion'),
           },
         }),
-        palette.setRelaunchData({ edit: locals[lang].relaunch.edit.description })
+          palette.setRelaunchData({
+            edit: locals[lang].relaunch.edit.description,
+          })
       },
       EMPTY_SELECTION: () =>
         figma.ui.postMessage({
@@ -59,7 +61,9 @@ const processSelection = () => {
           type: 'COLOR_SELECTED',
           data: viableSelection,
         })
-        element.setRelaunchData({ create: locals[lang].relaunch.create.description })
+        element.setRelaunchData({
+          create: locals[lang].relaunch.create.description,
+        })
       },
     }
 
