@@ -21,7 +21,7 @@ const glossary: {
   tritanomaly: 'Tritanomaly',
   tritanopia: 'Tritanopia',
   achromatomaly: 'Achromatomaly',
-  achromatopsia: 'Achromatopsia'
+  achromatopsia: 'Achromatopsia',
 }
 
 export const locals: { [key: string]: any } = {
@@ -127,12 +127,12 @@ export const locals: { [key: string]: any } = {
         customProperties: 'Custom Properties (CSS)',
       },
       tailwind: {
-        config: 'Tailwind (JS)'
+        config: 'Tailwind (JS)',
       },
       apple: {
         label: 'Apple',
         swiftui: 'SwiftUI (SWIFT)',
-        uikit: 'UIkit (SWIFT)'
+        uikit: 'UIkit (SWIFT)',
       },
       android: {
         label: 'Android',

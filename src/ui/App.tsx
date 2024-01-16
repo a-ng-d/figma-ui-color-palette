@@ -562,7 +562,7 @@ class App extends React.Component<any, any> {
               pluginMessage: {
                 type: 'EXPORT_PALETTE',
                 export: this.state['export'].context,
-                colorSpace: this.state['export'].colorSpace
+                colorSpace: this.state['export'].colorSpace,
               },
             },
             '*'
@@ -590,7 +590,9 @@ class App extends React.Component<any, any> {
             export: {
               format: 'JSON',
               context: e.data.pluginMessage.context,
-              label: `${locals[this.state['lang']].actions.export} ${locals[this.state['lang']].export.tokens.label}`,
+              label: `${locals[this.state['lang']].actions.export} ${
+                locals[this.state['lang']].export.tokens.label
+              }`,
               mimeType: 'application/json',
               data: JSON.stringify(e.data.pluginMessage.data, null, '  '),
             },
@@ -603,7 +605,9 @@ class App extends React.Component<any, any> {
               format: 'CSS',
               colorSpace: e.data.pluginMessage.colorSpace,
               context: e.data.pluginMessage.context,
-              label: `${locals[this.state['lang']].actions.export} ${locals[this.state['lang']].export.css.customProperties}`,
+              label: `${locals[this.state['lang']].actions.export} ${
+                locals[this.state['lang']].export.css.customProperties
+              }`,
               mimeType: 'text/css',
               data: `:root {\n  ${e.data.pluginMessage.data.join('\n  ')}\n}`,
             },
@@ -615,7 +619,9 @@ class App extends React.Component<any, any> {
             export: {
               format: 'JS',
               context: e.data.pluginMessage.context,
-              label: `${locals[this.state['lang']].actions.export} ${locals[this.state['lang']].export.tailwind.config}`,
+              label: `${locals[this.state['lang']].actions.export} ${
+                locals[this.state['lang']].export.tailwind.config
+              }`,
               mimeType: 'text/javascript',
               data: `/** @type {import('tailwindcss').Config} */\nmodule.exports = ${JSON.stringify(
                 e.data.pluginMessage.data,
@@ -631,7 +637,9 @@ class App extends React.Component<any, any> {
             export: {
               format: 'SWIFT',
               context: e.data.pluginMessage.context,
-              label: `${locals[this.state['lang']].actions.export} ${locals[this.state['lang']].export.apple.swiftui}`,
+              label: `${locals[this.state['lang']].actions.export} ${
+                locals[this.state['lang']].export.apple.swiftui
+              }`,
               mimeType: 'text/swift',
               data: `import SwiftUI\n\npublic extension Color {\n\n  static let Token = Color.TokenColor()\n\n  struct TokenColor {\n    ${e.data.pluginMessage.data.join(
                 '\n    '
@@ -639,13 +647,15 @@ class App extends React.Component<any, any> {
             },
             onGoingStep: 'export previewed',
           })
-        
+
         const exportPaletteToUIKit = () =>
           this.setState({
             export: {
               format: 'SWIFT',
               context: e.data.pluginMessage.context,
-              label: `${locals[this.state['lang']].actions.export} ${locals[this.state['lang']].export.apple.uikit}`,
+              label: `${locals[this.state['lang']].actions.export} ${
+                locals[this.state['lang']].export.apple.uikit
+              }`,
               mimeType: 'text/swift',
               data: `import UIKit\n\nstruct Color {\n  ${e.data.pluginMessage.data.join(
                 '\n\n  '
@@ -659,9 +669,13 @@ class App extends React.Component<any, any> {
             export: {
               format: 'KT',
               context: e.data.pluginMessage.context,
-              label: `${locals[this.state['lang']].actions.export} ${locals[this.state['lang']].export.android.compose}`,
+              label: `${locals[this.state['lang']].actions.export} ${
+                locals[this.state['lang']].export.android.compose
+              }`,
               mimeType: 'text/x-kotlin',
-              data: `import androidx.compose.ui.graphics.Color\n\n${e.data.pluginMessage.data.join('\n')}`,
+              data: `import androidx.compose.ui.graphics.Color\n\n${e.data.pluginMessage.data.join(
+                '\n'
+              )}`,
             },
             onGoingStep: 'export previewed',
           })
@@ -671,7 +685,9 @@ class App extends React.Component<any, any> {
             export: {
               format: 'XML',
               context: e.data.pluginMessage.context,
-              label: `${locals[this.state['lang']].actions.export} ${locals[this.state['lang']].export.android.resources}`,
+              label: `${locals[this.state['lang']].actions.export} ${
+                locals[this.state['lang']].export.android.resources
+              }`,
               mimeType: 'text/xml',
               data: `<?xml version="1.0" encoding="utf-8"?>\n<resources>\n  ${e.data.pluginMessage.data.join(
                 '\n  '
@@ -685,7 +701,9 @@ class App extends React.Component<any, any> {
             export: {
               format: 'CSV',
               context: e.data.pluginMessage.context,
-              label: `${locals[this.state['lang']].actions.export} ${locals[this.state['lang']].export.csv.spreadsheet}`,
+              label: `${locals[this.state['lang']].actions.export} ${
+                locals[this.state['lang']].export.csv.spreadsheet
+              }`,
               mimeType: 'text/csv',
               data: e.data.pluginMessage.data,
             },

@@ -28,7 +28,9 @@ const exportKt = (palette: SceneNode) => {
               workingThemes[0].type === 'custom theme'
                 ? doSnakeCase(theme.name + ' ' + color.name)
                 : doSnakeCase(color.name)
-            }_${shade.name} = Color(${shade.hex.replace('#', '0xFF').toUpperCase()})`
+            }_${shade.name} = Color(${shade.hex
+              .replace('#', '0xFF')
+              .toUpperCase()})`
           )
         })
         colors.unshift('')

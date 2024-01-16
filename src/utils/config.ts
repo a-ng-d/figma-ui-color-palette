@@ -387,8 +387,7 @@ const features: Array<Feature> = [
   },
   {
     name: 'EXPORT_APPLE',
-    description:
-      'Palette export for Apple projects',
+    description: 'Palette export for Apple projects',
     isActive: true,
     isPro: false,
     type: 'ACTION',
@@ -396,8 +395,7 @@ const features: Array<Feature> = [
   },
   {
     name: 'EXPORT_APPLE_SWIFTUI',
-    description:
-      'Palette export to SwiftUI (Apple)',
+    description: 'Palette export to SwiftUI (Apple)',
     isActive: true,
     isPro: false,
     type: 'ACTION',
@@ -405,8 +403,7 @@ const features: Array<Feature> = [
   },
   {
     name: 'EXPORT_APPLE_UIKIT',
-    description:
-      'Palette export to UIkit (Apple)',
+    description: 'Palette export to UIkit (Apple)',
     isActive: true,
     isPro: false,
     type: 'ACTION',

@@ -17,14 +17,10 @@ const exportUIKit = (palette: SceneNode) => {
     workingThemes.forEach((theme) => {
       const UIColors: Array<string> = []
       theme.colors.forEach((color) => {
-        UIColors.unshift(
-          `// ${color.name}`
-        )
+        UIColors.unshift(`// ${color.name}`)
         color.shades.forEach((shade) => {
           UIColors.unshift(
-            `static let ${
-              doCamelCase(color.name)
-            }${
+            `static let ${doCamelCase(color.name)}${
               shade.name === 'source' ? 'Source' : shade.name
             } = UIColor(red: ${shade.gl[0].toFixed(
               3
@@ -38,12 +34,12 @@ const exportUIKit = (palette: SceneNode) => {
       UIColors.shift()
       if (workingThemes[0].type === 'custom theme') {
         swift.push(
-          `struct ${doCamelCase(theme.name)} {\n    ${UIColors.reverse().join('\n    ')}\n  }`
+          `struct ${doCamelCase(theme.name)} {\n    ${UIColors.reverse().join(
+            '\n    '
+          )}\n  }`
         )
       } else {
-        swift.push(
-          `${UIColors.reverse().join('\n  ')}`
-        )
+        swift.push(`${UIColors.reverse().join('\n  ')}`)
       }
     })
 

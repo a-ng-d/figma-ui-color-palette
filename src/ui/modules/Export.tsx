@@ -44,7 +44,9 @@ export default class Export extends React.Component<Props, any> {
           format: 'EXPORT_TOKENS_GLOBAL',
         })
         parent.postMessage(
-          { pluginMessage: { type: 'EXPORT_PALETTE', export: 'TOKENS_GLOBAL' } },
+          {
+            pluginMessage: { type: 'EXPORT_PALETTE', export: 'TOKENS_GLOBAL' },
+          },
           '*'
         )
       },
@@ -245,7 +247,9 @@ export default class Export extends React.Component<Props, any> {
           format: 'EXPORT_APPLE_SWIFTUI',
         })
         parent.postMessage(
-          { pluginMessage: { type: 'EXPORT_PALETTE', export: 'APPLE_SWIFTUI' } },
+          {
+            pluginMessage: { type: 'EXPORT_PALETTE', export: 'APPLE_SWIFTUI' },
+          },
           '*'
         )
       },
@@ -263,7 +267,12 @@ export default class Export extends React.Component<Props, any> {
           format: 'EXPORT_ANDROID_COMPOSE',
         })
         parent.postMessage(
-          { pluginMessage: { type: 'EXPORT_PALETTE', export: 'ANDROID_COMPOSE' } },
+          {
+            pluginMessage: {
+              type: 'EXPORT_PALETTE',
+              export: 'ANDROID_COMPOSE',
+            },
+          },
           '*'
         )
       },
@@ -362,14 +371,16 @@ export default class Export extends React.Component<Props, any> {
                       },
                       {
                         label:
-                          locals[this.props.lang].export.tokens.amznStyleDictionary,
+                          locals[this.props.lang].export.tokens
+                            .amznStyleDictionary,
                         value: 'EXPORT_TOKENS_AMZN_STYLE_DICTIONARY',
                         feature: 'SELECT_EXPORT_FILE',
                         position: 0,
                         type: 'OPTION',
                         isActive: features.find(
                           (feature) =>
-                            feature.name === 'EXPORT_TOKENS_JSON_AMZN_STYLE_DICTIONARY'
+                            feature.name ===
+                            'EXPORT_TOKENS_JSON_AMZN_STYLE_DICTIONARY'
                         )?.isActive,
                         isBlocked: isBlocked(
                           'EXPORT_TOKENS_JSON_AMZN_STYLE_DICTIONARY',
@@ -379,7 +390,8 @@ export default class Export extends React.Component<Props, any> {
                         action: this.exportHandler,
                       },
                       {
-                        label: locals[this.props.lang].export.tokens.tokensStudio,
+                        label:
+                          locals[this.props.lang].export.tokens.tokensStudio,
                         value: 'EXPORT_TOKENS_TOKENS_STUDIO',
                         feature: 'SELECT_EXPORT_FILE',
                         position: 0,
@@ -439,15 +451,13 @@ export default class Export extends React.Component<Props, any> {
                     isBlocked: isBlocked('EXPORT_APPLE', this.props.planStatus),
                     children: [
                       {
-                        label:
-                          locals[this.props.lang].export.apple.swiftui,
+                        label: locals[this.props.lang].export.apple.swiftui,
                         value: 'EXPORT_APPLE_SWIFTUI',
                         feature: 'SELECT_EXPORT_FILE',
                         position: 0,
                         type: 'OPTION',
                         isActive: features.find(
-                          (feature) =>
-                            feature.name === 'EXPORT_APPLE_SWIFTUI'
+                          (feature) => feature.name === 'EXPORT_APPLE_SWIFTUI'
                         )?.isActive,
                         isBlocked: isBlocked(
                           'EXPORT_APPLE_SWIFTUI',
@@ -457,15 +467,13 @@ export default class Export extends React.Component<Props, any> {
                         action: this.exportHandler,
                       },
                       {
-                        label:
-                          locals[this.props.lang].export.apple.uikit,
+                        label: locals[this.props.lang].export.apple.uikit,
                         value: 'EXPORT_APPLE_UIKIT',
                         feature: 'SELECT_EXPORT_FILE',
                         position: 1,
                         type: 'OPTION',
                         isActive: features.find(
-                          (feature) =>
-                            feature.name === 'EXPORT_APPLE_UIKIT'
+                          (feature) => feature.name === 'EXPORT_APPLE_UIKIT'
                         )?.isActive,
                         isBlocked: isBlocked(
                           'EXPORT_APPLE_UIKIT',
@@ -486,18 +494,19 @@ export default class Export extends React.Component<Props, any> {
                     isActive: features.find(
                       (feature) => feature.name === 'EXPORT_ANDROID'
                     )?.isActive,
-                    isBlocked: isBlocked('EXPORT_ANDROID', this.props.planStatus),
+                    isBlocked: isBlocked(
+                      'EXPORT_ANDROID',
+                      this.props.planStatus
+                    ),
                     children: [
                       {
-                        label:
-                          locals[this.props.lang].export.android.compose,
+                        label: locals[this.props.lang].export.android.compose,
                         value: 'EXPORT_ANDROID_COMPOSE',
                         feature: 'SELECT_EXPORT_FILE',
                         position: 0,
                         type: 'OPTION',
                         isActive: features.find(
-                          (feature) =>
-                            feature.name === 'EXPORT_ANDROID_COMPOSE'
+                          (feature) => feature.name === 'EXPORT_ANDROID_COMPOSE'
                         )?.isActive,
                         isBlocked: isBlocked(
                           'EXPORT_ANDROID_COMPOSE',
@@ -507,15 +516,13 @@ export default class Export extends React.Component<Props, any> {
                         action: this.exportHandler,
                       },
                       {
-                        label:
-                          locals[this.props.lang].export.android.resources,
+                        label: locals[this.props.lang].export.android.resources,
                         value: 'EXPORT_ANDROID_XML',
                         feature: 'SELECT_EXPORT_FILE',
                         position: 1,
                         type: 'OPTION',
                         isActive: features.find(
-                          (feature) =>
-                            feature.name === 'EXPORT_ANDROID_XML'
+                          (feature) => feature.name === 'EXPORT_ANDROID_XML'
                         )?.isActive,
                         isBlocked: isBlocked(
                           'EXPORT_ANDROID_XML',

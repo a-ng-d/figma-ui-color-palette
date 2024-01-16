@@ -261,42 +261,26 @@ export default class Colors {
   ): [number, number, number] => {
     const actions: ActionsList = {
       NONE: () => sourceColor,
-      PROTANOMALY: () => chroma(
-        blinder.protanomaly(
-          chroma(sourceColor).hex()
-        )).rgb(false),
-      PROTANOPIA: () => chroma(
-        blinder.protanopia(
-          chroma(sourceColor).hex()
-        )).rgb(false),
-      DEUTERANOMALY: () => chroma(
-        blinder.deuteranomaly(
-          chroma(sourceColor).hex()
-        )).rgb(false),
-      DEUTERANOPIA: () => chroma(
-        blinder.deuteranopia(
-          chroma(sourceColor).hex()
-        )).rgb(false),
-      TRITANOMALY: () => chroma(
-        blinder.tritanomaly(
-          chroma(sourceColor).hex()
-        )).rgb(false),
-      TRITANOPIA: () => chroma(
-        blinder.tritanopia(
-          chroma(sourceColor).hex()
-        )).rgb(false),
-      ACHROMATOMALY: () => chroma(
-        blinder.achromatomaly(
-          chroma(sourceColor).hex()
-        )).rgb(false),
-      ACHROMATOPSIA: () => chroma(
-        blinder.achromatopsia(
-          chroma(sourceColor).hex()
-        )).rgb(false),
+      PROTANOMALY: () =>
+        chroma(blinder.protanomaly(chroma(sourceColor).hex())).rgb(false),
+      PROTANOPIA: () =>
+        chroma(blinder.protanopia(chroma(sourceColor).hex())).rgb(false),
+      DEUTERANOMALY: () =>
+        chroma(blinder.deuteranomaly(chroma(sourceColor).hex())).rgb(false),
+      DEUTERANOPIA: () =>
+        chroma(blinder.deuteranopia(chroma(sourceColor).hex())).rgb(false),
+      TRITANOMALY: () =>
+        chroma(blinder.tritanomaly(chroma(sourceColor).hex())).rgb(false),
+      TRITANOPIA: () =>
+        chroma(blinder.tritanopia(chroma(sourceColor).hex())).rgb(false),
+      ACHROMATOMALY: () =>
+        chroma(blinder.achromatomaly(chroma(sourceColor).hex())).rgb(false),
+      ACHROMATOPSIA: () =>
+        chroma(blinder.achromatopsia(chroma(sourceColor).hex())).rgb(false),
     }
 
-    const result = actions[colorBlindMode]?.();
-    return result !== undefined ? result : [0, 0, 0];
+    const result = actions[colorBlindMode]?.()
+    return result !== undefined ? result : [0, 0, 0]
   }
 
   makeEmptyCase = () => {
