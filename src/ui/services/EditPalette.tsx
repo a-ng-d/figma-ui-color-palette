@@ -161,6 +161,15 @@ export default class EditPalette extends React.Component<Props, any> {
             : doSnakeCase(this.props.name)
         }.swift`
       )
+    } else if (this.props.export.format === 'KT') {
+      FileSaver.saveAs(
+        blob,
+        `${
+          this.props.name === ''
+            ? doSnakeCase(locals[this.props.lang].name)
+            : doSnakeCase(this.props.name)
+        }.kt`
+      )
     } else {
       FileSaver.saveAs(
         blob,
