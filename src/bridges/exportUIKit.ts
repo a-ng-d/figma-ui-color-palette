@@ -1,6 +1,7 @@
 import type { PaletteData } from '../utils/types'
 import { locals, lang } from '../content/locals'
 import { doCamelCase } from '@a-ng-d/figmug.modules.do-camel-case'
+import { doPascalCase } from '@a-ng-d/figmug.modules.do-pascal-case'
 
 const exportUIKit = (palette: SceneNode) => {
   palette = figma.currentPage.selection[0] as FrameNode
@@ -34,7 +35,7 @@ const exportUIKit = (palette: SceneNode) => {
       UIColors.shift()
       if (workingThemes[0].type === 'custom theme') {
         swift.push(
-          `struct ${doCamelCase(theme.name)} {\n    ${UIColors.reverse().join(
+          `struct ${doPascalCase(theme.name)} {\n    ${UIColors.reverse().join(
             '\n    '
           )}\n  }`
         )
