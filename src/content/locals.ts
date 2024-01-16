@@ -47,6 +47,16 @@ export const locals: { [key: string]: any } = {
       news: "What's new",
       about: 'About',
     },
+    relaunch: {
+      create: {
+        label: 'Create a UI Color Palette',
+        description: 'Scale the selected colors'
+      },
+      edit: {
+        label: 'Edit a UI Color Palette',
+        description: 'Manage, publish, transfer shades'
+      }
+    },
     contexts: {
       source: 'Source',
       scale: 'Scale',
