@@ -49,6 +49,7 @@ const exportUIKit = (palette: SceneNode) => {
 
     figma.ui.postMessage({
       type: 'EXPORT_PALETTE_UIKIT',
+      context: 'APPLE_UIKIT',
       data: swift,
     })
   } else figma.notify(locals[lang].error.corruption)

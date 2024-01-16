@@ -46,6 +46,7 @@ const exportSwiftUI = (palette: SceneNode) => {
 
     figma.ui.postMessage({
       type: 'EXPORT_PALETTE_SWIFTUI',
+      context: 'APPLE_SWIFTUI',
       data: swift,
     })
   } else figma.notify(locals[lang].error.corruption)

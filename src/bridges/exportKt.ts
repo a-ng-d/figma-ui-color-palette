@@ -40,6 +40,7 @@ const exportKt = (palette: SceneNode) => {
 
     figma.ui.postMessage({
       type: 'EXPORT_PALETTE_KT',
+      context: 'ANDROID_COMPOSE',
       data: val,
     })
   } else figma.notify(locals[lang].error.corruption)
