@@ -60,6 +60,7 @@ const exportCsv = (palette: SceneNode) => {
 
     figma.ui.postMessage({
       type: 'EXPORT_PALETTE_CSV',
+      context: 'CSV',
       data:
         paletteData.themes[0].colors.length == 0
           ? [

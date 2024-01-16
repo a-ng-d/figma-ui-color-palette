@@ -165,7 +165,19 @@ export interface ThemeConfiguration {
 }
 
 export interface ExportConfiguration {
-  format: 'JSON' | 'CSS' | 'TAILWIND' | 'SWIFT' | 'XML' | 'CSV'
+  format: 'JSON' | 'CSS' | 'TAILWIND' | 'SWIFT' | 'KT' | 'XML' | 'CSV'
+  context:
+    | 'TOKENS_GLOBAL'
+    | 'TOKENS_AMZN_STYLE_DICTIONARY'
+    | 'TOKENS_TOKENS_STUDIO'
+    | 'CSS'
+    | 'TAILWIND'
+    | 'APPLE_SWIFTUI'
+    | 'APPLE_UIKIT'
+    | 'ANDROID_COMPOSE'
+    | 'ANDROID_XML'
+    | 'CSV'
+  label: string
   mimeType:
     | 'application/json'
     | 'text/css'

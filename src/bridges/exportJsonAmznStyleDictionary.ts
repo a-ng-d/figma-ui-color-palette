@@ -57,6 +57,7 @@ const exportJsonAmznStyleDictionary = (palette: SceneNode) => {
 
     figma.ui.postMessage({
       type: 'EXPORT_PALETTE_JSON',
+      context: 'TOKENS_AMZN_STYLE_DICTIONARY',
       data: json,
     })
   } else figma.notify(locals[lang].error.corruption)

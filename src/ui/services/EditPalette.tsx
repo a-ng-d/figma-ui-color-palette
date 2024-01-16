@@ -161,6 +161,15 @@ export default class EditPalette extends React.Component<Props, any> {
             : doSnakeCase(this.props.name)
         }.swift`
       )
+    } else if (this.props.export.format === 'KT') {
+      FileSaver.saveAs(
+        blob,
+        `${
+          this.props.name === ''
+            ? doSnakeCase(locals[this.props.lang].name)
+            : doSnakeCase(this.props.name)
+        }.kt`
+      )
     } else {
       FileSaver.saveAs(
         blob,
@@ -337,7 +346,7 @@ export default class EditPalette extends React.Component<Props, any> {
                 : this.props.export.data
             }
             planStatus={this.props.planStatus}
-            exportType={this.props.export.format}
+            exportType={this.props.export.label}
             lang={this.props.lang}
             onExportPalette={this.onExport}
           />

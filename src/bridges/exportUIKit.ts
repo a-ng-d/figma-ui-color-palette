@@ -2,7 +2,7 @@ import type { PaletteData } from '../utils/types'
 import { locals, lang } from '../content/locals'
 import { doCamelCase } from '@a-ng-d/figmug.modules.do-camel-case'
 
-const exportSwift = (palette: SceneNode) => {
+const exportUIKit = (palette: SceneNode) => {
   palette = figma.currentPage.selection[0] as FrameNode
 
   const paletteData: PaletteData = JSON.parse(palette.getPluginData('data')),
@@ -15,22 +15,14 @@ const exportSwift = (palette: SceneNode) => {
 
   if (palette.children.length == 1) {
     workingThemes.forEach((theme) => {
+      const UIColors: Array<string> = []
       theme.colors.forEach((color) => {
-        const UIColors: Array<string> = []
-        UIColors.unshift(
-          `// ${
-            workingThemes[0].type === 'custom theme' ? theme.name + ' - ' : ''
-          }${color.name}`
-        )
+        UIColors.unshift(`// ${color.name}`)
         color.shades.forEach((shade) => {
           UIColors.unshift(
-            `public let ${
-              workingThemes[0].type === 'custom theme'
-                ? doCamelCase(theme.name + ' ' + color.name)
-                : doCamelCase(color.name)
-            }${
+            `static let ${doCamelCase(color.name)}${
               shade.name === 'source' ? 'Source' : shade.name
-            } = Color(red: ${shade.gl[0].toFixed(
+            } = UIColor(red: ${shade.gl[0].toFixed(
               3
             )}, green: ${shade.gl[1].toFixed(3)}, blue: ${shade.gl[2].toFixed(
               3
@@ -38,17 +30,25 @@ const exportSwift = (palette: SceneNode) => {
           )
         })
         UIColors.unshift('')
-        UIColors.reverse().forEach((UIColor) => swift.push(UIColor))
       })
+      UIColors.shift()
+      if (workingThemes[0].type === 'custom theme') {
+        swift.push(
+          `struct ${doCamelCase(theme.name)} {\n    ${UIColors.reverse().join(
+            '\n    '
+          )}\n  }`
+        )
+      } else {
+        swift.push(`${UIColors.reverse().join('\n  ')}`)
+      }
     })
 
-    swift.pop()
-
     figma.ui.postMessage({
-      type: 'EXPORT_PALETTE_SWIFT',
+      type: 'EXPORT_PALETTE_UIKIT',
+      context: 'APPLE_UIKIT',
       data: swift,
     })
   } else figma.notify(locals[lang].error.corruption)
 }
 
-export default exportSwift
+export default exportUIKit

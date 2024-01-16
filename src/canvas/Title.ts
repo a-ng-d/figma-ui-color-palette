@@ -117,16 +117,17 @@ export default class Title {
         12
       ).makeNodeTag()
     )
-    if (
-      this.parent.colorBlindMode != 'NONE'
-    )
-    this.nodeProps.appendChild(
-      new Tag(
-        '_color-blind-simulation',
-        `Color blind simulation: ${this.parent.colorBlindMode.charAt(0) + this.parent.colorBlindMode.toLocaleLowerCase().slice(1)}`,
-        12
-      ).makeNodeTag()
-    )
+    if (this.parent.colorBlindMode != 'NONE')
+      this.nodeProps.appendChild(
+        new Tag(
+          '_color-blind-simulation',
+          `Color blind simulation: ${
+            this.parent.colorBlindMode.charAt(0) +
+            this.parent.colorBlindMode.toLocaleLowerCase().slice(1)
+          }`,
+          12
+        ).makeNodeTag()
+      )
     if (
       this.parent.themes.find((theme) => theme.isEnabled)?.type !=
       'default theme'

@@ -33,6 +33,7 @@ import features from '../utils/config'
 import 'figma-plugin-ds/dist/figma-plugin-ds.css'
 import './stylesheets/app.css'
 import './stylesheets/app-components.css'
+import { locals } from '../content/locals'
 
 let isPaletteSelected = false
 const container = document.getElementById('app'),
@@ -86,6 +87,8 @@ class App extends React.Component<any, any> {
       algorithmVersion: 'v1' as AlgorithmVersionConfiguration,
       export: {
         format: '',
+        context: '',
+        label: '',
         mimeType: '',
         data: '',
       },
@@ -558,7 +561,8 @@ class App extends React.Component<any, any> {
             {
               pluginMessage: {
                 type: 'EXPORT_PALETTE',
-                export: this.state['export'].format,
+                export: this.state['export'].context,
+                colorSpace: this.state['export'].colorSpace,
               },
             },
             '*'
@@ -584,7 +588,11 @@ class App extends React.Component<any, any> {
         const exportPaletteToJson = () =>
           this.setState({
             export: {
-              format: 'Tokens (JSON)',
+              format: 'JSON',
+              context: e.data.pluginMessage.context,
+              label: `${locals[this.state['lang']].actions.export} ${
+                locals[this.state['lang']].export.tokens.label
+              }`,
               mimeType: 'application/json',
               data: JSON.stringify(e.data.pluginMessage.data, null, '  '),
             },
@@ -594,7 +602,12 @@ class App extends React.Component<any, any> {
         const exportPaletteToCss = () =>
           this.setState({
             export: {
-              format: 'Custom Properties (CSS)',
+              format: 'CSS',
+              colorSpace: e.data.pluginMessage.colorSpace,
+              context: e.data.pluginMessage.context,
+              label: `${locals[this.state['lang']].actions.export} ${
+                locals[this.state['lang']].export.css.customProperties
+              }`,
               mimeType: 'text/css',
               data: `:root {\n  ${e.data.pluginMessage.data.join('\n  ')}\n}`,
             },
@@ -604,7 +617,11 @@ class App extends React.Component<any, any> {
         const exportPaletteToTaiwind = () =>
           this.setState({
             export: {
-              format: 'Tailwind (JS)',
+              format: 'JS',
+              context: e.data.pluginMessage.context,
+              label: `${locals[this.state['lang']].actions.export} ${
+                locals[this.state['lang']].export.tailwind.config
+              }`,
               mimeType: 'text/javascript',
               data: `/** @type {import('tailwindcss').Config} */\nmodule.exports = ${JSON.stringify(
                 e.data.pluginMessage.data,
@@ -615,10 +632,14 @@ class App extends React.Component<any, any> {
             onGoingStep: 'export previewed',
           })
 
-        const exportPaletteToSwift = () =>
+        const exportPaletteToSwiftUI = () =>
           this.setState({
             export: {
               format: 'SWIFT',
+              context: e.data.pluginMessage.context,
+              label: `${locals[this.state['lang']].actions.export} ${
+                locals[this.state['lang']].export.apple.swiftui
+              }`,
               mimeType: 'text/swift',
               data: `import SwiftUI\n\npublic extension Color {\n\n  static let Token = Color.TokenColor()\n\n  struct TokenColor {\n    ${e.data.pluginMessage.data.join(
                 '\n    '
@@ -627,12 +648,34 @@ class App extends React.Component<any, any> {
             onGoingStep: 'export previewed',
           })
 
+        const exportPaletteToUIKit = () =>
+          this.setState({
+            export: {
+              format: 'SWIFT',
+              context: e.data.pluginMessage.context,
+              label: `${locals[this.state['lang']].actions.export} ${
+                locals[this.state['lang']].export.apple.uikit
+              }`,
+              mimeType: 'text/swift',
+              data: `import UIKit\n\nstruct Color {\n  ${e.data.pluginMessage.data.join(
+                '\n\n  '
+              )}\n}`,
+            },
+            onGoingStep: 'export previewed',
+          })
+
         const exportPaletteToKt = () =>
           this.setState({
             export: {
-              format: 'Compose (KT)',
+              format: 'KT',
+              context: e.data.pluginMessage.context,
+              label: `${locals[this.state['lang']].actions.export} ${
+                locals[this.state['lang']].export.android.compose
+              }`,
               mimeType: 'text/x-kotlin',
-              data: `import androidx.compose.ui.graphics.Color\n\n${e.data.pluginMessage.data.join('\n')}`,
+              data: `import androidx.compose.ui.graphics.Color\n\n${e.data.pluginMessage.data.join(
+                '\n'
+              )}`,
             },
             onGoingStep: 'export previewed',
           })
@@ -641,6 +684,10 @@ class App extends React.Component<any, any> {
           this.setState({
             export: {
               format: 'XML',
+              context: e.data.pluginMessage.context,
+              label: `${locals[this.state['lang']].actions.export} ${
+                locals[this.state['lang']].export.android.resources
+              }`,
               mimeType: 'text/xml',
               data: `<?xml version="1.0" encoding="utf-8"?>\n<resources>\n  ${e.data.pluginMessage.data.join(
                 '\n  '
@@ -652,7 +699,11 @@ class App extends React.Component<any, any> {
         const exportPaletteToCsv = () =>
           this.setState({
             export: {
-              format: 'Spreadsheet (CSV)',
+              format: 'CSV',
+              context: e.data.pluginMessage.context,
+              label: `${locals[this.state['lang']].actions.export} ${
+                locals[this.state['lang']].export.csv.spreadsheet
+              }`,
               mimeType: 'text/csv',
               data: e.data.pluginMessage.data,
             },
@@ -682,7 +733,8 @@ class App extends React.Component<any, any> {
           EXPORT_PALETTE_JSON: () => exportPaletteToJson(),
           EXPORT_PALETTE_CSS: () => exportPaletteToCss(),
           EXPORT_PALETTE_TAILWIND: () => exportPaletteToTaiwind(),
-          EXPORT_PALETTE_SWIFT: () => exportPaletteToSwift(),
+          EXPORT_PALETTE_SWIFTUI: () => exportPaletteToSwiftUI(),
+          EXPORT_PALETTE_UIKIT: () => exportPaletteToUIKit(),
           EXPORT_PALETTE_KT: () => exportPaletteToKt(),
           EXPORT_PALETTE_XML: () => exportPaletteToXml(),
           EXPORT_PALETTE_CSV: () => exportPaletteToCsv(),

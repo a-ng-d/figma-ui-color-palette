@@ -353,8 +353,9 @@ export default class Settings extends React.Component<Props> {
     return (
       <Feature
         isActive={
-          features.find((feature) => feature.name === 'SETTINGS_COLOR_BLIND_MODE')
-            ?.isActive
+          features.find(
+            (feature) => feature.name === 'SETTINGS_COLOR_BLIND_MODE'
+          )?.isActive
         }
       >
         <div className="settings__item">
@@ -366,13 +367,15 @@ export default class Settings extends React.Component<Props> {
               id="color-blind-modes"
               options={[
                 {
-                  label: locals[this.props.lang].settings.color.colorBlindMode.none,
+                  label:
+                    locals[this.props.lang].settings.color.colorBlindMode.none,
                   value: 'NONE',
                   feature: 'UPDATE_COLOR_BLIND_MODE',
                   position: 0,
                   type: 'OPTION',
                   isActive: features.find(
-                    (feature) => feature.name === 'SETTINGS_COLOR_BLIND_MODE_NONE'
+                    (feature) =>
+                      feature.name === 'SETTINGS_COLOR_BLIND_MODE_NONE'
                   )?.isActive,
                   isBlocked: isBlocked(
                     'SETTINGS_COLOR_BLIND_MODE_NONE',
@@ -383,13 +386,15 @@ export default class Settings extends React.Component<Props> {
                 },
                 {
                   label:
-                    locals[this.props.lang].settings.color.colorBlindMode.protanomaly,
+                    locals[this.props.lang].settings.color.colorBlindMode
+                      .protanomaly,
                   value: 'PROTANOMALY',
                   feature: 'UPDATE_COLOR_BLIND_MODE',
                   position: 1,
                   type: 'OPTION',
                   isActive: features.find(
-                    (feature) => feature.name === 'SETTINGS_COLOR_BLIND_MODE_NONE'
+                    (feature) =>
+                      feature.name === 'SETTINGS_COLOR_BLIND_MODE_NONE'
                   )?.isActive,
                   isBlocked: isBlocked(
                     'SETTINGS_COLOR_BLIND_MODE_NONE',
@@ -399,13 +404,16 @@ export default class Settings extends React.Component<Props> {
                   action: this.props.onChangeSettings,
                 },
                 {
-                  label: locals[this.props.lang].settings.color.colorBlindMode.protanopia,
+                  label:
+                    locals[this.props.lang].settings.color.colorBlindMode
+                      .protanopia,
                   value: 'PROTANOPIA',
                   feature: 'UPDATE_COLOR_BLIND_MODE',
                   position: 2,
                   type: 'OPTION',
                   isActive: features.find(
-                    (feature) => feature.name === 'SETTINGS_COLOR_BLIND_MODE_PROTANOPIA'
+                    (feature) =>
+                      feature.name === 'SETTINGS_COLOR_BLIND_MODE_PROTANOPIA'
                   )?.isActive,
                   isBlocked: isBlocked(
                     'SETTINGS_COLOR_BLIND_MODE_PROTANOPIA',
@@ -416,13 +424,15 @@ export default class Settings extends React.Component<Props> {
                 },
                 {
                   label:
-                    locals[this.props.lang].settings.color.colorBlindMode.deuteranomaly,
+                    locals[this.props.lang].settings.color.colorBlindMode
+                      .deuteranomaly,
                   value: 'DEUTERANOMALY',
                   feature: 'UPDATE_COLOR_BLIND_MODE',
                   position: 3,
                   type: 'OPTION',
                   isActive: features.find(
-                    (feature) => feature.name === 'SETTINGS_COLOR_BLIND_MODE_DEUTERANOMALY'
+                    (feature) =>
+                      feature.name === 'SETTINGS_COLOR_BLIND_MODE_DEUTERANOMALY'
                   )?.isActive,
                   isBlocked: isBlocked(
                     'SETTINGS_COLOR_BLIND_MODE_DEUTERANOMALY',
@@ -432,13 +442,16 @@ export default class Settings extends React.Component<Props> {
                   action: this.props.onChangeSettings,
                 },
                 {
-                  label: locals[this.props.lang].settings.color.colorBlindMode.deuteranopia,
+                  label:
+                    locals[this.props.lang].settings.color.colorBlindMode
+                      .deuteranopia,
                   value: 'DEUTERANOPIA',
                   feature: 'UPDATE_COLOR_BLIND_MODE',
                   position: 4,
                   type: 'OPTION',
                   isActive: features.find(
-                    (feature) => feature.name === 'SETTINGS_COLOR_BLIND_MODE_DEUTERANOPIA'
+                    (feature) =>
+                      feature.name === 'SETTINGS_COLOR_BLIND_MODE_DEUTERANOPIA'
                   )?.isActive,
                   isBlocked: isBlocked(
                     'SETTINGS_COLOR_BLIND_MODE_DEUTERANOPIA',
@@ -449,13 +462,15 @@ export default class Settings extends React.Component<Props> {
                 },
                 {
                   label:
-                    locals[this.props.lang].settings.color.colorBlindMode.tritanomaly,
+                    locals[this.props.lang].settings.color.colorBlindMode
+                      .tritanomaly,
                   value: 'TRITANOMALY',
                   feature: 'UPDATE_COLOR_BLIND_MODE',
                   position: 5,
                   type: 'OPTION',
                   isActive: features.find(
-                    (feature) => feature.name === 'SETTINGS_COLOR_BLIND_MODE_TRITANOMALY'
+                    (feature) =>
+                      feature.name === 'SETTINGS_COLOR_BLIND_MODE_TRITANOMALY'
                   )?.isActive,
                   isBlocked: isBlocked(
                     'SETTINGS_COLOR_BLIND_MODE_TRITANOMALY',
@@ -466,13 +481,15 @@ export default class Settings extends React.Component<Props> {
                 },
                 {
                   label:
-                    locals[this.props.lang].settings.color.colorBlindMode.tritanopia,
+                    locals[this.props.lang].settings.color.colorBlindMode
+                      .tritanopia,
                   value: 'TRITANOPIA',
                   feature: 'UPDATE_COLOR_BLIND_MODE',
                   position: 6,
                   type: 'OPTION',
                   isActive: features.find(
-                    (feature) => feature.name === 'SETTINGS_COLOR_BLIND_MODE_TRITANOPIA'
+                    (feature) =>
+                      feature.name === 'SETTINGS_COLOR_BLIND_MODE_TRITANOPIA'
                   )?.isActive,
                   isBlocked: isBlocked(
                     'SETTINGS_COLOR_BLIND_MODE_TRITANOPIA',
@@ -483,13 +500,15 @@ export default class Settings extends React.Component<Props> {
                 },
                 {
                   label:
-                    locals[this.props.lang].settings.color.colorBlindMode.achromatomaly,
+                    locals[this.props.lang].settings.color.colorBlindMode
+                      .achromatomaly,
                   value: 'ACHROMATOMALY',
                   feature: 'UPDATE_COLOR_BLIND_MODE',
                   position: 7,
                   type: 'OPTION',
                   isActive: features.find(
-                    (feature) => feature.name === 'SETTINGS_COLOR_BLIND_MODE_ACHROMATOMALY'
+                    (feature) =>
+                      feature.name === 'SETTINGS_COLOR_BLIND_MODE_ACHROMATOMALY'
                   )?.isActive,
                   isBlocked: isBlocked(
                     'SETTINGS_COLOR_BLIND_MODE_ACHROMATOMALY',
@@ -500,13 +519,15 @@ export default class Settings extends React.Component<Props> {
                 },
                 {
                   label:
-                    locals[this.props.lang].settings.color.colorBlindMode.achromatopsia,
+                    locals[this.props.lang].settings.color.colorBlindMode
+                      .achromatopsia,
                   value: 'ACHROMATOPSIA',
                   feature: 'UPDATE_COLOR_BLIND_MODE',
                   position: 7,
                   type: 'OPTION',
                   isActive: features.find(
-                    (feature) => feature.name === 'SETTINGS_COLOR_BLIND_MODE_ACHROMATOPSIA'
+                    (feature) =>
+                      feature.name === 'SETTINGS_COLOR_BLIND_MODE_ACHROMATOPSIA'
                   )?.isActive,
                   isBlocked: isBlocked(
                     'SETTINGS_COLOR_BLIND_MODE_ACHROMATOPSIA',

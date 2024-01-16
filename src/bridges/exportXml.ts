@@ -40,6 +40,7 @@ const exportXml = (palette: SceneNode) => {
 
     figma.ui.postMessage({
       type: 'EXPORT_PALETTE_XML',
+      context: 'ANDROID_XML',
       data: resources,
     })
   } else figma.notify(locals[lang].error.corruption)

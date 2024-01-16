@@ -15,7 +15,8 @@ import exportCsv from './exportCsv'
 import exportJson from './exportJson'
 import exportJsonAmznStyleDictionary from './exportJsonAmznStyleDictionary'
 import exportJsonTokensStudio from './exportJsonTokensStudio'
-import exportSwift from './exportSwift'
+import exportSwiftUI from './exportSwiftUI'
+import exportUIKit from './exportUIKit'
 import exportKt from './exportKt'
 import exportXml from './exportXml'
 import getProPlan from './getProPlan'
@@ -94,7 +95,8 @@ const loadUI = async (palette: SceneNode) => {
           : null
         msg.export === 'CSS' ? exportCss(palette, msg.colorSpace) : null
         msg.export === 'TAILWIND' ? exportTailwind(palette) : null
-        msg.export === 'SWIFT' ? exportSwift(palette) : null
+        msg.export === 'APPLE_SWIFTUI' ? exportSwiftUI(palette) : null
+        msg.export === 'APPLE_UIKIT' ? exportUIKit(palette) : null
         msg.export === 'ANDROID_COMPOSE' ? exportKt(palette) : null
         msg.export === 'ANDROID_XML' ? exportXml(palette) : null
         msg.export === 'CSV' ? exportCsv(palette) : null
