@@ -137,9 +137,11 @@ export const locals: { [key: string]: any } = {
       android: {
         label: 'Android',
         compose: 'Compose (KT)',
-        xml: 'Resources (XML)',
+        resources: 'Resources (XML)',
       },
-      csv: 'Spreadsheet (CSV)',
+      csv: {
+        spreadsheet: 'Spreadsheet (CSV)',
+      },
       colorSpace: {
         label: glossary.colorSpace,
         rgb: glossary.rgb,

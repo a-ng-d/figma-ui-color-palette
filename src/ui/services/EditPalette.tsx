@@ -337,7 +337,7 @@ export default class EditPalette extends React.Component<Props, any> {
                 : this.props.export.data
             }
             planStatus={this.props.planStatus}
-            exportType={this.props.export.format}
+            exportType={this.props.export.label}
             lang={this.props.lang}
             onExportPalette={this.onExport}
           />

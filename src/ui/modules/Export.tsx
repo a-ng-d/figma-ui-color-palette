@@ -508,7 +508,7 @@ export default class Export extends React.Component<Props, any> {
                       },
                       {
                         label:
-                          locals[this.props.lang].export.android.xml,
+                          locals[this.props.lang].export.android.resources,
                         value: 'EXPORT_ANDROID_XML',
                         feature: 'SELECT_EXPORT_FILE',
                         position: 1,
@@ -528,7 +528,7 @@ export default class Export extends React.Component<Props, any> {
                     action: this.exportHandler,
                   },
                   {
-                    label: locals[this.props.lang].export.csv,
+                    label: locals[this.props.lang].export.csv.spreadsheet,
                     value: 'EXPORT_CSV',
                     feature: 'SELECT_EXPORT_FILE',
                     position: 5,

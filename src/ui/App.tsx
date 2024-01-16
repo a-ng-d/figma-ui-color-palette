@@ -33,6 +33,7 @@ import features from '../utils/config'
 import 'figma-plugin-ds/dist/figma-plugin-ds.css'
 import './stylesheets/app.css'
 import './stylesheets/app-components.css'
+import { locals } from '../content/locals'
 
 let isPaletteSelected = false
 const container = document.getElementById('app'),
@@ -86,6 +87,7 @@ class App extends React.Component<any, any> {
       algorithmVersion: 'v1' as AlgorithmVersionConfiguration,
       export: {
         format: '',
+        label: '',
         mimeType: '',
         data: '',
       },
@@ -584,7 +586,8 @@ class App extends React.Component<any, any> {
         const exportPaletteToJson = () =>
           this.setState({
             export: {
-              format: 'Tokens (JSON)',
+              label: `${locals[this.state['lang']].actions.export} ${locals[this.state['lang']].export.tokens.label}`,
+              format: 'JSON',
               mimeType: 'application/json',
               data: JSON.stringify(e.data.pluginMessage.data, null, '  '),
             },
@@ -594,7 +597,8 @@ class App extends React.Component<any, any> {
         const exportPaletteToCss = () =>
           this.setState({
             export: {
-              format: 'Custom Properties (CSS)',
+              label: `${locals[this.state['lang']].actions.export} ${locals[this.state['lang']].export.css.customProperties}`,
+              format: 'CSS',
               mimeType: 'text/css',
               data: `:root {\n  ${e.data.pluginMessage.data.join('\n  ')}\n}`,
             },
@@ -604,7 +608,8 @@ class App extends React.Component<any, any> {
         const exportPaletteToTaiwind = () =>
           this.setState({
             export: {
-              format: 'Tailwind (JS)',
+              label: `${locals[this.state['lang']].actions.export} ${locals[this.state['lang']].export.tailwind.config}`,
+              format: 'JS',
               mimeType: 'text/javascript',
               data: `/** @type {import('tailwindcss').Config} */\nmodule.exports = ${JSON.stringify(
                 e.data.pluginMessage.data,
@@ -618,7 +623,8 @@ class App extends React.Component<any, any> {
         const exportPaletteToSwiftUI = () =>
           this.setState({
             export: {
-              format: 'SwitchUI (SWIFT)',
+              label: `${locals[this.state['lang']].actions.export} ${locals[this.state['lang']].export.apple.swiftui}`,
+              format: 'SWIFT',
               mimeType: 'text/swift',
               data: `import SwiftUI\n\npublic extension Color {\n\n  static let Token = Color.TokenColor()\n\n  struct TokenColor {\n    ${e.data.pluginMessage.data.join(
                 '\n    '
@@ -630,7 +636,8 @@ class App extends React.Component<any, any> {
         const exportPaletteToUIKit = () =>
           this.setState({
             export: {
-              format: 'UIKit (SWIFT)',
+              label: `${locals[this.state['lang']].actions.export} ${locals[this.state['lang']].export.apple.uikit}`,
+              format: 'SWIFT',
               mimeType: 'text/swift',
               data: `import UIKit\n\nstruct Color {\n  ${e.data.pluginMessage.data.join(
                 '\n\n  '
@@ -642,7 +649,8 @@ class App extends React.Component<any, any> {
         const exportPaletteToKt = () =>
           this.setState({
             export: {
-              format: 'Compose (KT)',
+              label: `${locals[this.state['lang']].actions.export} ${locals[this.state['lang']].export.android.compose}`,
+              format: 'KT',
               mimeType: 'text/x-kotlin',
               data: `import androidx.compose.ui.graphics.Color\n\n${e.data.pluginMessage.data.join('\n')}`,
             },
@@ -652,7 +660,8 @@ class App extends React.Component<any, any> {
         const exportPaletteToXml = () =>
           this.setState({
             export: {
-              format: 'Resources (XML)',
+              label: `${locals[this.state['lang']].actions.export} ${locals[this.state['lang']].export.android.resources}`,
+              format: 'XML',
               mimeType: 'text/xml',
               data: `<?xml version="1.0" encoding="utf-8"?>\n<resources>\n  ${e.data.pluginMessage.data.join(
                 '\n  '
@@ -664,7 +673,8 @@ class App extends React.Component<any, any> {
         const exportPaletteToCsv = () =>
           this.setState({
             export: {
-              format: 'Spreadsheet (CSV)',
+              label: `${locals[this.state['lang']].actions.export} ${locals[this.state['lang']].export.csv.spreadsheet}`,
+              format: 'CSV',
               mimeType: 'text/csv',
               data: e.data.pluginMessage.data,
             },

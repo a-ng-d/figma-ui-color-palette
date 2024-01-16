@@ -166,6 +166,7 @@ export interface ThemeConfiguration {
 
 export interface ExportConfiguration {
   format: 'JSON' | 'CSS' | 'TAILWIND' | 'SWIFT' | 'XML' | 'CSV'
+  label: string
   mimeType:
     | 'application/json'
     | 'text/css'
