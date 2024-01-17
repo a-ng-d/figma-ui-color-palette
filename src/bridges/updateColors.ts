@@ -1,6 +1,6 @@
 import type {
   AlgorithmVersionConfiguration,
-  ColorBlindModeConfiguration,
+  visionSimulationModeConfiguration,
   ColorSpaceConfiguration,
   ColorsMessage,
   PresetConfiguration,
@@ -16,6 +16,7 @@ import {
   isSelectionChanged,
 } from './processSelection'
 import { locals, lang } from '../content/locals'
+import setPaletteName from '../utils/setPaletteName'
 
 const updateColors = (msg: ColorsMessage, palette: SceneNode) => {
   palette = isSelectionChanged
@@ -35,9 +36,9 @@ const updateColors = (msg: ColorsMessage, palette: SceneNode) => {
       colorSpace = palette.getPluginData(
         'colorSpace'
       ) as ColorSpaceConfiguration,
-      colorBlindMode = palette.getPluginData(
-        'colorBlindMode'
-      ) as ColorBlindModeConfiguration,
+      visionSimulationMode = palette.getPluginData(
+        'visionSimulationMode'
+      ) as visionSimulationModeConfiguration,
       themes = JSON.parse(
         palette.getPluginData('themes')
       ) as Array<ThemeConfiguration>,
@@ -61,7 +62,7 @@ const updateColors = (msg: ColorsMessage, palette: SceneNode) => {
           scale: scale,
           colors: msg.data,
           colorSpace: colorSpace,
-          colorBlindMode: colorBlindMode,
+          visionSimulationMode: visionSimulationMode,
           themes: themes,
           view:
             msg.isEditedInRealTime && view === 'PALETTE_WITH_PROPERTIES'
@@ -79,13 +80,13 @@ const updateColors = (msg: ColorsMessage, palette: SceneNode) => {
 
     // palette migration
     palette.counterAxisSizingMode = 'AUTO'
-    palette.name = `${name}﹒${
-      themes.find((theme) => theme.isEnabled)?.type === 'default theme'
-        ? ''
-        : themes.find((theme) => theme.isEnabled)?.name + '﹒'
-    }${preset.name}﹒${colorSpace} ${
-      view.includes('PALETTE') ? 'Palette' : 'Sheet'
-    }`
+    palette.name = setPaletteName(
+      name,
+      themes.find((theme) => theme.isEnabled)?.name,
+      preset.name,
+      colorSpace,
+      visionSimulationMode
+    )
   } else figma.notify(locals[lang].error.corruption)
 }
 

@@ -13,6 +13,7 @@ import {
 } from './processSelection'
 import Colors from '../canvas/Colors'
 import { locals, lang } from '../content/locals'
+import setPaletteName from '../utils/setPaletteName'
 
 const updateSettings = (msg: SettingsMessage, palette: SceneNode) => {
   palette = isSelectionChanged
@@ -35,7 +36,7 @@ const updateSettings = (msg: SettingsMessage, palette: SceneNode) => {
     palette.setPluginData('name', msg.data.name)
     palette.setPluginData('description', msg.data.description)
     palette.setPluginData('colorSpace', msg.data.colorSpace)
-    palette.setPluginData('colorBlindMode', msg.data.colorBlindMode)
+    palette.setPluginData('visionSimulationMode', msg.data.visionSimulationMode)
     palette.setPluginData(
       'textColorsTheme',
       JSON.stringify(msg.data.textColorsTheme)
@@ -52,7 +53,7 @@ const updateSettings = (msg: SettingsMessage, palette: SceneNode) => {
           scale: scale,
           colors: colors,
           colorSpace: msg.data.colorSpace,
-          colorBlindMode: msg.data.colorBlindMode,
+          visionSimulationMode: msg.data.visionSimulationMode,
           themes: themes,
           view: view,
           textColorsTheme: msg.data.textColorsTheme,
@@ -65,15 +66,13 @@ const updateSettings = (msg: SettingsMessage, palette: SceneNode) => {
 
     // palette migration
     palette.counterAxisSizingMode = 'AUTO'
-    palette.name = `${
-      msg.data.name === '' ? locals[lang].name : msg.data.name
-    }﹒${
-      themes.find((theme) => theme.isEnabled)?.type === 'default theme'
-        ? ''
-        : themes.find((theme) => theme.isEnabled)?.name + '﹒'
-    }${preset.name}﹒${msg.data.colorSpace} ${
-      view.includes('PALETTE') ? 'Palette' : 'Sheet'
-    }`
+    palette.name = setPaletteName(
+      msg.data.name,
+      themes.find((theme) => theme.isEnabled)?.name,
+      preset.name,
+      msg.data.colorSpace,
+      msg.data.visionSimulationMode
+    )
   } else figma.notify(locals[lang].error.corruption)
 }
 

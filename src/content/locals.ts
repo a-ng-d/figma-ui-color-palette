@@ -13,7 +13,6 @@ const glossary: {
   hex: 'HEX',
   rgb: 'RGB',
   p3: 'P3',
-  colorBlindMode: 'Color blind simulation',
   protanomaly: 'Protanomaly',
   protanopia: 'Protanopia',
   deuteranomaly: 'Deuteranomaly',
@@ -142,7 +141,7 @@ export const locals: { [key: string]: any } = {
       apple: {
         label: 'Apple',
         swiftui: 'SwiftUI (SWIFT)',
-        uikit: 'UIkit (SWIFT)',
+        uikit: 'UIKit (SWIFT)',
       },
       android: {
         label: 'Android',
@@ -199,8 +198,9 @@ export const locals: { [key: string]: any } = {
           rgb: glossary.rgb,
           p3: glossary.p3,
         },
-        colorBlindMode: {
-          label: glossary.colorBlindMode,
+        visionSimulationMode: {
+          label: 'Vision simulation',
+          colorBlind: 'Color blind',
           none: 'None',
           protanomaly: glossary.protanomaly,
           protanopia: glossary.protanopia,
@@ -280,7 +280,7 @@ export const locals: { [key: string]: any } = {
         title:
           'Would you like to upgrade to the Pro plan within the next 72 hours?',
         message:
-          'Explore the potential of synchronizing your color palette with variables and exporting it as design tokens, app resources, or files for Tokens Studio.',
+          'Explore the potential of synchronizing your color palette with variables, exporting it as design tokens, app resources, or for Tokens Studio and simulating vision impairment.',
         cta: 'Enable the 72-hour trial',
         option: 'Purchase',
       },

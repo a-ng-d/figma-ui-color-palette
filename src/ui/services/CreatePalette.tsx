@@ -1,6 +1,6 @@
 import * as React from 'react'
 import type {
-  ColorBlindModeConfiguration,
+  visionSimulationModeConfiguration,
   Language,
   PresetConfiguration,
   SourceColorConfiguration,
@@ -22,7 +22,7 @@ interface Props {
   description: string
   preset: PresetConfiguration
   colorSpace: string
-  colorBlindMode: ColorBlindModeConfiguration
+  visionSimulationMode: visionSimulationModeConfiguration
   view: string
   textColorsTheme: TextColorsThemeHexModel
   planStatus: 'UNPAID' | 'PAID'
@@ -72,21 +72,25 @@ export default class CreatePalette extends React.Component<Props, any> {
     const contexts: Array<{
       label: string
       id: string
+      isUpdated: boolean
     }> = []
     if (features.find((feature) => feature.name === 'SOURCE')?.isActive)
       contexts.push({
         label: locals[this.props.lang].contexts.source,
         id: 'SOURCE',
+        isUpdated: false,
       })
     if (features.find((feature) => feature.name === 'SCALE')?.isActive)
       contexts.push({
         label: locals[this.props.lang].contexts.scale,
         id: 'SCALE',
+        isUpdated: false,
       })
     if (features.find((feature) => feature.name === 'SETTINGS')?.isActive)
       contexts.push({
         label: locals[this.props.lang].contexts.settings,
         id: 'SETTINGS',
+        isUpdated: true,
       })
     return contexts
   }
@@ -139,7 +143,7 @@ export default class CreatePalette extends React.Component<Props, any> {
             name={this.props.name}
             description={this.props.description}
             colorSpace={this.props.colorSpace}
-            colorBlindMode={this.props.colorBlindMode}
+            visionSimulationMode={this.props.visionSimulationMode}
             textColorsTheme={this.props.textColorsTheme}
             view={this.props.view}
             planStatus={this.props.planStatus}

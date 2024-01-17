@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client'
 import type {
   ActionsList,
   AlgorithmVersionConfiguration,
-  ColorBlindModeConfiguration,
+  visionSimulationModeConfiguration,
   ColorConfiguration,
   ColorSpaceConfiguration,
   DispatchProcess,
@@ -45,7 +45,7 @@ const settingsMessage: SettingsMessage = {
     name: '',
     description: '',
     colorSpace: 'LCH',
-    colorBlindMode: 'NONE',
+    visionSimulationMode: 'NONE',
     textColorsTheme: {
       lightColor: '#FFFFFF',
       darkColor: '#000000',
@@ -77,7 +77,7 @@ class App extends React.Component<any, any> {
       scale: {} as ScaleConfiguration,
       newColors: [] as Array<ColorConfiguration> | [],
       colorSpace: 'LCH' as ColorSpaceConfiguration,
-      colorBlindMode: 'NONE' as ColorBlindModeConfiguration,
+      visionSimulationMode: 'NONE' as visionSimulationModeConfiguration,
       themes: [] as ThemeConfiguration | [],
       view: 'PALETTE_WITH_PROPERTIES' as ViewConfiguration,
       textColorsTheme: {
@@ -291,7 +291,8 @@ class App extends React.Component<any, any> {
       settingsMessage.data.name = e.target.value
       settingsMessage.data.description = this.state['description']
       settingsMessage.data.colorSpace = this.state['colorSpace']
-      settingsMessage.data.colorBlindMode = this.state['colorBlindMode']
+      settingsMessage.data.visionSimulationMode =
+        this.state['visionSimulationMode']
       settingsMessage.data.textColorsTheme = this.state['textColorsTheme']
       settingsMessage.data.algorithmVersion = this.state['algorithmVersion']
 
@@ -311,7 +312,8 @@ class App extends React.Component<any, any> {
       settingsMessage.data.name = this.state['name']
       settingsMessage.data.description = e.target.value
       settingsMessage.data.colorSpace = this.state['colorSpace']
-      settingsMessage.data.colorBlindMode = this.state['colorBlindMode']
+      settingsMessage.data.visionSimulationMode =
+        this.state['visionSimulationMode']
       settingsMessage.data.textColorsTheme = this.state['textColorsTheme']
       settingsMessage.data.algorithmVersion = this.state['algorithmVersion']
 
@@ -344,7 +346,8 @@ class App extends React.Component<any, any> {
       settingsMessage.data.name = this.state['name']
       settingsMessage.data.description = this.state['description']
       settingsMessage.data.colorSpace = e.target.dataset.value
-      settingsMessage.data.colorBlindMode = this.state['colorBlindMode']
+      settingsMessage.data.visionSimulationMode =
+        this.state['visionSimulationMode']
       settingsMessage.data.textColorsTheme = this.state['textColorsTheme']
       settingsMessage.data.algorithmVersion = this.state['algorithmVersion']
 
@@ -357,17 +360,17 @@ class App extends React.Component<any, any> {
         parent.postMessage({ pluginMessage: settingsMessage }, '*')
     }
 
-    const updateColorBlindMode = () => {
-      palette.colorBlindMode = e.target.dataset.value
+    const updatevisionSimulationMode = () => {
+      palette.visionSimulationMode = e.target.dataset.value
       settingsMessage.data.name = this.state['name']
       settingsMessage.data.description = this.state['description']
       settingsMessage.data.colorSpace = this.state['colorSpace']
-      settingsMessage.data.colorBlindMode = e.target.dataset.value
+      settingsMessage.data.visionSimulationMode = e.target.dataset.value
       settingsMessage.data.textColorsTheme = this.state['textColorsTheme']
       settingsMessage.data.algorithmVersion = this.state['algorithmVersion']
 
       this.setState({
-        colorBlindMode: settingsMessage.data.colorBlindMode,
+        visionSimulationMode: settingsMessage.data.visionSimulationMode,
         onGoingStep: 'settings changed',
       })
 
@@ -379,7 +382,8 @@ class App extends React.Component<any, any> {
       settingsMessage.data.name = this.state['name']
       settingsMessage.data.description = this.state['description']
       settingsMessage.data.colorSpace = this.state['colorSpace']
-      settingsMessage.data.colorBlindMode = this.state['colorBlindMode']
+      settingsMessage.data.visionSimulationMode =
+        this.state['visionSimulationMode']
       settingsMessage.data.textColorsTheme = this.state['textColorsTheme']
       settingsMessage.data.algorithmVersion = !e.target.checked ? 'v1' : 'v2'
 
@@ -400,7 +404,8 @@ class App extends React.Component<any, any> {
         settingsMessage.data.name = this.state['name']
         settingsMessage.data.description = this.state['description']
         settingsMessage.data.colorSpace = this.state['colorSpace']
-        settingsMessage.data.colorBlindMode = this.state['colorBlindMode']
+        settingsMessage.data.visionSimulationMode =
+          this.state['visionSimulationMode']
         settingsMessage.data.textColorsTheme.lightColor = code
         palette.textColorsTheme.lightColor = code
         settingsMessage.data.textColorsTheme.darkColor =
@@ -428,7 +433,8 @@ class App extends React.Component<any, any> {
         settingsMessage.data.name = this.state['name']
         settingsMessage.data.description = this.state['description']
         settingsMessage.data.colorSpace = this.state['colorSpace']
-        settingsMessage.data.colorBlindMode = this.state['colorBlindMode']
+        settingsMessage.data.visionSimulationMode =
+          this.state['visionSimulationMode']
         settingsMessage.data.textColorsTheme.lightColor =
           this.state['textColorsTheme'].lightColor
         settingsMessage.data.textColorsTheme.darkColor = code
@@ -452,7 +458,7 @@ class App extends React.Component<any, any> {
       UPDATE_DESCRIPTION: () => updateDescription(),
       UPDATE_VIEW: () => updateView(),
       UPDATE_COLOR_SPACE: () => updateColorSpace(),
-      UPDATE_COLOR_BLIND_MODE: () => updateColorBlindMode(),
+      UPDATE_COLOR_BLIND_MODE: () => updatevisionSimulationMode(),
       UPDATE_ALGORITHM_VERSION: () => updateAlgorythmVersion(),
       CHANGE_TEXT_LIGHT_COLOR: () => updateTextLightColor(),
       CHANGE_TEXT_DARK_COLOR: () => updateTextDarkColor(),
@@ -495,7 +501,7 @@ class App extends React.Component<any, any> {
             description: '',
             preset: presets.find((preset) => preset.id === 'MATERIAL'),
             colorSpace: 'LCH',
-            colorBlindMode: 'NONE',
+            visionSimulationMode: 'NONE',
             view: 'PALETTE_WITH_PROPERTIES',
             textColorsTheme: {
               lightColor: '#FFFFFF',
@@ -507,7 +513,7 @@ class App extends React.Component<any, any> {
           palette.description = ''
           palette.preset = {}
           palette.colorSpace = 'LCH'
-          palette.colorBlindMode = 'NONE'
+          palette.visionSimulationMode = 'NONE'
           palette.view = 'PALETTE_WITH_PROPERTIES'
           palette.textColorsTheme = {
             lightColor: '#FFFFFF',
@@ -523,7 +529,7 @@ class App extends React.Component<any, any> {
               description: '',
               preset: presets.find((preset) => preset.id === 'MATERIAL'),
               colorSpace: 'LCH',
-              colorBlindMode: 'NONE',
+              visionSimulationMode: 'NONE',
               view: 'PALETTE_WITH_PROPERTIES',
               textColorsTheme: {
                 lightColor: '#FFFFFF',
@@ -534,7 +540,7 @@ class App extends React.Component<any, any> {
             palette.description = ''
             palette.preset = presets.find((preset) => preset.id === 'MATERIAL')
             palette.colorSpace = 'LCH'
-            palette.colorBlindMode = 'NONE'
+            palette.visionSimulationMode = 'NONE'
             palette.view = 'PALETTE_WITH_PROPERTIES'
             palette.textColorsTheme = {
               lightColor: '#FFFFFF',
@@ -576,7 +582,8 @@ class App extends React.Component<any, any> {
             scale: e.data.pluginMessage.data.scale,
             newColors: e.data.pluginMessage.data.colors,
             colorSpace: e.data.pluginMessage.data.colorSpace,
-            colorBlindMode: e.data.pluginMessage.data.colorBlindMode,
+            visionSimulationMode:
+              e.data.pluginMessage.data.visionSimulationMode,
             themes: e.data.pluginMessage.data.themes,
             view: e.data.pluginMessage.data.view,
             textColorsTheme: e.data.pluginMessage.data.textColorsTheme,
@@ -641,7 +648,7 @@ class App extends React.Component<any, any> {
                 locals[this.state['lang']].export.apple.swiftui
               }`,
               mimeType: 'text/swift',
-              data: `import SwiftUI\n\npublic extension Color {\n\n  static let Token = Color.TokenColor()\n\n  struct TokenColor {\n    ${e.data.pluginMessage.data.join(
+              data: `import SwiftUI\n\npublic extension Color {\n  static let Token = Color.TokenColor()\n  struct TokenColor {\n    ${e.data.pluginMessage.data.join(
                 '\n    '
               )}\n  }\n}`,
             },
@@ -764,7 +771,7 @@ class App extends React.Component<any, any> {
                 description={this.state['description']}
                 preset={this.state['preset']}
                 colorSpace={this.state['colorSpace']}
-                colorBlindMode={this.state['colorBlindMode']}
+                visionSimulationMode={this.state['visionSimulationMode']}
                 view={this.state['view']}
                 textColorsTheme={this.state['textColorsTheme']}
                 planStatus={this.state['planStatus']}
@@ -789,7 +796,7 @@ class App extends React.Component<any, any> {
                 scale={this.state['scale']}
                 colors={this.state['newColors']}
                 colorSpace={this.state['colorSpace']}
-                colorBlindMode={this.state['colorBlindMode']}
+                visionSimulationMode={this.state['visionSimulationMode']}
                 themes={this.state['themes']}
                 view={this.state['view']}
                 textColorsTheme={this.state['textColorsTheme']}

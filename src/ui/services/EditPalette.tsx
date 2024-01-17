@@ -11,7 +11,7 @@ import type {
   ThemesMessage,
   Language,
   EditorType,
-  ColorBlindModeConfiguration,
+  visionSimulationModeConfiguration,
 } from '../../utils/types'
 import type { DropdownOption } from '@a-ng-d/figmug.modules.types'
 import Feature from '../components/Feature'
@@ -36,7 +36,7 @@ interface Props {
   scale: ScaleConfiguration
   colors: Array<ColorConfiguration>
   colorSpace: string
-  colorBlindMode: ColorBlindModeConfiguration
+  visionSimulationMode: visionSimulationModeConfiguration
   themes: Array<ThemeConfiguration>
   view: string
   textColorsTheme: TextColorsThemeHexModel
@@ -184,42 +184,48 @@ export default class EditPalette extends React.Component<Props, any> {
     const contexts: Array<{
       label: string
       id: string
+      isUpdated: boolean
     }> = []
     if (features.find((feature) => feature.name === 'SCALE')?.isActive)
       contexts.push({
         label: locals[this.props.lang].contexts.scale,
         id: 'SCALE',
+        isUpdated: false,
       })
     if (features.find((feature) => feature.name === 'COLORS')?.isActive)
       contexts.push({
         label: locals[this.props.lang].contexts.colors,
         id: 'COLORS',
+        isUpdated: false,
       })
     if (features.find((feature) => feature.name === 'THEMES')?.isActive)
       contexts.push({
         label: locals[this.props.lang].contexts.themes,
         id: 'THEMES',
+        isUpdated: false,
       })
     if (features.find((feature) => feature.name === 'EXPORT')?.isActive)
       contexts.push({
         label: locals[this.props.lang].contexts.export,
         id: 'EXPORT',
+        isUpdated: true,
       })
     if (features.find((feature) => feature.name === 'SETTINGS')?.isActive)
       contexts.push({
         label: locals[this.props.lang].contexts.settings,
         id: 'SETTINGS',
+        isUpdated: true,
       })
     return contexts
   }
 
   setThemes = (): Array<DropdownOption> => {
-    const themes = this.workingThemes().map((theme, index) => {
+    const themes = this.workingThemes().map((theme) => {
       return {
         label: theme.name,
         value: theme.id,
         feature: 'SWITCH_THEME',
-        position: index,
+        position: 0,
         type: 'OPTION',
         isActive: true,
         isBlocked: false,
@@ -243,7 +249,7 @@ export default class EditPalette extends React.Component<Props, any> {
         label: 'Create a color theme',
         value: null,
         feature: 'ADD_THEME',
-        position: themes.length + 1,
+        position: 0,
         type: 'OPTION',
         isActive: features.find((feature) => feature.name === 'THEMES')
           ?.isActive,
@@ -360,7 +366,7 @@ export default class EditPalette extends React.Component<Props, any> {
             name={this.props.name}
             description={this.props.description}
             colorSpace={this.props.colorSpace}
-            colorBlindMode={this.props.colorBlindMode}
+            visionSimulationMode={this.props.visionSimulationMode}
             textColorsTheme={this.props.textColorsTheme}
             view={this.props.view}
             isNewAlgorithm={this.props.algorithmVersion == 'v2' ? true : false}

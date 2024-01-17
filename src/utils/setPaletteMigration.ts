@@ -1,6 +1,6 @@
 import type {
   AlgorithmVersionConfiguration,
-  ColorBlindModeConfiguration,
+  visionSimulationModeConfiguration,
   ColorConfiguration,
   ColorSpaceConfiguration,
 } from './types'
@@ -21,7 +21,7 @@ const setPaletteMigration = (palette: BaseNode) => {
       palette.getPluginData('colors')
     ),
     colorSpace = palette.getPluginData('colorSpace'),
-    colorBlindMode = palette.getPluginData('colorBlindMode'),
+    visionSimulationMode = palette.getPluginData('visionSimulationMode'),
     themes = palette.getPluginData('themes'),
     captions = palette.getPluginData('captions'),
     properties = palette.getPluginData('properties'),
@@ -72,7 +72,8 @@ const setPaletteMigration = (palette: BaseNode) => {
 
   if (colorSpace === '') palette.setPluginData('colorSpace', 'LCH')
 
-  if (colorBlindMode === '') palette.setPluginData('colorBlindMode', 'NONE')
+  if (visionSimulationMode === '')
+    palette.setPluginData('visionSimulationMode', 'NONE')
 
   // themes
   if (themes === '')
@@ -131,9 +132,9 @@ const setPaletteMigration = (palette: BaseNode) => {
         colorSpace: palette.getPluginData(
           'colorSpace'
         ) as ColorSpaceConfiguration,
-        colorBlindMode: palette.getPluginData(
-          'colorBlindMode'
-        ) as ColorBlindModeConfiguration,
+        visionSimulationMode: palette.getPluginData(
+          'visionSimulationMode'
+        ) as visionSimulationModeConfiguration,
         themes: JSON.parse(palette.getPluginData('themes')),
         view: 'SHEET',
         textColorsTheme: JSON.parse(palette.getPluginData('textColorsTheme')),

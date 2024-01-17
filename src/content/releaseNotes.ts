@@ -1,4 +1,6 @@
 import type { ReleaseNote } from '../utils/types'
+import rnv301 from './images/release_note_v30_1.webp'
+import rnv302 from './images/release_note_v30_2.webp'
 import rnv291 from './images/release_note_v29_1.webp'
 import rnv292 from './images/release_note_v29_2.webp'
 import rnv281 from './images/release_note_v28_1.webp'
@@ -16,8 +18,23 @@ import rnv19 from './images/release_note_v19.webp'
 
 const releaseNotes: Array<ReleaseNote> = [
   {
-    version: '2.9.0',
+    version: '3.0.0',
     isMostRecent: true,
+    title: [
+      'Simulate various visions for accessibility',
+      'Exports more for Android and Apple apps',
+    ],
+    image: [rnv301, rnv302],
+    content: [
+      'You can simulate color perception and contrast for various types of color blindness. This is a step towards incorporating accessibility into the design process.',
+      'Both Android and Apple offer numerous ways to apply color themes. Now, you can export your palette for use in Compose on Android and UIKit on Apple.',
+    ],
+    numberOfNotes: 2,
+    learnMore: ['https://uicp.link/whats-new', 'https://uicp.link/whats-new'],
+  },
+  {
+    version: '2.9.0',
+    isMostRecent: false,
     title: ['Use your palettes for Tailwind', 'Happy Xmas!'],
     image: [rnv291, rnv292],
     content: [

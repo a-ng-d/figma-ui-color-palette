@@ -7,7 +7,7 @@ import type {
   ViewConfiguration,
   AlgorithmVersionConfiguration,
   ScaleMessage,
-  ColorBlindModeConfiguration,
+  visionSimulationModeConfiguration,
 } from '../utils/types'
 import {
   previousSelection,
@@ -17,6 +17,7 @@ import {
 import Colors from './../canvas/Colors'
 import { locals, lang } from '../content/locals'
 import doLightnessScale from '../utils/doLightnessScale'
+import setPaletteName from '../utils/setPaletteName'
 
 const updateScale = (msg: ScaleMessage, palette: SceneNode) => {
   palette = isSelectionChanged
@@ -38,9 +39,9 @@ const updateScale = (msg: ScaleMessage, palette: SceneNode) => {
       colorSpace = palette.getPluginData(
         'colorSpace'
       ) as ColorSpaceConfiguration,
-      colorBlindMode = palette.getPluginData(
-        'colorBlindMode'
-      ) as ColorBlindModeConfiguration,
+      visionSimulationMode = palette.getPluginData(
+        'visionSimulationMode'
+      ) as visionSimulationModeConfiguration,
       themes = JSON.parse(
         palette.getPluginData('themes')
       ) as Array<ThemeConfiguration>,
@@ -84,7 +85,7 @@ const updateScale = (msg: ScaleMessage, palette: SceneNode) => {
           scale: msg.data.scale,
           colors: colors,
           colorSpace: colorSpace,
-          colorBlindMode: colorBlindMode,
+          visionSimulationMode: visionSimulationMode,
           themes: themes,
           view:
             msg.isEditedInRealTime && view === 'PALETTE_WITH_PROPERTIES'
@@ -102,13 +103,13 @@ const updateScale = (msg: ScaleMessage, palette: SceneNode) => {
 
     // palette migration
     palette.counterAxisSizingMode = 'AUTO'
-    palette.name = `${name}﹒${
-      themes.find((theme) => theme.isEnabled)?.type === 'default theme'
-        ? ''
-        : themes.find((theme) => theme.isEnabled)?.name + '﹒'
-    }${preset.name}﹒${colorSpace} ${
-      view.includes('PALETTE') ? 'Palette' : 'Sheet'
-    }`
+    palette.name = setPaletteName(
+      name,
+      themes.find((theme) => theme.isEnabled)?.name,
+      preset.name,
+      colorSpace,
+      visionSimulationMode
+    )
   } else figma.notify(locals[lang].error.corruption)
 }
 

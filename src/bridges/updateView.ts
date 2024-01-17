@@ -7,10 +7,11 @@ import type {
   ColorSpaceConfiguration,
   AlgorithmVersionConfiguration,
   ViewMessage,
-  ColorBlindModeConfiguration,
+  visionSimulationModeConfiguration,
 } from '../utils/types'
 import Colors from '../canvas/Colors'
 import { locals, lang } from '../content/locals'
+import setPaletteName from '../utils/setPaletteName'
 
 const updateView = (msg: ViewMessage, palette: SceneNode) => {
   palette = figma.currentPage.selection[0] as FrameNode
@@ -31,9 +32,9 @@ const updateView = (msg: ViewMessage, palette: SceneNode) => {
       colorSpace = palette.getPluginData(
         'colorSpace'
       ) as ColorSpaceConfiguration,
-      colorBlindMode = palette.getPluginData(
-        'colorBlindMode'
-      ) as ColorBlindModeConfiguration,
+      visionSimulationMode = palette.getPluginData(
+        'visionSimulationMode'
+      ) as visionSimulationModeConfiguration,
       themes = JSON.parse(
         palette.getPluginData('themes')
       ) as Array<ThemeConfiguration>,
@@ -56,7 +57,7 @@ const updateView = (msg: ViewMessage, palette: SceneNode) => {
           scale: scale,
           colors: colors,
           colorSpace: colorSpace,
-          colorBlindMode: colorBlindMode,
+          visionSimulationMode: visionSimulationMode,
           themes: themes,
           view: msg.data.view,
           textColorsTheme: textColorsTheme,
@@ -69,13 +70,13 @@ const updateView = (msg: ViewMessage, palette: SceneNode) => {
 
     // palette migration
     palette.counterAxisSizingMode = 'AUTO'
-    palette.name = `${name}﹒${
-      themes.find((theme) => theme.isEnabled)?.type === 'default theme'
-        ? ''
-        : themes.find((theme) => theme.isEnabled)?.name + '﹒'
-    }${preset.name}﹒${colorSpace} ${
-      msg.data.view.includes('PALETTE') ? 'Palette' : 'Sheet'
-    }`
+    palette.name = setPaletteName(
+      name,
+      themes.find((theme) => theme.isEnabled)?.name,
+      preset.name,
+      colorSpace,
+      visionSimulationMode
+    )
   } else figma.notify(locals[lang].error.corruption)
 }
 
