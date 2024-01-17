@@ -385,12 +385,35 @@ export default class Settings extends React.Component<Props> {
                   action: this.props.onChangeSettings,
                 },
                 {
+                  label: null,
+                  value: null,
+                  feature: null,
+                  position: 1,
+                  type: 'SEPARATOR',
+                  isActive: true,
+                  isBlocked: false,
+                  children: [],
+                  action: () => null,
+                },
+                {
+                  label:
+                    locals[this.props.lang].settings.color.colorBlindMode.colorBlind,
+                  value: null,
+                  feature: null,
+                  position: 2,
+                  type: 'TITLE',
+                  isActive: true,
+                  isBlocked: false,
+                  children: [],
+                  action: () => null,
+                },
+                {
                   label:
                     locals[this.props.lang].settings.color.colorBlindMode
                       .protanomaly,
                   value: 'PROTANOMALY',
                   feature: 'UPDATE_COLOR_BLIND_MODE',
-                  position: 1,
+                  position: 3,
                   type: 'OPTION',
                   isActive: features.find(
                     (feature) =>
@@ -409,7 +432,7 @@ export default class Settings extends React.Component<Props> {
                       .protanopia,
                   value: 'PROTANOPIA',
                   feature: 'UPDATE_COLOR_BLIND_MODE',
-                  position: 2,
+                  position: 4,
                   type: 'OPTION',
                   isActive: features.find(
                     (feature) =>
@@ -428,7 +451,7 @@ export default class Settings extends React.Component<Props> {
                       .deuteranomaly,
                   value: 'DEUTERANOMALY',
                   feature: 'UPDATE_COLOR_BLIND_MODE',
-                  position: 3,
+                  position: 5,
                   type: 'OPTION',
                   isActive: features.find(
                     (feature) =>
@@ -447,7 +470,7 @@ export default class Settings extends React.Component<Props> {
                       .deuteranopia,
                   value: 'DEUTERANOPIA',
                   feature: 'UPDATE_COLOR_BLIND_MODE',
-                  position: 4,
+                  position: 6,
                   type: 'OPTION',
                   isActive: features.find(
                     (feature) =>
@@ -466,7 +489,7 @@ export default class Settings extends React.Component<Props> {
                       .tritanomaly,
                   value: 'TRITANOMALY',
                   feature: 'UPDATE_COLOR_BLIND_MODE',
-                  position: 5,
+                  position: 7,
                   type: 'OPTION',
                   isActive: features.find(
                     (feature) =>
@@ -485,7 +508,7 @@ export default class Settings extends React.Component<Props> {
                       .tritanopia,
                   value: 'TRITANOPIA',
                   feature: 'UPDATE_COLOR_BLIND_MODE',
-                  position: 6,
+                  position: 8,
                   type: 'OPTION',
                   isActive: features.find(
                     (feature) =>
@@ -504,7 +527,7 @@ export default class Settings extends React.Component<Props> {
                       .achromatomaly,
                   value: 'ACHROMATOMALY',
                   feature: 'UPDATE_COLOR_BLIND_MODE',
-                  position: 7,
+                  position: 9,
                   type: 'OPTION',
                   isActive: features.find(
                     (feature) =>
@@ -523,7 +546,7 @@ export default class Settings extends React.Component<Props> {
                       .achromatopsia,
                   value: 'ACHROMATOPSIA',
                   feature: 'UPDATE_COLOR_BLIND_MODE',
-                  position: 7,
+                  position: 10,
                   type: 'OPTION',
                   isActive: features.find(
                     (feature) =>

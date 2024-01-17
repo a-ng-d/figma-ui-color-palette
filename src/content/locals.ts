@@ -13,7 +13,6 @@ const glossary: {
   hex: 'HEX',
   rgb: 'RGB',
   p3: 'P3',
-  colorBlindMode: 'Color blind simulation',
   protanomaly: 'Protanomaly',
   protanopia: 'Protanopia',
   deuteranomaly: 'Deuteranomaly',
@@ -200,7 +199,8 @@ export const locals: { [key: string]: any } = {
           p3: glossary.p3,
         },
         colorBlindMode: {
-          label: glossary.colorBlindMode,
+          label: 'Vision simulation',
+          colorBlind: 'Color blind',
           none: 'None',
           protanomaly: glossary.protanomaly,
           protanopia: glossary.protanopia,
