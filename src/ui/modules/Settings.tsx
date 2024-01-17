@@ -354,7 +354,7 @@ export default class Settings extends React.Component<Props> {
       <Feature
         isActive={
           features.find(
-            (feature) => feature.name === 'SETTINGS_COLOR_BLIND_MODE'
+            (feature) => feature.name === 'SETTINGS_VISION_SIMULATION_MODE'
           )?.isActive
         }
       >
@@ -375,10 +375,10 @@ export default class Settings extends React.Component<Props> {
                   type: 'OPTION',
                   isActive: features.find(
                     (feature) =>
-                      feature.name === 'SETTINGS_COLOR_BLIND_MODE_NONE'
+                      feature.name === 'SETTINGS_VISION_SIMULATION_MODE_NONE'
                   )?.isActive,
                   isBlocked: isBlocked(
-                    'SETTINGS_COLOR_BLIND_MODE_NONE',
+                    'SETTINGS_VISION_SIMULATION_MODE_NONE',
                     this.props.planStatus
                   ),
                   children: [],
@@ -417,10 +417,10 @@ export default class Settings extends React.Component<Props> {
                   type: 'OPTION',
                   isActive: features.find(
                     (feature) =>
-                      feature.name === 'SETTINGS_COLOR_BLIND_MODE_NONE'
+                      feature.name === 'SETTINGS_VISION_SIMULATION_MODE_NONE'
                   )?.isActive,
                   isBlocked: isBlocked(
-                    'SETTINGS_COLOR_BLIND_MODE_NONE',
+                    'SETTINGS_VISION_SIMULATION_MODE_NONE',
                     this.props.planStatus
                   ),
                   children: [],
@@ -436,10 +436,10 @@ export default class Settings extends React.Component<Props> {
                   type: 'OPTION',
                   isActive: features.find(
                     (feature) =>
-                      feature.name === 'SETTINGS_COLOR_BLIND_MODE_PROTANOPIA'
+                      feature.name === 'SETTINGS_VISION_SIMULATION_MODE_PROTANOPIA'
                   )?.isActive,
                   isBlocked: isBlocked(
-                    'SETTINGS_COLOR_BLIND_MODE_PROTANOPIA',
+                    'SETTINGS_VISION_SIMULATION_MODE_PROTANOPIA',
                     this.props.planStatus
                   ),
                   children: [],
@@ -455,10 +455,10 @@ export default class Settings extends React.Component<Props> {
                   type: 'OPTION',
                   isActive: features.find(
                     (feature) =>
-                      feature.name === 'SETTINGS_COLOR_BLIND_MODE_DEUTERANOMALY'
+                      feature.name === 'SETTINGS_VISION_SIMULATION_MODE_DEUTERANOMALY'
                   )?.isActive,
                   isBlocked: isBlocked(
-                    'SETTINGS_COLOR_BLIND_MODE_DEUTERANOMALY',
+                    'SETTINGS_VISION_SIMULATION_MODE_DEUTERANOMALY',
                     this.props.planStatus
                   ),
                   children: [],
@@ -474,10 +474,10 @@ export default class Settings extends React.Component<Props> {
                   type: 'OPTION',
                   isActive: features.find(
                     (feature) =>
-                      feature.name === 'SETTINGS_COLOR_BLIND_MODE_DEUTERANOPIA'
+                      feature.name === 'SETTINGS_VISION_SIMULATION_MODE_DEUTERANOPIA'
                   )?.isActive,
                   isBlocked: isBlocked(
-                    'SETTINGS_COLOR_BLIND_MODE_DEUTERANOPIA',
+                    'SETTINGS_VISION_SIMULATION_MODE_DEUTERANOPIA',
                     this.props.planStatus
                   ),
                   children: [],
@@ -493,10 +493,10 @@ export default class Settings extends React.Component<Props> {
                   type: 'OPTION',
                   isActive: features.find(
                     (feature) =>
-                      feature.name === 'SETTINGS_COLOR_BLIND_MODE_TRITANOMALY'
+                      feature.name === 'SETTINGS_VISION_SIMULATION_MODE_TRITANOMALY'
                   )?.isActive,
                   isBlocked: isBlocked(
-                    'SETTINGS_COLOR_BLIND_MODE_TRITANOMALY',
+                    'SETTINGS_VISION_SIMULATION_MODE_TRITANOMALY',
                     this.props.planStatus
                   ),
                   children: [],
@@ -512,10 +512,10 @@ export default class Settings extends React.Component<Props> {
                   type: 'OPTION',
                   isActive: features.find(
                     (feature) =>
-                      feature.name === 'SETTINGS_COLOR_BLIND_MODE_TRITANOPIA'
+                      feature.name === 'SETTINGS_VISION_SIMULATION_MODE_TRITANOPIA'
                   )?.isActive,
                   isBlocked: isBlocked(
-                    'SETTINGS_COLOR_BLIND_MODE_TRITANOPIA',
+                    'SETTINGS_VISION_SIMULATION_MODE_TRITANOPIA',
                     this.props.planStatus
                   ),
                   children: [],
@@ -531,10 +531,10 @@ export default class Settings extends React.Component<Props> {
                   type: 'OPTION',
                   isActive: features.find(
                     (feature) =>
-                      feature.name === 'SETTINGS_COLOR_BLIND_MODE_ACHROMATOMALY'
+                      feature.name === 'SETTINGS_VISION_SIMULATION_MODE_ACHROMATOMALY'
                   )?.isActive,
                   isBlocked: isBlocked(
-                    'SETTINGS_COLOR_BLIND_MODE_ACHROMATOMALY',
+                    'SETTINGS_VISION_SIMULATION_MODE_ACHROMATOMALY',
                     this.props.planStatus
                   ),
                   children: [],
@@ -550,10 +550,10 @@ export default class Settings extends React.Component<Props> {
                   type: 'OPTION',
                   isActive: features.find(
                     (feature) =>
-                      feature.name === 'SETTINGS_COLOR_BLIND_MODE_ACHROMATOPSIA'
+                      feature.name === 'SETTINGS_VISION_SIMULATION_MODE_ACHROMATOPSIA'
                   )?.isActive,
                   isBlocked: isBlocked(
-                    'SETTINGS_COLOR_BLIND_MODE_ACHROMATOPSIA',
+                    'SETTINGS_VISION_SIMULATION_MODE_ACHROMATOPSIA',
                     this.props.planStatus
                   ),
                   children: [],

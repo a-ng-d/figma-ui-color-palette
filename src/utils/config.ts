@@ -522,7 +522,7 @@ const features: Array<Feature> = [
     service: ['CREATE', 'EDIT'],
   },
   {
-    name: 'SETTINGS_COLOR_BLIND_MODE',
+    name: 'SETTINGS_VISION_SIMULATION_MODE',
     description: 'Color blind simulation mode',
     isActive: true,
     isPro: false,
@@ -530,7 +530,7 @@ const features: Array<Feature> = [
     service: ['CREATE', 'EDIT'],
   },
   {
-    name: 'SETTINGS_COLOR_BLIND_MODE_NONE',
+    name: 'SETTINGS_VISION_SIMULATION_MODE_NONE',
     description: 'No vision simulation mode',
     isActive: true,
     isPro: false,
@@ -538,7 +538,7 @@ const features: Array<Feature> = [
     service: ['CREATE', 'EDIT'],
   },
   {
-    name: 'SETTINGS_COLOR_BLIND_MODE_PROTANOMALY',
+    name: 'SETTINGS_VISION_SIMULATION_MODE_PROTANOMALY',
     description: 'Protanomaly vision simulation mode',
     isActive: true,
     isPro: false,
@@ -546,7 +546,7 @@ const features: Array<Feature> = [
     service: ['CREATE', 'EDIT'],
   },
   {
-    name: 'SETTINGS_COLOR_BLIND_MODE_PROTANOPIA',
+    name: 'SETTINGS_VISION_SIMULATION_MODE_PROTANOPIA',
     description: 'Protanopia vision simulation mode',
     isActive: true,
     isPro: false,
@@ -554,7 +554,7 @@ const features: Array<Feature> = [
     service: ['CREATE', 'EDIT'],
   },
   {
-    name: 'SETTINGS_COLOR_BLIND_MODE_DEUTERANOMALY',
+    name: 'SETTINGS_VISION_SIMULATION_MODE_DEUTERANOMALY',
     description: 'Deuteranomaly vision simulation mode',
     isActive: true,
     isPro: false,
@@ -562,7 +562,7 @@ const features: Array<Feature> = [
     service: ['CREATE', 'EDIT'],
   },
   {
-    name: 'SETTINGS_COLOR_BLIND_MODE_DEUTERANOPIA',
+    name: 'SETTINGS_VISION_SIMULATION_MODE_DEUTERANOPIA',
     description: 'Deuteranopia vision simulation mode',
     isActive: true,
     isPro: false,
@@ -570,7 +570,7 @@ const features: Array<Feature> = [
     service: ['CREATE', 'EDIT'],
   },
   {
-    name: 'SETTINGS_COLOR_BLIND_MODE_TRITANOMALY',
+    name: 'SETTINGS_VISION_SIMULATION_MODE_TRITANOMALY',
     description: 'Tritanomaly vision simulation mode',
     isActive: true,
     isPro: false,
@@ -578,7 +578,7 @@ const features: Array<Feature> = [
     service: ['CREATE', 'EDIT'],
   },
   {
-    name: 'SETTINGS_COLOR_BLIND_MODE_TRITANOPIA',
+    name: 'SETTINGS_VISION_SIMULATION_MODE_TRITANOPIA',
     description: 'Tritanopia vision simulation mode',
     isActive: true,
     isPro: false,
@@ -586,7 +586,7 @@ const features: Array<Feature> = [
     service: ['CREATE', 'EDIT'],
   },
   {
-    name: 'SETTINGS_COLOR_BLIND_MODE_ACHROMATOMALY',
+    name: 'SETTINGS_VISION_SIMULATION_MODE_ACHROMATOMALY',
     description: 'Achromatomaly vision simulation mode',
     isActive: true,
     isPro: false,
@@ -594,7 +594,7 @@ const features: Array<Feature> = [
     service: ['CREATE', 'EDIT'],
   },
   {
-    name: 'SETTINGS_COLOR_BLIND_MODE_ACHROMATOPSIA',
+    name: 'SETTINGS_VISION_SIMULATION_MODE_ACHROMATOPSIA',
     description: 'Achromatopsia vision simulation mode',
     isActive: true,
     isPro: false,
