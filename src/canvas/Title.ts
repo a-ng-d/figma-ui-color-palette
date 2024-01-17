@@ -100,15 +100,19 @@ export default class Title {
     this.nodeProps.itemSpacing = 8
 
     // insert
+    if (
+      this.parent.themes.find((theme) => theme.isEnabled)?.type !=
+      'default theme'
+    )
+      this.nodeProps.appendChild(
+        new Tag(
+          '_theme',
+          `Theme: ${this.parent.themes.find((theme) => theme.isEnabled)?.name}`,
+          12
+        ).makeNodeTag()
+      )
     this.nodeProps.appendChild(
       new Tag('_preset', `Preset: ${this.parent.preset.name}`, 12).makeNodeTag()
-    )
-    this.nodeProps.appendChild(
-      new Tag(
-        '_view',
-        `Layout: ${this.parent.view.includes('PALETTE') ? 'Palette' : 'Sheet'}`,
-        12
-      ).makeNodeTag()
     )
     this.nodeProps.appendChild(
       new Tag(
@@ -120,22 +124,11 @@ export default class Title {
     if (this.parent.visionSimulationMode != 'NONE')
       this.nodeProps.appendChild(
         new Tag(
-          '_color-blind-simulation',
-          `Color blind simulation: ${
+          '_vision-simulation',
+          `Vision simulation: ${
             this.parent.visionSimulationMode.charAt(0) +
             this.parent.visionSimulationMode.toLocaleLowerCase().slice(1)
           }`,
-          12
-        ).makeNodeTag()
-      )
-    if (
-      this.parent.themes.find((theme) => theme.isEnabled)?.type !=
-      'default theme'
-    )
-      this.nodeProps.appendChild(
-        new Tag(
-          '_theme',
-          `Theme: ${this.parent.themes.find((theme) => theme.isEnabled)?.name}`,
           12
         ).makeNodeTag()
       )
