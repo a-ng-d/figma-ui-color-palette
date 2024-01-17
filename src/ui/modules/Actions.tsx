@@ -12,7 +12,7 @@ interface Props {
   context: string
   actions?: string
   sourceColors: Array<SourceColorConfiguration> | []
-  exportType?: string | null
+  exportType?: string
   planStatus?: 'UNPAID' | 'PAID'
   lang: Language
   onCreatePalette?: React.MouseEventHandler & React.KeyboardEventHandler
@@ -173,9 +173,7 @@ export default class Actions extends React.Component<Props> {
         <div className="buttons">
           <Button
             type="primary"
-            label={`${locals[this.props.lang].actions.export} ${
-              this.props.exportType
-            }`}
+            label={this.props.exportType}
             feature="EXPORT_PALETTE"
             action={this.props.onExportPalette}
           >

@@ -92,6 +92,7 @@ const exportJson = (palette: SceneNode) => {
 
     figma.ui.postMessage({
       type: 'EXPORT_PALETTE_JSON',
+      context: 'TOKENS_GLOBAL',
       data: json,
     })
   } else figma.notify(locals[lang].error.corruption)

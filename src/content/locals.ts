@@ -13,6 +13,14 @@ const glossary: {
   hex: 'HEX',
   rgb: 'RGB',
   p3: 'P3',
+  protanomaly: 'Protanomaly',
+  protanopia: 'Protanopia',
+  deuteranomaly: 'Deuteranomaly',
+  deuteranopia: 'Deuteranopia',
+  tritanomaly: 'Tritanomaly',
+  tritanopia: 'Tritanopia',
+  achromatomaly: 'Achromatomaly',
+  achromatopsia: 'Achromatopsia',
 }
 
 export const locals: { [key: string]: any } = {
@@ -37,6 +45,16 @@ export const locals: { [key: string]: any } = {
       trialFeedback: 'How was it?',
       news: "What's new",
       about: 'About',
+    },
+    relaunch: {
+      create: {
+        label: 'Create a UI Color Palette',
+        description: 'Scale the selected colors',
+      },
+      edit: {
+        label: 'Edit a UI Color Palette',
+        description: 'Manage, publish, transfer shades',
+      },
     },
     contexts: {
       source: 'Source',
@@ -108,10 +126,31 @@ export const locals: { [key: string]: any } = {
     export: {
       format: 'Code',
       preview: 'Preview',
-      json: 'Global (JSON)',
-      amznStyleDictionary: 'Amazon Style Dictionary (JSON)',
-      tokensStudio: 'Tokens Studio (JSON)',
-      css: 'Custom Properties (CSS)',
+      tokens: {
+        label: 'Tokens',
+        global: 'Global (JSON)',
+        amznStyleDictionary: 'Amazon Style Dictionary (JSON)',
+        tokensStudio: 'Tokens Studio (JSON)',
+      },
+      css: {
+        customProperties: 'Custom Properties (CSS)',
+      },
+      tailwind: {
+        config: 'Tailwind (JS)',
+      },
+      apple: {
+        label: 'Apple',
+        swiftui: 'SwiftUI (SWIFT)',
+        uikit: 'UIKit (SWIFT)',
+      },
+      android: {
+        label: 'Android',
+        compose: 'Compose (KT)',
+        resources: 'Resources (XML)',
+      },
+      csv: {
+        spreadsheet: 'Spreadsheet (CSV)',
+      },
       colorSpace: {
         label: glossary.colorSpace,
         rgb: glossary.rgb,
@@ -119,10 +158,6 @@ export const locals: { [key: string]: any } = {
         lch: glossary.lch,
         p3: glossary.p3,
       },
-      tailwind: 'Tailwind (JS)',
-      swift: 'iOS (SwiftUI)',
-      xml: 'Android (XML)',
-      csv: 'Spreadsheet (CSV)',
     },
     settings: {
       global: {
@@ -162,6 +197,19 @@ export const locals: { [key: string]: any } = {
           hex: glossary.hex,
           rgb: glossary.rgb,
           p3: glossary.p3,
+        },
+        visionSimulationMode: {
+          label: 'Vision simulation',
+          colorBlind: 'Color blind',
+          none: 'None',
+          protanomaly: glossary.protanomaly,
+          protanopia: glossary.protanopia,
+          deuteranomaly: glossary.deuteranomaly,
+          deuteranopia: glossary.deuteranopia,
+          tritanomaly: glossary.tritanomaly,
+          tritanopia: glossary.tritanopia,
+          achromatomaly: glossary.achromatomaly,
+          achromatopsia: glossary.achromatopsia,
         },
         newAlgorithm: {
           label: 'Enable the new algorithm for creating color shades',
@@ -232,7 +280,7 @@ export const locals: { [key: string]: any } = {
         title:
           'Would you like to upgrade to the Pro plan within the next 72 hours?',
         message:
-          'Explore the potential of synchronizing your color palette with variables and exporting it as design tokens, app resources, or files for Tokens Studio.',
+          'Explore the potential of synchronizing your color palette with variables, exporting it as design tokens, app resources, or for Tokens Studio and simulating a vision impairment.',
         cta: 'Enable the 72-hour trial',
         option: 'Purchase',
       },
@@ -255,7 +303,7 @@ export const locals: { [key: string]: any } = {
     },
     warning: {
       tooManyThemesToCreateModes:
-        'You cannot create more than 4 variable modes',
+        'You must upgrade your plan to create more variable modes',
       emptySourceColors:
         'There is no source color. Add them manually in the Colors section.',
       hslColorSpace:

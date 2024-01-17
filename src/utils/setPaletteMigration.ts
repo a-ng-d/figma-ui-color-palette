@@ -1,5 +1,6 @@
 import type {
   AlgorithmVersionConfiguration,
+  visionSimulationModeConfiguration,
   ColorConfiguration,
   ColorSpaceConfiguration,
 } from './types'
@@ -20,6 +21,7 @@ const setPaletteMigration = (palette: BaseNode) => {
       palette.getPluginData('colors')
     ),
     colorSpace = palette.getPluginData('colorSpace'),
+    visionSimulationMode = palette.getPluginData('visionSimulationMode'),
     themes = palette.getPluginData('themes'),
     captions = palette.getPluginData('captions'),
     properties = palette.getPluginData('properties'),
@@ -69,6 +71,9 @@ const setPaletteMigration = (palette: BaseNode) => {
     palette.setPluginData('colorSpace', 'OKLCH')
 
   if (colorSpace === '') palette.setPluginData('colorSpace', 'LCH')
+
+  if (visionSimulationMode === '')
+    palette.setPluginData('visionSimulationMode', 'NONE')
 
   // themes
   if (themes === '')
@@ -127,6 +132,9 @@ const setPaletteMigration = (palette: BaseNode) => {
         colorSpace: palette.getPluginData(
           'colorSpace'
         ) as ColorSpaceConfiguration,
+        visionSimulationMode: palette.getPluginData(
+          'visionSimulationMode'
+        ) as visionSimulationModeConfiguration,
         themes: JSON.parse(palette.getPluginData('themes')),
         view: 'SHEET',
         textColorsTheme: JSON.parse(palette.getPluginData('textColorsTheme')),

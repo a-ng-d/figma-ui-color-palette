@@ -5,6 +5,7 @@ import type {
   ThemeConfiguration,
 } from '../utils/types'
 import setPaletteMigration from '../utils/setPaletteMigration'
+import { lang, locals } from '../content/locals'
 
 export let currentSelection: ReadonlyArray<SceneNode>
 export let previousSelection: ReadonlyArray<SceneNode> | undefined
@@ -23,9 +24,9 @@ const processSelection = () => {
   const palette: FrameNode | InstanceNode = selection[0] as
     | FrameNode
     | InstanceNode
-  const selectionHandler = (state: string) => {
+  const selectionHandler = (state: string, element: any = null) => {
     const actions: ActionsList = {
-      PALETTE_SELECTED: () =>
+      PALETTE_SELECTED: () => {
         figma.ui.postMessage({
           type: 'PALETTE_SELECTED',
           data: {
@@ -37,6 +38,7 @@ const processSelection = () => {
             ).scale,
             colors: JSON.parse(palette.getPluginData('colors')),
             colorSpace: palette.getPluginData('colorSpace'),
+            visionSimulationMode: palette.getPluginData('visionSimulationMode'),
             themes: JSON.parse(palette.getPluginData('themes')),
             view: palette.getPluginData('view'),
             textColorsTheme: JSON.parse(
@@ -45,6 +47,10 @@ const processSelection = () => {
             algorithmVersion: palette.getPluginData('algorithmVersion'),
           },
         }),
+          palette.setRelaunchData({
+            edit: locals[lang].relaunch.edit.description,
+          })
+      },
       EMPTY_SELECTION: () =>
         figma.ui.postMessage({
           type: 'EMPTY_SELECTION',
@@ -54,6 +60,9 @@ const processSelection = () => {
         figma.ui.postMessage({
           type: 'COLOR_SELECTED',
           data: viableSelection,
+        })
+        element.setRelaunchData({
+          create: locals[lang].relaunch.create.description,
         })
       },
     }
@@ -101,7 +110,7 @@ const processSelection = () => {
           source: 'CANVAS',
           id: uid(),
         })
-        selectionHandler('COLOR_SELECTED')
+        selectionHandler('COLOR_SELECTED', element)
       }
   })
 

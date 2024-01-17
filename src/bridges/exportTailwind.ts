@@ -49,6 +49,7 @@ const exportTailwind = (palette: SceneNode) => {
 
     figma.ui.postMessage({
       type: 'EXPORT_PALETTE_TAILWIND',
+      context: 'TAILWIND',
       data: json,
     })
   } else figma.notify(locals[lang].error.corruption)

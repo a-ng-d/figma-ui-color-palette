@@ -1,5 +1,6 @@
 import * as React from 'react'
 import type {
+  visionSimulationModeConfiguration,
   EditorType,
   Language,
   SourceColorConfiguration,
@@ -24,6 +25,7 @@ interface Props {
   description: string
   textColorsTheme?: TextColorsThemeHexModel
   colorSpace: string
+  visionSimulationMode: visionSimulationModeConfiguration
   view: string
   isNewAlgorithm?: boolean
   actions?: string
@@ -347,6 +349,237 @@ export default class Settings extends React.Component<Props> {
     )
   }
 
+  visionSimulationMode = () => {
+    return (
+      <Feature
+        isActive={
+          features.find(
+            (feature) => feature.name === 'SETTINGS_VISION_SIMULATION_MODE'
+          )?.isActive
+        }
+      >
+        <div className="settings__item">
+          <FormItem
+            id="change-color-blind-mode"
+            label={
+              locals[this.props.lang].settings.color.visionSimulationMode.label
+            }
+          >
+            <Dropdown
+              id="color-blind-modes"
+              options={[
+                {
+                  label:
+                    locals[this.props.lang].settings.color.visionSimulationMode
+                      .none,
+                  value: 'NONE',
+                  feature: 'UPDATE_COLOR_BLIND_MODE',
+                  position: 0,
+                  type: 'OPTION',
+                  isActive: features.find(
+                    (feature) =>
+                      feature.name === 'SETTINGS_VISION_SIMULATION_MODE_NONE'
+                  )?.isActive,
+                  isBlocked: isBlocked(
+                    'SETTINGS_VISION_SIMULATION_MODE_NONE',
+                    this.props.planStatus
+                  ),
+                  children: [],
+                  action: this.props.onChangeSettings,
+                },
+                {
+                  label: null,
+                  value: null,
+                  feature: null,
+                  position: 1,
+                  type: 'SEPARATOR',
+                  isActive: true,
+                  isBlocked: false,
+                  children: [],
+                  action: () => null,
+                },
+                {
+                  label:
+                    locals[this.props.lang].settings.color.visionSimulationMode
+                      .colorBlind,
+                  value: null,
+                  feature: null,
+                  position: 2,
+                  type: 'TITLE',
+                  isActive: true,
+                  isBlocked: false,
+                  children: [],
+                  action: () => null,
+                },
+                {
+                  label:
+                    locals[this.props.lang].settings.color.visionSimulationMode
+                      .protanomaly,
+                  value: 'PROTANOMALY',
+                  feature: 'UPDATE_COLOR_BLIND_MODE',
+                  position: 3,
+                  type: 'OPTION',
+                  isActive: features.find(
+                    (feature) =>
+                      feature.name === 'SETTINGS_VISION_SIMULATION_MODE_PROTANOMALY'
+                  )?.isActive,
+                  isBlocked: isBlocked(
+                    'SETTINGS_VISION_SIMULATION_MODE_PROTANOMALY',
+                    this.props.planStatus
+                  ),
+                  children: [],
+                  action: this.props.onChangeSettings,
+                },
+                {
+                  label:
+                    locals[this.props.lang].settings.color.visionSimulationMode
+                      .protanopia,
+                  value: 'PROTANOPIA',
+                  feature: 'UPDATE_COLOR_BLIND_MODE',
+                  position: 4,
+                  type: 'OPTION',
+                  isActive: features.find(
+                    (feature) =>
+                      feature.name ===
+                      'SETTINGS_VISION_SIMULATION_MODE_PROTANOPIA'
+                  )?.isActive,
+                  isBlocked: isBlocked(
+                    'SETTINGS_VISION_SIMULATION_MODE_PROTANOPIA',
+                    this.props.planStatus
+                  ),
+                  children: [],
+                  action: this.props.onChangeSettings,
+                },
+                {
+                  label:
+                    locals[this.props.lang].settings.color.visionSimulationMode
+                      .deuteranomaly,
+                  value: 'DEUTERANOMALY',
+                  feature: 'UPDATE_COLOR_BLIND_MODE',
+                  position: 5,
+                  type: 'OPTION',
+                  isActive: features.find(
+                    (feature) =>
+                      feature.name ===
+                      'SETTINGS_VISION_SIMULATION_MODE_DEUTERANOMALY'
+                  )?.isActive,
+                  isBlocked: isBlocked(
+                    'SETTINGS_VISION_SIMULATION_MODE_DEUTERANOMALY',
+                    this.props.planStatus
+                  ),
+                  children: [],
+                  action: this.props.onChangeSettings,
+                },
+                {
+                  label:
+                    locals[this.props.lang].settings.color.visionSimulationMode
+                      .deuteranopia,
+                  value: 'DEUTERANOPIA',
+                  feature: 'UPDATE_COLOR_BLIND_MODE',
+                  position: 6,
+                  type: 'OPTION',
+                  isActive: features.find(
+                    (feature) =>
+                      feature.name ===
+                      'SETTINGS_VISION_SIMULATION_MODE_DEUTERANOPIA'
+                  )?.isActive,
+                  isBlocked: isBlocked(
+                    'SETTINGS_VISION_SIMULATION_MODE_DEUTERANOPIA',
+                    this.props.planStatus
+                  ),
+                  children: [],
+                  action: this.props.onChangeSettings,
+                },
+                {
+                  label:
+                    locals[this.props.lang].settings.color.visionSimulationMode
+                      .tritanomaly,
+                  value: 'TRITANOMALY',
+                  feature: 'UPDATE_COLOR_BLIND_MODE',
+                  position: 7,
+                  type: 'OPTION',
+                  isActive: features.find(
+                    (feature) =>
+                      feature.name ===
+                      'SETTINGS_VISION_SIMULATION_MODE_TRITANOMALY'
+                  )?.isActive,
+                  isBlocked: isBlocked(
+                    'SETTINGS_VISION_SIMULATION_MODE_TRITANOMALY',
+                    this.props.planStatus
+                  ),
+                  children: [],
+                  action: this.props.onChangeSettings,
+                },
+                {
+                  label:
+                    locals[this.props.lang].settings.color.visionSimulationMode
+                      .tritanopia,
+                  value: 'TRITANOPIA',
+                  feature: 'UPDATE_COLOR_BLIND_MODE',
+                  position: 8,
+                  type: 'OPTION',
+                  isActive: features.find(
+                    (feature) =>
+                      feature.name ===
+                      'SETTINGS_VISION_SIMULATION_MODE_TRITANOPIA'
+                  )?.isActive,
+                  isBlocked: isBlocked(
+                    'SETTINGS_VISION_SIMULATION_MODE_TRITANOPIA',
+                    this.props.planStatus
+                  ),
+                  children: [],
+                  action: this.props.onChangeSettings,
+                },
+                {
+                  label:
+                    locals[this.props.lang].settings.color.visionSimulationMode
+                      .achromatomaly,
+                  value: 'ACHROMATOMALY',
+                  feature: 'UPDATE_COLOR_BLIND_MODE',
+                  position: 9,
+                  type: 'OPTION',
+                  isActive: features.find(
+                    (feature) =>
+                      feature.name ===
+                      'SETTINGS_VISION_SIMULATION_MODE_ACHROMATOMALY'
+                  )?.isActive,
+                  isBlocked: isBlocked(
+                    'SETTINGS_VISION_SIMULATION_MODE_ACHROMATOMALY',
+                    this.props.planStatus
+                  ),
+                  children: [],
+                  action: this.props.onChangeSettings,
+                },
+                {
+                  label:
+                    locals[this.props.lang].settings.color.visionSimulationMode
+                      .achromatopsia,
+                  value: 'ACHROMATOPSIA',
+                  feature: 'UPDATE_COLOR_BLIND_MODE',
+                  position: 10,
+                  type: 'OPTION',
+                  isActive: features.find(
+                    (feature) =>
+                      feature.name ===
+                      'SETTINGS_VISION_SIMULATION_MODE_ACHROMATOPSIA'
+                  )?.isActive,
+                  isBlocked: isBlocked(
+                    'SETTINGS_VISION_SIMULATION_MODE_ACHROMATOPSIA',
+                    this.props.planStatus
+                  ),
+                  children: [],
+                  action: this.props.onChangeSettings,
+                },
+              ]}
+              selected={this.props.visionSimulationMode}
+              isNew
+            />
+          </FormItem>
+        </div>
+      </Feature>
+    )
+  }
+
   newAlgorithm = () => {
     return (
       <Feature
@@ -523,6 +756,7 @@ export default class Settings extends React.Component<Props> {
           </div>
         </div>
         <this.colorSpace />
+        <this.visionSimulationMode />
         {this.props.context === 'LOCAL_STYLES' ? <this.newAlgorithm /> : null}
       </div>
     )

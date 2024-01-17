@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client'
 import type {
   ActionsList,
   AlgorithmVersionConfiguration,
+  visionSimulationModeConfiguration,
   ColorConfiguration,
   ColorSpaceConfiguration,
   DispatchProcess,
@@ -32,6 +33,7 @@ import features from '../utils/config'
 import 'figma-plugin-ds/dist/figma-plugin-ds.css'
 import './stylesheets/app.css'
 import './stylesheets/app-components.css'
+import { locals } from '../content/locals'
 
 let isPaletteSelected = false
 const container = document.getElementById('app'),
@@ -43,6 +45,7 @@ const settingsMessage: SettingsMessage = {
     name: '',
     description: '',
     colorSpace: 'LCH',
+    visionSimulationMode: 'NONE',
     textColorsTheme: {
       lightColor: '#FFFFFF',
       darkColor: '#000000',
@@ -74,6 +77,7 @@ class App extends React.Component<any, any> {
       scale: {} as ScaleConfiguration,
       newColors: [] as Array<ColorConfiguration> | [],
       colorSpace: 'LCH' as ColorSpaceConfiguration,
+      visionSimulationMode: 'NONE' as visionSimulationModeConfiguration,
       themes: [] as ThemeConfiguration | [],
       view: 'PALETTE_WITH_PROPERTIES' as ViewConfiguration,
       textColorsTheme: {
@@ -83,6 +87,8 @@ class App extends React.Component<any, any> {
       algorithmVersion: 'v1' as AlgorithmVersionConfiguration,
       export: {
         format: '',
+        context: '',
+        label: '',
         mimeType: '',
         data: '',
       },
@@ -285,6 +291,8 @@ class App extends React.Component<any, any> {
       settingsMessage.data.name = e.target.value
       settingsMessage.data.description = this.state['description']
       settingsMessage.data.colorSpace = this.state['colorSpace']
+      settingsMessage.data.visionSimulationMode =
+        this.state['visionSimulationMode']
       settingsMessage.data.textColorsTheme = this.state['textColorsTheme']
       settingsMessage.data.algorithmVersion = this.state['algorithmVersion']
 
@@ -304,6 +312,8 @@ class App extends React.Component<any, any> {
       settingsMessage.data.name = this.state['name']
       settingsMessage.data.description = e.target.value
       settingsMessage.data.colorSpace = this.state['colorSpace']
+      settingsMessage.data.visionSimulationMode =
+        this.state['visionSimulationMode']
       settingsMessage.data.textColorsTheme = this.state['textColorsTheme']
       settingsMessage.data.algorithmVersion = this.state['algorithmVersion']
 
@@ -332,10 +342,12 @@ class App extends React.Component<any, any> {
     }
 
     const updateColorSpace = () => {
+      palette.colorSpace = e.target.dataset.value
       settingsMessage.data.name = this.state['name']
       settingsMessage.data.description = this.state['description']
       settingsMessage.data.colorSpace = e.target.dataset.value
-      palette.colorSpace = e.target.dataset.value
+      settingsMessage.data.visionSimulationMode =
+        this.state['visionSimulationMode']
       settingsMessage.data.textColorsTheme = this.state['textColorsTheme']
       settingsMessage.data.algorithmVersion = this.state['algorithmVersion']
 
@@ -348,10 +360,30 @@ class App extends React.Component<any, any> {
         parent.postMessage({ pluginMessage: settingsMessage }, '*')
     }
 
+    const updatevisionSimulationMode = () => {
+      palette.visionSimulationMode = e.target.dataset.value
+      settingsMessage.data.name = this.state['name']
+      settingsMessage.data.description = this.state['description']
+      settingsMessage.data.colorSpace = this.state['colorSpace']
+      settingsMessage.data.visionSimulationMode = e.target.dataset.value
+      settingsMessage.data.textColorsTheme = this.state['textColorsTheme']
+      settingsMessage.data.algorithmVersion = this.state['algorithmVersion']
+
+      this.setState({
+        visionSimulationMode: settingsMessage.data.visionSimulationMode,
+        onGoingStep: 'settings changed',
+      })
+
+      if (this.state['service'] === 'EDIT')
+        parent.postMessage({ pluginMessage: settingsMessage }, '*')
+    }
+
     const updateAlgorythmVersion = () => {
       settingsMessage.data.name = this.state['name']
       settingsMessage.data.description = this.state['description']
       settingsMessage.data.colorSpace = this.state['colorSpace']
+      settingsMessage.data.visionSimulationMode =
+        this.state['visionSimulationMode']
       settingsMessage.data.textColorsTheme = this.state['textColorsTheme']
       settingsMessage.data.algorithmVersion = !e.target.checked ? 'v1' : 'v2'
 
@@ -372,6 +404,8 @@ class App extends React.Component<any, any> {
         settingsMessage.data.name = this.state['name']
         settingsMessage.data.description = this.state['description']
         settingsMessage.data.colorSpace = this.state['colorSpace']
+        settingsMessage.data.visionSimulationMode =
+          this.state['visionSimulationMode']
         settingsMessage.data.textColorsTheme.lightColor = code
         palette.textColorsTheme.lightColor = code
         settingsMessage.data.textColorsTheme.darkColor =
@@ -399,6 +433,8 @@ class App extends React.Component<any, any> {
         settingsMessage.data.name = this.state['name']
         settingsMessage.data.description = this.state['description']
         settingsMessage.data.colorSpace = this.state['colorSpace']
+        settingsMessage.data.visionSimulationMode =
+          this.state['visionSimulationMode']
         settingsMessage.data.textColorsTheme.lightColor =
           this.state['textColorsTheme'].lightColor
         settingsMessage.data.textColorsTheme.darkColor = code
@@ -422,6 +458,7 @@ class App extends React.Component<any, any> {
       UPDATE_DESCRIPTION: () => updateDescription(),
       UPDATE_VIEW: () => updateView(),
       UPDATE_COLOR_SPACE: () => updateColorSpace(),
+      UPDATE_COLOR_BLIND_MODE: () => updatevisionSimulationMode(),
       UPDATE_ALGORITHM_VERSION: () => updateAlgorythmVersion(),
       CHANGE_TEXT_LIGHT_COLOR: () => updateTextLightColor(),
       CHANGE_TEXT_DARK_COLOR: () => updateTextDarkColor(),
@@ -464,6 +501,7 @@ class App extends React.Component<any, any> {
             description: '',
             preset: presets.find((preset) => preset.id === 'MATERIAL'),
             colorSpace: 'LCH',
+            visionSimulationMode: 'NONE',
             view: 'PALETTE_WITH_PROPERTIES',
             textColorsTheme: {
               lightColor: '#FFFFFF',
@@ -475,6 +513,7 @@ class App extends React.Component<any, any> {
           palette.description = ''
           palette.preset = {}
           palette.colorSpace = 'LCH'
+          palette.visionSimulationMode = 'NONE'
           palette.view = 'PALETTE_WITH_PROPERTIES'
           palette.textColorsTheme = {
             lightColor: '#FFFFFF',
@@ -490,6 +529,7 @@ class App extends React.Component<any, any> {
               description: '',
               preset: presets.find((preset) => preset.id === 'MATERIAL'),
               colorSpace: 'LCH',
+              visionSimulationMode: 'NONE',
               view: 'PALETTE_WITH_PROPERTIES',
               textColorsTheme: {
                 lightColor: '#FFFFFF',
@@ -500,6 +540,7 @@ class App extends React.Component<any, any> {
             palette.description = ''
             palette.preset = presets.find((preset) => preset.id === 'MATERIAL')
             palette.colorSpace = 'LCH'
+            palette.visionSimulationMode = 'NONE'
             palette.view = 'PALETTE_WITH_PROPERTIES'
             palette.textColorsTheme = {
               lightColor: '#FFFFFF',
@@ -526,7 +567,8 @@ class App extends React.Component<any, any> {
             {
               pluginMessage: {
                 type: 'EXPORT_PALETTE',
-                export: this.state['export'].format,
+                export: this.state['export'].context,
+                colorSpace: this.state['export'].colorSpace,
               },
             },
             '*'
@@ -540,6 +582,8 @@ class App extends React.Component<any, any> {
             scale: e.data.pluginMessage.data.scale,
             newColors: e.data.pluginMessage.data.colors,
             colorSpace: e.data.pluginMessage.data.colorSpace,
+            visionSimulationMode:
+              e.data.pluginMessage.data.visionSimulationMode,
             themes: e.data.pluginMessage.data.themes,
             view: e.data.pluginMessage.data.view,
             textColorsTheme: e.data.pluginMessage.data.textColorsTheme,
@@ -552,6 +596,10 @@ class App extends React.Component<any, any> {
           this.setState({
             export: {
               format: 'JSON',
+              context: e.data.pluginMessage.context,
+              label: `${locals[this.state['lang']].actions.export} ${
+                locals[this.state['lang']].export.tokens.label
+              }`,
               mimeType: 'application/json',
               data: JSON.stringify(e.data.pluginMessage.data, null, '  '),
             },
@@ -562,6 +610,11 @@ class App extends React.Component<any, any> {
           this.setState({
             export: {
               format: 'CSS',
+              colorSpace: e.data.pluginMessage.colorSpace,
+              context: e.data.pluginMessage.context,
+              label: `${locals[this.state['lang']].actions.export} ${
+                locals[this.state['lang']].export.css.customProperties
+              }`,
               mimeType: 'text/css',
               data: `:root {\n  ${e.data.pluginMessage.data.join('\n  ')}\n}`,
             },
@@ -571,7 +624,11 @@ class App extends React.Component<any, any> {
         const exportPaletteToTaiwind = () =>
           this.setState({
             export: {
-              format: 'TAILWIND',
+              format: 'JS',
+              context: e.data.pluginMessage.context,
+              label: `${locals[this.state['lang']].actions.export} ${
+                locals[this.state['lang']].export.tailwind.config
+              }`,
               mimeType: 'text/javascript',
               data: `/** @type {import('tailwindcss').Config} */\nmodule.exports = ${JSON.stringify(
                 e.data.pluginMessage.data,
@@ -582,14 +639,50 @@ class App extends React.Component<any, any> {
             onGoingStep: 'export previewed',
           })
 
-        const exportPaletteToSwift = () =>
+        const exportPaletteToSwiftUI = () =>
           this.setState({
             export: {
               format: 'SWIFT',
+              context: e.data.pluginMessage.context,
+              label: `${locals[this.state['lang']].actions.export} ${
+                locals[this.state['lang']].export.apple.swiftui
+              }`,
               mimeType: 'text/swift',
-              data: `import SwiftUI\n\npublic extension Color {\n\n  static let Token = Color.TokenColor()\n\n  struct TokenColor {\n    ${e.data.pluginMessage.data.join(
+              data: `import SwiftUI\n\npublic extension Color {\n  static let Token = Color.TokenColor()\n  struct TokenColor {\n    ${e.data.pluginMessage.data.join(
                 '\n    '
               )}\n  }\n}`,
+            },
+            onGoingStep: 'export previewed',
+          })
+
+        const exportPaletteToUIKit = () =>
+          this.setState({
+            export: {
+              format: 'SWIFT',
+              context: e.data.pluginMessage.context,
+              label: `${locals[this.state['lang']].actions.export} ${
+                locals[this.state['lang']].export.apple.uikit
+              }`,
+              mimeType: 'text/swift',
+              data: `import UIKit\n\nstruct Color {\n  ${e.data.pluginMessage.data.join(
+                '\n\n  '
+              )}\n}`,
+            },
+            onGoingStep: 'export previewed',
+          })
+
+        const exportPaletteToKt = () =>
+          this.setState({
+            export: {
+              format: 'KT',
+              context: e.data.pluginMessage.context,
+              label: `${locals[this.state['lang']].actions.export} ${
+                locals[this.state['lang']].export.android.compose
+              }`,
+              mimeType: 'text/x-kotlin',
+              data: `import androidx.compose.ui.graphics.Color\n\n${e.data.pluginMessage.data.join(
+                '\n'
+              )}`,
             },
             onGoingStep: 'export previewed',
           })
@@ -598,6 +691,10 @@ class App extends React.Component<any, any> {
           this.setState({
             export: {
               format: 'XML',
+              context: e.data.pluginMessage.context,
+              label: `${locals[this.state['lang']].actions.export} ${
+                locals[this.state['lang']].export.android.resources
+              }`,
               mimeType: 'text/xml',
               data: `<?xml version="1.0" encoding="utf-8"?>\n<resources>\n  ${e.data.pluginMessage.data.join(
                 '\n  '
@@ -610,6 +707,10 @@ class App extends React.Component<any, any> {
           this.setState({
             export: {
               format: 'CSV',
+              context: e.data.pluginMessage.context,
+              label: `${locals[this.state['lang']].actions.export} ${
+                locals[this.state['lang']].export.csv.spreadsheet
+              }`,
               mimeType: 'text/csv',
               data: e.data.pluginMessage.data,
             },
@@ -639,7 +740,9 @@ class App extends React.Component<any, any> {
           EXPORT_PALETTE_JSON: () => exportPaletteToJson(),
           EXPORT_PALETTE_CSS: () => exportPaletteToCss(),
           EXPORT_PALETTE_TAILWIND: () => exportPaletteToTaiwind(),
-          EXPORT_PALETTE_SWIFT: () => exportPaletteToSwift(),
+          EXPORT_PALETTE_SWIFTUI: () => exportPaletteToSwiftUI(),
+          EXPORT_PALETTE_UIKIT: () => exportPaletteToUIKit(),
+          EXPORT_PALETTE_KT: () => exportPaletteToKt(),
           EXPORT_PALETTE_XML: () => exportPaletteToXml(),
           EXPORT_PALETTE_CSV: () => exportPaletteToCsv(),
           GET_PRO_PLAN: () => getProPlan(),
@@ -668,6 +771,7 @@ class App extends React.Component<any, any> {
                 description={this.state['description']}
                 preset={this.state['preset']}
                 colorSpace={this.state['colorSpace']}
+                visionSimulationMode={this.state['visionSimulationMode']}
                 view={this.state['view']}
                 textColorsTheme={this.state['textColorsTheme']}
                 planStatus={this.state['planStatus']}
@@ -692,6 +796,7 @@ class App extends React.Component<any, any> {
                 scale={this.state['scale']}
                 colors={this.state['newColors']}
                 colorSpace={this.state['colorSpace']}
+                visionSimulationMode={this.state['visionSimulationMode']}
                 themes={this.state['themes']}
                 view={this.state['view']}
                 textColorsTheme={this.state['textColorsTheme']}

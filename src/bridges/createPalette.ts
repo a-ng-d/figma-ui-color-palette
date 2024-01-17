@@ -10,6 +10,7 @@ const createPalette = (msg: any, palette: SceneNode) => {
     msg.data.palette.preset,
     msg.data.palette.scale,
     msg.data.palette.colorSpace,
+    msg.data.palette.visionSimulationMode,
     msg.data.palette.view,
     msg.data.palette.textColorsTheme,
     'v2'

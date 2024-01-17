@@ -1,4 +1,5 @@
 import chroma from 'chroma-js'
+import * as blinder from 'color-blind'
 import { Hsluv } from 'hsluv'
 import type {
   PaletteNode,
@@ -6,6 +7,8 @@ import type {
   PaletteDataThemeItem,
   PaletteDataColorItem,
   PaletteData,
+  visionSimulationModeConfiguration,
+  ActionsList,
 } from '../utils/types'
 import Title from './Title'
 import Header from './Header'
@@ -79,7 +82,7 @@ export default class Colors {
         )
         .rgb()
 
-    return newColor ?? [0, 0, 0]
+    return this.simulateColorBlind(newColor, this.parent.visionSimulationMode)
   }
 
   getShadeColorFromOklch = (
@@ -103,7 +106,7 @@ export default class Colors {
         )
         .rgb()
 
-    return newColor ?? [0, 0, 0]
+    return this.simulateColorBlind(newColor, this.parent.visionSimulationMode)
   }
 
   getShadeColorFromLab = (
@@ -144,7 +147,7 @@ export default class Colors {
       )
       .rgb()
 
-    return newColor ?? [0, 0, 0]
+    return this.simulateColorBlind(newColor, this.parent.visionSimulationMode)
   }
 
   getShadeColorFromOklab = (
@@ -185,7 +188,7 @@ export default class Colors {
       )
       .rgb()
 
-    return newColor ?? [0, 0, 0]
+    return this.simulateColorBlind(newColor, this.parent.visionSimulationMode)
   }
 
   getShadeColorFromHsl = (
@@ -209,7 +212,7 @@ export default class Colors {
         )
         .rgb()
 
-    return newColor ?? [0, 0, 0]
+    return this.simulateColorBlind(newColor, this.parent.visionSimulationMode)
   }
 
   getShadeColorFromHsluv = (
@@ -249,7 +252,35 @@ export default class Colors {
       hsluv.rgb_b * 255,
     ]
 
-    return newColor ?? [0, 0, 0]
+    return this.simulateColorBlind(newColor, this.parent.visionSimulationMode)
+  }
+
+  simulateColorBlind = (
+    sourceColor: [number, number, number],
+    visionSimulationMode: visionSimulationModeConfiguration
+  ): [number, number, number] => {
+    const actions: ActionsList = {
+      NONE: () => sourceColor,
+      PROTANOMALY: () =>
+        chroma(blinder.protanomaly(chroma(sourceColor).hex())).rgb(false),
+      PROTANOPIA: () =>
+        chroma(blinder.protanopia(chroma(sourceColor).hex())).rgb(false),
+      DEUTERANOMALY: () =>
+        chroma(blinder.deuteranomaly(chroma(sourceColor).hex())).rgb(false),
+      DEUTERANOPIA: () =>
+        chroma(blinder.deuteranopia(chroma(sourceColor).hex())).rgb(false),
+      TRITANOMALY: () =>
+        chroma(blinder.tritanomaly(chroma(sourceColor).hex())).rgb(false),
+      TRITANOPIA: () =>
+        chroma(blinder.tritanopia(chroma(sourceColor).hex())).rgb(false),
+      ACHROMATOMALY: () =>
+        chroma(blinder.achromatomaly(chroma(sourceColor).hex())).rgb(false),
+      ACHROMATOPSIA: () =>
+        chroma(blinder.achromatopsia(chroma(sourceColor).hex())).rgb(false),
+    }
+
+    const result = actions[visionSimulationMode]?.()
+    return result !== undefined ? result : [0, 0, 0]
   }
 
   makeEmptyCase = () => {
@@ -274,6 +305,7 @@ export default class Colors {
         null,
         [255, 255, 255],
         this.parent.colorSpace,
+        this.parent.visionSimulationMode,
         this.parent.view,
         this.parent.textColorsTheme
       ).makeNodeName('FILL', 48, 48)
@@ -570,6 +602,7 @@ export default class Colors {
               null,
               [color.rgb.r * 255, color.rgb.g * 255, color.rgb.b * 255],
               this.parent.colorSpace,
+              this.parent.visionSimulationMode,
               this.parent.view,
               this.parent.textColorsTheme
             ).makeNodeShade(
@@ -584,6 +617,7 @@ export default class Colors {
               null,
               [color.rgb.r * 255, color.rgb.g * 255, color.rgb.b * 255],
               this.parent.colorSpace,
+              this.parent.visionSimulationMode,
               this.parent.view,
               this.parent.textColorsTheme
             ).makeNodeRichShade(
@@ -662,6 +696,7 @@ export default class Colors {
                 scaleName,
                 [newColor[0], newColor[1], newColor[2]],
                 this.parent.colorSpace,
+                this.parent.visionSimulationMode,
                 this.parent.view,
                 this.parent.textColorsTheme,
                 { isClosestToRef: distance < 4 ? true : false }
@@ -688,6 +723,7 @@ export default class Colors {
                   scaleName,
                   [newColor[0], newColor[1], newColor[2]],
                   this.parent.colorSpace,
+                  this.parent.visionSimulationMode,
                   this.parent.view,
                   this.parent.textColorsTheme,
                   { isClosestToRef: distance < 4 ? true : false }

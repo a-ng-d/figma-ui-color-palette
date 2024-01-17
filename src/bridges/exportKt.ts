@@ -1,8 +1,8 @@
 import type { PaletteData } from '../utils/types'
 import { locals, lang } from '../content/locals'
-import { doCamelCase } from '@a-ng-d/figmug.modules.do-camel-case'
+import { doSnakeCase } from '@a-ng-d/figmug.modules.do-snake-case'
 
-const exportSwift = (palette: SceneNode) => {
+const exportKt = (palette: SceneNode) => {
   palette = figma.currentPage.selection[0] as FrameNode
 
   const paletteData: PaletteData = JSON.parse(palette.getPluginData('data')),
@@ -11,44 +11,41 @@ const exportSwift = (palette: SceneNode) => {
         .length == 0
         ? paletteData.themes.filter((theme) => theme.type === 'default theme')
         : paletteData.themes.filter((theme) => theme.type === 'custom theme'),
-    swift: Array<string> = []
+    val: Array<string> = []
 
   if (palette.children.length == 1) {
     workingThemes.forEach((theme) => {
       theme.colors.forEach((color) => {
-        const UIColors: Array<string> = []
-        UIColors.unshift(
+        const colors: Array<string> = []
+        colors.unshift(
           `// ${
             workingThemes[0].type === 'custom theme' ? theme.name + ' - ' : ''
           }${color.name}`
         )
         color.shades.forEach((shade) => {
-          UIColors.unshift(
-            `public let ${
+          colors.unshift(
+            `val ${
               workingThemes[0].type === 'custom theme'
-                ? doCamelCase(theme.name + ' ' + color.name)
-                : doCamelCase(color.name)
-            }${
-              shade.name === 'source' ? 'Source' : shade.name
-            } = Color(red: ${shade.gl[0].toFixed(
-              3
-            )}, green: ${shade.gl[1].toFixed(3)}, blue: ${shade.gl[2].toFixed(
-              3
-            )})`
+                ? doSnakeCase(theme.name + ' ' + color.name)
+                : doSnakeCase(color.name)
+            }_${shade.name} = Color(${shade.hex
+              .replace('#', '0xFF')
+              .toUpperCase()})`
           )
         })
-        UIColors.unshift('')
-        UIColors.reverse().forEach((UIColor) => swift.push(UIColor))
+        colors.unshift('')
+        colors.reverse().forEach((color) => val.push(color))
       })
     })
 
-    swift.pop()
+    val.pop()
 
     figma.ui.postMessage({
-      type: 'EXPORT_PALETTE_SWIFT',
-      data: swift,
+      type: 'EXPORT_PALETTE_KT',
+      context: 'ANDROID_COMPOSE',
+      data: val,
     })
   } else figma.notify(locals[lang].error.corruption)
 }
 
-export default exportSwift
+export default exportKt
