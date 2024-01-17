@@ -361,14 +361,17 @@ export default class Settings extends React.Component<Props> {
         <div className="settings__item">
           <FormItem
             id="change-color-blind-mode"
-            label={locals[this.props.lang].settings.color.visionSimulationMode.label}
+            label={
+              locals[this.props.lang].settings.color.visionSimulationMode.label
+            }
           >
             <Dropdown
               id="color-blind-modes"
               options={[
                 {
                   label:
-                    locals[this.props.lang].settings.color.visionSimulationMode.none,
+                    locals[this.props.lang].settings.color.visionSimulationMode
+                      .none,
                   value: 'NONE',
                   feature: 'UPDATE_COLOR_BLIND_MODE',
                   position: 0,
@@ -397,7 +400,8 @@ export default class Settings extends React.Component<Props> {
                 },
                 {
                   label:
-                    locals[this.props.lang].settings.color.visionSimulationMode.colorBlind,
+                    locals[this.props.lang].settings.color.visionSimulationMode
+                      .colorBlind,
                   value: null,
                   feature: null,
                   position: 2,
@@ -436,7 +440,8 @@ export default class Settings extends React.Component<Props> {
                   type: 'OPTION',
                   isActive: features.find(
                     (feature) =>
-                      feature.name === 'SETTINGS_VISION_SIMULATION_MODE_PROTANOPIA'
+                      feature.name ===
+                      'SETTINGS_VISION_SIMULATION_MODE_PROTANOPIA'
                   )?.isActive,
                   isBlocked: isBlocked(
                     'SETTINGS_VISION_SIMULATION_MODE_PROTANOPIA',
@@ -455,7 +460,8 @@ export default class Settings extends React.Component<Props> {
                   type: 'OPTION',
                   isActive: features.find(
                     (feature) =>
-                      feature.name === 'SETTINGS_VISION_SIMULATION_MODE_DEUTERANOMALY'
+                      feature.name ===
+                      'SETTINGS_VISION_SIMULATION_MODE_DEUTERANOMALY'
                   )?.isActive,
                   isBlocked: isBlocked(
                     'SETTINGS_VISION_SIMULATION_MODE_DEUTERANOMALY',
@@ -474,7 +480,8 @@ export default class Settings extends React.Component<Props> {
                   type: 'OPTION',
                   isActive: features.find(
                     (feature) =>
-                      feature.name === 'SETTINGS_VISION_SIMULATION_MODE_DEUTERANOPIA'
+                      feature.name ===
+                      'SETTINGS_VISION_SIMULATION_MODE_DEUTERANOPIA'
                   )?.isActive,
                   isBlocked: isBlocked(
                     'SETTINGS_VISION_SIMULATION_MODE_DEUTERANOPIA',
@@ -493,7 +500,8 @@ export default class Settings extends React.Component<Props> {
                   type: 'OPTION',
                   isActive: features.find(
                     (feature) =>
-                      feature.name === 'SETTINGS_VISION_SIMULATION_MODE_TRITANOMALY'
+                      feature.name ===
+                      'SETTINGS_VISION_SIMULATION_MODE_TRITANOMALY'
                   )?.isActive,
                   isBlocked: isBlocked(
                     'SETTINGS_VISION_SIMULATION_MODE_TRITANOMALY',
@@ -512,7 +520,8 @@ export default class Settings extends React.Component<Props> {
                   type: 'OPTION',
                   isActive: features.find(
                     (feature) =>
-                      feature.name === 'SETTINGS_VISION_SIMULATION_MODE_TRITANOPIA'
+                      feature.name ===
+                      'SETTINGS_VISION_SIMULATION_MODE_TRITANOPIA'
                   )?.isActive,
                   isBlocked: isBlocked(
                     'SETTINGS_VISION_SIMULATION_MODE_TRITANOPIA',
@@ -531,7 +540,8 @@ export default class Settings extends React.Component<Props> {
                   type: 'OPTION',
                   isActive: features.find(
                     (feature) =>
-                      feature.name === 'SETTINGS_VISION_SIMULATION_MODE_ACHROMATOMALY'
+                      feature.name ===
+                      'SETTINGS_VISION_SIMULATION_MODE_ACHROMATOMALY'
                   )?.isActive,
                   isBlocked: isBlocked(
                     'SETTINGS_VISION_SIMULATION_MODE_ACHROMATOMALY',
@@ -550,7 +560,8 @@ export default class Settings extends React.Component<Props> {
                   type: 'OPTION',
                   isActive: features.find(
                     (feature) =>
-                      feature.name === 'SETTINGS_VISION_SIMULATION_MODE_ACHROMATOPSIA'
+                      feature.name ===
+                      'SETTINGS_VISION_SIMULATION_MODE_ACHROMATOPSIA'
                   )?.isActive,
                   isBlocked: isBlocked(
                     'SETTINGS_VISION_SIMULATION_MODE_ACHROMATOPSIA',

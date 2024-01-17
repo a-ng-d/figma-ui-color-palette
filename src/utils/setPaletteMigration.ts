@@ -72,7 +72,8 @@ const setPaletteMigration = (palette: BaseNode) => {
 
   if (colorSpace === '') palette.setPluginData('colorSpace', 'LCH')
 
-  if (visionSimulationMode === '') palette.setPluginData('visionSimulationMode', 'NONE')
+  if (visionSimulationMode === '')
+    palette.setPluginData('visionSimulationMode', 'NONE')
 
   // themes
   if (themes === '')

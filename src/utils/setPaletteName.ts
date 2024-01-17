@@ -1,4 +1,4 @@
-import { lang, locals } from "../content/locals"
+import { lang, locals } from '../content/locals'
 
 const setPaletteName = (
   name: string,
@@ -13,7 +13,13 @@ const setPaletteName = (
   theme === 'None' || theme == undefined ? null : parameters.push(theme)
   parameters.push(preset)
   parameters.push(colorSpace)
-  visionSimulationMode === 'NONE' ? null : parameters.push(locals[lang].settings.color.visionSimulationMode[visionSimulationMode.toLowerCase()])
+  visionSimulationMode === 'NONE'
+    ? null
+    : parameters.push(
+        locals[lang].settings.color.visionSimulationMode[
+          visionSimulationMode.toLowerCase()
+        ]
+      )
 
   return parameters.join('﹒')
 }

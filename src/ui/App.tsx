@@ -291,7 +291,8 @@ class App extends React.Component<any, any> {
       settingsMessage.data.name = e.target.value
       settingsMessage.data.description = this.state['description']
       settingsMessage.data.colorSpace = this.state['colorSpace']
-      settingsMessage.data.visionSimulationMode = this.state['visionSimulationMode']
+      settingsMessage.data.visionSimulationMode =
+        this.state['visionSimulationMode']
       settingsMessage.data.textColorsTheme = this.state['textColorsTheme']
       settingsMessage.data.algorithmVersion = this.state['algorithmVersion']
 
@@ -311,7 +312,8 @@ class App extends React.Component<any, any> {
       settingsMessage.data.name = this.state['name']
       settingsMessage.data.description = e.target.value
       settingsMessage.data.colorSpace = this.state['colorSpace']
-      settingsMessage.data.visionSimulationMode = this.state['visionSimulationMode']
+      settingsMessage.data.visionSimulationMode =
+        this.state['visionSimulationMode']
       settingsMessage.data.textColorsTheme = this.state['textColorsTheme']
       settingsMessage.data.algorithmVersion = this.state['algorithmVersion']
 
@@ -344,7 +346,8 @@ class App extends React.Component<any, any> {
       settingsMessage.data.name = this.state['name']
       settingsMessage.data.description = this.state['description']
       settingsMessage.data.colorSpace = e.target.dataset.value
-      settingsMessage.data.visionSimulationMode = this.state['visionSimulationMode']
+      settingsMessage.data.visionSimulationMode =
+        this.state['visionSimulationMode']
       settingsMessage.data.textColorsTheme = this.state['textColorsTheme']
       settingsMessage.data.algorithmVersion = this.state['algorithmVersion']
 
@@ -379,7 +382,8 @@ class App extends React.Component<any, any> {
       settingsMessage.data.name = this.state['name']
       settingsMessage.data.description = this.state['description']
       settingsMessage.data.colorSpace = this.state['colorSpace']
-      settingsMessage.data.visionSimulationMode = this.state['visionSimulationMode']
+      settingsMessage.data.visionSimulationMode =
+        this.state['visionSimulationMode']
       settingsMessage.data.textColorsTheme = this.state['textColorsTheme']
       settingsMessage.data.algorithmVersion = !e.target.checked ? 'v1' : 'v2'
 
@@ -400,7 +404,8 @@ class App extends React.Component<any, any> {
         settingsMessage.data.name = this.state['name']
         settingsMessage.data.description = this.state['description']
         settingsMessage.data.colorSpace = this.state['colorSpace']
-        settingsMessage.data.visionSimulationMode = this.state['visionSimulationMode']
+        settingsMessage.data.visionSimulationMode =
+          this.state['visionSimulationMode']
         settingsMessage.data.textColorsTheme.lightColor = code
         palette.textColorsTheme.lightColor = code
         settingsMessage.data.textColorsTheme.darkColor =
@@ -428,7 +433,8 @@ class App extends React.Component<any, any> {
         settingsMessage.data.name = this.state['name']
         settingsMessage.data.description = this.state['description']
         settingsMessage.data.colorSpace = this.state['colorSpace']
-        settingsMessage.data.visionSimulationMode = this.state['visionSimulationMode']
+        settingsMessage.data.visionSimulationMode =
+          this.state['visionSimulationMode']
         settingsMessage.data.textColorsTheme.lightColor =
           this.state['textColorsTheme'].lightColor
         settingsMessage.data.textColorsTheme.darkColor = code
@@ -576,7 +582,8 @@ class App extends React.Component<any, any> {
             scale: e.data.pluginMessage.data.scale,
             newColors: e.data.pluginMessage.data.colors,
             colorSpace: e.data.pluginMessage.data.colorSpace,
-            visionSimulationMode: e.data.pluginMessage.data.visionSimulationMode,
+            visionSimulationMode:
+              e.data.pluginMessage.data.visionSimulationMode,
             themes: e.data.pluginMessage.data.themes,
             view: e.data.pluginMessage.data.view,
             textColorsTheme: e.data.pluginMessage.data.textColorsTheme,

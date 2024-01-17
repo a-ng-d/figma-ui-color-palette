@@ -20,11 +20,14 @@ const releaseNotes: Array<ReleaseNote> = [
   {
     version: '3.0.0',
     isMostRecent: true,
-    title: ['Simulate color blindness', 'More exports for Android and Apple apps'],
+    title: [
+      'Simulate color blindness',
+      'More exports for Android and Apple apps',
+    ],
     image: [rnv301, rnv302],
     content: [
       'We now simulate color contrasts with various types of color blindness to better manage contrast. This is a step towards implementing accessibility by design.',
-      "Both Android and Apple offer numerous ways to apply color themes. Now, you can export your palette for use in Compose on Android and UIKit on Apple.",
+      'Both Android and Apple offer numerous ways to apply color themes. Now, you can export your palette for use in Compose on Android and UIKit on Apple.',
     ],
     numberOfNotes: 2,
     learnMore: ['https://uicp.link/whats-new', 'https://uicp.link/whats-new'],
