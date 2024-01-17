@@ -11,6 +11,7 @@ import type {
 } from '../utils/types'
 import Colors from '../canvas/Colors'
 import { locals, lang } from '../content/locals'
+import setPaletteName from '../utils/setPaletteName'
 
 const updateView = (msg: ViewMessage, palette: SceneNode) => {
   palette = figma.currentPage.selection[0] as FrameNode
@@ -69,11 +70,13 @@ const updateView = (msg: ViewMessage, palette: SceneNode) => {
 
     // palette migration
     palette.counterAxisSizingMode = 'AUTO'
-    palette.name = `${name}﹒${
-      themes.find((theme) => theme.isEnabled)?.type === 'default theme'
-        ? ''
-        : themes.find((theme) => theme.isEnabled)?.name + '﹒'
-    }${preset.name}﹒${colorSpace}﹒${locals[lang].settings.color.visionSimulationMode[visionSimulationMode.toLowerCase()]}`
+    palette.name = setPaletteName(
+      name,
+      themes.find((theme) => theme.isEnabled)?.name,
+      preset.name,
+      colorSpace,
+      visionSimulationMode
+    )
   } else figma.notify(locals[lang].error.corruption)
 }
 

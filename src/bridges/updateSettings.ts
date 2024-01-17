@@ -13,6 +13,7 @@ import {
 } from './processSelection'
 import Colors from '../canvas/Colors'
 import { locals, lang } from '../content/locals'
+import setPaletteName from '../utils/setPaletteName'
 
 const updateSettings = (msg: SettingsMessage, palette: SceneNode) => {
   palette = isSelectionChanged
@@ -65,13 +66,13 @@ const updateSettings = (msg: SettingsMessage, palette: SceneNode) => {
 
     // palette migration
     palette.counterAxisSizingMode = 'AUTO'
-    palette.name = `${
-      msg.data.name === '' ? locals[lang].name : msg.data.name
-    }﹒${
-      themes.find((theme) => theme.isEnabled)?.type === 'default theme'
-        ? ''
-        : themes.find((theme) => theme.isEnabled)?.name + '﹒'
-    }${preset.name}﹒${msg.data.colorSpace}﹒${locals[lang].settings.color.visionSimulationMode[msg.data.visionSimulationMode.toLowerCase()]}`
+    palette.name = setPaletteName(
+      msg.data.name,
+      themes.find((theme) => theme.isEnabled)?.name,
+      preset.name,
+      msg.data.colorSpace,
+      msg.data.visionSimulationMode
+    )
   } else figma.notify(locals[lang].error.corruption)
 }
 

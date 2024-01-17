@@ -16,6 +16,7 @@ import {
   isSelectionChanged,
 } from './processSelection'
 import { locals, lang } from '../content/locals'
+import setPaletteName from '../utils/setPaletteName'
 
 const updateColors = (msg: ColorsMessage, palette: SceneNode) => {
   palette = isSelectionChanged
@@ -79,11 +80,13 @@ const updateColors = (msg: ColorsMessage, palette: SceneNode) => {
 
     // palette migration
     palette.counterAxisSizingMode = 'AUTO'
-    palette.name = `${name}﹒${
-      themes.find((theme) => theme.isEnabled)?.type === 'default theme'
-        ? ''
-        : themes.find((theme) => theme.isEnabled)?.name + '﹒'
-    }${preset.name}﹒${colorSpace}﹒${locals[lang].settings.color.visionSimulationMode[visionSimulationMode.toLowerCase()]}`
+    palette.name = setPaletteName(
+      name,
+      themes.find((theme) => theme.isEnabled)?.name,
+      preset.name,
+      colorSpace,
+      visionSimulationMode
+    )
   } else figma.notify(locals[lang].error.corruption)
 }
 
