@@ -421,10 +421,10 @@ export default class Settings extends React.Component<Props> {
                   type: 'OPTION',
                   isActive: features.find(
                     (feature) =>
-                      feature.name === 'SETTINGS_VISION_SIMULATION_MODE_NONE'
+                      feature.name === 'SETTINGS_VISION_SIMULATION_MODE_PROTANOMALY'
                   )?.isActive,
                   isBlocked: isBlocked(
-                    'SETTINGS_VISION_SIMULATION_MODE_NONE',
+                    'SETTINGS_VISION_SIMULATION_MODE_PROTANOMALY',
                     this.props.planStatus
                   ),
                   children: [],
