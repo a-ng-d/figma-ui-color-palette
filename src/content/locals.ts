@@ -280,7 +280,7 @@ export const locals: { [key: string]: any } = {
         title:
           'Would you like to upgrade to the Pro plan within the next 72 hours?',
         message:
-          'Explore the potential of synchronizing your color palette with variables, exporting it as design tokens, app resources, or for Tokens Studio and simulating vision impairment.',
+          'Explore the potential of synchronizing your color palette with variables, exporting it as design tokens, app resources, or for Tokens Studio and simulating a vision impairment.',
         cta: 'Enable the 72-hour trial',
         option: 'Purchase',
       },
