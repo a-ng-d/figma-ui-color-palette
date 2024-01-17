@@ -414,7 +414,7 @@ export default class Export extends React.Component<Props, any> {
                     label: locals[this.props.lang].export.css.customProperties,
                     value: 'EXPORT_CSS',
                     feature: 'SELECT_EXPORT_FILE',
-                    position: 1,
+                    position: 0,
                     type: 'OPTION',
                     isActive: features.find(
                       (feature) => feature.name === 'EXPORT_CSS'
@@ -427,7 +427,7 @@ export default class Export extends React.Component<Props, any> {
                     label: locals[this.props.lang].export.tailwind.config,
                     value: 'EXPORT_TAILWIND',
                     feature: 'SELECT_EXPORT_FILE',
-                    position: 2,
+                    position: 0,
                     type: 'OPTION',
                     isActive: features.find(
                       (feature) => feature.name === 'EXPORT_TAILWIND'
@@ -443,7 +443,7 @@ export default class Export extends React.Component<Props, any> {
                     label: locals[this.props.lang].export.apple.label,
                     value: 'APPLE_GROUP',
                     feature: 'SELECT_EXPORT_FILE',
-                    position: 3,
+                    position: 0,
                     type: 'OPTION',
                     isActive: features.find(
                       (feature) => feature.name === 'EXPORT_APPLE'
@@ -470,7 +470,7 @@ export default class Export extends React.Component<Props, any> {
                         label: locals[this.props.lang].export.apple.uikit,
                         value: 'EXPORT_APPLE_UIKIT',
                         feature: 'SELECT_EXPORT_FILE',
-                        position: 1,
+                        position: 0,
                         type: 'OPTION',
                         isActive: features.find(
                           (feature) => feature.name === 'EXPORT_APPLE_UIKIT'
@@ -489,7 +489,7 @@ export default class Export extends React.Component<Props, any> {
                     label: locals[this.props.lang].export.android.label,
                     value: 'ANDROID_GROUP',
                     feature: 'SELECT_EXPORT_FILE',
-                    position: 4,
+                    position: 0,
                     type: 'OPTION',
                     isActive: features.find(
                       (feature) => feature.name === 'EXPORT_ANDROID'
@@ -519,7 +519,7 @@ export default class Export extends React.Component<Props, any> {
                         label: locals[this.props.lang].export.android.resources,
                         value: 'EXPORT_ANDROID_XML',
                         feature: 'SELECT_EXPORT_FILE',
-                        position: 1,
+                        position: 0,
                         type: 'OPTION',
                         isActive: features.find(
                           (feature) => feature.name === 'EXPORT_ANDROID_XML'
@@ -538,7 +538,7 @@ export default class Export extends React.Component<Props, any> {
                     label: locals[this.props.lang].export.csv.spreadsheet,
                     value: 'EXPORT_CSV',
                     feature: 'SELECT_EXPORT_FILE',
-                    position: 5,
+                    position: 0,
                     type: 'OPTION',
                     isActive: features.find(
                       (feature) => feature.name === 'EXPORT_CSV'

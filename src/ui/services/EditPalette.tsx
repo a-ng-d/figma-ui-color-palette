@@ -219,7 +219,7 @@ export default class EditPalette extends React.Component<Props, any> {
         label: theme.name,
         value: theme.id,
         feature: 'SWITCH_THEME',
-        position: index,
+        position: 0,
         type: 'OPTION',
         isActive: true,
         isBlocked: false,
@@ -243,7 +243,7 @@ export default class EditPalette extends React.Component<Props, any> {
         label: 'Create a color theme',
         value: null,
         feature: 'ADD_THEME',
-        position: themes.length + 1,
+        position: 0,
         type: 'OPTION',
         isActive: features.find((feature) => feature.name === 'THEMES')
           ?.isActive,
