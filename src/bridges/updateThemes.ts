@@ -83,9 +83,7 @@ const updateThemes = (msg: ThemesMessage, palette: SceneNode) => {
       msg.data.find((theme) => theme.isEnabled)?.type === 'default theme'
         ? ''
         : msg.data.find((theme) => theme.isEnabled)?.name + '﹒'
-    }${preset.name}﹒${colorSpace} ${
-      view.includes('PALETTE') ? 'Palette' : 'Sheet'
-    }`
+    }${preset.name}﹒${colorSpace}﹒${locals[lang].settings.color.visionSimulationMode[visionSimulationMode.toLowerCase()]}`
   } else figma.notify(locals[lang].error.corruption)
 }
 

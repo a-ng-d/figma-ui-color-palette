@@ -71,9 +71,7 @@ const updateSettings = (msg: SettingsMessage, palette: SceneNode) => {
       themes.find((theme) => theme.isEnabled)?.type === 'default theme'
         ? ''
         : themes.find((theme) => theme.isEnabled)?.name + '﹒'
-    }${preset.name}﹒${msg.data.colorSpace} ${
-      view.includes('PALETTE') ? 'Palette' : 'Sheet'
-    }`
+    }${preset.name}﹒${msg.data.colorSpace}﹒${locals[lang].settings.color.visionSimulationMode[msg.data.visionSimulationMode.toLowerCase()]}`
   } else figma.notify(locals[lang].error.corruption)
 }
 
