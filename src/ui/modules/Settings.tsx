@@ -572,6 +572,7 @@ export default class Settings extends React.Component<Props> {
                 },
               ]}
               selected={this.props.visionSimulationMode}
+              isNew
             />
           </FormItem>
         </div>

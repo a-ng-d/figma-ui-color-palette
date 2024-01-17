@@ -449,6 +449,7 @@ export default class Export extends React.Component<Props, any> {
                       (feature) => feature.name === 'EXPORT_APPLE'
                     )?.isActive,
                     isBlocked: isBlocked('EXPORT_APPLE', this.props.planStatus),
+                    isNew: true,
                     children: [
                       {
                         label: locals[this.props.lang].export.apple.swiftui,
@@ -498,6 +499,7 @@ export default class Export extends React.Component<Props, any> {
                       'EXPORT_ANDROID',
                       this.props.planStatus
                     ),
+                    isNew: true,
                     children: [
                       {
                         label: locals[this.props.lang].export.android.compose,

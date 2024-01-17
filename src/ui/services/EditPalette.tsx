@@ -184,31 +184,37 @@ export default class EditPalette extends React.Component<Props, any> {
     const contexts: Array<{
       label: string
       id: string
+      isUpdated: boolean
     }> = []
     if (features.find((feature) => feature.name === 'SCALE')?.isActive)
       contexts.push({
         label: locals[this.props.lang].contexts.scale,
         id: 'SCALE',
+        isUpdated: false,
       })
     if (features.find((feature) => feature.name === 'COLORS')?.isActive)
       contexts.push({
         label: locals[this.props.lang].contexts.colors,
         id: 'COLORS',
+        isUpdated: false,
       })
     if (features.find((feature) => feature.name === 'THEMES')?.isActive)
       contexts.push({
         label: locals[this.props.lang].contexts.themes,
         id: 'THEMES',
+        isUpdated: false,
       })
     if (features.find((feature) => feature.name === 'EXPORT')?.isActive)
       contexts.push({
         label: locals[this.props.lang].contexts.export,
         id: 'EXPORT',
+        isUpdated: true,
       })
     if (features.find((feature) => feature.name === 'SETTINGS')?.isActive)
       contexts.push({
         label: locals[this.props.lang].contexts.settings,
         id: 'SETTINGS',
+        isUpdated: true,
       })
     return contexts
   }
