@@ -332,7 +332,7 @@ export default class Export extends React.Component<Props, any> {
             <div className="section-controls__left-part">
               <div className={`section-title ${texts['section-title']}`}>
                 {locals[this.props.lang].export.format}
-                <div className={`type ${texts.type}`}>(7)</div>
+                <div className={`type ${texts.type}`}>(10)</div>
               </div>
             </div>
             <div className="section-controls__right-part">
