@@ -6,7 +6,7 @@ import type {
   TextColorsThemeHexModel,
 } from '../utils/types'
 import chroma from 'chroma-js'
-const blinder = require('color-blind')
+import * as blinder from 'color-blind'
 import { Hsluv } from 'hsluv'
 import { APCAcontrast, sRGBtoY, fontLookupAPCA } from 'apca-w3'
 import Tag from './Tag'

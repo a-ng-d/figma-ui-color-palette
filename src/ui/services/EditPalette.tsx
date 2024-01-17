@@ -220,7 +220,7 @@ export default class EditPalette extends React.Component<Props, any> {
   }
 
   setThemes = (): Array<DropdownOption> => {
-    const themes = this.workingThemes().map((theme, index) => {
+    const themes = this.workingThemes().map((theme) => {
       return {
         label: theme.name,
         value: theme.id,

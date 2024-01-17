@@ -1,5 +1,5 @@
 import chroma from 'chroma-js'
-const blinder = require('color-blind')
+import * as blinder from 'color-blind'
 import { Hsluv } from 'hsluv'
 import type {
   PaletteNode,
