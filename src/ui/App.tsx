@@ -648,7 +648,7 @@ class App extends React.Component<any, any> {
                 locals[this.state['lang']].export.apple.swiftui
               }`,
               mimeType: 'text/swift',
-              data: `import SwiftUI\n\npublic extension Color {\n\n  static let Token = Color.TokenColor()\n\n  struct TokenColor {\n    ${e.data.pluginMessage.data.join(
+              data: `import SwiftUI\n\npublic extension Color {\n  static let Token = Color.TokenColor()\n  struct TokenColor {\n    ${e.data.pluginMessage.data.join(
                 '\n    '
               )}\n  }\n}`,
             },
