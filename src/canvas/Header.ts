@@ -36,7 +36,7 @@ export default class Header {
         null,
         [255, 255, 255],
         this.parent.colorSpace,
-        this.parent.colorBlindMode,
+        this.parent.visionSimulationMode,
         this.parent.view,
         this.parent.textColorsTheme
       ).makeNodeName('FIXED', this.sampleSize, 48)
@@ -54,7 +54,7 @@ export default class Header {
               null,
               [255, 255, 255],
               this.parent.colorSpace,
-              this.parent.colorBlindMode,
+              this.parent.visionSimulationMode,
               this.parent.view,
               this.parent.textColorsTheme
             ).makeNodeName('FIXED', this.sampleSize, 48)

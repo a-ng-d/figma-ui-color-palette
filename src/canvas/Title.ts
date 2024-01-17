@@ -117,13 +117,13 @@ export default class Title {
         12
       ).makeNodeTag()
     )
-    if (this.parent.colorBlindMode != 'NONE')
+    if (this.parent.visionSimulationMode != 'NONE')
       this.nodeProps.appendChild(
         new Tag(
           '_color-blind-simulation',
           `Color blind simulation: ${
-            this.parent.colorBlindMode.charAt(0) +
-            this.parent.colorBlindMode.toLocaleLowerCase().slice(1)
+            this.parent.visionSimulationMode.charAt(0) +
+            this.parent.visionSimulationMode.toLocaleLowerCase().slice(1)
           }`,
           12
         ).makeNodeTag()

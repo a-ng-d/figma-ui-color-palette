@@ -1,6 +1,6 @@
 import * as React from 'react'
 import type {
-  ColorBlindModeConfiguration,
+  visionSimulationModeConfiguration,
   EditorType,
   Language,
   SourceColorConfiguration,
@@ -25,7 +25,7 @@ interface Props {
   description: string
   textColorsTheme?: TextColorsThemeHexModel
   colorSpace: string
-  colorBlindMode: ColorBlindModeConfiguration
+  visionSimulationMode: visionSimulationModeConfiguration
   view: string
   isNewAlgorithm?: boolean
   actions?: string
@@ -349,7 +349,7 @@ export default class Settings extends React.Component<Props> {
     )
   }
 
-  colorBlindMode = () => {
+  visionSimulationMode = () => {
     return (
       <Feature
         isActive={
@@ -361,14 +361,14 @@ export default class Settings extends React.Component<Props> {
         <div className="settings__item">
           <FormItem
             id="change-color-blind-mode"
-            label={locals[this.props.lang].settings.color.colorBlindMode.label}
+            label={locals[this.props.lang].settings.color.visionSimulationMode.label}
           >
             <Dropdown
               id="color-blind-modes"
               options={[
                 {
                   label:
-                    locals[this.props.lang].settings.color.colorBlindMode.none,
+                    locals[this.props.lang].settings.color.visionSimulationMode.none,
                   value: 'NONE',
                   feature: 'UPDATE_COLOR_BLIND_MODE',
                   position: 0,
@@ -397,7 +397,7 @@ export default class Settings extends React.Component<Props> {
                 },
                 {
                   label:
-                    locals[this.props.lang].settings.color.colorBlindMode.colorBlind,
+                    locals[this.props.lang].settings.color.visionSimulationMode.colorBlind,
                   value: null,
                   feature: null,
                   position: 2,
@@ -409,7 +409,7 @@ export default class Settings extends React.Component<Props> {
                 },
                 {
                   label:
-                    locals[this.props.lang].settings.color.colorBlindMode
+                    locals[this.props.lang].settings.color.visionSimulationMode
                       .protanomaly,
                   value: 'PROTANOMALY',
                   feature: 'UPDATE_COLOR_BLIND_MODE',
@@ -428,7 +428,7 @@ export default class Settings extends React.Component<Props> {
                 },
                 {
                   label:
-                    locals[this.props.lang].settings.color.colorBlindMode
+                    locals[this.props.lang].settings.color.visionSimulationMode
                       .protanopia,
                   value: 'PROTANOPIA',
                   feature: 'UPDATE_COLOR_BLIND_MODE',
@@ -447,7 +447,7 @@ export default class Settings extends React.Component<Props> {
                 },
                 {
                   label:
-                    locals[this.props.lang].settings.color.colorBlindMode
+                    locals[this.props.lang].settings.color.visionSimulationMode
                       .deuteranomaly,
                   value: 'DEUTERANOMALY',
                   feature: 'UPDATE_COLOR_BLIND_MODE',
@@ -466,7 +466,7 @@ export default class Settings extends React.Component<Props> {
                 },
                 {
                   label:
-                    locals[this.props.lang].settings.color.colorBlindMode
+                    locals[this.props.lang].settings.color.visionSimulationMode
                       .deuteranopia,
                   value: 'DEUTERANOPIA',
                   feature: 'UPDATE_COLOR_BLIND_MODE',
@@ -485,7 +485,7 @@ export default class Settings extends React.Component<Props> {
                 },
                 {
                   label:
-                    locals[this.props.lang].settings.color.colorBlindMode
+                    locals[this.props.lang].settings.color.visionSimulationMode
                       .tritanomaly,
                   value: 'TRITANOMALY',
                   feature: 'UPDATE_COLOR_BLIND_MODE',
@@ -504,7 +504,7 @@ export default class Settings extends React.Component<Props> {
                 },
                 {
                   label:
-                    locals[this.props.lang].settings.color.colorBlindMode
+                    locals[this.props.lang].settings.color.visionSimulationMode
                       .tritanopia,
                   value: 'TRITANOPIA',
                   feature: 'UPDATE_COLOR_BLIND_MODE',
@@ -523,7 +523,7 @@ export default class Settings extends React.Component<Props> {
                 },
                 {
                   label:
-                    locals[this.props.lang].settings.color.colorBlindMode
+                    locals[this.props.lang].settings.color.visionSimulationMode
                       .achromatomaly,
                   value: 'ACHROMATOMALY',
                   feature: 'UPDATE_COLOR_BLIND_MODE',
@@ -542,7 +542,7 @@ export default class Settings extends React.Component<Props> {
                 },
                 {
                   label:
-                    locals[this.props.lang].settings.color.colorBlindMode
+                    locals[this.props.lang].settings.color.visionSimulationMode
                       .achromatopsia,
                   value: 'ACHROMATOPSIA',
                   feature: 'UPDATE_COLOR_BLIND_MODE',
@@ -560,7 +560,7 @@ export default class Settings extends React.Component<Props> {
                   action: this.props.onChangeSettings,
                 },
               ]}
-              selected={this.props.colorBlindMode}
+              selected={this.props.visionSimulationMode}
             />
           </FormItem>
         </div>
@@ -744,7 +744,7 @@ export default class Settings extends React.Component<Props> {
           </div>
         </div>
         <this.colorSpace />
-        <this.colorBlindMode />
+        <this.visionSimulationMode />
         {this.props.context === 'LOCAL_STYLES' ? <this.newAlgorithm /> : null}
       </div>
     )

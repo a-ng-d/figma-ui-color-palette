@@ -57,7 +57,7 @@ export interface PaletteNode {
   scale: ScaleConfiguration
   colors: Array<ColorConfiguration>
   colorSpace: ColorSpaceConfiguration
-  colorBlindMode: ColorBlindModeConfiguration
+  visionSimulationMode: visionSimulationModeConfiguration
   themes: Array<ThemeConfiguration>
   view: ViewConfiguration
   textColorsTheme: TextColorsThemeHexModel
@@ -123,7 +123,7 @@ export interface PaletteConfiguration {
   min: number | undefined
   max: number | undefined
   colorSpace: ColorSpaceConfiguration
-  colorBlindMode: ColorBlindModeConfiguration
+  visionSimulationMode: visionSimulationModeConfiguration
   view: ViewConfiguration
   textColorsTheme: TextColorsThemeHexModel
 }
@@ -195,7 +195,7 @@ export type ColorSpaceConfiguration =
   | 'HSL'
   | 'HSLUV'
 
-export type ColorBlindModeConfiguration =
+export type visionSimulationModeConfiguration =
   | 'NONE'
   | 'PROTANOMALY'
   | 'PROTANOPIA'
@@ -292,7 +292,7 @@ export interface SettingsMessage {
     name: string
     description: string
     colorSpace: ColorSpaceConfiguration
-    colorBlindMode: ColorBlindModeConfiguration
+    visionSimulationMode: visionSimulationModeConfiguration
     textColorsTheme: TextColorsThemeHexModel
     algorithmVersion: AlgorithmVersionConfiguration
   }

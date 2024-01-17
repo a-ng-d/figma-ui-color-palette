@@ -1,6 +1,6 @@
 import type {
   ActionsList,
-  ColorBlindModeConfiguration,
+  visionSimulationModeConfiguration,
   ColorSpaceConfiguration,
   HexModel,
   TextColorsThemeHexModel,
@@ -16,7 +16,7 @@ export default class Properties {
   name: string
   rgb: [number, number, number]
   colorSpace: ColorSpaceConfiguration
-  colorBlindMode: ColorBlindModeConfiguration
+  visionSimulationMode: visionSimulationModeConfiguration
   textColorsTheme: TextColorsThemeHexModel
   hex: HexModel
   lch: Array<number>
@@ -42,13 +42,13 @@ export default class Properties {
     name: string,
     rgb: [number, number, number],
     colorSpace: ColorSpaceConfiguration,
-    colorBlindMode: ColorBlindModeConfiguration,
+    visionSimulationMode: visionSimulationModeConfiguration,
     textColorsTheme: TextColorsThemeHexModel
   ) {
     this.name = name
     this.rgb = rgb
     this.colorSpace = colorSpace
-    this.colorBlindMode = colorBlindMode
+    this.visionSimulationMode = visionSimulationMode
     this.textColorsTheme = textColorsTheme
     this.hex = chroma(rgb).hex()
     this.lch = chroma(rgb).lch()
@@ -73,7 +73,7 @@ export default class Properties {
 
   simulateColorBlind = (
     sourceColor: string,
-    colorBlindMode: ColorBlindModeConfiguration
+    visionSimulationMode: visionSimulationModeConfiguration
   ): string => {
     const actions: ActionsList = {
       NONE: () => sourceColor,
@@ -87,7 +87,7 @@ export default class Properties {
       ACHROMATOPSIA: () => chroma(blinder.achromatopsia(sourceColor)),
     }
 
-    const result = actions[colorBlindMode]?.()
+    const result = actions[visionSimulationMode]?.()
     return result !== undefined ? result : '#000000'
   }
 
@@ -97,11 +97,11 @@ export default class Properties {
       textColor === 'DARK'
         ? this.simulateColorBlind(
             this.textColorsTheme.darkColor,
-            this.colorBlindMode
+            this.visionSimulationMode
           )
         : this.simulateColorBlind(
             this.textColorsTheme.lightColor,
-            this.colorBlindMode
+            this.visionSimulationMode
           )
     )
   }
@@ -113,13 +113,13 @@ export default class Properties {
           ? chroma(
               this.simulateColorBlind(
                 this.textColorsTheme.darkColor,
-                this.colorBlindMode
+                this.visionSimulationMode
               )
             ).rgb()
           : chroma(
               this.simulateColorBlind(
                 this.textColorsTheme.lightColor,
-                this.colorBlindMode
+                this.visionSimulationMode
               )
             ).rgb()
       ),
@@ -273,7 +273,7 @@ export default class Properties {
         chroma(
           this.simulateColorBlind(
             this.textColorsTheme.lightColor,
-            this.colorBlindMode
+            this.visionSimulationMode
           )
         ).gl(),
         true
@@ -287,7 +287,7 @@ export default class Properties {
         chroma(
           this.simulateColorBlind(
             this.textColorsTheme.darkColor,
-            this.colorBlindMode
+            this.visionSimulationMode
           )
         ).gl(),
         true
@@ -303,7 +303,7 @@ export default class Properties {
         chroma(
           this.simulateColorBlind(
             this.textColorsTheme.lightColor,
-            this.colorBlindMode
+            this.visionSimulationMode
           )
         ).gl(),
         true
@@ -319,7 +319,7 @@ export default class Properties {
         chroma(
           this.simulateColorBlind(
             this.textColorsTheme.darkColor,
-            this.colorBlindMode
+            this.visionSimulationMode
           )
         ).gl(),
         true

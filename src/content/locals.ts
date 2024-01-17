@@ -198,7 +198,7 @@ export const locals: { [key: string]: any } = {
           rgb: glossary.rgb,
           p3: glossary.p3,
         },
-        colorBlindMode: {
+        visionSimulationMode: {
           label: 'Vision simulation',
           colorBlind: 'Color blind',
           none: 'None',

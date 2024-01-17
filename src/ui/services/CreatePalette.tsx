@@ -1,6 +1,6 @@
 import * as React from 'react'
 import type {
-  ColorBlindModeConfiguration,
+  visionSimulationModeConfiguration,
   Language,
   PresetConfiguration,
   SourceColorConfiguration,
@@ -22,7 +22,7 @@ interface Props {
   description: string
   preset: PresetConfiguration
   colorSpace: string
-  colorBlindMode: ColorBlindModeConfiguration
+  visionSimulationMode: visionSimulationModeConfiguration
   view: string
   textColorsTheme: TextColorsThemeHexModel
   planStatus: 'UNPAID' | 'PAID'
@@ -139,7 +139,7 @@ export default class CreatePalette extends React.Component<Props, any> {
             name={this.props.name}
             description={this.props.description}
             colorSpace={this.props.colorSpace}
-            colorBlindMode={this.props.colorBlindMode}
+            visionSimulationMode={this.props.visionSimulationMode}
             textColorsTheme={this.props.textColorsTheme}
             view={this.props.view}
             planStatus={this.props.planStatus}

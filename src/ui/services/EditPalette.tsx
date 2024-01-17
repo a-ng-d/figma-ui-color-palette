@@ -11,7 +11,7 @@ import type {
   ThemesMessage,
   Language,
   EditorType,
-  ColorBlindModeConfiguration,
+  visionSimulationModeConfiguration,
 } from '../../utils/types'
 import type { DropdownOption } from '@a-ng-d/figmug.modules.types'
 import Feature from '../components/Feature'
@@ -36,7 +36,7 @@ interface Props {
   scale: ScaleConfiguration
   colors: Array<ColorConfiguration>
   colorSpace: string
-  colorBlindMode: ColorBlindModeConfiguration
+  visionSimulationMode: visionSimulationModeConfiguration
   themes: Array<ThemeConfiguration>
   view: string
   textColorsTheme: TextColorsThemeHexModel
@@ -360,7 +360,7 @@ export default class EditPalette extends React.Component<Props, any> {
             name={this.props.name}
             description={this.props.description}
             colorSpace={this.props.colorSpace}
-            colorBlindMode={this.props.colorBlindMode}
+            visionSimulationMode={this.props.visionSimulationMode}
             textColorsTheme={this.props.textColorsTheme}
             view={this.props.view}
             isNewAlgorithm={this.props.algorithmVersion == 'v2' ? true : false}
