@@ -141,7 +141,7 @@ export const locals: { [key: string]: any } = {
       apple: {
         label: 'Apple',
         swiftui: 'SwiftUI (SWIFT)',
-        uikit: 'UIkit (SWIFT)',
+        uikit: 'UIKit (SWIFT)',
       },
       android: {
         label: 'Android',
