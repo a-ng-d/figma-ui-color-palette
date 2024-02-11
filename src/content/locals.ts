@@ -13,14 +13,14 @@ const glossary: {
   hex: 'HEX',
   rgb: 'RGB',
   p3: 'P3',
-  protanomaly: 'Protanomaly',
-  protanopia: 'Protanopia',
-  deuteranomaly: 'Deuteranomaly',
-  deuteranopia: 'Deuteranopia',
-  tritanomaly: 'Tritanomaly',
-  tritanopia: 'Tritanopia',
-  achromatomaly: 'Achromatomaly',
-  achromatopsia: 'Achromatopsia',
+  protanomaly: 'Protanomaly (red-anomalous)',
+  protanopia: 'Protanopia (red-blind)',
+  deuteranomaly: 'Deuteranomaly (green-anomalous)',
+  deuteranopia: 'Deuteranopia (green-blind)',
+  tritanomaly: 'Tritanomaly (blue-anomalous)',
+  tritanopia: 'Tritanopia (blue-blind)',
+  achromatomaly: 'Achromatomaly (total color-anomalous)',
+  achromatopsia: 'Achromatopsia (total color-blind)',
 }
 
 export const locals: { [key: string]: any } = {
