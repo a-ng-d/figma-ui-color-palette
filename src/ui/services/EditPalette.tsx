@@ -190,31 +190,31 @@ export default class EditPalette extends React.Component<Props, any> {
       contexts.push({
         label: locals[this.props.lang].contexts.scale,
         id: 'SCALE',
-        isUpdated: false,
+        isUpdated: features.find((feature) => feature.name === 'SCALE')?.isNew ?? false,
       })
     if (features.find((feature) => feature.name === 'COLORS')?.isActive)
       contexts.push({
         label: locals[this.props.lang].contexts.colors,
         id: 'COLORS',
-        isUpdated: false,
+        isUpdated: features.find((feature) => feature.name === 'COLORS')?.isNew ?? false,
       })
     if (features.find((feature) => feature.name === 'THEMES')?.isActive)
       contexts.push({
         label: locals[this.props.lang].contexts.themes,
         id: 'THEMES',
-        isUpdated: false,
+        isUpdated: features.find((feature) => feature.name === 'THEMES')?.isNew ?? false,
       })
     if (features.find((feature) => feature.name === 'EXPORT')?.isActive)
       contexts.push({
         label: locals[this.props.lang].contexts.export,
         id: 'EXPORT',
-        isUpdated: true,
+        isUpdated: features.find((feature) => feature.name === 'EXPORT')?.isNew ?? false,
       })
     if (features.find((feature) => feature.name === 'SETTINGS')?.isActive)
       contexts.push({
         label: locals[this.props.lang].contexts.settings,
         id: 'SETTINGS',
-        isUpdated: true,
+        isUpdated: features.find((feature) => feature.name === 'SETTINGS')?.isNew ?? false,
       })
     return contexts
   }
@@ -254,6 +254,8 @@ export default class EditPalette extends React.Component<Props, any> {
         isActive: features.find((feature) => feature.name === 'THEMES')
           ?.isActive,
         isBlocked: isBlocked('THEMES', this.props.planStatus),
+        isNew: features.find((feature) => feature.name === 'THEMES')
+          ?.isNew,
         children: [],
         action: () => {
           this.setState({ context: 'THEMES' })

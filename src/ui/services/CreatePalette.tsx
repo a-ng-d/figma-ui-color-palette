@@ -78,19 +78,19 @@ export default class CreatePalette extends React.Component<Props, any> {
       contexts.push({
         label: locals[this.props.lang].contexts.source,
         id: 'SOURCE',
-        isUpdated: false,
+        isUpdated: features.find((feature) => feature.name === 'SOURCE')?.isNew ?? false,
       })
     if (features.find((feature) => feature.name === 'SCALE')?.isActive)
       contexts.push({
         label: locals[this.props.lang].contexts.scale,
         id: 'SCALE',
-        isUpdated: false,
+        isUpdated: features.find((feature) => feature.name === 'SCALE')?.isNew ?? false,
       })
     if (features.find((feature) => feature.name === 'SETTINGS')?.isActive)
       contexts.push({
         label: locals[this.props.lang].contexts.settings,
         id: 'SETTINGS',
-        isUpdated: true,
+        isUpdated: features.find((feature) => feature.name === 'SETTINGS')?.isNew ?? false,
       })
     return contexts
   }
