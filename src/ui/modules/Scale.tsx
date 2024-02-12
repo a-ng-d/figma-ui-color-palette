@@ -187,6 +187,9 @@ export default class Scale extends React.Component<Props, any> {
                         `PRESETS_${preset[1].id}`,
                         this.props.planStatus
                       ),
+                      isNew: features.find(
+                        (feature) => feature.name === `PRESETS_${preset[1].id}`
+                      )?.isNew,
                       children: [],
                       action: (e) => this.props.onChangePreset?.(e),
                     }

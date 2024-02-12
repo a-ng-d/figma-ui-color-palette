@@ -105,6 +105,9 @@ export default class Export extends React.Component<Props, any> {
                   (feature) => feature.name === 'EXPORT_CSS_RGB'
                 )?.isActive,
                 isBlocked: isBlocked('EXPORT_CSS_RGB', this.props.planStatus),
+                isNew: features.find(
+                  (feature) => feature.name === 'EXPORT_CSS_RGB'
+                )?.isNew,
                 children: [],
                 action: this.exportHandler,
               },
@@ -118,6 +121,9 @@ export default class Export extends React.Component<Props, any> {
                   (feature) => feature.name === 'EXPORT_CSS_HEX'
                 )?.isActive,
                 isBlocked: isBlocked('EXPORT_CSS_HEX', this.props.planStatus),
+                isNew: features.find(
+                  (feature) => feature.name === 'EXPORT_CSS_HEX'
+                )?.isNew,
                 children: [],
                 action: this.exportHandler,
               },
@@ -131,6 +137,9 @@ export default class Export extends React.Component<Props, any> {
                   (feature) => feature.name === 'EXPORT_CSS_LCH'
                 )?.isActive,
                 isBlocked: isBlocked('EXPORT_CSS_LCH', this.props.planStatus),
+                isNew: features.find(
+                  (feature) => feature.name === 'EXPORT_CSS_LCH'
+                )?.isNew,
                 children: [],
                 action: this.exportHandler,
               },
@@ -144,6 +153,9 @@ export default class Export extends React.Component<Props, any> {
                   (feature) => feature.name === 'EXPORT_CSS_P3'
                 )?.isActive,
                 isBlocked: isBlocked('EXPORT_CSS_P3', this.props.planStatus),
+                isNew: features.find(
+                  (feature) => feature.name === 'EXPORT_CSS_P3'
+                )?.isNew,
                 children: [],
                 action: this.exportHandler,
               },
@@ -352,6 +364,9 @@ export default class Export extends React.Component<Props, any> {
                       'EXPORT_TOKENS',
                       this.props.planStatus
                     ),
+                    isNew: features.find(
+                      (feature) => feature.name === 'EXPORT_TOKENS'
+                    )?.isNew,
                     children: [
                       {
                         label: locals[this.props.lang].export.tokens.global,
@@ -366,6 +381,9 @@ export default class Export extends React.Component<Props, any> {
                           'EXPORT_TOKENS_JSON',
                           this.props.planStatus
                         ),
+                        isNew: features.find(
+                          (feature) => feature.name === 'EXPORT_TOKENS_JSON'
+                        )?.isNew,
                         children: [],
                         action: this.exportHandler,
                       },
@@ -386,6 +404,11 @@ export default class Export extends React.Component<Props, any> {
                           'EXPORT_TOKENS_JSON_AMZN_STYLE_DICTIONARY',
                           this.props.planStatus
                         ),
+                        isNew: features.find(
+                          (feature) =>
+                            feature.name ===
+                            'EXPORT_TOKENS_JSON_AMZN_STYLE_DICTIONARY'
+                        )?.isNew,
                         children: [],
                         action: this.exportHandler,
                       },
@@ -404,6 +427,10 @@ export default class Export extends React.Component<Props, any> {
                           'EXPORT_TOKENS_JSON_TOKENS_STUDIO',
                           this.props.planStatus
                         ),
+                        isNew: features.find(
+                          (feature) =>
+                            feature.name === 'EXPORT_TOKENS_JSON_TOKENS_STUDIO'
+                        )?.isNew,
                         children: [],
                         action: this.exportHandler,
                       },
@@ -420,6 +447,9 @@ export default class Export extends React.Component<Props, any> {
                       (feature) => feature.name === 'EXPORT_CSS'
                     )?.isActive,
                     isBlocked: isBlocked('EXPORT_CSS', this.props.planStatus),
+                    isNew: features.find(
+                      (feature) => feature.name === 'EXPORT_CSS'
+                    )?.isNew,
                     children: [],
                     action: this.exportHandler,
                   },
@@ -436,6 +466,9 @@ export default class Export extends React.Component<Props, any> {
                       'EXPORT_TAILWIND',
                       this.props.planStatus
                     ),
+                    isNew: features.find(
+                      (feature) => feature.name === 'EXPORT_TAILWIND'
+                    )?.isNew,
                     children: [],
                     action: this.exportHandler,
                   },
@@ -449,7 +482,9 @@ export default class Export extends React.Component<Props, any> {
                       (feature) => feature.name === 'EXPORT_APPLE'
                     )?.isActive,
                     isBlocked: isBlocked('EXPORT_APPLE', this.props.planStatus),
-                    isNew: true,
+                    isNew: features.find(
+                      (feature) => feature.name === 'EXPORT_APPLE'
+                    )?.isNew,
                     children: [
                       {
                         label: locals[this.props.lang].export.apple.swiftui,
@@ -464,6 +499,9 @@ export default class Export extends React.Component<Props, any> {
                           'EXPORT_APPLE_SWIFTUI',
                           this.props.planStatus
                         ),
+                        isNew: features.find(
+                          (feature) => feature.name === 'EXPORT_APPLE_SWIFTUI'
+                        )?.isNew,
                         children: [],
                         action: this.exportHandler,
                       },
@@ -480,6 +518,9 @@ export default class Export extends React.Component<Props, any> {
                           'EXPORT_APPLE_UIKIT',
                           this.props.planStatus
                         ),
+                        isNew: features.find(
+                          (feature) => feature.name === 'EXPORT_APPLE_UIKIT'
+                        )?.isNew,
                         children: [],
                         action: this.exportHandler,
                       },
@@ -499,7 +540,9 @@ export default class Export extends React.Component<Props, any> {
                       'EXPORT_ANDROID',
                       this.props.planStatus
                     ),
-                    isNew: true,
+                    isNew: features.find(
+                      (feature) => feature.name === 'EXPORT_ANDROID'
+                    )?.isNew,
                     children: [
                       {
                         label: locals[this.props.lang].export.android.compose,
@@ -514,6 +557,9 @@ export default class Export extends React.Component<Props, any> {
                           'EXPORT_ANDROID_COMPOSE',
                           this.props.planStatus
                         ),
+                        isNew: features.find(
+                          (feature) => feature.name === 'EXPORT_ANDROID_COMPOSE'
+                        )?.isNew,
                         children: [],
                         action: this.exportHandler,
                       },
@@ -530,6 +576,9 @@ export default class Export extends React.Component<Props, any> {
                           'EXPORT_ANDROID_XML',
                           this.props.planStatus
                         ),
+                        isNew: features.find(
+                          (feature) => feature.name === 'EXPORT_ANDROID_XML'
+                        )?.isNew,
                         children: [],
                         action: this.exportHandler,
                       },
@@ -546,6 +595,9 @@ export default class Export extends React.Component<Props, any> {
                       (feature) => feature.name === 'EXPORT_CSV'
                     )?.isActive,
                     isBlocked: isBlocked('EXPORT_CSV', this.props.planStatus),
+                    isNew: features.find(
+                      (feature) => feature.name === 'EXPORT_CSV'
+                    )?.isNew,
                     children: [],
                     action: this.exportHandler,
                   },

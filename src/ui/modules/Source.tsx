@@ -185,6 +185,10 @@ export default class Source extends React.Component<Props, any> {
           itemHandler={this.state['isCoolorsImportOpen'] ? 'REMOVE' : 'ADD'}
           isExpanded={this.state['isCoolorsImportOpen']}
           isBlocked={isBlocked('SOURCE_COOLORS', this.props.planStatus)}
+          isNew={
+            features.find((feature) => feature.name === 'SOURCE_COOLORS')
+              ?.isNew
+          }
           onAdd={() => {
             this.setState({ isCoolorsImportOpen: true })
           }}

@@ -40,6 +40,18 @@ export default class Actions extends React.Component<Props> {
           type="primary"
           label={locals[this.props.lang].actions.createLocalStyles}
           feature="SYNC_LOCAL_STYLES"
+          isBlocked={isBlocked(
+            'SYNC_LOCAL_STYLES',
+            this.props.planStatus ?? 'UNPAID'
+          )}
+          isDisabled={isBlocked(
+            'SYNC_LOCAL_STYLES',
+            this.props.planStatus ?? 'UNPAID'
+          )}
+          isNew={
+            features.find((feature) => feature.name === 'SYNC_LOCAL_STYLES')
+              ?.isNew
+          }
           action={this.props.onSyncLocalStyles}
         />
       </Feature>
@@ -66,6 +78,10 @@ export default class Actions extends React.Component<Props> {
             'SYNC_LOCAL_VARIABLES',
             this.props.planStatus ?? 'UNPAID'
           )}
+          isNew={
+            features.find((feature) => feature.name === 'SYNC_LOCAL_VARIABLES')
+              ?.isNew
+          }
           action={this.props.onSyncLocalVariables}
         />
       </Feature>
@@ -132,6 +148,9 @@ export default class Actions extends React.Component<Props> {
                   'LOCAL_STYLES',
                   this.props.planStatus ?? 'UNPAID'
                 ),
+                isNew: features.find(
+                  (feature) => feature.name === 'LOCAL_STYLES'
+                )?.isNew,
                 children: [],
                 action: (e) =>
                   this.props.onChangeActions?.(
@@ -152,6 +171,9 @@ export default class Actions extends React.Component<Props> {
                   'LOCAL_VARIABLES',
                   this.props.planStatus ?? 'UNPAID'
                 ),
+                isNew: features.find(
+                  (feature) => feature.name === 'LOCAL_VARIABLES'
+                )?.isNew,
                 children: [],
                 action: (e) =>
                   this.props.onChangeActions?.(
