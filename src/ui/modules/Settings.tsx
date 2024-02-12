@@ -177,6 +177,11 @@ export default class Settings extends React.Component<Props> {
                     'VIEWS_PALETTE_WITH_PROPERTIES',
                     this.props.planStatus
                   ),
+                  isNew: features.find(
+                    (feature) =>
+                      feature.name ===
+                      'VIEWS_PALETTE_WITH_PROPERTIES'
+                  )?.isNew,
                   children: [],
                   action: this.props.onChangeSettings,
                 },
@@ -190,6 +195,11 @@ export default class Settings extends React.Component<Props> {
                     (feature) => feature.name === 'VIEWS_PALETTE'
                   )?.isActive,
                   isBlocked: isBlocked('VIEWS_PALETTE', this.props.planStatus),
+                  isNew: features.find(
+                    (feature) =>
+                      feature.name ===
+                      'VIEWS_PALETTE'
+                  )?.isNew,
                   children: [],
                   action: this.props.onChangeSettings,
                 },
@@ -203,11 +213,23 @@ export default class Settings extends React.Component<Props> {
                     (feature) => feature.name === 'VIEWS_SHEET'
                   )?.isActive,
                   isBlocked: isBlocked('VIEWS_SHEET', this.props.planStatus),
+                  isNew: features.find(
+                    (feature) =>
+                      feature.name ===
+                      'VIEWS_SHEET'
+                  )?.isNew,
                   children: [],
                   action: this.props.onChangeSettings,
                 },
               ]}
               selected={this.props.view}
+              isNew={
+                features.find(
+                  (feature) =>
+                    feature.name ===
+                    'VIEWS'
+                )?.isNew
+              }
             />
           </FormItem>
         </div>
@@ -244,6 +266,11 @@ export default class Settings extends React.Component<Props> {
                     'SETTINGS_COLOR_SPACE_LCH',
                     this.props.planStatus
                   ),
+                  isNew: features.find(
+                    (feature) =>
+                      feature.name ===
+                      'SETTINGS_COLOR_SPACE_LCH'
+                  )?.isNew,
                   children: [],
                   action: this.props.onChangeSettings,
                 },
@@ -261,6 +288,11 @@ export default class Settings extends React.Component<Props> {
                     'SETTINGS_COLOR_SPACE_OKLCH',
                     this.props.planStatus
                   ),
+                  isNew: features.find(
+                    (feature) =>
+                      feature.name ===
+                      'SETTINGS_COLOR_SPACE_OKLCH'
+                  )?.isNew,
                   children: [],
                   action: this.props.onChangeSettings,
                 },
@@ -277,6 +309,11 @@ export default class Settings extends React.Component<Props> {
                     'SETTINGS_COLOR_SPACE_LAB',
                     this.props.planStatus
                   ),
+                  isNew: features.find(
+                    (feature) =>
+                      feature.name ===
+                      'SETTINGS_COLOR_SPACE_LAB'
+                  )?.isNew,
                   children: [],
                   action: this.props.onChangeSettings,
                 },
@@ -294,6 +331,11 @@ export default class Settings extends React.Component<Props> {
                     'SETTINGS_COLOR_SPACE_OKLAB',
                     this.props.planStatus
                   ),
+                  isNew: features.find(
+                    (feature) =>
+                      feature.name ===
+                      'SETTINGS_COLOR_SPACE_OKLAB'
+                  )?.isNew,
                   children: [],
                   action: this.props.onChangeSettings,
                 },
@@ -310,6 +352,11 @@ export default class Settings extends React.Component<Props> {
                     'SETTINGS_COLOR_SPACE_HSL',
                     this.props.planStatus
                   ),
+                  isNew: features.find(
+                    (feature) =>
+                      feature.name ===
+                      'SETTINGS_COLOR_SPACE_HSL'
+                  )?.isNew,
                   children: [],
                   action: this.props.onChangeSettings,
                 },
@@ -327,11 +374,23 @@ export default class Settings extends React.Component<Props> {
                     'SETTINGS_COLOR_SPACE_HSLUV',
                     this.props.planStatus
                   ),
+                  isNew: features.find(
+                    (feature) =>
+                      feature.name ===
+                      'SETTINGS_COLOR_SPACE_HSLUV'
+                  )?.isNew,
                   children: [],
                   action: this.props.onChangeSettings,
                 },
               ]}
               selected={this.props.colorSpace}
+              isNew={
+                features.find(
+                  (feature) =>
+                    feature.name ===
+                    'SETTINGS_COLOR_SPACE'
+                )?.isNew
+              }
             />
           </FormItem>
           {this.props.colorSpace === 'HSL' ? (
@@ -427,6 +486,11 @@ export default class Settings extends React.Component<Props> {
                     'SETTINGS_VISION_SIMULATION_MODE_PROTANOMALY',
                     this.props.planStatus
                   ),
+                  isNew: features.find(
+                    (feature) =>
+                      feature.name ===
+                      'SETTINGS_VISION_SIMULATION_MODE_PROTANOMALY'
+                  )?.isNew,
                   children: [],
                   action: this.props.onChangeSettings,
                 },
@@ -447,6 +511,11 @@ export default class Settings extends React.Component<Props> {
                     'SETTINGS_VISION_SIMULATION_MODE_PROTANOPIA',
                     this.props.planStatus
                   ),
+                  isNew: features.find(
+                    (feature) =>
+                      feature.name ===
+                      'SETTINGS_VISION_SIMULATION_MODE_PROTANOPIA'
+                  )?.isNew,
                   children: [],
                   action: this.props.onChangeSettings,
                 },
@@ -467,6 +536,11 @@ export default class Settings extends React.Component<Props> {
                     'SETTINGS_VISION_SIMULATION_MODE_DEUTERANOMALY',
                     this.props.planStatus
                   ),
+                  isNew: features.find(
+                    (feature) =>
+                      feature.name ===
+                      'SETTINGS_VISION_SIMULATION_MODE_DEUTERANOMALY'
+                  )?.isNew,
                   children: [],
                   action: this.props.onChangeSettings,
                 },
@@ -487,6 +561,11 @@ export default class Settings extends React.Component<Props> {
                     'SETTINGS_VISION_SIMULATION_MODE_DEUTERANOPIA',
                     this.props.planStatus
                   ),
+                  isNew: features.find(
+                    (feature) =>
+                      feature.name ===
+                      'SETTINGS_VISION_SIMULATION_MODE_DEUTERANOPIA'
+                  )?.isNew,
                   children: [],
                   action: this.props.onChangeSettings,
                 },
@@ -507,6 +586,11 @@ export default class Settings extends React.Component<Props> {
                     'SETTINGS_VISION_SIMULATION_MODE_TRITANOMALY',
                     this.props.planStatus
                   ),
+                  isNew: features.find(
+                    (feature) =>
+                      feature.name ===
+                      'SETTINGS_VISION_SIMULATION_MODE_TRITANOMALY'
+                  )?.isNew,
                   children: [],
                   action: this.props.onChangeSettings,
                 },
@@ -527,6 +611,11 @@ export default class Settings extends React.Component<Props> {
                     'SETTINGS_VISION_SIMULATION_MODE_TRITANOPIA',
                     this.props.planStatus
                   ),
+                  isNew: features.find(
+                    (feature) =>
+                      feature.name ===
+                      'SETTINGS_VISION_SIMULATION_MODE_TRITANOPIA'
+                  )?.isNew,
                   children: [],
                   action: this.props.onChangeSettings,
                 },
@@ -547,6 +636,11 @@ export default class Settings extends React.Component<Props> {
                     'SETTINGS_VISION_SIMULATION_MODE_ACHROMATOMALY',
                     this.props.planStatus
                   ),
+                  isNew: features.find(
+                    (feature) =>
+                      feature.name ===
+                      'SETTINGS_VISION_SIMULATION_MODE_ACHROMATOMALY'
+                  )?.isNew,
                   children: [],
                   action: this.props.onChangeSettings,
                 },
@@ -567,12 +661,23 @@ export default class Settings extends React.Component<Props> {
                     'SETTINGS_VISION_SIMULATION_MODE_ACHROMATOPSIA',
                     this.props.planStatus
                   ),
+                  isNew: features.find(
+                    (feature) =>
+                      feature.name ===
+                      'SETTINGS_VISION_SIMULATION_MODE_ACHROMATOPSIA'
+                  )?.isNew,
                   children: [],
                   action: this.props.onChangeSettings,
                 },
               ]}
               selected={this.props.visionSimulationMode}
-              isNew
+              isNew={
+                features.find(
+                  (feature) =>
+                    feature.name ===
+                    'SETTINGS_VISION_SIMULATION_MODE'
+                )?.isNew
+              }
             />
           </FormItem>
         </div>
@@ -599,6 +704,11 @@ export default class Settings extends React.Component<Props> {
               'SETTINGS_NEW_ALGORITHM',
               this.props.planStatus
             )}
+            isNew={
+              features.find(
+                (feature) => feature.name === 'SETTINGS_NEW_ALGORITHM')
+              ?.isNew
+            }
             feature="UPDATE_ALGORITHM_VERSION"
             onChange={
               isBlocked('SETTINGS_NEW_ALGORITHM', this.props.planStatus)
@@ -654,6 +764,13 @@ export default class Settings extends React.Component<Props> {
                 'SETTINGS_TEXT_COLORS_THEME',
                 this.props.planStatus
               )}
+              isNew={
+                features.find(
+                  (feature) =>
+                    feature.name ===
+                    'SETTINGS_TEXT_COLORS_THEME'
+                )?.isNew
+              }
               feature="CHANGE_TEXT_LIGHT_COLOR"
               onChange={
                 isBlocked('SETTINGS_TEXT_COLORS_THEME', this.props.planStatus)
@@ -694,6 +811,13 @@ export default class Settings extends React.Component<Props> {
                 'SETTINGS_TEXT_COLORS_THEME',
                 this.props.planStatus
               )}
+              isNew={
+                features.find(
+                  (feature) =>
+                    feature.name ===
+                    'SETTINGS_TEXT_COLORS_THEME'
+                )?.isNew
+              }
               feature="CHANGE_TEXT_DARK_COLOR"
               onChange={
                 isBlocked('SETTINGS_TEXT_COLORS_THEME', this.props.planStatus)
