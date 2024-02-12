@@ -3,6 +3,7 @@ export interface Feature {
   description: string
   isActive: boolean
   isPro: boolean
+  isNew: boolean
   type: 'SERVICE' | 'DIVISION' | 'ACTION' | 'CONTEXT'
   service: Array<Service>
 }
