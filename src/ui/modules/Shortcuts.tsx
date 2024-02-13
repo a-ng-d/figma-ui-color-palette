@@ -79,13 +79,19 @@ export default class Shortcuts extends React.Component<Props, any> {
         rightPart={
           <>
             <div className="shortcuts">
-              <Button
-                type="icon"
-                icon="repository"
-                action={() =>
-                  window.open('https://uicp.link/repository', '_blank')
+              <Feature
+                isActive={
+                  features.find(
+                    (feature) => feature.name === 'SHORTCUTS_DOCUMENTATION'
+                  )?.isActive
                 }
-              />
+              >
+                <Button
+                  type="icon"
+                  icon="library"
+                  action={() => window.open('https://uicp.link/docs', '_blank')}
+                />
+              </Feature>
               <Menu
                 id="shortcuts-menu"
                 icon="info"
@@ -108,23 +114,6 @@ export default class Shortcuts extends React.Component<Props, any> {
                     action: () => this.props.onReOpenHighlight(),
                   },
                   {
-                    label: locals[this.props.lang].about.getHelp.documentation,
-                    value: null,
-                    feature: null,
-                    position: 0,
-                    type: 'OPTION',
-                    isActive: features.find(
-                      (feature) => feature.name === 'SHORTCUTS_DOCUMENTATION'
-                    )?.isActive,
-                    isBlocked: isBlocked(
-                      'SHORTCUTS_DOCUMENTATION',
-                      this.props.planStatus
-                    ),
-                    children: [],
-                    action: () =>
-                      window.open('https://uicp.link/docs', '_blank'),
-                  },
-                  {
                     label: locals[this.props.lang].about.getHelp.email,
                     value: null,
                     feature: null,
@@ -140,6 +129,23 @@ export default class Shortcuts extends React.Component<Props, any> {
                     children: [],
                     action: () =>
                       window.open('https://uicp.link/send-message', '_blank'),
+                  },
+                  {
+                    label: locals[this.props.lang].about.repository,
+                    value: null,
+                    feature: null,
+                    position: 0,
+                    type: 'OPTION',
+                    isActive: features.find(
+                      (feature) => feature.name === 'SHORTCUTS_REPOSITORY'
+                    )?.isActive,
+                    isBlocked: isBlocked(
+                      'SHORTCUTS_REPOSITORY',
+                      this.props.planStatus
+                    ),
+                    children: [],
+                    action: () =>
+                      window.open('https://uicp.link/repository', '_blank'),
                   },
                   {
                     label: '',

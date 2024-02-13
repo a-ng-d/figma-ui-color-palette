@@ -704,6 +704,15 @@ const features: Array<Feature> = [
     service: ['CREATE', 'EDIT'],
   },
   {
+    name: 'SHORTCUTS_REPOSITORY',
+    description: 'Repository',
+    isActive: true,
+    isPro: false,
+    isNew: false,
+    type: 'CONTEXT',
+    service: ['CREATE', 'EDIT'],
+  },
+  {
     name: 'SHORTCUTS_EMAIL',
     description: 'Support email',
     isActive: true,

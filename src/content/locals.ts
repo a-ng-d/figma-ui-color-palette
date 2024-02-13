@@ -220,6 +220,7 @@ export const locals: { [key: string]: any } = {
     },
     about: {
       title: 'About UI Color Palette',
+      repository: 'Watch the repository',
       getHelp: {
         title: 'Have help',
         documentation: 'Read the documentation',
