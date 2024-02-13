@@ -70,8 +70,7 @@ export default class Actions extends React.Component<Props> {
             type="PRIMARY"
             options={[
               {
-                label:
-                  locals[this.props.lang].actions.createLocalStyles,
+                label: locals[this.props.lang].actions.createLocalStyles,
                 value: 'LOCAL_STYLES',
                 feature: 'SYNC_LOCAL_STYLES',
                 position: 0,
@@ -87,12 +86,10 @@ export default class Actions extends React.Component<Props> {
                   (feature) => feature.name === 'SYNC_LOCAL_STYLES'
                 )?.isNew,
                 children: [],
-                action: (e) =>
-                  this.props.onSyncLocalStyles?.(e)
+                action: (e) => this.props.onSyncLocalStyles?.(e),
               },
               {
-                label:
-                  locals[this.props.lang].actions.createLocalVariables,
+                label: locals[this.props.lang].actions.createLocalVariables,
                 value: 'LOCAL_VARIABLES',
                 feature: 'SYNC_LOCAL_VARIABLES',
                 position: 1,
@@ -108,15 +105,13 @@ export default class Actions extends React.Component<Props> {
                   (feature) => feature.name === 'SYNC_LOCAL_VARIABLES'
                 )?.isNew,
                 children: [],
-                action: (e) =>
-                  this.props.onSyncLocalVariables?.(e)
+                action: (e) => this.props.onSyncLocalVariables?.(e),
               },
             ]}
             alignment="TOP_RIGHT"
           />
         </div>
-        <div className="actions__left">
-        </div>
+        <div className="actions__left"></div>
       </div>
     )
   }

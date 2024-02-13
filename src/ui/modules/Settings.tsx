@@ -178,8 +178,7 @@ export default class Settings extends React.Component<Props> {
                   ),
                   isNew: features.find(
                     (feature) =>
-                      feature.name ===
-                      'VIEWS_PALETTE_WITH_PROPERTIES'
+                      feature.name === 'VIEWS_PALETTE_WITH_PROPERTIES'
                   )?.isNew,
                   children: [],
                   action: this.props.onChangeSettings,
@@ -195,9 +194,7 @@ export default class Settings extends React.Component<Props> {
                   )?.isActive,
                   isBlocked: isBlocked('VIEWS_PALETTE', this.props.planStatus),
                   isNew: features.find(
-                    (feature) =>
-                      feature.name ===
-                      'VIEWS_PALETTE'
+                    (feature) => feature.name === 'VIEWS_PALETTE'
                   )?.isNew,
                   children: [],
                   action: this.props.onChangeSettings,
@@ -213,9 +210,7 @@ export default class Settings extends React.Component<Props> {
                   )?.isActive,
                   isBlocked: isBlocked('VIEWS_SHEET', this.props.planStatus),
                   isNew: features.find(
-                    (feature) =>
-                      feature.name ===
-                      'VIEWS_SHEET'
+                    (feature) => feature.name === 'VIEWS_SHEET'
                   )?.isNew,
                   children: [],
                   action: this.props.onChangeSettings,
@@ -223,11 +218,7 @@ export default class Settings extends React.Component<Props> {
               ]}
               selected={this.props.view}
               isNew={
-                features.find(
-                  (feature) =>
-                    feature.name ===
-                    'VIEWS'
-                )?.isNew
+                features.find((feature) => feature.name === 'VIEWS')?.isNew
               }
             />
           </FormItem>
@@ -266,9 +257,7 @@ export default class Settings extends React.Component<Props> {
                     this.props.planStatus
                   ),
                   isNew: features.find(
-                    (feature) =>
-                      feature.name ===
-                      'SETTINGS_COLOR_SPACE_LCH'
+                    (feature) => feature.name === 'SETTINGS_COLOR_SPACE_LCH'
                   )?.isNew,
                   children: [],
                   action: this.props.onChangeSettings,
@@ -288,9 +277,7 @@ export default class Settings extends React.Component<Props> {
                     this.props.planStatus
                   ),
                   isNew: features.find(
-                    (feature) =>
-                      feature.name ===
-                      'SETTINGS_COLOR_SPACE_OKLCH'
+                    (feature) => feature.name === 'SETTINGS_COLOR_SPACE_OKLCH'
                   )?.isNew,
                   children: [],
                   action: this.props.onChangeSettings,
@@ -309,9 +296,7 @@ export default class Settings extends React.Component<Props> {
                     this.props.planStatus
                   ),
                   isNew: features.find(
-                    (feature) =>
-                      feature.name ===
-                      'SETTINGS_COLOR_SPACE_LAB'
+                    (feature) => feature.name === 'SETTINGS_COLOR_SPACE_LAB'
                   )?.isNew,
                   children: [],
                   action: this.props.onChangeSettings,
@@ -331,9 +316,7 @@ export default class Settings extends React.Component<Props> {
                     this.props.planStatus
                   ),
                   isNew: features.find(
-                    (feature) =>
-                      feature.name ===
-                      'SETTINGS_COLOR_SPACE_OKLAB'
+                    (feature) => feature.name === 'SETTINGS_COLOR_SPACE_OKLAB'
                   )?.isNew,
                   children: [],
                   action: this.props.onChangeSettings,
@@ -352,9 +335,7 @@ export default class Settings extends React.Component<Props> {
                     this.props.planStatus
                   ),
                   isNew: features.find(
-                    (feature) =>
-                      feature.name ===
-                      'SETTINGS_COLOR_SPACE_HSL'
+                    (feature) => feature.name === 'SETTINGS_COLOR_SPACE_HSL'
                   )?.isNew,
                   children: [],
                   action: this.props.onChangeSettings,
@@ -374,9 +355,7 @@ export default class Settings extends React.Component<Props> {
                     this.props.planStatus
                   ),
                   isNew: features.find(
-                    (feature) =>
-                      feature.name ===
-                      'SETTINGS_COLOR_SPACE_HSLUV'
+                    (feature) => feature.name === 'SETTINGS_COLOR_SPACE_HSLUV'
                   )?.isNew,
                   children: [],
                   action: this.props.onChangeSettings,
@@ -385,9 +364,7 @@ export default class Settings extends React.Component<Props> {
               selected={this.props.colorSpace}
               isNew={
                 features.find(
-                  (feature) =>
-                    feature.name ===
-                    'SETTINGS_COLOR_SPACE'
+                  (feature) => feature.name === 'SETTINGS_COLOR_SPACE'
                 )?.isNew
               }
             />
@@ -479,7 +456,8 @@ export default class Settings extends React.Component<Props> {
                   type: 'OPTION',
                   isActive: features.find(
                     (feature) =>
-                      feature.name === 'SETTINGS_VISION_SIMULATION_MODE_PROTANOMALY'
+                      feature.name ===
+                      'SETTINGS_VISION_SIMULATION_MODE_PROTANOMALY'
                   )?.isActive,
                   isBlocked: isBlocked(
                     'SETTINGS_VISION_SIMULATION_MODE_PROTANOMALY',
@@ -673,8 +651,7 @@ export default class Settings extends React.Component<Props> {
               isNew={
                 features.find(
                   (feature) =>
-                    feature.name ===
-                    'SETTINGS_VISION_SIMULATION_MODE'
+                    feature.name === 'SETTINGS_VISION_SIMULATION_MODE'
                 )?.isNew
               }
             />
@@ -705,8 +682,8 @@ export default class Settings extends React.Component<Props> {
             )}
             isNew={
               features.find(
-                (feature) => feature.name === 'SETTINGS_NEW_ALGORITHM')
-              ?.isNew
+                (feature) => feature.name === 'SETTINGS_NEW_ALGORITHM'
+              )?.isNew
             }
             feature="UPDATE_ALGORITHM_VERSION"
             onChange={
@@ -765,9 +742,7 @@ export default class Settings extends React.Component<Props> {
               )}
               isNew={
                 features.find(
-                  (feature) =>
-                    feature.name ===
-                    'SETTINGS_TEXT_COLORS_THEME'
+                  (feature) => feature.name === 'SETTINGS_TEXT_COLORS_THEME'
                 )?.isNew
               }
               feature="CHANGE_TEXT_LIGHT_COLOR"
@@ -812,9 +787,7 @@ export default class Settings extends React.Component<Props> {
               )}
               isNew={
                 features.find(
-                  (feature) =>
-                    feature.name ===
-                    'SETTINGS_TEXT_COLORS_THEME'
+                  (feature) => feature.name === 'SETTINGS_TEXT_COLORS_THEME'
                 )?.isNew
               }
               feature="CHANGE_TEXT_DARK_COLOR"

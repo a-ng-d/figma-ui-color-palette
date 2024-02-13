@@ -65,7 +65,7 @@ export default class EditPalette extends React.Component<Props, any> {
     super(props)
     this.state = {
       context:
-        this.setContexts()[0] != undefined ? this.setContexts()[0].id : ''
+        this.setContexts()[0] != undefined ? this.setContexts()[0].id : '',
     }
     this.themesRef = React.createRef()
   }
@@ -185,31 +185,37 @@ export default class EditPalette extends React.Component<Props, any> {
       contexts.push({
         label: locals[this.props.lang].contexts.scale,
         id: 'SCALE',
-        isUpdated: features.find((feature) => feature.name === 'SCALE')?.isNew ?? false,
+        isUpdated:
+          features.find((feature) => feature.name === 'SCALE')?.isNew ?? false,
       })
     if (features.find((feature) => feature.name === 'COLORS')?.isActive)
       contexts.push({
         label: locals[this.props.lang].contexts.colors,
         id: 'COLORS',
-        isUpdated: features.find((feature) => feature.name === 'COLORS')?.isNew ?? false,
+        isUpdated:
+          features.find((feature) => feature.name === 'COLORS')?.isNew ?? false,
       })
     if (features.find((feature) => feature.name === 'THEMES')?.isActive)
       contexts.push({
         label: locals[this.props.lang].contexts.themes,
         id: 'THEMES',
-        isUpdated: features.find((feature) => feature.name === 'THEMES')?.isNew ?? false,
+        isUpdated:
+          features.find((feature) => feature.name === 'THEMES')?.isNew ?? false,
       })
     if (features.find((feature) => feature.name === 'EXPORT')?.isActive)
       contexts.push({
         label: locals[this.props.lang].contexts.export,
         id: 'EXPORT',
-        isUpdated: features.find((feature) => feature.name === 'EXPORT')?.isNew ?? false,
+        isUpdated:
+          features.find((feature) => feature.name === 'EXPORT')?.isNew ?? false,
       })
     if (features.find((feature) => feature.name === 'SETTINGS')?.isActive)
       contexts.push({
         label: locals[this.props.lang].contexts.settings,
         id: 'SETTINGS',
-        isUpdated: features.find((feature) => feature.name === 'SETTINGS')?.isNew ?? false,
+        isUpdated:
+          features.find((feature) => feature.name === 'SETTINGS')?.isNew ??
+          false,
       })
     return contexts
   }
@@ -249,8 +255,7 @@ export default class EditPalette extends React.Component<Props, any> {
         isActive: features.find((feature) => feature.name === 'THEMES')
           ?.isActive,
         isBlocked: isBlocked('THEMES', this.props.planStatus),
-        isNew: features.find((feature) => feature.name === 'THEMES')
-          ?.isNew,
+        isNew: features.find((feature) => feature.name === 'THEMES')?.isNew,
         children: [],
         action: () => {
           this.setState({ context: 'THEMES' })
