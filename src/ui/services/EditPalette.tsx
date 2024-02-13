@@ -65,12 +65,7 @@ export default class EditPalette extends React.Component<Props, any> {
     super(props)
     this.state = {
       context:
-        this.setContexts()[0] != undefined ? this.setContexts()[0].id : '',
-      deploymentAction: features.find(
-        (feature) => feature.name === 'LOCAL_STYLES'
-      )?.isActive
-        ? 'LOCAL_STYLES'
-        : 'LOCAL_VARIABLES',
+        this.setContexts()[0] != undefined ? this.setContexts()[0].id : ''
     }
     this.themesRef = React.createRef()
   }
@@ -285,7 +280,6 @@ export default class EditPalette extends React.Component<Props, any> {
             hasPreset={false}
             preset={this.props.preset}
             scale={this.props.scale}
-            actions={this.state['deploymentAction']}
             planStatus={this.props.planStatus}
             editorType={this.props.editorType}
             lang={this.props.lang}
@@ -306,7 +300,6 @@ export default class EditPalette extends React.Component<Props, any> {
         controls = (
           <Colors
             colors={this.props.colors}
-            actions={this.state['deploymentAction']}
             planStatus={this.props.planStatus}
             editorType={this.props.editorType}
             lang={this.props.lang}
@@ -329,7 +322,6 @@ export default class EditPalette extends React.Component<Props, any> {
             preset={this.props.preset}
             scale={this.props.scale}
             themes={this.props.themes}
-            actions={this.state['deploymentAction']}
             planStatus={this.props.planStatus}
             editorType={this.props.editorType}
             lang={this.props.lang}
@@ -372,7 +364,6 @@ export default class EditPalette extends React.Component<Props, any> {
             textColorsTheme={this.props.textColorsTheme}
             view={this.props.view}
             isNewAlgorithm={this.props.algorithmVersion == 'v2' ? true : false}
-            actions={this.state['deploymentAction']}
             planStatus={this.props.planStatus}
             editorType={this.props.editorType}
             lang={this.props.lang}

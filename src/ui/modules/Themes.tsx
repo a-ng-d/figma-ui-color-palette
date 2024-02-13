@@ -27,7 +27,6 @@ interface Props {
   preset: PresetConfiguration
   scale: ScaleConfiguration
   themes: Array<ThemeConfiguration>
-  actions: string
   planStatus: 'UNPAID' | 'PAID'
   editorType: EditorType
   lang: Language
@@ -396,7 +395,6 @@ export default class Themes extends React.Component<Props, any> {
         {this.props.editorType === 'figma' ? (
           <Actions
             context="DEPLOY"
-            actions={this.props.actions}
             planStatus={this.props.planStatus}
             lang={this.props.lang}
             onSyncLocalStyles={this.props.onSyncLocalStyles}

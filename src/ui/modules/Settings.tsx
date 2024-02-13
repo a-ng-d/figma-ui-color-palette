@@ -28,7 +28,6 @@ interface Props {
   visionSimulationMode: visionSimulationModeConfiguration
   view: string
   isNewAlgorithm?: boolean
-  actions?: string
   planStatus: 'UNPAID' | 'PAID'
   editorType?: EditorType
   lang: Language
@@ -920,7 +919,6 @@ export default class Settings extends React.Component<Props> {
         ) : this.props.editorType === 'figma' ? (
           <Actions
             context="DEPLOY"
-            actions={this.props.actions}
             planStatus={this.props.planStatus}
             lang={this.props.lang}
             onSyncLocalStyles={this.props.onSyncLocalStyles}

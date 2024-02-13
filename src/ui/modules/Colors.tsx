@@ -21,7 +21,6 @@ import { uid } from 'uid'
 
 interface Props {
   colors: Array<ColorConfiguration>
-  actions: string
   editorType: 'figma' | 'figjam'
   planStatus: 'UNPAID' | 'PAID'
   lang: Language
@@ -415,7 +414,6 @@ export default class Colors extends React.Component<Props, any> {
         {this.props.editorType === 'figma' ? (
           <Actions
             context="DEPLOY"
-            actions={this.props.actions}
             planStatus={this.props.planStatus}
             lang={this.props.lang}
             onSyncLocalStyles={this.props.onSyncLocalStyles}
