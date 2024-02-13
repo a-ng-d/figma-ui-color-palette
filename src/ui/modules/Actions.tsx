@@ -92,7 +92,7 @@ export default class Actions extends React.Component<Props> {
                 label: locals[this.props.lang].actions.createLocalVariables,
                 value: 'LOCAL_VARIABLES',
                 feature: 'SYNC_LOCAL_VARIABLES',
-                position: 1,
+                position: 0,
                 type: 'OPTION',
                 isActive: features.find(
                   (feature) => feature.name === 'SYNC_LOCAL_VARIABLES'
