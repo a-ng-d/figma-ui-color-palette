@@ -207,42 +207,6 @@ export default class Export extends React.Component<Props, any> {
           '*'
         )
       },
-      EXPORT_CSS_LCH: () => {
-        this.setState({
-          colorSpace: {
-            selected: 'LCH',
-            options: this.state['colorSpace'].options,
-          },
-        })
-        parent.postMessage(
-          {
-            pluginMessage: {
-              type: 'EXPORT_PALETTE',
-              export: 'CSS',
-              colorSpace: 'LCH',
-            },
-          },
-          '*'
-        )
-      },
-      EXPORT_CSS_P3: () => {
-        this.setState({
-          colorSpace: {
-            selected: 'P3',
-            options: this.state['colorSpace'].options,
-          },
-        })
-        parent.postMessage(
-          {
-            pluginMessage: {
-              type: 'EXPORT_PALETTE',
-              export: 'CSS',
-              colorSpace: 'P3',
-            },
-          },
-          '*'
-        )
-      },
       EXPORT_CSS_HEX: () => {
         this.setState({
           colorSpace: {
@@ -274,6 +238,42 @@ export default class Export extends React.Component<Props, any> {
               type: 'EXPORT_PALETTE',
               export: 'CSS',
               colorSpace: 'HSL',
+            },
+          },
+          '*'
+        )
+      },
+      EXPORT_CSS_LCH: () => {
+        this.setState({
+          colorSpace: {
+            selected: 'LCH',
+            options: this.state['colorSpace'].options,
+          },
+        })
+        parent.postMessage(
+          {
+            pluginMessage: {
+              type: 'EXPORT_PALETTE',
+              export: 'CSS',
+              colorSpace: 'LCH',
+            },
+          },
+          '*'
+        )
+      },
+      EXPORT_CSS_P3: () => {
+        this.setState({
+          colorSpace: {
+            selected: 'P3',
+            options: this.state['colorSpace'].options,
+          },
+        })
+        parent.postMessage(
+          {
+            pluginMessage: {
+              type: 'EXPORT_PALETTE',
+              export: 'CSS',
+              colorSpace: 'P3',
             },
           },
           '*'
