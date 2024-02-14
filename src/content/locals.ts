@@ -155,6 +155,7 @@ export const locals: { [key: string]: any } = {
         label: glossary.colorSpace,
         rgb: glossary.rgb,
         hex: glossary.hex,
+        hsl: glossary.hsl,
         lch: glossary.lch,
         p3: glossary.p3,
       },

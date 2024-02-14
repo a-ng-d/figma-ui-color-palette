@@ -389,6 +389,15 @@ const features: Array<Feature> = [
     service: ['EDIT'],
   },
   {
+    name: 'EXPORT_CSS_HSL',
+    description: 'Palette export to CSS (HSL)',
+    isActive: true,
+    isPro: false,
+    isNew: false,
+    type: 'ACTION',
+    service: ['EDIT'],
+  },
+  {
     name: 'EXPORT_CSS_LCH',
     description: 'Palette export to CSS (LCH)',
     isActive: true,

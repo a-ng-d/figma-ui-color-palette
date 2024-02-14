@@ -128,10 +128,26 @@ export default class Export extends React.Component<Props, any> {
                 action: this.exportHandler,
               },
               {
+                label: locals[this.props.lang].export.colorSpace.hsl,
+                value: 'EXPORT_CSS_HSL',
+                feature: 'SELECT_COLOR_SPACE',
+                position: 2,
+                type: 'OPTION',
+                isActive: features.find(
+                  (feature) => feature.name === 'EXPORT_CSS_HSL'
+                )?.isActive,
+                isBlocked: isBlocked('EXPORT_CSS_HSL', this.props.planStatus),
+                isNew: features.find(
+                  (feature) => feature.name === 'EXPORT_CSS_HSL'
+                )?.isNew,
+                children: [],
+                action: this.exportHandler,
+              },
+              {
                 label: locals[this.props.lang].export.colorSpace.lch,
                 value: 'EXPORT_CSS_LCH',
                 feature: 'SELECT_COLOR_SPACE',
-                position: 2,
+                position: 3,
                 type: 'OPTION',
                 isActive: features.find(
                   (feature) => feature.name === 'EXPORT_CSS_LCH'
@@ -147,7 +163,7 @@ export default class Export extends React.Component<Props, any> {
                 label: locals[this.props.lang].export.colorSpace.p3,
                 value: 'EXPORT_CSS_P3',
                 feature: 'SELECT_COLOR_SPACE',
-                position: 3,
+                position: 4,
                 type: 'OPTION',
                 isActive: features.find(
                   (feature) => feature.name === 'EXPORT_CSS_P3'
@@ -240,6 +256,24 @@ export default class Export extends React.Component<Props, any> {
               type: 'EXPORT_PALETTE',
               export: 'CSS',
               colorSpace: 'HEX',
+            },
+          },
+          '*'
+        )
+      },
+      EXPORT_CSS_HSL: () => {
+        this.setState({
+          colorSpace: {
+            selected: 'HSL',
+            options: this.state['colorSpace'].options,
+          },
+        })
+        parent.postMessage(
+          {
+            pluginMessage: {
+              type: 'EXPORT_PALETTE',
+              export: 'CSS',
+              colorSpace: 'HSL',
             },
           },
           '*'
