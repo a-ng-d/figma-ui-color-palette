@@ -106,25 +106,25 @@ const features: Array<Feature> = [
     isActive: true,
     isPro: false,
     isNew: false,
-    type: 'CONTEXT',
+    type: 'ACTION',
     service: ['CREATE'],
   },
   {
     name: 'SOURCE_COOLORS',
-    description: 'Imported colors from a Coolors palette',
+    description: 'Import colors from a Coolors palette',
     isActive: true,
     isPro: false,
     isNew: false,
-    type: 'CONTEXT',
+    type: 'ACTION',
     service: ['CREATE'],
   },
   {
     name: 'SOURCE_REALTIME_COLORS',
-    description: 'Imported colors from a Realtime Colors simulation',
+    description: 'Import colors from a Realtime Colors simulation',
     isActive: true,
     isPro: false,
     isNew: false,
-    type: 'CONTEXT',
+    type: 'ACTION',
     service: ['CREATE'],
   },
   {
@@ -709,7 +709,7 @@ const features: Array<Feature> = [
     isActive: true,
     isPro: false,
     isNew: false,
-    type: 'DIVISION',
+    type: 'ACTION',
     service: ['CREATE', 'EDIT'],
   },
   {
@@ -718,7 +718,7 @@ const features: Array<Feature> = [
     isActive: true,
     isPro: false,
     isNew: false,
-    type: 'DIVISION',
+    type: 'ACTION',
     service: ['CREATE', 'EDIT'],
   },
   {
@@ -727,7 +727,7 @@ const features: Array<Feature> = [
     isActive: true,
     isPro: false,
     isNew: false,
-    type: 'CONTEXT',
+    type: 'ACTION',
     service: ['CREATE', 'EDIT'],
   },
   {
@@ -736,7 +736,7 @@ const features: Array<Feature> = [
     isActive: true,
     isPro: false,
     isNew: false,
-    type: 'DIVISION',
+    type: 'ACTION',
     service: ['CREATE', 'EDIT'],
   },
   {
@@ -745,7 +745,7 @@ const features: Array<Feature> = [
     isActive: true,
     isPro: false,
     isNew: false,
-    type: 'DIVISION',
+    type: 'ACTION',
     service: ['CREATE', 'EDIT'],
   },
   {
@@ -754,7 +754,7 @@ const features: Array<Feature> = [
     isActive: true,
     isPro: false,
     isNew: false,
-    type: 'DIVISION',
+    type: 'ACTION',
     service: ['CREATE', 'EDIT'],
   },
   {
@@ -763,7 +763,7 @@ const features: Array<Feature> = [
     isActive: true,
     isPro: false,
     isNew: false,
-    type: 'DIVISION',
+    type: 'ACTION',
     service: ['CREATE', 'EDIT'],
   },
   {
@@ -772,7 +772,7 @@ const features: Array<Feature> = [
     isActive: true,
     isPro: false,
     isNew: false,
-    type: 'CONTEXT',
+    type: 'ACTION',
     service: ['CREATE', 'EDIT'],
   },
   {
@@ -781,7 +781,7 @@ const features: Array<Feature> = [
     isActive: true,
     isPro: false,
     isNew: false,
-    type: 'CONTEXT',
+    type: 'ACTION',
     service: ['CREATE', 'EDIT'],
   },
   {
