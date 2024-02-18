@@ -112,7 +112,7 @@ export interface PaletteDataShadeItem {
 export interface SourceColorConfiguration {
   name: string
   rgb: RgbModel
-  source: 'CANVAS' | 'COOLORS'
+  source: 'CANVAS' | 'COOLORS' | 'REALTIME_COLORS'
   id: string
 }
 

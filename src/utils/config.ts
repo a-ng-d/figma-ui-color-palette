@@ -119,6 +119,15 @@ const features: Array<Feature> = [
     service: ['CREATE'],
   },
   {
+    name: 'SOURCE_REALTIME_COLORS',
+    description: 'Imported colors from a Realtime Colors simulation',
+    isActive: true,
+    isPro: false,
+    isNew: false,
+    type: 'CONTEXT',
+    service: ['CREATE'],
+  },
+  {
     name: 'SCALE',
     description: 'Lightness scale configuration',
     isActive: true,

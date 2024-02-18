@@ -80,6 +80,15 @@ export const locals: { [key: string]: any } = {
             'The end of the URL must match with several hexadecimal codes (e.g. 8ecae6-…-219ebc)',
         },
       },
+      realtimeColors: {
+        title: 'Import from Realtime Colors',
+        url: {
+          label: 'Realtime URL',
+          placeholder: 'https://www.realtimecolors.com/?colors=…',
+          errorMessage:
+            'The end of the URL must match with several hexadecimal codes (e.g. 8ecae6-…-219ebc)',
+        },
+      },
     },
     scale: {
       title: 'Lightness scale',
