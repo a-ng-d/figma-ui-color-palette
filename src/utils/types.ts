@@ -28,6 +28,8 @@ export type PriorityContext =
   | 'TRY'
   | 'ABOUT'
 
+export type ThirdParty = 'COOLORS' | 'REALTIME_COLORS'
+
 export interface windowSize {
   w: number
   h: number
@@ -112,7 +114,7 @@ export interface PaletteDataShadeItem {
 export interface SourceColorConfiguration {
   name: string
   rgb: RgbModel
-  source: 'CANVAS' | 'COOLORS' | 'REALTIME_COLORS'
+  source: 'CANVAS' | ThirdParty
   id: string
 }
 

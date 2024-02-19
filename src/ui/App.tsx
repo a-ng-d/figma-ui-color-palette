@@ -20,6 +20,7 @@ import type {
   ThemeConfiguration,
   TrialStatus,
   ViewConfiguration,
+  ThirdParty,
 } from '../utils/types'
 import Dispatcher from './modules/Dispatcher'
 import Feature from './components/Feature'
@@ -107,16 +108,17 @@ class App extends React.Component<any, any> {
     setTimeout(() => this.setState({ isLoaded: true }), 1000)
 
   // Handlers
-  colorsFromCoolorsHandler = (
-    sourceColorsFromCoolers: Array<SourceColorConfiguration>
+  colorsFromImportHandler = (
+    sourceColorsFromImport: Array<SourceColorConfiguration>,
+    source: ThirdParty
   ) => {
     this.setState({
       sourceColors: this.state['sourceColors']
         .filter(
           (sourceColors: SourceColorConfiguration) =>
-            sourceColors.source != 'COOLORS'
+            sourceColors.source != source
         )
-        .concat(sourceColorsFromCoolers),
+        .concat(sourceColorsFromImport),
     })
   }
 
@@ -776,7 +778,7 @@ class App extends React.Component<any, any> {
                 textColorsTheme={this.state['textColorsTheme']}
                 planStatus={this.state['planStatus']}
                 lang={this.state['lang']}
-                onChangeColorsFromCoolors={this.colorsFromCoolorsHandler}
+                onChangeColorsFromImport={this.colorsFromImportHandler}
                 onChangePreset={this.presetsHandler}
                 onCustomPreset={this.customHandler}
                 onChangeSettings={this.settingsHandler}
