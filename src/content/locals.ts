@@ -75,18 +75,18 @@ export const locals: { [key: string]: any } = {
         title: 'Import from Coolors',
         url: {
           label: 'Palette URL',
-          placeholder: 'https://coolors.co/…',
+          placeholder: 'Paste a link (https://coolors.co/…)',
           errorMessage:
-            'The end of the URL must match with several hexadecimal codes (e.g. 8ecae6-…-219ebc)',
+            'The URL must include several hexadecimal codes (e.g. 8ecae6-…-219ebc)',
         },
       },
       realtimeColors: {
         title: 'Import from Realtime Colors',
         url: {
           label: 'Realtime URL',
-          placeholder: 'https://www.realtimecolors.com/?colors=…',
+          placeholder: 'Paste a link (https://www.realtimecolors.com/?colors=…)',
           errorMessage:
-            'The end of the URL must match with several hexadecimal codes (e.g. 8ecae6-…-219ebc)',
+            'The URL must include several hexadecimal codes (e.g. 8ecae6-…-219ebc)',
         },
       },
     },
