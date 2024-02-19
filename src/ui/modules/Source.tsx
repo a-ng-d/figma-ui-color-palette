@@ -298,20 +298,12 @@ export default class Source extends React.Component<Props, any> {
                     this.importColorsFromCoolorsHandler()
                   }
                 }}
-              />
-              <div
-                style={{
-                  alignSelf: 'center',
+                onBlur={() => {
+                  if (this.state['coolorsUrl'].canBeSubmitted) {
+                    this.importColorsFromCoolorsHandler()
+                  }
                 }}
-              >
-                <Button
-                  type="icon"
-                  isDisabled={!this.state['coolorsUrl'].canBeSubmitted}
-                  icon="plus"
-                  feature="IMPORT_COLORS_FROM_URL"
-                  action={this.importColorsFromCoolorsHandler}
-                />
-              </div>
+              />
             </FormItem>
           </div>
           <ul className="list">
@@ -392,20 +384,12 @@ export default class Source extends React.Component<Props, any> {
                     this.importColorsFromRealtimeColorsHandler()
                   }
                 }}
-              />
-              <div
-                style={{
-                  alignSelf: 'center',
+                onBlur={() => {
+                  if (this.state['realtimeColorsUrl'].canBeSubmitted) {
+                    this.importColorsFromRealtimeColorsHandler()
+                  }
                 }}
-              >
-                <Button
-                  type="icon"
-                  isDisabled={!this.state['realtimeColorsUrl'].canBeSubmitted}
-                  icon="plus"
-                  feature="IMPORT_COLORS_FROM_URL"
-                  action={this.importColorsFromRealtimeColorsHandler}
-                />
-              </div>
+              />
             </FormItem>
           </div>
           <ul className="list">
