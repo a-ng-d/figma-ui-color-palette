@@ -9,13 +9,13 @@ import type {
 } from '../../utils/types'
 import Feature from '../components/Feature'
 import { Message } from '@a-ng-d/figmug.dialogs.message'
-import Actions from './Actions'
 import { FormItem } from '@a-ng-d/figmug.layouts.form-item'
 import { Input } from '@a-ng-d/figmug.inputs.input'
-import { Button } from '@a-ng-d/figmug.actions.button'
-import CompactColorItem from '../components/CompactColorItem'
 import { Accordion } from '@a-ng-d/figmug.layouts.accordion'
 import { texts } from '@a-ng-d/figmug.stylesheets.texts'
+import { SectionTitle } from '@a-ng-d/figmug.layouts.section-title'
+import Actions from './Actions'
+import CompactColorItem from '../components/CompactColorItem'
 import features from '../../utils/config'
 import isBlocked from '../../utils/isBlocked'
 import { locals } from '../../content/locals'
@@ -199,9 +199,9 @@ export default class Source extends React.Component<Props, any> {
       <>
         <div className="section-controls">
           <div className="section-controls__left-part">
-            <div className={`section-title ${texts['section-title']}`}>
-              {locals[this.props.lang].source.canvas.title}
-            </div>
+            <SectionTitle
+              label={locals[this.props.lang].source.canvas.title}
+            />
             <div className={`type ${texts.type}`}>{`(${
               this.props.sourceColors.filter(
                 (sourceColor) => sourceColor.source === 'CANVAS'

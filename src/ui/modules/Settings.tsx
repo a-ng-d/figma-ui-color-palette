@@ -12,8 +12,8 @@ import { Input } from '@a-ng-d/figmug.inputs.input'
 import { Select } from '@a-ng-d/figmug.inputs.select'
 import { Message } from '@a-ng-d/figmug.dialogs.message'
 import { Dropdown } from '@a-ng-d/figmug.inputs.dropdown'
+import { SectionTitle } from '@a-ng-d/figmug.layouts.section-title'
 import Actions from './Actions'
-import { texts } from '@a-ng-d/figmug.stylesheets.texts'
 import features from '../../utils/config'
 import isBlocked from '../../utils/isBlocked'
 import { locals } from '../../content/locals'
@@ -829,9 +829,9 @@ export default class Settings extends React.Component<Props> {
       <div className="settings__group">
         <div className="section-controls">
           <div className="section-controls__left-part">
-            <div className={`section-title ${texts['section-title']}`}>
-              {locals[this.props.lang].settings.global.title}
-            </div>
+            <SectionTitle
+              label={locals[this.props.lang].settings.global.title}
+            />
           </div>
         </div>
         <this.name />
@@ -846,9 +846,9 @@ export default class Settings extends React.Component<Props> {
       <div className="settings__group">
         <div className="section-controls">
           <div className="section-controls__left-part">
-            <div className={`section-title ${texts['section-title']}`}>
-              {locals[this.props.lang].settings.color.title}
-            </div>
+            <SectionTitle
+              label={locals[this.props.lang].settings.color.title}
+            />
           </div>
         </div>
         <this.colorSpace />
@@ -863,9 +863,9 @@ export default class Settings extends React.Component<Props> {
       <div className="settings__group">
         <div className="section-controls">
           <div className="section-controls__left-part">
-            <div className={`section-title ${texts['section-title']}`}>
-              {locals[this.props.lang].settings.contrast.title}
-            </div>
+            <SectionTitle
+              label={locals[this.props.lang].settings.contrast.title}
+            />
           </div>
         </div>
         <this.textColorsTheme />

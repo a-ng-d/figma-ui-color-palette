@@ -2,12 +2,12 @@ import * as React from 'react'
 import type { ActionsList, Language } from '../../utils/types'
 import { Input } from '@a-ng-d/figmug.inputs.input'
 import { Dropdown } from '@a-ng-d/figmug.inputs.dropdown'
+import { SectionTitle } from '@a-ng-d/figmug.layouts.section-title'
+import { Menu } from '@a-ng-d/figmug.navigation.menu'
 import Actions from './Actions'
-import { texts } from '@a-ng-d/figmug.stylesheets.texts'
 import features from '../../utils/config'
 import isBlocked from '../../utils/isBlocked'
 import { locals } from '../../content/locals'
-import { Menu } from '@a-ng-d/figmug.navigation.menu'
 
 interface Props {
   exportPreview: string
@@ -376,10 +376,10 @@ export default class Export extends React.Component<Props, any> {
         <div className="control__block">
           <div className="section-controls">
             <div className="section-controls__left-part">
-              <div className={`section-title ${texts['section-title']}`}>
-                {locals[this.props.lang].export.format}
-                <div className={`type ${texts.type}`}>(10)</div>
-              </div>
+              <SectionTitle
+                label={locals[this.props.lang].export.format}
+                indicator="10"
+              />
             </div>
             <div className="section-controls__right-part">
               <Dropdown
