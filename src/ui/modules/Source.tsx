@@ -111,55 +111,53 @@ export default class Source extends React.Component<Props, any> {
 
   importColorsFromCoolorsHandler = () => {
     const url: string = this.state['coolorsUrl'].value,
-      hexs: string | undefined = url.split('/').at(-1)
+      hexs = url.match(/([0-9a-fA-F]{6}-)+[0-9a-fA-F]{6}/)
 
-    if (hexs != undefined)
-      if (/^(?:[0-9a-fA-F]{6}-)+[0-9a-fA-F]{6}$/i.test(hexs)) {
-        this.props.onChangeColorsFromImport(
-          hexs.split('-').map((hex) => {
-            const gl = chroma(hex).gl()
-            return {
-              name: hex,
-              rgb: {
-                r: gl[0],
-                g: gl[1],
-                b: gl[2],
-              },
-              source: 'COOLORS',
-              id: uid(),
-            }
-          }), 'COOLORS'
-        )
-        this.setState({
-          coolorsUrl: {
-            value: '',
-            state: 'DEFAULT',
-            canBeSubmitted: false,
-            helper: undefined,
-          },
-        })
-      } else
-        this.setState({
-          coolorsUrl: {
-            value: this.state['coolorsUrl'].value,
-            state: 'ERROR',
-            canBeSubmitted: this.state['coolorsUrl'].canBeSubmitted,
-            helper: {
-              type: 'ERROR',
-              message: locals[this.props.lang].source.coolors.url.errorMessage,
+    if (hexs != null) {
+      this.props.onChangeColorsFromImport(
+        hexs[0].split('-').map((hex) => {
+          const gl = chroma(hex).gl()
+          return {
+            name: hex,
+            rgb: {
+              r: gl[0],
+              g: gl[1],
+              b: gl[2],
             },
+            source: 'COOLORS',
+            id: uid(),
+          }
+        }), 'COOLORS'
+      )
+      this.setState({
+        coolorsUrl: {
+          value: '',
+          state: 'DEFAULT',
+          canBeSubmitted: false,
+          helper: undefined,
+        },
+      })
+    } else
+      this.setState({
+        coolorsUrl: {
+          value: this.state['coolorsUrl'].value,
+          state: 'ERROR',
+          canBeSubmitted: this.state['coolorsUrl'].canBeSubmitted,
+          helper: {
+            type: 'ERROR',
+            message: locals[this.props.lang].source.coolors.url.errorMessage,
           },
-        })
+        },
+      })
   }
 
   importColorsFromRealtimeColorsHandler = () => {
     const url: string = this.state['realtimeColorsUrl'].value,
-      hexs: string | undefined = url.split('/').at(-1)?.split('&')[0].replace('?colors=', '')
+      hexs = url.match(/([0-9a-fA-F]{6}-)+[0-9a-fA-F]{6}/)
 
-    if (hexs != undefined)
-      if (/^(?:[0-9a-fA-F]{6}-)+[0-9a-fA-F]{6}$/i.test(hexs)) {
+    if (hexs != null) {
         this.props.onChangeColorsFromImport(
-          hexs.split('-').map((hex) => {
+          hexs[0].split('-').map((hex) => {
             const gl = chroma(hex).gl()
             return {
               name: hex,
@@ -181,18 +179,18 @@ export default class Source extends React.Component<Props, any> {
             helper: undefined,
           },
         })
-      } else
-        this.setState({
-          realtimeColorsUrl: {
-            value: this.state['realtimeColorsUrl'].value,
-            state: 'ERROR',
-            canBeSubmitted: this.state['realtimeColorsUrl'].canBeSubmitted,
-            helper: {
-              type: 'ERROR',
-              message: locals[this.props.lang].source.coolors.url.errorMessage,
-            },
+    } else
+      this.setState({
+        realtimeColorsUrl: {
+          value: this.state['realtimeColorsUrl'].value,
+          state: 'ERROR',
+          canBeSubmitted: this.state['realtimeColorsUrl'].canBeSubmitted,
+          helper: {
+            type: 'ERROR',
+            message: locals[this.props.lang].source.coolors.url.errorMessage,
           },
-        })
+        },
+      })
   }
 
   // Templates
