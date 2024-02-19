@@ -280,7 +280,7 @@ export default class Source extends React.Component<Props, any> {
         >
           <div className="settings__item">
             <FormItem
-              id="coolors-palette-urn"
+              id="coolors-palette-url"
               label={locals[this.props.lang].source.coolors.url.label}
               helper={this.state['coolorsUrl'].helper}
               shouldFill={false}
