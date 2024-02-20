@@ -127,7 +127,8 @@ export default class Source extends React.Component<Props, any> {
             source: 'COOLORS',
             id: uid(),
           }
-        }), 'COOLORS'
+        }),
+        'COOLORS'
       )
       this.setState({
         coolorsUrl: {
@@ -156,29 +157,30 @@ export default class Source extends React.Component<Props, any> {
       hexs = url.match(/([0-9a-fA-F]{6}-)+[0-9a-fA-F]{6}/)
 
     if (hexs != null) {
-        this.props.onChangeColorsFromImport(
-          hexs[0].split('-').map((hex) => {
-            const gl = chroma(hex).gl()
-            return {
-              name: hex,
-              rgb: {
-                r: gl[0],
-                g: gl[1],
-                b: gl[2],
-              },
-              source: 'REALTIME_COLORS',
-              id: uid(),
-            }
-          }), 'REALTIME_COLORS'
-        )
-        this.setState({
-          realtimeColorsUrl: {
-            value: '',
-            state: 'DEFAULT',
-            canBeSubmitted: false,
-            helper: undefined,
-          },
-        })
+      this.props.onChangeColorsFromImport(
+        hexs[0].split('-').map((hex) => {
+          const gl = chroma(hex).gl()
+          return {
+            name: hex,
+            rgb: {
+              r: gl[0],
+              g: gl[1],
+              b: gl[2],
+            },
+            source: 'REALTIME_COLORS',
+            id: uid(),
+          }
+        }),
+        'REALTIME_COLORS'
+      )
+      this.setState({
+        realtimeColorsUrl: {
+          value: '',
+          state: 'DEFAULT',
+          canBeSubmitted: false,
+          helper: undefined,
+        },
+      })
     } else
       this.setState({
         realtimeColorsUrl: {
@@ -199,9 +201,7 @@ export default class Source extends React.Component<Props, any> {
       <>
         <div className="section-controls">
           <div className="section-controls__left-part">
-            <SectionTitle
-              label={locals[this.props.lang].source.canvas.title}
-            />
+            <SectionTitle label={locals[this.props.lang].source.canvas.title} />
             <div className={`type ${texts.type}`}>{`(${
               this.props.sourceColors.filter(
                 (sourceColor) => sourceColor.source === 'CANVAS'
@@ -249,11 +249,9 @@ export default class Source extends React.Component<Props, any> {
       <>
         <Accordion
           label={locals[this.props.lang].source.coolors.title}
-          indicator={
-            this.props.sourceColors.filter(
-              (sourceColor) => sourceColor.source === 'COOLORS'
-            ).length.toString()
-          }
+          indicator={this.props.sourceColors
+            .filter((sourceColor) => sourceColor.source === 'COOLORS')
+            .length.toString()}
           helper={locals[this.props.lang].source.coolors.helper}
           itemHandler={this.state['isCoolorsImportOpen'] ? 'REMOVE' : 'ADD'}
           isExpanded={this.state['isCoolorsImportOpen']}
@@ -335,17 +333,19 @@ export default class Source extends React.Component<Props, any> {
       <>
         <Accordion
           label={locals[this.props.lang].source.realtimeColors.title}
-          indicator={
-            this.props.sourceColors.filter(
-              (sourceColor) => sourceColor.source === 'REALTIME_COLORS'
-            ).length.toString()
-          }
+          indicator={this.props.sourceColors
+            .filter((sourceColor) => sourceColor.source === 'REALTIME_COLORS')
+            .length.toString()}
           helper={locals[this.props.lang].source.realtimeColors.helper}
-          itemHandler={this.state['isRealtimeColorsImportOpen'] ? 'REMOVE' : 'ADD'}
+          itemHandler={
+            this.state['isRealtimeColorsImportOpen'] ? 'REMOVE' : 'ADD'
+          }
           isExpanded={this.state['isRealtimeColorsImportOpen']}
           isBlocked={isBlocked('SOURCE_REALTIME_COLORS', this.props.planStatus)}
           isNew={
-            features.find((feature) => feature.name === 'SOURCE_REALTIME_COLORS')?.isNew
+            features.find(
+              (feature) => feature.name === 'SOURCE_REALTIME_COLORS'
+            )?.isNew
           }
           onAdd={() => {
             this.setState({ isRealtimeColorsImportOpen: true })
@@ -442,8 +442,9 @@ export default class Source extends React.Component<Props, any> {
             </Feature>
             <Feature
               isActive={
-                features.find((feature) => feature.name === 'SOURCE_REALTIME_COLORS')
-                  ?.isActive
+                features.find(
+                  (feature) => feature.name === 'SOURCE_REALTIME_COLORS'
+                )?.isActive
               }
             >
               <this.RealtimeColorsColors />

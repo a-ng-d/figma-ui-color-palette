@@ -161,9 +161,7 @@ export default class Scale extends React.Component<Props, any> {
         <div className="control__block control__block--distributed">
           <div className="section-controls">
             <div className="section-controls__left-part">
-              <SectionTitle
-                label={locals[this.props.lang].scale.title}
-              />
+              <SectionTitle label={locals[this.props.lang].scale.title} />
             </div>
             <div className="section-controls__right-part">
               <Feature
@@ -295,7 +293,9 @@ export default class Scale extends React.Component<Props, any> {
             <div className="section-controls__left-part">
               <SectionTitle
                 label={locals[this.props.lang].scale.title}
-                indicator={Object.entries(this.props.scale ?? {}).length.toString()}
+                indicator={Object.entries(
+                  this.props.scale ?? {}
+                ).length.toString()}
               />
             </div>
             <div className="section-controls__right-part">
