@@ -30,6 +30,7 @@ const processSelection = () => {
         figma.ui.postMessage({
           type: 'PALETTE_SELECTED',
           data: {
+            editorType: figma.editorType,
             name: palette.getPluginData('name'),
             description: palette.getPluginData('description'),
             preset: JSON.parse(palette.getPluginData('preset')),

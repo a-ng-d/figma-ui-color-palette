@@ -4,7 +4,12 @@
   "api": "1.0.0",
   "editorType": [
     "figma",
-    "figjam"
+    "figjam",
+    "dev"
+  ],
+  "capabilities": [
+    "inspect",
+    "vscode"
   ],
   "relaunchButtons": [
     { "command": "create", "name": "Create a UI Color Palette", "multipleSelection": true },

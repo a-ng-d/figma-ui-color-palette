@@ -1,5 +1,5 @@
 import * as React from 'react'
-import type { Language, TrialStatus } from '../../utils/types'
+import type { EditorType, Language, TrialStatus } from '../../utils/types'
 import Feature from '../components/Feature'
 import { Bar } from '@a-ng-d/figmug.layouts.bar'
 import { Button } from '@a-ng-d/figmug.actions.button'
@@ -11,6 +11,7 @@ import { locals } from '../../content/locals'
 import isBlocked from '../../utils/isBlocked'
 
 interface Props {
+  editorType: EditorType
   planStatus: 'UNPAID' | 'PAID'
   trialStatus: TrialStatus
   trialRemainingTime: number
@@ -256,13 +257,15 @@ export default class Shortcuts extends React.Component<Props, any> {
                 alignment="TOP_RIGHT"
               />
             </div>
-            <div
-              className={`box-resizer-grip ${icons['icon--resize-grip']}`}
-              onMouseDown={this.onHold.bind(this)}
-              onMouseMove={this.onResize.bind(this)}
-              onMouseUp={this.onReleased.bind(this)}
-              onMouseLeave={this.onReleased.bind(this)}
-            ></div>
+            {this.props.editorType != 'dev' ? (
+              <div
+                className={`box-resizer-grip ${icons['icon--resize-grip']}`}
+                onMouseDown={this.onHold.bind(this)}
+                onMouseMove={this.onResize.bind(this)}
+                onMouseUp={this.onReleased.bind(this)}
+                onMouseLeave={this.onReleased.bind(this)}
+              ></div>
+            ) : null}
           </>
         }
         leftPart={

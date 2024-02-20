@@ -39,6 +39,8 @@ export const locals: { [key: string]: any } = {
       selectColor:
         'Select your source colors (solid colors only) on the Figma/FigJam canvas to create a UI Color Palette',
       selectPalette: 'Select a UI Color Palette to edit',
+      selectPaletteinDevMode:
+        'Select a UI Color Palette on the Figma canvas to inspect and export',
     },
     shortcuts: {
       feedback: 'Give feedback',

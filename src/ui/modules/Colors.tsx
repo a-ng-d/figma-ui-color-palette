@@ -9,6 +9,7 @@ import type {
   ActionsList,
   HexModel,
   Language,
+  EditorType,
 } from '../../utils/types'
 import Dispatcher from './Dispatcher'
 import { Button } from '@a-ng-d/figmug.actions.button'
@@ -21,7 +22,7 @@ import { uid } from 'uid'
 
 interface Props {
   colors: Array<ColorConfiguration>
-  editorType: 'figma' | 'figjam'
+  editorType: EditorType
   planStatus: 'UNPAID' | 'PAID'
   lang: Language
   onChangeColors: (colors: Array<ColorConfiguration>) => void

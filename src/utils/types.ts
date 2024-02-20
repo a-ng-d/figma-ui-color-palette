@@ -8,9 +8,9 @@ export interface Feature {
   service: Array<Service>
 }
 
-export type Service = 'CREATE' | 'EDIT'
+export type Service = 'CREATE' | 'EDIT' | 'TRANSFER'
 
-export type EditorType = 'figma' | 'figjam'
+export type EditorType = 'figma' | 'figjam' | 'dev'
 
 export type PlanStatus = 'UNPAID' | 'PAID' | 'NOT_SUPPORTED' | undefined
 
@@ -65,7 +65,7 @@ export interface PaletteNode {
   view: ViewConfiguration
   textColorsTheme: TextColorsThemeHexModel
   algorithmVersion: AlgorithmVersionConfiguration
-  service?: 'CREATE' | 'EDIT'
+  service?: Service
 }
 
 export interface PaletteData {

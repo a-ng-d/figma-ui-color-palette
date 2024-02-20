@@ -236,7 +236,7 @@ export default class Source extends React.Component<Props, any> {
           </ul>
         ) : (
           <Message
-            icon="list-tile"
+            icon="info"
             messages={[locals[this.props.lang].source.canvas.tip]}
           />
         )}

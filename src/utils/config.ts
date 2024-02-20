@@ -332,7 +332,7 @@ const features: Array<Feature> = [
     isPro: false,
     isNew: true,
     type: 'CONTEXT',
-    service: ['EDIT'],
+    service: ['EDIT', 'TRANSFER'],
   },
   {
     name: 'EXPORT_TOKENS',
@@ -341,7 +341,7 @@ const features: Array<Feature> = [
     isPro: false,
     isNew: false,
     type: 'ACTION',
-    service: ['EDIT'],
+    service: ['EDIT', 'TRANSFER'],
   },
   {
     name: 'EXPORT_TOKENS_JSON',
@@ -350,7 +350,7 @@ const features: Array<Feature> = [
     isPro: false,
     isNew: false,
     type: 'ACTION',
-    service: ['EDIT'],
+    service: ['EDIT', 'TRANSFER'],
   },
   {
     name: 'EXPORT_TOKENS_JSON_AMZN_STYLE_DICTIONARY',
@@ -359,7 +359,7 @@ const features: Array<Feature> = [
     isPro: false,
     isNew: false,
     type: 'ACTION',
-    service: ['EDIT'],
+    service: ['EDIT', 'TRANSFER'],
   },
   {
     name: 'EXPORT_TOKENS_JSON_TOKENS_STUDIO',
@@ -368,7 +368,7 @@ const features: Array<Feature> = [
     isPro: false,
     isNew: false,
     type: 'ACTION',
-    service: ['EDIT'],
+    service: ['EDIT', 'TRANSFER'],
   },
   {
     name: 'EXPORT_CSS',
@@ -377,7 +377,7 @@ const features: Array<Feature> = [
     isPro: false,
     isNew: false,
     type: 'ACTION',
-    service: ['EDIT'],
+    service: ['EDIT', 'TRANSFER'],
   },
   {
     name: 'EXPORT_CSS_RGB',
@@ -386,7 +386,7 @@ const features: Array<Feature> = [
     isPro: false,
     isNew: false,
     type: 'ACTION',
-    service: ['EDIT'],
+    service: ['EDIT', 'TRANSFER'],
   },
   {
     name: 'EXPORT_CSS_HEX',
@@ -395,7 +395,7 @@ const features: Array<Feature> = [
     isPro: false,
     isNew: false,
     type: 'ACTION',
-    service: ['EDIT'],
+    service: ['EDIT', 'TRANSFER'],
   },
   {
     name: 'EXPORT_CSS_HSL',
@@ -404,7 +404,7 @@ const features: Array<Feature> = [
     isPro: false,
     isNew: false,
     type: 'ACTION',
-    service: ['EDIT'],
+    service: ['EDIT', 'TRANSFER'],
   },
   {
     name: 'EXPORT_CSS_LCH',
@@ -413,7 +413,7 @@ const features: Array<Feature> = [
     isPro: false,
     isNew: false,
     type: 'ACTION',
-    service: ['EDIT'],
+    service: ['EDIT', 'TRANSFER'],
   },
   {
     name: 'EXPORT_CSS_P3',
@@ -422,7 +422,7 @@ const features: Array<Feature> = [
     isPro: false,
     isNew: false,
     type: 'ACTION',
-    service: ['EDIT'],
+    service: ['EDIT', 'TRANSFER'],
   },
   {
     name: 'EXPORT_TAILWIND',
@@ -431,7 +431,7 @@ const features: Array<Feature> = [
     isPro: false,
     isNew: false,
     type: 'ACTION',
-    service: ['EDIT'],
+    service: ['EDIT', 'TRANSFER'],
   },
   {
     name: 'EXPORT_APPLE',
@@ -440,7 +440,7 @@ const features: Array<Feature> = [
     isPro: false,
     isNew: true,
     type: 'ACTION',
-    service: ['EDIT'],
+    service: ['EDIT', 'TRANSFER'],
   },
   {
     name: 'EXPORT_APPLE_SWIFTUI',
@@ -449,7 +449,7 @@ const features: Array<Feature> = [
     isPro: false,
     isNew: false,
     type: 'ACTION',
-    service: ['EDIT'],
+    service: ['EDIT', 'TRANSFER'],
   },
   {
     name: 'EXPORT_APPLE_UIKIT',
@@ -458,7 +458,7 @@ const features: Array<Feature> = [
     isPro: false,
     isNew: false,
     type: 'ACTION',
-    service: ['EDIT'],
+    service: ['EDIT', 'TRANSFER'],
   },
   {
     name: 'EXPORT_ANDROID',
@@ -467,7 +467,7 @@ const features: Array<Feature> = [
     isPro: false,
     isNew: true,
     type: 'ACTION',
-    service: ['EDIT'],
+    service: ['EDIT', 'TRANSFER'],
   },
   {
     name: 'EXPORT_ANDROID_COMPOSE',
@@ -476,7 +476,7 @@ const features: Array<Feature> = [
     isPro: false,
     isNew: false,
     type: 'ACTION',
-    service: ['EDIT'],
+    service: ['EDIT', 'TRANSFER'],
   },
   {
     name: 'EXPORT_ANDROID_XML',
@@ -485,7 +485,7 @@ const features: Array<Feature> = [
     isPro: false,
     isNew: false,
     type: 'ACTION',
-    service: ['EDIT'],
+    service: ['EDIT', 'TRANSFER'],
   },
   {
     name: 'EXPORT_CSV',
@@ -494,7 +494,7 @@ const features: Array<Feature> = [
     isPro: false,
     isNew: false,
     type: 'ACTION',
-    service: ['EDIT'],
+    service: ['EDIT', 'TRANSFER'],
   },
   {
     name: 'SETTINGS',

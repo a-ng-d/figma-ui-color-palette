@@ -43,9 +43,9 @@ const loadUI = async (palette: SceneNode) => {
     themeColors: true,
   })
 
-  processSelection()
   checkEditorType()
   checkHighlightStatus(package_json.version)
+  processSelection()
 
   await checkPlanStatus()
 
