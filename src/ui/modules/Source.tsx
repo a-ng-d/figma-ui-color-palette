@@ -252,8 +252,9 @@ export default class Source extends React.Component<Props, any> {
           indicator={
             this.props.sourceColors.filter(
               (sourceColor) => sourceColor.source === 'COOLORS'
-            ).length
+            ).length.toString()
           }
+          helper={locals[this.props.lang].source.coolors.helper}
           itemHandler={this.state['isCoolorsImportOpen'] ? 'REMOVE' : 'ADD'}
           isExpanded={this.state['isCoolorsImportOpen']}
           isBlocked={isBlocked('SOURCE_COOLORS', this.props.planStatus)}
@@ -279,7 +280,6 @@ export default class Source extends React.Component<Props, any> {
           <div className="settings__item">
             <FormItem
               id="coolors-palette-url"
-              label={locals[this.props.lang].source.coolors.url.label}
               helper={this.state['coolorsUrl'].helper}
               shouldFill={false}
             >
@@ -338,8 +338,9 @@ export default class Source extends React.Component<Props, any> {
           indicator={
             this.props.sourceColors.filter(
               (sourceColor) => sourceColor.source === 'REALTIME_COLORS'
-            ).length
+            ).length.toString()
           }
+          helper={locals[this.props.lang].source.realtimeColors.helper}
           itemHandler={this.state['isRealtimeColorsImportOpen'] ? 'REMOVE' : 'ADD'}
           isExpanded={this.state['isRealtimeColorsImportOpen']}
           isBlocked={isBlocked('SOURCE_REALTIME_COLORS', this.props.planStatus)}
@@ -365,7 +366,6 @@ export default class Source extends React.Component<Props, any> {
           <div className="settings__item">
             <FormItem
               id="realtime-colors-url"
-              label={locals[this.props.lang].source.realtimeColors.url.label}
               helper={this.state['realtimeColorsUrl'].helper}
               shouldFill={false}
             >

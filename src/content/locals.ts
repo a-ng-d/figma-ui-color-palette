@@ -73,6 +73,7 @@ export const locals: { [key: string]: any } = {
       },
       coolors: {
         title: 'Import from Coolors',
+        helper: 'Coolors is a tool for creating and exploring beautiful color schemes',
         url: {
           label: 'Palette URL',
           placeholder: 'Paste a link (https://coolors.co/…)',
@@ -82,6 +83,7 @@ export const locals: { [key: string]: any } = {
       },
       realtimeColors: {
         title: 'Import from Realtime Colors',
+        helper: 'Realtime Colors is a tool for visualizing a color palette through a page template',
         url: {
           label: 'Realtime URL',
           placeholder: 'Paste a link (https://www.realtimecolors.com/?colors=…)',
