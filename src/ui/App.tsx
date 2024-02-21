@@ -852,13 +852,17 @@ class App extends React.Component<any, any> {
           >
             <section className="controller">
               <div className="controls">
-                <Message
-                  icon="info"
-                  messages={[
-                    locals[this.state['lang']].onboarding
-                      .selectPaletteinDevMode,
-                  ]}
-                ></Message>
+                <div className="controls__control">
+                  <div className="control__block">
+                    <Message
+                      icon="info"
+                      messages={[
+                        locals[this.state['lang']].onboarding
+                          .selectPaletteinDevMode,
+                      ]}
+                    ></Message>
+                  </div>
+                </div>
               </div>
             </section>
           </Feature>
