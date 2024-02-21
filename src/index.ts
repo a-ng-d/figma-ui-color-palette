@@ -5,6 +5,7 @@ import { presets } from './utils/palettePackage'
 import doLightnessScale from './utils/doLightnessScale'
 import loadUI from './bridges/loadUI'
 import loadParameters from './bridges/loadParameters'
+import setPalettesMigration from './utils/setPalettesMigration'
 
 let palette: SceneNode
 
@@ -73,6 +74,10 @@ figma.on('run', async ({ parameters }: RunEvent) => {
     figma.closePlugin()
   }
 })
+
+// Migration
+figma.on('run', () => setPalettesMigration())
+figma.on('currentpagechange', () => setPalettesMigration())
 
 // Selection
 figma.on('selectionchange', () => processSelection())
