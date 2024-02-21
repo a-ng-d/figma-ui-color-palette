@@ -102,6 +102,9 @@ const loadUI = async (palette: SceneNode) => {
         msg.export === 'CSV' ? exportCsv(palette) : null
       },
       UPDATE_SETTINGS: () => updateSettings(msg, palette),
+      OPEN_IN_BROWSER: () => {
+        figma.openExternal(msg.url)
+      },
       GET_PRO_PLAN: async () => await getProPlan(),
       ENABLE_TRIAL: async () => await enableTrial(),
     }

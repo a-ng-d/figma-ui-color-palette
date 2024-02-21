@@ -90,7 +90,12 @@ export default class Shortcuts extends React.Component<Props, any> {
                 <Button
                   type="icon"
                   icon="library"
-                  action={() => window.open('https://uicp.link/docs', '_blank')}
+                  action={  
+                    () => parent.postMessage(
+                      { pluginMessage: { type: "OPEN_IN_BROWSER", url: 'https://uicp.link/docs' } },
+                      "*"
+                    )
+                  }
                 />
               </Feature>
               <Menu
@@ -129,7 +134,10 @@ export default class Shortcuts extends React.Component<Props, any> {
                     ),
                     children: [],
                     action: () =>
-                      window.open('https://uicp.link/send-message', '_blank'),
+                      parent.postMessage(
+                        { pluginMessage: { type: "OPEN_IN_BROWSER", url: 'https://uicp.link/send-message' } },
+                        "*"
+                      )
                   },
                   {
                     label: locals[this.props.lang].about.repository,
@@ -146,7 +154,10 @@ export default class Shortcuts extends React.Component<Props, any> {
                     ),
                     children: [],
                     action: () =>
-                      window.open('https://uicp.link/repository', '_blank'),
+                      parent.postMessage(
+                        { pluginMessage: { type: "OPEN_IN_BROWSER", url: 'https://uicp.link/repository' } },
+                        "*"
+                      )
                   },
                   {
                     label: '',
@@ -190,7 +201,10 @@ export default class Shortcuts extends React.Component<Props, any> {
                     ),
                     children: [],
                     action: () =>
-                      window.open('https://uicp.link/report', '_blank'),
+                      parent.postMessage(
+                        { pluginMessage: { type: "OPEN_IN_BROWSER", url: 'https://uicp.link/report' } },
+                        "*"
+                      )
                   },
                   {
                     label: locals[this.props.lang].about.beInvolved.discuss,
@@ -207,7 +221,10 @@ export default class Shortcuts extends React.Component<Props, any> {
                     ),
                     children: [],
                     action: () =>
-                      window.open('https://uicp.link/discuss', '_blank'),
+                      parent.postMessage(
+                        { pluginMessage: { type: "OPEN_IN_BROWSER", url: 'https://uicp.link/discuss' } },
+                        "*"
+                      )
                   },
                   {
                     label: '',
@@ -251,7 +268,10 @@ export default class Shortcuts extends React.Component<Props, any> {
                     ),
                     children: [],
                     action: () =>
-                      window.open('https://uicp.link/network', '_blank'),
+                      parent.postMessage(
+                        { pluginMessage: { type: "OPEN_IN_BROWSER", url: 'https://uicp.link/network' } },
+                        "*"
+                      )
                   },
                 ]}
                 alignment="TOP_RIGHT"
