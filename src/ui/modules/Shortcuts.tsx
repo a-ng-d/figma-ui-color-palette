@@ -92,10 +92,15 @@ export default class Shortcuts extends React.Component<Props, any> {
                 <Button
                   type="icon"
                   icon="library"
-                  action={  
-                    () => parent.postMessage(
-                      { pluginMessage: { type: "OPEN_IN_BROWSER", url: 'https://uicp.link/docs' } },
-                      "*"
+                  action={() =>
+                    parent.postMessage(
+                      {
+                        pluginMessage: {
+                          type: 'OPEN_IN_BROWSER',
+                          url: 'https://uicp.link/docs',
+                        },
+                      },
+                      '*'
                     )
                   }
                 />
@@ -137,9 +142,14 @@ export default class Shortcuts extends React.Component<Props, any> {
                     children: [],
                     action: () =>
                       parent.postMessage(
-                        { pluginMessage: { type: "OPEN_IN_BROWSER", url: 'https://uicp.link/send-message' } },
-                        "*"
-                      )
+                        {
+                          pluginMessage: {
+                            type: 'OPEN_IN_BROWSER',
+                            url: 'https://uicp.link/send-message',
+                          },
+                        },
+                        '*'
+                      ),
                   },
                   {
                     label: locals[this.props.lang].about.repository,
@@ -157,9 +167,14 @@ export default class Shortcuts extends React.Component<Props, any> {
                     children: [],
                     action: () =>
                       parent.postMessage(
-                        { pluginMessage: { type: "OPEN_IN_BROWSER", url: 'https://uicp.link/repository' } },
-                        "*"
-                      )
+                        {
+                          pluginMessage: {
+                            type: 'OPEN_IN_BROWSER',
+                            url: 'https://uicp.link/repository',
+                          },
+                        },
+                        '*'
+                      ),
                   },
                   {
                     label: '',
@@ -204,9 +219,14 @@ export default class Shortcuts extends React.Component<Props, any> {
                     children: [],
                     action: () =>
                       parent.postMessage(
-                        { pluginMessage: { type: "OPEN_IN_BROWSER", url: 'https://uicp.link/report' } },
-                        "*"
-                      )
+                        {
+                          pluginMessage: {
+                            type: 'OPEN_IN_BROWSER',
+                            url: 'https://uicp.link/report',
+                          },
+                        },
+                        '*'
+                      ),
                   },
                   {
                     label: locals[this.props.lang].about.beInvolved.discuss,
@@ -224,9 +244,14 @@ export default class Shortcuts extends React.Component<Props, any> {
                     children: [],
                     action: () =>
                       parent.postMessage(
-                        { pluginMessage: { type: "OPEN_IN_BROWSER", url: 'https://uicp.link/discuss' } },
-                        "*"
-                      )
+                        {
+                          pluginMessage: {
+                            type: 'OPEN_IN_BROWSER',
+                            url: 'https://uicp.link/discuss',
+                          },
+                        },
+                        '*'
+                      ),
                   },
                   {
                     label: '',
@@ -271,9 +296,14 @@ export default class Shortcuts extends React.Component<Props, any> {
                     children: [],
                     action: () =>
                       parent.postMessage(
-                        { pluginMessage: { type: "OPEN_IN_BROWSER", url: 'https://uicp.link/network' } },
-                        "*"
-                      )
+                        {
+                          pluginMessage: {
+                            type: 'OPEN_IN_BROWSER',
+                            url: 'https://uicp.link/network',
+                          },
+                        },
+                        '*'
+                      ),
                   },
                 ]}
                 alignment="TOP_RIGHT"

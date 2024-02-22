@@ -107,8 +107,8 @@ const loadUI = async (palette: SceneNode) => {
       },
       GET_PALETTES: () => getPalettesOnCurrentPage(),
       JUMP_TO_PALETTE: () => {
-        const scene = figma.currentPage.findChildren(node =>
-          node.getPluginData('id') === msg.id
+        const scene = figma.currentPage.findChildren(
+          (node) => node.getPluginData('id') === msg.id
         )
         figma.currentPage.selection = scene
         figma.viewport.scrollAndZoomIntoView(scene)
@@ -125,12 +125,12 @@ const loadUI = async (palette: SceneNode) => {
 
 const getPalettesOnCurrentPage = () => {
   const palettes = figma.currentPage.findAllWithCriteria({
-    pluginData: {}
+    pluginData: {},
   })
   if (palettes.length != 0)
     figma.ui.postMessage({
       type: 'EXPOSE_PALETTES',
-      data: palettes.map(palette => {
+      data: palettes.map((palette) => {
         return {
           id: palette.getPluginData('id'),
           name: palette.getPluginData('name'),
@@ -143,7 +143,7 @@ const getPalettesOnCurrentPage = () => {
   else
     figma.ui.postMessage({
       type: 'EXPOSE_PALETTES',
-      data: []
+      data: [],
     })
 }
 

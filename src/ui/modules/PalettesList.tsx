@@ -12,19 +12,33 @@ interface Props {
 export default class PalettesList extends React.Component<Props, any> {
   componentDidMount = () =>
     parent.postMessage({ pluginMessage: { type: 'GET_PALETTES' } }, '*')
-  
+
   // Direct actions
-  onSelectPalette = (e: React.MouseEvent<HTMLLIElement> | React.KeyboardEvent<HTMLLIElement>) => {
+  onSelectPalette = (
+    e: React.MouseEvent<HTMLLIElement> | React.KeyboardEvent<HTMLLIElement>
+  ) => {
     e.preventDefault()
-    parent.postMessage({ pluginMessage: { type: 'JUMP_TO_PALETTE', id: (e.currentTarget as HTMLElement).dataset.id } }, '*')
+    parent.postMessage(
+      {
+        pluginMessage: {
+          type: 'JUMP_TO_PALETTE',
+          id: (e.currentTarget as HTMLElement).dataset.id,
+        },
+      },
+      '*'
+    )
   }
 
   // Templates
   PalettesList = () => {
-    return(
+    return (
       <ul className="rich-list">
-        <div className={`${texts.type} ${texts['type--secondary']} type rich-list__title`}>{locals[this.props.lang].palettesList.title}</div>
-        {this.props.paletteLists.map(palette => (
+        <div
+          className={`${texts.type} ${texts['type--secondary']} type rich-list__title`}
+        >
+          {locals[this.props.lang].palettesList.title}
+        </div>
+        {this.props.paletteLists.map((palette) => (
           <li
             className="rich-list__item"
             key={palette.id}
@@ -32,23 +46,27 @@ export default class PalettesList extends React.Component<Props, any> {
             tabIndex={0}
             onMouseDown={this.onSelectPalette}
             onKeyDown={(e) => {
-              if (e.key === ' ' || e.key === 'Enter') this.onSelectPalette?.(e);
-              if (e.key === 'Escape') (e.target as HTMLElement).blur();
+              if (e.key === ' ' || e.key === 'Enter') this.onSelectPalette?.(e)
+              if (e.key === 'Escape') (e.target as HTMLElement).blur()
             }}
           >
-            <div className={`${texts.type} type--large`}>{palette.name === '' ? locals[this.props.lang].name : palette.name}</div>
+            <div className={`${texts.type} type--large`}>
+              {palette.name === ''
+                ? locals[this.props.lang].name
+                : palette.name}
+            </div>
             <div className={`${texts.type} type`}>{palette.preset}</div>
-            <div className={`${texts.type} ${texts['type--secondary']} type`}>{
-              `${palette.colors.length} ${
-                palette.colors.length > 1 ?
-                  locals[this.props.lang].actions.sourceColorsNumber.several :
-                  locals[this.props.lang].actions.sourceColorsNumber.single
-              }, ${palette.themes.length} ${
-                palette.themes.length > 1 ?
-                    locals[this.props.lang].actions.colorThemesNumber.several :
-                    locals[this.props.lang].actions.colorThemesNumber.single
-              }`
-            }</div>
+            <div
+              className={`${texts.type} ${texts['type--secondary']} type`}
+            >{`${palette.colors.length} ${
+              palette.colors.length > 1
+                ? locals[this.props.lang].actions.sourceColorsNumber.several
+                : locals[this.props.lang].actions.sourceColorsNumber.single
+            }, ${palette.themes.length} ${
+              palette.themes.length > 1
+                ? locals[this.props.lang].actions.colorThemesNumber.several
+                : locals[this.props.lang].actions.colorThemesNumber.single
+            }`}</div>
           </li>
         ))}
       </ul>
@@ -68,8 +86,7 @@ export default class PalettesList extends React.Component<Props, any> {
                 <Message
                   icon="info"
                   messages={[
-                    locals[this.props.lang].warning
-                      .noPaletteOnCurrrentPage,
+                    locals[this.props.lang].warning.noPaletteOnCurrrentPage,
                   ]}
                 />
               )}

@@ -725,11 +725,11 @@ class App extends React.Component<any, any> {
             },
             onGoingStep: 'export previewed',
           })
-        
-          const exposePalettes = (data: Array<ExtractOfPaletteConfiguration>) =>
-            this.setState({
-              palettesList: data
-            })
+
+        const exposePalettes = (data: Array<ExtractOfPaletteConfiguration>) =>
+          this.setState({
+            palettesList: data,
+          })
 
         const getProPlan = () =>
           this.setState({
@@ -830,8 +830,8 @@ class App extends React.Component<any, any> {
           </Feature>
           <Feature
             isActive={
-              features.find((feature) => feature.name === 'TRANSFER')?.isActive &&
-              this.state['service'] === 'TRANSFER'
+              features.find((feature) => feature.name === 'TRANSFER')
+                ?.isActive && this.state['service'] === 'TRANSFER'
             }
           >
             <TransferPalette
