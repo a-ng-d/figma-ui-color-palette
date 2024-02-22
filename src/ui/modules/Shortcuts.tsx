@@ -31,6 +31,7 @@ export default class Shortcuts extends React.Component<Props, any> {
     }
   }
 
+  // Direct actions
   onHold = () => {
     this.setState({
       canBeResized: true,
@@ -74,6 +75,7 @@ export default class Shortcuts extends React.Component<Props, any> {
     e.target.removeEventListener('mouseup', () => this.onResize)
   }
 
+  // Render
   render() {
     return (
       <Bar

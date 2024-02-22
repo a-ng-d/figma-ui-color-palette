@@ -329,6 +329,7 @@ export default class Colors extends React.Component<Props, any> {
     else if (e.pageY + scrollY > parentRefBottom) this.orderHandler()
   }
 
+  // Render
   render() {
     return (
       <div className="controls__control">

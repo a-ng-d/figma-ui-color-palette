@@ -40,7 +40,7 @@ interface Props {
 
 export default class Settings extends React.Component<Props> {
   // Templates
-  name = () => {
+  Name = () => {
     return (
       <Feature
         isActive={
@@ -95,7 +95,7 @@ export default class Settings extends React.Component<Props> {
     )
   }
 
-  description = () => {
+  Description = () => {
     return (
       <Feature
         isActive={
@@ -147,7 +147,7 @@ export default class Settings extends React.Component<Props> {
     )
   }
 
-  view = () => {
+  View = () => {
     return (
       <Feature
         isActive={
@@ -227,7 +227,7 @@ export default class Settings extends React.Component<Props> {
     )
   }
 
-  colorSpace = () => {
+  ColorSpace = () => {
     return (
       <Feature
         isActive={
@@ -384,7 +384,7 @@ export default class Settings extends React.Component<Props> {
     )
   }
 
-  visionSimulationMode = () => {
+  VisionSimulationMode = () => {
     return (
       <Feature
         isActive={
@@ -661,7 +661,7 @@ export default class Settings extends React.Component<Props> {
     )
   }
 
-  newAlgorithm = () => {
+  NewAlgorithm = () => {
     return (
       <Feature
         isActive={
@@ -707,7 +707,7 @@ export default class Settings extends React.Component<Props> {
     )
   }
 
-  textColorsTheme = () => {
+  TextColorsTheme = () => {
     return (
       <Feature
         isActive={
@@ -834,9 +834,9 @@ export default class Settings extends React.Component<Props> {
             />
           </div>
         </div>
-        <this.name />
-        <this.description />
-        <this.view />
+        <this.Name />
+        <this.Description />
+        <this.View />
       </div>
     )
   }
@@ -851,9 +851,9 @@ export default class Settings extends React.Component<Props> {
             />
           </div>
         </div>
-        <this.colorSpace />
-        <this.visionSimulationMode />
-        {this.props.context === 'LOCAL_STYLES' ? <this.newAlgorithm /> : null}
+        <this.ColorSpace />
+        <this.VisionSimulationMode />
+        {this.props.context === 'LOCAL_STYLES' ? <this.NewAlgorithm /> : null}
       </div>
     )
   }
@@ -868,7 +868,7 @@ export default class Settings extends React.Component<Props> {
             />
           </div>
         </div>
-        <this.textColorsTheme />
+        <this.TextColorsTheme />
       </div>
     )
   }

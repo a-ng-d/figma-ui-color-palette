@@ -300,6 +300,7 @@ export default class Themes extends React.Component<Props, any> {
     parent.postMessage({ pluginMessage: themesMessage }, '*')
   }
 
+  // Render
   render() {
     return (
       <div className="controls__control">
