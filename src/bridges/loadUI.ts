@@ -105,12 +105,46 @@ const loadUI = async (palette: SceneNode) => {
       OPEN_IN_BROWSER: () => {
         figma.openExternal(msg.url)
       },
+      GET_PALETTES: () => getPalettesOnCurrentPage(),
+      JUMP_TO_PALETTE: () => {
+        const scene = figma.currentPage.findChildren(node =>
+          node.getPluginData('id') === msg.id
+        )
+        figma.currentPage.selection = scene
+        figma.viewport.scrollAndZoomIntoView(scene)
+      },
       GET_PRO_PLAN: async () => await getProPlan(),
       ENABLE_TRIAL: async () => await enableTrial(),
     }
 
     return actions[msg.type]?.()
   }
+
+  figma.on('currentpagechange', () => getPalettesOnCurrentPage())
+}
+
+const getPalettesOnCurrentPage = () => {
+  const palettes = figma.currentPage.findAllWithCriteria({
+    pluginData: {}
+  })
+  if (palettes.length != 0)
+    figma.ui.postMessage({
+      type: 'EXPOSE_PALETTES',
+      data: palettes.map(palette => {
+        return {
+          id: palette.getPluginData('id'),
+          name: palette.getPluginData('name'),
+          preset: JSON.parse(palette.getPluginData('preset')).name,
+          colors: JSON.parse(palette.getPluginData('colors')),
+          themes: JSON.parse(palette.getPluginData('themes')),
+        }
+      }),
+    })
+  else
+    figma.ui.postMessage({
+      type: 'EXPOSE_PALETTES',
+      data: []
+    })
 }
 
 export default loadUI

@@ -21,14 +21,15 @@ import type {
   TrialStatus,
   ViewConfiguration,
   ThirdParty,
+  ExtractOfPaletteConfiguration,
 } from '../utils/types'
 import Dispatcher from './modules/Dispatcher'
 import Feature from './components/Feature'
-import { Message } from '@a-ng-d/figmug.dialogs.message'
 import CreatePalette from './services/CreatePalette'
 import EditPalette from './services/EditPalette'
 import TransferPalette from './services/TransferPalette'
 import PriorityContainer from './modules/PriorityContainer'
+import PalettesList from './modules/PalettesList'
 import Shortcuts from './modules/Shortcuts'
 import { palette, presets } from '../utils/palettePackage'
 import doLightnessScale from '../utils/doLightnessScale'
@@ -95,6 +96,7 @@ class App extends React.Component<any, any> {
         mimeType: '',
         data: '',
       },
+      palettesList: [] as Array<ExtractOfPaletteConfiguration>,
       editorType: 'figma' as EditorType,
       planStatus: 'UNPAID' as PlanStatus,
       trialStatus: 'UNUSED' as TrialStatus,
@@ -723,6 +725,11 @@ class App extends React.Component<any, any> {
             },
             onGoingStep: 'export previewed',
           })
+        
+          const exposePalettes = (data: Array<ExtractOfPaletteConfiguration>) =>
+            this.setState({
+              palettesList: data
+            })
 
         const getProPlan = () =>
           this.setState({
@@ -752,6 +759,7 @@ class App extends React.Component<any, any> {
           EXPORT_PALETTE_KT: () => exportPaletteToKt(),
           EXPORT_PALETTE_XML: () => exportPaletteToXml(),
           EXPORT_PALETTE_CSV: () => exportPaletteToCsv(),
+          EXPOSE_PALETTES: () => exposePalettes(e.data.pluginMessage?.data),
           GET_PRO_PLAN: () => getProPlan(),
           ENABLE_TRIAL: () => enableTrial(),
           DEFAULT: () => null,
@@ -822,7 +830,7 @@ class App extends React.Component<any, any> {
           </Feature>
           <Feature
             isActive={
-              features.find((feature) => feature.name === 'EDIT')?.isActive &&
+              features.find((feature) => feature.name === 'TRANSFER')?.isActive &&
               this.state['service'] === 'TRANSFER'
             }
           >
@@ -846,25 +854,15 @@ class App extends React.Component<any, any> {
           </Feature>
           <Feature
             isActive={
+              features.find((feature) => feature.name === 'BROWSE')?.isActive &&
               this.state['service'] === 'CREATE' &&
               this.state['editorType'] === 'dev'
             }
           >
-            <section className="controller">
-              <div className="controls">
-                <div className="controls__control">
-                  <div className="control__block">
-                    <Message
-                      icon="info"
-                      messages={[
-                        locals[this.state['lang']].onboarding
-                          .selectPaletteinDevMode,
-                      ]}
-                    ></Message>
-                  </div>
-                </div>
-              </div>
-            </section>
+            <PalettesList
+              paletteLists={this.state['palettesList']}
+              lang={this.state['lang']}
+            />
           </Feature>
           <PriorityContainer
             context={this.state['priorityContainerContext']}

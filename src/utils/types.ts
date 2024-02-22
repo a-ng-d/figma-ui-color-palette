@@ -131,6 +131,14 @@ export interface PaletteConfiguration {
   textColorsTheme: TextColorsThemeHexModel
 }
 
+export interface ExtractOfPaletteConfiguration {
+  id: string
+  name: string
+  preset: PresetConfiguration
+  colors: Array<ColorConfiguration>
+  themes: Array<ThemeConfiguration>
+}
+
 export interface PresetConfiguration {
   name: string
   scale: Array<number>

@@ -1,0 +1,82 @@
+import * as React from 'react'
+import type { ExtractOfPaletteConfiguration, Language } from '../../utils/types'
+import { Message } from '@a-ng-d/figmug.dialogs.message'
+import { texts } from '@a-ng-d/figmug.stylesheets.texts'
+import { locals } from '../../content/locals'
+
+interface Props {
+  paletteLists: Array<ExtractOfPaletteConfiguration>
+  lang: Language
+}
+
+export default class PalettesList extends React.Component<Props, any> {
+  componentDidMount = () =>
+    parent.postMessage({ pluginMessage: { type: 'GET_PALETTES' } }, '*')
+  
+  // Direct actions
+  onSelectPalette = (e: React.MouseEvent<HTMLLIElement> | React.KeyboardEvent<HTMLLIElement>) => {
+    e.preventDefault()
+    parent.postMessage({ pluginMessage: { type: 'JUMP_TO_PALETTE', id: (e.currentTarget as HTMLElement).dataset.id } }, '*')
+  }
+
+  // Templates
+  PalettesList = () => {
+    return(
+      <ul className="rich-list">
+        <div className={`${texts.type} ${texts['type--secondary']} type rich-list__title`}>{locals[this.props.lang].palettesList.title}</div>
+        {this.props.paletteLists.map(palette => (
+          <li
+            className="rich-list__item"
+            key={palette.id}
+            data-id={palette.id}
+            tabIndex={0}
+            onMouseDown={this.onSelectPalette}
+            onKeyDown={(e) => {
+              if (e.key === ' ' || e.key === 'Enter') this.onSelectPalette?.(e);
+              if (e.key === 'Escape') (e.target as HTMLElement).blur();
+            }}
+          >
+            <div className={`${texts.type} type--large`}>{palette.name === '' ? locals[this.props.lang].name : palette.name}</div>
+            <div className={`${texts.type} type`}>{palette.preset}</div>
+            <div className={`${texts.type} ${texts['type--secondary']} type`}>{
+              `${palette.colors.length} ${
+                palette.colors.length > 1 ?
+                  locals[this.props.lang].actions.sourceColorsNumber.several :
+                  locals[this.props.lang].actions.sourceColorsNumber.single
+              }, ${palette.themes.length} ${
+                palette.themes.length > 1 ?
+                    locals[this.props.lang].actions.colorThemesNumber.several :
+                    locals[this.props.lang].actions.colorThemesNumber.single
+              }`
+            }</div>
+          </li>
+        ))}
+      </ul>
+    )
+  }
+
+  // Render
+  render() {
+    return (
+      <section className="controller">
+        <div className="controls">
+          <div className="controls__control">
+            <div className="control__block">
+              {this.props.paletteLists.length > 0 ? (
+                <this.PalettesList />
+              ) : (
+                <Message
+                  icon="info"
+                  messages={[
+                    locals[this.props.lang].warning
+                      .noPaletteOnCurrrentPage,
+                  ]}
+                />
+              )}
+            </div>
+          </div>
+        </div>
+      </section>
+    )
+  }
+}

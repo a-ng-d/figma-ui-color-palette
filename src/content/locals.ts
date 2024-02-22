@@ -270,6 +270,13 @@ export const locals: { [key: string]: any } = {
         single: 'source color',
         several: 'source colors',
       },
+      colorThemesNumber: {
+        single: 'color theme',
+        several: 'color themes',
+      },
+    },
+    palettesList: {
+      title: 'UI Color Palettes on this page'
     },
     highlight: {
       cta: {
@@ -330,6 +337,7 @@ export const locals: { [key: string]: any } = {
       unselectedColor:
         'Select a layer that is filled with at least one solid color',
       paletteNameRecommendation: '64 characters max is recommended',
+      noPaletteOnCurrrentPage: 'There is no UI Color Palette on the current page',
     },
     error: {
       corruption:

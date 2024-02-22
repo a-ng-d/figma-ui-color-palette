@@ -20,6 +20,15 @@ const features: Array<Feature> = [
     service: [],
   },
   {
+    name: 'TRANSFER',
+    description: 'Palette transfer service when the dev mode is selected',
+    isActive: true,
+    isPro: false,
+    isNew: false,
+    type: 'SERVICE',
+    service: [],
+  },
+  {
     name: 'PROPERTIES',
     description: 'Shades information and WCAG scores',
     isActive: true,
@@ -27,6 +36,15 @@ const features: Array<Feature> = [
     isNew: false,
     type: 'ACTION',
     service: ['CREATE', 'EDIT'],
+  },
+  {
+    name: 'BROWSE',
+    description: 'Browse UI Color Palette on the current page',
+    isActive: true,
+    isPro: false,
+    isNew: false,
+    type: 'CONTEXT',
+    service: ['TRANSFER'],
   },
   {
     name: 'VIEWS',
