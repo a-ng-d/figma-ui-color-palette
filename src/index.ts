@@ -5,7 +5,7 @@ import { presets } from './utils/palettePackage'
 import doLightnessScale from './utils/doLightnessScale'
 import loadUI from './bridges/loadUI'
 import loadParameters from './bridges/loadParameters'
-import setPalettesMigration from './utils/setPalettesMigration'
+import setPaletteMigration from './utils/setPaletteMigration'
 
 let palette: SceneNode
 
@@ -76,8 +76,24 @@ figma.on('run', async ({ parameters }: RunEvent) => {
 })
 
 // Migration
-figma.on('run', () => setPalettesMigration())
-figma.on('currentpagechange', () => setPalettesMigration())
+figma.on('run', () => {
+  figma.currentPage
+    .findAllWithCriteria({
+      pluginData: {},
+    })
+    .forEach((palette) => {
+      setPaletteMigration(palette)
+    })
+})
+figma.on('currentpagechange', () => () => {
+  figma.currentPage
+    .findAllWithCriteria({
+      pluginData: {},
+    })
+    .forEach((palette) => {
+      setPaletteMigration(palette)
+    })
+})
 
 // Selection
 figma.on('selectionchange', () => processSelection())

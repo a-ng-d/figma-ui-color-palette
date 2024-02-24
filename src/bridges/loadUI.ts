@@ -28,6 +28,7 @@ import updateScale from './updateScale'
 import updateSettings from './updateSettings'
 import updateThemes from './updateThemes'
 import updateView from './updateView'
+import getPalettesOnCurrentPage from './getPalettesOnCurrentPage'
 import package_json from './../../package.json'
 
 const loadUI = async (palette: SceneNode) => {
@@ -120,30 +121,6 @@ const loadUI = async (palette: SceneNode) => {
   }
 
   figma.on('currentpagechange', () => getPalettesOnCurrentPage())
-}
-
-const getPalettesOnCurrentPage = () => {
-  const palettes = figma.currentPage.findAllWithCriteria({
-    pluginData: {},
-  })
-  if (palettes.length != 0)
-    figma.ui.postMessage({
-      type: 'EXPOSE_PALETTES',
-      data: palettes.map((palette) => {
-        return {
-          id: palette.getPluginData('id'),
-          name: palette.getPluginData('name'),
-          preset: JSON.parse(palette.getPluginData('preset')).name,
-          colors: JSON.parse(palette.getPluginData('colors')),
-          themes: JSON.parse(palette.getPluginData('themes')),
-        }
-      }),
-    })
-  else
-    figma.ui.postMessage({
-      type: 'EXPOSE_PALETTES',
-      data: [],
-    })
 }
 
 export default loadUI

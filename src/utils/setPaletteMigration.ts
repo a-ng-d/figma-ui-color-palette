@@ -11,7 +11,8 @@ import { lang, locals } from '../content/locals'
 import { uid } from 'uid'
 
 const setPaletteMigration = (palette: BaseNode) => {
-  const type = palette.getPluginData('type'),
+  const id = palette.getPluginData('id'),
+    type = palette.getPluginData('type'),
     min = palette.getPluginData('min'),
     max = palette.getPluginData('max'),
     description = palette.getPluginData('description'),
@@ -27,6 +28,9 @@ const setPaletteMigration = (palette: BaseNode) => {
     properties = palette.getPluginData('properties'),
     textColorsTheme = palette.getPluginData('textColorsTheme'),
     algorithmVersion = palette.getPluginData('algorithmVersion')
+
+  // id
+  if (id === '') palette.setPluginData('id', uid())
 
   // type
   if (type === '') palette.setPluginData('type', 'UI_COLOR_PALETTE')
