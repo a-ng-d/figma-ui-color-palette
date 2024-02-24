@@ -61,6 +61,7 @@ figma.on('run', async ({ parameters }: RunEvent) => {
               selectedPreset?.isDistributed ? true : false
             ),
             colorSpace: parameters.space.toUpperCase().replace(' ', '_'),
+            visionSimulationMode: 'NONE',
             view: parameters.view.toUpperCase().replace(' ', '_'),
             textColorsTheme: {
               lightColor: '#FFFFFF',
