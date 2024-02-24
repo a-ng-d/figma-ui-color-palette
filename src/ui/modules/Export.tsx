@@ -35,7 +35,7 @@ export default class Export extends React.Component<Props, any> {
         options: [],
       },
     }
-    this.codeRef = React.createRef();
+    this.codeRef = React.createRef()
   }
 
   componentDidUpdate() {

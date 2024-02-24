@@ -6,7 +6,6 @@ const getPalettesOnCurrentPage = () => {
     figma.ui.postMessage({
       type: 'EXPOSE_PALETTES',
       data: palettes.map((palette) => {
-        
         return {
           id: palette.getPluginData('id'),
           name: palette.getPluginData('name'),
