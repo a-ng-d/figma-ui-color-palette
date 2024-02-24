@@ -276,7 +276,7 @@ export const locals: { [key: string]: any } = {
       },
     },
     palettesList: {
-      title: 'UI Color Palettes on this page',
+      title: 'UI Color Palettes on the page',
     },
     highlight: {
       cta: {
