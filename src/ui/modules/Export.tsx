@@ -19,6 +19,7 @@ interface Props {
 
 export default class Export extends React.Component<Props, any> {
   counter: number
+  codeRef: React.MutableRefObject<any>
 
   static defaultProps = {
     exportPreview: '',
@@ -34,6 +35,11 @@ export default class Export extends React.Component<Props, any> {
         options: [],
       },
     }
+    this.codeRef = React.createRef();
+  }
+
+  componentDidUpdate() {
+    this.codeRef.current.inputRef.current.scrollTop = 0
   }
 
   // Handlers
@@ -656,6 +662,7 @@ export default class Export extends React.Component<Props, any> {
               id="code-snippet-dragging"
               type="CODE"
               value={this.props.exportPreview}
+              ref={this.codeRef}
             />
           </div>
         </div>
