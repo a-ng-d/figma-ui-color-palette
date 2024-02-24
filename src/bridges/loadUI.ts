@@ -111,7 +111,6 @@ const loadUI = async (palette: SceneNode) => {
           (node) => node.getPluginData('id') === msg.id
         )
         figma.currentPage.selection = scene
-        figma.viewport.scrollAndZoomIntoView(scene)
       },
       GET_PRO_PLAN: async () => await getProPlan(),
       ENABLE_TRIAL: async () => await enableTrial(),
