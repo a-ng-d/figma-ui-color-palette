@@ -3,7 +3,7 @@ const checkPlanStatus = async () => {
   const trialStartDate: number | undefined = await figma.clientStorage.getAsync(
       'trial_start_date'
     ),
-    trialTime = 72
+    trialTime = 168
   let consumedTime = 0,
     trialStatus = 'UNUSED'
 

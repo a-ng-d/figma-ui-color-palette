@@ -100,7 +100,7 @@ class App extends React.Component<any, any> {
       editorType: 'figma' as EditorType,
       planStatus: 'UNPAID' as PlanStatus,
       trialStatus: 'UNUSED' as TrialStatus,
-      trialRemainingTime: 72,
+      trialRemainingTime: 168,
       lang: 'en-US' as Language,
       priorityContainerContext: 'EMPTY' as PriorityContext,
       isLoaded: false,
