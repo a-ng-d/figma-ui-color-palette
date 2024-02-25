@@ -82,7 +82,10 @@ export default class Source extends React.Component<Props, any> {
         helper: !(e.target as HTMLInputElement).value.includes(
           'https://coolors.co'
         )
-          ? undefined
+          ? {
+            type: 'INFO',
+            message: locals[this.props.lang].source.coolors.url.infoMessage
+          }
           : state['coolorsUrl'].helper,
       },
     }))
@@ -104,7 +107,10 @@ export default class Source extends React.Component<Props, any> {
         helper: !(e.target as HTMLInputElement).value.includes(
           'https://www.realtimecolors.com'
         )
-          ? undefined
+          ? {
+            type: 'INFO',
+            message: locals[this.props.lang].source.coolors.url.infoMessage
+          }
           : state['realtimeColorsUrl'].helper,
       },
     }))
