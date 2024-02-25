@@ -1,6 +1,6 @@
 const checkPlanStatus = async () => {
   // figma.clientStorage.deleteAsync('trial_start_date')
-  //figma.clientStorage.deleteAsync('is_trial_extended')
+  // figma.clientStorage.deleteAsync('is_trial_extended')
   /*figma.clientStorage
         .setAsync('trial_start_date', 1703286000000)*/
   
