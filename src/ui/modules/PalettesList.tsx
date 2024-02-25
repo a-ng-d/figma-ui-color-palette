@@ -62,8 +62,8 @@ export default class PalettesList extends React.Component<Props, any> {
               palette.colors.length > 1
                 ? locals[this.props.lang].actions.sourceColorsNumber.several
                 : locals[this.props.lang].actions.sourceColorsNumber.single
-            }, ${palette.themes.length} ${
-              palette.themes.length > 1
+            }, ${palette.themes.filter((theme) => theme.type === 'custom theme').length} ${
+              palette.themes.filter((theme) => theme.type === 'custom theme').length > 1
                 ? locals[this.props.lang].actions.colorThemesNumber.several
                 : locals[this.props.lang].actions.colorThemesNumber.single
             }`}</div>
