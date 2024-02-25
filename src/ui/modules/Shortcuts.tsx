@@ -347,8 +347,10 @@ export default class Shortcuts extends React.Component<Props, any> {
                     {Math.ceil(this.props.trialRemainingTime / 24)}
                   </div>
                   <div>
-                    {Math.ceil(this.props.trialRemainingTime / 24) <= 1 ? 'day' : 'days'} left
-                    in this trial
+                    {Math.ceil(this.props.trialRemainingTime / 24) <= 1
+                      ? 'day'
+                      : 'days'}{' '}
+                    left in this trial
                   </div>
                 </div>
               ) : this.props.trialStatus === 'EXPIRED' &&
