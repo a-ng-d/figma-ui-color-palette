@@ -13,13 +13,13 @@ const glossary: {
   hex: 'HEX',
   rgb: 'RGB',
   p3: 'P3',
-  protanomaly: 'Protanomaly (red-anomalous)',
+  protanomaly: 'Protanomaly (red-weak)',
   protanopia: 'Protanopia (red-blind)',
-  deuteranomaly: 'Deuteranomaly (green-anomalous)',
+  deuteranomaly: 'Deuteranomaly (green-weak)',
   deuteranopia: 'Deuteranopia (green-blind)',
-  tritanomaly: 'Tritanomaly (blue-anomalous)',
+  tritanomaly: 'Tritanomaly (blue-weak)',
   tritanopia: 'Tritanopia (blue-blind)',
-  achromatomaly: 'Achromatomaly (total color-anomalous)',
+  achromatomaly: 'Achromatomaly (total color-weak)',
   achromatopsia: 'Achromatopsia (total color-blind)',
 }
 
