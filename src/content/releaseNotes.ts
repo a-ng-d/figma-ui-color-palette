@@ -31,11 +31,15 @@ const releaseNotes: Array<ReleaseNote> = [
     image: [rnv311, rnv312, rnv313],
     content: [
       'Dev Mode, after a six-month beta test, is now complete tool for handoffs, effectively connecting designers and developers. Code extraction from palettes is now possible with this mode.',
-      "Trial periods are now seven days long, giving you an extra 96 hours to try out locked features, collaborate between roles, set up processes, etc. We believe you will find this extension beneficial.",
-      'Realtime Colors is a practical tool that allows you to test and adjust color palettes using a template. This work can then be imported into Figma to convert these color variations into a color system.'
+      'Trial periods are now seven days long, giving you an extra 96 hours to try out locked features, collaborate between roles, set up processes, etc. We believe you will find this extension beneficial.',
+      'Realtime Colors is a practical tool that allows you to test and adjust color palettes using a template. This work can then be imported into Figma to convert these color variations into a color system.',
     ],
     numberOfNotes: 3,
-    learnMore: ['https://uicp.link/whats-new', 'https://uicp.link/whats-new', 'https://uicp.link/whats-new'],
+    learnMore: [
+      'https://uicp.link/whats-new',
+      'https://uicp.link/whats-new',
+      'https://uicp.link/whats-new',
+    ],
   },
   {
     version: '3.0.0',

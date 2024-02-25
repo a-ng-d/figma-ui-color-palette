@@ -80,8 +80,7 @@ export const locals: { [key: string]: any } = {
         url: {
           label: 'Palette URL',
           placeholder: 'Paste a link－https://coolors.co/…',
-          infoMessage:
-            'The URL must start with "https://coolors.co"',
+          infoMessage: 'The URL must start with "https://coolors.co"',
           errorMessage:
             'The URL must include several hexadecimal codes (e.g. 8ecae6-…-219ebc)',
         },
@@ -92,8 +91,7 @@ export const locals: { [key: string]: any } = {
           'Realtime Colors is a tool for visualizing a color palette through a page template',
         url: {
           label: 'Realtime URL',
-          placeholder:
-            'Paste a link－https://www.realtimecolors.com/…',
+          placeholder: 'Paste a link－https://www.realtimecolors.com/…',
           infoMessage:
             'The URL must start with "https://www.realtimecolors.com/"',
           errorMessage:

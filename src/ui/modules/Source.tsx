@@ -83,9 +83,9 @@ export default class Source extends React.Component<Props, any> {
           'https://coolors.co'
         )
           ? {
-            type: 'INFO',
-            message: locals[this.props.lang].source.coolors.url.infoMessage
-          }
+              type: 'INFO',
+              message: locals[this.props.lang].source.coolors.url.infoMessage,
+            }
           : state['coolorsUrl'].helper,
       },
     }))
@@ -108,9 +108,9 @@ export default class Source extends React.Component<Props, any> {
           'https://www.realtimecolors.com'
         )
           ? {
-            type: 'INFO',
-            message: locals[this.props.lang].source.coolors.url.infoMessage
-          }
+              type: 'INFO',
+              message: locals[this.props.lang].source.coolors.url.infoMessage,
+            }
           : state['realtimeColorsUrl'].helper,
       },
     }))
