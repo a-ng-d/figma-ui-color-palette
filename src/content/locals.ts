@@ -13,13 +13,13 @@ const glossary: {
   hex: 'HEX',
   rgb: 'RGB',
   p3: 'P3',
-  protanomaly: 'Protanomaly (red-anomalous)',
+  protanomaly: 'Protanomaly (red-weak)',
   protanopia: 'Protanopia (red-blind)',
-  deuteranomaly: 'Deuteranomaly (green-anomalous)',
+  deuteranomaly: 'Deuteranomaly (green-weak)',
   deuteranopia: 'Deuteranopia (green-blind)',
-  tritanomaly: 'Tritanomaly (blue-anomalous)',
+  tritanomaly: 'Tritanomaly (blue-weak)',
   tritanopia: 'Tritanopia (blue-blind)',
-  achromatomaly: 'Achromatomaly (total color-anomalous)',
+  achromatomaly: 'Achromatomaly (total color-weak)',
   achromatopsia: 'Achromatopsia (total color-blind)',
 }
 
@@ -79,7 +79,8 @@ export const locals: { [key: string]: any } = {
           'Coolors is a tool for creating and exploring beautiful color schemes',
         url: {
           label: 'Palette URL',
-          placeholder: 'Paste a link (https://coolors.co/…)',
+          placeholder: 'Paste a link－https://coolors.co/…',
+          infoMessage: 'The URL must start with "https://coolors.co"',
           errorMessage:
             'The URL must include several hexadecimal codes (e.g. 8ecae6-…-219ebc)',
         },
@@ -90,8 +91,9 @@ export const locals: { [key: string]: any } = {
           'Realtime Colors is a tool for visualizing a color palette through a page template',
         url: {
           label: 'Realtime URL',
-          placeholder:
-            'Paste a link (https://www.realtimecolors.com/?colors=…)',
+          placeholder: 'Paste a link－https://www.realtimecolors.com/…',
+          infoMessage:
+            'The URL must start with "https://www.realtimecolors.com/"',
           errorMessage:
             'The URL must include several hexadecimal codes (e.g. 8ecae6-…-219ebc)',
         },

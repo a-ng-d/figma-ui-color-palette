@@ -308,6 +308,14 @@ export default class Shortcuts extends React.Component<Props, any> {
                 ]}
                 alignment="TOP_RIGHT"
               />
+              {this.props.editorType === 'dev' ? (
+                <div
+                  style={{
+                    width: '32px',
+                    height: '32px'
+                  }}
+                ></div>
+              ) : null}
             </div>
             {this.props.editorType != 'dev' ? (
               <div

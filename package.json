@@ -1,6 +1,6 @@
 {
   "name": "figma-ui-color-palette",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "description": "Create accessible UI color palettes with consistent lightness and contrast",
   "main": "code.js",
   "scripts": {
@@ -69,7 +69,7 @@
     "@a-ng-d/figmug.dialogs.dialog": "^0.0.12",
     "@a-ng-d/figmug.layouts.accordion": "^0.0.19",
     "@a-ng-d/figmug.layouts.bar": "^0.0.12",
-    "@a-ng-d/figmug.layouts.form-item": "^0.0.21",
+    "@a-ng-d/figmug.layouts.form-item": "^0.0.22",
     "@a-ng-d/figmug.layouts.menu-list": "^0.0.10",
     "@a-ng-d/figmug.layouts.popin": "^0.0.11",
     "@a-ng-d/figmug.layouts.section-title": "^0.0.3",

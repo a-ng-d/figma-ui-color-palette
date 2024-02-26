@@ -1,4 +1,7 @@
 import type { ReleaseNote } from '../utils/types'
+import rnv311 from './images/release_note_v31_1.webp'
+import rnv312 from './images/release_note_v31_2.webp'
+import rnv313 from './images/release_note_v31_3.webp'
 import rnv301 from './images/release_note_v30_1.webp'
 import rnv302 from './images/release_note_v30_2.webp'
 import rnv291 from './images/release_note_v29_1.webp'
@@ -18,8 +21,29 @@ import rnv19 from './images/release_note_v19.webp'
 
 const releaseNotes: Array<ReleaseNote> = [
   {
-    version: '3.0.0',
+    version: '3.1.0',
     isMostRecent: true,
+    title: [
+      'Ready to Dev Mode',
+      'Need More Trial Time?',
+      'Import Colors from Realtime Colors',
+    ],
+    image: [rnv311, rnv312, rnv313],
+    content: [
+      'Dev Mode, after a six-month beta test, is now complete tool for handoffs, effectively connecting designers and developers. Code extraction from palettes is now possible with this mode.',
+      'Trial periods are now seven days long, giving you an extra 96 hours to try out locked features, collaborate between roles, set up processes, etc. We believe you will find this extension beneficial.',
+      'Realtime Colors is a practical tool that allows you to test and adjust color palettes using a template. This work can then be imported into Figma to convert these color variations into a color system.',
+    ],
+    numberOfNotes: 3,
+    learnMore: [
+      'https://uicp.link/whats-new',
+      'https://uicp.link/whats-new',
+      'https://uicp.link/whats-new',
+    ],
+  },
+  {
+    version: '3.0.0',
+    isMostRecent: false,
     title: [
       'Simulate various visions for accessibility',
       'Exports more for Android and Apple apps',
