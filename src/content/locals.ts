@@ -74,7 +74,7 @@ export const locals: { [key: string]: any } = {
         tip: 'Select a frame or a shape (filled with color) on the Figma/FigJam canvas, then create a UI Color Palette.',
       },
       coolors: {
-        title: 'Import from Coolors',
+        title: 'Coolors',
         helper:
           'Coolors is a tool for creating and exploring beautiful color schemes',
         url: {
@@ -86,7 +86,7 @@ export const locals: { [key: string]: any } = {
         },
       },
       realtimeColors: {
-        title: 'Import from Realtime Colors',
+        title: 'Realtime Colors',
         helper:
           'Realtime Colors is a tool for visualizing a color palette through a page template',
         url: {
