@@ -17,7 +17,7 @@ const checkPlanStatus = async () => {
 
   if (trialStartDate != undefined) {
     if (
-      trialStartDate < 1708902000000 &&
+      trialStartDate < 1708988400000 &&
       (isTrialExtended == undefined || !isTrialExtended)
     ) {
       figma.clientStorage.setAsync(
