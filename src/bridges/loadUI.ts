@@ -108,9 +108,11 @@ const loadUI = async (palette: SceneNode) => {
       },
       GET_PALETTES: () => getPalettesOnCurrentPage(),
       JUMP_TO_PALETTE: () => {
-        const scene = figma.currentPage.findChildren(
+        const scene: Array<SceneNode> = []
+        const palette = figma.currentPage.findOne(
           (node) => node.getPluginData('id') === msg.id
         )
+        palette != null ? scene.push(palette) : null
         figma.currentPage.selection = scene
       },
       GET_PRO_PLAN: async () => await getProPlan(),
