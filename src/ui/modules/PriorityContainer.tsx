@@ -230,6 +230,7 @@ export default class PriorityContainer extends React.Component<Props, any> {
     )
   }
 
+  // Render
   render() {
     return (
       <>

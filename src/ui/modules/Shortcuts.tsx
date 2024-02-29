@@ -1,5 +1,5 @@
 import * as React from 'react'
-import type { Language, TrialStatus } from '../../utils/types'
+import type { EditorType, Language, TrialStatus } from '../../utils/types'
 import Feature from '../components/Feature'
 import { Bar } from '@a-ng-d/figmug.layouts.bar'
 import { Button } from '@a-ng-d/figmug.actions.button'
@@ -11,6 +11,7 @@ import { locals } from '../../content/locals'
 import isBlocked from '../../utils/isBlocked'
 
 interface Props {
+  editorType: EditorType
   planStatus: 'UNPAID' | 'PAID'
   trialStatus: TrialStatus
   trialRemainingTime: number
@@ -30,6 +31,7 @@ export default class Shortcuts extends React.Component<Props, any> {
     }
   }
 
+  // Direct actions
   onHold = () => {
     this.setState({
       canBeResized: true,
@@ -73,19 +75,36 @@ export default class Shortcuts extends React.Component<Props, any> {
     e.target.removeEventListener('mouseup', () => this.onResize)
   }
 
+  // Render
   render() {
     return (
       <Bar
         rightPart={
           <>
             <div className="shortcuts">
-              <Button
-                type="icon"
-                icon="repository"
-                action={() =>
-                  window.open('https://uicp.link/repository', '_blank')
+              <Feature
+                isActive={
+                  features.find(
+                    (feature) => feature.name === 'SHORTCUTS_DOCUMENTATION'
+                  )?.isActive
                 }
-              />
+              >
+                <Button
+                  type="icon"
+                  icon="library"
+                  action={() =>
+                    parent.postMessage(
+                      {
+                        pluginMessage: {
+                          type: 'OPEN_IN_BROWSER',
+                          url: 'https://uicp.link/docs',
+                        },
+                      },
+                      '*'
+                    )
+                  }
+                />
+              </Feature>
               <Menu
                 id="shortcuts-menu"
                 icon="info"
@@ -108,23 +127,6 @@ export default class Shortcuts extends React.Component<Props, any> {
                     action: () => this.props.onReOpenHighlight(),
                   },
                   {
-                    label: locals[this.props.lang].about.getHelp.documentation,
-                    value: null,
-                    feature: null,
-                    position: 0,
-                    type: 'OPTION',
-                    isActive: features.find(
-                      (feature) => feature.name === 'SHORTCUTS_DOCUMENTATION'
-                    )?.isActive,
-                    isBlocked: isBlocked(
-                      'SHORTCUTS_DOCUMENTATION',
-                      this.props.planStatus
-                    ),
-                    children: [],
-                    action: () =>
-                      window.open('https://uicp.link/docs', '_blank'),
-                  },
-                  {
                     label: locals[this.props.lang].about.getHelp.email,
                     value: null,
                     feature: null,
@@ -139,7 +141,40 @@ export default class Shortcuts extends React.Component<Props, any> {
                     ),
                     children: [],
                     action: () =>
-                      window.open('https://uicp.link/send-message', '_blank'),
+                      parent.postMessage(
+                        {
+                          pluginMessage: {
+                            type: 'OPEN_IN_BROWSER',
+                            url: 'https://uicp.link/send-message',
+                          },
+                        },
+                        '*'
+                      ),
+                  },
+                  {
+                    label: locals[this.props.lang].about.repository,
+                    value: null,
+                    feature: null,
+                    position: 0,
+                    type: 'OPTION',
+                    isActive: features.find(
+                      (feature) => feature.name === 'SHORTCUTS_REPOSITORY'
+                    )?.isActive,
+                    isBlocked: isBlocked(
+                      'SHORTCUTS_REPOSITORY',
+                      this.props.planStatus
+                    ),
+                    children: [],
+                    action: () =>
+                      parent.postMessage(
+                        {
+                          pluginMessage: {
+                            type: 'OPEN_IN_BROWSER',
+                            url: 'https://uicp.link/repository',
+                          },
+                        },
+                        '*'
+                      ),
                   },
                   {
                     label: '',
@@ -183,7 +218,15 @@ export default class Shortcuts extends React.Component<Props, any> {
                     ),
                     children: [],
                     action: () =>
-                      window.open('https://uicp.link/report', '_blank'),
+                      parent.postMessage(
+                        {
+                          pluginMessage: {
+                            type: 'OPEN_IN_BROWSER',
+                            url: 'https://uicp.link/report',
+                          },
+                        },
+                        '*'
+                      ),
                   },
                   {
                     label: locals[this.props.lang].about.beInvolved.discuss,
@@ -200,7 +243,15 @@ export default class Shortcuts extends React.Component<Props, any> {
                     ),
                     children: [],
                     action: () =>
-                      window.open('https://uicp.link/discuss', '_blank'),
+                      parent.postMessage(
+                        {
+                          pluginMessage: {
+                            type: 'OPEN_IN_BROWSER',
+                            url: 'https://uicp.link/discuss',
+                          },
+                        },
+                        '*'
+                      ),
                   },
                   {
                     label: '',
@@ -244,19 +295,37 @@ export default class Shortcuts extends React.Component<Props, any> {
                     ),
                     children: [],
                     action: () =>
-                      window.open('https://uicp.link/network', '_blank'),
+                      parent.postMessage(
+                        {
+                          pluginMessage: {
+                            type: 'OPEN_IN_BROWSER',
+                            url: 'https://uicp.link/network',
+                          },
+                        },
+                        '*'
+                      ),
                   },
                 ]}
                 alignment="TOP_RIGHT"
               />
+              {this.props.editorType === 'dev' ? (
+                <div
+                  style={{
+                    width: '32px',
+                    height: '32px'
+                  }}
+                ></div>
+              ) : null}
             </div>
-            <div
-              className={`box-resizer-grip ${icons['icon--resize-grip']}`}
-              onMouseDown={this.onHold.bind(this)}
-              onMouseMove={this.onResize.bind(this)}
-              onMouseUp={this.onReleased.bind(this)}
-              onMouseLeave={this.onReleased.bind(this)}
-            ></div>
+            {this.props.editorType != 'dev' ? (
+              <div
+                className={`box-resizer-grip ${icons['icon--resize-grip']}`}
+                onMouseDown={this.onHold.bind(this)}
+                onMouseMove={this.onResize.bind(this)}
+                onMouseUp={this.onReleased.bind(this)}
+                onMouseLeave={this.onReleased.bind(this)}
+              ></div>
+            ) : null}
           </>
         }
         leftPart={
@@ -283,11 +352,13 @@ export default class Shortcuts extends React.Component<Props, any> {
               {this.props.trialStatus === 'PENDING' ? (
                 <div className={`label ${texts.label}`}>
                   <div className="type--bold">
-                    {this.props.trialRemainingTime}
+                    {Math.ceil(this.props.trialRemainingTime / 24)}
                   </div>
                   <div>
-                    {this.props.trialRemainingTime <= 1 ? 'hour' : 'hours'} left
-                    in this trial
+                    {Math.ceil(this.props.trialRemainingTime / 24) <= 1
+                      ? 'day'
+                      : 'days'}{' '}
+                    left in this trial
                   </div>
                 </div>
               ) : this.props.trialStatus === 'EXPIRED' &&

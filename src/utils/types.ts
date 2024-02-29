@@ -3,13 +3,14 @@ export interface Feature {
   description: string
   isActive: boolean
   isPro: boolean
+  isNew: boolean
   type: 'SERVICE' | 'DIVISION' | 'ACTION' | 'CONTEXT'
   service: Array<Service>
 }
 
-export type Service = 'CREATE' | 'EDIT'
+export type Service = 'CREATE' | 'EDIT' | 'TRANSFER'
 
-export type EditorType = 'figma' | 'figjam'
+export type EditorType = 'figma' | 'figjam' | 'dev'
 
 export type PlanStatus = 'UNPAID' | 'PAID' | 'NOT_SUPPORTED' | undefined
 
@@ -26,6 +27,8 @@ export type PriorityContext =
   | 'WELCOME_TO_TRIAL'
   | 'TRY'
   | 'ABOUT'
+
+export type ThirdParty = 'COOLORS' | 'REALTIME_COLORS'
 
 export interface windowSize {
   w: number
@@ -62,7 +65,7 @@ export interface PaletteNode {
   view: ViewConfiguration
   textColorsTheme: TextColorsThemeHexModel
   algorithmVersion: AlgorithmVersionConfiguration
-  service?: 'CREATE' | 'EDIT'
+  service?: Service
 }
 
 export interface PaletteData {
@@ -111,7 +114,7 @@ export interface PaletteDataShadeItem {
 export interface SourceColorConfiguration {
   name: string
   rgb: RgbModel
-  source: 'CANVAS' | 'COOLORS'
+  source: 'CANVAS' | ThirdParty
   id: string
 }
 
@@ -126,6 +129,14 @@ export interface PaletteConfiguration {
   visionSimulationMode: visionSimulationModeConfiguration
   view: ViewConfiguration
   textColorsTheme: TextColorsThemeHexModel
+}
+
+export interface ExtractOfPaletteConfiguration {
+  id: string
+  name: string
+  preset: PresetConfiguration
+  colors: Array<ColorConfiguration>
+  themes: Array<ThemeConfiguration>
 }
 
 export interface PresetConfiguration {

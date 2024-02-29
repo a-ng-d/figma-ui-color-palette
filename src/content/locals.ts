@@ -13,14 +13,14 @@ const glossary: {
   hex: 'HEX',
   rgb: 'RGB',
   p3: 'P3',
-  protanomaly: 'Protanomaly',
-  protanopia: 'Protanopia',
-  deuteranomaly: 'Deuteranomaly',
-  deuteranopia: 'Deuteranopia',
-  tritanomaly: 'Tritanomaly',
-  tritanopia: 'Tritanopia',
-  achromatomaly: 'Achromatomaly',
-  achromatopsia: 'Achromatopsia',
+  protanomaly: 'Protanomaly (red-weak)',
+  protanopia: 'Protanopia (red-blind)',
+  deuteranomaly: 'Deuteranomaly (green-weak)',
+  deuteranopia: 'Deuteranopia (green-blind)',
+  tritanomaly: 'Tritanomaly (blue-weak)',
+  tritanopia: 'Tritanopia (blue-blind)',
+  achromatomaly: 'Achromatomaly (total color-weak)',
+  achromatopsia: 'Achromatopsia (total color-blind)',
 }
 
 export const locals: { [key: string]: any } = {
@@ -39,6 +39,8 @@ export const locals: { [key: string]: any } = {
       selectColor:
         'Select your source colors (solid colors only) on the Figma/FigJam canvas to create a UI Color Palette',
       selectPalette: 'Select a UI Color Palette to edit',
+      selectPaletteinDevMode:
+        'Select a UI Color Palette on the Figma canvas to inspect and export',
     },
     shortcuts: {
       feedback: 'Give feedback',
@@ -72,12 +74,28 @@ export const locals: { [key: string]: any } = {
         tip: 'Select a frame or a shape (filled with color) on the Figma/FigJam canvas, then create a UI Color Palette.',
       },
       coolors: {
-        title: 'Import from Coolors',
+        title: 'Coolors',
+        helper:
+          'Coolors is a tool for creating and exploring beautiful color schemes',
         url: {
           label: 'Palette URL',
-          placeholder: 'https://coolors.co/…',
+          placeholder: 'Paste a link－https://coolors.co/…',
+          infoMessage: 'The URL must start with "https://coolors.co"',
           errorMessage:
-            'The end of the URL must match with several hexadecimal codes (e.g. 8ecae6-…-219ebc)',
+            'The URL must include several hexadecimal codes (e.g. 8ecae6-…-219ebc)',
+        },
+      },
+      realtimeColors: {
+        title: 'Realtime Colors',
+        helper:
+          'Realtime Colors is a tool for visualizing a color palette through a page template',
+        url: {
+          label: 'Realtime URL',
+          placeholder: 'Paste a link－https://www.realtimecolors.com/…',
+          infoMessage:
+            'The URL must start with "https://www.realtimecolors.com/"',
+          errorMessage:
+            'The URL must include several hexadecimal codes (e.g. 8ecae6-…-219ebc)',
         },
       },
     },
@@ -155,6 +173,7 @@ export const locals: { [key: string]: any } = {
         label: glossary.colorSpace,
         rgb: glossary.rgb,
         hex: glossary.hex,
+        hsl: glossary.hsl,
         lch: glossary.lch,
         p3: glossary.p3,
       },
@@ -220,6 +239,7 @@ export const locals: { [key: string]: any } = {
     },
     about: {
       title: 'About UI Color Palette',
+      repository: 'Watch the repository',
       getHelp: {
         title: 'Have help',
         documentation: 'Read the documentation',
@@ -238,6 +258,7 @@ export const locals: { [key: string]: any } = {
     },
     actions: {
       createPalette: 'Create a UI Color Palette',
+      sync: 'Sync',
       createLocalStyles: 'Sync with the local styles',
       createLocalVariables: 'Sync with the local variables',
       updateLocalStyles: 'Update the existing local styles',
@@ -251,6 +272,13 @@ export const locals: { [key: string]: any } = {
         single: 'source color',
         several: 'source colors',
       },
+      colorThemesNumber: {
+        single: 'color theme',
+        several: 'color themes',
+      },
+    },
+    palettesList: {
+      title: 'UI Color Palettes on the page',
     },
     highlight: {
       cta: {
@@ -273,15 +301,15 @@ export const locals: { [key: string]: any } = {
         message:
           'This upgrade will unlock a range of tools that enable you to convert your color palette into a color system. We hope you will enjoy the benefits.',
         trial:
-          'This upgrade will unlock a range of tools that enable you to convert your color palette into a color system. We hope you will enjoy the benefits for the next 72 hours.',
+          'This upgrade will unlock a range of tools that enable you to convert your color palette into a color system. We hope you will enjoy the benefits for the next 7 days.',
         cta: "Let's build",
       },
       trial: {
         title:
-          'Would you like to upgrade to the Pro plan within the next 72 hours?',
+          'Would you like to upgrade to the Pro plan within the next 7 days?',
         message:
           'Explore the potential of synchronizing your color palette with variables, exporting it as design tokens, app resources, or for Tokens Studio and simulating a vision impairment.',
-        cta: 'Enable the 72-hour trial',
+        cta: 'Enable the 7-day trial',
         option: 'Purchase',
       },
     },
@@ -311,6 +339,8 @@ export const locals: { [key: string]: any } = {
       unselectedColor:
         'Select a layer that is filled with at least one solid color',
       paletteNameRecommendation: '64 characters max is recommended',
+      noPaletteOnCurrrentPage:
+        'There is no UI Color Palette on the current page',
     },
     error: {
       corruption:

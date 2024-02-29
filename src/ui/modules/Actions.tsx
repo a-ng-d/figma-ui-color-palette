@@ -2,7 +2,7 @@ import * as React from 'react'
 import type { Language, SourceColorConfiguration } from '../../utils/types'
 import Feature from '../components/Feature'
 import { Button } from '@a-ng-d/figmug.actions.button'
-import { Dropdown } from '@a-ng-d/figmug.inputs.dropdown'
+import { Menu } from '@a-ng-d/figmug.navigation.menu'
 import { texts } from '@a-ng-d/figmug.stylesheets.texts'
 import features from '../../utils/config'
 import isBlocked from '../../utils/isBlocked'
@@ -10,7 +10,6 @@ import { locals } from '../../content/locals'
 
 interface Props {
   context: string
-  actions?: string
   sourceColors: Array<SourceColorConfiguration> | []
   exportType?: string
   planStatus?: 'UNPAID' | 'PAID'
@@ -28,50 +27,6 @@ export default class Actions extends React.Component<Props> {
   }
 
   // Templates
-  LocalStyles = () => {
-    return (
-      <Feature
-        isActive={
-          features.find((feature) => feature.name === 'SYNC_LOCAL_STYLES')
-            ?.isActive
-        }
-      >
-        <Button
-          type="primary"
-          label={locals[this.props.lang].actions.createLocalStyles}
-          feature="SYNC_LOCAL_STYLES"
-          action={this.props.onSyncLocalStyles}
-        />
-      </Feature>
-    )
-  }
-
-  LocalVariables = () => {
-    return (
-      <Feature
-        isActive={
-          features.find((feature) => feature.name === 'SYNC_LOCAL_VARIABLES')
-            ?.isActive
-        }
-      >
-        <Button
-          type="primary"
-          label={locals[this.props.lang].actions.createLocalVariables}
-          feature="SYNC_LOCAL_VARIABLES"
-          isBlocked={isBlocked(
-            'SYNC_LOCAL_VARIABLES',
-            this.props.planStatus ?? 'UNPAID'
-          )}
-          isDisabled={isBlocked(
-            'SYNC_LOCAL_VARIABLES',
-            this.props.planStatus ?? 'UNPAID'
-          )}
-          action={this.props.onSyncLocalVariables}
-        />
-      </Feature>
-    )
-  }
-
   Create = () => {
     return (
       <div className="actions">
@@ -108,61 +63,54 @@ export default class Actions extends React.Component<Props> {
     return (
       <div className="actions">
         <div className="actions__right">
-          {this.props.actions === 'LOCAL_STYLES' ? (
-            <this.LocalStyles />
-          ) : (
-            <this.LocalVariables />
-          )}
-        </div>
-        <div className="actions__left">
-          <Dropdown
-            id="sync-mode"
+          <Menu
+            id="local-styles-variables"
+            label={locals[this.props.lang].actions.sync}
+            type="PRIMARY"
             options={[
               {
-                label:
-                  locals[this.props.lang].actions.managePalette.localStyles,
+                label: locals[this.props.lang].actions.createLocalStyles,
                 value: 'LOCAL_STYLES',
-                feature: 'UPDATE_DEPLOYMENT_ACTION',
+                feature: 'SYNC_LOCAL_STYLES',
                 position: 0,
                 type: 'OPTION',
                 isActive: features.find(
-                  (feature) => feature.name === 'LOCAL_STYLES'
+                  (feature) => feature.name === 'SYNC_LOCAL_STYLES'
                 )?.isActive,
                 isBlocked: isBlocked(
-                  'LOCAL_STYLES',
+                  'SYNC_LOCAL_STYLES',
                   this.props.planStatus ?? 'UNPAID'
                 ),
+                isNew: features.find(
+                  (feature) => feature.name === 'SYNC_LOCAL_STYLES'
+                )?.isNew,
                 children: [],
-                action: (e) =>
-                  this.props.onChangeActions?.(
-                    (e.target as HTMLElement).dataset.value ?? 'NULL'
-                  ),
+                action: (e) => this.props.onSyncLocalStyles?.(e),
               },
               {
-                label:
-                  locals[this.props.lang].actions.managePalette.localVariables,
+                label: locals[this.props.lang].actions.createLocalVariables,
                 value: 'LOCAL_VARIABLES',
-                feature: 'UPDATE_DEPLOYMENT_ACTION',
-                position: 1,
+                feature: 'SYNC_LOCAL_VARIABLES',
+                position: 0,
                 type: 'OPTION',
                 isActive: features.find(
-                  (feature) => feature.name === 'LOCAL_VARIABLES'
+                  (feature) => feature.name === 'SYNC_LOCAL_VARIABLES'
                 )?.isActive,
                 isBlocked: isBlocked(
-                  'LOCAL_VARIABLES',
+                  'SYNC_LOCAL_VARIABLES',
                   this.props.planStatus ?? 'UNPAID'
                 ),
+                isNew: features.find(
+                  (feature) => feature.name === 'SYNC_LOCAL_VARIABLES'
+                )?.isNew,
                 children: [],
-                action: (e) =>
-                  this.props.onChangeActions?.(
-                    (e.target as HTMLElement).dataset.value ?? 'NULL'
-                  ),
+                action: (e) => this.props.onSyncLocalVariables?.(e),
               },
             ]}
-            selected={this.props.actions ?? ''}
-            parentClassName="controls"
+            alignment="TOP_RIGHT"
           />
         </div>
+        <div className="actions__left"></div>
       </div>
     )
   }

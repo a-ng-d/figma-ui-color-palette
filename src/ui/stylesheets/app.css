@@ -147,11 +147,6 @@ div.section-controls .label {
   width: auto;
 }
 
-div.section-controls .section-title {
-  display: flex;
-  gap: var(--size-xxxsmall);
-}
-
 /* Export */
 div.export-palette__preview {
   padding: 0 var(--size-xsmall);

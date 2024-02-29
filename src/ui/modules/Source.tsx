@@ -5,16 +5,17 @@ import type {
   EditorType,
   Language,
   SourceColorConfiguration,
+  ThirdParty,
 } from '../../utils/types'
 import Feature from '../components/Feature'
 import { Message } from '@a-ng-d/figmug.dialogs.message'
-import Actions from './Actions'
 import { FormItem } from '@a-ng-d/figmug.layouts.form-item'
 import { Input } from '@a-ng-d/figmug.inputs.input'
-import { Button } from '@a-ng-d/figmug.actions.button'
-import CompactColorItem from '../components/CompactColorItem'
 import { Accordion } from '@a-ng-d/figmug.layouts.accordion'
 import { texts } from '@a-ng-d/figmug.stylesheets.texts'
+import { SectionTitle } from '@a-ng-d/figmug.layouts.section-title'
+import Actions from './Actions'
+import CompactColorItem from '../components/CompactColorItem'
 import features from '../../utils/config'
 import isBlocked from '../../utils/isBlocked'
 import { locals } from '../../content/locals'
@@ -24,8 +25,9 @@ interface Props {
   planStatus: 'UNPAID' | 'PAID'
   editorType?: EditorType
   lang: Language
-  onChangeColorsFromCoolors: (
-    sourceColorsFromCoolers: Array<SourceColorConfiguration>
+  onChangeColorsFromImport: (
+    onChangeColorsFromImport: Array<SourceColorConfiguration>,
+    source: ThirdParty
   ) => void
   onCreatePalette: () => void
 }
@@ -41,6 +43,13 @@ export default class Source extends React.Component<Props, any> {
         helper: undefined,
       },
       isCoolorsImportOpen: false,
+      realtimeColorsUrl: {
+        value: '' as string,
+        state: 'DEFAULT' as 'DEFAULT' | 'ERROR',
+        canBeSubmitted: false,
+        helper: undefined,
+      },
+      isRealtimeColorsImportOpen: false,
     }
   }
 
@@ -56,15 +65,15 @@ export default class Source extends React.Component<Props, any> {
   }
 
   // Handlers
-  isTypingHandler = (e: React.SyntheticEvent) =>
-    this.setState({
+  isTypingCoolorsUrlHandler = (e: React.SyntheticEvent) =>
+    this.setState((state: any) => ({
       coolorsUrl: {
         value: (e.target as HTMLInputElement).value,
         state: !(e.target as HTMLInputElement).value.includes(
           'https://coolors.co'
         )
           ? ''
-          : this.state['coolorsUrl'].state,
+          : state['coolorsUrl'].state,
         canBeSubmitted: (e.target as HTMLInputElement).value.includes(
           'https://coolors.co'
         )
@@ -73,52 +82,123 @@ export default class Source extends React.Component<Props, any> {
         helper: !(e.target as HTMLInputElement).value.includes(
           'https://coolors.co'
         )
-          ? undefined
-          : this.state['coolorsUrl'].helper,
+          ? {
+              type: 'INFO',
+              message: locals[this.props.lang].source.coolors.url.infoMessage,
+            }
+          : state['coolorsUrl'].helper,
       },
-    })
+    }))
+
+  isTypingRealtimeColorsUrlHandler = (e: React.SyntheticEvent) =>
+    this.setState((state: any) => ({
+      realtimeColorsUrl: {
+        value: (e.target as HTMLInputElement).value,
+        state: !(e.target as HTMLInputElement).value.includes(
+          'https://www.realtimecolors.com'
+        )
+          ? ''
+          : state['realtimeColorsUrl'].state,
+        canBeSubmitted: (e.target as HTMLInputElement).value.includes(
+          'https://www.realtimecolors.com'
+        )
+          ? true
+          : false,
+        helper: !(e.target as HTMLInputElement).value.includes(
+          'https://www.realtimecolors.com'
+        )
+          ? {
+              type: 'INFO',
+              message: locals[this.props.lang].source.coolors.url.infoMessage,
+            }
+          : state['realtimeColorsUrl'].helper,
+      },
+    }))
 
   importColorsFromCoolorsHandler = () => {
     const url: string = this.state['coolorsUrl'].value,
-      hexs: string | undefined = url.split('/').at(-1)
+      hexs = url.match(/([0-9a-fA-F]{6}-)+[0-9a-fA-F]{6}/)
 
-    if (hexs != undefined)
-      if (/^(?:[0-9a-fA-F]{6}-)+[0-9a-fA-F]{6}$/i.test(hexs)) {
-        this.props.onChangeColorsFromCoolors(
-          hexs.split('-').map((hex) => {
-            const gl = chroma(hex).gl()
-            return {
-              name: hex,
-              rgb: {
-                r: gl[0],
-                g: gl[1],
-                b: gl[2],
-              },
-              source: 'COOLORS',
-              id: uid(),
-            }
-          })
-        )
-        this.setState({
-          coolorsUrl: {
-            value: '',
-            state: 'DEFAULT',
-            canBeSubmitted: false,
-            helper: undefined,
-          },
-        })
-      } else
-        this.setState({
-          coolorsUrl: {
-            value: this.state['coolorsUrl'].value,
-            state: 'ERROR',
-            canBeSubmitted: this.state['coolorsUrl'].canBeSubmitted,
-            helper: {
-              type: 'ERROR',
-              message: locals[this.props.lang].source.coolors.url.errorMessage,
+    if (hexs != null) {
+      this.props.onChangeColorsFromImport(
+        hexs[0].split('-').map((hex) => {
+          const gl = chroma(hex).gl()
+          return {
+            name: hex,
+            rgb: {
+              r: gl[0],
+              g: gl[1],
+              b: gl[2],
             },
+            source: 'COOLORS',
+            id: uid(),
+          }
+        }),
+        'COOLORS'
+      )
+      this.setState({
+        coolorsUrl: {
+          value: '',
+          state: 'DEFAULT',
+          canBeSubmitted: false,
+          helper: undefined,
+        },
+      })
+    } else
+      this.setState({
+        coolorsUrl: {
+          value: this.state['coolorsUrl'].value,
+          state: 'ERROR',
+          canBeSubmitted: this.state['coolorsUrl'].canBeSubmitted,
+          helper: {
+            type: 'ERROR',
+            message: locals[this.props.lang].source.coolors.url.errorMessage,
           },
-        })
+        },
+      })
+  }
+
+  importColorsFromRealtimeColorsHandler = () => {
+    const url: string = this.state['realtimeColorsUrl'].value,
+      hexs = url.match(/([0-9a-fA-F]{6}-)+[0-9a-fA-F]{6}/)
+
+    if (hexs != null) {
+      this.props.onChangeColorsFromImport(
+        hexs[0].split('-').map((hex) => {
+          const gl = chroma(hex).gl()
+          return {
+            name: hex,
+            rgb: {
+              r: gl[0],
+              g: gl[1],
+              b: gl[2],
+            },
+            source: 'REALTIME_COLORS',
+            id: uid(),
+          }
+        }),
+        'REALTIME_COLORS'
+      )
+      this.setState({
+        realtimeColorsUrl: {
+          value: '',
+          state: 'DEFAULT',
+          canBeSubmitted: false,
+          helper: undefined,
+        },
+      })
+    } else
+      this.setState({
+        realtimeColorsUrl: {
+          value: this.state['realtimeColorsUrl'].value,
+          state: 'ERROR',
+          canBeSubmitted: this.state['realtimeColorsUrl'].canBeSubmitted,
+          helper: {
+            type: 'ERROR',
+            message: locals[this.props.lang].source.coolors.url.errorMessage,
+          },
+        },
+      })
   }
 
   // Templates
@@ -127,9 +207,7 @@ export default class Source extends React.Component<Props, any> {
       <>
         <div className="section-controls">
           <div className="section-controls__left-part">
-            <div className={`section-title ${texts['section-title']}`}>
-              {locals[this.props.lang].source.canvas.title}
-            </div>
+            <SectionTitle label={locals[this.props.lang].source.canvas.title} />
             <div className={`type ${texts.type}`}>{`(${
               this.props.sourceColors.filter(
                 (sourceColor) => sourceColor.source === 'CANVAS'
@@ -164,7 +242,7 @@ export default class Source extends React.Component<Props, any> {
           </ul>
         ) : (
           <Message
-            icon="list-tile"
+            icon="info"
             messages={[locals[this.props.lang].source.canvas.tip]}
           />
         )}
@@ -177,19 +255,21 @@ export default class Source extends React.Component<Props, any> {
       <>
         <Accordion
           label={locals[this.props.lang].source.coolors.title}
-          indicator={
-            this.props.sourceColors.filter(
-              (sourceColor) => sourceColor.source === 'COOLORS'
-            ).length
-          }
+          indicator={this.props.sourceColors
+            .filter((sourceColor) => sourceColor.source === 'COOLORS')
+            .length.toString()}
+          helper={locals[this.props.lang].source.coolors.helper}
           itemHandler={this.state['isCoolorsImportOpen'] ? 'REMOVE' : 'ADD'}
           isExpanded={this.state['isCoolorsImportOpen']}
           isBlocked={isBlocked('SOURCE_COOLORS', this.props.planStatus)}
+          isNew={
+            features.find((feature) => feature.name === 'SOURCE_COOLORS')?.isNew
+          }
           onAdd={() => {
             this.setState({ isCoolorsImportOpen: true })
           }}
           onEmpty={() => {
-            this.props.onChangeColorsFromCoolors([])
+            this.props.onChangeColorsFromImport([], 'COOLORS')
             this.setState({
               isCoolorsImportOpen: false,
               coolorsUrl: {
@@ -203,8 +283,7 @@ export default class Source extends React.Component<Props, any> {
         >
           <div className="settings__item">
             <FormItem
-              id="coolors-palette-urn"
-              label={locals[this.props.lang].source.coolors.url.label}
+              id="coolors-palette-url"
               helper={this.state['coolorsUrl'].helper}
               shouldFill={false}
             >
@@ -215,31 +294,111 @@ export default class Source extends React.Component<Props, any> {
                   locals[this.props.lang].source.coolors.url.placeholder
                 }
                 value={this.state['coolorsUrl'].value}
-                onChange={this.isTypingHandler}
+                onChange={this.isTypingCoolorsUrlHandler}
                 onConfirm={() => {
                   if (this.state['coolorsUrl'].canBeSubmitted) {
                     this.importColorsFromCoolorsHandler()
                   }
                 }}
-              />
-              <div
-                style={{
-                  alignSelf: 'center',
+                onBlur={() => {
+                  if (this.state['coolorsUrl'].canBeSubmitted) {
+                    this.importColorsFromCoolorsHandler()
+                  }
                 }}
-              >
-                <Button
-                  type="icon"
-                  isDisabled={!this.state['coolorsUrl'].canBeSubmitted}
-                  icon="plus"
-                  feature="IMPORT_COLORS_FROM_URL"
-                  action={this.importColorsFromCoolorsHandler}
-                />
-              </div>
+              />
             </FormItem>
           </div>
           <ul className="list">
             {this.props.sourceColors
               .filter((sourceColor) => sourceColor.source === 'COOLORS')
+              .map((sourceColor) => {
+                return (
+                  <CompactColorItem
+                    key={sourceColor.id}
+                    name={sourceColor.name}
+                    hex={chroma(
+                      sourceColor.rgb.r * 255,
+                      sourceColor.rgb.g * 255,
+                      sourceColor.rgb.b * 255
+                    )
+                      .hex()
+                      .toUpperCase()}
+                    uuid={sourceColor.id}
+                    lang={this.props.lang}
+                  />
+                )
+              })}
+          </ul>
+        </Accordion>
+      </>
+    )
+  }
+
+  RealtimeColorsColors = () => {
+    return (
+      <>
+        <Accordion
+          label={locals[this.props.lang].source.realtimeColors.title}
+          indicator={this.props.sourceColors
+            .filter((sourceColor) => sourceColor.source === 'REALTIME_COLORS')
+            .length.toString()}
+          helper={locals[this.props.lang].source.realtimeColors.helper}
+          itemHandler={
+            this.state['isRealtimeColorsImportOpen'] ? 'REMOVE' : 'ADD'
+          }
+          isExpanded={this.state['isRealtimeColorsImportOpen']}
+          isBlocked={isBlocked('SOURCE_REALTIME_COLORS', this.props.planStatus)}
+          isNew={
+            features.find(
+              (feature) => feature.name === 'SOURCE_REALTIME_COLORS'
+            )?.isNew
+          }
+          onAdd={() => {
+            this.setState({ isRealtimeColorsImportOpen: true })
+          }}
+          onEmpty={() => {
+            this.props.onChangeColorsFromImport([], 'REALTIME_COLORS')
+            this.setState({
+              isRealtimeColorsImportOpen: false,
+              realtimeColorsUrl: {
+                value: '',
+                state: 'DEFAULT',
+                canBeSubmitted: false,
+                helper: undefined,
+              },
+            })
+          }}
+        >
+          <div className="settings__item">
+            <FormItem
+              id="realtime-colors-url"
+              helper={this.state['realtimeColorsUrl'].helper}
+              shouldFill={false}
+            >
+              <Input
+                type="TEXT"
+                state={this.state['realtimeColorsUrl'].state}
+                placeholder={
+                  locals[this.props.lang].source.realtimeColors.url.placeholder
+                }
+                value={this.state['realtimeColorsUrl'].value}
+                onChange={this.isTypingRealtimeColorsUrlHandler}
+                onConfirm={() => {
+                  if (this.state['realtimeColorsUrl'].canBeSubmitted) {
+                    this.importColorsFromRealtimeColorsHandler()
+                  }
+                }}
+                onBlur={() => {
+                  if (this.state['realtimeColorsUrl'].canBeSubmitted) {
+                    this.importColorsFromRealtimeColorsHandler()
+                  }
+                }}
+              />
+            </FormItem>
+          </div>
+          <ul className="list">
+            {this.props.sourceColors
+              .filter((sourceColor) => sourceColor.source === 'REALTIME_COLORS')
               .map((sourceColor) => {
                 return (
                   <CompactColorItem
@@ -286,6 +445,15 @@ export default class Source extends React.Component<Props, any> {
               }
             >
               <this.CoolorsColors />
+            </Feature>
+            <Feature
+              isActive={
+                features.find(
+                  (feature) => feature.name === 'SOURCE_REALTIME_COLORS'
+                )?.isActive
+              }
+            >
+              <this.RealtimeColorsColors />
             </Feature>
           </div>
         </div>

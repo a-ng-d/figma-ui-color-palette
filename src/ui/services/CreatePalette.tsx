@@ -5,6 +5,7 @@ import type {
   PresetConfiguration,
   SourceColorConfiguration,
   TextColorsThemeHexModel,
+  ThirdParty,
 } from '../../utils/types'
 import { Bar } from '@a-ng-d/figmug.layouts.bar'
 import { Tabs } from '@a-ng-d/figmug.actions.tabs'
@@ -27,8 +28,9 @@ interface Props {
   textColorsTheme: TextColorsThemeHexModel
   planStatus: 'UNPAID' | 'PAID'
   lang: Language
-  onChangeColorsFromCoolors: (
-    sourceColorsFromCoolers: Array<SourceColorConfiguration>
+  onChangeColorsFromImport: (
+    sourceColorsFromImport: Array<SourceColorConfiguration>,
+    source: ThirdParty
   ) => void
   onChangePreset: (
     e: React.MouseEvent<HTMLLIElement, MouseEvent> | React.KeyboardEvent
@@ -78,19 +80,23 @@ export default class CreatePalette extends React.Component<Props, any> {
       contexts.push({
         label: locals[this.props.lang].contexts.source,
         id: 'SOURCE',
-        isUpdated: false,
+        isUpdated:
+          features.find((feature) => feature.name === 'SOURCE')?.isNew ?? false,
       })
     if (features.find((feature) => feature.name === 'SCALE')?.isActive)
       contexts.push({
         label: locals[this.props.lang].contexts.scale,
         id: 'SCALE',
-        isUpdated: false,
+        isUpdated:
+          features.find((feature) => feature.name === 'SCALE')?.isNew ?? false,
       })
     if (features.find((feature) => feature.name === 'SETTINGS')?.isActive)
       contexts.push({
         label: locals[this.props.lang].contexts.settings,
         id: 'SETTINGS',
-        isUpdated: true,
+        isUpdated:
+          features.find((feature) => feature.name === 'SETTINGS')?.isNew ??
+          false,
       })
     return contexts
   }
@@ -112,7 +118,7 @@ export default class CreatePalette extends React.Component<Props, any> {
             sourceColors={this.props.sourceColors}
             planStatus={this.props.planStatus}
             lang={this.props.lang}
-            onChangeColorsFromCoolors={this.props.onChangeColorsFromCoolors}
+            onChangeColorsFromImport={this.props.onChangeColorsFromImport}
             onCreatePalette={this.onCreatePalette}
           />
         )

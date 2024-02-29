@@ -5,6 +5,7 @@ import { presets } from './utils/palettePackage'
 import doLightnessScale from './utils/doLightnessScale'
 import loadUI from './bridges/loadUI'
 import loadParameters from './bridges/loadParameters'
+import setPaletteMigration from './utils/setPaletteMigration'
 
 let palette: SceneNode
 
@@ -60,6 +61,7 @@ figma.on('run', async ({ parameters }: RunEvent) => {
               selectedPreset?.isDistributed ? true : false
             ),
             colorSpace: parameters.space.toUpperCase().replace(' ', '_'),
+            visionSimulationMode: 'NONE',
             view: parameters.view.toUpperCase().replace(' ', '_'),
             textColorsTheme: {
               lightColor: '#FFFFFF',
@@ -72,6 +74,26 @@ figma.on('run', async ({ parameters }: RunEvent) => {
     )
     figma.closePlugin()
   }
+})
+
+// Migration
+figma.on('run', () => {
+  figma.currentPage
+    .findAllWithCriteria({
+      pluginData: {},
+    })
+    .forEach((palette) => {
+      setPaletteMigration(palette)
+    })
+})
+figma.on('currentpagechange', () => () => {
+  figma.currentPage
+    .findAllWithCriteria({
+      pluginData: {},
+    })
+    .forEach((palette) => {
+      setPaletteMigration(palette)
+    })
 })
 
 // Selection

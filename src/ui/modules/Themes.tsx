@@ -12,14 +12,14 @@ import type {
   ThemeConfiguration,
   ThemesMessage,
 } from '../../utils/types'
-import Dispatcher from './Dispatcher'
 import { Button } from '@a-ng-d/figmug.actions.button'
 import { Message } from '@a-ng-d/figmug.dialogs.message'
+import { SectionTitle } from '@a-ng-d/figmug.layouts.section-title'
 import ThemeItem from '../components/ThemeItem'
 import Actions from './Actions'
-import { texts } from '@a-ng-d/figmug.stylesheets.texts'
 import isBlocked from '../../utils/isBlocked'
 import doLightnessScale from '../../utils/doLightnessScale'
+import Dispatcher from './Dispatcher'
 import { locals } from '../../content/locals'
 import { uid } from 'uid'
 
@@ -27,7 +27,6 @@ interface Props {
   preset: PresetConfiguration
   scale: ScaleConfiguration
   themes: Array<ThemeConfiguration>
-  actions: string
   planStatus: 'UNPAID' | 'PAID'
   editorType: EditorType
   lang: Language
@@ -301,18 +300,17 @@ export default class Themes extends React.Component<Props, any> {
     parent.postMessage({ pluginMessage: themesMessage }, '*')
   }
 
+  // Render
   render() {
     return (
       <div className="controls__control">
         <div className="control__block control__block--list">
           <div className="section-controls">
             <div className="section-controls__left-part">
-              <div className={`section-title ${texts['section-title']}`}>
-                {locals[this.props.lang].themes.title}
-                <div className={`type ${texts.type}`}>{`(${
-                  this.props.themes.length - 1
-                })`}</div>
-              </div>
+              <SectionTitle
+                label={locals[this.props.lang].themes.title}
+                indicator={(this.props.themes.length - 1).toString()}
+              />
             </div>
             <div className="section-controls__right-part">
               <Button
@@ -396,7 +394,6 @@ export default class Themes extends React.Component<Props, any> {
         {this.props.editorType === 'figma' ? (
           <Actions
             context="DEPLOY"
-            actions={this.props.actions}
             planStatus={this.props.planStatus}
             lang={this.props.lang}
             onSyncLocalStyles={this.props.onSyncLocalStyles}

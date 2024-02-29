@@ -11,10 +11,11 @@ import type {
 import Feature from '../components/Feature'
 import { Button } from '@a-ng-d/figmug.actions.button'
 import { Dropdown } from '@a-ng-d/figmug.inputs.dropdown'
-import Slider from '../components/Slider'
 import { Message } from '@a-ng-d/figmug.dialogs.message'
-import Actions from './Actions'
 import { texts } from '@a-ng-d/figmug.stylesheets.texts'
+import { SectionTitle } from '@a-ng-d/figmug.layouts.section-title'
+import Slider from '../components/Slider'
+import Actions from './Actions'
 import { palette, presets } from '../../utils/palettePackage'
 import features from '../../utils/config'
 import isBlocked from '../../utils/isBlocked'
@@ -160,9 +161,7 @@ export default class Scale extends React.Component<Props, any> {
         <div className="control__block control__block--distributed">
           <div className="section-controls">
             <div className="section-controls__left-part">
-              <div className={`section-title ${texts['section-title']}`}>
-                {locals[this.props.lang].scale.title}
-              </div>
+              <SectionTitle label={locals[this.props.lang].scale.title} />
             </div>
             <div className="section-controls__right-part">
               <Feature
@@ -187,6 +186,9 @@ export default class Scale extends React.Component<Props, any> {
                         `PRESETS_${preset[1].id}`,
                         this.props.planStatus
                       ),
+                      isNew: features.find(
+                        (feature) => feature.name === `PRESETS_${preset[1].id}`
+                      )?.isNew,
                       children: [],
                       action: (e) => this.props.onChangePreset?.(e),
                     }
@@ -289,12 +291,12 @@ export default class Scale extends React.Component<Props, any> {
         <div className="control__block control__block--distributed">
           <div className="section-controls">
             <div className="section-controls__left-part">
-              <div className={`section-title ${texts['section-title']}`}>
-                {locals[this.props.lang].scale.title}
-                <div className={`type ${texts.type}`}>{`(${
-                  Object.entries(this.props.scale ?? {}).length
-                })`}</div>
-              </div>
+              <SectionTitle
+                label={locals[this.props.lang].scale.title}
+                indicator={Object.entries(
+                  this.props.scale ?? {}
+                ).length.toString()}
+              />
             </div>
             <div className="section-controls__right-part">
               <div className={`label ${texts.label}`}>
@@ -332,7 +334,6 @@ export default class Scale extends React.Component<Props, any> {
         {this.props.editorType === 'figma' ? (
           <Actions
             context="DEPLOY"
-            actions={this.props.actions}
             planStatus={this.props.planStatus}
             lang={this.props.lang}
             onSyncLocalStyles={this.props.onSyncLocalStyles}

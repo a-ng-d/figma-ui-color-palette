@@ -67,7 +67,7 @@ const enableTrial = async () => {
               "Période de l'essai": {
                 date: {
                   start: date.toISOString(),
-                  end: new Date(date.getTime() + 259200000).toISOString(),
+                  end: new Date(date.getTime() + 604800000).toISOString(),
                 },
               },
             },

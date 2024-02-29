@@ -23,6 +23,11 @@ const exportCss = (palette: SceneNode, colorSpace: 'RGB' | 'LCH' | 'P3') => {
         `rgb(${Math.floor(shade.rgb[0])}, ${Math.floor(
           shade.rgb[1]
         )}, ${Math.floor(shade.rgb[2])})`,
+      HEX: () => shade.hex,
+      HSL: () =>
+        `hsl(${Math.floor(shade.hsl[0])} ${Math.floor(
+          shade.hsl[1]
+        )}% ${Math.floor(shade.hsl[2])}%)`,
       LCH: () =>
         `lch(${Math.floor(shade.lch[0])}% ${Math.floor(
           shade.lch[1]
@@ -31,7 +36,6 @@ const exportCss = (palette: SceneNode, colorSpace: 'RGB' | 'LCH' | 'P3') => {
         `color(display-p3 ${shade.gl[0].toFixed(3)} ${shade.gl[1].toFixed(
           3
         )} ${shade.gl[2].toFixed(3)})`,
-      HEX: () => shade.hex,
     }
 
     return actions[colorSpace ?? 'RGB']?.()

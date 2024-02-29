@@ -9,20 +9,20 @@ import type {
   ActionsList,
   HexModel,
   Language,
+  EditorType,
 } from '../../utils/types'
 import Dispatcher from './Dispatcher'
 import { Button } from '@a-ng-d/figmug.actions.button'
+import { Message } from '@a-ng-d/figmug.dialogs.message'
+import { SectionTitle } from '@a-ng-d/figmug.layouts.section-title'
 import ColorItem from '../components/ColorItem'
 import Actions from './Actions'
-import { Message } from '@a-ng-d/figmug.dialogs.message'
-import { texts } from '@a-ng-d/figmug.stylesheets.texts'
 import { locals } from '../../content/locals'
 import { uid } from 'uid'
 
 interface Props {
   colors: Array<ColorConfiguration>
-  actions: string
-  editorType: 'figma' | 'figjam'
+  editorType: EditorType
   planStatus: 'UNPAID' | 'PAID'
   lang: Language
   onChangeColors: (colors: Array<ColorConfiguration>) => void
@@ -329,18 +329,17 @@ export default class Colors extends React.Component<Props, any> {
     else if (e.pageY + scrollY > parentRefBottom) this.orderHandler()
   }
 
+  // Render
   render() {
     return (
       <div className="controls__control">
         <div className="control__block control__block--list">
           <div className="section-controls">
             <div className="section-controls__left-part">
-              <div className={`section-title ${texts['section-title']}`}>
-                {locals[this.props.lang].colors.title}
-                <div
-                  className={`type ${texts.type}`}
-                >{`(${this.props.colors.length})`}</div>
-              </div>
+              <SectionTitle
+                label={locals[this.props.lang].colors.title}
+                indicator={this.props.colors.length.toString()}
+              />
             </div>
             <div className="section-controls__right-part">
               <Button
@@ -415,7 +414,6 @@ export default class Colors extends React.Component<Props, any> {
         {this.props.editorType === 'figma' ? (
           <Actions
             context="DEPLOY"
-            actions={this.props.actions}
             planStatus={this.props.planStatus}
             lang={this.props.lang}
             onSyncLocalStyles={this.props.onSyncLocalStyles}

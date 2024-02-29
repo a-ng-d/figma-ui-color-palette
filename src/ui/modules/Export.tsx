@@ -2,12 +2,12 @@ import * as React from 'react'
 import type { ActionsList, Language } from '../../utils/types'
 import { Input } from '@a-ng-d/figmug.inputs.input'
 import { Dropdown } from '@a-ng-d/figmug.inputs.dropdown'
+import { SectionTitle } from '@a-ng-d/figmug.layouts.section-title'
+import { Menu } from '@a-ng-d/figmug.navigation.menu'
 import Actions from './Actions'
-import { texts } from '@a-ng-d/figmug.stylesheets.texts'
 import features from '../../utils/config'
 import isBlocked from '../../utils/isBlocked'
 import { locals } from '../../content/locals'
-import { Menu } from '@a-ng-d/figmug.navigation.menu'
 
 interface Props {
   exportPreview: string
@@ -19,6 +19,7 @@ interface Props {
 
 export default class Export extends React.Component<Props, any> {
   counter: number
+  codeRef: React.MutableRefObject<any>
 
   static defaultProps = {
     exportPreview: '',
@@ -34,6 +35,11 @@ export default class Export extends React.Component<Props, any> {
         options: [],
       },
     }
+    this.codeRef = React.createRef()
+  }
+
+  componentDidUpdate() {
+    this.codeRef.current.inputRef.current.scrollTop = 0
   }
 
   // Handlers
@@ -105,6 +111,9 @@ export default class Export extends React.Component<Props, any> {
                   (feature) => feature.name === 'EXPORT_CSS_RGB'
                 )?.isActive,
                 isBlocked: isBlocked('EXPORT_CSS_RGB', this.props.planStatus),
+                isNew: features.find(
+                  (feature) => feature.name === 'EXPORT_CSS_RGB'
+                )?.isNew,
                 children: [],
                 action: this.exportHandler,
               },
@@ -118,6 +127,25 @@ export default class Export extends React.Component<Props, any> {
                   (feature) => feature.name === 'EXPORT_CSS_HEX'
                 )?.isActive,
                 isBlocked: isBlocked('EXPORT_CSS_HEX', this.props.planStatus),
+                isNew: features.find(
+                  (feature) => feature.name === 'EXPORT_CSS_HEX'
+                )?.isNew,
+                children: [],
+                action: this.exportHandler,
+              },
+              {
+                label: locals[this.props.lang].export.colorSpace.hsl,
+                value: 'EXPORT_CSS_HSL',
+                feature: 'SELECT_COLOR_SPACE',
+                position: 2,
+                type: 'OPTION',
+                isActive: features.find(
+                  (feature) => feature.name === 'EXPORT_CSS_HSL'
+                )?.isActive,
+                isBlocked: isBlocked('EXPORT_CSS_HSL', this.props.planStatus),
+                isNew: features.find(
+                  (feature) => feature.name === 'EXPORT_CSS_HSL'
+                )?.isNew,
                 children: [],
                 action: this.exportHandler,
               },
@@ -125,12 +153,15 @@ export default class Export extends React.Component<Props, any> {
                 label: locals[this.props.lang].export.colorSpace.lch,
                 value: 'EXPORT_CSS_LCH',
                 feature: 'SELECT_COLOR_SPACE',
-                position: 2,
+                position: 3,
                 type: 'OPTION',
                 isActive: features.find(
                   (feature) => feature.name === 'EXPORT_CSS_LCH'
                 )?.isActive,
                 isBlocked: isBlocked('EXPORT_CSS_LCH', this.props.planStatus),
+                isNew: features.find(
+                  (feature) => feature.name === 'EXPORT_CSS_LCH'
+                )?.isNew,
                 children: [],
                 action: this.exportHandler,
               },
@@ -138,12 +169,15 @@ export default class Export extends React.Component<Props, any> {
                 label: locals[this.props.lang].export.colorSpace.p3,
                 value: 'EXPORT_CSS_P3',
                 feature: 'SELECT_COLOR_SPACE',
-                position: 3,
+                position: 4,
                 type: 'OPTION',
                 isActive: features.find(
                   (feature) => feature.name === 'EXPORT_CSS_P3'
                 )?.isActive,
                 isBlocked: isBlocked('EXPORT_CSS_P3', this.props.planStatus),
+                isNew: features.find(
+                  (feature) => feature.name === 'EXPORT_CSS_P3'
+                )?.isNew,
                 children: [],
                 action: this.exportHandler,
               },
@@ -174,6 +208,42 @@ export default class Export extends React.Component<Props, any> {
               type: 'EXPORT_PALETTE',
               export: 'CSS',
               colorSpace: 'RGB',
+            },
+          },
+          '*'
+        )
+      },
+      EXPORT_CSS_HEX: () => {
+        this.setState({
+          colorSpace: {
+            selected: 'HEX',
+            options: this.state['colorSpace'].options,
+          },
+        })
+        parent.postMessage(
+          {
+            pluginMessage: {
+              type: 'EXPORT_PALETTE',
+              export: 'CSS',
+              colorSpace: 'HEX',
+            },
+          },
+          '*'
+        )
+      },
+      EXPORT_CSS_HSL: () => {
+        this.setState({
+          colorSpace: {
+            selected: 'HSL',
+            options: this.state['colorSpace'].options,
+          },
+        })
+        parent.postMessage(
+          {
+            pluginMessage: {
+              type: 'EXPORT_PALETTE',
+              export: 'CSS',
+              colorSpace: 'HSL',
             },
           },
           '*'
@@ -210,24 +280,6 @@ export default class Export extends React.Component<Props, any> {
               type: 'EXPORT_PALETTE',
               export: 'CSS',
               colorSpace: 'P3',
-            },
-          },
-          '*'
-        )
-      },
-      EXPORT_CSS_HEX: () => {
-        this.setState({
-          colorSpace: {
-            selected: 'HEX',
-            options: this.state['colorSpace'].options,
-          },
-        })
-        parent.postMessage(
-          {
-            pluginMessage: {
-              type: 'EXPORT_PALETTE',
-              export: 'CSS',
-              colorSpace: 'HEX',
             },
           },
           '*'
@@ -330,10 +382,10 @@ export default class Export extends React.Component<Props, any> {
         <div className="control__block">
           <div className="section-controls">
             <div className="section-controls__left-part">
-              <div className={`section-title ${texts['section-title']}`}>
-                {locals[this.props.lang].export.format}
-                <div className={`type ${texts.type}`}>(10)</div>
-              </div>
+              <SectionTitle
+                label={locals[this.props.lang].export.format}
+                indicator="10"
+              />
             </div>
             <div className="section-controls__right-part">
               <Dropdown
@@ -352,6 +404,9 @@ export default class Export extends React.Component<Props, any> {
                       'EXPORT_TOKENS',
                       this.props.planStatus
                     ),
+                    isNew: features.find(
+                      (feature) => feature.name === 'EXPORT_TOKENS'
+                    )?.isNew,
                     children: [
                       {
                         label: locals[this.props.lang].export.tokens.global,
@@ -366,6 +421,9 @@ export default class Export extends React.Component<Props, any> {
                           'EXPORT_TOKENS_JSON',
                           this.props.planStatus
                         ),
+                        isNew: features.find(
+                          (feature) => feature.name === 'EXPORT_TOKENS_JSON'
+                        )?.isNew,
                         children: [],
                         action: this.exportHandler,
                       },
@@ -386,6 +444,11 @@ export default class Export extends React.Component<Props, any> {
                           'EXPORT_TOKENS_JSON_AMZN_STYLE_DICTIONARY',
                           this.props.planStatus
                         ),
+                        isNew: features.find(
+                          (feature) =>
+                            feature.name ===
+                            'EXPORT_TOKENS_JSON_AMZN_STYLE_DICTIONARY'
+                        )?.isNew,
                         children: [],
                         action: this.exportHandler,
                       },
@@ -404,6 +467,10 @@ export default class Export extends React.Component<Props, any> {
                           'EXPORT_TOKENS_JSON_TOKENS_STUDIO',
                           this.props.planStatus
                         ),
+                        isNew: features.find(
+                          (feature) =>
+                            feature.name === 'EXPORT_TOKENS_JSON_TOKENS_STUDIO'
+                        )?.isNew,
                         children: [],
                         action: this.exportHandler,
                       },
@@ -420,6 +487,9 @@ export default class Export extends React.Component<Props, any> {
                       (feature) => feature.name === 'EXPORT_CSS'
                     )?.isActive,
                     isBlocked: isBlocked('EXPORT_CSS', this.props.planStatus),
+                    isNew: features.find(
+                      (feature) => feature.name === 'EXPORT_CSS'
+                    )?.isNew,
                     children: [],
                     action: this.exportHandler,
                   },
@@ -436,6 +506,9 @@ export default class Export extends React.Component<Props, any> {
                       'EXPORT_TAILWIND',
                       this.props.planStatus
                     ),
+                    isNew: features.find(
+                      (feature) => feature.name === 'EXPORT_TAILWIND'
+                    )?.isNew,
                     children: [],
                     action: this.exportHandler,
                   },
@@ -449,7 +522,9 @@ export default class Export extends React.Component<Props, any> {
                       (feature) => feature.name === 'EXPORT_APPLE'
                     )?.isActive,
                     isBlocked: isBlocked('EXPORT_APPLE', this.props.planStatus),
-                    isNew: true,
+                    isNew: features.find(
+                      (feature) => feature.name === 'EXPORT_APPLE'
+                    )?.isNew,
                     children: [
                       {
                         label: locals[this.props.lang].export.apple.swiftui,
@@ -464,6 +539,9 @@ export default class Export extends React.Component<Props, any> {
                           'EXPORT_APPLE_SWIFTUI',
                           this.props.planStatus
                         ),
+                        isNew: features.find(
+                          (feature) => feature.name === 'EXPORT_APPLE_SWIFTUI'
+                        )?.isNew,
                         children: [],
                         action: this.exportHandler,
                       },
@@ -480,6 +558,9 @@ export default class Export extends React.Component<Props, any> {
                           'EXPORT_APPLE_UIKIT',
                           this.props.planStatus
                         ),
+                        isNew: features.find(
+                          (feature) => feature.name === 'EXPORT_APPLE_UIKIT'
+                        )?.isNew,
                         children: [],
                         action: this.exportHandler,
                       },
@@ -499,7 +580,9 @@ export default class Export extends React.Component<Props, any> {
                       'EXPORT_ANDROID',
                       this.props.planStatus
                     ),
-                    isNew: true,
+                    isNew: features.find(
+                      (feature) => feature.name === 'EXPORT_ANDROID'
+                    )?.isNew,
                     children: [
                       {
                         label: locals[this.props.lang].export.android.compose,
@@ -514,6 +597,9 @@ export default class Export extends React.Component<Props, any> {
                           'EXPORT_ANDROID_COMPOSE',
                           this.props.planStatus
                         ),
+                        isNew: features.find(
+                          (feature) => feature.name === 'EXPORT_ANDROID_COMPOSE'
+                        )?.isNew,
                         children: [],
                         action: this.exportHandler,
                       },
@@ -530,6 +616,9 @@ export default class Export extends React.Component<Props, any> {
                           'EXPORT_ANDROID_XML',
                           this.props.planStatus
                         ),
+                        isNew: features.find(
+                          (feature) => feature.name === 'EXPORT_ANDROID_XML'
+                        )?.isNew,
                         children: [],
                         action: this.exportHandler,
                       },
@@ -546,6 +635,9 @@ export default class Export extends React.Component<Props, any> {
                       (feature) => feature.name === 'EXPORT_CSV'
                     )?.isActive,
                     isBlocked: isBlocked('EXPORT_CSV', this.props.planStatus),
+                    isNew: features.find(
+                      (feature) => feature.name === 'EXPORT_CSV'
+                    )?.isNew,
                     children: [],
                     action: this.exportHandler,
                   },
@@ -570,6 +662,7 @@ export default class Export extends React.Component<Props, any> {
               id="code-snippet-dragging"
               type="CODE"
               value={this.props.exportPreview}
+              ref={this.codeRef}
             />
           </div>
         </div>

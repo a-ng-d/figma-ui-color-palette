@@ -20,12 +20,16 @@ import type {
   ThemeConfiguration,
   TrialStatus,
   ViewConfiguration,
+  ThirdParty,
+  ExtractOfPaletteConfiguration,
 } from '../utils/types'
 import Dispatcher from './modules/Dispatcher'
 import Feature from './components/Feature'
 import CreatePalette from './services/CreatePalette'
 import EditPalette from './services/EditPalette'
+import TransferPalette from './services/TransferPalette'
 import PriorityContainer from './modules/PriorityContainer'
+import PalettesList from './modules/PalettesList'
 import Shortcuts from './modules/Shortcuts'
 import { palette, presets } from '../utils/palettePackage'
 import doLightnessScale from '../utils/doLightnessScale'
@@ -92,10 +96,11 @@ class App extends React.Component<any, any> {
         mimeType: '',
         data: '',
       },
+      palettesList: [] as Array<ExtractOfPaletteConfiguration>,
       editorType: 'figma' as EditorType,
       planStatus: 'UNPAID' as PlanStatus,
       trialStatus: 'UNUSED' as TrialStatus,
-      trialRemainingTime: 72,
+      trialRemainingTime: 168,
       lang: 'en-US' as Language,
       priorityContainerContext: 'EMPTY' as PriorityContext,
       isLoaded: false,
@@ -107,16 +112,17 @@ class App extends React.Component<any, any> {
     setTimeout(() => this.setState({ isLoaded: true }), 1000)
 
   // Handlers
-  colorsFromCoolorsHandler = (
-    sourceColorsFromCoolers: Array<SourceColorConfiguration>
+  colorsFromImportHandler = (
+    sourceColorsFromImport: Array<SourceColorConfiguration>,
+    source: ThirdParty
   ) => {
     this.setState({
       sourceColors: this.state['sourceColors']
         .filter(
           (sourceColors: SourceColorConfiguration) =>
-            sourceColors.source != 'COOLORS'
+            sourceColors.source != source
         )
-        .concat(sourceColorsFromCoolers),
+        .concat(sourceColorsFromImport),
     })
   }
 
@@ -574,7 +580,10 @@ class App extends React.Component<any, any> {
             '*'
           )
           this.setState({
-            service: 'EDIT',
+            service:
+              e.data.pluginMessage.data.editorType != 'dev'
+                ? 'EDIT'
+                : 'TRANSFER',
             sourceColors: [],
             name: e.data.pluginMessage.data.name,
             description: e.data.pluginMessage.data.description,
@@ -717,6 +726,11 @@ class App extends React.Component<any, any> {
             onGoingStep: 'export previewed',
           })
 
+        const exposePalettes = (data: Array<ExtractOfPaletteConfiguration>) =>
+          this.setState({
+            palettesList: data,
+          })
+
         const getProPlan = () =>
           this.setState({
             planStatus: e.data.pluginMessage.data,
@@ -745,6 +759,7 @@ class App extends React.Component<any, any> {
           EXPORT_PALETTE_KT: () => exportPaletteToKt(),
           EXPORT_PALETTE_XML: () => exportPaletteToXml(),
           EXPORT_PALETTE_CSV: () => exportPaletteToCsv(),
+          EXPOSE_PALETTES: () => exposePalettes(e.data.pluginMessage?.data),
           GET_PRO_PLAN: () => getProPlan(),
           ENABLE_TRIAL: () => enableTrial(),
           DEFAULT: () => null,
@@ -761,57 +776,93 @@ class App extends React.Component<any, any> {
         <main className="ui">
           <Feature
             isActive={
-              features.find((feature) => feature.name === 'CREATE')?.isActive
+              features.find((feature) => feature.name === 'CREATE')?.isActive &&
+              this.state['editorType'] != 'dev' &&
+              this.state['service'] === 'CREATE'
             }
           >
-            {this.state['service'] === 'CREATE' ? (
-              <CreatePalette
-                sourceColors={this.state['sourceColors']}
-                name={this.state['name']}
-                description={this.state['description']}
-                preset={this.state['preset']}
-                colorSpace={this.state['colorSpace']}
-                visionSimulationMode={this.state['visionSimulationMode']}
-                view={this.state['view']}
-                textColorsTheme={this.state['textColorsTheme']}
-                planStatus={this.state['planStatus']}
-                lang={this.state['lang']}
-                onChangeColorsFromCoolors={this.colorsFromCoolorsHandler}
-                onChangePreset={this.presetsHandler}
-                onCustomPreset={this.customHandler}
-                onChangeSettings={this.settingsHandler}
-              />
-            ) : null}
+            <CreatePalette
+              sourceColors={this.state['sourceColors']}
+              name={this.state['name']}
+              description={this.state['description']}
+              preset={this.state['preset']}
+              colorSpace={this.state['colorSpace']}
+              visionSimulationMode={this.state['visionSimulationMode']}
+              view={this.state['view']}
+              textColorsTheme={this.state['textColorsTheme']}
+              planStatus={this.state['planStatus']}
+              lang={this.state['lang']}
+              onChangeColorsFromImport={this.colorsFromImportHandler}
+              onChangePreset={this.presetsHandler}
+              onCustomPreset={this.customHandler}
+              onChangeSettings={this.settingsHandler}
+            />
           </Feature>
           <Feature
             isActive={
-              features.find((feature) => feature.name === 'EDIT')?.isActive
+              features.find((feature) => feature.name === 'EDIT')?.isActive &&
+              this.state['editorType'] != 'dev' &&
+              this.state['service'] === 'EDIT'
             }
           >
-            {this.state['service'] === 'EDIT' ? (
-              <EditPalette
-                name={this.state['name']}
-                description={this.state['description']}
-                preset={this.state['preset']}
-                scale={this.state['scale']}
-                colors={this.state['newColors']}
-                colorSpace={this.state['colorSpace']}
-                visionSimulationMode={this.state['visionSimulationMode']}
-                themes={this.state['themes']}
-                view={this.state['view']}
-                textColorsTheme={this.state['textColorsTheme']}
-                algorithmVersion={this.state['algorithmVersion']}
-                export={this.state['export']}
-                editorType={this.state['editorType']}
-                planStatus={this.state['planStatus']}
-                lang={this.state['lang']}
-                onChangeScale={this.slideHandler}
-                onChangeStop={this.customSlideHandler}
-                onChangeColors={this.colorsHandler}
-                onChangeThemes={this.themesHandler}
-                onChangeSettings={this.settingsHandler}
-              />
-            ) : null}
+            <EditPalette
+              name={this.state['name']}
+              description={this.state['description']}
+              preset={this.state['preset']}
+              scale={this.state['scale']}
+              colors={this.state['newColors']}
+              colorSpace={this.state['colorSpace']}
+              visionSimulationMode={this.state['visionSimulationMode']}
+              themes={this.state['themes']}
+              view={this.state['view']}
+              textColorsTheme={this.state['textColorsTheme']}
+              algorithmVersion={this.state['algorithmVersion']}
+              export={this.state['export']}
+              editorType={this.state['editorType']}
+              planStatus={this.state['planStatus']}
+              lang={this.state['lang']}
+              onChangeScale={this.slideHandler}
+              onChangeStop={this.customSlideHandler}
+              onChangeColors={this.colorsHandler}
+              onChangeThemes={this.themesHandler}
+              onChangeSettings={this.settingsHandler}
+            />
+          </Feature>
+          <Feature
+            isActive={
+              features.find((feature) => feature.name === 'TRANSFER')
+                ?.isActive && this.state['service'] === 'TRANSFER'
+            }
+          >
+            <TransferPalette
+              name={this.state['name']}
+              description={this.state['description']}
+              preset={this.state['preset']}
+              scale={this.state['scale']}
+              colors={this.state['newColors']}
+              colorSpace={this.state['colorSpace']}
+              visionSimulationMode={this.state['visionSimulationMode']}
+              themes={this.state['themes']}
+              view={this.state['view']}
+              textColorsTheme={this.state['textColorsTheme']}
+              algorithmVersion={this.state['algorithmVersion']}
+              export={this.state['export']}
+              editorType={this.state['editorType']}
+              planStatus={this.state['planStatus']}
+              lang={this.state['lang']}
+            />
+          </Feature>
+          <Feature
+            isActive={
+              features.find((feature) => feature.name === 'BROWSE')?.isActive &&
+              this.state['service'] === 'CREATE' &&
+              this.state['editorType'] === 'dev'
+            }
+          >
+            <PalettesList
+              paletteLists={this.state['palettesList']}
+              lang={this.state['lang']}
+            />
           </Feature>
           <PriorityContainer
             context={this.state['priorityContainerContext']}
@@ -826,6 +877,7 @@ class App extends React.Component<any, any> {
             }
           >
             <Shortcuts
+              editorType={this.state['editorType']}
               planStatus={this.state['planStatus']}
               trialStatus={this.state['trialStatus']}
               trialRemainingTime={this.state['trialRemainingTime']}
