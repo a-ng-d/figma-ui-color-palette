@@ -28,6 +28,7 @@
       
     ]
   },
+  "documentAccess": "dynamic-page",
   "parameters": [
     {
       "name": "Preset",
