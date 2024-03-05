@@ -47,11 +47,11 @@ const loadParameters = ({ key, result }: ParameterInputEvent) => {
 
     case 'view': {
       const suggestionsList = [
-        isAvailableAndBlocked('VIEWS_PALETTE', 'Palette'),
         isAvailableAndBlocked(
           'VIEWS_PALETTE_WITH_PROPERTIES',
           'Palette with properties'
         ),
+        isAvailableAndBlocked('VIEWS_PALETTE', 'Palette'),
         isAvailableAndBlocked('VIEWS_SHEET', 'Color sheet'),
       ].filter((n) => n) as Array<string>
 
