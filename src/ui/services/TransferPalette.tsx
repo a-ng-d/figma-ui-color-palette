@@ -11,6 +11,7 @@ import type {
   Language,
   EditorType,
   visionSimulationModeConfiguration,
+  PlanStatus,
 } from '../../utils/types'
 import Feature from '../components/Feature'
 import { Bar } from '@a-ng-d/figmug.layouts.bar'
@@ -33,12 +34,16 @@ interface Props {
   textColorsTheme: TextColorsThemeHexModel
   algorithmVersion: string
   export: ExportConfiguration
-  planStatus: 'UNPAID' | 'PAID'
+  planStatus: PlanStatus
   editorType: EditorType
   lang: Language
 }
 
-export default class TransferPalette extends React.Component<Props, any> {
+interface State {
+  context: string | undefined
+}
+
+export default class TransferPalette extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props)
     this.state = {
@@ -79,7 +84,7 @@ export default class TransferPalette extends React.Component<Props, any> {
       )
       zip
         .generateAsync({ type: 'blob' })
-        .then((content: any) =>
+        .then((content) =>
           FileSaver.saveAs(
             content,
             this.props.name === ''
@@ -87,7 +92,7 @@ export default class TransferPalette extends React.Component<Props, any> {
               : doSnakeCase(this.props.name)
           )
         )
-        .catch((error: any) => console.error(error))
+        .catch((error) => console.error(error))
     } else if (this.props.export.format === 'TAILWIND') {
       FileSaver.saveAs(blob, 'tailwind.config.js')
     } else if (this.props.export.format === 'SWIFT') {
@@ -163,7 +168,7 @@ export default class TransferPalette extends React.Component<Props, any> {
             leftPart={
               <Tabs
                 tabs={this.setContexts()}
-                active={this.state['context']}
+                active={this.state['context'] ?? ''}
                 action={this.navHandler}
               />
             }

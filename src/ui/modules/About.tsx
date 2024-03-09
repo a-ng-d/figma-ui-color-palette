@@ -1,5 +1,5 @@
 import * as React from 'react'
-import type { Language, TrialStatus } from '../../utils/types'
+import type { Language, PlanStatus, TrialStatus } from '../../utils/types'
 import Feature from '../components/Feature'
 import Icon from './Icon'
 import { texts } from '@a-ng-d/figmug.stylesheets.texts'
@@ -8,7 +8,7 @@ import package_json from './../../../package.json'
 import { locals } from '../../content/locals'
 
 interface Props {
-  planStatus: 'UNPAID' | 'PAID'
+  planStatus: PlanStatus
   trialStatus: TrialStatus
   lang: Language
 }

@@ -12,6 +12,7 @@ import type {
   Language,
   EditorType,
   visionSimulationModeConfiguration,
+  PlanStatus,
 } from '../../utils/types'
 import type { DropdownOption } from '@a-ng-d/figmug.modules.types'
 import Feature from '../components/Feature'
@@ -42,7 +43,7 @@ interface Props {
   textColorsTheme: TextColorsThemeHexModel
   algorithmVersion: string
   export: ExportConfiguration
-  planStatus: 'UNPAID' | 'PAID'
+  planStatus: PlanStatus
   editorType: EditorType
   lang: Language
   onChangeScale: () => void
@@ -52,13 +53,22 @@ interface Props {
   onChangeSettings: React.ChangeEventHandler
 }
 
+interface State {
+  context: string | undefined
+  selectedElement: {
+    id: string
+    position: number | null
+  }
+  deploymentAction: string | undefined
+}
+
 const themesMessage: ThemesMessage = {
   type: 'UPDATE_THEMES',
   data: [],
   isEditedInRealTime: false,
 }
 
-export default class EditPalette extends React.Component<Props, any> {
+export default class EditPalette extends React.Component<Props, State> {
   themesRef: React.MutableRefObject<any>
 
   constructor(props: Props) {
@@ -66,6 +76,11 @@ export default class EditPalette extends React.Component<Props, any> {
     this.state = {
       context:
         this.setContexts()[0] != undefined ? this.setContexts()[0].id : '',
+      selectedElement: {
+        id: '',
+        position: null,
+      },
+      deploymentAction: undefined,
     }
     this.themesRef = React.createRef()
   }
@@ -136,7 +151,7 @@ export default class EditPalette extends React.Component<Props, any> {
       )
       zip
         .generateAsync({ type: 'blob' })
-        .then((content: any) =>
+        .then((content) =>
           FileSaver.saveAs(
             content,
             this.props.name === ''
@@ -144,7 +159,7 @@ export default class EditPalette extends React.Component<Props, any> {
               : doSnakeCase(this.props.name)
           )
         )
-        .catch((error: any) => console.error(error))
+        .catch((error) => console.error(error))
     } else if (this.props.export.format === 'TAILWIND') {
       FileSaver.saveAs(blob, 'tailwind.config.js')
     } else if (this.props.export.format === 'SWIFT') {
@@ -231,7 +246,9 @@ export default class EditPalette extends React.Component<Props, any> {
         isActive: true,
         isBlocked: false,
         children: [],
-        action: (e: any) => this.switchThemeHandler(e),
+        action: (
+          e: React.MouseEvent<HTMLLIElement, MouseEvent> | React.KeyboardEvent
+        ) => this.switchThemeHandler(e),
       } as DropdownOption
     })
     const actions: Array<DropdownOption> = [
@@ -259,7 +276,7 @@ export default class EditPalette extends React.Component<Props, any> {
         children: [],
         action: () => {
           this.setState({ context: 'THEMES' })
-          setTimeout(() => this.themesRef.current.onAddTheme(), 1)
+          setTimeout(() => this.themesRef.current?.onAddTheme(), 1)
         },
       },
     ]
@@ -391,7 +408,7 @@ export default class EditPalette extends React.Component<Props, any> {
           leftPart={
             <Tabs
               tabs={this.setContexts()}
-              active={this.state['context']}
+              active={this.state['context'] ?? ''}
               action={this.navHandler}
             />
           }

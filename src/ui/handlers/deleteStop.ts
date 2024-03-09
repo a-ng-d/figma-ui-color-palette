@@ -26,6 +26,8 @@ const deleteStop = (
     ),
     min: presetMin,
     max: presetMax,
+    isDistributed: false,
+    id: '',
   }
 }
 

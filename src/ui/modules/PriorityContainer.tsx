@@ -1,5 +1,10 @@
 import * as React from 'react'
-import type { Language, PriorityContext, TrialStatus } from '../../utils/types'
+import type {
+  Language,
+  PlanStatus,
+  PriorityContext,
+  TrialStatus,
+} from '../../utils/types'
 import Feature from '../components/Feature'
 import { Dialog } from '@a-ng-d/figmug.dialogs.dialog'
 import Highlight from './Highlight'
@@ -14,13 +19,13 @@ import package_json from '../../../package.json'
 
 interface Props {
   context: PriorityContext
-  planStatus: 'PAID' | 'UNPAID'
+  planStatus: PlanStatus
   trialStatus: TrialStatus
   lang: Language
   onClose: React.ChangeEventHandler & (() => void)
 }
 
-export default class PriorityContainer extends React.Component<Props, any> {
+export default class PriorityContainer extends React.Component<Props> {
   // Templates
   TryPro = () => {
     return (

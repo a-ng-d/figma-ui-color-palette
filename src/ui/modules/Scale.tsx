@@ -4,6 +4,7 @@ import type {
   DispatchProcess,
   EditorType,
   Language,
+  PlanStatus,
   PresetConfiguration,
   ScaleConfiguration,
   SourceColorConfiguration,
@@ -29,7 +30,7 @@ interface Props {
   preset: PresetConfiguration
   scale?: ScaleConfiguration
   actions?: string
-  planStatus: 'UNPAID' | 'PAID'
+  planStatus: PlanStatus
   editorType?: EditorType
   lang: Language
   onChangePreset?: (
@@ -45,7 +46,7 @@ interface Props {
   onChangeActions?: (value: string) => void | undefined
 }
 
-export default class Scale extends React.Component<Props, any> {
+export default class Scale extends React.Component<Props> {
   dispatch: { [key: string]: DispatchProcess }
 
   constructor(props: Props) {

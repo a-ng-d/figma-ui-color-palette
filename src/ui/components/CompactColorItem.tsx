@@ -12,7 +12,7 @@ interface Props {
   onRemoveColor?: React.ReactEventHandler
 }
 
-export default class CompactColorItem extends React.Component<Props, any> {
+export default class CompactColorItem extends React.Component<Props> {
   static defaultProps = {
     canBeRemoved: false,
   }
