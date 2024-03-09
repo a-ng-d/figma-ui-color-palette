@@ -10,6 +10,7 @@ import type {
   HexModel,
   Language,
   EditorType,
+  PlanStatus,
 } from '../../utils/types'
 import Dispatcher from './Dispatcher'
 import { Button } from '@a-ng-d/figmug.actions.button'
@@ -23,12 +24,17 @@ import { uid } from 'uid'
 interface Props {
   colors: Array<ColorConfiguration>
   editorType: EditorType
-  planStatus: 'UNPAID' | 'PAID'
+  planStatus: PlanStatus
   lang: Language
   onChangeColors: (colors: Array<ColorConfiguration>) => void
   onSyncLocalStyles: () => void
   onSyncLocalVariables: () => void
   onChangeActions: (value: string) => void
+}
+
+interface State {
+  selectedElement: SelectedColor
+  hoveredElement: HoveredColor
 }
 
 const colorsMessage: ColorsMessage = {
@@ -37,7 +43,7 @@ const colorsMessage: ColorsMessage = {
   isEditedInRealTime: false,
 }
 
-export default class Colors extends React.Component<Props, any> {
+export default class Colors extends React.Component<Props, State> {
   dispatch: { [key: string]: DispatchProcess }
   listRef: React.MutableRefObject<any>
 
@@ -51,14 +57,14 @@ export default class Colors extends React.Component<Props, any> {
     }
     this.state = {
       selectedElement: {
-        id: '',
-        position: null,
+        id: undefined,
+        position: 0,
       },
       hoveredElement: {
-        id: '',
+        id: undefined,
         hasGuideAbove: false,
         hasGuideBelow: false,
-        position: null,
+        position: 0,
       },
     }
     this.listRef = React.createRef()
@@ -76,8 +82,8 @@ export default class Colors extends React.Component<Props, any> {
       if (this.listRef && !this.listRef.current.contains(e.target))
         this.setState({
           selectedElement: {
-            id: '',
-            position: null,
+            id: undefined,
+            position: 0,
           },
         })
   }
@@ -288,13 +294,15 @@ export default class Colors extends React.Component<Props, any> {
     )
   }
 
-  selectionHandler = (e: any) => {
-    const target = e.currentTarget
-    if (e.target.dataset.feature != undefined) return
+  selectionHandler: React.MouseEventHandler<HTMLLIElement> &
+    React.MouseEventHandler<Element> &
+    React.FocusEventHandler<HTMLInputElement> = (e) => {
+    const target = e.currentTarget as HTMLElement
+    if ((e.target as HTMLElement).dataset.feature != undefined) return
     this.setState({
       selectedElement: {
         id: target.dataset.id,
-        position: target.dataset.position,
+        position: parseFloat(target.dataset.position ?? '0'),
       },
     })
   }
@@ -303,7 +311,7 @@ export default class Colors extends React.Component<Props, any> {
     id: string | undefined,
     hasGuideAbove: boolean,
     hasGuideBelow: boolean,
-    position: number | string
+    position: number
   ) => {
     this.setState({
       hoveredElement: {
@@ -401,8 +409,8 @@ export default class Colors extends React.Component<Props, any> {
                   }
                   lang={this.props.lang}
                   onChangeColors={(e) => this.colorsHandler(e)}
-                  onChangeSelection={(e) => this.selectionHandler(e)}
-                  onCancellationSelection={(e) => this.selectionHandler(e)}
+                  onChangeSelection={this.selectionHandler}
+                  onCancellationSelection={this.selectionHandler}
                   onDragChange={this.dragHandler}
                   onDropOutside={(e) => this.dropOutsideHandler(e)}
                   onChangeOrder={this.orderHandler}

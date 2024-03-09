@@ -6,6 +6,7 @@ import type {
   SourceColorConfiguration,
   TextColorsThemeHexModel,
   ThirdParty,
+  PlanStatus,
 } from '../../utils/types'
 import { Bar } from '@a-ng-d/figmug.layouts.bar'
 import { Tabs } from '@a-ng-d/figmug.actions.tabs'
@@ -26,7 +27,7 @@ interface Props {
   visionSimulationMode: visionSimulationModeConfiguration
   view: string
   textColorsTheme: TextColorsThemeHexModel
-  planStatus: 'UNPAID' | 'PAID'
+  planStatus: PlanStatus
   lang: Language
   onChangeColorsFromImport: (
     sourceColorsFromImport: Array<SourceColorConfiguration>,
@@ -39,13 +40,16 @@ interface Props {
   onChangeSettings: (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => void
 }
 
-export default class CreatePalette extends React.Component<Props, any> {
+interface State {
+  context: string | undefined
+}
+
+export default class CreatePalette extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props)
     this.state = {
       context:
         this.setContexts()[0] != undefined ? this.setContexts()[0].id : '',
-      coolorsUrl: '',
     }
   }
 
@@ -168,7 +172,7 @@ export default class CreatePalette extends React.Component<Props, any> {
           leftPart={
             <Tabs
               tabs={this.setContexts()}
-              active={this.state['context']}
+              active={this.state['context'] ?? ''}
               action={this.navHandler}
             />
           }

@@ -6,6 +6,8 @@ import type {
   Language,
   SourceColorConfiguration,
   ThirdParty,
+  ImportUrl,
+  PlanStatus,
 } from '../../utils/types'
 import Feature from '../components/Feature'
 import { Message } from '@a-ng-d/figmug.dialogs.message'
@@ -22,7 +24,7 @@ import { locals } from '../../content/locals'
 
 interface Props {
   sourceColors: Array<SourceColorConfiguration>
-  planStatus: 'UNPAID' | 'PAID'
+  planStatus: PlanStatus
   editorType?: EditorType
   lang: Language
   onChangeColorsFromImport: (
@@ -32,7 +34,14 @@ interface Props {
   onCreatePalette: () => void
 }
 
-export default class Source extends React.Component<Props, any> {
+interface State {
+  coolorsUrl: ImportUrl
+  realtimeColorsUrl: ImportUrl
+  isCoolorsImportOpen: boolean
+  isRealtimeColorsImportOpen: boolean
+}
+
+export default class Source extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props)
     this.state = {
@@ -66,13 +75,13 @@ export default class Source extends React.Component<Props, any> {
 
   // Handlers
   isTypingCoolorsUrlHandler = (e: React.SyntheticEvent) =>
-    this.setState((state: any) => ({
+    this.setState((state) => ({
       coolorsUrl: {
         value: (e.target as HTMLInputElement).value,
         state: !(e.target as HTMLInputElement).value.includes(
           'https://coolors.co'
         )
-          ? ''
+          ? 'DEFAULT'
           : state['coolorsUrl'].state,
         canBeSubmitted: (e.target as HTMLInputElement).value.includes(
           'https://coolors.co'
@@ -91,13 +100,13 @@ export default class Source extends React.Component<Props, any> {
     }))
 
   isTypingRealtimeColorsUrlHandler = (e: React.SyntheticEvent) =>
-    this.setState((state: any) => ({
+    this.setState((state) => ({
       realtimeColorsUrl: {
         value: (e.target as HTMLInputElement).value,
         state: !(e.target as HTMLInputElement).value.includes(
           'https://www.realtimecolors.com'
         )
-          ? ''
+          ? 'DEFAULT'
           : state['realtimeColorsUrl'].state,
         canBeSubmitted: (e.target as HTMLInputElement).value.includes(
           'https://www.realtimecolors.com'

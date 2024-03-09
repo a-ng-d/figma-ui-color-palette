@@ -24,14 +24,20 @@ interface Props {
 
 export default class Slider extends React.Component<Props> {
   // Handlers
-  validHandler = (stopId: string, e: any) => {
-    if (e.target.value != '') {
+  validHandler = (
+    stopId: string,
+    e:
+      | React.FocusEvent<HTMLInputElement, Element>
+      | React.KeyboardEvent<HTMLInputElement>
+  ) => {
+    const target = e.target as HTMLInputElement
+    if (target.value != '') {
       palette.scale = this.props.scale ?? {}
-      if (parseFloat(e.target.value) < parseFloat(e.target.min))
-        palette.scale[`lightness-${stopId}`] = parseFloat(e.target.min)
-      else if (parseFloat(e.target.value) > parseFloat(e.target.max))
-        palette.scale[`lightness-${stopId}`] = parseFloat(e.target.max)
-      else palette.scale[`lightness-${stopId}`] = parseFloat(e.target.value)
+      if (parseFloat(target.value) < parseFloat(target.min))
+        palette.scale[`lightness-${stopId}`] = parseFloat(target.min)
+      else if (parseFloat(target.value) > parseFloat(target.max))
+        palette.scale[`lightness-${stopId}`] = parseFloat(target.max)
+      else palette.scale[`lightness-${stopId}`] = parseFloat(target.value)
       this.props.onChange('TYPED')
     }
   }

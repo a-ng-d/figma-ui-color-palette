@@ -6,6 +6,7 @@ import type {
   HexModel,
   HoveredColor,
   Language,
+  PlanStatus,
   PresetConfiguration,
   ScaleConfiguration,
   SelectedColor,
@@ -27,7 +28,7 @@ interface Props {
   preset: PresetConfiguration
   scale: ScaleConfiguration
   themes: Array<ThemeConfiguration>
-  planStatus: 'UNPAID' | 'PAID'
+  planStatus: PlanStatus
   editorType: EditorType
   lang: Language
   onChangeThemes: (themes: Array<ThemeConfiguration>) => void
@@ -36,15 +37,20 @@ interface Props {
   onChangeActions: (value: string) => void
 }
 
+interface State {
+  selectedElement: SelectedColor
+  hoveredElement: HoveredColor
+}
+
 const themesMessage: ThemesMessage = {
   type: 'UPDATE_THEMES',
   data: [],
   isEditedInRealTime: false,
 }
 
-export default class Themes extends React.Component<Props, any> {
+export default class Themes extends React.Component<Props, State> {
   dispatch: { [key: string]: DispatchProcess }
-  listRef: any
+  listRef: React.MutableRefObject<any>
 
   constructor(props: Props) {
     super(props)
@@ -56,14 +62,14 @@ export default class Themes extends React.Component<Props, any> {
     }
     this.state = {
       selectedElement: {
-        id: '',
-        position: null,
+        id: undefined,
+        position: 0,
       },
       hoveredElement: {
-        id: '',
+        id: undefined,
         hasGuideAbove: false,
         hasGuideBelow: false,
-        position: null,
+        position: 0,
       },
     }
     this.listRef = React.createRef()
@@ -81,8 +87,8 @@ export default class Themes extends React.Component<Props, any> {
       if (this.listRef && !this.listRef.current.contains(e.target))
         this.setState({
           selectedElement: {
-            id: '',
-            position: null,
+            id: undefined,
+            position: 0,
           },
         })
   }
@@ -205,7 +211,7 @@ export default class Themes extends React.Component<Props, any> {
       target: HoveredColor = this.state['hoveredElement'],
       colors = this.props.themes.map((el) => el)
 
-    let position: number
+    let position: number | undefined
 
     const colorsWithoutSource = colors.splice(source.position, 1)[0]
 
@@ -233,13 +239,15 @@ export default class Themes extends React.Component<Props, any> {
     )
   }
 
-  selectionHandler = (e: any) => {
-    const target = e.currentTarget
-    if (e.target.dataset.feature != undefined) return
+  selectionHandler: React.MouseEventHandler<HTMLLIElement> &
+    React.MouseEventHandler<Element> &
+    React.FocusEventHandler<HTMLInputElement> = (e) => {
+    const target = e.currentTarget as HTMLElement
+    if ((e.target as HTMLElement).dataset.feature != undefined) return
     this.setState({
       selectedElement: {
         id: target.dataset.id,
-        position: target.dataset.position,
+        position: parseFloat(target.dataset.position ?? '0'),
       },
     })
   }
@@ -248,7 +256,7 @@ export default class Themes extends React.Component<Props, any> {
     id: string | undefined,
     hasGuideAbove: boolean,
     hasGuideBelow: boolean,
-    position: number | string
+    position: number
   ) => {
     this.setState({
       hoveredElement: {

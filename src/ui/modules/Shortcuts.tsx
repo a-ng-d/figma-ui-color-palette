@@ -1,5 +1,10 @@
 import * as React from 'react'
-import type { EditorType, Language, TrialStatus } from '../../utils/types'
+import type {
+  EditorType,
+  Language,
+  PlanStatus,
+  TrialStatus,
+} from '../../utils/types'
 import Feature from '../components/Feature'
 import { Bar } from '@a-ng-d/figmug.layouts.bar'
 import { Button } from '@a-ng-d/figmug.actions.button'
@@ -12,7 +17,7 @@ import isBlocked from '../../utils/isBlocked'
 
 interface Props {
   editorType: EditorType
-  planStatus: 'UNPAID' | 'PAID'
+  planStatus: PlanStatus
   trialStatus: TrialStatus
   trialRemainingTime: number
   lang: Language
@@ -23,7 +28,11 @@ interface Props {
   onGetProPlan: () => void
 }
 
-export default class Shortcuts extends React.Component<Props, any> {
+interface State {
+  canBeResized: boolean
+}
+
+export default class Shortcuts extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props)
     this.state = {
@@ -312,7 +321,7 @@ export default class Shortcuts extends React.Component<Props, any> {
                 <div
                   style={{
                     width: '32px',
-                    height: '32px'
+                    height: '32px',
                   }}
                 ></div>
               ) : null}

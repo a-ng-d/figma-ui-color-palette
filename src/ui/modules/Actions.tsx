@@ -1,5 +1,9 @@
 import * as React from 'react'
-import type { Language, SourceColorConfiguration } from '../../utils/types'
+import type {
+  Language,
+  PlanStatus,
+  SourceColorConfiguration,
+} from '../../utils/types'
 import Feature from '../components/Feature'
 import { Button } from '@a-ng-d/figmug.actions.button'
 import { Menu } from '@a-ng-d/figmug.navigation.menu'
@@ -12,7 +16,7 @@ interface Props {
   context: string
   sourceColors: Array<SourceColorConfiguration> | []
   exportType?: string
-  planStatus?: 'UNPAID' | 'PAID'
+  planStatus?: PlanStatus
   lang: Language
   onCreatePalette?: React.MouseEventHandler & React.KeyboardEventHandler
   onSyncLocalStyles?: React.MouseEventHandler & React.KeyboardEventHandler

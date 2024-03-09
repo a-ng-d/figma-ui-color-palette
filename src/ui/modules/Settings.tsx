@@ -5,6 +5,7 @@ import type {
   Language,
   SourceColorConfiguration,
   TextColorsThemeHexModel,
+  PlanStatus,
 } from '../../utils/types'
 import Feature from '../components/Feature'
 import { FormItem } from '@a-ng-d/figmug.layouts.form-item'
@@ -28,7 +29,7 @@ interface Props {
   visionSimulationMode: visionSimulationModeConfiguration
   view: string
   isNewAlgorithm?: boolean
-  planStatus: 'UNPAID' | 'PAID'
+  planStatus: PlanStatus
   editorType?: EditorType
   lang: Language
   onChangeSettings: React.ReactEventHandler
