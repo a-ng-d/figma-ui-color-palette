@@ -40,11 +40,11 @@ interface Props {
   onChangeSettings: (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => void
 }
 
-interface State {
+interface States {
   context: string | undefined
 }
 
-export default class CreatePalette extends React.Component<Props, State> {
+export default class CreatePalette extends React.Component<Props, States> {
   constructor(props: Props) {
     super(props)
     this.state = {

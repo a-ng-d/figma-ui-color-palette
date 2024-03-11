@@ -34,14 +34,14 @@ interface Props {
   onCreatePalette: () => void
 }
 
-interface State {
+interface States {
   coolorsUrl: ImportUrl
   realtimeColorsUrl: ImportUrl
   isCoolorsImportOpen: boolean
   isRealtimeColorsImportOpen: boolean
 }
 
-export default class Source extends React.Component<Props, State> {
+export default class Source extends React.Component<Props, States> {
   constructor(props: Props) {
     super(props)
     this.state = {

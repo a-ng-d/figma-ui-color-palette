@@ -40,7 +40,7 @@ import './stylesheets/app.css'
 import './stylesheets/app-components.css'
 import { locals } from '../content/locals'
 
-interface State {
+interface States {
   service: 'CREATE' | 'EDIT' | 'TRANSFER'
   sourceColors: Array<SourceColorConfiguration>
   name: string
@@ -95,7 +95,7 @@ const defaultPreset: PresetConfiguration = {
   id: 'MATERIAL',
 }
 
-class App extends React.Component<Record<string, never>, State> {
+class App extends React.Component<Record<string, never>, States> {
   dispatch: { [key: string]: DispatchProcess }
 
   constructor(props: Record<string, never>) {

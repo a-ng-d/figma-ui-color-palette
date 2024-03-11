@@ -10,11 +10,11 @@ interface Props {
   onCloseHighlight: React.ReactEventHandler
 }
 
-interface State {
+interface States {
   position: number
 }
 
-export default class Highlight extends React.Component<Props, State> {
+export default class Highlight extends React.Component<Props, States> {
   constructor(props: Props) {
     super(props)
     this.state = {

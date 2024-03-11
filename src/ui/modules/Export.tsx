@@ -23,7 +23,7 @@ interface Props {
   onExportPalette: () => void
 }
 
-interface State {
+interface States {
   format:
     | 'EXPORT_TOKENS_GLOBAL'
     | 'EXPORT_TOKENS_AMZN_STYLE_DICTIONARY'
@@ -41,7 +41,7 @@ interface State {
   }
 }
 
-export default class Export extends React.Component<Props, State> {
+export default class Export extends React.Component<Props, States> {
   counter: number
   codeRef: React.MutableRefObject<any>
 
