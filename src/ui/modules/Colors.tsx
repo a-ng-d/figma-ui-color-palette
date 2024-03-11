@@ -94,7 +94,7 @@ export default class Colors extends React.Component<Props, State> {
     const element: HTMLElement | null = (e.target as HTMLElement).closest(
         '.list__item'
       ),
-      currentElement: HTMLInputElement = e.target as HTMLInputElement
+      currentElement: HTMLInputElement = e.currentTarget
 
     element != null ? (id = element.getAttribute('data-id')) : (id = null)
 
@@ -258,7 +258,7 @@ export default class Colors extends React.Component<Props, State> {
       NULL: () => null,
     }
 
-    return actions[(e.target as HTMLInputElement).dataset.feature ?? 'NULL']?.()
+    return actions[currentElement.dataset.feature ?? 'NULL']?.()
   }
 
   orderHandler = () => {
