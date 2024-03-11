@@ -99,7 +99,7 @@ export default class Themes extends React.Component<Props, State> {
     const element: HTMLElement | null = (e.target as HTMLElement).closest(
         '.list__item'
       ),
-      currentElement: HTMLInputElement = e.target as HTMLInputElement
+      currentElement = e.currentTarget as HTMLInputElement
 
     element != null ? (id = element.getAttribute('data-id')) : (id = null)
 
