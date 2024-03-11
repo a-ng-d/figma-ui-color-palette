@@ -28,11 +28,11 @@ interface Props {
   onGetProPlan: () => void
 }
 
-interface State {
+interface States {
   canBeResized: boolean
 }
 
-export default class Shortcuts extends React.Component<Props, State> {
+export default class Shortcuts extends React.Component<Props, States> {
   constructor(props: Props) {
     super(props)
     this.state = {

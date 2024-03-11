@@ -37,7 +37,7 @@ interface Props {
   onChangeActions: (value: string) => void
 }
 
-interface State {
+interface States {
   selectedElement: SelectedColor
   hoveredElement: HoveredColor
 }
@@ -48,7 +48,7 @@ const themesMessage: ThemesMessage = {
   isEditedInRealTime: false,
 }
 
-export default class Themes extends React.Component<Props, State> {
+export default class Themes extends React.Component<Props, States> {
   dispatch: { [key: string]: DispatchProcess }
   listRef: React.MutableRefObject<any>
 

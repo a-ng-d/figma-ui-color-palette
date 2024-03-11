@@ -53,7 +53,7 @@ interface Props {
   onChangeSettings: React.ChangeEventHandler
 }
 
-interface State {
+interface States {
   context: string | undefined
   selectedElement: {
     id: string
@@ -68,7 +68,7 @@ const themesMessage: ThemesMessage = {
   isEditedInRealTime: false,
 }
 
-export default class EditPalette extends React.Component<Props, State> {
+export default class EditPalette extends React.Component<Props, States> {
   themesRef: React.MutableRefObject<any>
 
   constructor(props: Props) {

@@ -22,12 +22,12 @@ interface Props {
   ) => void
 }
 
-interface State {
+interface States {
   isStopInputOpen: boolean
   stopInputValue: string | number
 }
 
-export default class Knob extends React.Component<Props, State> {
+export default class Knob extends React.Component<Props, States> {
   constructor(props: Props) {
     super(props)
     this.state = {

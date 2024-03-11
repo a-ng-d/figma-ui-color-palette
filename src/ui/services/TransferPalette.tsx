@@ -39,11 +39,11 @@ interface Props {
   lang: Language
 }
 
-interface State {
+interface States {
   context: string | undefined
 }
 
-export default class TransferPalette extends React.Component<Props, State> {
+export default class TransferPalette extends React.Component<Props, States> {
   constructor(props: Props) {
     super(props)
     this.state = {

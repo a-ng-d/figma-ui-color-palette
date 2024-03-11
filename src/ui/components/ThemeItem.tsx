@@ -36,12 +36,12 @@ interface Props {
   onChangeOrder: (e: React.DragEvent<HTMLLIElement>) => void
 }
 
-interface State {
+interface States {
   isDragged: boolean
   hasMoreOptions: boolean
 }
 
-export default class ThemeItem extends React.Component<Props, State> {
+export default class ThemeItem extends React.Component<Props, States> {
   constructor(props: Props) {
     super(props)
     this.state = {
