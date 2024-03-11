@@ -1,6 +1,31 @@
+import type {
+  ColorSpaceConfiguration,
+  PresetConfiguration,
+  ScaleConfiguration,
+  SourceColorConfiguration,
+  TextColorsThemeHexModel,
+  ViewConfiguration,
+  visionSimulationModeConfiguration,
+} from '../utils/types'
 import Palette from './../canvas/Palette'
 
-const createPalette = (msg: any, palette: SceneNode) => {
+interface Msg {
+  data: {
+    sourceColors: Array<SourceColorConfiguration>
+    palette: {
+      name: string
+      description: string
+      preset: PresetConfiguration
+      scale: ScaleConfiguration
+      colorSpace: ColorSpaceConfiguration
+      visionSimulationMode: visionSimulationModeConfiguration
+      view: ViewConfiguration
+      textColorsTheme: TextColorsThemeHexModel
+    }
+  }
+}
+
+const createPalette = (msg: Msg, palette: SceneNode) => {
   const scene: SceneNode[] = []
 
   palette = new Palette(

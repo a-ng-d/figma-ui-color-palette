@@ -1,5 +1,10 @@
 import * as React from 'react'
-import type { ActionsList, ColorSpaceConfiguration, Language, PlanStatus } from '../../utils/types'
+import type {
+  ActionsList,
+  ColorSpaceConfiguration,
+  Language,
+  PlanStatus,
+} from '../../utils/types'
 import type { DropdownOption } from '@a-ng-d/figmug.modules.types'
 import { Input } from '@a-ng-d/figmug.inputs.input'
 import { Dropdown } from '@a-ng-d/figmug.inputs.dropdown'
