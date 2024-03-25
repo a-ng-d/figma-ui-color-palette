@@ -74,6 +74,7 @@
     "@a-ng-d/figmug.layouts.popin": "^0.0.19",
     "@a-ng-d/figmug.layouts.section-title": "^0.0.9",
     "@a-ng-d/figmug.lists.keyboard-shortcut-item": "^0.0.2",
+    "@a-ng-d/figmug.lists.color-item": "^0.0.1",
     "@a-ng-d/figmug.tags.chip": "^0.0.8",
     "@a-ng-d/figmug.modules.do-map": "^0.0.3",
     "@a-ng-d/figmug.modules.do-camel-case": "^0.0.4",
