@@ -308,20 +308,3 @@ div.slider .slider__input {
   border-radius: var(--border-radius-med);
   background-color: var(--figma-color-bg);
 }
-
-/* Color */
-.color {
-  padding: 0 0 0 var(--size-xxsmall);
-}
-
-.color__icon {
-  flex: 0 0 var(--size-xsmall);
-  width: var(--size-xsmall);
-  height: var(--size-xsmall);
-  border-radius: 2px;
-  box-shadow: rgba(0, 0, 0, 0.1) 0 0 0 1px inset;
-}
-
-.color__icon--circle {
-  border-radius: var(--size-xxsmall);
-}
