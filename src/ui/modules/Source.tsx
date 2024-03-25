@@ -16,8 +16,8 @@ import { Input } from '@a-ng-d/figmug.inputs.input'
 import { Accordion } from '@a-ng-d/figmug.layouts.accordion'
 import { texts } from '@a-ng-d/figmug.stylesheets.texts'
 import { SectionTitle } from '@a-ng-d/figmug.layouts.section-title'
+import { ColorItem } from '@a-ng-d/figmug.lists.color-item'
 import Actions from './Actions'
-import CompactColorItem from '../components/CompactColorItem'
 import features from '../../utils/config'
 import isBlocked from '../../utils/isBlocked'
 import { locals } from '../../content/locals'
@@ -233,7 +233,7 @@ export default class Source extends React.Component<Props, States> {
               .filter((sourceColor) => sourceColor.source === 'CANVAS')
               .map((sourceColor) => {
                 return (
-                  <CompactColorItem
+                  <ColorItem
                     key={sourceColor.id}
                     name={sourceColor.name}
                     hex={chroma(
@@ -244,7 +244,6 @@ export default class Source extends React.Component<Props, States> {
                       .hex()
                       .toUpperCase()}
                     uuid={sourceColor.id}
-                    lang={this.props.lang}
                   />
                 )
               })}
@@ -322,7 +321,7 @@ export default class Source extends React.Component<Props, States> {
               .filter((sourceColor) => sourceColor.source === 'COOLORS')
               .map((sourceColor) => {
                 return (
-                  <CompactColorItem
+                  <ColorItem
                     key={sourceColor.id}
                     name={sourceColor.name}
                     hex={chroma(
@@ -333,7 +332,6 @@ export default class Source extends React.Component<Props, States> {
                       .hex()
                       .toUpperCase()}
                     uuid={sourceColor.id}
-                    lang={this.props.lang}
                   />
                 )
               })}
@@ -410,7 +408,7 @@ export default class Source extends React.Component<Props, States> {
               .filter((sourceColor) => sourceColor.source === 'REALTIME_COLORS')
               .map((sourceColor) => {
                 return (
-                  <CompactColorItem
+                  <ColorItem
                     key={sourceColor.id}
                     name={sourceColor.name}
                     hex={chroma(
@@ -421,7 +419,6 @@ export default class Source extends React.Component<Props, States> {
                       .hex()
                       .toUpperCase()}
                     uuid={sourceColor.id}
-                    lang={this.props.lang}
                   />
                 )
               })}
