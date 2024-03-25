@@ -12,9 +12,10 @@ import type {
 import Feature from '../components/Feature'
 import { Button } from '@a-ng-d/figmug.actions.button'
 import { Dropdown } from '@a-ng-d/figmug.inputs.dropdown'
-import { Message } from '@a-ng-d/figmug.dialogs.message'
 import { texts } from '@a-ng-d/figmug.stylesheets.texts'
 import { SectionTitle } from '@a-ng-d/figmug.layouts.section-title'
+import { Dialog } from '@a-ng-d/figmug.dialogs.dialog'
+import { KeyboardShortcutItem } from '@a-ng-d/figmug.lists.keyboard-shortcut-item'
 import Slider from '../components/Slider'
 import Actions from './Actions'
 import { palette, presets } from '../../utils/palettePackage'
@@ -46,7 +47,11 @@ interface Props {
   onChangeActions?: (value: string) => void | undefined
 }
 
-export default class Scale extends React.Component<Props> {
+interface States {
+  isTipsOpen: boolean
+}
+
+export default class Scale extends React.Component<Props, States> {
   dispatch: { [key: string]: DispatchProcess }
 
   constructor(props: Props) {
@@ -66,6 +71,9 @@ export default class Scale extends React.Component<Props> {
           ),
         500
       ) as DispatchProcess,
+    }
+    this.state = {
+      isTipsOpen: false
     }
   }
 
@@ -127,31 +135,6 @@ export default class Scale extends React.Component<Props> {
     }
 
     if (!this.props.hasPreset) return actions[state]?.()
-  }
-
-  // Direct actions
-  setOnboardingMessages = () => {
-    const messages: Array<string> = []
-
-    if (this.props.preset.name === 'Custom' && !this.props.hasPreset)
-      messages.push(
-        locals[this.props.lang].scale.tips.add,
-        locals[this.props.lang].scale.tips.remove
-      )
-
-    if (!this.props.hasPreset)
-      messages.push(
-        locals[this.props.lang].scale.tips.edit,
-        locals[this.props.lang].scale.tips.nav,
-        locals[this.props.lang].scale.tips.esc
-      )
-
-    messages.push(
-      locals[this.props.lang].scale.tips.shift,
-      locals[this.props.lang].scale.tips.ctrl
-    )
-
-    return messages
   }
 
   // Templates
@@ -268,10 +251,80 @@ export default class Scale extends React.Component<Props> {
                 ?.isActive
             }
           >
-            <Message
-              icon="key"
-              messages={this.setOnboardingMessages()}
-            />
+            <div className="section-controls">
+              <div className="section-controls__left-part"></div>
+              <div className="section-controls__right-part">
+                <Button
+                  type="tertiary"
+                  label={locals[this.props.lang].scale.keyboardShortcuts}
+                  action={() => this.setState({
+                    isTipsOpen: true
+                  })}
+                />
+              </div>
+            </div>
+            {this.state['isTipsOpen'] ? (
+              <Dialog
+                title={locals[this.props.lang].scale.tips.title}
+                actions={{
+                  primary: {
+                    label: locals[this.props.lang].scale.tips.cta,
+                    action: (e) => this.setState({
+                      isTipsOpen: false
+                    }),
+                  },
+                }}
+                onClose={(e) => this.setState({
+                  isTipsOpen: false
+                })}
+              >
+                <div className="controls__control">
+                  <div className="control__block control__block--list">
+                    <ul className="list">
+                      <KeyboardShortcutItem
+                        label={locals[this.props.lang].scale.tips.move}
+                        shortcuts={[['⌃', 'drag']]}
+                      />
+                      <KeyboardShortcutItem
+                        label={locals[this.props.lang].scale.tips.distribute}
+                        shortcuts={[['⇧', 'drag']]}
+                      />
+                      <KeyboardShortcutItem
+                        label={locals[this.props.lang].scale.tips.select}
+                        shortcuts={[['click']]}
+                      />
+                      <KeyboardShortcutItem
+                        label={locals[this.props.lang].scale.tips.unselect}
+                        shortcuts={[['⎋ Esc']]}
+                      />
+                      <KeyboardShortcutItem
+                        label={locals[this.props.lang].scale.tips.navPrevious}
+                        shortcuts={[['⇧', '⇥ Tab']]}
+                      />
+                      <KeyboardShortcutItem
+                        label={locals[this.props.lang].scale.tips.navNext}
+                        shortcuts={[['⇥ Tab']]}
+                      />
+                      <KeyboardShortcutItem
+                        label={locals[this.props.lang].scale.tips.type}
+                        shortcuts={[['db click'], ['↩︎ Enter']]}
+                        separator='or'
+                      />
+                      <KeyboardShortcutItem
+                        label={locals[this.props.lang].scale.tips.shiftLeft}
+                        shortcuts={[['←'], ['⇧', '←']]}
+                        separator='or'
+                      />
+                      <KeyboardShortcutItem
+                        label={locals[this.props.lang].scale.tips.shiftRight}
+                        shortcuts={[['→'], ['⇧', '→']]}
+                        separator='or'
+                      />
+                    </ul>
+                  </div>
+                </div>
+              </Dialog>
+            ) : null}     
           </Feature>
         </div>
         <Actions
@@ -326,10 +379,98 @@ export default class Scale extends React.Component<Props> {
                 ?.isActive
             }
           >
-            <Message
-              icon="key"
-              messages={this.setOnboardingMessages()}
-            />
+            <div className="section-controls">
+              <div className="section-controls__left-part"></div>
+              <div className="section-controls__right-part">
+                <Button
+                  type="tertiary"
+                  label={locals[this.props.lang].scale.keyboardShortcuts}
+                  action={() => this.setState({
+                    isTipsOpen: true
+                  })}
+                />
+              </div>
+            </div>
+            {this.state['isTipsOpen'] ? (
+              <Dialog
+                title={locals[this.props.lang].scale.tips.title}
+                actions={{
+                  primary: {
+                    label: locals[this.props.lang].scale.tips.cta,
+                    action: (e) => this.setState({
+                      isTipsOpen: false
+                    }),
+                  },
+                }}
+                onClose={(e) => this.setState({
+                  isTipsOpen: false
+                })}
+              >
+                <div className="controls__control controls__control--horizontal">
+                  <div className="control__block control__block--list">
+                    <ul className="list">
+                      <KeyboardShortcutItem
+                        label={locals[this.props.lang].scale.tips.move}
+                        shortcuts={[['⌃', 'drag']]}
+                      />
+                      <KeyboardShortcutItem
+                        label={locals[this.props.lang].scale.tips.distribute}
+                        shortcuts={[['⇧', 'drag']]}
+                      />
+                      <KeyboardShortcutItem
+                        label={locals[this.props.lang].scale.tips.select}
+                        shortcuts={[['click']]}
+                      />
+                      <KeyboardShortcutItem
+                        label={locals[this.props.lang].scale.tips.unselect}
+                        shortcuts={[['⎋ Esc']]}
+                      />
+                      <KeyboardShortcutItem
+                        label={locals[this.props.lang].scale.tips.navPrevious}
+                        shortcuts={[['⇧', '⇥ Tab']]}
+                      />
+                      <KeyboardShortcutItem
+                        label={locals[this.props.lang].scale.tips.navNext}
+                        shortcuts={[['⇥ Tab']]}
+                      />
+                      <KeyboardShortcutItem
+                        label={locals[this.props.lang].scale.tips.type}
+                        shortcuts={[['db click'], ['↩︎ Enter']]}
+                        separator='or'
+                      />
+                      <KeyboardShortcutItem
+                        label={locals[this.props.lang].scale.tips.shiftLeft}
+                        shortcuts={[['←'], ['⇧', '←']]}
+                        separator='or'
+                      />
+                      <KeyboardShortcutItem
+                        label={locals[this.props.lang].scale.tips.shiftRight}
+                        shortcuts={[['→'], ['⇧', '→']]}
+                        separator='or'
+                      />
+                    </ul>
+                  </div>
+                  <div className="control__block control__block--list">
+                    <div className="section-controls">
+                      <div className="section-controls__left-part">
+                        <SectionTitle label="Adjustment on Custom mode" />
+                      </div>
+                      <div className="section-controls__right-part"></div>
+                    </div>
+                    <ul className="list">
+                      <KeyboardShortcutItem
+                        label={locals[this.props.lang].scale.tips.add}
+                        shortcuts={[['click']]}
+                      />
+                      <KeyboardShortcutItem
+                        label={locals[this.props.lang].scale.tips.remove}
+                        shortcuts={[['⌫']]}
+                      />
+                    </ul>
+                  </div>
+                </div>
+              </Dialog>
+            ) : null}
           </Feature>
         </div>
         {this.props.editorType === 'figma' ? (
