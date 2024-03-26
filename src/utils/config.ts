@@ -254,8 +254,8 @@ const features: Array<Feature> = [
     service: ['CREATE', 'EDIT'],
   },
   {
-    name: 'SCALE_TIPS',
-    description: 'Tip messages to onboard users',
+    name: 'SCALE_HELPER',
+    description: 'Tips and tools to help configurate the scaling',
     isActive: true,
     isPro: false,
     isNew: false,
