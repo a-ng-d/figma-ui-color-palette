@@ -145,14 +145,14 @@ export default class Scale extends React.Component<Props, States> {
   DistributionMode = () => {
     return (
       <FormItem
-        label="Distribution mode"
+        label={locals[this.props.lang].scale.easing.label}
         id="distribution-mode"
       >
         <Dropdown
           id="distribution-mode"
           options={[
             {
-              label: "Linear",
+              label: locals[this.props.lang].scale.easing.linear,
               value: 'LINEAR',
               feature: 'UPDATE_DISTRIBUTION_MODE',
               position: 0,
@@ -166,7 +166,7 @@ export default class Scale extends React.Component<Props, States> {
               }),
             },
             {
-              label: "Ease in",
+              label: locals[this.props.lang].scale.easing.easeIn,
               value: 'EASE_IN',
               feature: 'UPDATE_DISTRIBUTION_MODE',
               position: 1,
@@ -180,7 +180,7 @@ export default class Scale extends React.Component<Props, States> {
               }),
             },
             {
-              label: "Ease out",
+              label: locals[this.props.lang].scale.easing.easeOut,
               value: 'EASE_OUT',
               feature: 'UPDATE_DISTRIBUTION_MODE',
               position: 2,
@@ -194,7 +194,7 @@ export default class Scale extends React.Component<Props, States> {
               }),
             },
             {
-              label: "Ease in out",
+              label: locals[this.props.lang].scale.easing.easeInOut,
               value: 'EASE_IN_OUT',
               feature: 'UPDATE_DISTRIBUTION_MODE',
               position: 3,
