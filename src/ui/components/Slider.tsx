@@ -326,7 +326,13 @@ export default class Slider extends React.Component<Props> {
     palette.scale = this.props.scale ?? {}
     return (
       <div
-        className="slider__range"
+        className={[
+          'slider__range',
+          this.props.presetName === 'Custom' && this.props.stops.length < 24 ? 'slider__range--add' : null,
+          this.props.stops.length == 24 ? 'slider__range--not-allowed' : null
+        ]
+          .filter((n) => n)
+          .join(' ')}
         onMouseDown={(e) => this.onAdd(e)}
       >
         {Object.entries(this.props.scale ?? {}).map(
