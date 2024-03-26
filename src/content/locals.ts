@@ -103,6 +103,7 @@ export const locals: { [key: string]: any } = {
       },
       tips: {
         title: 'Keyboard shortcuts',
+        custom: 'Adjustment with Custom preset',
         cta: 'Got it',
         move: 'Move every stop',
         distribute: "Distribute stops based on easing",
