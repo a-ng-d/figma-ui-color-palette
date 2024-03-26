@@ -19,7 +19,7 @@ interface Props {
   min?: number
   max?: number
   scale?: ScaleConfiguration
-  distributionMode: Easing
+  distributionEasing: Easing
   onChange: (state: string, feature?: string) => void
 }
 
@@ -265,7 +265,7 @@ export default class Slider extends React.Component<Props> {
       palette.min ?? 0,
       palette.max ?? 100,
       true,
-      this.props.distributionMode
+      this.props.distributionEasing
     )
 
     stops.forEach((stop) => {
@@ -304,7 +304,7 @@ export default class Slider extends React.Component<Props> {
       palette.min ?? 0,
       palette.max ?? 100,
       true,
-      this.props.distributionMode
+      this.props.distributionEasing
     )
     return (
       <div className="slider__range">
