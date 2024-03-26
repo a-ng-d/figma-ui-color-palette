@@ -139,6 +139,14 @@ div.slider .slider__range {
   position: relative;
 }
 
+div.slider .slider__range--add {
+  cursor: copy;
+}
+
+div.slider .slider__range--not-allowed {
+  cursor: not-allowed;
+}
+
 div.slider .slider__knob {
   width: var(--size-medium);
   height: var(--size-xxlarge);
