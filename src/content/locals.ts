@@ -94,6 +94,7 @@ export const locals: { [key: string]: any } = {
     scale: {
       title: 'Lightness scale',
       keyboardShortcuts: 'Review the keyboard shortcuts',
+      howTo: "How to adjust",
       easing: {
         label: 'Distribution easing',
         linear: 'Linear',

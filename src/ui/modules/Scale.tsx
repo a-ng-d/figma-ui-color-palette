@@ -449,15 +449,37 @@ export default class Scale extends React.Component<Props, States> {
                     )?.isActive
                   }
                 >
-                  <Button
-                    type="tertiary"
-                    label={locals[this.props.lang].scale.keyboardShortcuts}
-                    action={() =>
-                      this.setState({
-                        isTipsOpen: true,
-                      })
-                    }
-                  />
+                  <div className='shortcuts'>
+                    <Button
+                      type="tertiary"
+                      label={locals[this.props.lang].scale.howTo}
+                      action={() =>
+                        parent.postMessage(
+                          {
+                            pluginMessage: {
+                              type: 'OPEN_IN_BROWSER',
+                              url: 'https://uicp.link/how-to-adjust',
+                            },
+                          },
+                          '*'
+                        )
+                      }
+                    />
+                    <span
+                      className={`type ${texts.type} ${texts['type--secondary']}`}
+                    >
+                      ﹒
+                    </span>
+                    <Button
+                      type="tertiary"
+                      label={locals[this.props.lang].scale.keyboardShortcuts}
+                      action={() =>
+                        this.setState({
+                          isTipsOpen: true,
+                        })
+                      }
+                    />
+                  </div>
                 </Feature>
               </div>
             </div>
@@ -537,15 +559,37 @@ export default class Scale extends React.Component<Props, States> {
                     )?.isActive
                   }
                 >
-                  <Button
-                    type="tertiary"
-                    label={locals[this.props.lang].scale.keyboardShortcuts}
-                    action={() =>
-                      this.setState({
-                        isTipsOpen: true,
-                      })
-                    }
-                  />
+                  <div className='shortcuts'>
+                    <Button
+                      type="tertiary"
+                      label={locals[this.props.lang].scale.howTo}
+                      action={() =>
+                        parent.postMessage(
+                          {
+                            pluginMessage: {
+                              type: 'OPEN_IN_BROWSER',
+                              url: 'https://uicp.link/how-to-adjust',
+                            },
+                          },
+                          '*'
+                        )
+                      }
+                    />
+                    <span
+                      className={`type ${texts.type} ${texts['type--secondary']}`}
+                    >
+                      ﹒
+                    </span>
+                    <Button
+                      type="tertiary"
+                      label={locals[this.props.lang].scale.keyboardShortcuts}
+                      action={() =>
+                        this.setState({
+                          isTipsOpen: true,
+                        })
+                      }
+                    />
+                  </div>
                 </Feature>
               </div>
             </div>

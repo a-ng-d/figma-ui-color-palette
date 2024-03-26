@@ -217,5 +217,4 @@ div.pro-zone {
   display: flex;
   align-items: center;
   gap: var(--size-xxxsmall);
-  color: var(--figma-color-text);
 }
