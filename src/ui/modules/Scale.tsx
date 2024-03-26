@@ -176,21 +176,25 @@ export default class Scale extends React.Component<Props, States> {
                 label={locals[this.props.lang].scale.tips.navNext}
                 shortcuts={[['⇥ Tab']]}
               />
-              <KeyboardShortcutItem
-                label={locals[this.props.lang].scale.tips.type}
-                shortcuts={[['db click'], ['↩︎ Enter']]}
-                separator='or'
-              />
-              <KeyboardShortcutItem
-                label={locals[this.props.lang].scale.tips.shiftLeft}
-                shortcuts={[['←'], [isMacOrWinKeyboard, '←']]}
-                separator='or'
-              />
-              <KeyboardShortcutItem
-                label={locals[this.props.lang].scale.tips.shiftRight}
-                shortcuts={[['→'], [isMacOrWinKeyboard, '→']]}
-                separator='or'
-              />
+              {!this.props.hasPreset ? (
+                <>
+                  <KeyboardShortcutItem
+                    label={locals[this.props.lang].scale.tips.type}
+                    shortcuts={[['db click'], ['↩︎ Enter']]}
+                    separator='or'
+                  />
+                  <KeyboardShortcutItem
+                    label={locals[this.props.lang].scale.tips.shiftLeft}
+                    shortcuts={[['←'], [isMacOrWinKeyboard, '←']]}
+                    separator='or'
+                  />
+                  <KeyboardShortcutItem
+                    label={locals[this.props.lang].scale.tips.shiftRight}
+                    shortcuts={[['→'], [isMacOrWinKeyboard, '→']]}
+                    separator='or'
+                  />
+                </>
+              ) : null }
             </ul>
           </div>
           {!this.props.hasPreset ? (
