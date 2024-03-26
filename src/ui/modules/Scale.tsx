@@ -8,7 +8,7 @@ import type {
   PresetConfiguration,
   ScaleConfiguration,
   SourceColorConfiguration,
-  Easing
+  Easing,
 } from '../../utils/types'
 import Feature from '../components/Feature'
 import { Button } from '@a-ng-d/figmug.actions.button'
@@ -77,7 +77,7 @@ export default class Scale extends React.Component<Props, States> {
     }
     this.state = {
       distributionEasing: 'LINEAR',
-      isTipsOpen: false
+      isTipsOpen: false,
     }
   }
 
@@ -162,9 +162,10 @@ export default class Scale extends React.Component<Props, States> {
               isBlocked: false,
               isNew: false,
               children: [],
-              action: (e) => this.setState({
-                distributionEasing: e.target.dataset.value
-              }),
+              action: (e) =>
+                this.setState({
+                  distributionEasing: e.target.dataset.value,
+                }),
             },
             {
               label: locals[this.props.lang].scale.easing.easeIn,
@@ -176,9 +177,10 @@ export default class Scale extends React.Component<Props, States> {
               isBlocked: false,
               isNew: false,
               children: [],
-              action: (e) => this.setState({
-                distributionEasing: e.target.dataset.value
-              }),
+              action: (e) =>
+                this.setState({
+                  distributionEasing: e.target.dataset.value,
+                }),
             },
             {
               label: locals[this.props.lang].scale.easing.easeOut,
@@ -190,9 +192,10 @@ export default class Scale extends React.Component<Props, States> {
               isBlocked: false,
               isNew: false,
               children: [],
-              action: (e) => this.setState({
-                distributionEasing: e.target.dataset.value
-              }),
+              action: (e) =>
+                this.setState({
+                  distributionEasing: e.target.dataset.value,
+                }),
             },
             {
               label: locals[this.props.lang].scale.easing.easeInOut,
@@ -204,15 +207,18 @@ export default class Scale extends React.Component<Props, States> {
               isBlocked: false,
               isNew: false,
               children: [],
-              action: (e) => this.setState({
-                distributionEasing: e.target.dataset.value
-              }),
-            }
+              action: (e) =>
+                this.setState({
+                  distributionEasing: e.target.dataset.value,
+                }),
+            },
           ]}
           selected={this.state['distributionEasing']}
           parentClassName="controls"
           isNew={
-            features.find((feature) => feature.name === 'SCALE_HELPER_DISTRIBUTION')?.isNew
+            features.find(
+              (feature) => feature.name === 'SCALE_HELPER_DISTRIBUTION'
+            )?.isNew
           }
         />
       </FormItem>
@@ -220,15 +226,18 @@ export default class Scale extends React.Component<Props, States> {
   }
 
   KeyboardShortcuts = () => {
-    const isMacOrWinKeyboard = navigator.userAgent.indexOf('Mac') != -1 ? '⌘' : '⌃' ?? '⌘'
+    const isMacOrWinKeyboard =
+      navigator.userAgent.indexOf('Mac') != -1 ? '⌘' : '⌃' ?? '⌘'
 
     return (
       <Dialog
         title={locals[this.props.lang].scale.tips.title}
         actions={{}}
-        onClose={() => this.setState({
-          isTipsOpen: false
-        })}
+        onClose={() =>
+          this.setState({
+            isTipsOpen: false,
+          })
+        }
       >
         <div className="controls__control controls__control--horizontal">
           <div className="control__block control__block--no-padding">
@@ -262,41 +271,43 @@ export default class Scale extends React.Component<Props, States> {
                   <KeyboardShortcutItem
                     label={locals[this.props.lang].scale.tips.type}
                     shortcuts={[['db click'], ['↩︎ Enter']]}
-                    separator='or'
+                    separator="or"
                   />
                   <KeyboardShortcutItem
                     label={locals[this.props.lang].scale.tips.shiftLeft}
                     shortcuts={[['←'], [isMacOrWinKeyboard, '←']]}
-                    separator='or'
+                    separator="or"
                   />
                   <KeyboardShortcutItem
                     label={locals[this.props.lang].scale.tips.shiftRight}
                     shortcuts={[['→'], [isMacOrWinKeyboard, '→']]}
-                    separator='or'
+                    separator="or"
                   />
                 </>
-              ) : null }
+              ) : null}
             </ul>
           </div>
           {!this.props.hasPreset ? (
             <div className="control__block control__block--list">
-            <div className="section-controls">
-              <div className="section-controls__left-part">
-                <SectionTitle label={locals[this.props.lang].scale.tips.custom} />
+              <div className="section-controls">
+                <div className="section-controls__left-part">
+                  <SectionTitle
+                    label={locals[this.props.lang].scale.tips.custom}
+                  />
+                </div>
+                <div className="section-controls__right-part"></div>
               </div>
-              <div className="section-controls__right-part"></div>
+              <ul className="list">
+                <KeyboardShortcutItem
+                  label={locals[this.props.lang].scale.tips.add}
+                  shortcuts={[['click']]}
+                />
+                <KeyboardShortcutItem
+                  label={locals[this.props.lang].scale.tips.remove}
+                  shortcuts={[['⌫']]}
+                />
+              </ul>
             </div>
-            <ul className="list">
-              <KeyboardShortcutItem
-                label={locals[this.props.lang].scale.tips.add}
-                shortcuts={[['click']]}
-              />
-              <KeyboardShortcutItem
-                label={locals[this.props.lang].scale.tips.remove}
-                shortcuts={[['⌫']]}
-              />
-            </ul>
-          </div>
           ) : null}
         </div>
       </Dialog>
@@ -420,35 +431,37 @@ export default class Scale extends React.Component<Props, States> {
           >
             <div className="section-controls">
               <div className="section-controls__left-part">
-              <Feature
-                isActive={
-                  features.find((feature) => feature.name === 'SCALE_HELPER_DISTRIBUTION')
-                    ?.isActive
-                }
-              >
-                <this.DistributionMode />
-              </Feature>
+                <Feature
+                  isActive={
+                    features.find(
+                      (feature) => feature.name === 'SCALE_HELPER_DISTRIBUTION'
+                    )?.isActive
+                  }
+                >
+                  <this.DistributionMode />
+                </Feature>
               </div>
               <div className="section-controls__right-part">
                 <Feature
                   isActive={
-                    features.find((feature) => feature.name === 'SCALE_HELPER_TIPS')
-                      ?.isActive
+                    features.find(
+                      (feature) => feature.name === 'SCALE_HELPER_TIPS'
+                    )?.isActive
                   }
                 >
                   <Button
                     type="tertiary"
                     label={locals[this.props.lang].scale.keyboardShortcuts}
-                    action={() => this.setState({
-                      isTipsOpen: true
-                    })}
+                    action={() =>
+                      this.setState({
+                        isTipsOpen: true,
+                      })
+                    }
                   />
                 </Feature>
               </div>
             </div>
-            {this.state['isTipsOpen'] ? (
-              <this.KeyboardShortcuts />
-            ) : null}     
+            {this.state['isTipsOpen'] ? <this.KeyboardShortcuts /> : null}
           </Feature>
         </div>
         <Actions
@@ -508,8 +521,9 @@ export default class Scale extends React.Component<Props, States> {
               <div className="section-controls__left-part">
                 <Feature
                   isActive={
-                    features.find((feature) => feature.name === 'SCALE_HELPER_DISTRIBUTION')
-                      ?.isActive
+                    features.find(
+                      (feature) => feature.name === 'SCALE_HELPER_DISTRIBUTION'
+                    )?.isActive
                   }
                 >
                   <this.DistributionMode />
@@ -518,23 +532,24 @@ export default class Scale extends React.Component<Props, States> {
               <div className="section-controls__right-part">
                 <Feature
                   isActive={
-                    features.find((feature) => feature.name === 'SCALE_HELPER_TIPS')
-                      ?.isActive
+                    features.find(
+                      (feature) => feature.name === 'SCALE_HELPER_TIPS'
+                    )?.isActive
                   }
                 >
                   <Button
                     type="tertiary"
                     label={locals[this.props.lang].scale.keyboardShortcuts}
-                    action={() => this.setState({
-                      isTipsOpen: true
-                    })}
+                    action={() =>
+                      this.setState({
+                        isTipsOpen: true,
+                      })
+                    }
                   />
                 </Feature>
               </div>
             </div>
-            {this.state['isTipsOpen'] ? (
-              <this.KeyboardShortcuts />
-            ) : null}
+            {this.state['isTipsOpen'] ? <this.KeyboardShortcuts /> : null}
           </Feature>
         </div>
         {this.props.editorType === 'figma' ? (
