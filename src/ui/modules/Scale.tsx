@@ -147,6 +147,7 @@ export default class Scale extends React.Component<Props, States> {
       <FormItem
         label={locals[this.props.lang].scale.easing.label}
         id="distribution-mode"
+        shouldFill={false}
       >
         <Dropdown
           id="distribution-mode"
@@ -281,7 +282,7 @@ export default class Scale extends React.Component<Props, States> {
             <div className="control__block control__block--list">
             <div className="section-controls">
               <div className="section-controls__left-part">
-                <SectionTitle label="Adjustment on Custom mode" />
+                <SectionTitle label={locals[this.props.lang].scale.tips.custom} />
               </div>
               <div className="section-controls__right-part"></div>
             </div>
