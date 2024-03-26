@@ -6,7 +6,7 @@ const doLightnessScale = (
   min: number,
   max: number,
   isDistributed = true,
-  mode: Easing = 'EASE_IN_OUT',
+  mode: Easing = 'EASE_IN_OUT'
 ) => {
   let x = 1
   const scale: ScaleConfiguration = {}
@@ -21,8 +21,8 @@ const doLightnessScale = (
   return scale
 }
 
-const applyEase = (mode: Easing, x:  number): number => {
-  const actions: {[key: string]: (x: number) => number} = {
+const applyEase = (mode: Easing, x: number): number => {
+  const actions: { [key: string]: (x: number) => number } = {
     LINEAR: (x) => x,
     EASE_IN: (x) => 1 - Math.cos((x * Math.PI) / 2),
     EASE_OUT: (x) => Math.sin((x * Math.PI) / 2),
