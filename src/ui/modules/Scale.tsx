@@ -142,20 +142,20 @@ export default class Scale extends React.Component<Props, States> {
   }
 
   // Templates
-  DistributionMode = () => {
+  DistributionEasing = () => {
     return (
       <FormItem
         label={locals[this.props.lang].scale.easing.label}
-        id="distribution-mode"
+        id="distribution-easing"
         shouldFill={false}
       >
         <Dropdown
-          id="distribution-mode"
+          id="distribution-easing"
           options={[
             {
               label: locals[this.props.lang].scale.easing.linear,
               value: 'LINEAR',
-              feature: 'UPDATE_DISTRIBUTION_MODE',
+              feature: 'UPDATE_DISTRIBUTION_EASING',
               position: 0,
               type: 'OPTION',
               isActive: true,
@@ -170,7 +170,7 @@ export default class Scale extends React.Component<Props, States> {
             {
               label: locals[this.props.lang].scale.easing.easeIn,
               value: 'EASE_IN',
-              feature: 'UPDATE_DISTRIBUTION_MODE',
+              feature: 'UPDATE_DISTRIBUTION_EASING',
               position: 1,
               type: 'OPTION',
               isActive: true,
@@ -185,7 +185,7 @@ export default class Scale extends React.Component<Props, States> {
             {
               label: locals[this.props.lang].scale.easing.easeOut,
               value: 'EASE_OUT',
-              feature: 'UPDATE_DISTRIBUTION_MODE',
+              feature: 'UPDATE_DISTRIBUTION_EASING',
               position: 2,
               type: 'OPTION',
               isActive: true,
@@ -200,7 +200,7 @@ export default class Scale extends React.Component<Props, States> {
             {
               label: locals[this.props.lang].scale.easing.easeInOut,
               value: 'EASE_IN_OUT',
-              feature: 'UPDATE_DISTRIBUTION_MODE',
+              feature: 'UPDATE_DISTRIBUTION_EASING',
               position: 3,
               type: 'OPTION',
               isActive: true,
@@ -438,7 +438,7 @@ export default class Scale extends React.Component<Props, States> {
                     )?.isActive
                   }
                 >
-                  <this.DistributionMode />
+                  <this.DistributionEasing />
                 </Feature>
               </div>
               <div className="section-controls__right-part">
@@ -526,7 +526,7 @@ export default class Scale extends React.Component<Props, States> {
                     )?.isActive
                   }
                 >
-                  <this.DistributionMode />
+                  <this.DistributionEasing />
                 </Feature>
               </div>
               <div className="section-controls__right-part">
