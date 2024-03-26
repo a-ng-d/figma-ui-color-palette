@@ -266,20 +266,13 @@ export default class Scale extends React.Component<Props, States> {
             {this.state['isTipsOpen'] ? (
               <Dialog
                 title={locals[this.props.lang].scale.tips.title}
-                actions={{
-                  primary: {
-                    label: locals[this.props.lang].scale.tips.cta,
-                    action: (e) => this.setState({
-                      isTipsOpen: false
-                    }),
-                  },
-                }}
-                onClose={(e) => this.setState({
+                actions={{}}
+                onClose={() => this.setState({
                   isTipsOpen: false
                 })}
               >
                 <div className="controls__control">
-                  <div className="control__block control__block--list">
+                  <div className="control__block control__block--no-padding">
                     <ul className="list">
                       <KeyboardShortcutItem
                         label={locals[this.props.lang].scale.tips.move}
@@ -394,20 +387,13 @@ export default class Scale extends React.Component<Props, States> {
             {this.state['isTipsOpen'] ? (
               <Dialog
                 title={locals[this.props.lang].scale.tips.title}
-                actions={{
-                  primary: {
-                    label: locals[this.props.lang].scale.tips.cta,
-                    action: (e) => this.setState({
-                      isTipsOpen: false
-                    }),
-                  },
-                }}
-                onClose={(e) => this.setState({
+                actions={{}}
+                onClose={() => this.setState({
                   isTipsOpen: false
                 })}
               >
                 <div className="controls__control controls__control--horizontal">
-                  <div className="control__block control__block--list">
+                  <div className="control__block control__block--no-padding">
                     <ul className="list">
                       <KeyboardShortcutItem
                         label={locals[this.props.lang].scale.tips.move}
