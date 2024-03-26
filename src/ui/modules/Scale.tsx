@@ -140,6 +140,7 @@ export default class Scale extends React.Component<Props, States> {
   // Templates
   Create = () => {
     palette.scale = {}
+    const isMacOrWinKeyboard = navigator.userAgent.indexOf('Mac') != -1 ? '⌘' : '⌃' ?? '⌘'
     return (
       <div className="controls__control">
         <div className="control__block control__block--distributed">
@@ -276,7 +277,7 @@ export default class Scale extends React.Component<Props, States> {
                     <ul className="list">
                       <KeyboardShortcutItem
                         label={locals[this.props.lang].scale.tips.move}
-                        shortcuts={[['⌃', 'drag']]}
+                        shortcuts={[[isMacOrWinKeyboard, 'drag']]}
                       />
                       <KeyboardShortcutItem
                         label={locals[this.props.lang].scale.tips.distribute}
@@ -305,12 +306,12 @@ export default class Scale extends React.Component<Props, States> {
                       />
                       <KeyboardShortcutItem
                         label={locals[this.props.lang].scale.tips.shiftLeft}
-                        shortcuts={[['←'], ['⇧', '←']]}
+                        shortcuts={[['←'], [isMacOrWinKeyboard, '←']]}
                         separator='or'
                       />
                       <KeyboardShortcutItem
                         label={locals[this.props.lang].scale.tips.shiftRight}
-                        shortcuts={[['→'], ['⇧', '→']]}
+                        shortcuts={[['→'], [isMacOrWinKeyboard, '→']]}
                         separator='or'
                       />
                     </ul>
@@ -333,6 +334,7 @@ export default class Scale extends React.Component<Props, States> {
 
   Edit = () => {
     palette.scale = {}
+    const isMacOrWinKeyboard = navigator.userAgent.indexOf('Mac') != -1 ? '⌘' : '⌃' ?? '⌘'
     return (
       <div className="controls__control">
         <div className="control__block control__block--distributed">
@@ -397,7 +399,7 @@ export default class Scale extends React.Component<Props, States> {
                     <ul className="list">
                       <KeyboardShortcutItem
                         label={locals[this.props.lang].scale.tips.move}
-                        shortcuts={[['⌃', 'drag']]}
+                        shortcuts={[[isMacOrWinKeyboard, 'drag']]}
                       />
                       <KeyboardShortcutItem
                         label={locals[this.props.lang].scale.tips.distribute}
@@ -426,12 +428,12 @@ export default class Scale extends React.Component<Props, States> {
                       />
                       <KeyboardShortcutItem
                         label={locals[this.props.lang].scale.tips.shiftLeft}
-                        shortcuts={[['←'], ['⇧', '←']]}
+                        shortcuts={[['←'], [isMacOrWinKeyboard, '←']]}
                         separator='or'
                       />
                       <KeyboardShortcutItem
                         label={locals[this.props.lang].scale.tips.shiftRight}
-                        shortcuts={[['→'], ['⇧', '→']]}
+                        shortcuts={[['→'], [isMacOrWinKeyboard, '→']]}
                         separator='or'
                       />
                     </ul>
