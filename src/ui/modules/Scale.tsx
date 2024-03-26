@@ -210,6 +210,9 @@ export default class Scale extends React.Component<Props, States> {
           ]}
           selected={this.state['distributionMode']}
           parentClassName="controls"
+          isNew={
+            features.find((feature) => feature.name === 'SCALE_HELPER_DISTRIBUTION')?.isNew
+          }
         />
       </FormItem>
     )
@@ -416,16 +419,30 @@ export default class Scale extends React.Component<Props, States> {
           >
             <div className="section-controls">
               <div className="section-controls__left-part">
+              <Feature
+                isActive={
+                  features.find((feature) => feature.name === 'SCALE_HELPER_DISTRIBUTION')
+                    ?.isActive
+                }
+              >
                 <this.DistributionMode />
+              </Feature>
               </div>
               <div className="section-controls__right-part">
-                <Button
-                  type="tertiary"
-                  label={locals[this.props.lang].scale.keyboardShortcuts}
-                  action={() => this.setState({
-                    isTipsOpen: true
-                  })}
-                />
+                <Feature
+                  isActive={
+                    features.find((feature) => feature.name === 'SCALE_HELPER_TIPS')
+                      ?.isActive
+                  }
+                >
+                  <Button
+                    type="tertiary"
+                    label={locals[this.props.lang].scale.keyboardShortcuts}
+                    action={() => this.setState({
+                      isTipsOpen: true
+                    })}
+                  />
+                </Feature>
               </div>
             </div>
             {this.state['isTipsOpen'] ? (
@@ -488,16 +505,30 @@ export default class Scale extends React.Component<Props, States> {
           >
             <div className="section-controls">
               <div className="section-controls__left-part">
-                <this.DistributionMode />
+                <Feature
+                  isActive={
+                    features.find((feature) => feature.name === 'SCALE_HELPER_DISTRIBUTION')
+                      ?.isActive
+                  }
+                >
+                  <this.DistributionMode />
+                </Feature>
               </div>
               <div className="section-controls__right-part">
-                <Button
-                  type="tertiary"
-                  label={locals[this.props.lang].scale.keyboardShortcuts}
-                  action={() => this.setState({
-                    isTipsOpen: true
-                  })}
-                />
+                <Feature
+                  isActive={
+                    features.find((feature) => feature.name === 'SCALE_HELPER_TIPS')
+                      ?.isActive
+                  }
+                >
+                  <Button
+                    type="tertiary"
+                    label={locals[this.props.lang].scale.keyboardShortcuts}
+                    action={() => this.setState({
+                      isTipsOpen: true
+                    })}
+                  />
+                </Feature>
               </div>
             </div>
             {this.state['isTipsOpen'] ? (
