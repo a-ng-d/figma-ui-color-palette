@@ -50,7 +50,7 @@ interface Props {
 }
 
 interface States {
-  distributionMode: Easing
+  distributionEasing: Easing
   isTipsOpen: boolean
 }
 
@@ -76,7 +76,7 @@ export default class Scale extends React.Component<Props, States> {
       ) as DispatchProcess,
     }
     this.state = {
-      distributionMode: 'LINEAR',
+      distributionEasing: 'LINEAR',
       isTipsOpen: false
     }
   }
@@ -162,7 +162,7 @@ export default class Scale extends React.Component<Props, States> {
               isNew: false,
               children: [],
               action: (e) => this.setState({
-                distributionMode: e.target.dataset.value
+                distributionEasing: e.target.dataset.value
               }),
             },
             {
@@ -176,7 +176,7 @@ export default class Scale extends React.Component<Props, States> {
               isNew: false,
               children: [],
               action: (e) => this.setState({
-                distributionMode: e.target.dataset.value
+                distributionEasing: e.target.dataset.value
               }),
             },
             {
@@ -190,7 +190,7 @@ export default class Scale extends React.Component<Props, States> {
               isNew: false,
               children: [],
               action: (e) => this.setState({
-                distributionMode: e.target.dataset.value
+                distributionEasing: e.target.dataset.value
               }),
             },
             {
@@ -204,11 +204,11 @@ export default class Scale extends React.Component<Props, States> {
               isNew: false,
               children: [],
               action: (e) => this.setState({
-                distributionMode: e.target.dataset.value
+                distributionEasing: e.target.dataset.value
               }),
             }
           ]}
-          selected={this.state['distributionMode']}
+          selected={this.state['distributionEasing']}
           parentClassName="controls"
           isNew={
             features.find((feature) => feature.name === 'SCALE_HELPER_DISTRIBUTION')?.isNew
@@ -391,7 +391,7 @@ export default class Scale extends React.Component<Props, States> {
                 stops={this.props.preset.scale}
                 min={palette.min}
                 max={palette.max}
-                distributionMode={this.state['distributionMode']}
+                distributionEasing={this.state['distributionEasing']}
                 onChange={this.slideHandler}
               />
             ) : (
@@ -406,7 +406,7 @@ export default class Scale extends React.Component<Props, States> {
                   this.props.preset.max,
                   false
                 )}
-                distributionMode={this.state['distributionMode']}
+                distributionEasing={this.state['distributionEasing']}
                 onChange={this.slideHandler}
               />
             )}
@@ -493,7 +493,7 @@ export default class Scale extends React.Component<Props, States> {
               presetName={this.props.preset.name}
               stops={this.props.preset.scale}
               scale={this.props.scale}
-              distributionMode={this.state['distributionMode']}
+              distributionEasing={this.state['distributionEasing']}
               onChange={this.slideHandler}
             />
           </Feature>
