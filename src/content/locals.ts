@@ -102,6 +102,13 @@ export const locals: { [key: string]: any } = {
     scale: {
       title: 'Lightness scale',
       keyboardShortcuts: 'Review the keyboard shortcuts',
+      easing: {
+        label: "Distribution easing",
+        linear: "Linear",
+        easeIn: "Ease in",
+        easeOut: "Ease out",
+        easeInOut: "Ease in and out",
+      },
       tips: {
         title: 'Keyboard shortcuts',
         cta: 'Got it',
