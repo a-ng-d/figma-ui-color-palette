@@ -8,6 +8,7 @@ import type {
   PresetConfiguration,
   ScaleConfiguration,
   SourceColorConfiguration,
+  Easing
 } from '../../utils/types'
 import Feature from '../components/Feature'
 import { Button } from '@a-ng-d/figmug.actions.button'
@@ -16,6 +17,7 @@ import { texts } from '@a-ng-d/figmug.stylesheets.texts'
 import { SectionTitle } from '@a-ng-d/figmug.layouts.section-title'
 import { Dialog } from '@a-ng-d/figmug.dialogs.dialog'
 import { KeyboardShortcutItem } from '@a-ng-d/figmug.lists.keyboard-shortcut-item'
+import { FormItem } from '@a-ng-d/figmug.layouts.form-item'
 import Slider from '../components/Slider'
 import Actions from './Actions'
 import { palette, presets } from '../../utils/palettePackage'
@@ -48,6 +50,7 @@ interface Props {
 }
 
 interface States {
+  distributionMode: Easing
   isTipsOpen: boolean
 }
 
@@ -73,6 +76,7 @@ export default class Scale extends React.Component<Props, States> {
       ) as DispatchProcess,
     }
     this.state = {
+      distributionMode: 'LINEAR',
       isTipsOpen: false
     }
   }
@@ -138,6 +142,79 @@ export default class Scale extends React.Component<Props, States> {
   }
 
   // Templates
+  DistributionMode = () => {
+    return (
+      <FormItem
+        label="Distribution mode"
+        id="distribution-mode"
+      >
+        <Dropdown
+          id="distribution-mode"
+          options={[
+            {
+              label: "Linear",
+              value: 'LINEAR',
+              feature: 'UPDATE_DISTRIBUTION_MODE',
+              position: 0,
+              type: 'OPTION',
+              isActive: true,
+              isBlocked: false,
+              isNew: false,
+              children: [],
+              action: (e) => this.setState({
+                distributionMode: e.target.dataset.value
+              }),
+            },
+            {
+              label: "Ease in",
+              value: 'EASE_IN',
+              feature: 'UPDATE_DISTRIBUTION_MODE',
+              position: 1,
+              type: 'OPTION',
+              isActive: true,
+              isBlocked: false,
+              isNew: false,
+              children: [],
+              action: (e) => this.setState({
+                distributionMode: e.target.dataset.value
+              }),
+            },
+            {
+              label: "Ease out",
+              value: 'EASE_OUT',
+              feature: 'UPDATE_DISTRIBUTION_MODE',
+              position: 2,
+              type: 'OPTION',
+              isActive: true,
+              isBlocked: false,
+              isNew: false,
+              children: [],
+              action: (e) => this.setState({
+                distributionMode: e.target.dataset.value
+              }),
+            },
+            {
+              label: "Ease in out",
+              value: 'EASE_IN_OUT',
+              feature: 'UPDATE_DISTRIBUTION_MODE',
+              position: 3,
+              type: 'OPTION',
+              isActive: true,
+              isBlocked: false,
+              isNew: false,
+              children: [],
+              action: (e) => this.setState({
+                distributionMode: e.target.dataset.value
+              }),
+            }
+          ]}
+          selected={this.state['distributionMode']}
+          parentClassName="controls"
+        />
+      </FormItem>
+    )
+  }
+
   KeyboardShortcuts = () => {
     const isMacOrWinKeyboard = navigator.userAgent.indexOf('Mac') != -1 ? '⌘' : '⌃' ?? '⌘'
 
@@ -224,7 +301,6 @@ export default class Scale extends React.Component<Props, States> {
 
   Create = () => {
     palette.scale = {}
-    const isMacOrWinKeyboard = navigator.userAgent.indexOf('Mac') != -1 ? '⌘' : '⌃' ?? '⌘'
     return (
       <div className="controls__control">
         <div className="control__block control__block--distributed">
@@ -310,8 +386,9 @@ export default class Scale extends React.Component<Props, States> {
                 hasPreset={this.props.hasPreset}
                 presetName={this.props.preset.name}
                 stops={this.props.preset.scale}
-                min={this.props.preset.min}
-                max={this.props.preset.max}
+                min={palette.min}
+                max={palette.max}
+                distributionMode={this.state['distributionMode']}
                 onChange={this.slideHandler}
               />
             ) : (
@@ -326,6 +403,7 @@ export default class Scale extends React.Component<Props, States> {
                   this.props.preset.max,
                   false
                 )}
+                distributionMode={this.state['distributionMode']}
                 onChange={this.slideHandler}
               />
             )}
@@ -337,7 +415,9 @@ export default class Scale extends React.Component<Props, States> {
             }
           >
             <div className="section-controls">
-              <div className="section-controls__left-part"></div>
+              <div className="section-controls__left-part">
+                <this.DistributionMode />
+              </div>
               <div className="section-controls__right-part">
                 <Button
                   type="tertiary"
@@ -366,7 +446,6 @@ export default class Scale extends React.Component<Props, States> {
 
   Edit = () => {
     palette.scale = {}
-    const isMacOrWinKeyboard = navigator.userAgent.indexOf('Mac') != -1 ? '⌘' : '⌃' ?? '⌘'
     return (
       <div className="controls__control">
         <div className="control__block control__block--distributed">
@@ -397,6 +476,7 @@ export default class Scale extends React.Component<Props, States> {
               presetName={this.props.preset.name}
               stops={this.props.preset.scale}
               scale={this.props.scale}
+              distributionMode={this.state['distributionMode']}
               onChange={this.slideHandler}
             />
           </Feature>
@@ -407,7 +487,9 @@ export default class Scale extends React.Component<Props, States> {
             }
           >
             <div className="section-controls">
-              <div className="section-controls__left-part"></div>
+              <div className="section-controls__left-part">
+                <this.DistributionMode />
+              </div>
               <div className="section-controls__right-part">
                 <Button
                   type="tertiary"

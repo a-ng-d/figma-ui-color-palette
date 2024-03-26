@@ -1,5 +1,5 @@
 import * as React from 'react'
-import type { ScaleConfiguration } from '../../utils/types'
+import type { ScaleConfiguration, Easing } from '../../utils/types'
 import Knob from './Knob'
 import { doMap } from '@a-ng-d/figmug.modules.do-map'
 import addStop from './../handlers/addStop'
@@ -9,7 +9,7 @@ import shiftRightStop from './../handlers/shiftRightStop'
 import { palette } from '../../utils/palettePackage'
 import doLightnessScale from '../../utils/doLightnessScale'
 
-const safeGap = 2
+const safeGap = 0.1
 
 interface Props {
   stops: Array<number>
@@ -19,6 +19,7 @@ interface Props {
   min?: number
   max?: number
   scale?: ScaleConfiguration
+  distributionMode: Easing
   onChange: (state: string, feature?: string) => void
 }
 
@@ -262,7 +263,9 @@ export default class Slider extends React.Component<Props> {
     palette.scale = doLightnessScale(
       this.props.stops,
       palette.min ?? 0,
-      palette.max ?? 100
+      palette.max ?? 100,
+      true,
+      this.props.distributionMode
     )
 
     stops.forEach((stop) => {
@@ -299,7 +302,9 @@ export default class Slider extends React.Component<Props> {
     palette.scale = doLightnessScale(
       this.props.stops,
       palette.min ?? 0,
-      palette.max ?? 100
+      palette.max ?? 100,
+      true,
+      this.props.distributionMode
     )
     return (
       <div className="slider__range">

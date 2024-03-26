@@ -108,6 +108,8 @@ export default class CreatePalette extends React.Component<Props, States> {
   // Renders
   render() {
     palette.preset = this.props.preset
+    palette.min = this.props.preset.min
+    palette.max = this.props.preset.max
     palette.scale = doLightnessScale(
       this.props.preset.scale,
       this.props.preset.min ?? 0,

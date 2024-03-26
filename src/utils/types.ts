@@ -30,6 +30,8 @@ export type PriorityContext =
 
 export type ThirdParty = 'COOLORS' | 'REALTIME_COLORS'
 
+export type Easing = 'LINEAR' | 'EASE_IN' | 'EASE_OUT' | 'EASE_IN_OUT'
+
 export interface windowSize {
   w: number
   h: number
