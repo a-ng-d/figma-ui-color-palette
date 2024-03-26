@@ -419,12 +419,12 @@ export default class EditPalette extends React.Component<Props, States> {
               }
             >
               <FormItem
-                id="switch-theme"
+                id="themes"
                 label={locals[this.props.lang].themes.switchTheme.label}
                 shouldFill={false}
               >
                 <Dropdown
-                  id="switch-theme"
+                  id="themes"
                   options={this.setThemes()}
                   selected={
                     this.props.themes.find((theme) => theme.isEnabled)?.id ??

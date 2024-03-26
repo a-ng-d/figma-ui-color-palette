@@ -331,7 +331,7 @@ export default class Scale extends React.Component<Props, States> {
                 }
               >
                 <Dropdown
-                  id="switch-presets"
+                  id="presets"
                   options={Object.entries(presets).map((preset, index) => {
                     return {
                       label: preset[1].name,
