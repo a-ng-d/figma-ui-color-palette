@@ -449,7 +449,7 @@ export default class Scale extends React.Component<Props, States> {
                     )?.isActive
                   }
                 >
-                  <div className='shortcuts'>
+                  <div className="shortcuts">
                     <Button
                       type="tertiary"
                       label={locals[this.props.lang].scale.howTo}
@@ -559,7 +559,7 @@ export default class Scale extends React.Component<Props, States> {
                     )?.isActive
                   }
                 >
-                  <div className='snackbar'>
+                  <div className="snackbar">
                     <Button
                       type="tertiary"
                       label={locals[this.props.lang].scale.howTo}

@@ -112,8 +112,9 @@ export default class TransferPalette extends React.Component<Props> {
       <>
         <section className="controller">
           <div className="controls">
-          {this.props.service === 'CREATE' && this.props.editorType === 'dev' ? (
-            <PalettesList
+            {this.props.service === 'CREATE' &&
+            this.props.editorType === 'dev' ? (
+              <PalettesList
                 paletteLists={this.props.palettesList}
                 lang={this.props.lang}
               />

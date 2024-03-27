@@ -886,7 +886,7 @@ class App extends React.Component<Record<string, never>, States> {
           <Feature
             isActive={
               features.find((feature) => feature.name === 'TRANSFER')
-                 ?.isActive && this.state['editorType'] === 'dev'
+                ?.isActive && this.state['editorType'] === 'dev'
             }
           >
             <TransferPalette
