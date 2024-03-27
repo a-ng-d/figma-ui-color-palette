@@ -90,7 +90,7 @@ export default class Shortcuts extends React.Component<Props, States> {
       <Bar
         rightPart={
           <>
-            <div className="shortcuts">
+            <div className="shortcuts snackbar">
               <Feature
                 isActive={
                   features.find(
@@ -344,7 +344,7 @@ export default class Shortcuts extends React.Component<Props, States> {
                 ?.isActive
             }
           >
-            <div className="pro-zone">
+            <div className="pro-zone snackbar">
               {this.props.planStatus === 'UNPAID' &&
               this.props.trialStatus != 'PENDING' ? (
                 <Button
