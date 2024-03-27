@@ -87,12 +87,14 @@ export default class PalettesList extends React.Component<Props> {
               {this.props.paletteLists.length > 0 ? (
                 <this.PalettesList />
               ) : (
-                <Message
-                  icon="info"
-                  messages={[
-                    locals[this.props.lang].warning.noPaletteOnCurrrentPage,
-                  ]}
-                />
+                <div className="onboarding__callout">
+                  <Message
+                    icon="info"
+                    messages={[
+                      locals[this.props.lang].warning.noPaletteOnCurrrentPage,
+                    ]}
+                  />
+                </div>
               )}
             </div>
           </div>
