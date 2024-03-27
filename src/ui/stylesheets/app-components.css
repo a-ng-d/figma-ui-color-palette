@@ -121,6 +121,28 @@ li.rich-list__item:focus {
   outline-offset: -2px;
 }
 
+/* Callout */
+div.onboarding .label {
+  width: auto;
+}
+
+div.onboarding__callout {
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-xxxsmall);
+}
+
+div.onboarding__callout div.onboarding-tip {
+  justify-content: center;
+}
+
+div.onboarding__actions {
+  display: flex;
+  gap: var(--size-xxsmall);
+  justify-content: center;
+  padding: 0 calc(var(--size-xsmall) + var(--size-xxxsmall));
+}
+
 /* Slider */
 div.slider {
   display: flex;
