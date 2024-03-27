@@ -6,7 +6,7 @@ const doLightnessScale = (
   min: number,
   max: number,
   isDistributed = true,
-  mode: Easing = 'EASE_IN_OUT'
+  mode: Easing = 'LINEAR'
 ) => {
   let x = 1
   const scale: ScaleConfiguration = {}
