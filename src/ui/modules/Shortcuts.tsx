@@ -373,7 +373,9 @@ export default class Shortcuts extends React.Component<Props, States> {
               ) : this.props.trialStatus === 'EXPIRED' &&
                 this.props.planStatus != 'PAID' ? (
                 <>
-                  <div className={`type ${texts.type} ${texts['type--secondary']} truncated`}>
+                  <div
+                    className={`type ${texts.type} ${texts['type--secondary']} truncated`}
+                  >
                     <span>{locals[this.props.lang].plan.trialEnded}</span>
                   </div>
                   <span
