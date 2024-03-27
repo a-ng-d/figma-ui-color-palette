@@ -12,14 +12,13 @@ import type {
   EditorType,
   visionSimulationModeConfiguration,
   PlanStatus,
+  ExtractOfPaletteConfiguration,
+  Service,
 } from '../../utils/types'
-import Feature from '../components/Feature'
-import { Bar } from '@a-ng-d/figmug.layouts.bar'
-import { Tabs } from '@a-ng-d/figmug.actions.tabs'
 import Export from '../modules/Export'
-import features from '../../utils/config'
 import { locals } from '../../content/locals'
 import { doSnakeCase } from '@a-ng-d/figmug.modules.do-snake-case'
+import PalettesList from '../modules/PalettesList'
 
 interface Props {
   name: string
@@ -34,30 +33,14 @@ interface Props {
   textColorsTheme: TextColorsThemeHexModel
   algorithmVersion: string
   export: ExportConfiguration
+  palettesList: Array<ExtractOfPaletteConfiguration>
+  service: Service
   planStatus: PlanStatus
   editorType: EditorType
   lang: Language
 }
 
-interface States {
-  context: string | undefined
-}
-
-export default class TransferPalette extends React.Component<Props, States> {
-  constructor(props: Props) {
-    super(props)
-    this.state = {
-      context:
-        this.setContexts()[0] != undefined ? this.setContexts()[0].id : '',
-    }
-  }
-
-  // Handlers
-  navHandler = (e: React.SyntheticEvent) =>
-    this.setState({
-      context: (e.target as HTMLElement).dataset.feature,
-    })
-
+export default class TransferPalette extends React.Component<Props> {
   // Direct actions
   onExport = () => {
     const blob = new Blob([this.props.export.data], {
@@ -123,61 +106,31 @@ export default class TransferPalette extends React.Component<Props, States> {
     }
   }
 
-  setContexts = () => {
-    const contexts: Array<{
-      label: string
-      id: string
-      isUpdated: boolean
-    }> = []
-    if (features.find((feature) => feature.name === 'EXPORT')?.isActive)
-      contexts.push({
-        label: locals[this.props.lang].contexts.export,
-        id: 'EXPORT',
-        isUpdated:
-          features.find((feature) => feature.name === 'EXPORT')?.isNew ?? false,
-      })
-    return contexts
-  }
-
   // Render
   render() {
-    let controls
-
-    switch (this.state['context']) {
-      case 'EXPORT': {
-        controls = (
-          <Export
-            exportPreview={
-              this.props.export.format === 'CSV'
-                ? this.props.export.data[0].colors[0].csv
-                : this.props.export.data
-            }
-            planStatus={this.props.planStatus}
-            exportType={this.props.export.label}
-            lang={this.props.lang}
-            onExportPalette={this.onExport}
-          />
-        )
-        break
-      }
-    }
     return (
       <>
-        <Feature isActive={this.props.editorType != 'dev'}>
-          <Bar
-            leftPart={
-              <Tabs
-                tabs={this.setContexts()}
-                active={this.state['context'] ?? ''}
-                action={this.navHandler}
-              />
-            }
-            border={['BOTTOM']}
-            isOnlyText={true}
-          />
-        </Feature>
         <section className="controller">
-          <div className="controls">{controls}</div>
+          <div className="controls">
+          {this.props.service === 'CREATE' && this.props.editorType === 'dev' ? (
+            <PalettesList
+                paletteLists={this.props.palettesList}
+                lang={this.props.lang}
+              />
+            ) : (
+              <Export
+                exportPreview={
+                  this.props.export.format === 'CSV'
+                    ? this.props.export.data[0].colors[0].csv
+                    : this.props.export.data
+                }
+                planStatus={this.props.planStatus}
+                exportType={this.props.export.label}
+                lang={this.props.lang}
+                onExportPalette={this.onExport}
+              />
+            )}
+          </div>
         </section>
       </>
     )
