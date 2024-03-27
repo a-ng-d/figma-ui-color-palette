@@ -23,6 +23,7 @@ import type {
   ThirdParty,
   ExtractOfPaletteConfiguration,
   ExportConfiguration,
+  Service,
 } from '../utils/types'
 import Dispatcher from './modules/Dispatcher'
 import Feature from './components/Feature'
@@ -30,7 +31,6 @@ import CreatePalette from './services/CreatePalette'
 import EditPalette from './services/EditPalette'
 import TransferPalette from './services/TransferPalette'
 import PriorityContainer from './modules/PriorityContainer'
-import PalettesList from './modules/PalettesList'
 import Shortcuts from './modules/Shortcuts'
 import { palette, presets } from '../utils/palettePackage'
 import doLightnessScale from '../utils/doLightnessScale'
@@ -41,7 +41,7 @@ import './stylesheets/app-components.css'
 import { locals } from '../content/locals'
 
 interface States {
-  service: 'CREATE' | 'EDIT' | 'TRANSFER'
+  service: Service
   sourceColors: Array<SourceColorConfiguration>
   name: string
   description: string
@@ -886,7 +886,7 @@ class App extends React.Component<Record<string, never>, States> {
           <Feature
             isActive={
               features.find((feature) => feature.name === 'TRANSFER')
-                ?.isActive && this.state['service'] === 'TRANSFER'
+                 ?.isActive && this.state['editorType'] === 'dev'
             }
           >
             <TransferPalette
@@ -902,20 +902,10 @@ class App extends React.Component<Record<string, never>, States> {
               textColorsTheme={this.state['textColorsTheme']}
               algorithmVersion={this.state['algorithmVersion']}
               export={this.state['export']}
+              palettesList={this.state['palettesList']}
+              service={this.state['service']}
               editorType={this.state['editorType']}
               planStatus={this.state['planStatus']}
-              lang={this.state['lang']}
-            />
-          </Feature>
-          <Feature
-            isActive={
-              features.find((feature) => feature.name === 'BROWSE')?.isActive &&
-              this.state['service'] === 'CREATE' &&
-              this.state['editorType'] === 'dev'
-            }
-          >
-            <PalettesList
-              paletteLists={this.state['palettesList']}
               lang={this.state['lang']}
             />
           </Feature>
