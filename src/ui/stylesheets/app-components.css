@@ -316,3 +316,14 @@ div.slider .slider__input {
   border-radius: var(--border-radius-med);
   background-color: var(--figma-color-bg);
 }
+
+/* Truncated */
+div.truncated {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  padding: 0 0 0 var(--size-xxxsmall);
+}
+
+div.truncated span {
+  white-space: nowrap;
+}
