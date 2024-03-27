@@ -212,8 +212,7 @@ div.about__links {
 }
 
 /* Shortcuts */
-div.shortcuts,
-div.pro-zone {
+div.snackbar {
   display: flex;
   align-items: center;
   gap: var(--size-xxxsmall);
