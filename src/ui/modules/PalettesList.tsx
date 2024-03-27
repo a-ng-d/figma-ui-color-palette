@@ -38,10 +38,10 @@ export default class PalettesList extends React.Component<Props> {
         >
           {locals[this.props.lang].palettesList.title}
         </div>
-        {this.props.paletteLists.map((palette) => (
+        {this.props.paletteLists.map((palette, index) => (
           <li
             className="rich-list__item"
-            key={palette.id}
+            key={`palette-${index}`}
             data-id={palette.id}
             tabIndex={0}
             onMouseDown={this.onSelectPalette}
