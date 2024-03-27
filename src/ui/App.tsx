@@ -616,7 +616,7 @@ class App extends React.Component<Record<string, never>, States> {
 
         const updateWhilePaletteSelected = () => {
           isPaletteSelected = true
-          palette.preset = defaultPreset
+          palette.preset = e.data.pluginMessage.data.preset
           parent.postMessage(
             {
               pluginMessage: {
