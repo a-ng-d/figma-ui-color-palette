@@ -253,7 +253,7 @@ export default class Scale extends React.Component<Props, States> {
             label: locals[this.props.lang].scale.namingConvention.tens,
             value: 'TENS',
             feature: 'UPDATE_NAMING_CONVENTION',
-            position: 1,
+            position: 0,
             type: 'OPTION',
             isActive: true,
             isBlocked: false,
@@ -265,7 +265,7 @@ export default class Scale extends React.Component<Props, States> {
             label: locals[this.props.lang].scale.namingConvention.hundreds,
             value: 'HUNDREDS',
             feature: 'UPDATE_NAMING_CONVENTION',
-            position: 2,
+            position: 0,
             type: 'OPTION',
             isActive: true,
             isBlocked: false,
@@ -398,7 +398,7 @@ export default class Scale extends React.Component<Props, States> {
                       label: preset[1].name,
                       value: preset[1].id,
                       feature: 'UPDATE_PRESET',
-                      position: index,
+                      position: 0,
                       type: 'OPTION',
                       isActive: features.find(
                         (feature) => feature.name === `PRESETS_${preset[1].id}`
