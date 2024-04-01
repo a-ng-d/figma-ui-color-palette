@@ -795,7 +795,7 @@ const features: Array<Feature> = [
   },
   {
     name: 'SHORTCUTS_REPORTING',
-    description: 'Github Issues',
+    description: 'Bug reports',
     isActive: true,
     isPro: false,
     isNew: false,
@@ -803,8 +803,8 @@ const features: Array<Feature> = [
     service: ['CREATE', 'EDIT'],
   },
   {
-    name: 'SHORTCUTS_DISCUSSION',
-    description: 'Github Discussions',
+    name: 'SHORTCUTS_REQUESTS',
+    description: 'Feature requests',
     isActive: true,
     isPro: false,
     isNew: false,

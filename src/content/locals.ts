@@ -251,7 +251,7 @@ export const locals: { [key: string]: any } = {
     },
     about: {
       title: 'About UI Color Palette',
-      repository: 'Watch the repository',
+      repository: 'Repository',
       getHelp: {
         title: 'Have help',
         documentation: 'Read the documentation',
@@ -259,12 +259,13 @@ export const locals: { [key: string]: any } = {
       },
       beInvolved: {
         title: 'Get involved',
-        issue: 'Open an issue',
+        issue: 'Report a bug',
         discuss: 'Start a discussion',
+        request: 'Post a feature request'
       },
       giveSupport: {
         title: 'Give support',
-        follow: 'Follow our LinkedIn page',
+        follow: 'Follow us',
         rate: 'Like us',
       },
     },
