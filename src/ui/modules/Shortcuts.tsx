@@ -126,7 +126,7 @@ export default class Shortcuts extends React.Component<Props, States> {
                     type: 'OPTION',
                     isActive:
                       features.find(
-                        (feature) => feature.name === 'SHORTCUTS_HIGHTLIGHT'
+                        (feature) => feature.name === 'SHORTCUTS_HIGHLIGHT'
                       )?.isActive ?? true,
                     isBlocked: isBlocked(
                       'SHORTCUTS_HIGHLIGHT',
@@ -134,31 +134,6 @@ export default class Shortcuts extends React.Component<Props, States> {
                     ),
                     children: [],
                     action: () => this.props.onReOpenHighlight(),
-                  },
-                  {
-                    label: locals[this.props.lang].about.getHelp.email,
-                    value: null,
-                    feature: null,
-                    position: 0,
-                    type: 'OPTION',
-                    isActive: features.find(
-                      (feature) => feature.name === 'SHORTCUTS_EMAIL'
-                    )?.isActive,
-                    isBlocked: isBlocked(
-                      'SHORTCUTS_EMAIL',
-                      this.props.planStatus
-                    ),
-                    children: [],
-                    action: () =>
-                      parent.postMessage(
-                        {
-                          pluginMessage: {
-                            type: 'OPEN_IN_BROWSER',
-                            url: 'https://uicp.link/send-message',
-                          },
-                        },
-                        '*'
-                      ),
                   },
                   {
                     label: locals[this.props.lang].about.repository,
@@ -213,6 +188,31 @@ export default class Shortcuts extends React.Component<Props, States> {
                     action: () => this.props.onReOpenFeedback(),
                   },
                   {
+                    label: locals[this.props.lang].about.beInvolved.request,
+                    value: null,
+                    feature: null,
+                    position: 0,
+                    type: 'OPTION',
+                    isActive: features.find(
+                      (feature) => feature.name === 'SHORTCUTS_REQUESTS'
+                    )?.isActive,
+                    isBlocked: isBlocked(
+                      'SHORTCUTS_REQUESTS',
+                      this.props.planStatus
+                    ),
+                    children: [],
+                    action: () =>
+                      parent.postMessage(
+                        {
+                          pluginMessage: {
+                            type: 'OPEN_IN_BROWSER',
+                            url: 'https://uicp.link/feature-requests',
+                          },
+                        },
+                        '*'
+                      ),
+                  },
+                  {
                     label: locals[this.props.lang].about.beInvolved.issue,
                     value: null,
                     feature: null,
@@ -238,16 +238,16 @@ export default class Shortcuts extends React.Component<Props, States> {
                       ),
                   },
                   {
-                    label: locals[this.props.lang].about.beInvolved.discuss,
+                    label: locals[this.props.lang].about.getHelp.email,
                     value: null,
                     feature: null,
                     position: 0,
                     type: 'OPTION',
                     isActive: features.find(
-                      (feature) => feature.name === 'SHORTCUTS_DISCUSSION'
+                      (feature) => feature.name === 'SHORTCUTS_EMAIL'
                     )?.isActive,
                     isBlocked: isBlocked(
-                      'SHORTCUTS_DISCUSSION',
+                      'SHORTCUTS_EMAIL',
                       this.props.planStatus
                     ),
                     children: [],
@@ -256,7 +256,7 @@ export default class Shortcuts extends React.Component<Props, States> {
                         {
                           pluginMessage: {
                             type: 'OPEN_IN_BROWSER',
-                            url: 'https://uicp.link/discuss',
+                            url: 'https://uicp.link/send-message',
                           },
                         },
                         '*'
