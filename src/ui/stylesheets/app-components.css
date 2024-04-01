@@ -170,7 +170,7 @@ div.slider .slider__range--not-allowed {
 }
 
 div.slider .slider__knob {
-  width: var(--size-medium);
+  min-width: var(--size-medium);
   height: var(--size-xxlarge);
   background: transparent;
   transform: translateX(-50%) translateY(-50%);

@@ -164,6 +164,15 @@ const features: Array<Feature> = [
     service: ['CREATE'],
   },
   {
+    name: 'SCALE_PRESETS_NAMING_CONVENTION',
+    description: 'Naming convention pattern',
+    isActive: true,
+    isPro: false,
+    isNew: false,
+    type: 'ACTION',
+    service: ['CREATE'],
+  },
+  {
     name: 'PRESETS_MATERIAL',
     description: 'Material Design color system',
     isActive: true,

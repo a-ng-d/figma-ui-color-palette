@@ -9,13 +9,14 @@ const deleteStop = (
   presetMax: number
 ) => {
   const newScale: Array<number> = [],
-    newLightnessScale: { [key: string]: number } = {}
+    newLightnessScale: { [key: string]: number } = {},
+    factor = Math.min(...Object.keys(scale).map(stop => parseFloat(stop.split('-')[1])))
 
   Object.values(scale).forEach((scale) => {
     scale === parseFloat(selectedKnob.style.left) ? null : newScale.push(scale)
   })
   newScale.forEach(
-    (scale, index) => (newLightnessScale[`lightness-${index + 1}`] = scale)
+    (scale, index) => (newLightnessScale[`lightness-${(index + 1) * factor}`] = scale)
   )
 
   palette.scale = newLightnessScale
@@ -27,7 +28,7 @@ const deleteStop = (
     min: presetMin,
     max: presetMax,
     isDistributed: false,
-    id: '',
+    id: 'CUSTOM',
   }
 }
 

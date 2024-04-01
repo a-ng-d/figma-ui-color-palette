@@ -102,6 +102,11 @@ export const locals: { [key: string]: any } = {
         easeOut: 'Ease out',
         easeInOut: 'Ease in and out',
       },
+      namingConvention: {
+        ones: '1-10',
+        tens: '10-100',
+        hundreds: '100-1000',
+      },
       tips: {
         title: 'Keyboard shortcuts',
         custom: 'Adjustment with Custom preset',
