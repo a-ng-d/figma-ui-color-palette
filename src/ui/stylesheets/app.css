@@ -211,7 +211,7 @@ div.about__links {
   color: var(--figma-color-text);
 }
 
-/* Shortcuts */
+/* Bars */
 div.snackbar {
   display: flex;
   align-items: center;
