@@ -281,16 +281,15 @@ class App extends React.Component<Record<string, never>, States> {
     }
 
     const changeNamingConvention = () => {
-      const option =  (e.target as HTMLInputElement).dataset.value as NamingConvention
+      const option = (e.target as HTMLInputElement).dataset
+        .value as NamingConvention
       this.setState({
         namingConvention: option,
         preset: {
           name: presets.find((preset) => preset.id === 'CUSTOM')?.name ?? '',
           scale: scale.map((stop, index) => {
-            if (option === 'TENS')
-              return (index + 1) * 10
-            else if (option === 'HUNDREDS')
-              return (index + 1) * 100
+            if (option === 'TENS') return (index + 1) * 10
+            else if (option === 'HUNDREDS') return (index + 1) * 100
             return (index + 1) * 1
           }),
           min: palette.min ?? 0,
