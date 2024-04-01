@@ -24,6 +24,7 @@ import type {
   ExtractOfPaletteConfiguration,
   ExportConfiguration,
   Service,
+  NamingConvention,
 } from '../utils/types'
 import Dispatcher from './modules/Dispatcher'
 import Feature from './components/Feature'
@@ -46,6 +47,7 @@ interface States {
   name: string
   description: string
   preset: PresetConfiguration
+  namingConvention: NamingConvention
   scale: ScaleConfiguration
   newColors: Array<ColorConfiguration>
   colorSpace: ColorSpaceConfiguration
@@ -113,6 +115,7 @@ class App extends React.Component<Record<string, never>, States> {
       description: '',
       preset:
         presets.find((preset) => preset.id === 'MATERIAL') ?? defaultPreset,
+      namingConvention: 'ONES',
       scale: {},
       newColors: [],
       colorSpace: 'LCH',
@@ -247,7 +250,7 @@ class App extends React.Component<Record<string, never>, States> {
 
     const addStop = () => {
       if (scale.length < 24) {
-        scale.push(scale.length + 1)
+        scale.push(scale.slice(-1)[0] + scale[0])
         this.setState({
           preset: {
             name: presets.find((preset) => preset.id === 'CUSTOM')?.name ?? '',
@@ -277,9 +280,31 @@ class App extends React.Component<Record<string, never>, States> {
       }
     }
 
+    const changeNamingConvention = () => {
+      const option =  (e.target as HTMLInputElement).dataset.value as NamingConvention
+      this.setState({
+        namingConvention: option,
+        preset: {
+          name: presets.find((preset) => preset.id === 'CUSTOM')?.name ?? '',
+          scale: scale.map((stop, index) => {
+            if (option === 'TENS')
+              return (index + 1) * 10
+            else if (option === 'HUNDREDS')
+              return (index + 1) * 100
+            return (index + 1) * 1
+          }),
+          min: palette.min ?? 0,
+          max: palette.max ?? 100,
+          isDistributed: true,
+          id: 'CUSTOM',
+        },
+      })
+    }
+
     const actions: ActionsList = {
       ADD_STOP: () => addStop(),
       REMOVE_STOP: () => removeStop(),
+      UPDATE_NAMING_CONVENTION: () => changeNamingConvention(),
       NULL: () => null,
     }
 
@@ -550,6 +575,7 @@ class App extends React.Component<Record<string, never>, States> {
             preset:
               presets.find((preset) => preset.id === 'MATERIAL') ??
               defaultPreset,
+            namingConvention: 'ONES',
             colorSpace: 'LCH',
             visionSimulationMode: 'NONE',
             view: 'PALETTE_WITH_PROPERTIES',
@@ -580,6 +606,7 @@ class App extends React.Component<Record<string, never>, States> {
               preset:
                 presets.find((preset) => preset.id === 'MATERIAL') ??
                 defaultPreset,
+              namingConvention: 'ONES',
               colorSpace: 'LCH',
               visionSimulationMode: 'NONE',
               view: 'PALETTE_WITH_PROPERTIES',
@@ -841,6 +868,7 @@ class App extends React.Component<Record<string, never>, States> {
               name={this.state['name']}
               description={this.state['description']}
               preset={this.state['preset']}
+              namingConvention={this.state['namingConvention']}
               colorSpace={this.state['colorSpace']}
               visionSimulationMode={this.state['visionSimulationMode']}
               view={this.state['view']}

@@ -7,6 +7,7 @@ import type {
   TextColorsThemeHexModel,
   ThirdParty,
   PlanStatus,
+  NamingConvention,
 } from '../../utils/types'
 import { Bar } from '@a-ng-d/figmug.layouts.bar'
 import { Tabs } from '@a-ng-d/figmug.actions.tabs'
@@ -23,6 +24,7 @@ interface Props {
   name: string
   description: string
   preset: PresetConfiguration
+  namingConvention: NamingConvention
   colorSpace: string
   visionSimulationMode: visionSimulationModeConfiguration
   view: string
@@ -136,12 +138,14 @@ export default class CreatePalette extends React.Component<Props, States> {
             sourceColors={this.props.sourceColors}
             hasPreset={true}
             preset={this.props.preset}
+            namingConvention={this.props.namingConvention}
             planStatus={this.props.planStatus}
             lang={this.props.lang}
             onChangePreset={this.props.onChangePreset}
             onChangeScale={() => null}
             onAddStop={this.props.onCustomPreset}
             onRemoveStop={this.props.onCustomPreset}
+            onChangeNamingConvention={this.props.onCustomPreset}
             onCreatePalette={this.onCreatePalette}
           />
         )

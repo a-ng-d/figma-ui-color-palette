@@ -9,6 +9,7 @@ import type {
   ScaleConfiguration,
   SourceColorConfiguration,
   Easing,
+  NamingConvention,
 } from '../../utils/types'
 import Feature from '../components/Feature'
 import { Button } from '@a-ng-d/figmug.actions.button'
@@ -31,6 +32,7 @@ interface Props {
   sourceColors?: Array<SourceColorConfiguration>
   hasPreset: boolean
   preset: PresetConfiguration
+  namingConvention: NamingConvention
   scale?: ScaleConfiguration
   actions?: string
   planStatus: PlanStatus
@@ -43,6 +45,7 @@ interface Props {
   onChangeStop?: () => void
   onAddStop?: React.ReactEventHandler
   onRemoveStop?: React.ReactEventHandler
+  onChangeNamingConvention?: React.ReactEventHandler
   onCreatePalette?: () => void
   onSyncLocalStyles?: () => void
   onSyncLocalVariables?: () => void
@@ -56,6 +59,10 @@ interface States {
 
 export default class Scale extends React.Component<Props, States> {
   dispatch: { [key: string]: DispatchProcess }
+
+  static defaultProps = {
+    namingConvention: 'ONES'
+  }
 
   constructor(props: Props) {
     super(props)
@@ -225,6 +232,60 @@ export default class Scale extends React.Component<Props, States> {
     )
   }
 
+  NamingConvention = () => {
+    return (
+      <Dropdown
+        id="naming-convention"
+        options={[
+          {
+            label: locals[this.props.lang].scale.namingConvention.ones,
+            value: 'ONES',
+            feature: 'UPDATE_NAMING_CONVENTION',
+            position: 0,
+            type: 'OPTION',
+            isActive: true,
+            isBlocked: false,
+            isNew: false,
+            children: [],
+            action: (e) => this.props.onChangeNamingConvention?.(e),
+          },
+          {
+            label: locals[this.props.lang].scale.namingConvention.tens,
+            value: 'TENS',
+            feature: 'UPDATE_NAMING_CONVENTION',
+            position: 1,
+            type: 'OPTION',
+            isActive: true,
+            isBlocked: false,
+            isNew: false,
+            children: [],
+            action: (e) => this.props.onChangeNamingConvention?.(e),
+          },
+          {
+            label: locals[this.props.lang].scale.namingConvention.hundreds,
+            value: 'HUNDREDS',
+            feature: 'UPDATE_NAMING_CONVENTION',
+            position: 2,
+            type: 'OPTION',
+            isActive: true,
+            isBlocked: false,
+            isNew: false,
+            children: [],
+            action: (e) => this.props.onChangeNamingConvention?.(e),
+          },
+        ]}
+        selected={this.props.namingConvention}
+        parentClassName="controls"
+        alignment="RIGHT"
+        isNew={
+          features.find(
+            (feature) => feature.name === 'SCALE_PRESETS_NAMING_CONVENTION'
+          )?.isNew
+        }
+      />
+    )
+  }
+
   KeyboardShortcuts = () => {
     const isMacOrWinKeyboard =
       navigator.userAgent.indexOf('Mac') != -1 ? '⌘' : '⌃' ?? '⌘'
@@ -364,27 +425,37 @@ export default class Scale extends React.Component<Props, States> {
                     ?.isActive
                 }
               >
-                {this.props.preset.scale.length > 2 &&
-                this.props.preset.name === 'Custom' ? (
-                  <Button
-                    type="icon"
-                    icon="minus"
-                    feature="REMOVE_STOP"
-                    action={this.props.onRemoveStop}
-                  />
-                ) : null}
                 {this.props.preset.name === 'Custom' ? (
-                  <Button
-                    type="icon"
-                    icon="plus"
-                    isDisabled={this.props.preset.scale.length == 24}
-                    feature="ADD_STOP"
-                    action={
-                      this.props.preset.scale.length >= 24
-                        ? () => null
-                        : this.props.onAddStop
-                    }
-                  />
+                  <>
+                    <Feature
+                      isActive={
+                        features.find(
+                          (feature) => feature.name === 'SCALE_PRESETS_NAMING_CONVENTION'
+                        )?.isActive
+                      }
+                    >
+                      <this.NamingConvention />
+                    </Feature>
+                    {this.props.preset.scale.length > 2 ? (
+                      <Button
+                        type="icon"
+                        icon="minus"
+                        feature="REMOVE_STOP"
+                        action={this.props.onRemoveStop}
+                      />
+                    ) : null}
+                    <Button
+                      type="icon"
+                      icon="plus"
+                      isDisabled={this.props.preset.scale.length == 24}
+                      feature="ADD_STOP"
+                      action={
+                        this.props.preset.scale.length >= 24
+                          ? () => null
+                          : this.props.onAddStop
+                      }
+                    />
+                  </>
                 ) : null}
               </Feature>
             </div>
