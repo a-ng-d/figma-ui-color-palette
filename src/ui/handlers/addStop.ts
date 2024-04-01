@@ -20,7 +20,9 @@ const addStop = (
     ),
     offset: number = doMap(e.clientX - sliderPadding, 0, rangeWidth, 0, 100),
     newLightnessScale: { [key: string]: number } = {},
-    factor = Math.min(...Object.keys(scale).map(stop => parseFloat(stop.split('-')[1])))
+    factor = Math.min(
+      ...Object.keys(scale).map((stop) => parseFloat(stop.split('-')[1]))
+    )
 
   let newScale: Array<number> = []
 
@@ -28,7 +30,8 @@ const addStop = (
   newScale.length < 25 ? newScale.push(parseFloat(offset.toFixed(1))) : null
   newScale.sort((a, b) => b - a)
   newScale.forEach(
-    (scale, index) => (newLightnessScale[`lightness-${(index + 1) * factor}`] = scale)
+    (scale, index) =>
+      (newLightnessScale[`lightness-${(index + 1) * factor}`] = scale)
   )
 
   palette.scale = newLightnessScale

@@ -261,7 +261,7 @@ export const locals: { [key: string]: any } = {
         title: 'Get involved',
         issue: 'Report a bug',
         discuss: 'Start a discussion',
-        request: 'Post a feature request'
+        request: 'Post a feature request',
       },
       giveSupport: {
         title: 'Give support',

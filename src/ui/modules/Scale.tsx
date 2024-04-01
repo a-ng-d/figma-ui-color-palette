@@ -61,7 +61,7 @@ export default class Scale extends React.Component<Props, States> {
   dispatch: { [key: string]: DispatchProcess }
 
   static defaultProps = {
-    namingConvention: 'ONES'
+    namingConvention: 'ONES',
   }
 
   constructor(props: Props) {
@@ -430,7 +430,8 @@ export default class Scale extends React.Component<Props, States> {
                     <Feature
                       isActive={
                         features.find(
-                          (feature) => feature.name === 'SCALE_PRESETS_NAMING_CONVENTION'
+                          (feature) =>
+                            feature.name === 'SCALE_PRESETS_NAMING_CONVENTION'
                         )?.isActive
                       }
                     >
