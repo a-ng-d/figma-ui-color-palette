@@ -28,7 +28,7 @@
   },
   "repository": "https://github.com/inVoltag/figma-ui-color-palette",
   "devDependencies": {
-    "@figma/plugin-typings": "^1.86.0",
+    "@figma/plugin-typings": "*",
     "@types/chroma-js": "^2.4.0",
     "@types/file-saver": "^2.0.5",
     "@types/react": "^17.0.37",
