@@ -22,30 +22,36 @@ const createLocalVariables = async (palette: SceneNode) => {
               }
           })
           .slice(1) ?? []
-    
+
     const collection = await figma.variables
       .getLocalVariableCollectionsAsync()
-      .then(collections => collections.find((collection) => collection.id === paletteData.collectionId))
-      .then(collection => {
+      .then((collections) =>
+        collections.find(
+          (collection) => collection.id === paletteData.collectionId
+        )
+      )
+      .then((collection) => {
         if (collection == undefined) {
           collection = new LocalVariable().makeCollection(name)
           paletteData.collectionId = collection.id
         }
         return collection
       })
-    
+
     const createLocalVariablesStatusMessage = figma.variables
       .getLocalVariablesAsync()
-      .then(allLocalVariables => allLocalVariables
-        .filter(
-          async (localVariable) => localVariable.variableCollectionId === collection?.id
+      .then((allLocalVariables) =>
+        allLocalVariables.filter(
+          async (localVariable) =>
+            localVariable.variableCollectionId === collection?.id
         )
       )
-      .then(localVariables => {
-        let i = 0, j = 0
+      .then((localVariables) => {
+        let i = 0,
+          j = 0
         const messages: Array<string> = [],
           createdVariables: Array<Variable> = []
-        
+
         // Create variables
         paletteData.themes
           .filter((theme) => theme.type === 'default theme')
@@ -120,8 +126,12 @@ const createLocalVariables = async (palette: SceneNode) => {
             createdVariables.forEach((variable) => {
               const rightShade = paletteData.themes
                 .find((theme) => theme.name === themeItem?.name)
-                ?.colors.find((color) => color.name === variable.name.split('/')[0])
-                ?.shades.find((shade) => shade.name === variable.name.split('/')[1])
+                ?.colors.find(
+                  (color) => color.name === variable.name.split('/')[0]
+                )
+                ?.shades.find(
+                  (shade) => shade.name === variable.name.split('/')[1]
+                )
               if (rightShade != undefined && collection != undefined) {
                 rightShade.variableId = variable.id
               }
@@ -139,17 +149,16 @@ const createLocalVariables = async (palette: SceneNode) => {
 
         if (themesList.length > 4)
           figma.notify(locals[lang].warning.tooManyThemesToCreateModes)
-        
+
         return `${messages.join(', ')} created`
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error)
         return locals[lang].error.generic
       })
 
-      return await createLocalVariablesStatusMessage
-  } else
-    return locals[lang].error.corruption
+    return await createLocalVariablesStatusMessage
+  } else return locals[lang].error.corruption
 }
 
 export default createLocalVariables

@@ -72,18 +72,21 @@ const loadUI = async (palette: SceneNode) => {
       UPDATE_THEMES: () => updateThemes(msg, palette),
       SYNC_LOCAL_STYLES: async () => {
         createLocalStyles(palette)
-          .then(async message => [message, await updateLocalStyles(palette)])
+          .then(async (message) => [message, await updateLocalStyles(palette)])
           .then((messages) => figma.notify(messages.join('﹒')))
-          .catch(error => {
+          .catch((error) => {
             console.log(error)
             figma.notify(locals[lang].error.generic)
           })
       },
       SYNC_LOCAL_VARIABLES: () => {
         createLocalVariables(palette)
-          .then(async message => [message, await updateLocalVariables(palette)])
+          .then(async (message) => [
+            message,
+            await updateLocalVariables(palette),
+          ])
           .then((messages) => figma.notify(messages.join('﹒')))
-          .catch(error => {
+          .catch((error) => {
             console.log(error)
             figma.notify(locals[lang].error.generic)
           })
@@ -111,8 +114,10 @@ const loadUI = async (palette: SceneNode) => {
       GET_PALETTES: async () => await getPalettesOnCurrentPage(),
       JUMP_TO_PALETTE: async () => {
         const scene: Array<SceneNode> = []
-        const palette = await figma.currentPage.loadAsync()
-          .then(() => figma.currentPage.findOne(
+        const palette = await figma.currentPage
+          .loadAsync()
+          .then(() =>
+            figma.currentPage.findOne(
               (node) => node.getPluginData('id') === msg.id
             )
           )

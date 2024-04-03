@@ -75,7 +75,7 @@ export default class TransferPalette extends React.Component<Props> {
               : doSnakeCase(this.props.name)
           )
         )
-        .catch(error => {
+        .catch((error) => {
           console.log(error)
           return locals[this.props.lang].error.generic
         })

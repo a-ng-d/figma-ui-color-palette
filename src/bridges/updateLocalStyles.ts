@@ -13,9 +13,11 @@ const updateLocalStyles = async (palette: SceneNode) => {
         : paletteData.themes.filter((theme) => theme.type === 'custom theme')
 
   if (palette.children.length == 1) {
-    const updatedLocalStylesStatusMessage = figma.getLocalPaintStylesAsync()
-      .then(localStyles => {
-        let i = 0, j = 0
+    const updatedLocalStylesStatusMessage = figma
+      .getLocalPaintStylesAsync()
+      .then((localStyles) => {
+        let i = 0,
+          j = 0
         workingThemes.forEach((theme: PaletteDataThemeItem) => {
           theme.colors.forEach((color) => {
             color.shades.forEach((shade) => {
@@ -31,26 +33,27 @@ const updateLocalStyles = async (palette: SceneNode) => {
                   color.description != ''
                     ? color.description + '﹒' + shade.description
                     : shade.description
-    
+
               if (
-                localStyles.find((localStyle) => localStyle.id === shade.styleId) !=
-                undefined
+                localStyles.find(
+                  (localStyle) => localStyle.id === shade.styleId
+                ) != undefined
               ) {
                 const styleMatch = localStyles.find(
                   (localStyle) => localStyle.id === shade.styleId
                 )
-    
+
                 if (styleMatch != undefined) {
                   if (styleMatch.name != name) {
                     styleMatch.name = name
                     j++
                   }
-    
+
                   if (styleMatch.description != description) {
                     styleMatch.description = description
                     j++
                   }
-    
+
                   if (
                     shade.hex !=
                     chroma([
@@ -72,7 +75,7 @@ const updateLocalStyles = async (palette: SceneNode) => {
                     j++
                   }
                 }
-    
+
                 j > 0 ? i++ : i
                 j = 0
               } else if (
@@ -82,18 +85,18 @@ const updateLocalStyles = async (palette: SceneNode) => {
                 const styleMatch = localStyles.find(
                   (localStyle) => localStyle.name === name
                 )
-    
+
                 if (styleMatch != undefined) {
                   if (styleMatch.name != name) {
                     styleMatch.name = name
                     j++
                   }
-    
+
                   if (styleMatch.description != shade.description) {
                     styleMatch.description = shade.description
                     j++
                   }
-    
+
                   if (
                     shade.hex !=
                     chroma([
@@ -115,26 +118,24 @@ const updateLocalStyles = async (palette: SceneNode) => {
                     j++
                   }
                 }
-    
+
                 j > 0 ? i++ : i
                 j = 0
               }
             })
           })
         })
-    
-        if (i > 1)
-          return `${i} ${locals[lang].info.updatedLocalStyles}`
+
+        if (i > 1) return `${i} ${locals[lang].info.updatedLocalStyles}`
         else return `${i} ${locals[lang].info.updatedLocalStyle}`
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error)
         return locals[lang].error.generic
       })
 
-      return await updatedLocalStylesStatusMessage
-  } else
-    return locals[lang].error.corruption
+    return await updatedLocalStylesStatusMessage
+  } else return locals[lang].error.corruption
 }
 
 export default updateLocalStyles

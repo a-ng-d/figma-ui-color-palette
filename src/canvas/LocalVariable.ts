@@ -11,12 +11,12 @@ export default class LocalVariable {
     return collection
   }
 
-  makeVariable = (name: string, collection: VariableCollection, description: string) => {
-    this.variable = figma.variables.createVariable(
-      name,
-      collection,
-      'COLOR'
-    )
+  makeVariable = (
+    name: string,
+    collection: VariableCollection,
+    description: string
+  ) => {
+    this.variable = figma.variables.createVariable(name, collection, 'COLOR')
     this.variable.description = description
 
     return this.variable

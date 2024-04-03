@@ -9,32 +9,43 @@ const updateLocalVariables = async (palette: SceneNode) => {
 
   if (palette.children.length == 1) {
     const name =
-        palette.getPluginData('name') === ''
-          ? 'UI Color Palette'
-          : palette.getPluginData('name')
+      palette.getPluginData('name') === ''
+        ? 'UI Color Palette'
+        : palette.getPluginData('name')
 
     const collection = await figma.variables
       .getLocalVariableCollectionsAsync()
-      .then(collections => collections.find((collection) => collection.id === paletteData.collectionId))
+      .then((collections) =>
+        collections.find(
+          (collection) => collection.id === paletteData.collectionId
+        )
+      )
 
-    if (collection != undefined) {  
+    if (collection != undefined) {
       const updateLocalVariablesStatusMessage = figma.variables
         .getLocalVariablesAsync()
-        .then(allLocalVariables => allLocalVariables
-          .filter(
-            async (localVariable) => localVariable.variableCollectionId === collection?.id
+        .then((allLocalVariables) =>
+          allLocalVariables.filter(
+            async (localVariable) =>
+              localVariable.variableCollectionId === collection?.id
           )
         )
-        .then(localVariables => {
-          let i = 0, j = 0, k = 0
+        .then((localVariables) => {
+          let i = 0,
+            j = 0,
+            k = 0
           const messages: Array<string> = []
 
           if (collection.name != name) collection.name = name
           const workingThemes =
             paletteData.themes.filter((theme) => theme.type === 'custom theme')
               .length == 0
-              ? paletteData.themes.filter((theme) => theme.type === 'default theme')
-              : paletteData.themes.filter((theme) => theme.type === 'custom theme')
+              ? paletteData.themes.filter(
+                  (theme) => theme.type === 'default theme'
+                )
+              : paletteData.themes.filter(
+                  (theme) => theme.type === 'custom theme'
+                )
 
           workingThemes.forEach((theme) => {
             const modeMatch = collection.modes.find(
@@ -95,16 +106,14 @@ const updateLocalVariables = async (palette: SceneNode) => {
 
           return `${messages.join(', ')} updated`
         })
-        .catch(error => {
+        .catch((error) => {
           console.log(error)
           return locals[lang].error.generic
         })
-      
-        return await updateLocalVariablesStatusMessage
-    } else
-      return locals[lang].warning.collectionDoesNotExist
-  } else
-    return locals[lang].error.corruption
+
+      return await updateLocalVariablesStatusMessage
+    } else return locals[lang].warning.collectionDoesNotExist
+  } else return locals[lang].error.corruption
 }
 
 export default updateLocalVariables

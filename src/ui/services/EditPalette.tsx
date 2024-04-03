@@ -159,7 +159,7 @@ export default class EditPalette extends React.Component<Props, States> {
               : doSnakeCase(this.props.name)
           )
         )
-        .catch(error => {
+        .catch((error) => {
           console.log(error)
           return locals[this.props.lang].error.generic
         })
