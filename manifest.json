@@ -19,6 +19,7 @@
     "payments",
     "currentuser"
   ],
+  "documentAccess": "dynamic-page",
   "networkAccess": {
     "allowedDomains": [
       "https://figma.com",
