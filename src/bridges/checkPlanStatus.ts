@@ -1,17 +1,18 @@
-import { oldTrialTime, trialTime } from "../utils/config"
+import { oldTrialTime, trialTime } from '../utils/config'
 
 const checkPlanStatus = async () => {
   //figma.clientStorage.deleteAsync('trial_start_date')
   //figma.clientStorage.deleteAsync('trial_version')
-  figma.clientStorage.setAsync('trial_start_date', new Date().getTime() - (12 * 60 * 60 * 1000))
+  /*figma.clientStorage.setAsync(
+    'trial_start_date',
+    new Date().getTime() - 12 * 60 * 60 * 1000
+  )*/
 
-  const
-    trialStartDate: number | undefined = await figma.clientStorage.getAsync(
+  const trialStartDate: number | undefined = await figma.clientStorage.getAsync(
       'trial_start_date'
     ),
-    trialVersion: string = await figma.clientStorage.getAsync(
-      'trial_version'
-    ) ?? '3.1.0'
+    trialVersion: string =
+      (await figma.clientStorage.getAsync('trial_version')) ?? '3.1.0'
 
   let consumedTime = 0,
     trialStatus = 'UNUSED'
@@ -21,10 +22,8 @@ const checkPlanStatus = async () => {
 
     if (consumedTime <= oldTrialTime && trialVersion != '3.2.0')
       trialStatus = 'PENDING'
-    else if (consumedTime >= trialTime)
-      trialStatus = 'EXPIRED'
-    else
-      trialStatus = 'PENDING'
+    else if (consumedTime >= trialTime) trialStatus = 'EXPIRED'
+    else trialStatus = 'PENDING'
   }
 
   /* await figma.payments?.setPaymentStatusInDevelopment({

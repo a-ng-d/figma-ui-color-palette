@@ -371,9 +371,7 @@ export default class Shortcuts extends React.Component<Props, States> {
                     {Math.ceil(this.props.trialRemainingTime) > 72
                       ? 'day'
                       : 'hour'}
-                    {Math.ceil(this.props.trialRemainingTime) <= 1
-                      ? ''
-                      : 's'}{' '}
+                    {Math.ceil(this.props.trialRemainingTime) <= 1 ? '' : 's'}{' '}
                     left in this trial
                   </div>
                 </div>

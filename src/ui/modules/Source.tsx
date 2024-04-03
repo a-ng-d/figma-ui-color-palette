@@ -118,7 +118,8 @@ export default class Source extends React.Component<Props, States> {
         )
           ? {
               type: 'INFO',
-              message: locals[this.props.lang].source.realtimeColors.url.infoMessage,
+              message:
+                locals[this.props.lang].source.realtimeColors.url.infoMessage,
             }
           : state['realtimeColorsUrl'].helper,
       },
@@ -204,7 +205,8 @@ export default class Source extends React.Component<Props, States> {
           canBeSubmitted: this.state['realtimeColorsUrl'].canBeSubmitted,
           helper: {
             type: 'ERROR',
-            message: locals[this.props.lang].source.realtimeColors.url.errorMessage,
+            message:
+              locals[this.props.lang].source.realtimeColors.url.errorMessage,
           },
         },
       })
