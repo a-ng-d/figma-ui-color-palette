@@ -85,7 +85,7 @@ export const locals: { [key: string]: any } = {
           label: 'Realtime URL',
           placeholder: 'Paste a link－https://www.realtimecolors.com/…',
           infoMessage:
-            'The URL must start with "https://www.realtimecolors.com/"',
+            'The URL must start with "https://www.realtimecolors.com"',
           errorMessage:
             'The URL must include several hexadecimal codes (e.g. 8ecae6-…-219ebc)',
         },
@@ -135,7 +135,7 @@ export const locals: { [key: string]: any } = {
         label: 'LCH',
       },
       hueShifting: {
-        label: 'Shift the hue',
+        label: 'Shift hue',
       },
     },
     themes: {
