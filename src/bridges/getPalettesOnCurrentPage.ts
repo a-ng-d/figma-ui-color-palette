@@ -1,7 +1,9 @@
-const getPalettesOnCurrentPage = () => {
-  const palettes = figma.currentPage.findAllWithCriteria({
-    pluginData: {},
-  })
+const getPalettesOnCurrentPage = async () => {
+  const palettes = await figma.currentPage.loadAsync()
+    .then(() => figma.currentPage.findAllWithCriteria({
+      pluginData: {},
+    }))
+
   if (palettes.length != 0)
     figma.ui.postMessage({
       type: 'EXPOSE_PALETTES',

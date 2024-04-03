@@ -108,12 +108,19 @@ const loadUI = async (palette: SceneNode) => {
       OPEN_IN_BROWSER: () => {
         figma.openExternal(msg.url)
       },
-      GET_PALETTES: () => getPalettesOnCurrentPage(),
-      JUMP_TO_PALETTE: () => {
+      GET_PALETTES: async () => await getPalettesOnCurrentPage(),
+      JUMP_TO_PALETTE: async () => {
         const scene: Array<SceneNode> = []
-        const palette = figma.currentPage.findOne(
-          (node) => node.getPluginData('id') === msg.id
-        )
+        const palette = await figma.currentPage.loadAsync()
+          .then(() => figma.currentPage.findOne(
+              (node) => node.getPluginData('id') === msg.id
+            )
+          )
+          .catch((error) => {
+            console.log(error)
+            figma.notify(locals[lang].error.generic)
+            return null
+          })
         palette != null ? scene.push(palette) : null
         figma.currentPage.selection = scene
       },
