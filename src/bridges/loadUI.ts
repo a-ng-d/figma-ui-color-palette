@@ -1,5 +1,4 @@
 import { lang, locals } from '../content/locals'
-import { notifications } from '../utils/palettePackage'
 import { ActionsList, windowSize } from '../utils/types'
 import checkEditorType from './checkEditorType'
 import checkHighlightStatus from './checkHighlightStatus'
@@ -51,9 +50,6 @@ const loadUI = async (palette: SceneNode) => {
   await checkPlanStatus()
 
   figma.ui.onmessage = async (msg) => {
-    const i = 0,
-      j = 0
-
     const actions: ActionsList = {
       RESIZE_UI: async () => {
         windowSize.w < 540

@@ -10,8 +10,7 @@ const createLocalStyles = async (palette: SceneNode) => {
       paletteData.themes.filter((theme) => theme.type === 'custom theme')
         .length == 0
         ? paletteData.themes.filter((theme) => theme.type === 'default theme')
-        : paletteData.themes.filter((theme) => theme.type === 'custom theme'),
-    notifications: Array<string> = []
+        : paletteData.themes.filter((theme) => theme.type === 'custom theme')
   
   if (palette.children.length == 1) {
     const createdLocalStylesStatusMessage = figma.getLocalPaintStylesAsync()
@@ -61,7 +60,6 @@ const createLocalStyles = async (palette: SceneNode) => {
       return await createdLocalStylesStatusMessage
   } else
     locals[lang].error.corruption
-
 }
 
 export default createLocalStyles
