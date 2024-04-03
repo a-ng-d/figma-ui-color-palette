@@ -74,11 +74,10 @@ const loadUI = async (palette: SceneNode) => {
       UPDATE_VIEW: () => updateView(msg, palette),
       UPDATE_COLORS: () => updateColors(msg, palette),
       UPDATE_THEMES: () => updateThemes(msg, palette),
-      SYNC_LOCAL_STYLES: () => {
-        notifications.splice(0, notifications.length)
-        createLocalStyles(palette, i)
-        updateLocalStyles(palette, i)
-        figma.notify(notifications.join('﹒'))
+      SYNC_LOCAL_STYLES: async () => {
+        createLocalStyles(palette)
+          .then(async message => [message, await updateLocalStyles(palette)])
+          .then((messages) => figma.notify(messages.join(', ')))
       },
       SYNC_LOCAL_VARIABLES: () => {
         notifications.splice(0, notifications.length)
