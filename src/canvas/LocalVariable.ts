@@ -1,22 +1,20 @@
 export default class LocalVariable {
-  collection: VariableCollection | undefined
   variable: Variable | undefined
 
-  constructor(collection?: VariableCollection, variable?: Variable) {
-    this.collection = collection
+  constructor(variable?: Variable) {
     this.variable = variable
   }
 
   makeCollection = (name: string) => {
-    this.collection = figma.variables.createVariableCollection(name)
+    const collection = figma.variables.createVariableCollection(name)
 
-    return this.collection
+    return collection
   }
 
-  makeVariable = (name: string, description: string) => {
+  makeVariable = (name: string, collection: VariableCollection, description: string) => {
     this.variable = figma.variables.createVariable(
       name,
-      this.collection != undefined ? this.collection.id : '',
+      collection,
       'COLOR'
     )
     this.variable.description = description
