@@ -361,12 +361,19 @@ export default class Shortcuts extends React.Component<Props, States> {
               {this.props.trialStatus === 'PENDING' ? (
                 <div className={`label ${texts.label}`}>
                   <div className="type--bold">
-                    {Math.ceil(this.props.trialRemainingTime / 24)}
+                    {Math.ceil(
+                      this.props.trialRemainingTime > 72
+                        ? this.props.trialRemainingTime / 24
+                        : this.props.trialRemainingTime
+                    )}
                   </div>
                   <div>
-                    {Math.ceil(this.props.trialRemainingTime / 24) <= 1
+                    {Math.ceil(this.props.trialRemainingTime) > 72
                       ? 'day'
-                      : 'days'}{' '}
+                      : 'hour'}
+                    {Math.ceil(this.props.trialRemainingTime) <= 1
+                      ? ''
+                      : 's'}{' '}
                     left in this trial
                   </div>
                 </div>
