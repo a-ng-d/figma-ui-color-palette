@@ -53,6 +53,11 @@ const createLocalStyles = async (palette: SceneNode) => {
           return `${j} ${locals[lang].info.createdLocalStyles}`
         else return `${j} ${locals[lang].info.createdLocalStyle}`
       })
+      .catch(error => {
+        console.log(error)
+        return locals[lang].error.generic
+      })
+
       return await createdLocalStylesStatusMessage
   } else
     locals[lang].error.corruption

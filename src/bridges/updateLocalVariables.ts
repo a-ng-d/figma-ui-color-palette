@@ -95,7 +95,10 @@ const updateLocalVariables = async (palette: SceneNode) => {
 
           return `${messages.join(', ')} updated`
         })
-        .catch(error => console.log(error))
+        .catch(error => {
+          console.log(error)
+          return locals[lang].error.generic
+        })
       
         return await updateLocalVariablesStatusMessage
     } else

@@ -127,6 +127,11 @@ const updateLocalStyles = async (palette: SceneNode) => {
           return `${i} ${locals[lang].info.updatedLocalStyles}`
         else return `${i} ${locals[lang].info.updatedLocalStyle}`
       })
+      .catch(error => {
+        console.log(error)
+        return locals[lang].error.generic
+      })
+
       return await updatedLocalStylesStatusMessage
   } else
     return locals[lang].error.corruption

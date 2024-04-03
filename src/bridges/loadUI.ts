@@ -78,13 +78,19 @@ const loadUI = async (palette: SceneNode) => {
         createLocalStyles(palette)
           .then(async message => [message, await updateLocalStyles(palette)])
           .then((messages) => figma.notify(messages.join('﹒')))
-          .catch(error => console.log(error))
+          .catch(error => {
+            console.log(error)
+            return locals[lang].error.generic
+          })
       },
       SYNC_LOCAL_VARIABLES: () => {
         createLocalVariables(palette)
           .then(async message => [message, await updateLocalVariables(palette)])
           .then((messages) => figma.notify(messages.join('﹒')))
-          .catch(error => console.log(error))
+          .catch(error => {
+            console.log(error)
+            return locals[lang].error.generic
+          })
       },
       EXPORT_PALETTE: () => {
         msg.export === 'TOKENS_GLOBAL' ? exportJson(palette) : null

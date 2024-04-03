@@ -75,7 +75,10 @@ export default class TransferPalette extends React.Component<Props> {
               : doSnakeCase(this.props.name)
           )
         )
-        .catch((error) => console.error(error))
+        .catch(error => {
+          console.log(error)
+          return locals[this.props.lang].error.generic
+        })
     } else if (this.props.export.format === 'TAILWIND') {
       FileSaver.saveAs(blob, 'tailwind.config.js')
     } else if (this.props.export.format === 'SWIFT') {
