@@ -139,7 +139,7 @@ class App extends React.Component<Record<string, never>, States> {
       editorType: 'figma',
       planStatus: 'UNPAID',
       trialStatus: 'UNUSED',
-      trialRemainingTime: 168,
+      trialRemainingTime: 48,
       lang: 'en-US',
       priorityContainerContext: 'EMPTY',
       isLoaded: false,

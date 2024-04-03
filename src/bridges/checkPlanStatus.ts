@@ -1,47 +1,46 @@
 const checkPlanStatus = async () => {
-  // figma.clientStorage.deleteAsync('trial_start_date')
-  // figma.clientStorage.deleteAsync('is_trial_extended')
-  /*figma.clientStorage
-        .setAsync('trial_start_date', 1703286000000)*/
+  //figma.clientStorage.deleteAsync('trial_start_date')
+  //figma.clientStorage.deleteAsync('trial_version')
+  //figma.clientStorage.setAsync('trial_start_date', new Date().getTime() - (78 * 60 * 60 * 1000))
 
-  const trialTime = 168
-
-  let trialStartDate: number | undefined = await figma.clientStorage.getAsync(
+  const oldTrialTime = 168,
+    trialTime = 48,
+    trialStartDate: number | undefined = await figma.clientStorage.getAsync(
       'trial_start_date'
     ),
-    isTrialExtended: boolean | undefined = await figma.clientStorage.getAsync(
-      'is_trial_extended'
-    ),
-    consumedTime = 0,
+    trialVersion: string = await figma.clientStorage.getAsync(
+      'trial_version'
+    ) ?? '3.1.0'
+
+  let consumedTime = 0,
     trialStatus = 'UNUSED'
 
   if (trialStartDate != undefined) {
-    if (
-      trialStartDate < 1708988400000 &&
-      (isTrialExtended == undefined || !isTrialExtended)
-    ) {
-      figma.clientStorage.setAsync(
-        'trial_start_date',
-        new Date().getTime() - 259200000
-      )
-      figma.clientStorage.setAsync('is_trial_extended', true)
-      trialStartDate = new Date().getTime() - 259200000
-      isTrialExtended = true
-    }
     consumedTime = (new Date().getTime() - trialStartDate) / 1000 / (60 * 60)
-    trialStatus = consumedTime >= trialTime ? 'EXPIRED' : 'PENDING'
+
+    if (consumedTime <= oldTrialTime && trialVersion != '3.2.0')
+      trialStatus = 'PENDING'
+    else if (consumedTime >= trialTime)
+      trialStatus = 'EXPIRED'
+    else
+      trialStatus = 'PENDING'
   }
 
   /* await figma.payments?.setPaymentStatusInDevelopment({
     type: 'UNPAID',
   }) */
-  await figma.ui.postMessage({
+
+  figma.ui.postMessage({
     type: 'PLAN_STATUS',
     data: {
       planStatus:
         trialStatus === 'PENDING' ? 'PAID' : figma.payments?.status.type,
       trialStatus: trialStatus,
-      trialRemainingTime: Math.ceil(trialTime - consumedTime),
+      trialRemainingTime: Math.ceil(
+        trialVersion != '3.2.0'
+          ? oldTrialTime - consumedTime
+          : trialTime - consumedTime
+      ),
     },
   })
 }

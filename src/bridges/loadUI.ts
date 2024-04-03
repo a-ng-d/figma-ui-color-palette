@@ -130,7 +130,10 @@ const loadUI = async (palette: SceneNode) => {
         figma.currentPage.selection = scene
       },
       GET_PRO_PLAN: async () => await getProPlan(),
-      ENABLE_TRIAL: async () => await enableTrial(),
+      ENABLE_TRIAL: async () => {
+        await enableTrial()
+        await checkPlanStatus()
+      },
     }
 
     return actions[msg.type]?.()

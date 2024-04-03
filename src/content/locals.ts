@@ -314,15 +314,15 @@ export const locals: { [key: string]: any } = {
         message:
           'This upgrade will unlock a range of tools that enable you to convert your color palette into a color system. We hope you will enjoy the benefits.',
         trial:
-          'This upgrade will unlock a range of tools that enable you to convert your color palette into a color system. We hope you will enjoy the benefits for the next 7 days.',
+          'This upgrade will unlock a range of tools that enable you to convert your color palette into a color system. We hope you will enjoy the benefits for the next 48 hours.',
         cta: "Let's build",
       },
       trial: {
         title:
-          'Would you like to upgrade to the Pro plan within the next 7 days?',
+          'Would you like to upgrade to the Pro plan within the next 48 hours?',
         message:
           'Explore the potential of synchronizing your color palette with variables, exporting it as design tokens, app resources, or for Tokens Studio and simulating a vision impairment.',
-        cta: 'Enable the 7-day trial',
+        cta: 'Enable the 48-hour trial',
         option: 'Purchase',
       },
     },

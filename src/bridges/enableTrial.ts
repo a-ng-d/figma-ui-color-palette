@@ -6,6 +6,9 @@ const enableTrial = async () => {
   await figma.clientStorage
     .setAsync('trial_start_date', date.getTime())
     .then(() => {
+      figma.clientStorage.setAsync('trial_version', '3.2.0')
+    })
+    .then(() => {
       figma.ui.postMessage({
         type: 'ENABLE_TRIAL',
       })
