@@ -1,6 +1,9 @@
 import type { Feature } from './types'
 
-const features: Array<Feature> = [
+export const trialTime = 48
+export const oldTrialTime = 168
+
+export const features: Array<Feature> = [
   {
     name: 'CREATE',
     description: 'Palette creation service when several colors are selected',

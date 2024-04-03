@@ -1,3 +1,4 @@
+import { trialTime } from '../utils/config'
 import { notionOptions } from '../utils/fetch'
 
 const enableTrial = async () => {
@@ -70,7 +71,7 @@ const enableTrial = async () => {
               "Période de l'essai": {
                 date: {
                   start: date.toISOString(),
-                  end: new Date(date.getTime() + 604800000).toISOString(),
+                  end: new Date(date.getTime() + (trialTime * 60 * 60 * 1000)).toISOString(),
                 },
               },
             },

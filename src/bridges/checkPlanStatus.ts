@@ -1,10 +1,11 @@
+import { oldTrialTime, trialTime } from "../utils/config"
+
 const checkPlanStatus = async () => {
   //figma.clientStorage.deleteAsync('trial_start_date')
   //figma.clientStorage.deleteAsync('trial_version')
-  //figma.clientStorage.setAsync('trial_start_date', new Date().getTime() - (78 * 60 * 60 * 1000))
+  figma.clientStorage.setAsync('trial_start_date', new Date().getTime() - (12 * 60 * 60 * 1000))
 
-  const oldTrialTime = 168,
-    trialTime = 48,
+  const
     trialStartDate: number | undefined = await figma.clientStorage.getAsync(
       'trial_start_date'
     ),

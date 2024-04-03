@@ -93,5 +93,3 @@ export const palette: PaletteConfiguration = {
     darkColor: '#000000',
   },
 }
-
-export const notifications: Array<string> = []

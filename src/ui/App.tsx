@@ -35,7 +35,7 @@ import PriorityContainer from './modules/PriorityContainer'
 import Shortcuts from './modules/Shortcuts'
 import { palette, presets } from '../utils/palettePackage'
 import doLightnessScale from '../utils/doLightnessScale'
-import features from '../utils/config'
+import features, { trialTime } from '../utils/config'
 import 'figma-plugin-ds/dist/figma-plugin-ds.css'
 import './stylesheets/app.css'
 import './stylesheets/app-components.css'
@@ -139,7 +139,7 @@ class App extends React.Component<Record<string, never>, States> {
       editorType: 'figma',
       planStatus: 'UNPAID',
       trialStatus: 'UNUSED',
-      trialRemainingTime: 48,
+      trialRemainingTime: trialTime,
       lang: 'en-US',
       priorityContainerContext: 'EMPTY',
       isLoaded: false,
