@@ -80,10 +80,10 @@ const loadUI = async (palette: SceneNode) => {
           .then((messages) => figma.notify(messages.join(', ')))
       },
       SYNC_LOCAL_VARIABLES: () => {
-        notifications.splice(0, notifications.length)
-        createLocalVariables(palette, i, j)
-        updateLocalVariables(palette, i, j)
-        figma.notify(notifications.join('﹒'))
+        createLocalVariables(palette)
+          .then(async message => [message, await updateLocalVariables(palette)])
+          .then((messages) => figma.notify(messages.join('﹒')))
+          .catch(error => console.log(error))
       },
       EXPORT_PALETTE: () => {
         msg.export === 'TOKENS_GLOBAL' ? exportJson(palette) : null
