@@ -358,6 +358,7 @@ export const locals: { [key: string]: any } = {
     error: {
       corruption:
         'Your UI Color Palette seems corrupted. Do not edit any layer within it.',
+      palettesPicking: 'UI Color Palettes cannot be picked for now',
       generic: 'Something went wrong',
     },
   },

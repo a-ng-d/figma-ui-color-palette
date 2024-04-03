@@ -76,7 +76,7 @@ const loadUI = async (palette: SceneNode) => {
           .then((messages) => figma.notify(messages.join('﹒')))
           .catch(error => {
             console.log(error)
-            return locals[lang].error.generic
+            figma.notify(locals[lang].error.generic)
           })
       },
       SYNC_LOCAL_VARIABLES: () => {
@@ -85,7 +85,7 @@ const loadUI = async (palette: SceneNode) => {
           .then((messages) => figma.notify(messages.join('﹒')))
           .catch(error => {
             console.log(error)
-            return locals[lang].error.generic
+            figma.notify(locals[lang].error.generic)
           })
       },
       EXPORT_PALETTE: () => {
