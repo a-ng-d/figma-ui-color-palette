@@ -117,7 +117,7 @@ export const features: Array<Feature> = [
     description: 'Raw source colors',
     isActive: true,
     isPro: false,
-    isNew: false,
+    isNew: true,
     type: 'CONTEXT',
     service: ['CREATE'],
   },
