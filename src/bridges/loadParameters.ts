@@ -5,13 +5,12 @@ import isAvailableAndBlocked from '../utils/isAvailableAndBlocked'
 
 const loadParameters = ({ key, result }: ParameterInputEvent) => {
   const viableSelection = figma.currentPage.selection.filter(
-    (element) =>
+    (element: any) =>
       element.type != 'GROUP' &&
       element.type != 'EMBED' &&
       element.type != 'CONNECTOR' &&
       element.getPluginDataKeys().length == 0 &&
-      (element as any).fills.filter((fill: Paint) => fill.type === 'SOLID')
-        .length != 0
+      element.fills.filter((fill: Paint) => fill.type === 'SOLID').length != 0
   )
 
   switch (key) {
@@ -47,11 +46,11 @@ const loadParameters = ({ key, result }: ParameterInputEvent) => {
 
     case 'view': {
       const suggestionsList = [
-        isAvailableAndBlocked('VIEWS_PALETTE', 'Palette'),
         isAvailableAndBlocked(
           'VIEWS_PALETTE_WITH_PROPERTIES',
           'Palette with properties'
         ),
+        isAvailableAndBlocked('VIEWS_PALETTE', 'Palette'),
         isAvailableAndBlocked('VIEWS_SHEET', 'Color sheet'),
       ].filter((n) => n) as Array<string>
 

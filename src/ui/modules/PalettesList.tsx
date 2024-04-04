@@ -9,7 +9,7 @@ interface Props {
   lang: Language
 }
 
-export default class PalettesList extends React.Component<Props, any> {
+export default class PalettesList extends React.Component<Props> {
   componentDidMount = () =>
     parent.postMessage({ pluginMessage: { type: 'GET_PALETTES' } }, '*')
 
@@ -38,10 +38,10 @@ export default class PalettesList extends React.Component<Props, any> {
         >
           {locals[this.props.lang].palettesList.title}
         </div>
-        {this.props.paletteLists.map((palette) => (
+        {this.props.paletteLists.map((palette, index) => (
           <li
             className="rich-list__item"
-            key={palette.id}
+            key={`palette-${index}`}
             data-id={palette.id}
             tabIndex={0}
             onMouseDown={this.onSelectPalette}
@@ -62,8 +62,12 @@ export default class PalettesList extends React.Component<Props, any> {
               palette.colors.length > 1
                 ? locals[this.props.lang].actions.sourceColorsNumber.several
                 : locals[this.props.lang].actions.sourceColorsNumber.single
-            }, ${palette.themes.filter((theme) => theme.type === 'custom theme').length} ${
-              palette.themes.filter((theme) => theme.type === 'custom theme').length > 1
+            }, ${
+              palette.themes.filter((theme) => theme.type === 'custom theme')
+                .length
+            } ${
+              palette.themes.filter((theme) => theme.type === 'custom theme')
+                .length > 1
                 ? locals[this.props.lang].actions.colorThemesNumber.several
                 : locals[this.props.lang].actions.colorThemesNumber.single
             }`}</div>
@@ -83,12 +87,14 @@ export default class PalettesList extends React.Component<Props, any> {
               {this.props.paletteLists.length > 0 ? (
                 <this.PalettesList />
               ) : (
-                <Message
-                  icon="info"
-                  messages={[
-                    locals[this.props.lang].warning.noPaletteOnCurrrentPage,
-                  ]}
-                />
+                <div className="onboarding__callout">
+                  <Message
+                    icon="info"
+                    messages={[
+                      locals[this.props.lang].warning.noPaletteOnCurrrentPage,
+                    ]}
+                  />
+                </div>
               )}
             </div>
           </div>

@@ -1,5 +1,10 @@
 import * as React from 'react'
-import type { EditorType, Language, TrialStatus } from '../../utils/types'
+import type {
+  EditorType,
+  Language,
+  PlanStatus,
+  TrialStatus,
+} from '../../utils/types'
 import Feature from '../components/Feature'
 import { Bar } from '@a-ng-d/figmug.layouts.bar'
 import { Button } from '@a-ng-d/figmug.actions.button'
@@ -12,7 +17,7 @@ import isBlocked from '../../utils/isBlocked'
 
 interface Props {
   editorType: EditorType
-  planStatus: 'UNPAID' | 'PAID'
+  planStatus: PlanStatus
   trialStatus: TrialStatus
   trialRemainingTime: number
   lang: Language
@@ -23,7 +28,11 @@ interface Props {
   onGetProPlan: () => void
 }
 
-export default class Shortcuts extends React.Component<Props, any> {
+interface States {
+  canBeResized: boolean
+}
+
+export default class Shortcuts extends React.Component<Props, States> {
   constructor(props: Props) {
     super(props)
     this.state = {
@@ -81,7 +90,7 @@ export default class Shortcuts extends React.Component<Props, any> {
       <Bar
         rightPart={
           <>
-            <div className="shortcuts">
+            <div className="shortcuts snackbar">
               <Feature
                 isActive={
                   features.find(
@@ -117,39 +126,18 @@ export default class Shortcuts extends React.Component<Props, any> {
                     type: 'OPTION',
                     isActive:
                       features.find(
-                        (feature) => feature.name === 'SHORTCUTS_HIGHTLIGHT'
+                        (feature) => feature.name === 'SHORTCUTS_HIGHLIGHT'
                       )?.isActive ?? true,
                     isBlocked: isBlocked(
                       'SHORTCUTS_HIGHLIGHT',
                       this.props.planStatus
                     ),
+                    isNew:
+                      features.find(
+                        (feature) => feature.name === 'SHORTCUTS_HIGHLIGHT'
+                      )?.isNew ?? true,
                     children: [],
                     action: () => this.props.onReOpenHighlight(),
-                  },
-                  {
-                    label: locals[this.props.lang].about.getHelp.email,
-                    value: null,
-                    feature: null,
-                    position: 0,
-                    type: 'OPTION',
-                    isActive: features.find(
-                      (feature) => feature.name === 'SHORTCUTS_EMAIL'
-                    )?.isActive,
-                    isBlocked: isBlocked(
-                      'SHORTCUTS_EMAIL',
-                      this.props.planStatus
-                    ),
-                    children: [],
-                    action: () =>
-                      parent.postMessage(
-                        {
-                          pluginMessage: {
-                            type: 'OPEN_IN_BROWSER',
-                            url: 'https://uicp.link/send-message',
-                          },
-                        },
-                        '*'
-                      ),
                   },
                   {
                     label: locals[this.props.lang].about.repository,
@@ -164,6 +152,9 @@ export default class Shortcuts extends React.Component<Props, any> {
                       'SHORTCUTS_REPOSITORY',
                       this.props.planStatus
                     ),
+                    isNew: features.find(
+                      (feature) => feature.name === 'SHORTCUTS_REPOSITORY'
+                    )?.isNew,
                     children: [],
                     action: () =>
                       parent.postMessage(
@@ -200,8 +191,39 @@ export default class Shortcuts extends React.Component<Props, any> {
                       'SHORTCUTS_FEEDBACK',
                       this.props.planStatus
                     ),
+                    isNew: features.find(
+                      (feature) => feature.name === 'SHORTCUTS_FEEDBACK'
+                    )?.isNew,
                     children: [],
                     action: () => this.props.onReOpenFeedback(),
+                  },
+                  {
+                    label: locals[this.props.lang].about.beInvolved.request,
+                    value: null,
+                    feature: null,
+                    position: 0,
+                    type: 'OPTION',
+                    isActive: features.find(
+                      (feature) => feature.name === 'SHORTCUTS_REQUESTS'
+                    )?.isActive,
+                    isBlocked: isBlocked(
+                      'SHORTCUTS_REQUESTS',
+                      this.props.planStatus
+                    ),
+                    isNew: features.find(
+                      (feature) => feature.name === 'SHORTCUTS_REQUESTS'
+                    )?.isNew,
+                    children: [],
+                    action: () =>
+                      parent.postMessage(
+                        {
+                          pluginMessage: {
+                            type: 'OPEN_IN_BROWSER',
+                            url: 'https://uicp.link/feature-requests',
+                          },
+                        },
+                        '*'
+                      ),
                   },
                   {
                     label: locals[this.props.lang].about.beInvolved.issue,
@@ -216,6 +238,9 @@ export default class Shortcuts extends React.Component<Props, any> {
                       'SHORTCUTS_REPORTING',
                       this.props.planStatus
                     ),
+                    isNew: features.find(
+                      (feature) => feature.name === 'SHORTCUTS_REPORTING'
+                    )?.isNew,
                     children: [],
                     action: () =>
                       parent.postMessage(
@@ -229,25 +254,28 @@ export default class Shortcuts extends React.Component<Props, any> {
                       ),
                   },
                   {
-                    label: locals[this.props.lang].about.beInvolved.discuss,
+                    label: locals[this.props.lang].about.getHelp.email,
                     value: null,
                     feature: null,
                     position: 0,
                     type: 'OPTION',
                     isActive: features.find(
-                      (feature) => feature.name === 'SHORTCUTS_DISCUSSION'
+                      (feature) => feature.name === 'SHORTCUTS_EMAIL'
                     )?.isActive,
                     isBlocked: isBlocked(
-                      'SHORTCUTS_DISCUSSION',
+                      'SHORTCUTS_EMAIL',
                       this.props.planStatus
                     ),
+                    isNew: features.find(
+                      (feature) => feature.name === 'SHORTCUTS_EMAIL'
+                    )?.isNew,
                     children: [],
                     action: () =>
                       parent.postMessage(
                         {
                           pluginMessage: {
                             type: 'OPEN_IN_BROWSER',
-                            url: 'https://uicp.link/discuss',
+                            url: 'https://uicp.link/send-message',
                           },
                         },
                         '*'
@@ -277,6 +305,9 @@ export default class Shortcuts extends React.Component<Props, any> {
                       'SHORTCUTS_ABOUT',
                       this.props.planStatus
                     ),
+                    isNew: features.find(
+                      (feature) => feature.name === 'SHORTCUTS_ABOUT'
+                    )?.isNew,
                     children: [],
                     action: this.props.onReOpenAbout,
                   },
@@ -293,6 +324,9 @@ export default class Shortcuts extends React.Component<Props, any> {
                       'SHORTCUTS_NETWORKING',
                       this.props.planStatus
                     ),
+                    isNew: features.find(
+                      (feature) => feature.name === 'SHORTCUTS_NETWORKING'
+                    )?.isNew,
                     children: [],
                     action: () =>
                       parent.postMessage(
@@ -312,7 +346,7 @@ export default class Shortcuts extends React.Component<Props, any> {
                 <div
                   style={{
                     width: '32px',
-                    height: '32px'
+                    height: '32px',
                   }}
                 ></div>
               ) : null}
@@ -335,7 +369,7 @@ export default class Shortcuts extends React.Component<Props, any> {
                 ?.isActive
             }
           >
-            <div className="pro-zone">
+            <div className="pro-zone snackbar">
               {this.props.planStatus === 'UNPAID' &&
               this.props.trialStatus != 'PENDING' ? (
                 <Button
@@ -352,20 +386,27 @@ export default class Shortcuts extends React.Component<Props, any> {
               {this.props.trialStatus === 'PENDING' ? (
                 <div className={`label ${texts.label}`}>
                   <div className="type--bold">
-                    {Math.ceil(this.props.trialRemainingTime / 24)}
+                    {Math.ceil(
+                      this.props.trialRemainingTime > 72
+                        ? this.props.trialRemainingTime / 24
+                        : this.props.trialRemainingTime
+                    )}
                   </div>
                   <div>
-                    {Math.ceil(this.props.trialRemainingTime / 24) <= 1
+                    {Math.ceil(this.props.trialRemainingTime) > 72
                       ? 'day'
-                      : 'days'}{' '}
+                      : 'hour'}
+                    {Math.ceil(this.props.trialRemainingTime) <= 1 ? '' : 's'}{' '}
                     left in this trial
                   </div>
                 </div>
               ) : this.props.trialStatus === 'EXPIRED' &&
                 this.props.planStatus != 'PAID' ? (
                 <>
-                  <div className={`label ${texts.label}`}>
-                    {locals[this.props.lang].plan.trialEnded}
+                  <div
+                    className={`type ${texts.type} ${texts['type--secondary']} truncated`}
+                  >
+                    <span>{locals[this.props.lang].plan.trialEnded}</span>
                   </div>
                   <span
                     className={`type ${texts.type} ${texts['type--secondary']}`}

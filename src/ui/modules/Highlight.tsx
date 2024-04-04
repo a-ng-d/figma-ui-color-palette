@@ -10,7 +10,11 @@ interface Props {
   onCloseHighlight: React.ReactEventHandler
 }
 
-export default class Highlight extends React.Component<Props, any> {
+interface States {
+  position: number
+}
+
+export default class Highlight extends React.Component<Props, States> {
   constructor(props: Props) {
     super(props)
     this.state = {
@@ -18,7 +22,10 @@ export default class Highlight extends React.Component<Props, any> {
     }
   }
 
-  goNextSlide = (e: any, currentNote: ReleaseNote) => {
+  goNextSlide = (
+    e: React.SyntheticEvent<Element, Event>,
+    currentNote: ReleaseNote
+  ) => {
     if (this.state['position'] + 1 < currentNote['numberOfNotes'])
       this.setState({ position: this.state['position'] + 1 })
     else {

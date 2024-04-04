@@ -34,13 +34,18 @@ interface Props {
     id: string | undefined,
     hasGuideAbove: boolean,
     hasGuideBelow: boolean,
-    position: number | string
+    position: number
   ) => void
   onDropOutside: (e: React.DragEvent<HTMLLIElement>) => void
   onChangeOrder: (e: React.DragEvent<HTMLLIElement>) => void
 }
 
-export default class ColorItem extends React.Component<Props, any> {
+interface States {
+  isDragged: boolean
+  hasMoreOptions: boolean
+}
+
+export default class ColorItem extends React.Component<Props, States> {
   constructor(props: Props) {
     super(props)
     this.state = {
@@ -91,14 +96,14 @@ export default class ColorItem extends React.Component<Props, any> {
         target.dataset.id,
         true,
         false,
-        target.dataset.position ?? 0
+        parseFloat(target.dataset.position ?? '0')
       )
     else if (refY > height / 2 && refY <= height)
       this.props.onDragChange(
         target.dataset.id,
         false,
         true,
-        target?.dataset.position ?? 0
+        parseFloat(target.dataset.position ?? '0')
       )
   }
 

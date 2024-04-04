@@ -1,3 +1,4 @@
+import type { PaletteConfiguration } from './utils/types'
 import processSelection from './bridges/processSelection'
 import checkPlanStatus from './bridges/checkPlanStatus'
 import createPalette from './bridges/createPalette'
@@ -62,12 +63,12 @@ figma.on('run', async ({ parameters }: RunEvent) => {
             ),
             colorSpace: parameters.space.toUpperCase().replace(' ', '_'),
             visionSimulationMode: 'NONE',
-            view: parameters.view.toUpperCase().replace(' ', '_'),
+            view: parameters.view.toUpperCase().split(' ').join('_'),
             textColorsTheme: {
               lightColor: '#FFFFFF',
               darkColor: '#000000',
             },
-          },
+          } as PaletteConfiguration,
         },
       },
       palette

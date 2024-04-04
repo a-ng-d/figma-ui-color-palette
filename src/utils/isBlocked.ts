@@ -2,7 +2,7 @@ import features from './config'
 
 const isBlocked = (
   featureName: string,
-  planStatus: 'UNPAID' | 'PAID'
+  planStatus: 'UNPAID' | 'PAID' | 'NOT_SUPPORTED'
 ): boolean => {
   const match = features.find((feature) => feature.name === featureName)
 

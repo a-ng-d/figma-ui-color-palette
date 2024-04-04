@@ -4,16 +4,21 @@ import type {
   DispatchProcess,
   EditorType,
   Language,
+  PlanStatus,
   PresetConfiguration,
   ScaleConfiguration,
   SourceColorConfiguration,
+  Easing,
+  NamingConvention,
 } from '../../utils/types'
 import Feature from '../components/Feature'
 import { Button } from '@a-ng-d/figmug.actions.button'
 import { Dropdown } from '@a-ng-d/figmug.inputs.dropdown'
-import { Message } from '@a-ng-d/figmug.dialogs.message'
 import { texts } from '@a-ng-d/figmug.stylesheets.texts'
 import { SectionTitle } from '@a-ng-d/figmug.layouts.section-title'
+import { Dialog } from '@a-ng-d/figmug.dialogs.dialog'
+import { KeyboardShortcutItem } from '@a-ng-d/figmug.lists.keyboard-shortcut-item'
+import { FormItem } from '@a-ng-d/figmug.layouts.form-item'
 import Slider from '../components/Slider'
 import Actions from './Actions'
 import { palette, presets } from '../../utils/palettePackage'
@@ -27,9 +32,10 @@ interface Props {
   sourceColors?: Array<SourceColorConfiguration>
   hasPreset: boolean
   preset: PresetConfiguration
+  namingConvention: NamingConvention
   scale?: ScaleConfiguration
   actions?: string
-  planStatus: 'UNPAID' | 'PAID'
+  planStatus: PlanStatus
   editorType?: EditorType
   lang: Language
   onChangePreset?: (
@@ -39,14 +45,24 @@ interface Props {
   onChangeStop?: () => void
   onAddStop?: React.ReactEventHandler
   onRemoveStop?: React.ReactEventHandler
+  onChangeNamingConvention?: React.ReactEventHandler
   onCreatePalette?: () => void
   onSyncLocalStyles?: () => void
   onSyncLocalVariables?: () => void
   onChangeActions?: (value: string) => void | undefined
 }
 
-export default class Scale extends React.Component<Props, any> {
+interface States {
+  distributionEasing: Easing
+  isTipsOpen: boolean
+}
+
+export default class Scale extends React.Component<Props, States> {
   dispatch: { [key: string]: DispatchProcess }
+
+  static defaultProps = {
+    namingConvention: 'ONES',
+  }
 
   constructor(props: Props) {
     super(props)
@@ -65,6 +81,10 @@ export default class Scale extends React.Component<Props, any> {
           ),
         500
       ) as DispatchProcess,
+    }
+    this.state = {
+      distributionEasing: 'LINEAR',
+      isTipsOpen: false,
     }
   }
 
@@ -128,32 +148,244 @@ export default class Scale extends React.Component<Props, any> {
     if (!this.props.hasPreset) return actions[state]?.()
   }
 
-  // Direct actions
-  setOnboardingMessages = () => {
-    const messages: Array<string> = []
-
-    if (this.props.preset.name === 'Custom' && !this.props.hasPreset)
-      messages.push(
-        locals[this.props.lang].scale.tips.add,
-        locals[this.props.lang].scale.tips.remove
-      )
-
-    if (!this.props.hasPreset)
-      messages.push(
-        locals[this.props.lang].scale.tips.edit,
-        locals[this.props.lang].scale.tips.nav,
-        locals[this.props.lang].scale.tips.esc
-      )
-
-    messages.push(
-      locals[this.props.lang].scale.tips.shift,
-      locals[this.props.lang].scale.tips.ctrl
+  // Templates
+  DistributionEasing = () => {
+    return (
+      <FormItem
+        label={locals[this.props.lang].scale.easing.label}
+        id="distribution-easing"
+        shouldFill={false}
+      >
+        <Dropdown
+          id="distribution-easing"
+          options={[
+            {
+              label: locals[this.props.lang].scale.easing.linear,
+              value: 'LINEAR',
+              feature: 'UPDATE_DISTRIBUTION_EASING',
+              position: 0,
+              type: 'OPTION',
+              isActive: true,
+              isBlocked: false,
+              isNew: false,
+              children: [],
+              action: (e) =>
+                this.setState({
+                  distributionEasing: e.target.dataset.value,
+                }),
+            },
+            {
+              label: '',
+              value: null,
+              feature: null,
+              position: 1,
+              type: 'SEPARATOR',
+              isActive: true,
+              isBlocked: false,
+              children: [],
+              action: () => null,
+            },
+            {
+              label: locals[this.props.lang].scale.easing.easeIn,
+              value: 'EASE_IN',
+              feature: 'UPDATE_DISTRIBUTION_EASING',
+              position: 2,
+              type: 'OPTION',
+              isActive: true,
+              isBlocked: false,
+              isNew: false,
+              children: [],
+              action: (e) =>
+                this.setState({
+                  distributionEasing: e.target.dataset.value,
+                }),
+            },
+            {
+              label: locals[this.props.lang].scale.easing.easeOut,
+              value: 'EASE_OUT',
+              feature: 'UPDATE_DISTRIBUTION_EASING',
+              position: 3,
+              type: 'OPTION',
+              isActive: true,
+              isBlocked: false,
+              isNew: false,
+              children: [],
+              action: (e) =>
+                this.setState({
+                  distributionEasing: e.target.dataset.value,
+                }),
+            },
+            {
+              label: locals[this.props.lang].scale.easing.easeInOut,
+              value: 'EASE_IN_OUT',
+              feature: 'UPDATE_DISTRIBUTION_EASING',
+              position: 4,
+              type: 'OPTION',
+              isActive: true,
+              isBlocked: false,
+              isNew: false,
+              children: [],
+              action: (e) =>
+                this.setState({
+                  distributionEasing: e.target.dataset.value,
+                }),
+            },
+          ]}
+          selected={this.state['distributionEasing']}
+          parentClassName="controls"
+          isNew={
+            features.find(
+              (feature) => feature.name === 'SCALE_HELPER_DISTRIBUTION'
+            )?.isNew
+          }
+        />
+      </FormItem>
     )
-
-    return messages
   }
 
-  // Templates
+  NamingConvention = () => {
+    return (
+      <Dropdown
+        id="naming-convention"
+        options={[
+          {
+            label: locals[this.props.lang].scale.namingConvention.ones,
+            value: 'ONES',
+            feature: 'UPDATE_NAMING_CONVENTION',
+            position: 0,
+            type: 'OPTION',
+            isActive: true,
+            isBlocked: false,
+            isNew: false,
+            children: [],
+            action: (e) => this.props.onChangeNamingConvention?.(e),
+          },
+          {
+            label: locals[this.props.lang].scale.namingConvention.tens,
+            value: 'TENS',
+            feature: 'UPDATE_NAMING_CONVENTION',
+            position: 0,
+            type: 'OPTION',
+            isActive: true,
+            isBlocked: false,
+            isNew: false,
+            children: [],
+            action: (e) => this.props.onChangeNamingConvention?.(e),
+          },
+          {
+            label: locals[this.props.lang].scale.namingConvention.hundreds,
+            value: 'HUNDREDS',
+            feature: 'UPDATE_NAMING_CONVENTION',
+            position: 0,
+            type: 'OPTION',
+            isActive: true,
+            isBlocked: false,
+            isNew: false,
+            children: [],
+            action: (e) => this.props.onChangeNamingConvention?.(e),
+          },
+        ]}
+        selected={this.props.namingConvention}
+        parentClassName="controls"
+        alignment="RIGHT"
+        isNew={
+          features.find(
+            (feature) => feature.name === 'SCALE_PRESETS_NAMING_CONVENTION'
+          )?.isNew
+        }
+      />
+    )
+  }
+
+  KeyboardShortcuts = () => {
+    const isMacOrWinKeyboard =
+      navigator.userAgent.indexOf('Mac') != -1 ? '⌘' : '⌃' ?? '⌘'
+
+    return (
+      <Dialog
+        title={locals[this.props.lang].scale.tips.title}
+        actions={{}}
+        onClose={() =>
+          this.setState({
+            isTipsOpen: false,
+          })
+        }
+      >
+        <div className="controls__control controls__control--horizontal">
+          <div className="control__block control__block--no-padding">
+            <ul className="list">
+              <KeyboardShortcutItem
+                label={locals[this.props.lang].scale.tips.move}
+                shortcuts={[[isMacOrWinKeyboard, 'drag']]}
+              />
+              <KeyboardShortcutItem
+                label={locals[this.props.lang].scale.tips.distribute}
+                shortcuts={[['⇧', 'drag']]}
+              />
+              <KeyboardShortcutItem
+                label={locals[this.props.lang].scale.tips.select}
+                shortcuts={[['click']]}
+              />
+              <KeyboardShortcutItem
+                label={locals[this.props.lang].scale.tips.unselect}
+                shortcuts={[['⎋ Esc']]}
+              />
+              <KeyboardShortcutItem
+                label={locals[this.props.lang].scale.tips.navPrevious}
+                shortcuts={[['⇧', '⇥ Tab']]}
+              />
+              <KeyboardShortcutItem
+                label={locals[this.props.lang].scale.tips.navNext}
+                shortcuts={[['⇥ Tab']]}
+              />
+              {!this.props.hasPreset ? (
+                <>
+                  <KeyboardShortcutItem
+                    label={locals[this.props.lang].scale.tips.type}
+                    shortcuts={[['db click'], ['↩︎ Enter']]}
+                    separator="or"
+                  />
+                  <KeyboardShortcutItem
+                    label={locals[this.props.lang].scale.tips.shiftLeft}
+                    shortcuts={[['←'], [isMacOrWinKeyboard, '←']]}
+                    separator="or"
+                  />
+                  <KeyboardShortcutItem
+                    label={locals[this.props.lang].scale.tips.shiftRight}
+                    shortcuts={[['→'], [isMacOrWinKeyboard, '→']]}
+                    separator="or"
+                  />
+                </>
+              ) : null}
+            </ul>
+          </div>
+          {!this.props.hasPreset ? (
+            <div className="control__block control__block--list">
+              <div className="section-controls">
+                <div className="section-controls__left-part">
+                  <SectionTitle
+                    label={locals[this.props.lang].scale.tips.custom}
+                  />
+                </div>
+                <div className="section-controls__right-part"></div>
+              </div>
+              <ul className="list">
+                <KeyboardShortcutItem
+                  label={locals[this.props.lang].scale.tips.add}
+                  shortcuts={[['click']]}
+                />
+                <KeyboardShortcutItem
+                  label={locals[this.props.lang].scale.tips.remove}
+                  shortcuts={[['⌫']]}
+                />
+              </ul>
+            </div>
+          ) : null}
+        </div>
+      </Dialog>
+    )
+  }
+
   Create = () => {
     palette.scale = {}
     return (
@@ -171,13 +403,13 @@ export default class Scale extends React.Component<Props, any> {
                 }
               >
                 <Dropdown
-                  id="switch-presets"
+                  id="presets"
                   options={Object.entries(presets).map((preset, index) => {
                     return {
                       label: preset[1].name,
                       value: preset[1].id,
                       feature: 'UPDATE_PRESET',
-                      position: index,
+                      position: 0,
                       type: 'OPTION',
                       isActive: features.find(
                         (feature) => feature.name === `PRESETS_${preset[1].id}`
@@ -204,27 +436,38 @@ export default class Scale extends React.Component<Props, any> {
                     ?.isActive
                 }
               >
-                {this.props.preset.scale.length > 2 &&
-                this.props.preset.name === 'Custom' ? (
-                  <Button
-                    type="icon"
-                    icon="minus"
-                    feature="REMOVE_STOP"
-                    action={this.props.onRemoveStop}
-                  />
-                ) : null}
                 {this.props.preset.name === 'Custom' ? (
-                  <Button
-                    type="icon"
-                    icon="plus"
-                    isDisabled={this.props.preset.scale.length == 24}
-                    feature="ADD_STOP"
-                    action={
-                      this.props.preset.scale.length >= 24
-                        ? () => null
-                        : this.props.onAddStop
-                    }
-                  />
+                  <>
+                    <Feature
+                      isActive={
+                        features.find(
+                          (feature) =>
+                            feature.name === 'SCALE_PRESETS_NAMING_CONVENTION'
+                        )?.isActive
+                      }
+                    >
+                      <this.NamingConvention />
+                    </Feature>
+                    {this.props.preset.scale.length > 2 ? (
+                      <Button
+                        type="icon"
+                        icon="minus"
+                        feature="REMOVE_STOP"
+                        action={this.props.onRemoveStop}
+                      />
+                    ) : null}
+                    <Button
+                      type="icon"
+                      icon="plus"
+                      isDisabled={this.props.preset.scale.length == 24}
+                      feature="ADD_STOP"
+                      action={
+                        this.props.preset.scale.length >= 24
+                          ? () => null
+                          : this.props.onAddStop
+                      }
+                    />
+                  </>
                 ) : null}
               </Feature>
             </div>
@@ -241,8 +484,9 @@ export default class Scale extends React.Component<Props, any> {
                 hasPreset={this.props.hasPreset}
                 presetName={this.props.preset.name}
                 stops={this.props.preset.scale}
-                min={this.props.preset.min}
-                max={this.props.preset.max}
+                min={palette.min}
+                max={palette.max}
+                distributionEasing={this.state['distributionEasing']}
                 onChange={this.slideHandler}
               />
             ) : (
@@ -257,20 +501,72 @@ export default class Scale extends React.Component<Props, any> {
                   this.props.preset.max,
                   false
                 )}
+                distributionEasing={this.state['distributionEasing']}
                 onChange={this.slideHandler}
               />
             )}
           </Feature>
           <Feature
             isActive={
-              features.find((feature) => feature.name === 'SCALE_TIPS')
+              features.find((feature) => feature.name === 'SCALE_HELPER')
                 ?.isActive
             }
           >
-            <Message
-              icon="key"
-              messages={this.setOnboardingMessages()}
-            />
+            <div className="section-controls">
+              <div className="section-controls__left-part">
+                <Feature
+                  isActive={
+                    features.find(
+                      (feature) => feature.name === 'SCALE_HELPER_DISTRIBUTION'
+                    )?.isActive
+                  }
+                >
+                  <this.DistributionEasing />
+                </Feature>
+              </div>
+              <div className="section-controls__right-part">
+                <Feature
+                  isActive={
+                    features.find(
+                      (feature) => feature.name === 'SCALE_HELPER_TIPS'
+                    )?.isActive
+                  }
+                >
+                  <div className="snackbar">
+                    <Button
+                      type="tertiary"
+                      label={locals[this.props.lang].scale.howTo}
+                      action={() =>
+                        parent.postMessage(
+                          {
+                            pluginMessage: {
+                              type: 'OPEN_IN_BROWSER',
+                              url: 'https://uicp.link/how-to-adjust',
+                            },
+                          },
+                          '*'
+                        )
+                      }
+                    />
+                    <span
+                      className={`type ${texts.type} ${texts['type--secondary']}`}
+                    >
+                      ﹒
+                    </span>
+                    <Button
+                      type="tertiary"
+                      label={locals[this.props.lang].scale.keyboardShortcuts}
+                      action={() =>
+                        this.setState({
+                          isTipsOpen: true,
+                        })
+                      }
+                    />
+                  </div>
+                </Feature>
+              </div>
+            </div>
+            {this.state['isTipsOpen'] ? <this.KeyboardShortcuts /> : null}
           </Feature>
         </div>
         <Actions
@@ -316,19 +612,71 @@ export default class Scale extends React.Component<Props, any> {
               presetName={this.props.preset.name}
               stops={this.props.preset.scale}
               scale={this.props.scale}
+              distributionEasing={this.state['distributionEasing']}
               onChange={this.slideHandler}
             />
           </Feature>
           <Feature
             isActive={
-              features.find((feature) => feature.name === 'SCALE_TIPS')
+              features.find((feature) => feature.name === 'SCALE_HELPER')
                 ?.isActive
             }
           >
-            <Message
-              icon="key"
-              messages={this.setOnboardingMessages()}
-            />
+            <div className="section-controls">
+              <div className="section-controls__left-part">
+                <Feature
+                  isActive={
+                    features.find(
+                      (feature) => feature.name === 'SCALE_HELPER_DISTRIBUTION'
+                    )?.isActive
+                  }
+                >
+                  <this.DistributionEasing />
+                </Feature>
+              </div>
+              <div className="section-controls__right-part">
+                <Feature
+                  isActive={
+                    features.find(
+                      (feature) => feature.name === 'SCALE_HELPER_TIPS'
+                    )?.isActive
+                  }
+                >
+                  <div className="snackbar">
+                    <Button
+                      type="tertiary"
+                      label={locals[this.props.lang].scale.howTo}
+                      action={() =>
+                        parent.postMessage(
+                          {
+                            pluginMessage: {
+                              type: 'OPEN_IN_BROWSER',
+                              url: 'https://uicp.link/how-to-adjust',
+                            },
+                          },
+                          '*'
+                        )
+                      }
+                    />
+                    <span
+                      className={`type ${texts.type} ${texts['type--secondary']}`}
+                    >
+                      ﹒
+                    </span>
+                    <Button
+                      type="tertiary"
+                      label={locals[this.props.lang].scale.keyboardShortcuts}
+                      action={() =>
+                        this.setState({
+                          isTipsOpen: true,
+                        })
+                      }
+                    />
+                  </div>
+                </Feature>
+              </div>
+            </div>
+            {this.state['isTipsOpen'] ? <this.KeyboardShortcuts /> : null}
           </Feature>
         </div>
         {this.props.editorType === 'figma' ? (

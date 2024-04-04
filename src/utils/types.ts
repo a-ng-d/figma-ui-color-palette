@@ -12,7 +12,7 @@ export type Service = 'CREATE' | 'EDIT' | 'TRANSFER'
 
 export type EditorType = 'figma' | 'figjam' | 'dev'
 
-export type PlanStatus = 'UNPAID' | 'PAID' | 'NOT_SUPPORTED' | undefined
+export type PlanStatus = 'UNPAID' | 'PAID' | 'NOT_SUPPORTED'
 
 export type TrialStatus = 'UNUSED' | 'PENDING' | 'EXPIRED'
 
@@ -30,9 +30,25 @@ export type PriorityContext =
 
 export type ThirdParty = 'COOLORS' | 'REALTIME_COLORS'
 
+export type Easing = 'LINEAR' | 'EASE_IN' | 'EASE_OUT' | 'EASE_IN_OUT'
+
+export type NamingConvention = 'ONES' | 'TENS' | 'HUNDREDS'
+
 export interface windowSize {
   w: number
   h: number
+}
+
+export interface ImportUrl {
+  value: string
+  state: 'DEFAULT' | 'ERROR' | undefined
+  canBeSubmitted: boolean
+  helper:
+    | {
+        type: 'INFO' | 'ERROR'
+        message: string
+      }
+    | undefined
 }
 
 export interface ReleaseNote {
@@ -43,13 +59,6 @@ export interface ReleaseNote {
   content: Array<string>
   numberOfNotes: number
   learnMore: Array<`https://${string}`>
-}
-
-export interface Shortcut {
-  label: string
-  isLink: boolean
-  url: `https://${string}`
-  action: any
 }
 
 // Palette
@@ -121,7 +130,7 @@ export interface SourceColorConfiguration {
 export interface PaletteConfiguration {
   name: string
   description: string
-  preset: PresetConfiguration | any
+  preset: PresetConfiguration
   scale: ScaleConfiguration
   min: number | undefined
   max: number | undefined
@@ -134,7 +143,7 @@ export interface PaletteConfiguration {
 export interface ExtractOfPaletteConfiguration {
   id: string
   name: string
-  preset: PresetConfiguration
+  preset: PresetConfiguration | Record<string, never>
   colors: Array<ColorConfiguration>
   themes: Array<ThemeConfiguration>
 }
@@ -189,10 +198,13 @@ export interface ExportConfiguration {
     | 'ANDROID_XML'
     | 'CSV'
   label: string
+  colorSpace: ColorSpaceConfiguration
   mimeType:
     | 'application/json'
     | 'text/css'
+    | 'text/javascript'
     | 'text/swift'
+    | 'text/x-kotlin'
     | 'text/xml'
     | 'text/csv'
   data: any
@@ -205,6 +217,9 @@ export type ColorSpaceConfiguration =
   | 'OKLAB'
   | 'HSL'
   | 'HSLUV'
+  | 'RGB'
+  | 'HEX'
+  | 'P3'
 
 export type visionSimulationModeConfiguration =
   | 'NONE'
@@ -239,7 +254,7 @@ export interface DispatchProcess {
 }
 
 export interface SelectedColor {
-  id: string
+  id: string | undefined
   position: number
 }
 

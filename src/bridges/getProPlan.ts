@@ -78,7 +78,7 @@ const getProPlan = async () => {
         )
           .then((response) => response.json())
           .then((response) => console.log(response))
-          .catch((err) => console.error(err))
+          .catch((error) => console.error(error))
     })
 }
 

@@ -1,5 +1,4 @@
 import { lang, locals } from '../content/locals'
-import { notifications } from '../utils/palettePackage'
 import { ActionsList, windowSize } from '../utils/types'
 import checkEditorType from './checkEditorType'
 import checkHighlightStatus from './checkHighlightStatus'
@@ -51,9 +50,6 @@ const loadUI = async (palette: SceneNode) => {
   await checkPlanStatus()
 
   figma.ui.onmessage = async (msg) => {
-    const i = 0,
-      j = 0
-
     const actions: ActionsList = {
       RESIZE_UI: async () => {
         windowSize.w < 540
@@ -74,17 +70,26 @@ const loadUI = async (palette: SceneNode) => {
       UPDATE_VIEW: () => updateView(msg, palette),
       UPDATE_COLORS: () => updateColors(msg, palette),
       UPDATE_THEMES: () => updateThemes(msg, palette),
-      SYNC_LOCAL_STYLES: () => {
-        notifications.splice(0, notifications.length)
-        createLocalStyles(palette, i)
-        updateLocalStyles(palette, i)
-        figma.notify(notifications.join('﹒'))
+      SYNC_LOCAL_STYLES: async () => {
+        createLocalStyles(palette)
+          .then(async (message) => [message, await updateLocalStyles(palette)])
+          .then((messages) => figma.notify(messages.join('﹒')))
+          .catch((error) => {
+            console.log(error)
+            figma.notify(locals[lang].error.generic)
+          })
       },
       SYNC_LOCAL_VARIABLES: () => {
-        notifications.splice(0, notifications.length)
-        createLocalVariables(palette, i, j)
-        updateLocalVariables(palette, i, j)
-        figma.notify(notifications.join('﹒'))
+        createLocalVariables(palette)
+          .then(async (message) => [
+            message,
+            await updateLocalVariables(palette),
+          ])
+          .then((messages) => figma.notify(messages.join('﹒')))
+          .catch((error) => {
+            console.log(error)
+            figma.notify(locals[lang].error.generic)
+          })
       },
       EXPORT_PALETTE: () => {
         msg.export === 'TOKENS_GLOBAL' ? exportJson(palette) : null
@@ -106,17 +111,29 @@ const loadUI = async (palette: SceneNode) => {
       OPEN_IN_BROWSER: () => {
         figma.openExternal(msg.url)
       },
-      GET_PALETTES: () => getPalettesOnCurrentPage(),
-      JUMP_TO_PALETTE: () => {
+      GET_PALETTES: async () => await getPalettesOnCurrentPage(),
+      JUMP_TO_PALETTE: async () => {
         const scene: Array<SceneNode> = []
-        const palette = figma.currentPage.findOne(
-          (node) => node.getPluginData('id') === msg.id
-        )
+        const palette = await figma.currentPage
+          .loadAsync()
+          .then(() =>
+            figma.currentPage.findOne(
+              (node) => node.getPluginData('id') === msg.id
+            )
+          )
+          .catch((error) => {
+            console.log(error)
+            figma.notify(locals[lang].error.generic)
+            return null
+          })
         palette != null ? scene.push(palette) : null
         figma.currentPage.selection = scene
       },
       GET_PRO_PLAN: async () => await getProPlan(),
-      ENABLE_TRIAL: async () => await enableTrial(),
+      ENABLE_TRIAL: async () => {
+        await enableTrial()
+        await checkPlanStatus()
+      },
     }
 
     return actions[msg.type]?.()

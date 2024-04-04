@@ -6,6 +6,8 @@ import type {
   Language,
   SourceColorConfiguration,
   ThirdParty,
+  ImportUrl,
+  PlanStatus,
 } from '../../utils/types'
 import Feature from '../components/Feature'
 import { Message } from '@a-ng-d/figmug.dialogs.message'
@@ -14,15 +16,15 @@ import { Input } from '@a-ng-d/figmug.inputs.input'
 import { Accordion } from '@a-ng-d/figmug.layouts.accordion'
 import { texts } from '@a-ng-d/figmug.stylesheets.texts'
 import { SectionTitle } from '@a-ng-d/figmug.layouts.section-title'
+import { ColorItem } from '@a-ng-d/figmug.lists.color-item'
 import Actions from './Actions'
-import CompactColorItem from '../components/CompactColorItem'
 import features from '../../utils/config'
 import isBlocked from '../../utils/isBlocked'
 import { locals } from '../../content/locals'
 
 interface Props {
   sourceColors: Array<SourceColorConfiguration>
-  planStatus: 'UNPAID' | 'PAID'
+  planStatus: PlanStatus
   editorType?: EditorType
   lang: Language
   onChangeColorsFromImport: (
@@ -32,7 +34,14 @@ interface Props {
   onCreatePalette: () => void
 }
 
-export default class Source extends React.Component<Props, any> {
+interface States {
+  coolorsUrl: ImportUrl
+  realtimeColorsUrl: ImportUrl
+  isCoolorsImportOpen: boolean
+  isRealtimeColorsImportOpen: boolean
+}
+
+export default class Source extends React.Component<Props, States> {
   constructor(props: Props) {
     super(props)
     this.state = {
@@ -66,13 +75,13 @@ export default class Source extends React.Component<Props, any> {
 
   // Handlers
   isTypingCoolorsUrlHandler = (e: React.SyntheticEvent) =>
-    this.setState((state: any) => ({
+    this.setState((state) => ({
       coolorsUrl: {
         value: (e.target as HTMLInputElement).value,
         state: !(e.target as HTMLInputElement).value.includes(
           'https://coolors.co'
         )
-          ? ''
+          ? 'DEFAULT'
           : state['coolorsUrl'].state,
         canBeSubmitted: (e.target as HTMLInputElement).value.includes(
           'https://coolors.co'
@@ -91,13 +100,13 @@ export default class Source extends React.Component<Props, any> {
     }))
 
   isTypingRealtimeColorsUrlHandler = (e: React.SyntheticEvent) =>
-    this.setState((state: any) => ({
+    this.setState((state) => ({
       realtimeColorsUrl: {
         value: (e.target as HTMLInputElement).value,
         state: !(e.target as HTMLInputElement).value.includes(
           'https://www.realtimecolors.com'
         )
-          ? ''
+          ? 'DEFAULT'
           : state['realtimeColorsUrl'].state,
         canBeSubmitted: (e.target as HTMLInputElement).value.includes(
           'https://www.realtimecolors.com'
@@ -109,7 +118,8 @@ export default class Source extends React.Component<Props, any> {
         )
           ? {
               type: 'INFO',
-              message: locals[this.props.lang].source.coolors.url.infoMessage,
+              message:
+                locals[this.props.lang].source.realtimeColors.url.infoMessage,
             }
           : state['realtimeColorsUrl'].helper,
       },
@@ -195,7 +205,8 @@ export default class Source extends React.Component<Props, any> {
           canBeSubmitted: this.state['realtimeColorsUrl'].canBeSubmitted,
           helper: {
             type: 'ERROR',
-            message: locals[this.props.lang].source.coolors.url.errorMessage,
+            message:
+              locals[this.props.lang].source.realtimeColors.url.errorMessage,
           },
         },
       })
@@ -224,7 +235,7 @@ export default class Source extends React.Component<Props, any> {
               .filter((sourceColor) => sourceColor.source === 'CANVAS')
               .map((sourceColor) => {
                 return (
-                  <CompactColorItem
+                  <ColorItem
                     key={sourceColor.id}
                     name={sourceColor.name}
                     hex={chroma(
@@ -235,7 +246,6 @@ export default class Source extends React.Component<Props, any> {
                       .hex()
                       .toUpperCase()}
                     uuid={sourceColor.id}
-                    lang={this.props.lang}
                   />
                 )
               })}
@@ -313,7 +323,7 @@ export default class Source extends React.Component<Props, any> {
               .filter((sourceColor) => sourceColor.source === 'COOLORS')
               .map((sourceColor) => {
                 return (
-                  <CompactColorItem
+                  <ColorItem
                     key={sourceColor.id}
                     name={sourceColor.name}
                     hex={chroma(
@@ -324,7 +334,6 @@ export default class Source extends React.Component<Props, any> {
                       .hex()
                       .toUpperCase()}
                     uuid={sourceColor.id}
-                    lang={this.props.lang}
                   />
                 )
               })}
@@ -401,7 +410,7 @@ export default class Source extends React.Component<Props, any> {
               .filter((sourceColor) => sourceColor.source === 'REALTIME_COLORS')
               .map((sourceColor) => {
                 return (
-                  <CompactColorItem
+                  <ColorItem
                     key={sourceColor.id}
                     name={sourceColor.name}
                     hex={chroma(
@@ -412,7 +421,6 @@ export default class Source extends React.Component<Props, any> {
                       .hex()
                       .toUpperCase()}
                     uuid={sourceColor.id}
-                    lang={this.props.lang}
                   />
                 )
               })}

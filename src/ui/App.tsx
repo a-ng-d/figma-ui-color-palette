@@ -22,6 +22,9 @@ import type {
   ViewConfiguration,
   ThirdParty,
   ExtractOfPaletteConfiguration,
+  ExportConfiguration,
+  Service,
+  NamingConvention,
 } from '../utils/types'
 import Dispatcher from './modules/Dispatcher'
 import Feature from './components/Feature'
@@ -29,15 +32,41 @@ import CreatePalette from './services/CreatePalette'
 import EditPalette from './services/EditPalette'
 import TransferPalette from './services/TransferPalette'
 import PriorityContainer from './modules/PriorityContainer'
-import PalettesList from './modules/PalettesList'
 import Shortcuts from './modules/Shortcuts'
 import { palette, presets } from '../utils/palettePackage'
 import doLightnessScale from '../utils/doLightnessScale'
-import features from '../utils/config'
+import features, { trialTime } from '../utils/config'
 import 'figma-plugin-ds/dist/figma-plugin-ds.css'
 import './stylesheets/app.css'
 import './stylesheets/app-components.css'
 import { locals } from '../content/locals'
+
+interface States {
+  service: Service
+  sourceColors: Array<SourceColorConfiguration>
+  name: string
+  description: string
+  preset: PresetConfiguration
+  namingConvention: NamingConvention
+  scale: ScaleConfiguration
+  newColors: Array<ColorConfiguration>
+  colorSpace: ColorSpaceConfiguration
+  visionSimulationMode: visionSimulationModeConfiguration
+  themes: Array<ThemeConfiguration>
+  view: ViewConfiguration
+  textColorsTheme: TextColorsThemeHexModel
+  algorithmVersion: AlgorithmVersionConfiguration
+  export: ExportConfiguration
+  palettesList: Array<ExtractOfPaletteConfiguration>
+  editorType: EditorType
+  planStatus: PlanStatus
+  trialStatus: TrialStatus
+  trialRemainingTime: number
+  lang: Language
+  priorityContainerContext: PriorityContext
+  isLoaded: boolean
+  onGoingStep: string
+}
 
 let isPaletteSelected = false
 const container = document.getElementById('app'),
@@ -59,10 +88,19 @@ const settingsMessage: SettingsMessage = {
   isEditedInRealTime: false,
 }
 
-class App extends React.Component<any, any> {
+const defaultPreset: PresetConfiguration = {
+  name: 'Material Design, 50-900 (Google)',
+  scale: [50, 100, 200, 300, 400, 500, 600, 700, 800, 900],
+  min: 24,
+  max: 96,
+  isDistributed: true,
+  id: 'MATERIAL',
+}
+
+class App extends React.Component<Record<string, never>, States> {
   dispatch: { [key: string]: DispatchProcess }
 
-  constructor(props: any) {
+  constructor(props: Record<string, never>) {
     super(props)
     this.dispatch = {
       textColorsTheme: new Dispatcher(
@@ -72,37 +110,38 @@ class App extends React.Component<any, any> {
     }
     this.state = {
       service: 'CREATE',
-      sourceColors: [] as SourceColorConfiguration | [],
+      sourceColors: [],
       name: '',
       description: '',
-      preset: presets.find(
-        (preset) => preset.id === 'MATERIAL'
-      ) as PresetConfiguration,
-      scale: {} as ScaleConfiguration,
-      newColors: [] as Array<ColorConfiguration> | [],
-      colorSpace: 'LCH' as ColorSpaceConfiguration,
-      visionSimulationMode: 'NONE' as visionSimulationModeConfiguration,
-      themes: [] as ThemeConfiguration | [],
-      view: 'PALETTE_WITH_PROPERTIES' as ViewConfiguration,
+      preset:
+        presets.find((preset) => preset.id === 'MATERIAL') ?? defaultPreset,
+      namingConvention: 'ONES',
+      scale: {},
+      newColors: [],
+      colorSpace: 'LCH',
+      visionSimulationMode: 'NONE',
+      themes: [],
+      view: 'PALETTE_WITH_PROPERTIES',
       textColorsTheme: {
         lightColor: '#FFFFFF',
         darkColor: '#000000',
-      } as TextColorsThemeHexModel,
-      algorithmVersion: 'v1' as AlgorithmVersionConfiguration,
+      },
+      algorithmVersion: 'v1',
       export: {
-        format: '',
-        context: '',
+        format: 'JSON',
+        context: 'TOKENS_GLOBAL',
         label: '',
-        mimeType: '',
+        colorSpace: 'RGB',
+        mimeType: 'application/json',
         data: '',
       },
-      palettesList: [] as Array<ExtractOfPaletteConfiguration>,
-      editorType: 'figma' as EditorType,
-      planStatus: 'UNPAID' as PlanStatus,
-      trialStatus: 'UNUSED' as TrialStatus,
-      trialRemainingTime: 168,
-      lang: 'en-US' as Language,
-      priorityContainerContext: 'EMPTY' as PriorityContext,
+      palettesList: [],
+      editorType: 'figma',
+      planStatus: 'UNPAID',
+      trialStatus: 'UNUSED',
+      trialRemainingTime: trialTime,
+      lang: 'en-US',
+      priorityContainerContext: 'EMPTY',
       isLoaded: false,
       onGoingStep: '',
     }
@@ -129,49 +168,55 @@ class App extends React.Component<any, any> {
   presetsHandler = (e: React.SyntheticEvent) => {
     const setMaterialDesignPreset = () =>
       this.setState({
-        preset: presets.find((preset) => preset.id === 'MATERIAL'),
+        preset:
+          presets.find((preset) => preset.id === 'MATERIAL') ?? defaultPreset,
         onGoingStep: 'preset changed',
       })
 
     const setMaterial3Preset = () =>
       this.setState({
-        preset: presets.find((preset) => preset.id === 'MATERIAL_3'),
+        preset:
+          presets.find((preset) => preset.id === 'MATERIAL_3') ?? defaultPreset,
         onGoingStep: 'preset changed',
       })
 
     const setTailwindPreset = () =>
       this.setState({
-        preset: presets.find((preset) => preset.id === 'TAILWIND'),
+        preset:
+          presets.find((preset) => preset.id === 'TAILWIND') ?? defaultPreset,
         onGoingStep: 'preset changed',
       })
 
     const setAntDesignPreset = () =>
       this.setState({
-        preset: presets.find((preset) => preset.id === 'ANT'),
+        preset: presets.find((preset) => preset.id === 'ANT') ?? defaultPreset,
         onGoingStep: 'preset changed',
       })
 
     const setAdsPreset = () =>
       this.setState({
-        preset: presets.find((preset) => preset.id === 'ADS'),
+        preset: presets.find((preset) => preset.id === 'ADS') ?? defaultPreset,
         onGoingStep: 'preset changed',
       })
 
     const setAdsNeutralPreset = () =>
       this.setState({
-        preset: presets.find((preset) => preset.id === 'ADS_NEUTRAL'),
+        preset:
+          presets.find((preset) => preset.id === 'ADS_NEUTRAL') ??
+          defaultPreset,
         onGoingStep: 'preset changed',
       })
 
     const setCarbonPreset = () =>
       this.setState({
-        preset: presets.find((preset) => preset.id === 'CARBON'),
+        preset:
+          presets.find((preset) => preset.id === 'CARBON') ?? defaultPreset,
         onGoingStep: 'preset changed',
       })
 
     const setBasePreset = () =>
       this.setState({
-        preset: presets.find((preset) => preset.id === 'BASE'),
+        preset: presets.find((preset) => preset.id === 'BASE') ?? defaultPreset,
         onGoingStep: 'preset changed',
       })
 
@@ -179,7 +224,7 @@ class App extends React.Component<any, any> {
       const customPreset = presets.find((preset) => preset.id === 'CUSTOM')
       if (customPreset != undefined) customPreset.scale = [1, 2]
       this.setState({
-        preset: customPreset,
+        preset: customPreset ?? defaultPreset,
         onGoingStep: 'preset changed',
       })
     }
@@ -201,19 +246,19 @@ class App extends React.Component<any, any> {
   }
 
   customHandler = (e: React.SyntheticEvent) => {
-    const scale = this.state['preset']['scale']
+    const scale = this.state['preset']?.['scale'] ?? [1, 2]
 
     const addStop = () => {
       if (scale.length < 24) {
-        scale.push(scale.length + 1)
+        scale.push(scale.slice(-1)[0] + scale[0])
         this.setState({
           preset: {
-            name: presets.find((preset) => preset.id === 'CUSTOM')?.name,
+            name: presets.find((preset) => preset.id === 'CUSTOM')?.name ?? '',
             scale: scale,
-            min: palette.min,
-            max: palette.max,
+            min: palette.min ?? 0,
+            max: palette.max ?? 100,
             isDistributed: true,
-            id: presets.find((preset) => preset.id === 'CUSTOM')?.id,
+            id: 'CUSTOM',
           },
         })
       }
@@ -224,20 +269,41 @@ class App extends React.Component<any, any> {
         scale.pop()
         this.setState({
           preset: {
-            name: presets.find((preset) => preset.id === 'CUSTOM')?.name,
+            name: presets.find((preset) => preset.id === 'CUSTOM')?.name ?? '',
             scale: scale,
-            min: palette.min,
-            max: palette.max,
+            min: palette.min ?? 0,
+            max: palette.max ?? 100,
             isDistributed: true,
-            id: presets.find((preset) => preset.id === 'CUSTOM')?.id,
+            id: 'CUSTOM',
           },
         })
       }
     }
 
+    const changeNamingConvention = () => {
+      const option = (e.target as HTMLInputElement).dataset
+        .value as NamingConvention
+      this.setState({
+        namingConvention: option,
+        preset: {
+          name: presets.find((preset) => preset.id === 'CUSTOM')?.name ?? '',
+          scale: scale.map((stop, index) => {
+            if (option === 'TENS') return (index + 1) * 10
+            else if (option === 'HUNDREDS') return (index + 1) * 100
+            return (index + 1) * 1
+          }),
+          min: palette.min ?? 0,
+          max: palette.max ?? 100,
+          isDistributed: true,
+          id: 'CUSTOM',
+        },
+      })
+    }
+
     const actions: ActionsList = {
       ADD_STOP: () => addStop(),
       REMOVE_STOP: () => removeStop(),
+      UPDATE_NAMING_CONVENTION: () => changeNamingConvention(),
       NULL: () => null,
     }
 
@@ -286,7 +352,7 @@ class App extends React.Component<any, any> {
 
   themesHandler = (themes: Array<ThemeConfiguration>) =>
     this.setState({
-      scale: themes.find((theme) => theme.isEnabled)?.scale,
+      scale: themes.find((theme) => theme.isEnabled)?.scale ?? {},
       themes: themes,
       onGoingStep: 'themes changed',
     })
@@ -505,7 +571,10 @@ class App extends React.Component<any, any> {
             ),
             name: '',
             description: '',
-            preset: presets.find((preset) => preset.id === 'MATERIAL'),
+            preset:
+              presets.find((preset) => preset.id === 'MATERIAL') ??
+              defaultPreset,
+            namingConvention: 'ONES',
             colorSpace: 'LCH',
             visionSimulationMode: 'NONE',
             view: 'PALETTE_WITH_PROPERTIES',
@@ -517,7 +586,7 @@ class App extends React.Component<any, any> {
           })
           palette.name = ''
           palette.description = ''
-          palette.preset = {}
+          palette.preset = defaultPreset
           palette.colorSpace = 'LCH'
           palette.visionSimulationMode = 'NONE'
           palette.view = 'PALETTE_WITH_PROPERTIES'
@@ -533,7 +602,10 @@ class App extends React.Component<any, any> {
             this.setState({
               name: '',
               description: '',
-              preset: presets.find((preset) => preset.id === 'MATERIAL'),
+              preset:
+                presets.find((preset) => preset.id === 'MATERIAL') ??
+                defaultPreset,
+              namingConvention: 'ONES',
               colorSpace: 'LCH',
               visionSimulationMode: 'NONE',
               view: 'PALETTE_WITH_PROPERTIES',
@@ -544,7 +616,9 @@ class App extends React.Component<any, any> {
             })
             palette.name = ''
             palette.description = ''
-            palette.preset = presets.find((preset) => preset.id === 'MATERIAL')
+            palette.preset =
+              presets.find((preset) => preset.id === 'MATERIAL') ??
+              defaultPreset
             palette.colorSpace = 'LCH'
             palette.visionSimulationMode = 'NONE'
             palette.view = 'PALETTE_WITH_PROPERTIES'
@@ -568,7 +642,7 @@ class App extends React.Component<any, any> {
 
         const updateWhilePaletteSelected = () => {
           isPaletteSelected = true
-          palette.preset = {}
+          palette.preset = e.data.pluginMessage.data.preset
           parent.postMessage(
             {
               pluginMessage: {
@@ -609,6 +683,7 @@ class App extends React.Component<any, any> {
               label: `${locals[this.state['lang']].actions.export} ${
                 locals[this.state['lang']].export.tokens.label
               }`,
+              colorSpace: 'RGB',
               mimeType: 'application/json',
               data: JSON.stringify(e.data.pluginMessage.data, null, '  '),
             },
@@ -633,11 +708,12 @@ class App extends React.Component<any, any> {
         const exportPaletteToTaiwind = () =>
           this.setState({
             export: {
-              format: 'JS',
+              format: 'TAILWIND',
               context: e.data.pluginMessage.context,
               label: `${locals[this.state['lang']].actions.export} ${
                 locals[this.state['lang']].export.tailwind.config
               }`,
+              colorSpace: 'HEX',
               mimeType: 'text/javascript',
               data: `/** @type {import('tailwindcss').Config} */\nmodule.exports = ${JSON.stringify(
                 e.data.pluginMessage.data,
@@ -656,6 +732,7 @@ class App extends React.Component<any, any> {
               label: `${locals[this.state['lang']].actions.export} ${
                 locals[this.state['lang']].export.apple.swiftui
               }`,
+              colorSpace: 'HEX',
               mimeType: 'text/swift',
               data: `import SwiftUI\n\npublic extension Color {\n  static let Token = Color.TokenColor()\n  struct TokenColor {\n    ${e.data.pluginMessage.data.join(
                 '\n    '
@@ -672,6 +749,7 @@ class App extends React.Component<any, any> {
               label: `${locals[this.state['lang']].actions.export} ${
                 locals[this.state['lang']].export.apple.uikit
               }`,
+              colorSpace: 'HEX',
               mimeType: 'text/swift',
               data: `import UIKit\n\nstruct Color {\n  ${e.data.pluginMessage.data.join(
                 '\n\n  '
@@ -688,6 +766,7 @@ class App extends React.Component<any, any> {
               label: `${locals[this.state['lang']].actions.export} ${
                 locals[this.state['lang']].export.android.compose
               }`,
+              colorSpace: 'HEX',
               mimeType: 'text/x-kotlin',
               data: `import androidx.compose.ui.graphics.Color\n\n${e.data.pluginMessage.data.join(
                 '\n'
@@ -704,6 +783,7 @@ class App extends React.Component<any, any> {
               label: `${locals[this.state['lang']].actions.export} ${
                 locals[this.state['lang']].export.android.resources
               }`,
+              colorSpace: 'HEX',
               mimeType: 'text/xml',
               data: `<?xml version="1.0" encoding="utf-8"?>\n<resources>\n  ${e.data.pluginMessage.data.join(
                 '\n  '
@@ -720,6 +800,7 @@ class App extends React.Component<any, any> {
               label: `${locals[this.state['lang']].actions.export} ${
                 locals[this.state['lang']].export.csv.spreadsheet
               }`,
+              colorSpace: 'HEX',
               mimeType: 'text/csv',
               data: e.data.pluginMessage.data,
             },
@@ -786,6 +867,7 @@ class App extends React.Component<any, any> {
               name={this.state['name']}
               description={this.state['description']}
               preset={this.state['preset']}
+              namingConvention={this.state['namingConvention']}
               colorSpace={this.state['colorSpace']}
               visionSimulationMode={this.state['visionSimulationMode']}
               view={this.state['view']}
@@ -831,7 +913,7 @@ class App extends React.Component<any, any> {
           <Feature
             isActive={
               features.find((feature) => feature.name === 'TRANSFER')
-                ?.isActive && this.state['service'] === 'TRANSFER'
+                ?.isActive && this.state['editorType'] === 'dev'
             }
           >
             <TransferPalette
@@ -847,20 +929,10 @@ class App extends React.Component<any, any> {
               textColorsTheme={this.state['textColorsTheme']}
               algorithmVersion={this.state['algorithmVersion']}
               export={this.state['export']}
+              palettesList={this.state['palettesList']}
+              service={this.state['service']}
               editorType={this.state['editorType']}
               planStatus={this.state['planStatus']}
-              lang={this.state['lang']}
-            />
-          </Feature>
-          <Feature
-            isActive={
-              features.find((feature) => feature.name === 'BROWSE')?.isActive &&
-              this.state['service'] === 'CREATE' &&
-              this.state['editorType'] === 'dev'
-            }
-          >
-            <PalettesList
-              paletteLists={this.state['palettesList']}
               lang={this.state['lang']}
             />
           </Feature>

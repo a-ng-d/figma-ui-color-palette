@@ -1,5 +1,11 @@
 import * as React from 'react'
-import type { ActionsList, Language } from '../../utils/types'
+import type {
+  ActionsList,
+  ColorSpaceConfiguration,
+  Language,
+  PlanStatus,
+} from '../../utils/types'
+import type { DropdownOption } from '@a-ng-d/figmug.modules.types'
 import { Input } from '@a-ng-d/figmug.inputs.input'
 import { Dropdown } from '@a-ng-d/figmug.inputs.dropdown'
 import { SectionTitle } from '@a-ng-d/figmug.layouts.section-title'
@@ -11,13 +17,31 @@ import { locals } from '../../content/locals'
 
 interface Props {
   exportPreview: string
-  planStatus: 'UNPAID' | 'PAID'
+  planStatus: PlanStatus
   exportType: string
   lang: Language
   onExportPalette: () => void
 }
 
-export default class Export extends React.Component<Props, any> {
+interface States {
+  format:
+    | 'EXPORT_TOKENS_GLOBAL'
+    | 'EXPORT_TOKENS_AMZN_STYLE_DICTIONARY'
+    | 'EXPORT_TOKENS_TOKENS_STUDIO'
+    | 'EXPORT_CSS'
+    | 'EXPORT_TAILWIND'
+    | 'EXPORT_APPLE_SWIFTUI'
+    | 'EXPORT_APPLE_UIKIT'
+    | 'EXPORT_ANDROID_COMPOSE'
+    | 'EXPORT_ANDROID_XML'
+    | 'EXPORT_CSV'
+  colorSpace: {
+    selected: ColorSpaceConfiguration
+    options: Array<DropdownOption>
+  }
+}
+
+export default class Export extends React.Component<Props, States> {
   counter: number
   codeRef: React.MutableRefObject<any>
 
@@ -31,7 +55,7 @@ export default class Export extends React.Component<Props, any> {
     this.state = {
       format: 'EXPORT_TOKENS_GLOBAL',
       colorSpace: {
-        selected: '',
+        selected: 'RGB',
         options: [],
       },
     }

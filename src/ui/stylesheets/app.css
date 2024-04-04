@@ -211,11 +211,9 @@ div.about__links {
   color: var(--figma-color-text);
 }
 
-/* Shortcuts */
-div.shortcuts,
-div.pro-zone {
+/* Bars */
+div.snackbar {
   display: flex;
   align-items: center;
   gap: var(--size-xxxsmall);
-  color: var(--figma-color-text);
 }

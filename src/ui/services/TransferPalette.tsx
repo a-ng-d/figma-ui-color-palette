@@ -11,14 +11,14 @@ import type {
   Language,
   EditorType,
   visionSimulationModeConfiguration,
+  PlanStatus,
+  ExtractOfPaletteConfiguration,
+  Service,
 } from '../../utils/types'
-import Feature from '../components/Feature'
-import { Bar } from '@a-ng-d/figmug.layouts.bar'
-import { Tabs } from '@a-ng-d/figmug.actions.tabs'
 import Export from '../modules/Export'
-import features from '../../utils/config'
 import { locals } from '../../content/locals'
 import { doSnakeCase } from '@a-ng-d/figmug.modules.do-snake-case'
+import PalettesList from '../modules/PalettesList'
 
 interface Props {
   name: string
@@ -33,26 +33,14 @@ interface Props {
   textColorsTheme: TextColorsThemeHexModel
   algorithmVersion: string
   export: ExportConfiguration
-  planStatus: 'UNPAID' | 'PAID'
+  palettesList: Array<ExtractOfPaletteConfiguration>
+  service: Service
+  planStatus: PlanStatus
   editorType: EditorType
   lang: Language
 }
 
-export default class TransferPalette extends React.Component<Props, any> {
-  constructor(props: Props) {
-    super(props)
-    this.state = {
-      context:
-        this.setContexts()[0] != undefined ? this.setContexts()[0].id : '',
-    }
-  }
-
-  // Handlers
-  navHandler = (e: React.SyntheticEvent) =>
-    this.setState({
-      context: (e.target as HTMLElement).dataset.feature,
-    })
-
+export default class TransferPalette extends React.Component<Props> {
   // Direct actions
   onExport = () => {
     const blob = new Blob([this.props.export.data], {
@@ -79,7 +67,7 @@ export default class TransferPalette extends React.Component<Props, any> {
       )
       zip
         .generateAsync({ type: 'blob' })
-        .then((content: any) =>
+        .then((content) =>
           FileSaver.saveAs(
             content,
             this.props.name === ''
@@ -87,7 +75,10 @@ export default class TransferPalette extends React.Component<Props, any> {
               : doSnakeCase(this.props.name)
           )
         )
-        .catch((error: any) => console.error(error))
+        .catch((error) => {
+          console.log(error)
+          return locals[this.props.lang].error.generic
+        })
     } else if (this.props.export.format === 'TAILWIND') {
       FileSaver.saveAs(blob, 'tailwind.config.js')
     } else if (this.props.export.format === 'SWIFT') {
@@ -118,61 +109,32 @@ export default class TransferPalette extends React.Component<Props, any> {
     }
   }
 
-  setContexts = () => {
-    const contexts: Array<{
-      label: string
-      id: string
-      isUpdated: boolean
-    }> = []
-    if (features.find((feature) => feature.name === 'EXPORT')?.isActive)
-      contexts.push({
-        label: locals[this.props.lang].contexts.export,
-        id: 'EXPORT',
-        isUpdated:
-          features.find((feature) => feature.name === 'EXPORT')?.isNew ?? false,
-      })
-    return contexts
-  }
-
   // Render
   render() {
-    let controls
-
-    switch (this.state['context']) {
-      case 'EXPORT': {
-        controls = (
-          <Export
-            exportPreview={
-              this.props.export.format === 'CSV'
-                ? this.props.export.data[0].colors[0].csv
-                : this.props.export.data
-            }
-            planStatus={this.props.planStatus}
-            exportType={this.props.export.label}
-            lang={this.props.lang}
-            onExportPalette={this.onExport}
-          />
-        )
-        break
-      }
-    }
     return (
       <>
-        <Feature isActive={this.props.editorType != 'dev'}>
-          <Bar
-            leftPart={
-              <Tabs
-                tabs={this.setContexts()}
-                active={this.state['context']}
-                action={this.navHandler}
-              />
-            }
-            border={['BOTTOM']}
-            isOnlyText={true}
-          />
-        </Feature>
         <section className="controller">
-          <div className="controls">{controls}</div>
+          <div className="controls">
+            {this.props.service === 'CREATE' &&
+            this.props.editorType === 'dev' ? (
+              <PalettesList
+                paletteLists={this.props.palettesList}
+                lang={this.props.lang}
+              />
+            ) : (
+              <Export
+                exportPreview={
+                  this.props.export.format === 'CSV'
+                    ? this.props.export.data[0].colors[0].csv
+                    : this.props.export.data
+                }
+                planStatus={this.props.planStatus}
+                exportType={this.props.export.label}
+                lang={this.props.lang}
+                onExportPalette={this.onExport}
+              />
+            )}
+          </div>
         </section>
       </>
     )

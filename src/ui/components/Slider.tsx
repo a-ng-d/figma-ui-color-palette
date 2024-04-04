@@ -1,5 +1,5 @@
 import * as React from 'react'
-import type { ScaleConfiguration } from '../../utils/types'
+import type { ScaleConfiguration, Easing } from '../../utils/types'
 import Knob from './Knob'
 import { doMap } from '@a-ng-d/figmug.modules.do-map'
 import addStop from './../handlers/addStop'
@@ -9,7 +9,7 @@ import shiftRightStop from './../handlers/shiftRightStop'
 import { palette } from '../../utils/palettePackage'
 import doLightnessScale from '../../utils/doLightnessScale'
 
-const safeGap = 2
+const safeGap = 0.1
 
 interface Props {
   stops: Array<number>
@@ -19,19 +19,26 @@ interface Props {
   min?: number
   max?: number
   scale?: ScaleConfiguration
+  distributionEasing: Easing
   onChange: (state: string, feature?: string) => void
 }
 
 export default class Slider extends React.Component<Props> {
   // Handlers
-  validHandler = (stopId: string, e: any) => {
-    if (e.target.value != '') {
+  validHandler = (
+    stopId: string,
+    e:
+      | React.FocusEvent<HTMLInputElement, Element>
+      | React.KeyboardEvent<HTMLInputElement>
+  ) => {
+    const target = e.target as HTMLInputElement
+    if (target.value != '') {
       palette.scale = this.props.scale ?? {}
-      if (parseFloat(e.target.value) < parseFloat(e.target.min))
-        palette.scale[`lightness-${stopId}`] = parseFloat(e.target.min)
-      else if (parseFloat(e.target.value) > parseFloat(e.target.max))
-        palette.scale[`lightness-${stopId}`] = parseFloat(e.target.max)
-      else palette.scale[`lightness-${stopId}`] = parseFloat(e.target.value)
+      if (parseFloat(target.value) < parseFloat(target.min))
+        palette.scale[`lightness-${stopId}`] = parseFloat(target.min)
+      else if (parseFloat(target.value) > parseFloat(target.max))
+        palette.scale[`lightness-${stopId}`] = parseFloat(target.max)
+      else palette.scale[`lightness-${stopId}`] = parseFloat(target.value)
       this.props.onChange('TYPED')
     }
   }
@@ -256,7 +263,9 @@ export default class Slider extends React.Component<Props> {
     palette.scale = doLightnessScale(
       this.props.stops,
       palette.min ?? 0,
-      palette.max ?? 100
+      palette.max ?? 100,
+      true,
+      this.props.distributionEasing
     )
 
     stops.forEach((stop) => {
@@ -293,7 +302,9 @@ export default class Slider extends React.Component<Props> {
     palette.scale = doLightnessScale(
       this.props.stops,
       palette.min ?? 0,
-      palette.max ?? 100
+      palette.max ?? 100,
+      true,
+      this.props.distributionEasing
     )
     return (
       <div className="slider__range">
@@ -315,7 +326,15 @@ export default class Slider extends React.Component<Props> {
     palette.scale = this.props.scale ?? {}
     return (
       <div
-        className="slider__range"
+        className={[
+          'slider__range',
+          this.props.presetName === 'Custom' && this.props.stops.length < 24
+            ? 'slider__range--add'
+            : null,
+          this.props.stops.length == 24 ? 'slider__range--not-allowed' : null,
+        ]
+          .filter((n) => n)
+          .join(' ')}
         onMouseDown={(e) => this.onAdd(e)}
       >
         {Object.entries(this.props.scale ?? {}).map(

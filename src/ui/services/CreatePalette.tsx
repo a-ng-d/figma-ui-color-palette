@@ -6,6 +6,8 @@ import type {
   SourceColorConfiguration,
   TextColorsThemeHexModel,
   ThirdParty,
+  PlanStatus,
+  NamingConvention,
 } from '../../utils/types'
 import { Bar } from '@a-ng-d/figmug.layouts.bar'
 import { Tabs } from '@a-ng-d/figmug.actions.tabs'
@@ -22,11 +24,12 @@ interface Props {
   name: string
   description: string
   preset: PresetConfiguration
+  namingConvention: NamingConvention
   colorSpace: string
   visionSimulationMode: visionSimulationModeConfiguration
   view: string
   textColorsTheme: TextColorsThemeHexModel
-  planStatus: 'UNPAID' | 'PAID'
+  planStatus: PlanStatus
   lang: Language
   onChangeColorsFromImport: (
     sourceColorsFromImport: Array<SourceColorConfiguration>,
@@ -39,13 +42,16 @@ interface Props {
   onChangeSettings: (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => void
 }
 
-export default class CreatePalette extends React.Component<Props, any> {
+interface States {
+  context: string | undefined
+}
+
+export default class CreatePalette extends React.Component<Props, States> {
   constructor(props: Props) {
     super(props)
     this.state = {
       context:
         this.setContexts()[0] != undefined ? this.setContexts()[0].id : '',
-      coolorsUrl: '',
     }
   }
 
@@ -104,6 +110,8 @@ export default class CreatePalette extends React.Component<Props, any> {
   // Renders
   render() {
     palette.preset = this.props.preset
+    palette.min = this.props.preset.min
+    palette.max = this.props.preset.max
     palette.scale = doLightnessScale(
       this.props.preset.scale,
       this.props.preset.min ?? 0,
@@ -130,12 +138,14 @@ export default class CreatePalette extends React.Component<Props, any> {
             sourceColors={this.props.sourceColors}
             hasPreset={true}
             preset={this.props.preset}
+            namingConvention={this.props.namingConvention}
             planStatus={this.props.planStatus}
             lang={this.props.lang}
             onChangePreset={this.props.onChangePreset}
             onChangeScale={() => null}
             onAddStop={this.props.onCustomPreset}
             onRemoveStop={this.props.onCustomPreset}
+            onChangeNamingConvention={this.props.onCustomPreset}
             onCreatePalette={this.onCreatePalette}
           />
         )
@@ -168,7 +178,7 @@ export default class CreatePalette extends React.Component<Props, any> {
           leftPart={
             <Tabs
               tabs={this.setContexts()}
-              active={this.state['context']}
+              active={this.state['context'] ?? ''}
               action={this.navHandler}
             />
           }

@@ -1,21 +1,5 @@
 import type { PaletteConfiguration, PresetConfiguration } from './types'
 
-export const palette: PaletteConfiguration = {
-  name: '',
-  description: '',
-  min: undefined,
-  max: undefined,
-  preset: {},
-  scale: {},
-  colorSpace: 'LCH',
-  visionSimulationMode: 'NONE',
-  view: 'PALETTE_WITH_PROPERTIES',
-  textColorsTheme: {
-    lightColor: '#FFFFFF',
-    darkColor: '#000000',
-  },
-}
-
 export const presets: Array<PresetConfiguration> = [
   {
     name: 'Material Design, 50-900 (Google)',
@@ -94,4 +78,18 @@ export const presets: Array<PresetConfiguration> = [
   },
 ]
 
-export const notifications: Array<string> = []
+export const palette: PaletteConfiguration = {
+  name: '',
+  description: '',
+  min: undefined,
+  max: undefined,
+  preset: presets[0],
+  scale: {},
+  colorSpace: 'LCH',
+  visionSimulationMode: 'NONE',
+  view: 'PALETTE_WITH_PROPERTIES',
+  textColorsTheme: {
+    lightColor: '#FFFFFF',
+    darkColor: '#000000',
+  },
+}

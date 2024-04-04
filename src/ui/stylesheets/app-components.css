@@ -161,8 +161,16 @@ div.slider .slider__range {
   position: relative;
 }
 
+div.slider .slider__range--add {
+  cursor: copy;
+}
+
+div.slider .slider__range--not-allowed {
+  cursor: not-allowed;
+}
+
 div.slider .slider__knob {
-  width: var(--size-medium);
+  min-width: var(--size-medium);
   height: var(--size-xxlarge);
   background: transparent;
   transform: translateX(-50%) translateY(-50%);
@@ -309,19 +317,13 @@ div.slider .slider__input {
   background-color: var(--figma-color-bg);
 }
 
-/* Color */
-.color {
-  padding: 0 0 0 var(--size-xxsmall);
+/* Truncated */
+div.truncated {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  padding: 0 0 0 var(--size-xxxsmall);
 }
 
-.color__icon {
-  flex: 0 0 var(--size-xsmall);
-  width: var(--size-xsmall);
-  height: var(--size-xsmall);
-  border-radius: 2px;
-  box-shadow: rgba(0, 0, 0, 0.1) 0 0 0 1px inset;
-}
-
-.color__icon--circle {
-  border-radius: var(--size-xxsmall);
+div.truncated span {
+  white-space: nowrap;
 }

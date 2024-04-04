@@ -13,14 +13,6 @@ const glossary: {
   hex: 'HEX',
   rgb: 'RGB',
   p3: 'P3',
-  protanomaly: 'Protanomaly (red-weak)',
-  protanopia: 'Protanopia (red-blind)',
-  deuteranomaly: 'Deuteranomaly (green-weak)',
-  deuteranopia: 'Deuteranopia (green-blind)',
-  tritanomaly: 'Tritanomaly (blue-weak)',
-  tritanopia: 'Tritanopia (blue-blind)',
-  achromatomaly: 'Achromatomaly (total color-weak)',
-  achromatopsia: 'Achromatopsia (total color-blind)',
 }
 
 export const locals: { [key: string]: any } = {
@@ -93,7 +85,7 @@ export const locals: { [key: string]: any } = {
           label: 'Realtime URL',
           placeholder: 'Paste a link－https://www.realtimecolors.com/…',
           infoMessage:
-            'The URL must start with "https://www.realtimecolors.com/"',
+            'The URL must start with "https://www.realtimecolors.com"',
           errorMessage:
             'The URL must include several hexadecimal codes (e.g. 8ecae6-…-219ebc)',
         },
@@ -101,15 +93,35 @@ export const locals: { [key: string]: any } = {
     },
     scale: {
       title: 'Lightness scale',
+      keyboardShortcuts: 'Review the keyboard shortcuts',
+      howTo: 'How to adjust',
+      easing: {
+        label: 'Distribution easing',
+        linear: 'Linear',
+        easeIn: 'Ease in',
+        easeOut: 'Ease out',
+        easeInOut: 'Ease in and out',
+      },
+      namingConvention: {
+        ones: '1 - 24',
+        tens: '10 - 240',
+        hundreds: '100 - 2400',
+      },
       tips: {
-        ctrl: 'Hold Ctrl ⌃ or Cmd ⌘ while dragging a stop to move them',
-        shift:
-          "Hold Shift ⇧ while dragging the first or the last stop to distribute stops' horizontal spacing",
-        esc: 'Press Esc. after selecting a stop to unselect',
-        nav: 'Press ← or → after selecting a stop to shift',
-        edit: 'Double click a stop to type its value',
-        remove: 'Press Backspace ⌫ after selecting a stop to remove',
-        add: 'Click on the slider range to add a stop',
+        title: 'Keyboard shortcuts',
+        custom: 'Adjustment with Custom preset',
+        cta: 'Got it',
+        move: 'Move every stop',
+        distribute: 'Distribute stops based on easing',
+        add: 'Add stop',
+        select: 'Select stop',
+        unselect: 'Unselect stop',
+        navPrevious: 'Select previous stop',
+        navNext: 'Select next stop',
+        shiftLeft: 'Shift left stop',
+        shiftRight: 'Shift right stop',
+        type: 'Type stop value',
+        remove: 'Remove stop',
       },
     },
     colors: {
@@ -123,7 +135,7 @@ export const locals: { [key: string]: any } = {
         label: 'LCH',
       },
       hueShifting: {
-        label: 'Shift the hue',
+        label: 'Shift hue',
       },
     },
     themes: {
@@ -221,14 +233,14 @@ export const locals: { [key: string]: any } = {
           label: 'Vision simulation',
           colorBlind: 'Color blind',
           none: 'None',
-          protanomaly: glossary.protanomaly,
-          protanopia: glossary.protanopia,
-          deuteranomaly: glossary.deuteranomaly,
-          deuteranopia: glossary.deuteranopia,
-          tritanomaly: glossary.tritanomaly,
-          tritanopia: glossary.tritanopia,
-          achromatomaly: glossary.achromatomaly,
-          achromatopsia: glossary.achromatopsia,
+          protanomaly: 'Protanomaly (red-weak)',
+          protanopia: 'Protanopia (red-blind)',
+          deuteranomaly: 'Deuteranomaly (green-weak)',
+          deuteranopia: 'Deuteranopia (green-blind)',
+          tritanomaly: 'Tritanomaly (blue-weak)',
+          tritanopia: 'Tritanopia (blue-blind)',
+          achromatomaly: 'Achromatomaly (total color-weak)',
+          achromatopsia: 'Achromatopsia (total color-blind)',
         },
         newAlgorithm: {
           label: 'Enable the new algorithm for creating color shades',
@@ -239,7 +251,7 @@ export const locals: { [key: string]: any } = {
     },
     about: {
       title: 'About UI Color Palette',
-      repository: 'Watch the repository',
+      repository: 'Repository',
       getHelp: {
         title: 'Have help',
         documentation: 'Read the documentation',
@@ -247,12 +259,13 @@ export const locals: { [key: string]: any } = {
       },
       beInvolved: {
         title: 'Get involved',
-        issue: 'Open an issue',
+        issue: 'Report a bug',
         discuss: 'Start a discussion',
+        request: 'Post a feature request',
       },
       giveSupport: {
         title: 'Give support',
-        follow: 'Follow our LinkedIn page',
+        follow: 'Follow us',
         rate: 'Like us',
       },
     },
@@ -301,15 +314,15 @@ export const locals: { [key: string]: any } = {
         message:
           'This upgrade will unlock a range of tools that enable you to convert your color palette into a color system. We hope you will enjoy the benefits.',
         trial:
-          'This upgrade will unlock a range of tools that enable you to convert your color palette into a color system. We hope you will enjoy the benefits for the next 7 days.',
+          'This upgrade will unlock a range of tools that enable you to convert your color palette into a color system. We hope you will enjoy the benefits for the next 48 hours.',
         cta: "Let's build",
       },
       trial: {
         title:
-          'Would you like to upgrade to the Pro plan within the next 7 days?',
+          'Would you like to upgrade to the Pro plan within the next 48 hours?',
         message:
           'Explore the potential of synchronizing your color palette with variables, exporting it as design tokens, app resources, or for Tokens Studio and simulating a vision impairment.',
-        cta: 'Enable the 7-day trial',
+        cta: 'Enable the 48-hour trial',
         option: 'Purchase',
       },
     },
@@ -340,11 +353,13 @@ export const locals: { [key: string]: any } = {
         'Select a layer that is filled with at least one solid color',
       paletteNameRecommendation: '64 characters max is recommended',
       noPaletteOnCurrrentPage:
-        'There is no UI Color Palette on the current page',
+        'There is no UI Color Palette on the current page. You can ask a member with editing permissions to create.',
     },
     error: {
       corruption:
         'Your UI Color Palette seems corrupted. Do not edit any layer within it.',
+      palettesPicking: 'UI Color Palettes cannot be picked for now',
+      generic: 'Something went wrong',
     },
   },
 }

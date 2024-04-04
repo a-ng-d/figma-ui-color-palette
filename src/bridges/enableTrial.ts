@@ -1,3 +1,4 @@
+import { trialTime } from '../utils/config'
 import { notionOptions } from '../utils/fetch'
 
 const enableTrial = async () => {
@@ -5,6 +6,9 @@ const enableTrial = async () => {
 
   await figma.clientStorage
     .setAsync('trial_start_date', date.getTime())
+    .then(() => {
+      figma.clientStorage.setAsync('trial_version', '3.2.0')
+    })
     .then(() => {
       figma.ui.postMessage({
         type: 'ENABLE_TRIAL',
@@ -67,7 +71,9 @@ const enableTrial = async () => {
               "Période de l'essai": {
                 date: {
                   start: date.toISOString(),
-                  end: new Date(date.getTime() + 604800000).toISOString(),
+                  end: new Date(
+                    date.getTime() + trialTime * 60 * 60 * 1000
+                  ).toISOString(),
                 },
               },
             },
@@ -78,7 +84,7 @@ const enableTrial = async () => {
       )
         .then((response) => response.json())
         .then((response) => console.log(response))
-        .catch((err) => console.error(err))
+        .catch((error) => console.error(error))
     })
 }
 

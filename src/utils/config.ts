@@ -1,6 +1,9 @@
 import type { Feature } from './types'
 
-const features: Array<Feature> = [
+export const trialTime = 48
+export const oldTrialTime = 168
+
+export const features: Array<Feature> = [
   {
     name: 'CREATE',
     description: 'Palette creation service when several colors are selected',
@@ -150,13 +153,22 @@ const features: Array<Feature> = [
     description: 'Lightness scale configuration',
     isActive: true,
     isPro: false,
-    isNew: false,
+    isNew: true,
     type: 'CONTEXT',
     service: ['CREATE', 'EDIT'],
   },
   {
     name: 'SCALE_PRESETS',
     description: 'List of existing color systems',
+    isActive: true,
+    isPro: false,
+    isNew: false,
+    type: 'ACTION',
+    service: ['CREATE'],
+  },
+  {
+    name: 'SCALE_PRESETS_NAMING_CONVENTION',
+    description: 'Naming convention pattern',
     isActive: true,
     isPro: false,
     isNew: false,
@@ -240,7 +252,7 @@ const features: Array<Feature> = [
     description: 'Customized color system',
     isActive: true,
     isPro: false,
-    isNew: false,
+    isNew: true,
     type: 'ACTION',
     service: ['CREATE'],
   },
@@ -254,12 +266,30 @@ const features: Array<Feature> = [
     service: ['CREATE', 'EDIT'],
   },
   {
-    name: 'SCALE_TIPS',
-    description: 'Tip messages to onboard users',
+    name: 'SCALE_HELPER',
+    description: 'Tips and tools to help configurate the scaling',
     isActive: true,
     isPro: false,
     isNew: false,
     type: 'DIVISION',
+    service: ['CREATE', 'EDIT'],
+  },
+  {
+    name: 'SCALE_HELPER_DISTRIBUTION',
+    description: 'Distribution mode according to easings',
+    isActive: true,
+    isPro: false,
+    isNew: true,
+    type: 'ACTION',
+    service: ['CREATE', 'EDIT'],
+  },
+  {
+    name: 'SCALE_HELPER_TIPS',
+    description: 'Keyboard shortcuts',
+    isActive: true,
+    isPro: false,
+    isNew: false,
+    type: 'ACTION',
     service: ['CREATE', 'EDIT'],
   },
   {
@@ -768,7 +798,7 @@ const features: Array<Feature> = [
   },
   {
     name: 'SHORTCUTS_REPORTING',
-    description: 'Github Issues',
+    description: 'Bug reports',
     isActive: true,
     isPro: false,
     isNew: false,
@@ -776,11 +806,11 @@ const features: Array<Feature> = [
     service: ['CREATE', 'EDIT'],
   },
   {
-    name: 'SHORTCUTS_DISCUSSION',
-    description: 'Github Discussions',
+    name: 'SHORTCUTS_REQUESTS',
+    description: 'Feature requests',
     isActive: true,
     isPro: false,
-    isNew: false,
+    isNew: true,
     type: 'ACTION',
     service: ['CREATE', 'EDIT'],
   },
