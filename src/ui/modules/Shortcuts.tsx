@@ -132,6 +132,10 @@ export default class Shortcuts extends React.Component<Props, States> {
                       'SHORTCUTS_HIGHLIGHT',
                       this.props.planStatus
                     ),
+                    isNew:
+                      features.find(
+                        (feature) => feature.name === 'SHORTCUTS_HIGHLIGHT'
+                      )?.isNew ?? true,
                     children: [],
                     action: () => this.props.onReOpenHighlight(),
                   },
@@ -148,6 +152,9 @@ export default class Shortcuts extends React.Component<Props, States> {
                       'SHORTCUTS_REPOSITORY',
                       this.props.planStatus
                     ),
+                    isNew: features.find(
+                      (feature) => feature.name === 'SHORTCUTS_REPOSITORY'
+                    )?.isNew,
                     children: [],
                     action: () =>
                       parent.postMessage(
@@ -184,6 +191,9 @@ export default class Shortcuts extends React.Component<Props, States> {
                       'SHORTCUTS_FEEDBACK',
                       this.props.planStatus
                     ),
+                    isNew: features.find(
+                      (feature) => feature.name === 'SHORTCUTS_FEEDBACK'
+                    )?.isNew,
                     children: [],
                     action: () => this.props.onReOpenFeedback(),
                   },
@@ -200,6 +210,9 @@ export default class Shortcuts extends React.Component<Props, States> {
                       'SHORTCUTS_REQUESTS',
                       this.props.planStatus
                     ),
+                    isNew: features.find(
+                      (feature) => feature.name === 'SHORTCUTS_REQUESTS'
+                    )?.isNew,
                     children: [],
                     action: () =>
                       parent.postMessage(
@@ -225,6 +238,9 @@ export default class Shortcuts extends React.Component<Props, States> {
                       'SHORTCUTS_REPORTING',
                       this.props.planStatus
                     ),
+                    isNew: features.find(
+                      (feature) => feature.name === 'SHORTCUTS_REPORTING'
+                    )?.isNew,
                     children: [],
                     action: () =>
                       parent.postMessage(
@@ -250,6 +266,9 @@ export default class Shortcuts extends React.Component<Props, States> {
                       'SHORTCUTS_EMAIL',
                       this.props.planStatus
                     ),
+                    isNew: features.find(
+                      (feature) => feature.name === 'SHORTCUTS_EMAIL'
+                    )?.isNew,
                     children: [],
                     action: () =>
                       parent.postMessage(
@@ -286,6 +305,9 @@ export default class Shortcuts extends React.Component<Props, States> {
                       'SHORTCUTS_ABOUT',
                       this.props.planStatus
                     ),
+                    isNew: features.find(
+                      (feature) => feature.name === 'SHORTCUTS_ABOUT'
+                    )?.isNew,
                     children: [],
                     action: this.props.onReOpenAbout,
                   },
@@ -302,6 +324,9 @@ export default class Shortcuts extends React.Component<Props, States> {
                       'SHORTCUTS_NETWORKING',
                       this.props.planStatus
                     ),
+                    isNew: features.find(
+                      (feature) => feature.name === 'SHORTCUTS_NETWORKING'
+                    )?.isNew,
                     children: [],
                     action: () =>
                       parent.postMessage(
