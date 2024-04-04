@@ -103,9 +103,9 @@ export const locals: { [key: string]: any } = {
         easeInOut: 'Ease in and out',
       },
       namingConvention: {
-        ones: '1-10',
-        tens: '10-100',
-        hundreds: '100-1000',
+        ones: '1 - 24',
+        tens: '10 - 240',
+        hundreds: '100 - 2400',
       },
       tips: {
         title: 'Keyboard shortcuts',
