@@ -353,7 +353,7 @@ export const locals: { [key: string]: any } = {
         'Select a layer that is filled with at least one solid color',
       paletteNameRecommendation: '64 characters max is recommended',
       noPaletteOnCurrrentPage:
-        'There is no UI Color Palette on the current page. You can request that a member with editing permissions create a UI Color Palette.',
+        'There is no UI Color Palette on the current page. You can ask a member with editing permissions to create.',
     },
     error: {
       corruption:
