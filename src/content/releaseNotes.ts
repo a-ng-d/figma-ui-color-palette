@@ -1,4 +1,7 @@
 import type { ReleaseNote } from '../utils/types'
+import rnv321 from './images/release_note_v32_1.webp'
+import rnv322 from './images/release_note_v32_2.webp'
+import rnv323 from './images/release_note_v32_3.webp'
 import rnv311 from './images/release_note_v31_1.webp'
 import rnv312 from './images/release_note_v31_2.webp'
 import rnv313 from './images/release_note_v31_3.webp'
@@ -21,8 +24,29 @@ import rnv19 from './images/release_note_v19.webp'
 
 const releaseNotes: Array<ReleaseNote> = [
   {
-    version: '3.1.0',
+    version: '3.2.0',
     isMostRecent: true,
+    title: [
+      'Stops Distribution Easing',
+      'Canny Forefront Integration',
+      'Custom Naming Convention',
+    ],
+    image: [rnv321, rnv322, rnv323],
+    content: [
+      'You can distribute stops using pre-configured easing such as "ease" or "ease-in". This method provides a quick way to evenly distribute them across the range, thereby enhancing harmonized color scaling.',
+      'Canny has been emphasized and prioritized. This promotes user feedback and increases the visibility of community discussions, creating a more interactive and communicative user experience.',
+      'The naming convention within the Custom preset can be adjusted to either increase or decrease the stop number (from 1-10, 10-100, or 100-1000). This option is only available when creating a palette.',
+    ],
+    numberOfNotes: 3,
+    learnMore: [
+      'https://uicp.link/whats-new',
+      'https://uicp.link/whats-new',
+      'https://uicp.link/whats-new',
+    ],
+  },
+  {
+    version: '3.1.0',
+    isMostRecent: false,
     title: [
       'Ready to Dev Mode',
       'Need More Trial Time?',
