@@ -85,6 +85,7 @@
     "@a-ng-d/figmug.stylesheets.icons": "^0.0.9",
     "@a-ng-d/figmug.stylesheets.texts": "^0.0.2",
     "@a-ng-d/figmug.tags.chip": "^0.0.8",
+    "@supabase/supabase-js": "^2.42.0",
     "apca-w3": "^0.1.9",
     "chroma-js": "^2.4.2",
     "color-blind": "^0.1.3",
