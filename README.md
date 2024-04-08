@@ -15,9 +15,8 @@ The full documentation can be consulted on [docs.ui-color-palette.com](https://u
 
 ## Contribution
 ### Community
-Ask questions, submit your ideas or requests, discuss your usage, debate the evolution, get support, etc.
-Open a new discussion to share your usage, issues, or ideas with the community (requires a GitHub account) or browse the topics.
-Go to the [Discussion](https://uicp.link/discuss) section to enter the community.
+Ask questions, submit your ideas or requests, discuss your usage, debate the evolution, etc.
+Submit your ideas on [Canny](https://uicp.link/feature-requests).
 
 ### Issues
 Have you encountered a bug? Could a feature be improved?
