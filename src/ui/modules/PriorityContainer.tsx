@@ -16,6 +16,7 @@ import { locals } from '../../content/locals'
 import { texts } from '@a-ng-d/figmug.stylesheets.texts'
 import features from '../../utils/config'
 import package_json from '../../../package.json'
+import signIn from '../../bridges/signIn'
 
 interface Props {
   context: PriorityContext
@@ -235,6 +236,37 @@ export default class PriorityContainer extends React.Component<Props> {
     )
   }
 
+  Publication = () => {
+    return (
+      <Feature
+        isActive={
+          features.find((feature) => feature.name === 'PUBLICATION')?.isActive
+        }
+      >
+        <Dialog
+          title="Publish your palette"
+          actions={{
+            primary: {
+              label: "Sign in",
+              action: async () => {
+                await signIn()
+              },
+            },
+          }}
+          onClose={this.props.onClose}
+        >
+          <img
+            className="dialog__cover"
+            src={pp}
+          />
+          <p className={`dialog__text type ${texts.type}`}>
+            Publish your palette to reuse in others Figma document and share it with the community 
+          </p>
+        </Dialog>
+      </Feature>
+    )
+  }
+
   // Render
   render() {
     return (
@@ -250,6 +282,7 @@ export default class PriorityContainer extends React.Component<Props> {
         ) : null}
         {this.props.context === 'HIGHLIGHT' ? <this.Highlight /> : null}
         {this.props.context === 'ABOUT' ? <this.About /> : null}
+        {this.props.context === 'PUBLICATION' ? <this.Publication /> : null}
       </>
     )
   }

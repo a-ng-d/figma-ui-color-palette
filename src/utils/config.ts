@@ -113,6 +113,15 @@ export const features: Array<Feature> = [
     service: ['EDIT'],
   },
   {
+    name: 'PUBLISH_PALETTE',
+    description: 'Publish palette to the community and self',
+    isActive: true,
+    isPro: false,
+    isNew: false,
+    type: 'ACTION',
+    service: ['EDIT'],
+  },
+  {
     name: 'SOURCE',
     description: 'Raw source colors',
     isActive: true,
@@ -831,6 +840,15 @@ export const features: Array<Feature> = [
     isNew: false,
     type: 'ACTION',
     service: ['CREATE', 'EDIT'],
+  },
+  {
+    name: 'PUBLICATION',
+    description: 'Palette publication pitch',
+    isActive: true,
+    isPro: false,
+    isNew: false,
+    type: 'DIVISION',
+    service: ['EDIT'],
   },
   {
     name: 'GET_PRO_PLAN',

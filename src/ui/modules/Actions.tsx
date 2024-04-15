@@ -21,8 +21,8 @@ interface Props {
   onCreatePalette?: React.MouseEventHandler & React.KeyboardEventHandler
   onSyncLocalStyles?: React.MouseEventHandler & React.KeyboardEventHandler
   onSyncLocalVariables?: React.MouseEventHandler & React.KeyboardEventHandler
+  onPublishPalette?: React.MouseEventHandler & React.KeyboardEventHandler
   onExportPalette?: React.MouseEventHandler & React.KeyboardEventHandler
-  onChangeActions?: (value: string) => void
 }
 
 export default class Actions extends React.Component<Props> {
@@ -109,6 +109,25 @@ export default class Actions extends React.Component<Props> {
                 )?.isNew,
                 children: [],
                 action: (e) => this.props.onSyncLocalVariables?.(e),
+              },
+              {
+                label: "Publish the palette",
+                value: 'PALETTE_PUBLICATION',
+                feature: 'PUBLISH_PALETTE',
+                position: 0,
+                type: 'OPTION',
+                isActive: features.find(
+                  (feature) => feature.name === 'PUBLISH_PALETTE'
+                )?.isActive,
+                isBlocked: isBlocked(
+                  'PUBLISH_PALETTE',
+                  this.props.planStatus ?? 'UNPAID'
+                ),
+                isNew: features.find(
+                  (feature) => feature.name === 'PUBLISH_PALETTE'
+                )?.isNew,
+                children: [],
+                action: (e) => this.props.onPublishPalette?.(e),
               },
             ]}
             alignment="TOP_RIGHT"

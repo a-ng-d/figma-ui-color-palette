@@ -34,7 +34,7 @@ interface Props {
   onChangeThemes: (themes: Array<ThemeConfiguration>) => void
   onSyncLocalStyles: () => void
   onSyncLocalVariables: () => void
-  onChangeActions: (value: string) => void
+  onPublishPalette: () => void
 }
 
 interface States {
@@ -406,7 +406,7 @@ export default class Themes extends React.Component<Props, States> {
             lang={this.props.lang}
             onSyncLocalStyles={this.props.onSyncLocalStyles}
             onSyncLocalVariables={this.props.onSyncLocalVariables}
-            onChangeActions={this.props.onChangeActions}
+            onPublishPalette={this.props.onPublishPalette}
           />
         ) : null}
       </div>

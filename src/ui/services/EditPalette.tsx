@@ -51,6 +51,7 @@ interface Props {
   onChangeColors: (colors: Array<ColorConfiguration>) => void
   onChangeThemes: (themes: Array<ThemeConfiguration>) => void
   onChangeSettings: React.ChangeEventHandler
+  onPublishPalette: () => void
 }
 
 interface States {
@@ -59,7 +60,6 @@ interface States {
     id: string
     position: number | null
   }
-  deploymentAction: string | undefined
 }
 
 const themesMessage: ThemesMessage = {
@@ -80,7 +80,6 @@ export default class EditPalette extends React.Component<Props, States> {
         id: '',
         position: null,
       },
-      deploymentAction: undefined,
     }
     this.themesRef = React.createRef()
   }
@@ -312,11 +311,7 @@ export default class EditPalette extends React.Component<Props, States> {
             onChangeStop={this.props.onChangeStop}
             onSyncLocalStyles={this.onSyncStyles}
             onSyncLocalVariables={this.onSyncVariables}
-            onChangeActions={(value) =>
-              this.setState({
-                deploymentAction: value,
-              })
-            }
+            onPublishPalette={this.props.onPublishPalette}
           />
         )
         break
@@ -331,11 +326,7 @@ export default class EditPalette extends React.Component<Props, States> {
             onChangeColors={this.props.onChangeColors}
             onSyncLocalStyles={this.onSyncStyles}
             onSyncLocalVariables={this.onSyncVariables}
-            onChangeActions={(value) =>
-              this.setState({
-                deploymentAction: value,
-              })
-            }
+            onPublishPalette={this.props.onPublishPalette}
           />
         )
         break
@@ -353,11 +344,7 @@ export default class EditPalette extends React.Component<Props, States> {
             onChangeThemes={this.props.onChangeThemes}
             onSyncLocalStyles={this.onSyncStyles}
             onSyncLocalVariables={this.onSyncVariables}
-            onChangeActions={(value) =>
-              this.setState({
-                deploymentAction: value,
-              })
-            }
+            onPublishPalette={this.props.onPublishPalette}
           />
         )
         break
@@ -395,11 +382,7 @@ export default class EditPalette extends React.Component<Props, States> {
             onChangeSettings={this.props.onChangeSettings}
             onSyncLocalStyles={this.onSyncStyles}
             onSyncLocalVariables={this.onSyncVariables}
-            onChangeActions={(value) =>
-              this.setState({
-                deploymentAction: value,
-              })
-            }
+            onPublishPalette={this.props.onPublishPalette}
           />
         )
         break

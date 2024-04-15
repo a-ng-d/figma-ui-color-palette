@@ -36,7 +36,7 @@ interface Props {
   onCreatePalette?: () => void
   onSyncLocalStyles?: () => void
   onSyncLocalVariables?: () => void
-  onChangeActions?: (value: string) => void | undefined
+  onPublishPalette?: () => void
 }
 
 export default class Settings extends React.Component<Props> {
@@ -897,7 +897,7 @@ export default class Settings extends React.Component<Props> {
             lang={this.props.lang}
             onSyncLocalStyles={this.props.onSyncLocalStyles}
             onSyncLocalVariables={this.props.onSyncLocalVariables}
-            onChangeActions={this.props.onChangeActions}
+            onPublishPalette={this.props.onPublishPalette}
           />
         ) : null}
       </div>

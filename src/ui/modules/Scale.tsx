@@ -49,7 +49,7 @@ interface Props {
   onCreatePalette?: () => void
   onSyncLocalStyles?: () => void
   onSyncLocalVariables?: () => void
-  onChangeActions?: (value: string) => void | undefined
+  onPublishPalette?: () => void
 }
 
 interface States {
@@ -686,7 +686,7 @@ export default class Scale extends React.Component<Props, States> {
             lang={this.props.lang}
             onSyncLocalStyles={this.props.onSyncLocalStyles}
             onSyncLocalVariables={this.props.onSyncLocalVariables}
-            onChangeActions={this.props.onChangeActions}
+            onPublishPalette={this.props.onPublishPalette}
           />
         ) : null}
       </div>

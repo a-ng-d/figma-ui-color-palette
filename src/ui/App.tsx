@@ -539,6 +539,11 @@ class App extends React.Component<Record<string, never>, States> {
     return actions[e.target.dataset.feature]?.()
   }
 
+  publishHandler = () =>
+    this.setState({
+      priorityContainerContext: 'PUBLICATION',
+    })
+
   // Render
   render() {
     onmessage = (e: MessageEvent) => {
@@ -908,6 +913,7 @@ class App extends React.Component<Record<string, never>, States> {
               onChangeColors={this.colorsHandler}
               onChangeThemes={this.themesHandler}
               onChangeSettings={this.settingsHandler}
+              onPublishPalette={this.publishHandler}
             />
           </Feature>
           <Feature
