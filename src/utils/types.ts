@@ -12,6 +12,8 @@ export type Service = 'CREATE' | 'EDIT' | 'TRANSFER'
 
 export type EditorType = 'figma' | 'figjam' | 'dev'
 
+export type ConnectionStatus = 'CONNECTED' | 'UNCONNECTED'
+
 export type PlanStatus = 'UNPAID' | 'PAID' | 'NOT_SUPPORTED'
 
 export type TrialStatus = 'UNUSED' | 'PENDING' | 'EXPIRED'
@@ -60,6 +62,13 @@ export interface ReleaseNote {
   content: Array<string>
   numberOfNotes: number
   learnMore: Array<`https://${string}`>
+}
+
+export interface UserSession {
+  connectionStatus: ConnectionStatus
+  userFullName: string
+  accessToken: string | undefined
+  refreshToken: string | undefined
 }
 
 // Palette

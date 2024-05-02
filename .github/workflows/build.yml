@@ -23,6 +23,7 @@ jobs:
       run: |
         touch .env
         echo REACT_APP_NOTION_API_KEY="${{ secrets.NOTION_API_KEY }}" >> .env
+        echo REACT_APP_SUPABASE_PUBLIC_ANON_KEY="${{ secrets.SUPABASE_PUBLIC_ANON_KEY }}" >> .env
         echo REACT_APP_NOTION_TRIAL_TABLE_ID="${{ vars.NOTION_TRIAL_TABLE_ID }}" >> .env
         cat .env
 

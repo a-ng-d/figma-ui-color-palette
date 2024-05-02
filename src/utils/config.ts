@@ -2,6 +2,8 @@ import type { Feature } from './types'
 
 export const trialTime = 48
 export const oldTrialTime = 168
+export const databaseUrl = 'https://zclweepgvqkrelyfwhma.supabase.co'
+export const authUrl = 'http://localhost:3000'
 
 export const features: Array<Feature> = [
   {
@@ -754,6 +756,15 @@ export const features: Array<Feature> = [
   {
     name: 'SHORTCUTS',
     description: 'Quick useful links',
+    isActive: true,
+    isPro: false,
+    isNew: false,
+    type: 'DIVISION',
+    service: ['CREATE', 'EDIT'],
+  },
+  {
+    name: 'SHORTCUTS_USER',
+    description: 'User menu',
     isActive: true,
     isPro: false,
     isNew: false,

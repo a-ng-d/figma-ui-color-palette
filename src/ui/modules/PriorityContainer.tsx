@@ -12,11 +12,11 @@ import About from './About'
 import cp from '../../content/images/choose_plan.webp'
 import pp from '../../content/images/pro_plan.webp'
 import t from '../../content/images/trial.webp'
+import { signIn } from '../../bridges/authentication'
 import { locals } from '../../content/locals'
 import { texts } from '@a-ng-d/figmug.stylesheets.texts'
 import features from '../../utils/config'
 import package_json from '../../../package.json'
-import signIn from '../../bridges/signIn'
 
 interface Props {
   context: PriorityContext
@@ -248,9 +248,7 @@ export default class PriorityContainer extends React.Component<Props> {
           actions={{
             primary: {
               label: "Sign in",
-              action: async () => {
-                await signIn()
-              },
+              action: async () => await signIn(),
             },
           }}
           onClose={this.props.onClose}

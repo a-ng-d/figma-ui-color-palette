@@ -49,6 +49,14 @@ const loadUI = async (palette: SceneNode) => {
 
   await checkPlanStatus()
 
+  figma.ui.postMessage({
+    type: 'CHECK_USER_AUTHENTICATION',
+    data: {
+      accessToken: await figma.clientStorage.getAsync('supabase_access_token'),
+      refreshToken: await figma.clientStorage.getAsync('supabase_refresh_token')
+    },
+  }),
+
   figma.ui.onmessage = async (msg) => {
     const actions: ActionsList = {
       RESIZE_UI: async () => {
@@ -110,6 +118,18 @@ const loadUI = async (palette: SceneNode) => {
       UPDATE_SETTINGS: () => updateSettings(msg, palette),
       OPEN_IN_BROWSER: () => {
         figma.openExternal(msg.url)
+      },
+      SEND_MESSAGE: () => {
+        figma.notify(msg.message)
+      },
+      SET_ITEMS: () => {
+        msg.items.forEach(async (item: {
+          key: string,
+          value: string
+        }) => await figma.clientStorage.setAsync(item.key, item.value))
+      },
+      DELETE_ITEMS: () => {
+        msg.items.forEach(async (item: string) => await figma.clientStorage.deleteAsync(item))
       },
       GET_PALETTES: async () => await getPalettesOnCurrentPage(),
       JUMP_TO_PALETTE: async () => {

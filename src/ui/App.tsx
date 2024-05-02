@@ -25,8 +25,10 @@ import type {
   ExportConfiguration,
   Service,
   NamingConvention,
+  UserSession,
 } from '../utils/types'
 import Dispatcher from './modules/Dispatcher'
+import checkConnectionStatus from '../bridges/checkConnectionStatus'
 import Feature from './components/Feature'
 import CreatePalette from './services/CreatePalette'
 import EditPalette from './services/EditPalette'
@@ -40,6 +42,7 @@ import 'figma-plugin-ds/dist/figma-plugin-ds.css'
 import './stylesheets/app.css'
 import './stylesheets/app-components.css'
 import { locals } from '../content/locals'
+import { supabase } from '../bridges/authentication'
 
 interface States {
   service: Service
@@ -62,8 +65,9 @@ interface States {
   planStatus: PlanStatus
   trialStatus: TrialStatus
   trialRemainingTime: number
-  lang: Language
   priorityContainerContext: PriorityContext
+  lang: Language
+  userSession: UserSession
   isLoaded: boolean
   onGoingStep: string
 }
@@ -140,15 +144,68 @@ class App extends React.Component<Record<string, never>, States> {
       planStatus: 'UNPAID',
       trialStatus: 'UNUSED',
       trialRemainingTime: trialTime,
-      lang: 'en-US',
       priorityContainerContext: 'EMPTY',
+      lang: 'en-US',
+      userSession: {
+        connectionStatus: 'UNCONNECTED',
+        userFullName: '',
+        accessToken: undefined,
+        refreshToken: undefined
+      },
       isLoaded: false,
       onGoingStep: '',
     }
   }
 
-  componentDidMount = () =>
+  componentDidMount = () => {
     setTimeout(() => this.setState({ isLoaded: true }), 1000)
+    supabase.auth.onAuthStateChange((event, session) => {
+      const actions: ActionsList = {
+        SIGNED_IN: () => {
+          this.setState({
+            userSession: {
+              connectionStatus: 'CONNECTED',
+              userFullName: session?.user.user_metadata.full_name,
+              accessToken: session?.access_token,
+              refreshToken: session?.refresh_token
+            },
+            priorityContainerContext: 'EMPTY'
+          })
+          parent.postMessage(
+            {
+              pluginMessage: {
+                type: 'SEND_MESSAGE',
+                message: `You are connected!`,
+              },
+            },
+            '*'
+          )
+        },
+        SIGNED_OUT: () => {
+          this.setState({
+            userSession: {
+              connectionStatus: 'UNCONNECTED',
+              userFullName: '',
+              accessToken: undefined,
+              refreshToken: undefined
+            }
+          })
+          parent.postMessage(
+            {
+              pluginMessage: {
+                type: 'SEND_MESSAGE',
+                message: `You are disconnected`,
+              },
+            },
+            '*'
+          )
+        }
+      }
+      console.log(event, session)
+      return actions[event]?.()
+    })
+  }
+    
 
   // Handlers
   colorsFromImportHandler = (
@@ -548,6 +605,13 @@ class App extends React.Component<Record<string, never>, States> {
   render() {
     onmessage = (e: MessageEvent) => {
       try {
+        const checkUserAuthentication = async () => {
+          await checkConnectionStatus(
+            e.data.pluginMessage.data.accessToken,
+            e.data.pluginMessage.data.refreshToken
+          )
+        }
+
         const checkEditorType = () =>
           this.setState({ editorType: e.data.pluginMessage.data })
 
@@ -831,6 +895,7 @@ class App extends React.Component<Record<string, never>, States> {
           })
 
         const actions: ActionsList = {
+          CHECK_USER_AUTHENTICATION: () => checkUserAuthentication(),
           EDITOR_TYPE: () => checkEditorType(),
           HIGHLIGHT_STATUS: () => checkHighlightStatus(),
           PLAN_STATUS: () => checkPlanStatus(),
@@ -958,6 +1023,7 @@ class App extends React.Component<Record<string, never>, States> {
               editorType={this.state['editorType']}
               planStatus={this.state['planStatus']}
               trialStatus={this.state['trialStatus']}
+              userSession={this.state['userSession']}
               trialRemainingTime={this.state['trialRemainingTime']}
               lang={this.state['lang']}
               onReOpenFeedback={() =>

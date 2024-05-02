@@ -4,6 +4,7 @@ import type {
   Language,
   PlanStatus,
   TrialStatus,
+  UserSession,
 } from '../../utils/types'
 import Feature from '../components/Feature'
 import { Bar } from '@a-ng-d/figmug.layouts.bar'
@@ -14,12 +15,14 @@ import { texts } from '@a-ng-d/figmug.stylesheets.texts'
 import features from '../../utils/config'
 import { locals } from '../../content/locals'
 import isBlocked from '../../utils/isBlocked'
+import { signIn, signOut } from '../../bridges/authentication'
 
 interface Props {
   editorType: EditorType
   planStatus: PlanStatus
   trialStatus: TrialStatus
   trialRemainingTime: number
+  userSession: UserSession
   lang: Language
   onReOpenFeedback: () => void
   onReOpenTrialFeedback: () => void
@@ -91,6 +94,79 @@ export default class Shortcuts extends React.Component<Props, States> {
         rightPart={
           <>
             <div className="shortcuts snackbar">
+            <Feature
+                isActive={
+                  features.find(
+                    (feature) => feature.name === 'SHORTCUTS_USER'
+                  )?.isActive && this.props.editorType != 'dev'
+                }
+              >
+                {this.props.userSession.connectionStatus === 'CONNECTED' ? (
+                  <Menu
+                  id="user-menu"
+                  icon="info"
+                  options={[
+                    {
+                      label:  `Hello ${this.props.userSession.userFullName}!`,
+                      value: null,
+                      feature: null,
+                      position: 0,
+                      type: 'TITLE',
+                      isActive: true,
+                      isBlocked: false,
+                      isNew: false,
+                      children: [],
+                      action: () => null,
+                    },
+                    {
+                      label: '',
+                      value: null,
+                      feature: null,
+                      position: 0,
+                      type: 'SEPARATOR',
+                      isActive: true,
+                      isBlocked: false,
+                      children: [],
+                      action: () => null,
+                    },
+                    {
+                      label: 'Sign out',
+                      value: null,
+                      feature: null,
+                      position: 0,
+                      type: 'OPTION',
+                      isActive: true,
+                      isBlocked: false,
+                      isNew: false,
+                      children: [],
+                      action: async () => await signOut(),
+                    },
+                  ]}
+                  alignment="TOP_RIGHT"
+                />
+                ) : (
+                  <Menu
+                    id="user-menu"
+                    icon="info"
+                    options={[
+                      {
+                        label: 'Sign In',
+                        value: null,
+                        feature: null,
+                        position: 0,
+                        type: 'OPTION',
+                        isActive: true,
+                        isBlocked: false,
+                        isNew: false,
+                        children: [],
+                        action: async () => await signIn()
+                      },
+                    ]}
+                    alignment="TOP_RIGHT"
+                  />
+                )}
+                
+              </Feature>
               <Feature
                 isActive={
                   features.find(
