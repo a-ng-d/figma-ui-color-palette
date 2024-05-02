@@ -78,7 +78,8 @@ figma.on('run', async ({ parameters }: RunEvent) => {
 })
 
 // Migration
-figma.on('run', () => {
+figma.on('run', async () => {
+  await figma.currentPage.loadAsync()
   figma.currentPage
     .findAllWithCriteria({
       pluginData: {},
@@ -87,7 +88,8 @@ figma.on('run', () => {
       setPaletteMigration(palette)
     })
 })
-figma.on('currentpagechange', () => () => {
+figma.on('currentpagechange', async () => {
+  await figma.currentPage.loadAsync()
   figma.currentPage
     .findAllWithCriteria({
       pluginData: {},
