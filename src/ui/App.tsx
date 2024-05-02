@@ -65,9 +65,9 @@ interface States {
   planStatus: PlanStatus
   trialStatus: TrialStatus
   trialRemainingTime: number
+  userSession: UserSession
   priorityContainerContext: PriorityContext
   lang: Language
-  userSession: UserSession
   isLoaded: boolean
   onGoingStep: string
 }
