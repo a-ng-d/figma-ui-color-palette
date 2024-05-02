@@ -171,6 +171,16 @@ class App extends React.Component<Record<string, never>, States> {
             },
             priorityContainerContext: 'EMPTY',
           })
+          parent.postMessage(
+            {
+              pluginMessage: {
+                type: 'SEND_MESSAGE',
+                message: locals[this.state['lang']].user.welcomeMessage
+                  .replace('$[]', session?.user.user_metadata.full_name),
+              },
+            },
+            '*'
+          )
         },
         SIGNED_OUT: () => {
           this.setState({

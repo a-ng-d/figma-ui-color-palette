@@ -326,6 +326,11 @@ export const locals: { [key: string]: any } = {
         option: 'Purchase',
       },
     },
+    user: {
+      signIn: 'Sign in',
+      signOut: 'Sign out',
+      welcomeMessage: 'Hello $[] 🚀'
+    },
     properties: {
       base: 'Base',
       wcag: 'WCAG scores',
@@ -341,6 +346,7 @@ export const locals: { [key: string]: any } = {
       localVariables: 'local color variables',
       variableMode: 'variable mode',
       variableModes: 'variable modes',
+      signOut: 'See you later'
     },
     warning: {
       tooManyThemesToCreateModes:
@@ -360,6 +366,7 @@ export const locals: { [key: string]: any } = {
         'Your UI Color Palette seems corrupted. Do not edit any layer within it.',
       palettesPicking: 'UI Color Palettes cannot be picked for now',
       generic: 'Something went wrong',
+      timeout: 'The authentication has failed'
     },
   },
 }

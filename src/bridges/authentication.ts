@@ -1,6 +1,7 @@
 import { createClient } from '@supabase/supabase-js'
 import { authUrl, databaseUrl } from '../utils/config'
 import checkConnectionStatus from './checkConnectionStatus'
+import { lang, locals } from '../content/locals'
 
 export const supabase = createClient(
   databaseUrl,
@@ -78,15 +79,6 @@ export const signIn = async () => {
                 },
                 '*'
               )
-              parent.postMessage(
-                {
-                  pluginMessage: {
-                    type: 'SEND_MESSAGE',
-                    message: `You are connected!`,
-                  },
-                },
-                '*'
-              )
               checkConnectionStatus(result.access_token, result.refresh_token)
             }
           })
@@ -96,7 +88,7 @@ export const signIn = async () => {
               {
                 pluginMessage: {
                   type: 'SEND_MESSAGE',
-                  message: `Something went wrong`,
+                  message: locals[lang].error.generic,
                 },
               },
               '*'
@@ -109,7 +101,7 @@ export const signIn = async () => {
           {
             pluginMessage: {
               type: 'SEND_MESSAGE',
-              message: `Timeout request`,
+              message: locals[lang].error.timeout,
             },
           },
           '*'
@@ -123,7 +115,7 @@ export const signIn = async () => {
         {
           pluginMessage: {
             type: 'SEND_MESSAGE',
-            message: `Something went wrong`,
+            message: locals[lang].error.generic,
           },
         },
         '*'
@@ -147,7 +139,7 @@ export const signOut = async () => {
     {
       pluginMessage: {
         type: 'SEND_MESSAGE',
-        message: `You are disconnected`,
+        message: locals[lang].info.signOut,
       },
     },
     '*'

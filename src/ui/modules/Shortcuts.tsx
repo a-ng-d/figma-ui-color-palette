@@ -106,7 +106,8 @@ export default class Shortcuts extends React.Component<Props, States> {
                     icon="info"
                     options={[
                       {
-                        label: `Hello ${this.props.userSession.userFullName}!`,
+                        label: locals[this.props.lang].user.welcomeMessage
+                          .replace('$[]', this.props.userSession.userFullName),
                         value: null,
                         feature: null,
                         position: 0,
@@ -129,7 +130,7 @@ export default class Shortcuts extends React.Component<Props, States> {
                         action: () => null,
                       },
                       {
-                        label: 'Sign out',
+                        label: locals[this.props.lang].user.signOut,
                         value: null,
                         feature: null,
                         position: 0,
@@ -149,7 +150,7 @@ export default class Shortcuts extends React.Component<Props, States> {
                     icon="info"
                     options={[
                       {
-                        label: 'Sign In',
+                        label: locals[this.props.lang].user.signIn,
                         value: null,
                         feature: null,
                         position: 0,
