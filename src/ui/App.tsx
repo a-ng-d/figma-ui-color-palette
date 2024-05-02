@@ -171,15 +171,6 @@ class App extends React.Component<Record<string, never>, States> {
             },
             priorityContainerContext: 'EMPTY',
           })
-          parent.postMessage(
-            {
-              pluginMessage: {
-                type: 'SEND_MESSAGE',
-                message: `You are connected!`,
-              },
-            },
-            '*'
-          )
         },
         SIGNED_OUT: () => {
           this.setState({
@@ -190,15 +181,6 @@ class App extends React.Component<Record<string, never>, States> {
               refreshToken: undefined,
             },
           })
-          parent.postMessage(
-            {
-              pluginMessage: {
-                type: 'SEND_MESSAGE',
-                message: `You are disconnected`,
-              },
-            },
-            '*'
-          )
         },
       }
       console.log(event, session)

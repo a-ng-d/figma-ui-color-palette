@@ -78,6 +78,15 @@ export const signIn = async () => {
                 },
                 '*'
               )
+              parent.postMessage(
+                {
+                  pluginMessage: {
+                    type: 'SEND_MESSAGE',
+                    message: `You are connected!`,
+                  },
+                },
+                '*'
+              )
               checkConnectionStatus(result.access_token, result.refresh_token)
             }
           })
@@ -130,6 +139,15 @@ export const signOut = async () => {
       pluginMessage: {
         type: 'DELETE_ITEMS',
         items: ['supabase_access_token', 'supabase_refresh_token'],
+      },
+    },
+    '*'
+  )
+  parent.postMessage(
+    {
+      pluginMessage: {
+        type: 'SEND_MESSAGE',
+        message: `You are disconnected`,
       },
     },
     '*'
