@@ -60,7 +60,9 @@ const processSelection = () => {
       COLOR_SELECTED: () => {
         figma.ui.postMessage({
           type: 'COLOR_SELECTED',
-          data: viableSelection,
+          data: {
+            selection: viableSelection
+          }
         })
         element.setRelaunchData({
           create: locals[lang].relaunch.create.description,

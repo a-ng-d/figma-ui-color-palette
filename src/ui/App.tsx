@@ -703,7 +703,7 @@ class App extends React.Component<Record<string, never>, States> {
                 (sourceColor: SourceColorConfiguration) =>
                   sourceColor.source != 'CANVAS'
               )
-              .concat(e.data.pluginMessage.data),
+              .concat(e.data.pluginMessage.data.selection),
             onGoingStep: 'colors selected',
           })
           isPaletteSelected = false
