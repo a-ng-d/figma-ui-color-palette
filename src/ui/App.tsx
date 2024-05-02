@@ -150,7 +150,7 @@ class App extends React.Component<Record<string, never>, States> {
         connectionStatus: 'UNCONNECTED',
         userFullName: '',
         accessToken: undefined,
-        refreshToken: undefined
+        refreshToken: undefined,
       },
       isLoaded: false,
       onGoingStep: '',
@@ -167,9 +167,9 @@ class App extends React.Component<Record<string, never>, States> {
               connectionStatus: 'CONNECTED',
               userFullName: session?.user.user_metadata.full_name,
               accessToken: session?.access_token,
-              refreshToken: session?.refresh_token
+              refreshToken: session?.refresh_token,
             },
-            priorityContainerContext: 'EMPTY'
+            priorityContainerContext: 'EMPTY',
           })
           parent.postMessage(
             {
@@ -187,8 +187,8 @@ class App extends React.Component<Record<string, never>, States> {
               connectionStatus: 'UNCONNECTED',
               userFullName: '',
               accessToken: undefined,
-              refreshToken: undefined
-            }
+              refreshToken: undefined,
+            },
           })
           parent.postMessage(
             {
@@ -199,13 +199,12 @@ class App extends React.Component<Record<string, never>, States> {
             },
             '*'
           )
-        }
+        },
       }
       console.log(event, session)
       return actions[event]?.()
     })
   }
-    
 
   // Handlers
   colorsFromImportHandler = (

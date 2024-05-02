@@ -94,56 +94,55 @@ export default class Shortcuts extends React.Component<Props, States> {
         rightPart={
           <>
             <div className="shortcuts snackbar">
-            <Feature
+              <Feature
                 isActive={
-                  features.find(
-                    (feature) => feature.name === 'SHORTCUTS_USER'
-                  )?.isActive && this.props.editorType != 'dev'
+                  features.find((feature) => feature.name === 'SHORTCUTS_USER')
+                    ?.isActive && this.props.editorType != 'dev'
                 }
               >
                 {this.props.userSession.connectionStatus === 'CONNECTED' ? (
                   <Menu
-                  id="user-menu"
-                  icon="info"
-                  options={[
-                    {
-                      label:  `Hello ${this.props.userSession.userFullName}!`,
-                      value: null,
-                      feature: null,
-                      position: 0,
-                      type: 'TITLE',
-                      isActive: true,
-                      isBlocked: false,
-                      isNew: false,
-                      children: [],
-                      action: () => null,
-                    },
-                    {
-                      label: '',
-                      value: null,
-                      feature: null,
-                      position: 0,
-                      type: 'SEPARATOR',
-                      isActive: true,
-                      isBlocked: false,
-                      children: [],
-                      action: () => null,
-                    },
-                    {
-                      label: 'Sign out',
-                      value: null,
-                      feature: null,
-                      position: 0,
-                      type: 'OPTION',
-                      isActive: true,
-                      isBlocked: false,
-                      isNew: false,
-                      children: [],
-                      action: async () => await signOut(),
-                    },
-                  ]}
-                  alignment="TOP_RIGHT"
-                />
+                    id="user-menu"
+                    icon="info"
+                    options={[
+                      {
+                        label: `Hello ${this.props.userSession.userFullName}!`,
+                        value: null,
+                        feature: null,
+                        position: 0,
+                        type: 'TITLE',
+                        isActive: true,
+                        isBlocked: false,
+                        isNew: false,
+                        children: [],
+                        action: () => null,
+                      },
+                      {
+                        label: '',
+                        value: null,
+                        feature: null,
+                        position: 0,
+                        type: 'SEPARATOR',
+                        isActive: true,
+                        isBlocked: false,
+                        children: [],
+                        action: () => null,
+                      },
+                      {
+                        label: 'Sign out',
+                        value: null,
+                        feature: null,
+                        position: 0,
+                        type: 'OPTION',
+                        isActive: true,
+                        isBlocked: false,
+                        isNew: false,
+                        children: [],
+                        action: async () => await signOut(),
+                      },
+                    ]}
+                    alignment="TOP_RIGHT"
+                  />
                 ) : (
                   <Menu
                     id="user-menu"
@@ -159,13 +158,12 @@ export default class Shortcuts extends React.Component<Props, States> {
                         isBlocked: false,
                         isNew: false,
                         children: [],
-                        action: async () => await signIn()
+                        action: async () => await signIn(),
                       },
                     ]}
                     alignment="TOP_RIGHT"
                   />
                 )}
-                
               </Feature>
               <Feature
                 isActive={

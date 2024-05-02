@@ -1,4 +1,4 @@
-import { supabase } from "./authentication"
+import { supabase } from './authentication'
 
 const checkConnectionStatus = async (
   accessToken: string | undefined,
@@ -7,10 +7,9 @@ const checkConnectionStatus = async (
   if (accessToken != undefined && refreshToken != undefined) {
     const { data, error } = await supabase.auth.setSession({
       access_token: accessToken,
-      refresh_token: refreshToken
+      refresh_token: refreshToken,
     })
   }
 }
-  
 
 export default checkConnectionStatus
