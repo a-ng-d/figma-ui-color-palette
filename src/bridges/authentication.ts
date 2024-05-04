@@ -59,8 +59,7 @@ export const signIn = async () => {
             else throw new Error()
           })
           .then(async (result) => {
-            if (result.message === 'No tokens found') clearInterval(poll)
-            else {
+            if (result.message != 'No tokens found') {
               parent.postMessage(
                 {
                   pluginMessage: {
@@ -80,6 +79,7 @@ export const signIn = async () => {
                 '*'
               )
               checkConnectionStatus(result.access_token, result.refresh_token)
+              clearInterval(poll)
             }
           })
           .catch((error: any) => {
