@@ -13,14 +13,14 @@ import { uid } from 'uid'
 const setPaletteMigration = (palette: BaseNode) => {
   const id = palette.getPluginData('id'),
     type = palette.getPluginData('type'),
+    name = palette.getPluginData('name'),
     min = palette.getPluginData('min'),
     max = palette.getPluginData('max'),
     description = palette.getPluginData('description'),
     preset = palette.getPluginData('preset'),
     scale = palette.getPluginData('scale'),
-    colors: Array<ColorConfiguration> = JSON.parse(
-      palette.getPluginData('colors')
-    ),
+    colors = palette.getPluginData('colors'),
+    colorsObject: Array<ColorConfiguration> = JSON.parse(colors),
     colorSpace = palette.getPluginData('colorSpace'),
     visionSimulationMode = palette.getPluginData('visionSimulationMode'),
     themes = palette.getPluginData('themes'),
@@ -58,18 +58,18 @@ const setPaletteMigration = (palette: BaseNode) => {
     )
 
   // colors
-  if (colors.length != 0) {
-    if (!Object.prototype.hasOwnProperty.call(colors[0], 'hueShifting'))
-      palette.setPluginData('colors', setData(colors, 'hueShifting', 0))
+  if (colorsObject.length != 0) {
+    if (!Object.prototype.hasOwnProperty.call(colorsObject[0], 'hueShifting'))
+      palette.setPluginData('colors', setData(colorsObject, 'hueShifting', 0))
 
-    if (!Object.prototype.hasOwnProperty.call(colors[0], 'description'))
-      palette.setPluginData('colors', setData(colors, 'description', ''))
+    if (!Object.prototype.hasOwnProperty.call(colorsObject[0], 'description'))
+      palette.setPluginData('colors', setData(colorsObject, 'description', ''))
 
-    if (!Object.prototype.hasOwnProperty.call(colors[0], 'id'))
+    if (!Object.prototype.hasOwnProperty.call(colorsObject[0], 'id'))
       palette.setPluginData(
         'colors',
         JSON.stringify(
-          colors.map((color) => {
+          colorsObject.map((color) => {
             color.id = uid()
             return color
           })
@@ -77,7 +77,7 @@ const setPaletteMigration = (palette: BaseNode) => {
       )
   }
 
-  if (colors.filter((color) => color.oklch).length == colors.length)
+  if (colorsObject.filter((color) => color.oklch).length == colorsObject.length)
     palette.setPluginData('colorSpace', 'OKLCH')
 
   if (colorSpace === '') palette.setPluginData('colorSpace', 'LCH')
@@ -129,12 +129,12 @@ const setPaletteMigration = (palette: BaseNode) => {
 
   // data
   if (
-    palette.getPluginData('data') === '' ||
-    JSON.parse(palette.getPluginData('data')).type == undefined
+    data === '' ||
+    JSON.parse(data).type == undefined
   )
     new Colors(
       {
-        name: palette.getPluginData('name'),
+        name: name,
         description: palette.getPluginData('description'),
         preset: JSON.parse(palette.getPluginData('preset')),
         scale: JSON.parse(palette.getPluginData('scale')),
