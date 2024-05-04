@@ -534,6 +534,7 @@ export default class Colors {
     })
 
     this.palette?.setPluginData('data', JSON.stringify(this.paletteData))
+    this.palette?.setPluginData('updatedAt', new Date().toISOString())
   }
 
   makeNodeShades = () => {

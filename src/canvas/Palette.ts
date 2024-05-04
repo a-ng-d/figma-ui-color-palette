@@ -108,6 +108,11 @@ export default class Palette {
       JSON.stringify(this.textColorsTheme)
     )
     this.node.setPluginData('algorithmVersion', this.algorithmVersion)
+    this.node.setPluginData('isPublished', 'false')
+    this.node.setPluginData('isShared', 'false')
+    this.node.setPluginData('createdAt', new Date().toISOString())
+    this.node.setPluginData('updatedAt', new Date().toISOString())
+    this.node.setPluginData('publishedAt', '')
 
     // insert
     this.sourceColors.forEach((sourceColor) =>
