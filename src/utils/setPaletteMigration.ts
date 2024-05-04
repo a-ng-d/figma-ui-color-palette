@@ -27,7 +27,13 @@ const setPaletteMigration = (palette: BaseNode) => {
     captions = palette.getPluginData('captions'),
     properties = palette.getPluginData('properties'),
     textColorsTheme = palette.getPluginData('textColorsTheme'),
-    algorithmVersion = palette.getPluginData('algorithmVersion')
+    algorithmVersion = palette.getPluginData('algorithmVersion'),
+    data = palette.getPluginData('data'),
+    isPublished = palette.getPluginData('isPublished'),
+    isShared = palette.getPluginData('isShared'),
+    createdAt = palette.getPluginData('createdAt'),
+    updatedAt = palette.getPluginData('updatedAt'),
+    publishedAt = palette.getPluginData('publishedAt')
 
   // id
   if (id === '') palette.setPluginData('id', uid())
@@ -148,6 +154,15 @@ const setPaletteMigration = (palette: BaseNode) => {
       },
       palette as FrameNode
     ).makePaletteData('CREATE')
+
+  // publication and share
+  if (isPublished === '') palette.setPluginData('isPublished', 'false')
+  if (isShared === '') palette.setPluginData('isShared', 'false')
+  
+  // created, updated and published
+  if (createdAt === '') palette.setPluginData('createdAt', new Date().toISOString())
+  if (updatedAt === '') palette.setPluginData('updatedAt', new Date().toISOString())
+  if (publishedAt === '') palette.setPluginData('publishedAt', '')
 }
 
 export default setPaletteMigration
