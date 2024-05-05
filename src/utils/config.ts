@@ -4,6 +4,8 @@ export const trialTime = 48
 export const oldTrialTime = 168
 export const databaseUrl = 'https://zclweepgvqkrelyfwhma.supabase.co'
 export const authUrl = 'http://localhost:3000'
+export const palettesDbTableName = 'Palettes'
+export const palettesStorageName = 'Palette screenshots'
 
 export const features: Array<Feature> = [
   {

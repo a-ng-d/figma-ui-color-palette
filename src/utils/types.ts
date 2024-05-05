@@ -18,9 +18,15 @@ export type TrialStatus = 'UNUSED' | 'PENDING' | 'EXPIRED'
 
 export type ConnectionStatus = 'CONNECTED' | 'UNCONNECTED'
 
+export interface PublicationStatus {
+  isPublished: boolean
+  isShared: boolean
+}
+
 export interface UserSession {
   connectionStatus: ConnectionStatus
   userFullName: string
+  userId: string | undefined
   accessToken: string | undefined
   refreshToken: string | undefined
 }
@@ -249,6 +255,12 @@ export type ViewConfiguration =
   | 'SHEET_SAFE_MODE'
 
 export type AlgorithmVersionConfiguration = 'v1' | 'v2'
+
+export interface DatesConfiguration {
+  createdAt: DateConstructor | string
+  updatedAt: DateConstructor | string
+  publishedAt: DateConstructor | string
+}
 
 // Processes
 export interface DispatchProcess {

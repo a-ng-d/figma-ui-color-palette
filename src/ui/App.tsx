@@ -26,6 +26,8 @@ import type {
   Service,
   NamingConvention,
   UserSession,
+  PublicationStatus,
+  DatesConfiguration,
 } from '../utils/types'
 import Dispatcher from './modules/Dispatcher'
 import checkConnectionStatus from '../bridges/checkConnectionStatus'
@@ -47,24 +49,28 @@ import { supabase } from '../bridges/authentication'
 interface States {
   service: Service
   sourceColors: Array<SourceColorConfiguration>
+  id: string
   name: string
   description: string
   preset: PresetConfiguration
   namingConvention: NamingConvention
   scale: ScaleConfiguration
-  newColors: Array<ColorConfiguration>
+  colors: Array<ColorConfiguration>
   colorSpace: ColorSpaceConfiguration
   visionSimulationMode: visionSimulationModeConfiguration
   themes: Array<ThemeConfiguration>
   view: ViewConfiguration
   textColorsTheme: TextColorsThemeHexModel
   algorithmVersion: AlgorithmVersionConfiguration
+  screenshot: Uint8Array | null
+  dates: DatesConfiguration
   export: ExportConfiguration
   palettesList: Array<ExtractOfPaletteConfiguration>
   editorType: EditorType
   planStatus: PlanStatus
   trialStatus: TrialStatus
   trialRemainingTime: number
+  publicationStatus: PublicationStatus
   userSession: UserSession
   priorityContainerContext: PriorityContext
   lang: Language
@@ -115,13 +121,14 @@ class App extends React.Component<Record<string, never>, States> {
     this.state = {
       service: 'CREATE',
       sourceColors: [],
+      id: '',
       name: '',
       description: '',
       preset:
         presets.find((preset) => preset.id === 'MATERIAL') ?? defaultPreset,
       namingConvention: 'ONES',
       scale: {},
-      newColors: [],
+      colors: [],
       colorSpace: 'LCH',
       visionSimulationMode: 'NONE',
       themes: [],
@@ -131,6 +138,12 @@ class App extends React.Component<Record<string, never>, States> {
         darkColor: '#000000',
       },
       algorithmVersion: 'v1',
+      screenshot: null,
+      dates: {
+        createdAt: '',
+        updatedAt: '',
+        publishedAt: '',
+      },
       export: {
         format: 'JSON',
         context: 'TOKENS_GLOBAL',
@@ -144,11 +157,16 @@ class App extends React.Component<Record<string, never>, States> {
       planStatus: 'UNPAID',
       trialStatus: 'UNUSED',
       trialRemainingTime: trialTime,
+      publicationStatus: {
+        isPublished: false,
+        isShared: false,
+      },
       priorityContainerContext: 'EMPTY',
       lang: 'en-US',
       userSession: {
         connectionStatus: 'UNCONNECTED',
         userFullName: '',
+        userId: undefined,
         accessToken: undefined,
         refreshToken: undefined,
       },
@@ -166,6 +184,7 @@ class App extends React.Component<Record<string, never>, States> {
             userSession: {
               connectionStatus: 'CONNECTED',
               userFullName: session?.user.user_metadata.full_name,
+              userId: session?.user.id,
               accessToken: session?.access_token,
               refreshToken: session?.refresh_token,
             },
@@ -187,11 +206,42 @@ class App extends React.Component<Record<string, never>, States> {
             userSession: {
               connectionStatus: 'UNCONNECTED',
               userFullName: '',
+              userId: undefined,
               accessToken: undefined,
               refreshToken: undefined,
             },
           })
         },
+        TOKEN_REFRESHED: () => {
+          this.setState({
+            userSession: {
+              connectionStatus: 'CONNECTED',
+              userFullName: session?.user.user_metadata.full_name,
+              userId: session?.user.id,
+              accessToken: session?.access_token,
+              refreshToken: session?.refresh_token,
+            },
+            priorityContainerContext: 'EMPTY',
+          })
+          parent.postMessage(
+            {
+              pluginMessage: {
+                type: 'SET_ITEMS',
+                items: [
+                  {
+                    key: 'supabase_access_token',
+                    value: session?.access_token,
+                  },
+                  {
+                    key: 'supabase_refresh_token',
+                    value: session?.refresh_token,
+                  },
+                ],
+              },
+            },
+            '*'
+          )
+        }
       }
       console.log(event, session)
       return actions[event]?.()
@@ -394,7 +444,7 @@ class App extends React.Component<Record<string, never>, States> {
 
   colorsHandler = (colors: Array<ColorConfiguration>) =>
     this.setState({
-      newColors: colors,
+      colors: colors,
       onGoingStep: 'colors changed',
     })
 
@@ -629,6 +679,7 @@ class App extends React.Component<Record<string, never>, States> {
               (sourceColor: SourceColorConfiguration) =>
                 sourceColor.source != 'CANVAS'
             ),
+            id: '',
             name: '',
             description: '',
             preset:
@@ -641,6 +692,17 @@ class App extends React.Component<Record<string, never>, States> {
             textColorsTheme: {
               lightColor: '#FFFFFF',
               darkColor: '#000000',
+            },
+            algorithmVersion: 'v1',
+            screenshot: null,
+            dates: {
+              createdAt: '',
+              updatedAt: '',
+              publishedAt: '',
+            },
+            publicationStatus: {
+              isPublished: false,
+              isShared: false
             },
             onGoingStep: 'selection empty',
           })
@@ -660,6 +722,7 @@ class App extends React.Component<Record<string, never>, States> {
         const updateWhileColorSelected = () => {
           if (isPaletteSelected) {
             this.setState({
+              id: '',
               name: '',
               description: '',
               preset:
@@ -672,6 +735,17 @@ class App extends React.Component<Record<string, never>, States> {
               textColorsTheme: {
                 lightColor: '#FFFFFF',
                 darkColor: '#000000',
+              },
+              algorithmVersion: 'v1',
+              screenshot: null,
+              dates: {
+                createdAt: '',
+                updatedAt: '',
+                publishedAt: '',
+              },
+              publicationStatus: {
+                isPublished: false,
+                isShared: false
               },
             })
             palette.name = ''
@@ -719,11 +793,12 @@ class App extends React.Component<Record<string, never>, States> {
                 ? 'EDIT'
                 : 'TRANSFER',
             sourceColors: [],
+            id: e.data.pluginMessage.data.id,
             name: e.data.pluginMessage.data.name,
             description: e.data.pluginMessage.data.description,
             preset: e.data.pluginMessage.data.preset,
             scale: e.data.pluginMessage.data.scale,
-            newColors: e.data.pluginMessage.data.colors,
+            colors: e.data.pluginMessage.data.colors,
             colorSpace: e.data.pluginMessage.data.colorSpace,
             visionSimulationMode:
               e.data.pluginMessage.data.visionSimulationMode,
@@ -731,6 +806,16 @@ class App extends React.Component<Record<string, never>, States> {
             view: e.data.pluginMessage.data.view,
             textColorsTheme: e.data.pluginMessage.data.textColorsTheme,
             algorithmVersion: e.data.pluginMessage.data.algorithmVersion,
+            screenshot: e.data.pluginMessage.data.screenshot,
+            dates: {
+              createdAt: e.data.pluginMessage.data.createdAt,
+              updatedAt: e.data.pluginMessage.data.updatedAt,
+              publishedAt: e.data.pluginMessage.data.publishedAt,
+            },
+            publicationStatus: {
+              isPublished: e.data.pluginMessage.data.isPublished,
+              isShared: e.data.pluginMessage.data.isShared,
+            },
             onGoingStep: 'palette selected',
           })
         }
@@ -953,7 +1038,7 @@ class App extends React.Component<Record<string, never>, States> {
               description={this.state['description']}
               preset={this.state['preset']}
               scale={this.state['scale']}
-              colors={this.state['newColors']}
+              colors={this.state['colors']}
               colorSpace={this.state['colorSpace']}
               visionSimulationMode={this.state['visionSimulationMode']}
               themes={this.state['themes']}
@@ -983,7 +1068,7 @@ class App extends React.Component<Record<string, never>, States> {
               description={this.state['description']}
               preset={this.state['preset']}
               scale={this.state['scale']}
-              colors={this.state['newColors']}
+              colors={this.state['colors']}
               colorSpace={this.state['colorSpace']}
               visionSimulationMode={this.state['visionSimulationMode']}
               themes={this.state['themes']}
@@ -1000,8 +1085,10 @@ class App extends React.Component<Record<string, never>, States> {
           </Feature>
           <PriorityContainer
             context={this.state['priorityContainerContext']}
+            data={this.state}
             planStatus={this.state['planStatus']}
             trialStatus={this.state['trialStatus']}
+            userSession={this.state['userSession']}
             lang={this.state['lang']}
             onClose={() => this.setState({ priorityContainerContext: 'EMPTY' })}
           />

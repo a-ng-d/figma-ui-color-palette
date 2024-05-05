@@ -337,6 +337,9 @@ export const locals: { [key: string]: any } = {
       apca: 'APCA scores',
       fontSize: 'Minimum font sizes',
     },
+    success: {
+      publication: 'The palette has been published'
+    },
     info: {
       createdLocalStyle: 'local color style created',
       createdLocalStyles: 'local color styles created',
@@ -366,7 +369,8 @@ export const locals: { [key: string]: any } = {
         'Your UI Color Palette seems corrupted. Do not edit any layer within it.',
       palettesPicking: 'UI Color Palettes cannot be picked for now',
       generic: 'Something went wrong',
-      timeout: 'The authentication has failed'
+      timeout: 'The authentication has failed',
+      publication: 'The palette cannot be published'
     },
   },
 }

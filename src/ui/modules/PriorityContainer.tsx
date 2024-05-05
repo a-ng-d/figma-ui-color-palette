@@ -4,6 +4,7 @@ import type {
   PlanStatus,
   PriorityContext,
   TrialStatus,
+  UserSession,
 } from '../../utils/types'
 import Feature from '../components/Feature'
 import { Dialog } from '@a-ng-d/figmug.dialogs.dialog'
@@ -17,11 +18,14 @@ import { locals } from '../../content/locals'
 import { texts } from '@a-ng-d/figmug.stylesheets.texts'
 import features from '../../utils/config'
 import package_json from '../../../package.json'
+import publishPalette from '../../bridges/publishPalette'
 
 interface Props {
   context: PriorityContext
+  data: any
   planStatus: PlanStatus
   trialStatus: TrialStatus
+  userSession: UserSession
   lang: Language
   onClose: React.ChangeEventHandler & (() => void)
 }
@@ -243,25 +247,47 @@ export default class PriorityContainer extends React.Component<Props> {
           features.find((feature) => feature.name === 'PUBLICATION')?.isActive
         }
       >
-        <Dialog
-          title="Publish your palette"
-          actions={{
-            primary: {
-              label: 'Sign in',
-              action: async () => await signIn(),
-            },
-          }}
-          onClose={this.props.onClose}
-        >
-          <img
-            className="dialog__cover"
-            src={pp}
-          />
-          <p className={`dialog__text type ${texts.type}`}>
-            Publish your palette to reuse in others Figma document and share it
-            with the community
-          </p>
-        </Dialog>
+        {this.props.userSession.connectionStatus === 'CONNECTED' ? (
+          <Dialog
+            title="Publish your palette"
+            actions={{
+              primary: {
+                label: 'Publish',
+                action: async () => await publishPalette(this.props.data),
+              },
+            }}
+            onClose={this.props.onClose}
+          >
+            <img
+              className="dialog__cover"
+              src={pp}
+            />
+            <p className={`dialog__text type ${texts.type}`}>
+              Lets publish
+            </p>
+          </Dialog>
+        ) : (
+          <Dialog
+            title="Publish your palette"
+            actions={{
+              primary: {
+                label: 'Sign in',
+                action: async () => await signIn(),
+              },
+            }}
+            onClose={this.props.onClose}
+          >
+            <img
+              className="dialog__cover"
+              src={pp}
+            />
+            <p className={`dialog__text type ${texts.type}`}>
+              Publish your palette to reuse in others Figma document and share it
+              with the community
+            </p>
+          </Dialog>
+        )}
+        
       </Feature>
     )
   }

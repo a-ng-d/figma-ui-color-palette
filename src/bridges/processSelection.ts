@@ -26,11 +26,16 @@ const processSelection = () => {
     | InstanceNode
   const selectionHandler = (state: string, element: any = null) => {
     const actions: ActionsList = {
-      PALETTE_SELECTED: () => {
+      PALETTE_SELECTED: async () => {
+        const bytes = await palette.exportAsync({
+          format: 'PNG',
+          constraint: { type: 'SCALE', value: 0.25 },
+        })
         figma.ui.postMessage({
           type: 'PALETTE_SELECTED',
           data: {
             editorType: figma.editorType,
+            id: palette.getPluginData('id'),
             name: palette.getPluginData('name'),
             description: palette.getPluginData('description'),
             preset: JSON.parse(palette.getPluginData('preset')),
@@ -46,11 +51,17 @@ const processSelection = () => {
               palette.getPluginData('textColorsTheme')
             ),
             algorithmVersion: palette.getPluginData('algorithmVersion'),
+            screenshot: bytes,
+            isPublished: palette.getPluginData('isPublished'),
+            isShared: palette.getPluginData('isShared'),
+            createdAt: palette.getPluginData('createdAt'),
+            updatedAt: palette.getPluginData('updatedAt'),
+            publishedAt: palette.getPluginData('publishedAt')
           },
-        }),
-          palette.setRelaunchData({
-            edit: locals[lang].relaunch.edit.description,
-          })
+        })
+        palette.setRelaunchData({
+          edit: locals[lang].relaunch.edit.description,
+        })
       },
       EMPTY_SELECTION: () =>
         figma.ui.postMessage({
