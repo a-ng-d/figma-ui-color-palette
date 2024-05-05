@@ -2,9 +2,7 @@ import type { PaletteData } from '../utils/types'
 import LocalStyle from './../canvas/LocalStyle'
 import { locals, lang } from '../content/locals'
 
-const createLocalStyles = async (palette: SceneNode) => {
-  palette = figma.currentPage.selection[0] as FrameNode
-
+const createLocalStyles = async (palette: FrameNode) => {
   const paletteData: PaletteData = JSON.parse(palette.getPluginData('data')),
     workingThemes =
       paletteData.themes.filter((theme) => theme.type === 'custom theme')

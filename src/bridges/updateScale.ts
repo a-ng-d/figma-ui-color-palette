@@ -19,8 +19,8 @@ import { locals, lang } from '../content/locals'
 import doLightnessScale from '../utils/doLightnessScale'
 import setPaletteName from '../utils/setPaletteName'
 
-const updateScale = (msg: ScaleMessage, palette: SceneNode) => {
-  palette = isSelectionChanged
+const updateScale = (msg: ScaleMessage) => {
+  const palette = isSelectionChanged
     ? (previousSelection?.[0] as FrameNode)
     : (currentSelection[0] as FrameNode)
 

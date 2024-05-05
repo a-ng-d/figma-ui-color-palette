@@ -13,9 +13,7 @@ import Colors from '../canvas/Colors'
 import { locals, lang } from '../content/locals'
 import setPaletteName from '../utils/setPaletteName'
 
-const updateView = (msg: ViewMessage, palette: SceneNode) => {
-  palette = figma.currentPage.selection[0] as FrameNode
-
+const updateView = (msg: ViewMessage, palette: FrameNode) => {
   if (palette.children.length == 1) {
     const name: string =
         palette.getPluginData('name') === ''

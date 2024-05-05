@@ -30,7 +30,7 @@ import updateThemes from './updateThemes'
 import updateView from './updateView'
 import package_json from './../../package.json'
 
-const loadUI = async (palette: SceneNode) => {
+const loadUI = async () => {
   const windowSize: windowSize = {
     w: (await figma.clientStorage.getAsync('plugin_window_width')) ?? 640,
     h: (await figma.clientStorage.getAsync('plugin_window_height')) ?? 320,
@@ -60,7 +60,7 @@ const loadUI = async (palette: SceneNode) => {
   })
 
   figma.ui.onmessage = async (msg) => {
-    palette = figma.currentPage.selection[0] as FrameNode
+    const palette = figma.currentPage.selection[0] as FrameNode
     const actions: ActionsList = {
       RESIZE_UI: async () => {
         windowSize.w < 540
@@ -82,11 +82,11 @@ const loadUI = async (palette: SceneNode) => {
         figma.ui.resize(windowSize.w, windowSize.h)
       },
       CLOSE_HIGHLIGHT: () => closeHighlight(msg),
-      CREATE_PALETTE: () => createPalette(msg, palette),
-      UPDATE_SCALE: () => updateScale(msg, palette),
+      CREATE_PALETTE: () => createPalette(msg),
+      UPDATE_SCALE: () => updateScale(msg),
       UPDATE_VIEW: () => updateView(msg, palette),
-      UPDATE_COLORS: () => updateColors(msg, palette),
-      UPDATE_THEMES: () => updateThemes(msg, palette),
+      UPDATE_COLORS: () => updateColors(msg),
+      UPDATE_THEMES: () => updateThemes(msg),
       SYNC_LOCAL_STYLES: async () => {
         createLocalStyles(palette)
           .then(async (message) => [
@@ -127,7 +127,7 @@ const loadUI = async (palette: SceneNode) => {
         msg.export === 'ANDROID_XML' ? exportXml(palette) : null
         msg.export === 'CSV' ? exportCsv(palette) : null
       },
-      UPDATE_SETTINGS: () => updateSettings(msg, palette),
+      UPDATE_SETTINGS: () => updateSettings(msg),
       OPEN_IN_BROWSER: () => {
         figma.openExternal(msg.url)
       },

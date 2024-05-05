@@ -2,9 +2,7 @@ import chroma from 'chroma-js'
 import type { PaletteData, PaletteDataThemeItem } from '../utils/types'
 import { locals, lang } from '../content/locals'
 
-const updateLocalStyles = async (palette: SceneNode) => {
-  palette = figma.currentPage.selection[0] as FrameNode
-
+const updateLocalStyles = async (palette: FrameNode) => {
   const paletteData: PaletteData = JSON.parse(palette.getPluginData('data')),
     workingThemes =
       paletteData.themes.filter((theme) => theme.type === 'custom theme')

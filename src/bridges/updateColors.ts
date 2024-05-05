@@ -18,8 +18,8 @@ import {
 import { locals, lang } from '../content/locals'
 import setPaletteName from '../utils/setPaletteName'
 
-const updateColors = (msg: ColorsMessage, palette: SceneNode) => {
-  palette = isSelectionChanged
+const updateColors = (msg: ColorsMessage) => {
+  const palette = isSelectionChanged
     ? (previousSelection?.[0] as FrameNode)
     : (currentSelection[0] as FrameNode)
 

@@ -24,7 +24,7 @@ figma.parameters.on(
 
 // Loader
 figma.on('run', async ({ parameters }: RunEvent) => {
-  if (parameters == undefined) loadUI(palette)
+  if (parameters == undefined) loadUI()
   else {
     const selectedPreset = presets.find(
       (preset) => preset.name === parameters.preset
@@ -70,8 +70,7 @@ figma.on('run', async ({ parameters }: RunEvent) => {
             },
           } as PaletteConfiguration,
         },
-      },
-      palette
+      }
     )
     figma.closePlugin()
   }

@@ -1,9 +1,7 @@
 import type { PaletteData, PaletteDataShadeItem } from '../utils/types'
 import { locals, lang } from '../content/locals'
 
-const exportJson = (palette: SceneNode) => {
-  palette = figma.currentPage.selection[0] as FrameNode
-
+const exportJson = (palette: FrameNode) => {
   const paletteData: PaletteData = JSON.parse(palette.getPluginData('data')),
     workingThemes =
       paletteData.themes.filter((theme) => theme.type === 'custom theme')

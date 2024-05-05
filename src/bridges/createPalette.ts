@@ -25,10 +25,10 @@ interface Msg {
   }
 }
 
-const createPalette = (msg: Msg, palette: SceneNode) => {
+const createPalette = (msg: Msg) => {
   const scene: SceneNode[] = []
 
-  palette = new Palette(
+  const palette = new Palette(
     msg.data.sourceColors,
     msg.data.palette.name,
     msg.data.palette.description,

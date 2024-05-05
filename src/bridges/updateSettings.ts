@@ -15,8 +15,8 @@ import Colors from '../canvas/Colors'
 import { locals, lang } from '../content/locals'
 import setPaletteName from '../utils/setPaletteName'
 
-const updateSettings = (msg: SettingsMessage, palette: SceneNode) => {
-  palette = isSelectionChanged
+const updateSettings = (msg: SettingsMessage) => {
+  const palette = isSelectionChanged
     ? (previousSelection?.[0] as FrameNode)
     : (currentSelection[0] as FrameNode)
 
