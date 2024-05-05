@@ -15,7 +15,7 @@ import { texts } from '@a-ng-d/figmug.stylesheets.texts'
 import features from '../../utils/config'
 import { locals } from '../../content/locals'
 import isBlocked from '../../utils/isBlocked'
-import { signIn, signOut } from '../../bridges/authentication'
+import { signIn, signOut } from '../../bridges/publication/authentication'
 
 interface Props {
   editorType: EditorType

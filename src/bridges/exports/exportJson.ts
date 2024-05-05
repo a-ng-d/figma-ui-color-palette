@@ -1,5 +1,5 @@
-import type { PaletteData, PaletteDataShadeItem } from '../utils/types'
-import { locals, lang } from '../content/locals'
+import type { PaletteData, PaletteDataShadeItem } from '../../utils/types'
+import { locals, lang } from '../../content/locals'
 
 const exportJson = (palette: FrameNode) => {
   const paletteData: PaletteData = JSON.parse(palette.getPluginData('data')),

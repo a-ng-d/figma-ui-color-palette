@@ -2,8 +2,8 @@ import type {
   PaletteData,
   PaletteDataColorItem,
   PaletteDataShadeItem,
-} from '../utils/types'
-import { locals, lang } from '../content/locals'
+} from '../../utils/types'
+import { locals, lang } from '../../content/locals'
 
 const exportJsonAmznStyleDictionary = (palette: FrameNode) => {
   const paletteData: PaletteData = JSON.parse(palette.getPluginData('data')),

@@ -1,5 +1,5 @@
-import type { PaletteData } from '../utils/types'
-import { locals, lang } from '../content/locals'
+import type { PaletteData } from '../../utils/types'
+import { locals, lang } from '../../content/locals'
 import { doCamelCase } from '@a-ng-d/figmug.modules.do-camel-case'
 
 const exportSwiftUI = (palette: FrameNode) => {

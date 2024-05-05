@@ -8,10 +8,10 @@ import type {
   AlgorithmVersionConfiguration,
   ViewMessage,
   visionSimulationModeConfiguration,
-} from '../utils/types'
-import Colors from '../canvas/Colors'
-import { locals, lang } from '../content/locals'
-import setPaletteName from '../utils/setPaletteName'
+} from '../../utils/types'
+import Colors from '../../canvas/Colors'
+import { locals, lang } from '../../content/locals'
+import setPaletteName from '../../utils/setPaletteName'
 
 const updateView = (msg: ViewMessage, palette: FrameNode) => {
   if (palette.children.length == 1) {

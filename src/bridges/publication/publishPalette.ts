@@ -1,5 +1,5 @@
-import { lang, locals } from "../content/locals"
-import { databaseUrl, palettesDbTableName, palettesStorageName } from "../utils/config"
+import { lang, locals } from "../../content/locals"
+import { databaseUrl, palettesDbTableName, palettesStorageName } from "../../utils/config"
 import { supabase } from "./authentication"
 
 const publishPalette = async (rawData: any) => {

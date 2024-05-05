@@ -1,7 +1,7 @@
 import { createClient } from '@supabase/supabase-js'
-import { authUrl, databaseUrl } from '../utils/config'
-import checkConnectionStatus from './checkConnectionStatus'
-import { lang, locals } from '../content/locals'
+import { authUrl, databaseUrl } from '../../utils/config'
+import checkConnectionStatus from '../checks/checkConnectionStatus'
+import { lang, locals } from '../../content/locals'
 
 export const supabase = createClient(
   databaseUrl,

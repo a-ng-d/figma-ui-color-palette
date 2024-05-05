@@ -2,9 +2,9 @@ import type {
   ActionsList,
   PaletteData,
   PaletteDataShadeItem,
-} from '../utils/types'
+} from '../../utils/types'
 import { doKebabCase } from '@a-ng-d/figmug.modules.do-kebab-case'
-import { locals, lang } from '../content/locals'
+import { locals, lang } from '../../content/locals'
 
 const exportCss = (palette: FrameNode, colorSpace: 'RGB' | 'LCH' | 'P3') => {
   const paletteData: PaletteData = JSON.parse(palette.getPluginData('data')),

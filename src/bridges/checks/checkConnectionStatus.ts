@@ -1,4 +1,4 @@
-import { supabase } from './authentication'
+import { supabase } from '../publication/authentication'
 
 const checkConnectionStatus = async (
   accessToken: string | undefined,

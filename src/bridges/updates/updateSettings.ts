@@ -5,15 +5,15 @@ import type {
   SettingsMessage,
   ThemeConfiguration,
   ViewConfiguration,
-} from '../utils/types'
+} from '../../utils/types'
 import {
   previousSelection,
   currentSelection,
   isSelectionChanged,
-} from './processSelection'
-import Colors from '../canvas/Colors'
-import { locals, lang } from '../content/locals'
-import setPaletteName from '../utils/setPaletteName'
+} from '../processSelection'
+import Colors from '../../canvas/Colors'
+import { locals, lang } from '../../content/locals'
+import setPaletteName from '../../utils/setPaletteName'
 
 const updateSettings = (msg: SettingsMessage) => {
   const palette = isSelectionChanged

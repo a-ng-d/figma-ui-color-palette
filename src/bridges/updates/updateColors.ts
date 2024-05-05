@@ -1,24 +1,24 @@
 import type {
   AlgorithmVersionConfiguration,
   visionSimulationModeConfiguration,
-  ColorConfiguration,
   ColorSpaceConfiguration,
+  ColorsMessage,
   PresetConfiguration,
   ScaleConfiguration,
   TextColorsThemeHexModel,
-  ThemesMessage,
+  ThemeConfiguration,
   ViewConfiguration,
-} from '../utils/types'
-import Colors from '../canvas/Colors'
+} from '../../utils/types'
+import Colors from '../../canvas/Colors'
 import {
   previousSelection,
   currentSelection,
   isSelectionChanged,
-} from './processSelection'
-import { locals, lang } from '../content/locals'
-import setPaletteName from '../utils/setPaletteName'
+} from '../processSelection'
+import { locals, lang } from '../../content/locals'
+import setPaletteName from '../../utils/setPaletteName'
 
-const updateThemes = (msg: ThemesMessage) => {
+const updateColors = (msg: ColorsMessage) => {
   const palette = isSelectionChanged
     ? (previousSelection?.[0] as FrameNode)
     : (currentSelection[0] as FrameNode)
@@ -33,15 +33,15 @@ const updateThemes = (msg: ThemesMessage) => {
         palette.getPluginData('preset')
       ) as PresetConfiguration,
       scale = JSON.parse(palette.getPluginData('scale')) as ScaleConfiguration,
-      colors = JSON.parse(
-        palette.getPluginData('colors')
-      ) as Array<ColorConfiguration>,
       colorSpace = palette.getPluginData(
         'colorSpace'
       ) as ColorSpaceConfiguration,
       visionSimulationMode = palette.getPluginData(
         'visionSimulationMode'
       ) as visionSimulationModeConfiguration,
+      themes = JSON.parse(
+        palette.getPluginData('themes')
+      ) as Array<ThemeConfiguration>,
       view = palette.getPluginData('view') as ViewConfiguration,
       textColorsTheme = JSON.parse(
         palette.getPluginData('textColorsTheme')
@@ -50,7 +50,7 @@ const updateThemes = (msg: ThemesMessage) => {
         'algorithmVersion'
       ) as AlgorithmVersionConfiguration
 
-    palette.setPluginData('themes', JSON.stringify(msg.data))
+    palette.setPluginData('colors', JSON.stringify(msg.data))
 
     palette.children[0].remove()
     palette.appendChild(
@@ -60,10 +60,10 @@ const updateThemes = (msg: ThemesMessage) => {
           description: description,
           preset: preset,
           scale: scale,
-          colors: colors,
+          colors: msg.data,
           colorSpace: colorSpace,
           visionSimulationMode: visionSimulationMode,
-          themes: msg.data,
+          themes: themes,
           view:
             msg.isEditedInRealTime && view === 'PALETTE_WITH_PROPERTIES'
               ? 'PALETTE'
@@ -82,7 +82,7 @@ const updateThemes = (msg: ThemesMessage) => {
     palette.counterAxisSizingMode = 'AUTO'
     palette.name = setPaletteName(
       name,
-      msg.data.find((theme) => theme.isEnabled)?.name,
+      themes.find((theme) => theme.isEnabled)?.name,
       preset.name,
       colorSpace,
       visionSimulationMode
@@ -90,4 +90,4 @@ const updateThemes = (msg: ThemesMessage) => {
   } else figma.notify(locals[lang].error.corruption)
 }
 
-export default updateThemes
+export default updateColors

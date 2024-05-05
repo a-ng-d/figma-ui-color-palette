@@ -1,4 +1,4 @@
-import { oldTrialTime, trialTime } from '../utils/config'
+import { oldTrialTime, trialTime } from '../../utils/config'
 
 const checkPlanStatus = async () => {
   //figma.clientStorage.deleteAsync('trial_start_date')

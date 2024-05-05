@@ -1,5 +1,5 @@
-import type { PaletteData } from '../utils/types'
-import { locals, lang } from '../content/locals'
+import type { PaletteData } from '../../utils/types'
+import { locals, lang } from '../../content/locals'
 import { doKebabCase } from '@a-ng-d/figmug.modules.do-kebab-case'
 
 const exportTailwind = (palette: FrameNode) => {

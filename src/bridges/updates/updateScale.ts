@@ -8,16 +8,16 @@ import type {
   AlgorithmVersionConfiguration,
   ScaleMessage,
   visionSimulationModeConfiguration,
-} from '../utils/types'
+} from '../../utils/types'
 import {
   previousSelection,
   currentSelection,
   isSelectionChanged,
-} from './processSelection'
-import Colors from './../canvas/Colors'
-import { locals, lang } from '../content/locals'
-import doLightnessScale from '../utils/doLightnessScale'
-import setPaletteName from '../utils/setPaletteName'
+} from '../processSelection'
+import Colors from '../../canvas/Colors'
+import { locals, lang } from '../../content/locals'
+import doLightnessScale from '../../utils/doLightnessScale'
+import setPaletteName from '../../utils/setPaletteName'
 
 const updateScale = (msg: ScaleMessage) => {
   const palette = isSelectionChanged

@@ -1,4 +1,4 @@
-import releaseNotes from '../content/releaseNotes'
+import releaseNotes from '../../content/releaseNotes'
 
 const checkHighlightStatus = async (version: string) => {
   // figma.clientStorage.deleteAsync(`${version}_isRead`)

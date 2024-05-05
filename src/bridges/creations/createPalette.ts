@@ -6,8 +6,8 @@ import type {
   TextColorsThemeHexModel,
   ViewConfiguration,
   visionSimulationModeConfiguration,
-} from '../utils/types'
-import Palette from './../canvas/Palette'
+} from '../../utils/types'
+import Palette from '../../canvas/Palette'
 
 interface Msg {
   data: {

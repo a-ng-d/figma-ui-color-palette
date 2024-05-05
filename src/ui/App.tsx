@@ -30,7 +30,7 @@ import type {
   DatesConfiguration,
 } from '../utils/types'
 import Dispatcher from './modules/Dispatcher'
-import checkConnectionStatus from '../bridges/checkConnectionStatus'
+import checkConnectionStatus from '../bridges/checks/checkConnectionStatus'
 import Feature from './components/Feature'
 import CreatePalette from './services/CreatePalette'
 import EditPalette from './services/EditPalette'
@@ -44,7 +44,7 @@ import 'figma-plugin-ds/dist/figma-plugin-ds.css'
 import './stylesheets/app.css'
 import './stylesheets/app-components.css'
 import { locals } from '../content/locals'
-import { supabase } from '../bridges/authentication'
+import { supabase } from '../bridges/publication/authentication'
 
 interface States {
   service: Service
