@@ -105,7 +105,7 @@ const updateLocalVariables = async (palette: FrameNode) => {
           return `${messages.join(', ')} updated`
         })
         .catch((error) => {
-          console.log(error)
+          console.error(error)
           return locals[lang].error.generic
         })
 

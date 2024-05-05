@@ -128,7 +128,7 @@ const updateLocalStyles = async (palette: FrameNode) => {
         else return `${i} ${locals[lang].info.updatedLocalStyle}`
       })
       .catch((error) => {
-        console.log(error)
+        console.error(error)
         return locals[lang].error.generic
       })
 

@@ -159,7 +159,7 @@ export default class EditPalette extends React.Component<Props, States> {
           )
         )
         .catch((error) => {
-          console.log(error)
+          console.error(error)
           return locals[this.props.lang].error.generic
         })
     } else if (this.props.export.format === 'TAILWIND') {

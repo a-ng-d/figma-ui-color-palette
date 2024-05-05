@@ -76,7 +76,7 @@ export default class TransferPalette extends React.Component<Props> {
           )
         )
         .catch((error) => {
-          console.log(error)
+          console.error(error)
           return locals[this.props.lang].error.generic
         })
     } else if (this.props.export.format === 'TAILWIND') {

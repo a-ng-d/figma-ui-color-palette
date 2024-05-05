@@ -52,7 +52,7 @@ const createLocalStyles = async (palette: FrameNode) => {
         else return `${j} ${locals[lang].info.createdLocalStyle}`
       })
       .catch((error) => {
-        console.log(error)
+        console.error(error)
         return locals[lang].error.generic
       })
 

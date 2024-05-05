@@ -9,7 +9,7 @@ const getPalettesOnCurrentPage = async () => {
       })
     )
     .catch((error) => {
-      console.log(error)
+      console.error(error)
       figma.notify(locals[lang].error.palettesPicking)
       return []
     })

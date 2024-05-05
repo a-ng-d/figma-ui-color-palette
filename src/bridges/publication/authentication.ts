@@ -110,7 +110,7 @@ export const signIn = async () => {
       }, 2 * 60 * 1000)
     })
     .catch((error) => {
-      console.log(error)
+      console.error(error)
       parent.postMessage(
         {
           pluginMessage: {
@@ -126,22 +126,35 @@ export const signIn = async () => {
 export const signOut = async () => {
   const { error } = await supabase.auth.signOut()
 
-  parent.postMessage(
-    {
-      pluginMessage: {
-        type: 'DELETE_ITEMS',
-        items: ['supabase_access_token', 'supabase_refresh_token'],
+  if (!error) {
+    parent.postMessage(
+      {
+        pluginMessage: {
+          type: 'DELETE_ITEMS',
+          items: ['supabase_access_token', 'supabase_refresh_token'],
+        },
       },
-    },
-    '*'
-  )
-  parent.postMessage(
-    {
-      pluginMessage: {
-        type: 'SEND_MESSAGE',
-        message: locals[lang].info.signOut,
+      '*'
+    )
+    parent.postMessage(
+      {
+        pluginMessage: {
+          type: 'SEND_MESSAGE',
+          message: locals[lang].info.signOut,
+        },
       },
-    },
-    '*'
-  )
+      '*'
+    )
+  } else {
+    console.log(error)
+    parent.postMessage(
+      {
+        pluginMessage: {
+          type: 'SEND_MESSAGE',
+          message: locals[lang].error.generic,
+        },
+      },
+      '*'
+    )
+  }
 }
