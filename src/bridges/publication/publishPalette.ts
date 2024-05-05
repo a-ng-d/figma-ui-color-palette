@@ -1,28 +1,32 @@
-import { lang, locals } from "../../content/locals"
-import { databaseUrl, palettesDbTableName, palettesStorageName } from "../../utils/config"
-import { supabase } from "./authentication"
+import { lang, locals } from '../../content/locals'
+import {
+  databaseUrl,
+  palettesDbTableName,
+  palettesStorageName,
+} from '../../utils/config'
+import { supabase } from './authentication'
 
 const publishPalette = async (rawData: any) => {
-  const { data, error } = await supabase
-    .storage
+  const { data, error } = await supabase.storage
     .from(palettesStorageName)
     .upload(
       `${rawData.userSession.userId}/${rawData.id}.png`,
       rawData.screenshot.buffer,
       {
-        contentType: 'image/png'
+        contentType: 'image/png',
       }
     )
-  
+
   if (!error) {
     const { data, error } = await supabase
       .from(palettesDbTableName)
       .insert([
         {
           palette_id: rawData.id,
-          name: rawData.name === ''
-            ? `${rawData.userSession.userFullName}'s UI COLOR PALETTE`
-            : rawData.name,
+          name:
+            rawData.name === ''
+              ? `${rawData.userSession.userFullName}'s UI COLOR PALETTE`
+              : rawData.name,
           description: rawData.description,
           preset: rawData.preset,
           scale: rawData.scale,
@@ -42,7 +46,7 @@ const publishPalette = async (rawData: any) => {
       ])
       .select()
     console.log(data)
-    
+
     if (!error) {
       parent.postMessage(
         {

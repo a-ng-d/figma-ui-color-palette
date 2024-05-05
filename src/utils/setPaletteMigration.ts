@@ -128,10 +128,7 @@ const setPaletteMigration = (palette: BaseNode) => {
   if (algorithmVersion === '') palette.setPluginData('algorithmVersion', 'v1')
 
   // data
-  if (
-    data === '' ||
-    JSON.parse(data).type == undefined
-  )
+  if (data === '' || JSON.parse(data).type == undefined)
     new Colors(
       {
         name: name,
@@ -158,10 +155,12 @@ const setPaletteMigration = (palette: BaseNode) => {
   // publication and share
   if (isPublished === '') palette.setPluginData('isPublished', 'false')
   if (isShared === '') palette.setPluginData('isShared', 'false')
-  
+
   // created, updated and published
-  if (createdAt === '') palette.setPluginData('createdAt', new Date().toISOString())
-  if (updatedAt === '') palette.setPluginData('updatedAt', new Date().toISOString())
+  if (createdAt === '')
+    palette.setPluginData('createdAt', new Date().toISOString())
+  if (updatedAt === '')
+    palette.setPluginData('updatedAt', new Date().toISOString())
   if (publishedAt === '') palette.setPluginData('publishedAt', '')
 }
 

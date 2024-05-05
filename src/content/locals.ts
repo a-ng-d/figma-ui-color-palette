@@ -329,7 +329,7 @@ export const locals: { [key: string]: any } = {
     user: {
       signIn: 'Sign in',
       signOut: 'Sign out',
-      welcomeMessage: 'Hello $[] 🚀'
+      welcomeMessage: 'Hello $[] 🚀',
     },
     properties: {
       base: 'Base',
@@ -338,7 +338,7 @@ export const locals: { [key: string]: any } = {
       fontSize: 'Minimum font sizes',
     },
     success: {
-      publication: 'The palette has been published'
+      publication: 'The palette has been published',
     },
     info: {
       createdLocalStyle: 'local color style created',
@@ -349,7 +349,7 @@ export const locals: { [key: string]: any } = {
       localVariables: 'local color variables',
       variableMode: 'variable mode',
       variableModes: 'variable modes',
-      signOut: 'See you later'
+      signOut: 'See you later',
     },
     warning: {
       tooManyThemesToCreateModes:
@@ -370,7 +370,7 @@ export const locals: { [key: string]: any } = {
       palettesPicking: 'UI Color Palettes cannot be picked for now',
       generic: 'Something went wrong',
       timeout: 'The authentication has failed',
-      publication: 'The palette cannot be published'
+      publication: 'The palette cannot be published',
     },
   },
 }

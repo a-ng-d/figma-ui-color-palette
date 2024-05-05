@@ -29,49 +29,47 @@ figma.on('run', async ({ parameters }: RunEvent) => {
     const selectedPreset = presets.find(
       (preset) => preset.name === parameters.preset
     )
-    createPalette(
-      {
-        data: {
-          sourceColors: figma.currentPage.selection
-            .filter(
-              (element) =>
-                element.type != 'GROUP' &&
-                element.type != 'EMBED' &&
-                element.type != 'CONNECTOR' &&
-                element.getPluginDataKeys().length == 0 &&
-                (element as any).fills.filter(
-                  (fill: Paint) => fill.type === 'SOLID'
-                ).length != 0
-            )
-            .map((element) => {
-              return {
-                name: element.name,
-                rgb: (element as any).fills[0].color,
-                source: 'CANVAS',
-                id: '',
-              }
-            }),
-          palette: {
-            name: parameters.name == undefined ? '' : parameters.name,
-            description: '',
-            preset: presets.find((preset) => preset.name === parameters.preset),
-            scale: doLightnessScale(
-              selectedPreset?.scale ?? [1, 2],
-              selectedPreset?.min ?? 0,
-              selectedPreset?.max ?? 100,
-              selectedPreset?.isDistributed ? true : false
-            ),
-            colorSpace: parameters.space.toUpperCase().replace(' ', '_'),
-            visionSimulationMode: 'NONE',
-            view: parameters.view.toUpperCase().split(' ').join('_'),
-            textColorsTheme: {
-              lightColor: '#FFFFFF',
-              darkColor: '#000000',
-            },
-          } as PaletteConfiguration,
-        },
-      }
-    )
+    createPalette({
+      data: {
+        sourceColors: figma.currentPage.selection
+          .filter(
+            (element) =>
+              element.type != 'GROUP' &&
+              element.type != 'EMBED' &&
+              element.type != 'CONNECTOR' &&
+              element.getPluginDataKeys().length == 0 &&
+              (element as any).fills.filter(
+                (fill: Paint) => fill.type === 'SOLID'
+              ).length != 0
+          )
+          .map((element) => {
+            return {
+              name: element.name,
+              rgb: (element as any).fills[0].color,
+              source: 'CANVAS',
+              id: '',
+            }
+          }),
+        palette: {
+          name: parameters.name == undefined ? '' : parameters.name,
+          description: '',
+          preset: presets.find((preset) => preset.name === parameters.preset),
+          scale: doLightnessScale(
+            selectedPreset?.scale ?? [1, 2],
+            selectedPreset?.min ?? 0,
+            selectedPreset?.max ?? 100,
+            selectedPreset?.isDistributed ? true : false
+          ),
+          colorSpace: parameters.space.toUpperCase().replace(' ', '_'),
+          visionSimulationMode: 'NONE',
+          view: parameters.view.toUpperCase().split(' ').join('_'),
+          textColorsTheme: {
+            lightColor: '#FFFFFF',
+            darkColor: '#000000',
+          },
+        } as PaletteConfiguration,
+      },
+    })
     figma.closePlugin()
   }
 })

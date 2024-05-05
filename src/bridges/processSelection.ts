@@ -56,7 +56,7 @@ const processSelection = () => {
             isShared: palette.getPluginData('isShared'),
             createdAt: palette.getPluginData('createdAt'),
             updatedAt: palette.getPluginData('updatedAt'),
-            publishedAt: palette.getPluginData('publishedAt')
+            publishedAt: palette.getPluginData('publishedAt'),
           },
         })
         palette.setRelaunchData({

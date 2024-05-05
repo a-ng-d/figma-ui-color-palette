@@ -194,8 +194,10 @@ class App extends React.Component<Record<string, never>, States> {
             {
               pluginMessage: {
                 type: 'SEND_MESSAGE',
-                message: locals[this.state['lang']].user.welcomeMessage
-                  .replace('$[]', session?.user.user_metadata.full_name),
+                message: locals[this.state['lang']].user.welcomeMessage.replace(
+                  '$[]',
+                  session?.user.user_metadata.full_name
+                ),
               },
             },
             '*'
@@ -241,7 +243,7 @@ class App extends React.Component<Record<string, never>, States> {
             },
             '*'
           )
-        }
+        },
       }
       console.log(event, session)
       return actions[event]?.()
@@ -702,7 +704,7 @@ class App extends React.Component<Record<string, never>, States> {
             },
             publicationStatus: {
               isPublished: false,
-              isShared: false
+              isShared: false,
             },
             onGoingStep: 'selection empty',
           })
@@ -745,7 +747,7 @@ class App extends React.Component<Record<string, never>, States> {
               },
               publicationStatus: {
                 isPublished: false,
-                isShared: false
+                isShared: false,
               },
             })
             palette.name = ''

@@ -70,14 +70,8 @@ const loadUI = async () => {
           ? (windowSize.h = 300)
           : (windowSize.h = windowSize.h += msg.movement.y)
 
-        await figma.clientStorage.setAsync(
-          'plugin_window_width',
-          windowSize.w
-        )
-        await figma.clientStorage.setAsync(
-          'plugin_window_height',
-          windowSize.h
-        )
+        await figma.clientStorage.setAsync('plugin_window_width', windowSize.w)
+        await figma.clientStorage.setAsync('plugin_window_height', windowSize.h)
 
         figma.ui.resize(windowSize.w, windowSize.h)
       },
@@ -89,10 +83,7 @@ const loadUI = async () => {
       UPDATE_THEMES: () => updateThemes(msg),
       SYNC_LOCAL_STYLES: async () => {
         createLocalStyles(palette)
-          .then(async (message) => [
-            message,
-            await updateLocalStyles(palette),
-          ])
+          .then(async (message) => [message, await updateLocalStyles(palette)])
           .then((messages) => figma.notify(messages.join('﹒')))
           .catch((error) => {
             console.log(error)
@@ -146,9 +137,8 @@ const loadUI = async () => {
         )
       },
       SET_DATA: () => {
-        msg.items.forEach(
-          (item: { key: string; value: string }) =>
-            palette.setPluginData(item.key, item.value)
+        msg.items.forEach((item: { key: string; value: string }) =>
+          palette.setPluginData(item.key, item.value)
         )
       },
       GET_PALETTES: async () => await getPalettesOnCurrentPage(),

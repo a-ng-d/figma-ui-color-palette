@@ -262,9 +262,7 @@ export default class PriorityContainer extends React.Component<Props> {
               className="dialog__cover"
               src={pp}
             />
-            <p className={`dialog__text type ${texts.type}`}>
-              Lets publish
-            </p>
+            <p className={`dialog__text type ${texts.type}`}>Lets publish</p>
           </Dialog>
         ) : (
           <Dialog
@@ -282,12 +280,11 @@ export default class PriorityContainer extends React.Component<Props> {
               src={pp}
             />
             <p className={`dialog__text type ${texts.type}`}>
-              Publish your palette to reuse in others Figma document and share it
-              with the community
+              Publish your palette to reuse in others Figma document and share
+              it with the community
             </p>
           </Dialog>
         )}
-        
       </Feature>
     )
   }
