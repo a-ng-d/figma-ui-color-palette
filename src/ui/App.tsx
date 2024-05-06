@@ -788,6 +788,14 @@ class App extends React.Component<Record<string, never>, States> {
             },
             '*'
           )
+          parent.postMessage(
+            {
+              pluginMessage: {
+                type: 'UPDATE_SCREENSHOT',
+              },
+            },
+            '*'
+          )
           this.setState({
             service:
               e.data.pluginMessage.data.editorType != 'dev'
