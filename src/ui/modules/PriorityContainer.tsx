@@ -3,6 +3,7 @@ import type {
   Language,
   PlanStatus,
   PriorityContext,
+  ThemeConfiguration,
   TrialStatus,
   UserSession,
 } from '../../utils/types'
@@ -22,7 +23,7 @@ import publishPalette from '../../bridges/publication/publishPalette'
 
 interface Props {
   context: PriorityContext
-  data: any
+  rawData: any
   planStatus: PlanStatus
   trialStatus: TrialStatus
   userSession: UserSession
@@ -36,6 +37,12 @@ export default class PriorityContainer extends React.Component<Props> {
   constructor(props: Props) {
     super(props)
     this.counter = 0
+  }
+
+  // Direct actions
+  getImageSrc = () => {
+    const blob = new Blob([this.props.rawData.screenshot], { type: 'image/png' })
+    return URL.createObjectURL(blob)
   }
 
   uploadPaletteScreenshot = () => {
@@ -269,44 +276,55 @@ export default class PriorityContainer extends React.Component<Props> {
           features.find((feature) => feature.name === 'PUBLICATION')?.isActive
         }
       >
-        {this.props.userSession.connectionStatus === 'CONNECTED' ? (
-          <Dialog
-            title="Publish your palette"
-            actions={{
-              primary: {
-                label: 'Publish',
-                action: async () => await publishPalette(this.props.data),
-              },
-            }}
-            onClose={this.props.onClose}
-          >
-            <img
-              className="dialog__cover"
-              src={pp}
-            />
-            <p className={`dialog__text type ${texts.type}`}>Lets publish</p>
-          </Dialog>
-        ) : (
-          <Dialog
-            title="Publish your palette"
-            actions={{
-              primary: {
-                label: 'Sign in',
-                action: async () => await signIn(),
-              },
-            }}
-            onClose={this.props.onClose}
-          >
-            <img
-              className="dialog__cover"
-              src={pp}
-            />
-            <p className={`dialog__text type ${texts.type}`}>
+        <Dialog
+          title="Publish your palette"
+          actions={{
+            primary: {
+              label: (() =>
+                this.props.userSession.connectionStatus === 'CONNECTED'
+                  ? 'Publish…'
+                  : 'Sign in to publish'
+              )(),
+              action: async () =>
+                this.props.userSession.connectionStatus === 'CONNECTED'
+                ? await publishPalette(this.props.rawData)
+                : await signIn(),
+            },
+          }}
+          onClose={this.props.onClose}
+        >
+          <img
+            className="dialog__cover"
+            src={this.getImageSrc()}
+          />
+          <div className={`dialog__text`}>
+            <p className={`type ${texts.type}`}>
               Publish your palette to reuse in others Figma document and share
               it with the community
             </p>
-          </Dialog>
-        )}
+            <div className={`${texts.type} type--large`}>
+              {this.props.rawData.name === ''
+                ? locals[this.props.lang].name
+                : this.props.rawData.name}
+            </div>
+            <div className={`${texts.type} type`}>{this.props.rawData.preset.name}</div>
+            <div
+              className={`${texts.type} ${texts['type--secondary']} type`}
+            >{`${this.props.rawData.colors.length} ${
+              this.props.rawData.colors.length > 1
+                ? locals[this.props.lang].actions.sourceColorsNumber.several
+                : locals[this.props.lang].actions.sourceColorsNumber.single
+            }, ${
+              this.props.rawData.themes.filter((theme: ThemeConfiguration) => theme.type === 'custom theme')
+                .length
+            } ${
+              this.props.rawData.themes.filter((theme: ThemeConfiguration) => theme.type === 'custom theme')
+                .length > 1
+                ? locals[this.props.lang].actions.colorThemesNumber.several
+                : locals[this.props.lang].actions.colorThemesNumber.single
+            }`}</div>
+          </div>
+        </Dialog>
       </Feature>
     )
   }
