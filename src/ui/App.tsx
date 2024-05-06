@@ -705,6 +705,10 @@ class App extends React.Component<Record<string, never>, States> {
               isPublished: false,
               isShared: false,
             },
+            priorityContainerContext: (() => {
+              if (this.state['priorityContainerContext'] === 'PUBLICATION') return 'EMPTY'
+              else return this.state['priorityContainerContext']
+            })(),
             onGoingStep: 'selection empty',
           })
           palette.name = ''
@@ -748,6 +752,10 @@ class App extends React.Component<Record<string, never>, States> {
                 isPublished: false,
                 isShared: false,
               },
+              priorityContainerContext: (() => {
+                if (this.state['priorityContainerContext'] === 'PUBLICATION') return 'EMPTY'
+                else return this.state['priorityContainerContext']
+              })()
             })
             palette.name = ''
             palette.description = ''
