@@ -959,6 +959,11 @@ class App extends React.Component<Record<string, never>, States> {
             palettesList: data,
           })
 
+        const updateScreenshot = (bytes: Uint8Array) =>
+          this.setState({
+            screenshot: bytes,
+          })
+
         const getProPlan = () =>
           this.setState({
             planStatus: e.data.pluginMessage.data,
@@ -989,6 +994,7 @@ class App extends React.Component<Record<string, never>, States> {
           EXPORT_PALETTE_XML: () => exportPaletteToXml(),
           EXPORT_PALETTE_CSV: () => exportPaletteToCsv(),
           EXPOSE_PALETTES: () => exposePalettes(e.data.pluginMessage?.data),
+          UPDATE_SCREENSHOT: () => updateScreenshot(e.data.pluginMessage?.data),
           GET_PRO_PLAN: () => getProPlan(),
           ENABLE_TRIAL: () => enableTrial(),
           DEFAULT: () => null,
@@ -1085,15 +1091,21 @@ class App extends React.Component<Record<string, never>, States> {
               lang={this.state['lang']}
             />
           </Feature>
-          <PriorityContainer
-            context={this.state['priorityContainerContext']}
-            data={this.state}
-            planStatus={this.state['planStatus']}
-            trialStatus={this.state['trialStatus']}
-            userSession={this.state['userSession']}
-            lang={this.state['lang']}
-            onClose={() => this.setState({ priorityContainerContext: 'EMPTY' })}
-          />
+          <Feature
+            isActive={
+              this.state['priorityContainerContext'] != 'EMPTY'
+            }
+          >
+            <PriorityContainer
+              context={this.state['priorityContainerContext']}
+              rawData={this.state}
+              planStatus={this.state['planStatus']}
+              trialStatus={this.state['trialStatus']}
+              userSession={this.state['userSession']}
+              lang={this.state['lang']}
+              onClose={() => this.setState({ priorityContainerContext: 'EMPTY' })}
+            />
+          </Feature>
           <Feature
             isActive={
               features.find((feature) => feature.name === 'SHORTCUTS')?.isActive

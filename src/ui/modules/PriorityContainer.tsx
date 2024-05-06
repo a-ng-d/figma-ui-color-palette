@@ -31,6 +31,27 @@ interface Props {
 }
 
 export default class PriorityContainer extends React.Component<Props> {
+  counter: number
+
+  constructor(props: Props) {
+    super(props)
+    this.counter = 0
+  }
+
+  uploadPaletteScreenshot = () => {
+    this.counter == 0
+      ? parent.postMessage(
+          {
+            pluginMessage: {
+              type: 'UPDATE_SCREENSHOT'
+            },
+          },
+          '*'
+        )
+      : null
+    this.counter = 1
+  }
+
   // Templates
   TryPro = () => {
     return (
@@ -241,6 +262,7 @@ export default class PriorityContainer extends React.Component<Props> {
   }
 
   Publication = () => {
+    this.uploadPaletteScreenshot()
     return (
       <Feature
         isActive={

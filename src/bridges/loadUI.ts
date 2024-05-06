@@ -141,6 +141,16 @@ const loadUI = async () => {
           palette.setPluginData(item.key, item.value)
         )
       },
+      UPDATE_SCREENSHOT: async () => {
+        const bytes = await palette.exportAsync({
+          format: 'PNG',
+          constraint: { type: 'SCALE', value: 0.25 },
+        })
+        figma.ui.postMessage({
+          type: 'UPDATE_SCREENSHOT',
+          data: bytes,
+        })
+      },
       GET_PALETTES: async () => await getPalettesOnCurrentPage(),
       JUMP_TO_PALETTE: async () => {
         const scene: Array<SceneNode> = []
