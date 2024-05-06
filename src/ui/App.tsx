@@ -188,7 +188,6 @@ class App extends React.Component<Record<string, never>, States> {
               accessToken: session?.access_token,
               refreshToken: session?.refresh_token,
             },
-            priorityContainerContext: 'EMPTY',
           })
           parent.postMessage(
             {
