@@ -808,7 +808,6 @@ class App extends React.Component<Record<string, never>, States> {
             view: e.data.pluginMessage.data.view,
             textColorsTheme: e.data.pluginMessage.data.textColorsTheme,
             algorithmVersion: e.data.pluginMessage.data.algorithmVersion,
-            screenshot: e.data.pluginMessage.data.screenshot,
             dates: {
               createdAt: e.data.pluginMessage.data.createdAt,
               updatedAt: e.data.pluginMessage.data.updatedAt,
