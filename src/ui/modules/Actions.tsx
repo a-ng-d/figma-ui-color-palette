@@ -111,7 +111,7 @@ export default class Actions extends React.Component<Props> {
                 action: (e) => this.props.onSyncLocalVariables?.(e),
               },
               {
-                label: 'Publish the palette',
+                label: locals[this.props.lang].actions.publishPalette,
                 value: 'PALETTE_PUBLICATION',
                 feature: 'PUBLISH_PALETTE',
                 position: 0,

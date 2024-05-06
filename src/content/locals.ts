@@ -40,6 +40,13 @@ export const locals: { [key: string]: any } = {
       news: "What's new",
       about: 'About',
     },
+    publication: {
+      title: 'Publish your palette',
+      message: 'Publish your palette to reuse in others Figma document and share it with the community',
+      selectToShare: 'Share with community',
+      ctaWhenSignedIn: 'Publish…',
+      ctaWhenSignedOut: 'Sign in to publish',
+    },
     relaunch: {
       create: {
         label: 'Create a UI Color Palette',
@@ -274,6 +281,7 @@ export const locals: { [key: string]: any } = {
       sync: 'Sync',
       createLocalStyles: 'Sync with the local styles',
       createLocalVariables: 'Sync with the local variables',
+      publishPalette: 'Publish the palette',
       updateLocalStyles: 'Update the existing local styles',
       updateLocalVariables: 'Update the existing local variables',
       export: 'Export the UI Color Palette to',

@@ -9,6 +9,7 @@ import type {
 } from '../../utils/types'
 import Feature from '../components/Feature'
 import { Dialog } from '@a-ng-d/figmug.dialogs.dialog'
+import { Thumbnail } from '@a-ng-d/figmug.layouts.thumbnail'
 import Highlight from './Highlight'
 import About from './About'
 import cp from '../../content/images/choose_plan.webp'
@@ -31,12 +32,23 @@ interface Props {
   onClose: React.ChangeEventHandler & (() => void)
 }
 
-export default class PriorityContainer extends React.Component<Props> {
+interface States {
+  isPaletteShared: boolean
+  isPrimaryActionLoading: boolean
+  isSecondaryLoading: boolean
+}
+
+export default class PriorityContainer extends React.Component<Props, States> {
   counter: number
 
   constructor(props: Props) {
     super(props)
     this.counter = 0
+    this.state = {
+      isPaletteShared: this.props.rawData.publicationStatus.isShared,
+      isPrimaryActionLoading: false,
+      isSecondaryLoading: false,
+    }
   }
 
   // Direct actions
@@ -277,52 +289,69 @@ export default class PriorityContainer extends React.Component<Props> {
         }
       >
         <Dialog
-          title="Publish your palette"
+          title={locals[this.props.lang].publication.title}
           actions={{
             primary: {
               label: (() =>
                 this.props.userSession.connectionStatus === 'CONNECTED'
-                  ? 'Publish…'
-                  : 'Sign in to publish'
+                  ? locals[this.props.lang].publication.ctaWhenSignedIn
+                  : locals[this.props.lang].publication.ctaWhenSignedOut
               )(),
+              status: this.state['isPrimaryActionLoading'] ? 'LOADING' : 'DEFAULT',
               action: async () =>
                 this.props.userSession.connectionStatus === 'CONNECTED'
                 ? await publishPalette(this.props.rawData)
-                : await signIn(),
+                : (() => {
+                  this.setState({ isPrimaryActionLoading: true })
+                  signIn()
+                    .finally(() => {
+                      this.setState({ isPrimaryActionLoading: false });
+                    });
+              })()
             },
+          }}
+          select={{
+            label: locals[this.props.lang].publication.selectToShare,
+            status: false,
+            action: () => this.setState({
+              isPaletteShared: !this.state['isPaletteShared']
+            })
           }}
           onClose={this.props.onClose}
         >
-          <img
-            className="dialog__cover"
-            src={this.getImageSrc()}
-          />
+          <div className="dialog__cover dialog__cover--padding">
+            <Thumbnail
+              src={this.getImageSrc()}
+            />
+          </div>
           <div className={`dialog__text`}>
-            <p className={`type ${texts.type}`}>
-              Publish your palette to reuse in others Figma document and share
-              it with the community
-            </p>
-            <div className={`${texts.type} type--large`}>
-              {this.props.rawData.name === ''
-                ? locals[this.props.lang].name
-                : this.props.rawData.name}
+            <div>
+              <div className={`${texts.type} type--large`}>
+                {this.props.rawData.name === ''
+                  ? locals[this.props.lang].name
+                  : this.props.rawData.name}
+              </div>
+              <div className={`${texts.type} type`}>{this.props.rawData.preset.name}</div>
+              <div
+                className={`${texts.type} ${texts['type--secondary']} type`}
+              >{`${this.props.rawData.colors.length} ${
+                this.props.rawData.colors.length > 1
+                  ? locals[this.props.lang].actions.sourceColorsNumber.several
+                  : locals[this.props.lang].actions.sourceColorsNumber.single
+              }, ${
+                this.props.rawData.themes.filter((theme: ThemeConfiguration) => theme.type === 'custom theme')
+                  .length
+              } ${
+                this.props.rawData.themes.filter((theme: ThemeConfiguration) => theme.type === 'custom theme')
+                  .length > 1
+                  ? locals[this.props.lang].actions.colorThemesNumber.several
+                  : locals[this.props.lang].actions.colorThemesNumber.single
+              }`}</div>
             </div>
-            <div className={`${texts.type} type`}>{this.props.rawData.preset.name}</div>
-            <div
-              className={`${texts.type} ${texts['type--secondary']} type`}
-            >{`${this.props.rawData.colors.length} ${
-              this.props.rawData.colors.length > 1
-                ? locals[this.props.lang].actions.sourceColorsNumber.several
-                : locals[this.props.lang].actions.sourceColorsNumber.single
-            }, ${
-              this.props.rawData.themes.filter((theme: ThemeConfiguration) => theme.type === 'custom theme')
-                .length
-            } ${
-              this.props.rawData.themes.filter((theme: ThemeConfiguration) => theme.type === 'custom theme')
-                .length > 1
-                ? locals[this.props.lang].actions.colorThemesNumber.several
-                : locals[this.props.lang].actions.colorThemesNumber.single
-            }`}</div>
+            
+            <div className={`type ${texts.type}`}>
+              {locals[this.props.lang].publication.message}
+            </div>
           </div>
         </Dialog>
       </Feature>
