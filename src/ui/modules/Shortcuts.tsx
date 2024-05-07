@@ -103,7 +103,7 @@ export default class Shortcuts extends React.Component<Props, States> {
                 {this.props.userSession.connectionStatus === 'CONNECTED' ? (
                   <Menu
                     id="user-menu"
-                    icon="info"
+                    icon="user"
                     options={[
                       {
                         label: locals[
@@ -151,7 +151,7 @@ export default class Shortcuts extends React.Component<Props, States> {
                 ) : (
                   <Menu
                     id="user-menu"
-                    icon="info"
+                    icon="user"
                     options={[
                       {
                         label: locals[this.props.lang].user.signIn,
