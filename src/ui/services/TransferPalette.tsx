@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import JSZip from 'jszip'
 import FileSaver from 'file-saver'
 import type {
@@ -10,7 +10,7 @@ import type {
   ScaleConfiguration,
   Language,
   EditorType,
-  visionSimulationModeConfiguration,
+  VisionSimulationModeConfiguration,
   PlanStatus,
   ExtractOfPaletteConfiguration,
   Service,
@@ -20,14 +20,14 @@ import { locals } from '../../content/locals'
 import { doSnakeCase } from '@a-ng-d/figmug.modules.do-snake-case'
 import PalettesList from '../modules/PalettesList'
 
-interface Props {
+interface TransferPaletteProps {
   name: string
   description: string
   preset: PresetConfiguration
   scale: ScaleConfiguration
   colors: Array<ColorConfiguration>
   colorSpace: string
-  visionSimulationMode: visionSimulationModeConfiguration
+  visionSimulationMode: VisionSimulationModeConfiguration
   themes: Array<ThemeConfiguration>
   view: string
   textColorsTheme: TextColorsThemeHexModel
@@ -40,7 +40,7 @@ interface Props {
   lang: Language
 }
 
-export default class TransferPalette extends React.Component<Props> {
+export default class TransferPalette extends React.Component<TransferPaletteProps> {
   // Direct actions
   onExport = () => {
     const blob = new Blob([this.props.export.data], {

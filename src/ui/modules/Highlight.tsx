@@ -1,21 +1,21 @@
-import * as React from 'react'
+import React from 'react'
 import type { Language, ReleaseNote } from '../../utils/types'
 import { Dialog } from '@a-ng-d/figmug.dialogs.dialog'
 import releaseNotes from '../../content/releaseNotes'
 import { locals } from '../../content/locals'
 import { texts } from '@a-ng-d/figmug.stylesheets.texts'
 
-interface Props {
+interface HighlightProps {
   lang: Language
   onCloseHighlight: React.ReactEventHandler
 }
 
-interface States {
+interface HighlightStates {
   position: number
 }
 
-export default class Highlight extends React.Component<Props, States> {
-  constructor(props: Props) {
+export default class Highlight extends React.Component<HighlightProps, HighlightStates> {
+  constructor(props: HighlightProps) {
     super(props)
     this.state = {
       position: 0,

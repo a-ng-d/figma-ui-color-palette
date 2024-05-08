@@ -1,5 +1,5 @@
 import type {
-  visionSimulationModeConfiguration,
+  VisionSimulationModeConfiguration,
   ColorSpaceConfiguration,
   TextColorsThemeHexModel,
   ViewConfiguration,
@@ -15,7 +15,7 @@ export default class Sample {
   scale: string | null
   rgb: [number, number, number]
   colorSpace: ColorSpaceConfiguration
-  visionSimulationMode: visionSimulationModeConfiguration
+  visionSimulationMode: VisionSimulationModeConfiguration
   view: ViewConfiguration
   textColorsTheme: TextColorsThemeHexModel
   status: {
@@ -31,7 +31,7 @@ export default class Sample {
     scale: string | null,
     rgb: [number, number, number],
     colorSpace: ColorSpaceConfiguration,
-    visionSimulationMode: visionSimulationModeConfiguration,
+    visionSimulationMode: VisionSimulationModeConfiguration,
     view: ViewConfiguration,
     textColorsTheme: TextColorsThemeHexModel,
     status: { isClosestToRef: boolean } = { isClosestToRef: false }

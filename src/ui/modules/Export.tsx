@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import type {
   ActionsList,
   ColorSpaceConfiguration,
@@ -15,7 +15,7 @@ import features from '../../utils/config'
 import isBlocked from '../../utils/isBlocked'
 import { locals } from '../../content/locals'
 
-interface Props {
+interface ExportProps {
   exportPreview: string
   planStatus: PlanStatus
   exportType: string
@@ -23,7 +23,7 @@ interface Props {
   onExportPalette: () => void
 }
 
-interface States {
+interface ExportStates {
   format:
     | 'EXPORT_TOKENS_GLOBAL'
     | 'EXPORT_TOKENS_AMZN_STYLE_DICTIONARY'
@@ -41,7 +41,7 @@ interface States {
   }
 }
 
-export default class Export extends React.Component<Props, States> {
+export default class Export extends React.Component<ExportProps, ExportStates> {
   counter: number
   codeRef: React.MutableRefObject<any>
 
@@ -49,7 +49,7 @@ export default class Export extends React.Component<Props, States> {
     exportPreview: '',
   }
 
-  constructor(props: Props) {
+  constructor(props: ExportProps) {
     super(props)
     this.counter = 0
     this.state = {

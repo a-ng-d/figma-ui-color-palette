@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import type {
   ActionsList,
   DispatchProcess,
@@ -28,7 +28,7 @@ import doLightnessScale from '../../utils/doLightnessScale'
 import { locals } from '../../content/locals'
 import Dispatcher from './Dispatcher'
 
-interface Props {
+interface ScaleProps {
   sourceColors?: Array<SourceColorConfiguration>
   hasPreset: boolean
   preset: PresetConfiguration
@@ -52,19 +52,19 @@ interface Props {
   onPublishPalette?: () => void
 }
 
-interface States {
+interface ScaleStates {
   distributionEasing: Easing
   isTipsOpen: boolean
 }
 
-export default class Scale extends React.Component<Props, States> {
+export default class Scale extends React.Component<ScaleProps, ScaleStates> {
   dispatch: { [key: string]: DispatchProcess }
 
   static defaultProps = {
     namingConvention: 'ONES',
   }
 
-  constructor(props: Props) {
+  constructor(props: ScaleProps) {
     super(props)
     this.dispatch = {
       scale: new Dispatcher(

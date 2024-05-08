@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import type {
   EditorType,
   Language,
@@ -17,7 +17,7 @@ import { locals } from '../../content/locals'
 import isBlocked from '../../utils/isBlocked'
 import { signIn, signOut } from '../../bridges/publication/authentication'
 
-interface Props {
+interface ShortcutsProps {
   editorType: EditorType
   planStatus: PlanStatus
   trialStatus: TrialStatus
@@ -31,12 +31,12 @@ interface Props {
   onGetProPlan: () => void
 }
 
-interface States {
+interface ShortcutsStates {
   canBeResized: boolean
 }
 
-export default class Shortcuts extends React.Component<Props, States> {
-  constructor(props: Props) {
+export default class Shortcuts extends React.Component<ShortcutsProps, ShortcutsStates> {
+  constructor(props: ShortcutsProps) {
     super(props)
     this.state = {
       canBeResized: false,

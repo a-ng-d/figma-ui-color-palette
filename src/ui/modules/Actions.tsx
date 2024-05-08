@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import type {
   Language,
   PlanStatus,
@@ -12,7 +12,7 @@ import features from '../../utils/config'
 import isBlocked from '../../utils/isBlocked'
 import { locals } from '../../content/locals'
 
-interface Props {
+interface ActionsProps {
   context: string
   sourceColors: Array<SourceColorConfiguration> | []
   exportType?: string
@@ -25,7 +25,7 @@ interface Props {
   onExportPalette?: React.MouseEventHandler & React.KeyboardEventHandler
 }
 
-export default class Actions extends React.Component<Props> {
+export default class Actions extends React.Component<ActionsProps> {
   static defaultProps = {
     sourceColors: [],
   }

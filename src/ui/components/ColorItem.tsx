@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import chroma from 'chroma-js'
 import type { HexModel, Language } from '../../utils/types'
 import Feature from './Feature'
@@ -10,7 +10,7 @@ import { doMap } from '@a-ng-d/figmug.modules.do-map'
 import features from '../../utils/config'
 import { locals } from '../../content/locals'
 
-interface Props {
+interface ColorItemProps {
   name: string
   hex: HexModel
   oklch: boolean
@@ -45,8 +45,8 @@ interface States {
   hasMoreOptions: boolean
 }
 
-export default class ColorItem extends React.Component<Props, States> {
-  constructor(props: Props) {
+export default class ColorItem extends React.Component<ColorItemProps, States> {
+  constructor(props: ColorItemProps) {
     super(props)
     this.state = {
       isDragged: false,

@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import type {
   ActionsList,
   DispatchProcess,
@@ -24,7 +24,7 @@ import Dispatcher from './Dispatcher'
 import { locals } from '../../content/locals'
 import { uid } from 'uid'
 
-interface Props {
+interface ThemesProps {
   preset: PresetConfiguration
   scale: ScaleConfiguration
   themes: Array<ThemeConfiguration>
@@ -37,7 +37,7 @@ interface Props {
   onPublishPalette: () => void
 }
 
-interface States {
+interface ThemesStates {
   selectedElement: SelectedColor
   hoveredElement: HoveredColor
 }
@@ -48,11 +48,11 @@ const themesMessage: ThemesMessage = {
   isEditedInRealTime: false,
 }
 
-export default class Themes extends React.Component<Props, States> {
+export default class Themes extends React.Component<ThemesProps, ThemesStates> {
   dispatch: { [key: string]: DispatchProcess }
   listRef: React.MutableRefObject<any>
 
-  constructor(props: Props) {
+  constructor(props: ThemesProps) {
     super(props)
     this.dispatch = {
       themes: new Dispatcher(

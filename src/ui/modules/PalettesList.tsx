@@ -1,15 +1,15 @@
-import * as React from 'react'
+import React from 'react'
 import type { ExtractOfPaletteConfiguration, Language } from '../../utils/types'
 import { Message } from '@a-ng-d/figmug.dialogs.message'
 import { texts } from '@a-ng-d/figmug.stylesheets.texts'
 import { locals } from '../../content/locals'
 
-interface Props {
+interface PalettesListProps {
   paletteLists: Array<ExtractOfPaletteConfiguration>
   lang: Language
 }
 
-export default class PalettesList extends React.Component<Props> {
+export default class PalettesList extends React.Component<PalettesListProps> {
   componentDidMount = () =>
     parent.postMessage({ pluginMessage: { type: 'GET_PALETTES' } }, '*')
 

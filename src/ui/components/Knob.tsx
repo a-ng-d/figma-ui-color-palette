@@ -1,9 +1,9 @@
-import * as React from 'react'
+import React from 'react'
 import type { ActionsList } from '../../utils/types'
 import { Input } from '@a-ng-d/figmug.inputs.input'
 import { texts } from '@a-ng-d/figmug.stylesheets.texts'
 
-interface Props {
+interface KnobProps {
   id: string
   shortId: string
   value: string | number
@@ -27,8 +27,8 @@ interface States {
   stopInputValue: string | number
 }
 
-export default class Knob extends React.Component<Props, States> {
-  constructor(props: Props) {
+export default class Knob extends React.Component<KnobProps, States> {
+  constructor(props: KnobProps) {
     super(props)
     this.state = {
       isStopInputOpen: false,
@@ -53,7 +53,7 @@ export default class Knob extends React.Component<Props, States> {
           })
       },
       Escape: () => {
-        ;(e.target as HTMLElement).blur()
+        (e.target as HTMLElement).blur()
         this.setState({ isStopInputOpen: false })
       },
       Backspace: () => {

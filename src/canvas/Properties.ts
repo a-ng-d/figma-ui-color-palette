@@ -1,6 +1,6 @@
 import type {
   ActionsList,
-  visionSimulationModeConfiguration,
+  VisionSimulationModeConfiguration,
   ColorSpaceConfiguration,
   HexModel,
   TextColorsThemeHexModel,
@@ -16,7 +16,7 @@ export default class Properties {
   name: string
   rgb: [number, number, number]
   colorSpace: ColorSpaceConfiguration
-  visionSimulationMode: visionSimulationModeConfiguration
+  visionSimulationMode: VisionSimulationModeConfiguration
   textColorsTheme: TextColorsThemeHexModel
   hex: HexModel
   lch: Array<number>
@@ -42,7 +42,7 @@ export default class Properties {
     name: string,
     rgb: [number, number, number],
     colorSpace: ColorSpaceConfiguration,
-    visionSimulationMode: visionSimulationModeConfiguration,
+    visionSimulationMode: VisionSimulationModeConfiguration,
     textColorsTheme: TextColorsThemeHexModel
   ) {
     this.name = name
@@ -73,7 +73,7 @@ export default class Properties {
 
   simulateColorBlind = (
     sourceColor: string,
-    visionSimulationMode: visionSimulationModeConfiguration
+    visionSimulationMode: VisionSimulationModeConfiguration
   ): string => {
     const actions: ActionsList = {
       NONE: () => sourceColor,

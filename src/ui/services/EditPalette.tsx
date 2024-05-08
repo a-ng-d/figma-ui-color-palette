@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import JSZip from 'jszip'
 import FileSaver from 'file-saver'
 import type {
@@ -11,7 +11,7 @@ import type {
   ThemesMessage,
   Language,
   EditorType,
-  visionSimulationModeConfiguration,
+  VisionSimulationModeConfiguration,
   PlanStatus,
 } from '../../utils/types'
 import type { DropdownOption } from '@a-ng-d/figmug.modules.types'
@@ -30,14 +30,14 @@ import { locals } from '../../content/locals'
 import isBlocked from '../../utils/isBlocked'
 import { doSnakeCase } from '@a-ng-d/figmug.modules.do-snake-case'
 
-interface Props {
+interface EditPaletteProps {
   name: string
   description: string
   preset: PresetConfiguration
   scale: ScaleConfiguration
   colors: Array<ColorConfiguration>
   colorSpace: string
-  visionSimulationMode: visionSimulationModeConfiguration
+  visionSimulationMode: VisionSimulationModeConfiguration
   themes: Array<ThemeConfiguration>
   view: string
   textColorsTheme: TextColorsThemeHexModel
@@ -54,7 +54,7 @@ interface Props {
   onPublishPalette: () => void
 }
 
-interface States {
+interface EditPaletteStates {
   context: string | undefined
   selectedElement: {
     id: string
@@ -68,10 +68,10 @@ const themesMessage: ThemesMessage = {
   isEditedInRealTime: false,
 }
 
-export default class EditPalette extends React.Component<Props, States> {
+export default class EditPalette extends React.Component<EditPaletteProps, EditPaletteStates> {
   themesRef: React.MutableRefObject<any>
 
-  constructor(props: Props) {
+  constructor(props: EditPaletteProps) {
     super(props)
     this.state = {
       context:

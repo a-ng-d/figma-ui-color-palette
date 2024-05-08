@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import chroma from 'chroma-js'
 import type {
   HoveredColor,
@@ -21,7 +21,7 @@ import Actions from './Actions'
 import { locals } from '../../content/locals'
 import { uid } from 'uid'
 
-interface Props {
+interface ColorsProps {
   colors: Array<ColorConfiguration>
   editorType: EditorType
   planStatus: PlanStatus
@@ -32,7 +32,7 @@ interface Props {
   onPublishPalette: () => void
 }
 
-interface States {
+interface ColorsStates {
   selectedElement: SelectedColor
   hoveredElement: HoveredColor
 }
@@ -43,11 +43,11 @@ const colorsMessage: ColorsMessage = {
   isEditedInRealTime: false,
 }
 
-export default class Colors extends React.Component<Props, States> {
+export default class Colors extends React.Component<ColorsProps, ColorsStates> {
   dispatch: { [key: string]: DispatchProcess }
   listRef: React.MutableRefObject<any>
 
-  constructor(props: Props) {
+  constructor(props: ColorsProps) {
     super(props)
     this.dispatch = {
       colors: new Dispatcher(

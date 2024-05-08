@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import type {
   Language,
   PlanStatus,
@@ -22,7 +22,7 @@ import { texts } from '@a-ng-d/figmug.stylesheets.texts'
 import features from '../../utils/config'
 import package_json from '../../../package.json'
 
-interface Props {
+interface PriorityContainerProps {
   context: PriorityContext
   rawData: any
   planStatus: PlanStatus
@@ -32,16 +32,16 @@ interface Props {
   onClose: React.ChangeEventHandler & (() => void)
 }
 
-interface States {
+interface PriorityContainerStates {
   isPaletteShared: boolean
   isPrimaryActionLoading: boolean
   isSecondaryLoading: boolean
 }
 
-export default class PriorityContainer extends React.Component<Props, States> {
+export default class PriorityContainer extends React.Component<PriorityContainerProps, PriorityContainerStates> {
   counter: number
 
-  constructor(props: Props) {
+  constructor(props: PriorityContainerProps) {
     super(props)
     this.counter = 0
     this.state = {

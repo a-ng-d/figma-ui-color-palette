@@ -1,6 +1,6 @@
-import * as React from 'react'
+import React from 'react'
 import type {
-  visionSimulationModeConfiguration,
+  VisionSimulationModeConfiguration,
   Language,
   PresetConfiguration,
   SourceColorConfiguration,
@@ -19,14 +19,14 @@ import { locals } from '../../content/locals'
 import doLightnessScale from '../../utils/doLightnessScale'
 import Source from '../modules/Source'
 
-interface Props {
+interface CreatePaletteProps {
   sourceColors: Array<SourceColorConfiguration> | []
   name: string
   description: string
   preset: PresetConfiguration
   namingConvention: NamingConvention
   colorSpace: string
-  visionSimulationMode: visionSimulationModeConfiguration
+  visionSimulationMode: VisionSimulationModeConfiguration
   view: string
   textColorsTheme: TextColorsThemeHexModel
   planStatus: PlanStatus
@@ -42,12 +42,12 @@ interface Props {
   onChangeSettings: (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => void
 }
 
-interface States {
+interface CreatePaletteStates {
   context: string | undefined
 }
 
-export default class CreatePalette extends React.Component<Props, States> {
-  constructor(props: Props) {
+export default class CreatePalette extends React.Component<CreatePaletteProps, CreatePaletteStates> {
+  constructor(props: CreatePaletteProps) {
     super(props)
     this.state = {
       context:

@@ -7,7 +7,7 @@ import type {
   ViewConfiguration,
   AlgorithmVersionConfiguration,
   ScaleMessage,
-  visionSimulationModeConfiguration,
+  VisionSimulationModeConfiguration,
 } from '../../utils/types'
 import {
   previousSelection,
@@ -41,7 +41,7 @@ const updateScale = (msg: ScaleMessage) => {
       ) as ColorSpaceConfiguration,
       visionSimulationMode = palette.getPluginData(
         'visionSimulationMode'
-      ) as visionSimulationModeConfiguration,
+      ) as VisionSimulationModeConfiguration,
       themes = JSON.parse(
         palette.getPluginData('themes')
       ) as Array<ThemeConfiguration>,

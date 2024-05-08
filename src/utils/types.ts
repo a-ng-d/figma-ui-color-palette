@@ -85,7 +85,7 @@ export interface PaletteNode {
   scale: ScaleConfiguration
   colors: Array<ColorConfiguration>
   colorSpace: ColorSpaceConfiguration
-  visionSimulationMode: visionSimulationModeConfiguration
+  visionSimulationMode: VisionSimulationModeConfiguration
   themes: Array<ThemeConfiguration>
   view: ViewConfiguration
   textColorsTheme: TextColorsThemeHexModel
@@ -151,7 +151,7 @@ export interface PaletteConfiguration {
   min: number | undefined
   max: number | undefined
   colorSpace: ColorSpaceConfiguration
-  visionSimulationMode: visionSimulationModeConfiguration
+  visionSimulationMode: VisionSimulationModeConfiguration
   view: ViewConfiguration
   textColorsTheme: TextColorsThemeHexModel
 }
@@ -237,7 +237,7 @@ export type ColorSpaceConfiguration =
   | 'HEX'
   | 'P3'
 
-export type visionSimulationModeConfiguration =
+export type VisionSimulationModeConfiguration =
   | 'NONE'
   | 'PROTANOMALY'
   | 'PROTANOPIA'
@@ -340,7 +340,7 @@ export interface SettingsMessage {
     name: string
     description: string
     colorSpace: ColorSpaceConfiguration
-    visionSimulationMode: visionSimulationModeConfiguration
+    visionSimulationMode: VisionSimulationModeConfiguration
     textColorsTheme: TextColorsThemeHexModel
     algorithmVersion: AlgorithmVersionConfiguration
   }

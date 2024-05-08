@@ -5,7 +5,7 @@ import type {
   SourceColorConfiguration,
   TextColorsThemeHexModel,
   ViewConfiguration,
-  visionSimulationModeConfiguration,
+  VisionSimulationModeConfiguration,
 } from '../../utils/types'
 import Palette from '../../canvas/Palette'
 
@@ -18,7 +18,7 @@ interface Msg {
       preset: PresetConfiguration
       scale: ScaleConfiguration
       colorSpace: ColorSpaceConfiguration
-      visionSimulationMode: visionSimulationModeConfiguration
+      visionSimulationMode: VisionSimulationModeConfiguration
       view: ViewConfiguration
       textColorsTheme: TextColorsThemeHexModel
     }

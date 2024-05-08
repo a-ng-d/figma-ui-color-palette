@@ -1,9 +1,9 @@
-import * as React from 'react'
+import React from 'react'
 import { createRoot } from 'react-dom/client'
 import type {
   ActionsList,
   AlgorithmVersionConfiguration,
-  visionSimulationModeConfiguration,
+  VisionSimulationModeConfiguration,
   ColorConfiguration,
   ColorSpaceConfiguration,
   DispatchProcess,
@@ -46,7 +46,7 @@ import './stylesheets/app-components.css'
 import { locals } from '../content/locals'
 import { supabase } from '../bridges/publication/authentication'
 
-interface States {
+interface AppStates {
   service: Service
   sourceColors: Array<SourceColorConfiguration>
   id: string
@@ -57,7 +57,7 @@ interface States {
   scale: ScaleConfiguration
   colors: Array<ColorConfiguration>
   colorSpace: ColorSpaceConfiguration
-  visionSimulationMode: visionSimulationModeConfiguration
+  visionSimulationMode: VisionSimulationModeConfiguration
   themes: Array<ThemeConfiguration>
   view: ViewConfiguration
   textColorsTheme: TextColorsThemeHexModel
@@ -107,7 +107,7 @@ const defaultPreset: PresetConfiguration = {
   id: 'MATERIAL',
 }
 
-class App extends React.Component<Record<string, never>, States> {
+class App extends React.Component<Record<string, never>, AppStates> {
   dispatch: { [key: string]: DispatchProcess }
 
   constructor(props: Record<string, never>) {

@@ -1,6 +1,6 @@
 import type {
   AlgorithmVersionConfiguration,
-  visionSimulationModeConfiguration,
+  VisionSimulationModeConfiguration,
   ColorSpaceConfiguration,
   ColorsMessage,
   PresetConfiguration,
@@ -38,7 +38,7 @@ const updateColors = (msg: ColorsMessage) => {
       ) as ColorSpaceConfiguration,
       visionSimulationMode = palette.getPluginData(
         'visionSimulationMode'
-      ) as visionSimulationModeConfiguration,
+      ) as VisionSimulationModeConfiguration,
       themes = JSON.parse(
         palette.getPluginData('themes')
       ) as Array<ThemeConfiguration>,

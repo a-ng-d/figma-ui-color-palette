@@ -1,6 +1,6 @@
 import type {
   AlgorithmVersionConfiguration,
-  visionSimulationModeConfiguration,
+  VisionSimulationModeConfiguration,
   ColorConfiguration,
   ColorSpaceConfiguration,
 } from './types'
@@ -141,7 +141,7 @@ const setPaletteMigration = (palette: BaseNode) => {
         ) as ColorSpaceConfiguration,
         visionSimulationMode: palette.getPluginData(
           'visionSimulationMode'
-        ) as visionSimulationModeConfiguration,
+        ) as VisionSimulationModeConfiguration,
         themes: JSON.parse(palette.getPluginData('themes')),
         view: 'SHEET',
         textColorsTheme: JSON.parse(palette.getPluginData('textColorsTheme')),

@@ -1,6 +1,6 @@
-import * as React from 'react'
+import React from 'react'
 import type {
-  visionSimulationModeConfiguration,
+  VisionSimulationModeConfiguration,
   EditorType,
   Language,
   SourceColorConfiguration,
@@ -19,14 +19,14 @@ import features from '../../utils/config'
 import isBlocked from '../../utils/isBlocked'
 import { locals } from '../../content/locals'
 
-interface Props {
+interface SettingsProps {
   context: string
   sourceColors?: Array<SourceColorConfiguration>
   name: string
   description: string
   textColorsTheme?: TextColorsThemeHexModel
   colorSpace: string
-  visionSimulationMode: visionSimulationModeConfiguration
+  visionSimulationMode: VisionSimulationModeConfiguration
   view: string
   isNewAlgorithm?: boolean
   planStatus: PlanStatus
@@ -39,7 +39,7 @@ interface Props {
   onPublishPalette?: () => void
 }
 
-export default class Settings extends React.Component<Props> {
+export default class Settings extends React.Component<SettingsProps> {
   // Templates
   Name = () => {
     return (

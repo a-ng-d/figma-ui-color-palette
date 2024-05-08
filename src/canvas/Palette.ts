@@ -10,7 +10,7 @@ import type {
   ColorSpaceConfiguration,
   ViewConfiguration,
   AlgorithmVersionConfiguration,
-  visionSimulationModeConfiguration,
+  VisionSimulationModeConfiguration,
 } from '../utils/types'
 import Colors from './Colors'
 import { locals, lang } from '../content/locals'
@@ -24,7 +24,7 @@ export default class Palette {
   scale: ScaleConfiguration
   colors: Array<ColorConfiguration>
   colorSpace: ColorSpaceConfiguration
-  visionSimulationMode: visionSimulationModeConfiguration
+  visionSimulationMode: VisionSimulationModeConfiguration
   themes: Array<ThemeConfiguration>
   preset: PresetConfiguration
   view: ViewConfiguration
@@ -40,7 +40,7 @@ export default class Palette {
     preset: PresetConfiguration,
     scale: ScaleConfiguration,
     colorSpace: ColorSpaceConfiguration,
-    visionSimulationMode: visionSimulationModeConfiguration,
+    visionSimulationMode: VisionSimulationModeConfiguration,
     view: ViewConfiguration,
     textColorsTheme: TextColorsThemeHexModel,
     algorithmVersion: AlgorithmVersionConfiguration

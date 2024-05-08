@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import type { Language, PlanStatus, TrialStatus } from '../../utils/types'
 import Feature from '../components/Feature'
 import Icon from './Icon'
@@ -7,13 +7,13 @@ import features from '../../utils/config'
 import package_json from './../../../package.json'
 import { locals } from '../../content/locals'
 
-interface Props {
+interface AboutProps {
   planStatus: PlanStatus
   trialStatus: TrialStatus
   lang: Language
 }
 
-export default class About extends React.Component<Props> {
+export default class About extends React.Component<AboutProps> {
   render() {
     return (
       <div className="about controls__control">

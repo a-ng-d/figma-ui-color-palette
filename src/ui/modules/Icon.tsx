@@ -1,10 +1,10 @@
-import * as React from 'react'
+import React from 'react'
 
-interface Props {
+interface IconProps {
   size: number
 }
 
-export default class Icon extends React.Component<Props> {
+export default class Icon extends React.Component<IconProps> {
   render() {
     return (
       <svg

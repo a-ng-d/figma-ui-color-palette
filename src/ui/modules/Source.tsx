@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import chroma from 'chroma-js'
 import { uid } from 'uid'
 import type {
@@ -22,7 +22,7 @@ import features from '../../utils/config'
 import isBlocked from '../../utils/isBlocked'
 import { locals } from '../../content/locals'
 
-interface Props {
+interface SourceProps {
   sourceColors: Array<SourceColorConfiguration>
   planStatus: PlanStatus
   editorType?: EditorType
@@ -34,15 +34,15 @@ interface Props {
   onCreatePalette: () => void
 }
 
-interface States {
+interface SourceStates {
   coolorsUrl: ImportUrl
   realtimeColorsUrl: ImportUrl
   isCoolorsImportOpen: boolean
   isRealtimeColorsImportOpen: boolean
 }
 
-export default class Source extends React.Component<Props, States> {
-  constructor(props: Props) {
+export default class Source extends React.Component<SourceProps, SourceStates> {
+  constructor(props: SourceProps) {
     super(props)
     this.state = {
       coolorsUrl: {

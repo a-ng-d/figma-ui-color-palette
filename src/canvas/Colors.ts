@@ -7,7 +7,7 @@ import type {
   PaletteDataThemeItem,
   PaletteDataColorItem,
   PaletteData,
-  visionSimulationModeConfiguration,
+  VisionSimulationModeConfiguration,
   ActionsList,
 } from '../utils/types'
 import Title from './Title'
@@ -257,7 +257,7 @@ export default class Colors {
 
   simulateColorBlind = (
     sourceColor: [number, number, number],
-    visionSimulationMode: visionSimulationModeConfiguration
+    visionSimulationMode: VisionSimulationModeConfiguration
   ): [number, number, number] => {
     const actions: ActionsList = {
       NONE: () => sourceColor,

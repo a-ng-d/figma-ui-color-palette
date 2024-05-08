@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import type { ScaleConfiguration, Easing } from '../../utils/types'
 import Knob from './Knob'
 import { doMap } from '@a-ng-d/figmug.modules.do-map'
@@ -11,7 +11,7 @@ import doLightnessScale from '../../utils/doLightnessScale'
 
 const safeGap = 0.1
 
-interface Props {
+interface SliderProps {
   stops: Array<number>
   hasPreset: boolean
   presetName: string
@@ -23,7 +23,7 @@ interface Props {
   onChange: (state: string, feature?: string) => void
 }
 
-export default class Slider extends React.Component<Props> {
+export default class Slider extends React.Component<SliderProps> {
   // Handlers
   validHandler = (
     stopId: string,
