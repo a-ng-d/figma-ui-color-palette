@@ -13,8 +13,8 @@ import type {
   PlanStatus,
 } from '../../utils/types'
 import Dispatcher from './Dispatcher'
-import { Button } from '@a-ng-d/figmug.actions.button'
-import { Message } from '@a-ng-d/figmug.dialogs.message'
+import { Button } from '@a_ng_d/figmug-ui'
+import { Message } from '@a_ng_d/figmug-ui'
 import { SectionTitle } from '@a-ng-d/figmug.layouts.section-title'
 import ColorItem from '../components/ColorItem'
 import Actions from './Actions'

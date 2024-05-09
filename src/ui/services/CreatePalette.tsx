@@ -10,7 +10,7 @@ import type {
   NamingConvention,
 } from '../../utils/types'
 import { Bar } from '@a-ng-d/figmug.layouts.bar'
-import { Tabs } from '@a-ng-d/figmug.actions.tabs'
+import { Tabs } from '@a_ng_d/figmug-ui'
 import Scale from '../modules/Scale'
 import Settings from '../modules/Settings'
 import { palette } from '../../utils/palettePackage'

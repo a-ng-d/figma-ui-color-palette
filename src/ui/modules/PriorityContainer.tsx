@@ -18,7 +18,7 @@ import t from '../../content/images/trial.webp'
 import { signIn } from '../../bridges/publication/authentication'
 import publishPalette from '../../bridges/publication/publishPalette'
 import { locals } from '../../content/locals'
-import { texts } from '@a-ng-d/figmug.stylesheets.texts'
+import { texts } from '@a_ng_d/figmug-ui'
 import features from '../../utils/config'
 import package_json from '../../../package.json'
 

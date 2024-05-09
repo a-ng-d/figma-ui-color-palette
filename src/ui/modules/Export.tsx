@@ -6,8 +6,8 @@ import type {
   PlanStatus,
 } from '../../utils/types'
 import type { DropdownOption } from '@a-ng-d/figmug.modules.types'
-import { Input } from '@a-ng-d/figmug.inputs.input'
-import { Dropdown } from '@a-ng-d/figmug.inputs.dropdown'
+import { Input } from '@a_ng_d/figmug-ui'
+import { Dropdown } from '@a_ng_d/figmug-ui'
 import { SectionTitle } from '@a-ng-d/figmug.layouts.section-title'
 import { Menu } from '@a-ng-d/figmug.navigation.menu'
 import Actions from './Actions'
@@ -62,9 +62,8 @@ export default class Export extends React.Component<ExportProps, ExportStates> {
     this.codeRef = React.createRef()
   }
 
-  componentDidUpdate() {
+  componentDidUpdate = () =>
     this.codeRef.current.inputRef.current.scrollTop = 0
-  }
 
   // Handlers
   exportHandler = (e: React.SyntheticEvent) => {

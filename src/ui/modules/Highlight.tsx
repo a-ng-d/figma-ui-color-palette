@@ -3,7 +3,7 @@ import type { Language, ReleaseNote } from '../../utils/types'
 import { Dialog } from '@a-ng-d/figmug.dialogs.dialog'
 import releaseNotes from '../../content/releaseNotes'
 import { locals } from '../../content/locals'
-import { texts } from '@a-ng-d/figmug.stylesheets.texts'
+import { texts } from '@a_ng_d/figmug-ui'
 
 interface HighlightProps {
   lang: Language

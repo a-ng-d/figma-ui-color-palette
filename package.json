@@ -11,7 +11,7 @@
     "typecheck:watch": "npx tsc --noEmit --watch",
     "lint": "npx eslint ./src/** --ext .ts,.tsx --fix",
     "lint:watch": "esw ./src/** --ext .ts,.tsx --fix --watch",
-    "pretty": "npx prettier './src' --write"
+    "format": "npx prettier './src' --write"
   },
   "keywords": [
     "color",
@@ -61,17 +61,10 @@
     "webpack-cli": "^4.9.1"
   },
   "dependencies": {
-    "@a-ng-d/figmug.actions.button": "^0.0.33",
-    "@a-ng-d/figmug.actions.tabs": "^0.0.12",
+    "@a_ng_d/figmug-ui": "^0.18.0",
     "@a-ng-d/figmug.dialogs.dialog": "^0.0.28",
-    "@a-ng-d/figmug.dialogs.message": "^0.0.12",
-    "@a-ng-d/figmug.inputs.dropdown": "^0.0.36",
-    "@a-ng-d/figmug.inputs.input": "^0.0.47",
-    "@a-ng-d/figmug.inputs.select": "^0.0.19",
     "@a-ng-d/figmug.layouts.accordion": "^0.0.35",
     "@a-ng-d/figmug.layouts.bar": "^0.0.26",
-    "@a-ng-d/figmug.layouts.form-item": "^0.0.37",
-    "@a-ng-d/figmug.layouts.menu-list": "^0.0.22",
     "@a-ng-d/figmug.layouts.popin": "^0.0.24",
     "@a-ng-d/figmug.layouts.section-title": "^0.0.11",
     "@a-ng-d/figmug.layouts.thumbnail": "^0.0.1",
@@ -84,8 +77,6 @@
     "@a-ng-d/figmug.modules.do-snake-case": "^0.0.4",
     "@a-ng-d/figmug.navigation.menu": "^0.0.35",
     "@a-ng-d/figmug.stylesheets.icons": "^0.0.11",
-    "@a-ng-d/figmug.stylesheets.texts": "^0.0.2",
-    "@a-ng-d/figmug.tags.chip": "^0.0.8",
     "@supabase/supabase-js": "^2.42.0",
     "apca-w3": "^0.1.9",
     "chroma-js": "^2.4.2",

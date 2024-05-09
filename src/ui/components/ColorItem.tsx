@@ -2,10 +2,10 @@ import React from 'react'
 import chroma from 'chroma-js'
 import type { HexModel, Language } from '../../utils/types'
 import Feature from './Feature'
-import { Input } from '@a-ng-d/figmug.inputs.input'
-import { Button } from '@a-ng-d/figmug.actions.button'
-import { FormItem } from '@a-ng-d/figmug.layouts.form-item'
-import { texts } from '@a-ng-d/figmug.stylesheets.texts'
+import { Input } from '@a_ng_d/figmug-ui'
+import { Button } from '@a_ng_d/figmug-ui'
+import { FormItem } from '@a_ng_d/figmug-ui'
+import { texts } from '@a_ng_d/figmug-ui'
 import { doMap } from '@a-ng-d/figmug.modules.do-map'
 import features from '../../utils/config'
 import { locals } from '../../content/locals'
@@ -260,7 +260,7 @@ export default class ColorItem extends React.Component<ColorItemProps, States> {
                 >
                   <Input
                     type="NUMBER"
-                    icon={{ type: 'ICON', value: 'arrow-left-right' }}
+                    icon={{ type: 'PICTO', value: 'arrow-left-right' }}
                     value={this.props.shift.toString()}
                     min="-360"
                     max="360"

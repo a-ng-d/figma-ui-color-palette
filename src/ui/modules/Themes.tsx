@@ -13,8 +13,8 @@ import type {
   ThemeConfiguration,
   ThemesMessage,
 } from '../../utils/types'
-import { Button } from '@a-ng-d/figmug.actions.button'
-import { Message } from '@a-ng-d/figmug.dialogs.message'
+import { Button } from '@a_ng_d/figmug-ui'
+import { Message } from '@a_ng_d/figmug-ui'
 import { SectionTitle } from '@a-ng-d/figmug.layouts.section-title'
 import ThemeItem from '../components/ThemeItem'
 import Actions from './Actions'

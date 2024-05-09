@@ -5,9 +5,9 @@ import type {
   SourceColorConfiguration,
 } from '../../utils/types'
 import Feature from '../components/Feature'
-import { Button } from '@a-ng-d/figmug.actions.button'
+import { Button } from '@a_ng_d/figmug-ui'
 import { Menu } from '@a-ng-d/figmug.navigation.menu'
-import { texts } from '@a-ng-d/figmug.stylesheets.texts'
+import { texts } from '@a_ng_d/figmug-ui'
 import features from '../../utils/config'
 import isBlocked from '../../utils/isBlocked'
 import { locals } from '../../content/locals'

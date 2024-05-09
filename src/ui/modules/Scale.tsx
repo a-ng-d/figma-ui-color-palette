@@ -12,13 +12,13 @@ import type {
   NamingConvention,
 } from '../../utils/types'
 import Feature from '../components/Feature'
-import { Button } from '@a-ng-d/figmug.actions.button'
-import { Dropdown } from '@a-ng-d/figmug.inputs.dropdown'
-import { texts } from '@a-ng-d/figmug.stylesheets.texts'
+import { Button } from '@a_ng_d/figmug-ui'
+import { Dropdown } from '@a_ng_d/figmug-ui'
+import { texts } from '@a_ng_d/figmug-ui'
 import { SectionTitle } from '@a-ng-d/figmug.layouts.section-title'
 import { Dialog } from '@a-ng-d/figmug.dialogs.dialog'
 import { KeyboardShortcutItem } from '@a-ng-d/figmug.lists.keyboard-shortcut-item'
-import { FormItem } from '@a-ng-d/figmug.layouts.form-item'
+import { FormItem } from '@a_ng_d/figmug-ui'
 import Slider from '../components/Slider'
 import Actions from './Actions'
 import { palette, presets } from '../../utils/palettePackage'
@@ -171,7 +171,7 @@ export default class Scale extends React.Component<ScaleProps, ScaleStates> {
               children: [],
               action: (e) =>
                 this.setState({
-                  distributionEasing: e.target.dataset.value,
+                  distributionEasing: (e.target as HTMLElement).dataset.value as Easing,
                 }),
             },
             {
@@ -197,7 +197,7 @@ export default class Scale extends React.Component<ScaleProps, ScaleStates> {
               children: [],
               action: (e) =>
                 this.setState({
-                  distributionEasing: e.target.dataset.value,
+                  distributionEasing: (e.target as HTMLElement).dataset.value as Easing,
                 }),
             },
             {
@@ -212,7 +212,7 @@ export default class Scale extends React.Component<ScaleProps, ScaleStates> {
               children: [],
               action: (e) =>
                 this.setState({
-                  distributionEasing: e.target.dataset.value,
+                  distributionEasing: (e.target as HTMLElement).dataset.value as Easing,
                 }),
             },
             {
@@ -227,7 +227,7 @@ export default class Scale extends React.Component<ScaleProps, ScaleStates> {
               children: [],
               action: (e) =>
                 this.setState({
-                  distributionEasing: e.target.dataset.value,
+                  distributionEasing: (e.target as HTMLElement).dataset.value as Easing,
                 }),
             },
           ]}
