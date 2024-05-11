@@ -8,8 +8,8 @@ import type {
   UserSession,
 } from '../../utils/types'
 import Feature from '../components/Feature'
-import { Dialog } from '@a-ng-d/figmug.dialogs.dialog'
-import { Thumbnail } from '@a-ng-d/figmug.layouts.thumbnail'
+import { Dialog } from '@a_ng_d/figmug-ui'
+import { Thumbnail } from '@a_ng_d/figmug-ui'
 import Highlight from './Highlight'
 import About from './About'
 import cp from '../../content/images/choose_plan.webp'
@@ -101,13 +101,19 @@ export default class PriorityContainer extends React.Component<PriorityContainer
           }}
           onClose={this.props.onClose}
         >
-          <img
-            className="dialog__cover"
-            src={cp}
-          />
-          <p className={`dialog__text type ${texts.type}`}>
-            {locals[this.props.lang].proPlan.trial.message}
-          </p>
+          <div className="dialog__cover">
+            <img
+              src={cp}
+              style={{
+                width: '100%'
+              }}
+            />
+          </div>
+          <div className="dialog__text">
+            <p className={`type ${texts.type}`}>
+              {locals[this.props.lang].proPlan.trial.message}
+            </p>
+          </div>
         </Dialog>
       </Feature>
     )
@@ -130,13 +136,19 @@ export default class PriorityContainer extends React.Component<PriorityContainer
           }}
           onClose={this.props.onClose}
         >
-          <img
-            className="dialog__cover"
-            src={t}
-          />
-          <p className={`dialog__text type ${texts.type}`}>
-            {locals[this.props.lang].proPlan.welcome.trial}
-          </p>
+          <div className="dialog__cover">
+            <img
+              src={t}
+              style={{
+                width: '100%'
+              }}
+            />
+          </div>
+          <div className="dialog__text">
+            <p className={`type ${texts.type}`}>
+              {locals[this.props.lang].proPlan.welcome.trial}
+            </p>
+          </div>
         </Dialog>
       </Feature>
     )
@@ -215,13 +227,19 @@ export default class PriorityContainer extends React.Component<PriorityContainer
           }}
           onClose={this.props.onClose}
         >
-          <img
-            className="dialog__cover"
-            src={pp}
-          />
-          <p className={`dialog__text type ${texts.type}`}>
-            {locals[this.props.lang].proPlan.welcome.message}
-          </p>
+          <div className="dialog__cover">
+            <img
+              src={pp}
+              style={{
+                width: '100%'
+              }}
+            />
+          </div>
+          <div className="dialog__text">
+            <p className={`type ${texts.type}`}>
+              {locals[this.props.lang].proPlan.welcome.message}
+            </p>
+          </div>
         </Dialog>
       </Feature>
     )
@@ -297,7 +315,7 @@ export default class PriorityContainer extends React.Component<PriorityContainer
                   ? locals[this.props.lang].publication.ctaWhenSignedIn
                   : locals[this.props.lang].publication.ctaWhenSignedOut
               )(),
-              status: this.state['isPrimaryActionLoading'] ? 'LOADING' : 'DEFAULT',
+              state: this.state['isPrimaryActionLoading'] ? 'LOADING' : 'DEFAULT',
               action: async () =>
                 this.props.userSession.connectionStatus === 'CONNECTED'
                 ? await publishPalette(this.props.rawData)
@@ -312,7 +330,7 @@ export default class PriorityContainer extends React.Component<PriorityContainer
           }}
           select={{
             label: locals[this.props.lang].publication.selectToShare,
-            status: false,
+            state: false,
             action: () => this.setState({
               isPaletteShared: !this.state['isPaletteShared']
             })

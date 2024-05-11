@@ -1,6 +1,6 @@
 import React from 'react'
 import type { Language, ReleaseNote } from '../../utils/types'
-import { Dialog } from '@a-ng-d/figmug.dialogs.dialog'
+import { Dialog } from '@a_ng_d/figmug-ui'
 import releaseNotes from '../../content/releaseNotes'
 import { locals } from '../../content/locals'
 import { texts } from '@a_ng_d/figmug-ui'
@@ -66,13 +66,19 @@ export default class Highlight extends React.Component<HighlightProps, Highlight
           this.setState({ position: 0 })
         }}
       >
-        <img
-          className="dialog__cover"
-          src={currentNote['image'][this.state['position']]}
-        />
-        <p className={`dialog__text type ${texts.type}`}>
-          {currentNote['content'][this.state['position']]}
-        </p>
+        <div className="dialog__cover">
+          <img
+            src={currentNote['image'][this.state['position']]}
+            style={{
+              width: '100%'
+            }}
+          />
+        </div>
+        <div className="dialog__text">
+          <p className={`type ${texts.type}`}>
+            {currentNote['content'][this.state['position']]}
+          </p>
+        </div>
       </Dialog>
     )
   }

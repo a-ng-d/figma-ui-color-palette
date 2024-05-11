@@ -3,9 +3,9 @@ import chroma from 'chroma-js'
 import type { HexModel, Language } from '../../utils/types'
 import Feature from './Feature'
 import { Input } from '@a_ng_d/figmug-ui'
+import { InputsBar } from '@a_ng_d/figmug-ui'
 import { Button } from '@a_ng_d/figmug-ui'
 import { FormItem } from '@a_ng_d/figmug-ui'
-import { texts } from '@a_ng_d/figmug-ui'
 import { doMap } from '@a-ng-d/figmug.modules.do-map'
 import features from '../../utils/config'
 import { locals } from '../../content/locals'
@@ -173,47 +173,45 @@ export default class ColorItem extends React.Component<ColorItemProps, States> {
                     onBlur={this.props.onChangeColors}
                   />
                 </div>
-                <div className="list__item__param inputs">
-                  <div className={`label ${texts.label}`}>
-                    {locals[this.props.lang].colors.lch.label}
-                  </div>
-                  <div className="inputs__bar">
-                    <Input
-                      type="NUMBER"
-                      value={chroma(this.props.hex).lch()[0].toFixed(0)}
-                      min="0"
-                      max="100"
-                      feature="UPDATE_LIGHTNESS"
-                      onFocus={this.props.onCancellationSelection}
-                      onBlur={this.props.onChangeColors}
-                      onConfirm={this.props.onChangeColors}
-                    />
-                    <Input
-                      type="NUMBER"
-                      value={chroma(this.props.hex).lch()[1].toFixed(0)}
-                      min="0"
-                      max="100"
-                      feature="UPDATE_CHROMA"
-                      onFocus={this.props.onCancellationSelection}
-                      onBlur={this.props.onChangeColors}
-                      onConfirm={this.props.onChangeColors}
-                    />
-                    <Input
-                      type="NUMBER"
-                      value={
-                        chroma(this.props.hex).lch()[2].toFixed(0) == 'NaN'
-                          ? '0'
-                          : chroma(this.props.hex).lch()[2].toFixed(0)
-                      }
-                      min="0"
-                      max="360"
-                      feature="UPDATE_HUE"
-                      onFocus={this.props.onCancellationSelection}
-                      onBlur={this.props.onChangeColors}
-                      onConfirm={this.props.onChangeColors}
-                    />
-                  </div>
-                </div>
+                <InputsBar
+                  label={locals[this.props.lang].colors.lch.label}
+                  customClassName="list__item__param"
+                >
+                  <Input
+                    type="NUMBER"
+                    value={chroma(this.props.hex).lch()[0].toFixed(0)}
+                    min="0"
+                    max="100"
+                    feature="UPDATE_LIGHTNESS"
+                    onFocus={this.props.onCancellationSelection}
+                    onBlur={this.props.onChangeColors}
+                    onConfirm={this.props.onChangeColors}
+                  />
+                  <Input
+                    type="NUMBER"
+                    value={chroma(this.props.hex).lch()[1].toFixed(0)}
+                    min="0"
+                    max="100"
+                    feature="UPDATE_CHROMA"
+                    onFocus={this.props.onCancellationSelection}
+                    onBlur={this.props.onChangeColors}
+                    onConfirm={this.props.onChangeColors}
+                  />
+                  <Input
+                    type="NUMBER"
+                    value={
+                      chroma(this.props.hex).lch()[2].toFixed(0) == 'NaN'
+                        ? '0'
+                        : chroma(this.props.hex).lch()[2].toFixed(0)
+                    }
+                    min="0"
+                    max="360"
+                    feature="UPDATE_HUE"
+                    onFocus={this.props.onCancellationSelection}
+                    onBlur={this.props.onChangeColors}
+                    onConfirm={this.props.onChangeColors}
+                  />
+                </InputsBar>
               </>
             </Feature>
           </div>

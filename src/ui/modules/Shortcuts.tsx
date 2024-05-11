@@ -7,9 +7,9 @@ import type {
   UserSession,
 } from '../../utils/types'
 import Feature from '../components/Feature'
-import { Bar } from '@a-ng-d/figmug.layouts.bar'
+import { Bar } from '@a_ng_d/figmug-ui'
 import { Button } from '@a_ng_d/figmug-ui'
-import { Menu } from '@a-ng-d/figmug.navigation.menu'
+import { Menu } from '@a_ng_d/figmug-ui'
 import { icons } from '@a_ng_d/figmug-ui'
 import { texts } from '@a_ng_d/figmug-ui'
 import features from '../../utils/config'

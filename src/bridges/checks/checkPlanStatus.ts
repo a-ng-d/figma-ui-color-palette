@@ -7,6 +7,9 @@ const checkPlanStatus = async () => {
     'trial_start_date',
     new Date().getTime() - 12 * 60 * 60 * 1000
   )*/
+  /*figma.payments?.setPaymentStatusInDevelopment({
+    type: 'UNPAID',
+  })*/
 
   const trialStartDate: number | undefined = await figma.clientStorage.getAsync(
       'trial_start_date'
@@ -25,10 +28,6 @@ const checkPlanStatus = async () => {
     else if (consumedTime >= trialTime) trialStatus = 'EXPIRED'
     else trialStatus = 'PENDING'
   }
-
-  /* await figma.payments?.setPaymentStatusInDevelopment({
-    type: 'UNPAID',
-  }) */
 
   figma.ui.postMessage({
     type: 'PLAN_STATUS',

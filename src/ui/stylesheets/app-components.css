@@ -36,7 +36,7 @@ li.list__item[draggable='true'] {
 
 li.list__item[draggable='true'] .input__field,
 li.list__item--emphasis .input__field {
-  --white: var(--figma-color-bg-selected);
+  --white: var(--figma-color-bg-selected) !important;
 }
 
 li.list__item[draggable='true']:active {
@@ -52,7 +52,7 @@ li.list__item--emphasis {
 }
 
 li.list__item--emphasis .input__field {
-  --white: var(--figma-color-bg-pressed);
+  --white: var(--figma-color-bg-pressed) !important;
 }
 
 li.list__item--above {

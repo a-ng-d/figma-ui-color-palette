@@ -13,9 +13,9 @@ import Feature from '../components/Feature'
 import { Message } from '@a_ng_d/figmug-ui'
 import { FormItem } from '@a_ng_d/figmug-ui'
 import { Input } from '@a_ng_d/figmug-ui'
-import { Accordion } from '@a-ng-d/figmug.layouts.accordion'
+import { Accordion } from '@a_ng_d/figmug-ui'
 import { texts } from '@a_ng_d/figmug-ui'
-import { SectionTitle } from '@a-ng-d/figmug.layouts.section-title'
+import { SectionTitle } from '@a_ng_d/figmug-ui'
 import { ColorItem } from '@a-ng-d/figmug.lists.color-item'
 import Actions from './Actions'
 import features from '../../utils/config'
@@ -269,7 +269,6 @@ export default class Source extends React.Component<SourceProps, SourceStates> {
             .filter((sourceColor) => sourceColor.source === 'COOLORS')
             .length.toString()}
           helper={locals[this.props.lang].source.coolors.helper}
-          itemHandler={this.state['isCoolorsImportOpen'] ? 'REMOVE' : 'ADD'}
           isExpanded={this.state['isCoolorsImportOpen']}
           isBlocked={isBlocked('SOURCE_COOLORS', this.props.planStatus)}
           isNew={
@@ -352,9 +351,6 @@ export default class Source extends React.Component<SourceProps, SourceStates> {
             .filter((sourceColor) => sourceColor.source === 'REALTIME_COLORS')
             .length.toString()}
           helper={locals[this.props.lang].source.realtimeColors.helper}
-          itemHandler={
-            this.state['isRealtimeColorsImportOpen'] ? 'REMOVE' : 'ADD'
-          }
           isExpanded={this.state['isRealtimeColorsImportOpen']}
           isBlocked={isBlocked('SOURCE_REALTIME_COLORS', this.props.planStatus)}
           isNew={

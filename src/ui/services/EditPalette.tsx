@@ -16,7 +16,7 @@ import type {
 } from '../../utils/types'
 import type { DropdownOption } from '@a-ng-d/figmug.modules.types'
 import Feature from '../components/Feature'
-import { Bar } from '@a-ng-d/figmug.layouts.bar'
+import { Bar } from '@a_ng_d/figmug-ui'
 import { Tabs } from '@a_ng_d/figmug-ui'
 import Scale from '../modules/Scale'
 import Colors from '../modules/Colors'

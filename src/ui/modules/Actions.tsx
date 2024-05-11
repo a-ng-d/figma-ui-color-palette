@@ -6,7 +6,7 @@ import type {
 } from '../../utils/types'
 import Feature from '../components/Feature'
 import { Button } from '@a_ng_d/figmug-ui'
-import { Menu } from '@a-ng-d/figmug.navigation.menu'
+import { Menu } from '@a_ng_d/figmug-ui'
 import { texts } from '@a_ng_d/figmug-ui'
 import features from '../../utils/config'
 import isBlocked from '../../utils/isBlocked'
@@ -19,9 +19,9 @@ interface ActionsProps {
   planStatus?: PlanStatus
   lang: Language
   onCreatePalette?: React.MouseEventHandler & React.KeyboardEventHandler
-  onSyncLocalStyles?: React.MouseEventHandler & React.KeyboardEventHandler
-  onSyncLocalVariables?: React.MouseEventHandler & React.KeyboardEventHandler
-  onPublishPalette?: React.MouseEventHandler & React.KeyboardEventHandler
+  onSyncLocalStyles?: (e: React.MouseEvent<HTMLLIElement, MouseEvent> | React.KeyboardEvent<HTMLLIElement>) => void
+  onSyncLocalVariables?: (e: React.MouseEvent<HTMLLIElement, MouseEvent> | React.KeyboardEvent<HTMLLIElement>) => void
+  onPublishPalette?: (e: React.MouseEvent<HTMLLIElement, MouseEvent> | React.KeyboardEvent<HTMLLIElement>) => void
   onExportPalette?: React.MouseEventHandler & React.KeyboardEventHandler
 }
 

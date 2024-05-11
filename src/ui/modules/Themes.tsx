@@ -15,7 +15,7 @@ import type {
 } from '../../utils/types'
 import { Button } from '@a_ng_d/figmug-ui'
 import { Message } from '@a_ng_d/figmug-ui'
-import { SectionTitle } from '@a-ng-d/figmug.layouts.section-title'
+import { SectionTitle } from '@a_ng_d/figmug-ui'
 import ThemeItem from '../components/ThemeItem'
 import Actions from './Actions'
 import isBlocked from '../../utils/isBlocked'
