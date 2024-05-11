@@ -43,7 +43,6 @@ interface ExportStates {
 
 export default class Export extends React.Component<ExportProps, ExportStates> {
   counter: number
-  codeRef: React.MutableRefObject<any>
 
   static defaultProps = {
     exportPreview: '',
@@ -59,11 +58,7 @@ export default class Export extends React.Component<ExportProps, ExportStates> {
         options: [],
       },
     }
-    this.codeRef = React.createRef()
   }
-
-  componentDidUpdate = () =>
-    this.codeRef.current.inputRef.current.scrollTop = 0
 
   // Handlers
   exportHandler = (e: React.SyntheticEvent) => {
@@ -685,7 +680,6 @@ export default class Export extends React.Component<ExportProps, ExportStates> {
               id="code-snippet-dragging"
               type="CODE"
               value={this.props.exportPreview}
-              ref={this.codeRef}
             />
           </div>
         </div>
