@@ -3,6 +3,8 @@ import { authUrl, databaseUrl, proxyUrl } from '../../utils/config'
 import checkConnectionStatus from '../checks/checkConnectionStatus'
 import { lang, locals } from '../../content/locals'
 
+let isAuthenticated = false
+
 export const supabase = createClient(
   databaseUrl,
   process.env.REACT_APP_SUPABASE_PUBLIC_ANON_KEY ?? ''
@@ -55,6 +57,7 @@ export const signIn = async () => {
         })
         .then(async (result) => {
           if (result.message != 'No tokens found') {
+            isAuthenticated = true
             parent.postMessage(
               {
                 pluginMessage: {
@@ -94,17 +97,19 @@ export const signIn = async () => {
         })
       }, 5000)
       setTimeout(() => {
-        parent.postMessage(
-          {
-            pluginMessage: {
-              type: 'SEND_MESSAGE',
-              message: locals[lang].error.timeout,
+        if (!isAuthenticated) {
+          parent.postMessage(
+            {
+              pluginMessage: {
+                type: 'SEND_MESSAGE',
+                message: locals[lang].error.timeout,
+              },
             },
-          },
-          '*'
-        )
-        clearInterval(poll)
-        reject()
+            '*'
+          )
+          clearInterval(poll)
+          reject()
+        }
       }, 2 * 60 * 1000)
     })
     .catch((error) => {
