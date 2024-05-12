@@ -46,7 +46,7 @@ import './stylesheets/app-components.css'
 import { locals } from '../content/locals'
 import { supabase } from '../bridges/publication/authentication'
 
-interface AppStates {
+export interface AppStates {
   service: Service
   sourceColors: Array<SourceColorConfiguration>
   id: string
@@ -166,6 +166,7 @@ class App extends React.Component<Record<string, never>, AppStates> {
       userSession: {
         connectionStatus: 'UNCONNECTED',
         userFullName: '',
+        userAvatar: '',
         userId: undefined,
         accessToken: undefined,
         refreshToken: undefined,
@@ -184,6 +185,7 @@ class App extends React.Component<Record<string, never>, AppStates> {
             userSession: {
               connectionStatus: 'CONNECTED',
               userFullName: session?.user.user_metadata.full_name,
+              userAvatar: session?.user.user_metadata.avatar_url,
               userId: session?.user.id,
               accessToken: session?.access_token,
               refreshToken: session?.refresh_token,
@@ -207,6 +209,7 @@ class App extends React.Component<Record<string, never>, AppStates> {
             userSession: {
               connectionStatus: 'UNCONNECTED',
               userFullName: '',
+              userAvatar: '',
               userId: undefined,
               accessToken: undefined,
               refreshToken: undefined,
@@ -218,6 +221,7 @@ class App extends React.Component<Record<string, never>, AppStates> {
             userSession: {
               connectionStatus: 'CONNECTED',
               userFullName: session?.user.user_metadata.full_name,
+              userAvatar: session?.user.user_metadata.avatar_url,
               userId: session?.user.id,
               accessToken: session?.access_token,
               refreshToken: session?.refresh_token,

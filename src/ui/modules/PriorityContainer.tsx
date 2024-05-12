@@ -7,6 +7,7 @@ import type {
   TrialStatus,
   UserSession,
 } from '../../utils/types'
+import type { AppStates } from '../App'
 import Feature from '../components/Feature'
 import { Dialog } from '@a_ng_d/figmug-ui'
 import { Thumbnail } from '@a_ng_d/figmug-ui'
@@ -24,7 +25,7 @@ import package_json from '../../../package.json'
 
 interface PriorityContainerProps {
   context: PriorityContext
-  rawData: any
+  rawData: AppStates
   planStatus: PlanStatus
   trialStatus: TrialStatus
   userSession: UserSession
@@ -56,10 +57,12 @@ export default class PriorityContainer extends React.Component<
 
   // Direct actions
   getImageSrc = () => {
-    const blob = new Blob([this.props.rawData.screenshot], {
-      type: 'image/png',
-    })
-    return URL.createObjectURL(blob)
+    if (this.props.rawData.screenshot !== null) {
+      const blob = new Blob([this.props.rawData.screenshot], {
+        type: 'image/png',
+      })
+      return URL.createObjectURL(blob)
+    } else return ''
   }
 
   uploadPaletteScreenshot = () => {
@@ -305,6 +308,7 @@ export default class PriorityContainer extends React.Component<
 
   Publication = () => {
     this.uploadPaletteScreenshot()
+    console.log(this.state['isPaletteShared'])
     return (
       <Feature
         isActive={
@@ -324,7 +328,12 @@ export default class PriorityContainer extends React.Component<
                 : 'DEFAULT',
               action: async () =>
                 this.props.userSession.connectionStatus === 'CONNECTED'
-                  ? await publishPalette(this.props.rawData)
+                  ? (() => {
+                      this.setState({ isPrimaryActionLoading: true })
+                      publishPalette(this.props.rawData, this.state['isPrimaryActionLoading']).finally(() => {
+                        this.setState({ isPrimaryActionLoading: false })
+                      })
+                    })()
                   : (() => {
                       this.setState({ isPrimaryActionLoading: true })
                       signIn().finally(() => {
@@ -335,7 +344,7 @@ export default class PriorityContainer extends React.Component<
           }}
           select={{
             label: locals[this.props.lang].publication.selectToShare,
-            state: false,
+            state: this.state['isPaletteShared'],
             action: () =>
               this.setState({
                 isPaletteShared: !this.state['isPaletteShared'],
