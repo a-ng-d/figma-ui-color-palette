@@ -33,6 +33,7 @@ interface ShortcutsProps {
 
 interface ShortcutsStates {
   canBeResized: boolean
+  isUserMenuLoading: boolean
 }
 
 export default class Shortcuts extends React.Component<ShortcutsProps, ShortcutsStates> {
@@ -40,6 +41,7 @@ export default class Shortcuts extends React.Component<ShortcutsProps, Shortcuts
     super(props)
     this.state = {
       canBeResized: false,
+      isUserMenuLoading: false
     }
   }
 
@@ -143,7 +145,13 @@ export default class Shortcuts extends React.Component<ShortcutsProps, Shortcuts
                         isBlocked: false,
                         isNew: false,
                         children: [],
-                        action: async () => await signOut(),
+                        action: async () => (() => {
+                          this.setState({ isUserMenuLoading: true })
+                          signOut()
+                            .finally(() => {
+                              this.setState({ isUserMenuLoading: false });
+                            });
+                        })(),
                       },
                     ]}
                     alignment="TOP_RIGHT"
@@ -163,9 +171,16 @@ export default class Shortcuts extends React.Component<ShortcutsProps, Shortcuts
                         isBlocked: false,
                         isNew: false,
                         children: [],
-                        action: async () => await signIn(),
+                        action: async () => (() => {
+                          this.setState({ isUserMenuLoading: true })
+                          signIn()
+                            .finally(() => {
+                              this.setState({ isUserMenuLoading: false });
+                            });
+                        })(),
                       },
                     ]}
+                    state={this.state['isUserMenuLoading'] ? 'LOADING' : 'DEFAULT'}
                     alignment="TOP_RIGHT"
                   />
                 )}
