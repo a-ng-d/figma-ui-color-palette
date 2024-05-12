@@ -27,6 +27,10 @@ const processSelection = () => {
   const selectionHandler = (state: string, element: any = null) => {
     const actions: ActionsList = {
       PALETTE_SELECTED: async () => {
+        const bytes = await palette.exportAsync({
+          format: 'PNG',
+          constraint: { type: 'SCALE', value: 0.25 },
+        })
         figma.ui.postMessage({
           type: 'PALETTE_SELECTED',
           data: {
@@ -47,6 +51,7 @@ const processSelection = () => {
               palette.getPluginData('textColorsTheme')
             ),
             algorithmVersion: palette.getPluginData('algorithmVersion'),
+            screenshot: bytes,
             isPublished: palette.getPluginData('isPublished'),
             isShared: palette.getPluginData('isShared'),
             createdAt: palette.getPluginData('createdAt'),
