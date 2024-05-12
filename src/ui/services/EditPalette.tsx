@@ -14,7 +14,7 @@ import type {
   VisionSimulationModeConfiguration,
   PlanStatus,
 } from '../../utils/types'
-import type { DropdownOption } from '@a-ng-d/figmug.modules.types'
+import type { DropdownOption } from '@a_ng_d/figmug-ui'
 import Feature from '../components/Feature'
 import { Bar } from '@a_ng_d/figmug-ui'
 import { Tabs } from '@a_ng_d/figmug-ui'

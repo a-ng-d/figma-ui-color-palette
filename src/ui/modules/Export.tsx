@@ -5,7 +5,7 @@ import type {
   Language,
   PlanStatus,
 } from '../../utils/types'
-import type { DropdownOption } from '@a-ng-d/figmug.modules.types'
+import type { DropdownOption } from '@a_ng_d/figmug-ui'
 import { Input } from '@a_ng_d/figmug-ui'
 import { Dropdown } from '@a_ng_d/figmug-ui'
 import { SectionTitle } from '@a_ng_d/figmug-ui'
