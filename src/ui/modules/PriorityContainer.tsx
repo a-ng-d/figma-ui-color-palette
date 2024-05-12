@@ -38,7 +38,10 @@ interface PriorityContainerStates {
   isSecondaryLoading: boolean
 }
 
-export default class PriorityContainer extends React.Component<PriorityContainerProps, PriorityContainerStates> {
+export default class PriorityContainer extends React.Component<
+  PriorityContainerProps,
+  PriorityContainerStates
+> {
   counter: number
 
   constructor(props: PriorityContainerProps) {
@@ -53,7 +56,9 @@ export default class PriorityContainer extends React.Component<PriorityContainer
 
   // Direct actions
   getImageSrc = () => {
-    const blob = new Blob([this.props.rawData.screenshot], { type: 'image/png' })
+    const blob = new Blob([this.props.rawData.screenshot], {
+      type: 'image/png',
+    })
     return URL.createObjectURL(blob)
   }
 
@@ -62,7 +67,7 @@ export default class PriorityContainer extends React.Component<PriorityContainer
       ? parent.postMessage(
           {
             pluginMessage: {
-              type: 'UPDATE_SCREENSHOT'
+              type: 'UPDATE_SCREENSHOT',
             },
           },
           '*'
@@ -105,7 +110,7 @@ export default class PriorityContainer extends React.Component<PriorityContainer
             <img
               src={cp}
               style={{
-                width: '100%'
+                width: '100%',
               }}
             />
           </div>
@@ -140,7 +145,7 @@ export default class PriorityContainer extends React.Component<PriorityContainer
             <img
               src={t}
               style={{
-                width: '100%'
+                width: '100%',
               }}
             />
           </div>
@@ -231,7 +236,7 @@ export default class PriorityContainer extends React.Component<PriorityContainer
             <img
               src={pp}
               style={{
-                width: '100%'
+                width: '100%',
               }}
             />
           </div>
@@ -313,34 +318,33 @@ export default class PriorityContainer extends React.Component<PriorityContainer
               label: (() =>
                 this.props.userSession.connectionStatus === 'CONNECTED'
                   ? locals[this.props.lang].publication.ctaWhenSignedIn
-                  : locals[this.props.lang].publication.ctaWhenSignedOut
-              )(),
-              state: this.state['isPrimaryActionLoading'] ? 'LOADING' : 'DEFAULT',
+                  : locals[this.props.lang].publication.ctaWhenSignedOut)(),
+              state: this.state['isPrimaryActionLoading']
+                ? 'LOADING'
+                : 'DEFAULT',
               action: async () =>
                 this.props.userSession.connectionStatus === 'CONNECTED'
-                ? await publishPalette(this.props.rawData)
-                : (() => {
-                  this.setState({ isPrimaryActionLoading: true })
-                  signIn()
-                    .finally(() => {
-                      this.setState({ isPrimaryActionLoading: false });
-                    });
-              })()
+                  ? await publishPalette(this.props.rawData)
+                  : (() => {
+                      this.setState({ isPrimaryActionLoading: true })
+                      signIn().finally(() => {
+                        this.setState({ isPrimaryActionLoading: false })
+                      })
+                    })(),
             },
           }}
           select={{
             label: locals[this.props.lang].publication.selectToShare,
             state: false,
-            action: () => this.setState({
-              isPaletteShared: !this.state['isPaletteShared']
-            })
+            action: () =>
+              this.setState({
+                isPaletteShared: !this.state['isPaletteShared'],
+              }),
           }}
           onClose={this.props.onClose}
         >
           <div className="dialog__cover dialog__cover--padding">
-            <Thumbnail
-              src={this.getImageSrc()}
-            />
+            <Thumbnail src={this.getImageSrc()} />
           </div>
           <div className={`dialog__text`}>
             <div>
@@ -349,7 +353,9 @@ export default class PriorityContainer extends React.Component<PriorityContainer
                   ? locals[this.props.lang].name
                   : this.props.rawData.name}
               </div>
-              <div className={`${texts.type} type`}>{this.props.rawData.preset.name}</div>
+              <div className={`${texts.type} type`}>
+                {this.props.rawData.preset.name}
+              </div>
               <div
                 className={`${texts.type} ${texts['type--secondary']} type`}
               >{`${this.props.rawData.colors.length} ${
@@ -357,16 +363,18 @@ export default class PriorityContainer extends React.Component<PriorityContainer
                   ? locals[this.props.lang].actions.sourceColorsNumber.several
                   : locals[this.props.lang].actions.sourceColorsNumber.single
               }, ${
-                this.props.rawData.themes.filter((theme: ThemeConfiguration) => theme.type === 'custom theme')
-                  .length
+                this.props.rawData.themes.filter(
+                  (theme: ThemeConfiguration) => theme.type === 'custom theme'
+                ).length
               } ${
-                this.props.rawData.themes.filter((theme: ThemeConfiguration) => theme.type === 'custom theme')
-                  .length > 1
+                this.props.rawData.themes.filter(
+                  (theme: ThemeConfiguration) => theme.type === 'custom theme'
+                ).length > 1
                   ? locals[this.props.lang].actions.colorThemesNumber.several
                   : locals[this.props.lang].actions.colorThemesNumber.single
               }`}</div>
             </div>
-            
+
             <div className={`type ${texts.type}`}>
               {locals[this.props.lang].publication.message}
             </div>

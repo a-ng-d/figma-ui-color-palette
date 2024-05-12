@@ -68,7 +68,10 @@ const themesMessage: ThemesMessage = {
   isEditedInRealTime: false,
 }
 
-export default class EditPalette extends React.Component<EditPaletteProps, EditPaletteStates> {
+export default class EditPalette extends React.Component<
+  EditPaletteProps,
+  EditPaletteStates
+> {
   themesRef: React.MutableRefObject<any>
 
   constructor(props: EditPaletteProps) {

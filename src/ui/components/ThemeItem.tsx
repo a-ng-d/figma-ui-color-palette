@@ -41,7 +41,10 @@ interface ThemeItemStates {
   hasMoreOptions: boolean
 }
 
-export default class ThemeItem extends React.Component<ThemeItemProps, ThemeItemStates> {
+export default class ThemeItem extends React.Component<
+  ThemeItemProps,
+  ThemeItemStates
+> {
   constructor(props: ThemeItemProps) {
     super(props)
     this.state = {

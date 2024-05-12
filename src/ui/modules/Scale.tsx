@@ -171,7 +171,8 @@ export default class Scale extends React.Component<ScaleProps, ScaleStates> {
               children: [],
               action: (e) =>
                 this.setState({
-                  distributionEasing: (e.target as HTMLElement).dataset.value as Easing,
+                  distributionEasing: (e.target as HTMLElement).dataset
+                    .value as Easing,
                 }),
             },
             {
@@ -197,7 +198,8 @@ export default class Scale extends React.Component<ScaleProps, ScaleStates> {
               children: [],
               action: (e) =>
                 this.setState({
-                  distributionEasing: (e.target as HTMLElement).dataset.value as Easing,
+                  distributionEasing: (e.target as HTMLElement).dataset
+                    .value as Easing,
                 }),
             },
             {
@@ -212,7 +214,8 @@ export default class Scale extends React.Component<ScaleProps, ScaleStates> {
               children: [],
               action: (e) =>
                 this.setState({
-                  distributionEasing: (e.target as HTMLElement).dataset.value as Easing,
+                  distributionEasing: (e.target as HTMLElement).dataset
+                    .value as Easing,
                 }),
             },
             {
@@ -227,7 +230,8 @@ export default class Scale extends React.Component<ScaleProps, ScaleStates> {
               children: [],
               action: (e) =>
                 this.setState({
-                  distributionEasing: (e.target as HTMLElement).dataset.value as Easing,
+                  distributionEasing: (e.target as HTMLElement).dataset
+                    .value as Easing,
                 }),
             },
           ]}

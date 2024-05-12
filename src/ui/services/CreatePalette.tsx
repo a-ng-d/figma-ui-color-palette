@@ -46,7 +46,10 @@ interface CreatePaletteStates {
   context: string | undefined
 }
 
-export default class CreatePalette extends React.Component<CreatePaletteProps, CreatePaletteStates> {
+export default class CreatePalette extends React.Component<
+  CreatePaletteProps,
+  CreatePaletteStates
+> {
   constructor(props: CreatePaletteProps) {
     super(props)
     this.state = {

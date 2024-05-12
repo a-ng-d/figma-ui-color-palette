@@ -19,9 +19,21 @@ interface ActionsProps {
   planStatus?: PlanStatus
   lang: Language
   onCreatePalette?: React.MouseEventHandler & React.KeyboardEventHandler
-  onSyncLocalStyles?: (e: React.MouseEvent<HTMLLIElement, MouseEvent> | React.KeyboardEvent<HTMLLIElement>) => void
-  onSyncLocalVariables?: (e: React.MouseEvent<HTMLLIElement, MouseEvent> | React.KeyboardEvent<HTMLLIElement>) => void
-  onPublishPalette?: (e: React.MouseEvent<HTMLLIElement, MouseEvent> | React.KeyboardEvent<HTMLLIElement>) => void
+  onSyncLocalStyles?: (
+    e:
+      | React.MouseEvent<HTMLLIElement, MouseEvent>
+      | React.KeyboardEvent<HTMLLIElement>
+  ) => void
+  onSyncLocalVariables?: (
+    e:
+      | React.MouseEvent<HTMLLIElement, MouseEvent>
+      | React.KeyboardEvent<HTMLLIElement>
+  ) => void
+  onPublishPalette?: (
+    e:
+      | React.MouseEvent<HTMLLIElement, MouseEvent>
+      | React.KeyboardEvent<HTMLLIElement>
+  ) => void
   onExportPalette?: React.MouseEventHandler & React.KeyboardEventHandler
 }
 

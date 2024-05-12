@@ -14,7 +14,10 @@ interface HighlightStates {
   position: number
 }
 
-export default class Highlight extends React.Component<HighlightProps, HighlightStates> {
+export default class Highlight extends React.Component<
+  HighlightProps,
+  HighlightStates
+> {
   constructor(props: HighlightProps) {
     super(props)
     this.state = {
@@ -70,7 +73,7 @@ export default class Highlight extends React.Component<HighlightProps, Highlight
           <img
             src={currentNote['image'][this.state['position']]}
             style={{
-              width: '100%'
+              width: '100%',
             }}
           />
         </div>

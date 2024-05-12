@@ -706,7 +706,8 @@ class App extends React.Component<Record<string, never>, AppStates> {
               isShared: false,
             },
             priorityContainerContext: (() => {
-              if (this.state['priorityContainerContext'] === 'PUBLICATION') return 'EMPTY'
+              if (this.state['priorityContainerContext'] === 'PUBLICATION')
+                return 'EMPTY'
               else return this.state['priorityContainerContext']
             })(),
             onGoingStep: 'selection empty',
@@ -753,9 +754,10 @@ class App extends React.Component<Record<string, never>, AppStates> {
                 isShared: false,
               },
               priorityContainerContext: (() => {
-                if (this.state['priorityContainerContext'] === 'PUBLICATION') return 'EMPTY'
+                if (this.state['priorityContainerContext'] === 'PUBLICATION')
+                  return 'EMPTY'
                 else return this.state['priorityContainerContext']
-              })()
+              })(),
             })
             palette.name = ''
             palette.description = ''
@@ -1106,11 +1108,7 @@ class App extends React.Component<Record<string, never>, AppStates> {
               lang={this.state['lang']}
             />
           </Feature>
-          <Feature
-            isActive={
-              this.state['priorityContainerContext'] != 'EMPTY'
-            }
-          >
+          <Feature isActive={this.state['priorityContainerContext'] != 'EMPTY'}>
             <PriorityContainer
               context={this.state['priorityContainerContext']}
               rawData={this.state}
@@ -1118,7 +1116,9 @@ class App extends React.Component<Record<string, never>, AppStates> {
               trialStatus={this.state['trialStatus']}
               userSession={this.state['userSession']}
               lang={this.state['lang']}
-              onClose={() => this.setState({ priorityContainerContext: 'EMPTY' })}
+              onClose={() =>
+                this.setState({ priorityContainerContext: 'EMPTY' })
+              }
             />
           </Feature>
           <Feature

@@ -36,12 +36,15 @@ interface ShortcutsStates {
   isUserMenuLoading: boolean
 }
 
-export default class Shortcuts extends React.Component<ShortcutsProps, ShortcutsStates> {
+export default class Shortcuts extends React.Component<
+  ShortcutsProps,
+  ShortcutsStates
+> {
   constructor(props: ShortcutsProps) {
     super(props)
     this.state = {
       canBeResized: false,
-      isUserMenuLoading: false
+      isUserMenuLoading: false,
     }
   }
 
@@ -145,13 +148,13 @@ export default class Shortcuts extends React.Component<ShortcutsProps, Shortcuts
                         isBlocked: false,
                         isNew: false,
                         children: [],
-                        action: async () => (() => {
-                          this.setState({ isUserMenuLoading: true })
-                          signOut()
-                            .finally(() => {
-                              this.setState({ isUserMenuLoading: false });
-                            });
-                        })(),
+                        action: async () =>
+                          (() => {
+                            this.setState({ isUserMenuLoading: true })
+                            signOut().finally(() => {
+                              this.setState({ isUserMenuLoading: false })
+                            })
+                          })(),
                       },
                     ]}
                     alignment="TOP_RIGHT"
@@ -171,16 +174,18 @@ export default class Shortcuts extends React.Component<ShortcutsProps, Shortcuts
                         isBlocked: false,
                         isNew: false,
                         children: [],
-                        action: async () => (() => {
-                          this.setState({ isUserMenuLoading: true })
-                          signIn()
-                            .finally(() => {
-                              this.setState({ isUserMenuLoading: false });
-                            });
-                        })(),
+                        action: async () =>
+                          (() => {
+                            this.setState({ isUserMenuLoading: true })
+                            signIn().finally(() => {
+                              this.setState({ isUserMenuLoading: false })
+                            })
+                          })(),
                       },
                     ]}
-                    state={this.state['isUserMenuLoading'] ? 'LOADING' : 'DEFAULT'}
+                    state={
+                      this.state['isUserMenuLoading'] ? 'LOADING' : 'DEFAULT'
+                    }
                     alignment="TOP_RIGHT"
                   />
                 )}
