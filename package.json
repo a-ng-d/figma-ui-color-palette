@@ -22,10 +22,7 @@
     "figma-plugin"
   ],
   "author": "Aurélien Grimaud",
-  "licence": {
-    "type": "CC-BY-4.0",
-    "url": "https://creativecommons.org/licenses/by/4.0/"
-  },
+  "licence": "MIT",
   "repository": "https://github.com/inVoltag/figma-ui-color-palette",
   "devDependencies": {
     "@figma/eslint-plugin-figma-plugins": "^0.15.0",
