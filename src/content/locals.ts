@@ -278,7 +278,7 @@ export const locals: { [key: string]: any } = {
     },
     actions: {
       createPalette: 'Create a UI Color Palette',
-      sync: 'Sync',
+      run: 'Run',
       createLocalStyles: 'Sync with the local styles',
       createLocalVariables: 'Sync with the local variables',
       publishPalette: 'Publish the palette',

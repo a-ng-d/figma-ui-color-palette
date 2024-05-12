@@ -69,7 +69,7 @@ export default class Actions extends React.Component<ActionsProps> {
         <div className="actions__right">
           <Menu
             id="local-styles-variables"
-            label={locals[this.props.lang].actions.sync}
+            label={locals[this.props.lang].actions.run}
             type="PRIMARY"
             options={[
               {
