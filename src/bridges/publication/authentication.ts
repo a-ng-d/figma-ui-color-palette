@@ -1,5 +1,5 @@
 import { createClient } from '@supabase/supabase-js'
-import { authUrl, databaseUrl } from '../../utils/config'
+import { authUrl, databaseUrl, proxyUrl } from '../../utils/config'
 import checkConnectionStatus from '../checks/checkConnectionStatus'
 import { lang, locals } from '../../content/locals'
 
@@ -11,10 +11,7 @@ export const supabase = createClient(
 export const signIn = async () => {
   return new Promise((resolve, reject) => {
     fetch(
-      'https://corsproxy.io/?' +
-        encodeURIComponent(
-          'https://hook.eu1.make.com/s02o2bjkknapgjidnp5bko7duc5w6t65'
-        ),
+      proxyUrl,
       {
         cache: 'no-cache',
         credentials: 'omit',
@@ -42,10 +39,7 @@ export const signIn = async () => {
     .then((passkey) => {
       const poll = setInterval(() => {
         fetch(
-          'https://corsproxy.io/?' +
-            encodeURIComponent(
-              'https://hook.eu1.make.com/s02o2bjkknapgjidnp5bko7duc5w6t65'
-            ),
+          proxyUrl,
           {
             cache: 'no-cache',
             credentials: 'omit',
