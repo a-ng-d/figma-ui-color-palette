@@ -152,10 +152,7 @@ const createLocalVariables = async (palette: SceneNode) => {
 
         return `${messages.join(', ')} created`
       })
-      .catch((error) => {
-        console.error(error)
-        return locals[lang].error.generic
-      })
+      .catch(() => locals[lang].error.generic)
 
     return await createLocalVariablesStatusMessage
   } else return locals[lang].error.corruption

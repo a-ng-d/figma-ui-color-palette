@@ -51,10 +51,7 @@ const createLocalStyles = async (palette: FrameNode) => {
         if (j > 1) return `${j} ${locals[lang].info.createdLocalStyles}`
         else return `${j} ${locals[lang].info.createdLocalStyle}`
       })
-      .catch((error) => {
-        console.error(error)
-        return locals[lang].error.generic
-      })
+      .catch(() => locals[lang].error.generic)
 
     return await createdLocalStylesStatusMessage
   } else locals[lang].error.corruption

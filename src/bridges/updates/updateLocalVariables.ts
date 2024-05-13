@@ -104,10 +104,7 @@ const updateLocalVariables = async (palette: FrameNode) => {
 
           return `${messages.join(', ')} updated`
         })
-        .catch((error) => {
-          console.error(error)
-          return locals[lang].error.generic
-        })
+        .catch(() => locals[lang].error.generic)
 
       return await updateLocalVariablesStatusMessage
     } else return locals[lang].warning.collectionDoesNotExist

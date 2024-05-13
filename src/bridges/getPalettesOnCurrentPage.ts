@@ -8,8 +8,7 @@ const getPalettesOnCurrentPage = async () => {
         pluginData: {},
       })
     )
-    .catch((error) => {
-      console.error(error)
+    .catch(() => {
       figma.notify(locals[lang].error.palettesPicking)
       return []
     })

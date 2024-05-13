@@ -86,8 +86,8 @@ const loadUI = async () => {
           .then(async (message) => [message, await updateLocalStyles(palette)])
           .then((messages) => figma.notify(messages.join('﹒')))
           .catch((error) => {
-            console.error(error)
             figma.notify(locals[lang].error.generic)
+            throw error
           })
       },
       SYNC_LOCAL_VARIABLES: () => {
@@ -98,8 +98,8 @@ const loadUI = async () => {
           ])
           .then((messages) => figma.notify(messages.join('﹒')))
           .catch((error) => {
-            console.error(error)
             figma.notify(locals[lang].error.generic)
+            throw error
           })
       },
       EXPORT_PALETTE: () => {
@@ -162,9 +162,8 @@ const loadUI = async () => {
             )
           )
           .catch((error) => {
-            console.error(error)
             figma.notify(locals[lang].error.generic)
-            return null
+            throw error
           })
         palette != null ? scene.push(palette) : null
         figma.currentPage.selection = scene

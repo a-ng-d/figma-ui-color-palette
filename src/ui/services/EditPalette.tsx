@@ -161,10 +161,7 @@ export default class EditPalette extends React.Component<
               : doSnakeCase(this.props.name)
           )
         )
-        .catch((error) => {
-          console.error(error)
-          return locals[this.props.lang].error.generic
-        })
+        .catch(() => locals[this.props.lang].error.generic)
     } else if (this.props.export.format === 'TAILWIND') {
       FileSaver.saveAs(blob, 'tailwind.config.js')
     } else if (this.props.export.format === 'SWIFT') {
