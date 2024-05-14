@@ -8,7 +8,10 @@ import type {
   ThirdParty,
   PlanStatus,
   NamingConvention,
+  ColorSpaceConfiguration,
+  ViewConfiguration,
 } from '../../utils/types'
+import type { AppStates } from '../App'
 import { Bar, Tabs } from '@a_ng_d/figmug-ui'
 import Scale from '../modules/Scale'
 import Settings from '../modules/Settings'
@@ -24,9 +27,9 @@ interface CreatePaletteProps {
   description: string
   preset: PresetConfiguration
   namingConvention: NamingConvention
-  colorSpace: string
+  colorSpace: ColorSpaceConfiguration
   visionSimulationMode: VisionSimulationModeConfiguration
-  view: string
+  view: ViewConfiguration
   textColorsTheme: TextColorsThemeHexModel
   planStatus: PlanStatus
   lang: Language
@@ -38,7 +41,7 @@ interface CreatePaletteProps {
     e: React.MouseEvent<HTMLLIElement, MouseEvent> | React.KeyboardEvent
   ) => void
   onCustomPreset: (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => void
-  onChangeSettings: (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => void
+  onChangeSettings: React.Dispatch<Partial<AppStates>>
 }
 
 interface CreatePaletteStates {

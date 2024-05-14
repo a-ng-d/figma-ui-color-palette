@@ -13,8 +13,12 @@ import type {
   EditorType,
   VisionSimulationModeConfiguration,
   PlanStatus,
+  ColorSpaceConfiguration,
+  AlgorithmVersionConfiguration,
+  ViewConfiguration,
 } from '../../utils/types'
 import type { DropdownOption } from '@a_ng_d/figmug-ui'
+import type { AppStates } from '../App'
 import Feature from '../components/Feature'
 import { Bar, Tabs, FormItem, Dropdown } from '@a_ng_d/figmug-ui'
 import Scale from '../modules/Scale'
@@ -33,12 +37,12 @@ interface EditPaletteProps {
   preset: PresetConfiguration
   scale: ScaleConfiguration
   colors: Array<ColorConfiguration>
-  colorSpace: string
+  colorSpace: ColorSpaceConfiguration
   visionSimulationMode: VisionSimulationModeConfiguration
   themes: Array<ThemeConfiguration>
-  view: string
+  view: ViewConfiguration
   textColorsTheme: TextColorsThemeHexModel
-  algorithmVersion: string
+  algorithmVersion: AlgorithmVersionConfiguration
   export: ExportConfiguration
   planStatus: PlanStatus
   editorType: EditorType
@@ -47,7 +51,7 @@ interface EditPaletteProps {
   onChangeStop?: () => void
   onChangeColors: (colors: Array<ColorConfiguration>) => void
   onChangeThemes: (themes: Array<ThemeConfiguration>) => void
-  onChangeSettings: React.ChangeEventHandler
+  onChangeSettings: React.Dispatch<Partial<AppStates>>
   onPublishPalette: () => void
 }
 
@@ -372,7 +376,7 @@ export default class EditPalette extends React.Component<
             visionSimulationMode={this.props.visionSimulationMode}
             textColorsTheme={this.props.textColorsTheme}
             view={this.props.view}
-            isNewAlgorithm={this.props.algorithmVersion == 'v2' ? true : false}
+            algorithmVersion={this.props.algorithmVersion}
             planStatus={this.props.planStatus}
             editorType={this.props.editorType}
             lang={this.props.lang}

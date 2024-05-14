@@ -14,7 +14,6 @@ import type {
   PresetConfiguration,
   PriorityContext,
   ScaleConfiguration,
-  SettingsMessage,
   SourceColorConfiguration,
   TextColorsThemeHexModel,
   ThemeConfiguration,
@@ -31,7 +30,6 @@ import type {
   CreatorIdentity,
   PublicationDetails,
 } from '../utils/types'
-import Dispatcher from './modules/Dispatcher'
 import checkConnectionStatus from '../bridges/checks/checkConnectionStatus'
 import Feature from './components/Feature'
 import CreatePalette from './services/CreatePalette'
@@ -85,22 +83,6 @@ let isPaletteSelected = false
 const container = document.getElementById('app'),
   root = createRoot(container)
 
-const settingsMessage: SettingsMessage = {
-  type: 'UPDATE_SETTINGS',
-  data: {
-    name: '',
-    description: '',
-    colorSpace: 'LCH',
-    visionSimulationMode: 'NONE',
-    textColorsTheme: {
-      lightColor: '#FFFFFF',
-      darkColor: '#000000',
-    },
-    algorithmVersion: 'v2',
-  },
-  isEditedInRealTime: false,
-}
-
 const defaultPreset: PresetConfiguration = {
   name: 'Material Design, 50-900 (Google)',
   scale: [50, 100, 200, 300, 400, 500, 600, 700, 800, 900],
@@ -111,16 +93,8 @@ const defaultPreset: PresetConfiguration = {
 }
 
 class App extends React.Component<Record<string, never>, AppStates> {
-  dispatch: { [key: string]: DispatchProcess }
-
   constructor(props: Record<string, never>) {
     super(props)
-    this.dispatch = {
-      textColorsTheme: new Dispatcher(
-        () => parent.postMessage({ pluginMessage: settingsMessage }, '*'),
-        500
-      ) as DispatchProcess,
-    }
     this.state = {
       service: 'CREATE',
       sourceColors: [],
@@ -467,188 +441,6 @@ class App extends React.Component<Record<string, never>, AppStates> {
       themes: themes,
       onGoingStep: 'themes changed',
     })
-
-  settingsHandler = (e: any) => {
-    const renamePalette = () => {
-      palette.name = e.target.value
-      settingsMessage.data.name = e.target.value
-      settingsMessage.data.description = this.state['description']
-      settingsMessage.data.colorSpace = this.state['colorSpace']
-      settingsMessage.data.visionSimulationMode =
-        this.state['visionSimulationMode']
-      settingsMessage.data.textColorsTheme = this.state['textColorsTheme']
-      settingsMessage.data.algorithmVersion = this.state['algorithmVersion']
-
-      this.setState({
-        name: settingsMessage.data.name,
-        onGoingStep: 'settings changed',
-      })
-
-      if (e._reactName === 'onBlur' && this.state['service'] === 'EDIT')
-        parent.postMessage({ pluginMessage: settingsMessage }, '*')
-      else if (e.key === 'Enter' && this.state['service'] === 'EDIT')
-        parent.postMessage({ pluginMessage: settingsMessage }, '*')
-    }
-
-    const updateDescription = () => {
-      palette.description = e.target.value
-      settingsMessage.data.name = this.state['name']
-      settingsMessage.data.description = e.target.value
-      settingsMessage.data.colorSpace = this.state['colorSpace']
-      settingsMessage.data.visionSimulationMode =
-        this.state['visionSimulationMode']
-      settingsMessage.data.textColorsTheme = this.state['textColorsTheme']
-      settingsMessage.data.algorithmVersion = this.state['algorithmVersion']
-
-      this.setState({
-        description: settingsMessage.data.description,
-        onGoingStep: 'settings changed',
-      })
-
-      if (e._reactName === 'onBlur' && this.state['service'] === 'EDIT')
-        parent.postMessage({ pluginMessage: settingsMessage }, '*')
-    }
-
-    const updateView = () => {
-      if (e.target.dataset.isBlocked === 'false') {
-        palette.view = e.target.dataset.value
-        this.setState({
-          view: e.target.dataset.value,
-          onGoingStep: 'view changed',
-        })
-        if (this.state['service'] === 'EDIT')
-          parent.postMessage(
-            { pluginMessage: { type: 'UPDATE_VIEW', data: palette } },
-            '*'
-          )
-      }
-    }
-
-    const updateColorSpace = () => {
-      palette.colorSpace = e.target.dataset.value
-      settingsMessage.data.name = this.state['name']
-      settingsMessage.data.description = this.state['description']
-      settingsMessage.data.colorSpace = e.target.dataset.value
-      settingsMessage.data.visionSimulationMode =
-        this.state['visionSimulationMode']
-      settingsMessage.data.textColorsTheme = this.state['textColorsTheme']
-      settingsMessage.data.algorithmVersion = this.state['algorithmVersion']
-
-      this.setState({
-        colorSpace: settingsMessage.data.colorSpace,
-        onGoingStep: 'settings changed',
-      })
-
-      if (this.state['service'] === 'EDIT')
-        parent.postMessage({ pluginMessage: settingsMessage }, '*')
-    }
-
-    const updatevisionSimulationMode = () => {
-      palette.visionSimulationMode = e.target.dataset.value
-      settingsMessage.data.name = this.state['name']
-      settingsMessage.data.description = this.state['description']
-      settingsMessage.data.colorSpace = this.state['colorSpace']
-      settingsMessage.data.visionSimulationMode = e.target.dataset.value
-      settingsMessage.data.textColorsTheme = this.state['textColorsTheme']
-      settingsMessage.data.algorithmVersion = this.state['algorithmVersion']
-
-      this.setState({
-        visionSimulationMode: settingsMessage.data.visionSimulationMode,
-        onGoingStep: 'settings changed',
-      })
-
-      if (this.state['service'] === 'EDIT')
-        parent.postMessage({ pluginMessage: settingsMessage }, '*')
-    }
-
-    const updateAlgorythmVersion = () => {
-      settingsMessage.data.name = this.state['name']
-      settingsMessage.data.description = this.state['description']
-      settingsMessage.data.colorSpace = this.state['colorSpace']
-      settingsMessage.data.visionSimulationMode =
-        this.state['visionSimulationMode']
-      settingsMessage.data.textColorsTheme = this.state['textColorsTheme']
-      settingsMessage.data.algorithmVersion = !e.target.checked ? 'v1' : 'v2'
-
-      this.setState({
-        algorithmVersion: settingsMessage.data.algorithmVersion,
-        onGoingStep: 'settings changed',
-      })
-
-      parent.postMessage({ pluginMessage: settingsMessage }, '*')
-    }
-
-    const updateTextLightColor = () => {
-      const code: HexModel =
-        e.target.value.indexOf('#') == -1
-          ? '#' + e.target.value
-          : e.target.value
-      if (/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/i.test(code)) {
-        settingsMessage.data.name = this.state['name']
-        settingsMessage.data.description = this.state['description']
-        settingsMessage.data.colorSpace = this.state['colorSpace']
-        settingsMessage.data.visionSimulationMode =
-          this.state['visionSimulationMode']
-        settingsMessage.data.textColorsTheme.lightColor = code
-        palette.textColorsTheme.lightColor = code
-        settingsMessage.data.textColorsTheme.darkColor =
-          this.state['textColorsTheme'].darkColor
-        settingsMessage.data.algorithmVersion = this.state['algorithmVersion']
-
-        this.setState({
-          textColorsTheme: settingsMessage.data.textColorsTheme,
-          onGoingStep: 'settings changed',
-        })
-      }
-      if (e._reactName === 'onBlur' && this.state['service'] === 'EDIT') {
-        this.dispatch.textColorsTheme.on.status = false
-        parent.postMessage({ pluginMessage: settingsMessage }, '*')
-      } else if (this.state['service'] === 'EDIT')
-        this.dispatch.textColorsTheme.on.status = true
-    }
-
-    const updateTextDarkColor = () => {
-      const code: HexModel =
-        e.target.value.indexOf('#') == -1
-          ? '#' + e.target.value
-          : e.target.value
-      if (/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/i.test(code)) {
-        settingsMessage.data.name = this.state['name']
-        settingsMessage.data.description = this.state['description']
-        settingsMessage.data.colorSpace = this.state['colorSpace']
-        settingsMessage.data.visionSimulationMode =
-          this.state['visionSimulationMode']
-        settingsMessage.data.textColorsTheme.lightColor =
-          this.state['textColorsTheme'].lightColor
-        settingsMessage.data.textColorsTheme.darkColor = code
-        palette.textColorsTheme.darkColor = code
-        settingsMessage.data.algorithmVersion = this.state['algorithmVersion']
-
-        this.setState({
-          textColorsTheme: settingsMessage.data.textColorsTheme,
-          onGoingStep: 'settings changed',
-        })
-      }
-      if (e._reactName === 'onBlur' && this.state['service'] === 'EDIT') {
-        this.dispatch.textColorsTheme.on.status = false
-        parent.postMessage({ pluginMessage: settingsMessage }, '*')
-      } else if (this.state['service'] === 'EDIT')
-        this.dispatch.textColorsTheme.on.status = true
-    }
-
-    const actions: ActionsList = {
-      RENAME_PALETTE: () => renamePalette(),
-      UPDATE_DESCRIPTION: () => updateDescription(),
-      UPDATE_VIEW: () => updateView(),
-      UPDATE_COLOR_SPACE: () => updateColorSpace(),
-      UPDATE_COLOR_BLIND_MODE: () => updatevisionSimulationMode(),
-      UPDATE_ALGORITHM_VERSION: () => updateAlgorythmVersion(),
-      CHANGE_TEXT_LIGHT_COLOR: () => updateTextLightColor(),
-      CHANGE_TEXT_DARK_COLOR: () => updateTextDarkColor(),
-    }
-
-    return actions[e.target.dataset.feature]?.()
-  }
 
   publicationHandler = (e: PublicationDetails) =>
     this.setState({
@@ -1099,7 +891,7 @@ class App extends React.Component<Record<string, never>, AppStates> {
               onChangeColorsFromImport={this.colorsFromImportHandler}
               onChangePreset={this.presetsHandler}
               onCustomPreset={this.customHandler}
-              onChangeSettings={this.settingsHandler}
+              onChangeSettings={(e) => this.setState({ ...this.state, ...e })}
             />
           </Feature>
           <Feature
@@ -1129,7 +921,7 @@ class App extends React.Component<Record<string, never>, AppStates> {
               onChangeStop={this.customSlideHandler}
               onChangeColors={this.colorsHandler}
               onChangeThemes={this.themesHandler}
-              onChangeSettings={this.settingsHandler}
+              onChangeSettings={(e) => this.setState({ ...this.state, ...e })}
               onPublishPalette={() =>
                 this.setState({ priorityContainerContext: 'PUBLICATION' })
               }

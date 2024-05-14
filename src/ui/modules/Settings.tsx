@@ -6,8 +6,16 @@ import type {
   SourceColorConfiguration,
   TextColorsThemeHexModel,
   PlanStatus,
+  SettingsMessage,
+  ColorSpaceConfiguration,
+  AlgorithmVersionConfiguration,
+  ActionsList,
+  DispatchProcess,
+  ViewConfiguration,
 } from '../../utils/types'
+import type { AppStates } from '../App'
 import Feature from '../components/Feature'
+import Dispatcher from '../modules/Dispatcher'
 import {
   FormItem,
   Input,
@@ -15,33 +23,261 @@ import {
   Message,
   Dropdown,
   SectionTitle,
+  HexModel,
 } from '@a_ng_d/figmug-ui'
 import Actions from './Actions'
 import features from '../../utils/config'
 import isBlocked from '../../utils/isBlocked'
 import { locals } from '../../content/locals'
+import { palette } from '../../utils/palettePackage'
 
 interface SettingsProps {
   context: string
   sourceColors?: Array<SourceColorConfiguration>
   name: string
   description: string
-  textColorsTheme?: TextColorsThemeHexModel
-  colorSpace: string
+  textColorsTheme: TextColorsThemeHexModel
+  colorSpace: ColorSpaceConfiguration
   visionSimulationMode: VisionSimulationModeConfiguration
   view: string
-  isNewAlgorithm?: boolean
+  algorithmVersion?: AlgorithmVersionConfiguration
   planStatus: PlanStatus
   editorType?: EditorType
   lang: Language
-  onChangeSettings: React.ReactEventHandler
+  onChangeSettings: React.Dispatch<Partial<AppStates>>
   onCreatePalette?: () => void
   onSyncLocalStyles?: () => void
   onSyncLocalVariables?: () => void
   onPublishPalette?: () => void
 }
 
+const settingsMessage: SettingsMessage = {
+  type: 'UPDATE_SETTINGS',
+  data: {
+    name: '',
+    description: '',
+    colorSpace: 'LCH',
+    visionSimulationMode: 'NONE',
+    textColorsTheme: {
+      lightColor: '#FFFFFF',
+      darkColor: '#000000',
+    },
+    algorithmVersion: 'v2',
+  },
+  isEditedInRealTime: false,
+}
+
 export default class Settings extends React.Component<SettingsProps> {
+  dispatch: { [key: string]: DispatchProcess }
+
+  constructor(props: SettingsProps) {
+    super(props)
+    this.dispatch = {
+      textColorsTheme: new Dispatcher(
+        () => parent.postMessage({ pluginMessage: settingsMessage }, '*'),
+        500
+      ) as DispatchProcess,
+    }
+  }
+
+  // Direct actions
+  settingsHandler = (e: any) => {
+    const target = e.target as HTMLInputElement,
+      feature = target.dataset.feature ?? 'DEFAULT'
+
+    const renamePalette = () => {
+      palette.name = target.value
+      settingsMessage.data.name = target.value
+      settingsMessage.data.description = this.props.description
+      settingsMessage.data.colorSpace = this.props.colorSpace
+      settingsMessage.data.visionSimulationMode =
+        this.props.visionSimulationMode
+      settingsMessage.data.textColorsTheme = this.props.textColorsTheme
+      settingsMessage.data.algorithmVersion =
+        this.props.algorithmVersion ?? 'v2'
+
+      if (e.type === 'blur' && this.props.context === 'LOCAL_STYLES')
+        parent.postMessage({ pluginMessage: settingsMessage }, '*')
+      else if (e.key === 'Enter' && this.props.context === 'LOCAL_STYLES')
+        parent.postMessage({ pluginMessage: settingsMessage }, '*')
+
+      this.props.onChangeSettings({
+        name: settingsMessage.data.name,
+        onGoingStep: 'settings changed',
+      })
+    }
+
+    const updateDescription = () => {
+      palette.description = target.value
+      settingsMessage.data.name = this.props.name
+      settingsMessage.data.description = target.value
+      settingsMessage.data.colorSpace = this.props.colorSpace
+      settingsMessage.data.visionSimulationMode =
+        this.props.visionSimulationMode
+      settingsMessage.data.textColorsTheme = this.props.textColorsTheme
+      settingsMessage.data.algorithmVersion =
+        this.props.algorithmVersion ?? 'v2'
+
+      if (e.type === 'blur' && this.props.context === 'LOCAL_STYLES')
+        parent.postMessage({ pluginMessage: settingsMessage }, '*')
+
+      this.props.onChangeSettings({
+        description: settingsMessage.data.description,
+        onGoingStep: 'settings changed',
+      })
+    }
+
+    const updateView = () => {
+      if (target.dataset.isBlocked === 'false') {
+        palette.view = target.dataset.value as ViewConfiguration
+
+        if (this.props.context === 'LOCAL_STYLES')
+          parent.postMessage(
+            { pluginMessage: { type: 'UPDATE_VIEW', data: palette } },
+            '*'
+          )
+
+        this.props.onChangeSettings({
+          view: target.dataset.value as ViewConfiguration,
+          onGoingStep: 'view changed',
+        })
+      }
+    }
+
+    const updateColorSpace = () => {
+      palette.colorSpace = target.dataset.value as ColorSpaceConfiguration
+      settingsMessage.data.name = this.props.name
+      settingsMessage.data.description = this.props.description
+      settingsMessage.data.colorSpace = target.dataset
+        .value as ColorSpaceConfiguration
+      settingsMessage.data.visionSimulationMode =
+        this.props.visionSimulationMode
+      settingsMessage.data.textColorsTheme = this.props.textColorsTheme
+      settingsMessage.data.algorithmVersion =
+        this.props.algorithmVersion ?? 'v2'
+
+      if (this.props.context === 'LOCAL_STYLES')
+        parent.postMessage({ pluginMessage: settingsMessage }, '*')
+
+      this.props.onChangeSettings({
+        colorSpace: settingsMessage.data.colorSpace,
+        onGoingStep: 'settings changed',
+      })
+    }
+
+    const updatevisionSimulationMode = () => {
+      palette.visionSimulationMode = target.dataset
+        .value as VisionSimulationModeConfiguration
+      settingsMessage.data.name = this.props.name
+      settingsMessage.data.description = this.props.description
+      settingsMessage.data.colorSpace = this.props.colorSpace
+      settingsMessage.data.visionSimulationMode = target.dataset
+        .value as VisionSimulationModeConfiguration
+      settingsMessage.data.textColorsTheme = this.props.textColorsTheme
+      settingsMessage.data.algorithmVersion =
+        this.props.algorithmVersion ?? 'v2'
+
+      if (this.props.context === 'LOCAL_STYLES')
+        parent.postMessage({ pluginMessage: settingsMessage }, '*')
+
+      this.props.onChangeSettings({
+        visionSimulationMode: settingsMessage.data.visionSimulationMode,
+        onGoingStep: 'settings changed',
+      })
+    }
+
+    const updateAlgorythmVersion = () => {
+      settingsMessage.data.name = this.props.name
+      settingsMessage.data.description = this.props.description
+      settingsMessage.data.colorSpace = this.props.colorSpace
+      settingsMessage.data.visionSimulationMode =
+        this.props.visionSimulationMode
+      settingsMessage.data.textColorsTheme = this.props.textColorsTheme
+      settingsMessage.data.algorithmVersion = !target.checked ? 'v1' : 'v2'
+
+      parent.postMessage({ pluginMessage: settingsMessage }, '*')
+
+      this.props.onChangeSettings({
+        algorithmVersion: settingsMessage.data.algorithmVersion,
+        onGoingStep: 'settings changed',
+      })
+    }
+
+    const updateTextLightColor = () => {
+      const code: HexModel =
+        target.value.indexOf('#') == -1 ? '#' + target.value : target.value
+
+      if (/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/i.test(code)) {
+        settingsMessage.data.name = this.props.name
+        settingsMessage.data.description = this.props.description
+        settingsMessage.data.colorSpace = this.props.colorSpace
+        settingsMessage.data.visionSimulationMode =
+          this.props.visionSimulationMode
+        settingsMessage.data.textColorsTheme.lightColor = code
+        palette.textColorsTheme.lightColor = code
+        settingsMessage.data.textColorsTheme.darkColor =
+          this.props.textColorsTheme.darkColor
+        settingsMessage.data.algorithmVersion =
+          this.props.algorithmVersion ?? 'v2'
+      }
+
+      if (e.type === 'blur' && this.props.context === 'LOCAL_STYLES') {
+        this.dispatch.textColorsTheme.on.status = false
+        parent.postMessage({ pluginMessage: settingsMessage }, '*')
+      } else if (this.props.context === 'LOCAL_STYLES')
+        this.dispatch.textColorsTheme.on.status = true
+
+      this.props.onChangeSettings({
+        textColorsTheme: settingsMessage.data.textColorsTheme,
+        onGoingStep: 'settings changed',
+      })
+    }
+
+    const updateTextDarkColor = () => {
+      const code: HexModel =
+        target.value.indexOf('#') == -1 ? '#' + target.value : target.value
+
+      if (/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/i.test(code)) {
+        settingsMessage.data.name = this.props.name
+        settingsMessage.data.description = this.props.description
+        settingsMessage.data.colorSpace = this.props.colorSpace
+        settingsMessage.data.visionSimulationMode =
+          this.props.visionSimulationMode
+        settingsMessage.data.textColorsTheme.lightColor =
+          this.props.textColorsTheme.lightColor
+        settingsMessage.data.textColorsTheme.darkColor = code
+        palette.textColorsTheme.darkColor = code
+        settingsMessage.data.algorithmVersion =
+          this.props.algorithmVersion ?? 'v2'
+      }
+
+      if (e.type === 'blur' && this.props.context === 'LOCAL_STYLES') {
+        this.dispatch.textColorsTheme.on.status = false
+        parent.postMessage({ pluginMessage: settingsMessage }, '*')
+      } else if (this.props.context === 'LOCAL_STYLES')
+        this.dispatch.textColorsTheme.on.status = true
+
+      this.props.onChangeSettings({
+        textColorsTheme: settingsMessage.data.textColorsTheme,
+        onGoingStep: 'settings changed',
+      })
+    }
+
+    const actions: ActionsList = {
+      RENAME_PALETTE: () => renamePalette(),
+      UPDATE_DESCRIPTION: () => updateDescription(),
+      UPDATE_VIEW: () => updateView(),
+      UPDATE_COLOR_SPACE: () => updateColorSpace(),
+      UPDATE_COLOR_BLIND_MODE: () => updatevisionSimulationMode(),
+      UPDATE_ALGORITHM_VERSION: () => updateAlgorythmVersion(),
+      CHANGE_TEXT_LIGHT_COLOR: () => updateTextLightColor(),
+      CHANGE_TEXT_DARK_COLOR: () => updateTextDarkColor(),
+      DEFAULT: () => null,
+    }
+
+    return actions[feature]?.()
+  }
+
   // Templates
   Name = () => {
     return (
@@ -74,22 +310,22 @@ export default class Settings extends React.Component<SettingsProps> {
               onChange={
                 isBlocked('SETTINGS_PALETTE_NAME', this.props.planStatus)
                   ? () => null
-                  : this.props.onChangeSettings
+                  : this.settingsHandler
               }
               onFocus={
                 isBlocked('SETTINGS_PALETTE_NAME', this.props.planStatus)
                   ? () => null
-                  : this.props.onChangeSettings
+                  : this.settingsHandler
               }
               onBlur={
                 isBlocked('SETTINGS_PALETTE_NAME', this.props.planStatus)
                   ? () => null
-                  : this.props.onChangeSettings
+                  : this.settingsHandler
               }
               onConfirm={
                 isBlocked('SETTINGS_PALETTE_NAME', this.props.planStatus)
                   ? () => null
-                  : this.props.onChangeSettings
+                  : this.settingsHandler
               }
             />
           </FormItem>
@@ -131,17 +367,17 @@ export default class Settings extends React.Component<SettingsProps> {
               onFocus={
                 isBlocked('SETTINGS_PALETTE_DESCRIPTION', this.props.planStatus)
                   ? () => null
-                  : this.props.onChangeSettings
+                  : this.settingsHandler
               }
               onBlur={
                 isBlocked('SETTINGS_PALETTE_DESCRIPTION', this.props.planStatus)
                   ? () => null
-                  : this.props.onChangeSettings
+                  : this.settingsHandler
               }
               onConfirm={
                 isBlocked('SETTINGS_PALETTE_DESCRIPTION', this.props.planStatus)
                   ? () => null
-                  : this.props.onChangeSettings
+                  : this.settingsHandler
               }
             />
           </FormItem>
@@ -184,7 +420,7 @@ export default class Settings extends React.Component<SettingsProps> {
                       feature.name === 'VIEWS_PALETTE_WITH_PROPERTIES'
                   )?.isNew,
                   children: [],
-                  action: this.props.onChangeSettings,
+                  action: this.settingsHandler,
                 },
                 {
                   label: locals[this.props.lang].settings.global.views.simple,
@@ -200,7 +436,7 @@ export default class Settings extends React.Component<SettingsProps> {
                     (feature) => feature.name === 'VIEWS_PALETTE'
                   )?.isNew,
                   children: [],
-                  action: this.props.onChangeSettings,
+                  action: this.settingsHandler,
                 },
                 {
                   label: locals[this.props.lang].settings.global.views.sheet,
@@ -216,7 +452,7 @@ export default class Settings extends React.Component<SettingsProps> {
                     (feature) => feature.name === 'VIEWS_SHEET'
                   )?.isNew,
                   children: [],
-                  action: this.props.onChangeSettings,
+                  action: this.settingsHandler,
                 },
               ]}
               selected={this.props.view}
@@ -263,7 +499,7 @@ export default class Settings extends React.Component<SettingsProps> {
                     (feature) => feature.name === 'SETTINGS_COLOR_SPACE_LCH'
                   )?.isNew,
                   children: [],
-                  action: this.props.onChangeSettings,
+                  action: this.settingsHandler,
                 },
                 {
                   label:
@@ -283,7 +519,7 @@ export default class Settings extends React.Component<SettingsProps> {
                     (feature) => feature.name === 'SETTINGS_COLOR_SPACE_OKLCH'
                   )?.isNew,
                   children: [],
-                  action: this.props.onChangeSettings,
+                  action: this.settingsHandler,
                 },
                 {
                   label: locals[this.props.lang].settings.color.colorSpace.lab,
@@ -302,7 +538,7 @@ export default class Settings extends React.Component<SettingsProps> {
                     (feature) => feature.name === 'SETTINGS_COLOR_SPACE_LAB'
                   )?.isNew,
                   children: [],
-                  action: this.props.onChangeSettings,
+                  action: this.settingsHandler,
                 },
                 {
                   label:
@@ -322,7 +558,7 @@ export default class Settings extends React.Component<SettingsProps> {
                     (feature) => feature.name === 'SETTINGS_COLOR_SPACE_OKLAB'
                   )?.isNew,
                   children: [],
-                  action: this.props.onChangeSettings,
+                  action: this.settingsHandler,
                 },
                 {
                   label: locals[this.props.lang].settings.color.colorSpace.hsl,
@@ -341,7 +577,7 @@ export default class Settings extends React.Component<SettingsProps> {
                     (feature) => feature.name === 'SETTINGS_COLOR_SPACE_HSL'
                   )?.isNew,
                   children: [],
-                  action: this.props.onChangeSettings,
+                  action: this.settingsHandler,
                 },
                 {
                   label:
@@ -361,7 +597,7 @@ export default class Settings extends React.Component<SettingsProps> {
                     (feature) => feature.name === 'SETTINGS_COLOR_SPACE_HSLUV'
                   )?.isNew,
                   children: [],
-                  action: this.props.onChangeSettings,
+                  action: this.settingsHandler,
                 },
               ]}
               selected={this.props.colorSpace}
@@ -423,7 +659,7 @@ export default class Settings extends React.Component<SettingsProps> {
                     this.props.planStatus
                   ),
                   children: [],
-                  action: this.props.onChangeSettings,
+                  action: this.settingsHandler,
                 },
                 {
                   label: null,
@@ -472,7 +708,7 @@ export default class Settings extends React.Component<SettingsProps> {
                       'SETTINGS_VISION_SIMULATION_MODE_PROTANOMALY'
                   )?.isNew,
                   children: [],
-                  action: this.props.onChangeSettings,
+                  action: this.settingsHandler,
                 },
                 {
                   label:
@@ -497,7 +733,7 @@ export default class Settings extends React.Component<SettingsProps> {
                       'SETTINGS_VISION_SIMULATION_MODE_PROTANOPIA'
                   )?.isNew,
                   children: [],
-                  action: this.props.onChangeSettings,
+                  action: this.settingsHandler,
                 },
                 {
                   label:
@@ -522,7 +758,7 @@ export default class Settings extends React.Component<SettingsProps> {
                       'SETTINGS_VISION_SIMULATION_MODE_DEUTERANOMALY'
                   )?.isNew,
                   children: [],
-                  action: this.props.onChangeSettings,
+                  action: this.settingsHandler,
                 },
                 {
                   label:
@@ -547,7 +783,7 @@ export default class Settings extends React.Component<SettingsProps> {
                       'SETTINGS_VISION_SIMULATION_MODE_DEUTERANOPIA'
                   )?.isNew,
                   children: [],
-                  action: this.props.onChangeSettings,
+                  action: this.settingsHandler,
                 },
                 {
                   label:
@@ -572,7 +808,7 @@ export default class Settings extends React.Component<SettingsProps> {
                       'SETTINGS_VISION_SIMULATION_MODE_TRITANOMALY'
                   )?.isNew,
                   children: [],
-                  action: this.props.onChangeSettings,
+                  action: this.settingsHandler,
                 },
                 {
                   label:
@@ -597,7 +833,7 @@ export default class Settings extends React.Component<SettingsProps> {
                       'SETTINGS_VISION_SIMULATION_MODE_TRITANOPIA'
                   )?.isNew,
                   children: [],
-                  action: this.props.onChangeSettings,
+                  action: this.settingsHandler,
                 },
                 {
                   label:
@@ -622,7 +858,7 @@ export default class Settings extends React.Component<SettingsProps> {
                       'SETTINGS_VISION_SIMULATION_MODE_ACHROMATOMALY'
                   )?.isNew,
                   children: [],
-                  action: this.props.onChangeSettings,
+                  action: this.settingsHandler,
                 },
                 {
                   label:
@@ -647,7 +883,7 @@ export default class Settings extends React.Component<SettingsProps> {
                       'SETTINGS_VISION_SIMULATION_MODE_ACHROMATOPSIA'
                   )?.isNew,
                   children: [],
-                  action: this.props.onChangeSettings,
+                  action: this.settingsHandler,
                 },
               ]}
               selected={this.props.visionSimulationMode}
@@ -678,7 +914,7 @@ export default class Settings extends React.Component<SettingsProps> {
             type="SWITCH_BUTTON"
             name="algorythm"
             label={locals[this.props.lang].settings.color.newAlgorithm.label}
-            isChecked={this.props.isNewAlgorithm ?? true}
+            isChecked={this.props.algorithmVersion == 'v2' ? true : false}
             isBlocked={isBlocked(
               'SETTINGS_NEW_ALGORITHM',
               this.props.planStatus
@@ -692,7 +928,7 @@ export default class Settings extends React.Component<SettingsProps> {
             onChange={
               isBlocked('SETTINGS_NEW_ALGORITHM', this.props.planStatus)
                 ? () => null
-                : this.props.onChangeSettings
+                : this.settingsHandler
             }
           />
           <Message
@@ -752,17 +988,17 @@ export default class Settings extends React.Component<SettingsProps> {
               onChange={
                 isBlocked('SETTINGS_TEXT_COLORS_THEME', this.props.planStatus)
                   ? () => null
-                  : this.props.onChangeSettings
+                  : this.settingsHandler
               }
               onFocus={
                 isBlocked('SETTINGS_TEXT_COLORS_THEME', this.props.planStatus)
                   ? () => null
-                  : this.props.onChangeSettings
+                  : this.settingsHandler
               }
               onBlur={
                 isBlocked('SETTINGS_TEXT_COLORS_THEME', this.props.planStatus)
                   ? () => null
-                  : this.props.onChangeSettings
+                  : this.settingsHandler
               }
             />
           </FormItem>
@@ -797,17 +1033,17 @@ export default class Settings extends React.Component<SettingsProps> {
               onChange={
                 isBlocked('SETTINGS_TEXT_COLORS_THEME', this.props.planStatus)
                   ? () => null
-                  : this.props.onChangeSettings
+                  : this.settingsHandler
               }
               onFocus={
                 isBlocked('SETTINGS_TEXT_COLORS_THEME', this.props.planStatus)
                   ? () => null
-                  : this.props.onChangeSettings
+                  : this.settingsHandler
               }
               onBlur={
                 isBlocked('SETTINGS_TEXT_COLORS_THEME', this.props.planStatus)
                   ? () => null
-                  : this.props.onChangeSettings
+                  : this.settingsHandler
               }
             />
           </FormItem>
