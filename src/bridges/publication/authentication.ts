@@ -100,7 +100,7 @@ export const signIn = async () => {
             '*'
           )
           clearInterval(poll)
-          throw 'Timeout' 
+          throw 'Timeout'
         }
       }, 2 * 60 * 1000)
     })
@@ -120,7 +120,7 @@ export const signIn = async () => {
 
 export const signOut = async () => {
   const { error } = await supabase.auth.signOut({
-    scope: 'global'
+    scope: 'global',
   })
 
   if (!error) {

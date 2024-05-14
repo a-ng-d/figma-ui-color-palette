@@ -30,7 +30,7 @@ export interface CreatorIdentity {
 }
 
 export interface PublicationDetails {
-  creatorIdentity : CreatorIdentity
+  creatorIdentity: CreatorIdentity
   dates: DatesConfiguration
   publicationStatus: PublicationStatus
 }

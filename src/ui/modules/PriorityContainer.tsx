@@ -48,7 +48,7 @@ export default class PriorityContainer extends React.Component<
     this.counter = 0
     this.state = {
       isPrimaryActionLoading: false,
-      isSecondaryActionLoading: false
+      isSecondaryActionLoading: false,
     }
   }
 
@@ -290,49 +290,51 @@ export default class PriorityContainer extends React.Component<
           <Dialog
             title={locals[this.props.lang].publication.title}
             actions={{
-            primary: {
-              label: locals[this.props.lang].publication.ctaWhenSignedOut,
-              state: this.state['isPrimaryActionLoading']
-                ? 'LOADING'
-                : 'DEFAULT',
-              action: async () => {
-                this.setState({ isPrimaryActionLoading: true })
-                signIn()
-                  .finally(() => {
+              primary: {
+                label: locals[this.props.lang].publication.ctaWhenSignedOut,
+                state: this.state['isPrimaryActionLoading']
+                  ? 'LOADING'
+                  : 'DEFAULT',
+                action: async () => {
+                  this.setState({ isPrimaryActionLoading: true })
+                  signIn().finally(() => {
                     this.setState({ isPrimaryActionLoading: false })
                   })
-              }
-            },
-          }}
-          onClose={this.props.onClose}
-        >
-          <div className="dialog__cover">
-            <img
-              src={pp}
-              style={{
-                width: '100%',
-              }}
-            />
-          </div>
-          <div className="dialog__text">
-            <p className={`type ${texts.type}`}>
-              {locals[this.props.lang].publication.message}
-            </p>
-          </div>
-        </Dialog>
+                },
+              },
+            }}
+            onClose={this.props.onClose}
+          >
+            <div className="dialog__cover">
+              <img
+                src={pp}
+                style={{
+                  width: '100%',
+                }}
+              />
+            </div>
+            <div className="dialog__text">
+              <p className={`type ${texts.type}`}>
+                {locals[this.props.lang].publication.message}
+              </p>
+            </div>
+          </Dialog>
         ) : (
           <Publication
             rawData={this.props.rawData}
             isPrimaryActionLoading={this.state['isPrimaryActionLoading']}
             isSecondaryActionLoading={this.state['isSecondaryActionLoading']}
             lang={this.props.lang}
-            onPrimaryActionLoading={(e) => this.setState({ isPrimaryActionLoading: e })}
-            onSecondaryActionLoading={(e) => this.setState({ isSecondaryActionLoading: e })}
+            onPrimaryActionLoading={(e) =>
+              this.setState({ isPrimaryActionLoading: e })
+            }
+            onSecondaryActionLoading={(e) =>
+              this.setState({ isSecondaryActionLoading: e })
+            }
             onPalettePublished={this.props.onPalettePublished}
             onClosePublication={this.props.onClose}
           />
         )}
-        
       </Feature>
     )
   }

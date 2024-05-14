@@ -538,7 +538,7 @@ export default class Colors {
     this.palette?.setPluginData('updatedAt', updatedAt)
     figma.ui.postMessage({
       type: 'UPDATE_PALETTE',
-      data: updatedAt
+      data: updatedAt,
     })
   }
 

@@ -8,7 +8,14 @@ import type {
   PlanStatus,
 } from '../../utils/types'
 import Feature from '../components/Feature'
-import { FormItem, Input, Select, Message, Dropdown, SectionTitle } from '@a_ng_d/figmug-ui'
+import {
+  FormItem,
+  Input,
+  Select,
+  Message,
+  Dropdown,
+  SectionTitle,
+} from '@a_ng_d/figmug-ui'
 import Actions from './Actions'
 import features from '../../utils/config'
 import isBlocked from '../../utils/isBlocked'

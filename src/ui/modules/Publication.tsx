@@ -20,14 +20,17 @@ interface PublicationStates {
   isPaletteShared: boolean
 }
 
-export default class Publication extends React.Component<PublicationProps, PublicationStates> {
+export default class Publication extends React.Component<
+  PublicationProps,
+  PublicationStates
+> {
   counter: number
 
   constructor(props: PublicationProps) {
     super(props)
     this.counter = 0
     this.state = {
-      isPaletteShared: this.props.rawData.publicationStatus.isShared
+      isPaletteShared: this.props.rawData.publicationStatus.isShared,
     }
   }
 
@@ -58,27 +61,19 @@ export default class Publication extends React.Component<PublicationProps, Publi
   getPaletteStatus = () => {
     const publishedAt = new Date(this.props.rawData.dates.publishedAt),
       updatedAt = new Date(this.props.rawData.dates.updatedAt)
-    
+
     if (this.props.rawData.publicationStatus.isPublished)
       if (publishedAt < updatedAt)
-        return(
-          <Chip>
-            {locals[this.props.lang].publication.statusChanges}
-          </Chip>
-        )
+        return <Chip>{locals[this.props.lang].publication.statusChanges}</Chip>
       else
         return (
-          <Chip
-            state='INACTIVE'
-          >
+          <Chip state="INACTIVE">
             {locals[this.props.lang].publication.statusUptoDate}
           </Chip>
         )
     else
       return (
-        <Chip
-          state='INACTIVE'
-        >
+        <Chip state="INACTIVE">
           {locals[this.props.lang].publication.statusUnpublished}
         </Chip>
       )
@@ -89,18 +84,16 @@ export default class Publication extends React.Component<PublicationProps, Publi
       themesNumber = this.props.rawData.themes.filter(
         (theme) => theme.type === 'custom theme'
       ).length
-    
+
     let colorLabel: string, themeLabel: string
 
     if (colorsNumber > 1)
       colorLabel = locals[this.props.lang].actions.sourceColorsNumber.several
-    else
-      colorLabel = locals[this.props.lang].actions.sourceColorsNumber.single
+    else colorLabel = locals[this.props.lang].actions.sourceColorsNumber.single
 
     if (themesNumber > 1)
       themeLabel = locals[this.props.lang].actions.colorThemesNumber.several
-    else
-      themeLabel = locals[this.props.lang].actions.colorThemesNumber.single
+    else themeLabel = locals[this.props.lang].actions.colorThemesNumber.single
 
     return `${colorsNumber} ${colorLabel}, ${themesNumber} ${themeLabel}`
   }
@@ -113,12 +106,13 @@ export default class Publication extends React.Component<PublicationProps, Publi
         actions={{
           primary: {
             label: locals[this.props.lang].publication.publish,
-            state: this.props.isPrimaryActionLoading
-              ? 'LOADING'
-              : 'DEFAULT',
+            state: this.props.isPrimaryActionLoading ? 'LOADING' : 'DEFAULT',
             action: async () => {
               this.props.onPrimaryActionLoading(true)
-              publishPalette(this.props.rawData, this.props.isPrimaryActionLoading)
+              publishPalette(
+                this.props.rawData,
+                this.props.isPrimaryActionLoading
+              )
                 .then((data) => {
                   this.props.onPalettePublished(data)
                 })
@@ -136,21 +130,24 @@ export default class Publication extends React.Component<PublicationProps, Publi
                   : 'DEFAULT',
                 action: async () => {
                   this.props.onSecondaryActionLoading(true)
-                  publishPalette(this.props.rawData, this.props.isSecondaryActionLoading).finally(() => {
+                  publishPalette(
+                    this.props.rawData,
+                    this.props.isSecondaryActionLoading
+                  ).finally(() => {
                     this.props.onSecondaryActionLoading(false)
                   })
                 },
               }
             else undefined
-          })()
+          })(),
         }}
         select={{
           label: locals[this.props.lang].publication.selectToShare,
           state: this.state['isPaletteShared'],
           action: () =>
             this.setState({
-              isPaletteShared: !this.state['isPaletteShared']
-            })
+              isPaletteShared: !this.state['isPaletteShared'],
+            }),
         }}
         onClose={this.props.onClosePublication}
       >
@@ -168,15 +165,13 @@ export default class Publication extends React.Component<PublicationProps, Publi
             <div className={`${texts.type} type`}>
               {this.props.rawData.preset.name}
             </div>
-            <div
-              className={`${texts.type} ${texts['type--secondary']} type`}
-            >
+            <div className={`${texts.type} ${texts['type--secondary']} type`}>
               {this.getPaletteMeta()}
             </div>
           </div>
-          <div className={`type ${texts.type} ${texts['type--secondary']}`}>
-            
-          </div>
+          <div
+            className={`type ${texts.type} ${texts['type--secondary']}`}
+          ></div>
         </div>
       </Dialog>
     )

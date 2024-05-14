@@ -655,7 +655,7 @@ class App extends React.Component<Record<string, never>, AppStates> {
       dates: {
         createdAt: this.state['dates']['createdAt'],
         updatedAt: this.state['dates']['updatedAt'],
-        publishedAt: e.dates.publishedAt
+        publishedAt: e.dates.publishedAt,
       },
       publicationStatus: {
         isPublished: e.publicationStatus.isPublished,
@@ -665,7 +665,7 @@ class App extends React.Component<Record<string, never>, AppStates> {
         creatorFullName: e.creatorIdentity.creatorFullName,
         creatorAvatar: e.creatorIdentity.creatorAvatar,
         creatorId: e.creatorIdentity.creatorId,
-      }
+      },
     })
 
   // Render
@@ -1020,13 +1020,13 @@ class App extends React.Component<Record<string, never>, AppStates> {
           this.setState({
             screenshot: bytes,
           })
-        
+
         const updatePaletteDate = (date: Date) =>
           this.setState({
             dates: {
               createdAt: this.state['dates']['createdAt'],
               updatedAt: date,
-              publishedAt: this.state['dates']['publishedAt']
+              publishedAt: this.state['dates']['publishedAt'],
             },
           })
 
@@ -1061,7 +1061,8 @@ class App extends React.Component<Record<string, never>, AppStates> {
           EXPORT_PALETTE_CSV: () => exportPaletteToCsv(),
           EXPOSE_PALETTES: () => exposePalettes(e.data.pluginMessage?.data),
           UPDATE_SCREENSHOT: () => updateScreenshot(e.data.pluginMessage?.data),
-          UPDATE_PALETTE_DATE: () => updatePaletteDate(e.data.pluginMessage?.data),
+          UPDATE_PALETTE_DATE: () =>
+            updatePaletteDate(e.data.pluginMessage?.data),
           GET_PRO_PLAN: () => getProPlan(),
           ENABLE_TRIAL: () => enableTrial(),
           DEFAULT: () => null,

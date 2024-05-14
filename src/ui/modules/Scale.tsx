@@ -12,7 +12,15 @@ import type {
   NamingConvention,
 } from '../../utils/types'
 import Feature from '../components/Feature'
-import { Button, Dropdown, texts, SectionTitle, Dialog, KeyboardShortcutItem, FormItem } from '@a_ng_d/figmug-ui'
+import {
+  Button,
+  Dropdown,
+  texts,
+  SectionTitle,
+  Dialog,
+  KeyboardShortcutItem,
+  FormItem,
+} from '@a_ng_d/figmug-ui'
 import Slider from '../components/Slider'
 import Actions from './Actions'
 import { palette, presets } from '../../utils/palettePackage'

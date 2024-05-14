@@ -8,21 +8,25 @@ import type { AppStates } from '../../ui/App'
 import { supabase } from './authentication'
 import { lang, locals } from '../../content/locals'
 
-const publishPalette = async (rawData: AppStates, isShared = false): Promise<PublicationDetails> => {
+const publishPalette = async (
+  rawData: AppStates,
+  isShared = false
+): Promise<PublicationDetails> => {
   let imageUrl = null
 
   if (rawData.screenshot !== null) {
     const { data, error } = await supabase.storage
-    .from(palettesStorageName)
-    .upload(
-      `${rawData.userSession.userId}/${rawData.id}.png`,
-      rawData.screenshot.buffer,
-      {
-        contentType: 'image/png',
-      }
-    )
+      .from(palettesStorageName)
+      .upload(
+        `${rawData.userSession.userId}/${rawData.id}.png`,
+        rawData.screenshot.buffer,
+        {
+          contentType: 'image/png',
+        }
+      )
 
-    if (!error) imageUrl = `${databaseUrl}/storage/v1/object/public/${palettesStorageName}/${rawData.userSession.userId}/${rawData.id}.png`
+    if (!error)
+      imageUrl = `${databaseUrl}/storage/v1/object/public/${palettesStorageName}/${rawData.userSession.userId}/${rawData.id}.png`
   }
 
   const { data, error } = await supabase
@@ -61,7 +65,7 @@ const publishPalette = async (rawData: AppStates, isShared = false): Promise<Pub
       creatorIdentity: {
         creatorFullName: rawData.userSession.userFullName,
         creatorAvatar: rawData.userSession.userAvatar,
-        creatorId: rawData.userSession.userId ?? ''
+        creatorId: rawData.userSession.userId ?? '',
       },
       dates: {
         publishedAt: new Date().toISOString(),
@@ -71,7 +75,7 @@ const publishPalette = async (rawData: AppStates, isShared = false): Promise<Pub
       publicationStatus: {
         isPublished: true,
         isShared: isShared,
-      }
+      },
     }
 
     parent.postMessage(
@@ -85,11 +89,13 @@ const publishPalette = async (rawData: AppStates, isShared = false): Promise<Pub
             },
             {
               key: 'isPublished',
-              value: palettePublicationDetails.publicationStatus.isPublished.toString(),
+              value:
+                palettePublicationDetails.publicationStatus.isPublished.toString(),
             },
             {
               key: 'isShared',
-              value: palettePublicationDetails.publicationStatus.isShared.toString(),
+              value:
+                palettePublicationDetails.publicationStatus.isShared.toString(),
             },
             {
               key: 'creatorAvatar',
