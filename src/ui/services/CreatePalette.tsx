@@ -9,8 +9,7 @@ import type {
   PlanStatus,
   NamingConvention,
 } from '../../utils/types'
-import { Bar } from '@a_ng_d/figmug-ui'
-import { Tabs } from '@a_ng_d/figmug-ui'
+import { Bar, Tabs } from '@a_ng_d/figmug-ui'
 import Scale from '../modules/Scale'
 import Settings from '../modules/Settings'
 import { palette } from '../../utils/palettePackage'

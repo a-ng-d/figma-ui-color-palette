@@ -1,7 +1,6 @@
 import React from 'react'
 import type { ActionsList } from '../../utils/types'
-import { Input } from '@a_ng_d/figmug-ui'
-import { texts } from '@a_ng_d/figmug-ui'
+import { Input, texts } from '@a_ng_d/figmug-ui'
 
 interface KnobProps {
   id: string
@@ -53,7 +52,7 @@ export default class Knob extends React.Component<KnobProps, States> {
           })
       },
       Escape: () => {
-        ;(e.target as HTMLElement).blur()
+        (e.target as HTMLElement).blur()
         this.setState({ isStopInputOpen: false })
       },
       Backspace: () => {

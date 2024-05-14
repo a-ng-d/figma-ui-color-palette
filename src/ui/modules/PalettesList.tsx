@@ -1,7 +1,6 @@
 import React from 'react'
 import type { ExtractOfPaletteConfiguration, Language } from '../../utils/types'
-import { Message } from '@a_ng_d/figmug-ui'
-import { texts } from '@a_ng_d/figmug-ui'
+import { Message, texts } from '@a_ng_d/figmug-ui'
 import { locals } from '../../content/locals'
 
 interface PalettesListProps {

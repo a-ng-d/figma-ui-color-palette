@@ -7,11 +7,7 @@ import type {
   UserSession,
 } from '../../utils/types'
 import Feature from '../components/Feature'
-import { Bar } from '@a_ng_d/figmug-ui'
-import { Button } from '@a_ng_d/figmug-ui'
-import { Menu } from '@a_ng_d/figmug-ui'
-import { icons } from '@a_ng_d/figmug-ui'
-import { texts } from '@a_ng_d/figmug-ui'
+import { Bar, Button, Menu, icons, texts } from '@a_ng_d/figmug-ui'
 import features from '../../utils/config'
 import { locals } from '../../content/locals'
 import isBlocked from '../../utils/isBlocked'

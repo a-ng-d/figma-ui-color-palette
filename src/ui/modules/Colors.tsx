@@ -13,9 +13,7 @@ import type {
   PlanStatus,
 } from '../../utils/types'
 import Dispatcher from './Dispatcher'
-import { Button } from '@a_ng_d/figmug-ui'
-import { Message } from '@a_ng_d/figmug-ui'
-import { SectionTitle } from '@a_ng_d/figmug-ui'
+import { Button, Message, SectionTitle } from '@a_ng_d/figmug-ui'
 import ColorItem from '../components/ColorItem'
 import Actions from './Actions'
 import { locals } from '../../content/locals'

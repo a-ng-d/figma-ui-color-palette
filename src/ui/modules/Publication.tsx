@@ -1,10 +1,9 @@
 import React from 'react'
 import type { AppStates } from '../App'
 import type { Language, PublicationDetails } from '../../utils/types'
-import { Dialog, Thumbnail, Chip } from '@a_ng_d/figmug-ui'
+import { Dialog, Thumbnail, Chip, texts } from '@a_ng_d/figmug-ui'
 import publishPalette from '../../bridges/publication/publishPalette'
 import { locals } from '../../content/locals'
-import { texts } from '@a_ng_d/figmug-ui'
 
 interface PublicationProps {
   rawData: AppStates

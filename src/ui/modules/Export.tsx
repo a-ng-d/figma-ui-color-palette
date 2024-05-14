@@ -6,10 +6,7 @@ import type {
   PlanStatus,
 } from '../../utils/types'
 import type { DropdownOption } from '@a_ng_d/figmug-ui'
-import { Input } from '@a_ng_d/figmug-ui'
-import { Dropdown } from '@a_ng_d/figmug-ui'
-import { SectionTitle } from '@a_ng_d/figmug-ui'
-import { Menu } from '@a_ng_d/figmug-ui'
+import { Input, Dropdown, SectionTitle, Menu } from '@a_ng_d/figmug-ui'
 import Actions from './Actions'
 import features from '../../utils/config'
 import isBlocked from '../../utils/isBlocked'
