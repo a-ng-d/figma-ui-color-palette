@@ -533,8 +533,13 @@ export default class Colors {
       this.paletteData.themes.push(paletteDataThemeItem)
     })
 
+    const updatedAt = new Date().toISOString()
     this.palette?.setPluginData('data', JSON.stringify(this.paletteData))
-    this.palette?.setPluginData('updatedAt', new Date().toISOString())
+    this.palette?.setPluginData('updatedAt', updatedAt)
+    figma.ui.postMessage({
+      type: 'UPDATE_PALETTE',
+      data: updatedAt
+    })
   }
 
   makeNodeShades = () => {

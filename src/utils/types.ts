@@ -23,6 +23,18 @@ export interface PublicationStatus {
   isShared: boolean
 }
 
+export interface CreatorIdentity {
+  creatorFullName: string
+  creatorAvatar: string
+  creatorId: string
+}
+
+export interface PublicationDetails {
+  creatorIdentity : CreatorIdentity
+  dates: DatesConfiguration
+  publicationStatus: PublicationStatus
+}
+
 export interface UserSession {
   connectionStatus: ConnectionStatus
   userFullName: string
@@ -258,9 +270,9 @@ export type ViewConfiguration =
 export type AlgorithmVersionConfiguration = 'v1' | 'v2'
 
 export interface DatesConfiguration {
-  createdAt: DateConstructor | string
-  updatedAt: DateConstructor | string
-  publishedAt: DateConstructor | string
+  createdAt: Date | string
+  updatedAt: Date | string
+  publishedAt: Date | string
 }
 
 // Processes

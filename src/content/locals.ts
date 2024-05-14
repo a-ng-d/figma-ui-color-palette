@@ -45,8 +45,12 @@ export const locals: { [key: string]: any } = {
       message:
         'Publish your palette to reuse in others Figma document and share it with the community',
       selectToShare: 'Share with community',
-      ctaWhenSignedIn: 'Publish…',
-      ctaWhenSignedOut: 'Sign in to publish',
+      statusChanges: 'Changes',
+      statusUptoDate: 'No change',
+      statusUnpublished: 'Unpublished',
+      publish: 'Publish…',
+      unpublish: 'Unpublish',
+      signIn: 'Sign in to publish',
     },
     relaunch: {
       create: {

@@ -28,6 +28,8 @@ import type {
   UserSession,
   PublicationStatus,
   DatesConfiguration,
+  CreatorIdentity,
+  PublicationDetails,
 } from '../utils/types'
 import Dispatcher from './modules/Dispatcher'
 import checkConnectionStatus from '../bridges/checks/checkConnectionStatus'
@@ -71,6 +73,7 @@ export interface AppStates {
   trialStatus: TrialStatus
   trialRemainingTime: number
   publicationStatus: PublicationStatus
+  creatorIdentity: CreatorIdentity
   userSession: UserSession
   priorityContainerContext: PriorityContext
   lang: Language
@@ -160,6 +163,11 @@ class App extends React.Component<Record<string, never>, AppStates> {
       publicationStatus: {
         isPublished: false,
         isShared: false,
+      },
+      creatorIdentity: {
+        creatorFullName: '',
+        creatorAvatar: '',
+        creatorId: '',
       },
       priorityContainerContext: 'EMPTY',
       lang: 'en-US',
@@ -642,9 +650,22 @@ class App extends React.Component<Record<string, never>, AppStates> {
     return actions[e.target.dataset.feature]?.()
   }
 
-  publishHandler = () =>
+  publicationHandler = (e: PublicationDetails) =>
     this.setState({
-      priorityContainerContext: 'PUBLICATION',
+      dates: {
+        createdAt: this.state['dates']['createdAt'],
+        updatedAt: this.state['dates']['updatedAt'],
+        publishedAt: e.dates.publishedAt
+      },
+      publicationStatus: {
+        isPublished: e.publicationStatus.isPublished,
+        isShared: e.publicationStatus.isShared,
+      },
+      creatorIdentity: {
+        creatorFullName: e.creatorIdentity.creatorFullName,
+        creatorAvatar: e.creatorIdentity.creatorAvatar,
+        creatorId: e.creatorIdentity.creatorId,
+      }
     })
 
   // Render
@@ -709,6 +730,11 @@ class App extends React.Component<Record<string, never>, AppStates> {
               isPublished: false,
               isShared: false,
             },
+            creatorIdentity: {
+              creatorFullName: '',
+              creatorAvatar: '',
+              creatorId: '',
+            },
             priorityContainerContext: (() => {
               if (this.state['priorityContainerContext'] === 'PUBLICATION')
                 return 'EMPTY'
@@ -756,6 +782,11 @@ class App extends React.Component<Record<string, never>, AppStates> {
               publicationStatus: {
                 isPublished: false,
                 isShared: false,
+              },
+              creatorIdentity: {
+                creatorFullName: '',
+                creatorAvatar: '',
+                creatorId: '',
               },
               priorityContainerContext: (() => {
                 if (this.state['priorityContainerContext'] === 'PUBLICATION')
@@ -838,6 +869,11 @@ class App extends React.Component<Record<string, never>, AppStates> {
             publicationStatus: {
               isPublished: e.data.pluginMessage.data.isPublished,
               isShared: e.data.pluginMessage.data.isShared,
+            },
+            creatorIdentity: {
+              creatorFullName: e.data.pluginMessage.data.creatorFullName,
+              creatorAvatar: e.data.pluginMessage.data.creatorAvatar,
+              creatorId: e.data.pluginMessage.data.creatorId,
             },
             onGoingStep: 'palette selected',
           })
@@ -984,6 +1020,15 @@ class App extends React.Component<Record<string, never>, AppStates> {
           this.setState({
             screenshot: bytes,
           })
+        
+        const updatePaletteDate = (date: Date) =>
+          this.setState({
+            dates: {
+              createdAt: this.state['dates']['createdAt'],
+              updatedAt: date,
+              publishedAt: this.state['dates']['publishedAt']
+            },
+          })
 
         const getProPlan = () =>
           this.setState({
@@ -1016,6 +1061,7 @@ class App extends React.Component<Record<string, never>, AppStates> {
           EXPORT_PALETTE_CSV: () => exportPaletteToCsv(),
           EXPOSE_PALETTES: () => exposePalettes(e.data.pluginMessage?.data),
           UPDATE_SCREENSHOT: () => updateScreenshot(e.data.pluginMessage?.data),
+          UPDATE_PALETTE_DATE: () => updatePaletteDate(e.data.pluginMessage?.data),
           GET_PRO_PLAN: () => getProPlan(),
           ENABLE_TRIAL: () => enableTrial(),
           DEFAULT: () => null,
@@ -1083,7 +1129,9 @@ class App extends React.Component<Record<string, never>, AppStates> {
               onChangeColors={this.colorsHandler}
               onChangeThemes={this.themesHandler}
               onChangeSettings={this.settingsHandler}
-              onPublishPalette={this.publishHandler}
+              onPublishPalette={() =>
+                this.setState({ priorityContainerContext: 'PUBLICATION' })
+              }
             />
           </Feature>
           <Feature
@@ -1120,6 +1168,7 @@ class App extends React.Component<Record<string, never>, AppStates> {
               trialStatus={this.state['trialStatus']}
               userSession={this.state['userSession']}
               lang={this.state['lang']}
+              onPalettePublished={this.publicationHandler}
               onClose={() =>
                 this.setState({ priorityContainerContext: 'EMPTY' })
               }

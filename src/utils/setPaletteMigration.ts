@@ -31,6 +31,9 @@ const setPaletteMigration = (palette: BaseNode) => {
     data = palette.getPluginData('data'),
     isPublished = palette.getPluginData('isPublished'),
     isShared = palette.getPluginData('isShared'),
+    creatorFullName = palette.getPluginData('creatorFullName'),
+    creatorAvatar = palette.getPluginData('creatorAvatar'),
+    creatorId = palette.getPluginData('creatorId'),
     createdAt = palette.getPluginData('createdAt'),
     updatedAt = palette.getPluginData('updatedAt'),
     publishedAt = palette.getPluginData('publishedAt')
@@ -155,6 +158,11 @@ const setPaletteMigration = (palette: BaseNode) => {
   // publication and share
   if (isPublished === '') palette.setPluginData('isPublished', 'false')
   if (isShared === '') palette.setPluginData('isShared', 'false')
+
+  // creator identity
+  if (creatorFullName === '') palette.setPluginData('creatorFullName', '')
+  if (creatorAvatar === '') palette.setPluginData('creatorAvatar', '')
+  if (creatorId === '') palette.setPluginData('creatorId', '')
 
   // created, updated and published
   if (createdAt === '')

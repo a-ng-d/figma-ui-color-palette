@@ -3,21 +3,20 @@ import type {
   Language,
   PlanStatus,
   PriorityContext,
-  ThemeConfiguration,
+  PublicationDetails,
   TrialStatus,
   UserSession,
 } from '../../utils/types'
 import type { AppStates } from '../App'
 import Feature from '../components/Feature'
+import Publication from './Publication'
 import { Dialog } from '@a_ng_d/figmug-ui'
-import { Thumbnail } from '@a_ng_d/figmug-ui'
 import Highlight from './Highlight'
 import About from './About'
 import cp from '../../content/images/choose_plan.webp'
 import pp from '../../content/images/pro_plan.webp'
 import t from '../../content/images/trial.webp'
 import { signIn } from '../../bridges/publication/authentication'
-import publishPalette from '../../bridges/publication/publishPalette'
 import { locals } from '../../content/locals'
 import { texts } from '@a_ng_d/figmug-ui'
 import features from '../../utils/config'
@@ -30,13 +29,13 @@ interface PriorityContainerProps {
   trialStatus: TrialStatus
   userSession: UserSession
   lang: Language
+  onPalettePublished: (e: PublicationDetails) => void
   onClose: React.ChangeEventHandler & (() => void)
 }
 
 interface PriorityContainerStates {
-  isPaletteShared: boolean
   isPrimaryActionLoading: boolean
-  isSecondaryLoading: boolean
+  isSecondaryActionLoading: boolean
 }
 
 export default class PriorityContainer extends React.Component<
@@ -49,34 +48,9 @@ export default class PriorityContainer extends React.Component<
     super(props)
     this.counter = 0
     this.state = {
-      isPaletteShared: this.props.rawData.publicationStatus.isShared,
       isPrimaryActionLoading: false,
-      isSecondaryLoading: false,
+      isSecondaryActionLoading: false
     }
-  }
-
-  // Direct actions
-  getImageSrc = () => {
-    if (this.props.rawData.screenshot !== null) {
-      const blob = new Blob([this.props.rawData.screenshot], {
-        type: 'image/png',
-      })
-      return URL.createObjectURL(blob)
-    } else return ''
-  }
-
-  uploadPaletteScreenshot = () => {
-    this.counter == 0
-      ? parent.postMessage(
-          {
-            pluginMessage: {
-              type: 'UPDATE_SCREENSHOT',
-            },
-          },
-          '*'
-        )
-      : null
-    this.counter = 1
   }
 
   // Templates
@@ -307,88 +281,59 @@ export default class PriorityContainer extends React.Component<
   }
 
   Publication = () => {
-    this.uploadPaletteScreenshot()
-    console.log(this.state['isPaletteShared'])
     return (
       <Feature
         isActive={
           features.find((feature) => feature.name === 'PUBLICATION')?.isActive
         }
       >
-        <Dialog
-          title={locals[this.props.lang].publication.title}
-          actions={{
+        {this.props.rawData.userSession.connectionStatus === 'UNCONNECTED' ? (
+          <Dialog
+            title={locals[this.props.lang].publication.title}
+            actions={{
             primary: {
-              label: (() =>
-                this.props.userSession.connectionStatus === 'CONNECTED'
-                  ? locals[this.props.lang].publication.ctaWhenSignedIn
-                  : locals[this.props.lang].publication.ctaWhenSignedOut)(),
+              label: locals[this.props.lang].publication.ctaWhenSignedOut,
               state: this.state['isPrimaryActionLoading']
                 ? 'LOADING'
                 : 'DEFAULT',
-              action: async () =>
-                this.props.userSession.connectionStatus === 'CONNECTED'
-                  ? (() => {
-                      this.setState({ isPrimaryActionLoading: true })
-                      publishPalette(this.props.rawData, this.state['isPrimaryActionLoading']).finally(() => {
-                        this.setState({ isPrimaryActionLoading: false })
-                      })
-                    })()
-                  : (() => {
-                      this.setState({ isPrimaryActionLoading: true })
-                      signIn().finally(() => {
-                        this.setState({ isPrimaryActionLoading: false })
-                      })
-                    })(),
+              action: async () => {
+                this.setState({ isPrimaryActionLoading: true })
+                signIn()
+                  .finally(() => {
+                    this.setState({ isPrimaryActionLoading: false })
+                  })
+              }
             },
-          }}
-          select={{
-            label: locals[this.props.lang].publication.selectToShare,
-            state: this.state['isPaletteShared'],
-            action: () =>
-              this.setState({
-                isPaletteShared: !this.state['isPaletteShared'],
-              }),
           }}
           onClose={this.props.onClose}
         >
-          <div className="dialog__cover dialog__cover--padding">
-            <Thumbnail src={this.getImageSrc()} />
+          <div className="dialog__cover">
+            <img
+              src={pp}
+              style={{
+                width: '100%',
+              }}
+            />
           </div>
-          <div className={`dialog__text`}>
-            <div>
-              <div className={`${texts.type} type--large`}>
-                {this.props.rawData.name === ''
-                  ? locals[this.props.lang].name
-                  : this.props.rawData.name}
-              </div>
-              <div className={`${texts.type} type`}>
-                {this.props.rawData.preset.name}
-              </div>
-              <div
-                className={`${texts.type} ${texts['type--secondary']} type`}
-              >{`${this.props.rawData.colors.length} ${
-                this.props.rawData.colors.length > 1
-                  ? locals[this.props.lang].actions.sourceColorsNumber.several
-                  : locals[this.props.lang].actions.sourceColorsNumber.single
-              }, ${
-                this.props.rawData.themes.filter(
-                  (theme: ThemeConfiguration) => theme.type === 'custom theme'
-                ).length
-              } ${
-                this.props.rawData.themes.filter(
-                  (theme: ThemeConfiguration) => theme.type === 'custom theme'
-                ).length > 1
-                  ? locals[this.props.lang].actions.colorThemesNumber.several
-                  : locals[this.props.lang].actions.colorThemesNumber.single
-              }`}</div>
-            </div>
-
-            <div className={`type ${texts.type}`}>
+          <div className="dialog__text">
+            <p className={`type ${texts.type}`}>
               {locals[this.props.lang].publication.message}
-            </div>
+            </p>
           </div>
         </Dialog>
+        ) : (
+          <Publication
+            rawData={this.props.rawData}
+            isPrimaryActionLoading={this.state['isPrimaryActionLoading']}
+            isSecondaryActionLoading={this.state['isSecondaryActionLoading']}
+            lang={this.props.lang}
+            onPrimaryActionLoading={(e) => this.setState({ isPrimaryActionLoading: e })}
+            onSecondaryActionLoading={(e) => this.setState({ isSecondaryActionLoading: e })}
+            onPalettePublished={this.props.onPalettePublished}
+            onClosePublication={this.props.onClose}
+          />
+        )}
+        
       </Feature>
     )
   }

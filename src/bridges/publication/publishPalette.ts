@@ -1,3 +1,4 @@
+import type { PublicationDetails } from '../../utils/types'
 import {
   databaseUrl,
   palettesDbTableName,
@@ -7,7 +8,7 @@ import type { AppStates } from '../../ui/App'
 import { supabase } from './authentication'
 import { lang, locals } from '../../content/locals'
 
-const publishPalette = async (rawData: AppStates, isShared = false) => {
+const publishPalette = async (rawData: AppStates, isShared = false): Promise<PublicationDetails> => {
   let imageUrl = null
 
   if (rawData.screenshot !== null) {
@@ -56,6 +57,23 @@ const publishPalette = async (rawData: AppStates, isShared = false) => {
   console.log(data)
 
   if (!error) {
+    const palettePublicationDetails = {
+      creatorIdentity: {
+        creatorFullName: rawData.userSession.userFullName,
+        creatorAvatar: rawData.userSession.userAvatar,
+        creatorId: rawData.userSession.userId ?? ''
+      },
+      dates: {
+        publishedAt: new Date().toISOString(),
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+      },
+      publicationStatus: {
+        isPublished: true,
+        isShared: isShared,
+      }
+    }
+
     parent.postMessage(
       {
         pluginMessage: {
@@ -63,11 +81,27 @@ const publishPalette = async (rawData: AppStates, isShared = false) => {
           items: [
             {
               key: 'publishedAt',
-              value: new Date().toISOString(),
+              value: palettePublicationDetails.dates.publishedAt,
             },
             {
               key: 'isPublished',
-              value: 'true',
+              value: palettePublicationDetails.publicationStatus.isPublished.toString(),
+            },
+            {
+              key: 'isShared',
+              value: palettePublicationDetails.publicationStatus.isShared.toString(),
+            },
+            {
+              key: 'creatorAvatar',
+              value: palettePublicationDetails.creatorIdentity.creatorAvatar,
+            },
+            {
+              key: 'creatorFullName',
+              value: palettePublicationDetails.creatorIdentity.creatorFullName,
+            },
+            {
+              key: 'creatorId',
+              value: palettePublicationDetails.creatorIdentity.creatorId,
             },
           ],
         },
@@ -83,7 +117,7 @@ const publishPalette = async (rawData: AppStates, isShared = false) => {
       },
       '*'
     )
-    return data
+    return palettePublicationDetails
   } else {
     console.log(error)
     parent.postMessage(
