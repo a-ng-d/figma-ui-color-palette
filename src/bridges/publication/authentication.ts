@@ -11,115 +11,111 @@ export const supabase = createClient(
 )
 
 export const signIn = async () => {
-  return new Promise((resolve, reject) => {
-    fetch(proxyUrl, {
-      cache: 'no-cache',
-      credentials: 'omit',
-      headers: {
-        type: 'GET_PASSKEY',
-      },
+  fetch(proxyUrl, {
+    cache: 'no-cache',
+    credentials: 'omit',
+    headers: {
+      type: 'GET_PASSKEY',
+    },
+  })
+    .then((response) => {
+      if (response.body) return response.json()
+      else throw new Error()
     })
-      .then((response) => {
-        if (response.body) return response.json()
-        else throw new Error()
-      })
-      .then((result) => {
-        parent.postMessage(
-          {
-            pluginMessage: {
-              type: 'OPEN_IN_BROWSER',
-              url: `${authUrl}/?passkey=${result.passkey}`,
-            },
+    .then((result) => {
+      parent.postMessage(
+        {
+          pluginMessage: {
+            type: 'OPEN_IN_BROWSER',
+            url: `${authUrl}/?passkey=${result.passkey}`,
           },
-          '*'
-        )
-        return result.passkey
-      })
-      .then((passkey) => {
-        const poll = setInterval(() => {
-          fetch(proxyUrl, {
-            cache: 'no-cache',
-            credentials: 'omit',
-            headers: {
-              type: 'GET_TOKENS',
-              passkey: passkey,
-            },
+        },
+        '*'
+      )
+      return result.passkey
+    })
+    .then((passkey) => {
+      const poll = setInterval(() => {
+        fetch(proxyUrl, {
+          cache: 'no-cache',
+          credentials: 'omit',
+          headers: {
+            type: 'GET_TOKENS',
+            passkey: passkey,
+          },
+        })
+          .then((response) => {
+            if (response.body) return response.json()
+            else throw new Error()
           })
-            .then((response) => {
-              if (response.body) return response.json()
-              else throw new Error()
-            })
-            .then(async (result) => {
-              if (result.message != 'No tokens found') {
-                isAuthenticated = true
-                parent.postMessage(
-                  {
-                    pluginMessage: {
-                      type: 'SET_ITEMS',
-                      items: [
-                        {
-                          key: 'supabase_access_token',
-                          value: result.access_token,
-                        },
-                        {
-                          key: 'supabase_refresh_token',
-                          value: result.refresh_token,
-                        },
-                      ],
-                    },
-                  },
-                  '*'
-                )
-                checkConnectionStatus(result.access_token, result.refresh_token)
-                clearInterval(poll)
-                resolve(result)
-              }
-            })
-            .catch((error) => {
-              console.error(error)
+          .then(async (result) => {
+            if (result.message != 'No tokens found') {
+              isAuthenticated = true
               parent.postMessage(
                 {
                   pluginMessage: {
-                    type: 'SEND_MESSAGE',
-                    message: locals[lang].error.generic,
+                    type: 'SET_ITEMS',
+                    items: [
+                      {
+                        key: 'supabase_access_token',
+                        value: result.access_token,
+                      },
+                      {
+                        key: 'supabase_refresh_token',
+                        value: result.refresh_token,
+                      },
+                    ],
                   },
                 },
                 '*'
               )
+              checkConnectionStatus(result.access_token, result.refresh_token)
               clearInterval(poll)
-              reject(error)
-            })
-        }, 5000)
-        setTimeout(() => {
-          if (!isAuthenticated) {
+              return result
+            }
+          })
+          .catch((error) => {
             parent.postMessage(
               {
                 pluginMessage: {
                   type: 'SEND_MESSAGE',
-                  message: locals[lang].error.timeout,
+                  message: locals[lang].error.generic,
                 },
               },
               '*'
             )
             clearInterval(poll)
-            reject()
-          }
-        }, 2 * 60 * 1000)
-      })
-      .catch((error) => {
-        console.error(error)
-        parent.postMessage(
-          {
-            pluginMessage: {
-              type: 'SEND_MESSAGE',
-              message: locals[lang].error.generic,
+            throw error
+          })
+      }, 5000)
+      setTimeout(() => {
+        if (!isAuthenticated) {
+          parent.postMessage(
+            {
+              pluginMessage: {
+                type: 'SEND_MESSAGE',
+                message: locals[lang].error.timeout,
+              },
             },
+            '*'
+          )
+          clearInterval(poll)
+          throw 'Timeout' 
+        }
+      }, 2 * 60 * 1000)
+    })
+    .catch((error) => {
+      parent.postMessage(
+        {
+          pluginMessage: {
+            type: 'SEND_MESSAGE',
+            message: locals[lang].error.generic,
           },
-          '*'
-        )
-        reject(error)
-      })
-  })
+        },
+        '*'
+      )
+      throw error
+    })
 }
 
 export const signOut = async () => {
