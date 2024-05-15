@@ -223,19 +223,6 @@ class App extends React.Component<Record<string, never>, AppStates> {
   }
 
   // Handlers
-  colorsHandler = (colors: Array<ColorConfiguration>) =>
-    this.setState({
-      colors: colors,
-      onGoingStep: 'colors changed',
-    })
-
-  themesHandler = (themes: Array<ThemeConfiguration>) =>
-    this.setState({
-      scale: themes.find((theme) => theme.isEnabled)?.scale ?? {},
-      themes: themes,
-      onGoingStep: 'themes changed',
-    })
-
   publicationHandler = (e: PublicationDetails) =>
     this.setState({
       dates: {
@@ -715,8 +702,8 @@ class App extends React.Component<Record<string, never>, AppStates> {
               lang={this.state['lang']}
               onChangeScale={(e) => this.setState({ ...this.state, ...e })}
               onChangeStop={(e) => this.setState({ ...this.state, ...e })}
-              onChangeColors={this.colorsHandler}
-              onChangeThemes={this.themesHandler}
+              onChangeColors={(e) => this.setState({ ...this.state, ...e })}
+              onChangeThemes={(e) => this.setState({ ...this.state, ...e })}
               onChangeSettings={(e) => this.setState({ ...this.state, ...e })}
               onPublishPalette={() =>
                 this.setState({ priorityContainerContext: 'PUBLICATION' })

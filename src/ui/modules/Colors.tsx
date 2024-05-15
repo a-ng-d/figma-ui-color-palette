@@ -12,6 +12,7 @@ import type {
   EditorType,
   PlanStatus,
 } from '../../utils/types'
+import type { AppStates } from '../App'
 import Dispatcher from './Dispatcher'
 import { Button, Message, SectionTitle } from '@a_ng_d/figmug-ui'
 import ColorItem from '../components/ColorItem'
@@ -24,7 +25,7 @@ interface ColorsProps {
   editorType: EditorType
   planStatus: PlanStatus
   lang: Language
-  onChangeColors: (colors: Array<ColorConfiguration>) => void
+  onChangeColors: React.Dispatch<Partial<AppStates>>
   onSyncLocalStyles: () => void
   onSyncLocalVariables: () => void
   onPublishPalette: () => void
@@ -115,7 +116,10 @@ export default class Colors extends React.Component<ColorsProps, ColorsStates> {
         oklch: false,
         hueShifting: 0,
       })
-      this.props.onChangeColors(colorsMessage.data)
+      this.props.onChangeColors({
+        colors: colorsMessage.data,
+        onGoingStep: 'colors changed',
+      })
       parent.postMessage({ pluginMessage: colorsMessage }, '*')
     }
 
@@ -131,8 +135,11 @@ export default class Colors extends React.Component<ColorsProps, ColorsStates> {
               : currentElement.value
         return item
       })
-      this.props.onChangeColors(colorsMessage.data)
-      if (e._reactName === 'onBlur' || e.key === 'Enter')
+      this.props.onChangeColors({
+        colors: colorsMessage.data,
+        onGoingStep: 'colors changed',
+      })
+      if (e.type === 'blur' || e.key === 'Enter')
         parent.postMessage({ pluginMessage: colorsMessage }, '*')
     }
 
@@ -156,9 +163,12 @@ export default class Colors extends React.Component<ColorsProps, ColorsStates> {
             }
           return item
         })
-        this.props.onChangeColors(colorsMessage.data)
+        this.props.onChangeColors({
+          colors: colorsMessage.data,
+          onGoingStep: 'colors changed',
+        })
       }
-      if (e._reactName === 'onBlur') {
+      if (e.type === 'blur') {
         this.dispatch.colors.on.status = false
         parent.postMessage({ pluginMessage: colorsMessage }, '*')
       } else {
@@ -180,7 +190,10 @@ export default class Colors extends React.Component<ColorsProps, ColorsStates> {
           }
         return item
       })
-      this.props.onChangeColors(colorsMessage.data)
+      this.props.onChangeColors({
+        colors: colorsMessage.data,
+        onGoingStep: 'colors changed',
+      })
       parent.postMessage({ pluginMessage: colorsMessage }, '*')
     }
 
@@ -197,7 +210,10 @@ export default class Colors extends React.Component<ColorsProps, ColorsStates> {
           }
         return item
       })
-      this.props.onChangeColors(colorsMessage.data)
+      this.props.onChangeColors({
+        colors: colorsMessage.data,
+        onGoingStep: 'colors changed',
+      })
       parent.postMessage({ pluginMessage: colorsMessage }, '*')
     }
 
@@ -214,7 +230,10 @@ export default class Colors extends React.Component<ColorsProps, ColorsStates> {
           }
         return item
       })
-      this.props.onChangeColors(colorsMessage.data)
+      this.props.onChangeColors({
+        colors: colorsMessage.data,
+        onGoingStep: 'colors changed',
+      })
       parent.postMessage({ pluginMessage: colorsMessage }, '*')
     }
 
@@ -223,7 +242,10 @@ export default class Colors extends React.Component<ColorsProps, ColorsStates> {
         if (item.id === id) item.hueShifting = parseFloat(currentElement.value)
         return item
       })
-      this.props.onChangeColors(colorsMessage.data)
+      this.props.onChangeColors({
+        colors: colorsMessage.data,
+        onGoingStep: 'colors changed',
+      })
       parent.postMessage({ pluginMessage: colorsMessage }, '*')
     }
 
@@ -232,14 +254,20 @@ export default class Colors extends React.Component<ColorsProps, ColorsStates> {
         if (item.id === id) item.description = currentElement.value
         return item
       })
-      this.props.onChangeColors(colorsMessage.data)
-      if (e._reactName === 'onBlur')
+      this.props.onChangeColors({
+        colors: colorsMessage.data,
+        onGoingStep: 'colors changed',
+      })
+      if (e.type === 'blur')
         parent.postMessage({ pluginMessage: colorsMessage }, '*')
     }
 
     const removeColor = () => {
       colorsMessage.data = this.props.colors.filter((item) => item.id != id)
-      this.props.onChangeColors(colorsMessage.data)
+      this.props.onChangeColors({
+        colors: colorsMessage.data,
+        onGoingStep: 'colors changed',
+      })
       parent.postMessage({ pluginMessage: colorsMessage }, '*')
     }
 
@@ -279,7 +307,10 @@ export default class Colors extends React.Component<ColorsProps, ColorsStates> {
     else position = target.position
 
     colors.splice(position, 0, colorsWithoutSource)
-    this.props.onChangeColors(colors)
+    this.props.onChangeColors({
+      colors: colors,
+      onGoingStep: 'colors changed',
+    })
     parent.postMessage(
       {
         pluginMessage: {

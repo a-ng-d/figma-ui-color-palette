@@ -8,8 +8,6 @@ import loadUI from './bridges/loadUI'
 import loadParameters from './bridges/loadParameters'
 import setPaletteMigration from './utils/setPaletteMigration'
 
-let palette: SceneNode
-
 // Fonts
 figma.loadFontAsync({ family: 'Inter', style: 'Regular' })
 figma.loadFontAsync({ family: 'Inter', style: 'Medium' })

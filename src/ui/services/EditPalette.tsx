@@ -51,8 +51,8 @@ interface EditPaletteProps {
   lang: Language
   onChangeScale: React.Dispatch<Partial<AppStates>>
   onChangeStop?: React.Dispatch<Partial<AppStates>>
-  onChangeColors: (colors: Array<ColorConfiguration>) => void
-  onChangeThemes: (themes: Array<ThemeConfiguration>) => void
+  onChangeColors: React.Dispatch<Partial<AppStates>>
+  onChangeThemes: React.Dispatch<Partial<AppStates>>
   onChangeSettings: React.Dispatch<Partial<AppStates>>
   onPublishPalette: () => void
 }
@@ -107,7 +107,11 @@ export default class EditPalette extends React.Component<
       return theme
     })
     parent.postMessage({ pluginMessage: themesMessage }, '*')
-    this.props.onChangeThemes(themesMessage.data)
+    this.props.onChangeThemes({
+      scale: themesMessage.data.find((theme) => theme.isEnabled)?.scale ?? {},
+      themes: themesMessage.data,
+      onGoingStep: 'themes changed',
+    })
   }
 
   slideHandler = () =>

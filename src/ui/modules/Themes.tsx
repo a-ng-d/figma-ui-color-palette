@@ -13,6 +13,7 @@ import type {
   ThemeConfiguration,
   ThemesMessage,
 } from '../../utils/types'
+import type { AppStates } from '../App'
 import { Button, Message, SectionTitle } from '@a_ng_d/figmug-ui'
 import ThemeItem from '../components/ThemeItem'
 import Actions from './Actions'
@@ -29,7 +30,7 @@ interface ThemesProps {
   planStatus: PlanStatus
   editorType: EditorType
   lang: Language
-  onChangeThemes: (themes: Array<ThemeConfiguration>) => void
+  onChangeThemes: React.Dispatch<Partial<AppStates>>
   onSyncLocalStyles: () => void
   onSyncLocalVariables: () => void
   onPublishPalette: () => void
@@ -124,7 +125,11 @@ export default class Themes extends React.Component<ThemesProps, ThemesStates> {
         id: uid(),
         type: 'custom theme',
       })
-      this.props.onChangeThemes(themesMessage.data)
+      this.props.onChangeThemes({
+        scale: themesMessage.data.find((theme) => theme.isEnabled)?.scale ?? {},
+        themes: themesMessage.data,
+        onGoingStep: 'themes changed',
+      })
       parent.postMessage({ pluginMessage: themesMessage }, '*')
     }
 
@@ -140,8 +145,12 @@ export default class Themes extends React.Component<ThemesProps, ThemesStates> {
               : currentElement.value
         return item
       })
-      this.props.onChangeThemes(themesMessage.data)
-      if (e._reactName === 'onBlur')
+      this.props.onChangeThemes({
+        scale: themesMessage.data.find((theme) => theme.isEnabled)?.scale ?? {},
+        themes: themesMessage.data,
+        onGoingStep: 'themes changed',
+      })
+      if (e.type === 'blur')
         parent.postMessage({ pluginMessage: themesMessage }, '*')
     }
 
@@ -155,9 +164,14 @@ export default class Themes extends React.Component<ThemesProps, ThemesStates> {
           if (item.id === id) item.paletteBackground = code
           return item
         })
-        this.props.onChangeThemes(themesMessage.data)
+        this.props.onChangeThemes({
+          scale:
+            themesMessage.data.find((theme) => theme.isEnabled)?.scale ?? {},
+          themes: themesMessage.data,
+          onGoingStep: 'themes changed',
+        })
       }
-      if (e._reactName === 'onBlur') {
+      if (e.type === 'blur') {
         this.dispatch.themes.on.status = false
         parent.postMessage({ pluginMessage: themesMessage }, '*')
       } else {
@@ -171,8 +185,12 @@ export default class Themes extends React.Component<ThemesProps, ThemesStates> {
         if (item.id === id) item.description = currentElement.value
         return item
       })
-      this.props.onChangeThemes(themesMessage.data)
-      if (e._reactName === 'onBlur' || e.key === 'Enter')
+      this.props.onChangeThemes({
+        scale: themesMessage.data.find((theme) => theme.isEnabled)?.scale ?? {},
+        themes: themesMessage.data,
+        onGoingStep: 'themes changed',
+      })
+      if (e.type === 'blur' || e.key === 'Enter')
         parent.postMessage({ pluginMessage: themesMessage }, '*')
     }
 
@@ -188,7 +206,11 @@ export default class Themes extends React.Component<ThemesProps, ThemesStates> {
         )
         if (result != undefined) result.isEnabled = true
       }
-      this.props.onChangeThemes(themesMessage.data)
+      this.props.onChangeThemes({
+        scale: themesMessage.data.find((theme) => theme.isEnabled)?.scale ?? {},
+        themes: themesMessage.data,
+        onGoingStep: 'themes changed',
+      })
       parent.postMessage({ pluginMessage: themesMessage }, '*')
     }
 
@@ -207,11 +229,11 @@ export default class Themes extends React.Component<ThemesProps, ThemesStates> {
   orderHandler = () => {
     const source: SelectedColor = this.state['selectedElement'],
       target: HoveredColor = this.state['hoveredElement'],
-      colors = this.props.themes.map((el) => el)
+      themes = this.props.themes.map((el) => el)
 
     let position: number | undefined
 
-    const colorsWithoutSource = colors.splice(source.position, 1)[0]
+    const colorsWithoutSource = themes.splice(source.position, 1)[0]
 
     if (target.hasGuideAbove && target.position > source.position)
       position = target.position - 1
@@ -223,13 +245,17 @@ export default class Themes extends React.Component<ThemesProps, ThemesStates> {
       position = target.position + 1
     else position = target.position
 
-    colors.splice(position, 0, colorsWithoutSource)
-    this.props.onChangeThemes(colors)
+    themes.splice(position, 0, colorsWithoutSource)
+    this.props.onChangeThemes({
+      scale: themes.find((theme) => theme.isEnabled)?.scale ?? {},
+      themes: themes,
+      onGoingStep: 'themes changed',
+    })
     parent.postMessage(
       {
         pluginMessage: {
           type: 'UPDATE_THEMES',
-          data: colors,
+          data: themes,
           isEditedInRealTime: false,
         },
       },
@@ -302,7 +328,11 @@ export default class Themes extends React.Component<ThemesProps, ThemesStates> {
       id: uid(),
       type: 'custom theme',
     })
-    this.props.onChangeThemes(themesMessage.data)
+    this.props.onChangeThemes({
+      scale: themesMessage.data.find((theme) => theme.isEnabled)?.scale ?? {},
+      themes: themesMessage.data,
+      onGoingStep: 'themes changed',
+    })
     parent.postMessage({ pluginMessage: themesMessage }, '*')
   }
 
