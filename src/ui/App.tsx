@@ -25,7 +25,6 @@ import type {
   PublicationStatus,
   DatesConfiguration,
   CreatorIdentity,
-  PublicationDetails,
 } from '../utils/types'
 import checkConnectionStatus from '../bridges/checks/checkConnectionStatus'
 import Feature from './components/Feature'
@@ -221,25 +220,6 @@ class App extends React.Component<Record<string, never>, AppStates> {
       return actions[event]?.()
     })
   }
-
-  // Handlers
-  publicationHandler = (e: PublicationDetails) =>
-    this.setState({
-      dates: {
-        createdAt: this.state['dates']['createdAt'],
-        updatedAt: this.state['dates']['updatedAt'],
-        publishedAt: e.dates.publishedAt,
-      },
-      publicationStatus: {
-        isPublished: e.publicationStatus.isPublished,
-        isShared: e.publicationStatus.isShared,
-      },
-      creatorIdentity: {
-        creatorFullName: e.creatorIdentity.creatorFullName,
-        creatorAvatar: e.creatorIdentity.creatorAvatar,
-        creatorId: e.creatorIdentity.creatorId,
-      },
-    })
 
   // Render
   render() {
@@ -744,7 +724,7 @@ class App extends React.Component<Record<string, never>, AppStates> {
               trialStatus={this.state['trialStatus']}
               userSession={this.state['userSession']}
               lang={this.state['lang']}
-              onPalettePublished={this.publicationHandler}
+              onPalettePublished={(e) => this.setState({ ...this.state, ...e })}
               onClose={() =>
                 this.setState({ priorityContainerContext: 'EMPTY' })
               }

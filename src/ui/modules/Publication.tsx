@@ -1,6 +1,6 @@
 import React from 'react'
 import type { AppStates } from '../App'
-import type { Language, PublicationDetails } from '../../utils/types'
+import type { Language } from '../../utils/types'
 import { Dialog, Thumbnail, Chip, texts } from '@a_ng_d/figmug-ui'
 import publishPalette from '../../bridges/publication/publishPalette'
 import { locals } from '../../content/locals'
@@ -12,7 +12,7 @@ interface PublicationProps {
   lang: Language
   onPrimaryActionLoading: (e: boolean) => void
   onSecondaryActionLoading: (e: boolean) => void
-  onPalettePublished: (e: PublicationDetails) => void
+  onPalettePublished: React.Dispatch<Partial<AppStates>>
   onClosePublication: React.ReactEventHandler
 }
 

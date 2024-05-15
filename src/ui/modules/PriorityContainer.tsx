@@ -3,7 +3,6 @@ import type {
   Language,
   PlanStatus,
   PriorityContext,
-  PublicationDetails,
   TrialStatus,
   UserSession,
 } from '../../utils/types'
@@ -28,7 +27,7 @@ interface PriorityContainerProps {
   trialStatus: TrialStatus
   userSession: UserSession
   lang: Language
-  onPalettePublished: (e: PublicationDetails) => void
+  onPalettePublished: React.Dispatch<Partial<AppStates>>
   onClose: React.ChangeEventHandler & (() => void)
 }
 
