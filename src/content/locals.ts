@@ -286,7 +286,7 @@ export const locals: { [key: string]: any } = {
       run: 'Run',
       createLocalStyles: 'Sync with the local styles',
       createLocalVariables: 'Sync with the local variables',
-      publishPalette: 'Publish the palette',
+      publishPalette: 'Publish palette',
       updateLocalStyles: 'Update the existing local styles',
       updateLocalVariables: 'Update the existing local variables',
       export: 'Export the UI Color Palette to',
@@ -342,7 +342,7 @@ export const locals: { [key: string]: any } = {
     user: {
       signIn: 'Sign in',
       signOut: 'Sign out',
-      welcomeMessage: 'Hello $[] 🚀',
+      welcomeMessage: 'Hello $[]',
     },
     properties: {
       base: 'Base',
@@ -351,7 +351,8 @@ export const locals: { [key: string]: any } = {
       fontSize: 'Minimum font sizes',
     },
     success: {
-      publication: 'The palette has been published',
+      publication: '✓ The palette has been published',
+      nonPublication: '✓ The palette has been unpublished',
     },
     info: {
       createdLocalStyle: 'local color style created',
@@ -384,6 +385,7 @@ export const locals: { [key: string]: any } = {
       generic: 'Something went wrong',
       timeout: 'The authentication has failed',
       publication: 'The palette cannot be published',
+      nonPublication: 'The palette cannot be unpublished',
     },
   },
 }

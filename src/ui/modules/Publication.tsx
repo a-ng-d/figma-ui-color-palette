@@ -3,6 +3,7 @@ import type { AppStates } from '../App'
 import type { Language } from '../../utils/types'
 import { Dialog, Thumbnail, Chip, texts } from '@a_ng_d/figmug-ui'
 import publishPalette from '../../bridges/publication/publishPalette'
+import unpublishPalette from '../../bridges/publication/unpublishPalette'
 import { locals } from '../../content/locals'
 
 interface PublicationProps {
@@ -100,6 +101,7 @@ export default class Publication extends React.Component<
 
   render() {
     this.uploadPaletteScreenshot()
+    console.log(this.props.rawData.publicationStatus, this.props.rawData.dates, this.props.rawData.creatorIdentity)
     return (
       <Dialog
         title={locals[this.props.lang].publication.title}
@@ -111,7 +113,7 @@ export default class Publication extends React.Component<
               this.props.onPrimaryActionLoading(true)
               publishPalette(
                 this.props.rawData,
-                this.props.isPrimaryActionLoading
+                this.state['isPaletteShared']
               )
                 .then((data) => {
                   this.props.onPalettePublished(data)
@@ -130,12 +132,14 @@ export default class Publication extends React.Component<
                   : 'DEFAULT',
                 action: async () => {
                   this.props.onSecondaryActionLoading(true)
-                  publishPalette(
+                  unpublishPalette(
                     this.props.rawData,
-                    this.props.isSecondaryActionLoading
-                  ).finally(() => {
-                    this.props.onSecondaryActionLoading(false)
-                  })
+                  )
+                    .then((data) => {
+                      this.props.onPalettePublished(data)
+                    }).finally(() => {
+                      this.props.onSecondaryActionLoading(false)
+                    })
                 },
               }
             else undefined

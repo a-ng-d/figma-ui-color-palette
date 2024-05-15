@@ -1,6 +1,5 @@
 import type { PublicationDetails } from '../../utils/types'
 import {
-  databaseUrl,
   palettesDbTableName,
   palettesStorageName,
 } from '../../utils/config'
@@ -8,73 +7,39 @@ import type { AppStates } from '../../ui/App'
 import { supabase } from './authentication'
 import { lang, locals } from '../../content/locals'
 
-const publishPalette = async (
+const unpublishPalette = async (
   rawData: AppStates,
-  isShared = false
 ): Promise<PublicationDetails> => {
-  let imageUrl = null
-
   if (rawData.screenshot !== null) {
     const { data, error } = await supabase.storage
       .from(palettesStorageName)
-      .upload(
+      .remove([
         `${rawData.userSession.userId}/${rawData.id}.png`,
-        rawData.screenshot.buffer,
-        {
-          contentType: 'image/png',
-        }
-      )
-
-    if (!error)
-      imageUrl = `${databaseUrl}/storage/v1/object/public/${palettesStorageName}/${rawData.userSession.userId}/${rawData.id}.png`
+      ])
   }
 
   const { data, error } = await supabase
     .from(palettesDbTableName)
-    .insert([
-      {
-        palette_id: rawData.id,
-        name:
-          rawData.name === ''
-            ? `${rawData.userSession.userFullName}'s UI COLOR PALETTE`
-            : rawData.name,
-        description: rawData.description,
-        preset: rawData.preset,
-        scale: rawData.scale,
-        colors: rawData.colors,
-        color_space: rawData.colorSpace,
-        vision_simulation_mode: rawData.visionSimulationMode,
-        themes: rawData.themes,
-        view: rawData.view,
-        text_colors_theme: rawData.textColorsTheme,
-        algorithm_version: rawData.algorithmVersion,
-        is_shared: isShared,
-        screenshot: imageUrl,
-        creator_full_name: rawData.userSession.userFullName,
-        creator_avatar: rawData.userSession.userAvatar,
-        creator_id: rawData.userSession.userId,
-        created_at: rawData.dates.createdAt,
-        updated_at: rawData.dates.updatedAt,
-      },
-    ])
-    .select()
+    .delete()
+    .match({ palette_id: rawData.id })
+
   console.log(data)
 
   if (!error) {
     const palettePublicationDetails = {
       creatorIdentity: {
-        creatorFullName: rawData.userSession.userFullName,
-        creatorAvatar: rawData.userSession.userAvatar,
-        creatorId: rawData.userSession.userId ?? '',
+        creatorFullName: '',
+        creatorAvatar: '',
+        creatorId: '',
       },
       dates: {
-        publishedAt: new Date().toISOString(),
+        publishedAt: '',
         createdAt: rawData.dates.createdAt,
         updatedAt: rawData.dates.updatedAt,
       },
       publicationStatus: {
-        isPublished: true,
-        isShared: isShared,
+        isPublished: false,
+        isShared: false,
       },
     }
 
@@ -118,7 +83,7 @@ const publishPalette = async (
       {
         pluginMessage: {
           type: 'SEND_MESSAGE',
-          message: locals[lang].success.publication,
+          message: locals[lang].success.nonPublication,
         },
       },
       '*'
@@ -130,7 +95,7 @@ const publishPalette = async (
       {
         pluginMessage: {
           type: 'SEND_MESSAGE',
-          message: locals[lang].error.publication,
+          message: locals[lang].error.nonPublication,
         },
       },
       '*'
@@ -139,4 +104,4 @@ const publishPalette = async (
   }
 }
 
-export default publishPalette
+export default unpublishPalette
