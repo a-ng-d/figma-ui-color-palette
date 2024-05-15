@@ -11,6 +11,7 @@ import type {
   Easing,
   NamingConvention,
 } from '../../utils/types'
+import type { AppStates } from '../App'
 import Feature from '../components/Feature'
 import {
   Button,
@@ -40,14 +41,12 @@ interface ScaleProps {
   planStatus: PlanStatus
   editorType?: EditorType
   lang: Language
-  onChangePreset?: (
-    e: React.MouseEvent<HTMLLIElement, MouseEvent> | React.KeyboardEvent
-  ) => void
+  onChangePreset?: React.Dispatch<Partial<AppStates>>
   onChangeScale: () => void
   onChangeStop?: () => void
-  onAddStop?: React.ReactEventHandler
-  onRemoveStop?: React.ReactEventHandler
-  onChangeNamingConvention?: React.ReactEventHandler
+  onAddStop?: React.Dispatch<Partial<AppStates>>
+  onRemoveStop?: React.Dispatch<Partial<AppStates>>
+  onChangeNamingConvention?: React.Dispatch<Partial<AppStates>>
   onCreatePalette?: () => void
   onSyncLocalStyles?: () => void
   onSyncLocalVariables?: () => void
@@ -148,6 +147,144 @@ export default class Scale extends React.Component<ScaleProps, ScaleStates> {
     }
 
     if (!this.props.hasPreset) return actions[state]?.()
+  }
+
+  presetsHandler = (e: React.SyntheticEvent) => {
+    const setMaterialDesignPreset = () =>
+      this.props.onChangePreset?.({
+        preset: presets.find((preset) => preset.id === 'MATERIAL'),
+        onGoingStep: 'preset changed',
+      })
+
+    const setMaterial3Preset = () =>
+      this.props.onChangePreset?.({
+        preset: presets.find((preset) => preset.id === 'MATERIAL_3'),
+        onGoingStep: 'preset changed',
+      })
+
+    const setTailwindPreset = () => {
+      this.props.onChangePreset?.({
+        preset: presets.find((preset) => preset.id === 'TAILWIND'),
+        onGoingStep: 'preset changed',
+      })
+    }
+
+    const setAntDesignPreset = () =>
+      this.props.onChangePreset?.({
+        preset: presets.find((preset) => preset.id === 'ANT'),
+        onGoingStep: 'preset changed',
+      })
+
+    const setAdsPreset = () =>
+      this.props.onChangePreset?.({
+        preset: presets.find((preset) => preset.id === 'ADS'),
+        onGoingStep: 'preset changed',
+      })
+
+    const setAdsNeutralPreset = () =>
+      this.props.onChangePreset?.({
+        preset: presets.find((preset) => preset.id === 'ADS_NEUTRAL'),
+        onGoingStep: 'preset changed',
+      })
+
+    const setCarbonPreset = () =>
+      this.props.onChangePreset?.({
+        preset: presets.find((preset) => preset.id === 'CARBON'),
+        onGoingStep: 'preset changed',
+      })
+
+    const setBasePreset = () =>
+      this.props.onChangePreset?.({
+        preset: presets.find((preset) => preset.id === 'BASE'),
+        onGoingStep: 'preset changed',
+      })
+
+    const setCustomPreset = () => {
+      this.props.onChangePreset?.({
+        preset: presets.find((preset) => preset.id === 'CUSTOM'),
+        onGoingStep: 'preset changed',
+      })
+    }
+
+    const actions: ActionsList = {
+      MATERIAL: () => setMaterialDesignPreset(),
+      MATERIAL_3: () => setMaterial3Preset(),
+      TAILWIND: () => setTailwindPreset(),
+      ANT: () => setAntDesignPreset(),
+      ADS: () => setAdsPreset(),
+      ADS_NEUTRAL: () => setAdsNeutralPreset(),
+      CARBON: () => setCarbonPreset(),
+      BASE: () => setBasePreset(),
+      CUSTOM: () => setCustomPreset(),
+      NULL: () => null,
+    }
+
+    return actions[(e.target as HTMLElement).dataset.value ?? 'NULL']?.()
+  }
+
+  customHandler = (e: React.SyntheticEvent) => {
+    const scale = this.props.preset?.['scale'] ?? [1, 2]
+
+    const addStop = () => {
+      if (scale.length < 24) {
+        scale.push(scale.slice(-1)[0] + scale[0])
+        this.props.onAddStop?.({
+          preset: {
+            name: presets.find((preset) => preset.id === 'CUSTOM')?.name ?? '',
+            scale: scale,
+            min: palette.min ?? 0,
+            max: palette.max ?? 100,
+            isDistributed: true,
+            id: 'CUSTOM',
+          },
+        })
+      }
+    }
+
+    const removeStop = () => {
+      if (scale.length > 2) {
+        scale.pop()
+        this.props.onRemoveStop?.({
+          preset: {
+            name: presets.find((preset) => preset.id === 'CUSTOM')?.name ?? '',
+            scale: scale,
+            min: palette.min ?? 0,
+            max: palette.max ?? 100,
+            isDistributed: true,
+            id: 'CUSTOM',
+          },
+        })
+      }
+    }
+
+    const changeNamingConvention = () => {
+      const option = (e.target as HTMLInputElement).dataset
+        .value as NamingConvention
+      this.props.onChangeNamingConvention?.({
+        namingConvention: option,
+        preset: {
+          name: presets.find((preset) => preset.id === 'CUSTOM')?.name ?? '',
+          scale: scale.map((stop, index) => {
+            if (option === 'TENS') return (index + 1) * 10
+            else if (option === 'HUNDREDS') return (index + 1) * 100
+            return (index + 1) * 1
+          }),
+          min: palette.min ?? 0,
+          max: palette.max ?? 100,
+          isDistributed: true,
+          id: 'CUSTOM',
+        },
+      })
+    }
+
+    const actions: ActionsList = {
+      ADD_STOP: () => addStop(),
+      REMOVE_STOP: () => removeStop(),
+      UPDATE_NAMING_CONVENTION: () => changeNamingConvention(),
+      NULL: () => null,
+    }
+
+    return actions[(e.target as HTMLInputElement).dataset.feature ?? 'NULL']?.()
   }
 
   // Templates
@@ -264,7 +401,7 @@ export default class Scale extends React.Component<ScaleProps, ScaleStates> {
             isBlocked: false,
             isNew: false,
             children: [],
-            action: (e) => this.props.onChangeNamingConvention?.(e),
+            action: (e) => this.customHandler?.(e),
           },
           {
             label: locals[this.props.lang].scale.namingConvention.tens,
@@ -276,7 +413,7 @@ export default class Scale extends React.Component<ScaleProps, ScaleStates> {
             isBlocked: false,
             isNew: false,
             children: [],
-            action: (e) => this.props.onChangeNamingConvention?.(e),
+            action: (e) => this.customHandler?.(e),
           },
           {
             label: locals[this.props.lang].scale.namingConvention.hundreds,
@@ -288,7 +425,7 @@ export default class Scale extends React.Component<ScaleProps, ScaleStates> {
             isBlocked: false,
             isNew: false,
             children: [],
-            action: (e) => this.props.onChangeNamingConvention?.(e),
+            action: (e) => this.customHandler?.(e),
           },
         ]}
         selected={this.props.namingConvention}
@@ -410,7 +547,7 @@ export default class Scale extends React.Component<ScaleProps, ScaleStates> {
               >
                 <Dropdown
                   id="presets"
-                  options={Object.entries(presets).map((preset, index) => {
+                  options={Object.entries(presets).map((preset) => {
                     return {
                       label: preset[1].name,
                       value: preset[1].id,
@@ -428,7 +565,7 @@ export default class Scale extends React.Component<ScaleProps, ScaleStates> {
                         (feature) => feature.name === `PRESETS_${preset[1].id}`
                       )?.isNew,
                       children: [],
-                      action: (e) => this.props.onChangePreset?.(e),
+                      action: (e) => this.presetsHandler?.(e),
                     }
                   })}
                   selected={this.props.preset.id}
@@ -459,7 +596,7 @@ export default class Scale extends React.Component<ScaleProps, ScaleStates> {
                         type="icon"
                         icon="minus"
                         feature="REMOVE_STOP"
-                        action={this.props.onRemoveStop}
+                        action={this.customHandler}
                       />
                     ) : null}
                     <Button
@@ -470,7 +607,7 @@ export default class Scale extends React.Component<ScaleProps, ScaleStates> {
                       action={
                         this.props.preset.scale.length >= 24
                           ? () => null
-                          : this.props.onAddStop
+                          : this.customHandler
                       }
                     />
                   </>

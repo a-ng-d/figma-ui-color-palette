@@ -30,6 +30,8 @@ import features from '../../utils/config'
 import { locals } from '../../content/locals'
 import isBlocked from '../../utils/isBlocked'
 import { doSnakeCase } from '@a-ng-d/figmug.modules.do-snake-case'
+import { palette } from '../../utils/palettePackage'
+import doLightnessScale from '../../utils/doLightnessScale'
 
 interface EditPaletteProps {
   name: string
@@ -47,8 +49,8 @@ interface EditPaletteProps {
   planStatus: PlanStatus
   editorType: EditorType
   lang: Language
-  onChangeScale: () => void
-  onChangeStop?: () => void
+  onChangeScale: React.Dispatch<Partial<AppStates>>
+  onChangeStop?: React.Dispatch<Partial<AppStates>>
   onChangeColors: (colors: Array<ColorConfiguration>) => void
   onChangeThemes: (themes: Array<ThemeConfiguration>) => void
   onChangeSettings: React.Dispatch<Partial<AppStates>>
@@ -107,6 +109,40 @@ export default class EditPalette extends React.Component<
     parent.postMessage({ pluginMessage: themesMessage }, '*')
     this.props.onChangeThemes(themesMessage.data)
   }
+
+  slideHandler = () =>
+    this.props.onChangeScale({
+      scale: palette.scale,
+      themes: this.props.themes.map((theme: ThemeConfiguration) => {
+        if (theme.isEnabled) theme.scale = palette.scale
+        return theme
+      }),
+      onGoingStep: 'scale changed',
+    })
+
+  customSlideHandler = () =>
+    this.props.onChangeStop?.({
+      preset:
+        Object.keys(palette.preset).length == 0
+          ? this.props.preset
+          : palette.preset,
+      scale: palette.scale,
+      themes: this.props.themes.map((theme: ThemeConfiguration) => {
+        if (theme.isEnabled) theme.scale = palette.scale
+        else
+          theme.scale = doLightnessScale(
+            Object.keys(palette.scale).map((stop) => {
+              return parseFloat(stop.replace('lightness-', ''))
+            }),
+            theme.scale[
+              Object.keys(theme.scale)[Object.keys(theme.scale).length - 1]
+            ],
+            theme.scale[Object.keys(theme.scale)[0]]
+          )
+        return theme
+      }),
+      onGoingStep: 'stops changed',
+    })
 
   // Direct actions
   onSyncStyles = () => {
@@ -308,8 +344,8 @@ export default class EditPalette extends React.Component<
             planStatus={this.props.planStatus}
             editorType={this.props.editorType}
             lang={this.props.lang}
-            onChangeScale={this.props.onChangeScale}
-            onChangeStop={this.props.onChangeStop}
+            onChangeScale={this.slideHandler}
+            onChangeStop={this.customSlideHandler}
             onSyncLocalStyles={this.onSyncStyles}
             onSyncLocalVariables={this.onSyncVariables}
             onPublishPalette={this.props.onPublishPalette}

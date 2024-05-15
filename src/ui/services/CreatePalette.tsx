@@ -33,14 +33,9 @@ interface CreatePaletteProps {
   textColorsTheme: TextColorsThemeHexModel
   planStatus: PlanStatus
   lang: Language
-  onChangeColorsFromImport: (
-    sourceColorsFromImport: Array<SourceColorConfiguration>,
-    source: ThirdParty
-  ) => void
-  onChangePreset: (
-    e: React.MouseEvent<HTMLLIElement, MouseEvent> | React.KeyboardEvent
-  ) => void
-  onCustomPreset: (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => void
+  onChangeColorsFromImport: React.Dispatch<Partial<AppStates>>
+  onChangePreset: React.Dispatch<Partial<AppStates>>
+  onCustomPreset: React.Dispatch<Partial<AppStates>>
   onChangeSettings: React.Dispatch<Partial<AppStates>>
 }
 
@@ -65,6 +60,20 @@ export default class CreatePalette extends React.Component<
     this.setState({
       context: (e.target as HTMLElement).dataset.feature,
     })
+
+  colorsFromImportHandler = (
+    sourceColorsFromImport: Array<SourceColorConfiguration>,
+    source: ThirdParty
+  ) => {
+    this.props.onChangeColorsFromImport({
+      sourceColors: this.props.sourceColors
+        .filter(
+          (sourceColors: SourceColorConfiguration) =>
+            sourceColors.source != source
+        )
+        .concat(sourceColorsFromImport),
+    })
+  }
 
   // Direct actions
   onCreatePalette = () =>
@@ -131,7 +140,7 @@ export default class CreatePalette extends React.Component<
             sourceColors={this.props.sourceColors}
             planStatus={this.props.planStatus}
             lang={this.props.lang}
-            onChangeColorsFromImport={this.props.onChangeColorsFromImport}
+            onChangeColorsFromImport={this.colorsFromImportHandler}
             onCreatePalette={this.onCreatePalette}
           />
         )

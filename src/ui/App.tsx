@@ -6,9 +6,7 @@ import type {
   VisionSimulationModeConfiguration,
   ColorConfiguration,
   ColorSpaceConfiguration,
-  DispatchProcess,
   EditorType,
-  HexModel,
   Language,
   PlanStatus,
   PresetConfiguration,
@@ -19,7 +17,6 @@ import type {
   ThemeConfiguration,
   TrialStatus,
   ViewConfiguration,
-  ThirdParty,
   ExtractOfPaletteConfiguration,
   ExportConfiguration,
   Service,
@@ -37,8 +34,7 @@ import EditPalette from './services/EditPalette'
 import TransferPalette from './services/TransferPalette'
 import PriorityContainer from './modules/PriorityContainer'
 import Shortcuts from './modules/Shortcuts'
-import { palette, presets } from '../utils/palettePackage'
-import doLightnessScale from '../utils/doLightnessScale'
+import { defaultPreset, palette, presets } from '../utils/palettePackage'
 import features, { trialTime } from '../utils/config'
 import 'figma-plugin-ds/dist/figma-plugin-ds.css'
 import './stylesheets/app.css'
@@ -82,15 +78,6 @@ export interface AppStates {
 let isPaletteSelected = false
 const container = document.getElementById('app'),
   root = createRoot(container)
-
-const defaultPreset: PresetConfiguration = {
-  name: 'Material Design, 50-900 (Google)',
-  scale: [50, 100, 200, 300, 400, 500, 600, 700, 800, 900],
-  min: 24,
-  max: 96,
-  isDistributed: true,
-  id: 'MATERIAL',
-}
 
 class App extends React.Component<Record<string, never>, AppStates> {
   constructor(props: Record<string, never>) {
@@ -236,199 +223,6 @@ class App extends React.Component<Record<string, never>, AppStates> {
   }
 
   // Handlers
-  colorsFromImportHandler = (
-    sourceColorsFromImport: Array<SourceColorConfiguration>,
-    source: ThirdParty
-  ) => {
-    this.setState({
-      sourceColors: this.state['sourceColors']
-        .filter(
-          (sourceColors: SourceColorConfiguration) =>
-            sourceColors.source != source
-        )
-        .concat(sourceColorsFromImport),
-    })
-  }
-
-  presetsHandler = (e: React.SyntheticEvent) => {
-    const setMaterialDesignPreset = () =>
-      this.setState({
-        preset:
-          presets.find((preset) => preset.id === 'MATERIAL') ?? defaultPreset,
-        onGoingStep: 'preset changed',
-      })
-
-    const setMaterial3Preset = () =>
-      this.setState({
-        preset:
-          presets.find((preset) => preset.id === 'MATERIAL_3') ?? defaultPreset,
-        onGoingStep: 'preset changed',
-      })
-
-    const setTailwindPreset = () =>
-      this.setState({
-        preset:
-          presets.find((preset) => preset.id === 'TAILWIND') ?? defaultPreset,
-        onGoingStep: 'preset changed',
-      })
-
-    const setAntDesignPreset = () =>
-      this.setState({
-        preset: presets.find((preset) => preset.id === 'ANT') ?? defaultPreset,
-        onGoingStep: 'preset changed',
-      })
-
-    const setAdsPreset = () =>
-      this.setState({
-        preset: presets.find((preset) => preset.id === 'ADS') ?? defaultPreset,
-        onGoingStep: 'preset changed',
-      })
-
-    const setAdsNeutralPreset = () =>
-      this.setState({
-        preset:
-          presets.find((preset) => preset.id === 'ADS_NEUTRAL') ??
-          defaultPreset,
-        onGoingStep: 'preset changed',
-      })
-
-    const setCarbonPreset = () =>
-      this.setState({
-        preset:
-          presets.find((preset) => preset.id === 'CARBON') ?? defaultPreset,
-        onGoingStep: 'preset changed',
-      })
-
-    const setBasePreset = () =>
-      this.setState({
-        preset: presets.find((preset) => preset.id === 'BASE') ?? defaultPreset,
-        onGoingStep: 'preset changed',
-      })
-
-    const setCustomPreset = () => {
-      const customPreset = presets.find((preset) => preset.id === 'CUSTOM')
-      if (customPreset != undefined) customPreset.scale = [1, 2]
-      this.setState({
-        preset: customPreset ?? defaultPreset,
-        onGoingStep: 'preset changed',
-      })
-    }
-
-    const actions: ActionsList = {
-      MATERIAL: () => setMaterialDesignPreset(),
-      MATERIAL_3: () => setMaterial3Preset(),
-      TAILWIND: () => setTailwindPreset(),
-      ANT: () => setAntDesignPreset(),
-      ADS: () => setAdsPreset(),
-      ADS_NEUTRAL: () => setAdsNeutralPreset(),
-      CARBON: () => setCarbonPreset(),
-      BASE: () => setBasePreset(),
-      CUSTOM: () => setCustomPreset(),
-      NULL: () => null,
-    }
-
-    return actions[(e.target as HTMLElement).dataset.value ?? 'NULL']?.()
-  }
-
-  customHandler = (e: React.SyntheticEvent) => {
-    const scale = this.state['preset']?.['scale'] ?? [1, 2]
-
-    const addStop = () => {
-      if (scale.length < 24) {
-        scale.push(scale.slice(-1)[0] + scale[0])
-        this.setState({
-          preset: {
-            name: presets.find((preset) => preset.id === 'CUSTOM')?.name ?? '',
-            scale: scale,
-            min: palette.min ?? 0,
-            max: palette.max ?? 100,
-            isDistributed: true,
-            id: 'CUSTOM',
-          },
-        })
-      }
-    }
-
-    const removeStop = () => {
-      if (scale.length > 2) {
-        scale.pop()
-        this.setState({
-          preset: {
-            name: presets.find((preset) => preset.id === 'CUSTOM')?.name ?? '',
-            scale: scale,
-            min: palette.min ?? 0,
-            max: palette.max ?? 100,
-            isDistributed: true,
-            id: 'CUSTOM',
-          },
-        })
-      }
-    }
-
-    const changeNamingConvention = () => {
-      const option = (e.target as HTMLInputElement).dataset
-        .value as NamingConvention
-      this.setState({
-        namingConvention: option,
-        preset: {
-          name: presets.find((preset) => preset.id === 'CUSTOM')?.name ?? '',
-          scale: scale.map((stop, index) => {
-            if (option === 'TENS') return (index + 1) * 10
-            else if (option === 'HUNDREDS') return (index + 1) * 100
-            return (index + 1) * 1
-          }),
-          min: palette.min ?? 0,
-          max: palette.max ?? 100,
-          isDistributed: true,
-          id: 'CUSTOM',
-        },
-      })
-    }
-
-    const actions: ActionsList = {
-      ADD_STOP: () => addStop(),
-      REMOVE_STOP: () => removeStop(),
-      UPDATE_NAMING_CONVENTION: () => changeNamingConvention(),
-      NULL: () => null,
-    }
-
-    return actions[(e.target as HTMLInputElement).dataset.feature ?? 'NULL']?.()
-  }
-
-  slideHandler = () =>
-    this.setState({
-      scale: palette.scale,
-      themes: this.state['themes'].map((theme: ThemeConfiguration) => {
-        if (theme.isEnabled) theme.scale = palette.scale
-        return theme
-      }),
-      onGoingStep: 'scale changed',
-    })
-
-  customSlideHandler = () =>
-    this.setState({
-      preset:
-        Object.keys(palette.preset).length == 0
-          ? this.state['preset']
-          : palette.preset,
-      scale: palette.scale,
-      themes: this.state['themes'].map((theme: ThemeConfiguration) => {
-        if (theme.isEnabled) theme.scale = palette.scale
-        else
-          theme.scale = doLightnessScale(
-            Object.keys(palette.scale).map((stop) => {
-              return parseFloat(stop.replace('lightness-', ''))
-            }),
-            theme.scale[
-              Object.keys(theme.scale)[Object.keys(theme.scale).length - 1]
-            ],
-            theme.scale[Object.keys(theme.scale)[0]]
-          )
-        return theme
-      }),
-      onGoingStep: 'stops changed',
-    })
-
   colorsHandler = (colors: Array<ColorConfiguration>) =>
     this.setState({
       colors: colors,
@@ -888,9 +682,11 @@ class App extends React.Component<Record<string, never>, AppStates> {
               textColorsTheme={this.state['textColorsTheme']}
               planStatus={this.state['planStatus']}
               lang={this.state['lang']}
-              onChangeColorsFromImport={this.colorsFromImportHandler}
-              onChangePreset={this.presetsHandler}
-              onCustomPreset={this.customHandler}
+              onChangeColorsFromImport={(e) =>
+                this.setState({ ...this.state, ...e })
+              }
+              onChangePreset={(e) => this.setState({ ...this.state, ...e })}
+              onCustomPreset={(e) => this.setState({ ...this.state, ...e })}
               onChangeSettings={(e) => this.setState({ ...this.state, ...e })}
             />
           </Feature>
@@ -917,8 +713,8 @@ class App extends React.Component<Record<string, never>, AppStates> {
               editorType={this.state['editorType']}
               planStatus={this.state['planStatus']}
               lang={this.state['lang']}
-              onChangeScale={this.slideHandler}
-              onChangeStop={this.customSlideHandler}
+              onChangeScale={(e) => this.setState({ ...this.state, ...e })}
+              onChangeStop={(e) => this.setState({ ...this.state, ...e })}
               onChangeColors={this.colorsHandler}
               onChangeThemes={this.themesHandler}
               onChangeSettings={(e) => this.setState({ ...this.state, ...e })}

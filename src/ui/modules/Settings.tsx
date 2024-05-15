@@ -272,10 +272,10 @@ export default class Settings extends React.Component<SettingsProps> {
       UPDATE_ALGORITHM_VERSION: () => updateAlgorythmVersion(),
       CHANGE_TEXT_LIGHT_COLOR: () => updateTextLightColor(),
       CHANGE_TEXT_DARK_COLOR: () => updateTextDarkColor(),
-      DEFAULT: () => null,
+      NULL: () => null,
     }
 
-    return actions[feature]?.()
+    return actions[feature ?? 'NULL']?.()
   }
 
   // Templates

@@ -78,6 +78,8 @@ export const presets: Array<PresetConfiguration> = [
   },
 ]
 
+export const defaultPreset = presets[0]
+
 export const palette: PaletteConfiguration = {
   name: '',
   description: '',
