@@ -44,7 +44,7 @@ const colorsMessage: ColorsMessage = {
 
 export default class Colors extends React.Component<ColorsProps, ColorsStates> {
   dispatch: { [key: string]: DispatchProcess }
-  listRef: React.MutableRefObject<any>
+  listRef: React.RefObject<HTMLUListElement>
 
   constructor(props: ColorsProps) {
     super(props)
@@ -78,7 +78,7 @@ export default class Colors extends React.Component<ColorsProps, ColorsStates> {
 
   handleClickOutside = (e: Event) => {
     if (this.listRef.current != null)
-      if (this.listRef && !this.listRef.current.contains(e.target))
+      if (this.listRef && !this.listRef.current.contains(e.target as HTMLElement))
         this.setState({
           selectedElement: {
             id: undefined,
@@ -139,7 +139,7 @@ export default class Colors extends React.Component<ColorsProps, ColorsStates> {
         colors: colorsMessage.data,
         onGoingStep: 'colors changed',
       })
-      if (e.type === 'blur' || e.key === 'Enter')
+      if (e.type === 'blur' || e.code === 'Enter')
         parent.postMessage({ pluginMessage: colorsMessage }, '*')
     }
 

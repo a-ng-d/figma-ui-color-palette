@@ -75,7 +75,7 @@ export default class EditPalette extends React.Component<
   EditPaletteProps,
   EditPaletteStates
 > {
-  themesRef: React.MutableRefObject<any>
+  themesRef: React.RefObject<Themes>
 
   constructor(props: EditPaletteProps) {
     super(props)

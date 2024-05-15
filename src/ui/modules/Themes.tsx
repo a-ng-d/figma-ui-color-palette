@@ -49,7 +49,7 @@ const themesMessage: ThemesMessage = {
 
 export default class Themes extends React.Component<ThemesProps, ThemesStates> {
   dispatch: { [key: string]: DispatchProcess }
-  listRef: React.MutableRefObject<any>
+  listRef: React.RefObject<HTMLUListElement>
 
   constructor(props: ThemesProps) {
     super(props)
@@ -83,7 +83,7 @@ export default class Themes extends React.Component<ThemesProps, ThemesStates> {
 
   handleClickOutside = (e: Event) => {
     if (this.listRef.current != null)
-      if (this.listRef && !this.listRef.current.contains(e.target))
+      if (this.listRef && !this.listRef.current.contains(e.target as HTMLElement))
         this.setState({
           selectedElement: {
             id: undefined,
