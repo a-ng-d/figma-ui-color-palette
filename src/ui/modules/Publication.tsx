@@ -86,10 +86,6 @@ export default class Publication extends React.Component<
       prevProps.rawData.id !== this.props.rawData.id
     )
       this.callUICPAgent()
-    else if (prevProps.rawData.id !== this.props.rawData.id)
-      this.setState({
-        publicationStatus: 'UNPUBLISHED',
-      })
   }
 
   // Direct actions
@@ -338,8 +334,29 @@ export default class Publication extends React.Component<
       PUBLISHED: {
         primary: {
           label: locals[this.props.lang].publication.publish,
-          state: 'DISABLED',
-          action: () => null,
+          state: (() => {
+            if (
+              this.props.rawData.publicationStatus.isShared !== this.state['isPaletteShared']
+            ) return this.props.isPrimaryActionLoading ? 'LOADING' : 'DEFAULT'
+
+            return 'DISABLED'
+          })(),
+          action: async () => {
+            this.props.onPrimaryActionLoading(true)
+            pushPalette(
+              this.props.rawData,
+              this.state['isPaletteShared']
+            )
+              .then((data) => {
+                this.props.onPalettePublished(data)
+              })
+              .finally(() => {
+                this.props.onPrimaryActionLoading(false)
+                this.setState({
+                  publicationStatus: 'PUBLISHED',
+                })
+              })
+          },
         },
         secondary: {
           label: locals[this.props.lang].publication.unpublish,
@@ -454,8 +471,6 @@ export default class Publication extends React.Component<
 
   render() {
     this.uploadPaletteScreenshot()
-    console.log(this.state['publicationStatus'])
-    //console.log(this.props.rawData.publicationStatus, this.props.rawData.dates, this.props.rawData.creatorIdentity)
 
     return (
       <Dialog
