@@ -535,12 +535,13 @@ export default class Colors {
     })
 
     if (!this.parent.isSynchronized) {
-      const updatedAt = new Date().toISOString()
+      const now = new Date().toISOString()
+
       this.palette?.setPluginData('data', JSON.stringify(this.paletteData))
-      this.palette?.setPluginData('updatedAt', updatedAt)
+      this.palette?.setPluginData('updatedAt', now)
       figma.ui.postMessage({
         type: 'UPDATE_PALETTE_DATE',
-        data: updatedAt,
+        data: now,
       })
     }
   }

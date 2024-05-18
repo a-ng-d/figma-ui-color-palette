@@ -81,6 +81,7 @@ export default class Palette {
   }
 
   makeNode = () => {
+    const now = new Date().toISOString()
     // base
     this.node = figma.createFrame()
     this.node.name = this.frameName
@@ -116,8 +117,8 @@ export default class Palette {
     this.node.setPluginData('algorithmVersion', this.algorithmVersion)
     this.node.setPluginData('isPublished', 'false')
     this.node.setPluginData('isShared', 'false')
-    this.node.setPluginData('createdAt', new Date().toISOString())
-    this.node.setPluginData('updatedAt', new Date().toISOString())
+    this.node.setPluginData('createdAt', now)
+    this.node.setPluginData('updatedAt', now)
     this.node.setPluginData('publishedAt', '')
 
     // insert

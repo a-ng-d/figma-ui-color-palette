@@ -7,7 +7,7 @@ const pushPalette = async (
   rawData: AppStates,
   isShared = false
 ): Promise<Partial<AppStates>> => {
-  const publishedAt = new Date().toISOString()
+  const now = new Date().toISOString()
 
   if (rawData.screenshot !== null) {
     const { data, error } = await supabase.storage
@@ -44,7 +44,7 @@ const pushPalette = async (
         creator_avatar: rawData.userSession.userAvatar,
         creator_id: rawData.userSession.userId,
         updated_at: rawData.dates.updatedAt,
-        published_at: publishedAt,
+        published_at: now,
       },
     ])
     .match({ palette_id: rawData.id })
@@ -54,9 +54,9 @@ const pushPalette = async (
   if (!error) {
     const palettePublicationDetails = {
       dates: {
-        publishedAt: publishedAt,
+        publishedAt: now,
         createdAt: rawData.dates.createdAt,
-        updatedAt: rawData.dates.updatedAt,
+        updatedAt: now,
       },
       publicationStatus: {
         isPublished: true,
@@ -77,6 +77,10 @@ const pushPalette = async (
             {
               key: 'publishedAt',
               value: palettePublicationDetails.dates.publishedAt,
+            },
+            {
+              key: 'updatedAt',
+              value: palettePublicationDetails.dates.updatedAt,
             },
             {
               key: 'isShared',
