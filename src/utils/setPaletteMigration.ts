@@ -13,6 +13,7 @@ import type {
 
 const setPaletteMigration = (palette: BaseNode) => {
   const id = palette.getPluginData('id'),
+    idVersion = palette.getPluginData('idVersion'),
     type = palette.getPluginData('type'),
     name = palette.getPluginData('name'),
     min = palette.getPluginData('min'),
@@ -41,6 +42,10 @@ const setPaletteMigration = (palette: BaseNode) => {
 
   // id
   if (id === '') palette.setPluginData('id', uid())
+  if (idVersion === '') {
+    palette.setPluginData('id', uid())
+    palette.setPluginData('idVersion', 'v2')
+  }
 
   // type
   if (type === '') palette.setPluginData('type', 'UI_COLOR_PALETTE')
