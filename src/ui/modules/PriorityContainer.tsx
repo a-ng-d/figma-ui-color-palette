@@ -28,7 +28,7 @@ interface PriorityContainerProps {
   trialStatus: TrialStatus
   userSession: UserSession
   lang: Language
-  onPalettePublished: React.Dispatch<Partial<AppStates>>
+  onChangePublication: React.Dispatch<Partial<AppStates>>
   onClose: React.ChangeEventHandler & (() => void)
 }
 
@@ -325,13 +325,13 @@ export default class PriorityContainer extends React.Component<
             isPrimaryActionLoading={this.state['isPrimaryActionLoading']}
             isSecondaryActionLoading={this.state['isSecondaryActionLoading']}
             lang={this.props.lang}
-            onPrimaryActionLoading={(e) =>
+            onLoadPrimaryAction={(e) =>
               this.setState({ isPrimaryActionLoading: e })
             }
-            onSecondaryActionLoading={(e) =>
+            onLoadSecondaryAction={(e) =>
               this.setState({ isSecondaryActionLoading: e })
             }
-            onPalettePublished={this.props.onPalettePublished}
+            onChangePublication={this.props.onChangePublication}
             onClosePublication={this.props.onClose}
           />
         )}

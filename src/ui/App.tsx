@@ -724,7 +724,7 @@ class App extends React.Component<Record<string, never>, AppStates> {
               trialStatus={this.state['trialStatus']}
               userSession={this.state['userSession']}
               lang={this.state['lang']}
-              onPalettePublished={(e) => this.setState({ ...this.state, ...e })}
+              onChangePublication={(e) => this.setState({ ...this.state, ...e })}
               onClose={() =>
                 this.setState({ priorityContainerContext: 'EMPTY' })
               }

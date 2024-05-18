@@ -17,9 +17,9 @@ interface PublicationProps {
   isPrimaryActionLoading: boolean
   isSecondaryActionLoading: boolean
   lang: Language
-  onPrimaryActionLoading: (e: boolean) => void
-  onSecondaryActionLoading: (e: boolean) => void
-  onPalettePublished: React.Dispatch<Partial<AppStates>>
+  onLoadPrimaryAction: (e: boolean) => void
+  onLoadSecondaryAction: (e: boolean) => void
+  onChangePublication: React.Dispatch<Partial<AppStates>>
   onClosePublication: React.ReactEventHandler
 }
 
@@ -32,7 +32,7 @@ type PublicationStatus =
   | 'UP_TO_DATE'
   | 'CAN_BE_REVERTED'
   | 'IS_NOT_FOUND'
-  | 'FROZEN'
+  | 'WAITING'
 
 interface PublicationStates {
   isPaletteShared: boolean
@@ -67,7 +67,7 @@ export default class Publication extends React.Component<
     this.counter = 0
     this.state = {
       isPaletteShared: this.props.rawData.publicationStatus.isShared,
-      publicationStatus: 'FROZEN',
+      publicationStatus: 'WAITING',
     }
   }
 
@@ -181,7 +181,7 @@ export default class Publication extends React.Component<
           {locals[this.props.lang].publication.statusNotFound}
         </Chip>
       )
-    else if (this.state['publicationStatus'] === 'FROZEN')
+    else if (this.state['publicationStatus'] === 'WAITING')
       return (
         <Chip state="INACTIVE">
           {locals[this.props.lang].publication.statusWaiting}
@@ -217,13 +217,13 @@ export default class Publication extends React.Component<
           label: locals[this.props.lang].publication.publish,
           state: this.props.isPrimaryActionLoading ? 'LOADING' : 'DEFAULT',
           action: async () => {
-            this.props.onPrimaryActionLoading(true)
+            this.props.onLoadPrimaryAction(true)
             publishPalette(this.props.rawData, this.state['isPaletteShared'])
               .then((data) => {
-                this.props.onPalettePublished(data)
+                this.props.onChangePublication(data)
               })
               .finally(() => {
-                this.props.onPrimaryActionLoading(false)
+                this.props.onLoadPrimaryAction(false)
                 this.setState({
                   publicationStatus: 'PUBLISHED',
                 })
@@ -237,13 +237,13 @@ export default class Publication extends React.Component<
           label: locals[this.props.lang].publication.publish,
           state: this.props.isPrimaryActionLoading ? 'LOADING' : 'DEFAULT',
           action: async () => {
-            this.props.onPrimaryActionLoading(true)
+            this.props.onLoadPrimaryAction(true)
             pushPalette(this.props.rawData, this.state['isPaletteShared'])
               .then((data) => {
-                this.props.onPalettePublished(data)
+                this.props.onChangePublication(data)
               })
               .finally(() => {
-                this.props.onPrimaryActionLoading(false)
+                this.props.onLoadPrimaryAction(false)
                 this.setState({
                   publicationStatus: 'PUBLISHED',
                 })
@@ -254,13 +254,13 @@ export default class Publication extends React.Component<
           label: locals[this.props.lang].publication.revert,
           state: this.props.isSecondaryActionLoading ? 'LOADING' : 'DEFAULT',
           action: async () => {
-            this.props.onSecondaryActionLoading(true)
+            this.props.onLoadSecondaryAction(true)
             pullPalette(this.props.rawData)
               .then((data) => {
-                this.props.onPalettePublished(data)
+                this.props.onChangePublication(data)
               })
               .finally(() => {
-                this.props.onSecondaryActionLoading(false)
+                this.props.onLoadSecondaryAction(false)
                 this.setState({
                   publicationStatus: 'PUBLISHED',
                 })
@@ -273,13 +273,13 @@ export default class Publication extends React.Component<
           label: locals[this.props.lang].publication.synchronize,
           state: this.props.isPrimaryActionLoading ? 'LOADING' : 'DEFAULT',
           action: async () => {
-            this.props.onPrimaryActionLoading(true)
+            this.props.onLoadPrimaryAction(true)
             pullPalette(this.props.rawData)
               .then((data) => {
-                this.props.onPalettePublished(data)
+                this.props.onChangePublication(data)
               })
               .finally(() => {
-                this.props.onPrimaryActionLoading(false)
+                this.props.onLoadPrimaryAction(false)
                 this.setState({
                   publicationStatus: 'PUBLISHED',
                 })
@@ -290,13 +290,13 @@ export default class Publication extends React.Component<
           label: locals[this.props.lang].publication.detach,
           state: this.props.isSecondaryActionLoading ? 'LOADING' : 'DEFAULT',
           action: async () => {
-            this.props.onSecondaryActionLoading(true)
+            this.props.onLoadSecondaryAction(true)
             detachPalette(this.props.rawData)
               .then((data) => {
-                this.props.onPalettePublished(data)
+                this.props.onChangePublication(data)
               })
               .finally(() => {
-                this.props.onSecondaryActionLoading(false)
+                this.props.onLoadSecondaryAction(false)
                 this.setState({
                   publicationStatus: 'UNPUBLISHED',
                 })
@@ -309,13 +309,13 @@ export default class Publication extends React.Component<
           label: locals[this.props.lang].publication.synchronize,
           state: this.props.isPrimaryActionLoading ? 'LOADING' : 'DEFAULT',
           action: async () => {
-            this.props.onPrimaryActionLoading(true)
+            this.props.onLoadPrimaryAction(true)
             pullPalette(this.props.rawData)
               .then((data) => {
-                this.props.onPalettePublished(data)
+                this.props.onChangePublication(data)
               })
               .finally(() => {
-                this.props.onPrimaryActionLoading(false)
+                this.props.onLoadPrimaryAction(false)
                 this.setState({
                   publicationStatus: 'UP_TO_DATE',
                 })
@@ -326,13 +326,13 @@ export default class Publication extends React.Component<
           label: locals[this.props.lang].publication.detach,
           state: 'DEFAULT',
           action: async () => {
-            this.props.onSecondaryActionLoading(true)
+            this.props.onLoadSecondaryAction(true)
             detachPalette(this.props.rawData)
               .then((data) => {
-                this.props.onPalettePublished(data)
+                this.props.onChangePublication(data)
               })
               .finally(() => {
-                this.props.onSecondaryActionLoading(false)
+                this.props.onLoadSecondaryAction(false)
                 this.setState({
                   publicationStatus: 'UNPUBLISHED',
                 })
@@ -351,16 +351,16 @@ export default class Publication extends React.Component<
             return 'DISABLED'
           })(),
           action: async () => {
-            this.props.onPrimaryActionLoading(true)
+            this.props.onLoadPrimaryAction(true)
             pushPalette(
               this.props.rawData,
               this.state['isPaletteShared']
             )
               .then((data) => {
-                this.props.onPalettePublished(data)
+                this.props.onChangePublication(data)
               })
               .finally(() => {
-                this.props.onPrimaryActionLoading(false)
+                this.props.onLoadPrimaryAction(false)
                 this.setState({
                   publicationStatus: 'PUBLISHED',
                 })
@@ -371,13 +371,13 @@ export default class Publication extends React.Component<
           label: locals[this.props.lang].publication.unpublish,
           state: this.props.isSecondaryActionLoading ? 'LOADING' : 'DEFAULT',
           action: async () => {
-            this.props.onSecondaryActionLoading(true)
+            this.props.onLoadSecondaryAction(true)
             unpublishPalette(this.props.rawData)
               .then((data) => {
-                this.props.onPalettePublished(data)
+                this.props.onChangePublication(data)
               })
               .finally(() => {
-                this.props.onSecondaryActionLoading(false)
+                this.props.onLoadSecondaryAction(false)
                 this.setState({
                   publicationStatus: 'UNPUBLISHED',
                 })
@@ -395,13 +395,13 @@ export default class Publication extends React.Component<
           label: locals[this.props.lang].publication.detach,
           state: this.props.isSecondaryActionLoading ? 'LOADING' : 'DEFAULT',
           action: async () => {
-            this.props.onSecondaryActionLoading(true)
+            this.props.onLoadSecondaryAction(true)
             detachPalette(this.props.rawData)
               .then((data) => {
-                this.props.onPalettePublished(data)
+                this.props.onChangePublication(data)
               })
               .finally(() => {
-                this.props.onSecondaryActionLoading(false)
+                this.props.onLoadSecondaryAction(false)
                 this.setState({
                   publicationStatus: 'UNPUBLISHED',
                 })
@@ -414,13 +414,13 @@ export default class Publication extends React.Component<
           label: locals[this.props.lang].publication.detach,
           state: 'DEFAULT',
           action: async () => {
-            this.props.onSecondaryActionLoading(true)
+            this.props.onLoadPrimaryAction(true)
             detachPalette(this.props.rawData)
               .then((data) => {
-                this.props.onPalettePublished(data)
+                this.props.onChangePublication(data)
               })
               .finally(() => {
-                this.props.onSecondaryActionLoading(false)
+                this.props.onLoadPrimaryAction(false)
                 this.setState({
                   publicationStatus: 'UNPUBLISHED',
                 })
@@ -429,7 +429,7 @@ export default class Publication extends React.Component<
         },
         secondary: undefined,
       },
-      FROZEN: {
+      WAITING: {
         primary: {
           label: locals[this.props.lang].publication.waiting,
           state: 'DISABLED',
@@ -472,7 +472,7 @@ export default class Publication extends React.Component<
       },
       UP_TO_DATE: undefined,
       IS_NOT_FOUND: undefined,
-      FROZEN: undefined,
+      WAITING: undefined,
     }
 
     return actions[publicationStatus]
