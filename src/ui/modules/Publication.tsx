@@ -324,7 +324,7 @@ export default class Publication extends React.Component<
         },
         secondary: {
           label: locals[this.props.lang].publication.detach,
-          state: 'DEFAULT',
+          state: this.props.isSecondaryActionLoading ? 'LOADING' : 'DEFAULT',
           action: async () => {
             this.props.onLoadSecondaryAction(true)
             detachPalette(this.props.rawData)
@@ -387,9 +387,41 @@ export default class Publication extends React.Component<
       },
       UP_TO_DATE: {
         primary: {
-          label: locals[this.props.lang].publication.synchronize,
-          state: 'DISABLED',
-          action: () => null,
+          label: locals[this.props.lang].publication.detach,
+          state: this.props.isPrimaryActionLoading ? 'LOADING' : 'DEFAULT',
+          action: async () => {
+            this.props.onLoadPrimaryAction(true)
+            detachPalette(this.props.rawData)
+              .then((data) => {
+                this.props.onChangePublication(data)
+              })
+              .finally(() => {
+                this.props.onLoadPrimaryAction(false)
+                this.setState({
+                  publicationStatus: 'UNPUBLISHED',
+                })
+              })
+          },
+        },
+        secondary: undefined
+      },
+      CAN_BE_REVERTED: {
+        primary: {
+          label: locals[this.props.lang].publication.revert,
+          state: this.props.isPrimaryActionLoading ? 'LOADING' : 'DEFAULT',
+          action: async () => {
+            this.props.onLoadPrimaryAction(true)
+            pullPalette(this.props.rawData)
+              .then((data) => {
+                this.props.onChangePublication(data)
+              })
+              .finally(() => {
+                this.props.onLoadPrimaryAction(false)
+                this.setState({
+                  publicationStatus: 'UP_TO_DATE',
+                })
+              })
+          },
         },
         secondary: {
           label: locals[this.props.lang].publication.detach,
@@ -412,9 +444,9 @@ export default class Publication extends React.Component<
       IS_NOT_FOUND: {
         primary: {
           label: locals[this.props.lang].publication.detach,
-          state: 'DEFAULT',
+          state: this.props.isSecondaryActionLoading ? 'LOADING' : 'DEFAULT',
           action: async () => {
-            this.props.onLoadPrimaryAction(true)
+            this.props.onLoadSecondaryAction(true)
             detachPalette(this.props.rawData)
               .then((data) => {
                 this.props.onChangePublication(data)
@@ -471,6 +503,7 @@ export default class Publication extends React.Component<
           this.setState({ isPaletteShared: !this.state['isPaletteShared'] }),
       },
       UP_TO_DATE: undefined,
+      CAN_BE_REVERTED: undefined,
       IS_NOT_FOUND: undefined,
       WAITING: undefined,
     }
@@ -480,6 +513,7 @@ export default class Publication extends React.Component<
 
   render() {
     this.uploadPaletteScreenshot()
+    console.log(this.state['publicationStatus'])
 
     return (
       <Dialog
@@ -502,6 +536,10 @@ export default class Publication extends React.Component<
             <div className={`${texts.type} type`}>
               {this.props.rawData.preset.name}
             </div>
+            <div className={`${texts.type} ${texts['type--secondary']} type`}>
+              {this.getPaletteMeta()}
+            </div>
+            {this.state['publicationStatus'] === 'UP_TO_DATE' || this.state['publicationStatus'] === 'MAY_BE_PULLED'}
             <div className={`${texts.type} ${texts['type--secondary']} type`}>
               {this.getPaletteMeta()}
             </div>
