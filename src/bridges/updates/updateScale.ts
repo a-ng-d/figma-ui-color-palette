@@ -1,23 +1,23 @@
+import Colors from '../../canvas/Colors'
+import { lang, locals } from '../../content/locals'
+import doLightnessScale from '../../utils/doLightnessScale'
+import setPaletteName from '../../utils/setPaletteName'
 import type {
-  PresetConfiguration,
-  TextColorsThemeHexModel,
-  ColorConfiguration,
-  ThemeConfiguration,
-  ColorSpaceConfiguration,
-  ViewConfiguration,
   AlgorithmVersionConfiguration,
+  ColorConfiguration,
+  ColorSpaceConfiguration,
+  PresetConfiguration,
   ScaleMessage,
+  TextColorsThemeHexModel,
+  ThemeConfiguration,
+  ViewConfiguration,
   VisionSimulationModeConfiguration,
 } from '../../utils/types'
 import {
-  previousSelection,
   currentSelection,
   isSelectionChanged,
+  previousSelection,
 } from '../processSelection'
-import Colors from '../../canvas/Colors'
-import { locals, lang } from '../../content/locals'
-import doLightnessScale from '../../utils/doLightnessScale'
-import setPaletteName from '../../utils/setPaletteName'
 
 const updateScale = (msg: ScaleMessage) => {
   const palette = isSelectionChanged

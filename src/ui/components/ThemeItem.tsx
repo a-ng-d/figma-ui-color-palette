@@ -1,10 +1,11 @@
+import { doMap } from '@a-ng-d/figmug.modules.do-map'
+import { Button, FormItem, Input } from '@a_ng_d/figmug-ui'
 import React from 'react'
+
+import { locals } from '../../content/locals'
+import features from '../../utils/config'
 import { HexModel, Language } from '../../utils/types'
 import Feature from './Feature'
-import { Input, Button, FormItem } from '@a_ng_d/figmug-ui'
-import { doMap } from '@a-ng-d/figmug.modules.do-map'
-import features from '../../utils/config'
-import { locals } from '../../content/locals'
 
 interface ThemeItemProps {
   name: string

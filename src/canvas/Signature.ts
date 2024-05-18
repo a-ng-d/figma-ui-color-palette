@@ -1,5 +1,5 @@
-import Tag from './Tag'
 import { lang, locals } from '../content/locals'
+import Tag from './Tag'
 
 export default class Signature {
   nodeInfo: FrameNode | null

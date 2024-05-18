@@ -1,11 +1,12 @@
+import { texts } from '@a_ng_d/figmug-ui'
 import React from 'react'
+
+import { locals } from '../../content/locals'
+import features from '../../utils/config'
 import type { Language, PlanStatus, TrialStatus } from '../../utils/types'
 import Feature from '../components/Feature'
-import Icon from './Icon'
-import { texts } from '@a_ng_d/figmug-ui'
-import features from '../../utils/config'
 import package_json from './../../../package.json'
-import { locals } from '../../content/locals'
+import Icon from './Icon'
 
 interface AboutProps {
   planStatus: PlanStatus

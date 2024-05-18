@@ -1,24 +1,25 @@
-import React from 'react'
+import { Button, Message, SectionTitle } from '@a_ng_d/figmug-ui'
 import chroma from 'chroma-js'
+import React from 'react'
+import { uid } from 'uid'
+
+import { locals } from '../../content/locals'
 import type {
-  HoveredColor,
-  SelectedColor,
+  ActionsList,
   ColorConfiguration,
   ColorsMessage,
   DispatchProcess,
-  ActionsList,
-  HexModel,
-  Language,
   EditorType,
+  HexModel,
+  HoveredColor,
+  Language,
   PlanStatus,
+  SelectedColor,
 } from '../../utils/types'
 import type { AppStates } from '../App'
-import Dispatcher from './Dispatcher'
-import { Button, Message, SectionTitle } from '@a_ng_d/figmug-ui'
 import ColorItem from '../components/ColorItem'
 import Actions from './Actions'
-import { locals } from '../../content/locals'
-import { uid } from 'uid'
+import Dispatcher from './Dispatcher'
 
 interface ColorsProps {
   colors: Array<ColorConfiguration>
@@ -78,7 +79,10 @@ export default class Colors extends React.Component<ColorsProps, ColorsStates> {
 
   handleClickOutside = (e: Event) => {
     if (this.listRef.current != null)
-      if (this.listRef && !this.listRef.current.contains(e.target as HTMLElement))
+      if (
+        this.listRef &&
+        !this.listRef.current.contains(e.target as HTMLElement)
+      )
         this.setState({
           selectedElement: {
             id: undefined,

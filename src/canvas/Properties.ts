@@ -1,16 +1,17 @@
+import * as blinder from 'color-blind'
+import { APCAcontrast, fontLookupAPCA, sRGBtoY } from 'apca-w3'
+import chroma from 'chroma-js'
+import { Hsluv } from 'hsluv'
+
+import { lang, locals } from '../content/locals'
 import type {
   ActionsList,
-  VisionSimulationModeConfiguration,
   ColorSpaceConfiguration,
   HexModel,
   TextColorsThemeHexModel,
+  VisionSimulationModeConfiguration,
 } from '../utils/types'
-import chroma from 'chroma-js'
-import * as blinder from 'color-blind'
-import { Hsluv } from 'hsluv'
-import { APCAcontrast, sRGBtoY, fontLookupAPCA } from 'apca-w3'
 import Tag from './Tag'
-import { locals, lang } from '../content/locals'
 
 export default class Properties {
   name: string

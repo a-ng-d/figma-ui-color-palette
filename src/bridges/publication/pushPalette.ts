@@ -1,10 +1,7 @@
-import {
-  palettesDbTableName,
-  palettesStorageName,
-} from '../../utils/config'
-import type { AppStates } from '../../ui/App'
-import { supabase } from './authentication'
 import { lang, locals } from '../../content/locals'
+import type { AppStates } from '../../ui/App'
+import { palettesDbTableName, palettesStorageName } from '../../utils/config'
+import { supabase } from './authentication'
 
 const pushPalette = async (
   rawData: AppStates,

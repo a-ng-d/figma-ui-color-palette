@@ -1,7 +1,7 @@
 import { lang, locals } from '../content/locals'
-import { presets } from '../utils/palettePackage'
-import isBlocked from '../utils/isBlocked'
 import isAvailableAndBlocked from '../utils/isAvailableAndBlocked'
+import isBlocked from '../utils/isBlocked'
+import { presets } from '../utils/palettePackage'
 
 const loadParameters = ({ key, result }: ParameterInputEvent) => {
   const viableSelection = figma.currentPage.selection.filter(

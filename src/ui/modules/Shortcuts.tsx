@@ -1,4 +1,10 @@
+import { Bar, Button, Menu, icons, texts } from '@a_ng_d/figmug-ui'
 import React from 'react'
+
+import { signIn, signOut } from '../../bridges/publication/authentication'
+import { locals } from '../../content/locals'
+import features from '../../utils/config'
+import isBlocked from '../../utils/isBlocked'
 import type {
   EditorType,
   Language,
@@ -7,11 +13,6 @@ import type {
   UserSession,
 } from '../../utils/types'
 import Feature from '../components/Feature'
-import { Bar, Button, Menu, icons, texts } from '@a_ng_d/figmug-ui'
-import features from '../../utils/config'
-import { locals } from '../../content/locals'
-import isBlocked from '../../utils/isBlocked'
-import { signIn, signOut } from '../../bridges/publication/authentication'
 
 interface ShortcutsProps {
   editorType: EditorType

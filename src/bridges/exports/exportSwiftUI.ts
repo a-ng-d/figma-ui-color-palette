@@ -1,6 +1,7 @@
-import type { PaletteData } from '../../utils/types'
-import { locals, lang } from '../../content/locals'
 import { doCamelCase } from '@a-ng-d/figmug.modules.do-camel-case'
+
+import { lang, locals } from '../../content/locals'
+import type { PaletteData } from '../../utils/types'
 
 const exportSwiftUI = (palette: FrameNode) => {
   const paletteData: PaletteData = JSON.parse(palette.getPluginData('data')),

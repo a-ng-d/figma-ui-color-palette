@@ -1,8 +1,9 @@
-import React from 'react'
-import type { Language, ReleaseNote } from '../../utils/types'
 import { Dialog, texts } from '@a_ng_d/figmug-ui'
-import releaseNotes from '../../content/releaseNotes'
+import React from 'react'
+
 import { locals } from '../../content/locals'
+import releaseNotes from '../../content/releaseNotes'
+import type { Language, ReleaseNote } from '../../utils/types'
 
 interface HighlightProps {
   lang: Language

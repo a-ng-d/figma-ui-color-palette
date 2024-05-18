@@ -1,11 +1,11 @@
 import Colors from '../../canvas/Colors'
+import { lang, locals } from '../../content/locals'
+import setPaletteName from '../../utils/setPaletteName'
 import {
-  previousSelection,
   currentSelection,
   isSelectionChanged,
+  previousSelection,
 } from '../processSelection'
-import { locals, lang } from '../../content/locals'
-import setPaletteName from '../../utils/setPaletteName'
 
 const updateGlobal = async (msg: any) => {
   const palette = isSelectionChanged
@@ -13,7 +13,6 @@ const updateGlobal = async (msg: any) => {
     : (currentSelection[0] as FrameNode)
 
   if (palette.children.length == 1) {
-
     palette.children[0].remove()
     palette.appendChild(
       new Colors(
@@ -30,7 +29,7 @@ const updateGlobal = async (msg: any) => {
           textColorsTheme: msg.data.text_colors_theme,
           algorithmVersion: msg.data.algorithm_version,
           service: 'EDIT',
-          isSynchronized: true
+          isSynchronized: true,
         },
         palette
       ).makeNode()
@@ -50,11 +49,20 @@ const updateGlobal = async (msg: any) => {
     palette.setPluginData('scale', JSON.stringify(msg.data.scale))
     palette.setPluginData('colors', JSON.stringify(msg.data.colors))
     palette.setPluginData('colorSpace', msg.data.color_space)
-    palette.setPluginData('visionSimulationMode', msg.data.vision_simulation_mode)
+    palette.setPluginData(
+      'visionSimulationMode',
+      msg.data.vision_simulation_mode
+    )
     palette.setPluginData('themes', JSON.stringify(msg.data.themes))
     palette.setPluginData('view', msg.data.view)
-    palette.setPluginData('textColorsTheme', JSON.stringify(msg.data.text_colors_theme))
-    palette.setPluginData('algorithmVersion', JSON.stringify(msg.data.algorithm_version))
+    palette.setPluginData(
+      'textColorsTheme',
+      JSON.stringify(msg.data.text_colors_theme)
+    )
+    palette.setPluginData(
+      'algorithmVersion',
+      JSON.stringify(msg.data.algorithm_version)
+    )
     palette.setPluginData('createdAt', msg.data.created_at)
     palette.setPluginData('updatedAt', msg.data.updated_at)
     palette.setPluginData('isShared', msg.data.is_shared.toString())
@@ -70,7 +78,6 @@ const updateGlobal = async (msg: any) => {
       type: 'UPDATE_SCREENSHOT',
       data: bytes,
     })
-
   } else figma.notify(locals[lang].error.corruption)
 }
 

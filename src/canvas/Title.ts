@@ -1,7 +1,7 @@
-import type { PaletteNode } from '../utils/types'
-import Tag from './Tag'
-import Paragraph from './Paragraph'
 import { lang, locals } from '../content/locals'
+import type { PaletteNode } from '../utils/types'
+import Paragraph from './Paragraph'
+import Tag from './Tag'
 
 export default class Title {
   parent: PaletteNode

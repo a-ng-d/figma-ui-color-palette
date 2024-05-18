@@ -1,3 +1,4 @@
+import Palette from '../../canvas/Palette'
 import type {
   ColorSpaceConfiguration,
   PresetConfiguration,
@@ -7,7 +8,6 @@ import type {
   ViewConfiguration,
   VisionSimulationModeConfiguration,
 } from '../../utils/types'
-import Palette from '../../canvas/Palette'
 
 interface Msg {
   data: {

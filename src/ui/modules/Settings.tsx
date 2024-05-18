@@ -1,35 +1,36 @@
+import {
+  Dropdown,
+  FormItem,
+  HexModel,
+  Input,
+  Message,
+  SectionTitle,
+  Select,
+} from '@a_ng_d/figmug-ui'
 import React from 'react'
+
+import { locals } from '../../content/locals'
+import features from '../../utils/config'
+import isBlocked from '../../utils/isBlocked'
+import { palette } from '../../utils/palettePackage'
 import type {
-  VisionSimulationModeConfiguration,
+  ActionsList,
+  AlgorithmVersionConfiguration,
+  ColorSpaceConfiguration,
+  DispatchProcess,
   EditorType,
   Language,
-  SourceColorConfiguration,
-  TextColorsThemeHexModel,
   PlanStatus,
   SettingsMessage,
-  ColorSpaceConfiguration,
-  AlgorithmVersionConfiguration,
-  ActionsList,
-  DispatchProcess,
+  SourceColorConfiguration,
+  TextColorsThemeHexModel,
   ViewConfiguration,
+  VisionSimulationModeConfiguration,
 } from '../../utils/types'
 import type { AppStates } from '../App'
 import Feature from '../components/Feature'
 import Dispatcher from '../modules/Dispatcher'
-import {
-  FormItem,
-  Input,
-  Select,
-  Message,
-  Dropdown,
-  SectionTitle,
-  HexModel,
-} from '@a_ng_d/figmug-ui'
 import Actions from './Actions'
-import features from '../../utils/config'
-import isBlocked from '../../utils/isBlocked'
-import { locals } from '../../content/locals'
-import { palette } from '../../utils/palettePackage'
 
 interface SettingsProps {
   context: string

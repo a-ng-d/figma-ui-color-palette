@@ -1,12 +1,12 @@
-import type { PaletteConfiguration } from './utils/types'
-import processSelection from './bridges/processSelection'
 import checkPlanStatus from './bridges/checks/checkPlanStatus'
 import createPalette from './bridges/creations/createPalette'
-import { presets } from './utils/palettePackage'
-import doLightnessScale from './utils/doLightnessScale'
-import loadUI from './bridges/loadUI'
 import loadParameters from './bridges/loadParameters'
+import loadUI from './bridges/loadUI'
+import processSelection from './bridges/processSelection'
+import doLightnessScale from './utils/doLightnessScale'
+import { presets } from './utils/palettePackage'
 import setPaletteMigration from './utils/setPaletteMigration'
+import type { PaletteConfiguration } from './utils/types'
 
 // Fonts
 figma.loadFontAsync({ family: 'Inter', style: 'Regular' })

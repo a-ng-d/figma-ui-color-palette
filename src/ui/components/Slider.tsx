@@ -1,13 +1,14 @@
-import React from 'react'
-import type { ScaleConfiguration, Easing } from '../../utils/types'
-import Knob from './Knob'
 import { doMap } from '@a-ng-d/figmug.modules.do-map'
+import React from 'react'
+
+import doLightnessScale from '../../utils/doLightnessScale'
+import { palette } from '../../utils/palettePackage'
+import type { Easing, ScaleConfiguration } from '../../utils/types'
 import addStop from './../handlers/addStop'
 import deleteStop from './../handlers/deleteStop'
 import shiftLeftStop from './../handlers/shiftLeftStop'
 import shiftRightStop from './../handlers/shiftRightStop'
-import { palette } from '../../utils/palettePackage'
-import doLightnessScale from '../../utils/doLightnessScale'
+import Knob from './Knob'
 
 const safeGap = 0.1
 

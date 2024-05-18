@@ -1,17 +1,17 @@
+import Colors from '../../canvas/Colors'
+import { lang, locals } from '../../content/locals'
+import setPaletteName from '../../utils/setPaletteName'
 import type {
+  AlgorithmVersionConfiguration,
+  ColorConfiguration,
+  ColorSpaceConfiguration,
   PresetConfiguration,
   ScaleConfiguration,
   TextColorsThemeHexModel,
-  ColorConfiguration,
   ThemeConfiguration,
-  ColorSpaceConfiguration,
-  AlgorithmVersionConfiguration,
   ViewMessage,
   VisionSimulationModeConfiguration,
 } from '../../utils/types'
-import Colors from '../../canvas/Colors'
-import { locals, lang } from '../../content/locals'
-import setPaletteName from '../../utils/setPaletteName'
 
 const updateView = (msg: ViewMessage, palette: FrameNode) => {
   if (palette.children.length == 1) {

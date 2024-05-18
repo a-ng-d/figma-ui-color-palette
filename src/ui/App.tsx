@@ -1,45 +1,46 @@
+import 'figma-plugin-ds/dist/figma-plugin-ds.css'
 import React from 'react'
 import { createRoot } from 'react-dom/client'
+
+import checkConnectionStatus from '../bridges/checks/checkConnectionStatus'
+import { supabase } from '../bridges/publication/authentication'
+import { locals } from '../content/locals'
+import features, { trialTime } from '../utils/config'
+import { defaultPreset, palette, presets } from '../utils/palettePackage'
 import type {
   ActionsList,
   AlgorithmVersionConfiguration,
-  VisionSimulationModeConfiguration,
   ColorConfiguration,
   ColorSpaceConfiguration,
+  CreatorIdentity,
+  DatesConfiguration,
   EditorType,
+  ExportConfiguration,
+  ExtractOfPaletteConfiguration,
   Language,
+  NamingConvention,
   PlanStatus,
   PresetConfiguration,
   PriorityContext,
+  PublicationStatus,
   ScaleConfiguration,
+  Service,
   SourceColorConfiguration,
   TextColorsThemeHexModel,
   ThemeConfiguration,
   TrialStatus,
-  ViewConfiguration,
-  ExtractOfPaletteConfiguration,
-  ExportConfiguration,
-  Service,
-  NamingConvention,
   UserSession,
-  PublicationStatus,
-  DatesConfiguration,
-  CreatorIdentity,
+  ViewConfiguration,
+  VisionSimulationModeConfiguration,
 } from '../utils/types'
-import checkConnectionStatus from '../bridges/checks/checkConnectionStatus'
 import Feature from './components/Feature'
+import PriorityContainer from './modules/PriorityContainer'
+import Shortcuts from './modules/Shortcuts'
 import CreatePalette from './services/CreatePalette'
 import EditPalette from './services/EditPalette'
 import TransferPalette from './services/TransferPalette'
-import PriorityContainer from './modules/PriorityContainer'
-import Shortcuts from './modules/Shortcuts'
-import { defaultPreset, palette, presets } from '../utils/palettePackage'
-import features, { trialTime } from '../utils/config'
-import 'figma-plugin-ds/dist/figma-plugin-ds.css'
-import './stylesheets/app.css'
 import './stylesheets/app-components.css'
-import { locals } from '../content/locals'
-import { supabase } from '../bridges/publication/authentication'
+import './stylesheets/app.css'
 
 export interface AppStates {
   service: Service

@@ -1,4 +1,10 @@
+import { Button, Message, SectionTitle } from '@a_ng_d/figmug-ui'
 import React from 'react'
+import { uid } from 'uid'
+
+import { locals } from '../../content/locals'
+import doLightnessScale from '../../utils/doLightnessScale'
+import isBlocked from '../../utils/isBlocked'
 import type {
   ActionsList,
   DispatchProcess,
@@ -14,14 +20,9 @@ import type {
   ThemesMessage,
 } from '../../utils/types'
 import type { AppStates } from '../App'
-import { Button, Message, SectionTitle } from '@a_ng_d/figmug-ui'
 import ThemeItem from '../components/ThemeItem'
 import Actions from './Actions'
-import isBlocked from '../../utils/isBlocked'
-import doLightnessScale from '../../utils/doLightnessScale'
 import Dispatcher from './Dispatcher'
-import { locals } from '../../content/locals'
-import { uid } from 'uid'
 
 interface ThemesProps {
   preset: PresetConfiguration
@@ -83,7 +84,10 @@ export default class Themes extends React.Component<ThemesProps, ThemesStates> {
 
   handleClickOutside = (e: Event) => {
     if (this.listRef.current != null)
-      if (this.listRef && !this.listRef.current.contains(e.target as HTMLElement))
+      if (
+        this.listRef &&
+        !this.listRef.current.contains(e.target as HTMLElement)
+      )
         this.setState({
           selectedElement: {
             id: undefined,

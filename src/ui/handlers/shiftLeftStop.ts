@@ -1,5 +1,5 @@
-import type { ScaleConfiguration } from '../../utils/types'
 import { palette } from '../../utils/palettePackage'
+import type { ScaleConfiguration } from '../../utils/types'
 
 const shiftLeftStop = (
   scale: ScaleConfiguration,

@@ -1,6 +1,7 @@
 import chroma from 'chroma-js'
+
+import { lang, locals } from '../../content/locals'
 import type { PaletteData } from '../../utils/types'
-import { locals, lang } from '../../content/locals'
 
 const updateLocalVariables = async (palette: FrameNode) => {
   const paletteData: PaletteData = JSON.parse(palette.getPluginData('data'))

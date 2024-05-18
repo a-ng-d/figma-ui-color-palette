@@ -1,8 +1,8 @@
 import type {
-  VisionSimulationModeConfiguration,
   ColorSpaceConfiguration,
   TextColorsThemeHexModel,
   ViewConfiguration,
+  VisionSimulationModeConfiguration,
 } from '../utils/types'
 import Paragraph from './Paragraph'
 import Properties from './Properties'

@@ -1,20 +1,15 @@
-import {
-  palettesDbTableName,
-  palettesStorageName,
-} from '../../utils/config'
-import type { AppStates } from '../../ui/App'
-import { supabase } from './authentication'
 import { lang, locals } from '../../content/locals'
+import type { AppStates } from '../../ui/App'
+import { palettesDbTableName, palettesStorageName } from '../../utils/config'
+import { supabase } from './authentication'
 
 const unpublishPalette = async (
-  rawData: AppStates,
+  rawData: AppStates
 ): Promise<Partial<AppStates>> => {
   if (rawData.screenshot !== null) {
     const { data, error } = await supabase.storage
       .from(palettesStorageName)
-      .remove([
-        `${rawData.userSession.userId}/${rawData.id}.png`,
-      ])
+      .remove([`${rawData.userSession.userId}/${rawData.id}.png`])
   }
 
   const { data, error } = await supabase

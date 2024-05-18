@@ -1,16 +1,17 @@
+import type { DropdownOption } from '@a_ng_d/figmug-ui'
+import { Dropdown, Input, Menu, SectionTitle } from '@a_ng_d/figmug-ui'
 import React from 'react'
+
+import { locals } from '../../content/locals'
+import features from '../../utils/config'
+import isBlocked from '../../utils/isBlocked'
 import type {
   ActionsList,
   ColorSpaceConfiguration,
   Language,
   PlanStatus,
 } from '../../utils/types'
-import type { DropdownOption } from '@a_ng_d/figmug-ui'
-import { Input, Dropdown, SectionTitle, Menu } from '@a_ng_d/figmug-ui'
 import Actions from './Actions'
-import features from '../../utils/config'
-import isBlocked from '../../utils/isBlocked'
-import { locals } from '../../content/locals'
 
 interface ExportProps {
   exportPreview: string

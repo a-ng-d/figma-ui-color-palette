@@ -1,34 +1,35 @@
+import {
+  Button,
+  Dialog,
+  Dropdown,
+  FormItem,
+  KeyboardShortcutItem,
+  SectionTitle,
+  texts,
+} from '@a_ng_d/figmug-ui'
 import React from 'react'
+
+import { locals } from '../../content/locals'
+import features from '../../utils/config'
+import doLightnessScale from '../../utils/doLightnessScale'
+import isBlocked from '../../utils/isBlocked'
+import { palette, presets } from '../../utils/palettePackage'
 import type {
   ActionsList,
   DispatchProcess,
+  Easing,
   EditorType,
   Language,
+  NamingConvention,
   PlanStatus,
   PresetConfiguration,
   ScaleConfiguration,
   SourceColorConfiguration,
-  Easing,
-  NamingConvention,
 } from '../../utils/types'
 import type { AppStates } from '../App'
 import Feature from '../components/Feature'
-import {
-  Button,
-  Dropdown,
-  texts,
-  SectionTitle,
-  Dialog,
-  KeyboardShortcutItem,
-  FormItem,
-} from '@a_ng_d/figmug-ui'
 import Slider from '../components/Slider'
 import Actions from './Actions'
-import { palette, presets } from '../../utils/palettePackage'
-import features from '../../utils/config'
-import isBlocked from '../../utils/isBlocked'
-import doLightnessScale from '../../utils/doLightnessScale'
-import { locals } from '../../content/locals'
 import Dispatcher from './Dispatcher'
 
 interface ScaleProps {

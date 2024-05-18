@@ -1,3 +1,6 @@
+import Colors from '../../canvas/Colors'
+import { lang, locals } from '../../content/locals'
+import setPaletteName from '../../utils/setPaletteName'
 import type {
   ColorConfiguration,
   PresetConfiguration,
@@ -7,13 +10,10 @@ import type {
   ViewConfiguration,
 } from '../../utils/types'
 import {
-  previousSelection,
   currentSelection,
   isSelectionChanged,
+  previousSelection,
 } from '../processSelection'
-import Colors from '../../canvas/Colors'
-import { locals, lang } from '../../content/locals'
-import setPaletteName from '../../utils/setPaletteName'
 
 const updateSettings = (msg: SettingsMessage) => {
   const palette = isSelectionChanged

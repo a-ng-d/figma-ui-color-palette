@@ -1,21 +1,22 @@
+import { uid } from 'uid'
+
+import { lang, locals } from '../content/locals'
+import setPaletteName from '../utils/setPaletteName'
 import type {
+  AlgorithmVersionConfiguration,
+  ColorConfiguration,
+  ColorSpaceConfiguration,
+  PaletteNode,
+  PresetConfiguration,
+  ScaleConfiguration,
   Service,
   SourceColorConfiguration,
-  ColorConfiguration,
-  PresetConfiguration,
   TextColorsThemeHexModel,
-  PaletteNode,
-  ScaleConfiguration,
   ThemeConfiguration,
-  ColorSpaceConfiguration,
   ViewConfiguration,
-  AlgorithmVersionConfiguration,
   VisionSimulationModeConfiguration,
 } from '../utils/types'
 import Colors from './Colors'
-import { locals, lang } from '../content/locals'
-import { uid } from 'uid'
-import setPaletteName from '../utils/setPaletteName'
 
 export default class Palette {
   sourceColors: Array<SourceColorConfiguration>

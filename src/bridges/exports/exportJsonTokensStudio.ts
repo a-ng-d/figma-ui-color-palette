@@ -1,9 +1,9 @@
+import { lang, locals } from '../../content/locals'
 import type {
   PaletteData,
   PaletteDataColorItem,
   PaletteDataShadeItem,
 } from '../../utils/types'
-import { locals, lang } from '../../content/locals'
 
 const exportJsonTokensStudio = (palette: FrameNode) => {
   const paletteData: PaletteData = JSON.parse(palette.getPluginData('data')),

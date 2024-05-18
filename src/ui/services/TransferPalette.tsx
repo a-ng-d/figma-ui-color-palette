@@ -1,23 +1,24 @@
-import React from 'react'
-import JSZip from 'jszip'
+import { doSnakeCase } from '@a-ng-d/figmug.modules.do-snake-case'
 import FileSaver from 'file-saver'
+import JSZip from 'jszip'
+import React from 'react'
+
+import { locals } from '../../content/locals'
 import type {
-  PresetConfiguration,
-  TextColorsThemeHexModel,
   ColorConfiguration,
-  ThemeConfiguration,
-  ExportConfiguration,
-  ScaleConfiguration,
-  Language,
   EditorType,
-  VisionSimulationModeConfiguration,
-  PlanStatus,
+  ExportConfiguration,
   ExtractOfPaletteConfiguration,
+  Language,
+  PlanStatus,
+  PresetConfiguration,
+  ScaleConfiguration,
   Service,
+  TextColorsThemeHexModel,
+  ThemeConfiguration,
+  VisionSimulationModeConfiguration,
 } from '../../utils/types'
 import Export from '../modules/Export'
-import { locals } from '../../content/locals'
-import { doSnakeCase } from '@a-ng-d/figmug.modules.do-snake-case'
 import PalettesList from '../modules/PalettesList'
 
 interface TransferPaletteProps {

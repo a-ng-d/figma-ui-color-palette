@@ -1,20 +1,21 @@
-import chroma from 'chroma-js'
 import * as blinder from 'color-blind'
+import chroma from 'chroma-js'
 import { Hsluv } from 'hsluv'
+
+import { lang, locals } from '../content/locals'
 import type {
+  ActionsList,
+  PaletteData,
+  PaletteDataColorItem,
+  PaletteDataThemeItem,
   PaletteNode,
   ScaleConfiguration,
-  PaletteDataThemeItem,
-  PaletteDataColorItem,
-  PaletteData,
   VisionSimulationModeConfiguration,
-  ActionsList,
 } from '../utils/types'
-import Title from './Title'
 import Header from './Header'
 import Sample from './Sample'
 import Signature from './Signature'
-import { locals, lang } from '../content/locals'
+import Title from './Title'
 
 export default class Colors {
   parent: PaletteNode

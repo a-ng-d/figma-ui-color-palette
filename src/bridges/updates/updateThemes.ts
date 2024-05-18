@@ -1,6 +1,8 @@
+import Colors from '../../canvas/Colors'
+import { lang, locals } from '../../content/locals'
+import setPaletteName from '../../utils/setPaletteName'
 import type {
   AlgorithmVersionConfiguration,
-  VisionSimulationModeConfiguration,
   ColorConfiguration,
   ColorSpaceConfiguration,
   PresetConfiguration,
@@ -8,15 +10,13 @@ import type {
   TextColorsThemeHexModel,
   ThemesMessage,
   ViewConfiguration,
+  VisionSimulationModeConfiguration,
 } from '../../utils/types'
-import Colors from '../../canvas/Colors'
 import {
-  previousSelection,
   currentSelection,
   isSelectionChanged,
+  previousSelection,
 } from '../processSelection'
-import { locals, lang } from '../../content/locals'
-import setPaletteName from '../../utils/setPaletteName'
 
 const updateThemes = (msg: ThemesMessage) => {
   const palette = isSelectionChanged

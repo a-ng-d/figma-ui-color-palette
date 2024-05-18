@@ -1,8 +1,8 @@
-import type { AppStates } from '../../ui/App'
 import { lang, locals } from '../../content/locals'
+import type { AppStates } from '../../ui/App'
 
 const detachPalette = async (
-  rawData: AppStates,
+  rawData: AppStates
 ): Promise<Partial<AppStates>> => {
   const palettePublicationDetails = {
     dates: {

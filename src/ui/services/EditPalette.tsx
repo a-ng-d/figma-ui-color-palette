@@ -1,37 +1,38 @@
-import React from 'react'
-import JSZip from 'jszip'
-import FileSaver from 'file-saver'
-import type {
-  PresetConfiguration,
-  TextColorsThemeHexModel,
-  ColorConfiguration,
-  ThemeConfiguration,
-  ExportConfiguration,
-  ScaleConfiguration,
-  ThemesMessage,
-  Language,
-  EditorType,
-  VisionSimulationModeConfiguration,
-  PlanStatus,
-  ColorSpaceConfiguration,
-  AlgorithmVersionConfiguration,
-  ViewConfiguration,
-} from '../../utils/types'
+import { doSnakeCase } from '@a-ng-d/figmug.modules.do-snake-case'
 import type { DropdownOption } from '@a_ng_d/figmug-ui'
+import { Bar, Dropdown, FormItem, Tabs } from '@a_ng_d/figmug-ui'
+import FileSaver from 'file-saver'
+import JSZip from 'jszip'
+import React from 'react'
+
+import { locals } from '../../content/locals'
+import features from '../../utils/config'
+import doLightnessScale from '../../utils/doLightnessScale'
+import isBlocked from '../../utils/isBlocked'
+import { palette } from '../../utils/palettePackage'
+import type {
+  AlgorithmVersionConfiguration,
+  ColorConfiguration,
+  ColorSpaceConfiguration,
+  EditorType,
+  ExportConfiguration,
+  Language,
+  PlanStatus,
+  PresetConfiguration,
+  ScaleConfiguration,
+  TextColorsThemeHexModel,
+  ThemeConfiguration,
+  ThemesMessage,
+  ViewConfiguration,
+  VisionSimulationModeConfiguration,
+} from '../../utils/types'
 import type { AppStates } from '../App'
 import Feature from '../components/Feature'
-import { Bar, Tabs, FormItem, Dropdown } from '@a_ng_d/figmug-ui'
-import Scale from '../modules/Scale'
 import Colors from '../modules/Colors'
-import Themes from '../modules/Themes'
 import Export from '../modules/Export'
+import Scale from '../modules/Scale'
 import Settings from '../modules/Settings'
-import features from '../../utils/config'
-import { locals } from '../../content/locals'
-import isBlocked from '../../utils/isBlocked'
-import { doSnakeCase } from '@a-ng-d/figmug.modules.do-snake-case'
-import { palette } from '../../utils/palettePackage'
-import doLightnessScale from '../../utils/doLightnessScale'
+import Themes from '../modules/Themes'
 
 interface EditPaletteProps {
   name: string

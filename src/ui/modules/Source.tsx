@@ -1,28 +1,29 @@
-import React from 'react'
-import chroma from 'chroma-js'
-import { uid } from 'uid'
-import type {
-  EditorType,
-  Language,
-  SourceColorConfiguration,
-  ThirdParty,
-  ImportUrl,
-  PlanStatus,
-} from '../../utils/types'
-import Feature from '../components/Feature'
 import {
-  Message,
+  Accordion,
+  ColorItem,
   FormItem,
   Input,
-  Accordion,
-  texts,
+  Message,
   SectionTitle,
-  ColorItem,
+  texts,
 } from '@a_ng_d/figmug-ui'
-import Actions from './Actions'
+import chroma from 'chroma-js'
+import React from 'react'
+import { uid } from 'uid'
+
+import { locals } from '../../content/locals'
 import features from '../../utils/config'
 import isBlocked from '../../utils/isBlocked'
-import { locals } from '../../content/locals'
+import type {
+  EditorType,
+  ImportUrl,
+  Language,
+  PlanStatus,
+  SourceColorConfiguration,
+  ThirdParty,
+} from '../../utils/types'
+import Feature from '../components/Feature'
+import Actions from './Actions'
 
 interface SourceProps {
   sourceColors: Array<SourceColorConfiguration>

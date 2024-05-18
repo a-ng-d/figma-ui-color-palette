@@ -1,14 +1,15 @@
+import { Button, Menu, texts } from '@a_ng_d/figmug-ui'
 import React from 'react'
+
+import { locals } from '../../content/locals'
+import features from '../../utils/config'
+import isBlocked from '../../utils/isBlocked'
 import type {
   Language,
   PlanStatus,
   SourceColorConfiguration,
 } from '../../utils/types'
 import Feature from '../components/Feature'
-import { Button, Menu, texts } from '@a_ng_d/figmug-ui'
-import features from '../../utils/config'
-import isBlocked from '../../utils/isBlocked'
-import { locals } from '../../content/locals'
 
 interface ActionsProps {
   context: string

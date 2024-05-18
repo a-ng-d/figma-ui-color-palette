@@ -1,11 +1,11 @@
+import { lang, locals } from '../../content/locals'
+import type { AppStates } from '../../ui/App'
 import {
   databaseUrl,
   palettesDbTableName,
   palettesStorageName,
 } from '../../utils/config'
-import type { AppStates } from '../../ui/App'
 import { supabase } from './authentication'
-import { lang, locals } from '../../content/locals'
 
 const publishPalette = async (
   rawData: AppStates,
@@ -22,7 +22,7 @@ const publishPalette = async (
         rawData.screenshot.buffer,
         {
           contentType: 'image/png',
-          upsert: true
+          upsert: true,
         }
       )
 
@@ -64,9 +64,10 @@ const publishPalette = async (
 
   if (!error) {
     const palettePublicationDetails = {
-      name: rawData.name === ''
-        ? `${rawData.userSession.userFullName}'s UI COLOR PALETTE`
-        : rawData.name,
+      name:
+        rawData.name === ''
+          ? `${rawData.userSession.userFullName}'s UI COLOR PALETTE`
+          : rawData.name,
       dates: {
         publishedAt: publishedAt,
         createdAt: rawData.dates.createdAt,

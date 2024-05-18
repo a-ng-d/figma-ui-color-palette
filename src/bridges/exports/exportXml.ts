@@ -1,6 +1,7 @@
-import type { PaletteData } from '../../utils/types'
-import { locals, lang } from '../../content/locals'
 import { doSnakeCase } from '@a-ng-d/figmug.modules.do-snake-case'
+
+import { lang, locals } from '../../content/locals'
+import type { PaletteData } from '../../utils/types'
 
 const exportXml = (palette: FrameNode) => {
   const paletteData: PaletteData = JSON.parse(palette.getPluginData('data')),

@@ -1,6 +1,6 @@
-import type { PaletteData } from '../../utils/types'
 import LocalStyle from '../../canvas/LocalStyle'
-import { locals, lang } from '../../content/locals'
+import { lang, locals } from '../../content/locals'
+import type { PaletteData } from '../../utils/types'
 
 const createLocalStyles = async (palette: FrameNode) => {
   const paletteData: PaletteData = JSON.parse(palette.getPluginData('data')),

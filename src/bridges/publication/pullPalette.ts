@@ -1,18 +1,13 @@
-import {
-  palettesDbTableName,
-} from '../../utils/config'
-import type { AppStates } from '../../ui/App'
-import { supabase } from './authentication'
 import { lang, locals } from '../../content/locals'
+import type { AppStates } from '../../ui/App'
+import { palettesDbTableName } from '../../utils/config'
+import { supabase } from './authentication'
 
-const pullPalette = async (
-  rawData: AppStates
-): Promise<Partial<AppStates>> => {
-
+const pullPalette = async (rawData: AppStates): Promise<Partial<AppStates>> => {
   const { data, error } = await supabase
-      .from(palettesDbTableName)
-      .select('*')
-      .eq('palette_id', rawData.id)
+    .from(palettesDbTableName)
+    .select('*')
+    .eq('palette_id', rawData.id)
 
   console.log(data)
 

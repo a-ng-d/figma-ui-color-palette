@@ -1,24 +1,25 @@
+import { Bar, Tabs } from '@a_ng_d/figmug-ui'
 import React from 'react'
+
+import { locals } from '../../content/locals'
+import features from '../../utils/config'
+import doLightnessScale from '../../utils/doLightnessScale'
+import { palette } from '../../utils/palettePackage'
 import type {
-  VisionSimulationModeConfiguration,
+  ColorSpaceConfiguration,
   Language,
+  NamingConvention,
+  PlanStatus,
   PresetConfiguration,
   SourceColorConfiguration,
   TextColorsThemeHexModel,
   ThirdParty,
-  PlanStatus,
-  NamingConvention,
-  ColorSpaceConfiguration,
   ViewConfiguration,
+  VisionSimulationModeConfiguration,
 } from '../../utils/types'
 import type { AppStates } from '../App'
-import { Bar, Tabs } from '@a_ng_d/figmug-ui'
 import Scale from '../modules/Scale'
 import Settings from '../modules/Settings'
-import { palette } from '../../utils/palettePackage'
-import features from '../../utils/config'
-import { locals } from '../../content/locals'
-import doLightnessScale from '../../utils/doLightnessScale'
 import Source from '../modules/Source'
 
 interface CreatePaletteProps {
