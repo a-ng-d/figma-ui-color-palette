@@ -156,7 +156,7 @@ export default class Publication extends React.Component<
       this.state['publicationStatus'] === 'CAN_BE_PUSHED' ||
       this.state['publicationStatus'] === 'CAN_BE_REVERTED'
     )
-      return <Chip>{locals[this.props.lang].publication.statusChanges}</Chip>
+      return <Chip>{locals[this.props.lang].publication.statusLocalChanges}</Chip>
     else if (
       this.state['publicationStatus'] === 'PUBLISHED' ||
       this.state['publicationStatus'] === 'UP_TO_DATE'
@@ -164,6 +164,15 @@ export default class Publication extends React.Component<
       return (
         <Chip state="INACTIVE">
           {locals[this.props.lang].publication.statusUptoDate}
+        </Chip>
+      )
+    else if (
+      this.state['publicationStatus'] === 'MUST_BE_PULLED' ||
+      this.state['publicationStatus'] === 'MAY_BE_PULLED'
+    )
+      return (
+        <Chip>
+          {locals[this.props.lang].publication.statusRemoteChanges}
         </Chip>
       )
     else if (this.state['publicationStatus'] === 'IS_NOT_FOUND')

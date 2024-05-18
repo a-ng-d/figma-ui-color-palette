@@ -45,9 +45,10 @@ export const locals: { [key: string]: any } = {
       message:
         'Publish your palette to reuse in others Figma document and share it with the community',
       selectToShare: 'Share with community',
-      statusChanges: 'Changes',
+      statusLocalChanges: 'Local changes',
       statusUptoDate: 'No change',
       statusUnpublished: 'Unpublished',
+      statusRemoteChanges: 'Remote changes',
       statusWaiting: 'Waiting…',
       statusNotFound: 'Not found',
       publish: 'Publish…',
