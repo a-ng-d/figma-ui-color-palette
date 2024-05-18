@@ -6,20 +6,50 @@ import type { AppStates } from '../../ui/App'
 import { supabase } from './authentication'
 import { lang, locals } from '../../content/locals'
 
-const unpublishPalette = async (
+const pushPalette = async (
   rawData: AppStates,
+  isShared = false
 ): Promise<Partial<AppStates>> => {
+  const publishedAt = new Date().toISOString()
+
   if (rawData.screenshot !== null) {
     const { data, error } = await supabase.storage
       .from(palettesStorageName)
-      .remove([
+      .update(
         `${rawData.userSession.userId}/${rawData.id}.png`,
-      ])
+        rawData.screenshot.buffer,
+        {
+          contentType: 'image/png',
+        }
+      )
   }
 
   const { data, error } = await supabase
     .from(palettesDbTableName)
-    .delete()
+    .update([
+      {
+        name:
+          rawData.name === ''
+            ? `${rawData.userSession.userFullName}'s UI COLOR PALETTE`
+            : rawData.name,
+        description: rawData.description,
+        preset: rawData.preset,
+        scale: rawData.scale,
+        colors: rawData.colors,
+        color_space: rawData.colorSpace,
+        vision_simulation_mode: rawData.visionSimulationMode,
+        themes: rawData.themes,
+        view: rawData.view,
+        text_colors_theme: rawData.textColorsTheme,
+        algorithm_version: rawData.algorithmVersion,
+        is_shared: isShared,
+        creator_full_name: rawData.userSession.userFullName,
+        creator_avatar: rawData.userSession.userAvatar,
+        creator_id: rawData.userSession.userId,
+        updated_at: rawData.dates.updatedAt,
+        published_at: publishedAt,
+      },
+    ])
     .match({ palette_id: rawData.id })
 
   console.log(data)
@@ -27,18 +57,18 @@ const unpublishPalette = async (
   if (!error) {
     const palettePublicationDetails = {
       dates: {
-        publishedAt: '',
+        publishedAt: publishedAt,
         createdAt: rawData.dates.createdAt,
         updatedAt: rawData.dates.updatedAt,
       },
       publicationStatus: {
-        isPublished: false,
-        isShared: false,
+        isPublished: true,
+        isShared: isShared,
       },
       creatorIdentity: {
-        creatorFullName: '',
-        creatorAvatar: '',
-        creatorId: '',
+        creatorFullName: rawData.userSession.userFullName,
+        creatorAvatar: rawData.userSession.userAvatar,
+        creatorId: rawData.userSession.userId ?? '',
       },
     }
 
@@ -50,11 +80,6 @@ const unpublishPalette = async (
             {
               key: 'publishedAt',
               value: palettePublicationDetails.dates.publishedAt,
-            },
-            {
-              key: 'isPublished',
-              value:
-                palettePublicationDetails.publicationStatus.isPublished.toString(),
             },
             {
               key: 'isShared',
@@ -82,7 +107,7 @@ const unpublishPalette = async (
       {
         pluginMessage: {
           type: 'SEND_MESSAGE',
-          message: locals[lang].success.nonPublication,
+          message: locals[lang].success.publication,
         },
       },
       '*'
@@ -94,7 +119,7 @@ const unpublishPalette = async (
       {
         pluginMessage: {
           type: 'SEND_MESSAGE',
-          message: locals[lang].error.nonPublication,
+          message: locals[lang].error.publication,
         },
       },
       '*'
@@ -103,4 +128,4 @@ const unpublishPalette = async (
   }
 }
 
-export default unpublishPalette
+export default pushPalette

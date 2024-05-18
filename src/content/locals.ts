@@ -48,8 +48,14 @@ export const locals: { [key: string]: any } = {
       statusChanges: 'Changes',
       statusUptoDate: 'No change',
       statusUnpublished: 'Unpublished',
+      statusWaiting: 'Waiting…',
+      statusNotFound: 'Not found',
       publish: 'Publish…',
       unpublish: 'Unpublish',
+      synchronize: 'Synchronize',
+      revert: 'Revert',
+      detach: 'Detach',
+      waiting: 'Waiting…',
       signIn: 'Sign in to publish',
     },
     relaunch: {
@@ -353,6 +359,8 @@ export const locals: { [key: string]: any } = {
     success: {
       publication: '✓ The palette has been published',
       nonPublication: '✓ The palette has been unpublished',
+      synchronization: '✓ The palette has been synchronized',
+      detachment: '✓ The palette has been detached',
     },
     info: {
       createdLocalStyle: 'local color style created',
@@ -383,9 +391,10 @@ export const locals: { [key: string]: any } = {
         'Your UI Color Palette seems corrupted. Do not edit any layer within it.',
       palettesPicking: 'UI Color Palettes cannot be picked for now',
       generic: 'Something went wrong',
-      timeout: 'The authentication has failed',
-      publication: 'The palette cannot be published',
-      nonPublication: 'The palette cannot be unpublished',
+      timeout: '✕ The authentication has failed',
+      publication: '✕ The palette cannot be published',
+      nonPublication: '✕ The palette cannot be unpublished',
+      synchronization: '✕ The palette has been synchronized',
     },
   },
 }

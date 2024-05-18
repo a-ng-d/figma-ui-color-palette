@@ -29,12 +29,6 @@ export interface CreatorIdentity {
   creatorId: string
 }
 
-export interface PublicationDetails {
-  creatorIdentity: CreatorIdentity
-  dates: DatesConfiguration
-  publicationStatus: PublicationStatus
-}
-
 export interface UserSession {
   connectionStatus: ConnectionStatus
   userFullName: string
@@ -104,6 +98,7 @@ export interface PaletteNode {
   textColorsTheme: TextColorsThemeHexModel
   algorithmVersion: AlgorithmVersionConfiguration
   service?: Service
+  isSynchronized?: boolean
 }
 
 export interface PaletteData {

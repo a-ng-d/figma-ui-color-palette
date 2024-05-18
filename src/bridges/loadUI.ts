@@ -28,6 +28,7 @@ import updateScale from './updates/updateScale'
 import updateSettings from './updates/updateSettings'
 import updateThemes from './updates/updateThemes'
 import updateView from './updates/updateView'
+import updateGlobal from './updates/updateGlobal'
 import package_json from './../../package.json'
 
 const loadUI = async () => {
@@ -81,6 +82,7 @@ const loadUI = async () => {
       UPDATE_VIEW: () => updateView(msg, palette),
       UPDATE_COLORS: () => updateColors(msg),
       UPDATE_THEMES: () => updateThemes(msg),
+      UPDATE_GLOBAL: () => updateGlobal(msg),
       SYNC_LOCAL_STYLES: async () => {
         createLocalStyles(palette)
           .then(async (message) => [message, await updateLocalStyles(palette)])
@@ -149,6 +151,12 @@ const loadUI = async () => {
         figma.ui.postMessage({
           type: 'UPDATE_SCREENSHOT',
           data: bytes,
+        })
+      },
+      UPDATE_PALETTE_DATE: async () => {
+        figma.ui.postMessage({
+          type: 'UPDATE_SCREENSHOT',
+          data: msg.data,
         })
       },
       GET_PALETTES: async () => await getPalettesOnCurrentPage(),

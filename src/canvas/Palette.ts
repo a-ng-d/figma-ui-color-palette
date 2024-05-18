@@ -15,6 +15,7 @@ import type {
 import Colors from './Colors'
 import { locals, lang } from '../content/locals'
 import { uid } from 'uid'
+import setPaletteName from '../utils/setPaletteName'
 
 export default class Palette {
   sourceColors: Array<SourceColorConfiguration>
@@ -48,9 +49,13 @@ export default class Palette {
     this.sourceColors = sourceColors
     this.name = name
     this.description = description
-    this.frameName = `${name === '' ? locals[lang].name : name}﹒${
-      preset.name
-    }﹒${colorSpace} ${view.includes('PALETTE') ? 'Palette' : 'Sheet'}`
+    this.frameName = setPaletteName(
+      name === '' ? locals[lang].name : name,
+      undefined,
+      preset.name,
+      colorSpace,
+      visionSimulationMode
+    )
     this.preset = preset
     this.scale = scale
     this.colors = []

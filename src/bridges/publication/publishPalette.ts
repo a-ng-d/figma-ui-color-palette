@@ -1,4 +1,3 @@
-import type { PublicationDetails } from '../../utils/types'
 import {
   databaseUrl,
   palettesDbTableName,
@@ -11,8 +10,9 @@ import { lang, locals } from '../../content/locals'
 const publishPalette = async (
   rawData: AppStates,
   isShared = false
-): Promise<PublicationDetails> => {
+): Promise<Partial<AppStates>> => {
   let imageUrl = null
+  const publishedAt = new Date().toISOString()
 
   if (rawData.screenshot !== null) {
     const { data, error } = await supabase.storage
@@ -22,6 +22,7 @@ const publishPalette = async (
         rawData.screenshot.buffer,
         {
           contentType: 'image/png',
+          upsert: true
         }
       )
 
@@ -55,6 +56,7 @@ const publishPalette = async (
         creator_id: rawData.userSession.userId,
         created_at: rawData.dates.createdAt,
         updated_at: rawData.dates.updatedAt,
+        published_at: publishedAt,
       },
     ])
     .select()
@@ -62,19 +64,22 @@ const publishPalette = async (
 
   if (!error) {
     const palettePublicationDetails = {
-      creatorIdentity: {
-        creatorFullName: rawData.userSession.userFullName,
-        creatorAvatar: rawData.userSession.userAvatar,
-        creatorId: rawData.userSession.userId ?? '',
-      },
+      name: rawData.name === ''
+        ? `${rawData.userSession.userFullName}'s UI COLOR PALETTE`
+        : rawData.name,
       dates: {
-        publishedAt: new Date().toISOString(),
+        publishedAt: publishedAt,
         createdAt: rawData.dates.createdAt,
         updatedAt: rawData.dates.updatedAt,
       },
       publicationStatus: {
         isPublished: true,
         isShared: isShared,
+      },
+      creatorIdentity: {
+        creatorFullName: rawData.userSession.userFullName,
+        creatorAvatar: rawData.userSession.userAvatar,
+        creatorId: rawData.userSession.userId ?? '',
       },
     }
 
@@ -83,6 +88,10 @@ const publishPalette = async (
         pluginMessage: {
           type: 'SET_DATA',
           items: [
+            {
+              key: 'name',
+              value: palettePublicationDetails.name,
+            },
             {
               key: 'publishedAt',
               value: palettePublicationDetails.dates.publishedAt,
@@ -98,12 +107,12 @@ const publishPalette = async (
                 palettePublicationDetails.publicationStatus.isShared.toString(),
             },
             {
-              key: 'creatorAvatar',
-              value: palettePublicationDetails.creatorIdentity.creatorAvatar,
-            },
-            {
               key: 'creatorFullName',
               value: palettePublicationDetails.creatorIdentity.creatorFullName,
+            },
+            {
+              key: 'creatorAvatar',
+              value: palettePublicationDetails.creatorIdentity.creatorAvatar,
             },
             {
               key: 'creatorId',
