@@ -21,8 +21,8 @@ import type {
 } from '../../utils/types'
 import type { AppStates } from '../App'
 import ThemeItem from '../components/ThemeItem'
-import Actions from './Actions'
-import Dispatcher from './Dispatcher'
+import Actions from '../modules/Actions'
+import Dispatcher from '../modules/Dispatcher'
 
 interface ThemesProps {
   preset: PresetConfiguration

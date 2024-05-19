@@ -18,8 +18,8 @@ import type {
 } from '../../utils/types'
 import type { AppStates } from '../App'
 import ColorItem from '../components/ColorItem'
-import Actions from './Actions'
-import Dispatcher from './Dispatcher'
+import Actions from '../modules/Actions'
+import Dispatcher from '../modules/Dispatcher'
 
 interface ColorsProps {
   colors: Array<ColorConfiguration>

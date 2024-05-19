@@ -28,11 +28,11 @@ import type {
 } from '../../utils/types'
 import type { AppStates } from '../App'
 import Feature from '../components/Feature'
-import Colors from '../modules/Colors'
-import Export from '../modules/Export'
-import Scale from '../modules/Scale'
-import Settings from '../modules/Settings'
-import Themes from '../modules/Themes'
+import Colors from '../contexts/Colors'
+import Export from '../contexts/Export'
+import Scale from '../contexts/Scale'
+import Settings from '../contexts/Settings'
+import Themes from '../contexts/Themes'
 
 interface EditPaletteProps {
   name: string

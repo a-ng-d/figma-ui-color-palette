@@ -18,10 +18,10 @@ import type {
   VisionSimulationModeConfiguration,
 } from '../../utils/types'
 import type { AppStates } from '../App'
-import Explore from '../modules/Explore'
-import Scale from '../modules/Scale'
-import Settings from '../modules/Settings'
-import Source from '../modules/Source'
+import Explore from '../contexts/Explore'
+import Scale from '../contexts/Scale'
+import Settings from '../contexts/Settings'
+import Source from '../contexts/Source'
 
 interface CreatePaletteProps {
   sourceColors: Array<SourceColorConfiguration> | []

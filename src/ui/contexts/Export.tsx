@@ -11,7 +11,7 @@ import type {
   Language,
   PlanStatus,
 } from '../../utils/types'
-import Actions from './Actions'
+import Actions from '../modules/Actions'
 
 interface ExportProps {
   exportPreview: string

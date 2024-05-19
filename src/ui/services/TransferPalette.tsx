@@ -18,8 +18,8 @@ import type {
   ThemeConfiguration,
   VisionSimulationModeConfiguration,
 } from '../../utils/types'
-import Export from '../modules/Export'
-import PalettesList from '../modules/PalettesList'
+import Export from '../contexts/Export'
+import Palettes from '../contexts/Palettes'
 
 interface TransferPaletteProps {
   name: string
@@ -115,7 +115,7 @@ export default class TransferPalette extends React.Component<TransferPaletteProp
           <div className="controls">
             {this.props.service === 'CREATE' &&
             this.props.editorType === 'dev' ? (
-              <PalettesList
+              <Palettes
                 paletteLists={this.props.palettesList}
                 lang={this.props.lang}
               />

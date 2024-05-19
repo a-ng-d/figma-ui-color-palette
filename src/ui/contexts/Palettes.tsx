@@ -10,15 +10,15 @@ import type {
 } from '../../utils/types'
 import PaletteItem from '../components/PaletteItem'
 
-interface PalettesListProps {
+interface PalettesProps {
   paletteLists: Array<ExtractOfPaletteConfiguration>
   lang: Language
 }
 
-export default class PalettesList extends React.Component<PalettesListProps> {
+export default class Palettes extends React.Component<PalettesProps> {
   hasPalettes: boolean
 
-  constructor(props: PalettesListProps) {
+  constructor(props: PalettesProps) {
     super(props)
     this.hasPalettes = true
   }
@@ -27,7 +27,7 @@ export default class PalettesList extends React.Component<PalettesListProps> {
   componentDidMount = () =>
     parent.postMessage({ pluginMessage: { type: 'GET_PALETTES' } }, '*')
 
-  shouldComponentUpdate(prevProps: Readonly<PalettesListProps>): boolean {
+  shouldComponentUpdate(prevProps: Readonly<PalettesProps>): boolean {
     console.log(prevProps.paletteLists.length, this.props.paletteLists.length)
     if (prevProps.paletteLists.length > 0) this.hasPalettes = true
     else this.hasPalettes = false
@@ -82,13 +82,13 @@ export default class PalettesList extends React.Component<PalettesListProps> {
   }
 
   // Templates
-  PalettesList = () => {
+  Palettes = () => {
     return (
       <ul className="rich-list">
         <div
           className={`${texts.type} ${texts['type--secondary']} type rich-list__title`}
         >
-          {locals[this.props.lang].palettesList.title}
+          {locals[this.props.lang].Palettes.title}
         </div>
         {this.props.paletteLists.map((palette, index) => (
           <PaletteItem
@@ -101,7 +101,7 @@ export default class PalettesList extends React.Component<PalettesListProps> {
             indicator={
               palette.devStatus === 'READY_FOR_DEV'
                 ? {
-                    label: locals[this.props.lang].palettesList.readyForDev,
+                    label: locals[this.props.lang].Palettes.readyForDev,
                     status: 'ACTIVE',
                   }
                 : undefined
@@ -123,7 +123,7 @@ export default class PalettesList extends React.Component<PalettesListProps> {
           <div className="controls__control">
             <div className="control__block">
               {this.hasPalettes ? (
-                <this.PalettesList />
+                <this.Palettes />
               ) : (
                 <div className="onboarding__callout">
                   <Message

@@ -29,8 +29,8 @@ import type {
 } from '../../utils/types'
 import type { AppStates } from '../App'
 import Feature from '../components/Feature'
+import Actions from '../modules/Actions'
 import Dispatcher from '../modules/Dispatcher'
-import Actions from './Actions'
 
 interface SettingsProps {
   context: string

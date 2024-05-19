@@ -29,8 +29,8 @@ import type {
 import type { AppStates } from '../App'
 import Feature from '../components/Feature'
 import Slider from '../components/Slider'
-import Actions from './Actions'
-import Dispatcher from './Dispatcher'
+import Actions from '../modules/Actions'
+import Dispatcher from '../modules/Dispatcher'
 
 interface ScaleProps {
   sourceColors?: Array<SourceColorConfiguration>

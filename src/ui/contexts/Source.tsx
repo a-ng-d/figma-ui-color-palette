@@ -23,7 +23,7 @@ import type {
   ThirdParty,
 } from '../../utils/types'
 import Feature from '../components/Feature'
-import Actions from './Actions'
+import Actions from '../modules/Actions'
 
 interface SourceProps {
   sourceColors: Array<SourceColorConfiguration>
