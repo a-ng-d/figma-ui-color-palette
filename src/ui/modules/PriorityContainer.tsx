@@ -291,7 +291,7 @@ export default class PriorityContainer extends React.Component<
             title={locals[this.props.lang].publication.title}
             actions={{
               primary: {
-                label: locals[this.props.lang].publication.ctaWhenSignedOut,
+                label: locals[this.props.lang].publication.signIn,
                 state: this.state['isPrimaryActionLoading']
                   ? 'LOADING'
                   : 'DEFAULT',
