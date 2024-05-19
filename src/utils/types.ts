@@ -167,7 +167,7 @@ export interface PaletteConfiguration {
 export interface ExtractOfPaletteConfiguration {
   id: string
   name: string
-  preset: PresetConfiguration | Record<string, never>
+  preset: string
   colors: Array<ColorConfiguration>
   themes: Array<ThemeConfiguration>
   screenshot: Uint8Array | null

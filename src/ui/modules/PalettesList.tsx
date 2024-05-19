@@ -1,8 +1,9 @@
-import { Chip, Message, Thumbnail, texts } from '@a_ng_d/figmug-ui'
+import { Message, texts } from '@a_ng_d/figmug-ui'
 import React from 'react'
 
 import { locals } from '../../content/locals'
 import type { ColorConfiguration, ExtractOfPaletteConfiguration, Language, ThemeConfiguration } from '../../utils/types'
+import PaletteItem from '../components/PaletteItem'
 
 interface PalettesListProps {
   paletteLists: Array<ExtractOfPaletteConfiguration>
@@ -68,36 +69,26 @@ export default class PalettesList extends React.Component<PalettesListProps> {
           {locals[this.props.lang].palettesList.title}
         </div>
         {this.props.paletteLists.map((palette, index) => (
-          <li
-            className="rich-list__item"
+          <PaletteItem
+            id={palette.id}
             key={`palette-${index}`}
-            data-id={palette.id}
-            tabIndex={0}
-            onMouseDown={this.onSelectPalette}
-            onKeyDown={(e) => {
-              if (e.key === ' ' || e.key === 'Enter') this.onSelectPalette?.(e)
-              if (e.key === 'Escape') (e.target as HTMLElement).blur()
-            }}
-          >
-            <div className="rich-list__item__asset">
-              <Thumbnail src={this.getImageSrc(palette.screenshot)} />
-            </div>
-            <div className="rich-list__item__content">
-              <div className={`${texts.type} type--large`}>
-                {palette.name === ''
-                  ? locals[this.props.lang].name
-                  : palette.name}
-                {palette.devStatus === 'READY_FOR_DEV'
-                && <Chip>{locals[this.props.lang].palettesList.readyForDev}</Chip>}
-              </div>
-              <div className={`${texts.type} type`}>{palette.preset}</div>
-              <div
-                className={`${texts.type} ${texts['type--secondary']} type`}
-              >
-                {this.getPaletteMeta(palette.colors, palette.themes)}
-              </div>
-            </div>
-          </li>
+            src={this.getImageSrc(palette.screenshot)}
+            title={
+              palette.name === ''
+                ? locals[this.props.lang].name
+                : palette.name
+            }
+            indicator={palette.devStatus === 'READY_FOR_DEV'
+              ? {
+                label: locals[this.props.lang].palettesList.readyForDev,
+                status: 'ACTIVE'
+              }
+              : undefined
+            }
+            subtitle={palette.preset}
+            info={this.getPaletteMeta(palette.colors, palette.themes)}
+            action={this.onSelectPalette}
+          />
         ))}
       </ul>
     )
