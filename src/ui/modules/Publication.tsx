@@ -90,7 +90,7 @@ export default class Publication extends React.Component<
 
   // Direct actions
   callUICPAgent = async () => {
-    const localCreatorId = this.props.rawData.creatorIdentity.creatorId,
+    const localUserId = this.props.rawData.userSession.userId,
       localPublicationDate = new Date(this.props.rawData.dates.publishedAt),
       localUpdatedDate = new Date(this.props.rawData.dates.updatedAt)
 
@@ -102,7 +102,7 @@ export default class Publication extends React.Component<
     console.log(data)
 
     if (!error && data.length !== 0) {
-      const isMyPalette = data?.[0].creator_id === localCreatorId
+      const isMyPalette = data?.[0].creator_id === localUserId
 
       if (new Date(data[0].published_at) > localPublicationDate)
         this.setState({
@@ -526,23 +526,45 @@ export default class Publication extends React.Component<
           <Thumbnail src={this.getImageSrc()} />
         </div>
         <div className={`dialog__text`}>
-          <div>
-            <div className={`${texts.type} type--large`}>
-              {this.props.rawData.name === ''
-                ? locals[this.props.lang].name
-                : this.props.rawData.name}
-              {this.getPaletteStatus()}
+          <div style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 'var(--size-xsmall)'
+          }}>
+            <div>
+              <div className={`${texts.type} type--large`}>
+                {this.props.rawData.name === ''
+                  ? locals[this.props.lang].name
+                  : this.props.rawData.name}
+                {this.getPaletteStatus()}
+              </div>
+              <div className={`${texts.type} type`}>
+                {this.props.rawData.preset.name}
+              </div>
+              <div 
+                className={`${texts.type} ${texts['type--secondary']} type`}
+                style={{
+                  marginTop: '2px'
+                }}
+              >
+                {this.getPaletteMeta()}
+              </div>
             </div>
-            <div className={`${texts.type} type`}>
-              {this.props.rawData.preset.name}
-            </div>
-            <div className={`${texts.type} ${texts['type--secondary']} type`}>
-              {this.getPaletteMeta()}
-            </div>
-            {this.state['publicationStatus'] === 'UP_TO_DATE' || this.state['publicationStatus'] === 'MAY_BE_PULLED'}
-            <div className={`${texts.type} ${texts['type--secondary']} type`}>
-              {this.getPaletteMeta()}
-            </div>
+            {
+              (this.state['publicationStatus'] === 'UP_TO_DATE'
+              || this.state['publicationStatus'] === 'MAY_BE_PULLED'
+              || this.state['publicationStatus'] === 'CAN_BE_REVERTED')
+              && (
+                <div className="user">
+                  <div className="user__avatar">
+                    <img src={this.props.rawData.creatorIdentity.creatorAvatar} />
+                  </div>
+                  <div className={`${texts.type} ${texts['type--secondary']} type`}>
+                    {this.props.rawData.creatorIdentity.creatorFullName}
+                  </div>
+                </div>
+              )
+            }
           </div>
           <div
             className={`type ${texts.type} ${texts['type--secondary']}`}

@@ -46,11 +46,13 @@ export default class PaletteItem extends React.Component<PaletteItemProps> {
             <div className={`${texts.type} type`}>{this.props.subtitle}</div>
             <div
               className={`${texts.type} ${texts['type--secondary']} type`}
+              style={{
+                marginTop: '2px'
+              }}
             >
               {this.props.info}
             </div>
           </div>
-          
           {this.props.user && (
             <div className="user">
               <div className="user__avatar">
