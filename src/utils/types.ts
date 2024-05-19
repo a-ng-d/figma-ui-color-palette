@@ -170,6 +170,8 @@ export interface ExtractOfPaletteConfiguration {
   preset: PresetConfiguration | Record<string, never>
   colors: Array<ColorConfiguration>
   themes: Array<ThemeConfiguration>
+  screenshot: Uint8Array | null
+  devStatus: string | null
 }
 
 export interface PresetConfiguration {

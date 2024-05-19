@@ -106,8 +106,7 @@ div.rich-list__title {
 
 li.rich-list__item {
   display: flex;
-  flex-direction: column;
-  gap: var(--size-xxxsmall) 0;
+  gap: 0 var(--size-xsmall);
   padding: var(--size-xxsmall) var(--size-xsmall);
   border-bottom: 1px solid var(--figma-color-border-disabled);
 }
@@ -119,6 +118,12 @@ li.rich-list__item:hover {
 li.rich-list__item:focus {
   outline: 2px solid var(--figma-color-border-selected);
   outline-offset: -2px;
+}
+
+li.rich-list__item .rich-list__item__asset {
+  width: var(--size-xxlarge);
+  height: var(--size-xxlarge);
+  min-width: var(--size-xxlarge);
 }
 
 /* Callout */

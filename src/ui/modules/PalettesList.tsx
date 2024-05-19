@@ -1,8 +1,8 @@
-import { Message, texts } from '@a_ng_d/figmug-ui'
+import { Chip, Message, Thumbnail, texts } from '@a_ng_d/figmug-ui'
 import React from 'react'
 
 import { locals } from '../../content/locals'
-import type { ExtractOfPaletteConfiguration, Language } from '../../utils/types'
+import type { ColorConfiguration, ExtractOfPaletteConfiguration, Language, ThemeConfiguration } from '../../utils/types'
 
 interface PalettesListProps {
   paletteLists: Array<ExtractOfPaletteConfiguration>
@@ -10,10 +10,39 @@ interface PalettesListProps {
 }
 
 export default class PalettesList extends React.Component<PalettesListProps> {
+  // Lifecycle
   componentDidMount = () =>
     parent.postMessage({ pluginMessage: { type: 'GET_PALETTES' } }, '*')
 
   // Direct actions
+  getImageSrc = (screenshot: Uint8Array | null) => {
+    if (screenshot !== null) {
+      const blob = new Blob([screenshot], {
+        type: 'image/png',
+      })
+      return URL.createObjectURL(blob)
+    } else return ''
+  }
+
+  getPaletteMeta = (colors: Array<ColorConfiguration>, themes: Array<ThemeConfiguration>) => {
+    const colorsNumber = colors.length,
+      themesNumber = themes.filter(
+        (theme) => theme.type === 'custom theme'
+      ).length
+
+    let colorLabel: string, themeLabel: string
+
+    if (colorsNumber > 1)
+      colorLabel = locals[this.props.lang].actions.sourceColorsNumber.several
+    else colorLabel = locals[this.props.lang].actions.sourceColorsNumber.single
+
+    if (themesNumber > 1)
+      themeLabel = locals[this.props.lang].actions.colorThemesNumber.several
+    else themeLabel = locals[this.props.lang].actions.colorThemesNumber.single
+
+    return `${colorsNumber} ${colorLabel}, ${themesNumber} ${themeLabel}`
+  }
+
   onSelectPalette = (
     e: React.MouseEvent<HTMLLIElement> | React.KeyboardEvent<HTMLLIElement>
   ) => {
@@ -50,27 +79,24 @@ export default class PalettesList extends React.Component<PalettesListProps> {
               if (e.key === 'Escape') (e.target as HTMLElement).blur()
             }}
           >
-            <div className={`${texts.type} type--large`}>
-              {palette.name === ''
-                ? locals[this.props.lang].name
-                : palette.name}
+            <div className="rich-list__item__asset">
+              <Thumbnail src={this.getImageSrc(palette.screenshot)} />
             </div>
-            <div className={`${texts.type} type`}>{palette.preset}</div>
-            <div
-              className={`${texts.type} ${texts['type--secondary']} type`}
-            >{`${palette.colors.length} ${
-              palette.colors.length > 1
-                ? locals[this.props.lang].actions.sourceColorsNumber.several
-                : locals[this.props.lang].actions.sourceColorsNumber.single
-            }, ${
-              palette.themes.filter((theme) => theme.type === 'custom theme')
-                .length
-            } ${
-              palette.themes.filter((theme) => theme.type === 'custom theme')
-                .length > 1
-                ? locals[this.props.lang].actions.colorThemesNumber.several
-                : locals[this.props.lang].actions.colorThemesNumber.single
-            }`}</div>
+            <div className="rich-list__item__content">
+              <div className={`${texts.type} type--large`}>
+                {palette.name === ''
+                  ? locals[this.props.lang].name
+                  : palette.name}
+                {palette.devStatus === 'READY_FOR_DEV'
+                && <Chip>{locals[this.props.lang].palettesList.readyForDev}</Chip>}
+              </div>
+              <div className={`${texts.type} type`}>{palette.preset}</div>
+              <div
+                className={`${texts.type} ${texts['type--secondary']} type`}
+              >
+                {this.getPaletteMeta(palette.colors, palette.themes)}
+              </div>
+            </div>
           </li>
         ))}
       </ul>

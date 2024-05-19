@@ -312,6 +312,7 @@ export const locals: { [key: string]: any } = {
     },
     palettesList: {
       title: 'UI Color Palettes on the page',
+      readyForDev: 'Ready for development'
     },
     highlight: {
       cta: {

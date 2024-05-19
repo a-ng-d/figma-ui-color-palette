@@ -166,7 +166,7 @@ const loadUI = async () => {
           .loadAsync()
           .then(() =>
             figma.currentPage.findOne(
-              (node) => node.getPluginData('id') === msg.id
+              (node) => node.id === msg.id
             )
           )
           .catch((error) => {
