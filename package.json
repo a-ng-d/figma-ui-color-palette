@@ -49,7 +49,6 @@
     "postcss": "^8.4.31",
     "preact": "^10.6.4",
     "prettier": "^3.2.5",
-    "prettier-plugin-sort-json": "^4.0.0",
     "sass": "^1.69.5",
     "sass-loader": "^13.3.2",
     "style-loader": "^3.3.1",
