@@ -71,13 +71,12 @@ const updateGlobal = async (msg: any) => {
     palette.setPluginData('creatorAvatar', msg.data.creator_avatar)
     palette.setPluginData('creatorId', msg.data.creator_id)
 
-    const bytes = await palette.exportAsync({
-      format: 'PNG',
-      constraint: { type: 'SCALE', value: 0.25 },
-    })
     figma.ui.postMessage({
       type: 'UPDATE_SCREENSHOT',
-      data: bytes,
+      data: await palette.exportAsync({
+        format: 'PNG',
+        constraint: { type: 'SCALE', value: 0.25 },
+      }),
     })
   } else figma.notify(locals[lang].error.corruption)
 }
