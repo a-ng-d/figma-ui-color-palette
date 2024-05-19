@@ -1,7 +1,7 @@
 import { lang, locals } from '../content/locals'
 
 const getPalettesOnCurrentPage = async () => {
-  const palettes = await figma.currentPage
+  const palettes = (await figma.currentPage
     .loadAsync()
     .then(() =>
       figma.currentPage.findAllWithCriteria({
@@ -11,7 +11,7 @@ const getPalettesOnCurrentPage = async () => {
     .catch(() => {
       figma.notify(locals[lang].error.palettesPicking)
       return []
-    }) as Array<FrameNode>
+    })) as Array<FrameNode>
 
   if (palettes.length != 0) {
     const palettesList = async () => {
@@ -27,9 +27,7 @@ const getPalettesOnCurrentPage = async () => {
           colors: JSON.parse(palette.getPluginData('colors')),
           themes: JSON.parse(palette.getPluginData('themes')),
           screenshot: bytes,
-          devStatus: palette.devStatus !== null
-            ? palette.devStatus.type
-            : null
+          devStatus: palette.devStatus !== null ? palette.devStatus.type : null,
         }
       })
       return Promise.all(palettePromises)
@@ -37,10 +35,9 @@ const getPalettesOnCurrentPage = async () => {
 
     figma.ui.postMessage({
       type: 'EXPOSE_PALETTES',
-      data: await palettesList()
+      data: await palettesList(),
     })
-  }
-  else
+  } else
     figma.ui.postMessage({
       type: 'EXPOSE_PALETTES',
       data: [],

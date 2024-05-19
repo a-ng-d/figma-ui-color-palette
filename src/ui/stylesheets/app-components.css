@@ -63,12 +63,14 @@ li.list__item--emphasis .input__field {
 }
 
 li.list__item--above {
-  box-shadow: 0 1px 0 var(--figma-color-border-selected) inset,
+  box-shadow:
+    0 1px 0 var(--figma-color-border-selected) inset,
     0 -1px 0 var(--figma-color-border-selected);
 }
 
 li.list__item--below {
-  box-shadow: 0 -1px 0 var(--figma-color-border-selected) inset,
+  box-shadow:
+    0 -1px 0 var(--figma-color-border-selected) inset,
     0 1px 0 var(--figma-color-border-selected);
 }
 

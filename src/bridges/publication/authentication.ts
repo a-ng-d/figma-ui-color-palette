@@ -89,21 +89,24 @@ export const signIn = async () => {
             throw error
           })
       }, 5000)
-      setTimeout(() => {
-        if (!isAuthenticated) {
-          parent.postMessage(
-            {
-              pluginMessage: {
-                type: 'SEND_MESSAGE',
-                message: locals[lang].error.timeout,
+      setTimeout(
+        () => {
+          if (!isAuthenticated) {
+            parent.postMessage(
+              {
+                pluginMessage: {
+                  type: 'SEND_MESSAGE',
+                  message: locals[lang].error.timeout,
+                },
               },
-            },
-            '*'
-          )
-          clearInterval(poll)
-          throw 'Timeout'
-        }
-      }, 2 * 60 * 1000)
+              '*'
+            )
+            clearInterval(poll)
+            throw 'Timeout'
+          }
+        },
+        2 * 60 * 1000
+      )
     })
     .catch((error) => {
       parent.postMessage(

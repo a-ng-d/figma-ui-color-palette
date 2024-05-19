@@ -163,11 +163,7 @@ const loadUI = async () => {
         const scene: Array<SceneNode> = []
         const palette = await figma.currentPage
           .loadAsync()
-          .then(() =>
-            figma.currentPage.findOne(
-              (node) => node.id === msg.id
-            )
-          )
+          .then(() => figma.currentPage.findOne((node) => node.id === msg.id))
           .catch((error) => {
             figma.notify(locals[lang].error.generic)
             throw error

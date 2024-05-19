@@ -132,8 +132,8 @@ export default class Properties {
     return this.getContrast(textColor) < 4.5
       ? 'A'
       : this.getContrast(textColor) >= 4.5 && this.getContrast(textColor) < 7
-      ? 'AA'
-      : 'AAA'
+        ? 'AA'
+        : 'AAA'
   }
 
   getMinFontSizes = (textColor: string) => {

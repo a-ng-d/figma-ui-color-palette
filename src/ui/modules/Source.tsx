@@ -223,9 +223,11 @@ export default class Source extends React.Component<SourceProps, SourceStates> {
           <div className="section-controls__left-part">
             <SectionTitle
               label={locals[this.props.lang].source.canvas.title}
-              indicator={this.props.sourceColors.filter(
-                (sourceColor) => sourceColor.source === 'CANVAS'
-              ).length}
+              indicator={
+                this.props.sourceColors.filter(
+                  (sourceColor) => sourceColor.source === 'CANVAS'
+                ).length
+              }
             />
           </div>
           <div className="section-controls__right-part"></div>

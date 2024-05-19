@@ -2,7 +2,12 @@ import { Message, texts } from '@a_ng_d/figmug-ui'
 import React from 'react'
 
 import { locals } from '../../content/locals'
-import type { ColorConfiguration, ExtractOfPaletteConfiguration, Language, ThemeConfiguration } from '../../utils/types'
+import type {
+  ColorConfiguration,
+  ExtractOfPaletteConfiguration,
+  Language,
+  ThemeConfiguration,
+} from '../../utils/types'
 import PaletteItem from '../components/PaletteItem'
 
 interface PalettesListProps {
@@ -24,8 +29,7 @@ export default class PalettesList extends React.Component<PalettesListProps> {
 
   shouldComponentUpdate(prevProps: Readonly<PalettesListProps>): boolean {
     console.log(prevProps.paletteLists.length, this.props.paletteLists.length)
-    if (prevProps.paletteLists.length > 0)
-      this.hasPalettes = true
+    if (prevProps.paletteLists.length > 0) this.hasPalettes = true
     else this.hasPalettes = false
     return true
   }
@@ -40,7 +44,10 @@ export default class PalettesList extends React.Component<PalettesListProps> {
     } else return ''
   }
 
-  getPaletteMeta = (colors: Array<ColorConfiguration>, themes: Array<ThemeConfiguration>) => {
+  getPaletteMeta = (
+    colors: Array<ColorConfiguration>,
+    themes: Array<ThemeConfiguration>
+  ) => {
     const colorsNumber = colors.length,
       themesNumber = themes.filter(
         (theme) => theme.type === 'custom theme'
@@ -89,16 +96,15 @@ export default class PalettesList extends React.Component<PalettesListProps> {
             key={`palette-${index}`}
             src={this.getImageSrc(palette.screenshot)}
             title={
-              palette.name === ''
-                ? locals[this.props.lang].name
-                : palette.name
+              palette.name === '' ? locals[this.props.lang].name : palette.name
             }
-            indicator={palette.devStatus === 'READY_FOR_DEV'
-              ? {
-                label: locals[this.props.lang].palettesList.readyForDev,
-                status: 'ACTIVE'
-              }
-              : undefined
+            indicator={
+              palette.devStatus === 'READY_FOR_DEV'
+                ? {
+                    label: locals[this.props.lang].palettesList.readyForDev,
+                    status: 'ACTIVE',
+                  }
+                : undefined
             }
             subtitle={palette.preset}
             info={this.getPaletteMeta(palette.colors, palette.themes)}

@@ -68,8 +68,8 @@ const updateThemes = (msg: ThemesMessage) => {
             msg.isEditedInRealTime && view === 'PALETTE_WITH_PROPERTIES'
               ? 'PALETTE'
               : msg.isEditedInRealTime && view === 'SHEET'
-              ? 'SHEET_SAFE_MODE'
-              : view,
+                ? 'SHEET_SAFE_MODE'
+                : view,
           textColorsTheme: textColorsTheme,
           algorithmVersion: algorithmVersion,
           service: 'EDIT',

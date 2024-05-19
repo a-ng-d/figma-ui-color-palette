@@ -41,9 +41,9 @@ export default class About extends React.Component<AboutProps> {
                     {this.props.planStatus === 'UNPAID'
                       ? locals[this.props.lang].plan.free
                       : this.props.planStatus === 'PAID' &&
-                        this.props.trialStatus === 'PENDING'
-                      ? locals[this.props.lang].plan.trial
-                      : locals[this.props.lang].plan.pro}
+                          this.props.trialStatus === 'PENDING'
+                        ? locals[this.props.lang].plan.trial
+                        : locals[this.props.lang].plan.pro}
                   </p>
                 </Feature>
               </div>

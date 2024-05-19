@@ -11,9 +11,8 @@ const checkPlanStatus = async () => {
     type: 'UNPAID',
   })*/
 
-  const trialStartDate: number | undefined = await figma.clientStorage.getAsync(
-      'trial_start_date'
-    ),
+  const trialStartDate: number | undefined =
+      await figma.clientStorage.getAsync('trial_start_date'),
     trialVersion: string =
       (await figma.clientStorage.getAsync('trial_version')) ?? '3.1.0'
 

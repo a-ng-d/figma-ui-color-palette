@@ -78,8 +78,8 @@ export default class Colors {
           lch[2] + hueShifting < 0
             ? 0
             : lch[2] + hueShifting > 360
-            ? 360
-            : lch[2] + hueShifting
+              ? 360
+              : lch[2] + hueShifting
         )
         .rgb()
 
@@ -102,8 +102,8 @@ export default class Colors {
           oklch[2] + hueShifting < 0
             ? 0
             : oklch[2] + hueShifting > 360
-            ? 360
-            : oklch[2] + hueShifting
+              ? 360
+              : oklch[2] + hueShifting
         )
         .rgb()
 
@@ -204,8 +204,8 @@ export default class Colors {
           hsl[0] + hueShifting < 0
             ? 0
             : hsl[0] + hueShifting > 360
-            ? 360
-            : hsl[0] + hueShifting,
+              ? 360
+              : hsl[0] + hueShifting,
           algorithmVersion == 'v2'
             ? Math.sin((lightness / 100) * Math.PI) * hsl[1]
             : hsl[1],
@@ -239,8 +239,8 @@ export default class Colors {
       hsluv.hsluv_h + hueShifting < 0
         ? 0
         : hsluv.hsluv_h + hueShifting > 360
-        ? 360
-        : hsluv.hsluv_h + hueShifting
+          ? 360
+          : hsluv.hsluv_h + hueShifting
 
     if (Number.isNaN(hsluv.hsluv_s)) hsluv.hsluv_s = 0
     if (Number.isNaN(hsluv.hsluv_h)) hsluv.hsluv_h = 0

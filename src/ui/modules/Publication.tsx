@@ -156,7 +156,9 @@ export default class Publication extends React.Component<
       this.state['publicationStatus'] === 'CAN_BE_PUSHED' ||
       this.state['publicationStatus'] === 'CAN_BE_REVERTED'
     )
-      return <Chip>{locals[this.props.lang].publication.statusLocalChanges}</Chip>
+      return (
+        <Chip>{locals[this.props.lang].publication.statusLocalChanges}</Chip>
+      )
     else if (
       this.state['publicationStatus'] === 'PUBLISHED' ||
       this.state['publicationStatus'] === 'UP_TO_DATE'
@@ -171,9 +173,7 @@ export default class Publication extends React.Component<
       this.state['publicationStatus'] === 'MAY_BE_PULLED'
     )
       return (
-        <Chip>
-          {locals[this.props.lang].publication.statusRemoteChanges}
-        </Chip>
+        <Chip>{locals[this.props.lang].publication.statusRemoteChanges}</Chip>
       )
     else if (this.state['publicationStatus'] === 'IS_NOT_FOUND')
       return (
@@ -345,17 +345,16 @@ export default class Publication extends React.Component<
           label: locals[this.props.lang].publication.publish,
           state: (() => {
             if (
-              this.props.rawData.publicationStatus.isShared !== this.state['isPaletteShared']
-            ) return this.props.isPrimaryActionLoading ? 'LOADING' : 'DEFAULT'
+              this.props.rawData.publicationStatus.isShared !==
+              this.state['isPaletteShared']
+            )
+              return this.props.isPrimaryActionLoading ? 'LOADING' : 'DEFAULT'
 
             return 'DISABLED'
           })(),
           action: async () => {
             this.props.onLoadPrimaryAction(true)
-            pushPalette(
-              this.props.rawData,
-              this.state['isPaletteShared']
-            )
+            pushPalette(this.props.rawData, this.state['isPaletteShared'])
               .then((data) => {
                 this.props.onChangePublication(data)
               })
@@ -403,7 +402,7 @@ export default class Publication extends React.Component<
               })
           },
         },
-        secondary: undefined
+        secondary: undefined,
       },
       CAN_BE_REVERTED: {
         primary: {
@@ -526,11 +525,13 @@ export default class Publication extends React.Component<
           <Thumbnail src={this.getImageSrc()} />
         </div>
         <div className={`dialog__text`}>
-          <div style={{
-            display: 'flex',
-            flexDirection: 'column',
-            gap: 'var(--size-xsmall)'
-          }}>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 'var(--size-xsmall)',
+            }}
+          >
             <div>
               <div className={`${texts.type} type--large`}>
                 {this.props.rawData.name === ''
@@ -541,30 +542,29 @@ export default class Publication extends React.Component<
               <div className={`${texts.type} type`}>
                 {this.props.rawData.preset.name}
               </div>
-              <div 
+              <div
                 className={`${texts.type} ${texts['type--secondary']} type`}
                 style={{
-                  marginTop: '2px'
+                  marginTop: '2px',
                 }}
               >
                 {this.getPaletteMeta()}
               </div>
             </div>
-            {
-              (this.state['publicationStatus'] === 'UP_TO_DATE'
-              || this.state['publicationStatus'] === 'MAY_BE_PULLED'
-              || this.state['publicationStatus'] === 'CAN_BE_REVERTED')
-              && (
-                <div className="user">
-                  <div className="user__avatar">
-                    <img src={this.props.rawData.creatorIdentity.creatorAvatar} />
-                  </div>
-                  <div className={`${texts.type} ${texts['type--secondary']} type`}>
-                    {this.props.rawData.creatorIdentity.creatorFullName}
-                  </div>
+            {(this.state['publicationStatus'] === 'UP_TO_DATE' ||
+              this.state['publicationStatus'] === 'MAY_BE_PULLED' ||
+              this.state['publicationStatus'] === 'CAN_BE_REVERTED') && (
+              <div className="user">
+                <div className="user__avatar">
+                  <img src={this.props.rawData.creatorIdentity.creatorAvatar} />
                 </div>
-              )
-            }
+                <div
+                  className={`${texts.type} ${texts['type--secondary']} type`}
+                >
+                  {this.props.rawData.creatorIdentity.creatorFullName}
+                </div>
+              </div>
+            )}
           </div>
           <div
             className={`type ${texts.type} ${texts['type--secondary']}`}

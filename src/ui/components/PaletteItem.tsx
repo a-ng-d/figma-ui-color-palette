@@ -1,5 +1,5 @@
-import React from "react"
-import { Chip, Thumbnail, texts } from "@a_ng_d/figmug-ui"
+import { Chip, Thumbnail, texts } from '@a_ng_d/figmug-ui'
+import React from 'react'
 
 interface PaletteItemProps {
   id: string
@@ -15,7 +15,8 @@ interface PaletteItemProps {
     avatar: string
     name: string
   }
-  action: React.MouseEventHandler<HTMLLIElement> & React.KeyboardEventHandler<HTMLLIElement>
+  action: React.MouseEventHandler<HTMLLIElement> &
+    React.KeyboardEventHandler<HTMLLIElement>
 }
 
 export default class PaletteItem extends React.Component<PaletteItemProps> {
@@ -38,16 +39,17 @@ export default class PaletteItem extends React.Component<PaletteItemProps> {
           <div className="palette-info">
             <div className={`${texts.type} type--large`}>
               {this.props.title}
-              {this.props.indicator !== undefined
-              && <Chip state={this.props.indicator.status}>
-                {this.props.indicator.label}
-              </Chip>}
+              {this.props.indicator !== undefined && (
+                <Chip state={this.props.indicator.status}>
+                  {this.props.indicator.label}
+                </Chip>
+              )}
             </div>
             <div className={`${texts.type} type`}>{this.props.subtitle}</div>
             <div
               className={`${texts.type} ${texts['type--secondary']} type`}
               style={{
-                marginTop: '2px'
+                marginTop: '2px',
               }}
             >
               {this.props.info}

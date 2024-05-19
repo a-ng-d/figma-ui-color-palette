@@ -78,8 +78,8 @@ export default class Knob extends React.Component<KnobProps, States> {
         ? '100'
         : value
       : value === 100
-      ? '100'
-      : value.toFixed(1)
+        ? '100'
+        : value.toFixed(1)
 
   render() {
     return (
