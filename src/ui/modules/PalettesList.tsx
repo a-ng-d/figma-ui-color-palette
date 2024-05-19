@@ -11,9 +11,24 @@ interface PalettesListProps {
 }
 
 export default class PalettesList extends React.Component<PalettesListProps> {
+  hasPalettes: boolean
+
+  constructor(props: PalettesListProps) {
+    super(props)
+    this.hasPalettes = true
+  }
+
   // Lifecycle
   componentDidMount = () =>
     parent.postMessage({ pluginMessage: { type: 'GET_PALETTES' } }, '*')
+
+  shouldComponentUpdate(prevProps: Readonly<PalettesListProps>): boolean {
+    console.log(prevProps.paletteLists.length, this.props.paletteLists.length)
+    if (prevProps.paletteLists.length > 0)
+      this.hasPalettes = true
+    else this.hasPalettes = false
+    return true
+  }
 
   // Direct actions
   getImageSrc = (screenshot: Uint8Array | null) => {
@@ -101,7 +116,7 @@ export default class PalettesList extends React.Component<PalettesListProps> {
         <div className="controls">
           <div className="controls__control">
             <div className="control__block">
-              {this.props.paletteLists.length > 0 ? (
+              {this.hasPalettes ? (
                 <this.PalettesList />
               ) : (
                 <div className="onboarding__callout">
