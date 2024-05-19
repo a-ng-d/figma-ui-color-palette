@@ -41,9 +41,9 @@ export const locals: { [key: string]: any } = {
       about: 'About',
     },
     publication: {
-      title: 'Publish palette',
+      title: 'Publish or synchronize palette',
       message:
-        'Publish your palette to reuse in others Figma document and share it with the community',
+        'Publish your palette as a single source of truth and reuse it in other Figma documents. You can also distribute your palettes by sharing them with the community.',
       selectToShare: 'Share with community',
       statusLocalChanges: 'Local changes',
       statusUptoDate: 'No change',
@@ -298,14 +298,8 @@ export const locals: { [key: string]: any } = {
       run: 'Run',
       createLocalStyles: 'Sync with the local styles',
       createLocalVariables: 'Sync with the local variables',
-      publishPalette: 'Publish palette',
-      updateLocalStyles: 'Update the existing local styles',
-      updateLocalVariables: 'Update the existing local variables',
+      publishPalette: 'Publish or synchronize palette',
       export: 'Export the UI Color Palette to',
-      managePalette: {
-        localStyles: 'Manage local styles',
-        localVariables: 'Manage local variables',
-      },
       sourceColorsNumber: {
         single: 'source color',
         several: 'source colors',
