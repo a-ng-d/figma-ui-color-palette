@@ -128,6 +128,15 @@ export const features: Array<Feature> = [
     service: ['EDIT'],
   },
   {
+    name: 'EXPLORE',
+    description: 'Explore palettes from the community',
+    isActive: true,
+    isPro: false,
+    isNew: false,
+    type: 'CONTEXT',
+    service: ['CREATE'],
+  },
+  {
     name: 'SOURCE',
     description: 'Raw source colors',
     isActive: true,

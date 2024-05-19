@@ -21,6 +21,7 @@ import type { AppStates } from '../App'
 import Scale from '../modules/Scale'
 import Settings from '../modules/Settings'
 import Source from '../modules/Source'
+import Explore from '../modules/Explore'
 
 interface CreatePaletteProps {
   sourceColors: Array<SourceColorConfiguration> | []
@@ -52,7 +53,7 @@ export default class CreatePalette extends React.Component<
     super(props)
     this.state = {
       context:
-        this.setContexts()[0] != undefined ? this.setContexts()[0].id : '',
+        this.setContexts()[0] != undefined ? this.setContexts()[1].id : '',
     }
   }
 
@@ -97,6 +98,13 @@ export default class CreatePalette extends React.Component<
       id: string
       isUpdated: boolean
     }> = []
+    if (features.find((feature) => feature.name === 'EXPLORE')?.isActive)
+      contexts.push({
+        label: locals[this.props.lang].contexts.explore,
+        id: 'EXPLORE',
+        isUpdated:
+          features.find((feature) => feature.name === 'EXPLORE')?.isNew ?? false,
+      })
     if (features.find((feature) => feature.name === 'SOURCE')?.isActive)
       contexts.push({
         label: locals[this.props.lang].contexts.source,
@@ -135,6 +143,15 @@ export default class CreatePalette extends React.Component<
     let controls
 
     switch (this.state['context']) {
+      case 'EXPLORE': {
+        controls = (
+          <Explore
+            planStatus={this.props.planStatus}
+            lang={this.props.lang}
+          />
+        )
+        break
+      }
       case 'SOURCE': {
         controls = (
           <Source

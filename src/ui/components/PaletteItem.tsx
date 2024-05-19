@@ -11,6 +11,10 @@ interface PaletteItemProps {
   }
   subtitle: string
   info: string
+  user?: {
+    avatar: string
+    name: string
+  }
   action: React.MouseEventHandler<HTMLLIElement> & React.KeyboardEventHandler<HTMLLIElement>
 }
 
@@ -31,19 +35,32 @@ export default class PaletteItem extends React.Component<PaletteItemProps> {
           <Thumbnail src={this.props.src} />
         </div>
         <div className="rich-list__item__content">
-          <div className={`${texts.type} type--large`}>
-            {this.props.title}
-            {this.props.indicator !== undefined
-            && <Chip state={this.props.indicator.status}>
-              {this.props.indicator.label}
-            </Chip>}
+          <div className="palette-info">
+            <div className={`${texts.type} type--large`}>
+              {this.props.title}
+              {this.props.indicator !== undefined
+              && <Chip state={this.props.indicator.status}>
+                {this.props.indicator.label}
+              </Chip>}
+            </div>
+            <div className={`${texts.type} type`}>{this.props.subtitle}</div>
+            <div
+              className={`${texts.type} ${texts['type--secondary']} type`}
+            >
+              {this.props.info}
+            </div>
           </div>
-          <div className={`${texts.type} type`}>{this.props.subtitle}</div>
-          <div
-            className={`${texts.type} ${texts['type--secondary']} type`}
-          >
-            {this.props.info}
-          </div>
+          
+          {this.props.user && (
+            <div className="user">
+              <div className="user__avatar">
+                <img src={this.props.user.avatar} />
+              </div>
+              <div className={`${texts.type} ${texts['type--secondary']} type`}>
+                {this.props.user.name}
+              </div>
+            </div>
+          )}
         </div>
       </li>
     )

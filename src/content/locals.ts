@@ -71,12 +71,17 @@ export const locals: { [key: string]: any } = {
     },
     contexts: {
       source: 'Source',
+      explore: 'Explore',
       scale: 'Scale',
       colors: 'Colors',
       themes: 'Themes',
       export: 'Export',
       settings: 'Settings',
       about: 'About',
+    },
+    explore: {
+      loadMore: 'Lore more palettes',
+      completeList: 'The palettes list is complete',
     },
     source: {
       title: 'Source colors',
@@ -387,6 +392,7 @@ export const locals: { [key: string]: any } = {
       paletteNameRecommendation: '64 characters max is recommended',
       noPaletteOnCurrrentPage:
         'There is no UI Color Palette on the current page. You can ask a member with editing permissions to create.',
+      noPaletteOnRemote: 'No palette has been found'
     },
     error: {
       corruption:
@@ -397,6 +403,7 @@ export const locals: { [key: string]: any } = {
       publication: '✕ The palette cannot be published',
       nonPublication: '✕ The palette cannot be unpublished',
       synchronization: '✕ The palette has been synchronized',
+      noPaletteLoaded: 'The palettes cannot be loaded'
     },
   },
 }
