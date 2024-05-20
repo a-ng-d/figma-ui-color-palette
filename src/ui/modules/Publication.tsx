@@ -86,6 +86,13 @@ export default class Publication extends React.Component<
       prevProps.rawData.id !== this.props.rawData.id
     )
       this.callUICPAgent()
+    else if (
+      !this.props.rawData.publicationStatus.isPublished &&
+      prevProps.rawData.id !== this.props.rawData.id
+    )
+      this.setState({
+        publicationStatus: 'UNPUBLISHED',
+      })      
   }
 
   // Direct actions
@@ -277,6 +284,7 @@ export default class Publication extends React.Component<
                 this.props.onChangePublication(data)
                 this.setState({
                   publicationStatus: 'PUBLISHED',
+                  isPaletteShared: data.publicationStatus?.isShared ?? false
                 })
                 parent.postMessage(
                   {
@@ -314,6 +322,7 @@ export default class Publication extends React.Component<
                 this.props.onChangePublication(data)
                 this.setState({
                   publicationStatus: 'PUBLISHED',
+                  isPaletteShared: data.publicationStatus?.isShared ?? false
                 })
                 parent.postMessage(
                   {
@@ -353,6 +362,7 @@ export default class Publication extends React.Component<
                 this.props.onChangePublication(data)
                 this.setState({
                   publicationStatus: 'PUBLISHED',
+                  isPaletteShared: data.publicationStatus?.isShared ?? false
                 })
                 parent.postMessage(
                   {
@@ -390,6 +400,7 @@ export default class Publication extends React.Component<
                 this.props.onChangePublication(data)
                 this.setState({
                   publicationStatus: 'UNPUBLISHED',
+                  isPaletteShared: false
                 })
               })
               .finally(() => {
@@ -409,6 +420,7 @@ export default class Publication extends React.Component<
                 this.props.onChangePublication(data)
                 this.setState({
                   publicationStatus: 'UP_TO_DATE',
+                  isPaletteShared: data.publicationStatus?.isShared ?? false
                 })
                 parent.postMessage(
                   {
@@ -446,6 +458,7 @@ export default class Publication extends React.Component<
                 this.props.onChangePublication(data)
                 this.setState({
                   publicationStatus: 'UNPUBLISHED',
+                  isPaletteShared: false
                 })
               })
               .finally(() => {
@@ -473,6 +486,7 @@ export default class Publication extends React.Component<
                 this.props.onChangePublication(data)
                 this.setState({
                   publicationStatus: 'PUBLISHED',
+                  isPaletteShared: data.publicationStatus?.isShared ?? false
                 })
                 parent.postMessage(
                   {
@@ -510,6 +524,7 @@ export default class Publication extends React.Component<
                 this.props.onChangePublication(data)
                 this.setState({
                   publicationStatus: 'UNPUBLISHED',
+                  isPaletteShared: false
                 })
                 parent.postMessage(
                   {
@@ -549,6 +564,7 @@ export default class Publication extends React.Component<
                 this.props.onChangePublication(data)
                 this.setState({
                   publicationStatus: 'UNPUBLISHED',
+                  isPaletteShared: false
                 })
               })
               .finally(() => {
@@ -569,6 +585,7 @@ export default class Publication extends React.Component<
                 this.props.onChangePublication(data)
                 this.setState({
                   publicationStatus: 'UP_TO_DATE',
+                  isPaletteShared: data.publicationStatus?.isShared ?? false
                 })
                 parent.postMessage(
                   {
@@ -606,6 +623,7 @@ export default class Publication extends React.Component<
                 this.props.onChangePublication(data)
                 this.setState({
                   publicationStatus: 'UNPUBLISHED',
+                  isPaletteShared: false
                 })
               })
               .finally(() => {
@@ -625,6 +643,7 @@ export default class Publication extends React.Component<
                 this.props.onChangePublication(data)
                 this.setState({
                   publicationStatus: 'UNPUBLISHED',
+                  isPaletteShared: false
                 })
               })
               .finally(() => {

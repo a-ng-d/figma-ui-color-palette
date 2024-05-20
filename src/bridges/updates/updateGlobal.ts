@@ -64,7 +64,7 @@ const updateGlobal = async (msg: any) => {
     )
     palette.setPluginData('createdAt', msg.data.created_at)
     palette.setPluginData('updatedAt', msg.data.updated_at)
-    palette.setPluginData('publisedAt', msg.data.published_at)
+    palette.setPluginData('publishedAt', msg.data.published_at)
     palette.setPluginData('isShared', msg.data.is_shared.toString())
     palette.setPluginData('creatorFullName', msg.data.creator_full_name)
     palette.setPluginData('creatorAvatar', msg.data.creator_avatar)

@@ -1,3 +1,4 @@
+import { lang, locals } from '../../content/locals'
 import type { AppStates } from '../../ui/App'
 import {
   databaseUrl,
@@ -11,7 +12,10 @@ const publishPalette = async (
   isShared = false
 ): Promise<Partial<AppStates>> => {
   let imageUrl = null
-  const publishedAt = new Date().toISOString()
+  const now = new Date().toISOString()
+  const name = rawData.name === ''
+    ? `${rawData.userSession.userFullName}'s UI COLOR PALETTE`
+    : rawData.name
 
   if (rawData.screenshot !== null) {
     const { error } = await supabase.storage
@@ -35,10 +39,7 @@ const publishPalette = async (
     .insert([
       {
         palette_id: rawData.id,
-        name:
-          rawData.name === ''
-            ? `${rawData.userSession.userFullName}'s UI COLOR PALETTE`
-            : rawData.name,
+        name: name,
         description: rawData.description,
         preset: rawData.preset,
         scale: rawData.scale,
@@ -55,22 +56,19 @@ const publishPalette = async (
         creator_avatar: rawData.userSession.userAvatar,
         creator_id: rawData.userSession.userId,
         created_at: rawData.dates.createdAt,
-        updated_at: rawData.dates.updatedAt,
-        published_at: publishedAt,
+        updated_at: now,
+        published_at: now,
       },
     ])
     .select()
 
   if (!error) {
     const palettePublicationDetails = {
-      name:
-        rawData.name === ''
-          ? `${rawData.userSession.userFullName}'s UI COLOR PALETTE`
-          : rawData.name,
+      name: name,
       dates: {
-        publishedAt: publishedAt,
+        publishedAt: now,
         createdAt: rawData.dates.createdAt,
-        updatedAt: rawData.dates.updatedAt,
+        updatedAt: now,
       },
       publicationStatus: {
         isPublished: true,
@@ -97,6 +95,10 @@ const publishPalette = async (
               value: palettePublicationDetails.dates.publishedAt,
             },
             {
+              key: 'updatedAt',
+              value: palettePublicationDetails.dates.updatedAt,
+            },
+            {
               key: 'isPublished',
               value:
                 palettePublicationDetails.publicationStatus.isPublished.toString(),
@@ -119,6 +121,25 @@ const publishPalette = async (
               value: palettePublicationDetails.creatorIdentity.creatorId,
             },
           ],
+        },
+      },
+      '*'
+    )
+
+    parent.postMessage(
+      {
+        pluginMessage: {
+          type: 'UPDATE_SETTINGS',
+          data: {
+            name: palettePublicationDetails.name,
+            description: rawData.description,
+            colorSpace: rawData.colorSpace,
+            visionSimulationMode: rawData.visionSimulationMode,
+            textColorsTheme: rawData.textColorsTheme,
+            algorithmVersion: rawData.algorithmVersion,
+          },
+          isEditedInRealTime: false,
+          isSynchronized: true
         },
       },
       '*'

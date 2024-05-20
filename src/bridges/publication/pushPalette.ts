@@ -7,6 +7,9 @@ const pushPalette = async (
   isShared = false
 ): Promise<Partial<AppStates>> => {
   const now = new Date().toISOString()
+  const name = rawData.name === ''
+    ? `${rawData.userSession.userFullName}'s UI COLOR PALETTE`
+    : rawData.name
 
   if (rawData.screenshot !== null) {
     const { error } = await supabase.storage
@@ -26,10 +29,7 @@ const pushPalette = async (
     .from(palettesDbTableName)
     .update([
       {
-        name:
-          rawData.name === ''
-            ? `${rawData.userSession.userFullName}'s UI COLOR PALETTE`
-            : rawData.name,
+        name: name,
         description: rawData.description,
         preset: rawData.preset,
         scale: rawData.scale,
@@ -52,6 +52,7 @@ const pushPalette = async (
 
   if (!error) {
     const palettePublicationDetails = {
+      name: name,
       dates: {
         publishedAt: now,
         createdAt: rawData.dates.createdAt,
@@ -99,6 +100,25 @@ const pushPalette = async (
               value: palettePublicationDetails.creatorIdentity.creatorId,
             },
           ],
+        },
+      },
+      '*'
+    )
+
+    parent.postMessage(
+      {
+        pluginMessage: {
+          type: 'UPDATE_SETTINGS',
+          data: {
+            name: palettePublicationDetails.name,
+            description: rawData.description,
+            colorSpace: rawData.colorSpace,
+            visionSimulationMode: rawData.visionSimulationMode,
+            textColorsTheme: rawData.textColorsTheme,
+            algorithmVersion: rawData.algorithmVersion,
+          },
+          isEditedInRealTime: false,
+          isSynchronized: true
         },
       },
       '*'

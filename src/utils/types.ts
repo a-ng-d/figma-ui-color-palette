@@ -361,4 +361,5 @@ export interface SettingsMessage {
     algorithmVersion: AlgorithmVersionConfiguration
   }
   isEditedInRealTime: boolean
+  isSynchronized: boolean
 }
