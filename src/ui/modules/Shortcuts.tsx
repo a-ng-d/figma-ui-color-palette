@@ -145,13 +145,35 @@ export default class Shortcuts extends React.Component<
                         isBlocked: false,
                         isNew: false,
                         children: [],
-                        action: async () =>
-                          (() => {
-                            this.setState({ isUserMenuLoading: true })
-                            signOut().finally(() => {
+                        action: async () => {
+                          this.setState({ isUserMenuLoading: true })
+                          signOut()
+                            .then(() => {
+                              parent.postMessage(
+                                {
+                                  pluginMessage: {
+                                    type: 'SEND_MESSAGE',
+                                    message: locals[this.props.lang].info.signOut,
+                                  },
+                                },
+                                '*'
+                              )
+                            })
+                            .finally(() => {
                               this.setState({ isUserMenuLoading: false })
                             })
-                          })(),
+                            .catch(() => {
+                              parent.postMessage(
+                                {
+                                  pluginMessage: {
+                                    type: 'SEND_MESSAGE',
+                                    message: locals[this.props.lang].error.generic,
+                                  },
+                                },
+                                '*'
+                              )
+                            })
+                        }
                       },
                     ]}
                     alignment="TOP_RIGHT"
@@ -171,13 +193,26 @@ export default class Shortcuts extends React.Component<
                         isBlocked: false,
                         isNew: false,
                         children: [],
-                        action: async () =>
-                          (() => {
-                            this.setState({ isUserMenuLoading: true })
-                            signIn().finally(() => {
+                        action: async () => {
+                          this.setState({ isUserMenuLoading: true })
+                          signIn()
+                            .finally(() => {
                               this.setState({ isUserMenuLoading: false })
                             })
-                          })(),
+                            .catch((error) => {
+                              parent.postMessage(
+                                {
+                                  pluginMessage: {
+                                    type: 'SEND_MESSAGE',
+                                    message: error.message === 'Authentication timeout'
+                                    ? locals[this.props.lang].error.timeout
+                                    : locals[this.props.lang].error.authentication,
+                                  },
+                                },
+                                '*'
+                              )
+                            })
+                        }
                       },
                     ]}
                     state={

@@ -297,9 +297,23 @@ export default class PriorityContainer extends React.Component<
                   : 'DEFAULT',
                 action: async () => {
                   this.setState({ isPrimaryActionLoading: true })
-                  signIn().finally(() => {
-                    this.setState({ isPrimaryActionLoading: false })
-                  })
+                  signIn()
+                    .finally(() => {
+                      this.setState({ isPrimaryActionLoading: false })
+                    })
+                    .catch((error) => {
+                      parent.postMessage(
+                        {
+                          pluginMessage: {
+                            type: 'SEND_MESSAGE',
+                            message: error.message === 'Authentication timeout'
+                            ? locals[this.props.lang].error.timeout
+                            : locals[this.props.lang].error.authentication,
+                          },
+                        },
+                        '*'
+                      )
+                    })
                 },
               },
             }}
