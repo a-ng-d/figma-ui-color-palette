@@ -373,7 +373,7 @@ export const locals: { [key: string]: any } = {
       localVariables: 'local color variables',
       variableMode: 'variable mode',
       variableModes: 'variable modes',
-      signOut: 'See you later',
+      signOut: '☻ See you later',
     },
     warning: {
       tooManyThemesToCreateModes:
@@ -391,14 +391,17 @@ export const locals: { [key: string]: any } = {
     },
     error: {
       corruption:
-        'Your UI Color Palette seems corrupted. Do not edit any layer within it.',
-      palettesPicking: 'UI Color Palettes cannot be picked for now',
-      generic: 'Something went wrong',
-      timeout: '✕ The authentication has failed',
+        '✕ Your UI Color Palette seems corrupted. Do not edit any layer within it.',
+      palettesPicking: '✕ UI Color Palettes cannot be picked for now',
+      generic: '✕ Something went wrong',
+      authentication: '✕ The authentication has failed',
+      timeout: '✕ The authentication has been timed out',
       publication: '✕ The palette cannot be published',
       nonPublication: '✕ The palette cannot be unpublished',
-      synchronization: '✕ The palette has been synchronized',
-      noPaletteLoaded: 'The palettes cannot be loaded',
+      synchronization: '✕ The palette has not been synchronized',
+      fetchPalette: 'The palettes cannot be loaded',
+      addToFile: '✕ The palette cannot be added',
+      noInternetConnection: '✕ The connection with the remote palette is unlinked'
     },
   },
 }

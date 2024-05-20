@@ -176,6 +176,18 @@ const loadUI = async () => {
         await enableTrial()
         await checkPlanStatus()
       },
+      SIGN_OUT: () =>
+        figma.ui.postMessage({
+          type: 'SIGN_OUT',
+          data: {
+            connectionStatus: 'UNCONNECTED',
+            userFullName: '',
+            userAvatar: '',
+            userId: undefined,
+            accessToken: undefined,
+            refreshToken: undefined,
+          },
+        })
     }
 
     return actions[msg.type]?.()

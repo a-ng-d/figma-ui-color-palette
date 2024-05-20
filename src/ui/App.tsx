@@ -173,18 +173,6 @@ class App extends React.Component<Record<string, never>, AppStates> {
             '*'
           )
         },
-        SIGNED_OUT: () => {
-          this.setState({
-            userSession: {
-              connectionStatus: 'UNCONNECTED',
-              userFullName: '',
-              userAvatar: '',
-              userId: undefined,
-              accessToken: undefined,
-              refreshToken: undefined,
-            },
-          })
-        },
         TOKEN_REFRESHED: () => {
           this.setState({
             userSession: {
@@ -596,6 +584,11 @@ class App extends React.Component<Record<string, never>, AppStates> {
             priorityContainerContext: 'WELCOME_TO_TRIAL',
           })
 
+        const signOut = (data: UserSession) =>
+          this.setState({
+            userSession: data,
+          })
+
         const actions: ActionsList = {
           CHECK_USER_AUTHENTICATION: () => checkUserAuthentication(),
           EDITOR_TYPE: () => checkEditorType(),
@@ -618,6 +611,7 @@ class App extends React.Component<Record<string, never>, AppStates> {
             updatePaletteDate(e.data.pluginMessage?.data),
           GET_PRO_PLAN: () => getProPlan(),
           ENABLE_TRIAL: () => enableTrial(),
+          SIGN_OUT: () => signOut(e.data.pluginMessage?.data),
           DEFAULT: () => null,
         }
 

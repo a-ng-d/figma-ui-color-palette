@@ -124,7 +124,7 @@ export const signIn = async () => {
 
 export const signOut = async () => {
   const { error } = await supabase.auth.signOut({
-    scope: 'global',
+    scope: 'others',
   })
 
   if (!error) {
@@ -140,24 +140,12 @@ export const signOut = async () => {
     parent.postMessage(
       {
         pluginMessage: {
-          type: 'SEND_MESSAGE',
-          message: locals[lang].info.signOut,
+          type: 'SIGN_OUT',
         },
       },
       '*'
     )
+
     return
-  } else {
-    console.log(error)
-    parent.postMessage(
-      {
-        pluginMessage: {
-          type: 'SEND_MESSAGE',
-          message: locals[lang].error.generic,
-        },
-      },
-      '*'
-    )
-    throw error
-  }
+  } else throw error
 }

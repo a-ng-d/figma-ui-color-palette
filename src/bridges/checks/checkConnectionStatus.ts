@@ -9,6 +9,9 @@ const checkConnectionStatus = async (
       access_token: accessToken,
       refresh_token: refreshToken,
     })
+
+    if (!error) return data
+    else throw error
   }
 }
 
