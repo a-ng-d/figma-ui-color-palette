@@ -6,11 +6,11 @@ import { presets } from '../utils/palettePackage'
 const loadParameters = ({ key, result }: ParameterInputEvent) => {
   const viableSelection = figma.currentPage.selection.filter(
     (element: any) =>
-      element.type != 'GROUP' &&
-      element.type != 'EMBED' &&
-      element.type != 'CONNECTOR' &&
-      element.getPluginDataKeys().length == 0 &&
-      element.fills.filter((fill: Paint) => fill.type === 'SOLID').length != 0
+      element.type !== 'GROUP' &&
+      element.type !== 'EMBED' &&
+      element.type !== 'CONNECTOR' &&
+      element.getPluginDataKeys().length === 0 &&
+      element.fills.filter((fill: Paint) => fill.type === 'SOLID').length !== 0
   )
 
   switch (key) {

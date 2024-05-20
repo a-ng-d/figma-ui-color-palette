@@ -1,4 +1,3 @@
-import { lang, locals } from '../../content/locals'
 import type { AppStates } from '../../ui/App'
 import { palettesDbTableName, palettesStorageName } from '../../utils/config'
 import { supabase } from './authentication'
@@ -10,7 +9,7 @@ const pushPalette = async (
   const now = new Date().toISOString()
 
   if (rawData.screenshot !== null) {
-    const { data, error } = await supabase.storage
+    const { error } = await supabase.storage
       .from(palettesStorageName)
       .update(
         `${rawData.userSession.userId}/${rawData.id}.png`,
@@ -23,7 +22,7 @@ const pushPalette = async (
     if (error) throw error
   }
 
-  const { data, error } = await supabase
+  const { error } = await supabase
     .from(palettesDbTableName)
     .update([
       {

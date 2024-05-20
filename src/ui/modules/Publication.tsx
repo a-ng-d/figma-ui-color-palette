@@ -116,7 +116,7 @@ export default class Publication extends React.Component<
         this.setState({
           publicationStatus: isMyPalette ? 'PUBLISHED' : 'UP_TO_DATE',
         })
-    } else if (data?.length == 0)
+    } else if (data?.length === 0)
       this.setState({
         publicationStatus: 'IS_NOT_FOUND',
       })
@@ -146,7 +146,7 @@ export default class Publication extends React.Component<
   }
 
   uploadPaletteScreenshot = () => {
-    this.counter == 0
+    this.counter === 0
       ? parent.postMessage(
           {
             pluginMessage: {

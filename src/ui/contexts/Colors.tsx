@@ -78,7 +78,7 @@ export default class Colors extends React.Component<ColorsProps, ColorsStates> {
     document.removeEventListener('mousedown', this.handleClickOutside)
 
   handleClickOutside = (e: Event) => {
-    if (this.listRef.current != null)
+    if (this.listRef.current !== null)
       if (
         this.listRef &&
         !this.listRef.current.contains(e.target as HTMLElement)
@@ -99,7 +99,7 @@ export default class Colors extends React.Component<ColorsProps, ColorsStates> {
       ),
       currentElement: HTMLInputElement = e.currentTarget
 
-    element != null ? (id = element.getAttribute('data-id')) : (id = null)
+    element !== null ? (id = element.getAttribute('data-id')) : (id = null)
 
     colorsMessage.isEditedInRealTime = false
 
@@ -149,13 +149,13 @@ export default class Colors extends React.Component<ColorsProps, ColorsStates> {
 
     const updateHexCode = () => {
       const code: HexModel =
-        currentElement.value.indexOf('#') == -1
+        currentElement.value.indexOf('#') === -1
           ? '#' + currentElement.value
           : currentElement.value
       if (/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/i.test(code)) {
         colorsMessage.data = this.props.colors.map((item) => {
           const rgb = chroma(
-            currentElement.value.indexOf('#') == -1
+            currentElement.value.indexOf('#') === -1
               ? '#' + currentElement.value
               : currentElement.value
           ).rgb()
@@ -267,7 +267,7 @@ export default class Colors extends React.Component<ColorsProps, ColorsStates> {
     }
 
     const removeColor = () => {
-      colorsMessage.data = this.props.colors.filter((item) => item.id != id)
+      colorsMessage.data = this.props.colors.filter((item) => item.id !== id)
       this.props.onChangeColors({
         colors: colorsMessage.data,
         onGoingStep: 'colors changed',
@@ -331,7 +331,7 @@ export default class Colors extends React.Component<ColorsProps, ColorsStates> {
     React.MouseEventHandler<Element> &
     React.FocusEventHandler<HTMLInputElement> = (e) => {
     const target = e.currentTarget as HTMLElement
-    if ((e.target as HTMLElement).dataset.feature != undefined) return
+    if ((e.target as HTMLElement).dataset.feature !== undefined) return
     this.setState({
       selectedElement: {
         id: target.dataset.id,
@@ -391,7 +391,7 @@ export default class Colors extends React.Component<ColorsProps, ColorsStates> {
               />
             </div>
           </div>
-          {this.props.colors.length == 0 ? (
+          {this.props.colors.length === 0 ? (
             <div className="onboarding__callout">
               <Message
                 icon="list-tile"

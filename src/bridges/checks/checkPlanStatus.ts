@@ -19,10 +19,10 @@ const checkPlanStatus = async () => {
   let consumedTime = 0,
     trialStatus = 'UNUSED'
 
-  if (trialStartDate != undefined) {
+  if (trialStartDate !== undefined) {
     consumedTime = (new Date().getTime() - trialStartDate) / 1000 / (60 * 60)
 
-    if (consumedTime <= oldTrialTime && trialVersion != '3.2.0')
+    if (consumedTime <= oldTrialTime && trialVersion !== '3.2.0')
       trialStatus = 'PENDING'
     else if (consumedTime >= trialTime) trialStatus = 'EXPIRED'
     else trialStatus = 'PENDING'
@@ -35,7 +35,7 @@ const checkPlanStatus = async () => {
         trialStatus === 'PENDING' ? 'PAID' : figma.payments?.status.type,
       trialStatus: trialStatus,
       trialRemainingTime: Math.ceil(
-        trialVersion != '3.2.0'
+        trialVersion !== '3.2.0'
           ? oldTrialTime - consumedTime
           : trialTime - consumedTime
       ),

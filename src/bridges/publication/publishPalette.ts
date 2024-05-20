@@ -1,4 +1,3 @@
-import { lang, locals } from '../../content/locals'
 import type { AppStates } from '../../ui/App'
 import {
   databaseUrl,
@@ -15,7 +14,7 @@ const publishPalette = async (
   const publishedAt = new Date().toISOString()
 
   if (rawData.screenshot !== null) {
-    const { data, error } = await supabase.storage
+    const { error } = await supabase.storage
       .from(palettesStorageName)
       .upload(
         `${rawData.userSession.userId}/${rawData.id}.png`,
@@ -31,7 +30,7 @@ const publishPalette = async (
     else throw error
   }
 
-  const { data, error } = await supabase
+  const { error } = await supabase
     .from(palettesDbTableName)
     .insert([
       {

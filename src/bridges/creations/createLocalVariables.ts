@@ -7,7 +7,7 @@ const createLocalVariables = async (palette: SceneNode) => {
 
   const paletteData: PaletteData = JSON.parse(palette.getPluginData('data'))
 
-  if (palette.children.length == 1) {
+  if (palette.children.length === 1) {
     const name: string =
         palette.getPluginData('name') === ''
           ? locals[lang].name
@@ -31,7 +31,7 @@ const createLocalVariables = async (palette: SceneNode) => {
         )
       )
       .then((collection) => {
-        if (collection == undefined) {
+        if (collection === undefined) {
           collection = new LocalVariable().makeCollection(name)
           paletteData.collectionId = collection.id
         }
@@ -61,7 +61,7 @@ const createLocalVariables = async (palette: SceneNode) => {
                 const boundVariable = localVariables.find(
                   (localVariable) => localVariable.id === shade.variableId
                 )
-                if (boundVariable == undefined) {
+                if (boundVariable === undefined) {
                   const variable = new LocalVariable().makeVariable(
                     `${color.name}/${shade.name}`,
                     collection,
@@ -69,7 +69,7 @@ const createLocalVariables = async (palette: SceneNode) => {
                   )
                   shade.variableId = variable.id
                   createdVariables.push(variable)
-                  if (themesList.length == 0 && collection != undefined) {
+                  if (themesList.length === 0 && collection !== undefined) {
                     variable.setValueForMode(collection.modes[0].modeId, {
                       r: shade.gl[0],
                       g: shade.gl[1],
@@ -80,9 +80,9 @@ const createLocalVariables = async (palette: SceneNode) => {
                   }
                   i++
                 } else if (
-                  themesList.length == 0 &&
-                  collection?.modes[0].name != 'Mode 1' &&
-                  collection != undefined
+                  themesList.length === 0 &&
+                  collection?.modes[0].name !== 'Mode 1' &&
+                  collection !== undefined
                 ) {
                   collection.renameMode(collection.defaultModeId, 'Mode 1')
                 }
@@ -93,24 +93,24 @@ const createLocalVariables = async (palette: SceneNode) => {
         // Create modes
         if (themesList.length > 0) {
           themesList.forEach((themeItem) => {
-            if (themeItem != undefined && collection != undefined) {
+            if (themeItem !== undefined && collection !== undefined) {
               const theme = paletteData.themes.find(
                 (theme) => theme.name === themeItem.name
               )
               if (collection?.modes[0].name === 'Mode 1') {
                 collection.renameMode(collection.defaultModeId, themeItem.name)
                 themeItem.id = collection.defaultModeId
-                theme != undefined
+                theme !== undefined
                   ? (theme.modeId = collection.defaultModeId)
                   : null
               } else if (
-                collection.modes.find((mode) => mode.modeId === themeItem.id) ==
+                collection.modes.find((mode) => mode.modeId === themeItem.id) ===
                 undefined
               ) {
                 try {
                   const modeId = collection.addMode(themeItem.name)
                   themeItem.id = modeId
-                  theme != undefined ? (theme.modeId = modeId) : null
+                  theme !== undefined ? (theme.modeId = modeId) : null
                   j++
                 } catch {
                   figma.notify(locals[lang].warning.tooManyThemesToCreateModes)
@@ -122,7 +122,7 @@ const createLocalVariables = async (palette: SceneNode) => {
 
         // Set values
         themesList.forEach((themeItem) => {
-          if (collection != undefined && themeItem != undefined) {
+          if (collection !== undefined && themeItem !== undefined) {
             createdVariables.forEach((variable) => {
               const rightShade = paletteData.themes
                 .find((theme) => theme.name === themeItem?.name)
@@ -132,7 +132,7 @@ const createLocalVariables = async (palette: SceneNode) => {
                 ?.shades.find(
                   (shade) => shade.name === variable.name.split('/')[1]
                 )
-              if (rightShade != undefined && collection != undefined) {
+              if (rightShade !== undefined && collection !== undefined) {
                 rightShade.variableId = variable.id
               }
             })

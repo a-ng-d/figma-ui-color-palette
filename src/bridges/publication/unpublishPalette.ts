@@ -1,4 +1,3 @@
-import { lang, locals } from '../../content/locals'
 import type { AppStates } from '../../ui/App'
 import { palettesDbTableName, palettesStorageName } from '../../utils/config'
 import { supabase } from './authentication'
@@ -7,14 +6,14 @@ const unpublishPalette = async (
   rawData: AppStates
 ): Promise<Partial<AppStates>> => {
   if (rawData.screenshot !== null) {
-    const { data, error } = await supabase.storage
+    const { error } = await supabase.storage
       .from(palettesStorageName)
       .remove([`${rawData.userSession.userId}/${rawData.id}.png`])
     
     if (error) throw error
   }
 
-  const { data, error } = await supabase
+  const { error } = await supabase
     .from(palettesDbTableName)
     .delete()
     .match({ palette_id: rawData.id })

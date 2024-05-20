@@ -5,7 +5,6 @@ import {
   Input,
   Message,
   SectionTitle,
-  texts,
 } from '@a_ng_d/figmug-ui'
 import chroma from 'chroma-js'
 import React from 'react'
@@ -132,7 +131,7 @@ export default class Source extends React.Component<SourceProps, SourceStates> {
     const url: string = this.state['coolorsUrl'].value,
       hexs = url.match(/([0-9a-fA-F]{6}-)+[0-9a-fA-F]{6}/)
 
-    if (hexs != null) {
+    if (hexs !== null) {
       this.props.onChangeColorsFromImport(
         hexs[0].split('-').map((hex) => {
           const gl = chroma(hex).gl()
@@ -175,7 +174,7 @@ export default class Source extends React.Component<SourceProps, SourceStates> {
     const url: string = this.state['realtimeColorsUrl'].value,
       hexs = url.match(/([0-9a-fA-F]{6}-)+[0-9a-fA-F]{6}/)
 
-    if (hexs != null) {
+    if (hexs !== null) {
       this.props.onChangeColorsFromImport(
         hexs[0].split('-').map((hex) => {
           const gl = chroma(hex).gl()

@@ -443,7 +443,7 @@ export default class Scale extends React.Component<ScaleProps, ScaleStates> {
 
   KeyboardShortcuts = () => {
     const isMacOrWinKeyboard =
-      navigator.userAgent.indexOf('Mac') != -1 ? '⌘' : '⌃' ?? '⌘'
+      navigator.userAgent.indexOf('Mac') !== -1 ? '⌘' : '⌃' ?? '⌘'
 
     return (
       <Dialog
@@ -603,7 +603,7 @@ export default class Scale extends React.Component<ScaleProps, ScaleStates> {
                     <Button
                       type="icon"
                       icon="plus"
-                      isDisabled={this.props.preset.scale.length == 24}
+                      isDisabled={this.props.preset.scale.length === 24}
                       feature="ADD_STOP"
                       action={
                         this.props.preset.scale.length >= 24

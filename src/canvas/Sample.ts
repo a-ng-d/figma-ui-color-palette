@@ -188,7 +188,7 @@ export default class Sample {
       )
 
     this.node.appendChild(this.nodeColor)
-    if (isColorName && description != '')
+    if (isColorName && description !== '')
       this.node.appendChild(
         new Paragraph(
           '_description',

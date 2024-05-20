@@ -55,7 +55,7 @@ export default class TransferPalette extends React.Component<TransferPaletteProp
           type: string
           colors: Array<{ name: string; csv: string }>
         }) => {
-          if (theme.type != 'default theme') {
+          if (theme.type !== 'default theme') {
             const folder = zip.folder(theme.name) ?? zip
             theme.colors.forEach((color) => {
               folder.file(`${doSnakeCase(color.name)}.csv`, color.csv)

@@ -53,7 +53,7 @@ export default class CreatePalette extends React.Component<
     super(props)
     this.state = {
       context:
-        this.setContexts()[0] != undefined ? this.setContexts()[1].id : '',
+        this.setContexts()[0] !== undefined ? this.setContexts()[1].id : '',
     }
   }
 
@@ -71,7 +71,7 @@ export default class CreatePalette extends React.Component<
       sourceColors: this.props.sourceColors
         .filter(
           (sourceColors: SourceColorConfiguration) =>
-            sourceColors.source != source
+            sourceColors.source !== source
         )
         .concat(sourceColorsFromImport),
     })

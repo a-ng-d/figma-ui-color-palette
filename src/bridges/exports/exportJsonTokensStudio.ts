@@ -9,7 +9,7 @@ const exportJsonTokensStudio = (palette: FrameNode) => {
   const paletteData: PaletteData = JSON.parse(palette.getPluginData('data')),
     workingThemes =
       paletteData.themes.filter((theme) => theme.type === 'custom theme')
-        .length == 0
+        .length === 0
         ? paletteData.themes.filter((theme) => theme.type === 'default theme')
         : paletteData.themes.filter((theme) => theme.type === 'custom theme'),
     name: string =
@@ -22,14 +22,14 @@ const exportJsonTokensStudio = (palette: FrameNode) => {
     return {
       value: shade.hex,
       description:
-        color.description != ''
+        color.description !== ''
           ? color.description + '﹒' + shade.description
           : shade.description,
       type: 'color',
     }
   }
 
-  if (palette.children.length == 1) {
+  if (palette.children.length === 1) {
     if (workingThemes[0].type === 'custom theme')
       workingThemes.forEach((theme) => {
         json[name + ' - ' + theme.name] = {}

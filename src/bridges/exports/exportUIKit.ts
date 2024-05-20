@@ -8,12 +8,12 @@ const exportUIKit = (palette: FrameNode) => {
   const paletteData: PaletteData = JSON.parse(palette.getPluginData('data')),
     workingThemes =
       paletteData.themes.filter((theme) => theme.type === 'custom theme')
-        .length == 0
+        .length === 0
         ? paletteData.themes.filter((theme) => theme.type === 'default theme')
         : paletteData.themes.filter((theme) => theme.type === 'custom theme'),
     swift: Array<string> = []
 
-  if (palette.children.length == 1) {
+  if (palette.children.length === 1) {
     workingThemes.forEach((theme) => {
       const UIColors: Array<string> = []
       theme.colors.forEach((color) => {

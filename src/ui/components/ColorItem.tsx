@@ -198,7 +198,7 @@ export default class ColorItem extends React.Component<ColorItemProps, States> {
                   <Input
                     type="NUMBER"
                     value={
-                      chroma(this.props.hex).lch()[2].toFixed(0) == 'NaN'
+                      chroma(this.props.hex).lch()[2].toFixed(0) === 'NaN'
                         ? '0'
                         : chroma(this.props.hex).lch()[2].toFixed(0)
                     }

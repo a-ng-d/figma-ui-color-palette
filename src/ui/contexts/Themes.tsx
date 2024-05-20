@@ -83,7 +83,7 @@ export default class Themes extends React.Component<ThemesProps, ThemesStates> {
     document.removeEventListener('mousedown', this.handleClickOutside)
 
   handleClickOutside = (e: Event) => {
-    if (this.listRef.current != null)
+    if (this.listRef.current !== null)
       if (
         this.listRef &&
         !this.listRef.current.contains(e.target as HTMLElement)
@@ -104,7 +104,7 @@ export default class Themes extends React.Component<ThemesProps, ThemesStates> {
       ),
       currentElement = e.currentTarget as HTMLInputElement
 
-    element != null ? (id = element.getAttribute('data-id')) : (id = null)
+    element !== null ? (id = element.getAttribute('data-id')) : (id = null)
 
     themesMessage.isEditedInRealTime = false
 
@@ -121,8 +121,8 @@ export default class Themes extends React.Component<ThemesProps, ThemesStates> {
         description: '',
         scale: doLightnessScale(
           this.props.preset.scale,
-          this.props.preset.min == undefined ? 10 : this.props.preset.min,
-          this.props.preset.max == undefined ? 90 : this.props.preset.max
+          this.props.preset.min === undefined ? 10 : this.props.preset.min,
+          this.props.preset.max === undefined ? 90 : this.props.preset.max
         ),
         paletteBackground: '#FFFFFF',
         isEnabled: true,
@@ -160,7 +160,7 @@ export default class Themes extends React.Component<ThemesProps, ThemesStates> {
 
     const updatePaletteBackgroundColor = () => {
       const code: HexModel =
-        currentElement.value.indexOf('#') == -1
+        currentElement.value.indexOf('#') === -1
           ? '#' + currentElement.value
           : currentElement.value
       if (/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/i.test(code)) {
@@ -199,7 +199,7 @@ export default class Themes extends React.Component<ThemesProps, ThemesStates> {
     }
 
     const removeTheme = () => {
-      themesMessage.data = this.props.themes.filter((item) => item.id != id)
+      themesMessage.data = this.props.themes.filter((item) => item.id !== id)
       if (themesMessage.data.length > 1)
         themesMessage.data.filter(
           (item) => item.type === 'custom theme'
@@ -208,7 +208,7 @@ export default class Themes extends React.Component<ThemesProps, ThemesStates> {
         const result = themesMessage.data.find(
           (item) => item.type === 'default theme'
         )
-        if (result != undefined) result.isEnabled = true
+        if (result !== undefined) result.isEnabled = true
       }
       this.props.onChangeThemes({
         scale: themesMessage.data.find((theme) => theme.isEnabled)?.scale ?? {},
@@ -271,7 +271,7 @@ export default class Themes extends React.Component<ThemesProps, ThemesStates> {
     React.MouseEventHandler<Element> &
     React.FocusEventHandler<HTMLInputElement> = (e) => {
     const target = e.currentTarget as HTMLElement
-    if ((e.target as HTMLElement).dataset.feature != undefined) return
+    if ((e.target as HTMLElement).dataset.feature !== undefined) return
     this.setState({
       selectedElement: {
         id: target.dataset.id,
@@ -324,8 +324,8 @@ export default class Themes extends React.Component<ThemesProps, ThemesStates> {
       description: '',
       scale: doLightnessScale(
         this.props.preset.scale,
-        this.props.preset.min == undefined ? 10 : this.props.preset.min,
-        this.props.preset.max == undefined ? 90 : this.props.preset.max
+        this.props.preset.min === undefined ? 10 : this.props.preset.min,
+        this.props.preset.max === undefined ? 90 : this.props.preset.max
       ),
       paletteBackground: '#FFFFFF',
       isEnabled: true,
@@ -367,7 +367,7 @@ export default class Themes extends React.Component<ThemesProps, ThemesStates> {
               />
             </div>
           </div>
-          {this.props.themes.length == 1 ? (
+          {this.props.themes.length === 1 ? (
             <div className="onboarding__callout">
               <Message
                 icon="theme"
@@ -394,7 +394,7 @@ export default class Themes extends React.Component<ThemesProps, ThemesStates> {
               ref={this.listRef}
             >
               {this.props.themes.map((theme, index) => {
-                if (theme.type != 'default theme')
+                if (theme.type !== 'default theme')
                   return (
                     <ThemeItem
                       key={theme.id}

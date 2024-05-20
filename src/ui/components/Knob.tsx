@@ -40,10 +40,10 @@ export default class Knob extends React.Component<KnobProps, States> {
   keyboardHandler = (action: string, e: React.KeyboardEvent) => {
     const actions: ActionsList = {
       ArrowRight: () => {
-        if (this.props.onShiftRight != undefined) this.props.onShiftRight(e)
+        if (this.props.onShiftRight !== undefined) this.props.onShiftRight(e)
       },
       ArrowLeft: () => {
-        if (this.props.onShiftLeft != undefined) this.props.onShiftLeft(e)
+        if (this.props.onShiftLeft !== undefined) this.props.onShiftLeft(e)
       },
       Enter: () => {
         if (this.props.canBeTyped)
@@ -53,11 +53,11 @@ export default class Knob extends React.Component<KnobProps, States> {
           })
       },
       Escape: () => {
-        ;(e.target as HTMLElement).blur()
+        (e.target as HTMLElement).blur()
         this.setState({ isStopInputOpen: false })
       },
       Backspace: () => {
-        if (this.props.onDelete != undefined) this.props.onDelete(e)
+        if (this.props.onDelete !== undefined) this.props.onDelete(e)
       },
     }
 
@@ -65,7 +65,7 @@ export default class Knob extends React.Component<KnobProps, States> {
   }
 
   clickHandler = (e: React.MouseEvent) => {
-    if (e.detail == 2 && this.props.canBeTyped)
+    if (e.detail === 2 && this.props.canBeTyped)
       this.setState({
         isStopInputOpen: true,
         stopInputValue: this.props.value,
@@ -74,7 +74,7 @@ export default class Knob extends React.Component<KnobProps, States> {
 
   transformStopValue = (value: string | number) =>
     typeof value === 'string'
-      ? value == '100.0'
+      ? value === '100.0'
         ? '100'
         : value
       : value === 100

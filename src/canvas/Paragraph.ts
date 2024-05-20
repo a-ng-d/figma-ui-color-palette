@@ -70,11 +70,11 @@ export default class Paragraph {
       },
     ]
     this.node.cornerRadius = 16
-    if (this.type == 'FIXED') this.node.resize(this.width ?? 100, 100)
+    if (this.type === 'FIXED') this.node.resize(this.width ?? 100, 100)
 
     // layout
     this.node.layoutMode = 'HORIZONTAL'
-    if (this.type == 'FIXED') this.node.layoutSizingHorizontal = 'FIXED'
+    if (this.type === 'FIXED') this.node.layoutSizingHorizontal = 'FIXED'
     else {
       this.node.primaryAxisSizingMode = 'FIXED'
       this.node.layoutAlign = 'STRETCH'

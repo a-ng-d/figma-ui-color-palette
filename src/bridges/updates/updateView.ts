@@ -19,7 +19,7 @@ const updateView = (msg: ViewMessage) => {
     ? (previousSelection?.[0] as FrameNode)
     : (currentSelection[0] as FrameNode)
 
-  if (palette.children.length == 1) {
+  if (palette.children.length === 1) {
     const name: string =
         palette.getPluginData('name') === ''
           ? locals[lang].name

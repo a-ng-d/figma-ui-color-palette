@@ -169,7 +169,7 @@ const loadUI = async () => {
             figma.notify(locals[lang].error.generic)
             throw error
           })
-        palette != null ? scene.push(palette) : null
+        palette !== null ? scene.push(palette) : null
         figma.currentPage.selection = scene
       },
       GET_PRO_PLAN: async () => await getProPlan(),

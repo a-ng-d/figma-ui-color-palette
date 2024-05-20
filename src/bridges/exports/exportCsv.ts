@@ -16,7 +16,7 @@ const exportCsv = (palette: FrameNode) => {
   const paletteData: PaletteData = JSON.parse(palette.getPluginData('data')),
     workingThemes =
       paletteData.themes.filter((theme) => theme.type === 'custom theme')
-        .length == 0
+        .length === 0
         ? paletteData.themes.filter((theme) => theme.type === 'default theme')
         : paletteData.themes.filter((theme) => theme.type === 'custom theme'),
     colorCsv: Array<colorCsv> = [],
@@ -26,7 +26,7 @@ const exportCsv = (palette: FrameNode) => {
     c: Array<number | string> = [],
     h: Array<number | string> = []
 
-  if (palette.children.length == 1) {
+  if (palette.children.length === 1) {
     workingThemes.forEach((theme) => {
       theme.colors.forEach((color) => {
         color.shades.forEach((shade) => {
@@ -60,7 +60,7 @@ const exportCsv = (palette: FrameNode) => {
       type: 'EXPORT_PALETTE_CSV',
       context: 'CSV',
       data:
-        paletteData.themes[0].colors.length == 0
+        paletteData.themes[0].colors.length === 0
           ? [
               {
                 name: 'empty',

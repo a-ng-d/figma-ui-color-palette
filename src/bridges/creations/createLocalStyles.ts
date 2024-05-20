@@ -6,11 +6,11 @@ const createLocalStyles = async (palette: FrameNode) => {
   const paletteData: PaletteData = JSON.parse(palette.getPluginData('data')),
     workingThemes =
       paletteData.themes.filter((theme) => theme.type === 'custom theme')
-        .length == 0
+        .length === 0
         ? paletteData.themes.filter((theme) => theme.type === 'default theme')
         : paletteData.themes.filter((theme) => theme.type === 'custom theme')
 
-  if (palette.children.length == 1) {
+  if (palette.children.length === 1) {
     const createdLocalStylesStatusMessage = figma
       .getLocalPaintStylesAsync()
       .then((localStyles) => {
@@ -21,7 +21,7 @@ const createLocalStyles = async (palette: FrameNode) => {
               if (
                 localStyles.find(
                   (localStyle) => localStyle.id === shade.styleId
-                ) == undefined
+                ) === undefined
               ) {
                 const style = new LocalStyle(
                   workingThemes[0].type === 'custom theme'
@@ -31,7 +31,7 @@ const createLocalStyles = async (palette: FrameNode) => {
                     : `${paletteData.name === '' ? '' : paletteData.name}/${
                         color.name
                       }/${shade.name}`,
-                  color.description != ''
+                  color.description !== ''
                     ? color.description + '﹒' + shade.description
                     : shade.description,
                   {

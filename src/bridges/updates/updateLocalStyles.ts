@@ -7,11 +7,11 @@ const updateLocalStyles = async (palette: FrameNode) => {
   const paletteData: PaletteData = JSON.parse(palette.getPluginData('data')),
     workingThemes =
       paletteData.themes.filter((theme) => theme.type === 'custom theme')
-        .length == 0
+        .length === 0
         ? paletteData.themes.filter((theme) => theme.type === 'default theme')
         : paletteData.themes.filter((theme) => theme.type === 'custom theme')
 
-  if (palette.children.length == 1) {
+  if (palette.children.length === 1) {
     const updatedLocalStylesStatusMessage = figma
       .getLocalPaintStylesAsync()
       .then((localStyles) => {
@@ -22,39 +22,39 @@ const updateLocalStyles = async (palette: FrameNode) => {
             color.shades.forEach((shade) => {
               const name =
                   workingThemes[0].type === 'custom theme'
-                    ? `${paletteData.name == '' ? '' : paletteData.name + '/'}${
+                    ? `${paletteData.name === '' ? '' : paletteData.name + '/'}${
                         theme.name
                       }/${color.name}/${shade.name}`
                     : `${paletteData.name === '' ? '' : paletteData.name}/${
                         color.name
                       }/${shade.name}`,
                 description =
-                  color.description != ''
+                  color.description !== ''
                     ? color.description + '﹒' + shade.description
                     : shade.description
 
               if (
                 localStyles.find(
                   (localStyle) => localStyle.id === shade.styleId
-                ) != undefined
+                ) !== undefined
               ) {
                 const styleMatch = localStyles.find(
                   (localStyle) => localStyle.id === shade.styleId
                 )
 
-                if (styleMatch != undefined) {
-                  if (styleMatch.name != name) {
+                if (styleMatch !== undefined) {
+                  if (styleMatch.name !== name) {
                     styleMatch.name = name
                     j++
                   }
 
-                  if (styleMatch.description != description) {
+                  if (styleMatch.description !== description) {
                     styleMatch.description = description
                     j++
                   }
 
                   if (
-                    shade.hex !=
+                    shade.hex !==
                     chroma([
                       (styleMatch.paints[0] as SolidPaint).color.r * 255,
                       (styleMatch.paints[0] as SolidPaint).color.g * 255,
@@ -78,26 +78,26 @@ const updateLocalStyles = async (palette: FrameNode) => {
                 j > 0 ? i++ : i
                 j = 0
               } else if (
-                localStyles.find((localStyle) => localStyle.name === name) !=
+                localStyles.find((localStyle) => localStyle.name === name) !==
                 undefined
               ) {
                 const styleMatch = localStyles.find(
                   (localStyle) => localStyle.name === name
                 )
 
-                if (styleMatch != undefined) {
-                  if (styleMatch.name != name) {
+                if (styleMatch !== undefined) {
+                  if (styleMatch.name !== name) {
                     styleMatch.name = name
                     j++
                   }
 
-                  if (styleMatch.description != shade.description) {
+                  if (styleMatch.description !== shade.description) {
                     styleMatch.description = shade.description
                     j++
                   }
 
                   if (
-                    shade.hex !=
+                    shade.hex !==
                     chroma([
                       (styleMatch.paints[0] as SolidPaint).color.r * 255,
                       (styleMatch.paints[0] as SolidPaint).color.g * 255,

@@ -22,7 +22,7 @@ figma.parameters.on(
 
 // Loader
 figma.on('run', async ({ parameters }: RunEvent) => {
-  if (parameters == undefined) loadUI()
+  if (parameters === undefined) loadUI()
   else {
     const selectedPreset = presets.find(
       (preset) => preset.name === parameters.preset
@@ -32,13 +32,13 @@ figma.on('run', async ({ parameters }: RunEvent) => {
         sourceColors: figma.currentPage.selection
           .filter(
             (element) =>
-              element.type != 'GROUP' &&
-              element.type != 'EMBED' &&
-              element.type != 'CONNECTOR' &&
-              element.getPluginDataKeys().length == 0 &&
+              element.type !== 'GROUP' &&
+              element.type !== 'EMBED' &&
+              element.type !== 'CONNECTOR' &&
+              element.getPluginDataKeys().length === 0 &&
               (element as any).fills.filter(
                 (fill: Paint) => fill.type === 'SOLID'
-              ).length != 0
+              ).length !== 0
           )
           .map((element) => {
             return {
@@ -49,7 +49,7 @@ figma.on('run', async ({ parameters }: RunEvent) => {
             }
           }),
         palette: {
-          name: parameters.name == undefined ? '' : parameters.name,
+          name: parameters.name === undefined ? '' : parameters.name,
           description: '',
           preset: presets.find((preset) => preset.name === parameters.preset),
           scale: doLightnessScale(

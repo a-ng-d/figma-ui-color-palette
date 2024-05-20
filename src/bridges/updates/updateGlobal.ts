@@ -12,7 +12,7 @@ const updateGlobal = async (msg: any) => {
     ? (previousSelection?.[0] as FrameNode)
     : (currentSelection[0] as FrameNode)
 
-  if (palette.children.length == 1) {
+  if (palette.children.length === 1) {
     palette.children[0].remove()
     palette.appendChild(
       new Colors(

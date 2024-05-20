@@ -206,7 +206,7 @@ export default class Settings extends React.Component<SettingsProps> {
 
     const updateTextLightColor = () => {
       const code: HexModel =
-        target.value.indexOf('#') == -1 ? '#' + target.value : target.value
+        target.value.indexOf('#') === -1 ? '#' + target.value : target.value
 
       if (/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/i.test(code)) {
         settingsMessage.data.name = this.props.name
@@ -236,7 +236,7 @@ export default class Settings extends React.Component<SettingsProps> {
 
     const updateTextDarkColor = () => {
       const code: HexModel =
-        target.value.indexOf('#') == -1 ? '#' + target.value : target.value
+        target.value.indexOf('#') === -1 ? '#' + target.value : target.value
 
       if (/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/i.test(code)) {
         settingsMessage.data.name = this.props.name
@@ -301,7 +301,7 @@ export default class Settings extends React.Component<SettingsProps> {
               id="update-palette-name"
               type="TEXT"
               placeholder={locals[this.props.lang].name}
-              value={this.props.name != '' ? this.props.name : ''}
+              value={this.props.name !== '' ? this.props.name : ''}
               charactersLimit={64}
               isBlocked={isBlocked(
                 'SETTINGS_PALETTE_NAME',
@@ -915,7 +915,7 @@ export default class Settings extends React.Component<SettingsProps> {
             type="SWITCH_BUTTON"
             name="algorythm"
             label={locals[this.props.lang].settings.color.newAlgorithm.label}
-            isChecked={this.props.algorithmVersion == 'v2' ? true : false}
+            isChecked={this.props.algorithmVersion === 'v2' ? true : false}
             isBlocked={isBlocked(
               'SETTINGS_NEW_ALGORITHM',
               this.props.planStatus

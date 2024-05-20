@@ -7,7 +7,7 @@ const exportTailwind = (palette: FrameNode) => {
   const paletteData: PaletteData = JSON.parse(palette.getPluginData('data')),
     workingThemes =
       paletteData.themes.filter((theme) => theme.type === 'custom theme')
-        .length == 0
+        .length === 0
         ? paletteData.themes.filter((theme) => theme.type === 'default theme')
         : paletteData.themes.filter((theme) => theme.type === 'custom theme'),
     json: { [key: string]: any } = {
@@ -20,7 +20,7 @@ const exportTailwind = (palette: FrameNode) => {
     json['theme']['colors'][doKebabCase(color.name)] = {}
   })
 
-  if (palette.children.length == 1) {
+  if (palette.children.length === 1) {
     if (workingThemes[0].type === 'custom theme')
       workingThemes.forEach((theme) => {
         theme.colors.forEach((color) => {

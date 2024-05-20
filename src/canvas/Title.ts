@@ -39,8 +39,8 @@ export default class Title {
       ).makeNodeTag()
     )
     if (
-      this.parent.description != '' ||
-      this.parent.themes.find((theme) => theme.isEnabled)?.description != ''
+      this.parent.description !== '' ||
+      this.parent.themes.find((theme) => theme.isEnabled)?.description !== ''
     )
       this.nodeGlobalInfo.appendChild(this.makeNodeDescriptions())
 
@@ -60,7 +60,7 @@ export default class Title {
     this.nodeDescriptions.itemSpacing = 8
 
     // insert
-    if (this.parent.description != '')
+    if (this.parent.description !== '')
       this.nodeDescriptions.appendChild(
         new Paragraph(
           '_palette-description',
@@ -71,7 +71,7 @@ export default class Title {
         ).makeNode()
       )
 
-    if (this.parent.themes.find((theme) => theme.isEnabled)?.description != '')
+    if (this.parent.themes.find((theme) => theme.isEnabled)?.description !== '')
       this.nodeDescriptions.appendChild(
         new Paragraph(
           '_theme-description',
@@ -101,7 +101,7 @@ export default class Title {
 
     // insert
     if (
-      this.parent.themes.find((theme) => theme.isEnabled)?.type !=
+      this.parent.themes.find((theme) => theme.isEnabled)?.type !==
       'default theme'
     )
       this.nodeProps.appendChild(
@@ -121,7 +121,7 @@ export default class Title {
         12
       ).makeNodeTag()
     )
-    if (this.parent.visionSimulationMode != 'NONE')
+    if (this.parent.visionSimulationMode !== 'NONE')
       this.nodeProps.appendChild(
         new Tag(
           '_vision-simulation',

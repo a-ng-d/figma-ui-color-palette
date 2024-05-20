@@ -51,7 +51,7 @@ const setPaletteMigration = (palette: BaseNode) => {
   if (type === '') palette.setPluginData('type', 'UI_COLOR_PALETTE')
 
   // min-max
-  if (min != '' || max != '') {
+  if (min !== '' || max !== '') {
     palette.setPluginData('min', '')
     palette.setPluginData('max', '')
   }
@@ -67,7 +67,7 @@ const setPaletteMigration = (palette: BaseNode) => {
     )
 
   // colors
-  if (colorsObject.length != 0) {
+  if (colorsObject.length !== 0) {
     if (!Object.prototype.hasOwnProperty.call(colorsObject[0], 'hueShifting'))
       palette.setPluginData('colors', setData(colorsObject, 'hueShifting', 0))
 
@@ -86,7 +86,7 @@ const setPaletteMigration = (palette: BaseNode) => {
       )
   }
 
-  if (colorsObject.filter((color) => color.oklch).length == colorsObject.length)
+  if (colorsObject.filter((color) => color.oklch).length === colorsObject.length)
     palette.setPluginData('colorSpace', 'OKLCH')
 
   if (colorSpace === '') palette.setPluginData('colorSpace', 'LCH')
@@ -112,11 +112,11 @@ const setPaletteMigration = (palette: BaseNode) => {
     )
 
   // view
-  if (captions == 'hasCaptions' || properties == 'hasProperties') {
+  if (captions === 'hasCaptions' || properties === 'hasProperties') {
     palette.setPluginData('captions', '')
     palette.setPluginData('properties', '')
     palette.setPluginData('view', 'PALETTE_WITH_PROPERTIES')
-  } else if (captions == 'hasNotCaptions' || properties == 'hasNotProperties') {
+  } else if (captions === 'hasNotCaptions' || properties === 'hasNotProperties') {
     palette.setPluginData('captions', '')
     palette.setPluginData('properties', '')
     palette.setPluginData('view', 'PALETTE')
@@ -137,7 +137,7 @@ const setPaletteMigration = (palette: BaseNode) => {
   if (algorithmVersion === '') palette.setPluginData('algorithmVersion', 'v1')
 
   // data
-  if (data === '' || JSON.parse(data).type == undefined)
+  if (data === '' || JSON.parse(data).type === undefined)
     new Colors(
       {
         name: name,

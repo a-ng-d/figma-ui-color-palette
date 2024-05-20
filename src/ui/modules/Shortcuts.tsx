@@ -99,7 +99,7 @@ export default class Shortcuts extends React.Component<
               <Feature
                 isActive={
                   features.find((feature) => feature.name === 'SHORTCUTS_USER')
-                    ?.isActive && this.props.editorType != 'dev'
+                    ?.isActive && this.props.editorType !== 'dev'
                 }
               >
                 {this.props.userSession.connectionStatus === 'CONNECTED' ? (
@@ -482,7 +482,7 @@ export default class Shortcuts extends React.Component<
                 ></div>
               ) : null}
             </div>
-            {this.props.editorType != 'dev' ? (
+            {this.props.editorType !== 'dev' ? (
               <div
                 className={`box-resizer-grip ${icons['icon--resize-grip']}`}
                 onMouseDown={this.onHold.bind(this)}
@@ -502,7 +502,7 @@ export default class Shortcuts extends React.Component<
           >
             <div className="pro-zone snackbar">
               {this.props.planStatus === 'UNPAID' &&
-              this.props.trialStatus != 'PENDING' ? (
+              this.props.trialStatus !== 'PENDING' ? (
                 <Button
                   type="compact"
                   icon="lock-off"
@@ -532,7 +532,7 @@ export default class Shortcuts extends React.Component<
                   </div>
                 </div>
               ) : this.props.trialStatus === 'EXPIRED' &&
-                this.props.planStatus != 'PAID' ? (
+                this.props.planStatus !== 'PAID' ? (
                 <>
                   <div
                     className={`type ${texts.type} ${texts['type--secondary']} truncated`}

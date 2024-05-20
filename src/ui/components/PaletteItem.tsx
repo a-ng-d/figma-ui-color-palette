@@ -1,4 +1,4 @@
-import { Button, Chip, Thumbnail, texts } from '@a_ng_d/figmug-ui'
+import { Chip, Thumbnail, texts } from '@a_ng_d/figmug-ui'
 import React from 'react'
 
 interface PaletteItemProps {

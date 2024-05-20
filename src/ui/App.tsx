@@ -244,7 +244,7 @@ class App extends React.Component<Record<string, never>, AppStates> {
             service: 'CREATE',
             sourceColors: this.state['sourceColors'].filter(
               (sourceColor: SourceColorConfiguration) =>
-                sourceColor.source != 'CANVAS'
+                sourceColor.source !== 'CANVAS'
             ),
             id: '',
             name: '',
@@ -353,7 +353,7 @@ class App extends React.Component<Record<string, never>, AppStates> {
             sourceColors: this.state['sourceColors']
               .filter(
                 (sourceColor: SourceColorConfiguration) =>
-                  sourceColor.source != 'CANVAS'
+                  sourceColor.source !== 'CANVAS'
               )
               .concat(e.data.pluginMessage.data.selection),
             onGoingStep: 'colors selected',
@@ -384,7 +384,7 @@ class App extends React.Component<Record<string, never>, AppStates> {
           )
           this.setState({
             service:
-              e.data.pluginMessage.data.editorType != 'dev'
+              e.data.pluginMessage.data.editorType !== 'dev'
                 ? 'EDIT'
                 : 'TRANSFER',
             sourceColors: [],
@@ -627,7 +627,7 @@ class App extends React.Component<Record<string, never>, AppStates> {
           <Feature
             isActive={
               features.find((feature) => feature.name === 'CREATE')?.isActive &&
-              this.state['editorType'] != 'dev' &&
+              this.state['editorType'] !== 'dev' &&
               this.state['service'] === 'CREATE'
             }
           >
@@ -654,7 +654,7 @@ class App extends React.Component<Record<string, never>, AppStates> {
           <Feature
             isActive={
               features.find((feature) => feature.name === 'EDIT')?.isActive &&
-              this.state['editorType'] != 'dev' &&
+              this.state['editorType'] !== 'dev' &&
               this.state['service'] === 'EDIT'
             }
           >
@@ -710,7 +710,7 @@ class App extends React.Component<Record<string, never>, AppStates> {
               lang={this.state['lang']}
             />
           </Feature>
-          <Feature isActive={this.state['priorityContainerContext'] != 'EMPTY'}>
+          <Feature isActive={this.state['priorityContainerContext'] !== 'EMPTY'}>
             <PriorityContainer
               context={this.state['priorityContainerContext']}
               rawData={this.state}

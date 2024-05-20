@@ -13,7 +13,7 @@ const getPalettesOnCurrentPage = async () => {
       return []
     })) as Array<FrameNode>
 
-  if (palettes.length != 0) {
+  if (palettes.length !== 0) {
     const palettesList = async () => {
       const palettePromises = palettes.map(async (palette) => {
         const bytes = await palette.exportAsync({

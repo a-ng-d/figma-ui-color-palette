@@ -6,7 +6,7 @@ import type { PaletteData } from '../../utils/types'
 const updateLocalVariables = async (palette: FrameNode) => {
   const paletteData: PaletteData = JSON.parse(palette.getPluginData('data'))
 
-  if (palette.children.length == 1) {
+  if (palette.children.length === 1) {
     const name =
       palette.getPluginData('name') === ''
         ? 'UI Color Palette'
@@ -20,7 +20,7 @@ const updateLocalVariables = async (palette: FrameNode) => {
         )
       )
 
-    if (collection != undefined) {
+    if (collection !== undefined) {
       const updateLocalVariablesStatusMessage = figma.variables
         .getLocalVariablesAsync()
         .then((allLocalVariables) =>
@@ -35,10 +35,10 @@ const updateLocalVariables = async (palette: FrameNode) => {
             k = 0
           const messages: Array<string> = []
 
-          if (collection.name != name) collection.name = name
+          if (collection.name !== name) collection.name = name
           const workingThemes =
             paletteData.themes.filter((theme) => theme.type === 'custom theme')
-              .length == 0
+              .length === 0
               ? paletteData.themes.filter(
                   (theme) => theme.type === 'default theme'
                 )
@@ -50,8 +50,8 @@ const updateLocalVariables = async (palette: FrameNode) => {
             const modeMatch = collection.modes.find(
               (mode) => mode.modeId === theme.modeId
             )
-            if (modeMatch != undefined)
-              if (modeMatch.name != theme.name && theme.name != 'None') {
+            if (modeMatch !== undefined)
+              if (modeMatch.name !== theme.name && theme.name !== 'None') {
                 collection.renameMode(modeMatch.modeId, theme.name)
                 j++
               }
@@ -65,13 +65,13 @@ const updateLocalVariables = async (palette: FrameNode) => {
                     ? color.description.slice(0, -1)
                     : color.description
 
-                if (variableMatch != undefined && modeMatch != undefined) {
-                  if (variableMatch.name != `${color.name}/${shade.name}`) {
+                if (variableMatch !== undefined && modeMatch !== undefined) {
+                  if (variableMatch.name !== `${color.name}/${shade.name}`) {
                     variableMatch.name = `${color.name}/${shade.name}`
                     k++
                   }
 
-                  if (variableMatch.description != description) {
+                  if (variableMatch.description !== description) {
                     variableMatch.description = description
                     k++
                   }
@@ -81,7 +81,7 @@ const updateLocalVariables = async (palette: FrameNode) => {
                       (variableMatch.valuesByMode[theme.modeId] as RGB).r * 255,
                       (variableMatch.valuesByMode[theme.modeId] as RGB).g * 255,
                       (variableMatch.valuesByMode[theme.modeId] as RGB).b * 255,
-                    ]).hex() != shade.hex
+                    ]).hex() !== shade.hex
                   ) {
                     variableMatch.setValueForMode(theme.modeId, {
                       r: shade.gl[0],

@@ -82,7 +82,7 @@ export default class EditPalette extends React.Component<
     super(props)
     this.state = {
       context:
-        this.setContexts()[0] != undefined ? this.setContexts()[0].id : '',
+        this.setContexts()[0] !== undefined ? this.setContexts()[0].id : '',
       selectedElement: {
         id: '',
         position: null,
@@ -128,7 +128,7 @@ export default class EditPalette extends React.Component<
   customSlideHandler = () =>
     this.props.onChangeStop?.({
       preset:
-        Object.keys(palette.preset).length == 0
+        Object.keys(palette.preset).length === 0
           ? this.props.preset
           : palette.preset,
       scale: palette.scale,
@@ -182,7 +182,7 @@ export default class EditPalette extends React.Component<
           type: string
           colors: Array<{ name: string; csv: string }>
         }) => {
-          if (theme.type != 'default theme') {
+          if (theme.type !== 'default theme') {
             const folder = zip.folder(theme.name) ?? zip
             theme.colors.forEach((color) => {
               folder.file(`${doSnakeCase(color.name)}.csv`, color.csv)

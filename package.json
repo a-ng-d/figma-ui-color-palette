@@ -9,8 +9,8 @@
     "build:prod": "npx webpack --mode=production",
     "typecheck": "npx tsc --noEmit",
     "typecheck:watch": "npx tsc --noEmit --watch",
-    "lint": "npx eslint ./src/** --ext .ts,.tsx --fix",
-    "lint:watch": "esw ./src/** --ext .ts,.tsx --fix --watch",
+    "lint": "npx eslint ./src/** --fix --ext .ts,.tsx .",
+    "lint:watch": "esw ./src/** --fix --watch --ext .ts,.tsx .",
     "format": "npx prettier './src' --write"
   },
   "keywords": [

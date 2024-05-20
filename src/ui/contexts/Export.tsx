@@ -370,7 +370,7 @@ export default class Export extends React.Component<ExportProps, ExportStates> {
 
   // Direct actions
   setFirstPreview = () => {
-    this.counter == 0
+    this.counter === 0
       ? parent.postMessage(
           {
             pluginMessage: {

@@ -20,7 +20,7 @@ const updateSettings = (msg: SettingsMessage) => {
     ? (previousSelection?.[0] as FrameNode)
     : (currentSelection[0] as FrameNode)
 
-  if (palette.children.length == 1) {
+  if (palette.children.length === 1) {
     const preset = JSON.parse(
         palette.getPluginData('preset')
       ) as PresetConfiguration,

@@ -51,7 +51,7 @@ const createPalette = (msg: Msg) => {
     msg.data.paletteMeta
   ).makeNode()
 
-  if (palette.children.length != 0) {
+  if (palette.children.length !== 0) {
     figma.currentPage.appendChild(palette)
     scene.push(palette)
     palette.x = figma.viewport.center.x - palette.width / 2

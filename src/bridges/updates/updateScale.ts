@@ -24,7 +24,7 @@ const updateScale = (msg: ScaleMessage) => {
     ? (previousSelection?.[0] as FrameNode)
     : (currentSelection[0] as FrameNode)
 
-  if (palette.children.length == 1) {
+  if (palette.children.length === 1) {
     const name: string =
         palette.getPluginData('name') === ''
           ? locals[lang].name
@@ -54,7 +54,7 @@ const updateScale = (msg: ScaleMessage) => {
       ) as AlgorithmVersionConfiguration
 
     const theme = themes.find((theme) => theme.isEnabled)
-    if (theme != undefined) theme.scale = msg.data.scale
+    if (theme !== undefined) theme.scale = msg.data.scale
 
     if (msg.feature === 'ADD_STOP' || msg.feature === 'DELETE_STOP')
       themes.forEach((theme) => {
@@ -72,7 +72,7 @@ const updateScale = (msg: ScaleMessage) => {
       })
     palette.setPluginData('themes', JSON.stringify(themes))
 
-    if (Object.keys(msg.data.preset).length != 0)
+    if (Object.keys(msg.data.preset).length !== 0)
       palette.setPluginData('preset', JSON.stringify(msg.data.preset))
 
     palette.children[0].remove()

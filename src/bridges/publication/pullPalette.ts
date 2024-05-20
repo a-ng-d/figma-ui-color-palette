@@ -8,7 +8,7 @@ const pullPalette = async (rawData: AppStates): Promise<Partial<AppStates>> => {
     .select('*')
     .eq('palette_id', rawData.id)
 
-  if (!error && data.length == 1) {
+  if (!error && data.length === 1) {
     const palettePublicationDetails: Partial<AppStates> = {
       name: data[0].name,
       description: data[0].description,

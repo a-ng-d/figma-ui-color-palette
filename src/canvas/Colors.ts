@@ -72,7 +72,7 @@ export default class Colors {
       newColor = chroma
         .lch(
           lightness,
-          algorithmVersion == 'v2'
+          algorithmVersion === 'v2'
             ? Math.sin((lightness / 100) * Math.PI) * lch[1]
             : lch[1],
           lch[2] + hueShifting < 0
@@ -96,7 +96,7 @@ export default class Colors {
       newColor = chroma
         .oklch(
           lightness / 100,
-          algorithmVersion == 'v2'
+          algorithmVersion === 'v2'
             ? Math.sin((lightness / 100) * Math.PI) * oklch[1]
             : oklch[1],
           oklch[2] + hueShifting < 0
@@ -127,11 +127,11 @@ export default class Colors {
     let newLabA = chr * Math.cos(h),
       newLabB = chr * Math.sin(h)
 
-    if (Math.sign(labA) == -1 && Math.sign(labB) == 1) {
+    if (Math.sign(labA) === -1 && Math.sign(labB) === 1) {
       newLabA *= -1
       newLabB *= -1
     }
-    if (Math.sign(labA) == -1 && Math.sign(labB) == -1) {
+    if (Math.sign(labA) === -1 && Math.sign(labB) === -1) {
       newLabA *= -1
       newLabB *= -1
     }
@@ -139,10 +139,10 @@ export default class Colors {
     const newColor = chroma
       .lab(
         lightness,
-        algorithmVersion == 'v2'
+        algorithmVersion === 'v2'
           ? Math.sin((lightness / 100) * Math.PI) * newLabA
           : newLabA,
-        algorithmVersion == 'v2'
+        algorithmVersion === 'v2'
           ? Math.sin((lightness / 100) * Math.PI) * newLabB
           : newLabB
       )
@@ -168,11 +168,11 @@ export default class Colors {
     let newLabA = chr * Math.cos(h),
       newLabB = chr * Math.sin(h)
 
-    if (Math.sign(labA) == -1 && Math.sign(labB) == 1) {
+    if (Math.sign(labA) === -1 && Math.sign(labB) === 1) {
       newLabA *= -1
       newLabB *= -1
     }
-    if (Math.sign(labA) == -1 && Math.sign(labB) == -1) {
+    if (Math.sign(labA) === -1 && Math.sign(labB) === -1) {
       newLabA *= -1
       newLabB *= -1
     }
@@ -180,10 +180,10 @@ export default class Colors {
     const newColor = chroma
       .oklab(
         lightness / 100,
-        algorithmVersion == 'v2'
+        algorithmVersion === 'v2'
           ? Math.sin((lightness / 100) * Math.PI) * newLabA
           : newLabA,
-        algorithmVersion == 'v2'
+        algorithmVersion === 'v2'
           ? Math.sin((lightness / 100) * Math.PI) * newLabB
           : newLabB
       )
@@ -206,7 +206,7 @@ export default class Colors {
             : hsl[0] + hueShifting > 360
               ? 360
               : hsl[0] + hueShifting,
-          algorithmVersion == 'v2'
+          algorithmVersion === 'v2'
             ? Math.sin((lightness / 100) * Math.PI) * hsl[1]
             : hsl[1],
           lightness / 100
@@ -232,7 +232,7 @@ export default class Colors {
 
     hsluv.hsluv_l = lightness
     hsluv.hsluv_s =
-      algorithmVersion == 'v2'
+      algorithmVersion === 'v2'
         ? Math.sin((lightness / 100) * Math.PI) * hsluv.hsluv_s
         : hsluv.hsluv_s
     hsluv.hsluv_h =
@@ -317,9 +317,9 @@ export default class Colors {
 
   searchForModeId = (themes: Array<PaletteDataThemeItem>, themeId: string) => {
     const themeMatch = themes.find((record) => record.id === themeId),
-      modeId = themeMatch == undefined ? '' : themeMatch.modeId
+      modeId = themeMatch === undefined ? '' : themeMatch.modeId
 
-    return modeId == undefined ? '' : modeId
+    return modeId === undefined ? '' : modeId
   }
 
   searchForShadeVariableId = (
@@ -330,16 +330,16 @@ export default class Colors {
   ) => {
     const themeMatch = themes.find((theme) => theme.id === themeId),
       colorMatch =
-        themeMatch == undefined
+        themeMatch === undefined
           ? undefined
           : themeMatch.colors.find((color) => color.id === colorId),
       shadeMatch =
-        colorMatch == undefined
+        colorMatch === undefined
           ? undefined
           : colorMatch.shades.find((shade) => shade.name === shadeName),
-      variableId = shadeMatch == undefined ? '' : shadeMatch.variableId
+      variableId = shadeMatch === undefined ? '' : shadeMatch.variableId
 
-    return variableId == undefined ? '' : variableId
+    return variableId === undefined ? '' : variableId
   }
 
   searchForShadeStyleId = (
@@ -350,16 +350,16 @@ export default class Colors {
   ) => {
     const themeMatch = themes.find((theme) => theme.id === themeId),
       colorMatch =
-        themeMatch == undefined
+        themeMatch === undefined
           ? undefined
           : themeMatch.colors.find((color) => color.id === colorId),
       shadeMatch =
-        colorMatch == undefined
+        colorMatch === undefined
           ? undefined
           : colorMatch.shades.find((shade) => shade.name === shadeName),
-      styleId = shadeMatch == undefined ? '' : shadeMatch.styleId
+      styleId = shadeMatch === undefined ? '' : shadeMatch.styleId
 
-    return styleId == undefined ? '' : styleId
+    return styleId === undefined ? '' : styleId
   }
 
   makePaletteData = (service: string) => {
@@ -708,7 +708,7 @@ export default class Colors {
               )
             )
           } else {
-            if (this.nodeRowShades != null) {
+            if (this.nodeRowShades !== null) {
               this.nodeRowShades.layoutSizingHorizontal = 'FIXED'
               this.nodeRowShades.layoutWrap = 'WRAP'
               this.nodeRowShades.itemSpacing = this.gap
@@ -743,7 +743,7 @@ export default class Colors {
       this.nodeShades?.appendChild(this.nodeRow)
     })
     this.makePaletteData(this.parent.service ?? 'EDIT')
-    if (this.parent.colors.length == 0)
+    if (this.parent.colors.length === 0)
       this.nodeShades.appendChild(this.makeEmptyCase())
 
     return this.nodeShades
@@ -767,7 +767,7 @@ export default class Colors {
     this.node.appendChild(this.makeNodeShades())
     this.node.appendChild(new Signature().makeNode())
 
-    if (this.palette != undefined)
+    if (this.palette !== undefined)
       this.palette.fills = [
         {
           type: 'SOLID',
