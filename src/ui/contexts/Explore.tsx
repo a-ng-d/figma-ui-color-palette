@@ -7,8 +7,11 @@ import { palettesDbTableName } from '../../utils/config'
 import type {
   ColorConfiguration,
   Language,
+  MetaConfiguration,
+  PaletteConfiguration,
   PlanStatus,
   PresetConfiguration,
+  SourceColorConfiguration,
   ThemeConfiguration,
 } from '../../utils/types'
 import PaletteItem from '../components/PaletteItem'
@@ -22,7 +25,8 @@ interface ExploreStates {
   paletteListStatus: 'LOADING' | 'LOADED' | 'EMPTY' | 'ERROR' | 'FULL'
   pageSize: number
   currentPage: number
-  isSecondaryActionLoading: boolean
+  isLoadMoreActionLoading: boolean
+  isAddToFileActionLoading: Array<boolean>
   paletteList: Array<{
     palette_id: string
     screenshot: string
@@ -45,8 +49,9 @@ export default class Explore extends React.Component<
       paletteListStatus: 'LOADING',
       pageSize: 2,
       currentPage: 1,
-      isSecondaryActionLoading: false,
+      isLoadMoreActionLoading: false,
       paletteList: [],
+      isAddToFileActionLoading: []
     }
   }
 
@@ -77,7 +82,8 @@ export default class Explore extends React.Component<
 
     if (!error) {
       this.setState({
-        isSecondaryActionLoading: false,
+        isLoadMoreActionLoading: false,
+        isAddToFileActionLoading: Array(this.state['paletteList'].concat(data).length).fill(false),
         paletteListStatus: data.length > 0 ? 'LOADED' : 'FULL',
         paletteList: this.state['paletteList'].concat(data),
       })
@@ -108,17 +114,78 @@ export default class Explore extends React.Component<
     return `${colorsNumber} ${colorLabel}, ${themesNumber} ${themeLabel}`
   }
 
-  onSelectPalette = (
-    e: React.MouseEvent<HTMLLIElement> | React.KeyboardEvent<HTMLLIElement>
-  ) => {
-    e.preventDefault()
+  onSelectPalette = async (id: string) => {
+    const { data, error } = await supabase
+      .from(palettesDbTableName)
+      .select('*')
+      .eq('palette_id', id)
+    
+    console.log(data)
+
+    if (!error && data.length > 0) {
+      try {
+        parent.postMessage(
+          {
+            pluginMessage: {
+              type: 'CREATE_PALETTE',
+              data: {
+                sourceColors: data[0].colors.map(
+                  (color: ColorConfiguration) => {
+                  return {
+                    name: color.name,
+                    rgb: color.rgb,
+                    source: 'REMOTE',
+                    id: color.id
+                  }
+                }) as Array<SourceColorConfiguration>,
+                palette: {
+                  name:  data[0].name,
+                  description:  data[0].description,
+                  preset:  data[0].preset,
+                  scale:  data[0].scale,
+                  colorSpace:  data[0].color_space,
+                  visionSimulationMode:  data[0].vision_simulation_mode,
+                  view:  data[0].view,
+                  textColorsTheme:  data[0].text_colors_theme,
+                  algorithmVersion:  data[0].algorithm_version
+                } as Partial<PaletteConfiguration>,
+                themes: data[0].themes,
+                isRemote: true,
+                paletteMeta: {
+                  dates: {
+                    createdAt: data[0].created_at,
+                    updatedAt: data[0].updated_at,
+                    publishedAt: data[0].published_at
+                  },
+                  publicationStatus: {
+                    isPublished: true,
+                    isShared: data[0].is_shared
+                  },
+                  creatorIdentity: {
+                    creatorFullName: data[0].creator_full_name,
+                    creatorAvatar: data[0].creator_avatar,
+                    creatorId: data[0].creator_id,
+                  }
+                } as MetaConfiguration
+              },
+            },
+          },
+          '*'
+        )
+        
+        return
+      } catch {
+        throw error
+      }
+    } else
+      throw error
   }
 
   // Templates
   PalettesList = () => {
     return (
       <ul className="rich-list">
-        {this.state['paletteList'].map((palette: any, index: any) => (
+        {this.state['paletteList'].map((palette: any, index: number) => (
           <PaletteItem
             id={palette.palette_id}
             key={`palette-${index}`}
@@ -130,18 +197,50 @@ export default class Explore extends React.Component<
               avatar: palette.creator_avatar,
               name: palette.creator_full_name,
             }}
-            action={this.onSelectPalette}
-          />
+            action={() => null}
+          >
+            <Button
+              type="secondary"
+              label={locals[this.props.lang].actions.addToFile}
+              isLoading={this.state['isAddToFileActionLoading'][index]}
+              action={() => {
+                this.setState({
+                  isAddToFileActionLoading: this.state['isAddToFileActionLoading'].map(
+                    (loading, i) => i === index ? true : loading
+                  )
+                })
+                this.onSelectPalette(palette.palette_id)
+                  .finally(() => {
+                    this.setState({
+                      isAddToFileActionLoading: this.state.isAddToFileActionLoading.map(
+                        (loading, i) => i === index ? false : loading
+                      )
+                    })
+                  })
+                  .catch(() => {
+                    parent.postMessage(
+                      {
+                        pluginMessage: {
+                          type: 'SEND_MESSAGE',
+                          message: locals[this.props.lang].error.addToFile
+                        },
+                      },
+                      '*'
+                    )
+                  })
+              }}
+            />
+          </PaletteItem>
         ))}
         <div className="list-control">
           {this.state['paletteListStatus'] === 'LOADED' ? (
             <Button
               type="secondary"
               label={locals[this.props.lang].explore.loadMore}
-              isLoading={this.state['isSecondaryActionLoading']}
+              isLoading={this.state['isLoadMoreActionLoading']}
               action={() =>
                 this.setState({
-                  isSecondaryActionLoading: true,
+                  isLoadMoreActionLoading: true,
                   currentPage: this.state['currentPage'] + 1,
                 })
               }
@@ -170,7 +269,7 @@ export default class Explore extends React.Component<
         <div className="onboarding__callout--centered">
           <Message
             icon="warning"
-            messages={[locals[this.props.lang].error.noPaletteLoaded]}
+            messages={[locals[this.props.lang].error.fetchPalette]}
           />
         </div>
       )

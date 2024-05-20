@@ -6,6 +6,7 @@ import type {
   AlgorithmVersionConfiguration,
   ColorConfiguration,
   ColorSpaceConfiguration,
+  MetaConfiguration,
   PaletteNode,
   PresetConfiguration,
   ScaleConfiguration,
@@ -32,6 +33,8 @@ export default class Palette {
   view: ViewConfiguration
   textColorsTheme: TextColorsThemeHexModel
   algorithmVersion: AlgorithmVersionConfiguration
+  isRemote: boolean | undefined
+  meta: MetaConfiguration | undefined
   service: Service
   node: FrameNode | null
 
@@ -45,7 +48,10 @@ export default class Palette {
     visionSimulationMode: VisionSimulationModeConfiguration,
     view: ViewConfiguration,
     textColorsTheme: TextColorsThemeHexModel,
-    algorithmVersion: AlgorithmVersionConfiguration
+    algorithmVersion: AlgorithmVersionConfiguration,
+    themes: Array<ThemeConfiguration> | undefined = undefined,
+    isRemote: boolean | undefined = false,
+    meta: MetaConfiguration | undefined = undefined
   ) {
     this.sourceColors = sourceColors
     this.name = name
@@ -62,20 +68,22 @@ export default class Palette {
     this.colors = []
     this.colorSpace = colorSpace
     this.visionSimulationMode = visionSimulationMode
-    ;(this.themes = [
-      {
-        name: locals[lang].themes.switchTheme.defaultTheme,
-        description: '',
-        scale: this.scale,
-        paletteBackground: '#FFFFFF',
-        isEnabled: true,
-        id: '00000000000',
-        type: 'default theme',
-      },
-    ]),
+    this.themes = themes === undefined
+      ? [{
+          name: locals[lang].themes.switchTheme.defaultTheme,
+          description: '',
+          scale: this.scale,
+          paletteBackground: '#FFFFFF',
+          isEnabled: true,
+          id: '00000000000',
+          type: 'default theme',
+        }]
+      : themes,
       (this.view = view)
     this.algorithmVersion = algorithmVersion
     this.textColorsTheme = textColorsTheme
+    this.isRemote = isRemote
+    this.meta = meta
     this.service = 'CREATE'
     this.node = null
   }
@@ -115,11 +123,26 @@ export default class Palette {
       JSON.stringify(this.textColorsTheme)
     )
     this.node.setPluginData('algorithmVersion', this.algorithmVersion)
-    this.node.setPluginData('isPublished', 'false')
-    this.node.setPluginData('isShared', 'false')
-    this.node.setPluginData('createdAt', now)
-    this.node.setPluginData('updatedAt', now)
-    this.node.setPluginData('publishedAt', '')
+
+    if (this.isRemote && this.meta !== undefined) {
+      this.node.setPluginData('createdAt', this.meta.dates.createdAt as string)
+      this.node.setPluginData('updatedAt', this.meta.dates.updatedAt as string)
+      this.node.setPluginData('publishedAt', this.meta.dates.publishedAt as string)
+      this.node.setPluginData('isPublished', 'true')
+      this.node.setPluginData('isShared', this.meta.publicationStatus.isShared.toString())
+      this.node.setPluginData('creatorFullName', this.meta.creatorIdentity.creatorFullName)
+      this.node.setPluginData('creatorAvatar', this.meta.creatorIdentity.creatorAvatar)
+      this.node.setPluginData('creatorId', this.meta.creatorIdentity.creatorId)
+    } else {
+      this.node.setPluginData('createdAt', now)
+      this.node.setPluginData('updatedAt', now)
+      this.node.setPluginData('publishedAt', '')
+      this.node.setPluginData('isPublished', 'false')
+      this.node.setPluginData('isShared', 'false')
+      this.node.setPluginData('creatorFullName', '')
+      this.node.setPluginData('creatorAvatar', '')
+      this.node.setPluginData('creatorId', '')
+    }
 
     // insert
     this.sourceColors.forEach((sourceColor) =>

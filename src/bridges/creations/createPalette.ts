@@ -1,10 +1,14 @@
 import Palette from '../../canvas/Palette'
 import type {
   ColorSpaceConfiguration,
+  CreatorIdentity,
+  DatesConfiguration,
   PresetConfiguration,
+  PublicationStatus,
   ScaleConfiguration,
   SourceColorConfiguration,
   TextColorsThemeHexModel,
+  ThemeConfiguration,
   ViewConfiguration,
   VisionSimulationModeConfiguration,
 } from '../../utils/types'
@@ -22,11 +26,20 @@ interface Msg {
       view: ViewConfiguration
       textColorsTheme: TextColorsThemeHexModel
     }
+    themes?: Array<ThemeConfiguration>
+    isRemote?: boolean
+    paletteMeta?: {
+      dates: DatesConfiguration,
+      publicationStatus: PublicationStatus
+      creatorIdentity: CreatorIdentity
+    }
   }
 }
 
 const createPalette = (msg: Msg) => {
   const scene: SceneNode[] = []
+
+  console.log(msg.data)
 
   const palette = new Palette(
     msg.data.sourceColors,
@@ -38,7 +51,10 @@ const createPalette = (msg: Msg) => {
     msg.data.palette.visionSimulationMode,
     msg.data.palette.view,
     msg.data.palette.textColorsTheme,
-    'v2'
+    'v2',
+    msg.data.themes,
+    msg.data.isRemote,
+    msg.data.paletteMeta
   ).makeNode()
 
   if (palette.children.length != 0) {

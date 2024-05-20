@@ -147,7 +147,7 @@ export interface PaletteDataShadeItem {
 export interface SourceColorConfiguration {
   name: string
   rgb: RgbModel
-  source: 'CANVAS' | ThirdParty
+  source: 'CANVAS' | 'REMOTE' | ThirdParty
   id: string
 }
 
@@ -270,6 +270,12 @@ export interface DatesConfiguration {
   createdAt: Date | string
   updatedAt: Date | string
   publishedAt: Date | string
+}
+
+export interface MetaConfiguration {
+  dates: DatesConfiguration
+  publicationStatus: PublicationStatus
+  creatorIdentity: CreatorIdentity
 }
 
 // Processes

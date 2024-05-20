@@ -300,6 +300,7 @@ export const locals: { [key: string]: any } = {
       createLocalVariables: 'Sync with the local variables',
       publishPalette: 'Publish or synchronize palette',
       export: 'Export the UI Color Palette to',
+      addToFile: 'Add to file',
       sourceColorsNumber: {
         single: 'source color',
         several: 'source colors',
