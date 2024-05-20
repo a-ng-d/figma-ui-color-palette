@@ -19,6 +19,8 @@ const pushPalette = async (
           contentType: 'image/png',
         }
       )
+    
+    if (error) throw error
   }
 
   const { data, error } = await supabase
@@ -48,8 +50,6 @@ const pushPalette = async (
       },
     ])
     .match({ palette_id: rawData.id })
-
-  console.log(data)
 
   if (!error) {
     const palettePublicationDetails = {
@@ -104,29 +104,9 @@ const pushPalette = async (
       },
       '*'
     )
-    parent.postMessage(
-      {
-        pluginMessage: {
-          type: 'SEND_MESSAGE',
-          message: locals[lang].success.publication,
-        },
-      },
-      '*'
-    )
+
     return palettePublicationDetails
-  } else {
-    console.log(error)
-    parent.postMessage(
-      {
-        pluginMessage: {
-          type: 'SEND_MESSAGE',
-          message: locals[lang].error.publication,
-        },
-      },
-      '*'
-    )
-    throw error
-  }
+  } else throw error
 }
 
 export default pushPalette

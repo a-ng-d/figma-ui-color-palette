@@ -1,4 +1,3 @@
-import { lang, locals } from '../../content/locals'
 import type { AppStates } from '../../ui/App'
 import { palettesDbTableName } from '../../utils/config'
 import { supabase } from './authentication'
@@ -8,8 +7,6 @@ const pullPalette = async (rawData: AppStates): Promise<Partial<AppStates>> => {
     .from(palettesDbTableName)
     .select('*')
     .eq('palette_id', rawData.id)
-
-  console.log(data)
 
   if (!error && data.length == 1) {
     const palettePublicationDetails: Partial<AppStates> = {
@@ -49,29 +46,9 @@ const pullPalette = async (rawData: AppStates): Promise<Partial<AppStates>> => {
       },
       '*'
     )
-    parent.postMessage(
-      {
-        pluginMessage: {
-          type: 'SEND_MESSAGE',
-          message: locals[lang].success.synchronization,
-        },
-      },
-      '*'
-    )
+
     return palettePublicationDetails
-  } else {
-    console.log(error)
-    parent.postMessage(
-      {
-        pluginMessage: {
-          type: 'SEND_MESSAGE',
-          message: locals[lang].error.synchronization,
-        },
-      },
-      '*'
-    )
-    throw error
-  }
+  } else throw error
 }
 
 export default pullPalette

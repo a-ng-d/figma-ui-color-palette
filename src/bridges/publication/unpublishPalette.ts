@@ -10,14 +10,14 @@ const unpublishPalette = async (
     const { data, error } = await supabase.storage
       .from(palettesStorageName)
       .remove([`${rawData.userSession.userId}/${rawData.id}.png`])
+    
+    if (error) throw error
   }
 
   const { data, error } = await supabase
     .from(palettesDbTableName)
     .delete()
     .match({ palette_id: rawData.id })
-
-  console.log(data)
 
   if (!error) {
     const palettePublicationDetails = {
@@ -73,29 +73,9 @@ const unpublishPalette = async (
       },
       '*'
     )
-    parent.postMessage(
-      {
-        pluginMessage: {
-          type: 'SEND_MESSAGE',
-          message: locals[lang].success.nonPublication,
-        },
-      },
-      '*'
-    )
+
     return palettePublicationDetails
-  } else {
-    console.log(error)
-    parent.postMessage(
-      {
-        pluginMessage: {
-          type: 'SEND_MESSAGE',
-          message: locals[lang].error.nonPublication,
-        },
-      },
-      '*'
-    )
-    throw error
-  }
+  } else throw error
 }
 
 export default unpublishPalette

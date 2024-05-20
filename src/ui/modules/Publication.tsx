@@ -116,10 +116,24 @@ export default class Publication extends React.Component<
         this.setState({
           publicationStatus: isMyPalette ? 'PUBLISHED' : 'UP_TO_DATE',
         })
-    } else
+    } else if (data?.length == 0)
       this.setState({
         publicationStatus: 'IS_NOT_FOUND',
       })
+    else if (error) {
+      this.setState({
+        publicationStatus: 'WAITING',
+      })
+      parent.postMessage(
+        {
+          pluginMessage: {
+            type: 'SEND_MESSAGE',
+            message: locals[this.props.lang].error.noInternetConnection
+          },
+        },
+        '*'
+      )
+    }
   }
 
   getImageSrc = () => {
@@ -221,12 +235,32 @@ export default class Publication extends React.Component<
             publishPalette(this.props.rawData, this.state['isPaletteShared'])
               .then((data) => {
                 this.props.onChangePublication(data)
-              })
-              .finally(() => {
-                this.props.onLoadPrimaryAction(false)
                 this.setState({
                   publicationStatus: 'PUBLISHED',
                 })
+                parent.postMessage(
+                  {
+                    pluginMessage: {
+                      type: 'SEND_MESSAGE',
+                      message: locals[this.props.lang].success.publication,
+                    },
+                  },
+                  '*'
+                )
+              })
+              .finally(() => {
+                this.props.onLoadPrimaryAction(false)
+              })
+              .catch(() => {
+                parent.postMessage(
+                  {
+                    pluginMessage: {
+                      type: 'SEND_MESSAGE',
+                      message: locals[this.props.lang].error.publication,
+                    },
+                  },
+                  '*'
+                )
               })
           },
         },
@@ -241,12 +275,32 @@ export default class Publication extends React.Component<
             pushPalette(this.props.rawData, this.state['isPaletteShared'])
               .then((data) => {
                 this.props.onChangePublication(data)
-              })
-              .finally(() => {
-                this.props.onLoadPrimaryAction(false)
                 this.setState({
                   publicationStatus: 'PUBLISHED',
                 })
+                parent.postMessage(
+                  {
+                    pluginMessage: {
+                      type: 'SEND_MESSAGE',
+                      message: locals[this.props.lang].success.publication,
+                    },
+                  },
+                  '*'
+                )
+              })
+              .finally(() => {
+                this.props.onLoadPrimaryAction(false)
+              })
+              .catch(() => {
+                parent.postMessage(
+                  {
+                    pluginMessage: {
+                      type: 'SEND_MESSAGE',
+                      message: locals[this.props.lang].error.publication,
+                    },
+                  },
+                  '*'
+                )
               })
           },
         },
@@ -258,12 +312,32 @@ export default class Publication extends React.Component<
             pullPalette(this.props.rawData)
               .then((data) => {
                 this.props.onChangePublication(data)
-              })
-              .finally(() => {
-                this.props.onLoadSecondaryAction(false)
                 this.setState({
                   publicationStatus: 'PUBLISHED',
                 })
+                parent.postMessage(
+                  {
+                    pluginMessage: {
+                      type: 'SEND_MESSAGE',
+                      message: locals[this.props.lang].success.synchronization,
+                    },
+                  },
+                  '*'
+                )
+              })
+              .finally(() => {
+                this.props.onLoadSecondaryAction(false)
+              })
+              .catch(() => {
+                parent.postMessage(
+                  {
+                    pluginMessage: {
+                      type: 'SEND_MESSAGE',
+                      message: locals[this.props.lang].error.synchronization,
+                    },
+                  },
+                  '*'
+                )
               })
           },
         },
@@ -277,12 +351,32 @@ export default class Publication extends React.Component<
             pullPalette(this.props.rawData)
               .then((data) => {
                 this.props.onChangePublication(data)
-              })
-              .finally(() => {
-                this.props.onLoadPrimaryAction(false)
                 this.setState({
                   publicationStatus: 'PUBLISHED',
                 })
+                parent.postMessage(
+                  {
+                    pluginMessage: {
+                      type: 'SEND_MESSAGE',
+                      message: locals[this.props.lang].success.synchronization,
+                    },
+                  },
+                  '*'
+                )
+              })
+              .finally(() => {
+                this.props.onLoadPrimaryAction(false)
+              })
+              .catch(() => {
+                parent.postMessage(
+                  {
+                    pluginMessage: {
+                      type: 'SEND_MESSAGE',
+                      message: locals[this.props.lang].error.synchronization,
+                    },
+                  },
+                  '*'
+                )
               })
           },
         },
@@ -294,12 +388,12 @@ export default class Publication extends React.Component<
             detachPalette(this.props.rawData)
               .then((data) => {
                 this.props.onChangePublication(data)
-              })
-              .finally(() => {
-                this.props.onLoadSecondaryAction(false)
                 this.setState({
                   publicationStatus: 'UNPUBLISHED',
                 })
+              })
+              .finally(() => {
+                this.props.onLoadSecondaryAction(false)
               })
           },
         },
@@ -313,12 +407,32 @@ export default class Publication extends React.Component<
             pullPalette(this.props.rawData)
               .then((data) => {
                 this.props.onChangePublication(data)
-              })
-              .finally(() => {
-                this.props.onLoadPrimaryAction(false)
                 this.setState({
                   publicationStatus: 'UP_TO_DATE',
                 })
+                parent.postMessage(
+                  {
+                    pluginMessage: {
+                      type: 'SEND_MESSAGE',
+                      message: locals[this.props.lang].success.synchronization,
+                    },
+                  },
+                  '*'
+                )
+              })
+              .finally(() => {
+                this.props.onLoadPrimaryAction(false)
+              })
+              .catch(() => {
+                parent.postMessage(
+                  {
+                    pluginMessage: {
+                      type: 'SEND_MESSAGE',
+                      message: locals[this.props.lang].error.synchronization,
+                    },
+                  },
+                  '*'
+                )
               })
           },
         },
@@ -330,12 +444,12 @@ export default class Publication extends React.Component<
             detachPalette(this.props.rawData)
               .then((data) => {
                 this.props.onChangePublication(data)
-              })
-              .finally(() => {
-                this.props.onLoadSecondaryAction(false)
                 this.setState({
                   publicationStatus: 'UNPUBLISHED',
                 })
+              })
+              .finally(() => {
+                this.props.onLoadSecondaryAction(false)
               })
           },
         },
@@ -357,12 +471,32 @@ export default class Publication extends React.Component<
             pushPalette(this.props.rawData, this.state['isPaletteShared'])
               .then((data) => {
                 this.props.onChangePublication(data)
-              })
-              .finally(() => {
-                this.props.onLoadPrimaryAction(false)
                 this.setState({
                   publicationStatus: 'PUBLISHED',
                 })
+                parent.postMessage(
+                  {
+                    pluginMessage: {
+                      type: 'SEND_MESSAGE',
+                      message: locals[this.props.lang].success.publication,
+                    },
+                  },
+                  '*'
+                )
+              })
+              .finally(() => {
+                this.props.onLoadPrimaryAction(false)
+              })
+              .catch(() => {
+                parent.postMessage(
+                  {
+                    pluginMessage: {
+                      type: 'SEND_MESSAGE',
+                      message: locals[this.props.lang].error.publication,
+                    },
+                  },
+                  '*'
+                )
               })
           },
         },
@@ -374,12 +508,32 @@ export default class Publication extends React.Component<
             unpublishPalette(this.props.rawData)
               .then((data) => {
                 this.props.onChangePublication(data)
-              })
-              .finally(() => {
-                this.props.onLoadSecondaryAction(false)
                 this.setState({
                   publicationStatus: 'UNPUBLISHED',
                 })
+                parent.postMessage(
+                  {
+                    pluginMessage: {
+                      type: 'SEND_MESSAGE',
+                      message: locals[this.props.lang].success.nonPublication,
+                    },
+                  },
+                  '*'
+                )
+              })
+              .finally(() => {
+                this.props.onLoadSecondaryAction(false)
+              })
+              .catch(() => {
+                parent.postMessage(
+                  {
+                    pluginMessage: {
+                      type: 'SEND_MESSAGE',
+                      message: locals[this.props.lang].error.nonPublication,
+                    },
+                  },
+                  '*'
+                )
               })
           },
         },
@@ -393,12 +547,12 @@ export default class Publication extends React.Component<
             detachPalette(this.props.rawData)
               .then((data) => {
                 this.props.onChangePublication(data)
-              })
-              .finally(() => {
-                this.props.onLoadPrimaryAction(false)
                 this.setState({
                   publicationStatus: 'UNPUBLISHED',
                 })
+              })
+              .finally(() => {
+                this.props.onLoadPrimaryAction(false)
               })
           },
         },
@@ -413,12 +567,32 @@ export default class Publication extends React.Component<
             pullPalette(this.props.rawData)
               .then((data) => {
                 this.props.onChangePublication(data)
-              })
-              .finally(() => {
-                this.props.onLoadPrimaryAction(false)
                 this.setState({
                   publicationStatus: 'UP_TO_DATE',
                 })
+                parent.postMessage(
+                  {
+                    pluginMessage: {
+                      type: 'SEND_MESSAGE',
+                      message: locals[this.props.lang].success.synchronization,
+                    },
+                  },
+                  '*'
+                )
+              })
+              .finally(() => {
+                this.props.onLoadPrimaryAction(false)
+              })
+              .catch(() => {
+                parent.postMessage(
+                  {
+                    pluginMessage: {
+                      type: 'SEND_MESSAGE',
+                      message: locals[this.props.lang].error.synchronization,
+                    },
+                  },
+                  '*'
+                )
               })
           },
         },
@@ -430,12 +604,12 @@ export default class Publication extends React.Component<
             detachPalette(this.props.rawData)
               .then((data) => {
                 this.props.onChangePublication(data)
-              })
-              .finally(() => {
-                this.props.onLoadSecondaryAction(false)
                 this.setState({
                   publicationStatus: 'UNPUBLISHED',
                 })
+              })
+              .finally(() => {
+                this.props.onLoadSecondaryAction(false)
               })
           },
         },
@@ -449,12 +623,12 @@ export default class Publication extends React.Component<
             detachPalette(this.props.rawData)
               .then((data) => {
                 this.props.onChangePublication(data)
-              })
-              .finally(() => {
-                this.props.onLoadPrimaryAction(false)
                 this.setState({
                   publicationStatus: 'UNPUBLISHED',
                 })
+              })
+              .finally(() => {
+                this.props.onLoadPrimaryAction(false)
               })
           },
         },

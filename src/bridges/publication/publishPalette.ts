@@ -28,6 +28,7 @@ const publishPalette = async (
 
     if (!error)
       imageUrl = `${databaseUrl}/storage/v1/object/public/${palettesStorageName}/${rawData.userSession.userId}/${rawData.id}.png`
+    else throw error
   }
 
   const { data, error } = await supabase
@@ -60,7 +61,6 @@ const publishPalette = async (
       },
     ])
     .select()
-  console.log(data)
 
   if (!error) {
     const palettePublicationDetails = {
@@ -124,29 +124,9 @@ const publishPalette = async (
       },
       '*'
     )
-    parent.postMessage(
-      {
-        pluginMessage: {
-          type: 'SEND_MESSAGE',
-          message: locals[lang].success.publication,
-        },
-      },
-      '*'
-    )
+
     return palettePublicationDetails
-  } else {
-    console.log(error)
-    parent.postMessage(
-      {
-        pluginMessage: {
-          type: 'SEND_MESSAGE',
-          message: locals[lang].error.publication,
-        },
-      },
-      '*'
-    )
-    throw error
-  }
+  } else throw error
 }
 
 export default publishPalette
