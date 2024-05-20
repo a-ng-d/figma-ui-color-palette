@@ -309,7 +309,7 @@ export const locals: { [key: string]: any } = {
         several: 'color themes',
       },
     },
-    palettesList: {
+    palettes: {
       title: 'UI Color Palettes on the page',
       readyForDev: 'Ready for development',
     },

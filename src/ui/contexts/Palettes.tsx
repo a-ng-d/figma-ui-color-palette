@@ -1,4 +1,4 @@
-import { Message, texts } from '@a_ng_d/figmug-ui'
+import { Button, Message, texts } from '@a_ng_d/figmug-ui'
 import React from 'react'
 
 import { locals } from '../../content/locals'
@@ -66,15 +66,12 @@ export default class Palettes extends React.Component<PalettesProps> {
     return `${colorsNumber} ${colorLabel}, ${themesNumber} ${themeLabel}`
   }
 
-  onSelectPalette = (
-    e: React.MouseEvent<HTMLLIElement> | React.KeyboardEvent<HTMLLIElement>
-  ) => {
-    e.preventDefault()
+  onSelectPalette = (id: string) => {
     parent.postMessage(
       {
         pluginMessage: {
           type: 'JUMP_TO_PALETTE',
-          id: (e.currentTarget as HTMLElement).dataset.id,
+          id: id,
         },
       },
       '*'
@@ -88,7 +85,7 @@ export default class Palettes extends React.Component<PalettesProps> {
         <div
           className={`${texts.type} ${texts['type--secondary']} type rich-list__title`}
         >
-          {locals[this.props.lang].Palettes.title}
+          {locals[this.props.lang].palettes.title}
         </div>
         {this.props.paletteLists.map((palette, index) => (
           <PaletteItem
@@ -101,15 +98,21 @@ export default class Palettes extends React.Component<PalettesProps> {
             indicator={
               palette.devStatus === 'READY_FOR_DEV'
                 ? {
-                    label: locals[this.props.lang].Palettes.readyForDev,
+                    label: locals[this.props.lang].palettes.readyForDev,
                     status: 'ACTIVE',
                   }
                 : undefined
             }
             subtitle={palette.preset}
             info={this.getPaletteMeta(palette.colors, palette.themes)}
-            action={this.onSelectPalette}
-          />
+          >
+            <Button
+              type="icon"
+              icon="target"
+              label={locals[this.props.lang].actions.addToFile}
+              action={() => this.onSelectPalette(palette.id)}
+            />
+          </PaletteItem>
         ))}
       </ul>
     )

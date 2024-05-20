@@ -120,10 +120,6 @@ li.rich-list__item {
   border-bottom: 1px solid var(--figma-color-border-disabled);
 }
 
-li.rich-list__item:hover {
-  background-color: var(--figma-color-bg-hover);
-}
-
 li.rich-list__item:focus {
   outline: 2px solid var(--figma-color-border-selected);
   outline-offset: -2px;
@@ -139,6 +135,7 @@ li.rich-list__item .rich-list__item__content {
   display: flex;
   flex-direction: column;
   gap: var(--size-xsmall) 0;
+  flex: 1
 }
 
 /* Callout */
