@@ -118,6 +118,11 @@ li.rich-list__item {
   gap: 0 var(--size-xsmall);
   padding: var(--size-xsmall) var(--size-xsmall);
   border-bottom: 1px solid var(--figma-color-border-disabled);
+  align-items: center;
+}
+
+li.rich-list__item:last-child {
+  border-bottom: none;
 }
 
 li.rich-list__item:focus {
@@ -126,9 +131,9 @@ li.rich-list__item:focus {
 }
 
 li.rich-list__item .rich-list__item__asset {
-  width: var(--size-xxxlarge);
-  height: var(--size-xxlarge);
+  width: 100px;
   min-width: var(--size-xxxlarge);
+  height: var(--size-xxxlarge);
 }
 
 li.rich-list__item .rich-list__item__content {

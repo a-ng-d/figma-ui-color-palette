@@ -28,7 +28,6 @@ export default class Palettes extends React.Component<PalettesProps> {
     parent.postMessage({ pluginMessage: { type: 'GET_PALETTES' } }, '*')
 
   shouldComponentUpdate(prevProps: Readonly<PalettesProps>): boolean {
-    console.log(prevProps.paletteLists.length, this.props.paletteLists.length)
     if (prevProps.paletteLists.length > 0) this.hasPalettes = true
     else this.hasPalettes = false
     return true
@@ -124,7 +123,7 @@ export default class Palettes extends React.Component<PalettesProps> {
       <section className="controller">
         <div className="controls">
           <div className="controls__control">
-            <div className="control__block">
+            <div className="control__block control__block--list">
               {this.hasPalettes ? (
                 <this.Palettes />
               ) : (
