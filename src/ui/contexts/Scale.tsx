@@ -20,7 +20,7 @@ import type {
   Easing,
   EditorType,
   Language,
-  NamingConvention,
+  NamingConventionConfiguration,
   PlanStatus,
   PresetConfiguration,
   ScaleConfiguration,
@@ -36,7 +36,7 @@ interface ScaleProps {
   sourceColors?: Array<SourceColorConfiguration>
   hasPreset: boolean
   preset: PresetConfiguration
-  namingConvention: NamingConvention
+  namingConvention: NamingConventionConfiguration
   scale?: ScaleConfiguration
   actions?: string
   planStatus: PlanStatus
@@ -260,7 +260,7 @@ export default class Scale extends React.Component<ScaleProps, ScaleStates> {
 
     const changeNamingConvention = () => {
       const option = (e.target as HTMLInputElement).dataset
-        .value as NamingConvention
+        .value as NamingConventionConfiguration
       this.props.onChangeNamingConvention?.({
         namingConvention: option,
         preset: {

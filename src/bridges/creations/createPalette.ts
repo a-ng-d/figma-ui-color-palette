@@ -2,10 +2,8 @@ import Palette from '../../canvas/Palette'
 import type {
   AlgorithmVersionConfiguration,
   ColorSpaceConfiguration,
-  CreatorIdentity,
-  DatesConfiguration,
+  MetaConfiguration,
   PresetConfiguration,
-  PublicationStatus,
   ScaleConfiguration,
   SourceColorConfiguration,
   TextColorsThemeHexModel,
@@ -30,11 +28,7 @@ interface Msg {
     }
     themes?: Array<ThemeConfiguration>
     isRemote?: boolean
-    paletteMeta?: {
-      dates: DatesConfiguration,
-      publicationStatus: PublicationStatus
-      creatorIdentity: CreatorIdentity
-    }
+    paletteMeta?: MetaConfiguration
   }
 }
 

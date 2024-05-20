@@ -8,7 +8,7 @@ import { palette } from '../../utils/palettePackage'
 import type {
   ColorSpaceConfiguration,
   Language,
-  NamingConvention,
+  NamingConventionConfiguration,
   PlanStatus,
   PresetConfiguration,
   SourceColorConfiguration,
@@ -28,7 +28,7 @@ interface CreatePaletteProps {
   name: string
   description: string
   preset: PresetConfiguration
-  namingConvention: NamingConvention
+  namingConvention: NamingConventionConfiguration
   colorSpace: ColorSpaceConfiguration
   visionSimulationMode: VisionSimulationModeConfiguration
   view: ViewConfiguration

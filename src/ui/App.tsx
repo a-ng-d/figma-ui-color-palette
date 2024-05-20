@@ -12,17 +12,17 @@ import type {
   AlgorithmVersionConfiguration,
   ColorConfiguration,
   ColorSpaceConfiguration,
-  CreatorIdentity,
+  CreatorConfiguration,
   DatesConfiguration,
   EditorType,
   ExportConfiguration,
   ExtractOfPaletteConfiguration,
   Language,
-  NamingConvention,
+  NamingConventionConfiguration,
   PlanStatus,
   PresetConfiguration,
   PriorityContext,
-  PublicationStatus,
+  PublicationConfiguration,
   ScaleConfiguration,
   Service,
   SourceColorConfiguration,
@@ -49,7 +49,7 @@ export interface AppStates {
   name: string
   description: string
   preset: PresetConfiguration
-  namingConvention: NamingConvention
+  namingConvention: NamingConventionConfiguration
   scale: ScaleConfiguration
   colors: Array<ColorConfiguration>
   colorSpace: ColorSpaceConfiguration
@@ -66,8 +66,8 @@ export interface AppStates {
   planStatus: PlanStatus
   trialStatus: TrialStatus
   trialRemainingTime: number
-  publicationStatus: PublicationStatus
-  creatorIdentity: CreatorIdentity
+  publicationStatus: PublicationConfiguration
+  creatorIdentity: CreatorConfiguration
   userSession: UserSession
   priorityContainerContext: PriorityContext
   lang: Language

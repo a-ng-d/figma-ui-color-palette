@@ -18,17 +18,6 @@ export type TrialStatus = 'UNUSED' | 'PENDING' | 'EXPIRED'
 
 export type ConnectionStatus = 'CONNECTED' | 'UNCONNECTED'
 
-export interface PublicationStatus {
-  isPublished: boolean
-  isShared: boolean
-}
-
-export interface CreatorIdentity {
-  creatorFullName: string
-  creatorAvatar: string
-  creatorId: string
-}
-
 export interface UserSession {
   connectionStatus: ConnectionStatus
   userFullName: string
@@ -54,8 +43,6 @@ export type Language = 'en-US'
 export type ThirdParty = 'COOLORS' | 'REALTIME_COLORS'
 
 export type Easing = 'LINEAR' | 'EASE_IN' | 'EASE_OUT' | 'EASE_IN_OUT'
-
-export type NamingConvention = 'ONES' | 'TENS' | 'HUNDREDS'
 
 export interface windowSize {
   w: number
@@ -187,6 +174,8 @@ export interface ScaleConfiguration {
   [key: string]: number
 }
 
+export type NamingConventionConfiguration = 'ONES' | 'TENS' | 'HUNDREDS'
+
 export interface ColorConfiguration {
   name: string
   description: string
@@ -272,10 +261,21 @@ export interface DatesConfiguration {
   publishedAt: Date | string
 }
 
+export interface PublicationConfiguration {
+  isPublished: boolean
+  isShared: boolean
+}
+
+export interface CreatorConfiguration {
+  creatorFullName: string
+  creatorAvatar: string
+  creatorId: string
+}
+
 export interface MetaConfiguration {
   dates: DatesConfiguration
-  publicationStatus: PublicationStatus
-  creatorIdentity: CreatorIdentity
+  publicationStatus: PublicationConfiguration
+  creatorIdentity: CreatorConfiguration
 }
 
 // Processes
