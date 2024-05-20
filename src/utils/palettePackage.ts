@@ -94,4 +94,5 @@ export const palette: PaletteConfiguration = {
     lightColor: '#FFFFFF',
     darkColor: '#000000',
   },
+  algorithmVersion: 'v2'
 }

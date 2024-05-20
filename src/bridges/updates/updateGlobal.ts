@@ -29,7 +29,6 @@ const updateGlobal = async (msg: any) => {
           textColorsTheme: msg.data.text_colors_theme,
           algorithmVersion: msg.data.algorithm_version,
           service: 'EDIT',
-          isSynchronized: true,
         },
         palette
       ).makeNode()

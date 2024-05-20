@@ -12,8 +12,13 @@ import type {
   ViewMessage,
   VisionSimulationModeConfiguration,
 } from '../../utils/types'
+import { currentSelection, isSelectionChanged, previousSelection } from '../processSelection'
 
-const updateView = (msg: ViewMessage, palette: FrameNode) => {
+const updateView = (msg: ViewMessage) => {
+  const palette = isSelectionChanged
+    ? (previousSelection?.[0] as FrameNode)
+    : (currentSelection[0] as FrameNode)
+
   if (palette.children.length == 1) {
     const name: string =
         palette.getPluginData('name') === ''
@@ -65,6 +70,14 @@ const updateView = (msg: ViewMessage, palette: FrameNode) => {
         palette
       ).makeNode()
     )
+
+    // Update
+    const now = new Date().toISOString()
+    palette.setPluginData('updatedAt', now)
+    figma.ui.postMessage({
+      type: 'UPDATE_PALETTE_DATE',
+      data: now,
+    })
 
     // palette migration
     palette.counterAxisSizingMode = 'AUTO'

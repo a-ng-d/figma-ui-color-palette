@@ -65,6 +65,7 @@ figma.on('run', async ({ parameters }: RunEvent) => {
             lightColor: '#FFFFFF',
             darkColor: '#000000',
           },
+          algorithmVersion: 'v2'
         } as PaletteConfiguration,
       },
     })

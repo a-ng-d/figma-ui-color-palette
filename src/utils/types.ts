@@ -98,7 +98,6 @@ export interface PaletteNode {
   textColorsTheme: TextColorsThemeHexModel
   algorithmVersion: AlgorithmVersionConfiguration
   service?: Service
-  isSynchronized?: boolean
 }
 
 export interface PaletteData {
@@ -162,6 +161,7 @@ export interface PaletteConfiguration {
   visionSimulationMode: VisionSimulationModeConfiguration
   view: ViewConfiguration
   textColorsTheme: TextColorsThemeHexModel
+  algorithmVersion: AlgorithmVersionConfiguration
 }
 
 export interface ExtractOfPaletteConfiguration {

@@ -534,16 +534,7 @@ export default class Colors {
       this.paletteData.themes.push(paletteDataThemeItem)
     })
 
-    if (!this.parent.isSynchronized) {
-      const now = new Date().toISOString()
-
-      this.palette?.setPluginData('data', JSON.stringify(this.paletteData))
-      this.palette?.setPluginData('updatedAt', now)
-      figma.ui.postMessage({
-        type: 'UPDATE_PALETTE_DATE',
-        data: now,
-      })
-    }
+    this.palette?.setPluginData('data', JSON.stringify(this.paletteData))
   }
 
   makeNodeShades = () => {

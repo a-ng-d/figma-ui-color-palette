@@ -85,7 +85,10 @@ export default class CreatePalette extends React.Component<
           type: 'CREATE_PALETTE',
           data: {
             sourceColors: this.props.sourceColors,
-            palette: palette,
+            palette: {
+              ...palette,
+              algoritmVersion: 'v2'
+            },
           },
         },
       },

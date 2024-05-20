@@ -1,5 +1,6 @@
 import Palette from '../../canvas/Palette'
 import type {
+  AlgorithmVersionConfiguration,
   ColorSpaceConfiguration,
   CreatorIdentity,
   DatesConfiguration,
@@ -25,6 +26,7 @@ interface Msg {
       visionSimulationMode: VisionSimulationModeConfiguration
       view: ViewConfiguration
       textColorsTheme: TextColorsThemeHexModel
+      algorithmVersion: AlgorithmVersionConfiguration
     }
     themes?: Array<ThemeConfiguration>
     isRemote?: boolean
@@ -39,8 +41,6 @@ interface Msg {
 const createPalette = (msg: Msg) => {
   const scene: SceneNode[] = []
 
-  console.log(msg.data)
-
   const palette = new Palette(
     msg.data.sourceColors,
     msg.data.palette.name,
@@ -51,7 +51,7 @@ const createPalette = (msg: Msg) => {
     msg.data.palette.visionSimulationMode,
     msg.data.palette.view,
     msg.data.palette.textColorsTheme,
-    'v2',
+    msg.data.palette.algorithmVersion,
     msg.data.themes,
     msg.data.isRemote,
     msg.data.paletteMeta

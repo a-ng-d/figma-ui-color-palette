@@ -62,6 +62,7 @@ const loadUI = async () => {
 
   figma.ui.onmessage = async (msg) => {
     const palette = figma.currentPage.selection[0] as FrameNode
+
     const actions: ActionsList = {
       RESIZE_UI: async () => {
         windowSize.w < 540
@@ -79,7 +80,7 @@ const loadUI = async () => {
       CLOSE_HIGHLIGHT: () => closeHighlight(msg),
       CREATE_PALETTE: () => createPalette(msg),
       UPDATE_SCALE: () => updateScale(msg),
-      UPDATE_VIEW: () => updateView(msg, palette),
+      UPDATE_VIEW: () => updateView(msg),
       UPDATE_COLORS: () => updateColors(msg),
       UPDATE_THEMES: () => updateThemes(msg),
       UPDATE_GLOBAL: () => updateGlobal(msg),
