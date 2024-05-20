@@ -306,9 +306,10 @@ export default class PriorityContainer extends React.Component<
                         {
                           pluginMessage: {
                             type: 'SEND_MESSAGE',
-                            message: error.message === 'Authentication timeout'
-                            ? locals[this.props.lang].error.timeout
-                            : locals[this.props.lang].error.authentication,
+                            message:
+                              error.message === 'Authentication timeout'
+                                ? locals[this.props.lang].error.timeout
+                                : locals[this.props.lang].error.authentication,
                           },
                         },
                         '*'

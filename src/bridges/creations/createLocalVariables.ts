@@ -104,8 +104,9 @@ const createLocalVariables = async (palette: SceneNode) => {
                   ? (theme.modeId = collection.defaultModeId)
                   : null
               } else if (
-                collection.modes.find((mode) => mode.modeId === themeItem.id) ===
-                undefined
+                collection.modes.find(
+                  (mode) => mode.modeId === themeItem.id
+                ) === undefined
               ) {
                 try {
                   const modeId = collection.addMode(themeItem.name)

@@ -9,7 +9,7 @@ const unpublishPalette = async (
     const { error } = await supabase.storage
       .from(palettesStorageName)
       .remove([`${rawData.userSession.userId}/${rawData.id}.png`])
-    
+
     if (error) throw error
   }
 

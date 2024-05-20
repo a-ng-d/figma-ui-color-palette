@@ -68,17 +68,20 @@ export default class Palette {
     this.colors = []
     this.colorSpace = colorSpace
     this.visionSimulationMode = visionSimulationMode
-    this.themes = themes === undefined
-      ? [{
-          name: locals[lang].themes.switchTheme.defaultTheme,
-          description: '',
-          scale: this.scale,
-          paletteBackground: '#FFFFFF',
-          isEnabled: true,
-          id: '00000000000',
-          type: 'default theme',
-        }]
-      : themes,
+    ;(this.themes =
+      themes === undefined
+        ? [
+            {
+              name: locals[lang].themes.switchTheme.defaultTheme,
+              description: '',
+              scale: this.scale,
+              paletteBackground: '#FFFFFF',
+              isEnabled: true,
+              id: '00000000000',
+              type: 'default theme',
+            },
+          ]
+        : themes),
       (this.view = view)
     this.algorithmVersion = algorithmVersion
     this.textColorsTheme = textColorsTheme
@@ -127,11 +130,23 @@ export default class Palette {
     if (this.isRemote && this.meta !== undefined) {
       this.node.setPluginData('createdAt', this.meta.dates.createdAt as string)
       this.node.setPluginData('updatedAt', this.meta.dates.updatedAt as string)
-      this.node.setPluginData('publishedAt', this.meta.dates.publishedAt as string)
+      this.node.setPluginData(
+        'publishedAt',
+        this.meta.dates.publishedAt as string
+      )
       this.node.setPluginData('isPublished', 'true')
-      this.node.setPluginData('isShared', this.meta.publicationStatus.isShared.toString())
-      this.node.setPluginData('creatorFullName', this.meta.creatorIdentity.creatorFullName)
-      this.node.setPluginData('creatorAvatar', this.meta.creatorIdentity.creatorAvatar)
+      this.node.setPluginData(
+        'isShared',
+        this.meta.publicationStatus.isShared.toString()
+      )
+      this.node.setPluginData(
+        'creatorFullName',
+        this.meta.creatorIdentity.creatorFullName
+      )
+      this.node.setPluginData(
+        'creatorAvatar',
+        this.meta.creatorIdentity.creatorAvatar
+      )
       this.node.setPluginData('creatorId', this.meta.creatorIdentity.creatorId)
     } else {
       this.node.setPluginData('createdAt', now)

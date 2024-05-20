@@ -18,7 +18,7 @@ const pushPalette = async (
           contentType: 'image/png',
         }
       )
-    
+
     if (error) throw error
   }
 

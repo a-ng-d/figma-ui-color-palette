@@ -401,7 +401,8 @@ export const locals: { [key: string]: any } = {
       synchronization: '✕ The palette has not been synchronized',
       fetchPalette: 'The palettes cannot be loaded',
       addToFile: '✕ The palette cannot be added',
-      noInternetConnection: '✕ The connection with the remote palette is unlinked'
+      noInternetConnection:
+        '✕ The connection with the remote palette is unlinked',
     },
   },
 }

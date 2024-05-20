@@ -77,7 +77,7 @@ const updateColors = (msg: ColorsMessage) => {
         palette
       ).makeNode()
     )
-    
+
     // Update
     const now = new Date().toISOString()
     palette.setPluginData('updatedAt', now)

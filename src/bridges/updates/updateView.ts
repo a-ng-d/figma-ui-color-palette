@@ -12,7 +12,11 @@ import type {
   ViewMessage,
   VisionSimulationModeConfiguration,
 } from '../../utils/types'
-import { currentSelection, isSelectionChanged, previousSelection } from '../processSelection'
+import {
+  currentSelection,
+  isSelectionChanged,
+  previousSelection,
+} from '../processSelection'
 
 const updateView = (msg: ViewMessage) => {
   const palette = isSelectionChanged

@@ -188,7 +188,7 @@ const loadUI = async () => {
             accessToken: undefined,
             refreshToken: undefined,
           },
-        })
+        }),
     }
 
     return actions[msg.type]?.()

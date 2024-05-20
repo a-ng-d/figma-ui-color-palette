@@ -128,7 +128,7 @@ export default class Publication extends React.Component<
         {
           pluginMessage: {
             type: 'SEND_MESSAGE',
-            message: locals[this.props.lang].error.noInternetConnection
+            message: locals[this.props.lang].error.noInternetConnection,
           },
         },
         '*'

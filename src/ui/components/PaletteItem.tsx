@@ -25,9 +25,12 @@ interface PaletteItemStates {
   backgroundStyle: string
 }
 
-export default class PaletteItem extends React.Component<PaletteItemProps, PaletteItemStates> {
+export default class PaletteItem extends React.Component<
+  PaletteItemProps,
+  PaletteItemStates
+> {
   static defaultProps: Partial<PaletteItemProps> = {
-    isInteractive: false
+    isInteractive: false,
   }
 
   constructor(props: PaletteItemProps) {
@@ -44,20 +47,26 @@ export default class PaletteItem extends React.Component<PaletteItemProps, Palet
         data-id={this.props.id}
         tabIndex={this.props.isInteractive ? 0 : -1}
         style={{
-          backgroundColor: this.state['backgroundStyle']
+          backgroundColor: this.state['backgroundStyle'],
         }}
-        onMouseEnter={() => this.setState({
-          backgroundStyle: this.props.isInteractive
-            ? 'var(--figma-color-bg-hover)'
-            : 'var(--figma-color-bg)'
-        })}
-        onMouseLeave={() => this.setState({
-          backgroundStyle: 'var(--figma-color-bg)'
-        })}
+        onMouseEnter={() =>
+          this.setState({
+            backgroundStyle: this.props.isInteractive
+              ? 'var(--figma-color-bg-hover)'
+              : 'var(--figma-color-bg)',
+          })
+        }
+        onMouseLeave={() =>
+          this.setState({
+            backgroundStyle: 'var(--figma-color-bg)',
+          })
+        }
         onMouseDown={this.props.isInteractive ? this.props.action : undefined}
         onKeyDown={(e) => {
-          if ((e.key === ' ' || e.key === 'Enter') && this.props.isInteractive) this.props.action?.(e)
-          if (e.key === 'Escape' && this.props.isInteractive) (e.target as HTMLElement).blur()
+          if ((e.key === ' ' || e.key === 'Enter') && this.props.isInteractive)
+            this.props.action?.(e)
+          if (e.key === 'Escape' && this.props.isInteractive)
+            (e.target as HTMLElement).blur()
         }}
       >
         <div className="rich-list__item__asset">
@@ -94,10 +103,7 @@ export default class PaletteItem extends React.Component<PaletteItemProps, Palet
             </div>
           )}
         </div>
-        {this.props.children !== undefined && (
-          this.props.children
-        )}
-        
+        {this.props.children !== undefined && this.props.children}
       </li>
     )
   }

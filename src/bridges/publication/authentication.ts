@@ -35,54 +35,54 @@ export const signIn = async () => {
         )
         const poll = setInterval(async () => {
           fetch(proxyUrl, {
-              cache: 'no-cache',
-              credentials: 'omit',
-              headers: {
-                type: 'GET_TOKENS',
-                passkey: result.passkey,
-              },
+            cache: 'no-cache',
+            credentials: 'omit',
+            headers: {
+              type: 'GET_TOKENS',
+              passkey: result.passkey,
+            },
+          })
+            .then((response) => {
+              if (response.body) return response.json()
+              else reject(new Error())
             })
-              .then((response) => {
-                if (response.body) return response.json()
-                else reject(new Error())
-              })
-              .then(async (result) => {
-                //console.log(result)
-                if (result.message !== 'No token found') {
-                  isAuthenticated = true
-                  parent.postMessage(
-                    {
-                      pluginMessage: {
-                        type: 'SET_ITEMS',
-                        items: [
-                          {
-                            key: 'supabase_access_token',
-                            value: result.access_token,
-                          },
-                          {
-                            key: 'supabase_refresh_token',
-                            value: result.refresh_token,
-                          },
-                        ],
-                      },
+            .then(async (result) => {
+              //console.log(result)
+              if (result.message !== 'No token found') {
+                isAuthenticated = true
+                parent.postMessage(
+                  {
+                    pluginMessage: {
+                      type: 'SET_ITEMS',
+                      items: [
+                        {
+                          key: 'supabase_access_token',
+                          value: result.access_token,
+                        },
+                        {
+                          key: 'supabase_refresh_token',
+                          value: result.refresh_token,
+                        },
+                      ],
                     },
-                    '*'
-                  )
-                  checkConnectionStatus(result.access_token, result.refresh_token)
-                    .then(() => {
-                      clearInterval(poll)
-                      resolve(result)
-                    })
-                    .catch((error) => {
-                      clearInterval(poll)
-                      reject(error)
-                    })
-                }
-              })
-              .catch((error) => {
-                clearInterval(poll)
-                reject(error)
-              })
+                  },
+                  '*'
+                )
+                checkConnectionStatus(result.access_token, result.refresh_token)
+                  .then(() => {
+                    clearInterval(poll)
+                    resolve(result)
+                  })
+                  .catch((error) => {
+                    clearInterval(poll)
+                    reject(error)
+                  })
+              }
+            })
+            .catch((error) => {
+              clearInterval(poll)
+              reject(error)
+            })
         }, 5000)
         setTimeout(
           () => {

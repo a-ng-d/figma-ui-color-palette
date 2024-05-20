@@ -51,7 +51,7 @@ export default class Explore extends React.Component<
       currentPage: 1,
       isLoadMoreActionLoading: false,
       paletteList: [],
-      isAddToFileActionLoading: []
+      isAddToFileActionLoading: [],
     }
   }
 
@@ -83,7 +83,9 @@ export default class Explore extends React.Component<
     if (!error) {
       this.setState({
         isLoadMoreActionLoading: false,
-        isAddToFileActionLoading: Array(this.state['paletteList'].concat(data).length).fill(false),
+        isAddToFileActionLoading: Array(
+          this.state['paletteList'].concat(data).length
+        ).fill(false),
         paletteListStatus: data.length > 0 ? 'LOADED' : 'FULL',
         paletteList: this.state['paletteList'].concat(data),
       })
@@ -119,7 +121,7 @@ export default class Explore extends React.Component<
       .from(palettesDbTableName)
       .select('*')
       .eq('palette_id', id)
-    
+
     console.log(data)
 
     if (!error && data.length > 0) {
@@ -131,23 +133,24 @@ export default class Explore extends React.Component<
               data: {
                 sourceColors: data[0].colors.map(
                   (color: ColorConfiguration) => {
-                  return {
-                    name: color.name,
-                    rgb: color.rgb,
-                    source: 'REMOTE',
-                    id: color.id
+                    return {
+                      name: color.name,
+                      rgb: color.rgb,
+                      source: 'REMOTE',
+                      id: color.id,
+                    }
                   }
-                }) as Array<SourceColorConfiguration>,
+                ) as Array<SourceColorConfiguration>,
                 palette: {
-                  name:  data[0].name,
-                  description:  data[0].description,
-                  preset:  data[0].preset,
-                  scale:  data[0].scale,
-                  colorSpace:  data[0].color_space,
-                  visionSimulationMode:  data[0].vision_simulation_mode,
-                  view:  data[0].view,
-                  textColorsTheme:  data[0].text_colors_theme,
-                  algorithmVersion:  data[0].algorithm_version
+                  name: data[0].name,
+                  description: data[0].description,
+                  preset: data[0].preset,
+                  scale: data[0].scale,
+                  colorSpace: data[0].color_space,
+                  visionSimulationMode: data[0].vision_simulation_mode,
+                  view: data[0].view,
+                  textColorsTheme: data[0].text_colors_theme,
+                  algorithmVersion: data[0].algorithm_version,
                 } as Partial<PaletteConfiguration>,
                 themes: data[0].themes,
                 isRemote: true,
@@ -155,30 +158,29 @@ export default class Explore extends React.Component<
                   dates: {
                     createdAt: data[0].created_at,
                     updatedAt: data[0].updated_at,
-                    publishedAt: data[0].published_at
+                    publishedAt: data[0].published_at,
                   },
                   publicationStatus: {
                     isPublished: true,
-                    isShared: data[0].is_shared
+                    isShared: data[0].is_shared,
                   },
                   creatorIdentity: {
                     creatorFullName: data[0].creator_full_name,
                     creatorAvatar: data[0].creator_avatar,
                     creatorId: data[0].creator_id,
-                  }
-                } as MetaConfiguration
+                  },
+                } as MetaConfiguration,
               },
             },
           },
           '*'
         )
-        
+
         return
       } catch {
         throw error
       }
-    } else
-      throw error
+    } else throw error
   }
 
   // Templates
@@ -205,16 +207,17 @@ export default class Explore extends React.Component<
               isLoading={this.state['isAddToFileActionLoading'][index]}
               action={() => {
                 this.setState({
-                  isAddToFileActionLoading: this.state['isAddToFileActionLoading'].map(
-                    (loading, i) => i === index ? true : loading
-                  )
+                  isAddToFileActionLoading: this.state[
+                    'isAddToFileActionLoading'
+                  ].map((loading, i) => (i === index ? true : loading)),
                 })
                 this.onSelectPalette(palette.palette_id)
                   .finally(() => {
                     this.setState({
-                      isAddToFileActionLoading: this.state.isAddToFileActionLoading.map(
-                        (loading, i) => i === index ? false : loading
-                      )
+                      isAddToFileActionLoading:
+                        this.state.isAddToFileActionLoading.map((loading, i) =>
+                          i === index ? false : loading
+                        ),
                     })
                   })
                   .catch(() => {
@@ -222,7 +225,7 @@ export default class Explore extends React.Component<
                       {
                         pluginMessage: {
                           type: 'SEND_MESSAGE',
-                          message: locals[this.props.lang].error.addToFile
+                          message: locals[this.props.lang].error.addToFile,
                         },
                       },
                       '*'

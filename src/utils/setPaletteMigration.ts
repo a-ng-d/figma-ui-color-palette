@@ -86,7 +86,9 @@ const setPaletteMigration = (palette: BaseNode) => {
       )
   }
 
-  if (colorsObject.filter((color) => color.oklch).length === colorsObject.length)
+  if (
+    colorsObject.filter((color) => color.oklch).length === colorsObject.length
+  )
     palette.setPluginData('colorSpace', 'OKLCH')
 
   if (colorSpace === '') palette.setPluginData('colorSpace', 'LCH')
@@ -116,7 +118,10 @@ const setPaletteMigration = (palette: BaseNode) => {
     palette.setPluginData('captions', '')
     palette.setPluginData('properties', '')
     palette.setPluginData('view', 'PALETTE_WITH_PROPERTIES')
-  } else if (captions === 'hasNotCaptions' || properties === 'hasNotProperties') {
+  } else if (
+    captions === 'hasNotCaptions' ||
+    properties === 'hasNotProperties'
+  ) {
     palette.setPluginData('captions', '')
     palette.setPluginData('properties', '')
     palette.setPluginData('view', 'PALETTE')

@@ -153,7 +153,8 @@ export default class Shortcuts extends React.Component<
                                 {
                                   pluginMessage: {
                                     type: 'SEND_MESSAGE',
-                                    message: locals[this.props.lang].info.signOut,
+                                    message:
+                                      locals[this.props.lang].info.signOut,
                                   },
                                 },
                                 '*'
@@ -167,13 +168,14 @@ export default class Shortcuts extends React.Component<
                                 {
                                   pluginMessage: {
                                     type: 'SEND_MESSAGE',
-                                    message: locals[this.props.lang].error.generic,
+                                    message:
+                                      locals[this.props.lang].error.generic,
                                   },
                                 },
                                 '*'
                               )
                             })
-                        }
+                        },
                       },
                     ]}
                     alignment="TOP_RIGHT"
@@ -204,15 +206,17 @@ export default class Shortcuts extends React.Component<
                                 {
                                   pluginMessage: {
                                     type: 'SEND_MESSAGE',
-                                    message: error.message === 'Authentication timeout'
-                                    ? locals[this.props.lang].error.timeout
-                                    : locals[this.props.lang].error.authentication,
+                                    message:
+                                      error.message === 'Authentication timeout'
+                                        ? locals[this.props.lang].error.timeout
+                                        : locals[this.props.lang].error
+                                            .authentication,
                                   },
                                 },
                                 '*'
                               )
                             })
-                        }
+                        },
                       },
                     ]}
                     state={

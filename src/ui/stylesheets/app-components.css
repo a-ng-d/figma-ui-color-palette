@@ -135,7 +135,7 @@ li.rich-list__item .rich-list__item__content {
   display: flex;
   flex-direction: column;
   gap: var(--size-xsmall) 0;
-  flex: 1
+  flex: 1;
 }
 
 /* Callout */

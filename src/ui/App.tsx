@@ -710,7 +710,9 @@ class App extends React.Component<Record<string, never>, AppStates> {
               lang={this.state['lang']}
             />
           </Feature>
-          <Feature isActive={this.state['priorityContainerContext'] !== 'EMPTY'}>
+          <Feature
+            isActive={this.state['priorityContainerContext'] !== 'EMPTY'}
+          >
             <PriorityContainer
               context={this.state['priorityContainerContext']}
               rawData={this.state}
