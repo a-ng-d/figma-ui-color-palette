@@ -35,7 +35,17 @@ const getPalettesOnCurrentPage = async () => {
 
     figma.ui.postMessage({
       type: 'EXPOSE_PALETTES',
-      data: await palettesList(),
+      data: await palettesList()
+        .then((list) => {
+          return list.sort((a, b) => {
+            if (a.devStatus === "READY_FOR_DEV" && b.devStatus !== "READY_FOR_DEV")
+              return -1
+            else if (a.devStatus !== "READY_FOR_DEV" && b.devStatus === "READY_FOR_DEV")
+              return 1
+            else
+              return 0
+          })
+        })
     })
   } else
     figma.ui.postMessage({
