@@ -8,6 +8,7 @@ import type {
   ActionsList,
   ColorConfiguration,
   ColorsMessage,
+  ConnectionStatus,
   DispatchProcess,
   EditorType,
   HexModel,
@@ -24,6 +25,11 @@ import Dispatcher from '../modules/Dispatcher'
 interface ColorsProps {
   colors: Array<ColorConfiguration>
   editorType: EditorType
+  identities?: {
+    connectionStatus: ConnectionStatus
+    userId: string | undefined
+    creatorId: string
+  }
   planStatus: PlanStatus
   lang: Language
   onChangeColors: React.Dispatch<Partial<AppStates>>
@@ -455,6 +461,7 @@ export default class Colors extends React.Component<ColorsProps, ColorsStates> {
         {this.props.editorType === 'figma' ? (
           <Actions
             context="DEPLOY"
+            identities={this.props.identities}
             planStatus={this.props.planStatus}
             lang={this.props.lang}
             onSyncLocalStyles={this.props.onSyncLocalStyles}

@@ -17,6 +17,7 @@ import type {
   ActionsList,
   AlgorithmVersionConfiguration,
   ColorSpaceConfiguration,
+  ConnectionStatus,
   DispatchProcess,
   EditorType,
   Language,
@@ -42,6 +43,11 @@ interface SettingsProps {
   visionSimulationMode: VisionSimulationModeConfiguration
   view: string
   algorithmVersion?: AlgorithmVersionConfiguration
+  identities?: {
+    connectionStatus: ConnectionStatus
+    userId: string | undefined
+    creatorId: string
+  }
   planStatus: PlanStatus
   editorType?: EditorType
   lang: Language
@@ -1133,6 +1139,7 @@ export default class Settings extends React.Component<SettingsProps> {
         ) : this.props.editorType === 'figma' ? (
           <Actions
             context="DEPLOY"
+            identities={this.props.identities}
             planStatus={this.props.planStatus}
             lang={this.props.lang}
             onSyncLocalStyles={this.props.onSyncLocalStyles}

@@ -671,6 +671,11 @@ class App extends React.Component<Record<string, never>, AppStates> {
               textColorsTheme={this.state['textColorsTheme']}
               algorithmVersion={this.state['algorithmVersion']}
               export={this.state['export']}
+              identities={{
+                connectionStatus: this.state['userSession'].connectionStatus,
+                userId: this.state['userSession'].userId,
+                creatorId: this.state['creatorIdentity'].creatorId
+              }}
               editorType={this.state['editorType']}
               planStatus={this.state['planStatus']}
               lang={this.state['lang']}

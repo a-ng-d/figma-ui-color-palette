@@ -16,6 +16,7 @@ import isBlocked from '../../utils/isBlocked'
 import { palette, presets } from '../../utils/palettePackage'
 import type {
   ActionsList,
+  ConnectionStatus,
   DispatchProcess,
   Easing,
   EditorType,
@@ -39,6 +40,11 @@ interface ScaleProps {
   namingConvention: NamingConventionConfiguration
   scale?: ScaleConfiguration
   actions?: string
+  identities?: {
+    connectionStatus: ConnectionStatus
+    userId: string | undefined
+    creatorId: string
+  }
   planStatus: PlanStatus
   editorType?: EditorType
   lang: Language
@@ -826,6 +832,7 @@ export default class Scale extends React.Component<ScaleProps, ScaleStates> {
         {this.props.editorType === 'figma' ? (
           <Actions
             context="DEPLOY"
+            identities={this.props.identities}
             planStatus={this.props.planStatus}
             lang={this.props.lang}
             onSyncLocalStyles={this.props.onSyncLocalStyles}

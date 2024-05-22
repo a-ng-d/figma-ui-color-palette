@@ -1,10 +1,11 @@
-import { Button, Menu, texts } from '@a_ng_d/figmug-ui'
+import { Button, DropdownOption, Menu, texts } from '@a_ng_d/figmug-ui'
 import React from 'react'
 
 import { locals } from '../../content/locals'
 import features from '../../utils/config'
 import isBlocked from '../../utils/isBlocked'
 import type {
+  ConnectionStatus,
   Language,
   PlanStatus,
   SourceColorConfiguration,
@@ -14,6 +15,11 @@ import Feature from '../components/Feature'
 interface ActionsProps {
   context: string
   sourceColors: Array<SourceColorConfiguration> | []
+  identities?: {
+    connectionStatus: ConnectionStatus
+    userId: string | undefined
+    creatorId: string
+  }
   exportType?: string
   planStatus?: PlanStatus
   lang: Language
@@ -39,6 +45,28 @@ interface ActionsProps {
 export default class Actions extends React.Component<ActionsProps> {
   static defaultProps = {
     sourceColors: [],
+  }
+
+  // Direct actions
+  publicationAction = (): Partial<DropdownOption> => {
+    if (this.props.identities?.connectionStatus === 'UNCONNECTED')
+      return {
+        label: locals[this.props.lang].actions.publishOrSyncPalette,
+        value: 'PALETTE_PUBLICATION',
+        feature: 'PUBLISH_SYNC_PALETTE',
+      }
+    else if (this.props.identities?.userId === this.props.identities?.creatorId)
+      return {
+        label: locals[this.props.lang].actions.publishPalette,
+        value: 'PALETTE_PUBLICATION',
+        feature: 'PUBLISH_PALETTE',
+      }
+    else
+      return {
+        label: locals[this.props.lang].actions.syncPalette,
+        value: 'PALETTE_PUBLICATION',
+        feature: 'SYNC_PALETTE',
+      }
   }
 
   // Templates
@@ -122,9 +150,7 @@ export default class Actions extends React.Component<ActionsProps> {
                 action: (e) => this.props.onSyncLocalVariables?.(e),
               },
               {
-                label: locals[this.props.lang].actions.publishPalette,
-                value: 'PALETTE_PUBLICATION',
-                feature: 'PUBLISH_PALETTE',
+                ...this.publicationAction(),
                 position: 0,
                 type: 'OPTION',
                 isActive: features.find(
@@ -139,7 +165,7 @@ export default class Actions extends React.Component<ActionsProps> {
                 )?.isNew,
                 children: [],
                 action: (e) => this.props.onPublishPalette?.(e),
-              },
+              } as DropdownOption
             ]}
             alignment="TOP_RIGHT"
           />

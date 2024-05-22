@@ -288,7 +288,7 @@ export default class PriorityContainer extends React.Component<
       >
         {this.props.rawData.userSession.connectionStatus === 'UNCONNECTED' ? (
           <Dialog
-            title={locals[this.props.lang].publication.title}
+            title={locals[this.props.lang].publication.titleSignIn}
             actions={{
               primary: {
                 label: locals[this.props.lang].publication.signIn,

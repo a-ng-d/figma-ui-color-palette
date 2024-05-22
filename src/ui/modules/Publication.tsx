@@ -709,7 +709,10 @@ export default class Publication extends React.Component<
 
     return (
       <Dialog
-        title={locals[this.props.lang].publication.title}
+        title={this.props.rawData.creatorIdentity.creatorId === this.props.rawData.userSession.userId
+          ? locals[this.props.lang].publication.titlePublish
+          : locals[this.props.lang].publication.titleSynchronize
+        }
         actions={this.publicationActions(this.state['publicationStatus'])}
         select={this.publicationOption(this.state['publicationStatus'])}
         onClose={this.props.onClosePublication}

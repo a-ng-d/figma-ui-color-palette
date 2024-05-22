@@ -14,6 +14,7 @@ import type {
   AlgorithmVersionConfiguration,
   ColorConfiguration,
   ColorSpaceConfiguration,
+  ConnectionStatus,
   EditorType,
   ExportConfiguration,
   Language,
@@ -47,6 +48,11 @@ interface EditPaletteProps {
   textColorsTheme: TextColorsThemeHexModel
   algorithmVersion: AlgorithmVersionConfiguration
   export: ExportConfiguration
+  identities: {
+    connectionStatus: ConnectionStatus
+    userId: string | undefined
+    creatorId: string
+  }
   planStatus: PlanStatus
   editorType: EditorType
   lang: Language
@@ -346,6 +352,7 @@ export default class EditPalette extends React.Component<
             hasPreset={false}
             preset={this.props.preset}
             scale={this.props.scale}
+            identities={this.props.identities}
             planStatus={this.props.planStatus}
             editorType={this.props.editorType}
             lang={this.props.lang}
@@ -362,6 +369,7 @@ export default class EditPalette extends React.Component<
         controls = (
           <Colors
             colors={this.props.colors}
+            identities={this.props.identities}
             planStatus={this.props.planStatus}
             editorType={this.props.editorType}
             lang={this.props.lang}
@@ -380,6 +388,7 @@ export default class EditPalette extends React.Component<
             preset={this.props.preset}
             scale={this.props.scale}
             themes={this.props.themes}
+            identities={this.props.identities}
             planStatus={this.props.planStatus}
             editorType={this.props.editorType}
             lang={this.props.lang}
@@ -418,6 +427,7 @@ export default class EditPalette extends React.Component<
             textColorsTheme={this.props.textColorsTheme}
             view={this.props.view}
             algorithmVersion={this.props.algorithmVersion}
+            identities={this.props.identities}
             planStatus={this.props.planStatus}
             editorType={this.props.editorType}
             lang={this.props.lang}

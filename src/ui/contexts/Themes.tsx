@@ -7,6 +7,7 @@ import doLightnessScale from '../../utils/doLightnessScale'
 import isBlocked from '../../utils/isBlocked'
 import type {
   ActionsList,
+  ConnectionStatus,
   DispatchProcess,
   EditorType,
   HexModel,
@@ -28,6 +29,11 @@ interface ThemesProps {
   preset: PresetConfiguration
   scale: ScaleConfiguration
   themes: Array<ThemeConfiguration>
+  identities?: {
+    connectionStatus: ConnectionStatus
+    userId: string | undefined
+    creatorId: string
+  }
   planStatus: PlanStatus
   editorType: EditorType
   lang: Language
@@ -434,6 +440,7 @@ export default class Themes extends React.Component<ThemesProps, ThemesStates> {
         {this.props.editorType === 'figma' ? (
           <Actions
             context="DEPLOY"
+            identities={this.props.identities}
             planStatus={this.props.planStatus}
             lang={this.props.lang}
             onSyncLocalStyles={this.props.onSyncLocalStyles}
