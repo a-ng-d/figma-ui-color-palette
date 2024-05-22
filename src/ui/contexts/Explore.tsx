@@ -155,6 +155,7 @@ export default class Explore extends React.Component<
                 themes: data[0].themes,
                 isRemote: true,
                 paletteMeta: {
+                  id: data[0].palette_id,
                   dates: {
                     createdAt: data[0].created_at,
                     updatedAt: data[0].updated_at,

@@ -111,7 +111,7 @@ export default class Palette {
 
     // data
     this.node.setRelaunchData({ edit: '' })
-    this.node.setPluginData('id', uid())
+    this.node.setPluginData('idVersion', 'v2')
     this.node.setPluginData('type', 'UI_COLOR_PALETTE')
     this.node.setPluginData('name', this.name)
     this.node.setPluginData('description', this.description)
@@ -128,6 +128,7 @@ export default class Palette {
     this.node.setPluginData('algorithmVersion', this.algorithmVersion)
 
     if (this.isRemote && this.meta !== undefined) {
+      this.node.setPluginData('id', this.meta.id)
       this.node.setPluginData('createdAt', this.meta.dates.createdAt as string)
       this.node.setPluginData('updatedAt', this.meta.dates.updatedAt as string)
       this.node.setPluginData(
@@ -149,6 +150,7 @@ export default class Palette {
       )
       this.node.setPluginData('creatorId', this.meta.creatorIdentity.creatorId)
     } else {
+      this.node.setPluginData('id', uid())
       this.node.setPluginData('createdAt', now)
       this.node.setPluginData('updatedAt', now)
       this.node.setPluginData('publishedAt', '')

@@ -273,6 +273,7 @@ export interface CreatorConfiguration {
 }
 
 export interface MetaConfiguration {
+  id: string
   dates: DatesConfiguration
   publicationStatus: PublicationConfiguration
   creatorIdentity: CreatorConfiguration
