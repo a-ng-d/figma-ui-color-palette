@@ -23,7 +23,7 @@
   ],
   "author": "Aurélien Grimaud",
   "licence": "MIT",
-  "repository": "https://github.com/inVoltag/figma-ui-color-palette",
+  "repository": "https://github.com/a-ng-d/figma-ui-color-palette",
   "devDependencies": {
     "@figma/eslint-plugin-figma-plugins": "^0.15.0",
     "@figma/plugin-typings": "^1.89.0",
