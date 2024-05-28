@@ -1,10 +1,11 @@
 import { Button, Icon, Message, Tabs, Bar, texts, Input } from '@a_ng_d/figmug-ui'
 import React from 'react'
 
-import { supabase } from '../../bridges/publication/authentication'
+import { signIn, supabase } from '../../bridges/publication/authentication'
 import { locals } from '../../content/locals'
 import features, { palettesDbTableName } from '../../utils/config'
 import type {
+  ActionsList,
   ColorConfiguration,
   Language,
   MetaConfiguration,
@@ -13,21 +14,24 @@ import type {
   PresetConfiguration,
   SourceColorConfiguration,
   ThemeConfiguration,
+  UserSession,
 } from '../../utils/types'
 import PaletteItem from '../components/PaletteItem'
 import Feature from '../components/Feature'
 
 interface PalettesProps {
+  userSession: UserSession
   planStatus: PlanStatus
   lang: Language
 }
 
 interface PalettesStates {
   context: string | undefined
-  paletteListStatus: 'LOADING' | 'LOADED' | 'EMPTY' | 'ERROR' | 'FULL'
+  paletteListStatus: 'LOADING' | 'LOADED' | 'EMPTY' | 'ERROR' | 'FULL' | 'SIGN_IN_FIRST'
   pageSize: number
   currentPage: number
   isLoadMoreActionLoading: boolean
+  isSignInLoading: boolean
   isAddToFileActionLoading: Array<boolean>
   paletteList: Array<{
     palette_id: string
@@ -54,49 +58,103 @@ export default class Palettes extends React.Component<
       pageSize: 2,
       currentPage: 1,
       isLoadMoreActionLoading: false,
-      paletteList: [],
+      isSignInLoading: false,
       isAddToFileActionLoading: [],
+      paletteList: [],
     }
   }
 
   // Lifecycle
-  componentDidMount = async () => this.callUICPAgent()
+  componentDidMount = async () => this.callUICPAgent(this.state['context'])
 
   componentDidUpdate = (
     prevProps: Readonly<PalettesProps>,
     prevState: Readonly<PalettesStates>
   ): void => {
+    if (prevProps.userSession.connectionStatus !== this.props.userSession.connectionStatus) {
+      this.setState({
+        paletteListStatus: 'LOADING'
+      })
+      this.callUICPAgent(this.state['context'])
+    } 
+    if (prevState.context !== this.state['context']) {
+      this.setState({
+        paletteList: [],
+        paletteListStatus: 'LOADING'
+      })
+      this.callUICPAgent(this.state['context'])
+    }
     if (prevState.currentPage !== this.state['currentPage'])
-      this.callUICPAgent()
+      this.callUICPAgent(this.state['context'])
+      
   }
 
   // Direct actions
-  callUICPAgent = async () => {
-    const { data, error } = await supabase
-      .from(palettesDbTableName)
-      .select(
-        'palette_id, screenshot, name, preset, colors, themes, creator_avatar, creator_full_name'
-      )
-      .range(
-        this.state['pageSize'] * (this.state['currentPage'] - 1),
-        this.state['pageSize'] * this.state['currentPage'] - 1
-      )
+  callUICPAgent = async (context: string | undefined) => {
+    const getSeftPalettes = async () => {
+      const { data, error } = await supabase
+        .from(palettesDbTableName)
+        .select(
+          'palette_id, screenshot, name, preset, colors, themes, creator_avatar, creator_full_name, creator_id'
+        )
+        .eq('creator_id', this.props.userSession.userId)
+        .range(
+          this.state['pageSize'] * (this.state['currentPage'] - 1),
+          this.state['pageSize'] * this.state['currentPage'] - 1
+        )
+      
+      if (!error) {
+        this.setState({
+          isLoadMoreActionLoading: false,
+          isAddToFileActionLoading: Array(
+            this.state['paletteList'].concat(data).length
+          ).fill(false),
+          paletteListStatus: data.length > 0 ? 'LOADED' : 'FULL',
+          paletteList: this.state['paletteList'].concat(data),
+        })
+      } else if (this.props.userSession.connectionStatus === 'UNCONNECTED')
+        this.setState({
+          paletteListStatus: 'SIGN_IN_FIRST',
+        })
+      else
+        this.setState({
+          paletteListStatus: 'ERROR',
+        })
+    }
 
-    console.log(data)
+    const getCommunityPalettes = async () => {
+      const { data, error } = await supabase
+        .from(palettesDbTableName)
+        .select(
+          'palette_id, screenshot, name, preset, colors, themes, creator_avatar, creator_full_name'
+        )
+        .range(
+          this.state['pageSize'] * (this.state['currentPage'] - 1),
+          this.state['pageSize'] * this.state['currentPage'] - 1
+        )
+      
+      if (!error) {
+        this.setState({
+          isLoadMoreActionLoading: false,
+          isAddToFileActionLoading: Array(
+            this.state['paletteList'].concat(data).length
+          ).fill(false),
+          paletteListStatus: data.length > 0 ? 'LOADED' : 'FULL',
+          paletteList: this.state['paletteList'].concat(data),
+        })
+      } else
+        this.setState({
+          paletteListStatus: 'ERROR',
+        })
+    }
 
-    if (!error) {
-      this.setState({
-        isLoadMoreActionLoading: false,
-        isAddToFileActionLoading: Array(
-          this.state['paletteList'].concat(data).length
-        ).fill(false),
-        paletteListStatus: data.length > 0 ? 'LOADED' : 'FULL',
-        paletteList: this.state['paletteList'].concat(data),
-      })
-    } else
-      this.setState({
-        paletteListStatus: 'ERROR',
-      })
+    const actions: ActionsList = {
+      SELF: () => getSeftPalettes(),
+      COMMUNITY: () => getCommunityPalettes(),
+      DEFAULT: () => null
+    }
+
+    actions[context ?? 'DEFAULT']?.()
   }
 
   getPaletteMeta = (
@@ -223,6 +281,7 @@ export default class Palettes extends React.Component<
   navHandler = (e: React.SyntheticEvent) =>
     this.setState({
       context: (e.target as HTMLElement).dataset.feature,
+      currentPage: 1
     })
 
   // Templates
@@ -281,7 +340,7 @@ export default class Palettes extends React.Component<
           {this.state['paletteListStatus'] === 'LOADED' ? (
             <Button
               type="secondary"
-              label={locals[this.props.lang].palettes.loadMore}
+              label={locals[this.props.lang].palettes.lazyLoad.loadMore}
               isLoading={this.state['isLoadMoreActionLoading']}
               action={() =>
                 this.setState({
@@ -292,7 +351,7 @@ export default class Palettes extends React.Component<
             />
           ) : (
             <div className={`${texts['type--secondary']} type`}>
-              {locals[this.props.lang].palettes.completeList}
+              {locals[this.props.lang].palettes.lazyLoad.completeList}
             </div>
           )}
         </div>
@@ -316,6 +375,43 @@ export default class Palettes extends React.Component<
             icon="warning"
             messages={[locals[this.props.lang].error.fetchPalette]}
           />
+        </div>
+      )
+    } else if (this.state['paletteListStatus'] === 'SIGN_IN_FIRST') {
+      controls = (
+        <div className="onboarding__callout--centered">
+          <Message
+            icon="info"
+            messages={[locals[this.props.lang].palettes.signInFirst.message]}
+          />
+          <div className="onboarding__actions">
+            <Button
+              type="primary"
+              label={locals[this.props.lang].palettes.signInFirst.signIn}
+              isLoading={this.state['isSignInLoading']}
+              action={async () => {
+                this.setState({ isSignInLoading: true })
+                signIn()
+                  .finally(() => {
+                    this.setState({ isSignInLoading: false })
+                  })
+                  .catch((error) => {
+                    parent.postMessage(
+                      {
+                        pluginMessage: {
+                          type: 'SEND_MESSAGE',
+                          message:
+                            error.message === 'Authentication timeout'
+                              ? locals[this.props.lang].error.timeout
+                              : locals[this.props.lang].error.authentication,
+                        },
+                      },
+                      '*'
+                    )
+                  })
+              }}
+            />
+          </div>
         </div>
       )
     } else
@@ -349,7 +445,7 @@ export default class Palettes extends React.Component<
                   type: "PICTO",
                   value: "search"
                 }}
-                placeholder={locals[this.props.lang].palettes.search}
+                placeholder={locals[this.props.lang].palettes.lazyLoad.search}
               />
             </Feature>
           }

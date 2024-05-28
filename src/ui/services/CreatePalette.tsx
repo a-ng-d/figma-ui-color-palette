@@ -14,6 +14,7 @@ import type {
   SourceColorConfiguration,
   TextColorsThemeHexModel,
   ThirdParty,
+  UserSession,
   ViewConfiguration,
   VisionSimulationModeConfiguration,
 } from '../../utils/types'
@@ -34,6 +35,7 @@ interface CreatePaletteProps {
   view: ViewConfiguration
   textColorsTheme: TextColorsThemeHexModel
   planStatus: PlanStatus
+  userSession: UserSession
   lang: Language
   onChangeColorsFromImport: React.Dispatch<Partial<AppStates>>
   onChangePreset: React.Dispatch<Partial<AppStates>>
@@ -150,6 +152,7 @@ export default class CreatePalette extends React.Component<
       case 'PALETTES': {
         controls = (
           <Palettes
+            userSession={this.props.userSession}
             planStatus={this.props.planStatus}
             lang={this.props.lang}
           />

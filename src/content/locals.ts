@@ -88,9 +88,15 @@ export const locals: { [key: string]: any } = {
         explore: 'Explore',
         search: 'Search palettes',
       },
-      search: 'Search palettes',
-      loadMore: 'Load more palettes',
-      completeList: 'The palettes list is complete',
+      signInFirst: {
+        message: 'Find and reuse your published palettes once authentified',
+        signIn: 'Sign in to fetch your palettes',
+      },
+      lazyLoad: {
+        search: 'Search palettes',
+        loadMore: 'Load more palettes',
+        completeList: 'The palettes list is complete',
+      },
       devMode: {
         title: 'UI Color Palettes on the page',
         readyForDev: 'Ready for development',

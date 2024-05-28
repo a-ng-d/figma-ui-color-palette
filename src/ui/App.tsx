@@ -642,6 +642,7 @@ class App extends React.Component<Record<string, never>, AppStates> {
               view={this.state['view']}
               textColorsTheme={this.state['textColorsTheme']}
               planStatus={this.state['planStatus']}
+              userSession={this.state['userSession']}
               lang={this.state['lang']}
               onChangeColorsFromImport={(e) =>
                 this.setState({ ...this.state, ...e })
