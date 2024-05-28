@@ -632,18 +632,7 @@ class App extends React.Component<Record<string, never>, AppStates> {
             }
           >
             <CreatePalette
-              sourceColors={this.state['sourceColors']}
-              name={this.state['name']}
-              description={this.state['description']}
-              preset={this.state['preset']}
-              namingConvention={this.state['namingConvention']}
-              colorSpace={this.state['colorSpace']}
-              visionSimulationMode={this.state['visionSimulationMode']}
-              view={this.state['view']}
-              textColorsTheme={this.state['textColorsTheme']}
-              planStatus={this.state['planStatus']}
-              userSession={this.state['userSession']}
-              lang={this.state['lang']}
+              {...this.state}
               onChangeColorsFromImport={(e) =>
                 this.setState({ ...this.state, ...e })
               }
@@ -660,26 +649,12 @@ class App extends React.Component<Record<string, never>, AppStates> {
             }
           >
             <EditPalette
-              name={this.state['name']}
-              description={this.state['description']}
-              preset={this.state['preset']}
-              scale={this.state['scale']}
-              colors={this.state['colors']}
-              colorSpace={this.state['colorSpace']}
-              visionSimulationMode={this.state['visionSimulationMode']}
-              themes={this.state['themes']}
-              view={this.state['view']}
-              textColorsTheme={this.state['textColorsTheme']}
-              algorithmVersion={this.state['algorithmVersion']}
-              export={this.state['export']}
+              {...this.state}
               identities={{
                 connectionStatus: this.state['userSession'].connectionStatus,
                 userId: this.state['userSession'].userId,
                 creatorId: this.state['creatorIdentity'].creatorId,
               }}
-              editorType={this.state['editorType']}
-              planStatus={this.state['planStatus']}
-              lang={this.state['lang']}
               onChangeScale={(e) => this.setState({ ...this.state, ...e })}
               onChangeStop={(e) => this.setState({ ...this.state, ...e })}
               onChangeColors={(e) => this.setState({ ...this.state, ...e })}
@@ -697,23 +672,7 @@ class App extends React.Component<Record<string, never>, AppStates> {
             }
           >
             <TransferPalette
-              name={this.state['name']}
-              description={this.state['description']}
-              preset={this.state['preset']}
-              scale={this.state['scale']}
-              colors={this.state['colors']}
-              colorSpace={this.state['colorSpace']}
-              visionSimulationMode={this.state['visionSimulationMode']}
-              themes={this.state['themes']}
-              view={this.state['view']}
-              textColorsTheme={this.state['textColorsTheme']}
-              algorithmVersion={this.state['algorithmVersion']}
-              export={this.state['export']}
-              palettesList={this.state['palettesList']}
-              service={this.state['service']}
-              editorType={this.state['editorType']}
-              planStatus={this.state['planStatus']}
-              lang={this.state['lang']}
+              {...this.state}
             />
           </Feature>
           <Feature
@@ -722,10 +681,7 @@ class App extends React.Component<Record<string, never>, AppStates> {
             <PriorityContainer
               context={this.state['priorityContainerContext']}
               rawData={this.state}
-              planStatus={this.state['planStatus']}
-              trialStatus={this.state['trialStatus']}
-              userSession={this.state['userSession']}
-              lang={this.state['lang']}
+              {...this.state}
               onChangePublication={(e) =>
                 this.setState({ ...this.state, ...e })
               }
@@ -740,12 +696,7 @@ class App extends React.Component<Record<string, never>, AppStates> {
             }
           >
             <Shortcuts
-              editorType={this.state['editorType']}
-              planStatus={this.state['planStatus']}
-              trialStatus={this.state['trialStatus']}
-              userSession={this.state['userSession']}
-              trialRemainingTime={this.state['trialRemainingTime']}
-              lang={this.state['lang']}
+              {...this.state}
               onReOpenFeedback={() =>
                 this.setState({ priorityContainerContext: 'FEEDBACK' })
               }

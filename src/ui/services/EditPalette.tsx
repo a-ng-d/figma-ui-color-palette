@@ -350,17 +350,11 @@ export default class EditPalette extends React.Component<
         controls = (
           <Scale
             hasPreset={false}
-            preset={this.props.preset}
-            scale={this.props.scale}
-            identities={this.props.identities}
-            planStatus={this.props.planStatus}
-            editorType={this.props.editorType}
-            lang={this.props.lang}
+            {...this.props}
             onChangeScale={this.slideHandler}
             onChangeStop={this.customSlideHandler}
             onSyncLocalStyles={this.onSyncStyles}
             onSyncLocalVariables={this.onSyncVariables}
-            onPublishPalette={this.props.onPublishPalette}
           />
         )
         break
@@ -368,15 +362,9 @@ export default class EditPalette extends React.Component<
       case 'COLORS': {
         controls = (
           <Colors
-            colors={this.props.colors}
-            identities={this.props.identities}
-            planStatus={this.props.planStatus}
-            editorType={this.props.editorType}
-            lang={this.props.lang}
-            onChangeColors={this.props.onChangeColors}
+            {...this.props}
             onSyncLocalStyles={this.onSyncStyles}
             onSyncLocalVariables={this.onSyncVariables}
-            onPublishPalette={this.props.onPublishPalette}
           />
         )
         break
@@ -385,17 +373,9 @@ export default class EditPalette extends React.Component<
         controls = (
           <Themes
             ref={this.themesRef}
-            preset={this.props.preset}
-            scale={this.props.scale}
-            themes={this.props.themes}
-            identities={this.props.identities}
-            planStatus={this.props.planStatus}
-            editorType={this.props.editorType}
-            lang={this.props.lang}
-            onChangeThemes={this.props.onChangeThemes}
+            {...this.props}
             onSyncLocalStyles={this.onSyncStyles}
             onSyncLocalVariables={this.onSyncVariables}
-            onPublishPalette={this.props.onPublishPalette}
           />
         )
         break
@@ -420,21 +400,9 @@ export default class EditPalette extends React.Component<
         controls = (
           <Settings
             context="LOCAL_STYLES"
-            name={this.props.name}
-            description={this.props.description}
-            colorSpace={this.props.colorSpace}
-            visionSimulationMode={this.props.visionSimulationMode}
-            textColorsTheme={this.props.textColorsTheme}
-            view={this.props.view}
-            algorithmVersion={this.props.algorithmVersion}
-            identities={this.props.identities}
-            planStatus={this.props.planStatus}
-            editorType={this.props.editorType}
-            lang={this.props.lang}
-            onChangeSettings={this.props.onChangeSettings}
+            {...this.props}
             onSyncLocalStyles={this.onSyncStyles}
             onSyncLocalVariables={this.onSyncVariables}
-            onPublishPalette={this.props.onPublishPalette}
           />
         )
         break

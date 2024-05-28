@@ -374,7 +374,7 @@ export default class Themes extends React.Component<ThemesProps, ThemesStates> {
             </div>
           </div>
           {this.props.themes.length === 1 ? (
-            <div className="onboarding__callout">
+            <div className="onboarding__callout--centered">
               <Message
                 icon="theme"
                 messages={[locals[this.props.lang].themes.callout.message]}
@@ -440,12 +440,7 @@ export default class Themes extends React.Component<ThemesProps, ThemesStates> {
         {this.props.editorType === 'figma' ? (
           <Actions
             context="DEPLOY"
-            identities={this.props.identities}
-            planStatus={this.props.planStatus}
-            lang={this.props.lang}
-            onSyncLocalStyles={this.props.onSyncLocalStyles}
-            onSyncLocalVariables={this.props.onSyncLocalVariables}
-            onPublishPalette={this.props.onPublishPalette}
+            {...this.props}
           />
         ) : null}
       </div>

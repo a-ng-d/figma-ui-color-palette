@@ -152,9 +152,7 @@ export default class CreatePalette extends React.Component<
       case 'PALETTES': {
         controls = (
           <Palettes
-            userSession={this.props.userSession}
-            planStatus={this.props.planStatus}
-            lang={this.props.lang}
+            {...this.props}
           />
         )
         break
@@ -162,9 +160,7 @@ export default class CreatePalette extends React.Component<
       case 'SOURCE': {
         controls = (
           <Source
-            sourceColors={this.props.sourceColors}
-            planStatus={this.props.planStatus}
-            lang={this.props.lang}
+            {...this.props}
             onChangeColorsFromImport={this.colorsFromImportHandler}
             onCreatePalette={this.onCreatePalette}
           />
@@ -174,17 +170,9 @@ export default class CreatePalette extends React.Component<
       case 'SCALE': {
         controls = (
           <Scale
-            sourceColors={this.props.sourceColors}
             hasPreset={true}
-            preset={this.props.preset}
-            namingConvention={this.props.namingConvention}
-            planStatus={this.props.planStatus}
-            lang={this.props.lang}
-            onChangePreset={this.props.onChangePreset}
+            {...this.props}
             onChangeScale={() => null}
-            onAddStop={this.props.onCustomPreset}
-            onRemoveStop={this.props.onCustomPreset}
-            onChangeNamingConvention={this.props.onCustomPreset}
             onCreatePalette={this.onCreatePalette}
           />
         )
@@ -194,16 +182,7 @@ export default class CreatePalette extends React.Component<
         controls = (
           <Settings
             context="CREATE"
-            sourceColors={this.props.sourceColors}
-            name={this.props.name}
-            description={this.props.description}
-            colorSpace={this.props.colorSpace}
-            visionSimulationMode={this.props.visionSimulationMode}
-            textColorsTheme={this.props.textColorsTheme}
-            view={this.props.view}
-            planStatus={this.props.planStatus}
-            lang={this.props.lang}
-            onChangeSettings={this.props.onChangeSettings}
+            {...this.props}
             onCreatePalette={this.onCreatePalette}
           />
         )

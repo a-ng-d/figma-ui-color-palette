@@ -467,9 +467,7 @@ export default class Source extends React.Component<SourceProps, SourceStates> {
         </div>
         <Actions
           context="CREATE"
-          sourceColors={this.props.sourceColors}
-          planStatus={this.props.planStatus}
-          lang={this.props.lang}
+          {...this.props}
           onCreatePalette={
             this.props.sourceColors.length > 0
               ? this.props.onCreatePalette

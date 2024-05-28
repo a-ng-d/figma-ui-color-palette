@@ -398,7 +398,7 @@ export default class Colors extends React.Component<ColorsProps, ColorsStates> {
             </div>
           </div>
           {this.props.colors.length === 0 ? (
-            <div className="onboarding__callout">
+            <div className="onboarding__callout--centered">
               <Message
                 icon="list-tile"
                 messages={[locals[this.props.lang].colors.callout.message]}
@@ -461,12 +461,7 @@ export default class Colors extends React.Component<ColorsProps, ColorsStates> {
         {this.props.editorType === 'figma' ? (
           <Actions
             context="DEPLOY"
-            identities={this.props.identities}
-            planStatus={this.props.planStatus}
-            lang={this.props.lang}
-            onSyncLocalStyles={this.props.onSyncLocalStyles}
-            onSyncLocalVariables={this.props.onSyncLocalVariables}
-            onPublishPalette={this.props.onPublishPalette}
+            {...this.props}
           />
         ) : null}
       </div>

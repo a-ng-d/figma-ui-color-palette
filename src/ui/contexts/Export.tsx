@@ -683,9 +683,7 @@ export default class Export extends React.Component<ExportProps, ExportStates> {
         </div>
         <Actions
           context="EXPORT"
-          exportType={this.props.exportType}
-          lang={this.props.lang}
-          onExportPalette={this.props.onExportPalette}
+          {...this.props}
         />
       </div>
     )

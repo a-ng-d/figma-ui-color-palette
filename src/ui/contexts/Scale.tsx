@@ -721,10 +721,7 @@ export default class Scale extends React.Component<ScaleProps, ScaleStates> {
         </div>
         <Actions
           context="CREATE"
-          sourceColors={this.props.sourceColors}
-          planStatus={this.props.planStatus}
-          lang={this.props.lang}
-          onCreatePalette={this.props.onCreatePalette}
+          {...this.props}
         />
       </div>
     )
@@ -832,12 +829,7 @@ export default class Scale extends React.Component<ScaleProps, ScaleStates> {
         {this.props.editorType === 'figma' ? (
           <Actions
             context="DEPLOY"
-            identities={this.props.identities}
-            planStatus={this.props.planStatus}
-            lang={this.props.lang}
-            onSyncLocalStyles={this.props.onSyncLocalStyles}
-            onSyncLocalVariables={this.props.onSyncLocalVariables}
-            onPublishPalette={this.props.onPublishPalette}
+            {...this.props}
           />
         ) : null}
       </div>
