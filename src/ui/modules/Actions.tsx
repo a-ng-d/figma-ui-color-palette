@@ -165,7 +165,7 @@ export default class Actions extends React.Component<ActionsProps> {
                 )?.isNew,
                 children: [],
                 action: (e) => this.props.onPublishPalette?.(e),
-              } as DropdownOption
+              } as DropdownOption,
             ]}
             alignment="TOP_RIGHT"
           />

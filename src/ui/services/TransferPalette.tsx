@@ -18,8 +18,8 @@ import type {
   ThemeConfiguration,
   VisionSimulationModeConfiguration,
 } from '../../utils/types'
-import Export from '../contexts/Export'
 import DevModePalettes from '../contexts/DevModePalettes'
+import Export from '../contexts/Export'
 
 interface TransferPaletteProps {
   name: string

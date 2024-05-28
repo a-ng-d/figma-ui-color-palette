@@ -1,4 +1,3 @@
-import { lang, locals } from '../../content/locals'
 import type { AppStates } from '../../ui/App'
 import {
   databaseUrl,
@@ -13,9 +12,10 @@ const publishPalette = async (
 ): Promise<Partial<AppStates>> => {
   let imageUrl = null
   const now = new Date().toISOString()
-  const name = rawData.name === ''
-    ? `${rawData.userSession.userFullName}'s UI COLOR PALETTE`
-    : rawData.name
+  const name =
+    rawData.name === ''
+      ? `${rawData.userSession.userFullName}'s UI COLOR PALETTE`
+      : rawData.name
 
   if (rawData.screenshot !== null) {
     const { error } = await supabase.storage
@@ -139,7 +139,7 @@ const publishPalette = async (
             algorithmVersion: rawData.algorithmVersion,
           },
           isEditedInRealTime: false,
-          isSynchronized: true
+          isSynchronized: true,
         },
       },
       '*'

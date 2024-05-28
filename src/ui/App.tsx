@@ -675,7 +675,7 @@ class App extends React.Component<Record<string, never>, AppStates> {
               identities={{
                 connectionStatus: this.state['userSession'].connectionStatus,
                 userId: this.state['userSession'].userId,
-                creatorId: this.state['creatorIdentity'].creatorId
+                creatorId: this.state['creatorIdentity'].creatorId,
               }}
               editorType={this.state['editorType']}
               planStatus={this.state['planStatus']}

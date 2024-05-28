@@ -7,9 +7,10 @@ const pushPalette = async (
   isShared = false
 ): Promise<Partial<AppStates>> => {
   const now = new Date().toISOString()
-  const name = rawData.name === ''
-    ? `${rawData.userSession.userFullName}'s UI COLOR PALETTE`
-    : rawData.name
+  const name =
+    rawData.name === ''
+      ? `${rawData.userSession.userFullName}'s UI COLOR PALETTE`
+      : rawData.name
 
   if (rawData.screenshot !== null) {
     const { error } = await supabase.storage
@@ -118,7 +119,7 @@ const pushPalette = async (
             algorithmVersion: rawData.algorithmVersion,
           },
           isEditedInRealTime: false,
-          isSynchronized: true
+          isSynchronized: true,
         },
       },
       '*'

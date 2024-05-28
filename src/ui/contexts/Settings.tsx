@@ -69,10 +69,10 @@ const settingsMessage: SettingsMessage = {
       lightColor: '#FFFFFF',
       darkColor: '#000000',
     },
-    algorithmVersion: 'v2'
+    algorithmVersion: 'v2',
   },
   isEditedInRealTime: false,
-  isSynchronized: false
+  isSynchronized: false,
 }
 
 export default class Settings extends React.Component<SettingsProps> {

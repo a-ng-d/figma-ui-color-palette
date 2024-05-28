@@ -1,4 +1,12 @@
-import { Button, Icon, Message, Tabs, Bar, texts, Input } from '@a_ng_d/figmug-ui'
+import {
+  Bar,
+  Button,
+  Icon,
+  Input,
+  Message,
+  Tabs,
+  texts,
+} from '@a_ng_d/figmug-ui'
 import React from 'react'
 
 import { signIn, supabase } from '../../bridges/publication/authentication'
@@ -16,8 +24,8 @@ import type {
   ThemeConfiguration,
   UserSession,
 } from '../../utils/types'
-import PaletteItem from '../components/PaletteItem'
 import Feature from '../components/Feature'
+import PaletteItem from '../components/PaletteItem'
 
 interface PalettesProps {
   userSession: UserSession
@@ -27,7 +35,13 @@ interface PalettesProps {
 
 interface PalettesStates {
   context: string | undefined
-  paletteListStatus: 'LOADING' | 'LOADED' | 'EMPTY' | 'ERROR' | 'FULL' | 'SIGN_IN_FIRST'
+  paletteListStatus:
+    | 'LOADING'
+    | 'LOADED'
+    | 'EMPTY'
+    | 'ERROR'
+    | 'FULL'
+    | 'SIGN_IN_FIRST'
   pageSize: number
   currentPage: number
   isLoadMoreActionLoading: boolean
@@ -71,22 +85,24 @@ export default class Palettes extends React.Component<
     prevProps: Readonly<PalettesProps>,
     prevState: Readonly<PalettesStates>
   ): void => {
-    if (prevProps.userSession.connectionStatus !== this.props.userSession.connectionStatus) {
+    if (
+      prevProps.userSession.connectionStatus !==
+      this.props.userSession.connectionStatus
+    ) {
       this.setState({
-        paletteListStatus: 'LOADING'
+        paletteListStatus: 'LOADING',
       })
       this.callUICPAgent(this.state['context'])
-    } 
+    }
     if (prevState.context !== this.state['context']) {
       this.setState({
         paletteList: [],
-        paletteListStatus: 'LOADING'
+        paletteListStatus: 'LOADING',
       })
       this.callUICPAgent(this.state['context'])
     }
     if (prevState.currentPage !== this.state['currentPage'])
       this.callUICPAgent(this.state['context'])
-      
   }
 
   // Direct actions
@@ -102,7 +118,7 @@ export default class Palettes extends React.Component<
           this.state['pageSize'] * (this.state['currentPage'] - 1),
           this.state['pageSize'] * this.state['currentPage'] - 1
         )
-      
+
       if (!error) {
         this.setState({
           isLoadMoreActionLoading: false,
@@ -132,7 +148,7 @@ export default class Palettes extends React.Component<
           this.state['pageSize'] * (this.state['currentPage'] - 1),
           this.state['pageSize'] * this.state['currentPage'] - 1
         )
-      
+
       if (!error) {
         this.setState({
           isLoadMoreActionLoading: false,
@@ -151,7 +167,7 @@ export default class Palettes extends React.Component<
     const actions: ActionsList = {
       SELF: () => getSeftPalettes(),
       COMMUNITY: () => getCommunityPalettes(),
-      DEFAULT: () => null
+      DEFAULT: () => null,
     }
 
     actions[context ?? 'DEFAULT']?.()
@@ -258,21 +274,29 @@ export default class Palettes extends React.Component<
         label: locals[this.props.lang].palettes.contexts.self,
         id: 'SELF',
         isUpdated:
-          features.find((feature) => feature.name === 'PALETTES_SELF')?.isNew ?? false,
+          features.find((feature) => feature.name === 'PALETTES_SELF')?.isNew ??
+          false,
       })
-    if (features.find((feature) => feature.name === 'PALETTES_COMMUNITY')?.isActive)
+    if (
+      features.find((feature) => feature.name === 'PALETTES_COMMUNITY')
+        ?.isActive
+    )
       contexts.push({
         label: locals[this.props.lang].palettes.contexts.community,
         id: 'COMMUNITY',
         isUpdated:
-          features.find((feature) => feature.name === 'PALETTES_COMMUNITY')?.isNew ?? false,
+          features.find((feature) => feature.name === 'PALETTES_COMMUNITY')
+            ?.isNew ?? false,
       })
-    if (features.find((feature) => feature.name === 'PALETTES_EXPLORE')?.isActive)
+    if (
+      features.find((feature) => feature.name === 'PALETTES_EXPLORE')?.isActive
+    )
       contexts.push({
         label: locals[this.props.lang].palettes.contexts.explore,
         id: 'EXPLORE',
         isUpdated:
-          features.find((feature) => feature.name === 'PALETTES_EXPLORE')?.isNew ?? false,
+          features.find((feature) => feature.name === 'PALETTES_EXPLORE')
+            ?.isNew ?? false,
       })
     return contexts
   }
@@ -281,7 +305,7 @@ export default class Palettes extends React.Component<
   navHandler = (e: React.SyntheticEvent) =>
     this.setState({
       context: (e.target as HTMLElement).dataset.feature,
-      currentPage: 1
+      currentPage: 1,
     })
 
   // Templates
@@ -436,14 +460,15 @@ export default class Palettes extends React.Component<
           rightPart={
             <Feature
               isActive={
-                features.find((feature) => feature.name === 'PALETTES_SEARCH')?.isActive
+                features.find((feature) => feature.name === 'PALETTES_SEARCH')
+                  ?.isActive
               }
             >
               <Input
                 type="TEXT"
                 icon={{
-                  type: "PICTO",
-                  value: "search"
+                  type: 'PICTO',
+                  value: 'search',
                 }}
                 placeholder={locals[this.props.lang].palettes.lazyLoad.search}
               />
