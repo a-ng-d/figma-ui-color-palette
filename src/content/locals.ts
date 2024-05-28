@@ -73,7 +73,7 @@ export const locals: { [key: string]: any } = {
     },
     contexts: {
       source: 'Source',
-      explore: 'Explore',
+      palettes: 'Palettes',
       scale: 'Scale',
       colors: 'Colors',
       themes: 'Themes',
@@ -81,9 +81,20 @@ export const locals: { [key: string]: any } = {
       settings: 'Settings',
       about: 'About',
     },
-    explore: {
-      loadMore: 'Lore more palettes',
+    palettes: {
+      contexts: {
+        self: 'My palettes',
+        community: 'From community',
+        explore: 'Explore',
+        search: 'Search palettes',
+      },
+      search: 'Search palettes',
+      loadMore: 'Load more palettes',
       completeList: 'The palettes list is complete',
+      devMode: {
+        title: 'UI Color Palettes on the page',
+        readyForDev: 'Ready for development',
+      },
     },
     source: {
       title: 'Source colors',
@@ -313,10 +324,6 @@ export const locals: { [key: string]: any } = {
         single: 'color theme',
         several: 'color themes',
       },
-    },
-    palettes: {
-      title: 'UI Color Palettes on the page',
-      readyForDev: 'Ready for development',
     },
     highlight: {
       cta: {

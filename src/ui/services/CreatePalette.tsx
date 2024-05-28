@@ -18,7 +18,7 @@ import type {
   VisionSimulationModeConfiguration,
 } from '../../utils/types'
 import type { AppStates } from '../App'
-import Explore from '../contexts/Explore'
+import Palettes from '../contexts/Palettes'
 import Scale from '../contexts/Scale'
 import Settings from '../contexts/Settings'
 import Source from '../contexts/Source'
@@ -101,12 +101,12 @@ export default class CreatePalette extends React.Component<
       id: string
       isUpdated: boolean
     }> = []
-    if (features.find((feature) => feature.name === 'EXPLORE')?.isActive)
+    if (features.find((feature) => feature.name === 'PALETTES')?.isActive)
       contexts.push({
-        label: locals[this.props.lang].contexts.explore,
-        id: 'EXPLORE',
+        label: locals[this.props.lang].contexts.palettes,
+        id: 'PALETTES',
         isUpdated:
-          features.find((feature) => feature.name === 'EXPLORE')?.isNew ??
+          features.find((feature) => feature.name === 'PALETTES')?.isNew ??
           false,
       })
     if (features.find((feature) => feature.name === 'SOURCE')?.isActive)
@@ -147,9 +147,9 @@ export default class CreatePalette extends React.Component<
     let controls
 
     switch (this.state['context']) {
-      case 'EXPLORE': {
+      case 'PALETTES': {
         controls = (
-          <Explore
+          <Palettes
             planStatus={this.props.planStatus}
             lang={this.props.lang}
           />
