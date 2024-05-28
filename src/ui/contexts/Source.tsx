@@ -64,6 +64,7 @@ export default class Source extends React.Component<SourceProps, SourceStates> {
     }
   }
 
+  // Lifecycle
   componentWillUnmount(): void {
     this.setState({
       coolorsUrl: {

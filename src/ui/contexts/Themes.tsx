@@ -82,6 +82,7 @@ export default class Themes extends React.Component<ThemesProps, ThemesStates> {
     this.handleClickOutside = this.handleClickOutside.bind(this)
   }
 
+  // Lifecycle
   componentDidMount = () =>
     document.addEventListener('mousedown', this.handleClickOutside)
 

@@ -77,6 +77,7 @@ export default class Colors extends React.Component<ColorsProps, ColorsStates> {
     this.handleClickOutside = this.handleClickOutside.bind(this)
   }
 
+  // Lifecycle
   componentDidMount = () =>
     document.addEventListener('mousedown', this.handleClickOutside)
 
