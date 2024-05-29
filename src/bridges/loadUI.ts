@@ -65,12 +65,17 @@ const loadUI = async () => {
 
     const actions: ActionsList = {
       RESIZE_UI: async () => {
-        windowSize.w < 540
-          ? (windowSize.w = 540)
-          : (windowSize.w += msg.movement.x)
-        windowSize.h < 300
-          ? (windowSize.h = 300)
-          : (windowSize.h = windowSize.h += msg.movement.y)
+        const scaleX = Math.abs(msg.origin.x - msg.cursor.x - msg.shift.x),
+        scaleY = Math.abs(msg.origin.y - msg.cursor.y - msg.shift.y)
+
+        if (scaleX > 540)
+          windowSize.w = scaleX
+        else
+          windowSize.w = 540
+        if (scaleY > 300)
+          windowSize.h = scaleY
+        else
+          windowSize.h = 300
 
         await figma.clientStorage.setAsync('plugin_window_width', windowSize.w)
         await figma.clientStorage.setAsync('plugin_window_height', windowSize.h)

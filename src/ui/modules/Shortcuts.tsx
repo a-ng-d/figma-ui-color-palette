@@ -29,7 +29,6 @@ interface ShortcutsProps {
 }
 
 interface ShortcutsStates {
-  canBeResized: boolean
   isUserMenuLoading: boolean
 }
 
@@ -40,54 +39,44 @@ export default class Shortcuts extends React.Component<
   constructor(props: ShortcutsProps) {
     super(props)
     this.state = {
-      canBeResized: false,
       isUserMenuLoading: false,
     }
   }
 
   // Direct actions
-  onHold = () => {
-    this.setState({
-      canBeResized: true,
-    })
+  onHold = (e: any) => {
+    const shiftX = e.target.offsetWidth - e.nativeEvent.layerX
+    const shiftY = e.target.offsetHeight - e.nativeEvent.layerY
+    window.onmousemove = (e) => this.onResize(e, shiftX, shiftY)
+    window.onmouseup = this.onRelease
   }
+    
 
-  onResize = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (this.state['canBeResized']) {
-      parent.postMessage(
-        {
-          pluginMessage: {
-            type: 'RESIZE_UI',
-            origin: {
-              x: e.nativeEvent.screenX - e.nativeEvent.clientX,
-              y: e.nativeEvent.screenY - e.nativeEvent.clientY,
-            },
-            shift: {
-              x: (e as any).nativeEvent.layerX,
-              y: (e as any).nativeEvent.layerY,
-            },
-            cursor: {
-              x: e.nativeEvent.screenX,
-              y: e.nativeEvent.screenY,
-            },
-            movement: {
-              x: e.nativeEvent.movementX,
-              y: e.nativeEvent.movementY,
-            },
+  onResize = (e: MouseEvent, shiftX: number, shiftY: number) => {
+    parent.postMessage(
+      {
+        pluginMessage: {
+          type: 'RESIZE_UI',
+          origin: {
+            x: e.screenX - e.clientX,
+            y: e.screenY - e.clientY,
           },
+          shift: {
+            x: shiftX,
+            y: shiftY,
+          },
+          cursor: {
+            x: e.screenX,
+            y: e.screenY,
+          }
         },
-        '*'
-      )
-    }
+      },
+      '*'
+    )
   }
 
-  onReleased = (e: React.MouseEvent<HTMLDivElement>) => {
-    this.setState({
-      canBeResized: false,
-    })
-    e.target.removeEventListener('mouseleave', () => this.onResize)
-    e.target.removeEventListener('mouseup', () => this.onResize)
-  }
+  onRelease = () =>
+    window.onmousemove = null
 
   // Render
   render() {
@@ -490,9 +479,6 @@ export default class Shortcuts extends React.Component<
               <div
                 className={`box-resizer-grip ${icons['icon--resize-grip']}`}
                 onMouseDown={this.onHold.bind(this)}
-                onMouseMove={this.onResize.bind(this)}
-                onMouseUp={this.onReleased.bind(this)}
-                onMouseLeave={this.onReleased.bind(this)}
               ></div>
             ) : null}
           </>
