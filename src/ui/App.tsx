@@ -651,7 +651,7 @@ class App extends React.Component<Record<string, never>, AppStates> {
           >
             <EditPalette
               {...this.state}
-              identities={{
+              identity={{
                 connectionStatus: this.state['userSession'].connectionStatus,
                 userId: this.state['userSession'].userId,
                 creatorId: this.state['creatorIdentity'].creatorId,

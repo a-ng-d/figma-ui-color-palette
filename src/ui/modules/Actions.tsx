@@ -4,7 +4,7 @@ import React from 'react'
 import { locals } from '../../content/locals'
 import { Language, PlanStatus } from '../../types/config'
 import { SourceColorConfiguration } from '../../types/configurations'
-import { ConnectionStatus } from '../../types/user'
+import { Identity } from '../../types/user'
 import features from '../../utils/config'
 import isBlocked from '../../utils/isBlocked'
 import Feature from '../components/Feature'
@@ -12,11 +12,7 @@ import Feature from '../components/Feature'
 interface ActionsProps {
   context: string
   sourceColors: Array<SourceColorConfiguration> | []
-  identities?: {
-    connectionStatus: ConnectionStatus
-    userId: string | undefined
-    creatorId: string
-  }
+  identity?: Identity
   exportType?: string
   planStatus?: PlanStatus
   lang: Language
@@ -46,13 +42,13 @@ export default class Actions extends React.Component<ActionsProps> {
 
   // Direct actions
   publicationAction = (): Partial<DropdownOption> => {
-    if (this.props.identities?.connectionStatus === 'UNCONNECTED')
+    if (this.props.identity?.connectionStatus === 'UNCONNECTED')
       return {
         label: locals[this.props.lang].actions.publishOrSyncPalette,
         value: 'PALETTE_PUBLICATION',
         feature: 'PUBLISH_SYNC_PALETTE',
       }
-    else if (this.props.identities?.userId === this.props.identities?.creatorId)
+    else if (this.props.identity?.userId === this.props.identity?.creatorId)
       return {
         label: locals[this.props.lang].actions.publishPalette,
         value: 'PALETTE_PUBLICATION',

@@ -19,7 +19,7 @@ import {
 } from '../../types/configurations'
 import { Easing } from '../../types/management'
 import { ActionsList, DispatchProcess } from '../../types/models'
-import { ConnectionStatus } from '../../types/user'
+import { Identity } from '../../types/user'
 import features from '../../utils/config'
 import doLightnessScale from '../../utils/doLightnessScale'
 import isBlocked from '../../utils/isBlocked'
@@ -37,11 +37,7 @@ interface ScaleProps {
   namingConvention: NamingConventionConfiguration
   scale?: ScaleConfiguration
   actions?: string
-  identities?: {
-    connectionStatus: ConnectionStatus
-    userId: string | undefined
-    creatorId: string
-  }
+  identity: Identity
   planStatus: PlanStatus
   editorType?: EditorType
   lang: Language

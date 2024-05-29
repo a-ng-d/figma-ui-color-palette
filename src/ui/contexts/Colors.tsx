@@ -9,7 +9,7 @@ import { ColorConfiguration } from '../../types/configurations'
 import { HoveredColor, SelectedColor } from '../../types/management'
 import { ColorsMessage } from '../../types/messages'
 import { ActionsList, DispatchProcess } from '../../types/models'
-import { ConnectionStatus } from '../../types/user'
+import { Identity } from '../../types/user'
 import type { AppStates } from '../App'
 import ColorItem from '../components/ColorItem'
 import Actions from '../modules/Actions'
@@ -18,11 +18,7 @@ import Dispatcher from '../modules/Dispatcher'
 interface ColorsProps {
   colors: Array<ColorConfiguration>
   editorType: EditorType
-  identities?: {
-    connectionStatus: ConnectionStatus
-    userId: string | undefined
-    creatorId: string
-  }
+  identity?: Identity
   planStatus: PlanStatus
   lang: Language
   onChangeColors: React.Dispatch<Partial<AppStates>>

@@ -24,7 +24,7 @@ import {
   DispatchProcess,
   TextColorsThemeHexModel,
 } from '../../types/models'
-import { ConnectionStatus } from '../../types/user'
+import { Identity } from '../../types/user'
 import features from '../../utils/config'
 import isBlocked from '../../utils/isBlocked'
 import { palette } from '../../utils/palettePackage'
@@ -43,11 +43,7 @@ interface SettingsProps {
   visionSimulationMode: VisionSimulationModeConfiguration
   view: string
   algorithmVersion?: AlgorithmVersionConfiguration
-  identities?: {
-    connectionStatus: ConnectionStatus
-    userId: string | undefined
-    creatorId: string
-  }
+  identity?: Identity
   planStatus: PlanStatus
   editorType?: EditorType
   lang: Language
@@ -1139,7 +1135,7 @@ export default class Settings extends React.Component<SettingsProps> {
         ) : this.props.editorType === 'figma' ? (
           <Actions
             context="DEPLOY"
-            identities={this.props.identities}
+            identity={this.props.identity}
             planStatus={this.props.planStatus}
             lang={this.props.lang}
             onSyncLocalStyles={this.props.onSyncLocalStyles}

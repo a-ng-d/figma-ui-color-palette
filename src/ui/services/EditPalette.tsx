@@ -20,7 +20,7 @@ import {
 } from '../../types/configurations'
 import { ThemesMessage } from '../../types/messages'
 import { TextColorsThemeHexModel } from '../../types/models'
-import { ConnectionStatus } from '../../types/user'
+import { Identity } from '../../types/user'
 import features from '../../utils/config'
 import doLightnessScale from '../../utils/doLightnessScale'
 import isBlocked from '../../utils/isBlocked'
@@ -46,11 +46,7 @@ interface EditPaletteProps {
   textColorsTheme: TextColorsThemeHexModel
   algorithmVersion: AlgorithmVersionConfiguration
   export: ExportConfiguration
-  identities: {
-    connectionStatus: ConnectionStatus
-    userId: string | undefined
-    creatorId: string
-  }
+  identity: Identity
   planStatus: PlanStatus
   editorType: EditorType
   lang: Language

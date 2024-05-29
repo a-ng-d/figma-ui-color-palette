@@ -8,3 +8,9 @@ export interface UserSession {
   accessToken: string | undefined
   refreshToken: string | undefined
 }
+
+export interface Identity {
+  connectionStatus: ConnectionStatus
+  userId: string | undefined
+  creatorId: string
+}

@@ -12,7 +12,7 @@ import {
 import { HoveredColor, SelectedColor } from '../../types/management'
 import { ThemesMessage } from '../../types/messages'
 import { ActionsList, DispatchProcess } from '../../types/models'
-import { ConnectionStatus } from '../../types/user'
+import { Identity } from '../../types/user'
 import doLightnessScale from '../../utils/doLightnessScale'
 import isBlocked from '../../utils/isBlocked'
 import type { AppStates } from '../App'
@@ -24,11 +24,7 @@ interface ThemesProps {
   preset: PresetConfiguration
   scale: ScaleConfiguration
   themes: Array<ThemeConfiguration>
-  identities?: {
-    connectionStatus: ConnectionStatus
-    userId: string | undefined
-    creatorId: string
-  }
+  identity?: Identity
   planStatus: PlanStatus
   editorType: EditorType
   lang: Language
