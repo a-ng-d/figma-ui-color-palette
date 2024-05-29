@@ -1,14 +1,14 @@
 import Colors from '../../canvas/Colors'
 import { lang, locals } from '../../content/locals'
-import setPaletteName from '../../utils/setPaletteName'
-import type {
+import {
   ColorConfiguration,
   PresetConfiguration,
   ScaleConfiguration,
-  SettingsMessage,
   ThemeConfiguration,
   ViewConfiguration,
-} from '../../utils/types'
+} from '../../types/configurations'
+import { SettingsMessage } from '../../types/messages'
+import setPaletteName from '../../utils/setPaletteName'
 import {
   currentSelection,
   isSelectionChanged,

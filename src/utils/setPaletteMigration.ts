@@ -2,14 +2,14 @@ import { uid } from 'uid'
 
 import Colors from '../canvas/Colors'
 import { lang, locals } from '../content/locals'
-import { presets } from './palettePackage'
-import setData from './setData'
-import type {
+import {
   AlgorithmVersionConfiguration,
   ColorConfiguration,
   ColorSpaceConfiguration,
   VisionSimulationModeConfiguration,
-} from './types'
+} from '../types/configurations'
+import { presets } from './palettePackage'
+import setData from './setData'
 
 const setPaletteMigration = (palette: BaseNode) => {
   const id = palette.getPluginData('id'),

@@ -1,7 +1,7 @@
 import { Input, texts } from '@a_ng_d/figmug-ui'
 import React from 'react'
 
-import type { ActionsList } from '../../utils/types'
+import { ActionsList } from '../../types/models'
 
 interface KnobProps {
   id: string

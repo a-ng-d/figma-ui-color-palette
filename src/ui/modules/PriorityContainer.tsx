@@ -7,14 +7,10 @@ import cp from '../../content/images/choose_plan.webp'
 import pp from '../../content/images/pro_plan.webp'
 import t from '../../content/images/trial.webp'
 import { locals } from '../../content/locals'
+import { Language, PlanStatus, TrialStatus } from '../../types/config'
+import { PriorityContext } from '../../types/management'
+import { UserSession } from '../../types/user'
 import features from '../../utils/config'
-import type {
-  Language,
-  PlanStatus,
-  PriorityContext,
-  TrialStatus,
-  UserSession,
-} from '../../utils/types'
 import type { AppStates } from '../App'
 import Feature from '../components/Feature'
 import About from './About'

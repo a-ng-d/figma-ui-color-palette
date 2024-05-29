@@ -1,25 +1,20 @@
-import { Button, Message, SectionTitle } from '@a_ng_d/figmug-ui'
+import { Button, HexModel, Message, SectionTitle } from '@a_ng_d/figmug-ui'
 import React from 'react'
 import { uid } from 'uid'
 
 import { locals } from '../../content/locals'
-import doLightnessScale from '../../utils/doLightnessScale'
-import isBlocked from '../../utils/isBlocked'
-import type {
-  ActionsList,
-  ConnectionStatus,
-  DispatchProcess,
-  EditorType,
-  HexModel,
-  HoveredColor,
-  Language,
-  PlanStatus,
+import { EditorType, Language, PlanStatus } from '../../types/config'
+import {
   PresetConfiguration,
   ScaleConfiguration,
-  SelectedColor,
   ThemeConfiguration,
-  ThemesMessage,
-} from '../../utils/types'
+} from '../../types/configurations'
+import { HoveredColor, SelectedColor } from '../../types/management'
+import { ThemesMessage } from '../../types/messages'
+import { ActionsList, DispatchProcess } from '../../types/models'
+import { ConnectionStatus } from '../../types/user'
+import doLightnessScale from '../../utils/doLightnessScale'
+import isBlocked from '../../utils/isBlocked'
 import type { AppStates } from '../App'
 import ThemeItem from '../components/ThemeItem'
 import Actions from '../modules/Actions'

@@ -1,22 +1,22 @@
 import { uid } from 'uid'
 
 import { lang, locals } from '../content/locals'
-import setPaletteName from '../utils/setPaletteName'
-import type {
+import { Service } from '../types/config'
+import {
   AlgorithmVersionConfiguration,
   ColorConfiguration,
   ColorSpaceConfiguration,
   MetaConfiguration,
-  PaletteNode,
   PresetConfiguration,
   ScaleConfiguration,
-  Service,
   SourceColorConfiguration,
-  TextColorsThemeHexModel,
   ThemeConfiguration,
   ViewConfiguration,
   VisionSimulationModeConfiguration,
-} from '../utils/types'
+} from '../types/configurations'
+import { TextColorsThemeHexModel } from '../types/models'
+import { PaletteNode } from '../types/nodes'
+import setPaletteName from '../utils/setPaletteName'
 import Colors from './Colors'
 
 export default class Palette {

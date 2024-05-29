@@ -10,23 +10,20 @@ import {
 import React from 'react'
 
 import { locals } from '../../content/locals'
+import { EditorType, Language, PlanStatus } from '../../types/config'
+import {
+  NamingConventionConfiguration,
+  PresetConfiguration,
+  ScaleConfiguration,
+  SourceColorConfiguration,
+} from '../../types/configurations'
+import { Easing } from '../../types/management'
+import { ActionsList, DispatchProcess } from '../../types/models'
+import { ConnectionStatus } from '../../types/user'
 import features from '../../utils/config'
 import doLightnessScale from '../../utils/doLightnessScale'
 import isBlocked from '../../utils/isBlocked'
 import { palette, presets } from '../../utils/palettePackage'
-import type {
-  ActionsList,
-  ConnectionStatus,
-  DispatchProcess,
-  Easing,
-  EditorType,
-  Language,
-  NamingConventionConfiguration,
-  PlanStatus,
-  PresetConfiguration,
-  ScaleConfiguration,
-  SourceColorConfiguration,
-} from '../../utils/types'
 import type { AppStates } from '../App'
 import Feature from '../components/Feature'
 import Slider from '../components/Slider'
@@ -68,7 +65,7 @@ interface ScaleStates {
 export default class Scale extends React.Component<ScaleProps, ScaleStates> {
   dispatch: { [key: string]: DispatchProcess }
 
-  static defaultProps = {
+  static defaultProps: Partial<ScaleProps> = {
     namingConvention: 'ONES',
   }
 

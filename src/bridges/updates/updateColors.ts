@@ -1,17 +1,17 @@
 import Colors from '../../canvas/Colors'
 import { lang, locals } from '../../content/locals'
-import setPaletteName from '../../utils/setPaletteName'
-import type {
+import {
   AlgorithmVersionConfiguration,
   ColorSpaceConfiguration,
-  ColorsMessage,
   PresetConfiguration,
   ScaleConfiguration,
-  TextColorsThemeHexModel,
   ThemeConfiguration,
   ViewConfiguration,
   VisionSimulationModeConfiguration,
-} from '../../utils/types'
+} from '../../types/configurations'
+import { ColorsMessage } from '../../types/messages'
+import { TextColorsThemeHexModel } from '../../types/models'
+import setPaletteName from '../../utils/setPaletteName'
 import {
   currentSelection,
   isSelectionChanged,

@@ -5,34 +5,35 @@ import { createRoot } from 'react-dom/client'
 import checkConnectionStatus from '../bridges/checks/checkConnectionStatus'
 import { supabase } from '../bridges/publication/authentication'
 import { locals } from '../content/locals'
-import features, { trialTime } from '../utils/config'
-import { defaultPreset, palette, presets } from '../utils/palettePackage'
-import type {
-  ActionsList,
+import {
+  EditorType,
+  Language,
+  PlanStatus,
+  Service,
+  TrialStatus,
+} from '../types/config'
+import {
   AlgorithmVersionConfiguration,
   ColorConfiguration,
   ColorSpaceConfiguration,
   CreatorConfiguration,
   DatesConfiguration,
-  EditorType,
   ExportConfiguration,
   ExtractOfPaletteConfiguration,
-  Language,
   NamingConventionConfiguration,
-  PlanStatus,
   PresetConfiguration,
-  PriorityContext,
   PublicationConfiguration,
   ScaleConfiguration,
-  Service,
   SourceColorConfiguration,
-  TextColorsThemeHexModel,
   ThemeConfiguration,
-  TrialStatus,
-  UserSession,
   ViewConfiguration,
   VisionSimulationModeConfiguration,
-} from '../utils/types'
+} from '../types/configurations'
+import { PriorityContext } from '../types/management'
+import { ActionsList, TextColorsThemeHexModel } from '../types/models'
+import { UserSession } from '../types/user'
+import features, { trialTime } from '../utils/config'
+import { defaultPreset, palette, presets } from '../utils/palettePackage'
 import Feature from './components/Feature'
 import PriorityContainer from './modules/PriorityContainer'
 import Shortcuts from './modules/Shortcuts'
@@ -671,9 +672,7 @@ class App extends React.Component<Record<string, never>, AppStates> {
                 ?.isActive && this.state['editorType'] === 'dev'
             }
           >
-            <TransferPalette
-              {...this.state}
-            />
+            <TransferPalette {...this.state} />
           </Feature>
           <Feature
             isActive={this.state['priorityContainerContext'] !== 'EMPTY'}

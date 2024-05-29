@@ -1,5 +1,6 @@
 import { lang, locals } from '../content/locals'
-import { ActionsList, windowSize } from '../utils/types'
+import { windowSize } from '../types/config'
+import { ActionsList } from '../types/models'
 import package_json from './../../package.json'
 import checkEditorType from './checks/checkEditorType'
 import checkHighlightStatus from './checks/checkHighlightStatus'
@@ -66,16 +67,12 @@ const loadUI = async () => {
     const actions: ActionsList = {
       RESIZE_UI: async () => {
         const scaleX = Math.abs(msg.origin.x - msg.cursor.x - msg.shift.x),
-        scaleY = Math.abs(msg.origin.y - msg.cursor.y - msg.shift.y)
+          scaleY = Math.abs(msg.origin.y - msg.cursor.y - msg.shift.y)
 
-        if (scaleX > 540)
-          windowSize.w = scaleX
-        else
-          windowSize.w = 540
-        if (scaleY > 300)
-          windowSize.h = scaleY
-        else
-          windowSize.h = 300
+        if (scaleX > 540) windowSize.w = scaleX
+        else windowSize.w = 540
+        if (scaleY > 300) windowSize.h = scaleY
+        else windowSize.h = 300
 
         await figma.clientStorage.setAsync('plugin_window_width', windowSize.w)
         await figma.clientStorage.setAsync('plugin_window_height', windowSize.h)

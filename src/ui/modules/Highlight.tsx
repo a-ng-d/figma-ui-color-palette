@@ -3,7 +3,8 @@ import React from 'react'
 
 import { locals } from '../../content/locals'
 import releaseNotes from '../../content/releaseNotes'
-import type { Language, ReleaseNote } from '../../utils/types'
+import { Language } from '../../types/config'
+import { ReleaseNote } from '../../types/content'
 
 interface HighlightProps {
   lang: Language

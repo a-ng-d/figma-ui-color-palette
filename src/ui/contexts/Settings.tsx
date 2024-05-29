@@ -10,24 +10,24 @@ import {
 import React from 'react'
 
 import { locals } from '../../content/locals'
+import { EditorType, Language, PlanStatus } from '../../types/config'
+import {
+  AlgorithmVersionConfiguration,
+  ColorSpaceConfiguration,
+  SourceColorConfiguration,
+  ViewConfiguration,
+  VisionSimulationModeConfiguration,
+} from '../../types/configurations'
+import { SettingsMessage } from '../../types/messages'
+import {
+  ActionsList,
+  DispatchProcess,
+  TextColorsThemeHexModel,
+} from '../../types/models'
+import { ConnectionStatus } from '../../types/user'
 import features from '../../utils/config'
 import isBlocked from '../../utils/isBlocked'
 import { palette } from '../../utils/palettePackage'
-import type {
-  ActionsList,
-  AlgorithmVersionConfiguration,
-  ColorSpaceConfiguration,
-  ConnectionStatus,
-  DispatchProcess,
-  EditorType,
-  Language,
-  PlanStatus,
-  SettingsMessage,
-  SourceColorConfiguration,
-  TextColorsThemeHexModel,
-  ViewConfiguration,
-  VisionSimulationModeConfiguration,
-} from '../../utils/types'
 import type { AppStates } from '../App'
 import Feature from '../components/Feature'
 import Actions from '../modules/Actions'

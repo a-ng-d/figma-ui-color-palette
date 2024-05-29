@@ -1,11 +1,11 @@
 import { doMap } from '@a-ng-d/figmug.modules.do-map'
-import { Button, FormItem, Input, InputsBar } from '@a_ng_d/figmug-ui'
+import { Button, FormItem, HexModel, Input, InputsBar } from '@a_ng_d/figmug-ui'
 import chroma from 'chroma-js'
 import React from 'react'
 
 import { locals } from '../../content/locals'
+import { Language } from '../../types/config'
 import features from '../../utils/config'
-import type { HexModel, Language } from '../../utils/types'
 import Feature from './Feature'
 
 interface ColorItemProps {

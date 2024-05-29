@@ -1,7 +1,7 @@
 import { doKebabCase } from '@a-ng-d/figmug.modules.do-kebab-case'
 
 import { lang, locals } from '../../content/locals'
-import type { PaletteData } from '../../utils/types'
+import { PaletteData } from '../../types/data'
 
 const exportTailwind = (palette: FrameNode) => {
   const paletteData: PaletteData = JSON.parse(palette.getPluginData('data')),

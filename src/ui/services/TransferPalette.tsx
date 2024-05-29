@@ -4,20 +4,17 @@ import JSZip from 'jszip'
 import React from 'react'
 
 import { locals } from '../../content/locals'
-import type {
+import { EditorType, Language, PlanStatus, Service } from '../../types/config'
+import {
   ColorConfiguration,
-  EditorType,
   ExportConfiguration,
   ExtractOfPaletteConfiguration,
-  Language,
-  PlanStatus,
   PresetConfiguration,
   ScaleConfiguration,
-  Service,
-  TextColorsThemeHexModel,
   ThemeConfiguration,
   VisionSimulationModeConfiguration,
-} from '../../utils/types'
+} from '../../types/configurations'
+import { TextColorsThemeHexModel } from '../../types/models'
 import DevModePalettes from '../contexts/DevModePalettes'
 import Export from '../contexts/Export'
 

@@ -11,16 +11,11 @@ import React from 'react'
 import { uid } from 'uid'
 
 import { locals } from '../../content/locals'
+import { EditorType, Language, PlanStatus } from '../../types/config'
+import { SourceColorConfiguration } from '../../types/configurations'
+import { ImportUrl, ThirdParty } from '../../types/management'
 import features from '../../utils/config'
 import isBlocked from '../../utils/isBlocked'
-import type {
-  EditorType,
-  ImportUrl,
-  Language,
-  PlanStatus,
-  SourceColorConfiguration,
-  ThirdParty,
-} from '../../utils/types'
 import Feature from '../components/Feature'
 import Actions from '../modules/Actions'
 

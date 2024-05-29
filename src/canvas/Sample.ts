@@ -1,9 +1,9 @@
-import type {
+import {
   ColorSpaceConfiguration,
-  TextColorsThemeHexModel,
   ViewConfiguration,
   VisionSimulationModeConfiguration,
-} from '../utils/types'
+} from '../types/configurations'
+import { TextColorsThemeHexModel } from '../types/models'
 import Paragraph from './Paragraph'
 import Properties from './Properties'
 import Property from './Property'

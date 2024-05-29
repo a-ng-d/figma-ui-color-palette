@@ -3,10 +3,10 @@ import createPalette from './bridges/creations/createPalette'
 import loadParameters from './bridges/loadParameters'
 import loadUI from './bridges/loadUI'
 import processSelection from './bridges/processSelection'
+import { PaletteConfiguration } from './types/configurations'
 import doLightnessScale from './utils/doLightnessScale'
 import { presets } from './utils/palettePackage'
 import setPaletteMigration from './utils/setPaletteMigration'
-import type { PaletteConfiguration } from './utils/types'
 
 // Fonts
 figma.loadFontAsync({ family: 'Inter', style: 'Regular' })

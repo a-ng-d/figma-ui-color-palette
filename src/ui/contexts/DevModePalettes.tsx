@@ -2,12 +2,12 @@ import { Button, Message, texts } from '@a_ng_d/figmug-ui'
 import React from 'react'
 
 import { locals } from '../../content/locals'
-import type {
+import { Language } from '../../types/config'
+import {
   ColorConfiguration,
   ExtractOfPaletteConfiguration,
-  Language,
   ThemeConfiguration,
-} from '../../utils/types'
+} from '../../types/configurations'
 import PaletteItem from '../components/PaletteItem'
 
 interface DevModePalettesProps {

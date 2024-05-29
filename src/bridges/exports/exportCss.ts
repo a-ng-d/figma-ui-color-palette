@@ -1,11 +1,8 @@
 import { doKebabCase } from '@a-ng-d/figmug.modules.do-kebab-case'
 
 import { lang, locals } from '../../content/locals'
-import type {
-  ActionsList,
-  PaletteData,
-  PaletteDataShadeItem,
-} from '../../utils/types'
+import { PaletteData, PaletteDataShadeItem } from '../../types/data'
+import { ActionsList } from '../../types/models'
 
 const exportCss = (palette: FrameNode, colorSpace: 'RGB' | 'LCH' | 'P3') => {
   const paletteData: PaletteData = JSON.parse(palette.getPluginData('data')),

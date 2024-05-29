@@ -2,7 +2,7 @@ import { doCamelCase } from '@a-ng-d/figmug.modules.do-camel-case'
 import { doPascalCase } from '@a-ng-d/figmug.modules.do-pascal-case'
 
 import { lang, locals } from '../../content/locals'
-import type { PaletteData } from '../../utils/types'
+import { PaletteData } from '../../types/data'
 
 const exportUIKit = (palette: FrameNode) => {
   const paletteData: PaletteData = JSON.parse(palette.getPluginData('data')),

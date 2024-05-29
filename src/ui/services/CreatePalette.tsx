@@ -2,22 +2,21 @@ import { Bar, Tabs } from '@a_ng_d/figmug-ui'
 import React from 'react'
 
 import { locals } from '../../content/locals'
+import { Language, PlanStatus } from '../../types/config'
+import {
+  ColorSpaceConfiguration,
+  NamingConventionConfiguration,
+  PresetConfiguration,
+  SourceColorConfiguration,
+  ViewConfiguration,
+  VisionSimulationModeConfiguration,
+} from '../../types/configurations'
+import { ThirdParty } from '../../types/management'
+import { TextColorsThemeHexModel } from '../../types/models'
+import { UserSession } from '../../types/user'
 import features from '../../utils/config'
 import doLightnessScale from '../../utils/doLightnessScale'
 import { palette } from '../../utils/palettePackage'
-import type {
-  ColorSpaceConfiguration,
-  Language,
-  NamingConventionConfiguration,
-  PlanStatus,
-  PresetConfiguration,
-  SourceColorConfiguration,
-  TextColorsThemeHexModel,
-  ThirdParty,
-  UserSession,
-  ViewConfiguration,
-  VisionSimulationModeConfiguration,
-} from '../../utils/types'
 import type { AppStates } from '../App'
 import Palettes from '../contexts/Palettes'
 import Scale from '../contexts/Scale'
@@ -150,11 +149,7 @@ export default class CreatePalette extends React.Component<
 
     switch (this.state['context']) {
       case 'PALETTES': {
-        controls = (
-          <Palettes
-            {...this.props}
-          />
-        )
+        controls = <Palettes {...this.props} />
         break
       }
       case 'SOURCE': {

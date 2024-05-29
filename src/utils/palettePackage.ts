@@ -1,4 +1,7 @@
-import type { PaletteConfiguration, PresetConfiguration } from './types'
+import {
+  PaletteConfiguration,
+  PresetConfiguration,
+} from '../types/configurations'
 
 export const presets: Array<PresetConfiguration> = [
   {

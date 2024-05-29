@@ -1,18 +1,18 @@
 import Colors from '../../canvas/Colors'
 import { lang, locals } from '../../content/locals'
-import doLightnessScale from '../../utils/doLightnessScale'
-import setPaletteName from '../../utils/setPaletteName'
-import type {
+import {
   AlgorithmVersionConfiguration,
   ColorConfiguration,
   ColorSpaceConfiguration,
   PresetConfiguration,
-  ScaleMessage,
-  TextColorsThemeHexModel,
   ThemeConfiguration,
   ViewConfiguration,
   VisionSimulationModeConfiguration,
-} from '../../utils/types'
+} from '../../types/configurations'
+import { ScaleMessage } from '../../types/messages'
+import { TextColorsThemeHexModel } from '../../types/models'
+import doLightnessScale from '../../utils/doLightnessScale'
+import setPaletteName from '../../utils/setPaletteName'
 import {
   currentSelection,
   isSelectionChanged,

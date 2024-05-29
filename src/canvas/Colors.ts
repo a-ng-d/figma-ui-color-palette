@@ -3,15 +3,17 @@ import chroma from 'chroma-js'
 import { Hsluv } from 'hsluv'
 
 import { lang, locals } from '../content/locals'
-import type {
-  ActionsList,
+import {
+  ScaleConfiguration,
+  VisionSimulationModeConfiguration,
+} from '../types/configurations'
+import {
   PaletteData,
   PaletteDataColorItem,
   PaletteDataThemeItem,
-  PaletteNode,
-  ScaleConfiguration,
-  VisionSimulationModeConfiguration,
-} from '../utils/types'
+} from '../types/data'
+import { ActionsList } from '../types/models'
+import { PaletteNode } from '../types/nodes'
 import Header from './Header'
 import Sample from './Sample'
 import Signature from './Signature'

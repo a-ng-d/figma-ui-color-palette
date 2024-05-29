@@ -1,16 +1,16 @@
 import Palette from '../../canvas/Palette'
-import type {
+import {
   AlgorithmVersionConfiguration,
   ColorSpaceConfiguration,
   MetaConfiguration,
   PresetConfiguration,
   ScaleConfiguration,
   SourceColorConfiguration,
-  TextColorsThemeHexModel,
   ThemeConfiguration,
   ViewConfiguration,
   VisionSimulationModeConfiguration,
-} from '../../utils/types'
+} from '../../types/configurations'
+import { TextColorsThemeHexModel } from '../../types/models'
 
 interface Msg {
   data: {

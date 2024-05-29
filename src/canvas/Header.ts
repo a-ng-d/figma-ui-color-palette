@@ -1,5 +1,6 @@
 import { lang, locals } from '../content/locals'
-import type { PaletteNode, ScaleConfiguration } from '../utils/types'
+import { ScaleConfiguration } from '../types/configurations'
+import { PaletteNode } from '../types/nodes'
 import Sample from './Sample'
 
 export default class Header {

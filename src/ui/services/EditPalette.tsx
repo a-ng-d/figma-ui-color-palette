@@ -6,27 +6,25 @@ import JSZip from 'jszip'
 import React from 'react'
 
 import { locals } from '../../content/locals'
+import { EditorType, Language, PlanStatus } from '../../types/config'
+import {
+  AlgorithmVersionConfiguration,
+  ColorConfiguration,
+  ColorSpaceConfiguration,
+  ExportConfiguration,
+  PresetConfiguration,
+  ScaleConfiguration,
+  ThemeConfiguration,
+  ViewConfiguration,
+  VisionSimulationModeConfiguration,
+} from '../../types/configurations'
+import { ThemesMessage } from '../../types/messages'
+import { TextColorsThemeHexModel } from '../../types/models'
+import { ConnectionStatus } from '../../types/user'
 import features from '../../utils/config'
 import doLightnessScale from '../../utils/doLightnessScale'
 import isBlocked from '../../utils/isBlocked'
 import { palette } from '../../utils/palettePackage'
-import type {
-  AlgorithmVersionConfiguration,
-  ColorConfiguration,
-  ColorSpaceConfiguration,
-  ConnectionStatus,
-  EditorType,
-  ExportConfiguration,
-  Language,
-  PlanStatus,
-  PresetConfiguration,
-  ScaleConfiguration,
-  TextColorsThemeHexModel,
-  ThemeConfiguration,
-  ThemesMessage,
-  ViewConfiguration,
-  VisionSimulationModeConfiguration,
-} from '../../utils/types'
 import type { AppStates } from '../App'
 import Feature from '../components/Feature'
 import Colors from '../contexts/Colors'

@@ -1,12 +1,12 @@
 import { uid } from 'uid'
 
 import { lang, locals } from '../content/locals'
-import setPaletteMigration from '../utils/setPaletteMigration'
-import type {
-  ActionsList,
+import {
   SourceColorConfiguration,
   ThemeConfiguration,
-} from '../utils/types'
+} from '../types/configurations'
+import { ActionsList } from '../types/models'
+import setPaletteMigration from '../utils/setPaletteMigration'
 
 export let currentSelection: ReadonlyArray<SceneNode>
 export let previousSelection: ReadonlyArray<SceneNode> | undefined

@@ -1,5 +1,5 @@
 import { lang, locals } from '../content/locals'
-import type { PaletteNode } from '../utils/types'
+import { PaletteNode } from '../types/nodes'
 import Paragraph from './Paragraph'
 import Tag from './Tag'
 

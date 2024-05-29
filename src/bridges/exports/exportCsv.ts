@@ -1,5 +1,5 @@
 import { lang, locals } from '../../content/locals'
-import type { PaletteData } from '../../utils/types'
+import { PaletteData } from '../../types/data'
 
 interface colorCsv {
   name: string

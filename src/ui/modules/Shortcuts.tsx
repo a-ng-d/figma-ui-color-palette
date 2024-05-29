@@ -3,15 +3,15 @@ import React from 'react'
 
 import { signIn, signOut } from '../../bridges/publication/authentication'
 import { locals } from '../../content/locals'
-import features from '../../utils/config'
-import isBlocked from '../../utils/isBlocked'
-import type {
+import {
   EditorType,
   Language,
   PlanStatus,
   TrialStatus,
-  UserSession,
-} from '../../utils/types'
+} from '../../types/config'
+import { UserSession } from '../../types/user'
+import features from '../../utils/config'
+import isBlocked from '../../utils/isBlocked'
 import Feature from '../components/Feature'
 
 interface ShortcutsProps {
@@ -50,7 +50,6 @@ export default class Shortcuts extends React.Component<
     window.onmousemove = (e) => this.onResize(e, shiftX, shiftY)
     window.onmouseup = this.onRelease
   }
-    
 
   onResize = (e: MouseEvent, shiftX: number, shiftY: number) => {
     parent.postMessage(
@@ -68,15 +67,14 @@ export default class Shortcuts extends React.Component<
           cursor: {
             x: e.screenX,
             y: e.screenY,
-          }
+          },
         },
       },
       '*'
     )
   }
 
-  onRelease = () =>
-    window.onmousemove = null
+  onRelease = () => (window.onmousemove = null)
 
   // Render
   render() {

@@ -1,16 +1,15 @@
 import * as blinder from 'color-blind'
+import { HexModel } from '@a_ng_d/figmug-ui'
 import { APCAcontrast, fontLookupAPCA, sRGBtoY } from 'apca-w3'
 import chroma from 'chroma-js'
 import { Hsluv } from 'hsluv'
 
 import { lang, locals } from '../content/locals'
-import type {
-  ActionsList,
+import {
   ColorSpaceConfiguration,
-  HexModel,
-  TextColorsThemeHexModel,
   VisionSimulationModeConfiguration,
-} from '../utils/types'
+} from '../types/configurations'
+import { ActionsList, TextColorsThemeHexModel } from '../types/models'
 import Tag from './Tag'
 
 export default class Properties {

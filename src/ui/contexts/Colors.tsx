@@ -1,22 +1,15 @@
-import { Button, Message, SectionTitle } from '@a_ng_d/figmug-ui'
+import { Button, HexModel, Message, SectionTitle } from '@a_ng_d/figmug-ui'
 import chroma from 'chroma-js'
 import React from 'react'
 import { uid } from 'uid'
 
 import { locals } from '../../content/locals'
-import type {
-  ActionsList,
-  ColorConfiguration,
-  ColorsMessage,
-  ConnectionStatus,
-  DispatchProcess,
-  EditorType,
-  HexModel,
-  HoveredColor,
-  Language,
-  PlanStatus,
-  SelectedColor,
-} from '../../utils/types'
+import { EditorType, Language, PlanStatus } from '../../types/config'
+import { ColorConfiguration } from '../../types/configurations'
+import { HoveredColor, SelectedColor } from '../../types/management'
+import { ColorsMessage } from '../../types/messages'
+import { ActionsList, DispatchProcess } from '../../types/models'
+import { ConnectionStatus } from '../../types/user'
 import type { AppStates } from '../App'
 import ColorItem from '../components/ColorItem'
 import Actions from '../modules/Actions'

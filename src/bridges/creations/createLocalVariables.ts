@@ -1,6 +1,6 @@
 import LocalVariable from '../../canvas/LocalVariable'
 import { lang, locals } from '../../content/locals'
-import type { PaletteData } from '../../utils/types'
+import { PaletteData } from '../../types/data'
 
 const createLocalVariables = async (palette: SceneNode) => {
   palette = figma.currentPage.selection[0] as FrameNode

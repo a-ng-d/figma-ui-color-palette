@@ -11,19 +11,18 @@ import React from 'react'
 
 import { signIn, supabase } from '../../bridges/publication/authentication'
 import { locals } from '../../content/locals'
-import features, { palettesDbTableName } from '../../utils/config'
-import type {
-  ActionsList,
+import { Language, PlanStatus } from '../../types/config'
+import {
   ColorConfiguration,
-  Language,
   MetaConfiguration,
   PaletteConfiguration,
-  PlanStatus,
   PresetConfiguration,
   SourceColorConfiguration,
   ThemeConfiguration,
-  UserSession,
-} from '../../utils/types'
+} from '../../types/configurations'
+import { ActionsList } from '../../types/models'
+import { UserSession } from '../../types/user'
+import features, { palettesDbTableName } from '../../utils/config'
 import Feature from '../components/Feature'
 import PaletteItem from '../components/PaletteItem'
 

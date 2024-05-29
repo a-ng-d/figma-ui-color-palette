@@ -3,14 +3,11 @@ import { Dropdown, Input, Menu, SectionTitle } from '@a_ng_d/figmug-ui'
 import React from 'react'
 
 import { locals } from '../../content/locals'
+import { Language, PlanStatus } from '../../types/config'
+import { ColorSpaceConfiguration } from '../../types/configurations'
+import { ActionsList } from '../../types/models'
 import features from '../../utils/config'
 import isBlocked from '../../utils/isBlocked'
-import type {
-  ActionsList,
-  ColorSpaceConfiguration,
-  Language,
-  PlanStatus,
-} from '../../utils/types'
 import Actions from '../modules/Actions'
 
 interface ExportProps {
