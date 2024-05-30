@@ -126,6 +126,7 @@ const processSelection = () => {
           rgb: (element as any).fills[0].color,
           source: 'CANVAS',
           id: uid(),
+          isRemovable: false
         })
         selectionHandler('COLOR_SELECTED', element)
       }

@@ -123,7 +123,8 @@ export default class CreatePalette extends React.Component<
             b: gl[2]
           },
           source: 'REMOTE',
-          id: uid()
+          id: uid(),
+          isRemovable: false
         }
       })
     })

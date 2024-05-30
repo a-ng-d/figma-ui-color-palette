@@ -104,6 +104,10 @@ export const locals: { [key: string]: any } = {
     },
     source: {
       title: 'Source colors',
+      contexts: {
+        overview: 'Overview',
+        explore: 'Explore'
+      },
       canvas: {
         title: 'Selected colors',
         tip: 'Select a frame or a shape (filled with color) on the Figma/FigJam canvas, then create a UI Color Palette.',
@@ -133,6 +137,11 @@ export const locals: { [key: string]: any } = {
             'The URL must include several hexadecimal codes (e.g. 8ecae6-…-219ebc)',
         },
       },
+      colourLovers: {
+        title: 'Colour Lovers',
+        helper:
+          'Colour Lovers is a tool for creating and exploring beautiful color schemes',
+      }
     },
     scale: {
       title: 'Lightness scale',
@@ -322,7 +331,8 @@ export const locals: { [key: string]: any } = {
       syncPalette: 'Synchronize palette',
       export: 'Export the UI Color Palette to',
       addToFile: 'Add to file',
-      configure: 'Configure',
+      addToSource: 'Add to source',
+      duplicate: 'Duplicate',
       sourceColorsNumber: {
         single: 'source color',
         several: 'source colors',

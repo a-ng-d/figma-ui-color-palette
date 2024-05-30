@@ -22,7 +22,7 @@ import {
 } from '../../types/configurations'
 import { ActionsList } from '../../types/models'
 import { UserSession } from '../../types/user'
-import features, { palettesDbTableName } from '../../utils/config'
+import features, { pageSize, palettesDbTableName } from '../../utils/config'
 import Feature from '../components/Feature'
 import PaletteItem from '../components/PaletteItem'
 import { ColourLovers, ExternalPalettes } from '../../types/data'
@@ -48,7 +48,6 @@ interface PalettesStates {
     | 'ERROR'
     | 'FULL'
     | 'SIGN_IN_FIRST'
-  pageSize: number
   currentPage: number
   isLoadMoreActionLoading: boolean
   isSignInLoading: boolean
@@ -67,13 +66,11 @@ export default class Palettes extends React.Component<
     this.contexts = setContexts([
       'PALETTES_SELF',
       'PALETTES_COMMUNITY',
-      'PALETTES_EXPLORE',
     ])
     this.state = {
       context:
-      this.contexts[0] !== undefined ? this.contexts[0].id : '',
+        this.contexts[0] !== undefined ? this.contexts[0].id : '',
       paletteListStatus: 'LOADING',
-      pageSize: 20,
       currentPage: 1,
       isLoadMoreActionLoading: false,
       isSignInLoading: false,
@@ -120,8 +117,8 @@ export default class Palettes extends React.Component<
         )
         .eq('creator_id', this.props.userSession.userId)
         .range(
-          this.state['pageSize'] * (this.state['currentPage'] - 1),
-          this.state['pageSize'] * this.state['currentPage'] - 1
+          pageSize * (this.state['currentPage'] - 1),
+          pageSize * this.state['currentPage'] - 1
         )
 
       if (!error) {
@@ -150,8 +147,8 @@ export default class Palettes extends React.Component<
           'palette_id, screenshot, name, preset, colors, themes, creator_avatar, creator_full_name'
         )
         .range(
-          this.state['pageSize'] * (this.state['currentPage'] - 1),
-          this.state['pageSize'] * this.state['currentPage'] - 1
+          pageSize * (this.state['currentPage'] - 1),
+          pageSize * this.state['currentPage'] - 1
         )
 
       if (!error) {
@@ -169,38 +166,9 @@ export default class Palettes extends React.Component<
         })
     }
 
-    const getPublicPalettes = async () => {
-      return fetch(
-        'https://corsproxy.io/?' +
-          encodeURIComponent(
-            `https://www.colourlovers.com/api/palettes?format=json&numResults=${
-              this.state['pageSize']
-            }&resultOffset=${
-              this.state['currentPage'] - 1
-            }`
-          ),
-        {
-          cache: 'no-cache',
-          credentials: 'omit',
-        }
-      )
-        .then((response) => response.json())
-        .then((data) => this.setState({
-          paletteListStatus: data.length > 0 ? 'LOADED' : 'FULL',
-          paletteList: this.state['paletteList'].concat(data),
-        }))
-        .finally(() => this.setState({
-          isLoadMoreActionLoading: false,
-        }))
-        .catch(() => this.setState({
-          paletteListStatus: 'ERROR',
-        }))
-    }
-
     const actions: ActionsList = {
       PALETTES_SELF: () => getSeftPalettes(),
       PALETTES_COMMUNITY: () => getCommunityPalettes(),
-      PALETTES_EXPLORE: () => getPublicPalettes(),
       DEFAULT: () => null,
     }
 
@@ -377,71 +345,6 @@ export default class Palettes extends React.Component<
     )
   }
 
-  ExternalSourceColorsList = () => {
-    return (
-      <ul className="rich-list">
-        {this.state['paletteList'].map((palette, index: number) => (
-          <PaletteItem
-            id={palette.id?.toString() ?? ''}
-            key={`source-colors-${index}`}
-            src={palette.imageUrl?.replace('http', 'https')}
-            title={palette.title}
-            subtitle={`Rank ${palette.rank}`}
-            info={`${palette.numVotes} votes, ${palette.numViews} views, ${palette.numComments} comments`}
-            user={{
-              avatar: '',
-              name: palette.userName ?? '',
-            }}
-            action={() => null}
-          >
-            <div className="snackbar">
-              <Button
-                type="icon"
-                icon="link-connected"
-                action={() => parent.postMessage(
-                  {
-                    pluginMessage: {
-                      type: 'OPEN_IN_BROWSER',
-                      url: palette.url?.replace('http', 'https'),
-                    },
-                  },
-                  '*'
-                )}
-              />
-              <Button
-                type="secondary"
-                label={locals[this.props.lang].actions.configure}
-                action={() => this.props.onConfigureExternalSourceColors(
-                  palette.title ?? '',
-                  palette.colors ?? [],
-                )}
-              />
-            </div>
-          </PaletteItem>
-        ))}
-        <div className="list-control">
-          {this.state['paletteListStatus'] === 'LOADED' ? (
-            <Button
-              type="secondary"
-              label={locals[this.props.lang].palettes.lazyLoad.loadMore}
-              isLoading={this.state['isLoadMoreActionLoading']}
-              action={() =>
-                this.setState({
-                  isLoadMoreActionLoading: true,
-                  currentPage: this.state['currentPage'] + 1,
-                })
-              }
-            />
-          ) : (
-            <div className={`${texts['type--secondary']} type`}>
-              {locals[this.props.lang].palettes.lazyLoad.completeList}
-            </div>
-          )}
-        </div>
-      </ul>
-    )
-  }
-
   // Render
   render() {
     let controls
@@ -450,7 +353,7 @@ export default class Palettes extends React.Component<
       this.state['paletteListStatus'] === 'LOADED' ||
       this.state['paletteListStatus'] === 'FULL'
     ) {
-      controls = this.state['context'] !== 'PALETTES_EXPLORE' ? <this.ExternalPalettesList /> : <this.ExternalSourceColorsList />
+      controls = <this.ExternalPalettesList />
     } else if (this.state['paletteListStatus'] === 'ERROR') {
       controls = (
         <div className="onboarding__callout--centered">

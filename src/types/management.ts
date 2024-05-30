@@ -21,7 +21,7 @@ export type PriorityContext =
   | 'ABOUT'
   | 'PUBLICATION'
 
-export type ThirdParty = 'COOLORS' | 'REALTIME_COLORS'
+export type ThirdParty = 'COOLORS' | 'REALTIME_COLORS' | 'COLOUR_LOVERS'
 
 export type Easing = 'LINEAR' | 'EASE_IN' | 'EASE_OUT' | 'EASE_IN_OUT'
 

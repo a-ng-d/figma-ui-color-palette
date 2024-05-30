@@ -46,6 +46,7 @@ figma.on('run', async ({ parameters }: RunEvent) => {
               rgb: (element as any).fills[0].color,
               source: 'CANVAS',
               id: '',
+              isRemovable: false
             }
           }),
         palette: {

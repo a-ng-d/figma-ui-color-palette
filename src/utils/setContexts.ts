@@ -42,22 +42,30 @@ export const setContexts = (
         false
     },
     {
-      label: locals[lang].palettes.contexts.explore,
-      id: 'PALETTES_EXPLORE',
-      isUpdated:
-        features.find((feature) => feature.name === 'PALETTES_EXPLORE')
-          ?.isNew ?? false,
-        isActive:
-        features.find((feature) => feature.name === 'SOURCE')?.isActive ??
-        false
-    },
-    {
       label: locals[lang].contexts.source,
       id: 'SOURCE',
       isUpdated:
         features.find((feature) => feature.name === 'SOURCE')?.isNew ?? false,
       isActive:
         features.find((feature) => feature.name === 'SOURCE')?.isActive ??
+        false
+    },
+    {
+      label: locals[lang].source.contexts.overview,
+      id: 'SOURCE_OVERVIEW',
+      isUpdated:
+        features.find((feature) => feature.name === 'SOURCE_OVERVIEW')?.isNew ?? false,
+      isActive:
+        features.find((feature) => feature.name === 'SOURCE_OVERVIEW')?.isActive ??
+        false
+    },
+    {
+      label: locals[lang].source.contexts.explore,
+      id: 'SOURCE_EXPLORE',
+      isUpdated:
+        features.find((feature) => feature.name === 'SOURCE_EXPLORE')?.isNew ?? false,
+      isActive:
+        features.find((feature) => feature.name === 'SOURCE_EXPLORE')?.isActive ??
         false
     },
     {

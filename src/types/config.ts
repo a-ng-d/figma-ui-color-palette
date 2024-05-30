@@ -10,7 +10,19 @@ export interface Feature {
 
 export type Service = 'CREATE' | 'EDIT' | 'TRANSFER'
 
-export type Context = 'PALETTES' | 'SOURCE' | 'SCALE' | 'COLORS' | 'THEMES' | 'EXPORT' | 'SETTINGS' | 'PALETTES_SELF' | 'PALETTES_COMMUNITY' | 'PALETTES_EXPLORE'
+export type Context =
+  | 'PALETTES'
+  | 'PALETTES_SELF'
+  | 'PALETTES_COMMUNITY'
+  | 'PALETTES_EXPLORE'
+  | 'SOURCE'
+  | 'SOURCE_OVERVIEW'
+  | 'SOURCE_EXPLORE'
+  | 'SCALE'
+  | 'COLORS'
+  | 'THEMES'
+  | 'EXPORT'
+  | 'SETTINGS'
 
 export type EditorType = 'figma' | 'figjam' | 'dev'
 

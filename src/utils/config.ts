@@ -2,6 +2,7 @@ import { Feature } from '../types/config'
 
 export const trialTime = 48
 export const oldTrialTime = 168
+export const pageSize = 20
 export const proxyUrl =
   'https://hook.eu1.make.com/s02o2bjkknapgjidnp5bko7duc5w6t65'
 export const databaseUrl = 'https://zclweepgvqkrelyfwhma.supabase.co'
@@ -155,15 +156,6 @@ export const features: Array<Feature> = [
     service: ['CREATE'],
   },
   {
-    name: 'PALETTES_EXPLORE',
-    description: 'Free palettes',
-    isActive: true,
-    isPro: false,
-    isNew: false,
-    type: 'DIVISION',
-    service: ['CREATE'],
-  },
-  {
     name: 'PALETTES_DEV',
     description: 'Dev mode palettes',
     isActive: true,
@@ -197,6 +189,24 @@ export const features: Array<Feature> = [
     isPro: false,
     isNew: false,
     type: 'ACTION',
+    service: ['CREATE'],
+  },
+  {
+    name: 'SOURCE_OVERVIEW',
+    description: 'Source colors overview and import',
+    isActive: true,
+    isPro: false,
+    isNew: false,
+    type: 'CONTEXT',
+    service: ['CREATE'],
+  },
+  {
+    name: 'SOURCE_EXPLORE',
+    description: 'External color palettes from Colour Lovers',
+    isActive: true,
+    isPro: false,
+    isNew: false,
+    type: 'CONTEXT',
     service: ['CREATE'],
   },
   {

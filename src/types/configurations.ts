@@ -8,6 +8,7 @@ export interface SourceColorConfiguration {
   rgb: RgbModel
   source: 'CANVAS' | 'REMOTE' | ThirdParty
   id: string
+  isRemovable: boolean
 }
 
 export interface PaletteConfiguration {

@@ -1,10 +1,15 @@
 import {
   Accordion,
+  Bar,
+  Button,
   ColorItem,
   FormItem,
+  Icon,
   Input,
   Message,
   SectionTitle,
+  Tabs,
+  texts,
 } from '@a_ng_d/figmug-ui'
 import chroma from 'chroma-js'
 import React from 'react'
@@ -13,11 +18,14 @@ import { uid } from 'uid'
 import { locals } from '../../content/locals'
 import { EditorType, Language, PlanStatus } from '../../types/config'
 import { SourceColorConfiguration } from '../../types/configurations'
-import { ImportUrl, ThirdParty } from '../../types/management'
-import features from '../../utils/config'
+import { ContextItem, ImportUrl, ThirdParty } from '../../types/management'
+import features, { pageSize } from '../../utils/config'
 import isBlocked from '../../utils/isBlocked'
 import Feature from '../components/Feature'
 import Actions from '../modules/Actions'
+import { setContexts } from '../../utils/setContexts'
+import PaletteItem from '../components/PaletteItem'
+import { ColourLovers } from '../../types/data'
 
 interface SourceProps {
   sourceColors: Array<SourceColorConfiguration>
@@ -32,16 +40,36 @@ interface SourceProps {
 }
 
 interface SourceStates {
+  context: string | undefined
   coolorsUrl: ImportUrl
   realtimeColorsUrl: ImportUrl
   isCoolorsImportOpen: boolean
   isRealtimeColorsImportOpen: boolean
+  isColourLoversImportOpen: boolean
+  colourLoversPaletteListStatus:
+    | 'LOADING'
+    | 'LOADED'
+    | 'EMPTY'
+    | 'ERROR'
+    | 'FULL'
+    | 'SIGN_IN_FIRST'
+  currentPage: number
+  isLoadMoreActionLoading: boolean
+  colourLoversPaletteList: Array<ColourLovers>
 }
 
 export default class Source extends React.Component<SourceProps, SourceStates> {
+  contexts: Array<ContextItem>
+  
   constructor(props: SourceProps) {
     super(props)
+    this.contexts = setContexts([
+      'SOURCE_OVERVIEW',
+      'SOURCE_EXPLORE',
+    ])
     this.state = {
+      context:
+        this.contexts[0] !== undefined ? this.contexts[0].id : '',
       coolorsUrl: {
         value: '' as string,
         state: 'DEFAULT' as 'DEFAULT' | 'ERROR',
@@ -56,10 +84,25 @@ export default class Source extends React.Component<SourceProps, SourceStates> {
         helper: undefined,
       },
       isRealtimeColorsImportOpen: false,
+      isColourLoversImportOpen: false,
+      colourLoversPaletteListStatus: 'LOADING',
+      currentPage: 1,
+      isLoadMoreActionLoading: false,
+      colourLoversPaletteList: [],
     }
   }
 
   // Lifecycle
+  componentDidUpdate = (
+    prevProps: Readonly<SourceProps>,
+    prevState: Readonly<SourceStates>
+  ): void => {
+    if (prevState.currentPage !== this.state['currentPage']
+    || this.state['colourLoversPaletteListStatus'] !== 'LOADED') {
+      this.callUICPAgent()
+    }
+  }
+
   componentWillUnmount(): void {
     this.setState({
       coolorsUrl: {
@@ -68,10 +111,50 @@ export default class Source extends React.Component<SourceProps, SourceStates> {
         canBeSubmitted: false,
         helper: undefined,
       },
+      realtimeColorsUrl: {
+        value: '',
+        state: 'DEFAULT',
+        canBeSubmitted: false,
+        helper: undefined,
+      },
     })
   }
 
+  //Direct actions
+  callUICPAgent = async () => {
+    return fetch(
+      'https://corsproxy.io/?' +
+        encodeURIComponent(
+          `https://www.colourlovers.com/api/palettes?format=json&numResults=${
+            pageSize
+          }&resultOffset=${
+            this.state['currentPage'] - 1
+          }`
+        ),
+      {
+        cache: 'no-cache',
+        credentials: 'omit',
+      }
+    )
+      .then((response) => response.json())
+      .then((data) => this.setState({
+        colourLoversPaletteListStatus: data.length > 0 ? 'LOADED' : 'FULL',
+        colourLoversPaletteList: this.state['colourLoversPaletteList'].concat(data),
+      }))
+      .finally(() => this.setState({
+        isLoadMoreActionLoading: false,
+      }))
+      .catch(() => this.setState({
+        colourLoversPaletteListStatus: 'ERROR',
+      }))
+  }
+
   // Handlers
+  navHandler = (e: React.SyntheticEvent) =>
+    this.setState({
+      context: (e.target as HTMLElement).dataset.feature,
+    })
+
   isTypingCoolorsUrlHandler = (e: React.SyntheticEvent) =>
     this.setState((state) => ({
       coolorsUrl: {
@@ -140,6 +223,7 @@ export default class Source extends React.Component<SourceProps, SourceStates> {
             },
             source: 'COOLORS',
             id: uid(),
+            isRemovable: false
           }
         }),
         'COOLORS'
@@ -183,6 +267,7 @@ export default class Source extends React.Component<SourceProps, SourceStates> {
             },
             source: 'REALTIME_COLORS',
             id: uid(),
+            isRemovable: false
           }
         }),
         'REALTIME_COLORS'
@@ -246,6 +331,7 @@ export default class Source extends React.Component<SourceProps, SourceStates> {
                       .hex()
                       .toUpperCase()}
                     uuid={sourceColor.id}
+                    canBeRemoved={sourceColor.isRemovable}
                   />
                 )
               })}
@@ -303,6 +389,7 @@ export default class Source extends React.Component<SourceProps, SourceStates> {
                   locals[this.props.lang].source.coolors.url.placeholder
                 }
                 value={this.state['coolorsUrl'].value}
+                isAutoFocus={true}
                 onChange={this.isTypingCoolorsUrlHandler}
                 onConfirm={() => {
                   if (this.state['coolorsUrl'].canBeSubmitted) {
@@ -387,6 +474,7 @@ export default class Source extends React.Component<SourceProps, SourceStates> {
                   locals[this.props.lang].source.realtimeColors.url.placeholder
                 }
                 value={this.state['realtimeColorsUrl'].value}
+                isAutoFocus={true}
                 onChange={this.isTypingRealtimeColorsUrlHandler}
                 onConfirm={() => {
                   if (this.state['realtimeColorsUrl'].canBeSubmitted) {
@@ -426,41 +514,241 @@ export default class Source extends React.Component<SourceProps, SourceStates> {
     )
   }
 
-  // Render
-  render() {
+  ColourLoversColors = () => {
     return (
       <>
-        <div className="controls__control controls__control--horizontal">
-          <div className="control__block control__block--list">
-            <Feature
-              isActive={
-                features.find((feature) => feature.name === 'SOURCE_CANVAS')
-                  ?.isActive
+        <Accordion
+          label={locals[this.props.lang].source.colourLovers.title}
+          indicator={this.props.sourceColors
+            .filter((sourceColor) => sourceColor.source === 'COLOUR_LOVERS')
+            .length.toString()}
+          icon="adjust"
+          helper={locals[this.props.lang].source.colourLovers.helper}
+          isExpanded={this.state['isColourLoversImportOpen']}
+          isBlocked={isBlocked('SOURCE_EXPLORE', this.props.planStatus)}
+          isNew={
+            features.find(
+              (feature) => feature.name === 'SOURCE_EXPLORE'
+            )?.isNew
+          }
+          onAdd={() => {
+            this.setState({
+              context: 'SOURCE_EXPLORE'
+            })
+          }}
+          onEmpty={() => {
+            this.props.onChangeColorsFromImport([], 'COLOUR_LOVERS')
+            this.setState({
+              isColourLoversImportOpen: false,
+            })
+          }}
+        >
+          <ul className="list">
+            {this.props.sourceColors
+              .filter((sourceColor) => sourceColor.source === 'COLOUR_LOVERS')
+              .map((sourceColor) => {
+                return (
+                  <ColorItem
+                    key={sourceColor.id}
+                    name={sourceColor.name}
+                    hex={chroma(
+                      sourceColor.rgb.r * 255,
+                      sourceColor.rgb.g * 255,
+                      sourceColor.rgb.b * 255
+                    )
+                      .hex()
+                      .toUpperCase()}
+                    uuid={sourceColor.id}
+                  />
+                )
+              })}
+          </ul>
+        </Accordion>
+      </>
+    )
+  }
+
+  ExternalSourceColorsList = () => {
+    return (
+      <ul className="rich-list">
+        {this.state['colourLoversPaletteList'].map((palette, index: number) => (
+          <PaletteItem
+            id={palette.id?.toString() ?? ''}
+            key={`source-colors-${index}`}
+            src={palette.imageUrl?.replace('http', 'https')}
+            title={palette.title}
+            subtitle={`Rank ${palette.rank}`}
+            info={`${palette.numVotes} votes, ${palette.numViews} views, ${palette.numComments} comments`}
+            user={{
+              avatar: '',
+              name: palette.userName ?? '',
+            }}
+            action={() => null}
+          >
+            <div className="snackbar">
+              <Button
+                type="icon"
+                icon="link-connected"
+                action={() => parent.postMessage(
+                  {
+                    pluginMessage: {
+                      type: 'OPEN_IN_BROWSER',
+                      url: palette.url?.replace('http', 'https'),
+                    },
+                  },
+                  '*'
+                )}
+              />
+              <Button
+                type="secondary"
+                label={locals[this.props.lang].actions.addToSource}
+                action={() => { 
+                  this.setState({
+                    context: 'SOURCE_OVERVIEW',
+                    isColourLoversImportOpen: true,
+                  })
+                  this.props.onChangeColorsFromImport(
+                    palette.colors.map((color) => {
+                      const gl = chroma(color).gl()
+                      return {
+                        name: color,
+                        rgb: {
+                          r: gl[0],
+                          g: gl[1],
+                          b: gl[2]
+                        },
+                        id: uid(),
+                        source: 'COLOUR_LOVERS',
+                        isRemovable: true
+                      }
+                    }),
+                    'COLOUR_LOVERS'
+                  )
+                }}
+              />
+            </div>
+          </PaletteItem>
+        ))}
+        <div className="list-control">
+          {this.state['colourLoversPaletteListStatus'] === 'LOADED' ? (
+            <Button
+              type="secondary"
+              label={locals[this.props.lang].palettes.lazyLoad.loadMore}
+              isLoading={this.state['isLoadMoreActionLoading']}
+              action={() =>
+                this.setState({
+                  isLoadMoreActionLoading: true,
+                  currentPage: this.state['currentPage'] + pageSize,
+                })
               }
-            >
-              <this.SelectedColors />
-            </Feature>
-          </div>
-          <div className="control__block control__block--no-padding">
-            <Feature
-              isActive={
-                features.find((feature) => feature.name === 'SOURCE_COOLORS')
-                  ?.isActive
-              }
-            >
-              <this.CoolorsColors />
-            </Feature>
-            <Feature
-              isActive={
-                features.find(
-                  (feature) => feature.name === 'SOURCE_REALTIME_COLORS'
-                )?.isActive
-              }
-            >
-              <this.RealtimeColorsColors />
-            </Feature>
-          </div>
+            />
+          ) : (
+            <div className={`${texts['type--secondary']} type`}>
+              {locals[this.props.lang].palettes.lazyLoad.completeList}
+            </div>
+          )}
         </div>
+      </ul>
+    )
+  }
+
+  // Render
+  render() {
+    let controls
+
+    switch (this.state['context']) {
+      case 'SOURCE_OVERVIEW': {
+        controls = (
+          <div className="controls__control controls__control--horizontal">
+            <div className="control__block control__block--list">
+              <Feature
+                isActive={
+                  features.find((feature) => feature.name === 'SOURCE_CANVAS')
+                    ?.isActive
+                }
+              >
+                <this.SelectedColors />
+              </Feature>
+            </div>
+            <div className="control__block control__block--no-padding">
+              <Feature
+                isActive={
+                  features.find((feature) => feature.name === 'SOURCE_COOLORS')
+                    ?.isActive
+                }
+              >
+                <this.CoolorsColors />
+              </Feature>
+              <Feature
+                isActive={
+                  features.find(
+                    (feature) => feature.name === 'SOURCE_REALTIME_COLORS'
+                  )?.isActive
+                }
+              >
+                <this.RealtimeColorsColors />
+              </Feature>
+              <Feature
+                isActive={
+                  features.find(
+                    (feature) => feature.name === 'SOURCE_EXPLORE'
+                  )?.isActive
+                }
+              >
+                <this.ColourLoversColors />
+              </Feature>
+            </div>
+          </div>
+        )
+        break
+      }
+      case 'SOURCE_EXPLORE': {
+        controls = this.state['colourLoversPaletteListStatus'] !== 'LOADING' ? (
+          <div className="controls__control controls__control--horizontal">
+            {this.state['colourLoversPaletteListStatus'] === 'LOADED'
+            || this.state['colourLoversPaletteListStatus'] === 'FULL'
+            ? (
+              <div className="controls__control">
+                <div className="control__block control__block--no-padding">
+                  <this.ExternalSourceColorsList />
+                </div>
+              </div>
+            ) : (
+              <div className="onboarding__callout--centered">
+                <Message
+                  icon="warning"
+                  messages={[locals[this.props.lang].error.fetchPalette]}
+                />
+              </div>
+            )}
+          </div>
+        ) : (
+          <div className="controls__control controls__control--horizontal">
+            <Icon
+              type="PICTO"
+              iconName="spinner"
+              customClassName="control__block__loader"
+            />
+          </div>
+        )
+        break
+      }
+    }
+  
+    return (
+      <>
+        <Bar
+          leftPart={
+            <Tabs
+              tabs={this.contexts}
+              active={this.state['context'] ?? ''}
+              action={this.navHandler}
+            />
+          }
+          border={['BOTTOM']}
+          isOnlyText={true}
+        />
+        {controls}
         <Actions
           context="CREATE"
           {...this.props}
