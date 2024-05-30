@@ -33,34 +33,19 @@ export default class PaletteItem extends React.Component<
     isInteractive: false,
   }
 
-  constructor(props: PaletteItemProps) {
-    super(props)
-    this.state = {
-      backgroundStyle: 'var(--figma-color-bg)',
-    }
-  }
-
   render() {
     return (
       <li
-        className="rich-list__item"
+        className={[
+          'rich-list__item',
+          this.props.isInteractive
+            ? 'rich-list__item--interactive'
+            : null,
+        ]
+          .filter((n) => n)
+          .join(' ')}
         data-id={this.props.id}
         tabIndex={this.props.isInteractive ? 0 : -1}
-        style={{
-          backgroundColor: this.state['backgroundStyle'],
-        }}
-        onMouseEnter={() =>
-          this.setState({
-            backgroundStyle: this.props.isInteractive
-              ? 'var(--figma-color-bg-hover)'
-              : 'var(--figma-color-bg)',
-          })
-        }
-        onMouseLeave={() =>
-          this.setState({
-            backgroundStyle: 'var(--figma-color-bg)',
-          })
-        }
         onMouseDown={this.props.isInteractive ? this.props.action : undefined}
         onKeyDown={(e) => {
           if ((e.key === ' ' || e.key === 'Enter') && this.props.isInteractive)

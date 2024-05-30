@@ -125,7 +125,11 @@ li.rich-list__item:last-child {
   border-bottom: none;
 }
 
-li.rich-list__item:focus {
+li.rich-list__item--interactive:hover {
+  background-color: var(--figma-color-bg-hover);
+}
+
+li.rich-list__item--interactive:focus {
   outline: 2px solid var(--figma-color-border-selected);
   outline-offset: -2px;
 }
