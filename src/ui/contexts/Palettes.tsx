@@ -20,7 +20,7 @@ import {
   SourceColorConfiguration,
   ThemeConfiguration,
 } from '../../types/configurations'
-import { ColourLovers, ExternalPalettes } from '../../types/data'
+import { ExternalPalettes } from '../../types/data'
 import { ContextItem } from '../../types/management'
 import { ActionsList } from '../../types/models'
 import { UserSession } from '../../types/user'
@@ -52,7 +52,7 @@ interface PalettesStates {
   isLoadMoreActionLoading: boolean
   isSignInLoading: boolean
   isAddToFileActionLoading: Array<boolean>
-  paletteList: Array<Partial<ExternalPalettes & ColourLovers>>
+  paletteList: Array<ExternalPalettes>
 }
 
 export default class Palettes extends React.Component<

@@ -578,10 +578,10 @@ export default class Source extends React.Component<SourceProps, SourceStates> {
             key={`source-colors-${index}`}
             src={palette.imageUrl?.replace('http', 'https')}
             title={palette.title}
-            subtitle={`Rank ${palette.rank}`}
+            subtitle={`#${palette.rank}`}
             info={`${palette.numVotes} votes, ${palette.numViews} views, ${palette.numComments} comments`}
             user={{
-              avatar: '',
+              avatar: undefined,
               name: palette.userName ?? '',
             }}
             action={() => null}

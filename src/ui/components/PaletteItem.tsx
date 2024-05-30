@@ -12,7 +12,7 @@ interface PaletteItemProps {
   subtitle: string
   info: string
   user?: {
-    avatar: string
+    avatar?: string
     name: string
   }
   children?: React.ReactNode
@@ -92,11 +92,13 @@ export default class PaletteItem extends React.Component<
               {this.props.info}
             </div>
           </div>
-          {this.props.user && (
+          {this.props.user !== undefined && (
             <div className="user">
-              <div className="user__avatar">
-                <img src={this.props.user.avatar} />
-              </div>
+              {this.props.user.avatar !== undefined && (
+                <div className="user__avatar">
+                  <img src={this.props.user.avatar} />
+                </div>
+              )}
               <div className={`${texts.type} ${texts['type--secondary']} type`}>
                 {this.props.user.name}
               </div>
