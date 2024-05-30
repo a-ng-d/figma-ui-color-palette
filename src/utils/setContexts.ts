@@ -1,10 +1,8 @@
-import { lang, locals } from "../content/locals"
-import { Context } from "../types/config"
-import features from "./config"
+import { lang, locals } from '../content/locals'
+import { Context } from '../types/config'
+import features from './config'
 
-export const setContexts = (
-  contextList: Array<Context>
-) => {
+export const setContexts = (contextList: Array<Context>) => {
   const contexts: Array<{
     label: string
     id: Context
@@ -15,11 +13,10 @@ export const setContexts = (
       label: locals[lang].contexts.palettes,
       id: 'PALETTES',
       isUpdated:
-        features.find((feature) => feature.name === 'PALETTES')?.isNew ??
-        false,
+        features.find((feature) => feature.name === 'PALETTES')?.isNew ?? false,
       isActive:
         features.find((feature) => feature.name === 'PALETTES')?.isActive ??
-        false
+        false,
     },
     {
       label: locals[lang].palettes.contexts.self,
@@ -28,8 +25,8 @@ export const setContexts = (
         features.find((feature) => feature.name === 'PALETTES_SELF')?.isNew ??
         false,
       isActive:
-        features.find((feature) => feature.name === 'PALETTES_SELF')?.isActive ??
-        false
+        features.find((feature) => feature.name === 'PALETTES_SELF')
+          ?.isActive ?? false,
     },
     {
       label: locals[lang].palettes.contexts.community,
@@ -37,9 +34,9 @@ export const setContexts = (
       isUpdated:
         features.find((feature) => feature.name === 'PALETTES_COMMUNITY')
           ?.isNew ?? false,
-        isActive:
-        features.find((feature) => feature.name === 'PALETTES_COMMUNITY')?.isActive ??
-        false
+      isActive:
+        features.find((feature) => feature.name === 'PALETTES_COMMUNITY')
+          ?.isActive ?? false,
     },
     {
       label: locals[lang].contexts.source,
@@ -48,25 +45,27 @@ export const setContexts = (
         features.find((feature) => feature.name === 'SOURCE')?.isNew ?? false,
       isActive:
         features.find((feature) => feature.name === 'SOURCE')?.isActive ??
-        false
+        false,
     },
     {
       label: locals[lang].source.contexts.overview,
       id: 'SOURCE_OVERVIEW',
       isUpdated:
-        features.find((feature) => feature.name === 'SOURCE_OVERVIEW')?.isNew ?? false,
+        features.find((feature) => feature.name === 'SOURCE_OVERVIEW')?.isNew ??
+        false,
       isActive:
-        features.find((feature) => feature.name === 'SOURCE_OVERVIEW')?.isActive ??
-        false
+        features.find((feature) => feature.name === 'SOURCE_OVERVIEW')
+          ?.isActive ?? false,
     },
     {
       label: locals[lang].source.contexts.explore,
       id: 'SOURCE_EXPLORE',
       isUpdated:
-        features.find((feature) => feature.name === 'SOURCE_EXPLORE')?.isNew ?? false,
+        features.find((feature) => feature.name === 'SOURCE_EXPLORE')?.isNew ??
+        false,
       isActive:
-        features.find((feature) => feature.name === 'SOURCE_EXPLORE')?.isActive ??
-        false
+        features.find((feature) => feature.name === 'SOURCE_EXPLORE')
+          ?.isActive ?? false,
     },
     {
       label: locals[lang].contexts.scale,
@@ -74,8 +73,7 @@ export const setContexts = (
       isUpdated:
         features.find((feature) => feature.name === 'SCALE')?.isNew ?? false,
       isActive:
-        features.find((feature) => feature.name === 'SCALE')?.isActive ??
-        false
+        features.find((feature) => feature.name === 'SCALE')?.isActive ?? false,
     },
     {
       label: locals[lang].contexts.colors,
@@ -84,7 +82,7 @@ export const setContexts = (
         features.find((feature) => feature.name === 'COLORS')?.isNew ?? false,
       isActive:
         features.find((feature) => feature.name === 'COLORS')?.isActive ??
-        false
+        false,
     },
     {
       label: locals[lang].contexts.themes,
@@ -93,7 +91,7 @@ export const setContexts = (
         features.find((feature) => feature.name === 'THEMES')?.isNew ?? false,
       isActive:
         features.find((feature) => feature.name === 'THEMES')?.isActive ??
-        false
+        false,
     },
     {
       label: locals[lang].contexts.export,
@@ -102,17 +100,16 @@ export const setContexts = (
         features.find((feature) => feature.name === 'EXPORT')?.isNew ?? false,
       isActive:
         features.find((feature) => feature.name === 'EXPORT')?.isActive ??
-        false
+        false,
     },
     {
       label: locals[lang].contexts.settings,
       id: 'SETTINGS',
       isUpdated:
-        features.find((feature) => feature.name === 'SETTINGS')?.isNew ??
-        false,
+        features.find((feature) => feature.name === 'SETTINGS')?.isNew ?? false,
       isActive:
         features.find((feature) => feature.name === 'SETTINGS')?.isActive ??
-        false
+        false,
     },
   ]
 

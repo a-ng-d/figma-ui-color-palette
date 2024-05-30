@@ -1,5 +1,10 @@
 import { HexModel } from '@a_ng_d/figmug-ui'
-import { ColorConfiguration, PresetConfiguration, ThemeConfiguration } from './configurations'
+
+import {
+  ColorConfiguration,
+  PresetConfiguration,
+  ThemeConfiguration,
+} from './configurations'
 
 export interface PaletteData {
   name: string

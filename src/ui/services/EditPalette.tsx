@@ -18,6 +18,7 @@ import {
   ViewConfiguration,
   VisionSimulationModeConfiguration,
 } from '../../types/configurations'
+import { ContextItem } from '../../types/management'
 import { ThemesMessage } from '../../types/messages'
 import { TextColorsThemeHexModel } from '../../types/models'
 import { Identity } from '../../types/user'
@@ -25,6 +26,7 @@ import features from '../../utils/config'
 import doLightnessScale from '../../utils/doLightnessScale'
 import isBlocked from '../../utils/isBlocked'
 import { palette } from '../../utils/palettePackage'
+import { setContexts } from '../../utils/setContexts'
 import type { AppStates } from '../App'
 import Feature from '../components/Feature'
 import Colors from '../contexts/Colors'
@@ -32,8 +34,6 @@ import Export from '../contexts/Export'
 import Scale from '../contexts/Scale'
 import Settings from '../contexts/Settings'
 import Themes from '../contexts/Themes'
-import { ContextItem } from '../../types/management'
-import { setContexts } from '../../utils/setContexts'
 
 interface EditPaletteProps {
   name: string
@@ -88,11 +88,10 @@ export default class EditPalette extends React.Component<
       'COLORS',
       'THEMES',
       'EXPORT',
-      'SETTINGS'
+      'SETTINGS',
     ])
     this.state = {
-      context:
-      this.contexts[0] !== undefined ? this.contexts[0].id : '',
+      context: this.contexts[0] !== undefined ? this.contexts[0].id : '',
       selectedElement: {
         id: '',
         position: null,

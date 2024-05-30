@@ -106,7 +106,7 @@ export const locals: { [key: string]: any } = {
       title: 'Source colors',
       contexts: {
         overview: 'Overview',
-        explore: 'Explore'
+        explore: 'Explore',
       },
       canvas: {
         title: 'Selected colors',
@@ -141,7 +141,7 @@ export const locals: { [key: string]: any } = {
         title: 'Colour Lovers',
         helper:
           'Colour Lovers is a tool for creating and exploring beautiful color schemes',
-      }
+      },
     },
     scale: {
       title: 'Lightness scale',

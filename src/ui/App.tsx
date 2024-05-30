@@ -640,7 +640,9 @@ class App extends React.Component<Record<string, never>, AppStates> {
               onChangePreset={(e) => this.setState({ ...this.state, ...e })}
               onCustomPreset={(e) => this.setState({ ...this.state, ...e })}
               onChangeSettings={(e) => this.setState({ ...this.state, ...e })}
-              onConfigureExternalSourceColors={(e) => this.setState({ ...this.state, ...e })}
+              onConfigureExternalSourceColors={(e) =>
+                this.setState({ ...this.state, ...e })
+              }
             />
           </Feature>
           <Feature

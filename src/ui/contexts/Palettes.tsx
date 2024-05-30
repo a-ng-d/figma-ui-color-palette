@@ -20,14 +20,14 @@ import {
   SourceColorConfiguration,
   ThemeConfiguration,
 } from '../../types/configurations'
+import { ColourLovers, ExternalPalettes } from '../../types/data'
+import { ContextItem } from '../../types/management'
 import { ActionsList } from '../../types/models'
 import { UserSession } from '../../types/user'
 import features, { pageSize, palettesDbTableName } from '../../utils/config'
+import { setContexts } from '../../utils/setContexts'
 import Feature from '../components/Feature'
 import PaletteItem from '../components/PaletteItem'
-import { ColourLovers, ExternalPalettes } from '../../types/data'
-import { setContexts } from '../../utils/setContexts'
-import { ContextItem } from '../../types/management'
 
 interface PalettesProps {
   userSession: UserSession
@@ -63,13 +63,9 @@ export default class Palettes extends React.Component<
 
   constructor(props: PalettesProps) {
     super(props)
-    this.contexts = setContexts([
-      'PALETTES_SELF',
-      'PALETTES_COMMUNITY',
-    ])
+    this.contexts = setContexts(['PALETTES_SELF', 'PALETTES_COMMUNITY'])
     this.state = {
-      context:
-        this.contexts[0] !== undefined ? this.contexts[0].id : '',
+      context: this.contexts[0] !== undefined ? this.contexts[0].id : '',
       paletteListStatus: 'LOADING',
       currentPage: 1,
       isLoadMoreActionLoading: false,
@@ -281,7 +277,10 @@ export default class Palettes extends React.Component<
             src={palette.screenshot}
             title={palette.name}
             subtitle={palette.preset?.name}
-            info={this.getPaletteMeta(palette.colors ?? [], palette.themes ?? [])}
+            info={this.getPaletteMeta(
+              palette.colors ?? [],
+              palette.themes ?? []
+            )}
             user={{
               avatar: palette.creator_avatar ?? '',
               name: palette.creator_full_name ?? '',

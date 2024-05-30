@@ -1,5 +1,7 @@
 import { Bar, HexModel, Tabs } from '@a_ng_d/figmug-ui'
+import chroma from 'chroma-js'
 import React from 'react'
+import { uid } from 'uid'
 
 import { Context, Language, PlanStatus } from '../../types/config'
 import {
@@ -15,14 +17,12 @@ import { TextColorsThemeHexModel } from '../../types/models'
 import { UserSession } from '../../types/user'
 import doLightnessScale from '../../utils/doLightnessScale'
 import { palette } from '../../utils/palettePackage'
+import { setContexts } from '../../utils/setContexts'
 import type { AppStates } from '../App'
 import Palettes from '../contexts/Palettes'
 import Scale from '../contexts/Scale'
 import Settings from '../contexts/Settings'
 import Source from '../contexts/Source'
-import { uid } from 'uid'
-import chroma from 'chroma-js'
-import { setContexts } from '../../utils/setContexts'
 
 interface CreatePaletteProps {
   sourceColors: Array<SourceColorConfiguration> | []
@@ -56,15 +56,9 @@ export default class CreatePalette extends React.Component<
 
   constructor(props: CreatePaletteProps) {
     super(props)
-    this.contexts = setContexts([
-      'PALETTES',
-      'SOURCE',
-      'SCALE',
-      'SETTINGS'
-    ])
+    this.contexts = setContexts(['PALETTES', 'SOURCE', 'SCALE', 'SETTINGS'])
     this.state = {
-      context:
-        this.contexts[0] !== undefined ? this.contexts[1].id : '',
+      context: this.contexts[0] !== undefined ? this.contexts[1].id : '',
     }
   }
 
@@ -105,11 +99,11 @@ export default class CreatePalette extends React.Component<
       },
       '*'
     )
-  
+
   onConfigureExternalSourceColors = (name: string, colors: Array<HexModel>) => {
     palette.name = name
     this.setState({
-      context: 'SOURCE'
+      context: 'SOURCE',
     })
     this.props.onConfigureExternalSourceColors({
       name: name,
@@ -120,13 +114,13 @@ export default class CreatePalette extends React.Component<
           rgb: {
             r: gl[0],
             g: gl[1],
-            b: gl[2]
+            b: gl[2],
           },
           source: 'REMOTE',
           id: uid(),
-          isRemovable: false
+          isRemovable: false,
         }
-      })
+      }),
     })
   }
 
@@ -144,11 +138,14 @@ export default class CreatePalette extends React.Component<
 
     switch (this.state['context']) {
       case 'PALETTES': {
-        controls =
-        <Palettes
-          {...this.props}
-          onConfigureExternalSourceColors={this.onConfigureExternalSourceColors}
-        />
+        controls = (
+          <Palettes
+            {...this.props}
+            onConfigureExternalSourceColors={
+              this.onConfigureExternalSourceColors
+            }
+          />
+        )
         break
       }
       case 'SOURCE': {
