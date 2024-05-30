@@ -10,6 +10,8 @@ export interface Feature {
 
 export type Service = 'CREATE' | 'EDIT' | 'TRANSFER'
 
+export type Context = 'PALETTES' | 'SOURCE' | 'SCALE' | 'COLORS' | 'THEMES' | 'EXPORT' | 'SETTINGS' | 'PALETTES_SELF' | 'PALETTES_COMMUNITY' | 'PALETTES_EXPLORE'
+
 export type EditorType = 'figma' | 'figjam' | 'dev'
 
 export type PlanStatus = 'UNPAID' | 'PAID' | 'NOT_SUPPORTED'

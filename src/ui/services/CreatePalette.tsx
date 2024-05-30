@@ -1,8 +1,7 @@
 import { Bar, HexModel, Tabs } from '@a_ng_d/figmug-ui'
 import React from 'react'
 
-import { locals } from '../../content/locals'
-import { Language, PlanStatus } from '../../types/config'
+import { Context, Language, PlanStatus } from '../../types/config'
 import {
   ColorSpaceConfiguration,
   NamingConventionConfiguration,
@@ -11,10 +10,9 @@ import {
   ViewConfiguration,
   VisionSimulationModeConfiguration,
 } from '../../types/configurations'
-import { ThirdParty } from '../../types/management'
+import { ContextItem, ThirdParty } from '../../types/management'
 import { TextColorsThemeHexModel } from '../../types/models'
 import { UserSession } from '../../types/user'
-import features from '../../utils/config'
 import doLightnessScale from '../../utils/doLightnessScale'
 import { palette } from '../../utils/palettePackage'
 import type { AppStates } from '../App'
@@ -24,6 +22,7 @@ import Settings from '../contexts/Settings'
 import Source from '../contexts/Source'
 import { uid } from 'uid'
 import chroma from 'chroma-js'
+import { setContexts } from '../../utils/setContexts'
 
 interface CreatePaletteProps {
   sourceColors: Array<SourceColorConfiguration> | []
@@ -53,11 +52,19 @@ export default class CreatePalette extends React.Component<
   CreatePaletteProps,
   CreatePaletteStates
 > {
+  contexts: Array<ContextItem>
+
   constructor(props: CreatePaletteProps) {
     super(props)
+    this.contexts = setContexts([
+      'PALETTES',
+      'SOURCE',
+      'SCALE',
+      'SETTINGS'
+    ])
     this.state = {
       context:
-        this.setContexts()[0] !== undefined ? this.setContexts()[1].id : '',
+        this.contexts[0] !== undefined ? this.contexts[1].id : '',
     }
   }
 
@@ -122,45 +129,6 @@ export default class CreatePalette extends React.Component<
     })
   }
 
-  setContexts = () => {
-    const contexts: Array<{
-      label: string
-      id: string
-      isUpdated: boolean
-    }> = []
-    if (features.find((feature) => feature.name === 'PALETTES')?.isActive)
-      contexts.push({
-        label: locals[this.props.lang].contexts.palettes,
-        id: 'PALETTES',
-        isUpdated:
-          features.find((feature) => feature.name === 'PALETTES')?.isNew ??
-          false,
-      })
-    if (features.find((feature) => feature.name === 'SOURCE')?.isActive)
-      contexts.push({
-        label: locals[this.props.lang].contexts.source,
-        id: 'SOURCE',
-        isUpdated:
-          features.find((feature) => feature.name === 'SOURCE')?.isNew ?? false,
-      })
-    if (features.find((feature) => feature.name === 'SCALE')?.isActive)
-      contexts.push({
-        label: locals[this.props.lang].contexts.scale,
-        id: 'SCALE',
-        isUpdated:
-          features.find((feature) => feature.name === 'SCALE')?.isNew ?? false,
-      })
-    if (features.find((feature) => feature.name === 'SETTINGS')?.isActive)
-      contexts.push({
-        label: locals[this.props.lang].contexts.settings,
-        id: 'SETTINGS',
-        isUpdated:
-          features.find((feature) => feature.name === 'SETTINGS')?.isNew ??
-          false,
-      })
-    return contexts
-  }
-
   // Renders
   render() {
     palette.preset = this.props.preset
@@ -220,7 +188,7 @@ export default class CreatePalette extends React.Component<
         <Bar
           leftPart={
             <Tabs
-              tabs={this.setContexts()}
+              tabs={this.contexts}
               active={this.state['context'] ?? ''}
               action={this.navHandler}
             />

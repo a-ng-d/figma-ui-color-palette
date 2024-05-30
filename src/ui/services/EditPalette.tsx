@@ -32,6 +32,8 @@ import Export from '../contexts/Export'
 import Scale from '../contexts/Scale'
 import Settings from '../contexts/Settings'
 import Themes from '../contexts/Themes'
+import { ContextItem } from '../../types/management'
+import { setContexts } from '../../utils/setContexts'
 
 interface EditPaletteProps {
   name: string
@@ -76,13 +78,21 @@ export default class EditPalette extends React.Component<
   EditPaletteProps,
   EditPaletteStates
 > {
+  contexts: Array<ContextItem>
   themesRef: React.RefObject<Themes>
 
   constructor(props: EditPaletteProps) {
     super(props)
+    this.contexts = setContexts([
+      'SCALE',
+      'COLORS',
+      'THEMES',
+      'EXPORT',
+      'SETTINGS'
+    ])
     this.state = {
       context:
-        this.setContexts()[0] !== undefined ? this.setContexts()[0].id : '',
+      this.contexts[0] !== undefined ? this.contexts[0].id : '',
       selectedElement: {
         id: '',
         position: null,
@@ -234,51 +244,6 @@ export default class EditPalette extends React.Component<
     }
   }
 
-  setContexts = () => {
-    const contexts: Array<{
-      label: string
-      id: string
-      isUpdated: boolean
-    }> = []
-    if (features.find((feature) => feature.name === 'SCALE')?.isActive)
-      contexts.push({
-        label: locals[this.props.lang].contexts.scale,
-        id: 'SCALE',
-        isUpdated:
-          features.find((feature) => feature.name === 'SCALE')?.isNew ?? false,
-      })
-    if (features.find((feature) => feature.name === 'COLORS')?.isActive)
-      contexts.push({
-        label: locals[this.props.lang].contexts.colors,
-        id: 'COLORS',
-        isUpdated:
-          features.find((feature) => feature.name === 'COLORS')?.isNew ?? false,
-      })
-    if (features.find((feature) => feature.name === 'THEMES')?.isActive)
-      contexts.push({
-        label: locals[this.props.lang].contexts.themes,
-        id: 'THEMES',
-        isUpdated:
-          features.find((feature) => feature.name === 'THEMES')?.isNew ?? false,
-      })
-    if (features.find((feature) => feature.name === 'EXPORT')?.isActive)
-      contexts.push({
-        label: locals[this.props.lang].contexts.export,
-        id: 'EXPORT',
-        isUpdated:
-          features.find((feature) => feature.name === 'EXPORT')?.isNew ?? false,
-      })
-    if (features.find((feature) => feature.name === 'SETTINGS')?.isActive)
-      contexts.push({
-        label: locals[this.props.lang].contexts.settings,
-        id: 'SETTINGS',
-        isUpdated:
-          features.find((feature) => feature.name === 'SETTINGS')?.isNew ??
-          false,
-      })
-    return contexts
-  }
-
   setThemes = (): Array<DropdownOption> => {
     const themes = this.workingThemes().map((theme) => {
       return {
@@ -407,7 +372,7 @@ export default class EditPalette extends React.Component<
         <Bar
           leftPart={
             <Tabs
-              tabs={this.setContexts()}
+              tabs={this.contexts}
               active={this.state['context'] ?? ''}
               action={this.navHandler}
             />

@@ -1,3 +1,5 @@
+import { Context } from "./config"
+
 export interface SelectedColor {
   id: string | undefined
   position: number
@@ -33,4 +35,11 @@ export interface ImportUrl {
         message: string
       }
     | undefined
+}
+
+export interface ContextItem {
+  label: string
+  id: Context
+  isUpdated: boolean
+  isActive: boolean
 }

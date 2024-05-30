@@ -26,6 +26,8 @@ import features, { palettesDbTableName } from '../../utils/config'
 import Feature from '../components/Feature'
 import PaletteItem from '../components/PaletteItem'
 import { ColourLovers, ExternalPalettes } from '../../types/data'
+import { setContexts } from '../../utils/setContexts'
+import { ContextItem } from '../../types/management'
 
 interface PalettesProps {
   userSession: UserSession
@@ -58,11 +60,18 @@ export default class Palettes extends React.Component<
   PalettesProps,
   PalettesStates
 > {
+  contexts: Array<ContextItem>
+
   constructor(props: PalettesProps) {
     super(props)
+    this.contexts = setContexts([
+      'PALETTES_SELF',
+      'PALETTES_COMMUNITY',
+      'PALETTES_EXPLORE',
+    ])
     this.state = {
       context:
-        this.setContexts()[0] !== undefined ? this.setContexts()[0].id : '',
+      this.contexts[0] !== undefined ? this.contexts[0].id : '',
       paletteListStatus: 'LOADING',
       pageSize: 20,
       currentPage: 1,
@@ -189,9 +198,9 @@ export default class Palettes extends React.Component<
     }
 
     const actions: ActionsList = {
-      SELF: () => getSeftPalettes(),
-      COMMUNITY: () => getCommunityPalettes(),
-      EXPLORE: () => getPublicPalettes(),
+      PALETTES_SELF: () => getSeftPalettes(),
+      PALETTES_COMMUNITY: () => getCommunityPalettes(),
+      PALETTES_EXPLORE: () => getPublicPalettes(),
       DEFAULT: () => null,
     }
 
@@ -225,8 +234,6 @@ export default class Palettes extends React.Component<
       .from(palettesDbTableName)
       .select('*')
       .eq('palette_id', id)
-
-    console.log(data)
 
     if (!error && data.length > 0) {
       try {
@@ -286,44 +293,6 @@ export default class Palettes extends React.Component<
         throw error
       }
     } else throw error
-  }
-
-  setContexts = () => {
-    const contexts: Array<{
-      label: string
-      id: string
-      isUpdated: boolean
-    }> = []
-    if (features.find((feature) => feature.name === 'PALETTES_SELF')?.isActive)
-      contexts.push({
-        label: locals[this.props.lang].palettes.contexts.self,
-        id: 'SELF',
-        isUpdated:
-          features.find((feature) => feature.name === 'PALETTES_SELF')?.isNew ??
-          false,
-      })
-    if (
-      features.find((feature) => feature.name === 'PALETTES_COMMUNITY')
-        ?.isActive
-    )
-      contexts.push({
-        label: locals[this.props.lang].palettes.contexts.community,
-        id: 'COMMUNITY',
-        isUpdated:
-          features.find((feature) => feature.name === 'PALETTES_COMMUNITY')
-            ?.isNew ?? false,
-      })
-    if (
-      features.find((feature) => feature.name === 'PALETTES_EXPLORE')?.isActive
-    )
-      contexts.push({
-        label: locals[this.props.lang].palettes.contexts.explore,
-        id: 'EXPLORE',
-        isUpdated:
-          features.find((feature) => feature.name === 'PALETTES_EXPLORE')
-            ?.isNew ?? false,
-      })
-    return contexts
   }
 
   // Handlers
@@ -425,27 +394,29 @@ export default class Palettes extends React.Component<
             }}
             action={() => null}
           >
-            <Button
-              type="icon"
-              icon="link-connected"
-              action={() => parent.postMessage(
-                {
-                  pluginMessage: {
-                    type: 'OPEN_IN_BROWSER',
-                    url: palette.url?.replace('http', 'https'),
+            <div className="snackbar">
+              <Button
+                type="icon"
+                icon="link-connected"
+                action={() => parent.postMessage(
+                  {
+                    pluginMessage: {
+                      type: 'OPEN_IN_BROWSER',
+                      url: palette.url?.replace('http', 'https'),
+                    },
                   },
-                },
-                '*'
-              )}
-            />
-            <Button
-              type="secondary"
-              label={locals[this.props.lang].actions.configure}
-              action={() => this.props.onConfigureExternalSourceColors(
-                palette.title ?? '',
-                palette.colors ?? [],
-              )}
-            />
+                  '*'
+                )}
+              />
+              <Button
+                type="secondary"
+                label={locals[this.props.lang].actions.configure}
+                action={() => this.props.onConfigureExternalSourceColors(
+                  palette.title ?? '',
+                  palette.colors ?? [],
+                )}
+              />
+            </div>
           </PaletteItem>
         ))}
         <div className="list-control">
@@ -479,7 +450,7 @@ export default class Palettes extends React.Component<
       this.state['paletteListStatus'] === 'LOADED' ||
       this.state['paletteListStatus'] === 'FULL'
     ) {
-      controls = this.state['context'] !== 'EXPLORE' ? <this.ExternalPalettesList /> : <this.ExternalSourceColorsList />
+      controls = this.state['context'] !== 'PALETTES_EXPLORE' ? <this.ExternalPalettesList /> : <this.ExternalSourceColorsList />
     } else if (this.state['paletteListStatus'] === 'ERROR') {
       controls = (
         <div className="onboarding__callout--centered">
@@ -540,7 +511,7 @@ export default class Palettes extends React.Component<
         <Bar
           leftPart={
             <Tabs
-              tabs={this.setContexts()}
+              tabs={this.contexts}
               active={this.state['context'] ?? ''}
               action={this.navHandler}
             />

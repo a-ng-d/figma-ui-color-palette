@@ -1,4 +1,4 @@
-import type { ReleaseNote } from '../utils/types'
+import { ReleaseNote } from '../types/content'
 import rnv19 from './images/release_note_v19.webp'
 import rnv20 from './images/release_note_v20.webp'
 import rnv21 from './images/release_note_v21.webp'
