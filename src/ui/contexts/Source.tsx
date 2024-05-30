@@ -72,15 +72,18 @@ export default class Source extends React.Component<SourceProps, SourceStates> {
         canBeSubmitted: false,
         helper: undefined,
       },
-      isCoolorsImportOpen: false,
+      isCoolorsImportOpen: this.props.sourceColors
+        .filter((color) => color.source === 'COOLORS').length > 0,
       realtimeColorsUrl: {
         value: '' as string,
         state: 'DEFAULT' as 'DEFAULT' | 'ERROR',
         canBeSubmitted: false,
         helper: undefined,
       },
-      isRealtimeColorsImportOpen: false,
-      isColourLoversImportOpen: false,
+      isRealtimeColorsImportOpen: this.props.sourceColors
+        .filter((color) => color.source === 'REALTIME_COLORS').length > 0,
+      isColourLoversImportOpen: this.props.sourceColors
+        .filter((color) => color.source === 'COLOUR_LOVERS').length > 0,
       colourLoversPaletteListStatus: 'LOADING',
       currentPage: 1,
       isLoadMoreActionLoading: false,
