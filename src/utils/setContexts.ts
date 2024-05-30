@@ -1,5 +1,5 @@
 import { lang, locals } from '../content/locals'
-import { Context } from '../types/config'
+import { Context } from '../types/app'
 import features from './config'
 
 export const setContexts = (contextList: Array<Context>) => {

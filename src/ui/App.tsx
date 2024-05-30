@@ -11,7 +11,7 @@ import {
   PlanStatus,
   Service,
   TrialStatus,
-} from '../types/config'
+} from '../types/app'
 import {
   AlgorithmVersionConfiguration,
   ColorConfiguration,

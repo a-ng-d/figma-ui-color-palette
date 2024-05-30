@@ -3,7 +3,7 @@ import React from 'react'
 
 import { locals } from '../../content/locals'
 import releaseNotes from '../../content/releaseNotes'
-import { Language } from '../../types/config'
+import { Language } from '../../types/app'
 import { ReleaseNote } from '../../types/content'
 
 interface HighlightProps {

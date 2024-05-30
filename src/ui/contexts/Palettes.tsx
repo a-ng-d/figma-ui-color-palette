@@ -12,7 +12,7 @@ import React from 'react'
 
 import { signIn, supabase } from '../../bridges/publication/authentication'
 import { locals } from '../../content/locals'
-import { Language, PlanStatus } from '../../types/config'
+import { Language, PlanStatus } from '../../types/app'
 import {
   ColorConfiguration,
   MetaConfiguration,

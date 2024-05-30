@@ -1,5 +1,5 @@
 import { lang, locals } from '../content/locals'
-import { windowSize } from '../types/config'
+import { windowSize } from '../types/app'
 import { ActionsList } from '../types/models'
 import package_json from './../../package.json'
 import checkEditorType from './checks/checkEditorType'

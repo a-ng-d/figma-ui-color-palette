@@ -8,7 +8,7 @@ import pullPalette from '../../bridges/publication/pullPalette'
 import pushPalette from '../../bridges/publication/pushPalette'
 import unpublishPalette from '../../bridges/publication/unpublishPalette'
 import { locals } from '../../content/locals'
-import { Language } from '../../types/config'
+import { Language } from '../../types/app'
 import { palettesDbTableName } from '../../utils/config'
 import type { AppStates } from '../App'
 

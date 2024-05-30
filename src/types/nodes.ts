@@ -1,4 +1,4 @@
-import { Service } from './config'
+import { Service } from './app'
 import {
   AlgorithmVersionConfiguration,
   ColorConfiguration,

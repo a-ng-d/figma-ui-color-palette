@@ -2,7 +2,7 @@ import { texts } from '@a_ng_d/figmug-ui'
 import React from 'react'
 
 import { locals } from '../../content/locals'
-import { Language, PlanStatus, TrialStatus } from '../../types/config'
+import { Language, PlanStatus, TrialStatus } from '../../types/app'
 import features from '../../utils/config'
 import Feature from '../components/Feature'
 import package_json from './../../../package.json'

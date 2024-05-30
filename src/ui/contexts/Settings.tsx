@@ -10,7 +10,7 @@ import {
 import React from 'react'
 
 import { locals } from '../../content/locals'
-import { EditorType, Language, PlanStatus } from '../../types/config'
+import { EditorType, Language, PlanStatus } from '../../types/app'
 import {
   AlgorithmVersionConfiguration,
   ColorSpaceConfiguration,

@@ -16,7 +16,7 @@ import React from 'react'
 import { uid } from 'uid'
 
 import { locals } from '../../content/locals'
-import { EditorType, Language, PlanStatus } from '../../types/config'
+import { EditorType, Language, PlanStatus } from '../../types/app'
 import { SourceColorConfiguration } from '../../types/configurations'
 import { ColourLovers } from '../../types/data'
 import { ContextItem, ImportUrl, ThirdParty } from '../../types/management'

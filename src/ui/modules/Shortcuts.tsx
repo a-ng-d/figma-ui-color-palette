@@ -8,7 +8,7 @@ import {
   Language,
   PlanStatus,
   TrialStatus,
-} from '../../types/config'
+} from '../../types/app'
 import { UserSession } from '../../types/user'
 import features from '../../utils/config'
 import isBlocked from '../../utils/isBlocked'

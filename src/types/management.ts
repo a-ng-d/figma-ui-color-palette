@@ -1,4 +1,4 @@
-import { Context } from './config'
+import { Context } from './app'
 
 export interface SelectedColor {
   id: string | undefined

@@ -1,4 +1,4 @@
-import { Feature } from '../types/config'
+import { Feature } from '../types/app'
 
 export const trialTime = 48
 export const oldTrialTime = 168

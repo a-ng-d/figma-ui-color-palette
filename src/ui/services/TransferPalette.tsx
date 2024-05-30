@@ -4,7 +4,7 @@ import JSZip from 'jszip'
 import React from 'react'
 
 import { locals } from '../../content/locals'
-import { EditorType, Language, PlanStatus, Service } from '../../types/config'
+import { EditorType, Language, PlanStatus, Service } from '../../types/app'
 import {
   ColorConfiguration,
   ExportConfiguration,

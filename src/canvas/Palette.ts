@@ -1,7 +1,7 @@
 import { uid } from 'uid'
 
 import { lang, locals } from '../content/locals'
-import { Service } from '../types/config'
+import { Service } from '../types/app'
 import {
   AlgorithmVersionConfiguration,
   ColorConfiguration,

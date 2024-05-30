@@ -3,7 +3,7 @@ import { Dropdown, Input, Menu, SectionTitle } from '@a_ng_d/figmug-ui'
 import React from 'react'
 
 import { locals } from '../../content/locals'
-import { Language, PlanStatus } from '../../types/config'
+import { Language, PlanStatus } from '../../types/app'
 import { ColorSpaceConfiguration } from '../../types/configurations'
 import { ActionsList } from '../../types/models'
 import features from '../../utils/config'

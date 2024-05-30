@@ -2,7 +2,7 @@ import { Button, Message, texts } from '@a_ng_d/figmug-ui'
 import React from 'react'
 
 import { locals } from '../../content/locals'
-import { Language } from '../../types/config'
+import { Language } from '../../types/app'
 import {
   ColorConfiguration,
   ExtractOfPaletteConfiguration,

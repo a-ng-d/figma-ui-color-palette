@@ -3,7 +3,7 @@ import chroma from 'chroma-js'
 import React from 'react'
 import { uid } from 'uid'
 
-import { Context, Language, PlanStatus } from '../../types/config'
+import { Context, Language, PlanStatus } from '../../types/app'
 import {
   ColorSpaceConfiguration,
   NamingConventionConfiguration,
