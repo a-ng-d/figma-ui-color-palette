@@ -1,4 +1,4 @@
-import { Bar, Tabs } from '@a_ng_d/figmug-ui'
+import { Bar, HexModel, Tabs } from '@a_ng_d/figmug-ui'
 import React from 'react'
 
 import { locals } from '../../content/locals'
@@ -22,6 +22,8 @@ import Palettes from '../contexts/Palettes'
 import Scale from '../contexts/Scale'
 import Settings from '../contexts/Settings'
 import Source from '../contexts/Source'
+import { uid } from 'uid'
+import chroma from 'chroma-js'
 
 interface CreatePaletteProps {
   sourceColors: Array<SourceColorConfiguration> | []
@@ -40,6 +42,7 @@ interface CreatePaletteProps {
   onChangePreset: React.Dispatch<Partial<AppStates>>
   onCustomPreset: React.Dispatch<Partial<AppStates>>
   onChangeSettings: React.Dispatch<Partial<AppStates>>
+  onConfigureExternalSourceColors: React.Dispatch<Partial<AppStates>>
 }
 
 interface CreatePaletteStates {
@@ -95,6 +98,29 @@ export default class CreatePalette extends React.Component<
       },
       '*'
     )
+  
+  onConfigureExternalSourceColors = (name: string, colors: Array<HexModel>) => {
+    palette.name = name
+    this.setState({
+      context: 'SOURCE'
+    })
+    this.props.onConfigureExternalSourceColors({
+      name: name,
+      sourceColors: colors.map((color, index) => {
+        const gl = chroma(color).gl()
+        return {
+          name: `Color ${index + 1}`,
+          rgb: {
+            r: gl[0],
+            g: gl[1],
+            b: gl[2]
+          },
+          source: 'REMOTE',
+          id: uid()
+        }
+      })
+    })
+  }
 
   setContexts = () => {
     const contexts: Array<{
@@ -149,7 +175,11 @@ export default class CreatePalette extends React.Component<
 
     switch (this.state['context']) {
       case 'PALETTES': {
-        controls = <Palettes {...this.props} />
+        controls =
+        <Palettes
+          {...this.props}
+          onConfigureExternalSourceColors={this.onConfigureExternalSourceColors}
+        />
         break
       }
       case 'SOURCE': {

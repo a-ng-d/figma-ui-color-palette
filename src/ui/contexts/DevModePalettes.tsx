@@ -78,7 +78,7 @@ export default class DevModePalettes extends React.Component<DevModePalettesProp
   }
 
   // Templates
-  Palettes = () => {
+  InternalPalettesList = () => {
     return (
       <ul className="rich-list">
         <div
@@ -123,7 +123,7 @@ export default class DevModePalettes extends React.Component<DevModePalettesProp
       <div className="controls__control">
         <div className="control__block control__block--list">
           {this.hasPalettes ? (
-            <this.Palettes />
+            <this.InternalPalettesList />
           ) : (
             <div className="onboarding__callout">
               <Message

@@ -1,6 +1,7 @@
 import {
   Bar,
   Button,
+  HexModel,
   Icon,
   Input,
   Message,
@@ -16,7 +17,6 @@ import {
   ColorConfiguration,
   MetaConfiguration,
   PaletteConfiguration,
-  PresetConfiguration,
   SourceColorConfiguration,
   ThemeConfiguration,
 } from '../../types/configurations'
@@ -25,11 +25,16 @@ import { UserSession } from '../../types/user'
 import features, { palettesDbTableName } from '../../utils/config'
 import Feature from '../components/Feature'
 import PaletteItem from '../components/PaletteItem'
+import { ColourLovers, ExternalPalettes } from '../../types/data'
 
 interface PalettesProps {
   userSession: UserSession
   planStatus: PlanStatus
   lang: Language
+  onConfigureExternalSourceColors: (
+    name: string,
+    colors: Array<HexModel>
+  ) => void
 }
 
 interface PalettesStates {
@@ -46,16 +51,7 @@ interface PalettesStates {
   isLoadMoreActionLoading: boolean
   isSignInLoading: boolean
   isAddToFileActionLoading: Array<boolean>
-  paletteList: Array<{
-    palette_id: string
-    screenshot: string
-    name: string
-    preset: PresetConfiguration
-    colors: ColorConfiguration
-    themes: ThemeConfiguration
-    creator_avatar: string
-    creator_full_name: string
-  }>
+  paletteList: Array<Partial<ExternalPalettes & ColourLovers>>
 }
 
 export default class Palettes extends React.Component<
@@ -68,7 +64,7 @@ export default class Palettes extends React.Component<
       context:
         this.setContexts()[0] !== undefined ? this.setContexts()[0].id : '',
       paletteListStatus: 'LOADING',
-      pageSize: 2,
+      pageSize: 20,
       currentPage: 1,
       isLoadMoreActionLoading: false,
       isSignInLoading: false,
@@ -96,6 +92,7 @@ export default class Palettes extends React.Component<
     if (prevState.context !== this.state['context']) {
       this.setState({
         paletteList: [],
+        currentPage: 1,
         paletteListStatus: 'LOADING',
       })
       this.callUICPAgent(this.state['context'])
@@ -163,9 +160,38 @@ export default class Palettes extends React.Component<
         })
     }
 
+    const getPublicPalettes = async () => {
+      return fetch(
+        'https://corsproxy.io/?' +
+          encodeURIComponent(
+            `https://www.colourlovers.com/api/palettes?format=json&numResults=${
+              this.state['pageSize']
+            }&resultOffset=${
+              this.state['currentPage'] - 1
+            }`
+          ),
+        {
+          cache: 'no-cache',
+          credentials: 'omit',
+        }
+      )
+        .then((response) => response.json())
+        .then((data) => this.setState({
+          paletteListStatus: data.length > 0 ? 'LOADED' : 'FULL',
+          paletteList: this.state['paletteList'].concat(data),
+        }))
+        .finally(() => this.setState({
+          isLoadMoreActionLoading: false,
+        }))
+        .catch(() => this.setState({
+          paletteListStatus: 'ERROR',
+        }))
+    }
+
     const actions: ActionsList = {
       SELF: () => getSeftPalettes(),
       COMMUNITY: () => getCommunityPalettes(),
+      EXPLORE: () => getPublicPalettes(),
       DEFAULT: () => null,
     }
 
@@ -308,20 +334,20 @@ export default class Palettes extends React.Component<
     })
 
   // Templates
-  PalettesList = () => {
+  ExternalPalettesList = () => {
     return (
       <ul className="rich-list">
-        {this.state['paletteList'].map((palette: any, index: number) => (
+        {this.state['paletteList'].map((palette, index: number) => (
           <PaletteItem
             id={palette.palette_id}
             key={`palette-${index}`}
             src={palette.screenshot}
             title={palette.name}
-            subtitle={palette.preset.name}
-            info={this.getPaletteMeta(palette.colors, palette.themes)}
+            subtitle={palette.preset?.name}
+            info={this.getPaletteMeta(palette.colors ?? [], palette.themes ?? [])}
             user={{
-              avatar: palette.creator_avatar,
-              name: palette.creator_full_name,
+              avatar: palette.creator_avatar ?? '',
+              name: palette.creator_full_name ?? '',
             }}
             action={() => null}
           >
@@ -335,7 +361,7 @@ export default class Palettes extends React.Component<
                     'isAddToFileActionLoading'
                   ].map((loading, i) => (i === index ? true : loading)),
                 })
-                this.onSelectPalette(palette.palette_id)
+                this.onSelectPalette(palette.palette_id ?? '')
                   .finally(() => {
                     this.setState({
                       isAddToFileActionLoading:
@@ -382,6 +408,69 @@ export default class Palettes extends React.Component<
     )
   }
 
+  ExternalSourceColorsList = () => {
+    return (
+      <ul className="rich-list">
+        {this.state['paletteList'].map((palette, index: number) => (
+          <PaletteItem
+            id={palette.id?.toString() ?? ''}
+            key={`source-colors-${index}`}
+            src={palette.imageUrl?.replace('http', 'https')}
+            title={palette.title}
+            subtitle={`Rank ${palette.rank}`}
+            info={`${palette.numVotes} votes, ${palette.numViews} views, ${palette.numComments} comments`}
+            user={{
+              avatar: '',
+              name: palette.userName ?? '',
+            }}
+            action={() => null}
+          >
+            <Button
+              type="icon"
+              icon="link-connected"
+              action={() => parent.postMessage(
+                {
+                  pluginMessage: {
+                    type: 'OPEN_IN_BROWSER',
+                    url: palette.url?.replace('http', 'https'),
+                  },
+                },
+                '*'
+              )}
+            />
+            <Button
+              type="secondary"
+              label={locals[this.props.lang].actions.configure}
+              action={() => this.props.onConfigureExternalSourceColors(
+                palette.title ?? '',
+                palette.colors ?? [],
+              )}
+            />
+          </PaletteItem>
+        ))}
+        <div className="list-control">
+          {this.state['paletteListStatus'] === 'LOADED' ? (
+            <Button
+              type="secondary"
+              label={locals[this.props.lang].palettes.lazyLoad.loadMore}
+              isLoading={this.state['isLoadMoreActionLoading']}
+              action={() =>
+                this.setState({
+                  isLoadMoreActionLoading: true,
+                  currentPage: this.state['currentPage'] + 1,
+                })
+              }
+            />
+          ) : (
+            <div className={`${texts['type--secondary']} type`}>
+              {locals[this.props.lang].palettes.lazyLoad.completeList}
+            </div>
+          )}
+        </div>
+      </ul>
+    )
+  }
+
   // Render
   render() {
     let controls
@@ -390,7 +479,7 @@ export default class Palettes extends React.Component<
       this.state['paletteListStatus'] === 'LOADED' ||
       this.state['paletteListStatus'] === 'FULL'
     ) {
-      controls = <this.PalettesList />
+      controls = this.state['context'] !== 'EXPLORE' ? <this.ExternalPalettesList /> : <this.ExternalSourceColorsList />
     } else if (this.state['paletteListStatus'] === 'ERROR') {
       controls = (
         <div className="onboarding__callout--centered">

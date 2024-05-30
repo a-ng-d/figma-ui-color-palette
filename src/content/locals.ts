@@ -322,6 +322,7 @@ export const locals: { [key: string]: any } = {
       syncPalette: 'Synchronize palette',
       export: 'Export the UI Color Palette to',
       addToFile: 'Add to file',
+      configure: 'Configure',
       sourceColorsNumber: {
         single: 'source color',
         several: 'source colors',

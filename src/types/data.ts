@@ -1,4 +1,5 @@
 import { HexModel } from '@a_ng_d/figmug-ui'
+import { ColorConfiguration, PresetConfiguration, ThemeConfiguration } from './configurations'
 
 export interface PaletteData {
   name: string
@@ -40,4 +41,33 @@ export interface PaletteDataShadeItem {
   variableId: string
   styleId: string
   type: 'source color' | 'color shade'
+}
+
+export interface ColourLovers {
+  apiUrl: string
+  badgeUrl: string
+  colors: Array<HexModel>
+  dateCreated: Date | string
+  description: string
+  id: number
+  imageUrl: string
+  numComments: number
+  numHearts: number
+  numViews: number
+  numVotes: number
+  rank: number
+  title: string
+  url: string
+  userName: string
+}
+
+export interface ExternalPalettes {
+  palette_id: string
+  screenshot: string
+  name: string
+  preset: PresetConfiguration
+  colors: Array<ColorConfiguration>
+  themes: Array<ThemeConfiguration>
+  creator_avatar: string
+  creator_full_name: string
 }
