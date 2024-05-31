@@ -1,3 +1,4 @@
+import { uid } from 'uid'
 import type { AppStates } from '../../ui/App'
 import {
   databaseUrl,
@@ -11,17 +12,19 @@ const publishPalette = async (
   isShared = false
 ): Promise<Partial<AppStates>> => {
   let imageUrl = null
-  const now = new Date().toISOString()
-  const name =
-    rawData.name === ''
-      ? `${rawData.userSession.userFullName}'s UI COLOR PALETTE`
-      : rawData.name
+  const
+    now = new Date().toISOString(),
+    name =
+      rawData.name === ''
+        ? `${rawData.userSession.userFullName}'s UI COLOR PALETTE`
+        : rawData.name,
+    id = uid()
 
   if (rawData.screenshot !== null) {
     const { error } = await supabase.storage
       .from(palettesStorageName)
       .upload(
-        `${rawData.userSession.userId}/${rawData.id}.png`,
+        `${rawData.userSession.userId}/${id}.png`,
         rawData.screenshot.buffer,
         {
           contentType: 'image/png',
@@ -30,7 +33,7 @@ const publishPalette = async (
       )
 
     if (!error)
-      imageUrl = `${databaseUrl}/storage/v1/object/public/${palettesStorageName}/${rawData.userSession.userId}/${rawData.id}.png`
+      imageUrl = `${databaseUrl}/storage/v1/object/public/${palettesStorageName}/${rawData.userSession.userId}/${id}.png`
     else throw error
   }
 
@@ -38,7 +41,7 @@ const publishPalette = async (
     .from(palettesDbTableName)
     .insert([
       {
-        palette_id: rawData.id,
+        palette_id: id,
         name: name,
         description: rawData.description,
         preset: rawData.preset,
@@ -64,6 +67,7 @@ const publishPalette = async (
 
   if (!error) {
     const palettePublicationDetails = {
+      id: id,
       name: name,
       dates: {
         publishedAt: now,
@@ -86,6 +90,10 @@ const publishPalette = async (
         pluginMessage: {
           type: 'SET_DATA',
           items: [
+            {
+              key: 'id',
+              value: palettePublicationDetails.id,
+            },
             {
               key: 'name',
               value: palettePublicationDetails.name,

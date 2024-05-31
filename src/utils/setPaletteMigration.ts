@@ -12,8 +12,7 @@ import { presets } from './palettePackage'
 import setData from './setData'
 
 const setPaletteMigration = (palette: BaseNode) => {
-  const id = palette.getPluginData('id'),
-    idVersion = palette.getPluginData('idVersion'),
+  const
     type = palette.getPluginData('type'),
     name = palette.getPluginData('name'),
     min = palette.getPluginData('min'),
@@ -33,19 +32,11 @@ const setPaletteMigration = (palette: BaseNode) => {
     data = palette.getPluginData('data'),
     isPublished = palette.getPluginData('isPublished'),
     isShared = palette.getPluginData('isShared'),
-    creatorFullName = palette.getPluginData('creatorFullName'),
-    creatorAvatar = palette.getPluginData('creatorAvatar'),
-    creatorId = palette.getPluginData('creatorId'),
     createdAt = palette.getPluginData('createdAt'),
-    updatedAt = palette.getPluginData('updatedAt'),
-    publishedAt = palette.getPluginData('publishedAt')
+    updatedAt = palette.getPluginData('updatedAt')
 
   // id
-  if (id === '') palette.setPluginData('id', uid())
-  if (idVersion === '') {
-    palette.setPluginData('id', uid())
-    palette.setPluginData('idVersion', 'v2')
-  }
+  if (!isPublished) palette.setPluginData('id', '')
 
   // type
   if (type === '') palette.setPluginData('type', 'UI_COLOR_PALETTE')
@@ -170,17 +161,11 @@ const setPaletteMigration = (palette: BaseNode) => {
   if (isPublished === '') palette.setPluginData('isPublished', 'false')
   if (isShared === '') palette.setPluginData('isShared', 'false')
 
-  // creator identity
-  if (creatorFullName === '') palette.setPluginData('creatorFullName', '')
-  if (creatorAvatar === '') palette.setPluginData('creatorAvatar', '')
-  if (creatorId === '') palette.setPluginData('creatorId', '')
-
   // created, updated and published
   if (createdAt === '')
     palette.setPluginData('createdAt', new Date().toISOString())
   if (updatedAt === '')
     palette.setPluginData('updatedAt', new Date().toISOString())
-  if (publishedAt === '') palette.setPluginData('publishedAt', '')
 }
 
 export default setPaletteMigration

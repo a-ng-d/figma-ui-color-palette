@@ -111,7 +111,6 @@ export default class Palette {
 
     // data
     this.node.setRelaunchData({ edit: '' })
-    this.node.setPluginData('idVersion', 'v2')
     this.node.setPluginData('type', 'UI_COLOR_PALETTE')
     this.node.setPluginData('name', this.name)
     this.node.setPluginData('description', this.description)
@@ -150,15 +149,10 @@ export default class Palette {
       )
       this.node.setPluginData('creatorId', this.meta.creatorIdentity.creatorId)
     } else {
-      this.node.setPluginData('id', uid())
       this.node.setPluginData('createdAt', now)
       this.node.setPluginData('updatedAt', now)
-      this.node.setPluginData('publishedAt', '')
       this.node.setPluginData('isPublished', 'false')
       this.node.setPluginData('isShared', 'false')
-      this.node.setPluginData('creatorFullName', '')
-      this.node.setPluginData('creatorAvatar', '')
-      this.node.setPluginData('creatorId', '')
     }
 
     // insert

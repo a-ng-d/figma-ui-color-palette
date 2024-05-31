@@ -5,6 +5,7 @@ const detachPalette = async (
   rawData: AppStates
 ): Promise<Partial<AppStates>> => {
   const palettePublicationDetails = {
+    id: '',
     dates: {
       publishedAt: '',
       createdAt: rawData.dates.createdAt,
@@ -26,6 +27,10 @@ const detachPalette = async (
       pluginMessage: {
         type: 'SET_DATA',
         items: [
+          {
+            key: 'id',
+            value: palettePublicationDetails.id,
+          },
           {
             key: 'publishedAt',
             value: palettePublicationDetails.dates.publishedAt,

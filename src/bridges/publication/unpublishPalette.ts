@@ -20,6 +20,7 @@ const unpublishPalette = async (
 
   if (!error) {
     const palettePublicationDetails = {
+      id: '',
       dates: {
         publishedAt: '',
         createdAt: rawData.dates.createdAt,
@@ -41,6 +42,10 @@ const unpublishPalette = async (
         pluginMessage: {
           type: 'SET_DATA',
           items: [
+            {
+              key: 'id',
+              value: palettePublicationDetails.id,
+            },
             {
               key: 'publishedAt',
               value: palettePublicationDetails.dates.publishedAt,
