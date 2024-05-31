@@ -25,7 +25,7 @@ const processSelection = () => {
   const palette: FrameNode | InstanceNode = selection[0] as
     | FrameNode
     | InstanceNode
-  const selectionHandler = (state: string, element: any = null) => {
+  const selectionHandler = (state: string, element: FrameNode | null = null) => {
     const actions: ActionsList = {
       PALETTE_SELECTED: async () => {
         figma.ui.postMessage({
@@ -78,7 +78,7 @@ const processSelection = () => {
             selection: viableSelection,
           },
         })
-        element.setRelaunchData({
+        element?.setRelaunchData({
           create: locals[lang].relaunch.create.description,
         })
       },
@@ -105,9 +105,9 @@ const processSelection = () => {
   else if (selection.length > 1 && palette.getPluginDataKeys().length !== 0)
     selectionHandler('EMPTY_SELECTION')
   else if (selection[0].type === 'INSTANCE') selectionHandler('EMPTY_SELECTION')
-  else if ((selection[0] as any).fills === undefined)
+  else if ((selection[0] as FrameNode).fills === undefined)
     selectionHandler('EMPTY_SELECTION')
-  else if ((selection[0] as any).fills.length === 0)
+  else if ((selection[0] as FrameNode).fills && ((selection[0] as FrameNode).fills as readonly Paint[]).length === 0)
     selectionHandler('EMPTY_SELECTION')
 
   selection.forEach((element) => {
@@ -117,18 +117,21 @@ const processSelection = () => {
       element.type !== 'EMBED'
     )
       if (
-        (element as any).fills.filter((fill: Paint) => fill.type === 'SOLID')
-          .length !== 0 &&
+        ((element as FrameNode).fills as readonly Paint[]).filter((fill: Paint) => fill.type === 'SOLID').length !== 0 &&
         element.getPluginDataKeys().length === 0
       ) {
+        const solidFill = ((element as FrameNode).fills as Array<Paint>).find(
+          (fill: Paint) => fill.type === 'SOLID'
+        ) as SolidPaint;
+
         viableSelection.push({
-          name: (element as any).name,
-          rgb: (element as any).fills[0].color,
+          name: (element as FrameNode).name,
+          rgb: solidFill.color,
           source: 'CANVAS',
           id: uid(),
           isRemovable: false,
-        })
-        selectionHandler('COLOR_SELECTED', element)
+        });
+        selectionHandler('COLOR_SELECTED', element as FrameNode);
       }
   })
 

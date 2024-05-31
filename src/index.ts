@@ -36,14 +36,14 @@ figma.on('run', async ({ parameters }: RunEvent) => {
               element.type !== 'EMBED' &&
               element.type !== 'CONNECTOR' &&
               element.getPluginDataKeys().length === 0 &&
-              (element as any).fills.filter(
+              ((element as FrameNode).fills as readonly SolidPaint[]).filter(
                 (fill: Paint) => fill.type === 'SOLID'
               ).length !== 0
           )
           .map((element) => {
             return {
               name: element.name,
-              rgb: (element as any).fills[0].color,
+              rgb: ((element as FrameNode).fills as readonly SolidPaint[])[0].color,
               source: 'CANVAS',
               id: '',
               isRemovable: false,
