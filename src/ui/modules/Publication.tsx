@@ -727,7 +727,7 @@ export default class Publication extends React.Component<
             style={{
               display: 'flex',
               flexDirection: 'column',
-              gap: 'var(--size-xsmall)',
+              gap: 'var(--size-xxsmall)',
             }}
           >
             <div>
