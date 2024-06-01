@@ -33,7 +33,9 @@ const setPaletteMigration = (palette: BaseNode) => {
     isPublished = palette.getPluginData('isPublished'),
     isShared = palette.getPluginData('isShared'),
     createdAt = palette.getPluginData('createdAt'),
-    updatedAt = palette.getPluginData('updatedAt')
+    updatedAt = palette.getPluginData('updatedAt'),
+    creatorFullName = palette.getPluginData('creatorFullName'),
+    creatorAvatar = palette.getPluginData('creatorAvatar')
 
   // id
   if (!isPublished) palette.setPluginData('id', '')
@@ -153,6 +155,8 @@ const setPaletteMigration = (palette: BaseNode) => {
         algorithmVersion: palette.getPluginData(
           'algorithmVersion'
         ) as AlgorithmVersionConfiguration,
+        creatorFullName: creatorFullName,
+        creatorAvatar: creatorAvatar,
       },
       palette as FrameNode
     ).makePaletteData('CREATE')

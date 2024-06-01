@@ -4,8 +4,11 @@ export default class Tag {
   fontSize: number
   url: string | null
   nodeTag: FrameNode | null
+  nodeTagWithAvatar: FrameNode | null
+  nodeTagwithIndicator: FrameNode | null
   nodeText: TextNode | null
   nodeIndicator: EllipseNode | null
+  nodeAvatar: EllipseNode | null
 
   constructor(
     name: string,
@@ -18,11 +21,14 @@ export default class Tag {
     this.fontSize = fontSize
     this.url = url
     this.nodeTag = null
+    this.nodeTagwithIndicator = null
+    this.nodeTagWithAvatar = null
     this.nodeText = null
     this.nodeIndicator = null
+    this.nodeAvatar = null
   }
 
-  makeNodeTag = (gl: Array<number> = [0, 0, 0, 1], hasIndicator = false) => {
+  makeNodeTag = () => {
     // base
     this.nodeTag = figma.createFrame()
     this.nodeTag.name = this.name
@@ -43,16 +49,102 @@ export default class Tag {
     this.nodeTag.layoutMode = 'HORIZONTAL'
     this.nodeTag.layoutSizingHorizontal = 'HUG'
     this.nodeTag.layoutSizingVertical = 'HUG'
+    this.nodeTag.counterAxisAlignItems = 'CENTER'
     this.nodeTag.horizontalPadding = 8
     this.nodeTag.verticalPadding = 4
     this.nodeTag.itemSpacing = 4
 
     // insert
-    if (hasIndicator)
-      this.nodeTag.appendChild(this.makeNodeIndicator([gl[0], gl[1], gl[2]]))
     this.nodeTag.appendChild(this.makeNodeText())
 
     return this.nodeTag
+  }
+
+  makeNodeTagwithIndicator = (gl: Array<number> = [0, 0, 0, 1]) => {
+    // base
+    this.nodeTagwithIndicator = figma.createFrame()
+    this.nodeTagwithIndicator.name = this.name
+    this.nodeTagwithIndicator.fills = [
+      {
+        type: 'SOLID',
+        opacity: 0.5,
+        color: {
+          r: 1,
+          g: 1,
+          b: 1,
+        },
+      },
+    ]
+    this.nodeTagwithIndicator.cornerRadius = 16
+
+    // layout
+    this.nodeTagwithIndicator.layoutMode = 'HORIZONTAL'
+    this.nodeTagwithIndicator.layoutSizingHorizontal = 'HUG'
+    this.nodeTagwithIndicator.layoutSizingVertical = 'HUG'
+    this.nodeTagwithIndicator.counterAxisAlignItems = 'CENTER'
+    this.nodeTagwithIndicator.horizontalPadding = 8
+    this.nodeTagwithIndicator.verticalPadding = 4
+    this.nodeTagwithIndicator.itemSpacing = 4
+
+    // insert
+    this.nodeTagwithIndicator.appendChild(this.makeNodeIndicator([gl[0], gl[1], gl[2]]))
+    this.nodeTagwithIndicator.appendChild(this.makeNodeText())
+
+    return this.nodeTagwithIndicator
+  }
+
+  makeNodeTagWithAvatar = (url: string): FrameNode => {
+    // base
+    this.nodeTagWithAvatar = figma.createFrame()
+    this.nodeTagWithAvatar.name = this.name
+    this.nodeTagWithAvatar.cornerRadius = 16
+
+    this.nodeAvatar = figma.createEllipse()
+    this.nodeAvatar.resize(24, 24)
+    this.nodeAvatar.name = '_avatar'
+
+
+    // layout
+    this.nodeTagWithAvatar.layoutMode = 'HORIZONTAL'
+    this.nodeTagWithAvatar.layoutSizingHorizontal = 'HUG'
+    this.nodeTagWithAvatar.layoutSizingVertical = 'HUG'
+    this.nodeTagWithAvatar.counterAxisAlignItems = 'CENTER'
+    this.nodeTagWithAvatar.horizontalPadding = 8
+    this.nodeTagWithAvatar.verticalPadding = 4
+    this.nodeTagWithAvatar.itemSpacing = 8
+
+    // insert
+    this.makeNodeAvatar(url)
+      .then((data) => {
+        if (data !== null && this.nodeAvatar) {
+          this.nodeAvatar.fills = [
+            {
+              type: 'IMAGE',
+              scaleMode: 'FILL',
+              imageHash: data.hash,
+            },
+          ]
+        }
+      })
+      .catch(() => {
+        if (this.nodeTagWithAvatar) {
+          this.nodeTagWithAvatar.fills = [
+            {
+              type: 'SOLID',
+              opacity: 0.5,
+              color: {
+                r: 1,
+                g: 1,
+                b: 1,
+              },
+            },
+          ]
+        }
+      })
+
+    this.nodeTagWithAvatar?.appendChild(this.nodeAvatar)
+    this.nodeTagWithAvatar?.appendChild(this.makeNodeText())
+    return this.nodeTagWithAvatar
   }
 
   makeNodeText = () => {
@@ -119,5 +211,13 @@ export default class Tag {
     ]
 
     return this.nodeIndicator
+  }
+
+  makeNodeAvatar = async (url: string) => {
+    return figma.createImageAsync(
+      url
+    )
+      .then(async (image: Image) => image)
+      .catch(() => null)
   }
 }

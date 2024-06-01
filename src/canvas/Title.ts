@@ -100,6 +100,18 @@ export default class Title {
     this.nodeProps.itemSpacing = 8
 
     // insert
+    if (this.parent.creatorFullName !== undefined
+        && this.parent.creatorAvatar !== undefined)
+        if (this.parent.creatorFullName !== ''
+          && this.parent.creatorAvatar !== '')
+      this.nodeProps.appendChild(
+        new Tag(
+          '_creator_id',
+          `Provided by ${this.parent.creatorFullName}`,
+          12
+        ).makeNodeTagWithAvatar(this.parent.creatorAvatar)
+      )
+      
     if (
       this.parent.themes.find((theme) => theme.isEnabled)?.type !==
       'default theme'

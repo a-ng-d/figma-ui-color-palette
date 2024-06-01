@@ -25,7 +25,8 @@ const updateScale = (msg: ScaleMessage) => {
     : (currentSelection[0] as FrameNode)
 
   if (palette.children.length === 1) {
-    const name: string =
+    const
+      name: string =
         palette.getPluginData('name') === ''
           ? locals[lang].name
           : palette.getPluginData('name'),
@@ -51,7 +52,9 @@ const updateScale = (msg: ScaleMessage) => {
       ) as TextColorsThemeHexModel,
       algorithmVersion = palette.getPluginData(
         'algorithmVersion'
-      ) as AlgorithmVersionConfiguration
+      ) as AlgorithmVersionConfiguration,
+      creatorFullName = palette.getPluginData('creatorFullName'),
+      creatorAvatar = palette.getPluginData('creatorAvatar')
 
     const theme = themes.find((theme) => theme.isEnabled)
     if (theme !== undefined) theme.scale = msg.data.scale
@@ -95,6 +98,8 @@ const updateScale = (msg: ScaleMessage) => {
                 : view,
           textColorsTheme: textColorsTheme,
           algorithmVersion: algorithmVersion,
+          creatorFullName: creatorFullName,
+          creatorAvatar: creatorAvatar,
           service: 'EDIT',
         },
         palette

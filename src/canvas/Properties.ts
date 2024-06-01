@@ -269,28 +269,26 @@ export default class Properties {
       new Tag(
         '_wcag21-light',
         `${this.getContrast('LIGHT').toFixed(2)} • ${this.getLevel('LIGHT')}`
-      ).makeNodeTag(
+      ).makeNodeTagwithIndicator(
         chroma(
           this.simulateColorBlind(
             this.textColorsTheme.lightColor,
             this.visionSimulationMode
           )
-        ).gl(),
-        true
+        ).gl()
       )
     )
     this.nodeContrastScoresProps.appendChild(
       new Tag(
         '_wcag21-dark',
         `${this.getContrast('DARK').toFixed(2)} • ${this.getLevel('DARK')}`
-      ).makeNodeTag(
+      ).makeNodeTagwithIndicator(
         chroma(
           this.simulateColorBlind(
             this.textColorsTheme.darkColor,
             this.visionSimulationMode
           )
-        ).gl(),
-        true
+        ).gl()
       )
     )
     this.nodeContrastScoresProps.appendChild(
@@ -299,14 +297,13 @@ export default class Properties {
         `Lc ${this.getAPCAContrast('LIGHT').toFixed(1)} • ${
           this.getMinFontSizes('LIGHT')[4]
         }pt (400)`
-      ).makeNodeTag(
+      ).makeNodeTagwithIndicator(
         chroma(
           this.simulateColorBlind(
             this.textColorsTheme.lightColor,
             this.visionSimulationMode
           )
-        ).gl(),
-        true
+        ).gl()
       )
     )
     this.nodeContrastScoresProps.appendChild(
@@ -315,14 +312,13 @@ export default class Properties {
         `Lc ${this.getAPCAContrast('DARK').toFixed(1)} • ${
           this.getMinFontSizes('DARK')[4]
         }pt (400)`
-      ).makeNodeTag(
+      ).makeNodeTagwithIndicator(
         chroma(
           this.simulateColorBlind(
             this.textColorsTheme.darkColor,
             this.visionSimulationMode
           )
-        ).gl(),
-        true
+        ).gl()
       )
     )
 
@@ -418,13 +414,13 @@ export default class Properties {
       new Tag(
         '_wcag21-light',
         `${this.getContrast('LIGHT').toFixed(2)} • ${this.getLevel('LIGHT')}`
-      ).makeNodeTag(chroma(this.textColorsTheme.lightColor).gl(), true)
+      ).makeNodeTagwithIndicator(chroma(this.textColorsTheme.lightColor).gl())
     )
     this.nodeDetailedWCAGScoresProps.appendChild(
       new Tag(
         '_wcag21-dark',
         `${this.getContrast('DARK').toFixed(2)} • ${this.getLevel('DARK')}`
-      ).makeNodeTag(chroma(this.textColorsTheme.darkColor).gl(), true)
+      ).makeNodeTagwithIndicator(chroma(this.textColorsTheme.darkColor).gl())
     )
 
     return this.nodeDetailedWCAGScoresProps
@@ -456,7 +452,7 @@ export default class Properties {
           new Tag(
             '_apca-light',
             `Lc ${this.getAPCAContrast('LIGHT').toFixed(1)}`
-          ).makeNodeTag(chroma(this.textColorsTheme.lightColor).gl(), true),
+          ).makeNodeTagwithIndicator(chroma(this.textColorsTheme.lightColor).gl()),
           new Tag(
             '_minimum-font-sizes',
             locals[lang].properties.fontSize
@@ -490,7 +486,7 @@ export default class Properties {
           new Tag(
             '_apca-dark',
             `Lc ${this.getAPCAContrast('DARK').toFixed(1)}`
-          ).makeNodeTag(chroma(this.textColorsTheme.darkColor).gl(), true),
+          ).makeNodeTagwithIndicator(chroma(this.textColorsTheme.darkColor).gl()),
           new Tag(
             '_minimum-font-sizes',
             locals[lang].properties.fontSize

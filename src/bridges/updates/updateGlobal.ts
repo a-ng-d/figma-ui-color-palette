@@ -28,6 +28,8 @@ const updateGlobal = async (msg: any) => {
           view: msg.data.view,
           textColorsTheme: msg.data.text_colors_theme,
           algorithmVersion: msg.data.algorithm_version,
+          creatorFullName: msg.data.creator_full_name,
+          creatorAvatar: msg.data.creator_avatar,
           service: 'EDIT',
         },
         palette

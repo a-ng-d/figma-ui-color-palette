@@ -21,7 +21,8 @@ const updateSettings = (msg: SettingsMessage) => {
     : (currentSelection[0] as FrameNode)
 
   if (palette.children.length === 1) {
-    const preset = JSON.parse(
+    const
+      preset = JSON.parse(
         palette.getPluginData('preset')
       ) as PresetConfiguration,
       scale = JSON.parse(palette.getPluginData('scale')) as ScaleConfiguration,
@@ -31,7 +32,9 @@ const updateSettings = (msg: SettingsMessage) => {
       themes = JSON.parse(
         palette.getPluginData('themes')
       ) as Array<ThemeConfiguration>,
-      view = palette.getPluginData('view') as ViewConfiguration
+      view = palette.getPluginData('view') as ViewConfiguration,
+      creatorFullName = palette.getPluginData('creatorFullName'),
+      creatorAvatar = palette.getPluginData('creatorAvatar')
 
     palette.setPluginData('name', msg.data.name)
     palette.setPluginData('description', msg.data.description)
@@ -41,7 +44,7 @@ const updateSettings = (msg: SettingsMessage) => {
       'textColorsTheme',
       JSON.stringify(msg.data.textColorsTheme)
     )
-    palette.setPluginData('algorithmVersion', msg.data.algorithmVersion)
+    palette.setPluginData('algorithmVersion', msg.data.algorithmVersion),
 
     palette.children[0].remove()
     palette.appendChild(
@@ -58,6 +61,8 @@ const updateSettings = (msg: SettingsMessage) => {
           view: view,
           textColorsTheme: msg.data.textColorsTheme,
           algorithmVersion: msg.data.algorithmVersion,
+          creatorFullName: creatorFullName,
+          creatorAvatar: creatorAvatar,
           service: 'EDIT',
         },
         palette

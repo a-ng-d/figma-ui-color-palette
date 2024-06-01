@@ -24,7 +24,8 @@ const updateColors = (msg: ColorsMessage) => {
     : (currentSelection[0] as FrameNode)
 
   if (palette.children.length === 1) {
-    const name: string =
+    const
+      name: string =
         palette.getPluginData('name') === ''
           ? locals[lang].name
           : palette.getPluginData('name'),
@@ -48,7 +49,9 @@ const updateColors = (msg: ColorsMessage) => {
       ) as TextColorsThemeHexModel,
       algorithmVersion = palette.getPluginData(
         'algorithmVersion'
-      ) as AlgorithmVersionConfiguration
+      ) as AlgorithmVersionConfiguration,
+      creatorFullName = palette.getPluginData('creatorFullName'),
+      creatorAvatar = palette.getPluginData('creatorAvatar')
 
     palette.setPluginData('colors', JSON.stringify(msg.data))
 
@@ -72,6 +75,8 @@ const updateColors = (msg: ColorsMessage) => {
                 : view,
           textColorsTheme: textColorsTheme,
           algorithmVersion: algorithmVersion,
+          creatorFullName: creatorFullName,
+          creatorAvatar: creatorAvatar,
           service: 'EDIT',
         },
         palette

@@ -151,6 +151,7 @@ export default class Palette {
     } else {
       this.node.setPluginData('createdAt', now)
       this.node.setPluginData('updatedAt', now)
+      this.node.setPluginData('publishedAt', '')
       this.node.setPluginData('isPublished', 'false')
       this.node.setPluginData('isShared', 'false')
     }
