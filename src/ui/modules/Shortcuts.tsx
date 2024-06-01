@@ -3,12 +3,7 @@ import React from 'react'
 
 import { signIn, signOut } from '../../bridges/publication/authentication'
 import { locals } from '../../content/locals'
-import {
-  EditorType,
-  Language,
-  PlanStatus,
-  TrialStatus,
-} from '../../types/app'
+import { EditorType, Language, PlanStatus, TrialStatus } from '../../types/app'
 import { UserSession } from '../../types/user'
 import features from '../../utils/config'
 import isBlocked from '../../utils/isBlocked'

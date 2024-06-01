@@ -38,9 +38,7 @@ export default class PaletteItem extends React.Component<
       <li
         className={[
           'rich-list__item',
-          this.props.isInteractive
-            ? 'rich-list__item--interactive'
-            : null,
+          this.props.isInteractive ? 'rich-list__item--interactive' : null,
         ]
           .filter((n) => n)
           .join(' ')}

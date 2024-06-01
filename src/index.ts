@@ -43,7 +43,8 @@ figma.on('run', async ({ parameters }: RunEvent) => {
           .map((element) => {
             return {
               name: element.name,
-              rgb: ((element as FrameNode).fills as readonly SolidPaint[])[0].color,
+              rgb: ((element as FrameNode).fills as readonly SolidPaint[])[0]
+                .color,
               source: 'CANVAS',
               id: '',
               isRemovable: false,

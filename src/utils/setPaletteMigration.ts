@@ -12,8 +12,7 @@ import { presets } from './palettePackage'
 import setData from './setData'
 
 const setPaletteMigration = (palette: BaseNode) => {
-  const
-    type = palette.getPluginData('type'),
+  const type = palette.getPluginData('type'),
     name = palette.getPluginData('name'),
     min = palette.getPluginData('min'),
     max = palette.getPluginData('max'),

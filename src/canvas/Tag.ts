@@ -87,7 +87,9 @@ export default class Tag {
     this.nodeTagwithIndicator.itemSpacing = 4
 
     // insert
-    this.nodeTagwithIndicator.appendChild(this.makeNodeIndicator([gl[0], gl[1], gl[2]]))
+    this.nodeTagwithIndicator.appendChild(
+      this.makeNodeIndicator([gl[0], gl[1], gl[2]])
+    )
     this.nodeTagwithIndicator.appendChild(this.makeNodeText())
 
     return this.nodeTagwithIndicator
@@ -102,7 +104,6 @@ export default class Tag {
     this.nodeAvatar = figma.createEllipse()
     this.nodeAvatar.resize(24, 24)
     this.nodeAvatar.name = '_avatar'
-
 
     // layout
     this.nodeTagWithAvatar.layoutMode = 'HORIZONTAL'
@@ -214,9 +215,8 @@ export default class Tag {
   }
 
   makeNodeAvatar = async (url: string) => {
-    return figma.createImageAsync(
-      url
-    )
+    return figma
+      .createImageAsync(url)
       .then(async (image: Image) => image)
       .catch(() => null)
   }

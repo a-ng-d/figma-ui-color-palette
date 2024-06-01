@@ -24,8 +24,7 @@ const updateThemes = (msg: ThemesMessage) => {
     : (currentSelection[0] as FrameNode)
 
   if (palette.children.length === 1) {
-    const
-      name: string =
+    const name: string =
         palette.getPluginData('name') === ''
           ? locals[lang].name
           : palette.getPluginData('name'),

@@ -25,7 +25,10 @@ const processSelection = () => {
   const palette: FrameNode | InstanceNode = selection[0] as
     | FrameNode
     | InstanceNode
-  const selectionHandler = (state: string, element: FrameNode | null = null) => {
+  const selectionHandler = (
+    state: string,
+    element: FrameNode | null = null
+  ) => {
     const actions: ActionsList = {
       PALETTE_SELECTED: async () => {
         figma.ui.postMessage({
@@ -107,7 +110,10 @@ const processSelection = () => {
   else if (selection[0].type === 'INSTANCE') selectionHandler('EMPTY_SELECTION')
   else if ((selection[0] as FrameNode).fills === undefined)
     selectionHandler('EMPTY_SELECTION')
-  else if ((selection[0] as FrameNode).fills && ((selection[0] as FrameNode).fills as readonly Paint[]).length === 0)
+  else if (
+    (selection[0] as FrameNode).fills &&
+    ((selection[0] as FrameNode).fills as readonly Paint[]).length === 0
+  )
     selectionHandler('EMPTY_SELECTION')
 
   selection.forEach((element) => {
@@ -117,12 +123,14 @@ const processSelection = () => {
       element.type !== 'EMBED'
     )
       if (
-        ((element as FrameNode).fills as readonly Paint[]).filter((fill: Paint) => fill.type === 'SOLID').length !== 0 &&
+        ((element as FrameNode).fills as readonly Paint[]).filter(
+          (fill: Paint) => fill.type === 'SOLID'
+        ).length !== 0 &&
         element.getPluginDataKeys().length === 0
       ) {
         const solidFill = ((element as FrameNode).fills as Array<Paint>).find(
           (fill: Paint) => fill.type === 'SOLID'
-        ) as SolidPaint;
+        ) as SolidPaint
 
         viableSelection.push({
           name: (element as FrameNode).name,
@@ -130,8 +138,8 @@ const processSelection = () => {
           source: 'CANVAS',
           id: uid(),
           isRemovable: false,
-        });
-        selectionHandler('COLOR_SELECTED', element as FrameNode);
+        })
+        selectionHandler('COLOR_SELECTED', element as FrameNode)
       }
   })
 

@@ -21,8 +21,7 @@ const updateSettings = (msg: SettingsMessage) => {
     : (currentSelection[0] as FrameNode)
 
   if (palette.children.length === 1) {
-    const
-      preset = JSON.parse(
+    const preset = JSON.parse(
         palette.getPluginData('preset')
       ) as PresetConfiguration,
       scale = JSON.parse(palette.getPluginData('scale')) as ScaleConfiguration,
@@ -45,8 +44,7 @@ const updateSettings = (msg: SettingsMessage) => {
       JSON.stringify(msg.data.textColorsTheme)
     )
     palette.setPluginData('algorithmVersion', msg.data.algorithmVersion),
-
-    palette.children[0].remove()
+      palette.children[0].remove()
     palette.appendChild(
       new Colors(
         {

@@ -452,7 +452,9 @@ export default class Properties {
           new Tag(
             '_apca-light',
             `Lc ${this.getAPCAContrast('LIGHT').toFixed(1)}`
-          ).makeNodeTagwithIndicator(chroma(this.textColorsTheme.lightColor).gl()),
+          ).makeNodeTagwithIndicator(
+            chroma(this.textColorsTheme.lightColor).gl()
+          ),
           new Tag(
             '_minimum-font-sizes',
             locals[lang].properties.fontSize
@@ -486,7 +488,9 @@ export default class Properties {
           new Tag(
             '_apca-dark',
             `Lc ${this.getAPCAContrast('DARK').toFixed(1)}`
-          ).makeNodeTagwithIndicator(chroma(this.textColorsTheme.darkColor).gl()),
+          ).makeNodeTagwithIndicator(
+            chroma(this.textColorsTheme.darkColor).gl()
+          ),
           new Tag(
             '_minimum-font-sizes',
             locals[lang].properties.fontSize

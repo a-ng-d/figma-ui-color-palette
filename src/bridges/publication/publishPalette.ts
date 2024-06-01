@@ -1,4 +1,5 @@
 import { uid } from 'uid'
+
 import type { AppStates } from '../../ui/App'
 import {
   databaseUrl,
@@ -12,8 +13,7 @@ const publishPalette = async (
   isShared = false
 ): Promise<Partial<AppStates>> => {
   let imageUrl = null
-  const
-    now = new Date().toISOString(),
+  const now = new Date().toISOString(),
     name =
       rawData.name === ''
         ? `${rawData.userSession.userFullName}'s UI COLOR PALETTE`
