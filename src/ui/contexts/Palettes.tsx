@@ -48,11 +48,13 @@ interface PalettesStates {
     | 'ERROR'
     | 'FULL'
     | 'SIGN_IN_FIRST'
-  currentPage: number
   isLoadMoreActionLoading: boolean
   isSignInLoading: boolean
   isAddToFileActionLoading: Array<boolean>
-  palettesList: Array<ExternalPalettes>
+  selfCurrentPage: number
+  communityCurrentPage: number
+  selfPalettesList: Array<ExternalPalettes>
+  communityPalettesList: Array<ExternalPalettes>
 }
 
 export default class Palettes extends React.Component<
@@ -66,41 +68,42 @@ export default class Palettes extends React.Component<
     this.contexts = setContexts(['PALETTES_SELF', 'PALETTES_COMMUNITY'])
     this.state = {
       context: this.contexts[0] !== undefined ? this.contexts[0].id : '',
-      palettesListStatus: 'LOADING',
-      currentPage: 1,
+      palettesListStatus: 'EMPTY',
       isLoadMoreActionLoading: false,
       isSignInLoading: false,
       isAddToFileActionLoading: [],
-      palettesList: [],
+      selfCurrentPage: 1,
+      communityCurrentPage: 1,
+      selfPalettesList: [],
+      communityPalettesList: [],
     }
   }
 
   // Lifecycle
-  componentDidMount = async () => this.callUICPAgent(this.state['context'])
+  componentDidMount = async () => {
+    this.callUICPAgent(this.state['context'])
+    this.setState({ palettesListStatus: 'LOADING' })
+  }
 
   componentDidUpdate = (
     prevProps: Readonly<PalettesProps>,
     prevState: Readonly<PalettesStates>
   ): void => {
-    if (
-      prevProps.userSession.connectionStatus !==
-      this.props.userSession.connectionStatus
-    ) {
-      this.setState({
-        palettesListStatus: 'LOADING',
-      })
-      this.callUICPAgent(this.state['context'])
+    if (prevState['context'] === this.state['context']) {
+      if (prevState['selfCurrentPage'] !== this.state['selfCurrentPage'])
+        this.callUICPAgent('PALETTES_SELF')
+      if (prevState['communityCurrentPage'] !== this.state['communityCurrentPage'])
+        this.callUICPAgent('PALETTES_COMMUNITY')
+    } else {
+      if (this.state['selfPalettesList'].length === 0) {
+        this.setState({ palettesListStatus: 'LOADING' })
+        this.callUICPAgent(this.state['context'])
+      }
+      if (this.state['communityPalettesList'].length === 0) {
+        this.setState({ palettesListStatus: 'LOADING' })
+        this.callUICPAgent(this.state['context'])
+      }
     }
-    if (prevState.context !== this.state['context']) {
-      this.setState({
-        palettesList: [],
-        currentPage: 1,
-        palettesListStatus: 'LOADING',
-      })
-      this.callUICPAgent(this.state['context'])
-    }
-    if (prevState.currentPage !== this.state['currentPage'])
-      this.callUICPAgent(this.state['context'])
   }
 
   // Direct actions
@@ -113,18 +116,18 @@ export default class Palettes extends React.Component<
         )
         .eq('creator_id', this.props.userSession.userId)
         .range(
-          pageSize * (this.state['currentPage'] - 1),
-          pageSize * this.state['currentPage'] - 1
+          pageSize * (this.state['selfCurrentPage'] - 1),
+          pageSize * this.state['selfCurrentPage'] - 1
         )
 
       if (!error) {
         this.setState({
           isLoadMoreActionLoading: false,
           isAddToFileActionLoading: Array(
-            this.state['palettesList'].concat(data).length
+            this.state['selfPalettesList'].concat(data).length
           ).fill(false),
           palettesListStatus: data.length > 0 ? 'LOADED' : 'FULL',
-          palettesList: this.state['palettesList'].concat(data),
+          selfPalettesList: this.state['selfPalettesList'].concat(data),
         })
       } else if (this.props.userSession.connectionStatus === 'UNCONNECTED')
         this.setState({
@@ -143,18 +146,18 @@ export default class Palettes extends React.Component<
           'palette_id, screenshot, name, preset, colors, themes, creator_avatar, creator_full_name'
         )
         .range(
-          pageSize * (this.state['currentPage'] - 1),
-          pageSize * this.state['currentPage'] - 1
+          pageSize * (this.state['communityCurrentPage'] - 1),
+          pageSize * this.state['communityCurrentPage'] - 1
         )
 
       if (!error) {
         this.setState({
           isLoadMoreActionLoading: false,
           isAddToFileActionLoading: Array(
-            this.state['palettesList'].concat(data).length
+            this.state['communityPalettesList'].concat(data).length
           ).fill(false),
           palettesListStatus: data.length > 0 ? 'LOADED' : 'FULL',
-          palettesList: this.state['palettesList'].concat(data),
+          communityPalettesList: this.state['communityPalettesList'].concat(data),
         })
       } else
         this.setState({
@@ -263,14 +266,13 @@ export default class Palettes extends React.Component<
   navHandler = (e: React.SyntheticEvent) =>
     this.setState({
       context: (e.target as HTMLElement).dataset.feature,
-      currentPage: 1,
     })
 
   // Templates
-  ExternalPalettesList = () => {
+  ExternalPalettesList = (palettesList: Array<ExternalPalettes>, currentPage: { [key: string]: number}) => {
     return (
       <ul className="rich-list">
-        {this.state['palettesList'].map((palette, index: number) => (
+        {palettesList.map((palette, index: number) => (
           <PaletteItem
             id={palette.palette_id}
             key={`palette-${index}`}
@@ -330,7 +332,7 @@ export default class Palettes extends React.Component<
               action={() =>
                 this.setState({
                   isLoadMoreActionLoading: true,
-                  currentPage: this.state['currentPage'] + 1,
+                  ...currentPage
                 })
               }
             />
@@ -352,7 +354,17 @@ export default class Palettes extends React.Component<
       this.state['palettesListStatus'] === 'LOADED' ||
       this.state['palettesListStatus'] === 'FULL'
     ) {
-      controls = <this.ExternalPalettesList />
+      controls = this.state['context'] === 'PALETTES_SELF' ? (
+        this.ExternalPalettesList(
+          this.state['selfPalettesList'],
+          { selfCurrentPage: this.state['selfCurrentPage'] + 1 }
+        )
+      ) : (
+        this.ExternalPalettesList(
+          this.state['communityPalettesList'],
+          { communityCurrentPage: this.state['selfCurrentPage'] + 1 }
+        )
+      )
     } else if (this.state['palettesListStatus'] === 'ERROR') {
       controls = (
         <div className="onboarding__callout--centered">
