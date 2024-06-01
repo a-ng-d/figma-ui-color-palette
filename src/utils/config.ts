@@ -143,7 +143,7 @@ export const features: Array<Feature> = [
     isActive: true,
     isPro: false,
     isNew: false,
-    type: 'DIVISION',
+    type: 'CONTEXT',
     service: ['CREATE'],
   },
   {
@@ -152,7 +152,7 @@ export const features: Array<Feature> = [
     isActive: true,
     isPro: false,
     isNew: false,
-    type: 'DIVISION',
+    type: 'CONTEXT',
     service: ['CREATE'],
   },
   {
@@ -183,15 +183,6 @@ export const features: Array<Feature> = [
     service: ['CREATE'],
   },
   {
-    name: 'SOURCE_CANVAS',
-    description: 'Selected colors from the Figma or Figjam canvas',
-    isActive: true,
-    isPro: false,
-    isNew: false,
-    type: 'ACTION',
-    service: ['CREATE'],
-  },
-  {
     name: 'SOURCE_OVERVIEW',
     description: 'Source colors overview and import',
     isActive: true,
@@ -210,6 +201,15 @@ export const features: Array<Feature> = [
     service: ['CREATE'],
   },
   {
+    name: 'SOURCE_CANVAS',
+    description: 'Selected colors from the Figma or Figjam canvas',
+    isActive: true,
+    isPro: false,
+    isNew: false,
+    type: 'ACTION',
+    service: ['CREATE'],
+  },
+  {
     name: 'SOURCE_COOLORS',
     description: 'Import colors from a Coolors palette',
     isActive: true,
@@ -221,6 +221,15 @@ export const features: Array<Feature> = [
   {
     name: 'SOURCE_REALTIME_COLORS',
     description: 'Import colors from a Realtime Colors simulation',
+    isActive: true,
+    isPro: false,
+    isNew: false,
+    type: 'ACTION',
+    service: ['CREATE'],
+  },
+  {
+    name: 'SOURCE_COLOUR_LOVERS',
+    description: 'Import colors from a Colour Lovers palette',
     isActive: true,
     isPro: false,
     isNew: false,
