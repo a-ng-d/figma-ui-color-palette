@@ -41,7 +41,7 @@ interface PalettesProps {
 
 interface PalettesStates {
   context: string | undefined
-  paletteListStatus:
+  palettesListStatus:
     | 'LOADING'
     | 'LOADED'
     | 'EMPTY'
@@ -52,7 +52,7 @@ interface PalettesStates {
   isLoadMoreActionLoading: boolean
   isSignInLoading: boolean
   isAddToFileActionLoading: Array<boolean>
-  paletteList: Array<ExternalPalettes>
+  palettesList: Array<ExternalPalettes>
 }
 
 export default class Palettes extends React.Component<
@@ -66,12 +66,12 @@ export default class Palettes extends React.Component<
     this.contexts = setContexts(['PALETTES_SELF', 'PALETTES_COMMUNITY'])
     this.state = {
       context: this.contexts[0] !== undefined ? this.contexts[0].id : '',
-      paletteListStatus: 'LOADING',
+      palettesListStatus: 'LOADING',
       currentPage: 1,
       isLoadMoreActionLoading: false,
       isSignInLoading: false,
       isAddToFileActionLoading: [],
-      paletteList: [],
+      palettesList: [],
     }
   }
 
@@ -87,15 +87,15 @@ export default class Palettes extends React.Component<
       this.props.userSession.connectionStatus
     ) {
       this.setState({
-        paletteListStatus: 'LOADING',
+        palettesListStatus: 'LOADING',
       })
       this.callUICPAgent(this.state['context'])
     }
     if (prevState.context !== this.state['context']) {
       this.setState({
-        paletteList: [],
+        palettesList: [],
         currentPage: 1,
-        paletteListStatus: 'LOADING',
+        palettesListStatus: 'LOADING',
       })
       this.callUICPAgent(this.state['context'])
     }
@@ -121,18 +121,18 @@ export default class Palettes extends React.Component<
         this.setState({
           isLoadMoreActionLoading: false,
           isAddToFileActionLoading: Array(
-            this.state['paletteList'].concat(data).length
+            this.state['palettesList'].concat(data).length
           ).fill(false),
-          paletteListStatus: data.length > 0 ? 'LOADED' : 'FULL',
-          paletteList: this.state['paletteList'].concat(data),
+          palettesListStatus: data.length > 0 ? 'LOADED' : 'FULL',
+          palettesList: this.state['palettesList'].concat(data),
         })
       } else if (this.props.userSession.connectionStatus === 'UNCONNECTED')
         this.setState({
-          paletteListStatus: 'SIGN_IN_FIRST',
+          palettesListStatus: 'SIGN_IN_FIRST',
         })
       else
         this.setState({
-          paletteListStatus: 'ERROR',
+          palettesListStatus: 'ERROR',
         })
     }
 
@@ -151,14 +151,14 @@ export default class Palettes extends React.Component<
         this.setState({
           isLoadMoreActionLoading: false,
           isAddToFileActionLoading: Array(
-            this.state['paletteList'].concat(data).length
+            this.state['palettesList'].concat(data).length
           ).fill(false),
-          paletteListStatus: data.length > 0 ? 'LOADED' : 'FULL',
-          paletteList: this.state['paletteList'].concat(data),
+          palettesListStatus: data.length > 0 ? 'LOADED' : 'FULL',
+          palettesList: this.state['palettesList'].concat(data),
         })
       } else
         this.setState({
-          paletteListStatus: 'ERROR',
+          palettesListStatus: 'ERROR',
         })
     }
 
@@ -270,7 +270,7 @@ export default class Palettes extends React.Component<
   ExternalPalettesList = () => {
     return (
       <ul className="rich-list">
-        {this.state['paletteList'].map((palette, index: number) => (
+        {this.state['palettesList'].map((palette, index: number) => (
           <PaletteItem
             id={palette.palette_id}
             key={`palette-${index}`}
@@ -322,7 +322,7 @@ export default class Palettes extends React.Component<
           </PaletteItem>
         ))}
         <div className="list-control">
-          {this.state['paletteListStatus'] === 'LOADED' ? (
+          {this.state['palettesListStatus'] === 'LOADED' ? (
             <Button
               type="secondary"
               label={locals[this.props.lang].palettes.lazyLoad.loadMore}
@@ -349,11 +349,11 @@ export default class Palettes extends React.Component<
     let controls
 
     if (
-      this.state['paletteListStatus'] === 'LOADED' ||
-      this.state['paletteListStatus'] === 'FULL'
+      this.state['palettesListStatus'] === 'LOADED' ||
+      this.state['palettesListStatus'] === 'FULL'
     ) {
       controls = <this.ExternalPalettesList />
-    } else if (this.state['paletteListStatus'] === 'ERROR') {
+    } else if (this.state['palettesListStatus'] === 'ERROR') {
       controls = (
         <div className="onboarding__callout--centered">
           <Message
@@ -362,7 +362,7 @@ export default class Palettes extends React.Component<
           />
         </div>
       )
-    } else if (this.state['paletteListStatus'] === 'SIGN_IN_FIRST') {
+    } else if (this.state['palettesListStatus'] === 'SIGN_IN_FIRST') {
       controls = (
         <div className="onboarding__callout--centered">
           <Message
