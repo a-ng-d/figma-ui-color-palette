@@ -11,6 +11,11 @@ const updateGlobal = async (msg: any) => {
   const palette = isSelectionChanged
     ? (previousSelection?.[0] as FrameNode)
     : (currentSelection[0] as FrameNode)
+  
+  const creatorAvatarImg = await figma
+        .createImageAsync(msg.data.creator_avatar)
+        .then(async (image: Image) => image)
+        .catch(() => null)
 
   if (palette.children.length === 1) {
     palette.children[0].remove()
@@ -29,7 +34,7 @@ const updateGlobal = async (msg: any) => {
           textColorsTheme: msg.data.text_colors_theme,
           algorithmVersion: msg.data.algorithm_version,
           creatorFullName: msg.data.creator_full_name,
-          creatorAvatar: msg.data.creator_avatar,
+          creatorAvatarImg: creatorAvatarImg,
           service: 'EDIT',
         },
         palette

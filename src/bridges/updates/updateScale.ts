@@ -19,7 +19,7 @@ import {
   previousSelection,
 } from '../processSelection'
 
-const updateScale = (msg: ScaleMessage) => {
+const updateScale = async (msg: ScaleMessage) => {
   const palette = isSelectionChanged
     ? (previousSelection?.[0] as FrameNode)
     : (currentSelection[0] as FrameNode)
@@ -53,7 +53,13 @@ const updateScale = (msg: ScaleMessage) => {
         'algorithmVersion'
       ) as AlgorithmVersionConfiguration,
       creatorFullName = palette.getPluginData('creatorFullName'),
-      creatorAvatar = palette.getPluginData('creatorAvatar')
+      creatorAvatar = palette.getPluginData('creatorAvatar'),
+      creatorAvatarImg = creatorAvatar !== ''
+        ? await figma
+          .createImageAsync(creatorAvatar)
+          .then(async (image: Image) => image)
+          .catch(() => null)
+        : null
 
     const theme = themes.find((theme) => theme.isEnabled)
     if (theme !== undefined) theme.scale = msg.data.scale
@@ -98,7 +104,7 @@ const updateScale = (msg: ScaleMessage) => {
           textColorsTheme: textColorsTheme,
           algorithmVersion: algorithmVersion,
           creatorFullName: creatorFullName,
-          creatorAvatar: creatorAvatar,
+          creatorAvatarImg: creatorAvatarImg,
           service: 'EDIT',
         },
         palette

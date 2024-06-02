@@ -11,7 +11,7 @@ import {
 import { presets } from './palettePackage'
 import setData from './setData'
 
-const setPaletteMigration = (palette: BaseNode) => {
+const setPaletteMigration = async (palette: BaseNode) => {
   const type = palette.getPluginData('type'),
     name = palette.getPluginData('name'),
     min = palette.getPluginData('min'),
@@ -34,7 +34,13 @@ const setPaletteMigration = (palette: BaseNode) => {
     createdAt = palette.getPluginData('createdAt'),
     updatedAt = palette.getPluginData('updatedAt'),
     creatorFullName = palette.getPluginData('creatorFullName'),
-    creatorAvatar = palette.getPluginData('creatorAvatar')
+    creatorAvatar = palette.getPluginData('creatorAvatar'),
+    creatorAvatarImg = creatorAvatar !== ''
+      ? await figma
+        .createImageAsync(creatorAvatar)
+        .then(async (image: Image) => image)
+        .catch(() => null)
+      : null
 
   // id
   if (!isPublished) palette.setPluginData('id', '')
@@ -155,7 +161,7 @@ const setPaletteMigration = (palette: BaseNode) => {
           'algorithmVersion'
         ) as AlgorithmVersionConfiguration,
         creatorFullName: creatorFullName,
-        creatorAvatar: creatorAvatar,
+        creatorAvatarImg: creatorAvatarImg,
       },
       palette as FrameNode
     ).makePaletteData('CREATE')

@@ -15,7 +15,7 @@ import {
   previousSelection,
 } from '../processSelection'
 
-const updateSettings = (msg: SettingsMessage) => {
+const updateSettings = async (msg: SettingsMessage) => {
   const palette = isSelectionChanged
     ? (previousSelection?.[0] as FrameNode)
     : (currentSelection[0] as FrameNode)
@@ -33,7 +33,13 @@ const updateSettings = (msg: SettingsMessage) => {
       ) as Array<ThemeConfiguration>,
       view = palette.getPluginData('view') as ViewConfiguration,
       creatorFullName = palette.getPluginData('creatorFullName'),
-      creatorAvatar = palette.getPluginData('creatorAvatar')
+      creatorAvatar = palette.getPluginData('creatorAvatar'),
+      creatorAvatarImg = creatorAvatar !== ''
+        ? await figma
+          .createImageAsync(creatorAvatar)
+          .then(async (image: Image) => image)
+          .catch(() => null)
+        : null
 
     palette.setPluginData('name', msg.data.name)
     palette.setPluginData('description', msg.data.description)
@@ -60,7 +66,7 @@ const updateSettings = (msg: SettingsMessage) => {
           textColorsTheme: msg.data.textColorsTheme,
           algorithmVersion: msg.data.algorithmVersion,
           creatorFullName: creatorFullName,
-          creatorAvatar: creatorAvatar,
+          creatorAvatarImg: creatorAvatarImg,
           service: 'EDIT',
         },
         palette

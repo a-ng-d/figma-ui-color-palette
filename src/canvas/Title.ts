@@ -101,20 +101,16 @@ export default class Title {
 
     // insert
     if (
-      this.parent.creatorFullName !== undefined &&
-      this.parent.creatorAvatar !== undefined
+      this.parent.creatorFullName !== undefined ||
+      this.parent.creatorFullName !== ''
     )
-      if (
-        this.parent.creatorFullName !== '' &&
-        this.parent.creatorAvatar !== ''
+      this.nodeProps.appendChild(
+        new Tag(
+          '_creator_id',
+          `Provided by ${this.parent.creatorFullName}`,
+          12
+        ).makeNodeTagWithAvatar(this.parent.creatorAvatarImg)
       )
-        this.nodeProps.appendChild(
-          new Tag(
-            '_creator_id',
-            `Provided by ${this.parent.creatorFullName}`,
-            12
-          ).makeNodeTagWithAvatar(this.parent.creatorAvatar)
-        )
 
     if (
       this.parent.themes.find((theme) => theme.isEnabled)?.type !==

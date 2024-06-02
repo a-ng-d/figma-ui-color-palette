@@ -95,15 +95,22 @@ export default class Tag {
     return this.nodeTagwithIndicator
   }
 
-  makeNodeTagWithAvatar = (url: string): FrameNode => {
+  makeNodeTagWithAvatar = (image?: Image | null): FrameNode => {
     // base
     this.nodeTagWithAvatar = figma.createFrame()
     this.nodeTagWithAvatar.name = this.name
+    this.nodeTagWithAvatar.fills = [
+      {
+        type: 'SOLID',
+        opacity: 0.5,
+        color: {
+          r: 1,
+          g: 1,
+          b: 1,
+        },
+      },
+    ]
     this.nodeTagWithAvatar.cornerRadius = 16
-
-    this.nodeAvatar = figma.createEllipse()
-    this.nodeAvatar.resize(24, 24)
-    this.nodeAvatar.name = '_avatar'
 
     // layout
     this.nodeTagWithAvatar.layoutMode = 'HORIZONTAL'
@@ -115,36 +122,9 @@ export default class Tag {
     this.nodeTagWithAvatar.itemSpacing = 8
 
     // insert
-    this.makeNodeAvatar(url)
-      .then((data) => {
-        if (data !== null && this.nodeAvatar) {
-          this.nodeAvatar.fills = [
-            {
-              type: 'IMAGE',
-              scaleMode: 'FILL',
-              imageHash: data.hash,
-            },
-          ]
-        }
-      })
-      .catch(() => {
-        if (this.nodeTagWithAvatar) {
-          this.nodeTagWithAvatar.fills = [
-            {
-              type: 'SOLID',
-              opacity: 0.5,
-              color: {
-                r: 1,
-                g: 1,
-                b: 1,
-              },
-            },
-          ]
-        }
-      })
+    this.nodeTagWithAvatar.appendChild(this.makeNodeText())
+    this.nodeTagWithAvatar.appendChild(this.makeNodeAvatar(image))
 
-    this.nodeTagWithAvatar?.appendChild(this.nodeAvatar)
-    this.nodeTagWithAvatar?.appendChild(this.makeNodeText())
     return this.nodeTagWithAvatar
   }
 
@@ -214,10 +194,23 @@ export default class Tag {
     return this.nodeIndicator
   }
 
-  makeNodeAvatar = async (url: string) => {
-    return figma
-      .createImageAsync(url)
-      .then(async (image: Image) => image)
-      .catch(() => null)
+  makeNodeAvatar = (image?: Image | null) => {
+    // base
+    this.nodeAvatar = figma.createEllipse()
+    this.nodeAvatar.resize(24, 24)
+    this.nodeAvatar.name = '_avatar'
+
+    if (image !== null && image !== undefined) {
+      this.nodeAvatar.fills = [
+        {
+          type: 'IMAGE',
+          scaleMode: 'FILL',
+          imageHash: image.hash,
+        },
+      ]
+    }
+
+    return this.nodeAvatar
   }
+
 }
