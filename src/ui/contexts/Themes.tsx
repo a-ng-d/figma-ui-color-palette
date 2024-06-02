@@ -39,21 +39,21 @@ interface ThemesStates {
   hoveredElement: HoveredColor
 }
 
-const themesMessage: ThemesMessage = {
-  type: 'UPDATE_THEMES',
-  data: [],
-  isEditedInRealTime: false,
-}
-
 export default class Themes extends React.Component<ThemesProps, ThemesStates> {
+  themesMessage: ThemesMessage
   dispatch: { [key: string]: DispatchProcess }
   listRef: React.RefObject<HTMLUListElement>
 
   constructor(props: ThemesProps) {
     super(props)
+    this.themesMessage = {
+      type: 'UPDATE_THEMES',
+      data: [],
+      isEditedInRealTime: false,
+    }
     this.dispatch = {
       themes: new Dispatcher(
-        () => parent.postMessage({ pluginMessage: themesMessage }, '*'),
+        () => parent.postMessage({ pluginMessage: this.themesMessage }, '*'),
         500
       ) as DispatchProcess,
     }
@@ -104,17 +104,17 @@ export default class Themes extends React.Component<ThemesProps, ThemesStates> {
 
     element !== null ? (id = element.getAttribute('data-id')) : (id = null)
 
-    themesMessage.isEditedInRealTime = false
+    this.themesMessage.isEditedInRealTime = false
 
     const addTheme = () => {
-      themesMessage.data = this.props.themes.map((theme) => {
+      this.themesMessage.data = this.props.themes.map((theme) => {
         theme.isEnabled = false
         return theme
       })
-      const hasAlreadyNewUITheme = themesMessage.data.filter((color) =>
+      const hasAlreadyNewUITheme = this.themesMessage.data.filter((color) =>
         color.name.includes('New UI Theme')
       )
-      themesMessage.data.push({
+      this.themesMessage.data.push({
         name: `New UI Theme ${hasAlreadyNewUITheme.length + 1}`,
         description: '',
         scale: doLightnessScale(
@@ -128,18 +128,18 @@ export default class Themes extends React.Component<ThemesProps, ThemesStates> {
         type: 'custom theme',
       })
       this.props.onChangeThemes({
-        scale: themesMessage.data.find((theme) => theme.isEnabled)?.scale ?? {},
-        themes: themesMessage.data,
+        scale: this.themesMessage.data.find((theme) => theme.isEnabled)?.scale ?? {},
+        themes: this.themesMessage.data,
         onGoingStep: 'themes changed',
       })
-      parent.postMessage({ pluginMessage: themesMessage }, '*')
+      parent.postMessage({ pluginMessage: this.themesMessage }, '*')
     }
 
     const renameTheme = () => {
       const hasSameName = this.props.themes.filter(
         (color) => color.name === currentElement.value
       )
-      themesMessage.data = this.props.themes.map((item) => {
+      this.themesMessage.data = this.props.themes.map((item) => {
         if (item.id === id)
           item.name =
             hasSameName.length > 1
@@ -148,12 +148,12 @@ export default class Themes extends React.Component<ThemesProps, ThemesStates> {
         return item
       })
       this.props.onChangeThemes({
-        scale: themesMessage.data.find((theme) => theme.isEnabled)?.scale ?? {},
-        themes: themesMessage.data,
+        scale: this.themesMessage.data.find((theme) => theme.isEnabled)?.scale ?? {},
+        themes: this.themesMessage.data,
         onGoingStep: 'themes changed',
       })
       if (e.type === 'blur')
-        parent.postMessage({ pluginMessage: themesMessage }, '*')
+        parent.postMessage({ pluginMessage: this.themesMessage }, '*')
     }
 
     const updatePaletteBackgroundColor = () => {
@@ -162,58 +162,58 @@ export default class Themes extends React.Component<ThemesProps, ThemesStates> {
           ? '#' + currentElement.value
           : currentElement.value
       if (/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/i.test(code)) {
-        themesMessage.data = this.props.themes.map((item) => {
+        this.themesMessage.data = this.props.themes.map((item) => {
           if (item.id === id) item.paletteBackground = code
           return item
         })
         this.props.onChangeThemes({
           scale:
-            themesMessage.data.find((theme) => theme.isEnabled)?.scale ?? {},
-          themes: themesMessage.data,
+            this.themesMessage.data.find((theme) => theme.isEnabled)?.scale ?? {},
+          themes: this.themesMessage.data,
           onGoingStep: 'themes changed',
         })
       }
       if (e.type === 'blur') {
         this.dispatch.themes.on.status = false
-        parent.postMessage({ pluginMessage: themesMessage }, '*')
+        parent.postMessage({ pluginMessage: this.themesMessage }, '*')
       } else {
-        themesMessage.isEditedInRealTime = true
+        this.themesMessage.isEditedInRealTime = true
         this.dispatch.themes.on.status = true
       }
     }
 
     const updateThemeDescription = () => {
-      themesMessage.data = this.props.themes.map((item) => {
+      this.themesMessage.data = this.props.themes.map((item) => {
         if (item.id === id) item.description = currentElement.value
         return item
       })
       this.props.onChangeThemes({
-        scale: themesMessage.data.find((theme) => theme.isEnabled)?.scale ?? {},
-        themes: themesMessage.data,
+        scale: this.themesMessage.data.find((theme) => theme.isEnabled)?.scale ?? {},
+        themes: this.themesMessage.data,
         onGoingStep: 'themes changed',
       })
       if (e.type === 'blur' || e.key === 'Enter')
-        parent.postMessage({ pluginMessage: themesMessage }, '*')
+        parent.postMessage({ pluginMessage: this.themesMessage }, '*')
     }
 
     const removeTheme = () => {
-      themesMessage.data = this.props.themes.filter((item) => item.id !== id)
-      if (themesMessage.data.length > 1)
-        themesMessage.data.filter(
+      this.themesMessage.data = this.props.themes.filter((item) => item.id !== id)
+      if (this.themesMessage.data.length > 1)
+        this.themesMessage.data.filter(
           (item) => item.type === 'custom theme'
         )[0].isEnabled = true
       else {
-        const result = themesMessage.data.find(
+        const result = this.themesMessage.data.find(
           (item) => item.type === 'default theme'
         )
         if (result !== undefined) result.isEnabled = true
       }
       this.props.onChangeThemes({
-        scale: themesMessage.data.find((theme) => theme.isEnabled)?.scale ?? {},
-        themes: themesMessage.data,
+        scale: this.themesMessage.data.find((theme) => theme.isEnabled)?.scale ?? {},
+        themes: this.themesMessage.data,
         onGoingStep: 'themes changed',
       })
-      parent.postMessage({ pluginMessage: themesMessage }, '*')
+      parent.postMessage({ pluginMessage: this.themesMessage }, '*')
     }
 
     const actions: ActionsList = {
@@ -310,14 +310,14 @@ export default class Themes extends React.Component<ThemesProps, ThemesStates> {
 
   // Direct actions
   onAddTheme = () => {
-    themesMessage.data = this.props.themes.map((theme) => {
+    this.themesMessage.data = this.props.themes.map((theme) => {
       theme.isEnabled = false
       return theme
     })
-    const hasAlreadyNewUITheme = themesMessage.data.filter((color) =>
+    const hasAlreadyNewUITheme = this.themesMessage.data.filter((color) =>
       color.name.includes('New UI Theme')
     )
-    themesMessage.data.push({
+    this.themesMessage.data.push({
       name: `New UI Theme ${hasAlreadyNewUITheme.length + 1}`,
       description: '',
       scale: doLightnessScale(
@@ -331,11 +331,11 @@ export default class Themes extends React.Component<ThemesProps, ThemesStates> {
       type: 'custom theme',
     })
     this.props.onChangeThemes({
-      scale: themesMessage.data.find((theme) => theme.isEnabled)?.scale ?? {},
-      themes: themesMessage.data,
+      scale: this.themesMessage.data.find((theme) => theme.isEnabled)?.scale ?? {},
+      themes: this.themesMessage.data,
       onGoingStep: 'themes changed',
     })
-    parent.postMessage({ pluginMessage: themesMessage }, '*')
+    parent.postMessage({ pluginMessage: this.themesMessage }, '*')
   }
 
   // Render

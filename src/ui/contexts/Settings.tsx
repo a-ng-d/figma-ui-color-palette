@@ -54,31 +54,31 @@ interface SettingsProps {
   onPublishPalette?: () => void
 }
 
-const settingsMessage: SettingsMessage = {
-  type: 'UPDATE_SETTINGS',
-  data: {
-    name: '',
-    description: '',
-    colorSpace: 'LCH',
-    visionSimulationMode: 'NONE',
-    textColorsTheme: {
-      lightColor: '#FFFFFF',
-      darkColor: '#000000',
-    },
-    algorithmVersion: 'v2',
-  },
-  isEditedInRealTime: false,
-  isSynchronized: false,
-}
-
 export default class Settings extends React.Component<SettingsProps> {
+  settingsMessage: SettingsMessage
   dispatch: { [key: string]: DispatchProcess }
 
   constructor(props: SettingsProps) {
     super(props)
+    this.settingsMessage = {
+      type: 'UPDATE_SETTINGS',
+      data: {
+        name: '',
+        description: '',
+        colorSpace: 'LCH',
+        visionSimulationMode: 'NONE',
+        textColorsTheme: {
+          lightColor: '#FFFFFF',
+          darkColor: '#000000',
+        },
+        algorithmVersion: 'v2',
+      },
+      isEditedInRealTime: false,
+      isSynchronized: false,
+    }
     this.dispatch = {
       textColorsTheme: new Dispatcher(
-        () => parent.postMessage({ pluginMessage: settingsMessage }, '*'),
+        () => parent.postMessage({ pluginMessage: this.settingsMessage }, '*'),
         500
       ) as DispatchProcess,
     }
@@ -91,42 +91,42 @@ export default class Settings extends React.Component<SettingsProps> {
 
     const renamePalette = () => {
       palette.name = target.value
-      settingsMessage.data.name = target.value
-      settingsMessage.data.description = this.props.description
-      settingsMessage.data.colorSpace = this.props.colorSpace
-      settingsMessage.data.visionSimulationMode =
+      this.settingsMessage.data.name = target.value
+      this.settingsMessage.data.description = this.props.description
+      this.settingsMessage.data.colorSpace = this.props.colorSpace
+      this.settingsMessage.data.visionSimulationMode =
         this.props.visionSimulationMode
-      settingsMessage.data.textColorsTheme = this.props.textColorsTheme
-      settingsMessage.data.algorithmVersion =
+      this.settingsMessage.data.textColorsTheme = this.props.textColorsTheme
+      this.settingsMessage.data.algorithmVersion =
         this.props.algorithmVersion ?? 'v2'
 
       if (e.type === 'blur' && this.props.context === 'LOCAL_STYLES')
-        parent.postMessage({ pluginMessage: settingsMessage }, '*')
+        parent.postMessage({ pluginMessage: this.settingsMessage }, '*')
       else if (e.key === 'Enter' && this.props.context === 'LOCAL_STYLES')
-        parent.postMessage({ pluginMessage: settingsMessage }, '*')
+        parent.postMessage({ pluginMessage: this.settingsMessage }, '*')
 
       this.props.onChangeSettings({
-        name: settingsMessage.data.name,
+        name: this.settingsMessage.data.name,
         onGoingStep: 'settings changed',
       })
     }
 
     const updateDescription = () => {
       palette.description = target.value
-      settingsMessage.data.name = this.props.name
-      settingsMessage.data.description = target.value
-      settingsMessage.data.colorSpace = this.props.colorSpace
-      settingsMessage.data.visionSimulationMode =
+      this.settingsMessage.data.name = this.props.name
+      this.settingsMessage.data.description = target.value
+      this.settingsMessage.data.colorSpace = this.props.colorSpace
+      this.settingsMessage.data.visionSimulationMode =
         this.props.visionSimulationMode
-      settingsMessage.data.textColorsTheme = this.props.textColorsTheme
-      settingsMessage.data.algorithmVersion =
+      this.settingsMessage.data.textColorsTheme = this.props.textColorsTheme
+      this.settingsMessage.data.algorithmVersion =
         this.props.algorithmVersion ?? 'v2'
 
       if (e.type === 'blur' && this.props.context === 'LOCAL_STYLES')
-        parent.postMessage({ pluginMessage: settingsMessage }, '*')
+        parent.postMessage({ pluginMessage: this.settingsMessage }, '*')
 
       this.props.onChangeSettings({
-        description: settingsMessage.data.description,
+        description: this.settingsMessage.data.description,
         onGoingStep: 'settings changed',
       })
     }
@@ -150,21 +150,21 @@ export default class Settings extends React.Component<SettingsProps> {
 
     const updateColorSpace = () => {
       palette.colorSpace = target.dataset.value as ColorSpaceConfiguration
-      settingsMessage.data.name = this.props.name
-      settingsMessage.data.description = this.props.description
-      settingsMessage.data.colorSpace = target.dataset
+      this.settingsMessage.data.name = this.props.name
+      this.settingsMessage.data.description = this.props.description
+      this.settingsMessage.data.colorSpace = target.dataset
         .value as ColorSpaceConfiguration
-      settingsMessage.data.visionSimulationMode =
+      this.settingsMessage.data.visionSimulationMode =
         this.props.visionSimulationMode
-      settingsMessage.data.textColorsTheme = this.props.textColorsTheme
-      settingsMessage.data.algorithmVersion =
+      this.settingsMessage.data.textColorsTheme = this.props.textColorsTheme
+      this.settingsMessage.data.algorithmVersion =
         this.props.algorithmVersion ?? 'v2'
 
       if (this.props.context === 'LOCAL_STYLES')
-        parent.postMessage({ pluginMessage: settingsMessage }, '*')
+        parent.postMessage({ pluginMessage: this.settingsMessage }, '*')
 
       this.props.onChangeSettings({
-        colorSpace: settingsMessage.data.colorSpace,
+        colorSpace: this.settingsMessage.data.colorSpace,
         onGoingStep: 'settings changed',
       })
     }
@@ -172,37 +172,37 @@ export default class Settings extends React.Component<SettingsProps> {
     const updatevisionSimulationMode = () => {
       palette.visionSimulationMode = target.dataset
         .value as VisionSimulationModeConfiguration
-      settingsMessage.data.name = this.props.name
-      settingsMessage.data.description = this.props.description
-      settingsMessage.data.colorSpace = this.props.colorSpace
-      settingsMessage.data.visionSimulationMode = target.dataset
+      this.settingsMessage.data.name = this.props.name
+      this.settingsMessage.data.description = this.props.description
+      this.settingsMessage.data.colorSpace = this.props.colorSpace
+      this.settingsMessage.data.visionSimulationMode = target.dataset
         .value as VisionSimulationModeConfiguration
-      settingsMessage.data.textColorsTheme = this.props.textColorsTheme
-      settingsMessage.data.algorithmVersion =
+      this.settingsMessage.data.textColorsTheme = this.props.textColorsTheme
+      this.settingsMessage.data.algorithmVersion =
         this.props.algorithmVersion ?? 'v2'
 
       if (this.props.context === 'LOCAL_STYLES')
-        parent.postMessage({ pluginMessage: settingsMessage }, '*')
+        parent.postMessage({ pluginMessage: this.settingsMessage }, '*')
 
       this.props.onChangeSettings({
-        visionSimulationMode: settingsMessage.data.visionSimulationMode,
+        visionSimulationMode: this.settingsMessage.data.visionSimulationMode,
         onGoingStep: 'settings changed',
       })
     }
 
     const updateAlgorythmVersion = () => {
-      settingsMessage.data.name = this.props.name
-      settingsMessage.data.description = this.props.description
-      settingsMessage.data.colorSpace = this.props.colorSpace
-      settingsMessage.data.visionSimulationMode =
+      this.settingsMessage.data.name = this.props.name
+      this.settingsMessage.data.description = this.props.description
+      this.settingsMessage.data.colorSpace = this.props.colorSpace
+      this.settingsMessage.data.visionSimulationMode =
         this.props.visionSimulationMode
-      settingsMessage.data.textColorsTheme = this.props.textColorsTheme
-      settingsMessage.data.algorithmVersion = !target.checked ? 'v1' : 'v2'
+      this.settingsMessage.data.textColorsTheme = this.props.textColorsTheme
+      this.settingsMessage.data.algorithmVersion = !target.checked ? 'v1' : 'v2'
 
-      parent.postMessage({ pluginMessage: settingsMessage }, '*')
+      parent.postMessage({ pluginMessage: this.settingsMessage }, '*')
 
       this.props.onChangeSettings({
-        algorithmVersion: settingsMessage.data.algorithmVersion,
+        algorithmVersion: this.settingsMessage.data.algorithmVersion,
         onGoingStep: 'settings changed',
       })
     }
@@ -212,27 +212,27 @@ export default class Settings extends React.Component<SettingsProps> {
         target.value.indexOf('#') === -1 ? '#' + target.value : target.value
 
       if (/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/i.test(code)) {
-        settingsMessage.data.name = this.props.name
-        settingsMessage.data.description = this.props.description
-        settingsMessage.data.colorSpace = this.props.colorSpace
-        settingsMessage.data.visionSimulationMode =
+        this.settingsMessage.data.name = this.props.name
+        this.settingsMessage.data.description = this.props.description
+        this.settingsMessage.data.colorSpace = this.props.colorSpace
+        this.settingsMessage.data.visionSimulationMode =
           this.props.visionSimulationMode
-        settingsMessage.data.textColorsTheme.lightColor = code
+        this.settingsMessage.data.textColorsTheme.lightColor = code
         palette.textColorsTheme.lightColor = code
-        settingsMessage.data.textColorsTheme.darkColor =
+        this.settingsMessage.data.textColorsTheme.darkColor =
           this.props.textColorsTheme.darkColor
-        settingsMessage.data.algorithmVersion =
+        this.settingsMessage.data.algorithmVersion =
           this.props.algorithmVersion ?? 'v2'
       }
 
       if (e.type === 'blur' && this.props.context === 'LOCAL_STYLES') {
         this.dispatch.textColorsTheme.on.status = false
-        parent.postMessage({ pluginMessage: settingsMessage }, '*')
+        parent.postMessage({ pluginMessage: this.settingsMessage }, '*')
       } else if (this.props.context === 'LOCAL_STYLES')
         this.dispatch.textColorsTheme.on.status = true
 
       this.props.onChangeSettings({
-        textColorsTheme: settingsMessage.data.textColorsTheme,
+        textColorsTheme: this.settingsMessage.data.textColorsTheme,
         onGoingStep: 'settings changed',
       })
     }
@@ -242,27 +242,27 @@ export default class Settings extends React.Component<SettingsProps> {
         target.value.indexOf('#') === -1 ? '#' + target.value : target.value
 
       if (/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/i.test(code)) {
-        settingsMessage.data.name = this.props.name
-        settingsMessage.data.description = this.props.description
-        settingsMessage.data.colorSpace = this.props.colorSpace
-        settingsMessage.data.visionSimulationMode =
+        this.settingsMessage.data.name = this.props.name
+        this.settingsMessage.data.description = this.props.description
+        this.settingsMessage.data.colorSpace = this.props.colorSpace
+        this.settingsMessage.data.visionSimulationMode =
           this.props.visionSimulationMode
-        settingsMessage.data.textColorsTheme.lightColor =
+        this.settingsMessage.data.textColorsTheme.lightColor =
           this.props.textColorsTheme.lightColor
-        settingsMessage.data.textColorsTheme.darkColor = code
+        this.settingsMessage.data.textColorsTheme.darkColor = code
         palette.textColorsTheme.darkColor = code
-        settingsMessage.data.algorithmVersion =
+        this.settingsMessage.data.algorithmVersion =
           this.props.algorithmVersion ?? 'v2'
       }
 
       if (e.type === 'blur' && this.props.context === 'LOCAL_STYLES') {
         this.dispatch.textColorsTheme.on.status = false
-        parent.postMessage({ pluginMessage: settingsMessage }, '*')
+        parent.postMessage({ pluginMessage: this.settingsMessage }, '*')
       } else if (this.props.context === 'LOCAL_STYLES')
         this.dispatch.textColorsTheme.on.status = true
 
       this.props.onChangeSettings({
-        textColorsTheme: settingsMessage.data.textColorsTheme,
+        textColorsTheme: this.settingsMessage.data.textColorsTheme,
         onGoingStep: 'settings changed',
       })
     }

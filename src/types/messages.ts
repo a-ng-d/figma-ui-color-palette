@@ -12,7 +12,7 @@ export interface ScaleMessage {
   type: 'UPDATE_SCALE'
   data: PaletteConfiguration
   isEditedInRealTime: boolean
-  feature: 'ADD_STOP' | 'DELETE_STOP'
+  feature?: string
 }
 
 export interface ColorsMessage {

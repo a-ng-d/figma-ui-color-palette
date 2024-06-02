@@ -68,21 +68,21 @@ interface EditPaletteStates {
   }
 }
 
-const themesMessage: ThemesMessage = {
-  type: 'UPDATE_THEMES',
-  data: [],
-  isEditedInRealTime: false,
-}
-
 export default class EditPalette extends React.Component<
   EditPaletteProps,
   EditPaletteStates
 > {
+  themesMessage: ThemesMessage
   contexts: Array<ContextItem>
   themesRef: React.RefObject<Themes>
 
   constructor(props: EditPaletteProps) {
     super(props)
+    this.themesMessage = {
+      type: 'UPDATE_THEMES',
+      data: [],
+      isEditedInRealTime: false,
+    }
     this.contexts = setContexts([
       'SCALE',
       'COLORS',
@@ -109,17 +109,17 @@ export default class EditPalette extends React.Component<
   switchThemeHandler = (
     e: React.MouseEvent<HTMLLIElement, MouseEvent> | React.KeyboardEvent
   ) => {
-    themesMessage.data = this.props.themes.map((theme) => {
+    this.themesMessage.data = this.props.themes.map((theme) => {
       if ((e.target as HTMLElement).dataset.value === theme.id)
         theme.isEnabled = true
       else theme.isEnabled = false
 
       return theme
     })
-    parent.postMessage({ pluginMessage: themesMessage }, '*')
+    parent.postMessage({ pluginMessage: this.themesMessage }, '*')
     this.props.onChangeThemes({
-      scale: themesMessage.data.find((theme) => theme.isEnabled)?.scale ?? {},
-      themes: themesMessage.data,
+      scale: this.themesMessage.data.find((theme) => theme.isEnabled)?.scale ?? {},
+      themes: this.themesMessage.data,
       onGoingStep: 'themes changed',
     })
   }

@@ -29,6 +29,7 @@ import Feature from '../components/Feature'
 import Slider from '../components/Slider'
 import Actions from '../modules/Actions'
 import Dispatcher from '../modules/Dispatcher'
+import { ScaleMessage } from '../../types/messages'
 
 interface ScaleProps {
   sourceColors?: Array<SourceColorConfiguration>
@@ -59,6 +60,7 @@ interface ScaleStates {
 }
 
 export default class Scale extends React.Component<ScaleProps, ScaleStates> {
+  scaleMessage: ScaleMessage
   dispatch: { [key: string]: DispatchProcess }
 
   static defaultProps: Partial<ScaleProps> = {
@@ -67,17 +69,16 @@ export default class Scale extends React.Component<ScaleProps, ScaleStates> {
 
   constructor(props: ScaleProps) {
     super(props)
+    this.scaleMessage = {
+      type: 'UPDATE_SCALE',
+      data: palette,
+      isEditedInRealTime: true,
+    }
     this.dispatch = {
       scale: new Dispatcher(
         () =>
           parent.postMessage(
-            {
-              pluginMessage: {
-                type: 'UPDATE_SCALE',
-                data: palette,
-                isEditedInRealTime: true,
-              },
-            },
+            { pluginMessage: this.scaleMessage },
             '*'
           ),
         500
@@ -93,43 +94,31 @@ export default class Scale extends React.Component<ScaleProps, ScaleStates> {
   slideHandler = (state: string, feature?: string) => {
     const onReleaseStop = () => {
       this.dispatch.scale.on.status = false
+      this.scaleMessage.data = palette
+      this.scaleMessage.isEditedInRealTime = false
       parent.postMessage(
-        {
-          pluginMessage: {
-            type: 'UPDATE_SCALE',
-            data: palette,
-            isEditedInRealTime: false,
-          },
-        },
+        { pluginMessage: this.scaleMessage },
         '*'
       )
       this.props.onChangeScale()
     }
 
     const onChangeStop = () => {
+      this.scaleMessage.data = palette
+      this.scaleMessage.isEditedInRealTime = false
+      this.scaleMessage.feature = feature
       parent.postMessage(
-        {
-          pluginMessage: {
-            type: 'UPDATE_SCALE',
-            data: palette,
-            isEditedInRealTime: false,
-            feature: feature,
-          },
-        },
+        { pluginMessage: this.scaleMessage },
         '*'
       )
       this.props.onChangeStop?.()
     }
 
     const onTypeStopValue = () => {
+      this.scaleMessage.data = palette
+      this.scaleMessage.isEditedInRealTime = false
       parent.postMessage(
-        {
-          pluginMessage: {
-            type: 'UPDATE_SCALE',
-            data: palette,
-            isEditedInRealTime: false,
-          },
-        },
+        { pluginMessage: this.scaleMessage },
         '*'
       )
       this.props.onChangeStop?.()

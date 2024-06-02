@@ -152,7 +152,8 @@ const loadUI = async () => {
           data: await palette.exportAsync({
             format: 'PNG',
             constraint: { type: 'SCALE', value: 0.25 },
-          }),
+          })
+            .catch(() => null),
         })
       },
       UPDATE_PALETTE_DATE: async () => {

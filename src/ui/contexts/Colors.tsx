@@ -32,21 +32,21 @@ interface ColorsStates {
   hoveredElement: HoveredColor
 }
 
-const colorsMessage: ColorsMessage = {
-  type: 'UPDATE_COLORS',
-  data: [],
-  isEditedInRealTime: false,
-}
-
 export default class Colors extends React.Component<ColorsProps, ColorsStates> {
+  colorsMessage: ColorsMessage
   dispatch: { [key: string]: DispatchProcess }
   listRef: React.RefObject<HTMLUListElement>
 
   constructor(props: ColorsProps) {
     super(props)
+    this.colorsMessage = {
+      type: 'UPDATE_COLORS',
+      data: [],
+      isEditedInRealTime: false,
+    }
     this.dispatch = {
       colors: new Dispatcher(
-        () => parent.postMessage({ pluginMessage: colorsMessage }, '*'),
+        () => parent.postMessage({ pluginMessage: this.colorsMessage }, '*'),
         500
       ) as DispatchProcess,
     }
@@ -97,14 +97,14 @@ export default class Colors extends React.Component<ColorsProps, ColorsStates> {
 
     element !== null ? (id = element.getAttribute('data-id')) : (id = null)
 
-    colorsMessage.isEditedInRealTime = false
+    this.colorsMessage.isEditedInRealTime = false
 
     const addColor = () => {
-      colorsMessage.data = this.props.colors
-      const hasAlreadyNewUIColor = colorsMessage.data.filter((color) =>
+      this.colorsMessage.data = this.props.colors
+      const hasAlreadyNewUIColor = this.colorsMessage.data.filter((color) =>
         color.name.includes('New UI Color')
       )
-      colorsMessage.data.push({
+      this.colorsMessage.data.push({
         name: `New UI Color ${hasAlreadyNewUIColor.length + 1}`,
         description: '',
         rgb: {
@@ -117,17 +117,17 @@ export default class Colors extends React.Component<ColorsProps, ColorsStates> {
         hueShifting: 0,
       })
       this.props.onChangeColors({
-        colors: colorsMessage.data,
+        colors: this.colorsMessage.data,
         onGoingStep: 'colors changed',
       })
-      parent.postMessage({ pluginMessage: colorsMessage }, '*')
+      parent.postMessage({ pluginMessage: this.colorsMessage }, '*')
     }
 
     const renameColor = () => {
       const hasSameName = this.props.colors.filter(
         (color) => color.name === currentElement.value
       )
-      colorsMessage.data = this.props.colors.map((item) => {
+      this.colorsMessage.data = this.props.colors.map((item) => {
         if (item.id === id)
           item.name =
             hasSameName.length > 1
@@ -136,11 +136,11 @@ export default class Colors extends React.Component<ColorsProps, ColorsStates> {
         return item
       })
       this.props.onChangeColors({
-        colors: colorsMessage.data,
+        colors: this.colorsMessage.data,
         onGoingStep: 'colors changed',
       })
       if (e.type === 'blur' || e.code === 'Enter')
-        parent.postMessage({ pluginMessage: colorsMessage }, '*')
+        parent.postMessage({ pluginMessage: this.colorsMessage }, '*')
     }
 
     const updateHexCode = () => {
@@ -149,7 +149,7 @@ export default class Colors extends React.Component<ColorsProps, ColorsStates> {
           ? '#' + currentElement.value
           : currentElement.value
       if (/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/i.test(code)) {
-        colorsMessage.data = this.props.colors.map((item) => {
+        this.colorsMessage.data = this.props.colors.map((item) => {
           const rgb = chroma(
             currentElement.value.indexOf('#') === -1
               ? '#' + currentElement.value
@@ -164,21 +164,21 @@ export default class Colors extends React.Component<ColorsProps, ColorsStates> {
           return item
         })
         this.props.onChangeColors({
-          colors: colorsMessage.data,
+          colors: this.colorsMessage.data,
           onGoingStep: 'colors changed',
         })
       }
       if (e.type === 'blur') {
         this.dispatch.colors.on.status = false
-        parent.postMessage({ pluginMessage: colorsMessage }, '*')
+        parent.postMessage({ pluginMessage: this.colorsMessage }, '*')
       } else {
-        colorsMessage.isEditedInRealTime = true
+        this.colorsMessage.isEditedInRealTime = true
         this.dispatch.colors.on.status = true
       }
     }
 
     const updateLightnessProp = () => {
-      colorsMessage.data = this.props.colors.map((item) => {
+      this.colorsMessage.data = this.props.colors.map((item) => {
         const rgb = chroma(item.rgb.r * 255, item.rgb.g * 255, item.rgb.b * 255)
           .set('lch.l', currentElement.value)
           .rgb()
@@ -191,14 +191,14 @@ export default class Colors extends React.Component<ColorsProps, ColorsStates> {
         return item
       })
       this.props.onChangeColors({
-        colors: colorsMessage.data,
+        colors: this.colorsMessage.data,
         onGoingStep: 'colors changed',
       })
-      parent.postMessage({ pluginMessage: colorsMessage }, '*')
+      parent.postMessage({ pluginMessage: this.colorsMessage }, '*')
     }
 
     const updateChromaProp = () => {
-      colorsMessage.data = this.props.colors.map((item) => {
+      this.colorsMessage.data = this.props.colors.map((item) => {
         const rgb = chroma(item.rgb.r * 255, item.rgb.g * 255, item.rgb.b * 255)
           .set('lch.c', currentElement.value)
           .rgb()
@@ -211,14 +211,14 @@ export default class Colors extends React.Component<ColorsProps, ColorsStates> {
         return item
       })
       this.props.onChangeColors({
-        colors: colorsMessage.data,
+        colors: this.colorsMessage.data,
         onGoingStep: 'colors changed',
       })
-      parent.postMessage({ pluginMessage: colorsMessage }, '*')
+      parent.postMessage({ pluginMessage: this.colorsMessage }, '*')
     }
 
     const updateHueProp = () => {
-      colorsMessage.data = this.props.colors.map((item) => {
+      this.colorsMessage.data = this.props.colors.map((item) => {
         const rgb = chroma(item.rgb.r * 255, item.rgb.g * 255, item.rgb.b * 255)
           .set('lch.h', currentElement.value)
           .rgb()
@@ -231,44 +231,44 @@ export default class Colors extends React.Component<ColorsProps, ColorsStates> {
         return item
       })
       this.props.onChangeColors({
-        colors: colorsMessage.data,
+        colors: this.colorsMessage.data,
         onGoingStep: 'colors changed',
       })
-      parent.postMessage({ pluginMessage: colorsMessage }, '*')
+      parent.postMessage({ pluginMessage: this.colorsMessage }, '*')
     }
 
     const setHueShifting = () => {
-      colorsMessage.data = this.props.colors.map((item) => {
+      this.colorsMessage.data = this.props.colors.map((item) => {
         if (item.id === id) item.hueShifting = parseFloat(currentElement.value)
         return item
       })
       this.props.onChangeColors({
-        colors: colorsMessage.data,
+        colors: this.colorsMessage.data,
         onGoingStep: 'colors changed',
       })
-      parent.postMessage({ pluginMessage: colorsMessage }, '*')
+      parent.postMessage({ pluginMessage: this.colorsMessage }, '*')
     }
 
     const updateColorDescription = () => {
-      colorsMessage.data = this.props.colors.map((item) => {
+      this.colorsMessage.data = this.props.colors.map((item) => {
         if (item.id === id) item.description = currentElement.value
         return item
       })
       this.props.onChangeColors({
-        colors: colorsMessage.data,
+        colors: this.colorsMessage.data,
         onGoingStep: 'colors changed',
       })
       if (e.type === 'blur')
-        parent.postMessage({ pluginMessage: colorsMessage }, '*')
+        parent.postMessage({ pluginMessage: this.colorsMessage }, '*')
     }
 
     const removeColor = () => {
-      colorsMessage.data = this.props.colors.filter((item) => item.id !== id)
+      this.colorsMessage.data = this.props.colors.filter((item) => item.id !== id)
       this.props.onChangeColors({
-        colors: colorsMessage.data,
+        colors: this.colorsMessage.data,
         onGoingStep: 'colors changed',
       })
-      parent.postMessage({ pluginMessage: colorsMessage }, '*')
+      parent.postMessage({ pluginMessage: this.colorsMessage }, '*')
     }
 
     const actions: ActionsList = {

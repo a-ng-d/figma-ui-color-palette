@@ -51,10 +51,6 @@ const processSelection = () => {
               palette.getPluginData('textColorsTheme')
             ),
             algorithmVersion: palette.getPluginData('algorithmVersion'),
-            screenshot: await palette.exportAsync({
-              format: 'PNG',
-              constraint: { type: 'SCALE', value: 0.25 },
-            }),
             isPublished: palette.getPluginData('isPublished') === 'true',
             isShared: palette.getPluginData('isShared') === 'true',
             creatorFullName: palette.getPluginData('creatorFullName'),
@@ -65,6 +61,20 @@ const processSelection = () => {
             publishedAt: palette.getPluginData('publishedAt'),
           },
         })
+
+        await palette.exportAsync({
+          format: 'PNG',
+          constraint: { type: 'SCALE', value: 0.25 },
+        })
+          .then((image) => figma.ui.postMessage({
+            type: 'UPDATE_SCREENSHOT',
+            data: image,
+          }))
+          .catch(() => figma.ui.postMessage({
+            type: 'UPDATE_SCREENSHOT',
+            data: null,
+          }))
+        
         palette.setRelaunchData({
           edit: locals[lang].relaunch.edit.description,
         })
