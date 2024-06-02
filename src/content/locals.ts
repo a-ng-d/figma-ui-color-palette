@@ -96,6 +96,7 @@ export const locals: { [key: string]: any } = {
         search: 'Search palettes',
         loadMore: 'Load more palettes',
         completeList: 'The palettes list is complete',
+        emptyList: 'No palette has been found',
       },
       devMode: {
         title: 'UI Color Palettes on the page',
