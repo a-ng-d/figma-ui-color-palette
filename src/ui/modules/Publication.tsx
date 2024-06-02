@@ -711,8 +711,8 @@ export default class Publication extends React.Component<
       <Dialog
         title={
           this.props.rawData.creatorIdentity.creatorId ===
-          this.props.rawData.userSession.userId
-          || this.props.rawData.creatorIdentity.creatorId === ''
+            this.props.rawData.userSession.userId ||
+          this.props.rawData.creatorIdentity.creatorId === ''
             ? locals[this.props.lang].publication.titlePublish
             : locals[this.props.lang].publication.titleSynchronize
         }

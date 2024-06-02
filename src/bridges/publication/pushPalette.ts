@@ -76,8 +76,8 @@ const pushPalette = async (
           type: 'UPDATE_GLOBAL',
           data: {
             ...rawData,
-            ...palettePublicationDetails
-          }
+            ...palettePublicationDetails,
+          },
         },
       },
       '*'

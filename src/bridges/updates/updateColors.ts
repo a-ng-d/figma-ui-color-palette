@@ -51,12 +51,13 @@ const updateColors = async (msg: ColorsMessage) => {
       ) as AlgorithmVersionConfiguration,
       creatorFullName = palette.getPluginData('creatorFullName'),
       creatorAvatar = palette.getPluginData('creatorAvatar'),
-      creatorAvatarImg = creatorAvatar !== ''
-        ? await figma
-          .createImageAsync(creatorAvatar)
-          .then(async (image: Image) => image)
-          .catch(() => null)
-        : null
+      creatorAvatarImg =
+        creatorAvatar !== ''
+          ? await figma
+              .createImageAsync(creatorAvatar)
+              .then(async (image: Image) => image)
+              .catch(() => null)
+          : null
 
     palette.setPluginData('colors', JSON.stringify(msg.data))
 

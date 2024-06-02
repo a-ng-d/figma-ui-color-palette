@@ -26,7 +26,8 @@ interface OverviewProps {
     onChangeColorsFromImport: Array<SourceColorConfiguration>,
     source: ThirdParty
   ) => void
-  onChangeContexts: React.MouseEventHandler<Element> & React.KeyboardEventHandler<Element>
+  onChangeContexts: React.MouseEventHandler<Element> &
+    React.KeyboardEventHandler<Element>
 }
 
 interface OverviewStates {
@@ -37,8 +38,10 @@ interface OverviewStates {
   isColourLoversImportOpen: boolean
 }
 
-export default class Overview extends React.Component<OverviewProps, OverviewStates> {
-
+export default class Overview extends React.Component<
+  OverviewProps,
+  OverviewStates
+> {
   constructor(props: OverviewProps) {
     super(props)
     this.state = {
@@ -528,8 +531,9 @@ export default class Overview extends React.Component<OverviewProps, OverviewSta
           </Feature>
           <Feature
             isActive={
-              features.find((feature) => feature.name === 'SOURCE_COLOUR_LOVERS')
-                ?.isActive
+              features.find(
+                (feature) => feature.name === 'SOURCE_COLOUR_LOVERS'
+              )?.isActive
             }
           >
             <this.ColourLoversColors />

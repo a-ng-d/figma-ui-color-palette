@@ -34,12 +34,13 @@ const updateSettings = async (msg: SettingsMessage) => {
       view = palette.getPluginData('view') as ViewConfiguration,
       creatorFullName = palette.getPluginData('creatorFullName'),
       creatorAvatar = palette.getPluginData('creatorAvatar'),
-      creatorAvatarImg = creatorAvatar !== ''
-        ? await figma
-          .createImageAsync(creatorAvatar)
-          .then(async (image: Image) => image)
-          .catch(() => null)
-        : null
+      creatorAvatarImg =
+        creatorAvatar !== ''
+          ? await figma
+              .createImageAsync(creatorAvatar)
+              .then(async (image: Image) => image)
+              .catch(() => null)
+          : null
 
     palette.setPluginData('name', msg.data.name)
     palette.setPluginData('description', msg.data.description)

@@ -52,7 +52,7 @@ const detachPalette = async (
         data: {
           ...rawData,
           ...palettePublicationDetails,
-        }
+        },
       },
     },
     '*'

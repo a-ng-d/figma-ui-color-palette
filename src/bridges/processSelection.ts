@@ -62,19 +62,24 @@ const processSelection = () => {
           },
         })
 
-        await palette.exportAsync({
-          format: 'PNG',
-          constraint: { type: 'SCALE', value: 0.25 },
-        })
-          .then((image) => figma.ui.postMessage({
-            type: 'UPDATE_SCREENSHOT',
-            data: image,
-          }))
-          .catch(() => figma.ui.postMessage({
-            type: 'UPDATE_SCREENSHOT',
-            data: null,
-          }))
-        
+        await palette
+          .exportAsync({
+            format: 'PNG',
+            constraint: { type: 'SCALE', value: 0.25 },
+          })
+          .then((image) =>
+            figma.ui.postMessage({
+              type: 'UPDATE_SCREENSHOT',
+              data: image,
+            })
+          )
+          .catch(() =>
+            figma.ui.postMessage({
+              type: 'UPDATE_SCREENSHOT',
+              data: null,
+            })
+          )
+
         palette.setRelaunchData({
           edit: locals[lang].relaunch.edit.description,
         })

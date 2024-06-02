@@ -128,7 +128,8 @@ export default class Themes extends React.Component<ThemesProps, ThemesStates> {
         type: 'custom theme',
       })
       this.props.onChangeThemes({
-        scale: this.themesMessage.data.find((theme) => theme.isEnabled)?.scale ?? {},
+        scale:
+          this.themesMessage.data.find((theme) => theme.isEnabled)?.scale ?? {},
         themes: this.themesMessage.data,
         onGoingStep: 'themes changed',
       })
@@ -148,7 +149,8 @@ export default class Themes extends React.Component<ThemesProps, ThemesStates> {
         return item
       })
       this.props.onChangeThemes({
-        scale: this.themesMessage.data.find((theme) => theme.isEnabled)?.scale ?? {},
+        scale:
+          this.themesMessage.data.find((theme) => theme.isEnabled)?.scale ?? {},
         themes: this.themesMessage.data,
         onGoingStep: 'themes changed',
       })
@@ -168,7 +170,8 @@ export default class Themes extends React.Component<ThemesProps, ThemesStates> {
         })
         this.props.onChangeThemes({
           scale:
-            this.themesMessage.data.find((theme) => theme.isEnabled)?.scale ?? {},
+            this.themesMessage.data.find((theme) => theme.isEnabled)?.scale ??
+            {},
           themes: this.themesMessage.data,
           onGoingStep: 'themes changed',
         })
@@ -188,7 +191,8 @@ export default class Themes extends React.Component<ThemesProps, ThemesStates> {
         return item
       })
       this.props.onChangeThemes({
-        scale: this.themesMessage.data.find((theme) => theme.isEnabled)?.scale ?? {},
+        scale:
+          this.themesMessage.data.find((theme) => theme.isEnabled)?.scale ?? {},
         themes: this.themesMessage.data,
         onGoingStep: 'themes changed',
       })
@@ -197,7 +201,9 @@ export default class Themes extends React.Component<ThemesProps, ThemesStates> {
     }
 
     const removeTheme = () => {
-      this.themesMessage.data = this.props.themes.filter((item) => item.id !== id)
+      this.themesMessage.data = this.props.themes.filter(
+        (item) => item.id !== id
+      )
       if (this.themesMessage.data.length > 1)
         this.themesMessage.data.filter(
           (item) => item.type === 'custom theme'
@@ -209,7 +215,8 @@ export default class Themes extends React.Component<ThemesProps, ThemesStates> {
         if (result !== undefined) result.isEnabled = true
       }
       this.props.onChangeThemes({
-        scale: this.themesMessage.data.find((theme) => theme.isEnabled)?.scale ?? {},
+        scale:
+          this.themesMessage.data.find((theme) => theme.isEnabled)?.scale ?? {},
         themes: this.themesMessage.data,
         onGoingStep: 'themes changed',
       })
@@ -331,7 +338,8 @@ export default class Themes extends React.Component<ThemesProps, ThemesStates> {
       type: 'custom theme',
     })
     this.props.onChangeThemes({
-      scale: this.themesMessage.data.find((theme) => theme.isEnabled)?.scale ?? {},
+      scale:
+        this.themesMessage.data.find((theme) => theme.isEnabled)?.scale ?? {},
       themes: this.themesMessage.data,
       onGoingStep: 'themes changed',
     })

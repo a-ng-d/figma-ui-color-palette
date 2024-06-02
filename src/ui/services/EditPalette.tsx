@@ -118,7 +118,8 @@ export default class EditPalette extends React.Component<
     })
     parent.postMessage({ pluginMessage: this.themesMessage }, '*')
     this.props.onChangeThemes({
-      scale: this.themesMessage.data.find((theme) => theme.isEnabled)?.scale ?? {},
+      scale:
+        this.themesMessage.data.find((theme) => theme.isEnabled)?.scale ?? {},
       themes: this.themesMessage.data,
       onGoingStep: 'themes changed',
     })

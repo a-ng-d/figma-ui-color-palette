@@ -35,12 +35,13 @@ const setPaletteMigration = async (palette: BaseNode) => {
     updatedAt = palette.getPluginData('updatedAt'),
     creatorFullName = palette.getPluginData('creatorFullName'),
     creatorAvatar = palette.getPluginData('creatorAvatar'),
-    creatorAvatarImg = creatorAvatar !== ''
-      ? await figma
-        .createImageAsync(creatorAvatar)
-        .then(async (image: Image) => image)
-        .catch(() => null)
-      : null
+    creatorAvatarImg =
+      creatorAvatar !== ''
+        ? await figma
+            .createImageAsync(creatorAvatar)
+            .then(async (image: Image) => image)
+            .catch(() => null)
+        : null
 
   // Id
   if (!isPublished) palette.setPluginData('id', '')

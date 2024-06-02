@@ -1,9 +1,4 @@
-import {
-  Button,
-  Icon,
-  Message,
-  texts,
-} from '@a_ng_d/figmug-ui'
+import { Button, Icon, Message, texts } from '@a_ng_d/figmug-ui'
 import chroma from 'chroma-js'
 import React from 'react'
 import { uid } from 'uid'
@@ -23,7 +18,8 @@ interface ExploreProps {
     onChangeColorsFromImport: Array<SourceColorConfiguration>,
     source: ThirdParty
   ) => void
-  onChangeContexts: React.MouseEventHandler<Element> & React.KeyboardEventHandler<Element>
+  onChangeContexts: React.MouseEventHandler<Element> &
+    React.KeyboardEventHandler<Element>
   onLoadColourLoversPaletteList: (palettes: Array<ColourLovers>) => void
 }
 
@@ -39,7 +35,10 @@ interface ExploreStates {
   isLoadMoreActionLoading: boolean
 }
 
-export default class Explore extends React.Component<ExploreProps, ExploreStates> {
+export default class Explore extends React.Component<
+  ExploreProps,
+  ExploreStates
+> {
   constructor(props: ExploreProps) {
     super(props)
     this.state = {
@@ -60,7 +59,7 @@ export default class Explore extends React.Component<ExploreProps, ExploreStates
     if (
       prevState.currentPage !== this.state['currentPage'] ||
       (this.state['colourLoversPalettesListStatus'] !== 'LOADED' &&
-      this.state['colourLoversPalettesListStatus'] !== 'ERROR')
+        this.state['colourLoversPalettesListStatus'] !== 'ERROR')
     ) {
       this.callUICPAgent()
     }
@@ -83,7 +82,8 @@ export default class Explore extends React.Component<ExploreProps, ExploreStates
       .then((response) => response.json())
       .then((data) => {
         this.setState({
-          colourLoversPalettesListStatus: data.length === pageSize ? 'LOADED' : 'COMPLETE',
+          colourLoversPalettesListStatus:
+            data.length === pageSize ? 'LOADED' : 'COMPLETE',
         })
         this.props.onLoadColourLoversPaletteList(data)
       })

@@ -107,7 +107,7 @@ const publishPalette = async (
           data: {
             ...rawData,
             ...palettePublicationDetails,
-          }
+          },
         },
       },
       '*'

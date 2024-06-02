@@ -107,11 +107,7 @@ export default class Title {
       this.nodeProps.appendChild(
         new Tag(
           '_creator_id',
-          `${
-            locals[lang].paletteProperties.provider
-          }${
-            this.parent.creatorFullName
-          }`,
+          `${locals[lang].paletteProperties.provider}${this.parent.creatorFullName}`,
           12
         ).makeNodeTagWithAvatar(this.parent.creatorAvatarImg)
       )
@@ -123,31 +119,23 @@ export default class Title {
       this.nodeProps.appendChild(
         new Tag(
           '_theme',
-          `${
-            locals[lang].paletteProperties.theme
-          }${
+          `${locals[lang].paletteProperties.theme}${
             this.parent.themes.find((theme) => theme.isEnabled)?.name
           }`,
           12
         ).makeNodeTag()
       )
     this.nodeProps.appendChild(
-      new Tag('_preset', `${
-          locals[lang].paletteProperties.preset
-        }${
-          this.parent.preset.name
-        }`,
+      new Tag(
+        '_preset',
+        `${locals[lang].paletteProperties.preset}${this.parent.preset.name}`,
         12
       ).makeNodeTag()
     )
     this.nodeProps.appendChild(
       new Tag(
         '_color-space',
-        `${
-          locals[lang].paletteProperties.colorSpace
-        }${
-          this.parent.colorSpace
-        }`,
+        `${locals[lang].paletteProperties.colorSpace}${this.parent.colorSpace}`,
         12
       ).makeNodeTag()
     )

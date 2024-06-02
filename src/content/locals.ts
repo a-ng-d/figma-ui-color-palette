@@ -392,7 +392,6 @@ export const locals: { [key: string]: any } = {
       preset: 'Preset: ',
       colorSpace: 'Color space: ',
       visionSimulation: 'Vision simulation: ',
-
     },
     success: {
       publication: '✓ The palette has been published',

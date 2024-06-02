@@ -54,8 +54,10 @@ export default class Actions extends React.Component<ActionsProps> {
         value: 'PALETTE_PUBLICATION',
         feature: 'PUBLISH_PALETTE',
       }
-    else if (this.props.identity?.userId !== this.props.identity?.creatorId
-      && this.props.identity?.creatorId !== '')
+    else if (
+      this.props.identity?.userId !== this.props.identity?.creatorId &&
+      this.props.identity?.creatorId !== ''
+    )
       return {
         label: locals[this.props.lang].actions.syncPalette,
         value: 'PALETTE_PUBLICATION',

@@ -37,9 +37,9 @@ const createPalette = async (msg: Msg) => {
 
   const creatorAvatarImg = msg.data.paletteMeta?.creatorIdentity.creatorFullName
     ? await figma
-      .createImageAsync(msg.data.paletteMeta.creatorIdentity.creatorAvatar)
-      .then(async (image: Image) => image)
-      .catch(() => null)
+        .createImageAsync(msg.data.paletteMeta.creatorIdentity.creatorAvatar)
+        .then(async (image: Image) => image)
+        .catch(() => null)
     : null
 
   const palette = new Palette(

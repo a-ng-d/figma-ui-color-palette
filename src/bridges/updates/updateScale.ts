@@ -54,12 +54,13 @@ const updateScale = async (msg: ScaleMessage) => {
       ) as AlgorithmVersionConfiguration,
       creatorFullName = palette.getPluginData('creatorFullName'),
       creatorAvatar = palette.getPluginData('creatorAvatar'),
-      creatorAvatarImg = creatorAvatar !== ''
-        ? await figma
-          .createImageAsync(creatorAvatar)
-          .then(async (image: Image) => image)
-          .catch(() => null)
-        : null
+      creatorAvatarImg =
+        creatorAvatar !== ''
+          ? await figma
+              .createImageAsync(creatorAvatar)
+              .then(async (image: Image) => image)
+              .catch(() => null)
+          : null
 
     const theme = themes.find((theme) => theme.isEnabled)
     if (theme !== undefined) theme.scale = msg.data.scale

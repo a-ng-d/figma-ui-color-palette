@@ -149,10 +149,11 @@ const loadUI = async () => {
       UPDATE_SCREENSHOT: async () => {
         figma.ui.postMessage({
           type: 'UPDATE_SCREENSHOT',
-          data: await palette.exportAsync({
-            format: 'PNG',
-            constraint: { type: 'SCALE', value: 0.25 },
-          })
+          data: await palette
+            .exportAsync({
+              format: 'PNG',
+              constraint: { type: 'SCALE', value: 0.25 },
+            })
             .catch(() => null),
         })
       },

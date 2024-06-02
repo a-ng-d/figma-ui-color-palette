@@ -1,7 +1,4 @@
-import {
-  Bar,
-  Tabs,
-} from '@a_ng_d/figmug-ui'
+import { Bar, Tabs } from '@a_ng_d/figmug-ui'
 import React from 'react'
 
 import { EditorType, Language, PlanStatus } from '../../types/app'
@@ -10,8 +7,8 @@ import { ColourLovers } from '../../types/data'
 import { ContextItem, ThirdParty } from '../../types/management'
 import { setContexts } from '../../utils/setContexts'
 import Actions from '../modules/Actions'
-import Overview from './Overview'
 import Explore from './Explore'
+import Overview from './Overview'
 
 interface SourceProps {
   sourceColors: Array<SourceColorConfiguration>
@@ -57,7 +54,9 @@ export default class Source extends React.Component<SourceProps, SourceStates> {
         controls = (
           <Overview
             {...this.props}
-            onChangeContexts={() => this.setState({ context: 'SOURCE_EXPLORE' })}
+            onChangeContexts={() =>
+              this.setState({ context: 'SOURCE_EXPLORE' })
+            }
           />
         )
         break
@@ -67,10 +66,15 @@ export default class Source extends React.Component<SourceProps, SourceStates> {
           <Explore
             {...this.props}
             colourLoversPaletteList={this.state['colourLoversPaletteList']}
-            onChangeContexts={() => this.setState({ context: 'SOURCE_OVERVIEW' })}
-            onLoadColourLoversPaletteList={(e) =>this.setState({
-              colourLoversPaletteList: this.state['colourLoversPaletteList'].concat(e),
-            })}
+            onChangeContexts={() =>
+              this.setState({ context: 'SOURCE_OVERVIEW' })
+            }
+            onLoadColourLoversPaletteList={(e) =>
+              this.setState({
+                colourLoversPaletteList:
+                  this.state['colourLoversPaletteList'].concat(e),
+              })
+            }
           />
         )
         break

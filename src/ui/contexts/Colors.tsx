@@ -263,7 +263,9 @@ export default class Colors extends React.Component<ColorsProps, ColorsStates> {
     }
 
     const removeColor = () => {
-      this.colorsMessage.data = this.props.colors.filter((item) => item.id !== id)
+      this.colorsMessage.data = this.props.colors.filter(
+        (item) => item.id !== id
+      )
       this.props.onChangeColors({
         colors: this.colorsMessage.data,
         onGoingStep: 'colors changed',

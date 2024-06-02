@@ -212,5 +212,4 @@ export default class Tag {
 
     return this.nodeAvatar
   }
-
 }

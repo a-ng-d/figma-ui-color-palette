@@ -58,7 +58,7 @@ const unpublishPalette = async (
           data: {
             ...rawData,
             ...palettePublicationDetails,
-          }
+          },
         },
       },
       '*'

@@ -12,7 +12,7 @@ const updateGlobal = async (msg: any) => {
     ? (previousSelection?.[0] as FrameNode)
     : (currentSelection[0] as FrameNode)
   console.log(msg.data)
-  
+
   const creatorAvatarImg = await figma
     .createImageAsync(msg.data.creatorIdentity.creatorAvatar)
     .then(async (image: Image) => image)
@@ -56,10 +56,7 @@ const updateGlobal = async (msg: any) => {
     palette.setPluginData('scale', JSON.stringify(msg.data.scale))
     palette.setPluginData('colors', JSON.stringify(msg.data.colors))
     palette.setPluginData('colorSpace', msg.data.colorSpace)
-    palette.setPluginData(
-      'visionSimulationMode',
-      msg.data.visionSimulationMode
-    )
+    palette.setPluginData('visionSimulationMode', msg.data.visionSimulationMode)
     palette.setPluginData('themes', JSON.stringify(msg.data.themes))
     palette.setPluginData('view', msg.data.view)
     palette.setPluginData(
@@ -73,9 +70,18 @@ const updateGlobal = async (msg: any) => {
     palette.setPluginData('createdAt', msg.data.dates.createdAt)
     palette.setPluginData('updatedAt', msg.data.dates.updatedAt)
     palette.setPluginData('publishedAt', msg.data.dates.publishedAt)
-    palette.setPluginData('isShared', msg.data.publicationStatus.isShared.toString())
-    palette.setPluginData('creatorFullName', msg.data.creatorIdentity.creatorFullName)
-    palette.setPluginData('creatorAvatar', msg.data.creatorIdentity.creatorAvatar)
+    palette.setPluginData(
+      'isShared',
+      msg.data.publicationStatus.isShared.toString()
+    )
+    palette.setPluginData(
+      'creatorFullName',
+      msg.data.creatorIdentity.creatorFullName
+    )
+    palette.setPluginData(
+      'creatorAvatar',
+      msg.data.creatorIdentity.creatorAvatar
+    )
     palette.setPluginData('creatorId', msg.data.creatorIdentity.creatorId)
 
     figma.ui.postMessage({
