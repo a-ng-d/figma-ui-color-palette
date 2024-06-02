@@ -385,7 +385,7 @@ export default class Properties {
 
     // insert
     this.nodeDetailedBaseProps.appendChild(
-      new Tag('_title', locals[lang].properties.base, 10).makeNodeTag()
+      new Tag('_title', locals[lang].paletteProperties.base, 10).makeNodeTag()
     )
     this.nodeDetailedBaseProps.appendChild(
       new Tag('_hex', this.hex.toUpperCase()).makeNodeTag()
@@ -408,7 +408,7 @@ export default class Properties {
 
     // insert
     this.nodeDetailedWCAGScoresProps.appendChild(
-      new Tag('_title', locals[lang].properties.wcag, 10).makeNodeTag()
+      new Tag('_title', locals[lang].paletteProperties.wcag, 10).makeNodeTag()
     )
     this.nodeDetailedWCAGScoresProps.appendChild(
       new Tag(
@@ -444,7 +444,7 @@ export default class Properties {
 
     // insert
     this.nodeDetailedAPCAScoresProps.appendChild(
-      new Tag('_title', locals[lang].properties.apca, 10).makeNodeTag()
+      new Tag('_title', locals[lang].paletteProperties.apca, 10).makeNodeTag()
     )
     this.nodeDetailedAPCAScoresProps.appendChild(
       this.makeNodeColumns(
@@ -457,7 +457,7 @@ export default class Properties {
           ),
           new Tag(
             '_minimum-font-sizes',
-            locals[lang].properties.fontSize
+            locals[lang].paletteProperties.fontSize
           ).makeNodeTag(),
           new Tag(
             '_200-light',
@@ -493,7 +493,7 @@ export default class Properties {
           ),
           new Tag(
             '_minimum-font-sizes',
-            locals[lang].properties.fontSize
+            locals[lang].paletteProperties.fontSize
           ).makeNodeTag(),
           new Tag(
             '_200-dark',

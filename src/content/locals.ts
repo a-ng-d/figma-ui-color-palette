@@ -380,11 +380,18 @@ export const locals: { [key: string]: any } = {
       signOut: 'Sign out',
       welcomeMessage: 'Hello $[]',
     },
-    properties: {
+    paletteProperties: {
+      sourceColors: 'Source colors',
       base: 'Base',
       wcag: 'WCAG scores',
       apca: 'APCA scores',
       fontSize: 'Minimum font sizes',
+      provider: 'Provider: ',
+      theme: 'Theme: ',
+      preset: 'Preset: ',
+      colorSpace: 'Color space: ',
+      visionSimulation: 'Vision simulation: ',
+
     },
     success: {
       publication: '✓ The palette has been published',

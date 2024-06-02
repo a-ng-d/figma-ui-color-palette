@@ -32,7 +32,7 @@ export default class Header {
     // insert
     this.node.appendChild(
       new Sample(
-        locals[lang].colors.title,
+        locals[lang].paletteProperties.sourceColors,
         null,
         null,
         [255, 255, 255],

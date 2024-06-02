@@ -107,7 +107,11 @@ export default class Title {
       this.nodeProps.appendChild(
         new Tag(
           '_creator_id',
-          `Provided by ${this.parent.creatorFullName}`,
+          `${
+            locals[lang].paletteProperties.provider
+          }${
+            this.parent.creatorFullName
+          }`,
           12
         ).makeNodeTagWithAvatar(this.parent.creatorAvatarImg)
       )
@@ -119,17 +123,31 @@ export default class Title {
       this.nodeProps.appendChild(
         new Tag(
           '_theme',
-          `Theme: ${this.parent.themes.find((theme) => theme.isEnabled)?.name}`,
+          `${
+            locals[lang].paletteProperties.theme
+          }${
+            this.parent.themes.find((theme) => theme.isEnabled)?.name
+          }`,
           12
         ).makeNodeTag()
       )
     this.nodeProps.appendChild(
-      new Tag('_preset', `Preset: ${this.parent.preset.name}`, 12).makeNodeTag()
+      new Tag('_preset', `${
+          locals[lang].paletteProperties.preset
+        }${
+          this.parent.preset.name
+        }`,
+        12
+      ).makeNodeTag()
     )
     this.nodeProps.appendChild(
       new Tag(
         '_color-space',
-        `Color space: ${this.parent.colorSpace}`,
+        `${
+          locals[lang].paletteProperties.colorSpace
+        }${
+          this.parent.colorSpace
+        }`,
         12
       ).makeNodeTag()
     )
@@ -137,7 +155,7 @@ export default class Title {
       this.nodeProps.appendChild(
         new Tag(
           '_vision-simulation',
-          `Vision simulation: ${
+          `${locals[lang].paletteProperties.visionSimulation}${
             this.parent.visionSimulationMode.charAt(0) +
             this.parent.visionSimulationMode.toLocaleLowerCase().slice(1)
           }`,
