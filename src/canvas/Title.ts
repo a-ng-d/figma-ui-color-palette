@@ -101,7 +101,7 @@ export default class Title {
 
     // insert
     if (
-      this.parent.creatorFullName !== undefined ||
+      this.parent.creatorFullName !== undefined &&
       this.parent.creatorFullName !== ''
     )
       this.nodeProps.appendChild(

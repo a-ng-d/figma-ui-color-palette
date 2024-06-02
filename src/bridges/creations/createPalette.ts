@@ -32,8 +32,15 @@ interface Msg {
   }
 }
 
-const createPalette = (msg: Msg) => {
+const createPalette = async (msg: Msg) => {
   const scene: SceneNode[] = []
+
+  const creatorAvatarImg = msg.data.paletteMeta?.creatorIdentity.creatorFullName
+    ? await figma
+      .createImageAsync(msg.data.paletteMeta.creatorIdentity.creatorAvatar)
+      .then(async (image: Image) => image)
+      .catch(() => null)
+    : null
 
   const palette = new Palette(
     msg.data.sourceColors,
@@ -48,7 +55,8 @@ const createPalette = (msg: Msg) => {
     msg.data.palette.algorithmVersion,
     msg.data.themes,
     msg.data.isRemote,
-    msg.data.paletteMeta
+    msg.data.paletteMeta,
+    creatorAvatarImg
   ).makeNode()
 
   if (palette.children.length !== 0) {

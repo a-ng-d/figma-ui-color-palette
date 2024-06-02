@@ -41,7 +41,7 @@ const pullPalette = async (rawData: AppStates): Promise<Partial<AppStates>> => {
       {
         pluginMessage: {
           type: 'UPDATE_GLOBAL',
-          data: data[0],
+          data: palettePublicationDetails,
         },
       },
       '*'

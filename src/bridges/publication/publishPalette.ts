@@ -94,40 +94,6 @@ const publishPalette = async (
               key: 'id',
               value: palettePublicationDetails.id,
             },
-            {
-              key: 'name',
-              value: palettePublicationDetails.name,
-            },
-            {
-              key: 'publishedAt',
-              value: palettePublicationDetails.dates.publishedAt,
-            },
-            {
-              key: 'updatedAt',
-              value: palettePublicationDetails.dates.updatedAt,
-            },
-            {
-              key: 'isPublished',
-              value:
-                palettePublicationDetails.publicationStatus.isPublished.toString(),
-            },
-            {
-              key: 'isShared',
-              value:
-                palettePublicationDetails.publicationStatus.isShared.toString(),
-            },
-            {
-              key: 'creatorFullName',
-              value: palettePublicationDetails.creatorIdentity.creatorFullName,
-            },
-            {
-              key: 'creatorAvatar',
-              value: palettePublicationDetails.creatorIdentity.creatorAvatar,
-            },
-            {
-              key: 'creatorId',
-              value: palettePublicationDetails.creatorIdentity.creatorId,
-            },
           ],
         },
       },
@@ -137,17 +103,11 @@ const publishPalette = async (
     parent.postMessage(
       {
         pluginMessage: {
-          type: 'UPDATE_SETTINGS',
+          type: 'UPDATE_GLOBAL',
           data: {
-            name: palettePublicationDetails.name,
-            description: rawData.description,
-            colorSpace: rawData.colorSpace,
-            visionSimulationMode: rawData.visionSimulationMode,
-            textColorsTheme: rawData.textColorsTheme,
-            algorithmVersion: rawData.algorithmVersion,
-          },
-          isEditedInRealTime: false,
-          isSynchronized: true,
+            ...rawData,
+            ...palettePublicationDetails,
+          }
         },
       },
       '*'

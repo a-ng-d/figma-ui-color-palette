@@ -35,6 +35,8 @@ export default class Palette {
   algorithmVersion: AlgorithmVersionConfiguration
   isRemote: boolean | undefined
   meta: MetaConfiguration | undefined
+  creatorFullName: string | undefined
+  creatorAvatarImg: Image | null
   service: Service
   node: FrameNode | null
 
@@ -51,7 +53,8 @@ export default class Palette {
     algorithmVersion: AlgorithmVersionConfiguration,
     themes: Array<ThemeConfiguration> | undefined = undefined,
     isRemote: boolean | undefined = false,
-    meta: MetaConfiguration | undefined = undefined
+    meta: MetaConfiguration | undefined = undefined,
+    creatorAvatarImg: Image | null = null
   ) {
     this.sourceColors = sourceColors
     this.name = name
@@ -87,6 +90,8 @@ export default class Palette {
     this.textColorsTheme = textColorsTheme
     this.isRemote = isRemote
     this.meta = meta
+    this.creatorFullName = meta?.creatorIdentity.creatorFullName
+    this.creatorAvatarImg = creatorAvatarImg
     this.service = 'CREATE'
     this.node = null
   }

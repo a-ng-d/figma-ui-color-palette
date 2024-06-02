@@ -11,11 +11,12 @@ const updateGlobal = async (msg: any) => {
   const palette = isSelectionChanged
     ? (previousSelection?.[0] as FrameNode)
     : (currentSelection[0] as FrameNode)
+  console.log(msg.data)
   
   const creatorAvatarImg = await figma
-        .createImageAsync(msg.data.creator_avatar)
-        .then(async (image: Image) => image)
-        .catch(() => null)
+    .createImageAsync(msg.data.creatorIdentity.creatorAvatar)
+    .then(async (image: Image) => image)
+    .catch(() => null)
 
   if (palette.children.length === 1) {
     palette.children[0].remove()
@@ -27,13 +28,13 @@ const updateGlobal = async (msg: any) => {
           preset: msg.data.preset,
           scale: msg.data.scale,
           colors: msg.data.colors,
-          colorSpace: msg.data.color_space,
-          visionSimulationMode: msg.data.vision_simulation_mode,
+          colorSpace: msg.data.colorSpace,
+          visionSimulationMode: msg.data.visionSimulationMode,
           themes: msg.data.themes,
           view: msg.data.view,
-          textColorsTheme: msg.data.text_colors_theme,
-          algorithmVersion: msg.data.algorithm_version,
-          creatorFullName: msg.data.creator_full_name,
+          textColorsTheme: msg.data.textColorsTheme,
+          algorithmVersion: msg.data.algorithmVersion,
+          creatorFullName: msg.data.creatorIdentity.creatorFullName,
           creatorAvatarImg: creatorAvatarImg,
           service: 'EDIT',
         },
@@ -45,8 +46,8 @@ const updateGlobal = async (msg: any) => {
       msg.data.name,
       msg.data.themes.find((theme: any) => theme.isEnabled)?.name,
       msg.data.preset.name,
-      msg.data.color_space,
-      msg.data.vision_simulation_mode
+      msg.data.colorSpace,
+      msg.data.visionSimulationMode
     )
 
     palette.setPluginData('name', msg.data.name)
@@ -54,28 +55,28 @@ const updateGlobal = async (msg: any) => {
     palette.setPluginData('preset', JSON.stringify(msg.data.preset))
     palette.setPluginData('scale', JSON.stringify(msg.data.scale))
     palette.setPluginData('colors', JSON.stringify(msg.data.colors))
-    palette.setPluginData('colorSpace', msg.data.color_space)
+    palette.setPluginData('colorSpace', msg.data.colorSpace)
     palette.setPluginData(
       'visionSimulationMode',
-      msg.data.vision_simulation_mode
+      msg.data.visionSimulationMode
     )
     palette.setPluginData('themes', JSON.stringify(msg.data.themes))
     palette.setPluginData('view', msg.data.view)
     palette.setPluginData(
       'textColorsTheme',
-      JSON.stringify(msg.data.text_colors_theme)
+      JSON.stringify(msg.data.textColorsTheme)
     )
     palette.setPluginData(
       'algorithmVersion',
-      JSON.stringify(msg.data.algorithm_version)
+      JSON.stringify(msg.data.algorithmVersion)
     )
-    palette.setPluginData('createdAt', msg.data.created_at)
-    palette.setPluginData('updatedAt', msg.data.updated_at)
-    palette.setPluginData('publishedAt', msg.data.published_at)
-    palette.setPluginData('isShared', msg.data.is_shared.toString())
-    palette.setPluginData('creatorFullName', msg.data.creator_full_name)
-    palette.setPluginData('creatorAvatar', msg.data.creator_avatar)
-    palette.setPluginData('creatorId', msg.data.creator_id)
+    palette.setPluginData('createdAt', msg.data.dates.createdAt)
+    palette.setPluginData('updatedAt', msg.data.dates.updatedAt)
+    palette.setPluginData('publishedAt', msg.data.dates.publishedAt)
+    palette.setPluginData('isShared', msg.data.publicationStatus.isShared.toString())
+    palette.setPluginData('creatorFullName', msg.data.creatorIdentity.creatorFullName)
+    palette.setPluginData('creatorAvatar', msg.data.creatorIdentity.creatorAvatar)
+    palette.setPluginData('creatorId', msg.data.creatorIdentity.creatorId)
 
     figma.ui.postMessage({
       type: 'UPDATE_SCREENSHOT',

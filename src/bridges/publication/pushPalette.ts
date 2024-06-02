@@ -73,53 +73,11 @@ const pushPalette = async (
     parent.postMessage(
       {
         pluginMessage: {
-          type: 'SET_DATA',
-          items: [
-            {
-              key: 'publishedAt',
-              value: palettePublicationDetails.dates.publishedAt,
-            },
-            {
-              key: 'updatedAt',
-              value: palettePublicationDetails.dates.updatedAt,
-            },
-            {
-              key: 'isShared',
-              value:
-                palettePublicationDetails.publicationStatus.isShared.toString(),
-            },
-            {
-              key: 'creatorAvatar',
-              value: palettePublicationDetails.creatorIdentity.creatorAvatar,
-            },
-            {
-              key: 'creatorFullName',
-              value: palettePublicationDetails.creatorIdentity.creatorFullName,
-            },
-            {
-              key: 'creatorId',
-              value: palettePublicationDetails.creatorIdentity.creatorId,
-            },
-          ],
-        },
-      },
-      '*'
-    )
-
-    parent.postMessage(
-      {
-        pluginMessage: {
-          type: 'UPDATE_SETTINGS',
+          type: 'UPDATE_GLOBAL',
           data: {
-            name: palettePublicationDetails.name,
-            description: rawData.description,
-            colorSpace: rawData.colorSpace,
-            visionSimulationMode: rawData.visionSimulationMode,
-            textColorsTheme: rawData.textColorsTheme,
-            algorithmVersion: rawData.algorithmVersion,
-          },
-          isEditedInRealTime: false,
-          isSynchronized: true,
+            ...rawData,
+            ...palettePublicationDetails
+          }
         },
       },
       '*'

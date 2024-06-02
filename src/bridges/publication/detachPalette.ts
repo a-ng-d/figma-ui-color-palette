@@ -31,32 +31,6 @@ const detachPalette = async (
             key: 'id',
             value: palettePublicationDetails.id,
           },
-          {
-            key: 'publishedAt',
-            value: palettePublicationDetails.dates.publishedAt,
-          },
-          {
-            key: 'isPublished',
-            value:
-              palettePublicationDetails.publicationStatus.isPublished.toString(),
-          },
-          {
-            key: 'isShared',
-            value:
-              palettePublicationDetails.publicationStatus.isShared.toString(),
-          },
-          {
-            key: 'creatorAvatar',
-            value: palettePublicationDetails.creatorIdentity.creatorAvatar,
-          },
-          {
-            key: 'creatorFullName',
-            value: palettePublicationDetails.creatorIdentity.creatorFullName,
-          },
-          {
-            key: 'creatorId',
-            value: palettePublicationDetails.creatorIdentity.creatorId,
-          },
         ],
       },
     },
@@ -71,6 +45,19 @@ const detachPalette = async (
     },
     '*'
   )
+  parent.postMessage(
+    {
+      pluginMessage: {
+        type: 'UPDATE_GLOBAL',
+        data: {
+          ...rawData,
+          ...palettePublicationDetails,
+        }
+      },
+    },
+    '*'
+  )
+
   return palettePublicationDetails
 }
 
