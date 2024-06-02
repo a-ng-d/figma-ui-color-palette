@@ -46,7 +46,7 @@ interface PalettesStates {
     | 'LOADED'
     | 'EMPTY'
     | 'ERROR'
-    | 'FULL'
+    | 'COMPLETE'
     | 'SIGN_IN_FIRST'
   isLoadMoreActionLoading: boolean
   isSignInLoading: boolean
@@ -126,7 +126,7 @@ export default class Palettes extends React.Component<
           isAddToFileActionLoading: Array(
             this.state['selfPalettesList'].concat(data).length
           ).fill(false),
-          palettesListStatus: data.length > 0 ? 'LOADED' : 'FULL',
+          palettesListStatus: data.length === pageSize ? 'LOADED' : 'COMPLETE',
           selfPalettesList: this.state['selfPalettesList'].concat(data),
         })
       } else if (this.props.userSession.connectionStatus === 'UNCONNECTED')
@@ -156,7 +156,7 @@ export default class Palettes extends React.Component<
           isAddToFileActionLoading: Array(
             this.state['communityPalettesList'].concat(data).length
           ).fill(false),
-          palettesListStatus: data.length > 0 ? 'LOADED' : 'FULL',
+          palettesListStatus: data.length === pageSize ? 'LOADED' : 'COMPLETE',
           communityPalettesList: this.state['communityPalettesList'].concat(data),
         })
       } else
@@ -352,7 +352,7 @@ export default class Palettes extends React.Component<
 
     if (
       this.state['palettesListStatus'] === 'LOADED' ||
-      this.state['palettesListStatus'] === 'FULL'
+      this.state['palettesListStatus'] === 'COMPLETE'
     ) {
       controls = this.state['context'] === 'PALETTES_SELF' ? (
         this.ExternalPalettesList(

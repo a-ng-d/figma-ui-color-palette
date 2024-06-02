@@ -33,7 +33,7 @@ interface ExploreStates {
     | 'LOADED'
     | 'EMPTY'
     | 'ERROR'
-    | 'FULL'
+    | 'COMPLETE'
     | 'SIGN_IN_FIRST'
   currentPage: number
   isLoadMoreActionLoading: boolean
@@ -83,7 +83,7 @@ export default class Explore extends React.Component<ExploreProps, ExploreStates
       .then((response) => response.json())
       .then((data) => {
         this.setState({
-          colourLoversPalettesListStatus: data.length > 0 ? 'LOADED' : 'FULL',
+          colourLoversPalettesListStatus: data.length === pageSize ? 'LOADED' : 'COMPLETE',
         })
         this.props.onLoadColourLoversPaletteList(data)
       })
@@ -191,7 +191,7 @@ export default class Explore extends React.Component<ExploreProps, ExploreStates
       controls = (
         <div className="controls__control controls__control--horizontal">
           {this.state['colourLoversPalettesListStatus'] === 'LOADED' ||
-          this.state['colourLoversPalettesListStatus'] === 'FULL' ? (
+          this.state['colourLoversPalettesListStatus'] === 'COMPLETE' ? (
             <div className="controls__control">
               <div className="control__block control__block--no-padding">
                 <this.ExternalSourceColorsList />
