@@ -166,6 +166,7 @@ export default class Palettes extends React.Component<
       let data, error
 
       if (this.state['seftPalettesSearchQuery'] === '') {
+        // eslint-disable-next-line @typescript-eslint/no-extra-semi
         ;({ data, error } = await supabase
           .from(palettesDbTableName)
           .select(
@@ -177,6 +178,7 @@ export default class Palettes extends React.Component<
             pageSize * this.state['selfCurrentPage'] - 1
           ))
       } else {
+        // eslint-disable-next-line @typescript-eslint/no-extra-semi
         ;({ data, error } = await supabase
           .from(palettesDbTableName)
           .select(
@@ -214,6 +216,7 @@ export default class Palettes extends React.Component<
       let data, error
 
       if (this.state['communityPalettesSearchQuery'] === '') {
+        // eslint-disable-next-line @typescript-eslint/no-extra-semi
         ;({ data, error } = await supabase
           .from(palettesDbTableName)
           .select(
@@ -224,6 +227,7 @@ export default class Palettes extends React.Component<
             pageSize * this.state['communityCurrentPage'] - 1
           ))
       } else {
+        // eslint-disable-next-line @typescript-eslint/no-extra-semi
         ;({ data, error } = await supabase
           .from(palettesDbTableName)
           .select(
