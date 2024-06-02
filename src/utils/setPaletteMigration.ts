@@ -42,29 +42,29 @@ const setPaletteMigration = async (palette: BaseNode) => {
         .catch(() => null)
       : null
 
-  // id
+  // Id
   if (!isPublished) palette.setPluginData('id', '')
 
-  // type
+  // Type
   if (type === '') palette.setPluginData('type', 'UI_COLOR_PALETTE')
 
-  // min-max
+  // Min-Max
   if (min !== '' || max !== '') {
     palette.setPluginData('min', '')
     palette.setPluginData('max', '')
   }
 
-  // description
+  // Description
   if (description === '') palette.setPluginData('description', '')
 
-  // preset
+  // Preset
   if (preset === '')
     palette.setPluginData(
       'preset',
       JSON.stringify(presets.find((preset) => preset.id === 'MATERIAL'))
     )
 
-  // colors
+  // Colors
   if (colorsObject.length !== 0) {
     if (!Object.prototype.hasOwnProperty.call(colorsObject[0], 'hueShifting'))
       palette.setPluginData('colors', setData(colorsObject, 'hueShifting', 0))
@@ -94,7 +94,7 @@ const setPaletteMigration = async (palette: BaseNode) => {
   if (visionSimulationMode === '')
     palette.setPluginData('visionSimulationMode', 'NONE')
 
-  // themes
+  // Themes
   if (themes === '')
     palette.setPluginData(
       'themes',
@@ -111,7 +111,7 @@ const setPaletteMigration = async (palette: BaseNode) => {
       ])
     )
 
-  // view
+  // View
   if (captions === 'hasCaptions' || properties === 'hasProperties') {
     palette.setPluginData('captions', '')
     palette.setPluginData('properties', '')
@@ -125,7 +125,7 @@ const setPaletteMigration = async (palette: BaseNode) => {
     palette.setPluginData('view', 'PALETTE')
   }
 
-  // textColorsTheme
+  // TextColorsTheme
   if (textColorsTheme === '') {
     palette.setPluginData(
       'textColorsTheme',
@@ -136,10 +136,10 @@ const setPaletteMigration = async (palette: BaseNode) => {
     )
   }
 
-  // algorithm
+  // Algorithm
   if (algorithmVersion === '') palette.setPluginData('algorithmVersion', 'v1')
 
-  // data
+  // Data
   if (data === '' || JSON.parse(data).type === undefined)
     new Colors(
       {
@@ -166,11 +166,11 @@ const setPaletteMigration = async (palette: BaseNode) => {
       palette as FrameNode
     ).makePaletteData('CREATE')
 
-  // publication and share
+  // Publication and Share
   if (isPublished === '') palette.setPluginData('isPublished', 'false')
   if (isShared === '') palette.setPluginData('isShared', 'false')
 
-  // created, updated and published
+  // Created, Updated and Published
   if (createdAt === '')
     palette.setPluginData('createdAt', new Date().toISOString())
   if (updatedAt === '')

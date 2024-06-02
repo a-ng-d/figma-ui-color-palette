@@ -18,18 +18,18 @@ export default class Header {
   }
 
   makeNode = () => {
-    // base
+    // Base
     this.node = figma.createFrame()
     this.node.name = '_header'
     this.node.resize(100, this.sampleSize / 4)
     this.node.fills = []
 
-    // layout
+    // Layout
     this.node.layoutMode = 'HORIZONTAL'
     this.node.layoutSizingHorizontal = 'HUG'
     this.node.layoutSizingVertical = 'HUG'
 
-    // insert
+    // Insert
     this.node.appendChild(
       new Sample(
         locals[lang].paletteProperties.sourceColors,

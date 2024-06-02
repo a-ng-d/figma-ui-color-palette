@@ -14,19 +14,19 @@ export default class Property {
   }
 
   makeNode = () => {
-    // base
+    // Base
     this.node = figma.createFrame()
     this.node.name = '_property'
     this.node.fills = []
 
-    // layout
+    // Layout
     this.node.layoutMode = 'VERTICAL'
     this.node.counterAxisSizingMode = 'FIXED'
     this.node.layoutAlign = 'STRETCH'
     this.node.primaryAxisSizingMode = 'FIXED'
     this.node.layoutGrow = 1
 
-    // insert
+    // Insert
     this.node.appendChild(
       new Tag(this.name, this.content, this.size).makeNodeTag()
     )

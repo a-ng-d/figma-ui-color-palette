@@ -19,18 +19,18 @@ export default class Title {
   }
 
   makeNodeGlobalInfo = () => {
-    // base
+    // Base
     this.nodeGlobalInfo = figma.createFrame()
     this.nodeGlobalInfo.name = '_palette-global'
     this.nodeGlobalInfo.fills = []
 
-    // layout
+    // Layout
     this.nodeGlobalInfo.layoutMode = 'VERTICAL'
     this.nodeGlobalInfo.layoutSizingHorizontal = 'HUG'
     this.nodeGlobalInfo.layoutSizingVertical = 'HUG'
     this.nodeGlobalInfo.itemSpacing = 8
 
-    // insert
+    // Insert
     this.nodeGlobalInfo.appendChild(
       new Tag(
         '_name',
@@ -48,18 +48,18 @@ export default class Title {
   }
 
   makeNodeDescriptions = () => {
-    // base
+    // Base
     this.nodeDescriptions = figma.createFrame()
     this.nodeDescriptions.name = '_palette-description(s)'
     this.nodeDescriptions.fills = []
 
-    // layout
+    // Layout
     this.nodeDescriptions.layoutMode = 'HORIZONTAL'
     this.nodeDescriptions.layoutSizingHorizontal = 'HUG'
     this.nodeDescriptions.layoutSizingVertical = 'HUG'
     this.nodeDescriptions.itemSpacing = 8
 
-    // insert
+    // Insert
     if (this.parent.description !== '')
       this.nodeDescriptions.appendChild(
         new Paragraph(
@@ -87,19 +87,19 @@ export default class Title {
   }
 
   makeNodeProps = () => {
-    // base
+    // Base
     this.nodeProps = figma.createFrame()
     this.nodeProps.name = '_palette-props'
     this.nodeProps.fills = []
 
-    // layout
+    // Layout
     this.nodeProps.layoutMode = 'VERTICAL'
     this.nodeProps.layoutSizingHorizontal = 'HUG'
     this.nodeProps.layoutSizingVertical = 'HUG'
     this.nodeProps.counterAxisAlignItems = 'MAX'
     this.nodeProps.itemSpacing = 8
 
-    // insert
+    // Insert
     if (
       this.parent.creatorFullName !== undefined &&
       this.parent.creatorFullName !== ''
@@ -167,19 +167,19 @@ export default class Title {
   }
 
   makeNode = () => {
-    // base
+    // Base
     this.node = figma.createFrame()
     this.node.name = '_title'
     this.node.fills = []
 
-    // layout
+    // Layout
     this.node.layoutMode = 'HORIZONTAL'
     this.node.primaryAxisSizingMode = 'FIXED'
     this.node.layoutAlign = 'STRETCH'
     this.node.counterAxisSizingMode = 'AUTO'
     this.node.primaryAxisAlignItems = 'SPACE_BETWEEN'
 
-    // insert
+    // Insert
     this.node.appendChild(this.makeNodeGlobalInfo())
     this.node.appendChild(this.makeNodeProps())
 

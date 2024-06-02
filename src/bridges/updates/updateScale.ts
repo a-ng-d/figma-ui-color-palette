@@ -119,7 +119,7 @@ const updateScale = async (msg: ScaleMessage) => {
       data: now,
     })
 
-    // palette migration
+    // Palette migration
     palette.counterAxisSizingMode = 'AUTO'
     palette.name = setPaletteName(
       name,

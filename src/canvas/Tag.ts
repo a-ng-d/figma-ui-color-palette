@@ -29,7 +29,7 @@ export default class Tag {
   }
 
   makeNodeTag = () => {
-    // base
+    // Base
     this.nodeTag = figma.createFrame()
     this.nodeTag.name = this.name
     this.nodeTag.fills = [
@@ -45,7 +45,7 @@ export default class Tag {
     ]
     this.nodeTag.cornerRadius = 16
 
-    // layout
+    // Layout
     this.nodeTag.layoutMode = 'HORIZONTAL'
     this.nodeTag.layoutSizingHorizontal = 'HUG'
     this.nodeTag.layoutSizingVertical = 'HUG'
@@ -54,14 +54,14 @@ export default class Tag {
     this.nodeTag.verticalPadding = 4
     this.nodeTag.itemSpacing = 4
 
-    // insert
+    // Insert
     this.nodeTag.appendChild(this.makeNodeText())
 
     return this.nodeTag
   }
 
   makeNodeTagwithIndicator = (gl: Array<number> = [0, 0, 0, 1]) => {
-    // base
+    // Base
     this.nodeTagwithIndicator = figma.createFrame()
     this.nodeTagwithIndicator.name = this.name
     this.nodeTagwithIndicator.fills = [
@@ -77,7 +77,7 @@ export default class Tag {
     ]
     this.nodeTagwithIndicator.cornerRadius = 16
 
-    // layout
+    // Layout
     this.nodeTagwithIndicator.layoutMode = 'HORIZONTAL'
     this.nodeTagwithIndicator.layoutSizingHorizontal = 'HUG'
     this.nodeTagwithIndicator.layoutSizingVertical = 'HUG'
@@ -86,7 +86,7 @@ export default class Tag {
     this.nodeTagwithIndicator.verticalPadding = 4
     this.nodeTagwithIndicator.itemSpacing = 4
 
-    // insert
+    // Insert
     this.nodeTagwithIndicator.appendChild(
       this.makeNodeIndicator([gl[0], gl[1], gl[2]])
     )
@@ -96,7 +96,7 @@ export default class Tag {
   }
 
   makeNodeTagWithAvatar = (image?: Image | null): FrameNode => {
-    // base
+    // Base
     this.nodeTagWithAvatar = figma.createFrame()
     this.nodeTagWithAvatar.name = this.name
     this.nodeTagWithAvatar.fills = [
@@ -112,7 +112,7 @@ export default class Tag {
     ]
     this.nodeTagWithAvatar.cornerRadius = 16
 
-    // layout
+    // Layout
     this.nodeTagWithAvatar.layoutMode = 'HORIZONTAL'
     this.nodeTagWithAvatar.layoutSizingHorizontal = 'HUG'
     this.nodeTagWithAvatar.layoutSizingVertical = 'HUG'
@@ -121,7 +121,7 @@ export default class Tag {
     this.nodeTagWithAvatar.verticalPadding = 4
     this.nodeTagWithAvatar.itemSpacing = 8
 
-    // insert
+    // Insert
     this.nodeTagWithAvatar.appendChild(this.makeNodeText())
     this.nodeTagWithAvatar.appendChild(this.makeNodeAvatar(image))
 
@@ -129,7 +129,7 @@ export default class Tag {
   }
 
   makeNodeText = () => {
-    // base
+    // Base
     this.nodeText = figma.createText()
     this.nodeText.name = '_text'
     this.nodeText.characters = this.content
@@ -165,7 +165,7 @@ export default class Tag {
   }
 
   makeNodeIndicator = (rgb: Array<number>) => {
-    // base
+    // Base
     this.nodeIndicator = figma.createEllipse()
     this.nodeIndicator.name = '_indicator'
     this.nodeIndicator.resize(8, 8)
@@ -195,7 +195,7 @@ export default class Tag {
   }
 
   makeNodeAvatar = (image?: Image | null) => {
-    // base
+    // Base
     this.nodeAvatar = figma.createEllipse()
     this.nodeAvatar.resize(24, 24)
     this.nodeAvatar.name = '_avatar'

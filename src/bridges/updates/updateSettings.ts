@@ -83,7 +83,7 @@ const updateSettings = async (msg: SettingsMessage) => {
       })
     }
 
-    // palette migration
+    // Palette migration
     palette.counterAxisSizingMode = 'AUTO'
     palette.name = setPaletteName(
       msg.data.name,

@@ -139,7 +139,7 @@ export default class Slider extends React.Component<SliderProps> {
     if (offset <= limitMin) offset = limitMin
     else if (offset >= limitMax) offset = limitMax
 
-    // distribute stops horizontal spacing
+    // Distribute stops horizontal spacing
     if (stop === range.lastChild && e.shiftKey)
       // 900
       this.distributeStops(
@@ -155,7 +155,7 @@ export default class Slider extends React.Component<SliderProps> {
         stops
       )
 
-    // link every stop
+    // Link every stop
     if (e.ctrlKey || e.metaKey) {
       if (
         offset <
@@ -176,7 +176,7 @@ export default class Slider extends React.Component<SliderProps> {
 
     stop.style.left = doMap(offset, 0, rangeWidth, 0, 100).toFixed(1) + '%'
 
-    // update lightness scale
+    // Update lightness scale
     this.updateStopTooltip(
       tooltip,
       parseFloat(doMap(offset, 0, rangeWidth, 0, 100).toFixed(1))

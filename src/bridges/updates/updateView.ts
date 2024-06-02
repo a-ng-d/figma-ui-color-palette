@@ -93,7 +93,7 @@ const updateView = async (msg: ViewMessage) => {
       data: now,
     })
 
-    // palette migration
+    // Palette migration
     palette.counterAxisSizingMode = 'AUTO'
     palette.name = setPaletteName(
       name,

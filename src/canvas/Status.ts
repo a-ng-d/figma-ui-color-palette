@@ -15,12 +15,12 @@ export default class Status {
   }
 
   makeNode = () => {
-    // base
+    // Base
     this.node = figma.createFrame()
     this.node.name = '_status'
     this.node.fills = []
 
-    // layout
+    // Layout
     this.node.layoutMode = 'HORIZONTAL'
     this.node.primaryAxisSizingMode = 'FIXED'
     this.node.layoutAlign = 'STRETCH'

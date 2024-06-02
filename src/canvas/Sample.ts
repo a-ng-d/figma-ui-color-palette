@@ -51,12 +51,12 @@ export default class Sample {
   }
 
   makeNodeName = (mode: string, width: number, height: number) => {
-    // base
+    // Base
     this.node = figma.createFrame()
     this.node.name = this.name
     this.node.fills = []
 
-    // layout
+    // Layout
     this.node.layoutMode = 'HORIZONTAL'
     this.node.layoutSizingHorizontal = 'FIXED'
     this.node.paddingTop =
@@ -74,7 +74,7 @@ export default class Sample {
       this.children = new Property('_label', this.name, 10).makeNode()
     }
 
-    // insert
+    // Insert
     this.node.appendChild(this.children as FrameNode)
 
     return this.node
@@ -86,7 +86,7 @@ export default class Sample {
     name: string,
     isColorName = false
   ) => {
-    // base
+    // Base
     this.node = figma.createFrame()
     this.node.name = name
     this.node.resize(width, height)
@@ -101,7 +101,7 @@ export default class Sample {
       },
     ]
 
-    // layout
+    // Layout
     this.node.layoutMode = 'VERTICAL'
     this.node.layoutSizingHorizontal = 'FIXED'
     this.node.layoutSizingVertical = 'FIXED'
@@ -113,7 +113,7 @@ export default class Sample {
         8
     this.node.itemSpacing = 8
 
-    // insert
+    // Insert
     if (this.view.includes('PALETTE_WITH_PROPERTIES') && !isColorName) {
       this.node.appendChild(
         new Properties(
@@ -141,13 +141,13 @@ export default class Sample {
     isColorName = false,
     description = ''
   ) => {
-    // base
+    // Base
     this.node = figma.createFrame()
     this.node.name = name
     this.node.resize(width, height)
     this.node.fills = []
 
-    // layout
+    // Layout
     this.node.layoutMode = 'VERTICAL'
     this.node.layoutSizingHorizontal = 'FIXED'
     this.node.layoutSizingVertical = 'FIXED'
@@ -180,7 +180,7 @@ export default class Sample {
     ]
     this.nodeColor.cornerRadius = 16
 
-    // insert
+    // Insert
     this.nodeColor.appendChild(new Property('_label', name, 10).makeNode())
     if (this.status.isClosestToRef)
       this.nodeColor.appendChild(

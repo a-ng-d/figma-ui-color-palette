@@ -96,7 +96,7 @@ const updateThemes = async (msg: ThemesMessage) => {
       data: now,
     })
 
-    // palette migration
+    // Palette migration
     palette.counterAxisSizingMode = 'AUTO'
     palette.name = setPaletteName(
       name,

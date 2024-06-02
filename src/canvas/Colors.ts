@@ -287,20 +287,20 @@ export default class Colors {
   }
 
   makeEmptyCase = () => {
-    // base
+    // Base
     this.nodeEmpty = figma.createFrame()
     this.nodeEmpty.name = '_message'
     this.nodeEmpty.resize(100, 48)
     this.nodeEmpty.fills = []
 
-    // layout
+    // Layout
     this.nodeEmpty.layoutMode = 'HORIZONTAL'
     this.nodeEmpty.primaryAxisSizingMode = 'FIXED'
     this.nodeEmpty.layoutSizingVertical = 'FIXED'
     this.nodeEmpty.layoutAlign = 'STRETCH'
     this.nodeEmpty.primaryAxisAlignItems = 'CENTER'
 
-    // insert
+    // Insert
     this.nodeEmpty.appendChild(
       new Sample(
         locals[lang].warning.emptySourceColors,
@@ -540,17 +540,17 @@ export default class Colors {
   }
 
   makeNodeShades = () => {
-    // base
+    // Base
     this.nodeShades = figma.createFrame()
     this.nodeShades.name = '_shades'
     this.nodeShades.fills = []
 
-    // layout
+    // Layout
     this.nodeShades.layoutMode = 'VERTICAL'
     this.nodeShades.layoutSizingHorizontal = 'HUG'
     this.nodeShades.layoutSizingVertical = 'HUG'
 
-    // insert
+    // Insert
     this.nodeShades.appendChild(
       new Header(
         this.parent as PaletteNode,
@@ -568,7 +568,7 @@ export default class Colors {
         color.rgb.b * 255,
       ]
 
-      // base
+      // Base
       this.nodeRow = figma.createFrame()
       this.nodeRowSource = figma.createFrame()
       this.nodeRowShades = figma.createFrame()
@@ -580,7 +580,7 @@ export default class Colors {
         this.nodeRowShades.fills =
           []
 
-      // layout
+      // Layout
       this.nodeRow.layoutMode =
         this.nodeRowSource.layoutMode =
         this.nodeRowShades.layoutMode =
@@ -596,7 +596,7 @@ export default class Colors {
       if (!this.parent.view.includes('PALETTE'))
         this.nodeRow.itemSpacing = this.gap
 
-      // insert
+      // Insert
       this.nodeRowSource.appendChild(
         this.parent.view.includes('PALETTE')
           ? new Sample(
@@ -752,19 +752,19 @@ export default class Colors {
   }
 
   makeNode = () => {
-    // base
+    // Base
     this.node = figma.createFrame()
     this.node.name = '_colors﹒do not edit any layer'
     this.node.fills = []
     this.node.locked = true
 
-    // layout
+    // Layout
     this.node.layoutMode = 'VERTICAL'
     this.node.layoutSizingHorizontal = 'HUG'
     this.node.layoutSizingVertical = 'HUG'
     this.node.itemSpacing = 16
 
-    // insert
+    // Insert
     this.node.appendChild(new Title(this.parent).makeNode())
     this.node.appendChild(this.makeNodeShades())
     this.node.appendChild(new Signature().makeNode())

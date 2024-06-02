@@ -98,13 +98,13 @@ export default class Palette {
 
   makeNode = () => {
     const now = new Date().toISOString()
-    // base
+    // Base
     this.node = figma.createFrame()
     this.node.name = this.frameName
     this.node.resize(1640, 100)
     this.node.cornerRadius = 16
 
-    // layout
+    // Layout
     this.node.layoutMode = 'VERTICAL'
     this.node.layoutSizingHorizontal = 'HUG'
     this.node.layoutSizingVertical = 'HUG'
@@ -161,7 +161,7 @@ export default class Palette {
       this.node.setPluginData('isShared', 'false')
     }
 
-    // insert
+    // Insert
     this.sourceColors.forEach((sourceColor) =>
       this.colors.push({
         name: sourceColor.name,

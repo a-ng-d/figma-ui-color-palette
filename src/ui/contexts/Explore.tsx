@@ -66,7 +66,7 @@ export default class Explore extends React.Component<ExploreProps, ExploreStates
     }
   }
 
-  //Direct actions
+  // Direct actions
   callUICPAgent = async () => {
     return fetch(
       'https://corsproxy.io/?' +
