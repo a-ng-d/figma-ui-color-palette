@@ -158,15 +158,15 @@ export default class Properties {
   getRecommendedUsage = (textColor: string) => {
     if (this.getAPCAContrast(textColor) >= 90)
       return locals[lang].paletteProperties.fluentText
-    if (this.getAPCAContrast(textColor) >= 75 && this.getAPCAContrast(textColor) < 89)
+    if (this.getAPCAContrast(textColor) >= 75 && this.getAPCAContrast(textColor) < 90)
       return locals[lang].paletteProperties.contentText
-    if (this.getAPCAContrast(textColor) >= 60 && this.getAPCAContrast(textColor) < 74)
+    if (this.getAPCAContrast(textColor) >= 60 && this.getAPCAContrast(textColor) < 75)
       return locals[lang].paletteProperties.bodyText
-    if (this.getAPCAContrast(textColor) >= 45 && this.getAPCAContrast(textColor) < 59)
+    if (this.getAPCAContrast(textColor) >= 45 && this.getAPCAContrast(textColor) < 60)
       return locals[lang].paletteProperties.headlines
-    if (this.getAPCAContrast(textColor) >= 30 && this.getAPCAContrast(textColor) < 44)
+    if (this.getAPCAContrast(textColor) >= 30 && this.getAPCAContrast(textColor) < 45)
       return locals[lang].paletteProperties.spotText
-    if (this.getAPCAContrast(textColor) >= 15 && this.getAPCAContrast(textColor) < 29)
+    if (this.getAPCAContrast(textColor) >= 15 && this.getAPCAContrast(textColor) < 30)
       return locals[lang].paletteProperties.nonText
     if (this.getAPCAContrast(textColor) < 15)
       return locals[lang].paletteProperties.avoid
@@ -375,7 +375,7 @@ export default class Properties {
       name: '_apca-light-score',
       content: apcaLightRecommendation,
       backgroundColor: {
-        rgb: this.getScoreColor(apcaLightContrast),
+        rgb: this.getScoreColor(apcaLightRecommendation),
         alpha: 1
       },
     }).makeNodeTag(),
@@ -395,7 +395,7 @@ export default class Properties {
       name: '_apca-dark-score',
       content: apcaDarkRecommendation,
       backgroundColor: {
-        rgb: this.getScoreColor(wcagDarkScore),
+        rgb: this.getScoreColor(apcaDarkRecommendation),
         alpha: 1
       },
     }).makeNodeTag()
