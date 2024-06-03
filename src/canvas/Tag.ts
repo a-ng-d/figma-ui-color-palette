@@ -66,6 +66,17 @@ export default class Tag {
         },
       },
     ]
+    this.nodeTag.strokes = [
+      {
+        type: 'SOLID',
+        color: {
+          r: 0,
+          g: 0,
+          b: 0,
+        },
+        opacity: 0.05,
+      }
+    ]
     this.nodeTag.cornerRadius = 16
 
     // Layout
@@ -98,6 +109,17 @@ export default class Tag {
           b: this.backgroundColor.rgb.b,
         },
       },
+    ]
+    this.nodeTagwithIndicator.strokes = [
+      {
+        type: 'SOLID',
+        color: {
+          r: 0,
+          g: 0,
+          b: 0,
+        },
+        opacity: 0.05,
+      }
     ]
     this.nodeTagwithIndicator.cornerRadius = 16
 
@@ -134,6 +156,17 @@ export default class Tag {
           b: this.backgroundColor.rgb.b,
         },
       },
+    ]
+    this.nodeTagWithAvatar.strokes = [
+      {
+        type: 'SOLID',
+        color: {
+          r: 0,
+          g: 0,
+          b: 0,
+        },
+        opacity: 0.05,
+      }
     ]
     this.nodeTagWithAvatar.cornerRadius = 16
 
