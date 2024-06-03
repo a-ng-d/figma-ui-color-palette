@@ -1,3 +1,4 @@
+import { lang, locals } from '../content/locals'
 import Tag from './Tag'
 
 export default class Status {
@@ -28,7 +29,11 @@ export default class Status {
 
     if (this.status.isClosestToRef)
       this.node.appendChild(
-        new Tag('_close', 'Closest to source', 10).makeNodeTagwithIndicator([
+        new Tag({
+          name: '_close',
+          content: locals[lang].paletteProperties.closest,
+          fontSize: 10
+        }).makeNodeTagwithIndicator([
           this.source.r,
           this.source.g,
           this.source.b,

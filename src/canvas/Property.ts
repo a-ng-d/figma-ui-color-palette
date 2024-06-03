@@ -28,7 +28,11 @@ export default class Property {
 
     // Insert
     this.node.appendChild(
-      new Tag(this.name, this.content, this.size).makeNodeTag()
+      new Tag({
+        name: this.name,
+        content: this.content,
+        fontSize: this.size
+      }).makeNodeTag()
     )
 
     return this.node

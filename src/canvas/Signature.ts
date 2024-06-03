@@ -28,15 +28,18 @@ export default class Signature {
 
     // Insert
     this.nodeInfo.appendChild(
-      new Tag('_tagline', locals[lang].tagline, 10).makeNodeTag()
+      new Tag({
+        name: '_tagline',
+        content: locals[lang].tagline,
+        fontSize: 10
+      }).makeNodeTag()
     )
     this.nodeInfo.appendChild(
-      new Tag(
-        '_url',
-        locals[lang].url,
-        8,
-        'https://ui-color-palette.com'
-      ).makeNodeTag()
+      new Tag({
+        name: '_url',
+        content: locals[lang].url,
+        url: 'https://ui-color-palette.com',
+      }).makeNodeTag()
     )
 
     return this.nodeInfo

@@ -32,11 +32,11 @@ export default class Title {
 
     // Insert
     this.nodeGlobalInfo.appendChild(
-      new Tag(
-        '_name',
-        this.parent.name === '' ? locals[lang].name : this.parent.name,
-        20
-      ).makeNodeTag()
+      new Tag({
+        name: '_name',
+        content: this.parent.name === '' ? locals[lang].name : this.parent.name,
+        fontSize: 20
+      }).makeNodeTag()
     )
     if (
       this.parent.description !== '' ||
@@ -105,11 +105,11 @@ export default class Title {
       this.parent.creatorFullName !== ''
     )
       this.nodeProps.appendChild(
-        new Tag(
-          '_creator_id',
-          `${locals[lang].paletteProperties.provider}${this.parent.creatorFullName}`,
-          12
-        ).makeNodeTagWithAvatar(this.parent.creatorAvatarImg)
+        new Tag({
+          name: '_creator_id',
+          content: `${locals[lang].paletteProperties.provider}${this.parent.creatorFullName}`,
+          fontSize: 12
+        }).makeNodeTagWithAvatar(this.parent.creatorAvatarImg)
       )
 
     if (
@@ -117,38 +117,38 @@ export default class Title {
       'default theme'
     )
       this.nodeProps.appendChild(
-        new Tag(
-          '_theme',
-          `${locals[lang].paletteProperties.theme}${
+        new Tag({
+          name: '_theme',
+          content: `${locals[lang].paletteProperties.theme}${
             this.parent.themes.find((theme) => theme.isEnabled)?.name
           }`,
-          12
-        ).makeNodeTag()
+          fontSize: 12
+        }).makeNodeTag()
       )
     this.nodeProps.appendChild(
-      new Tag(
-        '_preset',
-        `${locals[lang].paletteProperties.preset}${this.parent.preset.name}`,
-        12
-      ).makeNodeTag()
+      new Tag({
+        name: '_preset',
+        content: `${locals[lang].paletteProperties.preset}${this.parent.preset.name}`,
+        fontSize: 12
+      }).makeNodeTag()
     )
     this.nodeProps.appendChild(
-      new Tag(
-        '_color-space',
-        `${locals[lang].paletteProperties.colorSpace}${this.parent.colorSpace}`,
-        12
-      ).makeNodeTag()
+      new Tag({
+        name: '_color-space',
+        content: `${locals[lang].paletteProperties.colorSpace}${this.parent.colorSpace}`,
+        fontSize: 12
+      }).makeNodeTag()
     )
     if (this.parent.visionSimulationMode !== 'NONE')
       this.nodeProps.appendChild(
-        new Tag(
-          '_vision-simulation',
-          `${locals[lang].paletteProperties.visionSimulation}${
+        new Tag({
+          name: '_vision-simulation',
+          content: `${locals[lang].paletteProperties.visionSimulation}${
             this.parent.visionSimulationMode.charAt(0) +
             this.parent.visionSimulationMode.toLocaleLowerCase().slice(1)
           }`,
-          12
-        ).makeNodeTag()
+          fontSize: 12
+        }).makeNodeTag()
       )
 
     return this.nodeProps

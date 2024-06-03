@@ -1,8 +1,15 @@
+import { RgbModel } from "../types/models"
+
 export default class Tag {
   name: string
   content: string
   fontSize: number
   url: string | null
+  backgroundColor: {
+    rgb: RgbModel,
+    alpha: number
+  }
+  isCompact: boolean
   nodeTag: FrameNode | null
   nodeTagWithAvatar: FrameNode | null
   nodeTagwithIndicator: FrameNode | null
@@ -11,15 +18,31 @@ export default class Tag {
   nodeAvatar: EllipseNode | null
 
   constructor(
-    name: string,
-    content: string,
-    fontSize = 8,
-    url: string | null = null
+    options: {
+      name: string,
+      content: string,
+      fontSize?: number,
+      backgroundColor?: {
+        rgb: RgbModel,
+        alpha: number
+      },
+      isCompact?: boolean,
+      url?: string | null,
+    }
   ) {
-    this.name = name
-    this.content = content
-    this.fontSize = fontSize
-    this.url = url
+    this.name = options.name
+    this.content = options.content
+    this.fontSize = options.fontSize ?? 8
+    this.url = options.url ?? null as string | null
+    this.backgroundColor = options.backgroundColor ?? {
+      rgb: {
+        r: 1,
+        g: 1,
+        b: 1,
+      },
+      alpha: 0.5,
+    }
+    this.isCompact = options.isCompact ?? false
     this.nodeTag = null
     this.nodeTagwithIndicator = null
     this.nodeTagWithAvatar = null
@@ -35,11 +58,11 @@ export default class Tag {
     this.nodeTag.fills = [
       {
         type: 'SOLID',
-        opacity: 0.5,
+        opacity: this.backgroundColor.alpha,
         color: {
-          r: 1,
-          g: 1,
-          b: 1,
+          r: this.backgroundColor?.rgb.r,
+          g: this.backgroundColor.rgb.g,
+          b: this.backgroundColor.rgb.b,
         },
       },
     ]
@@ -50,8 +73,9 @@ export default class Tag {
     this.nodeTag.layoutSizingHorizontal = 'HUG'
     this.nodeTag.layoutSizingVertical = 'HUG'
     this.nodeTag.counterAxisAlignItems = 'CENTER'
-    this.nodeTag.horizontalPadding = 8
-    this.nodeTag.verticalPadding = 4
+    this.nodeTag.paddingRight = this.isCompact ? 2 : 8
+    this.nodeTag.paddingLeft = 8
+    this.nodeTag.paddingTop = this.nodeTag.paddingBottom = this.isCompact ? 2 : 4
     this.nodeTag.itemSpacing = 4
 
     // Insert
@@ -67,11 +91,11 @@ export default class Tag {
     this.nodeTagwithIndicator.fills = [
       {
         type: 'SOLID',
-        opacity: 0.5,
+        opacity: this.backgroundColor.alpha,
         color: {
-          r: 1,
-          g: 1,
-          b: 1,
+          r: this.backgroundColor.rgb.r,
+          g: this.backgroundColor.rgb.g,
+          b: this.backgroundColor.rgb.b,
         },
       },
     ]
@@ -82,8 +106,9 @@ export default class Tag {
     this.nodeTagwithIndicator.layoutSizingHorizontal = 'HUG'
     this.nodeTagwithIndicator.layoutSizingVertical = 'HUG'
     this.nodeTagwithIndicator.counterAxisAlignItems = 'CENTER'
-    this.nodeTagwithIndicator.horizontalPadding = 8
-    this.nodeTagwithIndicator.verticalPadding = 4
+    this.nodeTagwithIndicator.paddingRight = this.isCompact ? 2 : 8
+    this.nodeTagwithIndicator.paddingLeft = 8
+    this.nodeTagwithIndicator.paddingTop = this.nodeTagwithIndicator.paddingBottom = this.isCompact ? 2 : 4
     this.nodeTagwithIndicator.itemSpacing = 4
 
     // Insert
@@ -102,11 +127,11 @@ export default class Tag {
     this.nodeTagWithAvatar.fills = [
       {
         type: 'SOLID',
-        opacity: 0.5,
+        opacity: this.backgroundColor.alpha,
         color: {
-          r: 1,
-          g: 1,
-          b: 1,
+          r: this.backgroundColor.rgb.r,
+          g: this.backgroundColor.rgb.g,
+          b: this.backgroundColor.rgb.b,
         },
       },
     ]
@@ -117,8 +142,8 @@ export default class Tag {
     this.nodeTagWithAvatar.layoutSizingHorizontal = 'HUG'
     this.nodeTagWithAvatar.layoutSizingVertical = 'HUG'
     this.nodeTagWithAvatar.counterAxisAlignItems = 'CENTER'
-    this.nodeTagWithAvatar.horizontalPadding = 8
-    this.nodeTagWithAvatar.verticalPadding = 4
+    this.nodeTagWithAvatar.horizontalPadding = this.isCompact ? 4 : 8
+    this.nodeTagWithAvatar.verticalPadding = this.isCompact ? 2 : 4
     this.nodeTagWithAvatar.itemSpacing = 8
 
     // Insert
