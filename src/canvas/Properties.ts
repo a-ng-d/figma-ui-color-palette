@@ -353,9 +353,6 @@ export default class Properties {
     nodeWcagLightProp.appendChild(nodeWcagLightScore)
     nodeWcagDarkProp.appendChild(nodeWcagDarkScore)
 
-    this.nodeContrastScoresProps.appendChild(nodeWcagLightProp)
-    this.nodeContrastScoresProps.appendChild(nodeWcagDarkProp)
-
     // APCA
     const apcaLightContrast = this.getAPCAContrast('LIGHT').toFixed(1),
     apcaLightRecommendation = this.getRecommendedUsage('LIGHT'),
@@ -406,7 +403,9 @@ export default class Properties {
     nodeApcaLightProp.appendChild(nodeApcaLightScore)
     nodeApcaDarkProp.appendChild(nodeApcaDarkScore)
 
+    this.nodeContrastScoresProps.appendChild(nodeWcagLightProp)
     this.nodeContrastScoresProps.appendChild(nodeApcaLightProp)
+    this.nodeContrastScoresProps.appendChild(nodeWcagDarkProp)
     this.nodeContrastScoresProps.appendChild(nodeApcaDarkProp)
 
     return this.nodeContrastScoresProps
