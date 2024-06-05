@@ -91,7 +91,7 @@ const exportJson = (palette: FrameNode) => {
     figma.ui.postMessage({
       type: 'EXPORT_PALETTE_JSON',
       context: 'TOKENS_GLOBAL',
-      data: json,
+      data: JSON.stringify(json, null, '  '),
     })
   } else figma.notify(locals[lang].error.corruption)
 }

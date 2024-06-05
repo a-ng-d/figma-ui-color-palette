@@ -431,7 +431,7 @@ class App extends React.Component<Record<string, never>, AppStates> {
               }`,
               colorSpace: 'RGB',
               mimeType: 'application/json',
-              data: JSON.stringify(e.data.pluginMessage.data, null, '  '),
+              data: e.data.pluginMessage.data,
             },
             onGoingStep: 'export previewed',
           })
@@ -480,9 +480,7 @@ class App extends React.Component<Record<string, never>, AppStates> {
               }`,
               colorSpace: 'HEX',
               mimeType: 'text/swift',
-              data: `import SwiftUI\n\npublic extension Color {\n  static let Token = Color.TokenColor()\n  struct TokenColor {\n    ${e.data.pluginMessage.data.join(
-                '\n    '
-              )}\n  }\n}`,
+              data: e.data.pluginMessage.data,
             },
             onGoingStep: 'export previewed',
           })
@@ -497,9 +495,7 @@ class App extends React.Component<Record<string, never>, AppStates> {
               }`,
               colorSpace: 'HEX',
               mimeType: 'text/swift',
-              data: `import UIKit\n\nstruct Color {\n  ${e.data.pluginMessage.data.join(
-                '\n\n  '
-              )}\n}`,
+              data: e.data.pluginMessage.data,
             },
             onGoingStep: 'export previewed',
           })
@@ -514,9 +510,7 @@ class App extends React.Component<Record<string, never>, AppStates> {
               }`,
               colorSpace: 'HEX',
               mimeType: 'text/x-kotlin',
-              data: `import androidx.compose.ui.graphics.Color\n\n${e.data.pluginMessage.data.join(
-                '\n'
-              )}`,
+              data: e.data.pluginMessage.data,
             },
             onGoingStep: 'export previewed',
           })
@@ -531,9 +525,7 @@ class App extends React.Component<Record<string, never>, AppStates> {
               }`,
               colorSpace: 'HEX',
               mimeType: 'text/xml',
-              data: `<?xml version="1.0" encoding="utf-8"?>\n<resources>\n  ${e.data.pluginMessage.data.join(
-                '\n  '
-              )}\n</resources>`,
+              data: e.data.pluginMessage.data,
             },
             onGoingStep: 'export previewed',
           })

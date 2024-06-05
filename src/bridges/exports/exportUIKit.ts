@@ -46,7 +46,10 @@ const exportUIKit = (palette: FrameNode) => {
     figma.ui.postMessage({
       type: 'EXPORT_PALETTE_UIKIT',
       context: 'APPLE_UIKIT',
-      data: swift,
+      data: `import UIKit\n\nstruct Color {\n  ${
+        swift.join(
+          '\n\n  '
+        )}\n}`,
     })
   } else figma.notify(locals[lang].error.corruption)
 }

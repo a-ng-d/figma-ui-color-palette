@@ -10,7 +10,7 @@ const exportKt = (palette: FrameNode) => {
         .length === 0
         ? paletteData.themes.filter((theme) => theme.type === 'default theme')
         : paletteData.themes.filter((theme) => theme.type === 'custom theme'),
-    val: Array<string> = []
+    kotlin: Array<string> = []
 
   if (palette.children.length === 1) {
     workingThemes.forEach((theme) => {
@@ -33,16 +33,19 @@ const exportKt = (palette: FrameNode) => {
           )
         })
         colors.unshift('')
-        colors.reverse().forEach((color) => val.push(color))
+        colors.reverse().forEach((color) => kotlin.push(color))
       })
     })
 
-    val.pop()
+    kotlin.pop()
 
     figma.ui.postMessage({
       type: 'EXPORT_PALETTE_KT',
       context: 'ANDROID_COMPOSE',
-      data: val,
+      data: `import androidx.compose.ui.graphics.Color\n\n${
+        kotlin.join(
+          '\n'
+        )}`,
     })
   } else figma.notify(locals[lang].error.corruption)
 }
