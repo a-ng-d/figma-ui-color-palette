@@ -500,6 +500,55 @@ export default class Properties {
     this.nodeDetailedWCAGScoresProps.itemSpacing = 4
 
     // Insert
+    const wcagLightContrast = this.getWcagContrast('LIGHT').toFixed(2),
+    wcagDarkContrast = this.getWcagContrast('DARK').toFixed(2),
+    wcagLightScore = this.getWcagScore('LIGHT'),
+    wcagDarkScore = this.getWcagScore('DARK')
+
+    const nodeWcagLightProp = new Tag({
+      name: '_wcag21-light',
+      content: wcagLightContrast,
+      isCompact: true
+    }).makeNodeTagwithIndicator(
+      chroma(
+        this.simulateColorBlind(
+          this.textColorsTheme.lightColor,
+          this.visionSimulationMode
+        )
+      ).gl()
+    ),
+    nodeWcagLightScore = new Tag({
+      name: '_wcag21-light-score',
+      content: wcagLightScore,
+      backgroundColor: {
+        rgb: this.getScoreColor(wcagLightScore),
+        alpha: 1
+      },
+    }).makeNodeTag(),
+    nodeWcagDarkProp = new Tag({
+      name: '_wcag21-dark',
+      content: wcagDarkContrast,
+      isCompact: true
+    }).makeNodeTagwithIndicator(
+      chroma(
+        this.simulateColorBlind(
+          this.textColorsTheme.darkColor,
+          this.visionSimulationMode
+        )
+      ).gl()
+    ),
+    nodeWcagDarkScore = new Tag({
+      name: '_wcag21-dark-score',
+      content: wcagDarkScore,
+      backgroundColor: {
+        rgb: this.getScoreColor(wcagDarkScore),
+        alpha: 1
+      },
+    }).makeNodeTag()
+
+    nodeWcagLightProp.appendChild(nodeWcagLightScore)
+    nodeWcagDarkProp.appendChild(nodeWcagDarkScore)
+
     this.nodeDetailedWCAGScoresProps.appendChild(
       new Tag({
         name: '_title',
@@ -507,18 +556,8 @@ export default class Properties {
         fontSize: 10
       }).makeNodeTag()
     )
-    this.nodeDetailedWCAGScoresProps.appendChild(
-      new Tag({
-        name: '_wcag21-light',
-        content: `${this.getWcagContrast('LIGHT').toFixed(2)} • ${this.getWcagScore('LIGHT')}`
-      }).makeNodeTagwithIndicator(chroma(this.textColorsTheme.lightColor).gl())
-    )
-    this.nodeDetailedWCAGScoresProps.appendChild(
-      new Tag({
-        name: '_wcag21-dark',
-        content: `${this.getWcagContrast('DARK').toFixed(2)} • ${this.getWcagScore('DARK')}`
-      }).makeNodeTagwithIndicator(chroma(this.textColorsTheme.darkColor).gl())
-    )
+    this.nodeDetailedWCAGScoresProps.appendChild(nodeWcagLightProp)
+    this.nodeDetailedWCAGScoresProps.appendChild(nodeWcagDarkProp)
 
     return this.nodeDetailedWCAGScoresProps
   }
@@ -540,6 +579,55 @@ export default class Properties {
     this.nodeDetailedAPCAScoresProps.itemSpacing = 4
 
     // Insert
+    const apcaLightContrast = this.getAPCAContrast('LIGHT').toFixed(1),
+    apcaLightRecommendation = this.getRecommendedUsage('LIGHT'),
+    apcaDarkContrast = this.getAPCAContrast('DARK').toFixed(1),
+    apcaDarkRecommendation = this.getRecommendedUsage('DARK')
+
+    const nodeApcaLightProp = new Tag({
+      name: '_apca-light',
+      content: `Lc ${apcaLightContrast}`,
+      isCompact: true
+    }).makeNodeTagwithIndicator(
+      chroma(
+        this.simulateColorBlind(
+          this.textColorsTheme.lightColor,
+          this.visionSimulationMode
+        )
+      ).gl()
+    ),
+    nodeApcaLightScore = new Tag({
+      name: '_apca-light-score',
+      content: apcaLightRecommendation,
+      backgroundColor: {
+        rgb: this.getScoreColor(apcaLightRecommendation),
+        alpha: 1
+      },
+    }).makeNodeTag(),
+    nodeApcaDarkProp = new Tag({
+      name: '_apca-dark',
+      content: `Lc ${apcaDarkContrast}`,
+      isCompact: true
+    }).makeNodeTagwithIndicator(
+      chroma(
+        this.simulateColorBlind(
+          this.textColorsTheme.darkColor,
+          this.visionSimulationMode
+        )
+      ).gl()
+    ),
+    nodeApcaDarkScore = new Tag({
+      name: '_apca-dark-score',
+      content: apcaDarkRecommendation,
+      backgroundColor: {
+        rgb: this.getScoreColor(apcaDarkRecommendation),
+        alpha: 1
+      },
+    }).makeNodeTag()
+
+    nodeApcaLightProp.appendChild(nodeApcaLightScore)
+    nodeApcaDarkProp.appendChild(nodeApcaDarkScore)
+    
     this.nodeDetailedAPCAScoresProps.appendChild(
       new Tag({
         name: '_title',
@@ -550,75 +638,65 @@ export default class Properties {
     this.nodeDetailedAPCAScoresProps.appendChild(
       this.makeNodeColumns(
         [
-          new Tag({
-            name: '_apca-light',
-            content: `Lc ${this.getAPCAContrast('LIGHT').toFixed(1)}`
-          }).makeNodeTagwithIndicator(
-            chroma(this.textColorsTheme.lightColor).gl()
-          ),
+          nodeApcaLightProp,
           new Tag({
             name: '_minimum-font-sizes',
             content: locals[lang].paletteProperties.fontSize
           }).makeNodeTag(),
           new Tag({
             name: '_200-light',
-            content: `${minimumLightFontSize[2]}pt (200)`
+            content: `${minimumLightFontSize[2]}pt (Extra-Light 200)`
           }).makeNodeTag(),
           new Tag({
             name: '_300-light',
-            content: `${minimumLightFontSize[3]}pt (300)`
+            content: `${minimumLightFontSize[3]}pt (Light 300)`
           }).makeNodeTag(),
           new Tag({
             name: '_400-light',
-            content: `${minimumLightFontSize[4]}pt (400)`
+            content: `${minimumLightFontSize[4]}pt (Regular 400)`
           }).makeNodeTag(),
           new Tag({
             name: '_500-light',
-            content: `${minimumLightFontSize[5]}pt (500)`
+            content: `${minimumLightFontSize[5]}pt (Medium 500)`
           }).makeNodeTag(),
           new Tag({
             name: '_500-light',
-            content: `${minimumLightFontSize[6]}pt (600)`
+            content: `${minimumLightFontSize[6]}pt (Semi-Bold 600)`
           }).makeNodeTag(),
           new Tag({
             name: '_700-light',
-            content: `${minimumLightFontSize[7]}pt (700)`
+            content: `${minimumLightFontSize[7]}pt (Bold 700)`
           }).makeNodeTag(),
         ],
         [
-          new Tag({
-            name: '_apca-dark',
-            content: `Lc ${this.getAPCAContrast('DARK').toFixed(1)}`
-          }).makeNodeTagwithIndicator(
-            chroma(this.textColorsTheme.darkColor).gl()
-          ),
+          nodeApcaDarkProp,
           new Tag({
             name: '_minimum-font-sizes',
             content: locals[lang].paletteProperties.fontSize
           }).makeNodeTag(),
           new Tag({
             name: '_200-dark',
-            content: `${minimumDarkFontSize[2]}pt (200)`
+            content: `${minimumDarkFontSize[2]}pt (Extra-Light 200)`
           }).makeNodeTag(),
           new Tag({
             name: '_300-dark',
-            content: `${minimumDarkFontSize[3]}pt (300)`
+            content: `${minimumDarkFontSize[3]}pt (Light 300)`
           }).makeNodeTag(),
           new Tag({
             name: '_400-dark',
-            content: `${minimumDarkFontSize[4]}pt (400)`
+            content: `${minimumDarkFontSize[4]}pt (Regular 400)`
           }).makeNodeTag(),
           new Tag({
             name: '_500-dark',
-            content: `${minimumDarkFontSize[5]}pt (500)`
+            content: `${minimumDarkFontSize[5]}pt (Medium 500)`
           }).makeNodeTag(),
           new Tag({
             name: '_600-dark',
-            content: `${minimumDarkFontSize[6]}pt (600)`
+            content: `${minimumDarkFontSize[6]}pt (Semi-Bold 600)`
           }).makeNodeTag(),
           new Tag({
             name: '_700-dark',
-            content: `${minimumDarkFontSize[7]}pt (700)`
+            content: `${minimumDarkFontSize[7]}pt (Bold 700)`
           }).makeNodeTag(),
         ]
       )
