@@ -446,7 +446,7 @@ class App extends React.Component<Record<string, never>, AppStates> {
                 locals[this.state['lang']].export.css.customProperties
               }`,
               mimeType: 'text/css',
-              data: `:root {\n  ${e.data.pluginMessage.data.join('\n  ')}\n}`,
+              data: e.data.pluginMessage.data,
             },
             onGoingStep: 'export previewed',
           })

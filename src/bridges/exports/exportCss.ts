@@ -39,34 +39,33 @@ const exportCss = (palette: FrameNode, colorSpace: 'RGB' | 'LCH' | 'P3') => {
 
   if (palette.children.length === 1) {
     workingThemes.forEach((theme) => {
+      const rowCss: Array<string> = []
       theme.colors.forEach((color) => {
-        const rowCss: Array<string> = []
-        rowCss.unshift(
-          `/* ${
-            workingThemes[0].type === 'custom theme' ? theme.name + ' - ' : ''
-          }${color.name} */`
+        rowCss.push(
+          `/* ${color.name} */`
         )
         color.shades.forEach((shade) => {
-          rowCss.unshift(
+          rowCss.push(
             `--${
-              workingThemes[0].type === 'custom theme'
-                ? doKebabCase(theme.name + ' ' + color.name)
-                : doKebabCase(color.name)
+              doKebabCase(color.name)
             }-${shade.name}: ${setValueAccordingToColorSpace(shade)};`
           )
         })
-        rowCss.unshift('')
-        rowCss.reverse().forEach((sampleCss) => css.push(sampleCss))
+        rowCss.push('')
       })
+      rowCss.pop()
+      css.push(`:root${
+        theme.type === 'custom theme'
+          ? `[data-theme='${doKebabCase(theme.name)}']`
+          : ''
+        } {\n  ${rowCss.join('\n  ')}\n}`)
     })
-
-    css.pop()
 
     figma.ui.postMessage({
       type: 'EXPORT_PALETTE_CSS',
       context: 'CSS',
       colorSpace: colorSpace,
-      data: css,
+      data: css.join('\n\n'),
     })
   } else figma.notify(locals[lang].error.corruption)
 }
