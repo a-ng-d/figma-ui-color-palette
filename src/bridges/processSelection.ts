@@ -135,7 +135,8 @@ const processSelection = () => {
     if (
       element.type !== 'CONNECTOR' &&
       element.type !== 'GROUP' &&
-      element.type !== 'EMBED'
+      element.type !== 'EMBED' &&
+      element.type !== 'SLICE'
     )
       if (
         ((element as FrameNode).fills as readonly Paint[]).filter(
