@@ -8,6 +8,7 @@ import {
   ColorSpaceConfiguration,
   NamingConventionConfiguration,
   PresetConfiguration,
+  ScaleConfiguration,
   SourceColorConfiguration,
   ViewConfiguration,
   VisionSimulationModeConfiguration,
@@ -30,6 +31,7 @@ interface CreatePaletteProps {
   description: string
   preset: PresetConfiguration
   namingConvention: NamingConventionConfiguration
+  scale: ScaleConfiguration
   colorSpace: ColorSpaceConfiguration
   visionSimulationMode: VisionSimulationModeConfiguration
   view: ViewConfiguration
@@ -38,6 +40,7 @@ interface CreatePaletteProps {
   userSession: UserSession
   lang: Language
   onChangeColorsFromImport: React.Dispatch<Partial<AppStates>>
+  onChangeScale: React.Dispatch<Partial<AppStates>>
   onChangePreset: React.Dispatch<Partial<AppStates>>
   onCustomPreset: React.Dispatch<Partial<AppStates>>
   onChangeSettings: React.Dispatch<Partial<AppStates>>
@@ -81,6 +84,12 @@ export default class CreatePalette extends React.Component<
         .concat(sourceColorsFromImport),
     })
   }
+
+  slideHandler = () =>
+    this.props.onChangeScale({
+      scale: palette.scale,
+      onGoingStep: 'scale changed',
+    })
 
   // Direct actions
   onCreatePalette = () =>
@@ -163,7 +172,10 @@ export default class CreatePalette extends React.Component<
           <Scale
             hasPreset={true}
             {...this.props}
-            onChangeScale={() => null}
+            onAddStop={this.props.onCustomPreset}
+            onRemoveStop={this.props.onCustomPreset}
+            onChangeNamingConvention={this.props.onCustomPreset}
+            onChangeScale={this.slideHandler}
             onCreatePalette={this.onCreatePalette}
           />
         )

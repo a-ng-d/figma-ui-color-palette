@@ -254,6 +254,7 @@ class App extends React.Component<Record<string, never>, AppStates> {
               presets.find((preset) => preset.id === 'MATERIAL') ??
               defaultPreset,
             namingConvention: 'ONES',
+            scale: {},
             colorSpace: 'LCH',
             visionSimulationMode: 'NONE',
             view: 'PALETTE_WITH_PROPERTIES',
@@ -307,6 +308,7 @@ class App extends React.Component<Record<string, never>, AppStates> {
                 presets.find((preset) => preset.id === 'MATERIAL') ??
                 defaultPreset,
               namingConvention: 'ONES',
+              scale: {},
               colorSpace: 'LCH',
               visionSimulationMode: 'NONE',
               view: 'PALETTE_WITH_PROPERTIES',
@@ -629,6 +631,7 @@ class App extends React.Component<Record<string, never>, AppStates> {
               onChangeColorsFromImport={(e) =>
                 this.setState({ ...this.state, ...e })
               }
+              onChangeScale={(e) => this.setState({ ...this.state, ...e })}
               onChangePreset={(e) => this.setState({ ...this.state, ...e })}
               onCustomPreset={(e) => this.setState({ ...this.state, ...e })}
               onChangeSettings={(e) => this.setState({ ...this.state, ...e })}

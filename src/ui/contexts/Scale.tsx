@@ -92,27 +92,31 @@ export default class Scale extends React.Component<ScaleProps, ScaleStates> {
       this.dispatch.scale.on.status = false
       this.scaleMessage.data = palette
       this.scaleMessage.isEditedInRealTime = false
-      parent.postMessage({ pluginMessage: this.scaleMessage }, '*')
       this.props.onChangeScale()
+      if (!this.props.hasPreset)
+        parent.postMessage({ pluginMessage: this.scaleMessage }, '*')
     }
 
     const onChangeStop = () => {
       this.scaleMessage.data = palette
       this.scaleMessage.isEditedInRealTime = false
       this.scaleMessage.feature = feature
-      parent.postMessage({ pluginMessage: this.scaleMessage }, '*')
       this.props.onChangeStop?.()
+      if (!this.props.hasPreset)
+        parent.postMessage({ pluginMessage: this.scaleMessage }, '*')
     }
 
     const onTypeStopValue = () => {
       this.scaleMessage.data = palette
       this.scaleMessage.isEditedInRealTime = false
-      parent.postMessage({ pluginMessage: this.scaleMessage }, '*')
       this.props.onChangeStop?.()
+      if (!this.props.hasPreset)
+        parent.postMessage({ pluginMessage: this.scaleMessage }, '*')
     }
 
     const onUpdatingStop = () => {
-      this.dispatch.scale.on.status = true
+      if (!this.props.hasPreset)
+        this.dispatch.scale.on.status = true
     }
 
     const actions: ActionsList = {
@@ -122,25 +126,28 @@ export default class Scale extends React.Component<ScaleProps, ScaleStates> {
       UPDATING: () => onUpdatingStop(),
     }
 
-    if (!this.props.hasPreset) return actions[state]?.()
+    return actions[state]?.()
   }
 
   presetsHandler = (e: React.SyntheticEvent) => {
     const setMaterialDesignPreset = () =>
       this.props.onChangePreset?.({
         preset: presets.find((preset) => preset.id === 'MATERIAL'),
+        scale: {},
         onGoingStep: 'preset changed',
       })
 
     const setMaterial3Preset = () =>
       this.props.onChangePreset?.({
         preset: presets.find((preset) => preset.id === 'MATERIAL_3'),
+        scale: {},
         onGoingStep: 'preset changed',
       })
 
     const setTailwindPreset = () => {
       this.props.onChangePreset?.({
         preset: presets.find((preset) => preset.id === 'TAILWIND'),
+        scale: {},
         onGoingStep: 'preset changed',
       })
     }
@@ -148,36 +155,42 @@ export default class Scale extends React.Component<ScaleProps, ScaleStates> {
     const setAntDesignPreset = () =>
       this.props.onChangePreset?.({
         preset: presets.find((preset) => preset.id === 'ANT'),
+        scale: {},
         onGoingStep: 'preset changed',
       })
 
     const setAdsPreset = () =>
       this.props.onChangePreset?.({
         preset: presets.find((preset) => preset.id === 'ADS'),
+        scale: {},
         onGoingStep: 'preset changed',
       })
 
     const setAdsNeutralPreset = () =>
       this.props.onChangePreset?.({
         preset: presets.find((preset) => preset.id === 'ADS_NEUTRAL'),
+        scale: {},
         onGoingStep: 'preset changed',
       })
 
     const setCarbonPreset = () =>
       this.props.onChangePreset?.({
         preset: presets.find((preset) => preset.id === 'CARBON'),
+        scale: {},
         onGoingStep: 'preset changed',
       })
 
     const setBasePreset = () =>
       this.props.onChangePreset?.({
         preset: presets.find((preset) => preset.id === 'BASE'),
+        scale: {},
         onGoingStep: 'preset changed',
       })
 
     const setCustomPreset = () => {
       this.props.onChangePreset?.({
         preset: presets.find((preset) => preset.id === 'CUSTOM'),
+        scale: {},
         onGoingStep: 'preset changed',
       })
     }
@@ -213,6 +226,7 @@ export default class Scale extends React.Component<ScaleProps, ScaleStates> {
             isDistributed: true,
             id: 'CUSTOM',
           },
+          scale: {},
         })
       }
     }
@@ -229,6 +243,7 @@ export default class Scale extends React.Component<ScaleProps, ScaleStates> {
             isDistributed: true,
             id: 'CUSTOM',
           },
+          scale: {},
         })
       }
     }
@@ -250,6 +265,7 @@ export default class Scale extends React.Component<ScaleProps, ScaleStates> {
           isDistributed: true,
           id: 'CUSTOM',
         },
+        scale: {},
       })
     }
 
@@ -506,7 +522,6 @@ export default class Scale extends React.Component<ScaleProps, ScaleStates> {
   }
 
   Create = () => {
-    palette.scale = {}
     return (
       <div className="controls__control">
         <div className="control__block control__block--distributed">
@@ -597,7 +612,8 @@ export default class Scale extends React.Component<ScaleProps, ScaleStates> {
                 ?.isActive
             }
           >
-            {this.props.preset.isDistributed ? (
+            {this.props.preset.isDistributed
+            && Object.keys(this.props.scale ?? {}).length === 0 ? (
               <Slider
                 type="EQUAL"
                 hasPreset={this.props.hasPreset}
@@ -614,12 +630,16 @@ export default class Scale extends React.Component<ScaleProps, ScaleStates> {
                 hasPreset={this.props.hasPreset}
                 presetName={this.props.preset.name}
                 stops={this.props.preset.scale}
-                scale={doLightnessScale(
-                  this.props.preset.scale,
-                  this.props.preset.min,
-                  this.props.preset.max,
-                  false
-                )}
+                scale={
+                  Object.keys(this.props.scale ?? {}).length === 0
+                    ? doLightnessScale(
+                      this.props.preset.scale,
+                      this.props.preset.min,
+                      this.props.preset.max,
+                      false
+                    )
+                    : this.props.scale
+                }
                 distributionEasing={this.state['distributionEasing']}
                 onChange={this.slideHandler}
               />

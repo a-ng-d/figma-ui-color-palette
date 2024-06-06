@@ -356,7 +356,7 @@ export default class Slider extends React.Component<SliderProps> {
                   ? '100'
                   : (original[index - 1][1] - safeGap).toString()
               }
-              canBeTyped={true}
+              canBeTyped={!this.props.hasPreset}
               onShiftRight={(e) => {
                 this.onShiftRight(e.target as HTMLElement, e.metaKey, e.ctrlKey)
               }}
