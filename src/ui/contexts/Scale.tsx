@@ -115,8 +115,7 @@ export default class Scale extends React.Component<ScaleProps, ScaleStates> {
     }
 
     const onUpdatingStop = () => {
-      if (!this.props.hasPreset)
-        this.dispatch.scale.on.status = true
+      if (!this.props.hasPreset) this.dispatch.scale.on.status = true
     }
 
     const actions: ActionsList = {
@@ -612,8 +611,8 @@ export default class Scale extends React.Component<ScaleProps, ScaleStates> {
                 ?.isActive
             }
           >
-            {this.props.preset.isDistributed
-            && Object.keys(this.props.scale ?? {}).length === 0 ? (
+            {this.props.preset.isDistributed &&
+            Object.keys(this.props.scale ?? {}).length === 0 ? (
               <Slider
                 type="EQUAL"
                 hasPreset={this.props.hasPreset}
@@ -633,11 +632,11 @@ export default class Scale extends React.Component<ScaleProps, ScaleStates> {
                 scale={
                   Object.keys(this.props.scale ?? {}).length === 0
                     ? doLightnessScale(
-                      this.props.preset.scale,
-                      this.props.preset.min,
-                      this.props.preset.max,
-                      false
-                    )
+                        this.props.preset.scale,
+                        this.props.preset.min,
+                        this.props.preset.max,
+                        false
+                      )
                     : this.props.scale
                 }
                 distributionEasing={this.state['distributionEasing']}
