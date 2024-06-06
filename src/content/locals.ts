@@ -40,6 +40,27 @@ export const locals: { [key: string]: any } = {
       news: "What's new",
       about: 'About',
     },
+    publication: {
+      titlePublish: 'Publish palette',
+      titleSynchronize: 'Synchronize palette',
+      titleSignIn: 'Publish or Synchronize palette',
+      message:
+        'Publish your palette as a single source of truth and reuse it in other Figma documents. You can also distribute your palettes by sharing them with the community.',
+      selectToShare: 'Share with community',
+      statusLocalChanges: 'Local changes',
+      statusUptoDate: 'No change',
+      statusUnpublished: 'Unpublished',
+      statusRemoteChanges: 'Remote changes',
+      statusWaiting: 'Waiting…',
+      statusNotFound: 'Not found',
+      publish: 'Publish…',
+      unpublish: 'Unpublish',
+      synchronize: 'Synchronize',
+      revert: 'Revert',
+      detach: 'Detach',
+      waiting: 'Waiting…',
+      signIn: 'Sign in to publish',
+    },
     relaunch: {
       create: {
         label: 'Create a UI Color Palette',
@@ -52,6 +73,7 @@ export const locals: { [key: string]: any } = {
     },
     contexts: {
       source: 'Source',
+      palettes: 'Palettes',
       scale: 'Scale',
       colors: 'Colors',
       themes: 'Themes',
@@ -59,8 +81,34 @@ export const locals: { [key: string]: any } = {
       settings: 'Settings',
       about: 'About',
     },
+    palettes: {
+      contexts: {
+        self: 'My palettes',
+        community: 'From community',
+        explore: 'Explore',
+        search: 'Search palettes',
+      },
+      signInFirst: {
+        message: 'Find and reuse your published palettes once authentified',
+        signIn: 'Sign in to fetch your palettes',
+      },
+      lazyLoad: {
+        search: 'Search palettes',
+        loadMore: 'Load more palettes',
+        completeList: 'The palettes list is complete',
+        emptyList: 'No palette has been found',
+      },
+      devMode: {
+        title: 'UI Color Palettes on the page',
+        readyForDev: 'Ready for development',
+      },
+    },
     source: {
       title: 'Source colors',
+      contexts: {
+        overview: 'Overview',
+        explore: 'Explore',
+      },
       canvas: {
         title: 'Selected colors',
         tip: 'Select a frame or a shape (filled with color) on the Figma/FigJam canvas, then create a UI Color Palette.',
@@ -89,6 +137,11 @@ export const locals: { [key: string]: any } = {
           errorMessage:
             'The URL must include several hexadecimal codes (e.g. 8ecae6-…-219ebc)',
         },
+      },
+      colourLovers: {
+        title: 'Colour Lovers',
+        helper:
+          'Colour Lovers is a tool for creating and exploring beautiful color schemes',
       },
     },
     scale: {
@@ -271,16 +324,16 @@ export const locals: { [key: string]: any } = {
     },
     actions: {
       createPalette: 'Create a UI Color Palette',
-      sync: 'Sync',
+      run: 'Run',
       createLocalStyles: 'Sync with the local styles',
       createLocalVariables: 'Sync with the local variables',
-      updateLocalStyles: 'Update the existing local styles',
-      updateLocalVariables: 'Update the existing local variables',
+      publishOrSyncPalette: 'Publish or Synchronize palette',
+      publishPalette: 'Publish palette',
+      syncPalette: 'Synchronize palette',
       export: 'Export the UI Color Palette to',
-      managePalette: {
-        localStyles: 'Manage local styles',
-        localVariables: 'Manage local variables',
-      },
+      addToFile: 'Add to file',
+      addToSource: 'Add to source',
+      duplicate: 'Duplicate',
       sourceColorsNumber: {
         single: 'source color',
         several: 'source colors',
@@ -289,9 +342,6 @@ export const locals: { [key: string]: any } = {
         single: 'color theme',
         several: 'color themes',
       },
-    },
-    palettesList: {
-      title: 'UI Color Palettes on the page',
     },
     highlight: {
       cta: {
@@ -326,11 +376,37 @@ export const locals: { [key: string]: any } = {
         option: 'Purchase',
       },
     },
-    properties: {
+    user: {
+      signIn: 'Sign in',
+      signOut: 'Sign out',
+      welcomeMessage: 'Hello $[]',
+    },
+    paletteProperties: {
+      sourceColors: 'Source colors',
+      closest: 'Closest to source',
       base: 'Base',
       wcag: 'WCAG scores',
       apca: 'APCA scores',
       fontSize: 'Minimum font sizes',
+      unknown: 'Unknown',
+      avoid: 'Avoid',
+      nonText: 'Non text',
+      spotText: 'Spot text',
+      headlines: 'Headlines',
+      bodyText: 'Body text',
+      contentText: 'Content text',
+      fluentText: 'Fluent text',
+      provider: 'Provider: ',
+      theme: 'Theme: ',
+      preset: 'Preset: ',
+      colorSpace: 'Color space: ',
+      visionSimulation: 'Vision simulation: ',
+    },
+    success: {
+      publication: '✓ The palette has been published',
+      nonPublication: '✓ The palette has been unpublished',
+      synchronization: '✓ The palette has been synchronized',
+      detachment: '✓ The palette has been detached',
     },
     info: {
       createdLocalStyle: 'local color style created',
@@ -341,6 +417,7 @@ export const locals: { [key: string]: any } = {
       localVariables: 'local color variables',
       variableMode: 'variable mode',
       variableModes: 'variable modes',
+      signOut: '☻ See you later',
     },
     warning: {
       tooManyThemesToCreateModes:
@@ -354,12 +431,23 @@ export const locals: { [key: string]: any } = {
       paletteNameRecommendation: '64 characters max is recommended',
       noPaletteOnCurrrentPage:
         'There is no UI Color Palette on the current page. You can ask a member with editing permissions to create.',
+      noPaletteOnRemote: 'No palette has been found',
     },
     error: {
       corruption:
-        'Your UI Color Palette seems corrupted. Do not edit any layer within it.',
-      palettesPicking: 'UI Color Palettes cannot be picked for now',
-      generic: 'Something went wrong',
+        '✕ Your UI Color Palette seems corrupted. Do not edit any layer within it.',
+      palettesPicking: '✕ UI Color Palettes cannot be picked for now',
+      generic: '✕ Something went wrong',
+      badResponse: '✕ The response is not valid',
+      authentication: '✕ The authentication has failed',
+      timeout: '✕ The authentication has been timed out',
+      publication: '✕ The palette cannot be published',
+      nonPublication: '✕ The palette cannot be unpublished',
+      synchronization: '✕ The palette has not been synchronized',
+      fetchPalette: 'The palettes cannot be loaded',
+      addToFile: '✕ The palette cannot be added',
+      noInternetConnection:
+        '✕ The connection with the remote palette is unlinked',
     },
   },
 }

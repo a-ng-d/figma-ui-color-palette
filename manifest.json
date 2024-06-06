@@ -23,10 +23,13 @@
   "networkAccess": {
     "allowedDomains": [
       "https://figma.com",
+      "https://*.figma.com",
       "https://rsms.me",
       "https://tally.so",
-      "https://corsproxy.io"
-      
+      "https://corsproxy.io",
+      "https://zclweepgvqkrelyfwhma.supabase.co",
+      "https://hook.eu1.make.com",
+      "https://www.colourlovers.com"
     ]
   },
   "parameters": [

@@ -1,57 +1,67 @@
-import * as React from 'react'
-import type {
-  visionSimulationModeConfiguration,
-  Language,
-  PresetConfiguration,
-  SourceColorConfiguration,
-  TextColorsThemeHexModel,
-  ThirdParty,
-  PlanStatus,
-  NamingConvention,
-} from '../../utils/types'
-import { Bar } from '@a-ng-d/figmug.layouts.bar'
-import { Tabs } from '@a-ng-d/figmug.actions.tabs'
-import Scale from '../modules/Scale'
-import Settings from '../modules/Settings'
-import { palette } from '../../utils/palettePackage'
-import features from '../../utils/config'
-import { locals } from '../../content/locals'
-import doLightnessScale from '../../utils/doLightnessScale'
-import Source from '../modules/Source'
+import { Bar, HexModel, Tabs } from '@a_ng_d/figmug-ui'
+import chroma from 'chroma-js'
+import React from 'react'
+import { uid } from 'uid'
 
-interface Props {
+import { Language, PlanStatus } from '../../types/app'
+import {
+  ColorSpaceConfiguration,
+  NamingConventionConfiguration,
+  PresetConfiguration,
+  ScaleConfiguration,
+  SourceColorConfiguration,
+  ViewConfiguration,
+  VisionSimulationModeConfiguration,
+} from '../../types/configurations'
+import { ContextItem, ThirdParty } from '../../types/management'
+import { TextColorsThemeHexModel } from '../../types/models'
+import { UserSession } from '../../types/user'
+import doLightnessScale from '../../utils/doLightnessScale'
+import { palette } from '../../utils/palettePackage'
+import { setContexts } from '../../utils/setContexts'
+import type { AppStates } from '../App'
+import Palettes from '../contexts/Palettes'
+import Scale from '../contexts/Scale'
+import Settings from '../contexts/Settings'
+import Source from '../contexts/Source'
+
+interface CreatePaletteProps {
   sourceColors: Array<SourceColorConfiguration> | []
   name: string
   description: string
   preset: PresetConfiguration
-  namingConvention: NamingConvention
-  colorSpace: string
-  visionSimulationMode: visionSimulationModeConfiguration
-  view: string
+  namingConvention: NamingConventionConfiguration
+  scale: ScaleConfiguration
+  colorSpace: ColorSpaceConfiguration
+  visionSimulationMode: VisionSimulationModeConfiguration
+  view: ViewConfiguration
   textColorsTheme: TextColorsThemeHexModel
   planStatus: PlanStatus
+  userSession: UserSession
   lang: Language
-  onChangeColorsFromImport: (
-    sourceColorsFromImport: Array<SourceColorConfiguration>,
-    source: ThirdParty
-  ) => void
-  onChangePreset: (
-    e: React.MouseEvent<HTMLLIElement, MouseEvent> | React.KeyboardEvent
-  ) => void
-  onCustomPreset: (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => void
-  onChangeSettings: (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => void
+  onChangeColorsFromImport: React.Dispatch<Partial<AppStates>>
+  onChangeScale: React.Dispatch<Partial<AppStates>>
+  onChangePreset: React.Dispatch<Partial<AppStates>>
+  onCustomPreset: React.Dispatch<Partial<AppStates>>
+  onChangeSettings: React.Dispatch<Partial<AppStates>>
+  onConfigureExternalSourceColors: React.Dispatch<Partial<AppStates>>
 }
 
-interface States {
+interface CreatePaletteStates {
   context: string | undefined
 }
 
-export default class CreatePalette extends React.Component<Props, States> {
-  constructor(props: Props) {
+export default class CreatePalette extends React.Component<
+  CreatePaletteProps,
+  CreatePaletteStates
+> {
+  contexts: Array<ContextItem>
+
+  constructor(props: CreatePaletteProps) {
     super(props)
+    this.contexts = setContexts(['PALETTES', 'SOURCE', 'SCALE', 'SETTINGS'])
     this.state = {
-      context:
-        this.setContexts()[0] != undefined ? this.setContexts()[0].id : '',
+      context: this.contexts[0] !== undefined ? this.contexts[1].id : '',
     }
   }
 
@@ -59,6 +69,26 @@ export default class CreatePalette extends React.Component<Props, States> {
   navHandler = (e: React.SyntheticEvent) =>
     this.setState({
       context: (e.target as HTMLElement).dataset.feature,
+    })
+
+  colorsFromImportHandler = (
+    sourceColorsFromImport: Array<SourceColorConfiguration>,
+    source: ThirdParty
+  ) => {
+    this.props.onChangeColorsFromImport({
+      sourceColors: this.props.sourceColors
+        .filter(
+          (sourceColors: SourceColorConfiguration) =>
+            sourceColors.source !== source
+        )
+        .concat(sourceColorsFromImport),
+    })
+  }
+
+  slideHandler = () =>
+    this.props.onChangeScale({
+      scale: palette.scale,
+      onGoingStep: 'scale changed',
     })
 
   // Direct actions
@@ -69,42 +99,38 @@ export default class CreatePalette extends React.Component<Props, States> {
           type: 'CREATE_PALETTE',
           data: {
             sourceColors: this.props.sourceColors,
-            palette: palette,
+            palette: {
+              ...palette,
+              algoritmVersion: 'v2',
+            },
           },
         },
       },
       '*'
     )
 
-  setContexts = () => {
-    const contexts: Array<{
-      label: string
-      id: string
-      isUpdated: boolean
-    }> = []
-    if (features.find((feature) => feature.name === 'SOURCE')?.isActive)
-      contexts.push({
-        label: locals[this.props.lang].contexts.source,
-        id: 'SOURCE',
-        isUpdated:
-          features.find((feature) => feature.name === 'SOURCE')?.isNew ?? false,
-      })
-    if (features.find((feature) => feature.name === 'SCALE')?.isActive)
-      contexts.push({
-        label: locals[this.props.lang].contexts.scale,
-        id: 'SCALE',
-        isUpdated:
-          features.find((feature) => feature.name === 'SCALE')?.isNew ?? false,
-      })
-    if (features.find((feature) => feature.name === 'SETTINGS')?.isActive)
-      contexts.push({
-        label: locals[this.props.lang].contexts.settings,
-        id: 'SETTINGS',
-        isUpdated:
-          features.find((feature) => feature.name === 'SETTINGS')?.isNew ??
-          false,
-      })
-    return contexts
+  onConfigureExternalSourceColors = (name: string, colors: Array<HexModel>) => {
+    palette.name = name
+    this.setState({
+      context: 'SOURCE',
+    })
+    this.props.onConfigureExternalSourceColors({
+      name: name,
+      sourceColors: colors.map((color, index) => {
+        const gl = chroma(color).gl()
+        return {
+          name: `Color ${index + 1}`,
+          rgb: {
+            r: gl[0],
+            g: gl[1],
+            b: gl[2],
+          },
+          source: 'REMOTE',
+          id: uid(),
+          isRemovable: false,
+        }
+      }),
+    })
   }
 
   // Renders
@@ -120,13 +146,22 @@ export default class CreatePalette extends React.Component<Props, States> {
     let controls
 
     switch (this.state['context']) {
+      case 'PALETTES': {
+        controls = (
+          <Palettes
+            {...this.props}
+            onConfigureExternalSourceColors={
+              this.onConfigureExternalSourceColors
+            }
+          />
+        )
+        break
+      }
       case 'SOURCE': {
         controls = (
           <Source
-            sourceColors={this.props.sourceColors}
-            planStatus={this.props.planStatus}
-            lang={this.props.lang}
-            onChangeColorsFromImport={this.props.onChangeColorsFromImport}
+            {...this.props}
+            onChangeColorsFromImport={this.colorsFromImportHandler}
             onCreatePalette={this.onCreatePalette}
           />
         )
@@ -135,17 +170,12 @@ export default class CreatePalette extends React.Component<Props, States> {
       case 'SCALE': {
         controls = (
           <Scale
-            sourceColors={this.props.sourceColors}
             hasPreset={true}
-            preset={this.props.preset}
-            namingConvention={this.props.namingConvention}
-            planStatus={this.props.planStatus}
-            lang={this.props.lang}
-            onChangePreset={this.props.onChangePreset}
-            onChangeScale={() => null}
+            {...this.props}
             onAddStop={this.props.onCustomPreset}
             onRemoveStop={this.props.onCustomPreset}
             onChangeNamingConvention={this.props.onCustomPreset}
+            onChangeScale={this.slideHandler}
             onCreatePalette={this.onCreatePalette}
           />
         )
@@ -155,16 +185,7 @@ export default class CreatePalette extends React.Component<Props, States> {
         controls = (
           <Settings
             context="CREATE"
-            sourceColors={this.props.sourceColors}
-            name={this.props.name}
-            description={this.props.description}
-            colorSpace={this.props.colorSpace}
-            visionSimulationMode={this.props.visionSimulationMode}
-            textColorsTheme={this.props.textColorsTheme}
-            view={this.props.view}
-            planStatus={this.props.planStatus}
-            lang={this.props.lang}
-            onChangeSettings={this.props.onChangeSettings}
+            {...this.props}
             onCreatePalette={this.onCreatePalette}
           />
         )
@@ -177,7 +198,7 @@ export default class CreatePalette extends React.Component<Props, States> {
         <Bar
           leftPart={
             <Tabs
-              tabs={this.setContexts()}
+              tabs={this.contexts}
               active={this.state['context'] ?? ''}
               action={this.navHandler}
             />

@@ -1,25 +1,20 @@
-import * as React from 'react'
-import type {
-  EditorType,
-  Language,
-  PlanStatus,
-  TrialStatus,
-} from '../../utils/types'
-import Feature from '../components/Feature'
-import { Bar } from '@a-ng-d/figmug.layouts.bar'
-import { Button } from '@a-ng-d/figmug.actions.button'
-import { Menu } from '@a-ng-d/figmug.navigation.menu'
-import { icons } from '@a-ng-d/figmug.stylesheets.icons'
-import { texts } from '@a-ng-d/figmug.stylesheets.texts'
-import features from '../../utils/config'
-import { locals } from '../../content/locals'
-import isBlocked from '../../utils/isBlocked'
+import { Bar, Button, Menu, icons, texts } from '@a_ng_d/figmug-ui'
+import React from 'react'
 
-interface Props {
+import { signIn, signOut } from '../../bridges/publication/authentication'
+import { locals } from '../../content/locals'
+import { EditorType, Language, PlanStatus, TrialStatus } from '../../types/app'
+import { UserSession } from '../../types/user'
+import features from '../../utils/config'
+import isBlocked from '../../utils/isBlocked'
+import Feature from '../components/Feature'
+
+interface ShortcutsProps {
   editorType: EditorType
   planStatus: PlanStatus
   trialStatus: TrialStatus
   trialRemainingTime: number
+  userSession: UserSession
   lang: Language
   onReOpenFeedback: () => void
   onReOpenTrialFeedback: () => void
@@ -28,61 +23,53 @@ interface Props {
   onGetProPlan: () => void
 }
 
-interface States {
-  canBeResized: boolean
+interface ShortcutsStates {
+  isUserMenuLoading: boolean
 }
 
-export default class Shortcuts extends React.Component<Props, States> {
-  constructor(props: Props) {
+export default class Shortcuts extends React.Component<
+  ShortcutsProps,
+  ShortcutsStates
+> {
+  constructor(props: ShortcutsProps) {
     super(props)
     this.state = {
-      canBeResized: false,
+      isUserMenuLoading: false,
     }
   }
 
   // Direct actions
-  onHold = () => {
-    this.setState({
-      canBeResized: true,
-    })
+  onHold = (e: any) => {
+    const shiftX = e.target.offsetWidth - e.nativeEvent.layerX
+    const shiftY = e.target.offsetHeight - e.nativeEvent.layerY
+    window.onmousemove = (e) => this.onResize(e, shiftX, shiftY)
+    window.onmouseup = this.onRelease
   }
 
-  onResize = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (this.state['canBeResized']) {
-      parent.postMessage(
-        {
-          pluginMessage: {
-            type: 'RESIZE_UI',
-            origin: {
-              x: e.nativeEvent.screenX - e.nativeEvent.clientX,
-              y: e.nativeEvent.screenY - e.nativeEvent.clientY,
-            },
-            shift: {
-              x: (e as any).nativeEvent.layerX,
-              y: (e as any).nativeEvent.layerY,
-            },
-            cursor: {
-              x: e.nativeEvent.screenX,
-              y: e.nativeEvent.screenY,
-            },
-            movement: {
-              x: e.nativeEvent.movementX,
-              y: e.nativeEvent.movementY,
-            },
+  onResize = (e: MouseEvent, shiftX: number, shiftY: number) => {
+    parent.postMessage(
+      {
+        pluginMessage: {
+          type: 'RESIZE_UI',
+          origin: {
+            x: e.screenX - e.clientX,
+            y: e.screenY - e.clientY,
+          },
+          shift: {
+            x: shiftX,
+            y: shiftY,
+          },
+          cursor: {
+            x: e.screenX,
+            y: e.screenY,
           },
         },
-        '*'
-      )
-    }
+      },
+      '*'
+    )
   }
 
-  onReleased = (e: React.MouseEvent<HTMLDivElement>) => {
-    this.setState({
-      canBeResized: false,
-    })
-    e.target.removeEventListener('mouseleave', () => this.onResize)
-    e.target.removeEventListener('mouseup', () => this.onResize)
-  }
+  onRelease = () => (window.onmousemove = null)
 
   // Render
   render() {
@@ -91,6 +78,136 @@ export default class Shortcuts extends React.Component<Props, States> {
         rightPart={
           <>
             <div className="shortcuts snackbar">
+              <Feature
+                isActive={
+                  features.find((feature) => feature.name === 'SHORTCUTS_USER')
+                    ?.isActive && this.props.editorType !== 'dev'
+                }
+              >
+                {this.props.userSession.connectionStatus === 'CONNECTED' ? (
+                  <Menu
+                    id="user-menu"
+                    icon="user"
+                    options={[
+                      {
+                        label: locals[
+                          this.props.lang
+                        ].user.welcomeMessage.replace(
+                          '$[]',
+                          this.props.userSession.userFullName
+                        ),
+                        value: null,
+                        feature: null,
+                        position: 0,
+                        type: 'TITLE',
+                        isActive: true,
+                        isBlocked: false,
+                        isNew: false,
+                        children: [],
+                        action: () => null,
+                      },
+                      {
+                        label: '',
+                        value: null,
+                        feature: null,
+                        position: 0,
+                        type: 'SEPARATOR',
+                        isActive: true,
+                        isBlocked: false,
+                        children: [],
+                        action: () => null,
+                      },
+                      {
+                        label: locals[this.props.lang].user.signOut,
+                        value: null,
+                        feature: null,
+                        position: 0,
+                        type: 'OPTION',
+                        isActive: true,
+                        isBlocked: false,
+                        isNew: false,
+                        children: [],
+                        action: async () => {
+                          this.setState({ isUserMenuLoading: true })
+                          signOut()
+                            .then(() => {
+                              parent.postMessage(
+                                {
+                                  pluginMessage: {
+                                    type: 'SEND_MESSAGE',
+                                    message:
+                                      locals[this.props.lang].info.signOut,
+                                  },
+                                },
+                                '*'
+                              )
+                            })
+                            .finally(() => {
+                              this.setState({ isUserMenuLoading: false })
+                            })
+                            .catch(() => {
+                              parent.postMessage(
+                                {
+                                  pluginMessage: {
+                                    type: 'SEND_MESSAGE',
+                                    message:
+                                      locals[this.props.lang].error.generic,
+                                  },
+                                },
+                                '*'
+                              )
+                            })
+                        },
+                      },
+                    ]}
+                    alignment="TOP_RIGHT"
+                  />
+                ) : (
+                  <Menu
+                    id="user-menu"
+                    icon="user"
+                    options={[
+                      {
+                        label: locals[this.props.lang].user.signIn,
+                        value: null,
+                        feature: null,
+                        position: 0,
+                        type: 'OPTION',
+                        isActive: true,
+                        isBlocked: false,
+                        isNew: false,
+                        children: [],
+                        action: async () => {
+                          this.setState({ isUserMenuLoading: true })
+                          signIn()
+                            .finally(() => {
+                              this.setState({ isUserMenuLoading: false })
+                            })
+                            .catch((error) => {
+                              parent.postMessage(
+                                {
+                                  pluginMessage: {
+                                    type: 'SEND_MESSAGE',
+                                    message:
+                                      error.message === 'Authentication timeout'
+                                        ? locals[this.props.lang].error.timeout
+                                        : locals[this.props.lang].error
+                                            .authentication,
+                                  },
+                                },
+                                '*'
+                              )
+                            })
+                        },
+                      },
+                    ]}
+                    state={
+                      this.state['isUserMenuLoading'] ? 'LOADING' : 'DEFAULT'
+                    }
+                    alignment="TOP_RIGHT"
+                  />
+                )}
+              </Feature>
               <Feature
                 isActive={
                   features.find(
@@ -351,13 +468,10 @@ export default class Shortcuts extends React.Component<Props, States> {
                 ></div>
               ) : null}
             </div>
-            {this.props.editorType != 'dev' ? (
+            {this.props.editorType !== 'dev' ? (
               <div
                 className={`box-resizer-grip ${icons['icon--resize-grip']}`}
                 onMouseDown={this.onHold.bind(this)}
-                onMouseMove={this.onResize.bind(this)}
-                onMouseUp={this.onReleased.bind(this)}
-                onMouseLeave={this.onReleased.bind(this)}
               ></div>
             ) : null}
           </>
@@ -371,7 +485,7 @@ export default class Shortcuts extends React.Component<Props, States> {
           >
             <div className="pro-zone snackbar">
               {this.props.planStatus === 'UNPAID' &&
-              this.props.trialStatus != 'PENDING' ? (
+              this.props.trialStatus !== 'PENDING' ? (
                 <Button
                   type="compact"
                   icon="lock-off"
@@ -401,7 +515,7 @@ export default class Shortcuts extends React.Component<Props, States> {
                   </div>
                 </div>
               ) : this.props.trialStatus === 'EXPIRED' &&
-                this.props.planStatus != 'PAID' ? (
+                this.props.planStatus !== 'PAID' ? (
                 <>
                   <div
                     className={`type ${texts.type} ${texts['type--secondary']} truncated`}

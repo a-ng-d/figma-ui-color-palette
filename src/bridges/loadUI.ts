@@ -1,36 +1,38 @@
 import { lang, locals } from '../content/locals'
-import { ActionsList, windowSize } from '../utils/types'
-import checkEditorType from './checkEditorType'
-import checkHighlightStatus from './checkHighlightStatus'
-import checkPlanStatus from './checkPlanStatus'
+import { windowSize } from '../types/app'
+import { ActionsList } from '../types/models'
+import package_json from './../../package.json'
+import checkEditorType from './checks/checkEditorType'
+import checkHighlightStatus from './checks/checkHighlightStatus'
+import checkPlanStatus from './checks/checkPlanStatus'
 import closeHighlight from './closeHighlight'
-import createLocalStyles from './createLocalStyles'
-import createLocalVariables from './createLocalVariables'
-import createPalette from './createPalette'
+import createLocalStyles from './creations/createLocalStyles'
+import createLocalVariables from './creations/createLocalVariables'
+import createPalette from './creations/createPalette'
 import enableTrial from './enableTrial'
-import exportCss from './exportCss'
-import exportTailwind from './exportTailwind'
-import exportCsv from './exportCsv'
-import exportJson from './exportJson'
-import exportJsonAmznStyleDictionary from './exportJsonAmznStyleDictionary'
-import exportJsonTokensStudio from './exportJsonTokensStudio'
-import exportSwiftUI from './exportSwiftUI'
-import exportUIKit from './exportUIKit'
-import exportKt from './exportKt'
-import exportXml from './exportXml'
+import exportCss from './exports/exportCss'
+import exportCsv from './exports/exportCsv'
+import exportJson from './exports/exportJson'
+import exportJsonAmznStyleDictionary from './exports/exportJsonAmznStyleDictionary'
+import exportJsonTokensStudio from './exports/exportJsonTokensStudio'
+import exportKt from './exports/exportKt'
+import exportSwiftUI from './exports/exportSwiftUI'
+import exportTailwind from './exports/exportTailwind'
+import exportUIKit from './exports/exportUIKit'
+import exportXml from './exports/exportXml'
+import getPalettesOnCurrentPage from './getPalettesOnCurrentPage'
 import getProPlan from './getProPlan'
 import processSelection from './processSelection'
-import updateColors from './updateColors'
-import updateLocalStyles from './updateLocalStyles'
-import updateLocalVariables from './updateLocalVariables'
-import updateScale from './updateScale'
-import updateSettings from './updateSettings'
-import updateThemes from './updateThemes'
-import updateView from './updateView'
-import getPalettesOnCurrentPage from './getPalettesOnCurrentPage'
-import package_json from './../../package.json'
+import updateColors from './updates/updateColors'
+import updateGlobal from './updates/updateGlobal'
+import updateLocalStyles from './updates/updateLocalStyles'
+import updateLocalVariables from './updates/updateLocalVariables'
+import updateScale from './updates/updateScale'
+import updateSettings from './updates/updateSettings'
+import updateThemes from './updates/updateThemes'
+import updateView from './updates/updateView'
 
-const loadUI = async (palette: SceneNode) => {
+const loadUI = async () => {
   const windowSize: windowSize = {
     w: (await figma.clientStorage.getAsync('plugin_window_width')) ?? 640,
     h: (await figma.clientStorage.getAsync('plugin_window_height')) ?? 320,
@@ -49,15 +51,28 @@ const loadUI = async (palette: SceneNode) => {
 
   await checkPlanStatus()
 
+  figma.ui.postMessage({
+    type: 'CHECK_USER_AUTHENTICATION',
+    data: {
+      accessToken: await figma.clientStorage.getAsync('supabase_access_token'),
+      refreshToken: await figma.clientStorage.getAsync(
+        'supabase_refresh_token'
+      ),
+    },
+  })
+
   figma.ui.onmessage = async (msg) => {
+    const palette = figma.currentPage.selection[0] as FrameNode
+
     const actions: ActionsList = {
       RESIZE_UI: async () => {
-        windowSize.w < 540
-          ? (windowSize.w = 540)
-          : (windowSize.w += msg.movement.x)
-        windowSize.h < 300
-          ? (windowSize.h = 300)
-          : (windowSize.h = windowSize.h += msg.movement.y)
+        const scaleX = Math.abs(msg.origin.x - msg.cursor.x - msg.shift.x),
+          scaleY = Math.abs(msg.origin.y - msg.cursor.y - msg.shift.y)
+
+        if (scaleX > 540) windowSize.w = scaleX
+        else windowSize.w = 540
+        if (scaleY > 300) windowSize.h = scaleY
+        else windowSize.h = 300
 
         await figma.clientStorage.setAsync('plugin_window_width', windowSize.w)
         await figma.clientStorage.setAsync('plugin_window_height', windowSize.h)
@@ -65,18 +80,19 @@ const loadUI = async (palette: SceneNode) => {
         figma.ui.resize(windowSize.w, windowSize.h)
       },
       CLOSE_HIGHLIGHT: () => closeHighlight(msg),
-      CREATE_PALETTE: () => createPalette(msg, palette),
-      UPDATE_SCALE: () => updateScale(msg, palette),
-      UPDATE_VIEW: () => updateView(msg, palette),
-      UPDATE_COLORS: () => updateColors(msg, palette),
-      UPDATE_THEMES: () => updateThemes(msg, palette),
+      CREATE_PALETTE: () => createPalette(msg),
+      UPDATE_SCALE: () => updateScale(msg),
+      UPDATE_VIEW: () => updateView(msg),
+      UPDATE_COLORS: () => updateColors(msg),
+      UPDATE_THEMES: () => updateThemes(msg),
+      UPDATE_GLOBAL: () => updateGlobal(msg),
       SYNC_LOCAL_STYLES: async () => {
         createLocalStyles(palette)
           .then(async (message) => [message, await updateLocalStyles(palette)])
           .then((messages) => figma.notify(messages.join('﹒')))
           .catch((error) => {
-            console.log(error)
             figma.notify(locals[lang].error.generic)
+            throw error
           })
       },
       SYNC_LOCAL_VARIABLES: () => {
@@ -87,8 +103,8 @@ const loadUI = async (palette: SceneNode) => {
           ])
           .then((messages) => figma.notify(messages.join('﹒')))
           .catch((error) => {
-            console.log(error)
             figma.notify(locals[lang].error.generic)
+            throw error
           })
       },
       EXPORT_PALETTE: () => {
@@ -107,26 +123,57 @@ const loadUI = async (palette: SceneNode) => {
         msg.export === 'ANDROID_XML' ? exportXml(palette) : null
         msg.export === 'CSV' ? exportCsv(palette) : null
       },
-      UPDATE_SETTINGS: () => updateSettings(msg, palette),
+      UPDATE_SETTINGS: () => updateSettings(msg),
       OPEN_IN_BROWSER: () => {
         figma.openExternal(msg.url)
+      },
+      SEND_MESSAGE: () => {
+        figma.notify(msg.message)
+      },
+      SET_ITEMS: () => {
+        msg.items.forEach(
+          async (item: { key: string; value: string }) =>
+            await figma.clientStorage.setAsync(item.key, item.value)
+        )
+      },
+      DELETE_ITEMS: () => {
+        msg.items.forEach(
+          async (item: string) => await figma.clientStorage.deleteAsync(item)
+        )
+      },
+      SET_DATA: () => {
+        msg.items.forEach((item: { key: string; value: string }) =>
+          palette.setPluginData(item.key, item.value)
+        )
+      },
+      UPDATE_SCREENSHOT: async () => {
+        figma.ui.postMessage({
+          type: 'UPDATE_SCREENSHOT',
+          data: await palette
+            .exportAsync({
+              format: 'PNG',
+              constraint: { type: 'SCALE', value: 0.25 },
+            })
+            .catch(() => null),
+        })
+      },
+      UPDATE_PALETTE_DATE: async () => {
+        figma.ui.postMessage({
+          type: 'UPDATE_SCREENSHOT',
+          data: msg.data,
+        })
       },
       GET_PALETTES: async () => await getPalettesOnCurrentPage(),
       JUMP_TO_PALETTE: async () => {
         const scene: Array<SceneNode> = []
         const palette = await figma.currentPage
           .loadAsync()
-          .then(() =>
-            figma.currentPage.findOne(
-              (node) => node.getPluginData('id') === msg.id
-            )
-          )
+          .then(() => figma.currentPage.findOne((node) => node.id === msg.id))
           .catch((error) => {
-            console.log(error)
             figma.notify(locals[lang].error.generic)
-            return null
+            throw error
           })
-        palette != null ? scene.push(palette) : null
+        palette !== null ? scene.push(palette) : null
         figma.currentPage.selection = scene
       },
       GET_PRO_PLAN: async () => await getProPlan(),
@@ -134,6 +181,18 @@ const loadUI = async (palette: SceneNode) => {
         await enableTrial()
         await checkPlanStatus()
       },
+      SIGN_OUT: () =>
+        figma.ui.postMessage({
+          type: 'SIGN_OUT',
+          data: {
+            connectionStatus: 'UNCONNECTED',
+            userFullName: '',
+            userAvatar: '',
+            userId: undefined,
+            accessToken: undefined,
+            refreshToken: undefined,
+          },
+        }),
     }
 
     return actions[msg.type]?.()

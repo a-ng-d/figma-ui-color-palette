@@ -1,4 +1,4 @@
-![GitHub package.json version](https://img.shields.io/github/package-json/v/inVoltag/figma-ui-color-palette?color=informational) ![GitHub last commit](https://img.shields.io/github/last-commit/inVoltag/figma-ui-color-palette?color=informational) ![GitHub](https://img.shields.io/github/license/inVoltag/figma-ui-color-palette?color=informational)
+![GitHub package.json version](https://img.shields.io/github/package-json/v/a-ng-d/figma-ui-color-palette?color=informational) ![GitHub last commit](https://img.shields.io/github/last-commit/a-ng-d/figma-ui-color-palette?color=informational) ![GitHub](https://img.shields.io/github/license/a-ng-d/figma-ui-color-palette?color=informational)
 # UI Color Palette
 UI Color Palette is a Figma and FigJam plugin that creates consistent and accessible color palettes specifically for UI. The plugin uses alternative color spaces, like `LCH`, `OKLCH`, `CIELAB`, `OKLAB`, and `HSLuv`, to create color shades based on the configured lightness scale. These spaces ensure [WCAG standards](https://www.w3.org/WAI/standards-guidelines/wcag/) compliance and sufficient contrast between information and background color.
 
@@ -30,7 +30,7 @@ Go to the [Issues](https://uicp.link/report) section and browse the existing tic
 - _Let's do this._
 
 ### Beta test
-- Go to the [Actions](https://github.com/inVoltag/figma-ui-color-palette/actions) sections and access the `Build and Download UI Color Palette` tab.
+- Go to the [Actions](https://github.com/a-ng-d/figma-ui-color-palette/actions) sections and access the `Build and Download UI Color Palette` tab.
 - Click `Run workflow`, then select a branch and confirm.
 - Wait a minute, and once finished, download the artifact (which is a ZIP file containing the plugin).
 - Go to Figma, then `Plugins` > `Development` > `Import plugin from manifest…` and choose `manifest.json` in the unzipped folder.

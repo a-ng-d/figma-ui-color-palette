@@ -1,21 +1,25 @@
-import * as React from 'react'
-import type { Language, ReleaseNote } from '../../utils/types'
-import { Dialog } from '@a-ng-d/figmug.dialogs.dialog'
-import releaseNotes from '../../content/releaseNotes'
-import { locals } from '../../content/locals'
-import { texts } from '@a-ng-d/figmug.stylesheets.texts'
+import { Dialog, texts } from '@a_ng_d/figmug-ui'
+import React from 'react'
 
-interface Props {
+import { locals } from '../../content/locals'
+import releaseNotes from '../../content/releaseNotes'
+import { Language } from '../../types/app'
+import { ReleaseNote } from '../../types/content'
+
+interface HighlightProps {
   lang: Language
   onCloseHighlight: React.ReactEventHandler
 }
 
-interface States {
+interface HighlightStates {
   position: number
 }
 
-export default class Highlight extends React.Component<Props, States> {
-  constructor(props: Props) {
+export default class Highlight extends React.Component<
+  HighlightProps,
+  HighlightStates
+> {
+  constructor(props: HighlightProps) {
     super(props)
     this.state = {
       position: 0,
@@ -66,13 +70,19 @@ export default class Highlight extends React.Component<Props, States> {
           this.setState({ position: 0 })
         }}
       >
-        <img
-          className="dialog__cover"
-          src={currentNote['image'][this.state['position']]}
-        />
-        <p className={`dialog__text type ${texts.type}`}>
-          {currentNote['content'][this.state['position']]}
-        </p>
+        <div className="dialog__cover">
+          <img
+            src={currentNote['image'][this.state['position']]}
+            style={{
+              width: '100%',
+            }}
+          />
+        </div>
+        <div className="dialog__text">
+          <p className={`type ${texts.type}`}>
+            {currentNote['content'][this.state['position']]}
+          </p>
+        </div>
       </Dialog>
     )
   }

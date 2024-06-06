@@ -1,14 +1,13 @@
-import * as React from 'react'
-import { HexModel, Language } from '../../utils/types'
-import Feature from './Feature'
-import { Input } from '@a-ng-d/figmug.inputs.input'
-import { Button } from '@a-ng-d/figmug.actions.button'
-import { FormItem } from '@a-ng-d/figmug.layouts.form-item'
 import { doMap } from '@a-ng-d/figmug.modules.do-map'
-import features from '../../utils/config'
-import { locals } from '../../content/locals'
+import { Button, FormItem, HexModel, Input } from '@a_ng_d/figmug-ui'
+import React from 'react'
 
-interface Props {
+import { locals } from '../../content/locals'
+import { Language } from '../../types/app'
+import features from '../../utils/config'
+import Feature from './Feature'
+
+interface ThemeItemProps {
   name: string
   description: string
   paletteBackground: HexModel
@@ -36,13 +35,16 @@ interface Props {
   onChangeOrder: (e: React.DragEvent<HTMLLIElement>) => void
 }
 
-interface States {
+interface ThemeItemStates {
   isDragged: boolean
   hasMoreOptions: boolean
 }
 
-export default class ThemeItem extends React.Component<Props, States> {
-  constructor(props: Props) {
+export default class ThemeItem extends React.Component<
+  ThemeItemProps,
+  ThemeItemStates
+> {
+  constructor(props: ThemeItemProps) {
     super(props)
     this.state = {
       isDragged: false,

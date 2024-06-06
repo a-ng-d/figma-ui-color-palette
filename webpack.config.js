@@ -38,7 +38,8 @@ module.exports = (env, argv) => ({
   output: {
     filename: '[name].js',
     publicPath: '/',
-    path: path.resolve(__dirname, 'dist'), // Compile into a folder called "dist"
+    path: path.resolve(__dirname, 'dist'), // Compile into a folder called "dist",
+    clean: true
   },
 
   // Tells Webpack to generate "ui.html" and to inline "ui.ts" into it

@@ -1,33 +1,31 @@
-import * as React from 'react'
-import JSZip from 'jszip'
-import FileSaver from 'file-saver'
-import type {
-  PresetConfiguration,
-  TextColorsThemeHexModel,
-  ColorConfiguration,
-  ThemeConfiguration,
-  ExportConfiguration,
-  ScaleConfiguration,
-  Language,
-  EditorType,
-  visionSimulationModeConfiguration,
-  PlanStatus,
-  ExtractOfPaletteConfiguration,
-  Service,
-} from '../../utils/types'
-import Export from '../modules/Export'
-import { locals } from '../../content/locals'
 import { doSnakeCase } from '@a-ng-d/figmug.modules.do-snake-case'
-import PalettesList from '../modules/PalettesList'
+import FileSaver from 'file-saver'
+import JSZip from 'jszip'
+import React from 'react'
 
-interface Props {
+import { locals } from '../../content/locals'
+import { EditorType, Language, PlanStatus, Service } from '../../types/app'
+import {
+  ColorConfiguration,
+  ExportConfiguration,
+  ExtractOfPaletteConfiguration,
+  PresetConfiguration,
+  ScaleConfiguration,
+  ThemeConfiguration,
+  VisionSimulationModeConfiguration,
+} from '../../types/configurations'
+import { TextColorsThemeHexModel } from '../../types/models'
+import DevModePalettes from '../contexts/DevModePalettes'
+import Export from '../contexts/Export'
+
+interface TransferPaletteProps {
   name: string
   description: string
   preset: PresetConfiguration
   scale: ScaleConfiguration
   colors: Array<ColorConfiguration>
   colorSpace: string
-  visionSimulationMode: visionSimulationModeConfiguration
+  visionSimulationMode: VisionSimulationModeConfiguration
   themes: Array<ThemeConfiguration>
   view: string
   textColorsTheme: TextColorsThemeHexModel
@@ -40,7 +38,7 @@ interface Props {
   lang: Language
 }
 
-export default class TransferPalette extends React.Component<Props> {
+export default class TransferPalette extends React.Component<TransferPaletteProps> {
   // Direct actions
   onExport = () => {
     const blob = new Blob([this.props.export.data], {
@@ -54,7 +52,7 @@ export default class TransferPalette extends React.Component<Props> {
           type: string
           colors: Array<{ name: string; csv: string }>
         }) => {
-          if (theme.type != 'default theme') {
+          if (theme.type !== 'default theme') {
             const folder = zip.folder(theme.name) ?? zip
             theme.colors.forEach((color) => {
               folder.file(`${doSnakeCase(color.name)}.csv`, color.csv)
@@ -75,10 +73,7 @@ export default class TransferPalette extends React.Component<Props> {
               : doSnakeCase(this.props.name)
           )
         )
-        .catch((error) => {
-          console.log(error)
-          return locals[this.props.lang].error.generic
-        })
+        .catch(() => locals[this.props.lang].error.generic)
     } else if (this.props.export.format === 'TAILWIND') {
       FileSaver.saveAs(blob, 'tailwind.config.js')
     } else if (this.props.export.format === 'SWIFT') {
@@ -117,7 +112,7 @@ export default class TransferPalette extends React.Component<Props> {
           <div className="controls">
             {this.props.service === 'CREATE' &&
             this.props.editorType === 'dev' ? (
-              <PalettesList
+              <DevModePalettes
                 paletteLists={this.props.palettesList}
                 lang={this.props.lang}
               />

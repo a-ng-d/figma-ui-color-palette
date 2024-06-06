@@ -1,33 +1,74 @@
-import * as React from 'react'
-import type {
-  Language,
-  PlanStatus,
-  SourceColorConfiguration,
-} from '../../utils/types'
-import Feature from '../components/Feature'
-import { Button } from '@a-ng-d/figmug.actions.button'
-import { Menu } from '@a-ng-d/figmug.navigation.menu'
-import { texts } from '@a-ng-d/figmug.stylesheets.texts'
+import { Button, DropdownOption, Menu, texts } from '@a_ng_d/figmug-ui'
+import React from 'react'
+
+import { locals } from '../../content/locals'
+import { Language, PlanStatus } from '../../types/app'
+import { SourceColorConfiguration } from '../../types/configurations'
+import { Identity } from '../../types/user'
 import features from '../../utils/config'
 import isBlocked from '../../utils/isBlocked'
-import { locals } from '../../content/locals'
+import Feature from '../components/Feature'
 
-interface Props {
+interface ActionsProps {
   context: string
   sourceColors: Array<SourceColorConfiguration> | []
+  identity?: Identity
   exportType?: string
   planStatus?: PlanStatus
   lang: Language
   onCreatePalette?: React.MouseEventHandler & React.KeyboardEventHandler
-  onSyncLocalStyles?: React.MouseEventHandler & React.KeyboardEventHandler
-  onSyncLocalVariables?: React.MouseEventHandler & React.KeyboardEventHandler
+  onSyncLocalStyles?: (
+    e:
+      | React.MouseEvent<HTMLLIElement, MouseEvent>
+      | React.KeyboardEvent<HTMLLIElement>
+  ) => void
+  onSyncLocalVariables?: (
+    e:
+      | React.MouseEvent<HTMLLIElement, MouseEvent>
+      | React.KeyboardEvent<HTMLLIElement>
+  ) => void
+  onPublishPalette?: (
+    e:
+      | React.MouseEvent<HTMLLIElement, MouseEvent>
+      | React.KeyboardEvent<HTMLLIElement>
+  ) => void
   onExportPalette?: React.MouseEventHandler & React.KeyboardEventHandler
-  onChangeActions?: (value: string) => void
 }
 
-export default class Actions extends React.Component<Props> {
+export default class Actions extends React.Component<ActionsProps> {
   static defaultProps = {
     sourceColors: [],
+  }
+
+  // Direct actions
+  publicationAction = (): Partial<DropdownOption> => {
+    if (this.props.identity?.connectionStatus === 'UNCONNECTED')
+      return {
+        label: locals[this.props.lang].actions.publishOrSyncPalette,
+        value: 'PALETTE_PUBLICATION',
+        feature: 'PUBLISH_SYNC_PALETTE',
+      }
+    else if (this.props.identity?.userId === this.props.identity?.creatorId)
+      return {
+        label: locals[this.props.lang].actions.publishPalette,
+        value: 'PALETTE_PUBLICATION',
+        feature: 'PUBLISH_PALETTE',
+      }
+    else if (
+      this.props.identity?.userId !== this.props.identity?.creatorId &&
+      this.props.identity?.creatorId !== ''
+    )
+      return {
+        label: locals[this.props.lang].actions.syncPalette,
+        value: 'PALETTE_PUBLICATION',
+        feature: 'SYNC_PALETTE',
+      }
+    else
+      return {
+        label: locals[this.props.lang].actions.publishPalette,
+        value: 'PALETTE_PUBLICATION',
+        feature: 'PUBLISH_PALETTE',
+      }
   }
 
   // Templates
@@ -69,7 +110,7 @@ export default class Actions extends React.Component<Props> {
         <div className="actions__right">
           <Menu
             id="local-styles-variables"
-            label={locals[this.props.lang].actions.sync}
+            label={locals[this.props.lang].actions.run}
             type="PRIMARY"
             options={[
               {
@@ -110,6 +151,23 @@ export default class Actions extends React.Component<Props> {
                 children: [],
                 action: (e) => this.props.onSyncLocalVariables?.(e),
               },
+              {
+                ...this.publicationAction(),
+                position: 0,
+                type: 'OPTION',
+                isActive: features.find(
+                  (feature) => feature.name === 'PUBLISH_PALETTE'
+                )?.isActive,
+                isBlocked: isBlocked(
+                  'PUBLISH_PALETTE',
+                  this.props.planStatus ?? 'UNPAID'
+                ),
+                isNew: features.find(
+                  (feature) => feature.name === 'PUBLISH_PALETTE'
+                )?.isNew,
+                children: [],
+                action: (e) => this.props.onPublishPalette?.(e),
+              } as DropdownOption,
             ]}
             alignment="TOP_RIGHT"
           />

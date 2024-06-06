@@ -1,20 +1,23 @@
-import type {
-  Service,
-  SourceColorConfiguration,
-  ColorConfiguration,
-  PresetConfiguration,
-  TextColorsThemeHexModel,
-  PaletteNode,
-  ScaleConfiguration,
-  ThemeConfiguration,
-  ColorSpaceConfiguration,
-  ViewConfiguration,
-  AlgorithmVersionConfiguration,
-  visionSimulationModeConfiguration,
-} from '../utils/types'
-import Colors from './Colors'
-import { locals, lang } from '../content/locals'
 import { uid } from 'uid'
+
+import { lang, locals } from '../content/locals'
+import { Service } from '../types/app'
+import {
+  AlgorithmVersionConfiguration,
+  ColorConfiguration,
+  ColorSpaceConfiguration,
+  MetaConfiguration,
+  PresetConfiguration,
+  ScaleConfiguration,
+  SourceColorConfiguration,
+  ThemeConfiguration,
+  ViewConfiguration,
+  VisionSimulationModeConfiguration,
+} from '../types/configurations'
+import { TextColorsThemeHexModel } from '../types/models'
+import { PaletteNode } from '../types/nodes'
+import setPaletteName from '../utils/setPaletteName'
+import Colors from './Colors'
 
 export default class Palette {
   sourceColors: Array<SourceColorConfiguration>
@@ -24,12 +27,16 @@ export default class Palette {
   scale: ScaleConfiguration
   colors: Array<ColorConfiguration>
   colorSpace: ColorSpaceConfiguration
-  visionSimulationMode: visionSimulationModeConfiguration
+  visionSimulationMode: VisionSimulationModeConfiguration
   themes: Array<ThemeConfiguration>
   preset: PresetConfiguration
   view: ViewConfiguration
   textColorsTheme: TextColorsThemeHexModel
   algorithmVersion: AlgorithmVersionConfiguration
+  isRemote: boolean | undefined
+  meta: MetaConfiguration | undefined
+  creatorFullName: string | undefined
+  creatorAvatarImg: Image | null
   service: Service
   node: FrameNode | null
 
@@ -40,48 +47,64 @@ export default class Palette {
     preset: PresetConfiguration,
     scale: ScaleConfiguration,
     colorSpace: ColorSpaceConfiguration,
-    visionSimulationMode: visionSimulationModeConfiguration,
+    visionSimulationMode: VisionSimulationModeConfiguration,
     view: ViewConfiguration,
     textColorsTheme: TextColorsThemeHexModel,
-    algorithmVersion: AlgorithmVersionConfiguration
+    algorithmVersion: AlgorithmVersionConfiguration,
+    themes: Array<ThemeConfiguration> | undefined = undefined,
+    isRemote: boolean | undefined = false,
+    meta: MetaConfiguration | undefined = undefined,
+    creatorAvatarImg: Image | null = null
   ) {
     this.sourceColors = sourceColors
     this.name = name
     this.description = description
-    this.frameName = `${name === '' ? locals[lang].name : name}﹒${
-      preset.name
-    }﹒${colorSpace} ${view.includes('PALETTE') ? 'Palette' : 'Sheet'}`
+    this.frameName = setPaletteName(
+      name === '' ? locals[lang].name : name,
+      undefined,
+      preset.name,
+      colorSpace,
+      visionSimulationMode
+    )
     this.preset = preset
     this.scale = scale
     this.colors = []
     this.colorSpace = colorSpace
     this.visionSimulationMode = visionSimulationMode
-    ;(this.themes = [
-      {
-        name: locals[lang].themes.switchTheme.defaultTheme,
-        description: '',
-        scale: this.scale,
-        paletteBackground: '#FFFFFF',
-        isEnabled: true,
-        id: '00000000000',
-        type: 'default theme',
-      },
-    ]),
+    ;(this.themes =
+      themes === undefined
+        ? [
+            {
+              name: locals[lang].themes.switchTheme.defaultTheme,
+              description: '',
+              scale: this.scale,
+              paletteBackground: '#FFFFFF',
+              isEnabled: true,
+              id: '00000000000',
+              type: 'default theme',
+            },
+          ]
+        : themes),
       (this.view = view)
     this.algorithmVersion = algorithmVersion
     this.textColorsTheme = textColorsTheme
+    this.isRemote = isRemote
+    this.meta = meta
+    this.creatorFullName = meta?.creatorIdentity.creatorFullName
+    this.creatorAvatarImg = creatorAvatarImg
     this.service = 'CREATE'
     this.node = null
   }
 
   makeNode = () => {
-    // base
+    const now = new Date().toISOString()
+    // Base
     this.node = figma.createFrame()
     this.node.name = this.frameName
     this.node.resize(1640, 100)
     this.node.cornerRadius = 16
 
-    // layout
+    // Layout
     this.node.layoutMode = 'VERTICAL'
     this.node.layoutSizingHorizontal = 'HUG'
     this.node.layoutSizingVertical = 'HUG'
@@ -93,7 +116,6 @@ export default class Palette {
 
     // data
     this.node.setRelaunchData({ edit: '' })
-    this.node.setPluginData('id', uid())
     this.node.setPluginData('type', 'UI_COLOR_PALETTE')
     this.node.setPluginData('name', this.name)
     this.node.setPluginData('description', this.description)
@@ -109,7 +131,37 @@ export default class Palette {
     )
     this.node.setPluginData('algorithmVersion', this.algorithmVersion)
 
-    // insert
+    if (this.isRemote && this.meta !== undefined) {
+      this.node.setPluginData('id', this.meta.id)
+      this.node.setPluginData('createdAt', this.meta.dates.createdAt as string)
+      this.node.setPluginData('updatedAt', this.meta.dates.updatedAt as string)
+      this.node.setPluginData(
+        'publishedAt',
+        this.meta.dates.publishedAt as string
+      )
+      this.node.setPluginData('isPublished', 'true')
+      this.node.setPluginData(
+        'isShared',
+        this.meta.publicationStatus.isShared.toString()
+      )
+      this.node.setPluginData(
+        'creatorFullName',
+        this.meta.creatorIdentity.creatorFullName
+      )
+      this.node.setPluginData(
+        'creatorAvatar',
+        this.meta.creatorIdentity.creatorAvatar
+      )
+      this.node.setPluginData('creatorId', this.meta.creatorIdentity.creatorId)
+    } else {
+      this.node.setPluginData('createdAt', now)
+      this.node.setPluginData('updatedAt', now)
+      this.node.setPluginData('publishedAt', '')
+      this.node.setPluginData('isPublished', 'false')
+      this.node.setPluginData('isShared', 'false')
+    }
+
+    // Insert
     this.sourceColors.forEach((sourceColor) =>
       this.colors.push({
         name: sourceColor.name,

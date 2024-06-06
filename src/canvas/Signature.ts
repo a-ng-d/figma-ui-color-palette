@@ -1,5 +1,5 @@
-import Tag from './Tag'
 import { lang, locals } from '../content/locals'
+import Tag from './Tag'
 
 export default class Signature {
   nodeInfo: FrameNode | null
@@ -15,35 +15,38 @@ export default class Signature {
   }
 
   makeNodeInfo = () => {
-    // base
+    // Base
     this.nodeInfo = figma.createFrame()
     this.nodeInfo.name = '_info'
     this.nodeInfo.fills = []
 
-    // layout
+    // Layout
     this.nodeInfo.layoutMode = 'VERTICAL'
     this.nodeInfo.layoutSizingHorizontal = 'HUG'
     this.nodeInfo.layoutSizingVertical = 'HUG'
     this.nodeInfo.itemSpacing = 4
 
-    // insert
+    // Insert
     this.nodeInfo.appendChild(
-      new Tag('_tagline', locals[lang].tagline, 10).makeNodeTag()
+      new Tag({
+        name: '_tagline',
+        content: locals[lang].tagline,
+        fontSize: 10,
+      }).makeNodeTag()
     )
     this.nodeInfo.appendChild(
-      new Tag(
-        '_url',
-        locals[lang].url,
-        8,
-        'https://ui-color-palette.com'
-      ).makeNodeTag()
+      new Tag({
+        name: '_url',
+        content: locals[lang].url,
+        url: 'https://ui-color-palette.com',
+      }).makeNodeTag()
     )
 
     return this.nodeInfo
   }
 
   makeNodeLogotype = () => {
-    // base
+    // Base
     this.nodeLogotype = figma.createFrame()
     this.nodeLogotype.name = '_logotype'
     this.nodeLogotype.fills = [
@@ -59,21 +62,21 @@ export default class Signature {
     ]
     this.nodeLogotype.cornerRadius = 8
 
-    // layout
+    // Layout
     this.nodeLogotype.layoutMode = 'HORIZONTAL'
     this.nodeLogotype.layoutSizingHorizontal = 'HUG'
     this.nodeLogotype.layoutSizingVertical = 'HUG'
     this.nodeLogotype.horizontalPadding = 8
     this.nodeLogotype.verticalPadding = 4
 
-    // insert
+    // Insert
     this.nodeLogotype.appendChild(this.makeNodeVector())
 
     return this.nodeLogotype
   }
 
   makeNodeVector = () => {
-    // base
+    // Base
     this.nodeVector = figma.createVector()
     this.nodeVector.name = '_vector'
     this.nodeVector.fills = [
@@ -115,19 +118,19 @@ export default class Signature {
   }
 
   makeNode = () => {
-    // base
+    // Base
     this.node = figma.createFrame()
     this.node.name = '_signature'
     this.node.fills = []
 
-    // layout
+    // Layout
     this.node.layoutMode = 'HORIZONTAL'
     this.node.primaryAxisSizingMode = 'FIXED'
     this.node.counterAxisSizingMode = 'AUTO'
     this.node.layoutAlign = 'STRETCH'
     this.node.primaryAxisAlignItems = 'SPACE_BETWEEN'
 
-    // insert
+    // Insert
     this.node.appendChild(this.makeNodeInfo())
     this.node.appendChild(this.makeNodeLogotype())
 

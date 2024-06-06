@@ -1,62 +1,194 @@
+import { RgbModel } from '../types/models'
+
 export default class Tag {
   name: string
   content: string
   fontSize: number
   url: string | null
+  backgroundColor: {
+    rgb: RgbModel
+    alpha: number
+  }
+  isCompact: boolean
   nodeTag: FrameNode | null
+  nodeTagWithAvatar: FrameNode | null
+  nodeTagwithIndicator: FrameNode | null
   nodeText: TextNode | null
   nodeIndicator: EllipseNode | null
+  nodeAvatar: EllipseNode | null
 
-  constructor(
-    name: string,
-    content: string,
-    fontSize = 8,
-    url: string | null = null
-  ) {
-    this.name = name
-    this.content = content
-    this.fontSize = fontSize
-    this.url = url
+  constructor(options: {
+    name: string
+    content: string
+    fontSize?: number
+    backgroundColor?: {
+      rgb: RgbModel
+      alpha: number
+    }
+    isCompact?: boolean
+    url?: string | null
+  }) {
+    this.name = options.name
+    this.content = options.content
+    this.fontSize = options.fontSize ?? 8
+    this.url = options.url ?? (null as string | null)
+    this.backgroundColor = options.backgroundColor ?? {
+      rgb: {
+        r: 1,
+        g: 1,
+        b: 1,
+      },
+      alpha: 0.5,
+    }
+    this.isCompact = options.isCompact ?? false
     this.nodeTag = null
+    this.nodeTagwithIndicator = null
+    this.nodeTagWithAvatar = null
     this.nodeText = null
     this.nodeIndicator = null
+    this.nodeAvatar = null
   }
 
-  makeNodeTag = (gl: Array<number> = [0, 0, 0, 1], hasIndicator = false) => {
-    // base
+  makeNodeTag = () => {
+    // Base
     this.nodeTag = figma.createFrame()
     this.nodeTag.name = this.name
     this.nodeTag.fills = [
       {
         type: 'SOLID',
-        opacity: 0.5,
+        opacity: this.backgroundColor.alpha,
         color: {
-          r: 1,
-          g: 1,
-          b: 1,
+          r: this.backgroundColor?.rgb.r,
+          g: this.backgroundColor.rgb.g,
+          b: this.backgroundColor.rgb.b,
         },
+      },
+    ]
+    this.nodeTag.strokes = [
+      {
+        type: 'SOLID',
+        color: {
+          r: 0,
+          g: 0,
+          b: 0,
+        },
+        opacity: 0.05,
       },
     ]
     this.nodeTag.cornerRadius = 16
 
-    // layout
+    // Layout
     this.nodeTag.layoutMode = 'HORIZONTAL'
     this.nodeTag.layoutSizingHorizontal = 'HUG'
     this.nodeTag.layoutSizingVertical = 'HUG'
-    this.nodeTag.horizontalPadding = 8
-    this.nodeTag.verticalPadding = 4
+    this.nodeTag.counterAxisAlignItems = 'CENTER'
+    this.nodeTag.paddingRight = this.isCompact ? 2 : 8
+    this.nodeTag.paddingLeft = 8
+    this.nodeTag.paddingTop = this.nodeTag.paddingBottom = this.isCompact
+      ? 2
+      : 4
     this.nodeTag.itemSpacing = 4
 
-    // insert
-    if (hasIndicator)
-      this.nodeTag.appendChild(this.makeNodeIndicator([gl[0], gl[1], gl[2]]))
+    // Insert
     this.nodeTag.appendChild(this.makeNodeText())
 
     return this.nodeTag
   }
 
+  makeNodeTagwithIndicator = (gl: Array<number> = [0, 0, 0, 1]) => {
+    // Base
+    this.nodeTagwithIndicator = figma.createFrame()
+    this.nodeTagwithIndicator.name = this.name
+    this.nodeTagwithIndicator.fills = [
+      {
+        type: 'SOLID',
+        opacity: this.backgroundColor.alpha,
+        color: {
+          r: this.backgroundColor.rgb.r,
+          g: this.backgroundColor.rgb.g,
+          b: this.backgroundColor.rgb.b,
+        },
+      },
+    ]
+    this.nodeTagwithIndicator.strokes = [
+      {
+        type: 'SOLID',
+        color: {
+          r: 0,
+          g: 0,
+          b: 0,
+        },
+        opacity: 0.05,
+      },
+    ]
+    this.nodeTagwithIndicator.cornerRadius = 16
+
+    // Layout
+    this.nodeTagwithIndicator.layoutMode = 'HORIZONTAL'
+    this.nodeTagwithIndicator.layoutSizingHorizontal = 'HUG'
+    this.nodeTagwithIndicator.layoutSizingVertical = 'HUG'
+    this.nodeTagwithIndicator.counterAxisAlignItems = 'CENTER'
+    this.nodeTagwithIndicator.paddingRight = this.isCompact ? 2 : 8
+    this.nodeTagwithIndicator.paddingLeft = 8
+    this.nodeTagwithIndicator.paddingTop =
+      this.nodeTagwithIndicator.paddingBottom = this.isCompact ? 2 : 4
+    this.nodeTagwithIndicator.itemSpacing = 4
+
+    // Insert
+    this.nodeTagwithIndicator.appendChild(
+      this.makeNodeIndicator([gl[0], gl[1], gl[2]])
+    )
+    this.nodeTagwithIndicator.appendChild(this.makeNodeText())
+
+    return this.nodeTagwithIndicator
+  }
+
+  makeNodeTagWithAvatar = (image?: Image | null): FrameNode => {
+    // Base
+    this.nodeTagWithAvatar = figma.createFrame()
+    this.nodeTagWithAvatar.name = this.name
+    this.nodeTagWithAvatar.fills = [
+      {
+        type: 'SOLID',
+        opacity: this.backgroundColor.alpha,
+        color: {
+          r: this.backgroundColor.rgb.r,
+          g: this.backgroundColor.rgb.g,
+          b: this.backgroundColor.rgb.b,
+        },
+      },
+    ]
+    this.nodeTagWithAvatar.strokes = [
+      {
+        type: 'SOLID',
+        color: {
+          r: 0,
+          g: 0,
+          b: 0,
+        },
+        opacity: 0.05,
+      },
+    ]
+    this.nodeTagWithAvatar.cornerRadius = 16
+
+    // Layout
+    this.nodeTagWithAvatar.layoutMode = 'HORIZONTAL'
+    this.nodeTagWithAvatar.layoutSizingHorizontal = 'HUG'
+    this.nodeTagWithAvatar.layoutSizingVertical = 'HUG'
+    this.nodeTagWithAvatar.counterAxisAlignItems = 'CENTER'
+    this.nodeTagWithAvatar.horizontalPadding = this.isCompact ? 4 : 8
+    this.nodeTagWithAvatar.verticalPadding = this.isCompact ? 2 : 4
+    this.nodeTagWithAvatar.itemSpacing = 8
+
+    // Insert
+    this.nodeTagWithAvatar.appendChild(this.makeNodeText())
+    this.nodeTagWithAvatar.appendChild(this.makeNodeAvatar(image))
+
+    return this.nodeTagWithAvatar
+  }
+
   makeNodeText = () => {
-    // base
+    // Base
     this.nodeText = figma.createText()
     this.nodeText.name = '_text'
     this.nodeText.characters = this.content
@@ -70,7 +202,7 @@ export default class Tag {
       unit: 'PERCENT',
     })
     this.nodeText.textAlignHorizontal = 'CENTER'
-    if (this.url != null) {
+    if (this.url !== null) {
       this.nodeText.setRangeHyperlink(0, this.content.length, {
         type: 'URL',
         value: this.url,
@@ -92,7 +224,7 @@ export default class Tag {
   }
 
   makeNodeIndicator = (rgb: Array<number>) => {
-    // base
+    // Base
     this.nodeIndicator = figma.createEllipse()
     this.nodeIndicator.name = '_indicator'
     this.nodeIndicator.resize(8, 8)
@@ -119,5 +251,24 @@ export default class Tag {
     ]
 
     return this.nodeIndicator
+  }
+
+  makeNodeAvatar = (image?: Image | null) => {
+    // Base
+    this.nodeAvatar = figma.createEllipse()
+    this.nodeAvatar.resize(24, 24)
+    this.nodeAvatar.name = '_avatar'
+
+    if (image !== null && image !== undefined) {
+      this.nodeAvatar.fills = [
+        {
+          type: 'IMAGE',
+          scaleMode: 'FILL',
+          imageHash: image.hash,
+        },
+      ]
+    }
+
+    return this.nodeAvatar
   }
 }

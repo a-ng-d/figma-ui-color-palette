@@ -1,5 +1,7 @@
-import type { Easing, ScaleConfiguration } from './types'
 import { doMap } from '@a-ng-d/figmug.modules.do-map'
+
+import { ScaleConfiguration } from '../types/configurations'
+import { Easing } from '../types/management'
 
 const doLightnessScale = (
   stops: Array<number>,
@@ -29,7 +31,7 @@ const applyEase = (mode: Easing, x: number): number => {
     EASE_IN_OUT: (x) => -(Math.cos(Math.PI * x) - 1) / 2,
   }
 
-  return actions[mode]?.(x)
+  return actions[mode ?? 'LINEAR']?.(x)
 }
 
 export default doLightnessScale

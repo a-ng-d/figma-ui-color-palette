@@ -125,6 +125,10 @@ div.controls__control--horizontal .control__block + .control__block {
   border-left: 1px solid var(--figma-color-border-disabled);
 }
 
+div.control__block__loader {
+  margin: auto;
+}
+
 div.section-controls {
   display: flex;
   align-items: center;

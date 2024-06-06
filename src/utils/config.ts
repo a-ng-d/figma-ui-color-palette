@@ -1,7 +1,14 @@
-import type { Feature } from './types'
+import { Feature } from '../types/app'
 
 export const trialTime = 48
 export const oldTrialTime = 168
+export const pageSize = 20
+export const proxyUrl =
+  'https://hook.eu1.make.com/s02o2bjkknapgjidnp5bko7duc5w6t65'
+export const databaseUrl = 'https://zclweepgvqkrelyfwhma.supabase.co'
+export const authUrl = 'http://localhost:3000'
+export const palettesDbTableName = 'Palettes'
+export const palettesStorageName = 'Palette screenshots'
 
 export const features: Array<Feature> = [
   {
@@ -113,8 +120,80 @@ export const features: Array<Feature> = [
     service: ['EDIT'],
   },
   {
+    name: 'PUBLISH_PALETTE',
+    description: 'Publish palette to the community and self',
+    isActive: true,
+    isPro: false,
+    isNew: false,
+    type: 'ACTION',
+    service: ['EDIT'],
+  },
+  {
+    name: 'PALETTES',
+    description: 'Palettes that can be reused',
+    isActive: true,
+    isPro: false,
+    isNew: false,
+    type: 'CONTEXT',
+    service: ['CREATE'],
+  },
+  {
+    name: 'PALETTES_SELF',
+    description: 'Self-created palettes',
+    isActive: true,
+    isPro: false,
+    isNew: false,
+    type: 'CONTEXT',
+    service: ['CREATE'],
+  },
+  {
+    name: 'PALETTES_COMMUNITY',
+    description: 'Community palettes',
+    isActive: true,
+    isPro: false,
+    isNew: false,
+    type: 'CONTEXT',
+    service: ['CREATE'],
+  },
+  {
+    name: 'PALETTES_DEV',
+    description: 'Dev mode palettes',
+    isActive: true,
+    isPro: false,
+    isNew: false,
+    type: 'DIVISION',
+    service: ['CREATE'],
+  },
+  {
+    name: 'PALETTES_SEARCH',
+    description: 'Search palettes',
+    isActive: true,
+    isPro: false,
+    isNew: false,
+    type: 'ACTION',
+    service: ['CREATE'],
+  },
+  {
     name: 'SOURCE',
     description: 'Raw source colors',
+    isActive: true,
+    isPro: false,
+    isNew: false,
+    type: 'CONTEXT',
+    service: ['CREATE'],
+  },
+  {
+    name: 'SOURCE_OVERVIEW',
+    description: 'Source colors overview and import',
+    isActive: true,
+    isPro: false,
+    isNew: false,
+    type: 'CONTEXT',
+    service: ['CREATE'],
+  },
+  {
+    name: 'SOURCE_EXPLORE',
+    description: 'External color palettes from Colour Lovers',
     isActive: true,
     isPro: false,
     isNew: false,
@@ -142,6 +221,15 @@ export const features: Array<Feature> = [
   {
     name: 'SOURCE_REALTIME_COLORS',
     description: 'Import colors from a Realtime Colors simulation',
+    isActive: true,
+    isPro: false,
+    isNew: false,
+    type: 'ACTION',
+    service: ['CREATE'],
+  },
+  {
+    name: 'SOURCE_COLOUR_LOVERS',
+    description: 'Import colors from a Colour Lovers palette',
     isActive: true,
     isPro: false,
     isNew: false,
@@ -752,6 +840,15 @@ export const features: Array<Feature> = [
     service: ['CREATE', 'EDIT'],
   },
   {
+    name: 'SHORTCUTS_USER',
+    description: 'User menu',
+    isActive: true,
+    isPro: false,
+    isNew: false,
+    type: 'DIVISION',
+    service: ['CREATE', 'EDIT'],
+  },
+  {
     name: 'SHORTCUTS_HIGHLIGHT',
     description: 'Release notes',
     isActive: true,
@@ -831,6 +928,15 @@ export const features: Array<Feature> = [
     isNew: false,
     type: 'ACTION',
     service: ['CREATE', 'EDIT'],
+  },
+  {
+    name: 'PUBLICATION',
+    description: 'Palette publication pitch',
+    isActive: true,
+    isPro: false,
+    isNew: false,
+    type: 'DIVISION',
+    service: ['EDIT'],
   },
   {
     name: 'GET_PRO_PLAN',
