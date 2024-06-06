@@ -79,7 +79,10 @@ export default class Explore extends React.Component<
         credentials: 'omit',
       }
     )
-      .then((response) => response.json())
+      .then((response) => {
+        if (response.ok) return response.json()
+        else throw new Error(locals[this.props.lang].error.badResponse)
+      })
       .then((data) => {
         this.setState({
           colourLoversPalettesListStatus:

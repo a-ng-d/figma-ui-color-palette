@@ -438,6 +438,7 @@ export const locals: { [key: string]: any } = {
         '✕ Your UI Color Palette seems corrupted. Do not edit any layer within it.',
       palettesPicking: '✕ UI Color Palettes cannot be picked for now',
       generic: '✕ Something went wrong',
+      badResponse: '✕ The response is not valid',
       authentication: '✕ The authentication has failed',
       timeout: '✕ The authentication has been timed out',
       publication: '✕ The palette cannot be published',

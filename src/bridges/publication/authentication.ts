@@ -2,6 +2,7 @@ import { createClient } from '@supabase/supabase-js'
 
 import { authUrl, databaseUrl, proxyUrl } from '../../utils/config'
 import checkConnectionStatus from '../checks/checkConnectionStatus'
+import { lang, locals } from '../../content/locals'
 
 let isAuthenticated = false
 
@@ -20,8 +21,8 @@ export const signIn = async () => {
       },
     })
       .then((response) => {
-        if (response.body) return response.json()
-        else reject(new Error())
+        if (response.ok) return response.json()
+        else reject(new Error(locals[lang].error.badResponse))
       })
       .then((result) => {
         parent.postMessage(
