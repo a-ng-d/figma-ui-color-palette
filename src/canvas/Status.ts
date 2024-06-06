@@ -32,7 +32,7 @@ export default class Status {
         new Tag({
           name: '_close',
           content: locals[lang].paletteProperties.closest,
-          fontSize: 10
+          fontSize: 10,
         }).makeNodeTagwithIndicator([
           this.source.r,
           this.source.g,

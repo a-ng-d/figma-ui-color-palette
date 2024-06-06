@@ -35,7 +35,7 @@ export default class Title {
       new Tag({
         name: '_name',
         content: this.parent.name === '' ? locals[lang].name : this.parent.name,
-        fontSize: 20
+        fontSize: 20,
       }).makeNodeTag()
     )
     if (
@@ -108,7 +108,7 @@ export default class Title {
         new Tag({
           name: '_creator_id',
           content: `${locals[lang].paletteProperties.provider}${this.parent.creatorFullName}`,
-          fontSize: 12
+          fontSize: 12,
         }).makeNodeTagWithAvatar(this.parent.creatorAvatarImg)
       )
 
@@ -122,21 +122,21 @@ export default class Title {
           content: `${locals[lang].paletteProperties.theme}${
             this.parent.themes.find((theme) => theme.isEnabled)?.name
           }`,
-          fontSize: 12
+          fontSize: 12,
         }).makeNodeTag()
       )
     this.nodeProps.appendChild(
       new Tag({
         name: '_preset',
         content: `${locals[lang].paletteProperties.preset}${this.parent.preset.name}`,
-        fontSize: 12
+        fontSize: 12,
       }).makeNodeTag()
     )
     this.nodeProps.appendChild(
       new Tag({
         name: '_color-space',
         content: `${locals[lang].paletteProperties.colorSpace}${this.parent.colorSpace}`,
-        fontSize: 12
+        fontSize: 12,
       }).makeNodeTag()
     )
     if (this.parent.visionSimulationMode !== 'NONE')
@@ -147,7 +147,7 @@ export default class Title {
             this.parent.visionSimulationMode.charAt(0) +
             this.parent.visionSimulationMode.toLocaleLowerCase().slice(1)
           }`,
-          fontSize: 12
+          fontSize: 12,
         }).makeNodeTag()
       )
 

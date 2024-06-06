@@ -31,7 +31,7 @@ export default class Property {
       new Tag({
         name: this.name,
         content: this.content,
-        fontSize: this.size
+        fontSize: this.size,
       }).makeNodeTag()
     )
 

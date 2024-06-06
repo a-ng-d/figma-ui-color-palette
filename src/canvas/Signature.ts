@@ -31,7 +31,7 @@ export default class Signature {
       new Tag({
         name: '_tagline',
         content: locals[lang].tagline,
-        fontSize: 10
+        fontSize: 10,
       }).makeNodeTag()
     )
     this.nodeInfo.appendChild(

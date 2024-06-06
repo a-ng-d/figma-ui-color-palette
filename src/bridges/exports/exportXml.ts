@@ -40,10 +40,9 @@ const exportXml = (palette: FrameNode) => {
     figma.ui.postMessage({
       type: 'EXPORT_PALETTE_XML',
       context: 'ANDROID_XML',
-      data: `<?xml version="1.0" encoding="utf-8"?>\n<resources>\n  ${
-        resources.join(
-          '\n  '
-        )}\n</resources>`,
+      data: `<?xml version="1.0" encoding="utf-8"?>\n<resources>\n  ${resources.join(
+        '\n  '
+      )}\n</resources>`,
     })
   } else figma.notify(locals[lang].error.corruption)
 }

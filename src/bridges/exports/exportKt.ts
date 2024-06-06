@@ -42,10 +42,7 @@ const exportKt = (palette: FrameNode) => {
     figma.ui.postMessage({
       type: 'EXPORT_PALETTE_KT',
       context: 'ANDROID_COMPOSE',
-      data: `import androidx.compose.ui.graphics.Color\n\n${
-        kotlin.join(
-          '\n'
-        )}`,
+      data: `import androidx.compose.ui.graphics.Color\n\n${kotlin.join('\n')}`,
     })
   } else figma.notify(locals[lang].error.corruption)
 }

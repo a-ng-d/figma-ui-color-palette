@@ -41,24 +41,24 @@ const exportCss = (palette: FrameNode, colorSpace: 'RGB' | 'LCH' | 'P3') => {
     workingThemes.forEach((theme) => {
       const rowCss: Array<string> = []
       theme.colors.forEach((color) => {
-        rowCss.push(
-          `/* ${color.name} */`
-        )
+        rowCss.push(`/* ${color.name} */`)
         color.shades.forEach((shade) => {
           rowCss.push(
-            `--${
-              doKebabCase(color.name)
-            }-${shade.name}: ${setValueAccordingToColorSpace(shade)};`
+            `--${doKebabCase(
+              color.name
+            )}-${shade.name}: ${setValueAccordingToColorSpace(shade)};`
           )
         })
         rowCss.push('')
       })
       rowCss.pop()
-      css.push(`:root${
-        theme.type === 'custom theme'
-          ? `[data-theme='${doKebabCase(theme.name)}']`
-          : ''
-        } {\n  ${rowCss.join('\n  ')}\n}`)
+      css.push(
+        `:root${
+          theme.type === 'custom theme'
+            ? `[data-theme='${doKebabCase(theme.name)}']`
+            : ''
+        } {\n  ${rowCss.join('\n  ')}\n}`
+      )
     })
 
     figma.ui.postMessage({

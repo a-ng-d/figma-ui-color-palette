@@ -46,10 +46,9 @@ const exportSwiftUI = (palette: FrameNode) => {
     figma.ui.postMessage({
       type: 'EXPORT_PALETTE_SWIFTUI',
       context: 'APPLE_SWIFTUI',
-      data: `import SwiftUI\n\npublic extension Color {\n  static let Token = Color.TokenColor()\n  struct TokenColor {\n    ${
-        swift.join(
-          '\n    '
-        )}\n  }\n}`,
+      data: `import SwiftUI\n\npublic extension Color {\n  static let Token = Color.TokenColor()\n  struct TokenColor {\n    ${swift.join(
+        '\n    '
+      )}\n  }\n}`,
     })
   } else figma.notify(locals[lang].error.corruption)
 }

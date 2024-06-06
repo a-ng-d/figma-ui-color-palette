@@ -1,4 +1,4 @@
-import { RgbModel } from "../types/models"
+import { RgbModel } from '../types/models'
 
 export default class Tag {
   name: string
@@ -6,7 +6,7 @@ export default class Tag {
   fontSize: number
   url: string | null
   backgroundColor: {
-    rgb: RgbModel,
+    rgb: RgbModel
     alpha: number
   }
   isCompact: boolean
@@ -17,23 +17,21 @@ export default class Tag {
   nodeIndicator: EllipseNode | null
   nodeAvatar: EllipseNode | null
 
-  constructor(
-    options: {
-      name: string,
-      content: string,
-      fontSize?: number,
-      backgroundColor?: {
-        rgb: RgbModel,
-        alpha: number
-      },
-      isCompact?: boolean,
-      url?: string | null,
+  constructor(options: {
+    name: string
+    content: string
+    fontSize?: number
+    backgroundColor?: {
+      rgb: RgbModel
+      alpha: number
     }
-  ) {
+    isCompact?: boolean
+    url?: string | null
+  }) {
     this.name = options.name
     this.content = options.content
     this.fontSize = options.fontSize ?? 8
-    this.url = options.url ?? null as string | null
+    this.url = options.url ?? (null as string | null)
     this.backgroundColor = options.backgroundColor ?? {
       rgb: {
         r: 1,
@@ -75,7 +73,7 @@ export default class Tag {
           b: 0,
         },
         opacity: 0.05,
-      }
+      },
     ]
     this.nodeTag.cornerRadius = 16
 
@@ -86,7 +84,9 @@ export default class Tag {
     this.nodeTag.counterAxisAlignItems = 'CENTER'
     this.nodeTag.paddingRight = this.isCompact ? 2 : 8
     this.nodeTag.paddingLeft = 8
-    this.nodeTag.paddingTop = this.nodeTag.paddingBottom = this.isCompact ? 2 : 4
+    this.nodeTag.paddingTop = this.nodeTag.paddingBottom = this.isCompact
+      ? 2
+      : 4
     this.nodeTag.itemSpacing = 4
 
     // Insert
@@ -119,7 +119,7 @@ export default class Tag {
           b: 0,
         },
         opacity: 0.05,
-      }
+      },
     ]
     this.nodeTagwithIndicator.cornerRadius = 16
 
@@ -130,7 +130,8 @@ export default class Tag {
     this.nodeTagwithIndicator.counterAxisAlignItems = 'CENTER'
     this.nodeTagwithIndicator.paddingRight = this.isCompact ? 2 : 8
     this.nodeTagwithIndicator.paddingLeft = 8
-    this.nodeTagwithIndicator.paddingTop = this.nodeTagwithIndicator.paddingBottom = this.isCompact ? 2 : 4
+    this.nodeTagwithIndicator.paddingTop =
+      this.nodeTagwithIndicator.paddingBottom = this.isCompact ? 2 : 4
     this.nodeTagwithIndicator.itemSpacing = 4
 
     // Insert
@@ -166,7 +167,7 @@ export default class Tag {
           b: 0,
         },
         opacity: 0.05,
-      }
+      },
     ]
     this.nodeTagWithAvatar.cornerRadius = 16
 
