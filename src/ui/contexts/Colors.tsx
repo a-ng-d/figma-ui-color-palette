@@ -10,11 +10,11 @@ import { HoveredColor, SelectedColor } from '../../types/management'
 import { ColorsMessage } from '../../types/messages'
 import { ActionsList, DispatchProcess } from '../../types/models'
 import { Identity } from '../../types/user'
+import { trackSourceColorEvent } from '../../utils/eventsTracker'
 import type { AppStates } from '../App'
 import ColorItem from '../components/ColorItem'
 import Actions from '../modules/Actions'
 import Dispatcher from '../modules/Dispatcher'
-import { trackSourceColorEvent } from '../../utils/eventsTracker'
 
 interface ColorsProps {
   colors: Array<ColorConfiguration>
@@ -105,7 +105,7 @@ export default class Colors extends React.Component<ColorsProps, ColorsStates> {
       const hasAlreadyNewUIColor = this.colorsMessage.data.filter((color) =>
         color.name.includes('New UI Color')
       )
-      
+
       this.colorsMessage.data = this.props.colors
       this.colorsMessage.data.push({
         name: `New UI Color ${hasAlreadyNewUIColor.length + 1}`,
@@ -155,7 +155,7 @@ export default class Colors extends React.Component<ColorsProps, ColorsStates> {
         trackSourceColorEvent(this.props.figmaUserId, {
           feature: 'RENAME_COLOR',
         })
-      }     
+      }
     }
 
     const updateHexCode = () => {
@@ -295,7 +295,7 @@ export default class Colors extends React.Component<ColorsProps, ColorsStates> {
         if (item.id === id) item.description = currentElement.value
         return item
       })
-      
+
       this.props.onChangeColors({
         colors: this.colorsMessage.data,
         onGoingStep: 'colors changed',
@@ -306,7 +306,7 @@ export default class Colors extends React.Component<ColorsProps, ColorsStates> {
         trackSourceColorEvent(this.props.figmaUserId, {
           feature: 'DESCRIBE_COLOR',
         })
-      }  
+      }
     }
 
     const removeColor = () => {

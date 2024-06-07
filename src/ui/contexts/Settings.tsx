@@ -26,13 +26,13 @@ import {
 } from '../../types/models'
 import { Identity } from '../../types/user'
 import features from '../../utils/config'
+import { trackSettingEvent } from '../../utils/eventsTracker'
 import isBlocked from '../../utils/isBlocked'
 import { palette } from '../../utils/palettePackage'
 import type { AppStates } from '../App'
 import Feature from '../components/Feature'
 import Actions from '../modules/Actions'
 import Dispatcher from '../modules/Dispatcher'
-import { trackSettingEvent } from '../../utils/eventsTracker'
 
 interface SettingsProps {
   context: string
@@ -107,7 +107,10 @@ export default class Settings extends React.Component<SettingsProps> {
         onGoingStep: 'settings changed',
       })
 
-      if ((e.type === 'blur' || e.key === 'Enter') && this.props.context === 'LOCAL_STYLES') {
+      if (
+        (e.type === 'blur' || e.key === 'Enter') &&
+        this.props.context === 'LOCAL_STYLES'
+      ) {
         parent.postMessage({ pluginMessage: this.settingsMessage }, '*')
         trackSettingEvent(this.props.figmaUserId, {
           feature: 'RENAME_PALETTE',
@@ -201,7 +204,7 @@ export default class Settings extends React.Component<SettingsProps> {
         visionSimulationMode: this.settingsMessage.data.visionSimulationMode,
         onGoingStep: 'settings changed',
       })
-      
+
       if (this.props.context === 'LOCAL_STYLES') {
         parent.postMessage({ pluginMessage: this.settingsMessage }, '*')
         trackSettingEvent(this.props.figmaUserId, {
@@ -218,7 +221,7 @@ export default class Settings extends React.Component<SettingsProps> {
         this.props.visionSimulationMode
       this.settingsMessage.data.textColorsTheme = this.props.textColorsTheme
       this.settingsMessage.data.algorithmVersion = !target.checked ? 'v1' : 'v2'
-      
+
       this.props.onChangeSettings({
         algorithmVersion: this.settingsMessage.data.algorithmVersion,
         onGoingStep: 'settings changed',

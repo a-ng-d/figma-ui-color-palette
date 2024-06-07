@@ -14,12 +14,12 @@ import { ThemesMessage } from '../../types/messages'
 import { ActionsList, DispatchProcess } from '../../types/models'
 import { Identity } from '../../types/user'
 import doLightnessScale from '../../utils/doLightnessScale'
+import { trackColorThemeEvent } from '../../utils/eventsTracker'
 import isBlocked from '../../utils/isBlocked'
 import type { AppStates } from '../App'
 import ThemeItem from '../components/ThemeItem'
 import Actions from '../modules/Actions'
 import Dispatcher from '../modules/Dispatcher'
-import { trackColorThemeEvent} from '../../utils/eventsTracker'
 
 interface ThemesProps {
   preset: PresetConfiguration
@@ -130,7 +130,7 @@ export default class Themes extends React.Component<ThemesProps, ThemesStates> {
         id: uid(),
         type: 'custom theme',
       })
-      
+
       this.props.onChangeThemes({
         scale:
           this.themesMessage.data.find((theme) => theme.isEnabled)?.scale ?? {},
@@ -225,7 +225,6 @@ export default class Themes extends React.Component<ThemesProps, ThemesStates> {
           feature: 'DESCRIBE_THEME',
         })
       }
-        
     }
 
     const removeTheme = () => {
@@ -249,7 +248,7 @@ export default class Themes extends React.Component<ThemesProps, ThemesStates> {
         themes: this.themesMessage.data,
         onGoingStep: 'themes changed',
       })
-      
+
       parent.postMessage({ pluginMessage: this.themesMessage }, '*')
       trackColorThemeEvent(this.props.figmaUserId, {
         feature: 'REMOVE_THEME',

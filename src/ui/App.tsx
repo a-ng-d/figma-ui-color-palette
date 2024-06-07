@@ -1,4 +1,5 @@
 import 'figma-plugin-ds/dist/figma-plugin-ds.css'
+import mixpanel from 'mixpanel-figma'
 import React from 'react'
 import { createRoot } from 'react-dom/client'
 
@@ -33,6 +34,12 @@ import { PriorityContext } from '../types/management'
 import { ActionsList, TextColorsThemeHexModel } from '../types/models'
 import { UserSession } from '../types/user'
 import features, { trialTime } from '../utils/config'
+import {
+  trackExportEvent,
+  trackPurchaseEvent,
+  trackRunningEvent,
+  trackTrialEnablementEvent,
+} from '../utils/eventsTracker'
 import { defaultPreset, palette, presets } from '../utils/palettePackage'
 import Feature from './components/Feature'
 import PriorityContainer from './modules/PriorityContainer'
@@ -42,8 +49,6 @@ import EditPalette from './services/EditPalette'
 import TransferPalette from './services/TransferPalette'
 import './stylesheets/app-components.css'
 import './stylesheets/app.css'
-import mixpanel from 'mixpanel-figma'
-import { trackExportEvent, trackPurchaseEvent, trackRunningEvent, trackTrialEnablementEvent } from '../utils/eventsTracker'
 
 export interface AppStates {
   service: Service
@@ -450,14 +455,10 @@ class App extends React.Component<Record<string, never>, AppStates> {
             },
             onGoingStep: 'export previewed',
           })
-          trackExportEvent(
-            e.data.pluginMessage.id,
-            {
-              context: e.data.pluginMessage.context
-            }
-          )
+          trackExportEvent(e.data.pluginMessage.id, {
+            context: e.data.pluginMessage.context,
+          })
         }
-          
 
         const exportPaletteToCss = () => {
           this.setState({
@@ -473,15 +474,11 @@ class App extends React.Component<Record<string, never>, AppStates> {
             },
             onGoingStep: 'export previewed',
           })
-          trackExportEvent(
-            e.data.pluginMessage.id,
-            {
-              context: e.data.pluginMessage.context,
-              colorSpace: e.data.pluginMessage.colorSpace
-            }
-          )
+          trackExportEvent(e.data.pluginMessage.id, {
+            context: e.data.pluginMessage.context,
+            colorSpace: e.data.pluginMessage.colorSpace,
+          })
         }
-          
 
         const exportPaletteToTaiwind = () => {
           this.setState({
@@ -501,14 +498,10 @@ class App extends React.Component<Record<string, never>, AppStates> {
             },
             onGoingStep: 'export previewed',
           })
-          trackExportEvent(
-            e.data.pluginMessage.id,
-            {
-              context: e.data.pluginMessage.context,
-            }
-          )
+          trackExportEvent(e.data.pluginMessage.id, {
+            context: e.data.pluginMessage.context,
+          })
         }
-          
 
         const exportPaletteToSwiftUI = () => {
           this.setState({
@@ -524,14 +517,10 @@ class App extends React.Component<Record<string, never>, AppStates> {
             },
             onGoingStep: 'export previewed',
           })
-          trackExportEvent(
-            e.data.pluginMessage.id,
-            {
-              context: e.data.pluginMessage.context,
-            }
-          )
+          trackExportEvent(e.data.pluginMessage.id, {
+            context: e.data.pluginMessage.context,
+          })
         }
-          
 
         const exportPaletteToUIKit = () => {
           this.setState({
@@ -547,14 +536,10 @@ class App extends React.Component<Record<string, never>, AppStates> {
             },
             onGoingStep: 'export previewed',
           })
-          trackExportEvent(
-            e.data.pluginMessage.id,
-            {
-              context: e.data.pluginMessage.context,
-            }
-          )
+          trackExportEvent(e.data.pluginMessage.id, {
+            context: e.data.pluginMessage.context,
+          })
         }
-          
 
         const exportPaletteToKt = () => {
           this.setState({
@@ -570,14 +555,10 @@ class App extends React.Component<Record<string, never>, AppStates> {
             },
             onGoingStep: 'export previewed',
           })
-          trackExportEvent(
-            e.data.pluginMessage.id,
-            {
-              context: e.data.pluginMessage.context,
-            }
-          )
+          trackExportEvent(e.data.pluginMessage.id, {
+            context: e.data.pluginMessage.context,
+          })
         }
-          
 
         const exportPaletteToXml = () => {
           this.setState({
@@ -593,14 +574,10 @@ class App extends React.Component<Record<string, never>, AppStates> {
             },
             onGoingStep: 'export previewed',
           })
-          trackExportEvent(
-            e.data.pluginMessage.id,
-            {
-              context: e.data.pluginMessage.context,
-            }
-          )
+          trackExportEvent(e.data.pluginMessage.id, {
+            context: e.data.pluginMessage.context,
+          })
         }
-          
 
         const exportPaletteToCsv = () => {
           this.setState({
@@ -616,14 +593,10 @@ class App extends React.Component<Record<string, never>, AppStates> {
             },
             onGoingStep: 'export previewed',
           })
-          trackExportEvent(
-            e.data.pluginMessage.id,
-            {
-              context: e.data.pluginMessage.context,
-            }
-          )
+          trackExportEvent(e.data.pluginMessage.id, {
+            context: e.data.pluginMessage.context,
+          })
         }
-          
 
         const exposePalettes = (data: Array<ExtractOfPaletteConfiguration>) =>
           this.setState({
@@ -649,9 +622,7 @@ class App extends React.Component<Record<string, never>, AppStates> {
             planStatus: e.data.pluginMessage.data,
             priorityContainerContext: 'WELCOME_TO_PRO',
           })
-          trackPurchaseEvent(
-            e.data.pluginMessage.id
-          )
+          trackPurchaseEvent(e.data.pluginMessage.id)
         }
 
         const enableTrial = () => {
@@ -660,15 +631,11 @@ class App extends React.Component<Record<string, never>, AppStates> {
             trialStatus: 'PENDING',
             priorityContainerContext: 'WELCOME_TO_TRIAL',
           })
-          trackTrialEnablementEvent(
-            e.data.pluginMessage.id,
-            {
-              date: e.data.pluginMessage.date,
-              trialTime: e.data.pluginMessage.trialTime
-            }
-          )
+          trackTrialEnablementEvent(e.data.pluginMessage.id, {
+            date: e.data.pluginMessage.date,
+            trialTime: e.data.pluginMessage.trialTime,
+          })
         }
-          
 
         const signOut = (data: UserSession) =>
           this.setState({

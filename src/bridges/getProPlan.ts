@@ -8,7 +8,7 @@ const getProPlan = async () => {
         figma.ui.postMessage({
           type: 'GET_PRO_PLAN',
           data: figma.payments.status.type,
-          id: figma.currentUser?.id
+          id: figma.currentUser?.id,
         })
     })
 }
