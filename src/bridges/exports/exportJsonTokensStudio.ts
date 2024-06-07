@@ -58,6 +58,7 @@ const exportJsonTokensStudio = (palette: FrameNode) => {
 
     figma.ui.postMessage({
       type: 'EXPORT_PALETTE_JSON',
+      id: figma.currentUser?.id,
       context: 'TOKENS_TOKENS_STUDIO',
       data: JSON.stringify(json, null, '  '),
     })

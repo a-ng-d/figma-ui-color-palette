@@ -55,6 +55,7 @@ const exportJsonAmznStyleDictionary = (palette: FrameNode) => {
 
     figma.ui.postMessage({
       type: 'EXPORT_PALETTE_JSON',
+      id: figma.currentUser?.id,
       context: 'TOKENS_AMZN_STYLE_DICTIONARY',
       data: JSON.stringify(json, null, '  '),
     })

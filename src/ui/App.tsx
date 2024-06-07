@@ -43,7 +43,7 @@ import TransferPalette from './services/TransferPalette'
 import './stylesheets/app-components.css'
 import './stylesheets/app.css'
 import mixpanel from 'mixpanel-figma'
-import { trackPurchaseEvent, trackTrialEnablementEvent } from '../utils/eventsTracker'
+import { trackExportEvent, trackPurchaseEvent, trackTrialEnablementEvent } from '../utils/eventsTracker'
 
 export interface AppStates {
   service: Service
@@ -430,7 +430,7 @@ class App extends React.Component<Record<string, never>, AppStates> {
           })
         }
 
-        const exportPaletteToJson = () =>
+        const exportPaletteToJson = () => {
           this.setState({
             export: {
               format: 'JSON',
@@ -444,8 +444,16 @@ class App extends React.Component<Record<string, never>, AppStates> {
             },
             onGoingStep: 'export previewed',
           })
+          trackExportEvent(
+            e.data.pluginMessage.id,
+            {
+              context: e.data.pluginMessage.context
+            }
+          )
+        }
+          
 
-        const exportPaletteToCss = () =>
+        const exportPaletteToCss = () => {
           this.setState({
             export: {
               format: 'CSS',
@@ -459,8 +467,17 @@ class App extends React.Component<Record<string, never>, AppStates> {
             },
             onGoingStep: 'export previewed',
           })
+          trackExportEvent(
+            e.data.pluginMessage.id,
+            {
+              context: e.data.pluginMessage.context,
+              colorSpace: e.data.pluginMessage.colorSpace
+            }
+          )
+        }
+          
 
-        const exportPaletteToTaiwind = () =>
+        const exportPaletteToTaiwind = () => {
           this.setState({
             export: {
               format: 'TAILWIND',
@@ -478,8 +495,16 @@ class App extends React.Component<Record<string, never>, AppStates> {
             },
             onGoingStep: 'export previewed',
           })
+          trackExportEvent(
+            e.data.pluginMessage.id,
+            {
+              context: e.data.pluginMessage.context,
+            }
+          )
+        }
+          
 
-        const exportPaletteToSwiftUI = () =>
+        const exportPaletteToSwiftUI = () => {
           this.setState({
             export: {
               format: 'SWIFT',
@@ -493,8 +518,16 @@ class App extends React.Component<Record<string, never>, AppStates> {
             },
             onGoingStep: 'export previewed',
           })
+          trackExportEvent(
+            e.data.pluginMessage.id,
+            {
+              context: e.data.pluginMessage.context,
+            }
+          )
+        }
+          
 
-        const exportPaletteToUIKit = () =>
+        const exportPaletteToUIKit = () => {
           this.setState({
             export: {
               format: 'SWIFT',
@@ -508,8 +541,16 @@ class App extends React.Component<Record<string, never>, AppStates> {
             },
             onGoingStep: 'export previewed',
           })
+          trackExportEvent(
+            e.data.pluginMessage.id,
+            {
+              context: e.data.pluginMessage.context,
+            }
+          )
+        }
+          
 
-        const exportPaletteToKt = () =>
+        const exportPaletteToKt = () => {
           this.setState({
             export: {
               format: 'KT',
@@ -523,8 +564,16 @@ class App extends React.Component<Record<string, never>, AppStates> {
             },
             onGoingStep: 'export previewed',
           })
+          trackExportEvent(
+            e.data.pluginMessage.id,
+            {
+              context: e.data.pluginMessage.context,
+            }
+          )
+        }
+          
 
-        const exportPaletteToXml = () =>
+        const exportPaletteToXml = () => {
           this.setState({
             export: {
               format: 'XML',
@@ -538,8 +587,16 @@ class App extends React.Component<Record<string, never>, AppStates> {
             },
             onGoingStep: 'export previewed',
           })
+          trackExportEvent(
+            e.data.pluginMessage.id,
+            {
+              context: e.data.pluginMessage.context,
+            }
+          )
+        }
+          
 
-        const exportPaletteToCsv = () =>
+        const exportPaletteToCsv = () => {
           this.setState({
             export: {
               format: 'CSV',
@@ -553,6 +610,14 @@ class App extends React.Component<Record<string, never>, AppStates> {
             },
             onGoingStep: 'export previewed',
           })
+          trackExportEvent(
+            e.data.pluginMessage.id,
+            {
+              context: e.data.pluginMessage.context,
+            }
+          )
+        }
+          
 
         const exposePalettes = (data: Array<ExtractOfPaletteConfiguration>) =>
           this.setState({
@@ -591,8 +656,10 @@ class App extends React.Component<Record<string, never>, AppStates> {
           })
           trackTrialEnablementEvent(
             e.data.pluginMessage.id,
-            e.data.pluginMessage.date,
-            e.data.pluginMessage.trialTime
+            {
+              date: e.data.pluginMessage.date,
+              trialTime: e.data.pluginMessage.trialTime
+            }
           )
         }
           

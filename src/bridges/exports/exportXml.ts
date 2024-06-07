@@ -39,6 +39,7 @@ const exportXml = (palette: FrameNode) => {
 
     figma.ui.postMessage({
       type: 'EXPORT_PALETTE_XML',
+      id: figma.currentUser?.id,
       context: 'ANDROID_XML',
       data: `<?xml version="1.0" encoding="utf-8"?>\n<resources>\n  ${resources.join(
         '\n  '

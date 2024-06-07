@@ -63,6 +63,7 @@ const exportCss = (palette: FrameNode, colorSpace: 'RGB' | 'LCH' | 'P3') => {
 
     figma.ui.postMessage({
       type: 'EXPORT_PALETTE_CSS',
+      id: figma.currentUser?.id,
       context: 'CSS',
       colorSpace: colorSpace,
       data: css.join('\n\n'),

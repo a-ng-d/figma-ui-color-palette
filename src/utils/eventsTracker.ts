@@ -1,11 +1,12 @@
 import mixpanel from "mixpanel-figma"
+import { TrialEnablementEvent, ExportEvent } from "../types/events"
 
-export const trackTrialEnablementEvent = (id: string, date: number, trialTime: number) => {
+export const trackTrialEnablementEvent = (id: string, options: TrialEnablementEvent) => {
   mixpanel.identify(id),
   mixpanel.track('Trial Enabled', {
-    'Trial Start Date': new Date(date).toISOString(),
-    'Trial End Date': new Date(date + (trialTime * 3600 * 1000)).toISOString(),
-    'Trail Time': trialTime + ' hours',
+    'Trial Start Date': new Date(options.date).toISOString(),
+    'Trial End Date': new Date(options.date + (options.trialTime * 3600 * 1000)).toISOString(),
+    'Trail Time': options.trialTime + ' hours',
     'Trial Version': '3.2.0',
   })
 }
@@ -13,4 +14,12 @@ export const trackTrialEnablementEvent = (id: string, date: number, trialTime: n
 export const trackPurchaseEvent = (id: string) => {
   mixpanel.identify(id),
   mixpanel.track('Purchase Enabled')
+}
+
+export const trackExportEvent = (id: string, options: ExportEvent) => {
+  mixpanel.identify(id),
+  mixpanel.track('Palette Color Shades Exported', {
+    'Context': options.context,
+    'Color Space': options.colorSpace ?? 'NC'
+  })
 }
