@@ -32,6 +32,7 @@ import type { AppStates } from '../App'
 import Feature from '../components/Feature'
 import Actions from '../modules/Actions'
 import Dispatcher from '../modules/Dispatcher'
+import { trackSettingEvent } from '../../utils/eventsTracker'
 
 interface SettingsProps {
   context: string
@@ -47,6 +48,7 @@ interface SettingsProps {
   planStatus: PlanStatus
   editorType?: EditorType
   lang: Language
+  figmaUserId: string
   onChangeSettings: React.Dispatch<Partial<AppStates>>
   onCreatePalette?: () => void
   onSyncLocalStyles?: () => void
@@ -100,15 +102,17 @@ export default class Settings extends React.Component<SettingsProps> {
       this.settingsMessage.data.algorithmVersion =
         this.props.algorithmVersion ?? 'v2'
 
-      if (e.type === 'blur' && this.props.context === 'LOCAL_STYLES')
-        parent.postMessage({ pluginMessage: this.settingsMessage }, '*')
-      else if (e.key === 'Enter' && this.props.context === 'LOCAL_STYLES')
-        parent.postMessage({ pluginMessage: this.settingsMessage }, '*')
-
       this.props.onChangeSettings({
         name: this.settingsMessage.data.name,
         onGoingStep: 'settings changed',
       })
+
+      if ((e.type === 'blur' || e.key === 'Enter') && this.props.context === 'LOCAL_STYLES') {
+        parent.postMessage({ pluginMessage: this.settingsMessage }, '*')
+        trackSettingEvent(this.props.figmaUserId, {
+          feature: 'RENAME_PALETTE',
+        })
+      }
     }
 
     const updateDescription = () => {
@@ -122,29 +126,37 @@ export default class Settings extends React.Component<SettingsProps> {
       this.settingsMessage.data.algorithmVersion =
         this.props.algorithmVersion ?? 'v2'
 
-      if (e.type === 'blur' && this.props.context === 'LOCAL_STYLES')
-        parent.postMessage({ pluginMessage: this.settingsMessage }, '*')
-
       this.props.onChangeSettings({
         description: this.settingsMessage.data.description,
         onGoingStep: 'settings changed',
       })
+
+      if (e.type === 'blur' && this.props.context === 'LOCAL_STYLES') {
+        parent.postMessage({ pluginMessage: this.settingsMessage }, '*')
+        trackSettingEvent(this.props.figmaUserId, {
+          feature: 'DESCRIBE_PALETTE',
+        })
+      }
     }
 
     const updateView = () => {
       if (target.dataset.isBlocked === 'false') {
         palette.view = target.dataset.value as ViewConfiguration
 
-        if (this.props.context === 'LOCAL_STYLES')
-          parent.postMessage(
-            { pluginMessage: { type: 'UPDATE_VIEW', data: palette } },
-            '*'
-          )
-
         this.props.onChangeSettings({
           view: target.dataset.value as ViewConfiguration,
           onGoingStep: 'view changed',
         })
+
+        if (this.props.context === 'LOCAL_STYLES') {
+          parent.postMessage(
+            { pluginMessage: { type: 'UPDATE_VIEW', data: palette } },
+            '*'
+          )
+          trackSettingEvent(this.props.figmaUserId, {
+            feature: 'UPDATE_VIEW',
+          })
+        }
       }
     }
 
@@ -160,13 +172,17 @@ export default class Settings extends React.Component<SettingsProps> {
       this.settingsMessage.data.algorithmVersion =
         this.props.algorithmVersion ?? 'v2'
 
-      if (this.props.context === 'LOCAL_STYLES')
-        parent.postMessage({ pluginMessage: this.settingsMessage }, '*')
-
       this.props.onChangeSettings({
         colorSpace: this.settingsMessage.data.colorSpace,
         onGoingStep: 'settings changed',
       })
+
+      if (this.props.context === 'LOCAL_STYLES') {
+        parent.postMessage({ pluginMessage: this.settingsMessage }, '*')
+        trackSettingEvent(this.props.figmaUserId, {
+          feature: 'UPDATE_COLOR_SPACE',
+        })
+      }
     }
 
     const updatevisionSimulationMode = () => {
@@ -181,13 +197,17 @@ export default class Settings extends React.Component<SettingsProps> {
       this.settingsMessage.data.algorithmVersion =
         this.props.algorithmVersion ?? 'v2'
 
-      if (this.props.context === 'LOCAL_STYLES')
-        parent.postMessage({ pluginMessage: this.settingsMessage }, '*')
-
       this.props.onChangeSettings({
         visionSimulationMode: this.settingsMessage.data.visionSimulationMode,
         onGoingStep: 'settings changed',
       })
+      
+      if (this.props.context === 'LOCAL_STYLES') {
+        parent.postMessage({ pluginMessage: this.settingsMessage }, '*')
+        trackSettingEvent(this.props.figmaUserId, {
+          feature: 'UPDATE_VISION_SIMULATION_MODE',
+        })
+      }
     }
 
     const updateAlgorythmVersion = () => {
@@ -198,12 +218,15 @@ export default class Settings extends React.Component<SettingsProps> {
         this.props.visionSimulationMode
       this.settingsMessage.data.textColorsTheme = this.props.textColorsTheme
       this.settingsMessage.data.algorithmVersion = !target.checked ? 'v1' : 'v2'
-
-      parent.postMessage({ pluginMessage: this.settingsMessage }, '*')
-
+      
       this.props.onChangeSettings({
         algorithmVersion: this.settingsMessage.data.algorithmVersion,
         onGoingStep: 'settings changed',
+      })
+
+      parent.postMessage({ pluginMessage: this.settingsMessage }, '*')
+      trackSettingEvent(this.props.figmaUserId, {
+        feature: 'UPDATE_ALGORITHM',
       })
     }
 
@@ -225,16 +248,19 @@ export default class Settings extends React.Component<SettingsProps> {
           this.props.algorithmVersion ?? 'v2'
       }
 
-      if (e.type === 'blur' && this.props.context === 'LOCAL_STYLES') {
-        this.dispatch.textColorsTheme.on.status = false
-        parent.postMessage({ pluginMessage: this.settingsMessage }, '*')
-      } else if (this.props.context === 'LOCAL_STYLES')
-        this.dispatch.textColorsTheme.on.status = true
-
       this.props.onChangeSettings({
         textColorsTheme: this.settingsMessage.data.textColorsTheme,
         onGoingStep: 'settings changed',
       })
+
+      if (e.type === 'blur' && this.props.context === 'LOCAL_STYLES') {
+        this.dispatch.textColorsTheme.on.status = false
+        parent.postMessage({ pluginMessage: this.settingsMessage }, '*')
+        trackSettingEvent(this.props.figmaUserId, {
+          feature: 'UPDATE_TEXT_COLORS_THEME',
+        })
+      } else if (this.props.context === 'LOCAL_STYLES')
+        this.dispatch.textColorsTheme.on.status = true
     }
 
     const updateTextDarkColor = () => {
@@ -255,16 +281,19 @@ export default class Settings extends React.Component<SettingsProps> {
           this.props.algorithmVersion ?? 'v2'
       }
 
-      if (e.type === 'blur' && this.props.context === 'LOCAL_STYLES') {
-        this.dispatch.textColorsTheme.on.status = false
-        parent.postMessage({ pluginMessage: this.settingsMessage }, '*')
-      } else if (this.props.context === 'LOCAL_STYLES')
-        this.dispatch.textColorsTheme.on.status = true
-
       this.props.onChangeSettings({
         textColorsTheme: this.settingsMessage.data.textColorsTheme,
         onGoingStep: 'settings changed',
       })
+
+      if (e.type === 'blur' && this.props.context === 'LOCAL_STYLES') {
+        this.dispatch.textColorsTheme.on.status = false
+        parent.postMessage({ pluginMessage: this.settingsMessage }, '*')
+        trackSettingEvent(this.props.figmaUserId, {
+          feature: 'UPDATE_TEXT_COLORS_THEME',
+        })
+      } else if (this.props.context === 'LOCAL_STYLES')
+        this.dispatch.textColorsTheme.on.status = true
     }
 
     const actions: ActionsList = {

@@ -43,7 +43,7 @@ import TransferPalette from './services/TransferPalette'
 import './stylesheets/app-components.css'
 import './stylesheets/app.css'
 import mixpanel from 'mixpanel-figma'
-import { trackExportEvent, trackPurchaseEvent, trackTrialEnablementEvent } from '../utils/eventsTracker'
+import { trackExportEvent, trackPurchaseEvent, trackRunningEvent, trackTrialEnablementEvent } from '../utils/eventsTracker'
 
 export interface AppStates {
   service: Service
@@ -231,6 +231,7 @@ class App extends React.Component<Record<string, never>, AppStates> {
           this.setState({
             figmaUserId: e.data.pluginMessage.id,
           })
+          trackRunningEvent(e.data.pluginMessage.id)
         }
 
         const checkEditorType = () =>

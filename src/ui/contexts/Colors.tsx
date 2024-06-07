@@ -119,6 +119,7 @@ export default class Colors extends React.Component<ColorsProps, ColorsStates> {
         oklch: false,
         hueShifting: 0,
       })
+
       this.props.onChangeColors({
         colors: this.colorsMessage.data,
         onGoingStep: 'colors changed',
@@ -143,6 +144,7 @@ export default class Colors extends React.Component<ColorsProps, ColorsStates> {
               : currentElement.value
         return item
       })
+
       this.props.onChangeColors({
         colors: this.colorsMessage.data,
         onGoingStep: 'colors changed',
@@ -177,6 +179,7 @@ export default class Colors extends React.Component<ColorsProps, ColorsStates> {
             }
           return item
         })
+
         this.props.onChangeColors({
           colors: this.colorsMessage.data,
           onGoingStep: 'colors changed',
@@ -208,6 +211,7 @@ export default class Colors extends React.Component<ColorsProps, ColorsStates> {
           }
         return item
       })
+
       this.props.onChangeColors({
         colors: this.colorsMessage.data,
         onGoingStep: 'colors changed',
@@ -232,6 +236,7 @@ export default class Colors extends React.Component<ColorsProps, ColorsStates> {
           }
         return item
       })
+
       this.props.onChangeColors({
         colors: this.colorsMessage.data,
         onGoingStep: 'colors changed',
@@ -256,6 +261,7 @@ export default class Colors extends React.Component<ColorsProps, ColorsStates> {
           }
         return item
       })
+
       this.props.onChangeColors({
         colors: this.colorsMessage.data,
         onGoingStep: 'colors changed',
@@ -272,6 +278,7 @@ export default class Colors extends React.Component<ColorsProps, ColorsStates> {
         if (item.id === id) item.hueShifting = parseFloat(currentElement.value)
         return item
       })
+
       this.props.onChangeColors({
         colors: this.colorsMessage.data,
         onGoingStep: 'colors changed',
@@ -288,6 +295,7 @@ export default class Colors extends React.Component<ColorsProps, ColorsStates> {
         if (item.id === id) item.description = currentElement.value
         return item
       })
+      
       this.props.onChangeColors({
         colors: this.colorsMessage.data,
         onGoingStep: 'colors changed',
@@ -305,6 +313,7 @@ export default class Colors extends React.Component<ColorsProps, ColorsStates> {
       this.colorsMessage.data = this.props.colors.filter(
         (item) => item.id !== id
       )
+
       this.props.onChangeColors({
         colors: this.colorsMessage.data,
         onGoingStep: 'colors changed',

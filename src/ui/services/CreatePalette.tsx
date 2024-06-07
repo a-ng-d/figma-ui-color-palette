@@ -39,6 +39,7 @@ interface CreatePaletteProps {
   planStatus: PlanStatus
   userSession: UserSession
   lang: Language
+  figmaUserId: string
   onChangeColorsFromImport: React.Dispatch<Partial<AppStates>>
   onChangeScale: React.Dispatch<Partial<AppStates>>
   onChangePreset: React.Dispatch<Partial<AppStates>>

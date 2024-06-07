@@ -130,6 +130,7 @@ export default class Themes extends React.Component<ThemesProps, ThemesStates> {
         id: uid(),
         type: 'custom theme',
       })
+      
       this.props.onChangeThemes({
         scale:
           this.themesMessage.data.find((theme) => theme.isEnabled)?.scale ?? {},
@@ -156,6 +157,7 @@ export default class Themes extends React.Component<ThemesProps, ThemesStates> {
               : currentElement.value
         return item
       })
+
       this.props.onChangeThemes({
         scale:
           this.themesMessage.data.find((theme) => theme.isEnabled)?.scale ?? {},
@@ -182,6 +184,7 @@ export default class Themes extends React.Component<ThemesProps, ThemesStates> {
           if (item.id === id) item.paletteBackground = code
           return item
         })
+
         this.props.onChangeThemes({
           scale:
             this.themesMessage.data.find((theme) => theme.isEnabled)?.scale ??
@@ -208,12 +211,14 @@ export default class Themes extends React.Component<ThemesProps, ThemesStates> {
         if (item.id === id) item.description = currentElement.value
         return item
       })
+
       this.props.onChangeThemes({
         scale:
           this.themesMessage.data.find((theme) => theme.isEnabled)?.scale ?? {},
         themes: this.themesMessage.data,
         onGoingStep: 'themes changed',
       })
+
       if (e.type === 'blur' || e.key === 'Enter') {
         parent.postMessage({ pluginMessage: this.themesMessage }, '*')
         trackColorThemeEvent(this.props.figmaUserId, {
@@ -237,12 +242,14 @@ export default class Themes extends React.Component<ThemesProps, ThemesStates> {
         )
         if (result !== undefined) result.isEnabled = true
       }
+
       this.props.onChangeThemes({
         scale:
           this.themesMessage.data.find((theme) => theme.isEnabled)?.scale ?? {},
         themes: this.themesMessage.data,
         onGoingStep: 'themes changed',
       })
+      
       parent.postMessage({ pluginMessage: this.themesMessage }, '*')
       trackColorThemeEvent(this.props.figmaUserId, {
         feature: 'REMOVE_THEME',

@@ -17,3 +17,7 @@ export interface ExportEvent {
   context?: string,
   colorSpace?: ColorSpaceConfiguration
 }
+  
+export interface SettingEvent {
+  feature: 'RENAME_PALETTE' | 'DESCRIBE_PALETTE' | 'UPDATE_VIEW' | 'UPDATE_COLOR_SPACE' | 'UPDATE_VISION_SIMULATION_MODE' | 'UPDATE_ALGORITHM' | 'UPDATE_TEXT_COLORS_THEME'
+}
