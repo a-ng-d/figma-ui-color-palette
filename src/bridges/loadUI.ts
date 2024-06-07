@@ -53,6 +53,7 @@ const loadUI = async () => {
 
   figma.ui.postMessage({
     type: 'CHECK_USER_AUTHENTICATION',
+    id: figma.currentUser?.id,
     data: {
       accessToken: await figma.clientStorage.getAsync('supabase_access_token'),
       refreshToken: await figma.clientStorage.getAsync(

@@ -19,6 +19,7 @@ import type { AppStates } from '../App'
 import ThemeItem from '../components/ThemeItem'
 import Actions from '../modules/Actions'
 import Dispatcher from '../modules/Dispatcher'
+import { trackColorThemeBackgroundEvent, trackColorThemeDescriptionEvent, trackColorThemeRenameEvent } from '../../utils/eventsTracker'
 
 interface ThemesProps {
   preset: PresetConfiguration
@@ -28,6 +29,7 @@ interface ThemesProps {
   planStatus: PlanStatus
   editorType: EditorType
   lang: Language
+  figmaUserId: string
   onChangeThemes: React.Dispatch<Partial<AppStates>>
   onSyncLocalStyles: () => void
   onSyncLocalVariables: () => void
@@ -107,13 +109,14 @@ export default class Themes extends React.Component<ThemesProps, ThemesStates> {
     this.themesMessage.isEditedInRealTime = false
 
     const addTheme = () => {
+      const hasAlreadyNewUITheme = this.themesMessage.data.filter((color) =>
+        color.name.includes('New UI Theme')
+      )
+
       this.themesMessage.data = this.props.themes.map((theme) => {
         theme.isEnabled = false
         return theme
       })
-      const hasAlreadyNewUITheme = this.themesMessage.data.filter((color) =>
-        color.name.includes('New UI Theme')
-      )
       this.themesMessage.data.push({
         name: `New UI Theme ${hasAlreadyNewUITheme.length + 1}`,
         description: '',
@@ -133,6 +136,7 @@ export default class Themes extends React.Component<ThemesProps, ThemesStates> {
         themes: this.themesMessage.data,
         onGoingStep: 'themes changed',
       })
+
       parent.postMessage({ pluginMessage: this.themesMessage }, '*')
     }
 
@@ -140,6 +144,7 @@ export default class Themes extends React.Component<ThemesProps, ThemesStates> {
       const hasSameName = this.props.themes.filter(
         (color) => color.name === currentElement.value
       )
+
       this.themesMessage.data = this.props.themes.map((item) => {
         if (item.id === id)
           item.name =
@@ -154,8 +159,11 @@ export default class Themes extends React.Component<ThemesProps, ThemesStates> {
         themes: this.themesMessage.data,
         onGoingStep: 'themes changed',
       })
-      if (e.type === 'blur')
+
+      if (e.type === 'blur' || e.code === 'Enter') {
         parent.postMessage({ pluginMessage: this.themesMessage }, '*')
+        trackColorThemeRenameEvent(this.props.figmaUserId)
+      }
     }
 
     const updatePaletteBackgroundColor = () => {
@@ -163,6 +171,7 @@ export default class Themes extends React.Component<ThemesProps, ThemesStates> {
         currentElement.value.indexOf('#') === -1
           ? '#' + currentElement.value
           : currentElement.value
+
       if (/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/i.test(code)) {
         this.themesMessage.data = this.props.themes.map((item) => {
           if (item.id === id) item.paletteBackground = code
@@ -176,9 +185,11 @@ export default class Themes extends React.Component<ThemesProps, ThemesStates> {
           onGoingStep: 'themes changed',
         })
       }
+
       if (e.type === 'blur') {
         this.dispatch.themes.on.status = false
         parent.postMessage({ pluginMessage: this.themesMessage }, '*')
+        trackColorThemeBackgroundEvent(this.props.figmaUserId)
       } else {
         this.themesMessage.isEditedInRealTime = true
         this.dispatch.themes.on.status = true
@@ -196,8 +207,11 @@ export default class Themes extends React.Component<ThemesProps, ThemesStates> {
         themes: this.themesMessage.data,
         onGoingStep: 'themes changed',
       })
-      if (e.type === 'blur' || e.key === 'Enter')
+      if (e.type === 'blur' || e.key === 'Enter') {
         parent.postMessage({ pluginMessage: this.themesMessage }, '*')
+        trackColorThemeDescriptionEvent(this.props.figmaUserId)
+      }
+        
     }
 
     const removeTheme = () => {

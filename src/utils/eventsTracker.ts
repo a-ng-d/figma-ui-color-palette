@@ -23,3 +23,43 @@ export const trackExportEvent = (id: string, options: ExportEvent) => {
     'Color Space': options.colorSpace ?? 'NC'
   })
 }
+
+export const trackSourceColorRenameEvent = (id: string) => {
+  mixpanel.identify(id),
+  mixpanel.track('Source Color Renamed')
+}
+
+export const trackSourceColorHexUpdateEvent = (id: string) => {
+  mixpanel.identify(id),
+  mixpanel.track('Source Color Hex Updated')
+}
+
+export const trackSourceColorLchUpdateEvent = (id: string) => {
+  mixpanel.identify(id),
+  mixpanel.track('Source Color LCH Updated')
+}
+
+export const trackSourceColorShiftEvent = (id: string) => {
+  mixpanel.identify(id),
+  mixpanel.track('Source Color Shifted')
+}
+
+export const trackSourceColorDescriptionEvent = (id: string) => {
+  mixpanel.identify(id),
+  mixpanel.track('Source Color Described')
+}
+
+export const trackColorThemeRenameEvent = (id: string) => {
+  mixpanel.identify(id),
+  mixpanel.track('Color Theme Renamed')
+}
+
+export const trackColorThemeBackgroundEvent = (id: string) => {
+  mixpanel.identify(id),
+  mixpanel.track('Color Theme Background Updated')
+}
+
+export const trackColorThemeDescriptionEvent = (id: string) => {
+  mixpanel.identify(id),
+  mixpanel.track('Color Theme Described')
+}

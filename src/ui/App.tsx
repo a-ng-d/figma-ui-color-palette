@@ -75,6 +75,7 @@ export interface AppStates {
   priorityContainerContext: PriorityContext
   lang: Language
   isLoaded: boolean
+  figmaUserId: string
   onGoingStep: string
 }
 
@@ -149,6 +150,7 @@ class App extends React.Component<Record<string, never>, AppStates> {
         refreshToken: undefined,
       },
       isLoaded: false,
+      figmaUserId: '',
       onGoingStep: '',
     }
   }
@@ -226,6 +228,9 @@ class App extends React.Component<Record<string, never>, AppStates> {
             e.data.pluginMessage.data.accessToken,
             e.data.pluginMessage.data.refreshToken
           )
+          this.setState({
+            figmaUserId: e.data.pluginMessage.id,
+          })
         }
 
         const checkEditorType = () =>

@@ -52,6 +52,7 @@ interface EditPaletteProps {
   planStatus: PlanStatus
   editorType: EditorType
   lang: Language
+  figmaUserId: string
   onChangeScale: React.Dispatch<Partial<AppStates>>
   onChangeStop?: React.Dispatch<Partial<AppStates>>
   onChangeColors: React.Dispatch<Partial<AppStates>>

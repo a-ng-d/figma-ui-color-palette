@@ -14,6 +14,7 @@ import type { AppStates } from '../App'
 import ColorItem from '../components/ColorItem'
 import Actions from '../modules/Actions'
 import Dispatcher from '../modules/Dispatcher'
+import { trackSourceColorDescriptionEvent, trackSourceColorHexUpdateEvent, trackSourceColorLchUpdateEvent, trackSourceColorRenameEvent, trackSourceColorShiftEvent } from '../../utils/eventsTracker'
 
 interface ColorsProps {
   colors: Array<ColorConfiguration>
@@ -21,6 +22,7 @@ interface ColorsProps {
   identity?: Identity
   planStatus: PlanStatus
   lang: Language
+  figmaUserId: string
   onChangeColors: React.Dispatch<Partial<AppStates>>
   onSyncLocalStyles: () => void
   onSyncLocalVariables: () => void
@@ -100,10 +102,11 @@ export default class Colors extends React.Component<ColorsProps, ColorsStates> {
     this.colorsMessage.isEditedInRealTime = false
 
     const addColor = () => {
-      this.colorsMessage.data = this.props.colors
       const hasAlreadyNewUIColor = this.colorsMessage.data.filter((color) =>
         color.name.includes('New UI Color')
       )
+      
+      this.colorsMessage.data = this.props.colors
       this.colorsMessage.data.push({
         name: `New UI Color ${hasAlreadyNewUIColor.length + 1}`,
         description: '',
@@ -120,6 +123,7 @@ export default class Colors extends React.Component<ColorsProps, ColorsStates> {
         colors: this.colorsMessage.data,
         onGoingStep: 'colors changed',
       })
+
       parent.postMessage({ pluginMessage: this.colorsMessage }, '*')
     }
 
@@ -127,6 +131,7 @@ export default class Colors extends React.Component<ColorsProps, ColorsStates> {
       const hasSameName = this.props.colors.filter(
         (color) => color.name === currentElement.value
       )
+
       this.colorsMessage.data = this.props.colors.map((item) => {
         if (item.id === id)
           item.name =
@@ -139,8 +144,11 @@ export default class Colors extends React.Component<ColorsProps, ColorsStates> {
         colors: this.colorsMessage.data,
         onGoingStep: 'colors changed',
       })
-      if (e.type === 'blur' || e.code === 'Enter')
+
+      if (e.type === 'blur' || e.code === 'Enter') {
         parent.postMessage({ pluginMessage: this.colorsMessage }, '*')
+        trackSourceColorRenameEvent(this.props.figmaUserId)
+      }     
     }
 
     const updateHexCode = () => {
@@ -148,6 +156,7 @@ export default class Colors extends React.Component<ColorsProps, ColorsStates> {
         currentElement.value.indexOf('#') === -1
           ? '#' + currentElement.value
           : currentElement.value
+
       if (/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/i.test(code)) {
         this.colorsMessage.data = this.props.colors.map((item) => {
           const rgb = chroma(
@@ -168,9 +177,11 @@ export default class Colors extends React.Component<ColorsProps, ColorsStates> {
           onGoingStep: 'colors changed',
         })
       }
+
       if (e.type === 'blur') {
         this.dispatch.colors.on.status = false
         parent.postMessage({ pluginMessage: this.colorsMessage }, '*')
+        trackSourceColorHexUpdateEvent(this.props.figmaUserId)
       } else {
         this.colorsMessage.isEditedInRealTime = true
         this.dispatch.colors.on.status = true
@@ -194,7 +205,9 @@ export default class Colors extends React.Component<ColorsProps, ColorsStates> {
         colors: this.colorsMessage.data,
         onGoingStep: 'colors changed',
       })
+
       parent.postMessage({ pluginMessage: this.colorsMessage }, '*')
+      trackSourceColorLchUpdateEvent(this.props.figmaUserId)
     }
 
     const updateChromaProp = () => {
@@ -214,7 +227,9 @@ export default class Colors extends React.Component<ColorsProps, ColorsStates> {
         colors: this.colorsMessage.data,
         onGoingStep: 'colors changed',
       })
+
       parent.postMessage({ pluginMessage: this.colorsMessage }, '*')
+      trackSourceColorLchUpdateEvent(this.props.figmaUserId)
     }
 
     const updateHueProp = () => {
@@ -234,7 +249,9 @@ export default class Colors extends React.Component<ColorsProps, ColorsStates> {
         colors: this.colorsMessage.data,
         onGoingStep: 'colors changed',
       })
+
       parent.postMessage({ pluginMessage: this.colorsMessage }, '*')
+      trackSourceColorLchUpdateEvent(this.props.figmaUserId)
     }
 
     const setHueShifting = () => {
@@ -246,7 +263,9 @@ export default class Colors extends React.Component<ColorsProps, ColorsStates> {
         colors: this.colorsMessage.data,
         onGoingStep: 'colors changed',
       })
+
       parent.postMessage({ pluginMessage: this.colorsMessage }, '*')
+      trackSourceColorShiftEvent(this.props.figmaUserId)
     }
 
     const updateColorDescription = () => {
@@ -258,8 +277,11 @@ export default class Colors extends React.Component<ColorsProps, ColorsStates> {
         colors: this.colorsMessage.data,
         onGoingStep: 'colors changed',
       })
-      if (e.type === 'blur')
+
+      if (e.type === 'blur') {
         parent.postMessage({ pluginMessage: this.colorsMessage }, '*')
+        trackSourceColorDescriptionEvent(this.props.figmaUserId)
+      }  
     }
 
     const removeColor = () => {
@@ -270,6 +292,7 @@ export default class Colors extends React.Component<ColorsProps, ColorsStates> {
         colors: this.colorsMessage.data,
         onGoingStep: 'colors changed',
       })
+
       parent.postMessage({ pluginMessage: this.colorsMessage }, '*')
     }
 
