@@ -42,6 +42,8 @@ import EditPalette from './services/EditPalette'
 import TransferPalette from './services/TransferPalette'
 import './stylesheets/app-components.css'
 import './stylesheets/app.css'
+import mixpanel from 'mixpanel-figma'
+import { trackTrialEnabledEvent } from '../utils/eventsTracker'
 
 export interface AppStates {
   service: Service
@@ -83,6 +85,11 @@ const container = document.getElementById('app'),
 class App extends React.Component<Record<string, never>, AppStates> {
   constructor(props: Record<string, never>) {
     super(props)
+    mixpanel.init('46aa880b8cae32ae12b9fe29f707df11', {
+      debug: true,
+      disable_persistence: true,
+      disable_cookie: true,
+    })
     this.state = {
       service: 'CREATE',
       sourceColors: [],
@@ -572,12 +579,18 @@ class App extends React.Component<Record<string, never>, AppStates> {
             priorityContainerContext: 'WELCOME_TO_PRO',
           })
 
-        const enableTrial = () =>
+        const enableTrial = () => {
           this.setState({
             planStatus: 'PAID',
             trialStatus: 'PENDING',
             priorityContainerContext: 'WELCOME_TO_TRIAL',
           })
+          trackTrialEnabledEvent(
+            e.data.pluginMessage.id,
+            e.data.pluginMessage.date,
+            e.data.pluginMessage.trialTime)
+        }
+          
 
         const signOut = (data: UserSession) =>
           this.setState({
