@@ -72,6 +72,7 @@
     "file-saver": "^2.0.5",
     "hsluv": "^1.0.1",
     "jszip": "^3.10.1",
+    "mixpanel-figma": "^2.0.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "uid": "^2.0.2"
