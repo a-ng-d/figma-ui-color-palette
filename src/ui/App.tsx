@@ -43,7 +43,7 @@ import TransferPalette from './services/TransferPalette'
 import './stylesheets/app-components.css'
 import './stylesheets/app.css'
 import mixpanel from 'mixpanel-figma'
-import { trackCssExportEvent, trackCsvExportEvent, trackJsonExportEvent, trackKtExportEvent, trackPurchaseEvent, trackSwiftUIExportEvent, trackTailwindExportEvent, trackTrialEnablementEvent, trackUIKitExportEvent, trackXmlExportEvent } from '../utils/eventsTracker'
+import { trackExportEvent, trackPurchaseEvent, trackTrialEnablementEvent } from '../utils/eventsTracker'
 
 export interface AppStates {
   service: Service
@@ -449,7 +449,7 @@ class App extends React.Component<Record<string, never>, AppStates> {
             },
             onGoingStep: 'export previewed',
           })
-          trackJsonExportEvent(
+          trackExportEvent(
             e.data.pluginMessage.id,
             {
               context: e.data.pluginMessage.context
@@ -472,9 +472,10 @@ class App extends React.Component<Record<string, never>, AppStates> {
             },
             onGoingStep: 'export previewed',
           })
-          trackCssExportEvent(
+          trackExportEvent(
             e.data.pluginMessage.id,
             {
+              context: e.data.pluginMessage.context,
               colorSpace: e.data.pluginMessage.colorSpace
             }
           )
@@ -499,7 +500,12 @@ class App extends React.Component<Record<string, never>, AppStates> {
             },
             onGoingStep: 'export previewed',
           })
-          trackTailwindExportEvent(e.data.pluginMessage.id)
+          trackExportEvent(
+            e.data.pluginMessage.id,
+            {
+              context: e.data.pluginMessage.context,
+            }
+          )
         }
           
 
@@ -517,7 +523,12 @@ class App extends React.Component<Record<string, never>, AppStates> {
             },
             onGoingStep: 'export previewed',
           })
-          trackSwiftUIExportEvent(e.data.pluginMessage.id)
+          trackExportEvent(
+            e.data.pluginMessage.id,
+            {
+              context: e.data.pluginMessage.context,
+            }
+          )
         }
           
 
@@ -535,7 +546,12 @@ class App extends React.Component<Record<string, never>, AppStates> {
             },
             onGoingStep: 'export previewed',
           })
-          trackUIKitExportEvent(e.data.pluginMessage.id)
+          trackExportEvent(
+            e.data.pluginMessage.id,
+            {
+              context: e.data.pluginMessage.context,
+            }
+          )
         }
           
 
@@ -553,7 +569,12 @@ class App extends React.Component<Record<string, never>, AppStates> {
             },
             onGoingStep: 'export previewed',
           })
-          trackKtExportEvent(e.data.pluginMessage.id)
+          trackExportEvent(
+            e.data.pluginMessage.id,
+            {
+              context: e.data.pluginMessage.context,
+            }
+          )
         }
           
 
@@ -571,7 +592,12 @@ class App extends React.Component<Record<string, never>, AppStates> {
             },
             onGoingStep: 'export previewed',
           })
-          trackXmlExportEvent(e.data.pluginMessage.id)
+          trackExportEvent(
+            e.data.pluginMessage.id,
+            {
+              context: e.data.pluginMessage.context,
+            }
+          )
         }
           
 
@@ -589,7 +615,12 @@ class App extends React.Component<Record<string, never>, AppStates> {
             },
             onGoingStep: 'export previewed',
           })
-          trackCsvExportEvent(e.data.pluginMessage.id)
+          trackExportEvent(
+            e.data.pluginMessage.id,
+            {
+              context: e.data.pluginMessage.context,
+            }
+          )
         }
           
 

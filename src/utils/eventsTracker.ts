@@ -1,5 +1,5 @@
 import mixpanel from "mixpanel-figma"
-import { TrialEnablementEvent, ExportEvent } from "../types/events"
+import { TrialEnablementEvent, ExportEvent, SourceColorEvent, ColorThemeEvent } from "../types/events"
 
 export const trackTrialEnablementEvent = (id: string, options: TrialEnablementEvent) => {
   mixpanel.identify(id),
@@ -16,86 +16,24 @@ export const trackPurchaseEvent = (id: string) => {
   mixpanel.track('Purchase Enabled')
 }
 
-export const trackJsonExportEvent = (id: string, options: ExportEvent) => {
+export const trackExportEvent = (id: string, options: ExportEvent) => {
   mixpanel.identify(id),
-  mixpanel.track('JSON Exported', {
+  mixpanel.track('Palette Color Shades Exported', {
     'Context': options.context,
+    'Color Space': options.colorSpace ?? 'NC'
   })
 }
 
-export const trackCssExportEvent = (id: string, options: ExportEvent) => {
+export const trackSourceColorEvent = (id: string, options: SourceColorEvent) => {
   mixpanel.identify(id),
-  mixpanel.track('CSS Exported', {
-    'Color Space': options.colorSpace
+  mixpanel.track('Source Color Updated', {
+    'Feature': options.feature
   })
 }
 
-export const trackTailwindExportEvent = (id: string) => {
+export const trackColorThemeEvent = (id: string, options: ColorThemeEvent) => {
   mixpanel.identify(id),
-  mixpanel.track('Tailwind Exported')
-}
-
-export const trackSwiftUIExportEvent = (id: string) => {
-  mixpanel.identify(id),
-  mixpanel.track('Swift UI Exported')
-}
-
-export const trackUIKitExportEvent = (id: string) => {
-  mixpanel.identify(id),
-  mixpanel.track('UI Kit Exported')
-}
-
-export const trackKtExportEvent = (id: string) => {
-  mixpanel.identify(id),
-  mixpanel.track('Kotlin Exported')
-}
-
-export const trackXmlExportEvent = (id: string) => {
-  mixpanel.identify(id),
-  mixpanel.track('XML Exported')
-}
-
-export const trackCsvExportEvent = (id: string) => {
-  mixpanel.identify(id),
-  mixpanel.track('CSV Exported')
-}
-
-export const trackSourceColorRenameEvent = (id: string) => {
-  mixpanel.identify(id),
-  mixpanel.track('Source Color Renamed')
-}
-
-export const trackSourceColorHexUpdateEvent = (id: string) => {
-  mixpanel.identify(id),
-  mixpanel.track('Source Color Hex Updated')
-}
-
-export const trackSourceColorLchUpdateEvent = (id: string) => {
-  mixpanel.identify(id),
-  mixpanel.track('Source Color LCH Updated')
-}
-
-export const trackSourceColorShiftEvent = (id: string) => {
-  mixpanel.identify(id),
-  mixpanel.track('Source Color Shifted')
-}
-
-export const trackSourceColorDescriptionEvent = (id: string) => {
-  mixpanel.identify(id),
-  mixpanel.track('Source Color Described')
-}
-
-export const trackColorThemeRenameEvent = (id: string) => {
-  mixpanel.identify(id),
-  mixpanel.track('Color Theme Renamed')
-}
-
-export const trackColorThemeBackgroundEvent = (id: string) => {
-  mixpanel.identify(id),
-  mixpanel.track('Color Theme Background Updated')
-}
-
-export const trackColorThemeDescriptionEvent = (id: string) => {
-  mixpanel.identify(id),
-  mixpanel.track('Color Theme Described')
+  mixpanel.track('Source Color Updated', {
+    'Feature': options.feature
+  })
 }
