@@ -7,9 +7,9 @@ const checkPlanStatus = async () => {
     'trial_start_date',
     new Date().getTime() - 12 * 60 * 60 * 1000
   )*/
-  /*figma.payments?.setPaymentStatusInDevelopment({
+  figma.payments?.setPaymentStatusInDevelopment({
     type: 'UNPAID',
-  })*/
+  })
 
   const trialStartDate: number | undefined =
       await figma.clientStorage.getAsync('trial_start_date'),

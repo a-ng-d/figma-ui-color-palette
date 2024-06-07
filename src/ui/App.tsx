@@ -43,7 +43,7 @@ import TransferPalette from './services/TransferPalette'
 import './stylesheets/app-components.css'
 import './stylesheets/app.css'
 import mixpanel from 'mixpanel-figma'
-import { trackTrialEnabledEvent } from '../utils/eventsTracker'
+import { trackPurchaseEvent, trackTrialEnablementEvent } from '../utils/eventsTracker'
 
 export interface AppStates {
   service: Service
@@ -573,11 +573,15 @@ class App extends React.Component<Record<string, never>, AppStates> {
             },
           })
 
-        const getProPlan = () =>
+        const getProPlan = () => {
           this.setState({
             planStatus: e.data.pluginMessage.data,
             priorityContainerContext: 'WELCOME_TO_PRO',
           })
+          trackPurchaseEvent(
+            e.data.pluginMessage.id
+          )
+        }
 
         const enableTrial = () => {
           this.setState({
@@ -585,10 +589,11 @@ class App extends React.Component<Record<string, never>, AppStates> {
             trialStatus: 'PENDING',
             priorityContainerContext: 'WELCOME_TO_TRIAL',
           })
-          trackTrialEnabledEvent(
+          trackTrialEnablementEvent(
             e.data.pluginMessage.id,
             e.data.pluginMessage.date,
-            e.data.pluginMessage.trialTime)
+            e.data.pluginMessage.trialTime
+          )
         }
           
 
