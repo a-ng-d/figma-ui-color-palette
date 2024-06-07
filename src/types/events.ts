@@ -6,6 +6,6 @@ export interface TrialEnablementEvent {
 }
 
 export interface ExportEvent {
-  context: string,
+  context?: string,
   colorSpace?: ColorSpaceConfiguration
 }

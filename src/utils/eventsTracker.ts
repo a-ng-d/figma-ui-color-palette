@@ -16,12 +16,48 @@ export const trackPurchaseEvent = (id: string) => {
   mixpanel.track('Purchase Enabled')
 }
 
-export const trackExportEvent = (id: string, options: ExportEvent) => {
+export const trackJsonExportEvent = (id: string, options: ExportEvent) => {
   mixpanel.identify(id),
-  mixpanel.track('Palette Color Shades Exported', {
+  mixpanel.track('JSON Exported', {
     'Context': options.context,
-    'Color Space': options.colorSpace ?? 'NC'
   })
+}
+
+export const trackCssExportEvent = (id: string, options: ExportEvent) => {
+  mixpanel.identify(id),
+  mixpanel.track('CSS Exported', {
+    'Color Space': options.colorSpace
+  })
+}
+
+export const trackTailwindExportEvent = (id: string) => {
+  mixpanel.identify(id),
+  mixpanel.track('Tailwind Exported')
+}
+
+export const trackSwiftUIExportEvent = (id: string) => {
+  mixpanel.identify(id),
+  mixpanel.track('Swift UI Exported')
+}
+
+export const trackUIKitExportEvent = (id: string) => {
+  mixpanel.identify(id),
+  mixpanel.track('UI Kit Exported')
+}
+
+export const trackKtExportEvent = (id: string) => {
+  mixpanel.identify(id),
+  mixpanel.track('Kotlin Exported')
+}
+
+export const trackXmlExportEvent = (id: string) => {
+  mixpanel.identify(id),
+  mixpanel.track('XML Exported')
+}
+
+export const trackCsvExportEvent = (id: string) => {
+  mixpanel.identify(id),
+  mixpanel.track('CSV Exported')
 }
 
 export const trackSourceColorRenameEvent = (id: string) => {
