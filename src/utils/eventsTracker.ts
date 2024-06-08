@@ -63,7 +63,7 @@ export const trackImportEvent = (
   })
 }
 
-export const trackScaleEvent = (
+export const trackScaleManagementEvent = (
   id: string,
   options: ScaleEvent
 ) => {
@@ -73,7 +73,7 @@ export const trackScaleEvent = (
   })
 }
 
-export const trackSourceColorEvent = (
+export const trackSourceColorsManagementEvent = (
   id: string,
   options: SourceColorEvent
 ) => {
@@ -83,14 +83,14 @@ export const trackSourceColorEvent = (
   })
 }
 
-export const trackColorThemeEvent = (id: string, options: ColorThemeEvent) => {
+export const trackColorThemesManagementEvent = (id: string, options: ColorThemeEvent) => {
   mixpanel.identify(id)
   mixpanel.track('Color Theme Updated', {
     'Feature': options.feature,
   })
 }
 
-export const trackSettingEvent = (id: string, options: SettingEvent) => {
+export const trackSettingsManagementEvent = (id: string, options: SettingEvent) => {
   mixpanel.identify(id)
   mixpanel.track('Setting Updated', {
     'Feature': options.feature,

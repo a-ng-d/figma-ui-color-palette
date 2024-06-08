@@ -26,7 +26,7 @@ import {
 } from '../../types/models'
 import { Identity } from '../../types/user'
 import features from '../../utils/config'
-import { trackSettingEvent } from '../../utils/eventsTracker'
+import { trackSettingsManagementEvent } from '../../utils/eventsTracker'
 import isBlocked from '../../utils/isBlocked'
 import { palette } from '../../utils/palettePackage'
 import type { AppStates } from '../App'
@@ -112,7 +112,7 @@ export default class Settings extends React.Component<SettingsProps> {
         this.props.context === 'LOCAL_STYLES'
       ) {
         parent.postMessage({ pluginMessage: this.settingsMessage }, '*')
-        trackSettingEvent(this.props.figmaUserId, {
+        trackSettingsManagementEvent(this.props.figmaUserId, {
           feature: 'RENAME_PALETTE',
         })
       }
@@ -136,7 +136,7 @@ export default class Settings extends React.Component<SettingsProps> {
 
       if (e.type === 'blur' && this.props.context === 'LOCAL_STYLES') {
         parent.postMessage({ pluginMessage: this.settingsMessage }, '*')
-        trackSettingEvent(this.props.figmaUserId, {
+        trackSettingsManagementEvent(this.props.figmaUserId, {
           feature: 'DESCRIBE_PALETTE',
         })
       }
@@ -156,7 +156,7 @@ export default class Settings extends React.Component<SettingsProps> {
             { pluginMessage: { type: 'UPDATE_VIEW', data: palette } },
             '*'
           )
-          trackSettingEvent(this.props.figmaUserId, {
+          trackSettingsManagementEvent(this.props.figmaUserId, {
             feature: 'UPDATE_VIEW',
           })
         }
@@ -182,7 +182,7 @@ export default class Settings extends React.Component<SettingsProps> {
 
       if (this.props.context === 'LOCAL_STYLES') {
         parent.postMessage({ pluginMessage: this.settingsMessage }, '*')
-        trackSettingEvent(this.props.figmaUserId, {
+        trackSettingsManagementEvent(this.props.figmaUserId, {
           feature: 'UPDATE_COLOR_SPACE',
         })
       }
@@ -207,7 +207,7 @@ export default class Settings extends React.Component<SettingsProps> {
 
       if (this.props.context === 'LOCAL_STYLES') {
         parent.postMessage({ pluginMessage: this.settingsMessage }, '*')
-        trackSettingEvent(this.props.figmaUserId, {
+        trackSettingsManagementEvent(this.props.figmaUserId, {
           feature: 'UPDATE_VISION_SIMULATION_MODE',
         })
       }
@@ -228,7 +228,7 @@ export default class Settings extends React.Component<SettingsProps> {
       })
 
       parent.postMessage({ pluginMessage: this.settingsMessage }, '*')
-      trackSettingEvent(this.props.figmaUserId, {
+      trackSettingsManagementEvent(this.props.figmaUserId, {
         feature: 'UPDATE_ALGORITHM',
       })
     }
@@ -259,7 +259,7 @@ export default class Settings extends React.Component<SettingsProps> {
       if (e.type === 'blur' && this.props.context === 'LOCAL_STYLES') {
         this.dispatch.textColorsTheme.on.status = false
         parent.postMessage({ pluginMessage: this.settingsMessage }, '*')
-        trackSettingEvent(this.props.figmaUserId, {
+        trackSettingsManagementEvent(this.props.figmaUserId, {
           feature: 'UPDATE_TEXT_COLORS_THEME',
         })
       } else if (this.props.context === 'LOCAL_STYLES')
@@ -292,7 +292,7 @@ export default class Settings extends React.Component<SettingsProps> {
       if (e.type === 'blur' && this.props.context === 'LOCAL_STYLES') {
         this.dispatch.textColorsTheme.on.status = false
         parent.postMessage({ pluginMessage: this.settingsMessage }, '*')
-        trackSettingEvent(this.props.figmaUserId, {
+        trackSettingsManagementEvent(this.props.figmaUserId, {
           feature: 'UPDATE_TEXT_COLORS_THEME',
         })
       } else if (this.props.context === 'LOCAL_STYLES')

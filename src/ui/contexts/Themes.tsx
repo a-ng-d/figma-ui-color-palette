@@ -14,7 +14,7 @@ import { ThemesMessage } from '../../types/messages'
 import { ActionsList, DispatchProcess } from '../../types/models'
 import { Identity } from '../../types/user'
 import doLightnessScale from '../../utils/doLightnessScale'
-import { trackColorThemeEvent } from '../../utils/eventsTracker'
+import { trackColorThemesManagementEvent } from '../../utils/eventsTracker'
 import isBlocked from '../../utils/isBlocked'
 import type { AppStates } from '../App'
 import ThemeItem from '../components/ThemeItem'
@@ -139,7 +139,7 @@ export default class Themes extends React.Component<ThemesProps, ThemesStates> {
       })
 
       parent.postMessage({ pluginMessage: this.themesMessage }, '*')
-      trackColorThemeEvent(this.props.figmaUserId, {
+      trackColorThemesManagementEvent(this.props.figmaUserId, {
         feature: 'ADD_THEME',
       })
     }
@@ -167,7 +167,7 @@ export default class Themes extends React.Component<ThemesProps, ThemesStates> {
 
       if (e.type === 'blur' || e.code === 'Enter') {
         parent.postMessage({ pluginMessage: this.themesMessage }, '*')
-        trackColorThemeEvent(this.props.figmaUserId, {
+        trackColorThemesManagementEvent(this.props.figmaUserId, {
           feature: 'RENAME_THEME',
         })
       }
@@ -197,7 +197,7 @@ export default class Themes extends React.Component<ThemesProps, ThemesStates> {
       if (e.type === 'blur') {
         this.dispatch.themes.on.status = false
         parent.postMessage({ pluginMessage: this.themesMessage }, '*')
-        trackColorThemeEvent(this.props.figmaUserId, {
+        trackColorThemesManagementEvent(this.props.figmaUserId, {
           feature: 'UPDATE_BACKGROUND',
         })
       } else {
@@ -221,7 +221,7 @@ export default class Themes extends React.Component<ThemesProps, ThemesStates> {
 
       if (e.type === 'blur' || e.key === 'Enter') {
         parent.postMessage({ pluginMessage: this.themesMessage }, '*')
-        trackColorThemeEvent(this.props.figmaUserId, {
+        trackColorThemesManagementEvent(this.props.figmaUserId, {
           feature: 'DESCRIBE_THEME',
         })
       }
@@ -250,7 +250,7 @@ export default class Themes extends React.Component<ThemesProps, ThemesStates> {
       })
 
       parent.postMessage({ pluginMessage: this.themesMessage }, '*')
-      trackColorThemeEvent(this.props.figmaUserId, {
+      trackColorThemesManagementEvent(this.props.figmaUserId, {
         feature: 'REMOVE_THEME',
       })
     }
@@ -377,7 +377,7 @@ export default class Themes extends React.Component<ThemesProps, ThemesStates> {
     })
 
     parent.postMessage({ pluginMessage: this.themesMessage }, '*')
-    trackColorThemeEvent(this.props.figmaUserId, {
+    trackColorThemesManagementEvent(this.props.figmaUserId, {
       feature: 'ADD_THEME_FROM_DROPDOWN',
     })
   }

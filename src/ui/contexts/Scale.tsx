@@ -30,7 +30,7 @@ import Feature from '../components/Feature'
 import Slider from '../components/Slider'
 import Actions from '../modules/Actions'
 import Dispatcher from '../modules/Dispatcher'
-import { trackScaleEvent } from '../../utils/eventsTracker'
+import { trackScaleManagementEvent } from '../../utils/eventsTracker'
 
 interface ScaleProps {
   sourceColors?: Array<SourceColorConfiguration>
@@ -138,7 +138,7 @@ export default class Scale extends React.Component<ScaleProps, ScaleStates> {
         onGoingStep: 'preset changed',
       })
 
-      trackScaleEvent(this.props.figmaUserId, {
+      trackScaleManagementEvent(this.props.figmaUserId, {
         feature: 'SWITCH_MATERIAL'
       })
     }
@@ -150,7 +150,7 @@ export default class Scale extends React.Component<ScaleProps, ScaleStates> {
         onGoingStep: 'preset changed',
       })
 
-      trackScaleEvent(this.props.figmaUserId, {
+      trackScaleManagementEvent(this.props.figmaUserId, {
         feature: 'SWITCH_MATERIAL_3'
       })
     }
@@ -163,7 +163,7 @@ export default class Scale extends React.Component<ScaleProps, ScaleStates> {
         onGoingStep: 'preset changed',
       })
 
-      trackScaleEvent(this.props.figmaUserId, {
+      trackScaleManagementEvent(this.props.figmaUserId, {
         feature: 'SWITCH_MATERIAL'
       })
     }
@@ -175,7 +175,7 @@ export default class Scale extends React.Component<ScaleProps, ScaleStates> {
         onGoingStep: 'preset changed',
       })
 
-      trackScaleEvent(this.props.figmaUserId, {
+      trackScaleManagementEvent(this.props.figmaUserId, {
         feature: 'SWITCH_ANT'
       })
     }
@@ -187,7 +187,7 @@ export default class Scale extends React.Component<ScaleProps, ScaleStates> {
         onGoingStep: 'preset changed',
       })
 
-      trackScaleEvent(this.props.figmaUserId, {
+      trackScaleManagementEvent(this.props.figmaUserId, {
         feature: 'SWITCH_ADS'
       })
     }
@@ -199,7 +199,7 @@ export default class Scale extends React.Component<ScaleProps, ScaleStates> {
         onGoingStep: 'preset changed',
       })
 
-      trackScaleEvent(this.props.figmaUserId, {
+      trackScaleManagementEvent(this.props.figmaUserId, {
         feature: 'SWITCH_ADS_NEUTRAL'
       })
     }
@@ -211,7 +211,7 @@ export default class Scale extends React.Component<ScaleProps, ScaleStates> {
         onGoingStep: 'preset changed',
       })
 
-      trackScaleEvent(this.props.figmaUserId, {
+      trackScaleManagementEvent(this.props.figmaUserId, {
         feature: 'SWITCH_CARBON'
       })
     }
@@ -223,7 +223,7 @@ export default class Scale extends React.Component<ScaleProps, ScaleStates> {
         onGoingStep: 'preset changed',
       })
 
-      trackScaleEvent(this.props.figmaUserId, {
+      trackScaleManagementEvent(this.props.figmaUserId, {
         feature: 'SWITCH_BASE'
       })
     }
@@ -235,7 +235,7 @@ export default class Scale extends React.Component<ScaleProps, ScaleStates> {
         onGoingStep: 'preset changed',
       })
 
-      trackScaleEvent(this.props.figmaUserId, {
+      trackScaleManagementEvent(this.props.figmaUserId, {
         feature: 'SWITCH_CUSTOM'
       })
     }
@@ -322,7 +322,7 @@ export default class Scale extends React.Component<ScaleProps, ScaleStates> {
         distributionEasing: value,
       })
 
-      trackScaleEvent(this.props.figmaUserId, {
+      trackScaleManagementEvent(this.props.figmaUserId, {
         feature: value
       })
     }
@@ -479,7 +479,7 @@ export default class Scale extends React.Component<ScaleProps, ScaleStates> {
     const isMacOrWinKeyboard =
       navigator.userAgent.indexOf('Mac') !== -1 ? '⌘' : '⌃' ?? '⌘'
 
-    trackScaleEvent(this.props.figmaUserId, {
+    trackScaleManagementEvent(this.props.figmaUserId, {
       feature: 'OPEN_KEYBOARD_SHORTCUTS'
     })
 
