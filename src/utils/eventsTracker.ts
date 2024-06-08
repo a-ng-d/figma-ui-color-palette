@@ -15,6 +15,14 @@ export const trackRunningEvent = (id: string) => {
   mixpanel.identify(id), mixpanel.track('Plugin Run')
 }
 
+export const trackSignInEvent = (id: string) => {
+  mixpanel.identify(id), mixpanel.track('Signed in')
+}
+
+export const trackSignOutEvent = (id: string) => {
+  mixpanel.identify(id), mixpanel.track('Signed out')
+}
+
 export const trackTrialEnablementEvent = (
   id: string,
   options: TrialEvent

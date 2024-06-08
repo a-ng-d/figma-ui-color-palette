@@ -16,6 +16,7 @@ import Feature from '../components/Feature'
 import About from './About'
 import Highlight from './Highlight'
 import Publication from './Publication'
+import { trackSignInEvent } from '../../utils/eventsTracker'
 
 interface PriorityContainerProps {
   context: PriorityContext
@@ -295,6 +296,9 @@ export default class PriorityContainer extends React.Component<
                 action: async () => {
                   this.setState({ isPrimaryActionLoading: true })
                   signIn()
+                    .then(() => {
+                      trackSignInEvent(this.props.figmaUserId)
+                    })
                     .finally(() => {
                       this.setState({ isPrimaryActionLoading: false })
                     })

@@ -479,6 +479,10 @@ export default class Scale extends React.Component<ScaleProps, ScaleStates> {
     const isMacOrWinKeyboard =
       navigator.userAgent.indexOf('Mac') !== -1 ? '⌘' : '⌃' ?? '⌘'
 
+    trackScaleEvent(this.props.figmaUserId, {
+      feature: 'OPEN_KEYBOARD_SHORTCUTS'
+    })
+
     return (
       <Dialog
         title={locals[this.props.lang].scale.tips.title}

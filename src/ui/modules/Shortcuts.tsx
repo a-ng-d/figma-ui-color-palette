@@ -8,6 +8,7 @@ import { UserSession } from '../../types/user'
 import features from '../../utils/config'
 import isBlocked from '../../utils/isBlocked'
 import Feature from '../components/Feature'
+import { trackSignInEvent, trackSignOutEvent } from '../../utils/eventsTracker'
 
 interface ShortcutsProps {
   editorType: EditorType
@@ -16,6 +17,7 @@ interface ShortcutsProps {
   trialRemainingTime: number
   userSession: UserSession
   lang: Language
+  figmaUserId: string
   onReOpenFeedback: () => void
   onReOpenTrialFeedback: () => void
   onReOpenHighlight: () => void
@@ -141,6 +143,7 @@ export default class Shortcuts extends React.Component<
                                 },
                                 '*'
                               )
+                              trackSignOutEvent(this.props.figmaUserId)
                             })
                             .finally(() => {
                               this.setState({ isUserMenuLoading: false })
@@ -180,6 +183,9 @@ export default class Shortcuts extends React.Component<
                         action: async () => {
                           this.setState({ isUserMenuLoading: true })
                           signIn()
+                            .then(() => {
+                              trackSignInEvent(this.props.figmaUserId)
+                            })
                             .finally(() => {
                               this.setState({ isUserMenuLoading: false })
                             })

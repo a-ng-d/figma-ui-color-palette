@@ -37,6 +37,7 @@ export interface ScaleEvent {
     | 'SWITCH_CARBON'
     | 'SWITCH_BASE'
     | 'SWITCH_CUSTOM'
+    | 'OPEN_KEYBOARD_SHORTCUTS'
     | NamingConventionConfiguration
     | Easing
 }
