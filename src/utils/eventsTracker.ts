@@ -3,6 +3,7 @@ import mixpanel from 'mixpanel-figma'
 import {
   ColorThemeEvent,
   ExportEvent,
+  ScaleEvent,
   SettingEvent,
   SourceColorEvent,
   TrialEnablementEvent,
@@ -31,34 +32,44 @@ export const trackPurchaseEvent = (id: string) => {
   mixpanel.identify(id), mixpanel.track('Purchase Enabled')
 }
 
+export const trackScaleEvent = (
+  id: string,
+  options: ScaleEvent
+) => {
+  mixpanel.identify(id)
+  mixpanel.track('Scale Updated', {
+    Feature: options.feature,
+  })
+}
+
 export const trackSourceColorEvent = (
   id: string,
   options: SourceColorEvent
 ) => {
-  mixpanel.identify(id),
-    mixpanel.track('Source Color Updated', {
-      Feature: options.feature,
-    })
+  mixpanel.identify(id)
+  mixpanel.track('Source Color Updated', {
+    Feature: options.feature,
+  })
 }
 
 export const trackColorThemeEvent = (id: string, options: ColorThemeEvent) => {
-  mixpanel.identify(id),
-    mixpanel.track('Color Theme Updated', {
-      Feature: options.feature,
-    })
+  mixpanel.identify(id)
+  mixpanel.track('Color Theme Updated', {
+    Feature: options.feature,
+  })
 }
 
 export const trackSettingEvent = (id: string, options: SettingEvent) => {
-  mixpanel.identify(id),
-    mixpanel.track('Setting Updated', {
-      Feature: options.feature,
-    })
+  mixpanel.identify(id)
+  mixpanel.track('Setting Updated', {
+    Feature: options.feature,
+  })
 }
 
 export const trackExportEvent = (id: string, options: ExportEvent) => {
-  mixpanel.identify(id),
-    mixpanel.track('Color Shades Exported', {
-      Context: options.context,
-      'Color Space': options.colorSpace ?? 'NC',
-    })
+  mixpanel.identify(id)
+  mixpanel.track('Color Shades Exported', {
+    Context: options.context,
+    'Color Space': options.colorSpace ?? 'NC',
+  })
 }

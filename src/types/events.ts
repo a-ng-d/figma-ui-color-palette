@@ -1,8 +1,24 @@
-import { ColorSpaceConfiguration } from './configurations'
+import { ColorSpaceConfiguration, NamingConventionConfiguration } from './configurations'
+import { Easing } from './management'
 
 export interface TrialEnablementEvent {
   date: number
   trialTime: number
+}
+
+export interface ScaleEvent {
+  feature:
+    | 'SWITCH_MATERIAL'
+    | 'SWITCH_MATERIAL_3'
+    | 'SWITCH_TAILWIND'
+    | 'SWITCH_ANT'
+    | 'SWITCH_ADS'
+    | 'SWITCH_ADS_NEUTRAL'
+    | 'SWITCH_CARBON'
+    | 'SWITCH_BASE'
+    | 'SWITCH_CUSTOM'
+    | NamingConventionConfiguration
+    | Easing
 }
 
 export interface SourceColorEvent {
