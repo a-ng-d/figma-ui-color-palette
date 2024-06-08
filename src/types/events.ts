@@ -57,6 +57,7 @@ export interface ColorThemeEvent {
     | 'RENAME_THEME'
     | 'REMOVE_THEME'
     | 'ADD_THEME'
+    | 'ADD_THEME_FROM_DROPDOWN'
     | 'UPDATE_BACKGROUND'
     | 'DESCRIBE_THEME'
 }

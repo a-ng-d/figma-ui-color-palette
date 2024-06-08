@@ -349,13 +349,13 @@ export default class Themes extends React.Component<ThemesProps, ThemesStates> {
 
   // Direct actions
   onAddTheme = () => {
+    const hasAlreadyNewUITheme = this.themesMessage.data.filter((color) =>
+      color.name.includes('New UI Theme')
+    )
     this.themesMessage.data = this.props.themes.map((theme) => {
       theme.isEnabled = false
       return theme
     })
-    const hasAlreadyNewUITheme = this.themesMessage.data.filter((color) =>
-      color.name.includes('New UI Theme')
-    )
     this.themesMessage.data.push({
       name: `New UI Theme ${hasAlreadyNewUITheme.length + 1}`,
       description: '',
@@ -375,7 +375,11 @@ export default class Themes extends React.Component<ThemesProps, ThemesStates> {
       themes: this.themesMessage.data,
       onGoingStep: 'themes changed',
     })
+
     parent.postMessage({ pluginMessage: this.themesMessage }, '*')
+    trackColorThemeEvent(this.props.figmaUserId, {
+      feature: 'ADD_THEME_FROM_DROPDOWN',
+    })
   }
 
   // Render
