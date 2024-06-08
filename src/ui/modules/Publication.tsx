@@ -11,12 +11,14 @@ import { locals } from '../../content/locals'
 import { Language } from '../../types/app'
 import { palettesDbTableName } from '../../utils/config'
 import type { AppStates } from '../App'
+import { trackPublicationEvent } from '../../utils/eventsTracker'
 
 interface PublicationProps {
   rawData: AppStates
   isPrimaryActionLoading: boolean
   isSecondaryActionLoading: boolean
   lang: Language
+  figmaUserId: string
   onLoadPrimaryAction: (e: boolean) => void
   onLoadSecondaryAction: (e: boolean) => void
   onChangePublication: React.Dispatch<Partial<AppStates>>
@@ -254,6 +256,9 @@ export default class Publication extends React.Component<
                   },
                   '*'
                 )
+                trackPublicationEvent(this.props.figmaUserId, {
+                  feature: 'UNPUBLISH_PALETTE',
+                })
               })
               .finally(() => {
                 this.props.onLoadPrimaryAction(false)
@@ -295,6 +300,9 @@ export default class Publication extends React.Component<
                   },
                   '*'
                 )
+                trackPublicationEvent(this.props.figmaUserId, {
+                  feature: 'PUSH_PALETTE',
+                })
               })
               .finally(() => {
                 this.props.onLoadPrimaryAction(false)
@@ -333,6 +341,9 @@ export default class Publication extends React.Component<
                   },
                   '*'
                 )
+                trackPublicationEvent(this.props.figmaUserId, {
+                  feature: 'REVERT_PALETTE',
+                })
               })
               .finally(() => {
                 this.props.onLoadSecondaryAction(false)
@@ -373,6 +384,9 @@ export default class Publication extends React.Component<
                   },
                   '*'
                 )
+                trackPublicationEvent(this.props.figmaUserId, {
+                  feature: 'PULL_PALETTE',
+                })
               })
               .finally(() => {
                 this.props.onLoadPrimaryAction(false)
@@ -401,6 +415,9 @@ export default class Publication extends React.Component<
                 this.setState({
                   publicationStatus: 'UNPUBLISHED',
                   isPaletteShared: false,
+                })
+                trackPublicationEvent(this.props.figmaUserId, {
+                  feature: 'DETACH_PALETTE',
                 })
               })
               .finally(() => {
@@ -431,6 +448,9 @@ export default class Publication extends React.Component<
                   },
                   '*'
                 )
+                trackPublicationEvent(this.props.figmaUserId, {
+                  feature: 'PULL_PALETTE',
+                })
               })
               .finally(() => {
                 this.props.onLoadPrimaryAction(false)
@@ -459,6 +479,9 @@ export default class Publication extends React.Component<
                 this.setState({
                   publicationStatus: 'UNPUBLISHED',
                   isPaletteShared: false,
+                })
+                trackPublicationEvent(this.props.figmaUserId, {
+                  feature: 'DETACH_PALETTE',
                 })
               })
               .finally(() => {
@@ -497,6 +520,9 @@ export default class Publication extends React.Component<
                   },
                   '*'
                 )
+                trackPublicationEvent(this.props.figmaUserId, {
+                  feature: 'PUSH_PALETTE',
+                })
               })
               .finally(() => {
                 this.props.onLoadPrimaryAction(false)
@@ -535,6 +561,9 @@ export default class Publication extends React.Component<
                   },
                   '*'
                 )
+                trackPublicationEvent(this.props.figmaUserId, {
+                  feature: 'UNPUBLISH_PALETTE',
+                })
               })
               .finally(() => {
                 this.props.onLoadSecondaryAction(false)
@@ -566,6 +595,9 @@ export default class Publication extends React.Component<
                   publicationStatus: 'UNPUBLISHED',
                   isPaletteShared: false,
                 })
+                trackPublicationEvent(this.props.figmaUserId, {
+                  feature: 'DETACH_PALETTE',
+                })
               })
               .finally(() => {
                 this.props.onLoadPrimaryAction(false)
@@ -586,6 +618,9 @@ export default class Publication extends React.Component<
                 this.setState({
                   publicationStatus: 'UP_TO_DATE',
                   isPaletteShared: data.publicationStatus?.isShared ?? false,
+                })
+                trackPublicationEvent(this.props.figmaUserId, {
+                  feature: 'REVERT_PALETTE',
                 })
                 parent.postMessage(
                   {
@@ -625,6 +660,9 @@ export default class Publication extends React.Component<
                   publicationStatus: 'UNPUBLISHED',
                   isPaletteShared: false,
                 })
+                trackPublicationEvent(this.props.figmaUserId, {
+                  feature: 'DETACH_PALETTE',
+                })
               })
               .finally(() => {
                 this.props.onLoadSecondaryAction(false)
@@ -644,6 +682,9 @@ export default class Publication extends React.Component<
                 this.setState({
                   publicationStatus: 'UNPUBLISHED',
                   isPaletteShared: false,
+                })
+                trackPublicationEvent(this.props.figmaUserId, {
+                  feature: 'DETACH_PALETTE',
                 })
               })
               .finally(() => {

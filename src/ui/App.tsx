@@ -455,9 +455,10 @@ class App extends React.Component<Record<string, never>, AppStates> {
             },
             onGoingStep: 'export previewed',
           })
-          trackExportEvent(e.data.pluginMessage.id, {
-            context: e.data.pluginMessage.context,
-          })
+          if (e.data.pluginMessage.context !== 'TOKENS_GLOBAL')
+            trackExportEvent(e.data.pluginMessage.id, {
+              context: e.data.pluginMessage.context,
+            })
         }
 
         const exportPaletteToCss = () => {

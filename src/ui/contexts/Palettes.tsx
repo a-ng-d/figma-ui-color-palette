@@ -6,7 +6,6 @@ import {
   Input,
   Message,
   Tabs,
-  texts,
 } from '@a_ng_d/figmug-ui'
 import React from 'react'
 
@@ -28,11 +27,13 @@ import features, { pageSize, palettesDbTableName } from '../../utils/config'
 import { setContexts } from '../../utils/setContexts'
 import Feature from '../components/Feature'
 import PaletteItem from '../components/PaletteItem'
+import { trackPublicationEvent } from '../../utils/eventsTracker'
 
 interface PalettesProps {
   userSession: UserSession
   planStatus: PlanStatus
   lang: Language
+  figmaUserId: string
   onConfigureExternalSourceColors: (
     name: string,
     colors: Array<HexModel>
@@ -367,6 +368,11 @@ export default class Palettes extends React.Component<
           },
           '*'
         )
+        trackPublicationEvent(this.props.figmaUserId, {
+          feature: this.props.userSession.userId === data[0].creator_id
+            ? 'REUSE_PALETTE'
+            : 'ADD_PALETTE',
+        })
 
         return
       } catch {

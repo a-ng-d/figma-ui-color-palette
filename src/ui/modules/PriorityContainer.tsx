@@ -24,6 +24,7 @@ interface PriorityContainerProps {
   trialStatus: TrialStatus
   userSession: UserSession
   lang: Language
+  figmaUserId: string
   onChangePublication: React.Dispatch<Partial<AppStates>>
   onClose: React.ChangeEventHandler & (() => void)
 }
@@ -332,17 +333,15 @@ export default class PriorityContainer extends React.Component<
           </Dialog>
         ) : (
           <Publication
-            rawData={this.props.rawData}
+            {...this.props}
             isPrimaryActionLoading={this.state['isPrimaryActionLoading']}
             isSecondaryActionLoading={this.state['isSecondaryActionLoading']}
-            lang={this.props.lang}
             onLoadPrimaryAction={(e) =>
               this.setState({ isPrimaryActionLoading: e })
             }
             onLoadSecondaryAction={(e) =>
               this.setState({ isSecondaryActionLoading: e })
             }
-            onChangePublication={this.props.onChangePublication}
             onClosePublication={this.props.onClose}
           />
         )}
