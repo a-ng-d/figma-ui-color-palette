@@ -11,16 +11,23 @@ import {
   TrialEvent,
 } from '../types/events'
 
+const eventsRecurringProperties = {
+  'Env': process.env.NODE_ENV === 'development' ? 'Dev' : 'Prod',
+}
+
 export const trackRunningEvent = (id: string) => {
-  mixpanel.identify(id), mixpanel.track('Plugin Run')
+  mixpanel.identify(id)
+  mixpanel.track('Plugin Run', { ...eventsRecurringProperties })
 }
 
 export const trackSignInEvent = (id: string) => {
-  mixpanel.identify(id), mixpanel.track('Signed in')
+  mixpanel.identify(id)
+  mixpanel.track('Signed in', { ...eventsRecurringProperties })
 }
 
 export const trackSignOutEvent = (id: string) => {
-  mixpanel.identify(id), mixpanel.track('Signed out')
+  mixpanel.identify(id)
+  mixpanel.track('Signed out', { ...eventsRecurringProperties })
 }
 
 export const trackTrialEnablementEvent = (
@@ -35,12 +42,13 @@ export const trackTrialEnablementEvent = (
     ).toISOString(),
     'Trail Time': options.trialTime + ' hours',
     'Trial Version': '3.2.0',
+    ...eventsRecurringProperties
   })
 }
 
 export const trackPurchaseEvent = (id: string) => {
   mixpanel.identify(id)
-  mixpanel.track('Purchase Enabled')
+  mixpanel.track('Purchase Enabled' , { ...eventsRecurringProperties })
 }
 
 export const trackPublicationEvent = (
@@ -50,6 +58,7 @@ export const trackPublicationEvent = (
   mixpanel.identify(id)
   mixpanel.track('Palette Managed', {
     'Feature': options.feature,
+    ...eventsRecurringProperties
   })
 }
 
@@ -60,6 +69,7 @@ export const trackImportEvent = (
   mixpanel.identify(id)
   mixpanel.track('Colors Imported', {
     'Feature': options.feature,
+    ...eventsRecurringProperties,
   })
 }
 
@@ -70,6 +80,7 @@ export const trackScaleManagementEvent = (
   mixpanel.identify(id)
   mixpanel.track('Scale Updated', {
     'Feature': options.feature,
+    ...eventsRecurringProperties
   })
 }
 
@@ -80,6 +91,7 @@ export const trackSourceColorsManagementEvent = (
   mixpanel.identify(id)
   mixpanel.track('Source Color Updated', {
     'Feature': options.feature,
+    ...eventsRecurringProperties
   })
 }
 
@@ -87,6 +99,7 @@ export const trackColorThemesManagementEvent = (id: string, options: ColorThemeE
   mixpanel.identify(id)
   mixpanel.track('Color Theme Updated', {
     'Feature': options.feature,
+    ...eventsRecurringProperties
   })
 }
 
@@ -94,6 +107,7 @@ export const trackSettingsManagementEvent = (id: string, options: SettingEvent) 
   mixpanel.identify(id)
   mixpanel.track('Setting Updated', {
     'Feature': options.feature,
+    ...eventsRecurringProperties
   })
 }
 
@@ -102,5 +116,6 @@ export const trackExportEvent = (id: string, options: ExportEvent) => {
   mixpanel.track('Color Shades Exported', {
     'Context': options.context,
     'Color Space': options.colorSpace ?? 'NC',
+    ...eventsRecurringProperties
   })
 }

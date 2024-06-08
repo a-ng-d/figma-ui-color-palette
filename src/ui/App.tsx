@@ -92,7 +92,7 @@ class App extends React.Component<Record<string, never>, AppStates> {
   constructor(props: Record<string, never>) {
     super(props)
     mixpanel.init('46aa880b8cae32ae12b9fe29f707df11', {
-      debug: true,
+      debug: process.env.NODE_ENV === 'development',
       disable_persistence: true,
       disable_cookie: true,
     })
