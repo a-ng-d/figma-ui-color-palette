@@ -3,6 +3,7 @@ import mixpanel from 'mixpanel-figma'
 import {
   ColorThemeEvent,
   ExportEvent,
+  ImportEvent,
   ScaleEvent,
   SettingEvent,
   SourceColorEvent,
@@ -30,6 +31,16 @@ export const trackTrialEnablementEvent = (
 
 export const trackPurchaseEvent = (id: string) => {
   mixpanel.identify(id), mixpanel.track('Purchase Enabled')
+}
+
+export const trackImportEvent = (
+  id: string,
+  options: ImportEvent
+) => {
+  mixpanel.identify(id)
+  mixpanel.track('Colors Imported', {
+    Feature: options.feature,
+  })
 }
 
 export const trackScaleEvent = (

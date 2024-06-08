@@ -6,6 +6,13 @@ export interface TrialEnablementEvent {
   trialTime: number
 }
 
+export interface ImportEvent {
+  feature:
+    | 'IMPORT_COOLORS'
+    | 'IMPORT_REALTIME_COLORS'
+    | 'IMPORT_COLOUR_LOVERS'
+}
+
 export interface ScaleEvent {
   feature:
     | 'SWITCH_MATERIAL'

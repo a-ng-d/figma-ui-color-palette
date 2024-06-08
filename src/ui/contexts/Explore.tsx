@@ -10,10 +10,12 @@ import { ColourLovers } from '../../types/data'
 import { ThirdParty } from '../../types/management'
 import { pageSize } from '../../utils/config'
 import PaletteItem from '../components/PaletteItem'
+import { trackImportEvent } from '../../utils/eventsTracker'
 
 interface ExploreProps {
   colourLoversPaletteList: Array<ColourLovers>
   lang: Language
+  figmaUserId: string
   onChangeColorsFromImport: (
     onChangeColorsFromImport: Array<SourceColorConfiguration>,
     source: ThirdParty
@@ -158,6 +160,9 @@ export default class Explore extends React.Component<
                     }),
                     'COLOUR_LOVERS'
                   )
+                  trackImportEvent(this.props.figmaUserId, {
+                    feature: 'IMPORT_COLOUR_LOVERS',
+                  })
                 }}
               />
             </div>

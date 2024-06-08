@@ -15,6 +15,7 @@ interface SourceProps {
   planStatus: PlanStatus
   editorType?: EditorType
   lang: Language
+  figmaUserId: string
   onChangeColorsFromImport: (
     onChangeColorsFromImport: Array<SourceColorConfiguration>,
     source: ThirdParty

@@ -17,11 +17,13 @@ import { ImportUrl, ThirdParty } from '../../types/management'
 import features from '../../utils/config'
 import isBlocked from '../../utils/isBlocked'
 import Feature from '../components/Feature'
+import { trackImportEvent } from '../../utils/eventsTracker'
 
 interface OverviewProps {
   sourceColors: Array<SourceColorConfiguration>
   planStatus: PlanStatus
   lang: Language
+  figmaUserId: string
   onChangeColorsFromImport: (
     onChangeColorsFromImport: Array<SourceColorConfiguration>,
     source: ThirdParty
@@ -171,6 +173,9 @@ export default class Overview extends React.Component<
           helper: undefined,
         },
       })
+      trackImportEvent(this.props.figmaUserId, {
+        feature: 'IMPORT_COOLORS'
+      })
     } else
       this.setState({
         coolorsUrl: {
@@ -214,6 +219,9 @@ export default class Overview extends React.Component<
           canBeSubmitted: false,
           helper: undefined,
         },
+      })
+      trackImportEvent(this.props.figmaUserId, {
+        feature: 'IMPORT_REALTIME_COLORS'
       })
     } else
       this.setState({
