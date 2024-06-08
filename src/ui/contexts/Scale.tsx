@@ -117,6 +117,7 @@ export default class Scale extends React.Component<ScaleProps, ScaleStates> {
     }
 
     const onUpdatingStop = () => {
+      this.scaleMessage.isEditedInRealTime = true
       if (!this.props.hasPreset) this.dispatch.scale.on.status = true
     }
 
