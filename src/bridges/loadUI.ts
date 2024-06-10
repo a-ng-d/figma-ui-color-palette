@@ -82,6 +82,7 @@ const loadUI = async () => {
 
         figma.ui.resize(windowSize.w, windowSize.h)
       },
+      CHECK_USER_CONSENT: () => checkUserConsent(),
       CLOSE_HIGHLIGHT: () => closeHighlight(msg),
       CREATE_PALETTE: () => createPalette(msg),
       UPDATE_SCALE: () => updateScale(msg),
