@@ -216,7 +216,9 @@ div.about__links {
 }
 
 @media (max-width: 460px) {
-  .ui > .bar {
+  .ui > .bar.recharged {
     flex-direction: column;
+    padding-top: var(--size-xxxsmall) !important;
+    padding-bottom: var(--size-xxxsmall) !important;
   }
 }
