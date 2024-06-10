@@ -3,6 +3,7 @@ import {
   ConsentConfiguration,
   Icon,
   Message,
+  layouts,
   texts,
 } from '@a_ng_d/figmug-ui'
 import chroma from 'chroma-js'
@@ -129,7 +130,7 @@ export default class Explore extends React.Component<
             }}
             action={() => null}
           >
-            <div className="snackbar">
+            <div className={layouts['snackbar--tight']}>
               <Button
                 type="icon"
                 icon="link-connected"

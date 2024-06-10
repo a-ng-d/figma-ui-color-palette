@@ -4,6 +4,7 @@ import {
   ConsentConfiguration,
   Menu,
   icons,
+  layouts,
   texts,
 } from '@a_ng_d/figmug-ui'
 import React from 'react'
@@ -88,11 +89,17 @@ export default class Shortcuts extends React.Component<
       <Bar
         rightPart={
           <>
-            <div className="shortcuts snackbar">
+            <div className={[
+              'shortcuts',
+              layouts['snackbar--tight']
+            ]
+              .filter((n) => n)
+              .join(' ')
+            }>
               <Feature
                 isActive={
                   features.find((feature) => feature.name === 'SHORTCUTS_USER')
-                    ?.isActive && this.props.editorType !== 'dev'
+                    ?.isActive
                 }
               >
                 {this.props.userSession.connectionStatus === 'CONNECTED' ? (
@@ -508,14 +515,6 @@ export default class Shortcuts extends React.Component<
                 ]}
                 alignment="TOP_RIGHT"
               />
-              {this.props.editorType === 'dev' ? (
-                <div
-                  style={{
-                    width: '32px',
-                    height: '32px',
-                  }}
-                ></div>
-              ) : null}
             </div>
             {this.props.editorType !== 'dev' ? (
               <div
@@ -532,7 +531,13 @@ export default class Shortcuts extends React.Component<
                 ?.isActive
             }
           >
-            <div className="pro-zone snackbar">
+            <div className={[
+              'pro-zone',
+              layouts['snackbar--tight']
+            ]
+              .filter((n) => n)
+              .join(' ')
+            }>
               {this.props.planStatus === 'UNPAID' &&
               this.props.trialStatus !== 'PENDING' ? (
                 <Button

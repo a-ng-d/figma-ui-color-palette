@@ -6,6 +6,7 @@ import {
   FormItem,
   KeyboardShortcutItem,
   SectionTitle,
+  layouts,
   texts,
 } from '@a_ng_d/figmug-ui'
 import React from 'react'
@@ -775,7 +776,7 @@ export default class Scale extends React.Component<ScaleProps, ScaleStates> {
                     )?.isActive
                   }
                 >
-                  <div className="snackbar">
+                  <div className={layouts['snackbar--tight']}>
                     <Button
                       type="tertiary"
                       label={locals[this.props.lang].scale.howTo}
@@ -882,7 +883,7 @@ export default class Scale extends React.Component<ScaleProps, ScaleStates> {
                     )?.isActive
                   }
                 >
-                  <div className="snackbar">
+                  <div className={layouts['snackbar--tight']}>
                     <Button
                       type="tertiary"
                       label={locals[this.props.lang].scale.howTo}
