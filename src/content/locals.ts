@@ -382,7 +382,8 @@ export const locals: { [key: string]: any } = {
       welcomeMessage: 'Hello $[]',
       updateConsent: 'Manage your cookies',
       cookies: {
-        welcome: 'UI Color Palette uses cookies to understand how you use our plugin and to improve your experience.',
+        welcome:
+          'UI Color Palette uses cookies to understand how you use our plugin and to improve your experience.',
         vendors:
           'By accepting this, you agree to our use of cookies and other technologies for the purposes listed above.',
         customize: 'Customize cookies',
@@ -390,7 +391,7 @@ export const locals: { [key: string]: any } = {
         deny: 'Deny all',
         consent: 'Accept all',
         save: 'Save preferences',
-      }
+      },
     },
     paletteProperties: {
       sourceColors: 'Source colors',
@@ -416,8 +417,9 @@ export const locals: { [key: string]: any } = {
     vendors: {
       mixpanel: {
         name: 'Mixpanel',
-        description: 'A top analytics platform for tracking and understanding user interactions'
-      }
+        description:
+          'A top analytics platform for tracking and understanding user interactions',
+      },
     },
     success: {
       publication: '✓ The palette has been published',

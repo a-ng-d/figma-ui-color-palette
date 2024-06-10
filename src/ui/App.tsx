@@ -1,3 +1,4 @@
+import { Consent, ConsentConfiguration } from '@a_ng_d/figmug-ui'
 import 'figma-plugin-ds/dist/figma-plugin-ds.css'
 import mixpanel from 'mixpanel-figma'
 import React from 'react'
@@ -41,6 +42,7 @@ import {
   trackTrialEnablementEvent,
 } from '../utils/eventsTracker'
 import { defaultPreset, palette, presets } from '../utils/palettePackage'
+import { userConsent } from '../utils/userConsent'
 import Feature from './components/Feature'
 import PriorityContainer from './modules/PriorityContainer'
 import Shortcuts from './modules/Shortcuts'
@@ -49,8 +51,6 @@ import EditPalette from './services/EditPalette'
 import TransferPalette from './services/TransferPalette'
 import './stylesheets/app-components.css'
 import './stylesheets/app.css'
-import { Consent, ConsentConfiguration } from '@a_ng_d/figmug-ui'
-import { userConsent } from '../utils/userConsent'
 
 export interface AppStates {
   service: Service
@@ -99,7 +99,7 @@ class App extends React.Component<Record<string, never>, AppStates> {
       debug: process.env.NODE_ENV === 'development',
       disable_persistence: true,
       disable_cookie: true,
-      opt_out_tracking_by_default: true
+      opt_out_tracking_by_default: true,
     })
     this.state = {
       service: 'CREATE',
@@ -229,19 +229,6 @@ class App extends React.Component<Record<string, never>, AppStates> {
       console.log(event, session)
       return actions[event]?.()
     })
-    if (this.state['userConsent'].find((consent) => consent.id === 'mixpanel')?.isConsented)
-      mixpanel.opt_in_tracking()
-    else
-      mixpanel.opt_out_tracking()
-  }
-
-  componentDidUpdate = () => {
-    if (this.state['userConsent'].find((consent) => consent.id === 'mixpanel')?.isConsented)
-      mixpanel.opt_in_tracking()
-    else {
-      console.log(mixpanel.has_opted_out_tracking())
-    }
-      
   }
 
   // Handlers
@@ -257,12 +244,13 @@ class App extends React.Component<Record<string, never>, AppStates> {
           items: [
             {
               key: 'mixpanel_user_consent',
-              value: e.find((consent) => consent.id === 'mixpanel')?.isConsented,
+              value: e.find((consent) => consent.id === 'mixpanel')
+                ?.isConsented,
             },
             {
               key: 'user_consent_version',
               value: userConsentVersion,
-            }
+            },
           ],
         },
       },
@@ -282,7 +270,12 @@ class App extends React.Component<Record<string, never>, AppStates> {
           this.setState({
             figmaUserId: e.data.pluginMessage.id,
           })
-          trackRunningEvent(e.data.pluginMessage.id)
+          trackRunningEvent(
+            e.data.pluginMessage.id,
+            this.state['userConsent'].find(
+              (consent) => consent.id === 'mixpanel'
+            )?.isConsented ?? false
+          )
         }
 
         const checkUserConsent = () => {
@@ -509,9 +502,15 @@ class App extends React.Component<Record<string, never>, AppStates> {
             onGoingStep: 'export previewed',
           })
           if (e.data.pluginMessage.context !== 'TOKENS_GLOBAL')
-            trackExportEvent(e.data.pluginMessage.id, {
-              context: e.data.pluginMessage.context,
-            })
+            trackExportEvent(
+              e.data.pluginMessage.id,
+              this.state['userConsent'].find(
+                (consent) => consent.id === 'mixpanel'
+              )?.isConsented ?? false,
+              {
+                context: e.data.pluginMessage.context,
+              }
+            )
         }
 
         const exportPaletteToCss = () => {
@@ -528,10 +527,16 @@ class App extends React.Component<Record<string, never>, AppStates> {
             },
             onGoingStep: 'export previewed',
           })
-          trackExportEvent(e.data.pluginMessage.id, {
-            context: e.data.pluginMessage.context,
-            colorSpace: e.data.pluginMessage.colorSpace,
-          })
+          trackExportEvent(
+            e.data.pluginMessage.id,
+            this.state['userConsent'].find(
+              (consent) => consent.id === 'mixpanel'
+            )?.isConsented ?? false,
+            {
+              context: e.data.pluginMessage.context,
+              colorSpace: e.data.pluginMessage.colorSpace,
+            }
+          )
         }
 
         const exportPaletteToTaiwind = () => {
@@ -552,9 +557,15 @@ class App extends React.Component<Record<string, never>, AppStates> {
             },
             onGoingStep: 'export previewed',
           })
-          trackExportEvent(e.data.pluginMessage.id, {
-            context: e.data.pluginMessage.context,
-          })
+          trackExportEvent(
+            e.data.pluginMessage.id,
+            this.state['userConsent'].find(
+              (consent) => consent.id === 'mixpanel'
+            )?.isConsented ?? false,
+            {
+              context: e.data.pluginMessage.context,
+            }
+          )
         }
 
         const exportPaletteToSwiftUI = () => {
@@ -571,9 +582,15 @@ class App extends React.Component<Record<string, never>, AppStates> {
             },
             onGoingStep: 'export previewed',
           })
-          trackExportEvent(e.data.pluginMessage.id, {
-            context: e.data.pluginMessage.context,
-          })
+          trackExportEvent(
+            e.data.pluginMessage.id,
+            this.state['userConsent'].find(
+              (consent) => consent.id === 'mixpanel'
+            )?.isConsented ?? false,
+            {
+              context: e.data.pluginMessage.context,
+            }
+          )
         }
 
         const exportPaletteToUIKit = () => {
@@ -590,9 +607,15 @@ class App extends React.Component<Record<string, never>, AppStates> {
             },
             onGoingStep: 'export previewed',
           })
-          trackExportEvent(e.data.pluginMessage.id, {
-            context: e.data.pluginMessage.context,
-          })
+          trackExportEvent(
+            e.data.pluginMessage.id,
+            this.state['userConsent'].find(
+              (consent) => consent.id === 'mixpanel'
+            )?.isConsented ?? false,
+            {
+              context: e.data.pluginMessage.context,
+            }
+          )
         }
 
         const exportPaletteToKt = () => {
@@ -609,9 +632,15 @@ class App extends React.Component<Record<string, never>, AppStates> {
             },
             onGoingStep: 'export previewed',
           })
-          trackExportEvent(e.data.pluginMessage.id, {
-            context: e.data.pluginMessage.context,
-          })
+          trackExportEvent(
+            e.data.pluginMessage.id,
+            this.state['userConsent'].find(
+              (consent) => consent.id === 'mixpanel'
+            )?.isConsented ?? false,
+            {
+              context: e.data.pluginMessage.context,
+            }
+          )
         }
 
         const exportPaletteToXml = () => {
@@ -628,9 +657,15 @@ class App extends React.Component<Record<string, never>, AppStates> {
             },
             onGoingStep: 'export previewed',
           })
-          trackExportEvent(e.data.pluginMessage.id, {
-            context: e.data.pluginMessage.context,
-          })
+          trackExportEvent(
+            e.data.pluginMessage.id,
+            this.state['userConsent'].find(
+              (consent) => consent.id === 'mixpanel'
+            )?.isConsented ?? false,
+            {
+              context: e.data.pluginMessage.context,
+            }
+          )
         }
 
         const exportPaletteToCsv = () => {
@@ -647,9 +682,15 @@ class App extends React.Component<Record<string, never>, AppStates> {
             },
             onGoingStep: 'export previewed',
           })
-          trackExportEvent(e.data.pluginMessage.id, {
-            context: e.data.pluginMessage.context,
-          })
+          trackExportEvent(
+            e.data.pluginMessage.id,
+            this.state['userConsent'].find(
+              (consent) => consent.id === 'mixpanel'
+            )?.isConsented ?? false,
+            {
+              context: e.data.pluginMessage.context,
+            }
+          )
         }
 
         const exposePalettes = (data: Array<ExtractOfPaletteConfiguration>) =>
@@ -676,7 +717,12 @@ class App extends React.Component<Record<string, never>, AppStates> {
             planStatus: e.data.pluginMessage.data,
             priorityContainerContext: 'WELCOME_TO_PRO',
           })
-          trackPurchaseEvent(e.data.pluginMessage.id)
+          trackPurchaseEvent(
+            e.data.pluginMessage.id,
+            this.state['userConsent'].find(
+              (consent) => consent.id === 'mixpanel'
+            )?.isConsented ?? false
+          )
         }
 
         const enableTrial = () => {
@@ -685,10 +731,16 @@ class App extends React.Component<Record<string, never>, AppStates> {
             trialStatus: 'PENDING',
             priorityContainerContext: 'WELCOME_TO_TRIAL',
           })
-          trackTrialEnablementEvent(e.data.pluginMessage.id, {
-            date: e.data.pluginMessage.date,
-            trialTime: e.data.pluginMessage.trialTime,
-          })
+          trackTrialEnablementEvent(
+            e.data.pluginMessage.id,
+            this.state['userConsent'].find(
+              (consent) => consent.id === 'mixpanel'
+            )?.isConsented ?? false,
+            {
+              date: e.data.pluginMessage.date,
+              trialTime: e.data.pluginMessage.trialTime,
+            }
+          )
         }
 
         const signOut = (data: UserSession) =>
@@ -801,14 +853,17 @@ class App extends React.Component<Record<string, never>, AppStates> {
             />
           </Feature>
           <Feature
-            isActive={this.state['mustUserConsent']
-              && features.find((feature) => feature.name === 'CONSENT')
-                ?.isActive}
+            isActive={
+              this.state['mustUserConsent'] &&
+              features.find((feature) => feature.name === 'CONSENT')?.isActive
+            }
           >
             <Consent
               welcomeMessage={locals[this.state['lang']].user.cookies.welcome}
               vendorsMessage={locals[this.state['lang']].user.cookies.vendors}
-              moreDetailsLabel={locals[this.state['lang']].user.cookies.customize}
+              moreDetailsLabel={
+                locals[this.state['lang']].user.cookies.customize
+              }
               lessDetailsLabel={locals[this.state['lang']].user.cookies.back}
               consentActions={{
                 consent: {
@@ -857,9 +912,7 @@ class App extends React.Component<Record<string, never>, AppStates> {
                   )
                 else this.setState({ priorityContainerContext: 'TRY' })
               }}
-              onUpdateConsent={() =>
-                this.setState({ mustUserConsent: true })
-              }
+              onUpdateConsent={() => this.setState({ mustUserConsent: true })}
             />
           </Feature>
         </main>

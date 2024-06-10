@@ -1,4 +1,11 @@
-import { Bar, Button, Menu, icons, texts } from '@a_ng_d/figmug-ui'
+import {
+  Bar,
+  Button,
+  ConsentConfiguration,
+  Menu,
+  icons,
+  texts,
+} from '@a_ng_d/figmug-ui'
 import React from 'react'
 
 import { signIn, signOut } from '../../bridges/publication/authentication'
@@ -6,9 +13,9 @@ import { locals } from '../../content/locals'
 import { EditorType, Language, PlanStatus, TrialStatus } from '../../types/app'
 import { UserSession } from '../../types/user'
 import features from '../../utils/config'
+import { trackSignInEvent, trackSignOutEvent } from '../../utils/eventsTracker'
 import isBlocked from '../../utils/isBlocked'
 import Feature from '../components/Feature'
-import { trackSignInEvent, trackSignOutEvent } from '../../utils/eventsTracker'
 
 interface ShortcutsProps {
   editorType: EditorType
@@ -16,6 +23,7 @@ interface ShortcutsProps {
   trialStatus: TrialStatus
   trialRemainingTime: number
   userSession: UserSession
+  userConsent: Array<ConsentConfiguration>
   lang: Language
   figmaUserId: string
   onReOpenFeedback: () => void
@@ -144,7 +152,12 @@ export default class Shortcuts extends React.Component<
                                 },
                                 '*'
                               )
-                              trackSignOutEvent(this.props.figmaUserId)
+                              trackSignOutEvent(
+                                this.props.figmaUserId,
+                                this.props.userConsent.find(
+                                  (consent) => consent.id === 'mixpanel'
+                                )?.isConsented ?? false
+                              )
                             })
                             .finally(() => {
                               this.setState({ isUserMenuLoading: false })
@@ -174,7 +187,7 @@ export default class Shortcuts extends React.Component<
                         isNew: false,
                         children: [],
                         action: this.props.onUpdateConsent,
-                      }
+                      },
                     ]}
                     alignment="TOP_RIGHT"
                   />
@@ -197,7 +210,12 @@ export default class Shortcuts extends React.Component<
                           this.setState({ isUserMenuLoading: true })
                           signIn()
                             .then(() => {
-                              trackSignInEvent(this.props.figmaUserId)
+                              trackSignInEvent(
+                                this.props.figmaUserId,
+                                this.props.userConsent.find(
+                                  (consent) => consent.id === 'mixpanel'
+                                )?.isConsented ?? false
+                              )
                             })
                             .finally(() => {
                               this.setState({ isUserMenuLoading: false })
@@ -230,7 +248,7 @@ export default class Shortcuts extends React.Component<
                         isNew: false,
                         children: [],
                         action: this.props.onUpdateConsent,
-                      }
+                      },
                     ]}
                     state={
                       this.state['isUserMenuLoading'] ? 'LOADING' : 'DEFAULT'

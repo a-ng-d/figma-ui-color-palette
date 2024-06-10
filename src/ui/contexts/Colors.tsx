@@ -1,4 +1,10 @@
-import { Button, HexModel, Message, SectionTitle } from '@a_ng_d/figmug-ui'
+import {
+  Button,
+  ConsentConfiguration,
+  HexModel,
+  Message,
+  SectionTitle,
+} from '@a_ng_d/figmug-ui'
 import chroma from 'chroma-js'
 import React from 'react'
 import { uid } from 'uid'
@@ -20,6 +26,7 @@ interface ColorsProps {
   colors: Array<ColorConfiguration>
   editorType: EditorType
   identity?: Identity
+  userConsent: Array<ConsentConfiguration>
   planStatus: PlanStatus
   lang: Language
   figmaUserId: string
@@ -126,9 +133,14 @@ export default class Colors extends React.Component<ColorsProps, ColorsStates> {
       })
 
       parent.postMessage({ pluginMessage: this.colorsMessage }, '*')
-      trackSourceColorsManagementEvent(this.props.figmaUserId, {
-        feature: 'ADD_COLOR',
-      })
+      trackSourceColorsManagementEvent(
+        this.props.figmaUserId,
+        this.props.userConsent.find((consent) => consent.id === 'mixpanel')
+          ?.isConsented ?? false,
+        {
+          feature: 'ADD_COLOR',
+        }
+      )
     }
 
     const renameColor = () => {
@@ -152,9 +164,14 @@ export default class Colors extends React.Component<ColorsProps, ColorsStates> {
 
       if (e.type === 'blur' || e.code === 'Enter') {
         parent.postMessage({ pluginMessage: this.colorsMessage }, '*')
-        trackSourceColorsManagementEvent(this.props.figmaUserId, {
-          feature: 'RENAME_COLOR',
-        })
+        trackSourceColorsManagementEvent(
+          this.props.figmaUserId,
+          this.props.userConsent.find((consent) => consent.id === 'mixpanel')
+            ?.isConsented ?? false,
+          {
+            feature: 'RENAME_COLOR',
+          }
+        )
       }
     }
 
@@ -189,9 +206,14 @@ export default class Colors extends React.Component<ColorsProps, ColorsStates> {
       if (e.type === 'blur') {
         this.dispatch.colors.on.status = false
         parent.postMessage({ pluginMessage: this.colorsMessage }, '*')
-        trackSourceColorsManagementEvent(this.props.figmaUserId, {
-          feature: 'UPDATE_HEX',
-        })
+        trackSourceColorsManagementEvent(
+          this.props.figmaUserId,
+          this.props.userConsent.find((consent) => consent.id === 'mixpanel')
+            ?.isConsented ?? false,
+          {
+            feature: 'UPDATE_HEX',
+          }
+        )
       } else {
         this.colorsMessage.isEditedInRealTime = true
         this.dispatch.colors.on.status = true
@@ -218,9 +240,14 @@ export default class Colors extends React.Component<ColorsProps, ColorsStates> {
       })
 
       parent.postMessage({ pluginMessage: this.colorsMessage }, '*')
-      trackSourceColorsManagementEvent(this.props.figmaUserId, {
-        feature: 'UPDATE_LCH',
-      })
+      trackSourceColorsManagementEvent(
+        this.props.figmaUserId,
+        this.props.userConsent.find((consent) => consent.id === 'mixpanel')
+          ?.isConsented ?? false,
+        {
+          feature: 'UPDATE_LCH',
+        }
+      )
     }
 
     const updateChromaProp = () => {
@@ -243,9 +270,14 @@ export default class Colors extends React.Component<ColorsProps, ColorsStates> {
       })
 
       parent.postMessage({ pluginMessage: this.colorsMessage }, '*')
-      trackSourceColorsManagementEvent(this.props.figmaUserId, {
-        feature: 'UPDATE_LCH',
-      })
+      trackSourceColorsManagementEvent(
+        this.props.figmaUserId,
+        this.props.userConsent.find((consent) => consent.id === 'mixpanel')
+          ?.isConsented ?? false,
+        {
+          feature: 'UPDATE_LCH',
+        }
+      )
     }
 
     const updateHueProp = () => {
@@ -268,9 +300,14 @@ export default class Colors extends React.Component<ColorsProps, ColorsStates> {
       })
 
       parent.postMessage({ pluginMessage: this.colorsMessage }, '*')
-      trackSourceColorsManagementEvent(this.props.figmaUserId, {
-        feature: 'UPDATE_LCH',
-      })
+      trackSourceColorsManagementEvent(
+        this.props.figmaUserId,
+        this.props.userConsent.find((consent) => consent.id === 'mixpanel')
+          ?.isConsented ?? false,
+        {
+          feature: 'UPDATE_LCH',
+        }
+      )
     }
 
     const setHueShifting = () => {
@@ -285,9 +322,14 @@ export default class Colors extends React.Component<ColorsProps, ColorsStates> {
       })
 
       parent.postMessage({ pluginMessage: this.colorsMessage }, '*')
-      trackSourceColorsManagementEvent(this.props.figmaUserId, {
-        feature: 'SHIFT_HUE',
-      })
+      trackSourceColorsManagementEvent(
+        this.props.figmaUserId,
+        this.props.userConsent.find((consent) => consent.id === 'mixpanel')
+          ?.isConsented ?? false,
+        {
+          feature: 'SHIFT_HUE',
+        }
+      )
     }
 
     const updateColorDescription = () => {
@@ -303,9 +345,14 @@ export default class Colors extends React.Component<ColorsProps, ColorsStates> {
 
       if (e.type === 'blur') {
         parent.postMessage({ pluginMessage: this.colorsMessage }, '*')
-        trackSourceColorsManagementEvent(this.props.figmaUserId, {
-          feature: 'DESCRIBE_COLOR',
-        })
+        trackSourceColorsManagementEvent(
+          this.props.figmaUserId,
+          this.props.userConsent.find((consent) => consent.id === 'mixpanel')
+            ?.isConsented ?? false,
+          {
+            feature: 'DESCRIBE_COLOR',
+          }
+        )
       }
     }
 
@@ -320,9 +367,14 @@ export default class Colors extends React.Component<ColorsProps, ColorsStates> {
       })
 
       parent.postMessage({ pluginMessage: this.colorsMessage }, '*')
-      trackSourceColorsManagementEvent(this.props.figmaUserId, {
-        feature: 'REMOVE_COLOR',
-      })
+      trackSourceColorsManagementEvent(
+        this.props.figmaUserId,
+        this.props.userConsent.find((consent) => consent.id === 'mixpanel')
+          ?.isConsented ?? false,
+        {
+          feature: 'REMOVE_COLOR',
+        }
+      )
     }
 
     const actions: ActionsList = {

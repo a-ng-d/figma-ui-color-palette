@@ -1,6 +1,7 @@
 import {
   Accordion,
   ColorItem,
+  ConsentConfiguration,
   FormItem,
   Input,
   Message,
@@ -15,12 +16,13 @@ import { Language, PlanStatus } from '../../types/app'
 import { SourceColorConfiguration } from '../../types/configurations'
 import { ImportUrl, ThirdParty } from '../../types/management'
 import features from '../../utils/config'
+import { trackImportEvent } from '../../utils/eventsTracker'
 import isBlocked from '../../utils/isBlocked'
 import Feature from '../components/Feature'
-import { trackImportEvent } from '../../utils/eventsTracker'
 
 interface OverviewProps {
   sourceColors: Array<SourceColorConfiguration>
+  userConsent: Array<ConsentConfiguration>
   planStatus: PlanStatus
   lang: Language
   figmaUserId: string
@@ -173,9 +175,14 @@ export default class Overview extends React.Component<
           helper: undefined,
         },
       })
-      trackImportEvent(this.props.figmaUserId, {
-        feature: 'IMPORT_COOLORS'
-      })
+      trackImportEvent(
+        this.props.figmaUserId,
+        this.props.userConsent.find((consent) => consent.id === 'mixpanel')
+          ?.isConsented ?? false,
+        {
+          feature: 'IMPORT_COOLORS',
+        }
+      )
     } else
       this.setState({
         coolorsUrl: {
@@ -220,9 +227,14 @@ export default class Overview extends React.Component<
           helper: undefined,
         },
       })
-      trackImportEvent(this.props.figmaUserId, {
-        feature: 'IMPORT_REALTIME_COLORS'
-      })
+      trackImportEvent(
+        this.props.figmaUserId,
+        this.props.userConsent.find((consent) => consent.id === 'mixpanel')
+          ?.isConsented ?? false,
+        {
+          feature: 'IMPORT_REALTIME_COLORS',
+        }
+      )
     } else
       this.setState({
         realtimeColorsUrl: {

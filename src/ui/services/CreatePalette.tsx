@@ -1,4 +1,4 @@
-import { Bar, HexModel, Tabs } from '@a_ng_d/figmug-ui'
+import { Bar, ConsentConfiguration, HexModel, Tabs } from '@a_ng_d/figmug-ui'
 import chroma from 'chroma-js'
 import React from 'react'
 import { uid } from 'uid'
@@ -36,8 +36,9 @@ interface CreatePaletteProps {
   visionSimulationMode: VisionSimulationModeConfiguration
   view: ViewConfiguration
   textColorsTheme: TextColorsThemeHexModel
-  planStatus: PlanStatus
   userSession: UserSession
+  userConsent: Array<ConsentConfiguration>
+  planStatus: PlanStatus
   lang: Language
   figmaUserId: string
   onChangeColorsFromImport: React.Dispatch<Partial<AppStates>>

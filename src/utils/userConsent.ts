@@ -1,5 +1,6 @@
-import { ConsentConfiguration } from "@a_ng_d/figmug-ui";
-import { lang, locals } from "../content/locals";
+import { ConsentConfiguration } from '@a_ng_d/figmug-ui'
+
+import { lang, locals } from '../content/locals'
 
 export const userConsent: Array<ConsentConfiguration> = [
   {
@@ -8,5 +9,5 @@ export const userConsent: Array<ConsentConfiguration> = [
     icon: 'https://asset.brandfetch.io/idr_rhI2FS/ideb-tnj2D.svg',
     description: locals[lang].vendors.mixpanel.description,
     isConsented: false,
-  }
+  },
 ]

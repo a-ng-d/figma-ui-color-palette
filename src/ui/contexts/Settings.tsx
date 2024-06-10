@@ -1,4 +1,5 @@
 import {
+  ConsentConfiguration,
   Dropdown,
   FormItem,
   HexModel,
@@ -45,6 +46,7 @@ interface SettingsProps {
   view: string
   algorithmVersion?: AlgorithmVersionConfiguration
   identity?: Identity
+  userConsent: Array<ConsentConfiguration>
   planStatus: PlanStatus
   editorType?: EditorType
   lang: Language
@@ -112,9 +114,14 @@ export default class Settings extends React.Component<SettingsProps> {
         this.props.context === 'LOCAL_STYLES'
       ) {
         parent.postMessage({ pluginMessage: this.settingsMessage }, '*')
-        trackSettingsManagementEvent(this.props.figmaUserId, {
-          feature: 'RENAME_PALETTE',
-        })
+        trackSettingsManagementEvent(
+          this.props.figmaUserId,
+          this.props.userConsent.find((consent) => consent.id === 'mixpanel')
+            ?.isConsented ?? false,
+          {
+            feature: 'RENAME_PALETTE',
+          }
+        )
       }
     }
 
@@ -136,9 +143,14 @@ export default class Settings extends React.Component<SettingsProps> {
 
       if (e.type === 'blur' && this.props.context === 'LOCAL_STYLES') {
         parent.postMessage({ pluginMessage: this.settingsMessage }, '*')
-        trackSettingsManagementEvent(this.props.figmaUserId, {
-          feature: 'DESCRIBE_PALETTE',
-        })
+        trackSettingsManagementEvent(
+          this.props.figmaUserId,
+          this.props.userConsent.find((consent) => consent.id === 'mixpanel')
+            ?.isConsented ?? false,
+          {
+            feature: 'DESCRIBE_PALETTE',
+          }
+        )
       }
     }
 
@@ -156,9 +168,14 @@ export default class Settings extends React.Component<SettingsProps> {
             { pluginMessage: { type: 'UPDATE_VIEW', data: palette } },
             '*'
           )
-          trackSettingsManagementEvent(this.props.figmaUserId, {
-            feature: 'UPDATE_VIEW',
-          })
+          trackSettingsManagementEvent(
+            this.props.figmaUserId,
+            this.props.userConsent.find((consent) => consent.id === 'mixpanel')
+              ?.isConsented ?? false,
+            {
+              feature: 'UPDATE_VIEW',
+            }
+          )
         }
       }
     }
@@ -182,9 +199,14 @@ export default class Settings extends React.Component<SettingsProps> {
 
       if (this.props.context === 'LOCAL_STYLES') {
         parent.postMessage({ pluginMessage: this.settingsMessage }, '*')
-        trackSettingsManagementEvent(this.props.figmaUserId, {
-          feature: 'UPDATE_COLOR_SPACE',
-        })
+        trackSettingsManagementEvent(
+          this.props.figmaUserId,
+          this.props.userConsent.find((consent) => consent.id === 'mixpanel')
+            ?.isConsented ?? false,
+          {
+            feature: 'UPDATE_COLOR_SPACE',
+          }
+        )
       }
     }
 
@@ -207,9 +229,14 @@ export default class Settings extends React.Component<SettingsProps> {
 
       if (this.props.context === 'LOCAL_STYLES') {
         parent.postMessage({ pluginMessage: this.settingsMessage }, '*')
-        trackSettingsManagementEvent(this.props.figmaUserId, {
-          feature: 'UPDATE_VISION_SIMULATION_MODE',
-        })
+        trackSettingsManagementEvent(
+          this.props.figmaUserId,
+          this.props.userConsent.find((consent) => consent.id === 'mixpanel')
+            ?.isConsented ?? false,
+          {
+            feature: 'UPDATE_VISION_SIMULATION_MODE',
+          }
+        )
       }
     }
 
@@ -228,9 +255,14 @@ export default class Settings extends React.Component<SettingsProps> {
       })
 
       parent.postMessage({ pluginMessage: this.settingsMessage }, '*')
-      trackSettingsManagementEvent(this.props.figmaUserId, {
-        feature: 'UPDATE_ALGORITHM',
-      })
+      trackSettingsManagementEvent(
+        this.props.figmaUserId,
+        this.props.userConsent.find((consent) => consent.id === 'mixpanel')
+          ?.isConsented ?? false,
+        {
+          feature: 'UPDATE_ALGORITHM',
+        }
+      )
     }
 
     const updateTextLightColor = () => {
@@ -259,9 +291,14 @@ export default class Settings extends React.Component<SettingsProps> {
       if (e.type === 'blur' && this.props.context === 'LOCAL_STYLES') {
         this.dispatch.textColorsTheme.on.status = false
         parent.postMessage({ pluginMessage: this.settingsMessage }, '*')
-        trackSettingsManagementEvent(this.props.figmaUserId, {
-          feature: 'UPDATE_TEXT_COLORS_THEME',
-        })
+        trackSettingsManagementEvent(
+          this.props.figmaUserId,
+          this.props.userConsent.find((consent) => consent.id === 'mixpanel')
+            ?.isConsented ?? false,
+          {
+            feature: 'UPDATE_TEXT_COLORS_THEME',
+          }
+        )
       } else if (this.props.context === 'LOCAL_STYLES')
         this.dispatch.textColorsTheme.on.status = true
     }
@@ -292,9 +329,14 @@ export default class Settings extends React.Component<SettingsProps> {
       if (e.type === 'blur' && this.props.context === 'LOCAL_STYLES') {
         this.dispatch.textColorsTheme.on.status = false
         parent.postMessage({ pluginMessage: this.settingsMessage }, '*')
-        trackSettingsManagementEvent(this.props.figmaUserId, {
-          feature: 'UPDATE_TEXT_COLORS_THEME',
-        })
+        trackSettingsManagementEvent(
+          this.props.figmaUserId,
+          this.props.userConsent.find((consent) => consent.id === 'mixpanel')
+            ?.isConsented ?? false,
+          {
+            feature: 'UPDATE_TEXT_COLORS_THEME',
+          }
+        )
       } else if (this.props.context === 'LOCAL_STYLES')
         this.dispatch.textColorsTheme.on.status = true
     }

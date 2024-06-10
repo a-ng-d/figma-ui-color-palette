@@ -1,4 +1,4 @@
-import { Bar, Tabs } from '@a_ng_d/figmug-ui'
+import { Bar, ConsentConfiguration, Tabs } from '@a_ng_d/figmug-ui'
 import React from 'react'
 
 import { EditorType, Language, PlanStatus } from '../../types/app'
@@ -12,6 +12,7 @@ import Overview from './Overview'
 
 interface SourceProps {
   sourceColors: Array<SourceColorConfiguration>
+  userConsent: Array<ConsentConfiguration>
   planStatus: PlanStatus
   editorType?: EditorType
   lang: Language

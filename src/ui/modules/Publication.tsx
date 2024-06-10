@@ -1,4 +1,10 @@
-import { Chip, Dialog, Thumbnail, texts } from '@a_ng_d/figmug-ui'
+import {
+  Chip,
+  ConsentConfiguration,
+  Dialog,
+  Thumbnail,
+  texts,
+} from '@a_ng_d/figmug-ui'
 import React from 'react'
 
 import { supabase } from '../../bridges/publication/authentication'
@@ -10,13 +16,14 @@ import unpublishPalette from '../../bridges/publication/unpublishPalette'
 import { locals } from '../../content/locals'
 import { Language } from '../../types/app'
 import { palettesDbTableName } from '../../utils/config'
-import type { AppStates } from '../App'
 import { trackPublicationEvent } from '../../utils/eventsTracker'
+import type { AppStates } from '../App'
 
 interface PublicationProps {
   rawData: AppStates
   isPrimaryActionLoading: boolean
   isSecondaryActionLoading: boolean
+  userConsent: Array<ConsentConfiguration>
   lang: Language
   figmaUserId: string
   onLoadPrimaryAction: (e: boolean) => void
@@ -256,9 +263,15 @@ export default class Publication extends React.Component<
                   },
                   '*'
                 )
-                trackPublicationEvent(this.props.figmaUserId, {
-                  feature: 'UNPUBLISH_PALETTE',
-                })
+                trackPublicationEvent(
+                  this.props.figmaUserId,
+                  this.props.userConsent.find(
+                    (consent) => consent.id === 'mixpanel'
+                  )?.isConsented ?? false,
+                  {
+                    feature: 'UNPUBLISH_PALETTE',
+                  }
+                )
               })
               .finally(() => {
                 this.props.onLoadPrimaryAction(false)
@@ -300,9 +313,15 @@ export default class Publication extends React.Component<
                   },
                   '*'
                 )
-                trackPublicationEvent(this.props.figmaUserId, {
-                  feature: 'PUSH_PALETTE',
-                })
+                trackPublicationEvent(
+                  this.props.figmaUserId,
+                  this.props.userConsent.find(
+                    (consent) => consent.id === 'mixpanel'
+                  )?.isConsented ?? false,
+                  {
+                    feature: 'PUSH_PALETTE',
+                  }
+                )
               })
               .finally(() => {
                 this.props.onLoadPrimaryAction(false)
@@ -341,9 +360,15 @@ export default class Publication extends React.Component<
                   },
                   '*'
                 )
-                trackPublicationEvent(this.props.figmaUserId, {
-                  feature: 'REVERT_PALETTE',
-                })
+                trackPublicationEvent(
+                  this.props.figmaUserId,
+                  this.props.userConsent.find(
+                    (consent) => consent.id === 'mixpanel'
+                  )?.isConsented ?? false,
+                  {
+                    feature: 'REVERT_PALETTE',
+                  }
+                )
               })
               .finally(() => {
                 this.props.onLoadSecondaryAction(false)
@@ -384,9 +409,15 @@ export default class Publication extends React.Component<
                   },
                   '*'
                 )
-                trackPublicationEvent(this.props.figmaUserId, {
-                  feature: 'PULL_PALETTE',
-                })
+                trackPublicationEvent(
+                  this.props.figmaUserId,
+                  this.props.userConsent.find(
+                    (consent) => consent.id === 'mixpanel'
+                  )?.isConsented ?? false,
+                  {
+                    feature: 'PULL_PALETTE',
+                  }
+                )
               })
               .finally(() => {
                 this.props.onLoadPrimaryAction(false)
@@ -416,9 +447,15 @@ export default class Publication extends React.Component<
                   publicationStatus: 'UNPUBLISHED',
                   isPaletteShared: false,
                 })
-                trackPublicationEvent(this.props.figmaUserId, {
-                  feature: 'DETACH_PALETTE',
-                })
+                trackPublicationEvent(
+                  this.props.figmaUserId,
+                  this.props.userConsent.find(
+                    (consent) => consent.id === 'mixpanel'
+                  )?.isConsented ?? false,
+                  {
+                    feature: 'DETACH_PALETTE',
+                  }
+                )
               })
               .finally(() => {
                 this.props.onLoadSecondaryAction(false)
@@ -448,9 +485,15 @@ export default class Publication extends React.Component<
                   },
                   '*'
                 )
-                trackPublicationEvent(this.props.figmaUserId, {
-                  feature: 'PULL_PALETTE',
-                })
+                trackPublicationEvent(
+                  this.props.figmaUserId,
+                  this.props.userConsent.find(
+                    (consent) => consent.id === 'mixpanel'
+                  )?.isConsented ?? false,
+                  {
+                    feature: 'PULL_PALETTE',
+                  }
+                )
               })
               .finally(() => {
                 this.props.onLoadPrimaryAction(false)
@@ -480,9 +523,15 @@ export default class Publication extends React.Component<
                   publicationStatus: 'UNPUBLISHED',
                   isPaletteShared: false,
                 })
-                trackPublicationEvent(this.props.figmaUserId, {
-                  feature: 'DETACH_PALETTE',
-                })
+                trackPublicationEvent(
+                  this.props.figmaUserId,
+                  this.props.userConsent.find(
+                    (consent) => consent.id === 'mixpanel'
+                  )?.isConsented ?? false,
+                  {
+                    feature: 'DETACH_PALETTE',
+                  }
+                )
               })
               .finally(() => {
                 this.props.onLoadSecondaryAction(false)
@@ -520,9 +569,15 @@ export default class Publication extends React.Component<
                   },
                   '*'
                 )
-                trackPublicationEvent(this.props.figmaUserId, {
-                  feature: 'PUSH_PALETTE',
-                })
+                trackPublicationEvent(
+                  this.props.figmaUserId,
+                  this.props.userConsent.find(
+                    (consent) => consent.id === 'mixpanel'
+                  )?.isConsented ?? false,
+                  {
+                    feature: 'PUSH_PALETTE',
+                  }
+                )
               })
               .finally(() => {
                 this.props.onLoadPrimaryAction(false)
@@ -561,9 +616,15 @@ export default class Publication extends React.Component<
                   },
                   '*'
                 )
-                trackPublicationEvent(this.props.figmaUserId, {
-                  feature: 'UNPUBLISH_PALETTE',
-                })
+                trackPublicationEvent(
+                  this.props.figmaUserId,
+                  this.props.userConsent.find(
+                    (consent) => consent.id === 'mixpanel'
+                  )?.isConsented ?? false,
+                  {
+                    feature: 'UNPUBLISH_PALETTE',
+                  }
+                )
               })
               .finally(() => {
                 this.props.onLoadSecondaryAction(false)
@@ -595,9 +656,15 @@ export default class Publication extends React.Component<
                   publicationStatus: 'UNPUBLISHED',
                   isPaletteShared: false,
                 })
-                trackPublicationEvent(this.props.figmaUserId, {
-                  feature: 'DETACH_PALETTE',
-                })
+                trackPublicationEvent(
+                  this.props.figmaUserId,
+                  this.props.userConsent.find(
+                    (consent) => consent.id === 'mixpanel'
+                  )?.isConsented ?? false,
+                  {
+                    feature: 'DETACH_PALETTE',
+                  }
+                )
               })
               .finally(() => {
                 this.props.onLoadPrimaryAction(false)
@@ -619,9 +686,15 @@ export default class Publication extends React.Component<
                   publicationStatus: 'UP_TO_DATE',
                   isPaletteShared: data.publicationStatus?.isShared ?? false,
                 })
-                trackPublicationEvent(this.props.figmaUserId, {
-                  feature: 'REVERT_PALETTE',
-                })
+                trackPublicationEvent(
+                  this.props.figmaUserId,
+                  this.props.userConsent.find(
+                    (consent) => consent.id === 'mixpanel'
+                  )?.isConsented ?? false,
+                  {
+                    feature: 'REVERT_PALETTE',
+                  }
+                )
                 parent.postMessage(
                   {
                     pluginMessage: {
@@ -660,9 +733,15 @@ export default class Publication extends React.Component<
                   publicationStatus: 'UNPUBLISHED',
                   isPaletteShared: false,
                 })
-                trackPublicationEvent(this.props.figmaUserId, {
-                  feature: 'DETACH_PALETTE',
-                })
+                trackPublicationEvent(
+                  this.props.figmaUserId,
+                  this.props.userConsent.find(
+                    (consent) => consent.id === 'mixpanel'
+                  )?.isConsented ?? false,
+                  {
+                    feature: 'DETACH_PALETTE',
+                  }
+                )
               })
               .finally(() => {
                 this.props.onLoadSecondaryAction(false)
@@ -683,9 +762,15 @@ export default class Publication extends React.Component<
                   publicationStatus: 'UNPUBLISHED',
                   isPaletteShared: false,
                 })
-                trackPublicationEvent(this.props.figmaUserId, {
-                  feature: 'DETACH_PALETTE',
-                })
+                trackPublicationEvent(
+                  this.props.figmaUserId,
+                  this.props.userConsent.find(
+                    (consent) => consent.id === 'mixpanel'
+                  )?.isConsented ?? false,
+                  {
+                    feature: 'DETACH_PALETTE',
+                  }
+                )
               })
               .finally(() => {
                 this.props.onLoadPrimaryAction(false)

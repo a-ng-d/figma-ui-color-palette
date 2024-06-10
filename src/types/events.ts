@@ -1,4 +1,7 @@
-import { ColorSpaceConfiguration, NamingConventionConfiguration } from './configurations'
+import {
+  ColorSpaceConfiguration,
+  NamingConventionConfiguration,
+} from './configurations'
 import { Easing } from './management'
 
 export interface TrialEvent {
@@ -20,10 +23,7 @@ export interface PublicationEvent {
 }
 
 export interface ImportEvent {
-  feature:
-    | 'IMPORT_COOLORS'
-    | 'IMPORT_REALTIME_COLORS'
-    | 'IMPORT_COLOUR_LOVERS'
+  feature: 'IMPORT_COOLORS' | 'IMPORT_REALTIME_COLORS' | 'IMPORT_COLOUR_LOVERS'
 }
 
 export interface ScaleEvent {

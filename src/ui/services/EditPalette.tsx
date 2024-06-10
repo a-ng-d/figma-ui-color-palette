@@ -1,5 +1,5 @@
 import { doSnakeCase } from '@a-ng-d/figmug.modules.do-snake-case'
-import type { DropdownOption } from '@a_ng_d/figmug-ui'
+import type { ConsentConfiguration, DropdownOption } from '@a_ng_d/figmug-ui'
 import { Bar, Dropdown, FormItem, Tabs } from '@a_ng_d/figmug-ui'
 import FileSaver from 'file-saver'
 import JSZip from 'jszip'
@@ -49,6 +49,7 @@ interface EditPaletteProps {
   algorithmVersion: AlgorithmVersionConfiguration
   export: ExportConfiguration
   identity: Identity
+  userConsent: Array<ConsentConfiguration>
   planStatus: PlanStatus
   editorType: EditorType
   lang: Language

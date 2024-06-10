@@ -1,4 +1,4 @@
-import { Dialog, texts } from '@a_ng_d/figmug-ui'
+import { ConsentConfiguration, Dialog, texts } from '@a_ng_d/figmug-ui'
 import React from 'react'
 
 import package_json from '../../../package.json'
@@ -11,16 +11,17 @@ import { Language, PlanStatus, TrialStatus } from '../../types/app'
 import { PriorityContext } from '../../types/management'
 import { UserSession } from '../../types/user'
 import features from '../../utils/config'
+import { trackSignInEvent } from '../../utils/eventsTracker'
 import type { AppStates } from '../App'
 import Feature from '../components/Feature'
 import About from './About'
 import Highlight from './Highlight'
 import Publication from './Publication'
-import { trackSignInEvent } from '../../utils/eventsTracker'
 
 interface PriorityContainerProps {
   context: PriorityContext
   rawData: AppStates
+  userConsent: Array<ConsentConfiguration>
   planStatus: PlanStatus
   trialStatus: TrialStatus
   userSession: UserSession
@@ -297,7 +298,12 @@ export default class PriorityContainer extends React.Component<
                   this.setState({ isPrimaryActionLoading: true })
                   signIn()
                     .then(() => {
-                      trackSignInEvent(this.props.figmaUserId)
+                      trackSignInEvent(
+                        this.props.figmaUserId,
+                        this.props.userConsent.find(
+                          (consent) => consent.id === 'mixpanel'
+                        )?.isConsented ?? false
+                      )
                     })
                     .finally(() => {
                       this.setState({ isPrimaryActionLoading: false })

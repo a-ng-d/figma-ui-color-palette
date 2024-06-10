@@ -1,4 +1,10 @@
-import { Button, HexModel, Message, SectionTitle } from '@a_ng_d/figmug-ui'
+import {
+  Button,
+  ConsentConfiguration,
+  HexModel,
+  Message,
+  SectionTitle,
+} from '@a_ng_d/figmug-ui'
 import React from 'react'
 import { uid } from 'uid'
 
@@ -26,6 +32,7 @@ interface ThemesProps {
   scale: ScaleConfiguration
   themes: Array<ThemeConfiguration>
   identity?: Identity
+  userConsent: Array<ConsentConfiguration>
   planStatus: PlanStatus
   editorType: EditorType
   lang: Language
@@ -139,9 +146,14 @@ export default class Themes extends React.Component<ThemesProps, ThemesStates> {
       })
 
       parent.postMessage({ pluginMessage: this.themesMessage }, '*')
-      trackColorThemesManagementEvent(this.props.figmaUserId, {
-        feature: 'ADD_THEME',
-      })
+      trackColorThemesManagementEvent(
+        this.props.figmaUserId,
+        this.props.userConsent.find((consent) => consent.id === 'mixpanel')
+          ?.isConsented ?? false,
+        {
+          feature: 'ADD_THEME',
+        }
+      )
     }
 
     const renameTheme = () => {
@@ -167,9 +179,14 @@ export default class Themes extends React.Component<ThemesProps, ThemesStates> {
 
       if (e.type === 'blur' || e.code === 'Enter') {
         parent.postMessage({ pluginMessage: this.themesMessage }, '*')
-        trackColorThemesManagementEvent(this.props.figmaUserId, {
-          feature: 'RENAME_THEME',
-        })
+        trackColorThemesManagementEvent(
+          this.props.figmaUserId,
+          this.props.userConsent.find((consent) => consent.id === 'mixpanel')
+            ?.isConsented ?? false,
+          {
+            feature: 'RENAME_THEME',
+          }
+        )
       }
     }
 
@@ -197,9 +214,14 @@ export default class Themes extends React.Component<ThemesProps, ThemesStates> {
       if (e.type === 'blur') {
         this.dispatch.themes.on.status = false
         parent.postMessage({ pluginMessage: this.themesMessage }, '*')
-        trackColorThemesManagementEvent(this.props.figmaUserId, {
-          feature: 'UPDATE_BACKGROUND',
-        })
+        trackColorThemesManagementEvent(
+          this.props.figmaUserId,
+          this.props.userConsent.find((consent) => consent.id === 'mixpanel')
+            ?.isConsented ?? false,
+          {
+            feature: 'UPDATE_BACKGROUND',
+          }
+        )
       } else {
         this.themesMessage.isEditedInRealTime = true
         this.dispatch.themes.on.status = true
@@ -221,9 +243,14 @@ export default class Themes extends React.Component<ThemesProps, ThemesStates> {
 
       if (e.type === 'blur' || e.key === 'Enter') {
         parent.postMessage({ pluginMessage: this.themesMessage }, '*')
-        trackColorThemesManagementEvent(this.props.figmaUserId, {
-          feature: 'DESCRIBE_THEME',
-        })
+        trackColorThemesManagementEvent(
+          this.props.figmaUserId,
+          this.props.userConsent.find((consent) => consent.id === 'mixpanel')
+            ?.isConsented ?? false,
+          {
+            feature: 'DESCRIBE_THEME',
+          }
+        )
       }
     }
 
@@ -250,9 +277,14 @@ export default class Themes extends React.Component<ThemesProps, ThemesStates> {
       })
 
       parent.postMessage({ pluginMessage: this.themesMessage }, '*')
-      trackColorThemesManagementEvent(this.props.figmaUserId, {
-        feature: 'REMOVE_THEME',
-      })
+      trackColorThemesManagementEvent(
+        this.props.figmaUserId,
+        this.props.userConsent.find((consent) => consent.id === 'mixpanel')
+          ?.isConsented ?? false,
+        {
+          feature: 'REMOVE_THEME',
+        }
+      )
     }
 
     const actions: ActionsList = {
@@ -377,9 +409,14 @@ export default class Themes extends React.Component<ThemesProps, ThemesStates> {
     })
 
     parent.postMessage({ pluginMessage: this.themesMessage }, '*')
-    trackColorThemesManagementEvent(this.props.figmaUserId, {
-      feature: 'ADD_THEME_FROM_DROPDOWN',
-    })
+    trackColorThemesManagementEvent(
+      this.props.figmaUserId,
+      this.props.userConsent.find((consent) => consent.id === 'mixpanel')
+        ?.isConsented ?? false,
+      {
+        feature: 'ADD_THEME_FROM_DROPDOWN',
+      }
+    )
   }
 
   // Render
