@@ -23,6 +23,7 @@ interface ShortcutsProps {
   onReOpenHighlight: () => void
   onReOpenAbout: () => void
   onGetProPlan: () => void
+  onUpdateConsent: () => void
 }
 
 interface ShortcutsStates {
@@ -162,6 +163,18 @@ export default class Shortcuts extends React.Component<
                             })
                         },
                       },
+                      {
+                        label: locals[this.props.lang].user.updateConsent,
+                        value: null,
+                        feature: null,
+                        position: 0,
+                        type: 'OPTION',
+                        isActive: true,
+                        isBlocked: false,
+                        isNew: false,
+                        children: [],
+                        action: this.props.onUpdateConsent,
+                      }
                     ]}
                     alignment="TOP_RIGHT"
                   />
@@ -206,6 +219,18 @@ export default class Shortcuts extends React.Component<
                             })
                         },
                       },
+                      {
+                        label: locals[this.props.lang].user.updateConsent,
+                        value: null,
+                        feature: null,
+                        position: 0,
+                        type: 'OPTION',
+                        isActive: true,
+                        isBlocked: false,
+                        isNew: false,
+                        children: [],
+                        action: this.props.onUpdateConsent,
+                      }
                     ]}
                     state={
                       this.state['isUserMenuLoading'] ? 'LOADING' : 'DEFAULT'

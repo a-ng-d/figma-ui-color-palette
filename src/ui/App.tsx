@@ -33,7 +33,7 @@ import {
 import { PriorityContext } from '../types/management'
 import { ActionsList, TextColorsThemeHexModel } from '../types/models'
 import { UserSession } from '../types/user'
-import features, { trialTime } from '../utils/config'
+import features, { trialTime, userConsentVersion } from '../utils/config'
 import {
   trackExportEvent,
   trackPurchaseEvent,
@@ -49,6 +49,8 @@ import EditPalette from './services/EditPalette'
 import TransferPalette from './services/TransferPalette'
 import './stylesheets/app-components.css'
 import './stylesheets/app.css'
+import { Consent, ConsentConfiguration } from '@a_ng_d/figmug-ui'
+import { userConsent } from '../utils/userConsent'
 
 export interface AppStates {
   service: Service
@@ -77,10 +79,12 @@ export interface AppStates {
   publicationStatus: PublicationConfiguration
   creatorIdentity: CreatorConfiguration
   userSession: UserSession
+  userConsent: Array<ConsentConfiguration>
   priorityContainerContext: PriorityContext
   lang: Language
-  isLoaded: boolean
   figmaUserId: string
+  mustUserConsent: boolean
+  isLoaded: boolean
   onGoingStep: string
 }
 
@@ -91,11 +95,6 @@ const container = document.getElementById('app'),
 class App extends React.Component<Record<string, never>, AppStates> {
   constructor(props: Record<string, never>) {
     super(props)
-    mixpanel.init('46aa880b8cae32ae12b9fe29f707df11', {
-      debug: process.env.NODE_ENV === 'development',
-      disable_persistence: true,
-      disable_cookie: true,
-    })
     this.state = {
       service: 'CREATE',
       sourceColors: [],
@@ -154,8 +153,10 @@ class App extends React.Component<Record<string, never>, AppStates> {
         accessToken: undefined,
         refreshToken: undefined,
       },
-      isLoaded: false,
+      userConsent: userConsent,
       figmaUserId: '',
+      mustUserConsent: true,
+      isLoaded: false,
       onGoingStep: '',
     }
   }
@@ -222,6 +223,47 @@ class App extends React.Component<Record<string, never>, AppStates> {
       console.log(event, session)
       return actions[event]?.()
     })
+    if (this.state['userConsent'].find((consent) => consent.id === 'mixpanel')?.isConsented)
+      mixpanel.init('46aa880b8cae32ae12b9fe29f707df11', {
+        debug: process.env.NODE_ENV === 'development',
+        disable_persistence: true,
+        disable_cookie: true,
+      })
+  }
+
+  componentDidUpdate = () => {
+    if (this.state['userConsent'].find((consent) => consent.id === 'mixpanel')?.isConsented)
+      mixpanel.init('46aa880b8cae32ae12b9fe29f707df11', {
+        debug: process.env.NODE_ENV === 'development',
+        disable_persistence: true,
+        disable_cookie: true,
+      })
+  }
+
+  // Handlers
+  userConsentHandler = (e: Array<ConsentConfiguration>) => {
+    this.setState({
+      userConsent: e,
+      mustUserConsent: false,
+    })
+    parent.postMessage(
+      {
+        pluginMessage: {
+          type: 'SET_ITEMS',
+          items: [
+            {
+              key: 'mixpanel_user_consent',
+              value: e.find((consent) => consent.id === 'mixpanel')?.isConsented,
+            },
+            {
+              key: 'user_consent_version',
+              value: userConsentVersion,
+            }
+          ],
+        },
+      },
+      '*'
+    )
   }
 
   // Render
@@ -237,6 +279,13 @@ class App extends React.Component<Record<string, never>, AppStates> {
             figmaUserId: e.data.pluginMessage.id,
           })
           trackRunningEvent(e.data.pluginMessage.id)
+        }
+
+        const checkUserConsent = () => {
+          this.setState({
+            mustUserConsent: e.data.pluginMessage.mustUserConsent,
+            userConsent: e.data.pluginMessage.userConsent,
+          })
         }
 
         const checkEditorType = () =>
@@ -645,9 +694,10 @@ class App extends React.Component<Record<string, never>, AppStates> {
 
         const actions: ActionsList = {
           CHECK_USER_AUTHENTICATION: () => checkUserAuthentication(),
-          EDITOR_TYPE: () => checkEditorType(),
-          HIGHLIGHT_STATUS: () => checkHighlightStatus(),
-          PLAN_STATUS: () => checkPlanStatus(),
+          CHECK_USER_CONSENT: () => checkUserConsent(),
+          CHECK_EDITOR_TYPE: () => checkEditorType(),
+          CHECK_HIGHLIGHT_STATUS: () => checkHighlightStatus(),
+          CHECK_PLAN_STATUS: () => checkPlanStatus(),
           EMPTY_SELECTION: () => updateWhileEmptySelection(),
           COLOR_SELECTED: () => updateWhileColorSelected(),
           PALETTE_SELECTED: () => updateWhilePaletteSelected(),
@@ -747,6 +797,36 @@ class App extends React.Component<Record<string, never>, AppStates> {
             />
           </Feature>
           <Feature
+            isActive={this.state['mustUserConsent']
+              && features.find((feature) => feature.name === 'CONSENT')
+                ?.isActive}
+          >
+            <Consent
+              welcomeMessage={locals[this.state['lang']].user.cookies.welcome}
+              vendorsMessage={locals[this.state['lang']].user.cookies.vendors}
+              moreDetailsLabel={locals[this.state['lang']].user.cookies.customize}
+              lessDetailsLabel={locals[this.state['lang']].user.cookies.back}
+              consentActions={{
+                consent: {
+                  label: locals[this.state['lang']].user.cookies.consent,
+                  action: this.userConsentHandler,
+                },
+                deny: {
+                  label: locals[this.state['lang']].user.cookies.deny,
+                  action: this.userConsentHandler,
+                },
+                save: {
+                  label: locals[this.state['lang']].user.cookies.save,
+                  action: this.userConsentHandler,
+                },
+                close: {
+                  action: () => this.setState({ mustUserConsent: false }),
+                },
+              }}
+              vendorsList={this.state['userConsent']}
+            />
+          </Feature>
+          <Feature
             isActive={
               features.find((feature) => feature.name === 'SHORTCUTS')?.isActive
             }
@@ -773,6 +853,9 @@ class App extends React.Component<Record<string, never>, AppStates> {
                   )
                 else this.setState({ priorityContainerContext: 'TRY' })
               }}
+              onUpdateConsent={() =>
+                this.setState({ mustUserConsent: true })
+              }
             />
           </Feature>
         </main>

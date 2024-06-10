@@ -30,7 +30,8 @@
       "https://zclweepgvqkrelyfwhma.supabase.co",
       "https://hook.eu1.make.com",
       "https://www.colourlovers.com",
-      "https://*.mixpanel.com"
+      "https://*.mixpanel.com",
+      "https://asset.brandfetch.io"
     ]
   },
   "parameters": [

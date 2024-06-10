@@ -5,6 +5,7 @@ import package_json from './../../package.json'
 import checkEditorType from './checks/checkEditorType'
 import checkHighlightStatus from './checks/checkHighlightStatus'
 import checkPlanStatus from './checks/checkPlanStatus'
+import checkUserConsent from './checks/checkUserConsent'
 import closeHighlight from './closeHighlight'
 import createLocalStyles from './creations/createLocalStyles'
 import createLocalVariables from './creations/createLocalVariables'
@@ -47,6 +48,7 @@ const loadUI = async () => {
 
   checkEditorType()
   checkHighlightStatus(package_json.version)
+  checkUserConsent()
   processSelection()
 
   await checkPlanStatus()

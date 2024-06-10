@@ -29,7 +29,7 @@ const checkPlanStatus = async () => {
   }
 
   figma.ui.postMessage({
-    type: 'PLAN_STATUS',
+    type: 'CHECK_PLAN_STATUS',
     data: {
       planStatus:
         trialStatus === 'PENDING' ? 'PAID' : figma.payments?.status.type,

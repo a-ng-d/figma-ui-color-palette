@@ -380,6 +380,17 @@ export const locals: { [key: string]: any } = {
       signIn: 'Sign in',
       signOut: 'Sign out',
       welcomeMessage: 'Hello $[]',
+      updateConsent: 'Manage your cookies',
+      cookies: {
+        welcome: 'UI Color Palette uses cookies to understand how you use our plugin and to improve your experience.',
+        vendors:
+          'By accepting this, you agree to our use of cookies and other technologies for the purposes listed above.',
+        customize: 'Customize cookies',
+        back: 'Back',
+        deny: 'Deny all',
+        consent: 'Accept all',
+        save: 'Save preferences',
+      }
     },
     paletteProperties: {
       sourceColors: 'Source colors',
@@ -401,6 +412,12 @@ export const locals: { [key: string]: any } = {
       preset: 'Preset: ',
       colorSpace: 'Color space: ',
       visionSimulation: 'Vision simulation: ',
+    },
+    vendors: {
+      mixpanel: {
+        name: 'Mixpanel',
+        description: 'A top analytics platform for tracking and understanding user interactions'
+      }
     },
     success: {
       publication: '✓ The palette has been published',
