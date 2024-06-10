@@ -897,6 +897,14 @@ class App extends React.Component<Record<string, never>, AppStates> {
             <Consent
               welcomeMessage={locals[this.state['lang']].user.cookies.welcome}
               vendorsMessage={locals[this.state['lang']].user.cookies.vendors}
+              privacyPolicy={{
+                label: locals[this.state['lang']].user.cookies.privacyPolicy,
+                action: () => parent.postMessage({
+                  pluginMessage: {
+                    type: 'OPEN_IN_BROWSER',
+                    url: 'https://uicp.link/privacy',
+                  } }, '*')
+              }}
               moreDetailsLabel={
                 locals[this.state['lang']].user.cookies.customize
               }
@@ -917,6 +925,13 @@ class App extends React.Component<Record<string, never>, AppStates> {
                 close: {
                   action: () => this.setState({ mustUserConsent: false }),
                 },
+              }}
+              validVendor={{
+                name: locals[this.state['lang']].vendors.functional.name,
+                id: 'functional',
+                icon: '',
+                description: locals[this.state['lang']].vendors.functional.description,
+                isConsented: true,
               }}
               vendorsList={this.state['userConsent']}
             />

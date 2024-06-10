@@ -386,6 +386,7 @@ export const locals: { [key: string]: any } = {
           'UI Color Palette uses cookies to understand how you use our plugin and to improve your experience.',
         vendors:
           'By accepting this, you agree to our use of cookies and other technologies for the purposes listed above.',
+        privacyPolicy: 'Read our Privacy Policy',
         customize: 'Customize cookies',
         back: 'Back',
         deny: 'Deny all',
@@ -415,6 +416,10 @@ export const locals: { [key: string]: any } = {
       visionSimulation: 'Vision simulation: ',
     },
     vendors: {
+      functional: {
+        name: 'Functional',
+        description: 'Cookies that are necessary for the plugin to work',
+      },
       mixpanel: {
         name: 'Mixpanel',
         description:
