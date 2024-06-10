@@ -95,6 +95,12 @@ const container = document.getElementById('app'),
 class App extends React.Component<Record<string, never>, AppStates> {
   constructor(props: Record<string, never>) {
     super(props)
+    mixpanel.init('46aa880b8cae32ae12b9fe29f707df11', {
+      debug: process.env.NODE_ENV === 'development',
+      disable_persistence: true,
+      disable_cookie: true,
+      opt_out_tracking_by_default: true
+    })
     this.state = {
       service: 'CREATE',
       sourceColors: [],
@@ -224,20 +230,18 @@ class App extends React.Component<Record<string, never>, AppStates> {
       return actions[event]?.()
     })
     if (this.state['userConsent'].find((consent) => consent.id === 'mixpanel')?.isConsented)
-      mixpanel.init('46aa880b8cae32ae12b9fe29f707df11', {
-        debug: process.env.NODE_ENV === 'development',
-        disable_persistence: true,
-        disable_cookie: true,
-      })
+      mixpanel.opt_in_tracking()
+    else
+      mixpanel.opt_out_tracking()
   }
 
   componentDidUpdate = () => {
     if (this.state['userConsent'].find((consent) => consent.id === 'mixpanel')?.isConsented)
-      mixpanel.init('46aa880b8cae32ae12b9fe29f707df11', {
-        debug: process.env.NODE_ENV === 'development',
-        disable_persistence: true,
-        disable_cookie: true,
-      })
+      mixpanel.opt_in_tracking()
+    else {
+      console.log(mixpanel.has_opted_out_tracking())
+    }
+      
   }
 
   // Handlers
