@@ -90,7 +90,7 @@ const loadUI = async () => {
       UPDATE_COLORS: () => updateColors(msg),
       UPDATE_THEMES: () => updateThemes(msg),
       UPDATE_GLOBAL: () => updateGlobal(msg),
-      SYNC_LOCAL_STYLES: async () => {
+      SYNC_LOCAL_STYLES: async () => 
         createLocalStyles(palette)
           .then(async (message) => [message, await updateLocalStyles(palette)])
           .then((messages) => figma.notify(messages.join('﹒')))
@@ -98,8 +98,8 @@ const loadUI = async () => {
             figma.notify(locals[lang].error.generic)
             throw error
           })
-      },
-      SYNC_LOCAL_VARIABLES: () => {
+      ,
+      SYNC_LOCAL_VARIABLES: () =>
         createLocalVariables(palette)
           .then(async (message) => [
             message,
@@ -110,7 +110,7 @@ const loadUI = async () => {
             figma.notify(locals[lang].error.generic)
             throw error
           })
-      },
+      ,
       EXPORT_PALETTE: () => {
         msg.export === 'TOKENS_GLOBAL' ? exportJson(palette) : null
         msg.export === 'TOKENS_AMZN_STYLE_DICTIONARY'
@@ -128,29 +128,25 @@ const loadUI = async () => {
         msg.export === 'CSV' ? exportCsv(palette) : null
       },
       UPDATE_SETTINGS: () => updateSettings(msg),
-      OPEN_IN_BROWSER: () => {
-        figma.openExternal(msg.url)
-      },
-      SEND_MESSAGE: () => {
-        figma.notify(msg.message)
-      },
+      OPEN_IN_BROWSER: () => figma.openExternal(msg.url),
+      SEND_MESSAGE: () => figma.notify(msg.message),
       SET_ITEMS: () => {
         msg.items.forEach(
           async (item: { key: string; value: string }) =>
             await figma.clientStorage.setAsync(item.key, item.value)
         )
       },
-      DELETE_ITEMS: () => {
+      DELETE_ITEMS: () =>
         msg.items.forEach(
           async (item: string) => await figma.clientStorage.deleteAsync(item)
         )
-      },
-      SET_DATA: () => {
+      ,
+      SET_DATA: () =>
         msg.items.forEach((item: { key: string; value: string }) =>
           palette.setPluginData(item.key, item.value)
         )
-      },
-      UPDATE_SCREENSHOT: async () => {
+      ,
+      UPDATE_SCREENSHOT: async () =>
         figma.ui.postMessage({
           type: 'UPDATE_SCREENSHOT',
           data: await palette
@@ -160,13 +156,13 @@ const loadUI = async () => {
             })
             .catch(() => null),
         })
-      },
-      UPDATE_PALETTE_DATE: async () => {
+      ,
+      UPDATE_PALETTE_DATE: async () =>
         figma.ui.postMessage({
           type: 'UPDATE_SCREENSHOT',
           data: msg.data,
         })
-      },
+      ,
       GET_PALETTES: async () => await getPalettesOnCurrentPage(),
       JUMP_TO_PALETTE: async () => {
         const scene: Array<SceneNode> = []
