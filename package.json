@@ -65,6 +65,7 @@
     "@a-ng-d/figmug.modules.do-map": "^0.0.3",
     "@a-ng-d/figmug.modules.do-pascal-case": "^0.0.3",
     "@a-ng-d/figmug.modules.do-snake-case": "^0.0.4",
+    "@sentry/react": "^8.8.0",
     "@supabase/supabase-js": "^2.42.0",
     "apca-w3": "^0.1.9",
     "chroma-js": "^2.4.2",

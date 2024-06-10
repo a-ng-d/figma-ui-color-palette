@@ -1,3 +1,4 @@
+import * as Sentry from '@sentry/react'
 import { Consent, ConsentConfiguration } from '@a_ng_d/figmug-ui'
 import 'figma-plugin-ds/dist/figma-plugin-ds.css'
 import mixpanel from 'mixpanel-figma'
@@ -101,6 +102,20 @@ class App extends React.Component<Record<string, never>, AppStates> {
       disable_cookie: true,
       opt_out_tracking_by_default: true,
     })
+    Sentry.init({
+      dsn: "https://2ba8d5e2c6e1980abdf62d010256c37f@o4507409671520256.ingest.de.sentry.io/4507409703043152",
+      integrations: [
+        Sentry.browserTracingIntegration(),
+        Sentry.replayIntegration(),
+      ],
+      // Performance Monitoring
+      tracesSampleRate: 1.0, //  Capture 100% of the transactions
+      // Set 'tracePropagationTargets' to control for which URLs distributed tracing should be enabled
+      tracePropagationTargets: ["localhost", /^https:\/\/yourserver\.io\/api/],
+      // Session Replay
+      replaysSessionSampleRate: 0.1, // This sets the sample rate at 10%. You may want to change it to 100% while in development and then sample at a lower rate in production.
+      replaysOnErrorSampleRate: 1.0, // If you're not already sampling the entire session, change the sample rate to 100% when sampling sessions where errors occur.
+    });
     this.state = {
       service: 'CREATE',
       sourceColors: [],
@@ -229,37 +244,6 @@ class App extends React.Component<Record<string, never>, AppStates> {
       console.log(event, session)
       return actions[event]?.()
     })
-  }
-
-  // Handlers
-  userConsentHandler = (e: Array<ConsentConfiguration>) => {
-    this.setState({
-      userConsent: e,
-      mustUserConsent: false,
-    })
-    parent.postMessage(
-      {
-        pluginMessage: {
-          type: 'SET_ITEMS',
-          items: [
-            {
-              key: 'mixpanel_user_consent',
-              value: e.find((consent) => consent.id === 'mixpanel')
-                ?.isConsented,
-            },
-            {
-              key: 'user_consent_version',
-              value: userConsentVersion,
-            },
-          ],
-        },
-      },
-      '*'
-    )
-  }
-
-  // Render
-  render() {
     onmessage = (e: MessageEvent) => {
       try {
         const checkUserAuthentication = async () => {
@@ -780,7 +764,37 @@ class App extends React.Component<Record<string, never>, AppStates> {
         console.error(error)
       }
     }
+  }
 
+  // Handlers
+  userConsentHandler = (e: Array<ConsentConfiguration>) => {
+    this.setState({
+      userConsent: e,
+      mustUserConsent: false,
+    })
+    parent.postMessage(
+      {
+        pluginMessage: {
+          type: 'SET_ITEMS',
+          items: [
+            {
+              key: 'mixpanel_user_consent',
+              value: e.find((consent) => consent.id === 'mixpanel')
+                ?.isConsented,
+            },
+            {
+              key: 'user_consent_version',
+              value: userConsentVersion,
+            },
+          ],
+        },
+      },
+      '*'
+    )
+  }
+
+  // Render
+  render() {
     if (this.state['isLoaded'])
       return (
         <main className="ui">
