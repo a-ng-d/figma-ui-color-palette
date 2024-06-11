@@ -37,6 +37,7 @@ import { ActionsList, TextColorsThemeHexModel } from '../types/models'
 import { UserSession } from '../types/user'
 import features, { trialTime, userConsentVersion } from '../utils/config'
 import {
+  trackEditorEvent,
   trackExportEvent,
   trackPurchaseEvent,
   trackRunningEvent,
@@ -278,8 +279,18 @@ class App extends React.Component<Record<string, never>, AppStates> {
           }
         }
 
-        const checkEditorType = () =>
+        const checkEditorType = () => {
           this.setState({ editorType: e.data.pluginMessage.data })
+          setTimeout(() => trackEditorEvent(
+            e.data.pluginMessage.id,
+            this.state['userConsent'].find(
+              (consent) => consent.id === 'mixpanel'
+            )?.isConsented ?? false,
+            {
+              editor: e.data.pluginMessage.data,
+            }
+          ), 1000)
+        }
 
         const checkHighlightStatus = () =>
           this.setState({

@@ -46,9 +46,9 @@ const loadUI = async () => {
     themeColors: true,
   })
 
-  checkEditorType()
-  checkHighlightStatus(package_json.version)
   checkUserConsent()
+    .then(() => checkEditorType())
+    .then(() => checkHighlightStatus(package_json.version))
   processSelection()
 
   await checkPlanStatus()

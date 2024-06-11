@@ -2,6 +2,7 @@ import mixpanel from 'mixpanel-figma'
 
 import {
   ColorThemeEvent,
+  EditorEvent,
   ExportEvent,
   ImportEvent,
   PublicationEvent,
@@ -19,6 +20,19 @@ export const trackRunningEvent = (id: string, consent: boolean) => {
   if (!consent) return
   mixpanel.identify(id)
   mixpanel.track('Plugin Run', { ...eventsRecurringProperties })
+}
+
+export const trackEditorEvent = (
+  id: string,
+  consent: boolean,
+  options: EditorEvent
+) => {
+  if (!consent) return
+  mixpanel.identify(id)
+  mixpanel.track('Editor Run', {
+    Editor: options.editor,
+    ...eventsRecurringProperties
+  })
 }
 
 export const trackSignInEvent = (id: string, consent: boolean) => {

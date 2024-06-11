@@ -1,8 +1,13 @@
+import { EditorType } from './app'
 import {
   ColorSpaceConfiguration,
   NamingConventionConfiguration,
 } from './configurations'
 import { Easing } from './management'
+
+export interface EditorEvent {
+  editor: EditorType
+}
 
 export interface TrialEvent {
   date: number
