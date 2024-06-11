@@ -30,7 +30,7 @@ jobs:
         npm run build:prod
     
     - name: Archive production artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: figma-ui-color-palette
         path: |
