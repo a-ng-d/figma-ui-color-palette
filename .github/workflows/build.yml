@@ -23,8 +23,11 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
 
-    - name: Dotenv Action
-      uses: falti/dotenv-action@v1.1.2  
+    - name: 'Create .env file'
+      run: |
+        touch .env
+        echo REACT_APP_SUPABASE_PUBLIC_ANON_KEY="${{ secrets.SUPABASE_PUBLIC_ANON_KEY }}" >> .env
+        cat .env
 
     - name: Install and Build
       run: |
