@@ -90,15 +90,14 @@ const loadUI = async () => {
       UPDATE_COLORS: () => updateColors(msg),
       UPDATE_THEMES: () => updateThemes(msg),
       UPDATE_GLOBAL: () => updateGlobal(msg),
-      SYNC_LOCAL_STYLES: async () => 
+      SYNC_LOCAL_STYLES: async () =>
         createLocalStyles(palette)
           .then(async (message) => [message, await updateLocalStyles(palette)])
           .then((messages) => figma.notify(messages.join('﹒')))
           .catch((error) => {
             figma.notify(locals[lang].error.generic)
             throw error
-          })
-      ,
+          }),
       SYNC_LOCAL_VARIABLES: () =>
         createLocalVariables(palette)
           .then(async (message) => [
@@ -109,8 +108,7 @@ const loadUI = async () => {
           .catch((error) => {
             figma.notify(locals[lang].error.generic)
             throw error
-          })
-      ,
+          }),
       EXPORT_PALETTE: () => {
         msg.export === 'TOKENS_GLOBAL' ? exportJson(palette) : null
         msg.export === 'TOKENS_AMZN_STYLE_DICTIONARY'
@@ -139,13 +137,11 @@ const loadUI = async () => {
       DELETE_ITEMS: () =>
         msg.items.forEach(
           async (item: string) => await figma.clientStorage.deleteAsync(item)
-        )
-      ,
+        ),
       SET_DATA: () =>
         msg.items.forEach((item: { key: string; value: string }) =>
           palette.setPluginData(item.key, item.value)
-        )
-      ,
+        ),
       UPDATE_SCREENSHOT: async () =>
         figma.ui.postMessage({
           type: 'UPDATE_SCREENSHOT',
@@ -155,14 +151,12 @@ const loadUI = async () => {
               constraint: { type: 'SCALE', value: 0.25 },
             })
             .catch(() => null),
-        })
-      ,
+        }),
       UPDATE_PALETTE_DATE: async () =>
         figma.ui.postMessage({
           type: 'UPDATE_SCREENSHOT',
           data: msg.data,
-        })
-      ,
+        }),
       GET_PALETTES: async () => await getPalettesOnCurrentPage(),
       JUMP_TO_PALETTE: async () => {
         const scene: Array<SceneNode> = []

@@ -90,17 +90,16 @@ export default class Shortcuts extends React.Component<
         <Bar
           rightPart={
             <>
-              <div className={[
-                'shortcuts',
-                layouts['snackbar--tight']
-              ]
-                .filter((n) => n)
-                .join(' ')
-              }>
+              <div
+                className={['shortcuts', layouts['snackbar--tight']]
+                  .filter((n) => n)
+                  .join(' ')}
+              >
                 <Feature
                   isActive={
-                    features.find((feature) => feature.name === 'SHORTCUTS_USER')
-                      ?.isActive
+                    features.find(
+                      (feature) => feature.name === 'SHORTCUTS_USER'
+                    )?.isActive
                   }
                 >
                   {this.props.userSession.connectionStatus === 'CONNECTED' ? (
@@ -234,8 +233,10 @@ export default class Shortcuts extends React.Component<
                                     pluginMessage: {
                                       type: 'SEND_MESSAGE',
                                       message:
-                                        error.message === 'Authentication timeout'
-                                          ? locals[this.props.lang].error.timeout
+                                        error.message ===
+                                        'Authentication timeout'
+                                          ? locals[this.props.lang].error
+                                              .timeout
                                           : locals[this.props.lang].error
                                               .authentication,
                                     },
@@ -532,13 +533,11 @@ export default class Shortcuts extends React.Component<
                   ?.isActive
               }
             >
-              <div className={[
-                'pro-zone',
-                layouts['snackbar--tight']
-              ]
-                .filter((n) => n)
-                .join(' ')
-              }>
+              <div
+                className={['pro-zone', layouts['snackbar--tight']]
+                  .filter((n) => n)
+                  .join(' ')}
+              >
                 {this.props.planStatus === 'UNPAID' &&
                 this.props.trialStatus !== 'PENDING' ? (
                   <Button
@@ -597,7 +596,7 @@ export default class Shortcuts extends React.Component<
         {this.props.editorType === 'dev' && (
           <div
             style={{
-              height: '48px'
+              height: '48px',
             }}
           ></div>
         )}

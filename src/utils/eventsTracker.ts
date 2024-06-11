@@ -31,7 +31,7 @@ export const trackEditorEvent = (
   mixpanel.identify(id)
   mixpanel.track('Editor Run', {
     Editor: options.editor,
-    ...eventsRecurringProperties
+    ...eventsRecurringProperties,
   })
 }
 

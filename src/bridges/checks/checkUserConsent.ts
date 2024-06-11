@@ -6,12 +6,16 @@ const checkUserConsent = async () => {
     'user_consent_version'
   )
 
-  const userConsentData = await Promise.all(userConsent.map(async (consent) => {
-    return {
-      ...consent,
-      isConsented: await figma.clientStorage.getAsync(`${consent.id}_user_consent`) ?? false,
-    }
-  }));
+  const userConsentData = await Promise.all(
+    userConsent.map(async (consent) => {
+      return {
+        ...consent,
+        isConsented:
+          (await figma.clientStorage.getAsync(`${consent.id}_user_consent`)) ??
+          false,
+      }
+    })
+  )
 
   figma.ui.postMessage({
     type: 'CHECK_USER_CONSENT',

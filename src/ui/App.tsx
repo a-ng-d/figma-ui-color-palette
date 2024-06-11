@@ -249,9 +249,11 @@ class App extends React.Component<Record<string, never>, AppStates> {
             userConsent: e.data.pluginMessage.userConsent,
           })
 
-          if (e.data.pluginMessage.userConsent
-            .find((consent: ConsentConfiguration) => consent.id === 'mixpanel')
-              ?.isConsented ?? false
+          if (
+            e.data.pluginMessage.userConsent.find(
+              (consent: ConsentConfiguration) => consent.id === 'mixpanel'
+            )?.isConsented ??
+            false
           ) {
             mixpanel.init('46aa880b8cae32ae12b9fe29f707df11', {
               debug: process.env.NODE_ENV === 'development',
@@ -261,18 +263,23 @@ class App extends React.Component<Record<string, never>, AppStates> {
             })
           }
 
-          if (e.data.pluginMessage.userConsent
-            .find((consent: ConsentConfiguration) => consent.id === 'sentry')
-              ?.isConsented ?? false
+          if (
+            e.data.pluginMessage.userConsent.find(
+              (consent: ConsentConfiguration) => consent.id === 'sentry'
+            )?.isConsented ??
+            false
           ) {
             Sentry.init({
-              dsn: "https://2ba8d5e2c6e1980abdf62d010256c37f@o4507409671520256.ingest.de.sentry.io/4507409703043152",
+              dsn: 'https://2ba8d5e2c6e1980abdf62d010256c37f@o4507409671520256.ingest.de.sentry.io/4507409703043152',
               integrations: [
                 Sentry.browserTracingIntegration(),
                 Sentry.replayIntegration(),
               ],
               tracesSampleRate: 1.0,
-              tracePropagationTargets: ["localhost", /^https:\/\/yourserver\.io\/api/],
+              tracePropagationTargets: [
+                'localhost',
+                /^https:\/\/yourserver\.io\/api/,
+              ],
               replaysSessionSampleRate: 0.1,
               replaysOnErrorSampleRate: 1.0,
             })
@@ -281,15 +288,19 @@ class App extends React.Component<Record<string, never>, AppStates> {
 
         const checkEditorType = () => {
           this.setState({ editorType: e.data.pluginMessage.data })
-          setTimeout(() => trackEditorEvent(
-            e.data.pluginMessage.id,
-            this.state['userConsent'].find(
-              (consent) => consent.id === 'mixpanel'
-            )?.isConsented ?? false,
-            {
-              editor: e.data.pluginMessage.data,
-            }
-          ), 1000)
+          setTimeout(
+            () =>
+              trackEditorEvent(
+                e.data.pluginMessage.id,
+                this.state['userConsent'].find(
+                  (consent) => consent.id === 'mixpanel'
+                )?.isConsented ?? false,
+                {
+                  editor: e.data.pluginMessage.data,
+                }
+              ),
+            1000
+          )
         }
 
         const checkHighlightStatus = () =>
@@ -804,8 +815,7 @@ class App extends React.Component<Record<string, never>, AppStates> {
             },
             {
               key: 'sentry_user_consent',
-              value: e.find((consent) => consent.id === 'sentry')
-                ?.isConsented,
+              value: e.find((consent) => consent.id === 'sentry')?.isConsented,
             },
             {
               key: 'user_consent_version',
@@ -910,11 +920,16 @@ class App extends React.Component<Record<string, never>, AppStates> {
               vendorsMessage={locals[this.state['lang']].user.cookies.vendors}
               privacyPolicy={{
                 label: locals[this.state['lang']].user.cookies.privacyPolicy,
-                action: () => parent.postMessage({
-                  pluginMessage: {
-                    type: 'OPEN_IN_BROWSER',
-                    url: 'https://uicp.link/privacy',
-                  } }, '*')
+                action: () =>
+                  parent.postMessage(
+                    {
+                      pluginMessage: {
+                        type: 'OPEN_IN_BROWSER',
+                        url: 'https://uicp.link/privacy',
+                      },
+                    },
+                    '*'
+                  ),
               }}
               moreDetailsLabel={
                 locals[this.state['lang']].user.cookies.customize
@@ -941,7 +956,8 @@ class App extends React.Component<Record<string, never>, AppStates> {
                 name: locals[this.state['lang']].vendors.functional.name,
                 id: 'functional',
                 icon: '',
-                description: locals[this.state['lang']].vendors.functional.description,
+                description:
+                  locals[this.state['lang']].vendors.functional.description,
                 isConsented: true,
               }}
               vendorsList={this.state['userConsent']}
