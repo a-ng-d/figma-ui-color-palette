@@ -7,7 +7,7 @@ export const pageSize = 20
 export const proxyUrl =
   'https://hook.eu1.make.com/s02o2bjkknapgjidnp5bko7duc5w6t65'
 export const databaseUrl = 'https://zclweepgvqkrelyfwhma.supabase.co'
-export const authUrl = 'http://localhost:3000'
+export const authUrl = 'https://auth.ui-color-palette.com'
 
 export const palettesDbTableName = 'Palettes'
 export const palettesStorageName = 'Palette screenshots'
