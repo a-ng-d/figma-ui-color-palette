@@ -23,6 +23,11 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
 
+    - name: Setup Dotenv
+      uses: mikeal/actions-dotenv@v1
+      with:
+        path: .env
+
     - name: Install and Build
       run: |
         npm config set //registry.npmjs.org/:_authToken ${{ secrets.NPM_TOKEN }}
