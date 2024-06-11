@@ -23,10 +23,8 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
 
-    - name: Setup Dotenv
-      uses: mikeal/actions-dotenv@v1
-      with:
-        path: .env
+    - name: Dotenv Action
+      uses: falti/dotenv-action@v1.1.2  
 
     - name: Install and Build
       run: |
