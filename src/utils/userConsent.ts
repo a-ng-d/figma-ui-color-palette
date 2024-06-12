@@ -10,11 +10,4 @@ export const userConsent: Array<ConsentConfiguration> = [
     description: locals[lang].vendors.mixpanel.description,
     isConsented: false,
   },
-  {
-    name: locals[lang].vendors.sentry.name,
-    id: 'sentry',
-    icon: 'https://asset.brandfetch.io/idag_928SW/idvt5Qs5eF.jpeg',
-    description: locals[lang].vendors.sentry.description,
-    isConsented: false,
-  },
 ]

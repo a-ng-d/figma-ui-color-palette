@@ -425,11 +425,6 @@ export const locals: { [key: string]: any } = {
         description:
           'A top analytics platform for tracking and understanding user interactions',
       },
-      sentry: {
-        name: 'Sentry',
-        description:
-          'A top error tracking platform for monitoring and fixing crashes in real time',
-      },
     },
     success: {
       publication: '✓ The palette has been published',
