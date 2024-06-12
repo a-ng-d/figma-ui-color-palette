@@ -302,6 +302,20 @@ export const locals: { [key: string]: any } = {
         },
       },
     },
+    report: {
+      title: 'Report a bug',
+      fullName: {
+        label: 'Full name',
+      },
+      email: {
+        label: 'Email',
+      },
+      message: {
+        label: 'Message (required)',
+        placeholder: 'Describe the issue you encountered by trying to describe the steps to reproduce it.',
+      },
+      cta: 'Submit your issue',
+    },
     about: {
       title: 'About UI Color Palette',
       repository: 'Repository',
@@ -431,6 +445,7 @@ export const locals: { [key: string]: any } = {
       nonPublication: '✓ The palette has been unpublished',
       synchronization: '✓ The palette has been synchronized',
       detachment: '✓ The palette has been detached',
+      report: '✓ Thanks for your report',
     },
     info: {
       createdLocalStyle: 'local color style created',

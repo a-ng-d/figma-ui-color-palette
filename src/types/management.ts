@@ -20,6 +20,7 @@ export type PriorityContext =
   | 'TRY'
   | 'ABOUT'
   | 'PUBLICATION'
+  | 'REPORT'
 
 export type ThirdParty = 'COOLORS' | 'REALTIME_COLORS' | 'COLOUR_LOVERS'
 

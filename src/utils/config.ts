@@ -9,7 +9,7 @@ export const proxyUrl =
 export const databaseUrl = 'https://zclweepgvqkrelyfwhma.supabase.co'
 export const authUrl = 'https://auth.ui-color-palette.com'
 
-export const palettesDbTableName = 'Palettes'
+export const palettesDbTableName = '[Sandbox] Palettes'
 export const palettesStorageName = 'Palette screenshots'
 
 export const userConsentVersion = '2024.01'
@@ -946,6 +946,15 @@ export const features: Array<Feature> = [
   {
     name: 'CONSENT',
     description: 'User vendors consent',
+    isActive: true,
+    isPro: false,
+    isNew: false,
+    type: 'DIVISION',
+    service: ['CREATE', 'EDIT', 'TRANSFER'],
+  },
+  {
+    name: 'REPORT',
+    description: 'Bugs reportung form',
     isActive: true,
     isPro: false,
     isNew: false,

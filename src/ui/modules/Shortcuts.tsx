@@ -31,6 +31,7 @@ interface ShortcutsProps {
   onReOpenTrialFeedback: () => void
   onReOpenHighlight: () => void
   onReOpenAbout: () => void
+  onReOpenReport: () => void
   onGetProPlan: () => void
   onUpdateConsent: () => void
 }
@@ -417,16 +418,7 @@ export default class Shortcuts extends React.Component<
                         (feature) => feature.name === 'SHORTCUTS_REPORTING'
                       )?.isNew,
                       children: [],
-                      action: () =>
-                        parent.postMessage(
-                          {
-                            pluginMessage: {
-                              type: 'OPEN_IN_BROWSER',
-                              url: 'https://uicp.link/report',
-                            },
-                          },
-                          '*'
-                        ),
+                      action: this.props.onReOpenReport
                     },
                     {
                       label: locals[this.props.lang].about.getHelp.email,

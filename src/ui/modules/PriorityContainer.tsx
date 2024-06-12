@@ -1,4 +1,4 @@
-import { ConsentConfiguration, Dialog, texts } from '@a_ng_d/figmug-ui'
+import { ConsentConfiguration, Dialog, FormItem, Input, texts } from '@a_ng_d/figmug-ui'
 import React from 'react'
 
 import package_json from '../../../package.json'
@@ -17,6 +17,7 @@ import Feature from '../components/Feature'
 import About from './About'
 import Highlight from './Highlight'
 import Publication from './Publication'
+import * as Sentry from "@sentry/browser"
 
 interface PriorityContainerProps {
   context: PriorityContext
@@ -34,6 +35,9 @@ interface PriorityContainerProps {
 interface PriorityContainerStates {
   isPrimaryActionLoading: boolean
   isSecondaryActionLoading: boolean
+  userFullName: string
+  userEmail: string
+  userMessage: string
 }
 
 export default class PriorityContainer extends React.Component<
@@ -48,7 +52,53 @@ export default class PriorityContainer extends React.Component<
     this.state = {
       isPrimaryActionLoading: false,
       isSecondaryActionLoading: false,
+      userFullName: '',
+      userEmail: '',
+      userMessage: '',
     }
+  }
+
+  // Handlers
+  reportHandler = () => {
+    this.setState({ isPrimaryActionLoading: true })
+    Sentry.sendFeedback(
+      {
+        name: this.state.userFullName,
+        email: this.state.userEmail,
+        message: this.state.userMessage,
+      },
+      {
+        includeReplay: true,
+      }
+    )
+      .then(() => {
+        this.setState({
+          userFullName: '',
+          userEmail: '',
+          userMessage: ''
+        })
+        parent.postMessage(
+          {
+            pluginMessage: {
+              type: 'SEND_MESSAGE',
+              message: locals[this.props.lang].success.report,
+            },
+          },
+          '*'
+        )
+      })
+      .finally(() => this.setState({ isPrimaryActionLoading: false }))
+      .catch(() => {
+        parent.postMessage(
+          {
+            pluginMessage: {
+              type: 'SEND_MESSAGE',
+              message: locals[this.props.lang].error.generic,
+            },
+          },
+          '*'
+        )
+      })
   }
 
   // Templates
@@ -359,6 +409,80 @@ export default class PriorityContainer extends React.Component<
     )
   }
 
+  Report = () => {
+    return (
+      <Feature
+        isActive={
+          features.find((feature) => feature.name === 'REPORT')?.isActive
+        }
+      >
+        <Dialog
+          title={locals[this.props.lang].report.title}
+          actions={{
+            primary: {
+              label: locals[this.props.lang].report.cta,
+              state: (() => {
+                if (this.state['userMessage'] === '') { 
+                  return 'DISABLED'
+                }
+                if (this.state['isPrimaryActionLoading'])
+                  return 'LOADING'
+                return 'DEFAULT'
+              })(),
+              action: this.reportHandler,
+            },
+          }}
+          onClose={this.props.onClose}
+        >
+          <div
+            className="dialog__form"
+          >
+            <div className="dialog__form__item">
+              <FormItem
+                label={locals[this.props.lang].report.fullName.label}
+                id="type-fullname"
+                shouldFill
+              >
+                <Input
+                  type="TEXT"
+                  value={this.state['userFullName']}
+                  onChange={(e) => this.setState({ userFullName: e.target.value })}
+                />
+              </FormItem>
+            </div>
+            <div className="dialog__form__item">
+              <FormItem
+                label={locals[this.props.lang].report.email.label}
+                id="type-email"
+                shouldFill
+              >
+                <Input
+                  type="TEXT"
+                  value={this.state['userEmail']}
+                  onChange={(e) => this.setState({ userEmail: e.target.value })}
+                />
+              </FormItem>
+            </div>
+            <div className="dialog__form__item">
+              <FormItem
+                label={locals[this.props.lang].report.message.label}
+                id="type-message"
+                shouldFill
+              >
+                <Input
+                  type="LONG_TEXT"
+                  placeholder={locals[this.props.lang].report.message.placeholder}
+                  value={this.state['userMessage']}
+                  onChange={(e) => this.setState({ userMessage: e.target.value })}
+                />
+              </FormItem>
+            </div>
+          </div>
+        </Dialog>
+      </Feature>
+    )
+  }
+
   // Render
   render() {
     return (
@@ -375,6 +499,7 @@ export default class PriorityContainer extends React.Component<
         {this.props.context === 'HIGHLIGHT' ? <this.Highlight /> : null}
         {this.props.context === 'ABOUT' ? <this.About /> : null}
         {this.props.context === 'PUBLICATION' ? <this.Publication /> : null}
+        {this.props.context === 'REPORT' ? <this.Report /> : null}
       </>
     )
   }

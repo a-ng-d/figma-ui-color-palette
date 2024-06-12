@@ -107,6 +107,9 @@ Sentry.init({
   integrations: [
     Sentry.browserTracingIntegration(),
     Sentry.replayIntegration(),
+    Sentry.feedbackIntegration({
+      colorScheme: "system",
+    })
   ],
   tracesSampleRate: 1.0,
   tracePropagationTargets: [
@@ -968,6 +971,9 @@ class App extends React.Component<Record<string, never>, AppStates> {
               }
               onReOpenAbout={() =>
                 this.setState({ priorityContainerContext: 'ABOUT' })
+              }
+              onReOpenReport={() =>
+                this.setState({ priorityContainerContext: 'REPORT' })
               }
               onGetProPlan={() => {
                 if (this.state['trialStatus'] === 'EXPIRED')
