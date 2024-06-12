@@ -28,8 +28,7 @@ interface ExploreProps {
     onChangeColorsFromImport: Array<SourceColorConfiguration>,
     source: ThirdParty
   ) => void
-  onChangeContexts: React.MouseEventHandler<Element> &
-    React.KeyboardEventHandler<Element>
+  onChangeContexts: () => void
   onLoadColourLoversPaletteList: (palettes: Array<ColourLovers>) => void
 }
 
@@ -150,7 +149,7 @@ export default class Explore extends React.Component<
                 type="secondary"
                 label={locals[this.props.lang].actions.addToSource}
                 action={() => {
-                  this.props.onChangeContexts
+                  this.props.onChangeContexts()
                   this.props.onChangeColorsFromImport(
                     palette.colors.map((color) => {
                       const gl = chroma(color).gl()
