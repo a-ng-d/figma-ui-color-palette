@@ -394,8 +394,8 @@ export default class Colors extends React.Component<ColorsProps, ColorsStates> {
   }
 
   orderHandler = () => {
-    const source: SelectedColor = this.state['selectedElement'],
-      target: HoveredColor = this.state['hoveredElement'],
+    const source: SelectedColor = this.state.selectedElement,
+      target: HoveredColor = this.state.hoveredElement,
       colors = this.props.colors.map((el) => el)
 
     let position: number
@@ -530,16 +530,16 @@ export default class Colors extends React.Component<ColorsProps, ColorsStates> {
                   description={color.description}
                   uuid={color.id}
                   selected={
-                    this.state['selectedElement'].id === color.id ? true : false
+                    this.state.selectedElement.id === color.id ? true : false
                   }
                   guideAbove={
-                    this.state['hoveredElement'].id === color.id
-                      ? this.state['hoveredElement'].hasGuideAbove
+                    this.state.hoveredElement.id === color.id
+                      ? this.state.hoveredElement.hasGuideAbove
                       : false
                   }
                   guideBelow={
-                    this.state['hoveredElement'].id === color.id
-                      ? this.state['hoveredElement'].hasGuideBelow
+                    this.state.hoveredElement.id === color.id
+                      ? this.state.hoveredElement.hasGuideBelow
                       : false
                   }
                   lang={this.props.lang}

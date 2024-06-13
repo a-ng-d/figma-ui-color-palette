@@ -147,7 +147,7 @@ export default class CreatePalette extends React.Component<
     )
     let controls
 
-    switch (this.state['context']) {
+    switch (this.state.context) {
       case 'PALETTES': {
         controls = (
           <Palettes
@@ -201,7 +201,7 @@ export default class CreatePalette extends React.Component<
           leftPart={
             <Tabs
               tabs={this.contexts}
-              active={this.state['context'] ?? ''}
+              active={this.state.context ?? ''}
               action={this.navHandler}
             />
           }

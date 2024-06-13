@@ -341,7 +341,7 @@ export default class PriorityContainer extends React.Component<
             actions={{
               primary: {
                 label: locals[this.props.lang].publication.signIn,
-                state: this.state['isPrimaryActionLoading']
+                state: this.state.isPrimaryActionLoading
                   ? 'LOADING'
                   : 'DEFAULT',
                 action: async () => {
@@ -394,8 +394,8 @@ export default class PriorityContainer extends React.Component<
         ) : (
           <Publication
             {...this.props}
-            isPrimaryActionLoading={this.state['isPrimaryActionLoading']}
-            isSecondaryActionLoading={this.state['isSecondaryActionLoading']}
+            isPrimaryActionLoading={this.state.isPrimaryActionLoading}
+            isSecondaryActionLoading={this.state.isSecondaryActionLoading}
             onLoadPrimaryAction={(e) =>
               this.setState({ isPrimaryActionLoading: e })
             }
@@ -422,10 +422,10 @@ export default class PriorityContainer extends React.Component<
             primary: {
               label: locals[this.props.lang].report.cta,
               state: (() => {
-                if (this.state['userMessage'] === '') { 
+                if (this.state.userMessage === '') { 
                   return 'DISABLED'
                 }
-                if (this.state['isPrimaryActionLoading'])
+                if (this.state.isPrimaryActionLoading)
                   return 'LOADING'
                 return 'DEFAULT'
               })(),
@@ -445,7 +445,7 @@ export default class PriorityContainer extends React.Component<
               >
                 <Input
                   type="TEXT"
-                  value={this.state['userFullName']}
+                  value={this.state.userFullName}
                   isAutoFocus={true}
                   placeholder={locals[this.props.lang].report.fullName.placeholder}
                   onChange={(e) => this.setState({ userFullName: e.target.value })}
@@ -460,7 +460,7 @@ export default class PriorityContainer extends React.Component<
               >
                 <Input
                   type="TEXT"
-                  value={this.state['userEmail']}
+                  value={this.state.userEmail}
                   placeholder={locals[this.props.lang].report.email.placeholder}
                   onChange={(e) => this.setState({ userEmail: e.target.value })}
                 />
@@ -475,7 +475,7 @@ export default class PriorityContainer extends React.Component<
                 <Input
                   type="LONG_TEXT"
                   placeholder={locals[this.props.lang].report.message.placeholder}
-                  value={this.state['userMessage']}
+                  value={this.state.userMessage}
                   onChange={(e) => this.setState({ userMessage: e.target.value })}
                 />
               </FormItem>

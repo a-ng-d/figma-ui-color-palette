@@ -300,8 +300,8 @@ export default class Themes extends React.Component<ThemesProps, ThemesStates> {
   }
 
   orderHandler = () => {
-    const source: SelectedColor = this.state['selectedElement'],
-      target: HoveredColor = this.state['hoveredElement'],
+    const source: SelectedColor = this.state.selectedElement,
+      target: HoveredColor = this.state.hoveredElement,
       themes = this.props.themes.map((el) => el)
 
     let position: number | undefined
@@ -483,18 +483,18 @@ export default class Themes extends React.Component<ThemesProps, ThemesStates> {
                       paletteBackground={theme.paletteBackground}
                       uuid={theme.id}
                       selected={
-                        this.state['selectedElement'].id === theme.id
+                        this.state.selectedElement.id === theme.id
                           ? true
                           : false
                       }
                       guideAbove={
-                        this.state['hoveredElement'].id === theme.id
-                          ? this.state['hoveredElement'].hasGuideAbove
+                        this.state.hoveredElement.id === theme.id
+                          ? this.state.hoveredElement.hasGuideAbove
                           : false
                       }
                       guideBelow={
-                        this.state['hoveredElement'].id === theme.id
-                          ? this.state['hoveredElement'].hasGuideBelow
+                        this.state.hoveredElement.id === theme.id
+                          ? this.state.hoveredElement.hasGuideBelow
                           : false
                       }
                       lang={this.props.lang}

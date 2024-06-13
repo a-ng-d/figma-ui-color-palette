@@ -306,7 +306,7 @@ export default class EditPalette extends React.Component<
   render() {
     let controls
 
-    switch (this.state['context']) {
+    switch (this.state.context) {
       case 'SCALE': {
         controls = (
           <Scale
@@ -375,7 +375,7 @@ export default class EditPalette extends React.Component<
           leftPart={
             <Tabs
               tabs={this.contexts}
-              active={this.state['context'] ?? ''}
+              active={this.state.context ?? ''}
               action={this.navHandler}
             />
           }

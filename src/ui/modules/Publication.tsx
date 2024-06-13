@@ -176,22 +176,22 @@ export default class Publication extends React.Component<
   }
 
   getPaletteStatus = () => {
-    if (this.state['publicationStatus'] === 'UNPUBLISHED')
+    if (this.state.publicationStatus === 'UNPUBLISHED')
       return (
         <Chip state="INACTIVE">
           {locals[this.props.lang].publication.statusUnpublished}
         </Chip>
       )
     else if (
-      this.state['publicationStatus'] === 'CAN_BE_PUSHED' ||
-      this.state['publicationStatus'] === 'CAN_BE_REVERTED'
+      this.state.publicationStatus === 'CAN_BE_PUSHED' ||
+      this.state.publicationStatus === 'CAN_BE_REVERTED'
     )
       return (
         <Chip>{locals[this.props.lang].publication.statusLocalChanges}</Chip>
       )
     else if (
-      this.state['publicationStatus'] === 'PUBLISHED' ||
-      this.state['publicationStatus'] === 'UP_TO_DATE'
+      this.state.publicationStatus === 'PUBLISHED' ||
+      this.state.publicationStatus === 'UP_TO_DATE'
     )
       return (
         <Chip state="INACTIVE">
@@ -199,19 +199,19 @@ export default class Publication extends React.Component<
         </Chip>
       )
     else if (
-      this.state['publicationStatus'] === 'MUST_BE_PULLED' ||
-      this.state['publicationStatus'] === 'MAY_BE_PULLED'
+      this.state.publicationStatus === 'MUST_BE_PULLED' ||
+      this.state.publicationStatus === 'MAY_BE_PULLED'
     )
       return (
         <Chip>{locals[this.props.lang].publication.statusRemoteChanges}</Chip>
       )
-    else if (this.state['publicationStatus'] === 'IS_NOT_FOUND')
+    else if (this.state.publicationStatus === 'IS_NOT_FOUND')
       return (
         <Chip state="INACTIVE">
           {locals[this.props.lang].publication.statusNotFound}
         </Chip>
       )
-    else if (this.state['publicationStatus'] === 'WAITING')
+    else if (this.state.publicationStatus === 'WAITING')
       return (
         <Chip state="INACTIVE">
           {locals[this.props.lang].publication.statusWaiting}
@@ -248,7 +248,7 @@ export default class Publication extends React.Component<
           state: this.props.isPrimaryActionLoading ? 'LOADING' : 'DEFAULT',
           action: async () => {
             this.props.onLoadPrimaryAction(true)
-            publishPalette(this.props.rawData, this.state['isPaletteShared'])
+            publishPalette(this.props.rawData, this.state.isPaletteShared)
               .then((data) => {
                 this.props.onChangePublication(data)
                 this.setState({
@@ -297,7 +297,7 @@ export default class Publication extends React.Component<
           state: this.props.isPrimaryActionLoading ? 'LOADING' : 'DEFAULT',
           action: async () => {
             this.props.onLoadPrimaryAction(true)
-            pushPalette(this.props.rawData, this.state['isPaletteShared'])
+            pushPalette(this.props.rawData, this.state.isPaletteShared)
               .then((data) => {
                 this.props.onChangePublication(data)
                 this.setState({
@@ -545,7 +545,7 @@ export default class Publication extends React.Component<
           state: (() => {
             if (
               this.props.rawData.publicationStatus.isShared !==
-              this.state['isPaletteShared']
+              this.state.isPaletteShared
             )
               return this.props.isPrimaryActionLoading ? 'LOADING' : 'DEFAULT'
 
@@ -553,7 +553,7 @@ export default class Publication extends React.Component<
           })(),
           action: async () => {
             this.props.onLoadPrimaryAction(true)
-            pushPalette(this.props.rawData, this.state['isPaletteShared'])
+            pushPalette(this.props.rawData, this.state.isPaletteShared)
               .then((data) => {
                 this.props.onChangePublication(data)
                 this.setState({
@@ -802,23 +802,23 @@ export default class Publication extends React.Component<
     const actions: Record<string, PublicationOption | undefined> = {
       UNPUBLISHED: {
         label: locals[this.props.lang].publication.selectToShare,
-        state: this.state['isPaletteShared'],
+        state: this.state.isPaletteShared,
         action: () =>
-          this.setState({ isPaletteShared: !this.state['isPaletteShared'] }),
+          this.setState({ isPaletteShared: !this.state.isPaletteShared }),
       },
       CAN_BE_PUSHED: {
         label: locals[this.props.lang].publication.selectToShare,
-        state: this.state['isPaletteShared'],
+        state: this.state.isPaletteShared,
         action: () =>
-          this.setState({ isPaletteShared: !this.state['isPaletteShared'] }),
+          this.setState({ isPaletteShared: !this.state.isPaletteShared }),
       },
       MUST_BE_PULLED: undefined,
       MAY_BE_PULLED: undefined,
       PUBLISHED: {
         label: locals[this.props.lang].publication.selectToShare,
-        state: this.state['isPaletteShared'],
+        state: this.state.isPaletteShared,
         action: () =>
-          this.setState({ isPaletteShared: !this.state['isPaletteShared'] }),
+          this.setState({ isPaletteShared: !this.state.isPaletteShared }),
       },
       UP_TO_DATE: undefined,
       CAN_BE_REVERTED: undefined,
@@ -831,7 +831,7 @@ export default class Publication extends React.Component<
 
   render() {
     this.uploadPaletteScreenshot()
-    console.log(this.state['publicationStatus'])
+    console.log(this.state.publicationStatus)
 
     return (
       <Dialog
@@ -842,8 +842,8 @@ export default class Publication extends React.Component<
             ? locals[this.props.lang].publication.titlePublish
             : locals[this.props.lang].publication.titleSynchronize
         }
-        actions={this.publicationActions(this.state['publicationStatus'])}
-        select={this.publicationOption(this.state['publicationStatus'])}
+        actions={this.publicationActions(this.state.publicationStatus)}
+        select={this.publicationOption(this.state.publicationStatus)}
         onClose={this.props.onClosePublication}
       >
         <div className="dialog__cover dialog__cover--padding">
@@ -876,9 +876,9 @@ export default class Publication extends React.Component<
                 {this.getPaletteMeta()}
               </div>
             </div>
-            {(this.state['publicationStatus'] === 'UP_TO_DATE' ||
-              this.state['publicationStatus'] === 'MAY_BE_PULLED' ||
-              this.state['publicationStatus'] === 'CAN_BE_REVERTED') && (
+            {(this.state.publicationStatus === 'UP_TO_DATE' ||
+              this.state.publicationStatus === 'MAY_BE_PULLED' ||
+              this.state.publicationStatus === 'CAN_BE_REVERTED') && (
               <div className="user">
                 <div className="user__avatar">
                   <img src={this.props.rawData.creatorIdentity.creatorAvatar} />

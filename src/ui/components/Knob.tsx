@@ -87,7 +87,7 @@ export default class Knob extends React.Component<KnobProps, States> {
         className={[
           'slider__knob',
           this.props.id,
-          this.state['isStopInputOpen'] ? 'slider__knob--editing' : null,
+          this.state.isStopInputOpen ? 'slider__knob--editing' : null,
         ]
           .filter((n) => n)
           .join(' ')}
@@ -100,11 +100,11 @@ export default class Knob extends React.Component<KnobProps, States> {
         <div className={`type ${texts.type} type--inverse slider__tooltip`}>
           {this.transformStopValue(this.props.value)}
         </div>
-        {this.state['isStopInputOpen'] ? (
+        {this.state.isStopInputOpen ? (
           <div className="slider__input">
             <Input
               type="NUMBER"
-              value={this.state['stopInputValue'].toString() ?? '0'}
+              value={this.state.stopInputValue.toString() ?? '0'}
               min={this.props.min}
               max={this.props.max}
               step="0.1"

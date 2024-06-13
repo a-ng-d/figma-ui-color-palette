@@ -462,7 +462,7 @@ export default class Scale extends React.Component<ScaleProps, ScaleStates> {
               action: this.customHandler,
             },
           ]}
-          selected={this.state['distributionEasing']}
+          selected={this.state.distributionEasing}
           parentClassName="controls"
           isNew={
             features.find(
@@ -726,7 +726,7 @@ export default class Scale extends React.Component<ScaleProps, ScaleStates> {
                 stops={this.props.preset.scale}
                 min={palette.min}
                 max={palette.max}
-                distributionEasing={this.state['distributionEasing']}
+                distributionEasing={this.state.distributionEasing}
                 onChange={this.slideHandler}
               />
             ) : (
@@ -745,7 +745,7 @@ export default class Scale extends React.Component<ScaleProps, ScaleStates> {
                       )
                     : this.props.scale
                 }
-                distributionEasing={this.state['distributionEasing']}
+                distributionEasing={this.state.distributionEasing}
                 onChange={this.slideHandler}
               />
             )}
@@ -810,7 +810,7 @@ export default class Scale extends React.Component<ScaleProps, ScaleStates> {
                 </Feature>
               </div>
             </div>
-            {this.state['isTipsOpen'] ? <this.KeyboardShortcuts /> : null}
+            {this.state.isTipsOpen ? <this.KeyboardShortcuts /> : null}
           </Feature>
         </div>
         <Actions
@@ -853,7 +853,7 @@ export default class Scale extends React.Component<ScaleProps, ScaleStates> {
               presetName={this.props.preset.name}
               stops={this.props.preset.scale}
               scale={this.props.scale}
-              distributionEasing={this.state['distributionEasing']}
+              distributionEasing={this.state.distributionEasing}
               onChange={this.slideHandler}
             />
           </Feature>
@@ -917,7 +917,7 @@ export default class Scale extends React.Component<ScaleProps, ScaleStates> {
                 </Feature>
               </div>
             </div>
-            {this.state['isTipsOpen'] ? <this.KeyboardShortcuts /> : null}
+            {this.state.isTipsOpen ? <this.KeyboardShortcuts /> : null}
           </Feature>
         </div>
         {this.props.editorType === 'figma' ? (

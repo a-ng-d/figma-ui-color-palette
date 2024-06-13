@@ -30,8 +30,8 @@ export default class Highlight extends React.Component<
     e: React.SyntheticEvent<Element, Event>,
     currentNote: ReleaseNote
   ) => {
-    if (this.state['position'] + 1 < currentNote['numberOfNotes'])
-      this.setState({ position: this.state['position'] + 1 })
+    if (this.state.position + 1 < currentNote['numberOfNotes'])
+      this.setState({ position: this.state.position + 1 })
     else {
       this.props.onCloseHighlight(e)
       this.setState({ position: 0 })
@@ -42,11 +42,11 @@ export default class Highlight extends React.Component<
     const currentNote = releaseNotes.filter((note) => note['isMostRecent'])[0]
     return (
       <Dialog
-        title={currentNote['title'][this.state['position']]}
+        title={currentNote['title'][this.state.position]}
         actions={{
           primary: {
             label:
-              this.state['position'] + 1 < currentNote['numberOfNotes']
+              this.state.position + 1 < currentNote['numberOfNotes']
                 ? locals[this.props.lang].highlight.cta.next
                 : locals[this.props.lang].highlight.cta.gotIt,
             action: (e) => this.goNextSlide(e, currentNote),
@@ -55,14 +55,14 @@ export default class Highlight extends React.Component<
             label: locals[this.props.lang].highlight.cta.learnMore,
             action: () =>
               window.open(
-                currentNote['learnMore'][this.state['position']],
+                currentNote['learnMore'][this.state.position],
                 '_blank'
               ),
           },
         }}
         indicator={
           currentNote['numberOfNotes'] > 1
-            ? `${this.state['position'] + 1} of ${currentNote['numberOfNotes']}`
+            ? `${this.state.position + 1} of ${currentNote['numberOfNotes']}`
             : undefined
         }
         onClose={(e) => {
@@ -72,7 +72,7 @@ export default class Highlight extends React.Component<
       >
         <div className="dialog__cover">
           <img
-            src={currentNote['image'][this.state['position']]}
+            src={currentNote['image'][this.state.position]}
             style={{
               width: '100%',
             }}
@@ -80,7 +80,7 @@ export default class Highlight extends React.Component<
         </div>
         <div className="dialog__text">
           <p className={`type ${texts.type}`}>
-            {currentNote['content'][this.state['position']]}
+            {currentNote['content'][this.state.position]}
           </p>
         </div>
       </Dialog>

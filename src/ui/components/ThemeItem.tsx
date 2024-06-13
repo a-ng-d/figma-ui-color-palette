@@ -55,7 +55,7 @@ export default class ThemeItem extends React.Component<
   // Handlers
   optionsHandler = () => {
     this.props.onCancellationSelection
-    this.setState({ hasMoreOptions: !this.state['hasMoreOptions'] })
+    this.setState({ hasMoreOptions: !this.state.hasMoreOptions })
   }
 
   // Direct actions
@@ -120,10 +120,10 @@ export default class ThemeItem extends React.Component<
         data-position={this.props.index}
         className={[
           'list__item',
-          this.state['isDragged'] ? 'list__item--dragged' : null,
+          this.state.isDragged ? 'list__item--dragged' : null,
           this.props.guideAbove ? 'list__item--above' : null,
           this.props.guideBelow ? 'list__item--below' : null,
-          this.state['hasMoreOptions'] ? 'list__item--emphasis' : null,
+          this.state.hasMoreOptions ? 'list__item--emphasis' : null,
         ]
           .filter((n) => n)
           .join(' ')}
@@ -191,7 +191,7 @@ export default class ThemeItem extends React.Component<
               <Button
                 type="icon"
                 icon="ellipsis"
-                state={this.state['hasMoreOptions'] ? 'selected' : ''}
+                state={this.state.hasMoreOptions ? 'selected' : ''}
                 feature="DISPLAY_MORE"
                 action={this.optionsHandler}
               />
@@ -204,7 +204,7 @@ export default class ThemeItem extends React.Component<
             />
           </div>
         </div>
-        {this.state['hasMoreOptions'] ? (
+        {this.state.hasMoreOptions ? (
           <div className="list__item__secondary">
             <Feature
               isActive={

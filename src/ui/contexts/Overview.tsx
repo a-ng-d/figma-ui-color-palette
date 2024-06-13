@@ -102,7 +102,7 @@ export default class Overview extends React.Component<
           'https://coolors.co'
         )
           ? 'DEFAULT'
-          : state['coolorsUrl'].state,
+          : state.coolorsUrl.state,
         canBeSubmitted: (e.target as HTMLInputElement).value.includes(
           'https://coolors.co'
         )
@@ -115,7 +115,7 @@ export default class Overview extends React.Component<
               type: 'INFO',
               message: locals[this.props.lang].source.coolors.url.infoMessage,
             }
-          : state['coolorsUrl'].helper,
+          : state.coolorsUrl.helper,
       },
     }))
 
@@ -127,7 +127,7 @@ export default class Overview extends React.Component<
           'https://www.realtimecolors.com'
         )
           ? 'DEFAULT'
-          : state['realtimeColorsUrl'].state,
+          : state.realtimeColorsUrl.state,
         canBeSubmitted: (e.target as HTMLInputElement).value.includes(
           'https://www.realtimecolors.com'
         )
@@ -141,12 +141,12 @@ export default class Overview extends React.Component<
               message:
                 locals[this.props.lang].source.realtimeColors.url.infoMessage,
             }
-          : state['realtimeColorsUrl'].helper,
+          : state.realtimeColorsUrl.helper,
       },
     }))
 
   importColorsFromCoolorsHandler = () => {
-    const url: string = this.state['coolorsUrl'].value,
+    const url: string = this.state.coolorsUrl.value,
       hexs = url.match(/([0-9a-fA-F]{6}-)+[0-9a-fA-F]{6}/)
 
     if (hexs !== null) {
@@ -186,9 +186,9 @@ export default class Overview extends React.Component<
     } else
       this.setState({
         coolorsUrl: {
-          value: this.state['coolorsUrl'].value,
+          value: this.state.coolorsUrl.value,
           state: 'ERROR',
-          canBeSubmitted: this.state['coolorsUrl'].canBeSubmitted,
+          canBeSubmitted: this.state.coolorsUrl.canBeSubmitted,
           helper: {
             type: 'ERROR',
             message: locals[this.props.lang].source.coolors.url.errorMessage,
@@ -198,7 +198,7 @@ export default class Overview extends React.Component<
   }
 
   importColorsFromRealtimeColorsHandler = () => {
-    const url: string = this.state['realtimeColorsUrl'].value,
+    const url: string = this.state.realtimeColorsUrl.value,
       hexs = url.match(/([0-9a-fA-F]{6}-)+[0-9a-fA-F]{6}/)
 
     if (hexs !== null) {
@@ -238,9 +238,9 @@ export default class Overview extends React.Component<
     } else
       this.setState({
         realtimeColorsUrl: {
-          value: this.state['realtimeColorsUrl'].value,
+          value: this.state.realtimeColorsUrl.value,
           state: 'ERROR',
-          canBeSubmitted: this.state['realtimeColorsUrl'].canBeSubmitted,
+          canBeSubmitted: this.state.realtimeColorsUrl.canBeSubmitted,
           helper: {
             type: 'ERROR',
             message:
@@ -310,7 +310,7 @@ export default class Overview extends React.Component<
             .filter((sourceColor) => sourceColor.source === 'COOLORS')
             .length.toString()}
           helper={locals[this.props.lang].source.coolors.helper}
-          isExpanded={this.state['isCoolorsImportOpen']}
+          isExpanded={this.state.isCoolorsImportOpen}
           isBlocked={isBlocked('SOURCE_COOLORS', this.props.planStatus)}
           isNew={
             features.find((feature) => feature.name === 'SOURCE_COOLORS')?.isNew
@@ -334,25 +334,25 @@ export default class Overview extends React.Component<
           <div className="settings__item">
             <FormItem
               id="coolors-palette-url"
-              helper={this.state['coolorsUrl'].helper}
+              helper={this.state.coolorsUrl.helper}
               shouldFill={false}
             >
               <Input
                 type="TEXT"
-                state={this.state['coolorsUrl'].state}
+                state={this.state.coolorsUrl.state}
                 placeholder={
                   locals[this.props.lang].source.coolors.url.placeholder
                 }
-                value={this.state['coolorsUrl'].value}
+                value={this.state.coolorsUrl.value}
                 isAutoFocus={true}
                 onChange={this.isTypingCoolorsUrlHandler}
                 onConfirm={() => {
-                  if (this.state['coolorsUrl'].canBeSubmitted) {
+                  if (this.state.coolorsUrl.canBeSubmitted) {
                     this.importColorsFromCoolorsHandler()
                   }
                 }}
                 onBlur={() => {
-                  if (this.state['coolorsUrl'].canBeSubmitted) {
+                  if (this.state.coolorsUrl.canBeSubmitted) {
                     this.importColorsFromCoolorsHandler()
                   }
                 }}
@@ -393,7 +393,7 @@ export default class Overview extends React.Component<
             .filter((sourceColor) => sourceColor.source === 'REALTIME_COLORS')
             .length.toString()}
           helper={locals[this.props.lang].source.realtimeColors.helper}
-          isExpanded={this.state['isRealtimeColorsImportOpen']}
+          isExpanded={this.state.isRealtimeColorsImportOpen}
           isBlocked={isBlocked('SOURCE_REALTIME_COLORS', this.props.planStatus)}
           isNew={
             features.find(
@@ -419,25 +419,25 @@ export default class Overview extends React.Component<
           <div className="settings__item">
             <FormItem
               id="realtime-colors-url"
-              helper={this.state['realtimeColorsUrl'].helper}
+              helper={this.state.realtimeColorsUrl.helper}
               shouldFill={false}
             >
               <Input
                 type="TEXT"
-                state={this.state['realtimeColorsUrl'].state}
+                state={this.state.realtimeColorsUrl.state}
                 placeholder={
                   locals[this.props.lang].source.realtimeColors.url.placeholder
                 }
-                value={this.state['realtimeColorsUrl'].value}
+                value={this.state.realtimeColorsUrl.value}
                 isAutoFocus={true}
                 onChange={this.isTypingRealtimeColorsUrlHandler}
                 onConfirm={() => {
-                  if (this.state['realtimeColorsUrl'].canBeSubmitted) {
+                  if (this.state.realtimeColorsUrl.canBeSubmitted) {
                     this.importColorsFromRealtimeColorsHandler()
                   }
                 }}
                 onBlur={() => {
-                  if (this.state['realtimeColorsUrl'].canBeSubmitted) {
+                  if (this.state.realtimeColorsUrl.canBeSubmitted) {
                     this.importColorsFromRealtimeColorsHandler()
                   }
                 }}
@@ -479,7 +479,7 @@ export default class Overview extends React.Component<
             .length.toString()}
           icon="adjust"
           helper={locals[this.props.lang].source.colourLovers.helper}
-          isExpanded={this.state['isColourLoversImportOpen']}
+          isExpanded={this.state.isColourLoversImportOpen}
           isBlocked={isBlocked('SOURCE_EXPLORE', this.props.planStatus)}
           isNew={
             features.find((feature) => feature.name === 'SOURCE_EXPLORE')?.isNew

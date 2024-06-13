@@ -51,7 +51,7 @@ export default class Source extends React.Component<SourceProps, SourceStates> {
   render() {
     let controls
 
-    switch (this.state['context']) {
+    switch (this.state.context) {
       case 'SOURCE_OVERVIEW': {
         controls = (
           <Overview
@@ -67,14 +67,14 @@ export default class Source extends React.Component<SourceProps, SourceStates> {
         controls = (
           <Explore
             {...this.props}
-            colourLoversPaletteList={this.state['colourLoversPaletteList']}
+            colourLoversPaletteList={this.state.colourLoversPaletteList}
             onChangeContexts={() =>
               this.setState({ context: 'SOURCE_OVERVIEW' })
             }
             onLoadColourLoversPaletteList={(e) =>
               this.setState({
                 colourLoversPaletteList:
-                  this.state['colourLoversPaletteList'].concat(e),
+                  this.state.colourLoversPaletteList.concat(e),
               })
             }
           />
@@ -89,7 +89,7 @@ export default class Source extends React.Component<SourceProps, SourceStates> {
           leftPart={
             <Tabs
               tabs={this.contexts}
-              active={this.state['context'] ?? ''}
+              active={this.state.context ?? ''}
               action={this.navHandler}
             />
           }

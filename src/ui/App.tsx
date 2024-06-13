@@ -208,7 +208,7 @@ class App extends React.Component<Record<string, never>, AppStates> {
             {
               pluginMessage: {
                 type: 'SEND_MESSAGE',
-                message: locals[this.state['lang']].user.welcomeMessage.replace(
+                message: locals[this.state.lang].user.welcomeMessage.replace(
                   '$[]',
                   session?.user.user_metadata.full_name
                 ),
@@ -263,7 +263,7 @@ class App extends React.Component<Record<string, never>, AppStates> {
           })
           trackRunningEvent(
             e.data.pluginMessage.id,
-            this.state['userConsent'].find(
+            this.state.userConsent.find(
               (consent) => consent.id === 'mixpanel'
             )?.isConsented ?? false
           )
@@ -281,7 +281,7 @@ class App extends React.Component<Record<string, never>, AppStates> {
             () =>
               trackEditorEvent(
                 e.data.pluginMessage.id,
-                this.state['userConsent'].find(
+                this.state.userConsent.find(
                   (consent) => consent.id === 'mixpanel'
                 )?.isConsented ?? false,
                 {
@@ -311,7 +311,7 @@ class App extends React.Component<Record<string, never>, AppStates> {
         const updateWhileEmptySelection = () => {
           this.setState({
             service: 'CREATE',
-            sourceColors: this.state['sourceColors'].filter(
+            sourceColors: this.state.sourceColors.filter(
               (sourceColor: SourceColorConfiguration) =>
                 sourceColor.source !== 'CANVAS'
             ),
@@ -347,9 +347,9 @@ class App extends React.Component<Record<string, never>, AppStates> {
               creatorId: '',
             },
             priorityContainerContext: (() => {
-              if (this.state['priorityContainerContext'] === 'PUBLICATION')
+              if (this.state.priorityContainerContext === 'PUBLICATION')
                 return 'EMPTY'
-              else return this.state['priorityContainerContext']
+              else return this.state.priorityContainerContext
             })(),
             onGoingStep: 'selection empty',
           })
@@ -401,9 +401,9 @@ class App extends React.Component<Record<string, never>, AppStates> {
                 creatorId: '',
               },
               priorityContainerContext: (() => {
-                if (this.state['priorityContainerContext'] === 'PUBLICATION')
+                if (this.state.priorityContainerContext === 'PUBLICATION')
                   return 'EMPTY'
-                else return this.state['priorityContainerContext']
+                else return this.state.priorityContainerContext
               })(),
             })
             palette.name = ''
@@ -421,7 +421,7 @@ class App extends React.Component<Record<string, never>, AppStates> {
           }
           this.setState({
             service: 'CREATE',
-            sourceColors: this.state['sourceColors']
+            sourceColors: this.state.sourceColors
               .filter(
                 (sourceColor: SourceColorConfiguration) =>
                   sourceColor.source !== 'CANVAS'
@@ -439,8 +439,8 @@ class App extends React.Component<Record<string, never>, AppStates> {
             {
               pluginMessage: {
                 type: 'EXPORT_PALETTE',
-                export: this.state['export'].context,
-                colorSpace: this.state['export'].colorSpace,
+                export: this.state.export.context,
+                colorSpace: this.state.export.colorSpace,
               },
             },
             '*'
@@ -496,8 +496,8 @@ class App extends React.Component<Record<string, never>, AppStates> {
             export: {
               format: 'JSON',
               context: e.data.pluginMessage.context,
-              label: `${locals[this.state['lang']].actions.export} ${
-                locals[this.state['lang']].export.tokens.label
+              label: `${locals[this.state.lang].actions.export} ${
+                locals[this.state.lang].export.tokens.label
               }`,
               colorSpace: 'RGB',
               mimeType: 'application/json',
@@ -508,7 +508,7 @@ class App extends React.Component<Record<string, never>, AppStates> {
           if (e.data.pluginMessage.context !== 'TOKENS_GLOBAL')
             trackExportEvent(
               e.data.pluginMessage.id,
-              this.state['userConsent'].find(
+              this.state.userConsent.find(
                 (consent) => consent.id === 'mixpanel'
               )?.isConsented ?? false,
               {
@@ -523,8 +523,8 @@ class App extends React.Component<Record<string, never>, AppStates> {
               format: 'CSS',
               colorSpace: e.data.pluginMessage.colorSpace,
               context: e.data.pluginMessage.context,
-              label: `${locals[this.state['lang']].actions.export} ${
-                locals[this.state['lang']].export.css.customProperties
+              label: `${locals[this.state.lang].actions.export} ${
+                locals[this.state.lang].export.css.customProperties
               }`,
               mimeType: 'text/css',
               data: e.data.pluginMessage.data,
@@ -533,7 +533,7 @@ class App extends React.Component<Record<string, never>, AppStates> {
           })
           trackExportEvent(
             e.data.pluginMessage.id,
-            this.state['userConsent'].find(
+            this.state.userConsent.find(
               (consent) => consent.id === 'mixpanel'
             )?.isConsented ?? false,
             {
@@ -548,8 +548,8 @@ class App extends React.Component<Record<string, never>, AppStates> {
             export: {
               format: 'TAILWIND',
               context: e.data.pluginMessage.context,
-              label: `${locals[this.state['lang']].actions.export} ${
-                locals[this.state['lang']].export.tailwind.config
+              label: `${locals[this.state.lang].actions.export} ${
+                locals[this.state.lang].export.tailwind.config
               }`,
               colorSpace: 'HEX',
               mimeType: 'text/javascript',
@@ -563,7 +563,7 @@ class App extends React.Component<Record<string, never>, AppStates> {
           })
           trackExportEvent(
             e.data.pluginMessage.id,
-            this.state['userConsent'].find(
+            this.state.userConsent.find(
               (consent) => consent.id === 'mixpanel'
             )?.isConsented ?? false,
             {
@@ -577,8 +577,8 @@ class App extends React.Component<Record<string, never>, AppStates> {
             export: {
               format: 'SWIFT',
               context: e.data.pluginMessage.context,
-              label: `${locals[this.state['lang']].actions.export} ${
-                locals[this.state['lang']].export.apple.swiftui
+              label: `${locals[this.state.lang].actions.export} ${
+                locals[this.state.lang].export.apple.swiftui
               }`,
               colorSpace: 'HEX',
               mimeType: 'text/swift',
@@ -588,7 +588,7 @@ class App extends React.Component<Record<string, never>, AppStates> {
           })
           trackExportEvent(
             e.data.pluginMessage.id,
-            this.state['userConsent'].find(
+            this.state.userConsent.find(
               (consent) => consent.id === 'mixpanel'
             )?.isConsented ?? false,
             {
@@ -602,8 +602,8 @@ class App extends React.Component<Record<string, never>, AppStates> {
             export: {
               format: 'SWIFT',
               context: e.data.pluginMessage.context,
-              label: `${locals[this.state['lang']].actions.export} ${
-                locals[this.state['lang']].export.apple.uikit
+              label: `${locals[this.state.lang].actions.export} ${
+                locals[this.state.lang].export.apple.uikit
               }`,
               colorSpace: 'HEX',
               mimeType: 'text/swift',
@@ -613,7 +613,7 @@ class App extends React.Component<Record<string, never>, AppStates> {
           })
           trackExportEvent(
             e.data.pluginMessage.id,
-            this.state['userConsent'].find(
+            this.state.userConsent.find(
               (consent) => consent.id === 'mixpanel'
             )?.isConsented ?? false,
             {
@@ -627,8 +627,8 @@ class App extends React.Component<Record<string, never>, AppStates> {
             export: {
               format: 'KT',
               context: e.data.pluginMessage.context,
-              label: `${locals[this.state['lang']].actions.export} ${
-                locals[this.state['lang']].export.android.compose
+              label: `${locals[this.state.lang].actions.export} ${
+                locals[this.state.lang].export.android.compose
               }`,
               colorSpace: 'HEX',
               mimeType: 'text/x-kotlin',
@@ -638,7 +638,7 @@ class App extends React.Component<Record<string, never>, AppStates> {
           })
           trackExportEvent(
             e.data.pluginMessage.id,
-            this.state['userConsent'].find(
+            this.state.userConsent.find(
               (consent) => consent.id === 'mixpanel'
             )?.isConsented ?? false,
             {
@@ -652,8 +652,8 @@ class App extends React.Component<Record<string, never>, AppStates> {
             export: {
               format: 'XML',
               context: e.data.pluginMessage.context,
-              label: `${locals[this.state['lang']].actions.export} ${
-                locals[this.state['lang']].export.android.resources
+              label: `${locals[this.state.lang].actions.export} ${
+                locals[this.state.lang].export.android.resources
               }`,
               colorSpace: 'HEX',
               mimeType: 'text/xml',
@@ -663,7 +663,7 @@ class App extends React.Component<Record<string, never>, AppStates> {
           })
           trackExportEvent(
             e.data.pluginMessage.id,
-            this.state['userConsent'].find(
+            this.state.userConsent.find(
               (consent) => consent.id === 'mixpanel'
             )?.isConsented ?? false,
             {
@@ -677,8 +677,8 @@ class App extends React.Component<Record<string, never>, AppStates> {
             export: {
               format: 'CSV',
               context: e.data.pluginMessage.context,
-              label: `${locals[this.state['lang']].actions.export} ${
-                locals[this.state['lang']].export.csv.spreadsheet
+              label: `${locals[this.state.lang].actions.export} ${
+                locals[this.state.lang].export.csv.spreadsheet
               }`,
               colorSpace: 'HEX',
               mimeType: 'text/csv',
@@ -688,7 +688,7 @@ class App extends React.Component<Record<string, never>, AppStates> {
           })
           trackExportEvent(
             e.data.pluginMessage.id,
-            this.state['userConsent'].find(
+            this.state.userConsent.find(
               (consent) => consent.id === 'mixpanel'
             )?.isConsented ?? false,
             {
@@ -710,9 +710,9 @@ class App extends React.Component<Record<string, never>, AppStates> {
         const updatePaletteDate = (date: Date) =>
           this.setState({
             dates: {
-              createdAt: this.state['dates']['createdAt'],
+              createdAt: this.state.dates['createdAt'],
               updatedAt: date,
-              publishedAt: this.state['dates']['publishedAt'],
+              publishedAt: this.state.dates['publishedAt'],
             },
           })
 
@@ -723,7 +723,7 @@ class App extends React.Component<Record<string, never>, AppStates> {
           })
           trackPurchaseEvent(
             e.data.pluginMessage.id,
-            this.state['userConsent'].find(
+            this.state.userConsent.find(
               (consent) => consent.id === 'mixpanel'
             )?.isConsented ?? false
           )
@@ -737,7 +737,7 @@ class App extends React.Component<Record<string, never>, AppStates> {
           })
           trackTrialEnablementEvent(
             e.data.pluginMessage.id,
-            this.state['userConsent'].find(
+            this.state.userConsent.find(
               (consent) => consent.id === 'mixpanel'
             )?.isConsented ?? false,
             {
@@ -828,14 +828,14 @@ class App extends React.Component<Record<string, never>, AppStates> {
 
   // Render
   render() {
-    if (this.state['isLoaded'])
+    if (this.state.isLoaded)
       return (
         <main className="ui">
           <Feature
             isActive={
               features.find((feature) => feature.name === 'CREATE')?.isActive &&
-              this.state['editorType'] !== 'dev' &&
-              this.state['service'] === 'CREATE'
+              this.state.editorType !== 'dev' &&
+              this.state.service === 'CREATE'
             }
           >
             <CreatePalette
@@ -855,16 +855,16 @@ class App extends React.Component<Record<string, never>, AppStates> {
           <Feature
             isActive={
               features.find((feature) => feature.name === 'EDIT')?.isActive &&
-              this.state['editorType'] !== 'dev' &&
-              this.state['service'] === 'EDIT'
+              this.state.editorType !== 'dev' &&
+              this.state.service === 'EDIT'
             }
           >
             <EditPalette
               {...this.state}
               identity={{
-                connectionStatus: this.state['userSession'].connectionStatus,
-                userId: this.state['userSession'].userId,
-                creatorId: this.state['creatorIdentity'].creatorId,
+                connectionStatus: this.state.userSession.connectionStatus,
+                userId: this.state.userSession.userId,
+                creatorId: this.state.creatorIdentity.creatorId,
               }}
               onChangeScale={(e) => this.setState({ ...this.state, ...e })}
               onChangeStop={(e) => this.setState({ ...this.state, ...e })}
@@ -879,16 +879,16 @@ class App extends React.Component<Record<string, never>, AppStates> {
           <Feature
             isActive={
               features.find((feature) => feature.name === 'TRANSFER')
-                ?.isActive && this.state['editorType'] === 'dev'
+                ?.isActive && this.state.editorType === 'dev'
             }
           >
             <TransferPalette {...this.state} />
           </Feature>
           <Feature
-            isActive={this.state['priorityContainerContext'] !== 'EMPTY'}
+            isActive={this.state.priorityContainerContext !== 'EMPTY'}
           >
             <PriorityContainer
-              context={this.state['priorityContainerContext']}
+              context={this.state.priorityContainerContext}
               rawData={this.state}
               {...this.state}
               onChangePublication={(e) =>
@@ -901,15 +901,15 @@ class App extends React.Component<Record<string, never>, AppStates> {
           </Feature>
           <Feature
             isActive={
-              this.state['mustUserConsent'] &&
+              this.state.mustUserConsent &&
               features.find((feature) => feature.name === 'CONSENT')?.isActive
             }
           >
             <Consent
-              welcomeMessage={locals[this.state['lang']].user.cookies.welcome}
-              vendorsMessage={locals[this.state['lang']].user.cookies.vendors}
+              welcomeMessage={locals[this.state.lang].user.cookies.welcome}
+              vendorsMessage={locals[this.state.lang].user.cookies.vendors}
               privacyPolicy={{
-                label: locals[this.state['lang']].user.cookies.privacyPolicy,
+                label: locals[this.state.lang].user.cookies.privacyPolicy,
                 action: () =>
                   parent.postMessage(
                     {
@@ -922,20 +922,20 @@ class App extends React.Component<Record<string, never>, AppStates> {
                   ),
               }}
               moreDetailsLabel={
-                locals[this.state['lang']].user.cookies.customize
+                locals[this.state.lang].user.cookies.customize
               }
-              lessDetailsLabel={locals[this.state['lang']].user.cookies.back}
+              lessDetailsLabel={locals[this.state.lang].user.cookies.back}
               consentActions={{
                 consent: {
-                  label: locals[this.state['lang']].user.cookies.consent,
+                  label: locals[this.state.lang].user.cookies.consent,
                   action: this.userConsentHandler,
                 },
                 deny: {
-                  label: locals[this.state['lang']].user.cookies.deny,
+                  label: locals[this.state.lang].user.cookies.deny,
                   action: this.userConsentHandler,
                 },
                 save: {
-                  label: locals[this.state['lang']].user.cookies.save,
+                  label: locals[this.state.lang].user.cookies.save,
                   action: this.userConsentHandler,
                 },
                 close: {
@@ -943,14 +943,14 @@ class App extends React.Component<Record<string, never>, AppStates> {
                 },
               }}
               validVendor={{
-                name: locals[this.state['lang']].vendors.functional.name,
+                name: locals[this.state.lang].vendors.functional.name,
                 id: 'functional',
                 icon: '',
                 description:
-                  locals[this.state['lang']].vendors.functional.description,
+                  locals[this.state.lang].vendors.functional.description,
                 isConsented: true,
               }}
-              vendorsList={this.state['userConsent']}
+              vendorsList={this.state.userConsent}
             />
           </Feature>
           <Feature
@@ -976,7 +976,7 @@ class App extends React.Component<Record<string, never>, AppStates> {
                 this.setState({ priorityContainerContext: 'REPORT' })
               }
               onGetProPlan={() => {
-                if (this.state['trialStatus'] === 'EXPIRED')
+                if (this.state.trialStatus === 'EXPIRED')
                   parent.postMessage(
                     { pluginMessage: { type: 'GET_PRO_PLAN' } },
                     '*'

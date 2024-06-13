@@ -96,7 +96,7 @@ export default class Palettes extends React.Component<
   // Lifecycle
   componentDidMount = async () => {
     if (this.props.userSession.connectionStatus === 'CONNECTED') {
-      this.callUICPAgent(this.state['context'])
+      this.callUICPAgent(this.state.context)
       this.setState({ selfPalettesListStatus: 'LOADING' })
     } else
       this.setState({
@@ -109,22 +109,22 @@ export default class Palettes extends React.Component<
     prevState: Readonly<PalettesStates>
   ): void => {
     if (
-      prevProps['userSession'].connectionStatus !==
-      this.props['userSession'].connectionStatus
+      prevProps.userSession.connectionStatus !==
+      this.props.userSession.connectionStatus
     ) {
       this.setState({ selfPalettesListStatus: 'LOADING' })
       this.callUICPAgent('PALETTES_SELF')
     }
-    if (prevState['context'] === this.state['context']) {
-      if (prevState['selfCurrentPage'] !== this.state['selfCurrentPage'])
+    if (prevState.context === this.state.context) {
+      if (prevState.selfCurrentPage !== this.state.selfCurrentPage)
         this.callUICPAgent('PALETTES_SELF')
       if (
-        prevState['communityCurrentPage'] !== this.state['communityCurrentPage']
+        prevState.communityCurrentPage !== this.state.communityCurrentPage
       )
         this.callUICPAgent('PALETTES_COMMUNITY')
       if (
-        prevState['seftPalettesSearchQuery'] !==
-        this.state['seftPalettesSearchQuery']
+        prevState.seftPalettesSearchQuery !==
+        this.state.seftPalettesSearchQuery
       ) {
         this.setState({
           selfPalettesList: [],
@@ -134,8 +134,8 @@ export default class Palettes extends React.Component<
         this.callUICPAgent('PALETTES_SELF')
       }
       if (
-        prevState['communityPalettesSearchQuery'] !==
-        this.state['communityPalettesSearchQuery']
+        prevState.communityPalettesSearchQuery !==
+        this.state.communityPalettesSearchQuery
       ) {
         this.setState({
           communityPalettesList: [],
@@ -146,19 +146,19 @@ export default class Palettes extends React.Component<
       }
     } else {
       if (
-        this.state['selfPalettesList'].length === 0 &&
-        this.state['selfPalettesListStatus'] !== 'EMPTY' &&
-        this.state['selfPalettesListStatus'] !== 'SIGN_IN_FIRST'
+        this.state.selfPalettesList.length === 0 &&
+        this.state.selfPalettesListStatus !== 'EMPTY' &&
+        this.state.selfPalettesListStatus !== 'SIGN_IN_FIRST'
       ) {
         this.setState({ selfPalettesListStatus: 'LOADING' })
-        this.callUICPAgent(this.state['context'])
+        this.callUICPAgent(this.state.context)
       }
       if (
-        this.state['communityPalettesList'].length === 0 &&
-        this.state['communityPalettesListStatus'] !== 'EMPTY'
+        this.state.communityPalettesList.length === 0 &&
+        this.state.communityPalettesListStatus !== 'EMPTY'
       ) {
         this.setState({ communityPalettesListStatus: 'LOADING' })
-        this.callUICPAgent(this.state['context'])
+        this.callUICPAgent(this.state.context)
       }
     }
   }
@@ -168,7 +168,7 @@ export default class Palettes extends React.Component<
     const getSeftPalettes = async () => {
       let data, error
 
-      if (this.state['seftPalettesSearchQuery'] === '') {
+      if (this.state.seftPalettesSearchQuery === '') {
         // eslint-disable-next-line @typescript-eslint/no-extra-semi
         ;({ data, error } = await supabase
           .from(palettesDbTableName)
@@ -177,8 +177,8 @@ export default class Palettes extends React.Component<
           )
           .eq('creator_id', this.props.userSession.userId)
           .range(
-            pageSize * (this.state['selfCurrentPage'] - 1),
-            pageSize * this.state['selfCurrentPage'] - 1
+            pageSize * (this.state.selfCurrentPage - 1),
+            pageSize * this.state.selfCurrentPage - 1
           ))
       } else {
         // eslint-disable-next-line @typescript-eslint/no-extra-semi
@@ -189,14 +189,14 @@ export default class Palettes extends React.Component<
           )
           .eq('creator_id', this.props.userSession.userId)
           .range(
-            pageSize * (this.state['selfCurrentPage'] - 1),
-            pageSize * this.state['selfCurrentPage'] - 1
+            pageSize * (this.state.selfCurrentPage - 1),
+            pageSize * this.state.selfCurrentPage - 1
           )
-          .ilike('name', `%${this.state['seftPalettesSearchQuery']}%`))
+          .ilike('name', `%${this.state.seftPalettesSearchQuery}%`))
       }
 
       if (!error) {
-        const batch = this.state['selfPalettesList'].concat(
+        const batch = this.state.selfPalettesList.concat(
           data as Array<ExternalPalettes>
         )
 
@@ -205,7 +205,7 @@ export default class Palettes extends React.Component<
           isAddToFileActionLoading: Array(batch.length).fill(false),
           selfPalettesListStatus: updateStatus(
             batch,
-            this.state['selfCurrentPage']
+            this.state.selfCurrentPage
           ),
           selfPalettesList: batch,
         })
@@ -218,7 +218,7 @@ export default class Palettes extends React.Component<
     const getCommunityPalettes = async () => {
       let data, error
 
-      if (this.state['communityPalettesSearchQuery'] === '') {
+      if (this.state.communityPalettesSearchQuery === '') {
         // eslint-disable-next-line @typescript-eslint/no-extra-semi
         ;({ data, error } = await supabase
           .from(palettesDbTableName)
@@ -226,8 +226,8 @@ export default class Palettes extends React.Component<
             'palette_id, screenshot, name, preset, colors, themes, creator_avatar, creator_full_name'
           )
           .range(
-            pageSize * (this.state['communityCurrentPage'] - 1),
-            pageSize * this.state['communityCurrentPage'] - 1
+            pageSize * (this.state.communityCurrentPage - 1),
+            pageSize * this.state.communityCurrentPage - 1
           ))
       } else {
         // eslint-disable-next-line @typescript-eslint/no-extra-semi
@@ -237,14 +237,14 @@ export default class Palettes extends React.Component<
             'palette_id, screenshot, name, preset, colors, themes, creator_avatar, creator_full_name'
           )
           .range(
-            pageSize * (this.state['communityCurrentPage'] - 1),
-            pageSize * this.state['communityCurrentPage'] - 1
+            pageSize * (this.state.communityCurrentPage - 1),
+            pageSize * this.state.communityCurrentPage - 1
           )
-          .ilike('name', `%${this.state['communityPalettesSearchQuery']}%`))
+          .ilike('name', `%${this.state.communityPalettesSearchQuery}%`))
       }
 
       if (!error) {
-        const batch = this.state['communityPalettesList'].concat(
+        const batch = this.state.communityPalettesList.concat(
           data as Array<ExternalPalettes>
         )
 
@@ -253,7 +253,7 @@ export default class Palettes extends React.Component<
           isAddToFileActionLoading: Array(batch.length).fill(false),
           communityPalettesListStatus: updateStatus(
             batch,
-            this.state['communityCurrentPage']
+            this.state.communityCurrentPage
           ),
           communityPalettesList: batch,
         })
@@ -408,7 +408,7 @@ export default class Palettes extends React.Component<
         <Button
           type="secondary"
           label={locals[this.props.lang].palettes.lazyLoad.loadMore}
-          isLoading={this.state['isLoadMoreActionLoading']}
+          isLoading={this.state.isLoadMoreActionLoading}
           action={() =>
             this.setState({
               isLoadMoreActionLoading: true,
@@ -454,7 +454,7 @@ export default class Palettes extends React.Component<
             <Button
               type="secondary"
               label={locals[this.props.lang].actions.addToFile}
-              isLoading={this.state['isAddToFileActionLoading'][index]}
+              isLoading={this.state.isAddToFileActionLoading[index]}
               action={() => {
                 this.setState({
                   isAddToFileActionLoading: this.state[
@@ -494,18 +494,18 @@ export default class Palettes extends React.Component<
   render() {
     let controls
 
-    if (this.state['context'] === 'PALETTES_SELF') {
+    if (this.state.context === 'PALETTES_SELF') {
       if (
-        this.state['selfPalettesListStatus'] === 'LOADED' ||
-        this.state['selfPalettesListStatus'] === 'COMPLETE' ||
-        this.state['selfPalettesListStatus'] === 'EMPTY'
+        this.state.selfPalettesListStatus === 'LOADED' ||
+        this.state.selfPalettesListStatus === 'COMPLETE' ||
+        this.state.selfPalettesListStatus === 'EMPTY'
       ) {
         controls = this.ExternalPalettesList(
-          this.state['selfPalettesListStatus'],
-          this.state['selfPalettesList'],
-          { selfCurrentPage: this.state['selfCurrentPage'] + 1 }
+          this.state.selfPalettesListStatus,
+          this.state.selfPalettesList,
+          { selfCurrentPage: this.state.selfCurrentPage + 1 }
         )
-      } else if (this.state['selfPalettesListStatus'] === 'ERROR') {
+      } else if (this.state.selfPalettesListStatus === 'ERROR') {
         controls = (
           <div className="onboarding__callout--centered">
             <Message
@@ -514,7 +514,7 @@ export default class Palettes extends React.Component<
             />
           </div>
         )
-      } else if (this.state['selfPalettesListStatus'] === 'SIGN_IN_FIRST') {
+      } else if (this.state.selfPalettesListStatus === 'SIGN_IN_FIRST') {
         controls = (
           <div className="onboarding__callout--centered">
             <Message
@@ -525,7 +525,7 @@ export default class Palettes extends React.Component<
               <Button
                 type="primary"
                 label={locals[this.props.lang].palettes.signInFirst.signIn}
-                isLoading={this.state['isSignInLoading']}
+                isLoading={this.state.isSignInLoading}
                 action={async () => {
                   this.setState({ isSignInLoading: true })
                   signIn()
@@ -561,15 +561,15 @@ export default class Palettes extends React.Component<
         )
     } else {
       if (
-        this.state['communityPalettesListStatus'] !== 'ERROR' &&
-        this.state['communityPalettesListStatus'] !== 'LOADING'
+        this.state.communityPalettesListStatus !== 'ERROR' &&
+        this.state.communityPalettesListStatus !== 'LOADING'
       ) {
         controls = this.ExternalPalettesList(
-          this.state['communityPalettesListStatus'],
-          this.state['communityPalettesList'],
-          { communityCurrentPage: this.state['communityCurrentPage'] + 1 }
+          this.state.communityPalettesListStatus,
+          this.state.communityPalettesList,
+          { communityCurrentPage: this.state.communityCurrentPage + 1 }
         )
-      } else if (this.state['communityPalettesListStatus'] === 'ERROR') {
+      } else if (this.state.communityPalettesListStatus === 'ERROR') {
         controls = (
           <div className="onboarding__callout--centered">
             <Message
@@ -594,7 +594,7 @@ export default class Palettes extends React.Component<
           leftPart={
             <Tabs
               tabs={this.contexts}
-              active={this.state['context'] ?? ''}
+              active={this.state.context ?? ''}
               action={this.navHandler}
             />
           }
@@ -613,12 +613,12 @@ export default class Palettes extends React.Component<
                 }}
                 placeholder={locals[this.props.lang].palettes.lazyLoad.search}
                 value={
-                  this.state['context'] === 'PALETTES_SELF'
-                    ? this.state['seftPalettesSearchQuery']
-                    : this.state['communityPalettesSearchQuery']
+                  this.state.context === 'PALETTES_SELF'
+                    ? this.state.seftPalettesSearchQuery
+                    : this.state.communityPalettesSearchQuery
                 }
                 onConfirm={(e) => {
-                  if (this.state['context'] === 'PALETTES_SELF')
+                  if (this.state.context === 'PALETTES_SELF')
                     this.setState({
                       seftPalettesSearchQuery: (e.target as HTMLInputElement)
                         .value,

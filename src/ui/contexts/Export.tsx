@@ -212,7 +212,7 @@ export default class Export extends React.Component<ExportProps, ExportStates> {
         this.setState({
           colorSpace: {
             selected: 'RGB',
-            options: this.state['colorSpace'].options,
+            options: this.state.colorSpace.options,
           },
         })
         parent.postMessage(
@@ -230,7 +230,7 @@ export default class Export extends React.Component<ExportProps, ExportStates> {
         this.setState({
           colorSpace: {
             selected: 'HEX',
-            options: this.state['colorSpace'].options,
+            options: this.state.colorSpace.options,
           },
         })
         parent.postMessage(
@@ -248,7 +248,7 @@ export default class Export extends React.Component<ExportProps, ExportStates> {
         this.setState({
           colorSpace: {
             selected: 'HSL',
-            options: this.state['colorSpace'].options,
+            options: this.state.colorSpace.options,
           },
         })
         parent.postMessage(
@@ -266,7 +266,7 @@ export default class Export extends React.Component<ExportProps, ExportStates> {
         this.setState({
           colorSpace: {
             selected: 'LCH',
-            options: this.state['colorSpace'].options,
+            options: this.state.colorSpace.options,
           },
         })
         parent.postMessage(
@@ -284,7 +284,7 @@ export default class Export extends React.Component<ExportProps, ExportStates> {
         this.setState({
           colorSpace: {
             selected: 'P3',
-            options: this.state['colorSpace'].options,
+            options: this.state.colorSpace.options,
           },
         })
         parent.postMessage(
@@ -372,7 +372,7 @@ export default class Export extends React.Component<ExportProps, ExportStates> {
           {
             pluginMessage: {
               type: 'EXPORT_PALETTE',
-              export: this.state['format'].replace('EXPORT_', ''),
+              export: this.state.format.replace('EXPORT_', ''),
             },
           },
           '*'
@@ -655,16 +655,16 @@ export default class Export extends React.Component<ExportProps, ExportStates> {
                     action: this.exportHandler,
                   },
                 ]}
-                selected={this.state['format'] ?? ''}
+                selected={this.state.format ?? ''}
                 parentClassName="controls"
                 alignment="RIGHT"
               />
-              {this.state['format'] === 'EXPORT_CSS' ? (
+              {this.state.format === 'EXPORT_CSS' ? (
                 <Menu
                   icon="adjust"
                   id="select-color-space"
-                  options={this.state['colorSpace'].options}
-                  selected={`${this.state['format']}_${this.state['colorSpace'].selected}`}
+                  options={this.state.colorSpace.options}
+                  selected={`${this.state.format}_${this.state.colorSpace.selected}`}
                   alignment="BOTTOM_RIGHT"
                 />
               ) : null}

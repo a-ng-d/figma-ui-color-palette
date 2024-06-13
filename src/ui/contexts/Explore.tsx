@@ -66,9 +66,9 @@ export default class Explore extends React.Component<
   ): void => {
     console.log()
     if (
-      prevState.currentPage !== this.state['currentPage'] ||
-      (this.state['colourLoversPalettesListStatus'] !== 'LOADED' &&
-        this.state['colourLoversPalettesListStatus'] !== 'ERROR')
+      prevState.currentPage !== this.state.currentPage ||
+      (this.state.colourLoversPalettesListStatus !== 'LOADED' &&
+        this.state.colourLoversPalettesListStatus !== 'ERROR')
     ) {
       this.callUICPAgent()
     }
@@ -80,7 +80,7 @@ export default class Explore extends React.Component<
       'https://corsproxy.io/?' +
         encodeURIComponent(
           `https://www.colourlovers.com/api/palettes?format=json&numResults=${pageSize}&resultOffset=${
-            this.state['currentPage'] - 1
+            this.state.currentPage - 1
           }`
         ),
       {
@@ -182,15 +182,15 @@ export default class Explore extends React.Component<
           </PaletteItem>
         ))}
         <div className="list-control">
-          {this.state['colourLoversPalettesListStatus'] === 'LOADED' ? (
+          {this.state.colourLoversPalettesListStatus === 'LOADED' ? (
             <Button
               type="secondary"
               label={locals[this.props.lang].palettes.lazyLoad.loadMore}
-              isLoading={this.state['isLoadMoreActionLoading']}
+              isLoading={this.state.isLoadMoreActionLoading}
               action={() =>
                 this.setState({
                   isLoadMoreActionLoading: true,
-                  currentPage: this.state['currentPage'] + pageSize,
+                  currentPage: this.state.currentPage + pageSize,
                 })
               }
             />
@@ -208,11 +208,11 @@ export default class Explore extends React.Component<
   render() {
     let controls
 
-    if (this.state['colourLoversPalettesListStatus'] !== 'LOADING')
+    if (this.state.colourLoversPalettesListStatus !== 'LOADING')
       controls = (
         <div className="controls__control controls__control--horizontal">
-          {this.state['colourLoversPalettesListStatus'] === 'LOADED' ||
-          this.state['colourLoversPalettesListStatus'] === 'COMPLETE' ? (
+          {this.state.colourLoversPalettesListStatus === 'LOADED' ||
+          this.state.colourLoversPalettesListStatus === 'COMPLETE' ? (
             <div className="controls__control">
               <div className="control__block control__block--no-padding">
                 <this.ExternalSourceColorsList />

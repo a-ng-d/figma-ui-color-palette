@@ -284,7 +284,7 @@ export default class Shortcuts extends React.Component<
                         },
                       ]}
                       state={
-                        this.state['isUserMenuLoading'] ? 'LOADING' : 'DEFAULT'
+                        this.state.isUserMenuLoading ? 'LOADING' : 'DEFAULT'
                       }
                       alignment="TOP_RIGHT"
                     />
