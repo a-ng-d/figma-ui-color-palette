@@ -567,7 +567,7 @@ export default class Palettes extends React.Component<
         controls = this.ExternalPalettesList(
           this.state['communityPalettesListStatus'],
           this.state['communityPalettesList'],
-          { communityCurrentPage: this.state['selfCurrentPage'] + 1 }
+          { communityCurrentPage: this.state['communityCurrentPage'] + 1 }
         )
       } else if (this.state['communityPalettesListStatus'] === 'ERROR') {
         controls = (
