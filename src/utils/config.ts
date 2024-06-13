@@ -9,8 +9,8 @@ export const proxyUrl =
 export const databaseUrl = 'https://zclweepgvqkrelyfwhma.supabase.co'
 export const authUrl = 'https://auth.ui-color-palette.com'
 
-export const palettesDbTableName = '[Sandbox] Palettes'
-export const palettesStorageName = 'Palette screenshots'
+export const palettesDbTableName = 'palettes'
+export const palettesStorageName = 'palette.screenshots'
 
 export const userConsentVersion = '2024.01'
 export const trialVersion = '2024.02'
