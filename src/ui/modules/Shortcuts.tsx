@@ -103,6 +103,29 @@ export default class Shortcuts extends React.Component<
                     )?.isActive
                   }
                 >
+                  <Feature
+                  isActive={
+                    features.find(
+                      (feature) => feature.name === 'SHORTCUTS_DOCUMENTATION'
+                    )?.isActive
+                  }
+                >
+                  <Button
+                    type="icon"
+                    icon="library"
+                    action={() =>
+                      parent.postMessage(
+                        {
+                          pluginMessage: {
+                            type: 'OPEN_IN_BROWSER',
+                            url: 'https://uicp.link/docs',
+                          },
+                        },
+                        '*'
+                      )
+                    }
+                  />
+                </Feature>
                   {this.props.userSession.connectionStatus === 'CONNECTED' ? (
                     <Menu
                       id="user-menu"
@@ -266,29 +289,6 @@ export default class Shortcuts extends React.Component<
                       alignment="TOP_RIGHT"
                     />
                   )}
-                </Feature>
-                <Feature
-                  isActive={
-                    features.find(
-                      (feature) => feature.name === 'SHORTCUTS_DOCUMENTATION'
-                    )?.isActive
-                  }
-                >
-                  <Button
-                    type="icon"
-                    icon="library"
-                    action={() =>
-                      parent.postMessage(
-                        {
-                          pluginMessage: {
-                            type: 'OPEN_IN_BROWSER',
-                            url: 'https://uicp.link/docs',
-                          },
-                        },
-                        '*'
-                      )
-                    }
-                  />
                 </Feature>
                 <Menu
                   id="shortcuts-menu"
