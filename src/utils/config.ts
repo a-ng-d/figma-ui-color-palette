@@ -4,10 +4,9 @@ export const trialTime = 48
 export const oldTrialTime = 168
 
 export const pageSize = 20
-export const proxyUrl =
-  'https://hook.eu1.make.com/s02o2bjkknapgjidnp5bko7duc5w6t65'
-export const databaseUrl = 'https://zclweepgvqkrelyfwhma.supabase.co'
-export const authUrl = 'https://auth.ui-color-palette.com'
+export const proxyUrl = process.env.REACT_APP_WORKER_URL as string
+export const databaseUrl = process.env.REACT_APP_SUPABASE_URL as string
+export const authUrl = process.env.REACT_APP_AUTH_URL as string
 
 export const palettesDbTableName = 'palettes'
 export const palettesStorageName = 'palette.screenshots'
