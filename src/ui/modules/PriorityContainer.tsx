@@ -446,6 +446,8 @@ export default class PriorityContainer extends React.Component<
                 <Input
                   type="TEXT"
                   value={this.state['userFullName']}
+                  isAutoFocus={true}
+                  placeholder={locals[this.props.lang].report.fullName.placeholder}
                   onChange={(e) => this.setState({ userFullName: e.target.value })}
                 />
               </FormItem>
@@ -459,6 +461,7 @@ export default class PriorityContainer extends React.Component<
                 <Input
                   type="TEXT"
                   value={this.state['userEmail']}
+                  placeholder={locals[this.props.lang].report.email.placeholder}
                   onChange={(e) => this.setState({ userEmail: e.target.value })}
                 />
               </FormItem>

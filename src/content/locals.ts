@@ -306,9 +306,11 @@ export const locals: { [key: string]: any } = {
       title: 'Report a bug',
       fullName: {
         label: 'Full name',
+        placeholder: 'Optional',
       },
       email: {
         label: 'Email',
+        placeholder: 'Optional',
       },
       message: {
         label: 'Message (required)',
