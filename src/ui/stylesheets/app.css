@@ -215,9 +215,10 @@ div.about__links {
   color: var(--figma-color-text);
 }
 
-/* Bars */
-div.snackbar {
-  display: flex;
-  align-items: center;
-  gap: var(--size-xxxsmall);
+@media (max-width: 460px) {
+  .ui > .bar.recharged {
+    flex-direction: column;
+    padding-top: var(--size-xxxsmall) !important;
+    padding-bottom: var(--size-xxxsmall) !important;
+  }
 }

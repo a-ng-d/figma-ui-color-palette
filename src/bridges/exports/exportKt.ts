@@ -41,6 +41,7 @@ const exportKt = (palette: FrameNode) => {
 
     figma.ui.postMessage({
       type: 'EXPORT_PALETTE_KT',
+      id: figma.currentUser?.id,
       context: 'ANDROID_COMPOSE',
       data: `import androidx.compose.ui.graphics.Color\n\n${kotlin.join('\n')}`,
     })

@@ -2,13 +2,18 @@ import { Feature } from '../types/app'
 
 export const trialTime = 48
 export const oldTrialTime = 168
+
 export const pageSize = 20
 export const proxyUrl =
   'https://hook.eu1.make.com/s02o2bjkknapgjidnp5bko7duc5w6t65'
 export const databaseUrl = 'https://zclweepgvqkrelyfwhma.supabase.co'
-export const authUrl = 'http://localhost:3000'
-export const palettesDbTableName = 'Palettes'
-export const palettesStorageName = 'Palette screenshots'
+export const authUrl = 'https://auth.ui-color-palette.com'
+
+export const palettesDbTableName = 'palettes'
+export const palettesStorageName = 'palette.screenshots'
+
+export const userConsentVersion = '2024.01'
+export const trialVersion = '2024.02'
 
 export const features: Array<Feature> = [
   {
@@ -41,51 +46,6 @@ export const features: Array<Feature> = [
   {
     name: 'PROPERTIES',
     description: 'Shades information and WCAG scores',
-    isActive: true,
-    isPro: false,
-    isNew: false,
-    type: 'ACTION',
-    service: ['CREATE', 'EDIT'],
-  },
-  {
-    name: 'BROWSE',
-    description: 'Browse UI Color Palette on the current page',
-    isActive: true,
-    isPro: false,
-    isNew: false,
-    type: 'CONTEXT',
-    service: ['TRANSFER'],
-  },
-  {
-    name: 'VIEWS',
-    description: 'Information arrangement',
-    isActive: true,
-    isPro: false,
-    isNew: false,
-    type: 'DIVISION',
-    service: ['CREATE', 'EDIT'],
-  },
-  {
-    name: 'VIEWS_PALETTE',
-    description: 'Palette view',
-    isActive: true,
-    isPro: false,
-    isNew: false,
-    type: 'ACTION',
-    service: ['CREATE', 'EDIT'],
-  },
-  {
-    name: 'VIEWS_PALETTE_WITH_PROPERTIES',
-    description: 'Detailed palette view',
-    isActive: true,
-    isPro: false,
-    isNew: false,
-    type: 'ACTION',
-    service: ['CREATE', 'EDIT'],
-  },
-  {
-    name: 'VIEWS_SHEET',
-    description: 'Detailed color sheet view',
     isActive: true,
     isPro: false,
     isNew: false,
@@ -660,6 +620,42 @@ export const features: Array<Feature> = [
     service: ['CREATE', 'EDIT'],
   },
   {
+    name: 'VIEWS',
+    description: 'Information arrangement',
+    isActive: true,
+    isPro: false,
+    isNew: false,
+    type: 'DIVISION',
+    service: ['CREATE', 'EDIT'],
+  },
+  {
+    name: 'VIEWS_PALETTE',
+    description: 'Palette view',
+    isActive: true,
+    isPro: false,
+    isNew: false,
+    type: 'ACTION',
+    service: ['CREATE', 'EDIT'],
+  },
+  {
+    name: 'VIEWS_PALETTE_WITH_PROPERTIES',
+    description: 'Detailed palette view',
+    isActive: true,
+    isPro: false,
+    isNew: false,
+    type: 'ACTION',
+    service: ['CREATE', 'EDIT'],
+  },
+  {
+    name: 'VIEWS_SHEET',
+    description: 'Detailed color sheet view',
+    isActive: true,
+    isPro: false,
+    isNew: false,
+    type: 'ACTION',
+    service: ['CREATE', 'EDIT'],
+  },
+  {
     name: 'SETTINGS_COLOR_SPACE',
     description: 'Palette global color space',
     isActive: true,
@@ -946,6 +942,24 @@ export const features: Array<Feature> = [
     isNew: false,
     type: 'ACTION',
     service: ['CREATE', 'EDIT'],
+  },
+  {
+    name: 'CONSENT',
+    description: 'User vendors consent',
+    isActive: true,
+    isPro: false,
+    isNew: false,
+    type: 'DIVISION',
+    service: ['CREATE', 'EDIT', 'TRANSFER'],
+  },
+  {
+    name: 'REPORT',
+    description: 'Bugs reportung form',
+    isActive: true,
+    isPro: false,
+    isNew: false,
+    type: 'DIVISION',
+    service: ['CREATE', 'EDIT', 'TRANSFER'],
   },
 ]
 

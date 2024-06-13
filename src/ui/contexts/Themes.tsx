@@ -1,4 +1,10 @@
-import { Button, HexModel, Message, SectionTitle } from '@a_ng_d/figmug-ui'
+import {
+  Button,
+  ConsentConfiguration,
+  HexModel,
+  Message,
+  SectionTitle,
+} from '@a_ng_d/figmug-ui'
 import React from 'react'
 import { uid } from 'uid'
 
@@ -14,6 +20,7 @@ import { ThemesMessage } from '../../types/messages'
 import { ActionsList, DispatchProcess } from '../../types/models'
 import { Identity } from '../../types/user'
 import doLightnessScale from '../../utils/doLightnessScale'
+import { trackColorThemesManagementEvent } from '../../utils/eventsTracker'
 import isBlocked from '../../utils/isBlocked'
 import type { AppStates } from '../App'
 import ThemeItem from '../components/ThemeItem'
@@ -25,9 +32,11 @@ interface ThemesProps {
   scale: ScaleConfiguration
   themes: Array<ThemeConfiguration>
   identity?: Identity
+  userConsent: Array<ConsentConfiguration>
   planStatus: PlanStatus
   editorType: EditorType
   lang: Language
+  figmaUserId: string
   onChangeThemes: React.Dispatch<Partial<AppStates>>
   onSyncLocalStyles: () => void
   onSyncLocalVariables: () => void
@@ -107,13 +116,14 @@ export default class Themes extends React.Component<ThemesProps, ThemesStates> {
     this.themesMessage.isEditedInRealTime = false
 
     const addTheme = () => {
+      const hasAlreadyNewUITheme = this.themesMessage.data.filter((color) =>
+        color.name.includes('New UI Theme')
+      )
+
       this.themesMessage.data = this.props.themes.map((theme) => {
         theme.isEnabled = false
         return theme
       })
-      const hasAlreadyNewUITheme = this.themesMessage.data.filter((color) =>
-        color.name.includes('New UI Theme')
-      )
       this.themesMessage.data.push({
         name: `New UI Theme ${hasAlreadyNewUITheme.length + 1}`,
         description: '',
@@ -127,19 +137,30 @@ export default class Themes extends React.Component<ThemesProps, ThemesStates> {
         id: uid(),
         type: 'custom theme',
       })
+
       this.props.onChangeThemes({
         scale:
           this.themesMessage.data.find((theme) => theme.isEnabled)?.scale ?? {},
         themes: this.themesMessage.data,
         onGoingStep: 'themes changed',
       })
+
       parent.postMessage({ pluginMessage: this.themesMessage }, '*')
+      trackColorThemesManagementEvent(
+        this.props.figmaUserId,
+        this.props.userConsent.find((consent) => consent.id === 'mixpanel')
+          ?.isConsented ?? false,
+        {
+          feature: 'ADD_THEME',
+        }
+      )
     }
 
     const renameTheme = () => {
       const hasSameName = this.props.themes.filter(
         (color) => color.name === currentElement.value
       )
+
       this.themesMessage.data = this.props.themes.map((item) => {
         if (item.id === id)
           item.name =
@@ -148,14 +169,25 @@ export default class Themes extends React.Component<ThemesProps, ThemesStates> {
               : currentElement.value
         return item
       })
+
       this.props.onChangeThemes({
         scale:
           this.themesMessage.data.find((theme) => theme.isEnabled)?.scale ?? {},
         themes: this.themesMessage.data,
         onGoingStep: 'themes changed',
       })
-      if (e.type === 'blur')
+
+      if (e.type === 'blur' || e.code === 'Enter') {
         parent.postMessage({ pluginMessage: this.themesMessage }, '*')
+        trackColorThemesManagementEvent(
+          this.props.figmaUserId,
+          this.props.userConsent.find((consent) => consent.id === 'mixpanel')
+            ?.isConsented ?? false,
+          {
+            feature: 'RENAME_THEME',
+          }
+        )
+      }
     }
 
     const updatePaletteBackgroundColor = () => {
@@ -163,11 +195,13 @@ export default class Themes extends React.Component<ThemesProps, ThemesStates> {
         currentElement.value.indexOf('#') === -1
           ? '#' + currentElement.value
           : currentElement.value
+
       if (/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/i.test(code)) {
         this.themesMessage.data = this.props.themes.map((item) => {
           if (item.id === id) item.paletteBackground = code
           return item
         })
+
         this.props.onChangeThemes({
           scale:
             this.themesMessage.data.find((theme) => theme.isEnabled)?.scale ??
@@ -176,9 +210,18 @@ export default class Themes extends React.Component<ThemesProps, ThemesStates> {
           onGoingStep: 'themes changed',
         })
       }
+
       if (e.type === 'blur') {
         this.dispatch.themes.on.status = false
         parent.postMessage({ pluginMessage: this.themesMessage }, '*')
+        trackColorThemesManagementEvent(
+          this.props.figmaUserId,
+          this.props.userConsent.find((consent) => consent.id === 'mixpanel')
+            ?.isConsented ?? false,
+          {
+            feature: 'UPDATE_BACKGROUND',
+          }
+        )
       } else {
         this.themesMessage.isEditedInRealTime = true
         this.dispatch.themes.on.status = true
@@ -190,14 +233,25 @@ export default class Themes extends React.Component<ThemesProps, ThemesStates> {
         if (item.id === id) item.description = currentElement.value
         return item
       })
+
       this.props.onChangeThemes({
         scale:
           this.themesMessage.data.find((theme) => theme.isEnabled)?.scale ?? {},
         themes: this.themesMessage.data,
         onGoingStep: 'themes changed',
       })
-      if (e.type === 'blur' || e.key === 'Enter')
+
+      if (e.type === 'blur' || e.key === 'Enter') {
         parent.postMessage({ pluginMessage: this.themesMessage }, '*')
+        trackColorThemesManagementEvent(
+          this.props.figmaUserId,
+          this.props.userConsent.find((consent) => consent.id === 'mixpanel')
+            ?.isConsented ?? false,
+          {
+            feature: 'DESCRIBE_THEME',
+          }
+        )
+      }
     }
 
     const removeTheme = () => {
@@ -214,13 +268,23 @@ export default class Themes extends React.Component<ThemesProps, ThemesStates> {
         )
         if (result !== undefined) result.isEnabled = true
       }
+
       this.props.onChangeThemes({
         scale:
           this.themesMessage.data.find((theme) => theme.isEnabled)?.scale ?? {},
         themes: this.themesMessage.data,
         onGoingStep: 'themes changed',
       })
+
       parent.postMessage({ pluginMessage: this.themesMessage }, '*')
+      trackColorThemesManagementEvent(
+        this.props.figmaUserId,
+        this.props.userConsent.find((consent) => consent.id === 'mixpanel')
+          ?.isConsented ?? false,
+        {
+          feature: 'REMOVE_THEME',
+        }
+      )
     }
 
     const actions: ActionsList = {
@@ -317,13 +381,13 @@ export default class Themes extends React.Component<ThemesProps, ThemesStates> {
 
   // Direct actions
   onAddTheme = () => {
+    const hasAlreadyNewUITheme = this.themesMessage.data.filter((color) =>
+      color.name.includes('New UI Theme')
+    )
     this.themesMessage.data = this.props.themes.map((theme) => {
       theme.isEnabled = false
       return theme
     })
-    const hasAlreadyNewUITheme = this.themesMessage.data.filter((color) =>
-      color.name.includes('New UI Theme')
-    )
     this.themesMessage.data.push({
       name: `New UI Theme ${hasAlreadyNewUITheme.length + 1}`,
       description: '',
@@ -343,7 +407,16 @@ export default class Themes extends React.Component<ThemesProps, ThemesStates> {
       themes: this.themesMessage.data,
       onGoingStep: 'themes changed',
     })
+
     parent.postMessage({ pluginMessage: this.themesMessage }, '*')
+    trackColorThemesManagementEvent(
+      this.props.figmaUserId,
+      this.props.userConsent.find((consent) => consent.id === 'mixpanel')
+        ?.isConsented ?? false,
+      {
+        feature: 'ADD_THEME_FROM_DROPDOWN',
+      }
+    )
   }
 
   // Render

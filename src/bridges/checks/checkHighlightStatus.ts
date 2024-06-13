@@ -8,7 +8,7 @@ const checkHighlightStatus = async (version: string) => {
 
   if (mostRecentReleaseNoteVersion !== version)
     await figma.ui.postMessage({
-      type: 'HIGHLIGHT_STATUS',
+      type: 'CHECK_HIGHLIGHT_STATUS',
       data: 'NO_RELEASE_NOTE',
     })
   else {
@@ -17,7 +17,7 @@ const checkHighlightStatus = async (version: string) => {
       (await !figma.clientStorage.getAsync(`${version}_isRead`))
     )
       await figma.ui.postMessage({
-        type: 'HIGHLIGHT_STATUS',
+        type: 'CHECK_HIGHLIGHT_STATUS',
         data:
           figma.payments !== undefined
             ? figma.payments.getUserFirstRanSecondsAgo() > 60
@@ -27,7 +27,7 @@ const checkHighlightStatus = async (version: string) => {
       })
     else
       await figma.ui.postMessage({
-        type: 'HIGHLIGHT_STATUS',
+        type: 'CHECK_HIGHLIGHT_STATUS',
         data: 'READ_RELEASE_NOTE',
       })
   }

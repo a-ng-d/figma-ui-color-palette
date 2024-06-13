@@ -302,6 +302,20 @@ export const locals: { [key: string]: any } = {
         },
       },
     },
+    report: {
+      title: 'Report a bug',
+      fullName: {
+        label: 'Full name',
+      },
+      email: {
+        label: 'Email',
+      },
+      message: {
+        label: 'Message (required)',
+        placeholder: 'Describe the issue you encountered by trying to describe the steps to reproduce it.',
+      },
+      cta: 'Submit your issue',
+    },
     about: {
       title: 'About UI Color Palette',
       repository: 'Repository',
@@ -380,6 +394,19 @@ export const locals: { [key: string]: any } = {
       signIn: 'Sign in',
       signOut: 'Sign out',
       welcomeMessage: 'Hello $[]',
+      updateConsent: 'Manage your cookies',
+      cookies: {
+        welcome:
+          'UI Color Palette uses cookies to understand how you use our plugin and to improve your experience.',
+        vendors:
+          'By accepting this, you agree to our use of cookies and other technologies for the purposes listed above.',
+        privacyPolicy: 'Read our Privacy Policy',
+        customize: 'Customize cookies',
+        back: 'Back',
+        deny: 'Deny all',
+        consent: 'Accept all',
+        save: 'Save preferences',
+      },
     },
     paletteProperties: {
       sourceColors: 'Source colors',
@@ -402,11 +429,23 @@ export const locals: { [key: string]: any } = {
       colorSpace: 'Color space: ',
       visionSimulation: 'Vision simulation: ',
     },
+    vendors: {
+      functional: {
+        name: 'Functional',
+        description: 'Cookies that are necessary for the plugin to work',
+      },
+      mixpanel: {
+        name: 'Mixpanel',
+        description:
+          'A top analytics platform for tracking and understanding user interactions',
+      },
+    },
     success: {
       publication: '✓ The palette has been published',
       nonPublication: '✓ The palette has been unpublished',
       synchronization: '✓ The palette has been synchronized',
       detachment: '✓ The palette has been detached',
+      report: '✓ Thanks for your report',
     },
     info: {
       createdLocalStyle: 'local color style created',

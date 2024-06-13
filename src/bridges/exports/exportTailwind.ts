@@ -48,6 +48,7 @@ const exportTailwind = (palette: FrameNode) => {
 
     figma.ui.postMessage({
       type: 'EXPORT_PALETTE_TAILWIND',
+      id: figma.currentUser?.id,
       context: 'TAILWIND',
       data: json,
     })

@@ -1,4 +1,11 @@
-import { Button, Icon, Message, texts } from '@a_ng_d/figmug-ui'
+import {
+  Button,
+  ConsentConfiguration,
+  Icon,
+  Message,
+  layouts,
+  texts,
+} from '@a_ng_d/figmug-ui'
 import chroma from 'chroma-js'
 import React from 'react'
 import { uid } from 'uid'
@@ -9,17 +16,19 @@ import { SourceColorConfiguration } from '../../types/configurations'
 import { ColourLovers } from '../../types/data'
 import { ThirdParty } from '../../types/management'
 import { pageSize } from '../../utils/config'
+import { trackImportEvent } from '../../utils/eventsTracker'
 import PaletteItem from '../components/PaletteItem'
 
 interface ExploreProps {
   colourLoversPaletteList: Array<ColourLovers>
+  userConsent: Array<ConsentConfiguration>
   lang: Language
+  figmaUserId: string
   onChangeColorsFromImport: (
     onChangeColorsFromImport: Array<SourceColorConfiguration>,
     source: ThirdParty
   ) => void
-  onChangeContexts: React.MouseEventHandler<Element> &
-    React.KeyboardEventHandler<Element>
+  onChangeContexts: () => void
   onLoadColourLoversPaletteList: (palettes: Array<ColourLovers>) => void
 }
 
@@ -120,7 +129,7 @@ export default class Explore extends React.Component<
             }}
             action={() => null}
           >
-            <div className="snackbar">
+            <div className={layouts['snackbar--tight']}>
               <Button
                 type="icon"
                 icon="link-connected"
@@ -140,7 +149,7 @@ export default class Explore extends React.Component<
                 type="secondary"
                 label={locals[this.props.lang].actions.addToSource}
                 action={() => {
-                  this.props.onChangeContexts
+                  this.props.onChangeContexts()
                   this.props.onChangeColorsFromImport(
                     palette.colors.map((color) => {
                       const gl = chroma(color).gl()
@@ -157,6 +166,15 @@ export default class Explore extends React.Component<
                       }
                     }),
                     'COLOUR_LOVERS'
+                  )
+                  trackImportEvent(
+                    this.props.figmaUserId,
+                    this.props.userConsent.find(
+                      (consent) => consent.id === 'mixpanel'
+                    )?.isConsented ?? false,
+                    {
+                      feature: 'IMPORT_COLOUR_LOVERS',
+                    }
                   )
                 }}
               />

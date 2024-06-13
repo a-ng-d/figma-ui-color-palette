@@ -5,6 +5,7 @@ import package_json from './../../package.json'
 import checkEditorType from './checks/checkEditorType'
 import checkHighlightStatus from './checks/checkHighlightStatus'
 import checkPlanStatus from './checks/checkPlanStatus'
+import checkUserConsent from './checks/checkUserConsent'
 import closeHighlight from './closeHighlight'
 import createLocalStyles from './creations/createLocalStyles'
 import createLocalVariables from './creations/createLocalVariables'
@@ -45,14 +46,16 @@ const loadUI = async () => {
     themeColors: true,
   })
 
-  checkEditorType()
-  checkHighlightStatus(package_json.version)
+  checkUserConsent()
+    .then(() => checkEditorType())
+    .then(() => checkHighlightStatus(package_json.version))
   processSelection()
 
   await checkPlanStatus()
 
   figma.ui.postMessage({
     type: 'CHECK_USER_AUTHENTICATION',
+    id: figma.currentUser?.id,
     data: {
       accessToken: await figma.clientStorage.getAsync('supabase_access_token'),
       refreshToken: await figma.clientStorage.getAsync(
@@ -79,6 +82,7 @@ const loadUI = async () => {
 
         figma.ui.resize(windowSize.w, windowSize.h)
       },
+      CHECK_USER_CONSENT: () => checkUserConsent(),
       CLOSE_HIGHLIGHT: () => closeHighlight(msg),
       CREATE_PALETTE: () => createPalette(msg),
       UPDATE_SCALE: () => updateScale(msg),
@@ -86,16 +90,15 @@ const loadUI = async () => {
       UPDATE_COLORS: () => updateColors(msg),
       UPDATE_THEMES: () => updateThemes(msg),
       UPDATE_GLOBAL: () => updateGlobal(msg),
-      SYNC_LOCAL_STYLES: async () => {
+      SYNC_LOCAL_STYLES: async () =>
         createLocalStyles(palette)
           .then(async (message) => [message, await updateLocalStyles(palette)])
           .then((messages) => figma.notify(messages.join('﹒')))
           .catch((error) => {
             figma.notify(locals[lang].error.generic)
             throw error
-          })
-      },
-      SYNC_LOCAL_VARIABLES: () => {
+          }),
+      SYNC_LOCAL_VARIABLES: () =>
         createLocalVariables(palette)
           .then(async (message) => [
             message,
@@ -105,8 +108,7 @@ const loadUI = async () => {
           .catch((error) => {
             figma.notify(locals[lang].error.generic)
             throw error
-          })
-      },
+          }),
       EXPORT_PALETTE: () => {
         msg.export === 'TOKENS_GLOBAL' ? exportJson(palette) : null
         msg.export === 'TOKENS_AMZN_STYLE_DICTIONARY'
@@ -124,29 +126,23 @@ const loadUI = async () => {
         msg.export === 'CSV' ? exportCsv(palette) : null
       },
       UPDATE_SETTINGS: () => updateSettings(msg),
-      OPEN_IN_BROWSER: () => {
-        figma.openExternal(msg.url)
-      },
-      SEND_MESSAGE: () => {
-        figma.notify(msg.message)
-      },
+      OPEN_IN_BROWSER: () => figma.openExternal(msg.url),
+      SEND_MESSAGE: () => figma.notify(msg.message),
       SET_ITEMS: () => {
         msg.items.forEach(
           async (item: { key: string; value: string }) =>
             await figma.clientStorage.setAsync(item.key, item.value)
         )
       },
-      DELETE_ITEMS: () => {
+      DELETE_ITEMS: () =>
         msg.items.forEach(
           async (item: string) => await figma.clientStorage.deleteAsync(item)
-        )
-      },
-      SET_DATA: () => {
+        ),
+      SET_DATA: () =>
         msg.items.forEach((item: { key: string; value: string }) =>
           palette.setPluginData(item.key, item.value)
-        )
-      },
-      UPDATE_SCREENSHOT: async () => {
+        ),
+      UPDATE_SCREENSHOT: async () =>
         figma.ui.postMessage({
           type: 'UPDATE_SCREENSHOT',
           data: await palette
@@ -155,14 +151,12 @@ const loadUI = async () => {
               constraint: { type: 'SCALE', value: 0.25 },
             })
             .catch(() => null),
-        })
-      },
-      UPDATE_PALETTE_DATE: async () => {
+        }),
+      UPDATE_PALETTE_DATE: async () =>
         figma.ui.postMessage({
           type: 'UPDATE_SCREENSHOT',
           data: msg.data,
-        })
-      },
+        }),
       GET_PALETTES: async () => await getPalettesOnCurrentPage(),
       JUMP_TO_PALETTE: async () => {
         const scene: Array<SceneNode> = []

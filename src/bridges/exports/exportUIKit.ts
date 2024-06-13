@@ -45,6 +45,7 @@ const exportUIKit = (palette: FrameNode) => {
 
     figma.ui.postMessage({
       type: 'EXPORT_PALETTE_UIKIT',
+      id: figma.currentUser?.id,
       context: 'APPLE_UIKIT',
       data: `import UIKit\n\nstruct Color {\n  ${swift.join('\n\n  ')}\n}`,
     })

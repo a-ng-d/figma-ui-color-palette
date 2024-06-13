@@ -1,4 +1,5 @@
 import {
+  ConsentConfiguration,
   Dropdown,
   FormItem,
   HexModel,
@@ -26,6 +27,7 @@ import {
 } from '../../types/models'
 import { Identity } from '../../types/user'
 import features from '../../utils/config'
+import { trackSettingsManagementEvent } from '../../utils/eventsTracker'
 import isBlocked from '../../utils/isBlocked'
 import { palette } from '../../utils/palettePackage'
 import type { AppStates } from '../App'
@@ -44,9 +46,11 @@ interface SettingsProps {
   view: string
   algorithmVersion?: AlgorithmVersionConfiguration
   identity?: Identity
+  userConsent: Array<ConsentConfiguration>
   planStatus: PlanStatus
   editorType?: EditorType
   lang: Language
+  figmaUserId: string
   onChangeSettings: React.Dispatch<Partial<AppStates>>
   onCreatePalette?: () => void
   onSyncLocalStyles?: () => void
@@ -100,15 +104,25 @@ export default class Settings extends React.Component<SettingsProps> {
       this.settingsMessage.data.algorithmVersion =
         this.props.algorithmVersion ?? 'v2'
 
-      if (e.type === 'blur' && this.props.context === 'LOCAL_STYLES')
-        parent.postMessage({ pluginMessage: this.settingsMessage }, '*')
-      else if (e.key === 'Enter' && this.props.context === 'LOCAL_STYLES')
-        parent.postMessage({ pluginMessage: this.settingsMessage }, '*')
-
       this.props.onChangeSettings({
         name: this.settingsMessage.data.name,
         onGoingStep: 'settings changed',
       })
+
+      if (
+        (e.type === 'blur' || e.key === 'Enter') &&
+        this.props.context === 'LOCAL_STYLES'
+      ) {
+        parent.postMessage({ pluginMessage: this.settingsMessage }, '*')
+        trackSettingsManagementEvent(
+          this.props.figmaUserId,
+          this.props.userConsent.find((consent) => consent.id === 'mixpanel')
+            ?.isConsented ?? false,
+          {
+            feature: 'RENAME_PALETTE',
+          }
+        )
+      }
     }
 
     const updateDescription = () => {
@@ -122,29 +136,47 @@ export default class Settings extends React.Component<SettingsProps> {
       this.settingsMessage.data.algorithmVersion =
         this.props.algorithmVersion ?? 'v2'
 
-      if (e.type === 'blur' && this.props.context === 'LOCAL_STYLES')
-        parent.postMessage({ pluginMessage: this.settingsMessage }, '*')
-
       this.props.onChangeSettings({
         description: this.settingsMessage.data.description,
         onGoingStep: 'settings changed',
       })
+
+      if (e.type === 'blur' && this.props.context === 'LOCAL_STYLES') {
+        parent.postMessage({ pluginMessage: this.settingsMessage }, '*')
+        trackSettingsManagementEvent(
+          this.props.figmaUserId,
+          this.props.userConsent.find((consent) => consent.id === 'mixpanel')
+            ?.isConsented ?? false,
+          {
+            feature: 'DESCRIBE_PALETTE',
+          }
+        )
+      }
     }
 
     const updateView = () => {
       if (target.dataset.isBlocked === 'false') {
         palette.view = target.dataset.value as ViewConfiguration
 
-        if (this.props.context === 'LOCAL_STYLES')
-          parent.postMessage(
-            { pluginMessage: { type: 'UPDATE_VIEW', data: palette } },
-            '*'
-          )
-
         this.props.onChangeSettings({
           view: target.dataset.value as ViewConfiguration,
           onGoingStep: 'view changed',
         })
+
+        if (this.props.context === 'LOCAL_STYLES') {
+          parent.postMessage(
+            { pluginMessage: { type: 'UPDATE_VIEW', data: palette } },
+            '*'
+          )
+          trackSettingsManagementEvent(
+            this.props.figmaUserId,
+            this.props.userConsent.find((consent) => consent.id === 'mixpanel')
+              ?.isConsented ?? false,
+            {
+              feature: 'UPDATE_VIEW',
+            }
+          )
+        }
       }
     }
 
@@ -160,13 +192,22 @@ export default class Settings extends React.Component<SettingsProps> {
       this.settingsMessage.data.algorithmVersion =
         this.props.algorithmVersion ?? 'v2'
 
-      if (this.props.context === 'LOCAL_STYLES')
-        parent.postMessage({ pluginMessage: this.settingsMessage }, '*')
-
       this.props.onChangeSettings({
         colorSpace: this.settingsMessage.data.colorSpace,
         onGoingStep: 'settings changed',
       })
+
+      if (this.props.context === 'LOCAL_STYLES') {
+        parent.postMessage({ pluginMessage: this.settingsMessage }, '*')
+        trackSettingsManagementEvent(
+          this.props.figmaUserId,
+          this.props.userConsent.find((consent) => consent.id === 'mixpanel')
+            ?.isConsented ?? false,
+          {
+            feature: 'UPDATE_COLOR_SPACE',
+          }
+        )
+      }
     }
 
     const updatevisionSimulationMode = () => {
@@ -181,13 +222,22 @@ export default class Settings extends React.Component<SettingsProps> {
       this.settingsMessage.data.algorithmVersion =
         this.props.algorithmVersion ?? 'v2'
 
-      if (this.props.context === 'LOCAL_STYLES')
-        parent.postMessage({ pluginMessage: this.settingsMessage }, '*')
-
       this.props.onChangeSettings({
         visionSimulationMode: this.settingsMessage.data.visionSimulationMode,
         onGoingStep: 'settings changed',
       })
+
+      if (this.props.context === 'LOCAL_STYLES') {
+        parent.postMessage({ pluginMessage: this.settingsMessage }, '*')
+        trackSettingsManagementEvent(
+          this.props.figmaUserId,
+          this.props.userConsent.find((consent) => consent.id === 'mixpanel')
+            ?.isConsented ?? false,
+          {
+            feature: 'UPDATE_VISION_SIMULATION_MODE',
+          }
+        )
+      }
     }
 
     const updateAlgorythmVersion = () => {
@@ -199,12 +249,20 @@ export default class Settings extends React.Component<SettingsProps> {
       this.settingsMessage.data.textColorsTheme = this.props.textColorsTheme
       this.settingsMessage.data.algorithmVersion = !target.checked ? 'v1' : 'v2'
 
-      parent.postMessage({ pluginMessage: this.settingsMessage }, '*')
-
       this.props.onChangeSettings({
         algorithmVersion: this.settingsMessage.data.algorithmVersion,
         onGoingStep: 'settings changed',
       })
+
+      parent.postMessage({ pluginMessage: this.settingsMessage }, '*')
+      trackSettingsManagementEvent(
+        this.props.figmaUserId,
+        this.props.userConsent.find((consent) => consent.id === 'mixpanel')
+          ?.isConsented ?? false,
+        {
+          feature: 'UPDATE_ALGORITHM',
+        }
+      )
     }
 
     const updateTextLightColor = () => {
@@ -225,16 +283,24 @@ export default class Settings extends React.Component<SettingsProps> {
           this.props.algorithmVersion ?? 'v2'
       }
 
-      if (e.type === 'blur' && this.props.context === 'LOCAL_STYLES') {
-        this.dispatch.textColorsTheme.on.status = false
-        parent.postMessage({ pluginMessage: this.settingsMessage }, '*')
-      } else if (this.props.context === 'LOCAL_STYLES')
-        this.dispatch.textColorsTheme.on.status = true
-
       this.props.onChangeSettings({
         textColorsTheme: this.settingsMessage.data.textColorsTheme,
         onGoingStep: 'settings changed',
       })
+
+      if (e.type === 'blur' && this.props.context === 'LOCAL_STYLES') {
+        this.dispatch.textColorsTheme.on.status = false
+        parent.postMessage({ pluginMessage: this.settingsMessage }, '*')
+        trackSettingsManagementEvent(
+          this.props.figmaUserId,
+          this.props.userConsent.find((consent) => consent.id === 'mixpanel')
+            ?.isConsented ?? false,
+          {
+            feature: 'UPDATE_TEXT_COLORS_THEME',
+          }
+        )
+      } else if (this.props.context === 'LOCAL_STYLES')
+        this.dispatch.textColorsTheme.on.status = true
     }
 
     const updateTextDarkColor = () => {
@@ -255,16 +321,24 @@ export default class Settings extends React.Component<SettingsProps> {
           this.props.algorithmVersion ?? 'v2'
       }
 
-      if (e.type === 'blur' && this.props.context === 'LOCAL_STYLES') {
-        this.dispatch.textColorsTheme.on.status = false
-        parent.postMessage({ pluginMessage: this.settingsMessage }, '*')
-      } else if (this.props.context === 'LOCAL_STYLES')
-        this.dispatch.textColorsTheme.on.status = true
-
       this.props.onChangeSettings({
         textColorsTheme: this.settingsMessage.data.textColorsTheme,
         onGoingStep: 'settings changed',
       })
+
+      if (e.type === 'blur' && this.props.context === 'LOCAL_STYLES') {
+        this.dispatch.textColorsTheme.on.status = false
+        parent.postMessage({ pluginMessage: this.settingsMessage }, '*')
+        trackSettingsManagementEvent(
+          this.props.figmaUserId,
+          this.props.userConsent.find((consent) => consent.id === 'mixpanel')
+            ?.isConsented ?? false,
+          {
+            feature: 'UPDATE_TEXT_COLORS_THEME',
+          }
+        )
+      } else if (this.props.context === 'LOCAL_STYLES')
+        this.dispatch.textColorsTheme.on.status = true
     }
 
     const actions: ActionsList = {
@@ -936,7 +1010,7 @@ export default class Settings extends React.Component<SettingsProps> {
             }
           />
           <Message
-            icon="key"
+            icon="info"
             messages={[
               locals[this.props.lang].settings.color.newAlgorithm.description,
             ]}
@@ -1052,7 +1126,7 @@ export default class Settings extends React.Component<SettingsProps> {
             />
           </FormItem>
           <Message
-            icon="key"
+            icon="info"
             messages={[
               locals[this.props.lang].settings.contrast.textColors
                 .textThemeColorsDescription,

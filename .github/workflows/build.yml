@@ -2,6 +2,10 @@ name: Build and Download UI Color Palette
 
 on: workflow_dispatch
 
+env:
+  REACT_APP_SUPABASE_PUBLIC_ANON_KEY: ${{ secrets.SUPABASE_PUBLIC_ANON_KEY }}
+  
+
 jobs:
   build:
     name: Build with Node
@@ -9,7 +13,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [18.x]
+        node-version: [20.x]
 
     steps:
     - uses: actions/checkout@v3
@@ -22,18 +26,17 @@ jobs:
     - name: 'Create .env file'
       run: |
         touch .env
-        echo REACT_APP_NOTION_API_KEY="${{ secrets.NOTION_API_KEY }}" >> .env
         echo REACT_APP_SUPABASE_PUBLIC_ANON_KEY="${{ secrets.SUPABASE_PUBLIC_ANON_KEY }}" >> .env
-        echo REACT_APP_NOTION_TRIAL_TABLE_ID="${{ vars.NOTION_TRIAL_TABLE_ID }}" >> .env
         cat .env
 
     - name: Install and Build
       run: |
+        npm config set //registry.npmjs.org/:_authToken ${{ secrets.NPM_TOKEN }}
         npm install
         npm run build:prod
     
-    - name: Archive production artifacts
-      uses: actions/upload-artifact@v3
+    - name: Archive production artifact
+      uses: actions/upload-artifact@v4
       with:
         name: figma-ui-color-palette
         path: |

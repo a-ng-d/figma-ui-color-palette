@@ -1,4 +1,10 @@
-import { Button, HexModel, Message, SectionTitle } from '@a_ng_d/figmug-ui'
+import {
+  Button,
+  ConsentConfiguration,
+  HexModel,
+  Message,
+  SectionTitle,
+} from '@a_ng_d/figmug-ui'
 import chroma from 'chroma-js'
 import React from 'react'
 import { uid } from 'uid'
@@ -10,6 +16,7 @@ import { HoveredColor, SelectedColor } from '../../types/management'
 import { ColorsMessage } from '../../types/messages'
 import { ActionsList, DispatchProcess } from '../../types/models'
 import { Identity } from '../../types/user'
+import { trackSourceColorsManagementEvent } from '../../utils/eventsTracker'
 import type { AppStates } from '../App'
 import ColorItem from '../components/ColorItem'
 import Actions from '../modules/Actions'
@@ -19,8 +26,10 @@ interface ColorsProps {
   colors: Array<ColorConfiguration>
   editorType: EditorType
   identity?: Identity
+  userConsent: Array<ConsentConfiguration>
   planStatus: PlanStatus
   lang: Language
+  figmaUserId: string
   onChangeColors: React.Dispatch<Partial<AppStates>>
   onSyncLocalStyles: () => void
   onSyncLocalVariables: () => void
@@ -100,10 +109,11 @@ export default class Colors extends React.Component<ColorsProps, ColorsStates> {
     this.colorsMessage.isEditedInRealTime = false
 
     const addColor = () => {
-      this.colorsMessage.data = this.props.colors
       const hasAlreadyNewUIColor = this.colorsMessage.data.filter((color) =>
         color.name.includes('New UI Color')
       )
+
+      this.colorsMessage.data = this.props.colors
       this.colorsMessage.data.push({
         name: `New UI Color ${hasAlreadyNewUIColor.length + 1}`,
         description: '',
@@ -116,17 +126,28 @@ export default class Colors extends React.Component<ColorsProps, ColorsStates> {
         oklch: false,
         hueShifting: 0,
       })
+
       this.props.onChangeColors({
         colors: this.colorsMessage.data,
         onGoingStep: 'colors changed',
       })
+
       parent.postMessage({ pluginMessage: this.colorsMessage }, '*')
+      trackSourceColorsManagementEvent(
+        this.props.figmaUserId,
+        this.props.userConsent.find((consent) => consent.id === 'mixpanel')
+          ?.isConsented ?? false,
+        {
+          feature: 'ADD_COLOR',
+        }
+      )
     }
 
     const renameColor = () => {
       const hasSameName = this.props.colors.filter(
         (color) => color.name === currentElement.value
       )
+
       this.colorsMessage.data = this.props.colors.map((item) => {
         if (item.id === id)
           item.name =
@@ -135,12 +156,23 @@ export default class Colors extends React.Component<ColorsProps, ColorsStates> {
               : currentElement.value
         return item
       })
+
       this.props.onChangeColors({
         colors: this.colorsMessage.data,
         onGoingStep: 'colors changed',
       })
-      if (e.type === 'blur' || e.code === 'Enter')
+
+      if (e.type === 'blur' || e.code === 'Enter') {
         parent.postMessage({ pluginMessage: this.colorsMessage }, '*')
+        trackSourceColorsManagementEvent(
+          this.props.figmaUserId,
+          this.props.userConsent.find((consent) => consent.id === 'mixpanel')
+            ?.isConsented ?? false,
+          {
+            feature: 'RENAME_COLOR',
+          }
+        )
+      }
     }
 
     const updateHexCode = () => {
@@ -148,6 +180,7 @@ export default class Colors extends React.Component<ColorsProps, ColorsStates> {
         currentElement.value.indexOf('#') === -1
           ? '#' + currentElement.value
           : currentElement.value
+
       if (/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/i.test(code)) {
         this.colorsMessage.data = this.props.colors.map((item) => {
           const rgb = chroma(
@@ -163,14 +196,24 @@ export default class Colors extends React.Component<ColorsProps, ColorsStates> {
             }
           return item
         })
+
         this.props.onChangeColors({
           colors: this.colorsMessage.data,
           onGoingStep: 'colors changed',
         })
       }
+
       if (e.type === 'blur') {
         this.dispatch.colors.on.status = false
         parent.postMessage({ pluginMessage: this.colorsMessage }, '*')
+        trackSourceColorsManagementEvent(
+          this.props.figmaUserId,
+          this.props.userConsent.find((consent) => consent.id === 'mixpanel')
+            ?.isConsented ?? false,
+          {
+            feature: 'UPDATE_HEX',
+          }
+        )
       } else {
         this.colorsMessage.isEditedInRealTime = true
         this.dispatch.colors.on.status = true
@@ -190,11 +233,21 @@ export default class Colors extends React.Component<ColorsProps, ColorsStates> {
           }
         return item
       })
+
       this.props.onChangeColors({
         colors: this.colorsMessage.data,
         onGoingStep: 'colors changed',
       })
+
       parent.postMessage({ pluginMessage: this.colorsMessage }, '*')
+      trackSourceColorsManagementEvent(
+        this.props.figmaUserId,
+        this.props.userConsent.find((consent) => consent.id === 'mixpanel')
+          ?.isConsented ?? false,
+        {
+          feature: 'UPDATE_LCH',
+        }
+      )
     }
 
     const updateChromaProp = () => {
@@ -210,11 +263,21 @@ export default class Colors extends React.Component<ColorsProps, ColorsStates> {
           }
         return item
       })
+
       this.props.onChangeColors({
         colors: this.colorsMessage.data,
         onGoingStep: 'colors changed',
       })
+
       parent.postMessage({ pluginMessage: this.colorsMessage }, '*')
+      trackSourceColorsManagementEvent(
+        this.props.figmaUserId,
+        this.props.userConsent.find((consent) => consent.id === 'mixpanel')
+          ?.isConsented ?? false,
+        {
+          feature: 'UPDATE_LCH',
+        }
+      )
     }
 
     const updateHueProp = () => {
@@ -230,11 +293,21 @@ export default class Colors extends React.Component<ColorsProps, ColorsStates> {
           }
         return item
       })
+
       this.props.onChangeColors({
         colors: this.colorsMessage.data,
         onGoingStep: 'colors changed',
       })
+
       parent.postMessage({ pluginMessage: this.colorsMessage }, '*')
+      trackSourceColorsManagementEvent(
+        this.props.figmaUserId,
+        this.props.userConsent.find((consent) => consent.id === 'mixpanel')
+          ?.isConsented ?? false,
+        {
+          feature: 'UPDATE_LCH',
+        }
+      )
     }
 
     const setHueShifting = () => {
@@ -242,11 +315,21 @@ export default class Colors extends React.Component<ColorsProps, ColorsStates> {
         if (item.id === id) item.hueShifting = parseFloat(currentElement.value)
         return item
       })
+
       this.props.onChangeColors({
         colors: this.colorsMessage.data,
         onGoingStep: 'colors changed',
       })
+
       parent.postMessage({ pluginMessage: this.colorsMessage }, '*')
+      trackSourceColorsManagementEvent(
+        this.props.figmaUserId,
+        this.props.userConsent.find((consent) => consent.id === 'mixpanel')
+          ?.isConsented ?? false,
+        {
+          feature: 'SHIFT_HUE',
+        }
+      )
     }
 
     const updateColorDescription = () => {
@@ -254,23 +337,44 @@ export default class Colors extends React.Component<ColorsProps, ColorsStates> {
         if (item.id === id) item.description = currentElement.value
         return item
       })
+
       this.props.onChangeColors({
         colors: this.colorsMessage.data,
         onGoingStep: 'colors changed',
       })
-      if (e.type === 'blur')
+
+      if (e.type === 'blur') {
         parent.postMessage({ pluginMessage: this.colorsMessage }, '*')
+        trackSourceColorsManagementEvent(
+          this.props.figmaUserId,
+          this.props.userConsent.find((consent) => consent.id === 'mixpanel')
+            ?.isConsented ?? false,
+          {
+            feature: 'DESCRIBE_COLOR',
+          }
+        )
+      }
     }
 
     const removeColor = () => {
       this.colorsMessage.data = this.props.colors.filter(
         (item) => item.id !== id
       )
+
       this.props.onChangeColors({
         colors: this.colorsMessage.data,
         onGoingStep: 'colors changed',
       })
+
       parent.postMessage({ pluginMessage: this.colorsMessage }, '*')
+      trackSourceColorsManagementEvent(
+        this.props.figmaUserId,
+        this.props.userConsent.find((consent) => consent.id === 'mixpanel')
+          ?.isConsented ?? false,
+        {
+          feature: 'REMOVE_COLOR',
+        }
+      )
     }
 
     const actions: ActionsList = {

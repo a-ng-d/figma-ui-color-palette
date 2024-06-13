@@ -1,6 +1,7 @@
 const checkEditorType = () =>
   figma.ui.postMessage({
-    type: 'EDITOR_TYPE',
+    type: 'CHECK_EDITOR_TYPE',
+    id: figma.currentUser?.id,
     data: figma.editorType,
   })
 

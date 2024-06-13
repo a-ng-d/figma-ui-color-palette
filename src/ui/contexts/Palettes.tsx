@@ -1,12 +1,12 @@
 import {
   Bar,
   Button,
+  ConsentConfiguration,
   HexModel,
   Icon,
   Input,
   Message,
   Tabs,
-  texts,
 } from '@a_ng_d/figmug-ui'
 import React from 'react'
 
@@ -25,14 +25,17 @@ import { ContextItem } from '../../types/management'
 import { ActionsList } from '../../types/models'
 import { UserSession } from '../../types/user'
 import features, { pageSize, palettesDbTableName } from '../../utils/config'
+import { trackPublicationEvent } from '../../utils/eventsTracker'
 import { setContexts } from '../../utils/setContexts'
 import Feature from '../components/Feature'
 import PaletteItem from '../components/PaletteItem'
 
 interface PalettesProps {
   userSession: UserSession
+  userConsent: Array<ConsentConfiguration>
   planStatus: PlanStatus
   lang: Language
+  figmaUserId: string
   onConfigureExternalSourceColors: (
     name: string,
     colors: Array<HexModel>
@@ -366,6 +369,17 @@ export default class Palettes extends React.Component<
             },
           },
           '*'
+        )
+        trackPublicationEvent(
+          this.props.figmaUserId,
+          this.props.userConsent.find((consent) => consent.id === 'mixpanel')
+            ?.isConsented ?? false,
+          {
+            feature:
+              this.props.userSession.userId === data[0].creator_id
+                ? 'REUSE_PALETTE'
+                : 'ADD_PALETTE',
+          }
         )
 
         return

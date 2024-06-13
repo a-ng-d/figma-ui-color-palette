@@ -36,7 +36,7 @@ const setPaletteMigration = async (palette: BaseNode) => {
     creatorFullName = palette.getPluginData('creatorFullName'),
     creatorAvatar = palette.getPluginData('creatorAvatar'),
     creatorAvatarImg =
-      creatorAvatar !== ''
+      creatorAvatar !== '' && figma.editorType !== 'dev'
         ? await figma
             .createImageAsync(creatorAvatar)
             .then(async (image: Image) => image)

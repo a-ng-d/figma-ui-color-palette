@@ -1,15 +1,15 @@
 import { oldTrialTime, trialTime } from '../../utils/config'
 
 const checkPlanStatus = async () => {
-  //figma.clientStorage.deleteAsync('trial_start_date')
-  //figma.clientStorage.deleteAsync('trial_version')
-  /*figma.clientStorage.setAsync(
-    'trial_start_date',
-    new Date().getTime() - 12 * 60 * 60 * 1000
-  )*/
-  /*figma.payments?.setPaymentStatusInDevelopment({
-    type: 'UNPAID',
-  })*/
+  // figma.clientStorage.deleteAsync('trial_start_date')
+  // figma.clientStorage.deleteAsync('trial_version')
+  // figma.clientStorage.setAsync(
+  //   'trial_start_date',
+  //   new Date().getTime() - 72 * 60 * 60 * 1000
+  // )
+  // figma.payments?.setPaymentStatusInDevelopment({
+  //   type: 'UNPAID',
+  // })
 
   const trialStartDate: number | undefined =
       await figma.clientStorage.getAsync('trial_start_date'),
@@ -29,7 +29,7 @@ const checkPlanStatus = async () => {
   }
 
   figma.ui.postMessage({
-    type: 'PLAN_STATUS',
+    type: 'CHECK_PLAN_STATUS',
     data: {
       planStatus:
         trialStatus === 'PENDING' ? 'PAID' : figma.payments?.status.type,

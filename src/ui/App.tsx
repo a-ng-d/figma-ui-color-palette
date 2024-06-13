@@ -1,4 +1,7 @@
+import * as Sentry from '@sentry/react'
+import { Consent, ConsentConfiguration } from '@a_ng_d/figmug-ui'
 import 'figma-plugin-ds/dist/figma-plugin-ds.css'
+import mixpanel from 'mixpanel-figma'
 import React from 'react'
 import { createRoot } from 'react-dom/client'
 
@@ -32,8 +35,17 @@ import {
 import { PriorityContext } from '../types/management'
 import { ActionsList, TextColorsThemeHexModel } from '../types/models'
 import { UserSession } from '../types/user'
-import features, { trialTime } from '../utils/config'
+import features, { trialTime, userConsentVersion } from '../utils/config'
+import {
+  trackEditorEvent,
+  trackExportEvent,
+  trackPurchaseEvent,
+  trackRunningEvent,
+  trackTrialEnablementEvent,
+  trackUserConsentEvent,
+} from '../utils/eventsTracker'
 import { defaultPreset, palette, presets } from '../utils/palettePackage'
+import { userConsent } from '../utils/userConsent'
 import Feature from './components/Feature'
 import PriorityContainer from './modules/PriorityContainer'
 import Shortcuts from './modules/Shortcuts'
@@ -70,8 +82,11 @@ export interface AppStates {
   publicationStatus: PublicationConfiguration
   creatorIdentity: CreatorConfiguration
   userSession: UserSession
+  userConsent: Array<ConsentConfiguration>
   priorityContainerContext: PriorityContext
   lang: Language
+  figmaUserId: string
+  mustUserConsent: boolean
   isLoaded: boolean
   onGoingStep: string
 }
@@ -79,6 +94,31 @@ export interface AppStates {
 let isPaletteSelected = false
 const container = document.getElementById('app'),
   root = createRoot(container)
+
+mixpanel.init('46aa880b8cae32ae12b9fe29f707df11', {
+  debug: process.env.NODE_ENV === 'development',
+  disable_persistence: true,
+  disable_cookie: true,
+  opt_out_tracking_by_default: true,
+})
+
+Sentry.init({
+  dsn: 'https://2ba8d5e2c6e1980abdf62d010256c37f@o4507409671520256.ingest.de.sentry.io/4507409703043152',
+  integrations: [
+    Sentry.browserTracingIntegration(),
+    Sentry.replayIntegration(),
+    Sentry.feedbackIntegration({
+      colorScheme: "system",
+    })
+  ],
+  tracesSampleRate: 1.0,
+  tracePropagationTargets: [
+    'localhost',
+    /^https:\/\/yourserver\.io\/api/,
+  ],
+  replaysSessionSampleRate: 0.1,
+  replaysOnErrorSampleRate: 1.0,
+})
 
 class App extends React.Component<Record<string, never>, AppStates> {
   constructor(props: Record<string, never>) {
@@ -141,6 +181,9 @@ class App extends React.Component<Record<string, never>, AppStates> {
         accessToken: undefined,
         refreshToken: undefined,
       },
+      userConsent: userConsent,
+      figmaUserId: '',
+      mustUserConsent: true,
       isLoaded: false,
       onGoingStep: '',
     }
@@ -208,10 +251,6 @@ class App extends React.Component<Record<string, never>, AppStates> {
       console.log(event, session)
       return actions[event]?.()
     })
-  }
-
-  // Render
-  render() {
     onmessage = (e: MessageEvent) => {
       try {
         const checkUserAuthentication = async () => {
@@ -219,10 +258,39 @@ class App extends React.Component<Record<string, never>, AppStates> {
             e.data.pluginMessage.data.accessToken,
             e.data.pluginMessage.data.refreshToken
           )
+          this.setState({
+            figmaUserId: e.data.pluginMessage.id,
+          })
+          trackRunningEvent(
+            e.data.pluginMessage.id,
+            this.state['userConsent'].find(
+              (consent) => consent.id === 'mixpanel'
+            )?.isConsented ?? false
+          )
         }
 
-        const checkEditorType = () =>
+        const checkUserConsent = () =>
+          this.setState({
+            mustUserConsent: e.data.pluginMessage.mustUserConsent,
+            userConsent: e.data.pluginMessage.userConsent,
+          })
+
+        const checkEditorType = () => {
           this.setState({ editorType: e.data.pluginMessage.data })
+          setTimeout(
+            () =>
+              trackEditorEvent(
+                e.data.pluginMessage.id,
+                this.state['userConsent'].find(
+                  (consent) => consent.id === 'mixpanel'
+                )?.isConsented ?? false,
+                {
+                  editor: e.data.pluginMessage.data,
+                }
+              ),
+            1000
+          )
+        }
 
         const checkHighlightStatus = () =>
           this.setState({
@@ -423,7 +491,7 @@ class App extends React.Component<Record<string, never>, AppStates> {
           })
         }
 
-        const exportPaletteToJson = () =>
+        const exportPaletteToJson = () => {
           this.setState({
             export: {
               format: 'JSON',
@@ -437,8 +505,19 @@ class App extends React.Component<Record<string, never>, AppStates> {
             },
             onGoingStep: 'export previewed',
           })
+          if (e.data.pluginMessage.context !== 'TOKENS_GLOBAL')
+            trackExportEvent(
+              e.data.pluginMessage.id,
+              this.state['userConsent'].find(
+                (consent) => consent.id === 'mixpanel'
+              )?.isConsented ?? false,
+              {
+                context: e.data.pluginMessage.context,
+              }
+            )
+        }
 
-        const exportPaletteToCss = () =>
+        const exportPaletteToCss = () => {
           this.setState({
             export: {
               format: 'CSS',
@@ -452,8 +531,19 @@ class App extends React.Component<Record<string, never>, AppStates> {
             },
             onGoingStep: 'export previewed',
           })
+          trackExportEvent(
+            e.data.pluginMessage.id,
+            this.state['userConsent'].find(
+              (consent) => consent.id === 'mixpanel'
+            )?.isConsented ?? false,
+            {
+              context: e.data.pluginMessage.context,
+              colorSpace: e.data.pluginMessage.colorSpace,
+            }
+          )
+        }
 
-        const exportPaletteToTaiwind = () =>
+        const exportPaletteToTaiwind = () => {
           this.setState({
             export: {
               format: 'TAILWIND',
@@ -471,8 +561,18 @@ class App extends React.Component<Record<string, never>, AppStates> {
             },
             onGoingStep: 'export previewed',
           })
+          trackExportEvent(
+            e.data.pluginMessage.id,
+            this.state['userConsent'].find(
+              (consent) => consent.id === 'mixpanel'
+            )?.isConsented ?? false,
+            {
+              context: e.data.pluginMessage.context,
+            }
+          )
+        }
 
-        const exportPaletteToSwiftUI = () =>
+        const exportPaletteToSwiftUI = () => {
           this.setState({
             export: {
               format: 'SWIFT',
@@ -486,8 +586,18 @@ class App extends React.Component<Record<string, never>, AppStates> {
             },
             onGoingStep: 'export previewed',
           })
+          trackExportEvent(
+            e.data.pluginMessage.id,
+            this.state['userConsent'].find(
+              (consent) => consent.id === 'mixpanel'
+            )?.isConsented ?? false,
+            {
+              context: e.data.pluginMessage.context,
+            }
+          )
+        }
 
-        const exportPaletteToUIKit = () =>
+        const exportPaletteToUIKit = () => {
           this.setState({
             export: {
               format: 'SWIFT',
@@ -501,8 +611,18 @@ class App extends React.Component<Record<string, never>, AppStates> {
             },
             onGoingStep: 'export previewed',
           })
+          trackExportEvent(
+            e.data.pluginMessage.id,
+            this.state['userConsent'].find(
+              (consent) => consent.id === 'mixpanel'
+            )?.isConsented ?? false,
+            {
+              context: e.data.pluginMessage.context,
+            }
+          )
+        }
 
-        const exportPaletteToKt = () =>
+        const exportPaletteToKt = () => {
           this.setState({
             export: {
               format: 'KT',
@@ -516,8 +636,18 @@ class App extends React.Component<Record<string, never>, AppStates> {
             },
             onGoingStep: 'export previewed',
           })
+          trackExportEvent(
+            e.data.pluginMessage.id,
+            this.state['userConsent'].find(
+              (consent) => consent.id === 'mixpanel'
+            )?.isConsented ?? false,
+            {
+              context: e.data.pluginMessage.context,
+            }
+          )
+        }
 
-        const exportPaletteToXml = () =>
+        const exportPaletteToXml = () => {
           this.setState({
             export: {
               format: 'XML',
@@ -531,8 +661,18 @@ class App extends React.Component<Record<string, never>, AppStates> {
             },
             onGoingStep: 'export previewed',
           })
+          trackExportEvent(
+            e.data.pluginMessage.id,
+            this.state['userConsent'].find(
+              (consent) => consent.id === 'mixpanel'
+            )?.isConsented ?? false,
+            {
+              context: e.data.pluginMessage.context,
+            }
+          )
+        }
 
-        const exportPaletteToCsv = () =>
+        const exportPaletteToCsv = () => {
           this.setState({
             export: {
               format: 'CSV',
@@ -546,6 +686,16 @@ class App extends React.Component<Record<string, never>, AppStates> {
             },
             onGoingStep: 'export previewed',
           })
+          trackExportEvent(
+            e.data.pluginMessage.id,
+            this.state['userConsent'].find(
+              (consent) => consent.id === 'mixpanel'
+            )?.isConsented ?? false,
+            {
+              context: e.data.pluginMessage.context,
+            }
+          )
+        }
 
         const exposePalettes = (data: Array<ExtractOfPaletteConfiguration>) =>
           this.setState({
@@ -566,18 +716,36 @@ class App extends React.Component<Record<string, never>, AppStates> {
             },
           })
 
-        const getProPlan = () =>
+        const getProPlan = () => {
           this.setState({
             planStatus: e.data.pluginMessage.data,
             priorityContainerContext: 'WELCOME_TO_PRO',
           })
+          trackPurchaseEvent(
+            e.data.pluginMessage.id,
+            this.state['userConsent'].find(
+              (consent) => consent.id === 'mixpanel'
+            )?.isConsented ?? false
+          )
+        }
 
-        const enableTrial = () =>
+        const enableTrial = () => {
           this.setState({
             planStatus: 'PAID',
             trialStatus: 'PENDING',
             priorityContainerContext: 'WELCOME_TO_TRIAL',
           })
+          trackTrialEnablementEvent(
+            e.data.pluginMessage.id,
+            this.state['userConsent'].find(
+              (consent) => consent.id === 'mixpanel'
+            )?.isConsented ?? false,
+            {
+              date: e.data.pluginMessage.date,
+              trialTime: e.data.pluginMessage.trialTime,
+            }
+          )
+        }
 
         const signOut = (data: UserSession) =>
           this.setState({
@@ -586,9 +754,10 @@ class App extends React.Component<Record<string, never>, AppStates> {
 
         const actions: ActionsList = {
           CHECK_USER_AUTHENTICATION: () => checkUserAuthentication(),
-          EDITOR_TYPE: () => checkEditorType(),
-          HIGHLIGHT_STATUS: () => checkHighlightStatus(),
-          PLAN_STATUS: () => checkPlanStatus(),
+          CHECK_USER_CONSENT: () => checkUserConsent(),
+          CHECK_EDITOR_TYPE: () => checkEditorType(),
+          CHECK_HIGHLIGHT_STATUS: () => checkHighlightStatus(),
+          CHECK_PLAN_STATUS: () => checkPlanStatus(),
           EMPTY_SELECTION: () => updateWhileEmptySelection(),
           COLOR_SELECTED: () => updateWhileColorSelected(),
           PALETTE_SELECTED: () => updateWhilePaletteSelected(),
@@ -615,7 +784,50 @@ class App extends React.Component<Record<string, never>, AppStates> {
         console.error(error)
       }
     }
+  }
 
+  // Handlers
+  userConsentHandler = (e: Array<ConsentConfiguration>) => {
+    this.setState({
+      userConsent: e,
+      mustUserConsent: false,
+    })
+    parent.postMessage(
+      {
+        pluginMessage: {
+          type: 'SET_ITEMS',
+          items: [
+            {
+              key: 'mixpanel_user_consent',
+              value: e.find((consent) => consent.id === 'mixpanel')
+                ?.isConsented,
+            },
+            {
+              key: 'sentry_user_consent',
+              value: e.find((consent) => consent.id === 'sentry')?.isConsented,
+            },
+            {
+              key: 'user_consent_version',
+              value: userConsentVersion,
+            },
+          ],
+        },
+      },
+      '*'
+    )
+    parent.postMessage(
+      {
+        pluginMessage: {
+          type: 'CHECK_USER_CONSENT',
+        },
+      },
+      '*'
+    )
+    trackUserConsentEvent(e)
+  }
+
+  // Render
+  render() {
     if (this.state['isLoaded'])
       return (
         <main className="ui">
@@ -689,6 +901,60 @@ class App extends React.Component<Record<string, never>, AppStates> {
           </Feature>
           <Feature
             isActive={
+              this.state['mustUserConsent'] &&
+              features.find((feature) => feature.name === 'CONSENT')?.isActive
+            }
+          >
+            <Consent
+              welcomeMessage={locals[this.state['lang']].user.cookies.welcome}
+              vendorsMessage={locals[this.state['lang']].user.cookies.vendors}
+              privacyPolicy={{
+                label: locals[this.state['lang']].user.cookies.privacyPolicy,
+                action: () =>
+                  parent.postMessage(
+                    {
+                      pluginMessage: {
+                        type: 'OPEN_IN_BROWSER',
+                        url: 'https://uicp.link/privacy',
+                      },
+                    },
+                    '*'
+                  ),
+              }}
+              moreDetailsLabel={
+                locals[this.state['lang']].user.cookies.customize
+              }
+              lessDetailsLabel={locals[this.state['lang']].user.cookies.back}
+              consentActions={{
+                consent: {
+                  label: locals[this.state['lang']].user.cookies.consent,
+                  action: this.userConsentHandler,
+                },
+                deny: {
+                  label: locals[this.state['lang']].user.cookies.deny,
+                  action: this.userConsentHandler,
+                },
+                save: {
+                  label: locals[this.state['lang']].user.cookies.save,
+                  action: this.userConsentHandler,
+                },
+                close: {
+                  action: () => this.setState({ mustUserConsent: false }),
+                },
+              }}
+              validVendor={{
+                name: locals[this.state['lang']].vendors.functional.name,
+                id: 'functional',
+                icon: '',
+                description:
+                  locals[this.state['lang']].vendors.functional.description,
+                isConsented: true,
+              }}
+              vendorsList={this.state['userConsent']}
+            />
+          </Feature>
+          <Feature
+            isActive={
               features.find((feature) => feature.name === 'SHORTCUTS')?.isActive
             }
           >
@@ -706,6 +972,9 @@ class App extends React.Component<Record<string, never>, AppStates> {
               onReOpenAbout={() =>
                 this.setState({ priorityContainerContext: 'ABOUT' })
               }
+              onReOpenReport={() =>
+                this.setState({ priorityContainerContext: 'REPORT' })
+              }
               onGetProPlan={() => {
                 if (this.state['trialStatus'] === 'EXPIRED')
                   parent.postMessage(
@@ -714,6 +983,7 @@ class App extends React.Component<Record<string, never>, AppStates> {
                   )
                 else this.setState({ priorityContainerContext: 'TRY' })
               }}
+              onUpdateConsent={() => this.setState({ mustUserConsent: true })}
             />
           </Feature>
         </main>

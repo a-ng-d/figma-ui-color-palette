@@ -58,6 +58,7 @@ const exportCsv = (palette: FrameNode) => {
 
     figma.ui.postMessage({
       type: 'EXPORT_PALETTE_CSV',
+      id: figma.currentUser?.id,
       context: 'CSV',
       data:
         paletteData.themes[0].colors.length === 0

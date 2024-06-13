@@ -45,6 +45,7 @@ const exportSwiftUI = (palette: FrameNode) => {
 
     figma.ui.postMessage({
       type: 'EXPORT_PALETTE_SWIFTUI',
+      id: figma.currentUser?.id,
       context: 'APPLE_SWIFTUI',
       data: `import SwiftUI\n\npublic extension Color {\n  static let Token = Color.TokenColor()\n  struct TokenColor {\n    ${swift.join(
         '\n    '

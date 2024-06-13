@@ -1,10 +1,12 @@
 import {
   Button,
+  ConsentConfiguration,
   Dialog,
   Dropdown,
   FormItem,
   KeyboardShortcutItem,
   SectionTitle,
+  layouts,
   texts,
 } from '@a_ng_d/figmug-ui'
 import React from 'react'
@@ -23,6 +25,7 @@ import { ActionsList, DispatchProcess } from '../../types/models'
 import { Identity } from '../../types/user'
 import features from '../../utils/config'
 import doLightnessScale from '../../utils/doLightnessScale'
+import { trackScaleManagementEvent } from '../../utils/eventsTracker'
 import isBlocked from '../../utils/isBlocked'
 import { palette, presets } from '../../utils/palettePackage'
 import type { AppStates } from '../App'
@@ -39,9 +42,11 @@ interface ScaleProps {
   scale?: ScaleConfiguration
   actions?: string
   identity: Identity
+  userConsent: Array<ConsentConfiguration>
   planStatus: PlanStatus
   editorType?: EditorType
   lang: Language
+  figmaUserId: string
   onChangePreset?: React.Dispatch<Partial<AppStates>>
   onChangeScale: () => void
   onChangeStop?: () => void
@@ -115,6 +120,7 @@ export default class Scale extends React.Component<ScaleProps, ScaleStates> {
     }
 
     const onUpdatingStop = () => {
+      this.scaleMessage.isEditedInRealTime = true
       if (!this.props.hasPreset) this.dispatch.scale.on.status = true
     }
 
@@ -129,19 +135,39 @@ export default class Scale extends React.Component<ScaleProps, ScaleStates> {
   }
 
   presetsHandler = (e: React.SyntheticEvent) => {
-    const setMaterialDesignPreset = () =>
+    const setMaterialDesignPreset = () => {
       this.props.onChangePreset?.({
         preset: presets.find((preset) => preset.id === 'MATERIAL'),
         scale: {},
         onGoingStep: 'preset changed',
       })
 
-    const setMaterial3Preset = () =>
+      trackScaleManagementEvent(
+        this.props.figmaUserId,
+        this.props.userConsent.find((consent) => consent.id === 'mixpanel')
+          ?.isConsented ?? false,
+        {
+          feature: 'SWITCH_MATERIAL',
+        }
+      )
+    }
+
+    const setMaterial3Preset = () => {
       this.props.onChangePreset?.({
         preset: presets.find((preset) => preset.id === 'MATERIAL_3'),
         scale: {},
         onGoingStep: 'preset changed',
       })
+
+      trackScaleManagementEvent(
+        this.props.figmaUserId,
+        this.props.userConsent.find((consent) => consent.id === 'mixpanel')
+          ?.isConsented ?? false,
+        {
+          feature: 'SWITCH_MATERIAL_3',
+        }
+      )
+    }
 
     const setTailwindPreset = () => {
       this.props.onChangePreset?.({
@@ -149,42 +175,101 @@ export default class Scale extends React.Component<ScaleProps, ScaleStates> {
         scale: {},
         onGoingStep: 'preset changed',
       })
+
+      trackScaleManagementEvent(
+        this.props.figmaUserId,
+        this.props.userConsent.find((consent) => consent.id === 'mixpanel')
+          ?.isConsented ?? false,
+        {
+          feature: 'SWITCH_MATERIAL',
+        }
+      )
     }
 
-    const setAntDesignPreset = () =>
+    const setAntDesignPreset = () => {
       this.props.onChangePreset?.({
         preset: presets.find((preset) => preset.id === 'ANT'),
         scale: {},
         onGoingStep: 'preset changed',
       })
 
-    const setAdsPreset = () =>
+      trackScaleManagementEvent(
+        this.props.figmaUserId,
+        this.props.userConsent.find((consent) => consent.id === 'mixpanel')
+          ?.isConsented ?? false,
+        {
+          feature: 'SWITCH_ANT',
+        }
+      )
+    }
+
+    const setAdsPreset = () => {
       this.props.onChangePreset?.({
         preset: presets.find((preset) => preset.id === 'ADS'),
         scale: {},
         onGoingStep: 'preset changed',
       })
 
-    const setAdsNeutralPreset = () =>
+      trackScaleManagementEvent(
+        this.props.figmaUserId,
+        this.props.userConsent.find((consent) => consent.id === 'mixpanel')
+          ?.isConsented ?? false,
+        {
+          feature: 'SWITCH_ADS',
+        }
+      )
+    }
+
+    const setAdsNeutralPreset = () => {
       this.props.onChangePreset?.({
         preset: presets.find((preset) => preset.id === 'ADS_NEUTRAL'),
         scale: {},
         onGoingStep: 'preset changed',
       })
 
-    const setCarbonPreset = () =>
+      trackScaleManagementEvent(
+        this.props.figmaUserId,
+        this.props.userConsent.find((consent) => consent.id === 'mixpanel')
+          ?.isConsented ?? false,
+        {
+          feature: 'SWITCH_ADS_NEUTRAL',
+        }
+      )
+    }
+
+    const setCarbonPreset = () => {
       this.props.onChangePreset?.({
         preset: presets.find((preset) => preset.id === 'CARBON'),
         scale: {},
         onGoingStep: 'preset changed',
       })
 
-    const setBasePreset = () =>
+      trackScaleManagementEvent(
+        this.props.figmaUserId,
+        this.props.userConsent.find((consent) => consent.id === 'mixpanel')
+          ?.isConsented ?? false,
+        {
+          feature: 'SWITCH_CARBON',
+        }
+      )
+    }
+
+    const setBasePreset = () => {
       this.props.onChangePreset?.({
         preset: presets.find((preset) => preset.id === 'BASE'),
         scale: {},
         onGoingStep: 'preset changed',
       })
+
+      trackScaleManagementEvent(
+        this.props.figmaUserId,
+        this.props.userConsent.find((consent) => consent.id === 'mixpanel')
+          ?.isConsented ?? false,
+        {
+          feature: 'SWITCH_BASE',
+        }
+      )
+    }
 
     const setCustomPreset = () => {
       this.props.onChangePreset?.({
@@ -192,6 +277,15 @@ export default class Scale extends React.Component<ScaleProps, ScaleStates> {
         scale: {},
         onGoingStep: 'preset changed',
       })
+
+      trackScaleManagementEvent(
+        this.props.figmaUserId,
+        this.props.userConsent.find((consent) => consent.id === 'mixpanel')
+          ?.isConsented ?? false,
+        {
+          feature: 'SWITCH_CUSTOM',
+        }
+      )
     }
 
     const actions: ActionsList = {
@@ -250,6 +344,7 @@ export default class Scale extends React.Component<ScaleProps, ScaleStates> {
     const changeNamingConvention = () => {
       const option = (e.target as HTMLInputElement).dataset
         .value as NamingConventionConfiguration
+
       this.props.onChangeNamingConvention?.({
         namingConvention: option,
         preset: {
@@ -268,10 +363,28 @@ export default class Scale extends React.Component<ScaleProps, ScaleStates> {
       })
     }
 
+    const changeDistributionEasing = () => {
+      const value = (e.target as HTMLElement).dataset.value as Easing
+
+      this.setState({
+        distributionEasing: value,
+      })
+
+      trackScaleManagementEvent(
+        this.props.figmaUserId,
+        this.props.userConsent.find((consent) => consent.id === 'mixpanel')
+          ?.isConsented ?? false,
+        {
+          feature: value,
+        }
+      )
+    }
+
     const actions: ActionsList = {
       ADD_STOP: () => addStop(),
       REMOVE_STOP: () => removeStop(),
       UPDATE_NAMING_CONVENTION: () => changeNamingConvention(),
+      UPDATE_DISTRIBUTION_EASING: () => changeDistributionEasing(),
       NULL: () => null,
     }
 
@@ -299,11 +412,7 @@ export default class Scale extends React.Component<ScaleProps, ScaleStates> {
               isBlocked: false,
               isNew: false,
               children: [],
-              action: (e) =>
-                this.setState({
-                  distributionEasing: (e.target as HTMLElement).dataset
-                    .value as Easing,
-                }),
+              action: this.customHandler,
             },
             {
               label: '',
@@ -326,11 +435,7 @@ export default class Scale extends React.Component<ScaleProps, ScaleStates> {
               isBlocked: false,
               isNew: false,
               children: [],
-              action: (e) =>
-                this.setState({
-                  distributionEasing: (e.target as HTMLElement).dataset
-                    .value as Easing,
-                }),
+              action: this.customHandler,
             },
             {
               label: locals[this.props.lang].scale.easing.easeOut,
@@ -342,11 +447,7 @@ export default class Scale extends React.Component<ScaleProps, ScaleStates> {
               isBlocked: false,
               isNew: false,
               children: [],
-              action: (e) =>
-                this.setState({
-                  distributionEasing: (e.target as HTMLElement).dataset
-                    .value as Easing,
-                }),
+              action: this.customHandler,
             },
             {
               label: locals[this.props.lang].scale.easing.easeInOut,
@@ -358,11 +459,7 @@ export default class Scale extends React.Component<ScaleProps, ScaleStates> {
               isBlocked: false,
               isNew: false,
               children: [],
-              action: (e) =>
-                this.setState({
-                  distributionEasing: (e.target as HTMLElement).dataset
-                    .value as Easing,
-                }),
+              action: this.customHandler,
             },
           ]}
           selected={this.state['distributionEasing']}
@@ -392,7 +489,7 @@ export default class Scale extends React.Component<ScaleProps, ScaleStates> {
             isBlocked: false,
             isNew: false,
             children: [],
-            action: (e) => this.customHandler?.(e),
+            action: this.customHandler,
           },
           {
             label: locals[this.props.lang].scale.namingConvention.tens,
@@ -404,7 +501,7 @@ export default class Scale extends React.Component<ScaleProps, ScaleStates> {
             isBlocked: false,
             isNew: false,
             children: [],
-            action: (e) => this.customHandler?.(e),
+            action: this.customHandler,
           },
           {
             label: locals[this.props.lang].scale.namingConvention.hundreds,
@@ -416,7 +513,7 @@ export default class Scale extends React.Component<ScaleProps, ScaleStates> {
             isBlocked: false,
             isNew: false,
             children: [],
-            action: (e) => this.customHandler?.(e),
+            action: this.customHandler,
           },
         ]}
         selected={this.props.namingConvention}
@@ -434,6 +531,15 @@ export default class Scale extends React.Component<ScaleProps, ScaleStates> {
   KeyboardShortcuts = () => {
     const isMacOrWinKeyboard =
       navigator.userAgent.indexOf('Mac') !== -1 ? '⌘' : '⌃' ?? '⌘'
+
+    trackScaleManagementEvent(
+      this.props.figmaUserId,
+      this.props.userConsent.find((consent) => consent.id === 'mixpanel')
+        ?.isConsented ?? false,
+      {
+        feature: 'OPEN_KEYBOARD_SHORTCUTS',
+      }
+    )
 
     return (
       <Dialog
@@ -670,7 +776,7 @@ export default class Scale extends React.Component<ScaleProps, ScaleStates> {
                     )?.isActive
                   }
                 >
-                  <div className="snackbar">
+                  <div className={layouts['snackbar--tight']}>
                     <Button
                       type="tertiary"
                       label={locals[this.props.lang].scale.howTo}
@@ -777,7 +883,7 @@ export default class Scale extends React.Component<ScaleProps, ScaleStates> {
                     )?.isActive
                   }
                 >
-                  <div className="snackbar">
+                  <div className={layouts['snackbar--tight']}>
                     <Button
                       type="tertiary"
                       label={locals[this.props.lang].scale.howTo}

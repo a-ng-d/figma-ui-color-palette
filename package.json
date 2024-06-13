@@ -59,12 +59,14 @@
     "webpack-cli": "^4.9.1"
   },
   "dependencies": {
-    "@a_ng_d/figmug-ui": "^0.47.0",
+    "@a_ng_d/figmug-ui": "^0.58.0",
     "@a-ng-d/figmug.modules.do-camel-case": "^0.0.4",
     "@a-ng-d/figmug.modules.do-kebab-case": "^0.0.4",
     "@a-ng-d/figmug.modules.do-map": "^0.0.3",
     "@a-ng-d/figmug.modules.do-pascal-case": "^0.0.3",
     "@a-ng-d/figmug.modules.do-snake-case": "^0.0.4",
+    "@sentry/react": "^8.8.0",
+    "@sentry/webpack-plugin": "^2.18.0",
     "@supabase/supabase-js": "^2.42.0",
     "apca-w3": "^0.1.9",
     "chroma-js": "^2.4.2",
@@ -72,6 +74,7 @@
     "file-saver": "^2.0.5",
     "hsluv": "^1.0.1",
     "jszip": "^3.10.1",
+    "mixpanel-figma": "^2.0.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "uid": "^2.0.2"
