@@ -21,7 +21,7 @@ import {
   ThemeConfiguration,
 } from '../../types/configurations'
 import { ExternalPalettes } from '../../types/data'
-import { ContextItem } from '../../types/management'
+import { ContextItem, FetchStatus } from '../../types/management'
 import { ActionsList } from '../../types/models'
 import { UserSession } from '../../types/user'
 import features, { pageSize, palettesDbTableName } from '../../utils/config'
@@ -44,19 +44,8 @@ interface PalettesProps {
 
 interface PalettesStates {
   context: string | undefined
-  selfPalettesListStatus:
-    | 'LOADING'
-    | 'EMPTY'
-    | 'LOADED'
-    | 'COMPLETE'
-    | 'ERROR'
-    | 'SIGN_IN_FIRST'
-  communityPalettesListStatus:
-    | 'LOADING'
-    | 'EMPTY'
-    | 'LOADED'
-    | 'COMPLETE'
-    | 'ERROR'
+  selfPalettesListStatus: FetchStatus
+  communityPalettesListStatus: FetchStatus
   isLoadMoreActionLoading: boolean
   isSignInLoading: boolean
   isAddToFileActionLoading: Array<boolean>

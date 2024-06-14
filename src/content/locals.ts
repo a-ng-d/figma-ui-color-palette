@@ -142,6 +142,16 @@ export const locals: { [key: string]: any } = {
         title: 'Colour Lovers',
         helper:
           'Colour Lovers is a tool for creating and exploring beautiful color schemes',
+        filters: {
+          label: 'Colors',
+          any: 'Any',
+          yellow: 'Yellow',
+          orange: 'Orange',
+          red: 'Red',
+          green: 'Green',
+          violet: 'Violet',
+          blue: 'Blue',
+        }
       },
     },
     scale: {
