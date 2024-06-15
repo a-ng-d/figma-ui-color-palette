@@ -95,7 +95,7 @@ let isPaletteSelected = false
 const container = document.getElementById('app'),
   root = createRoot(container)
 
-mixpanel.init('46aa880b8cae32ae12b9fe29f707df11', {
+mixpanel.init(process.env.REACT_APP_MIXPANEL_TOKEN ?? '', {
   debug: process.env.NODE_ENV === 'development',
   disable_persistence: true,
   disable_cookie: true,
@@ -103,7 +103,7 @@ mixpanel.init('46aa880b8cae32ae12b9fe29f707df11', {
 })
 
 Sentry.init({
-  dsn: 'https://2ba8d5e2c6e1980abdf62d010256c37f@o4507409671520256.ingest.de.sentry.io/4507409703043152',
+  dsn: process.env.REACT_APP_SENTRY_DSN ?? '',
   integrations: [
     Sentry.browserTracingIntegration(),
     Sentry.replayIntegration(),
@@ -248,7 +248,7 @@ class App extends React.Component<Record<string, never>, AppStates> {
           )
         },
       }
-      console.log(event, session)
+      // console.log(event, session)
       return actions[event]?.()
     })
     onmessage = (e: MessageEvent) => {
