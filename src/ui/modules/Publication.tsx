@@ -752,9 +752,9 @@ export default class Publication extends React.Component<
       IS_NOT_FOUND: {
         primary: {
           label: locals[this.props.lang].publication.detach,
-          state: this.props.isSecondaryActionLoading ? 'LOADING' : 'DEFAULT',
+          state: this.props.isPrimaryActionLoading ? 'LOADING' : 'DEFAULT',
           action: async () => {
-            this.props.onLoadSecondaryAction(true)
+            this.props.onLoadPrimaryAction(true)
             detachPalette(this.props.rawData)
               .then((data) => {
                 this.props.onChangePublication(data)
