@@ -201,7 +201,6 @@ export default class PriorityContainer extends React.Component<
             style={{
               border: 'none',
               width: '100%',
-              height: '100%',
             }}
             title="Voice of the UI Color Palette Users"
             loading="lazy"

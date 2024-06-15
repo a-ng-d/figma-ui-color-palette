@@ -124,15 +124,6 @@ export const features: Array<Feature> = [
     service: ['CREATE'],
   },
   {
-    name: 'PALETTES_SEARCH',
-    description: 'Search palettes',
-    isActive: true,
-    isPro: false,
-    isNew: false,
-    type: 'ACTION',
-    service: ['CREATE'],
-  },
-  {
     name: 'SOURCE',
     description: 'Raw source colors',
     isActive: true,

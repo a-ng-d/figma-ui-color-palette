@@ -310,7 +310,6 @@ export default class Explore extends React.Component<
                 <FormItem
                   id="explore__filters"
                   label={locals[this.props.lang].source.colourLovers.filters.label}
-                  shouldFill={false}
                 >
                   <Dropdown
                     id="explore__filters"

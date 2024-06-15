@@ -578,40 +578,33 @@ export default class Palettes extends React.Component<
         />
         <div className="control__block control__block--no-padding">
           <Bar
-            leftPart={
-              <Feature
-                isActive={
-                  features.find((feature) => feature.name === 'PALETTES_SEARCH')
-                    ?.isActive
+            soloPart={
+              <Input
+                type="TEXT"
+                icon={{
+                  type: 'PICTO',
+                  value: 'search',
+                }}
+                placeholder={locals[this.props.lang].palettes.lazyLoad.search}
+                value={
+                  this.state.context === 'PALETTES_SELF'
+                    ? this.state.seftPalettesSearchQuery
+                    : this.state.communityPalettesSearchQuery
                 }
-              >
-                <Input
-                  type="TEXT"
-                  icon={{
-                    type: 'PICTO',
-                    value: 'search',
-                  }}
-                  placeholder={locals[this.props.lang].palettes.lazyLoad.search}
-                  value={
-                    this.state.context === 'PALETTES_SELF'
-                      ? this.state.seftPalettesSearchQuery
-                      : this.state.communityPalettesSearchQuery
-                  }
-                  onConfirm={(e) => {
-                    if (this.state.context === 'PALETTES_SELF')
-                      this.setState({
-                        seftPalettesSearchQuery: (e.target as HTMLInputElement)
-                          .value,
-                      })
-                    else
-                      this.setState({
-                        communityPalettesSearchQuery: (
-                          e.target as HTMLInputElement
-                        ).value,
-                      })
-                  }}
-                />
-              </Feature>
+                onConfirm={(e) => {
+                  if (this.state.context === 'PALETTES_SELF')
+                    this.setState({
+                      seftPalettesSearchQuery: (e.target as HTMLInputElement)
+                        .value,
+                    })
+                  else
+                    this.setState({
+                      communityPalettesSearchQuery: (
+                        e.target as HTMLInputElement
+                      ).value,
+                    })
+                }}
+              />
             }
             border={['BOTTOM']}
           />
