@@ -1,7 +1,7 @@
 import { createClient } from '@supabase/supabase-js'
 
 import { lang, locals } from '../../content/locals'
-import { authUrl, databaseUrl, proxyUrl } from '../../utils/config'
+import { authUrl, databaseUrl, workerUrl } from '../../utils/config'
 import checkConnectionStatus from '../checks/checkConnectionStatus'
 
 let isAuthenticated = false
@@ -13,7 +13,7 @@ export const supabase = createClient(
 
 export const signIn = async () => {
   return new Promise((resolve, reject) => {
-    fetch(proxyUrl, {
+    fetch(workerUrl, {
       cache: 'no-cache',
       credentials: 'omit',
       headers: {
@@ -35,7 +35,7 @@ export const signIn = async () => {
           '*'
         )
         const poll = setInterval(async () => {
-          fetch(proxyUrl, {
+          fetch(workerUrl, {
             cache: 'no-cache',
             credentials: 'omit',
             headers: {

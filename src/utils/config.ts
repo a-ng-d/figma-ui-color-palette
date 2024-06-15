@@ -4,7 +4,7 @@ export const trialTime = 48
 export const oldTrialTime = 168
 
 export const pageSize = 20
-export const proxyUrl = process.env.REACT_APP_WORKER_URL as string
+export const workerUrl = process.env.REACT_APP_WORKER_URL as string
 export const databaseUrl = process.env.REACT_APP_SUPABASE_URL as string
 export const authUrl = process.env.REACT_APP_AUTH_URL as string
 
