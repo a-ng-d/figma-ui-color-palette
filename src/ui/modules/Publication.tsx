@@ -115,8 +115,6 @@ export default class Publication extends React.Component<
       .select('*')
       .eq('palette_id', this.props.rawData.id)
 
-    console.log(data)
-
     if (!error && data.length !== 0) {
       const isMyPalette = data?.[0].creator_id === localUserId
 
@@ -831,7 +829,7 @@ export default class Publication extends React.Component<
 
   render() {
     this.uploadPaletteScreenshot()
-    console.log(this.state.publicationStatus)
+    // console.log(this.state.publicationStatus)
 
     return (
       <Dialog

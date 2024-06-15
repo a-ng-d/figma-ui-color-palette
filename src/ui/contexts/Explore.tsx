@@ -300,7 +300,6 @@ export default class Explore extends React.Component<
 
   // Render
   render() {
-    console.log(this.state.activeFilters, this.state.activeFilters.join(', '))
     return (
       <div className="controls__control controls__control--horizontal">
         <div className="controls__control">

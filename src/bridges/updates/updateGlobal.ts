@@ -11,7 +11,6 @@ const updateGlobal = async (msg: any) => {
   const palette = isSelectionChanged
     ? (previousSelection?.[0] as FrameNode)
     : (currentSelection[0] as FrameNode)
-  console.log(msg.data)
 
   const creatorAvatarImg = await figma
     .createImageAsync(msg.data.creatorIdentity.creatorAvatar)
