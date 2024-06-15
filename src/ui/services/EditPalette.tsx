@@ -304,11 +304,11 @@ export default class EditPalette extends React.Component<
 
   // Render
   render() {
-    let controls
+    let fragment
 
     switch (this.state.context) {
       case 'SCALE': {
-        controls = (
+        fragment = (
           <Scale
             hasPreset={false}
             {...this.props}
@@ -321,7 +321,7 @@ export default class EditPalette extends React.Component<
         break
       }
       case 'COLORS': {
-        controls = (
+        fragment = (
           <Colors
             {...this.props}
             onSyncLocalStyles={this.onSyncStyles}
@@ -331,7 +331,7 @@ export default class EditPalette extends React.Component<
         break
       }
       case 'THEMES': {
-        controls = (
+        fragment = (
           <Themes
             ref={this.themesRef}
             {...this.props}
@@ -342,7 +342,7 @@ export default class EditPalette extends React.Component<
         break
       }
       case 'EXPORT': {
-        controls = (
+        fragment = (
           <Export
             exportPreview={
               this.props.export.format === 'CSV'
@@ -358,7 +358,7 @@ export default class EditPalette extends React.Component<
         break
       }
       case 'SETTINGS': {
-        controls = (
+        fragment = (
           <Settings
             context="LOCAL_STYLES"
             {...this.props}
@@ -407,7 +407,7 @@ export default class EditPalette extends React.Component<
           isOnlyText={true}
         />
         <section className="controller">
-          <div className="controls">{controls}</div>
+          <div className="controls">{fragment}</div>
         </section>
       </>
     )

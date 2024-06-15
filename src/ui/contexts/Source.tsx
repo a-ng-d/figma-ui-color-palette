@@ -49,11 +49,11 @@ export default class Source extends React.Component<SourceProps, SourceStates> {
 
   // Render
   render() {
-    let controls
+    let fragment
 
     switch (this.state.context) {
       case 'SOURCE_OVERVIEW': {
-        controls = (
+        fragment = (
           <Overview
             {...this.props}
             onChangeContexts={() =>
@@ -64,7 +64,7 @@ export default class Source extends React.Component<SourceProps, SourceStates> {
         break
       }
       case 'SOURCE_EXPLORE': {
-        controls = (
+        fragment = (
           <Explore
             {...this.props}
             colourLoversPaletteList={this.state.colourLoversPaletteList}
@@ -98,7 +98,7 @@ export default class Source extends React.Component<SourceProps, SourceStates> {
           border={['BOTTOM']}
           isOnlyText={true}
         />
-        {controls}
+        {fragment}
         <Actions
           context="CREATE"
           {...this.props}

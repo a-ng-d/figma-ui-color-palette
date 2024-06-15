@@ -145,11 +145,11 @@ export default class CreatePalette extends React.Component<
       this.props.preset.min ?? 0,
       this.props.preset.max ?? 100
     )
-    let controls
+    let fragment
 
     switch (this.state.context) {
       case 'PALETTES': {
-        controls = (
+        fragment = (
           <Palettes
             {...this.props}
             onConfigureExternalSourceColors={
@@ -160,7 +160,7 @@ export default class CreatePalette extends React.Component<
         break
       }
       case 'SOURCE': {
-        controls = (
+        fragment = (
           <Source
             {...this.props}
             onChangeColorsFromImport={this.colorsFromImportHandler}
@@ -170,7 +170,7 @@ export default class CreatePalette extends React.Component<
         break
       }
       case 'SCALE': {
-        controls = (
+        fragment = (
           <Scale
             hasPreset={true}
             {...this.props}
@@ -184,7 +184,7 @@ export default class CreatePalette extends React.Component<
         break
       }
       case 'SETTINGS': {
-        controls = (
+        fragment = (
           <Settings
             context="CREATE"
             {...this.props}
@@ -209,7 +209,7 @@ export default class CreatePalette extends React.Component<
           isOnlyText={true}
         />
         <section className="controller">
-          <div className="controls">{controls}</div>
+          <div className="controls">{fragment}</div>
         </section>
       </>
     )

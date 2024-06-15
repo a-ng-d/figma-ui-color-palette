@@ -509,17 +509,17 @@ export default class Palettes extends React.Component<
 
   // Render
   render() {
-    let controls
+    let fragment
 
     if (this.state.context === 'PALETTES_SELF') {
       if (this.state.selfPalettesListStatus !== 'SIGN_IN_FIRST') {
-        controls = this.ExternalPalettesList(
+        fragment = this.ExternalPalettesList(
           this.state.selfPalettesListStatus,
           this.state.selfPalettesList,
           { selfCurrentPage: this.state.selfCurrentPage + 1 }
         )
       } else {
-        controls = (
+        fragment = (
           <div className="onboarding__callout--centered">
             <Message
               icon="info"
@@ -557,7 +557,7 @@ export default class Palettes extends React.Component<
         )
       }
     } else
-      controls = this.ExternalPalettesList(
+      fragment = this.ExternalPalettesList(
         this.state.communityPalettesListStatus,
         this.state.communityPalettesList,
         { communityCurrentPage: this.state.communityCurrentPage + 1 }
@@ -608,7 +608,7 @@ export default class Palettes extends React.Component<
             }
             border={['BOTTOM']}
           />
-          {controls}
+          {fragment}
         </div>
       </div>
     )
