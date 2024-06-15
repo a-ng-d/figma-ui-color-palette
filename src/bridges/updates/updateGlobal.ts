@@ -71,6 +71,10 @@ const updateGlobal = async (msg: any) => {
     palette.setPluginData('updatedAt', msg.data.dates.updatedAt)
     palette.setPluginData('publishedAt', msg.data.dates.publishedAt)
     palette.setPluginData(
+      'isPublished',
+      msg.data.publicationStatus.isPublished.toString()
+    )
+    palette.setPluginData(
       'isShared',
       msg.data.publicationStatus.isShared.toString()
     )

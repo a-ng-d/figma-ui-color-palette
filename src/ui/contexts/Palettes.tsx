@@ -390,10 +390,10 @@ export default class Palettes extends React.Component<
     palettesList: Array<ExternalPalettes>,
     currentPage: { [key: string]: number }
   ) => {
-    let controls
+    let fragment
 
-    if (status === 'LOADED')
-      controls = (
+    if (status === 'LOADED') {
+      fragment = (
         <Button
           type="secondary"
           label={locals[this.props.lang].palettes.lazyLoad.loadMore}
@@ -406,75 +406,103 @@ export default class Palettes extends React.Component<
           }
         />
       )
+    }
     else if (status === 'COMPLETE')
-      controls = (
+      fragment = (
         <Message
           icon="check"
           messages={[locals[this.props.lang].palettes.lazyLoad.completeList]}
         />
       )
-    else if (status === 'EMPTY')
-      controls = (
-        <Message
-          icon="info"
-          messages={[locals[this.props.lang].palettes.lazyLoad.emptyList]}
-        />
-      )
-
+      
     return (
-      <ul className="rich-list">
-        {palettesList.map((palette, index: number) => (
-          <PaletteItem
-            id={palette.palette_id}
-            key={`palette-${index}`}
-            src={palette.screenshot}
-            title={palette.name}
-            subtitle={palette.preset?.name}
-            info={this.getPaletteMeta(
-              palette.colors ?? [],
-              palette.themes ?? []
-            )}
-            user={{
-              avatar: palette.creator_avatar ?? '',
-              name: palette.creator_full_name ?? '',
-            }}
-            action={() => null}
-          >
-            <Button
-              type="secondary"
-              label={locals[this.props.lang].actions.addToFile}
-              isLoading={this.state.isAddToFileActionLoading[index]}
-              action={() => {
-                this.setState({
-                  isAddToFileActionLoading: this.state[
-                    'isAddToFileActionLoading'
-                  ].map((loading, i) => (i === index ? true : loading)),
-                })
-                this.onSelectPalette(palette.palette_id ?? '')
-                  .finally(() => {
-                    this.setState({
-                      isAddToFileActionLoading:
-                        this.state.isAddToFileActionLoading.map((loading, i) =>
-                          i === index ? false : loading
-                        ),
-                    })
-                  })
-                  .catch(() => {
-                    parent.postMessage(
-                      {
-                        pluginMessage: {
-                          type: 'SEND_MESSAGE',
-                          message: locals[this.props.lang].error.addToFile,
-                        },
-                      },
-                      '*'
-                    )
-                  })
-              }}
+      <ul
+      className={[
+        'rich-list',
+        status === 'LOADING' ? 'rich-list--loading' : null,
+        status === 'ERROR' || status === 'EMPTY' ? 'rich-list--message' : null
+        
+      ]
+        .filter((n) => n)
+        .join(' ')}
+      >
+        {status === 'LOADING' && (
+          <Icon
+            type="PICTO"
+            iconName="spinner"
+            customClassName="control__block__loader"
+          />
+        )}
+        {status === 'ERROR' && (
+          <div className="onboarding__callout--centered">
+            <Message
+              icon="warning"
+              messages={[locals[this.props.lang].error.fetchPalette]}
             />
-          </PaletteItem>
-        ))}
-        <div className="list-control">{controls}</div>
+          </div>
+        )}
+        {status === 'EMPTY' && (
+          <div className="onboarding__callout--centered">
+            <Message
+              icon="info"
+              messages={[locals[this.props.lang].warning.noPaletteOnRemote]}
+            />
+          </div>
+        )}
+        {(status === 'LOADED' || status === 'COMPLETE') && 
+          palettesList.map((palette, index: number) => (
+            <PaletteItem
+              id={palette.palette_id}
+              key={`palette-${index}`}
+              src={palette.screenshot}
+              title={palette.name}
+              subtitle={palette.preset?.name}
+              info={this.getPaletteMeta(
+                palette.colors ?? [],
+                palette.themes ?? []
+              )}
+              user={{
+                avatar: palette.creator_avatar ?? '',
+                name: palette.creator_full_name ?? '',
+              }}
+              action={() => null}
+            >
+              <Button
+                type="secondary"
+                label={locals[this.props.lang].actions.addToFile}
+                isLoading={this.state.isAddToFileActionLoading[index]}
+                action={() => {
+                  this.setState({
+                    isAddToFileActionLoading: this.state[
+                      'isAddToFileActionLoading'
+                    ].map((loading, i) => (i === index ? true : loading)),
+                  })
+                  this.onSelectPalette(palette.palette_id ?? '')
+                    .finally(() => {
+                      this.setState({
+                        isAddToFileActionLoading:
+                          this.state.isAddToFileActionLoading.map((loading, i) =>
+                            i === index ? false : loading
+                          ),
+                      })
+                    })
+                    .catch(() => {
+                      parent.postMessage(
+                        {
+                          pluginMessage: {
+                            type: 'SEND_MESSAGE',
+                            message: locals[this.props.lang].error.addToFile,
+                          },
+                        },
+                        '*'
+                      )
+                    })
+                }}
+              />
+            </PaletteItem>
+          )
+        )}
+        <div className="list-control">{fragment}</div>
       </ul>
     )
   }
@@ -484,26 +512,13 @@ export default class Palettes extends React.Component<
     let controls
 
     if (this.state.context === 'PALETTES_SELF') {
-      if (
-        this.state.selfPalettesListStatus === 'LOADED' ||
-        this.state.selfPalettesListStatus === 'COMPLETE' ||
-        this.state.selfPalettesListStatus === 'EMPTY'
-      ) {
+      if (this.state.selfPalettesListStatus !== 'SIGN_IN_FIRST') {
         controls = this.ExternalPalettesList(
           this.state.selfPalettesListStatus,
           this.state.selfPalettesList,
           { selfCurrentPage: this.state.selfCurrentPage + 1 }
         )
-      } else if (this.state.selfPalettesListStatus === 'ERROR') {
-        controls = (
-          <div className="onboarding__callout--centered">
-            <Message
-              icon="warning"
-              messages={[locals[this.props.lang].error.fetchPalette]}
-            />
-          </div>
-        )
-      } else if (this.state.selfPalettesListStatus === 'SIGN_IN_FIRST') {
+      } else {
         controls = (
           <div className="onboarding__callout--centered">
             <Message
@@ -540,42 +555,13 @@ export default class Palettes extends React.Component<
             </div>
           </div>
         )
-      } else
-        controls = (
-          <Icon
-            type="PICTO"
-            iconName="spinner"
-            customClassName="control__block__loader"
-          />
-        )
-    } else {
-      if (
-        this.state.communityPalettesListStatus !== 'ERROR' &&
-        this.state.communityPalettesListStatus !== 'LOADING'
-      ) {
-        controls = this.ExternalPalettesList(
-          this.state.communityPalettesListStatus,
-          this.state.communityPalettesList,
-          { communityCurrentPage: this.state.communityCurrentPage + 1 }
-        )
-      } else if (this.state.communityPalettesListStatus === 'ERROR') {
-        controls = (
-          <div className="onboarding__callout--centered">
-            <Message
-              icon="warning"
-              messages={[locals[this.props.lang].error.fetchPalette]}
-            />
-          </div>
-        )
-      } else
-        controls = (
-          <Icon
-            type="PICTO"
-            iconName="spinner"
-            customClassName="control__block__loader"
-          />
-        )
-    }
+      }
+    } else
+      controls = this.ExternalPalettesList(
+        this.state.communityPalettesListStatus,
+        this.state.communityPalettesList,
+        { communityCurrentPage: this.state.communityCurrentPage + 1 }
+      )
 
     return (
       <div className="controls__control">
@@ -587,45 +573,48 @@ export default class Palettes extends React.Component<
               action={this.navHandler}
             />
           }
-          rightPart={
-            <Feature
-              isActive={
-                features.find((feature) => feature.name === 'PALETTES_SEARCH')
-                  ?.isActive
-              }
-            >
-              <Input
-                type="TEXT"
-                icon={{
-                  type: 'PICTO',
-                  value: 'search',
-                }}
-                placeholder={locals[this.props.lang].palettes.lazyLoad.search}
-                value={
-                  this.state.context === 'PALETTES_SELF'
-                    ? this.state.seftPalettesSearchQuery
-                    : this.state.communityPalettesSearchQuery
-                }
-                onConfirm={(e) => {
-                  if (this.state.context === 'PALETTES_SELF')
-                    this.setState({
-                      seftPalettesSearchQuery: (e.target as HTMLInputElement)
-                        .value,
-                    })
-                  else
-                    this.setState({
-                      communityPalettesSearchQuery: (
-                        e.target as HTMLInputElement
-                      ).value,
-                    })
-                }}
-              />
-            </Feature>
-          }
           border={['BOTTOM']}
           isOnlyText={true}
         />
         <div className="control__block control__block--no-padding">
+          <Bar
+            leftPart={
+              <Feature
+                isActive={
+                  features.find((feature) => feature.name === 'PALETTES_SEARCH')
+                    ?.isActive
+                }
+              >
+                <Input
+                  type="TEXT"
+                  icon={{
+                    type: 'PICTO',
+                    value: 'search',
+                  }}
+                  placeholder={locals[this.props.lang].palettes.lazyLoad.search}
+                  value={
+                    this.state.context === 'PALETTES_SELF'
+                      ? this.state.seftPalettesSearchQuery
+                      : this.state.communityPalettesSearchQuery
+                  }
+                  onConfirm={(e) => {
+                    if (this.state.context === 'PALETTES_SELF')
+                      this.setState({
+                        seftPalettesSearchQuery: (e.target as HTMLInputElement)
+                          .value,
+                      })
+                    else
+                      this.setState({
+                        communityPalettesSearchQuery: (
+                          e.target as HTMLInputElement
+                        ).value,
+                      })
+                  }}
+                />
+              </Feature>
+            }
+            border={['BOTTOM']}
+          />
           {controls}
         </div>
       </div>

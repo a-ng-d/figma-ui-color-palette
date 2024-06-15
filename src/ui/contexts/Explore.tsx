@@ -268,10 +268,12 @@ export default class Explore extends React.Component<
     }
     else if (this.state.colourLoversPalettesListStatus === 'ERROR')
       fragment = (
-        <Message
-          icon="warning"
-          messages={[locals[this.props.lang].error.fetchPalette]}
-        />
+        <div className="onboarding__callout--centered">
+          <Message
+            icon="warning"
+            messages={[locals[this.props.lang].error.fetchPalette]}
+          />
+        </div>
       )
     else if (this.state.colourLoversPalettesListStatus === 'LOADING')
       fragment = (
