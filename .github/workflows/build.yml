@@ -2,10 +2,6 @@ name: Build and Download UI Color Palette
 
 on: workflow_dispatch
 
-env:
-  REACT_APP_SUPABASE_PUBLIC_ANON_KEY: ${{ secrets.SUPABASE_PUBLIC_ANON_KEY }}
-  
-
 jobs:
   build:
     name: Build with Node
