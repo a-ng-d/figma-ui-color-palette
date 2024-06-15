@@ -186,8 +186,8 @@ export default class CreatePalette extends React.Component<
       case 'SETTINGS': {
         fragment = (
           <Settings
-            context="CREATE"
             {...this.props}
+            context="CREATE"
             onCreatePalette={this.onCreatePalette}
           />
         )

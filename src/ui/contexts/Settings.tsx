@@ -1200,21 +1200,13 @@ export default class Settings extends React.Component<SettingsProps> {
         </div>
         {this.props.context === 'CREATE' ? (
           <Actions
+            {...this.props}
             context="CREATE"
-            sourceColors={this.props.sourceColors}
-            planStatus={this.props.planStatus}
-            lang={this.props.lang}
-            onCreatePalette={this.props.onCreatePalette}
           />
-        ) : this.props.editorType === 'figma' ? (
+        ) : this.props.editorType !== 'dev' ? (
           <Actions
+            {...this.props}
             context="DEPLOY"
-            identity={this.props.identity}
-            planStatus={this.props.planStatus}
-            lang={this.props.lang}
-            onSyncLocalStyles={this.props.onSyncLocalStyles}
-            onSyncLocalVariables={this.props.onSyncLocalVariables}
-            onPublishPalette={this.props.onPublishPalette}
           />
         ) : null}
       </div>

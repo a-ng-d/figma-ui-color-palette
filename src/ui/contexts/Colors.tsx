@@ -554,12 +554,10 @@ export default class Colors extends React.Component<ColorsProps, ColorsStates> {
             </ul>
           )}
         </div>
-        {this.props.editorType === 'figma' ? (
-          <Actions
-            context="DEPLOY"
-            {...this.props}
-          />
-        ) : null}
+        <Actions
+          {...this.props}
+          context="DEPLOY"
+        />
       </div>
     )
   }

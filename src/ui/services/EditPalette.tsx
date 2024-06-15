@@ -310,8 +310,8 @@ export default class EditPalette extends React.Component<
       case 'SCALE': {
         fragment = (
           <Scale
-            hasPreset={false}
             {...this.props}
+            hasPreset={false}
             onChangeScale={this.slideHandler}
             onChangeStop={this.customSlideHandler}
             onSyncLocalStyles={this.onSyncStyles}
@@ -333,8 +333,8 @@ export default class EditPalette extends React.Component<
       case 'THEMES': {
         fragment = (
           <Themes
-            ref={this.themesRef}
             {...this.props}
+            ref={this.themesRef}
             onSyncLocalStyles={this.onSyncStyles}
             onSyncLocalVariables={this.onSyncVariables}
           />

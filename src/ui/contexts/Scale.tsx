@@ -814,8 +814,8 @@ export default class Scale extends React.Component<ScaleProps, ScaleStates> {
           </Feature>
         </div>
         <Actions
-          context="CREATE"
           {...this.props}
+          context="CREATE"
         />
       </div>
     )
@@ -920,12 +920,12 @@ export default class Scale extends React.Component<ScaleProps, ScaleStates> {
             {this.state.isTipsOpen ? <this.KeyboardShortcuts /> : null}
           </Feature>
         </div>
-        {this.props.editorType === 'figma' ? (
+        {this.props.editorType !== 'dev' && (
           <Actions
             context="DEPLOY"
             {...this.props}
           />
-        ) : null}
+        )}
       </div>
     )
   }
