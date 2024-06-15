@@ -317,6 +317,7 @@ export default class Explore extends React.Component<
                     selected={this.state.activeFilters.includes('ANY') && this.state.activeFilters.length > 1
                       ? this.state.activeFilters.filter(((filter) => filter !== 'ANY')).join(', ')
                       : this.state.activeFilters.join(', ')}
+                    isDisabled={this.state.colourLoversPalettesListStatus === 'LOADING'}
                     parentClassName="ui"
                   />
                 </FormItem>
