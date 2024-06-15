@@ -920,12 +920,10 @@ export default class Scale extends React.Component<ScaleProps, ScaleStates> {
             {this.state.isTipsOpen ? <this.KeyboardShortcuts /> : null}
           </Feature>
         </div>
-        {this.props.editorType !== 'dev' && (
-          <Actions
-            context="DEPLOY"
-            {...this.props}
-          />
-        )}
+        <Actions
+          context="DEPLOY"
+          {...this.props}
+        />
       </div>
     )
   }

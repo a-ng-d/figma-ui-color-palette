@@ -1203,12 +1203,13 @@ export default class Settings extends React.Component<SettingsProps> {
             {...this.props}
             context="CREATE"
           />
-        ) : this.props.editorType !== 'dev' ? (
+        ) : (
           <Actions
             {...this.props}
             context="DEPLOY"
           />
-        ) : null}
+        )
+      }
       </div>
     )
   }

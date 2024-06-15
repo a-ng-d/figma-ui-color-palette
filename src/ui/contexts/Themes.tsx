@@ -510,12 +510,10 @@ export default class Themes extends React.Component<ThemesProps, ThemesStates> {
             </ul>
           )}
         </div>
-        {this.props.editorType !== 'dev' ? (
-          <Actions
-            context="DEPLOY"
-            {...this.props}
-          />
-        ) : null}
+        <Actions
+          context="DEPLOY"
+          {...this.props}
+        />
       </div>
     )
   }
