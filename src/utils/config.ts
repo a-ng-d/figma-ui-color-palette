@@ -1,7 +1,7 @@
 import { Feature } from '../types/app'
 
-export const trialTime = 48
-export const oldTrialTime = 168
+export const trialTime = 72
+export const oldTrialTime = 48
 
 export const pageSize = 20
 export const workerUrl = process.env.REACT_APP_WORKER_URL as string
