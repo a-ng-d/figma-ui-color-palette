@@ -27,8 +27,7 @@ export default class About extends React.Component<AboutProps> {
               </p>
               <div className="about__info">
                 <p className={`type ${texts.type}`}>{`Version ${
-                  package_json.version.slice(0, 1) +
-                  package_json.version.slice(2, 3)
+                  package_json.version
                 }`}</p>
                 <Feature
                   isActive={
