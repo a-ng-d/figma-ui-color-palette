@@ -395,7 +395,7 @@ export default class Shortcuts extends React.Component<
                           {
                             pluginMessage: {
                               type: 'OPEN_IN_BROWSER',
-                              url: 'https://uicp.link/feature-requests',
+                              url: 'https://uicp.link/request-feature',
                             },
                           },
                           '*'
@@ -442,7 +442,7 @@ export default class Shortcuts extends React.Component<
                           {
                             pluginMessage: {
                               type: 'OPEN_IN_BROWSER',
-                              url: 'https://uicp.link/send-message',
+                              url: 'https://uicp.link/contact-support',
                             },
                           },
                           '*'
