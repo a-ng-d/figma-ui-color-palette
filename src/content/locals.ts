@@ -45,7 +45,7 @@ export const locals: { [key: string]: any } = {
       titleSynchronize: 'Synchronize palette',
       titleSignIn: 'Publish or Synchronize palette',
       message:
-        'Publish your palette as a single source of truth and reuse it in other Figma documents. You can also distribute your palettes by sharing them with the community.',
+        'Publish your palette as a single source of truth and reuse it in other Figma documents (like a component instance). You can also distribute your palettes by sharing them with the community.',
       selectToShare: 'Share with the community',
       statusLocalChanges: 'Local changes',
       statusUptoDate: 'No change',
