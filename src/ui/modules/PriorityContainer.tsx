@@ -6,6 +6,7 @@ import { signIn } from '../../bridges/publication/authentication'
 import cp from '../../content/images/choose_plan.webp'
 import pp from '../../content/images/pro_plan.webp'
 import t from '../../content/images/trial.webp'
+import p from '../../content/images/publication.webp'
 import { locals } from '../../content/locals'
 import { Language, PlanStatus, TrialStatus } from '../../types/app'
 import { PriorityContext } from '../../types/management'
@@ -378,7 +379,7 @@ export default class PriorityContainer extends React.Component<
           >
             <div className="dialog__cover">
               <img
-                src={pp}
+                src={p}
                 style={{
                   width: '100%',
                 }}

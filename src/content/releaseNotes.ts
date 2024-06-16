@@ -21,11 +21,39 @@ import rnv313 from './images/release_note_v31_3.webp'
 import rnv321 from './images/release_note_v32_1.webp'
 import rnv322 from './images/release_note_v32_2.webp'
 import rnv323 from './images/release_note_v32_3.webp'
+import rnv331 from './images/release_note_v33_1.webp'
+import rnv332 from './images/release_note_v33_2.webp'
+import rnv333 from './images/release_note_v33_3.webp'
+import rnv334 from './images/release_note_v33_4.webp'
 
 const releaseNotes: Array<ReleaseNote> = [
   {
-    version: '3.2.0',
+    version: '4.0.0',
     isMostRecent: true,
+    title: [
+      'UI Color Palette at the Config!',
+      'Let’s Celebrate with a Special Offer',
+      'Publish and Share Palettes',
+      'Score Indicator Enhancement'
+    ],
+    image: [rnv331, rnv332, rnv333, rnv334],
+    content: [
+      'We are happy to share with you this new: UI Color Palette will be exhibited in the Figma Config community showcase! During the next weeks, we would like to celebrate our current users and welcome our new comers!',
+      'The celebration is followed with special offer! For a limited time, we are offering a discount on our service and a longer trial period to supercharge your palettes. Enjoy exploring and creating!',
+      'You have the ability to publish color palettes for your personal use or for the wider community. This allows for the reuse of synchronized palettes in other documents and provides a source of inspiration drawn from the collective offerings of the UI Color Palette community!',
+      'The score indicators offer precise and useful metrics (WCAG 2 and 3), enabling you to effectively assess the contrast ratio between text and background colors.'
+    ],
+    numberOfNotes: 4,
+    learnMore: [
+      'https://uicp.link/whats-new',
+      'https://uicp.link/whats-new',
+      'https://uicp.link/whats-new',
+      'https://uicp.link/whats-new',
+    ],
+  },
+  {
+    version: '3.2.0',
+    isMostRecent: false,
     title: [
       'Stops Distribution Easing',
       'Canny Forefront Integration',
