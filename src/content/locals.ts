@@ -55,7 +55,7 @@ export const locals: { [key: string]: any } = {
       statusNotFound: 'Not found',
       publish: 'Publish…',
       unpublish: 'Unpublish',
-      synchronize: 'Synchronize',
+      synchronize: 'Synchronize…',
       revert: 'Revert',
       detach: 'Detach',
       waiting: 'Waiting…',
@@ -468,6 +468,7 @@ export const locals: { [key: string]: any } = {
       variableMode: 'variable mode',
       variableModes: 'variable modes',
       signOut: '☻ See you later',
+      noResult: 'No palette match your search',
     },
     warning: {
       tooManyThemesToCreateModes:
@@ -481,7 +482,8 @@ export const locals: { [key: string]: any } = {
       paletteNameRecommendation: '64 characters max is recommended',
       noPaletteOnCurrrentPage:
         'There is no UI Color Palette on the current page. You can ask a member with editing permissions to create.',
-      noPaletteOnRemote: 'No palette has been found',
+      noSelfPaletteOnRemote: 'This is quite empty around here. Publish your palette to reuse it across multiple document.',
+      noCommunityPaletteOnRemote: 'This is quite empty around here. Be the first to share your palette!',
     },
     error: {
       corruption:

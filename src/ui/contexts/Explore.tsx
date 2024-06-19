@@ -33,7 +33,7 @@ interface ExploreProps {
     source: ThirdParty
   ) => void
   onChangeContexts: () => void
-  onLoadColourLoversPaletteList: (palettes: Array<ColourLovers>, shouldBeEmpty: boolean) => void
+  onLoadColourLoversPalettesList: (palettes: Array<ColourLovers>, shouldBeEmpty: boolean) => void
 }
 
 type FilterOptions = 'ANY' | 'YELLOW' | 'ORANGE' | 'RED' | 'GREEN' | 'VIOLET' | 'BLUE'
@@ -91,7 +91,7 @@ export default class Explore extends React.Component<
         currentPage: 1,
         colourLoversPalettesListStatus: 'LOADING',
       })
-      this.props.onLoadColourLoversPaletteList([], true)
+      this.props.onLoadColourLoversPalettesList([], true)
       this.callUICPAgent()
     }
       
@@ -125,7 +125,7 @@ export default class Explore extends React.Component<
           colourLoversPalettesListStatus:
             data.length === pageSize ? 'LOADED' : 'COMPLETE',
         })
-        this.props.onLoadColourLoversPaletteList(data, false)
+        this.props.onLoadColourLoversPalettesList(data, false)
       })
       .finally(() =>
         this.setState({

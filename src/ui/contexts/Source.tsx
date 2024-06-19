@@ -71,7 +71,7 @@ export default class Source extends React.Component<SourceProps, SourceStates> {
             onChangeContexts={() =>
               this.setState({ context: 'SOURCE_OVERVIEW' })
             }
-            onLoadColourLoversPaletteList={(e, shouldBeEmpty) =>
+            onLoadColourLoversPalettesList={(e, shouldBeEmpty) =>
               this.setState({
                 colourLoversPaletteList:
                   !shouldBeEmpty
