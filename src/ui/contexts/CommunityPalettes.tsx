@@ -80,6 +80,18 @@ export default class CommunityPalettes extends React.Component<
    return actions[this.props.status]?.()
   }
 
+  // Lifecycle
+  componentDidUpdate = (
+    prevProps: Readonly<CommunityPalettesProps>
+  ): void => {
+    if (
+      prevProps.palettesList.length !== this.props.palettesList.length
+    ) 
+      this.setState({
+        isAddToFileActionLoading: Array(this.props.palettesList.length).fill(false),
+      })
+  }
+
   // Direct actions
   updateStatus = (
     batch: Array<ExternalPalettes>,
@@ -142,7 +154,6 @@ export default class CommunityPalettes extends React.Component<
     )
     this.setState({
       isLoadMoreActionLoading: false,
-      isAddToFileActionLoading: Array(batch.length).fill(false),
     })
   } else
     this.props.onChangeStatus('ERROR')

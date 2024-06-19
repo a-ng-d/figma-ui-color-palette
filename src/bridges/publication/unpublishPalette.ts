@@ -3,12 +3,13 @@ import { palettesDbTableName, palettesStorageName } from '../../utils/config'
 import { supabase } from './authentication'
 
 const unpublishPalette = async (
-  rawData: AppStates
+  rawData: Partial<AppStates>,
+  isRemote = false
 ): Promise<Partial<AppStates>> => {
-  if (rawData.screenshot !== null) {
+  if (rawData.screenshot !== null && !isRemote) {
     const { error } = await supabase.storage
       .from(palettesStorageName)
-      .remove([`${rawData.userSession.userId}/${rawData.id}.png`])
+      .remove([`${rawData.userSession?.userId}/${rawData.id}.png`])
 
     if (error) throw error
   }
@@ -23,8 +24,8 @@ const unpublishPalette = async (
       id: '',
       dates: {
         publishedAt: '',
-        createdAt: rawData.dates.createdAt,
-        updatedAt: rawData.dates.updatedAt,
+        createdAt: rawData.dates?.createdAt ?? '',
+        updatedAt: rawData.dates?.updatedAt ?? '',
       },
       publicationStatus: {
         isPublished: false,
@@ -37,32 +38,35 @@ const unpublishPalette = async (
       },
     }
 
-    parent.postMessage(
-      {
-        pluginMessage: {
-          type: 'SET_DATA',
-          items: [
-            {
-              key: 'id',
-              value: palettePublicationDetails.id,
-            },
-          ],
-        },
-      },
-      '*'
-    )
-    parent.postMessage(
-      {
-        pluginMessage: {
-          type: 'UPDATE_GLOBAL',
-          data: {
-            ...rawData,
-            ...palettePublicationDetails,
+    if (!isRemote) {
+      parent.postMessage(
+        {
+          pluginMessage: {
+            type: 'SET_DATA',
+            items: [
+              {
+                key: 'id',
+                value: palettePublicationDetails.id,
+              },
+            ],
           },
         },
-      },
-      '*'
-    )
+        '*'
+      )
+      parent.postMessage(
+        {
+          pluginMessage: {
+            type: 'UPDATE_GLOBAL',
+            data: {
+              ...rawData,
+              ...palettePublicationDetails,
+            },
+          },
+        },
+        '*'
+      )
+    }
+    
 
     return palettePublicationDetails
   } else throw error

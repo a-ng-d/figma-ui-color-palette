@@ -4,6 +4,7 @@ import {
   ConsentConfiguration,
   Icon,
   Input,
+  Menu,
   Message,
 } from '@a_ng_d/figmug-ui'
 import React from 'react'
@@ -25,6 +26,7 @@ import { pageSize, palettesDbTableName } from '../../utils/config'
 import { trackPublicationEvent } from '../../utils/eventsTracker'
 import PaletteItem from '../components/PaletteItem'
 import { ActionsList } from '../../types/models'
+import unpublishPalette from '../../bridges/publication/unpublishPalette'
 
 interface MyPalettesProps {
   context: Context
@@ -45,8 +47,9 @@ interface MyPalettesProps {
 
 interface MyPalettesStates {
   isLoadMoreActionLoading: boolean
-  isSignInLoading: boolean
+  isSignInActionLoading: boolean
   isAddToFileActionLoading: Array<boolean>
+  isContextActionLoading: Array<boolean>
 }
 
 export default class MyPalettes extends React.Component<
@@ -57,8 +60,9 @@ export default class MyPalettes extends React.Component<
     super(props)
     this.state = {
       isLoadMoreActionLoading: false,
-      isSignInLoading: false,
+      isSignInActionLoading: false,
       isAddToFileActionLoading: [],
+      isContextActionLoading: []
     }
   }
 
@@ -94,6 +98,13 @@ export default class MyPalettes extends React.Component<
         ''
       )
     }
+    if (
+      prevProps.palettesList.length !== this.props.palettesList.length
+    ) 
+      this.setState({
+        isAddToFileActionLoading: Array(this.props.palettesList.length).fill(false),
+        isContextActionLoading: Array(this.props.palettesList.length).fill(false),
+      })
   }
 
   // Direct actions
@@ -157,8 +168,7 @@ export default class MyPalettes extends React.Component<
         )
       )
       this.setState({
-        isLoadMoreActionLoading: false,
-        isAddToFileActionLoading: Array(batch.length).fill(false),
+        isLoadMoreActionLoading: false
       })
     } else
       this.props.onChangeStatus('ERROR')
@@ -294,7 +304,7 @@ export default class MyPalettes extends React.Component<
           messages={[locals[this.props.lang].palettes.lazyLoad.completeList]}
         />
       )
-      
+
     return (
       <ul
         className={[
@@ -353,6 +363,89 @@ export default class MyPalettes extends React.Component<
               )}
               action={() => null}
             >
+              <Menu
+                id="publication-options"
+                icon="ellipsis"
+                options={[
+                  {
+                    label: locals[this.props.lang].publication.unpublish,
+                    value: null,
+                    feature: null,
+                    position: 0,
+                    type: 'OPTION',
+                    isActive: true,
+                    isBlocked: false,
+                    isNew: false,
+                    children: [],
+                    action: async () => {
+                      this.setState({
+                        isContextActionLoading:
+                          this.state.isContextActionLoading
+                            .map((loading, i) => (i === index ? true : loading))
+                      })
+                      unpublishPalette({
+                        id: palette.palette_id,
+                        userSession: this.props.userSession,
+
+                      }, true)
+                        .then(() => {
+                          const currentPalettesList = this.props.palettesList
+                            .filter(pal => pal.palette_id !== palette.palette_id)
+
+                          parent.postMessage(
+                            {
+                              pluginMessage: {
+                                type: 'SEND_MESSAGE',
+                                message: locals[this.props.lang].success.nonPublication,
+                              },
+                            },
+                            '*'
+                          )
+                          this.props.onLoadPalettesList(currentPalettesList)
+
+                          if (currentPalettesList.length === 0)
+                            this.props.onChangeStatus('EMPTY')
+                          if (currentPalettesList.length < pageSize)
+                            this.props.onChangeCurrentPage(1)
+                          
+                          trackPublicationEvent(
+                            this.props.figmaUserId,
+                            this.props.userConsent.find(
+                              (consent) => consent.id === 'mixpanel'
+                            )?.isConsented ?? false,
+                            {
+                              feature: 'UNPUBLISH_PALETTE'
+                            }
+                          )
+                        })
+                        .finally(() => {
+                          this.setState({
+                            isContextActionLoading:
+                              this.state.isContextActionLoading
+                                .map((loading, i) =>
+                                  i === index ? false : loading
+                                ),
+                          })
+                        })
+                        .catch(() => {
+                          parent.postMessage(
+                            {
+                              pluginMessage: {
+                                type: 'SEND_MESSAGE',
+                                message: locals[this.props.lang].warning.nonPublication,
+                              },
+                            },
+                            '*'
+                          )
+                        })
+                    },
+                  },
+                ]}
+                state={
+                  this.state.isContextActionLoading[index] ? 'LOADING' : 'DEFAULT'
+                }
+                alignment="BOTTOM_RIGHT"
+              />
               <Button
                 type="secondary"
                 label={locals[this.props.lang].actions.addToFile}
@@ -410,12 +503,12 @@ export default class MyPalettes extends React.Component<
             <Button
               type="primary"
               label={locals[this.props.lang].palettes.signInFirst.signIn}
-              isLoading={this.state.isSignInLoading}
+              isLoading={this.state.isSignInActionLoading}
               action={async () => {
-                this.setState({ isSignInLoading: true })
+                this.setState({ isSignInActionLoading: true })
                 signIn()
                   .finally(() => {
-                    this.setState({ isSignInLoading: false })
+                    this.setState({ isSignInActionLoading: false })
                   })
                   .catch((error) => {
                     parent.postMessage(
