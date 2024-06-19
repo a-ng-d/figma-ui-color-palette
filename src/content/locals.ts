@@ -482,8 +482,8 @@ export const locals: { [key: string]: any } = {
       paletteNameRecommendation: '64 characters max is recommended',
       noPaletteOnCurrrentPage:
         'There is no UI Color Palette on the current page. You can ask a member with editing permissions to create.',
-      noSelfPaletteOnRemote: 'This is quite empty around here. Publish your palette to reuse it across multiple document.',
-      noCommunityPaletteOnRemote: 'This is quite empty around here. Be the first to share your palette!',
+      noSelfPaletteOnRemote: 'This is quite empty around here! Publish your palette to reuse it across multiple documents.',
+      noCommunityPaletteOnRemote: 'This is quite empty around here! Be the first to share your palette with other users!',
     },
     error: {
       corruption:
