@@ -45,4 +45,12 @@ export interface ContextItem {
   isActive: boolean
 }
 
-export type FetchStatus = 'UNLOADED' | 'LOADING' | 'LOADED' | 'ERROR' | 'EMPTY' | 'COMPLETE' | 'SIGN_IN_FIRST' | 'NO_RESULT'
+export type FetchStatus =
+  | 'UNLOADED'
+  | 'LOADING'
+  | 'LOADED'
+  | 'ERROR'
+  | 'EMPTY'
+  | 'COMPLETE'
+  | 'SIGN_IN_FIRST'
+  | 'NO_RESULT'

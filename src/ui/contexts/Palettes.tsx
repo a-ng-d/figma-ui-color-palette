@@ -1,9 +1,4 @@
-import {
-  Bar,
-  ConsentConfiguration,
-  HexModel,
-  Tabs,
-} from '@a_ng_d/figmug-ui'
+import { Bar, ConsentConfiguration, HexModel, Tabs } from '@a_ng_d/figmug-ui'
 import React from 'react'
 
 import { Language, PlanStatus } from '../../types/app'
@@ -11,8 +6,8 @@ import { ExternalPalettes } from '../../types/data'
 import { ContextItem, FetchStatus } from '../../types/management'
 import { UserSession } from '../../types/user'
 import { setContexts } from '../../utils/setContexts'
-import MyPalettes from './MyPalettes'
 import CommunityPalettes from './CommunityPalettes'
+import MyPalettes from './MyPalettes'
 
 interface PalettesProps {
   userSession: UserSession
@@ -61,13 +56,11 @@ export default class Palettes extends React.Component<
   }
 
   // Lifecycle
-  componentDidUpdate = (
-    prevProps: Readonly<PalettesProps>
-  ): void => {
+  componentDidUpdate = (prevProps: Readonly<PalettesProps>): void => {
     if (
       prevProps.userSession.connectionStatus !==
-      this.props.userSession.connectionStatus
-      && this.state.selfPalettesList.length === 0
+        this.props.userSession.connectionStatus &&
+      this.state.selfPalettesList.length === 0
     ) {
       this.setState({
         selfPalettesListStatus: 'LOADING',
@@ -103,15 +96,24 @@ export default class Palettes extends React.Component<
               context={this.state.context}
               currentPage={this.state.selfCurrentPage}
               searchQuery={this.state.seftPalettesSearchQuery}
-              status={this.props.userSession.connectionStatus === 'CONNECTED'
-                ? this.state.selfPalettesListStatus
-                : 'SIGN_IN_FIRST'
+              status={
+                this.props.userSession.connectionStatus === 'CONNECTED'
+                  ? this.state.selfPalettesListStatus
+                  : 'SIGN_IN_FIRST'
               }
               palettesList={this.state.selfPalettesList}
-              onChangeStatus={(status) => this.setState({ selfPalettesListStatus: status })}
-              onChangeCurrentPage={(page) => this.setState({ selfCurrentPage: page })}
-              onChangeSearchQuery={(query) => this.setState({ seftPalettesSearchQuery: query })}
-              onLoadPalettesList={(palettesList) => this.setState({ selfPalettesList: palettesList })}
+              onChangeStatus={(status) =>
+                this.setState({ selfPalettesListStatus: status })
+              }
+              onChangeCurrentPage={(page) =>
+                this.setState({ selfCurrentPage: page })
+              }
+              onChangeSearchQuery={(query) =>
+                this.setState({ seftPalettesSearchQuery: query })
+              }
+              onLoadPalettesList={(palettesList) =>
+                this.setState({ selfPalettesList: palettesList })
+              }
             />
           )}
           {this.state.context === 'PALETTES_COMMUNITY' && (
@@ -122,10 +124,18 @@ export default class Palettes extends React.Component<
               searchQuery={this.state.communityPalettesSearchQuery}
               status={this.state.communityPalettesListStatus}
               palettesList={this.state.communityPalettesList}
-              onChangeStatus={(status) => this.setState({ communityPalettesListStatus: status })}
-              onChangeCurrentPage={(page) => this.setState({ communityCurrentPage: page })}
-              onChangeSearchQuery={(query) => this.setState({ communityPalettesSearchQuery: query })}
-              onLoadPalettesList={(palettesList) => this.setState({ communityPalettesList: palettesList })}
+              onChangeStatus={(status) =>
+                this.setState({ communityPalettesListStatus: status })
+              }
+              onChangeCurrentPage={(page) =>
+                this.setState({ communityCurrentPage: page })
+              }
+              onChangeSearchQuery={(query) =>
+                this.setState({ communityPalettesSearchQuery: query })
+              }
+              onLoadPalettesList={(palettesList) =>
+                this.setState({ communityPalettesList: palettesList })
+              }
             />
           )}
         </div>

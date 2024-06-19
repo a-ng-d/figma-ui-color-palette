@@ -66,7 +66,6 @@ const unpublishPalette = async (
         '*'
       )
     }
-    
 
     return palettePublicationDetails
   } else throw error

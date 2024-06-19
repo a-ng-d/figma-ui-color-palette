@@ -20,11 +20,11 @@ import {
 } from '../../types/configurations'
 import { ExternalPalettes } from '../../types/data'
 import { FetchStatus } from '../../types/management'
+import { ActionsList } from '../../types/models'
 import { UserSession } from '../../types/user'
 import { pageSize, palettesDbTableName } from '../../utils/config'
 import { trackPublicationEvent } from '../../utils/eventsTracker'
 import PaletteItem from '../components/PaletteItem'
-import { ActionsList } from '../../types/models'
 
 interface CommunityPalettesProps {
   context: Context
@@ -66,29 +66,24 @@ export default class CommunityPalettes extends React.Component<
   componentDidMount = async () => {
     const actions: ActionsList = {
       UNLOADED: () => {
-        this.callUICPAgent(
-          1,
-          ''
-        )
+        this.callUICPAgent(1, '')
         this.props.onChangeStatus('LOADING')
       },
       LOADING: () => null,
       COMPLETE: () => null,
-      LOADED: () => null
+      LOADED: () => null,
     }
 
-   return actions[this.props.status]?.()
+    return actions[this.props.status]?.()
   }
 
   // Lifecycle
-  componentDidUpdate = (
-    prevProps: Readonly<CommunityPalettesProps>
-  ): void => {
-    if (
-      prevProps.palettesList.length !== this.props.palettesList.length
-    ) 
+  componentDidUpdate = (prevProps: Readonly<CommunityPalettesProps>): void => {
+    if (prevProps.palettesList.length !== this.props.palettesList.length)
       this.setState({
-        isAddToFileActionLoading: Array(this.props.palettesList.length).fill(false),
+        isAddToFileActionLoading: Array(this.props.palettesList.length).fill(
+          false
+        ),
       })
   }
 
@@ -98,65 +93,53 @@ export default class CommunityPalettes extends React.Component<
     currentPage: number,
     searchQuery: string
   ) => {
-    if (batch.length === 0 && currentPage === 1)
-      return 'EMPTY'
+    if (batch.length === 0 && currentPage === 1) return 'EMPTY'
     if (batch.length === 0 && currentPage === 1 && searchQuery !== '')
       return 'NO_RESULT'
-    else if (batch.length < pageSize)
-      return 'COMPLETE'
+    else if (batch.length < pageSize) return 'COMPLETE'
     return 'LOADED'
   }
 
-  callUICPAgent = async (
-    currentPage: number,
-    searchQuery: string
-  ) => {
+  callUICPAgent = async (currentPage: number, searchQuery: string) => {
     let data, error
 
-  if (searchQuery === '') {
-    // eslint-disable-next-line @typescript-eslint/no-extra-semi
-    ;({ data, error } = await supabase
-      .from(palettesDbTableName)
-      .select(
-        'palette_id, screenshot, name, preset, colors, themes, creator_avatar, creator_full_name, is_shared'
-      )
-      .eq('is_shared', true)
-      .range(
-        pageSize * (currentPage - 1),
-        pageSize * currentPage - 1
-      ))
-  } else {
-    // eslint-disable-next-line @typescript-eslint/no-extra-semi
-    ;({ data, error } = await supabase
-      .from(palettesDbTableName)
-      .select(
-        'palette_id, screenshot, name, preset, colors, themes, creator_avatar, creator_full_name, is_shared'
-      )
-      .eq('is_shared', true)
-      .range(
-        pageSize * (currentPage - 1),
-        pageSize * currentPage - 1
-      )
-      .ilike('name', `%${searchQuery}%`))
-  }
+    if (searchQuery === '') {
+      // eslint-disable-next-line @typescript-eslint/no-extra-semi
+      ;({ data, error } = await supabase
+        .from(palettesDbTableName)
+        .select(
+          'palette_id, screenshot, name, preset, colors, themes, creator_avatar, creator_full_name, is_shared'
+        )
+        .eq('is_shared', true)
+        .range(pageSize * (currentPage - 1), pageSize * currentPage - 1))
+    } else {
+      // eslint-disable-next-line @typescript-eslint/no-extra-semi
+      ;({ data, error } = await supabase
+        .from(palettesDbTableName)
+        .select(
+          'palette_id, screenshot, name, preset, colors, themes, creator_avatar, creator_full_name, is_shared'
+        )
+        .eq('is_shared', true)
+        .range(pageSize * (currentPage - 1), pageSize * currentPage - 1)
+        .ilike('name', `%${searchQuery}%`))
+    }
 
-  if (!error) {
-    const batch = this.props.palettesList.concat(
-      data as Array<ExternalPalettes>
-    )
-    this.props.onLoadPalettesList(batch)
-    this.props.onChangeStatus(
-      this.updateStatus(
-        data as Array<ExternalPalettes>,
-        currentPage,
-        searchQuery
+    if (!error) {
+      const batch = this.props.palettesList.concat(
+        data as Array<ExternalPalettes>
       )
-    )
-    this.setState({
-      isLoadMoreActionLoading: false,
-    })
-  } else
-    this.props.onChangeStatus('ERROR')
+      this.props.onLoadPalettesList(batch)
+      this.props.onChangeStatus(
+        this.updateStatus(
+          data as Array<ExternalPalettes>,
+          currentPage,
+          searchQuery
+        )
+      )
+      this.setState({
+        isLoadMoreActionLoading: false,
+      })
+    } else this.props.onChangeStatus('ERROR')
   }
 
   getPaletteMeta = (
@@ -280,24 +263,24 @@ export default class CommunityPalettes extends React.Component<
           }}
         />
       )
-    }
-    else if (this.props.status === 'COMPLETE')
+    } else if (this.props.status === 'COMPLETE')
       fragment = (
         <Message
           icon="check"
           messages={[locals[this.props.lang].palettes.lazyLoad.completeList]}
         />
       )
-      
+
     return (
       <ul
         className={[
           'rich-list',
           this.props.status === 'LOADING' ? 'rich-list--loading' : null,
-          this.props.status === 'ERROR'
-            || this.props.status === 'EMPTY'
-            || this.props.status === 'NO_RESULT' ? 'rich-list--message' : null
-          
+          this.props.status === 'ERROR' ||
+          this.props.status === 'EMPTY' ||
+          this.props.status === 'NO_RESULT'
+            ? 'rich-list--message'
+            : null,
         ]
           .filter((n) => n)
           .join(' ')}
@@ -321,7 +304,9 @@ export default class CommunityPalettes extends React.Component<
           <div className="onboarding__callout--centered">
             <Message
               icon="info"
-              messages={[locals[this.props.lang].warning.noCommunityPaletteOnRemote]}
+              messages={[
+                locals[this.props.lang].warning.noCommunityPaletteOnRemote,
+              ]}
             />
           </div>
         )}
@@ -333,7 +318,7 @@ export default class CommunityPalettes extends React.Component<
             />
           </div>
         )}
-        {(this.props.status === 'LOADED' || this.props.status === 'COMPLETE') && 
+        {(this.props.status === 'LOADED' || this.props.status === 'COMPLETE') &&
           this.props.palettesList.map((palette, index: number) => (
             <PaletteItem
               id={palette.palette_id}
@@ -365,8 +350,8 @@ export default class CommunityPalettes extends React.Component<
                     .finally(() => {
                       this.setState({
                         isAddToFileActionLoading:
-                          this.state.isAddToFileActionLoading.map((loading, i) =>
-                            i === index ? false : loading
+                          this.state.isAddToFileActionLoading.map(
+                            (loading, i) => (i === index ? false : loading)
                           ),
                       })
                     })
@@ -384,8 +369,7 @@ export default class CommunityPalettes extends React.Component<
                 }}
               />
             </PaletteItem>
-          )
-        )}
+          ))}
         <div className="list-control">{fragment}</div>
       </ul>
     )
@@ -395,7 +379,6 @@ export default class CommunityPalettes extends React.Component<
   render() {
     return (
       <div className="controls__control">
-        
         <div className="control__block control__block--no-padding">
           <Bar
             soloPart={
@@ -414,10 +397,7 @@ export default class CommunityPalettes extends React.Component<
                   this.props.onChangeStatus('LOADING')
                   this.props.onChangeCurrentPage(1)
                   this.props.onLoadPalettesList([])
-                  this.callUICPAgent(
-                    1,
-                    (e.target as HTMLInputElement).value
-                  )
+                  this.callUICPAgent(1, (e.target as HTMLInputElement).value)
                 }}
               />
             }

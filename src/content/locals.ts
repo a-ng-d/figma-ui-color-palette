@@ -150,7 +150,7 @@ export const locals: { [key: string]: any } = {
           green: 'Green',
           violet: 'Violet',
           blue: 'Blue',
-        }
+        },
       },
     },
     scale: {
@@ -323,7 +323,8 @@ export const locals: { [key: string]: any } = {
       },
       message: {
         label: 'Message (required)',
-        placeholder: 'Describe the issue you encountered by trying to describe the steps to reproduce it.',
+        placeholder:
+          'Describe the issue you encountered by trying to describe the steps to reproduce it.',
       },
       cta: 'Submit your issue',
     },
@@ -482,8 +483,10 @@ export const locals: { [key: string]: any } = {
       paletteNameRecommendation: '64 characters max is recommended',
       noPaletteOnCurrrentPage:
         'There is no UI Color Palette on the current page. You can ask a member with editing permissions to create.',
-      noSelfPaletteOnRemote: 'This is quite empty around here! Publish your palette to reuse it across multiple documents.',
-      noCommunityPaletteOnRemote: 'This is quite empty around here! Be the first to share your palette with other users!',
+      noSelfPaletteOnRemote:
+        'This is quite empty around here! Publish your palette to reuse it across multiple documents.',
+      noCommunityPaletteOnRemote:
+        'This is quite empty around here! Be the first to share your palette with other users!',
     },
     error: {
       corruption:

@@ -26,9 +26,9 @@ export default class About extends React.Component<AboutProps> {
                 {locals[this.props.lang].name}
               </p>
               <div className="about__info">
-                <p className={`type ${texts.type}`}>{`Version ${
-                  package_json.version
-                }`}</p>
+                <p
+                  className={`type ${texts.type}`}
+                >{`Version ${package_json.version}`}</p>
                 <Feature
                   isActive={
                     features.find((feature) => feature.name === 'GET_PRO_PLAN')

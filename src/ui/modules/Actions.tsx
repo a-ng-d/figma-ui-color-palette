@@ -29,9 +29,7 @@ interface ActionsProps {
       | React.KeyboardEvent<HTMLLIElement>
   ) => void
   onPublishPalette?: (
-    e:
-      | React.MouseEvent<Element>
-      | React.KeyboardEvent<Element>
+    e: React.MouseEvent<Element> | React.KeyboardEvent<Element>
   ) => void
   onExportPalette?: React.MouseEventHandler & React.KeyboardEventHandler
 }
@@ -82,8 +80,7 @@ export default class Actions extends React.Component<ActionsProps> {
       this.props.identity?.creatorId !== ''
     )
       return locals[this.props.lang].actions.syncPalette
-    else
-      return locals[this.props.lang].actions.publishPalette
+    else return locals[this.props.lang].actions.publishPalette
   }
 
   // Templates

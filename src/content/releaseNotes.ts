@@ -34,14 +34,14 @@ const releaseNotes: Array<ReleaseNote> = [
       'UI Color Palette at the Config!',
       'Let’s Celebrate with a Special Offer',
       'Publish and Share Palettes',
-      'Score Indicator Enhancement'
+      'Score Indicator Enhancement',
     ],
     image: [rnv331, rnv332, rnv333, rnv334],
     content: [
       'We are happy to share with you this new: UI Color Palette will be exhibited in the Figma Config community showcase! During the next weeks, we would like to celebrate our current users and welcome our new comers!',
       'The celebration is followed with special offer! For a limited time, we are offering a discount on our service and a longer trial period to supercharge your palettes. Enjoy exploring and creating!',
       'You have the ability to publish color palettes for your personal use or for the wider community. This allows for the reuse of synchronized palettes in other documents and provides a source of inspiration drawn from the collective offerings of the UI Color Palette community!',
-      'The score indicators offer precise and useful metrics (WCAG 2 and 3), enabling you to effectively assess the contrast ratio between text and background colors.'
+      'The score indicators offer precise and useful metrics (WCAG 2 and 3), enabling you to effectively assess the contrast ratio between text and background colors.',
     ],
     numberOfNotes: 4,
     learnMore: [

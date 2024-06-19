@@ -104,28 +104,28 @@ export default class Shortcuts extends React.Component<
                   }
                 >
                   <Feature
-                  isActive={
-                    features.find(
-                      (feature) => feature.name === 'SHORTCUTS_DOCUMENTATION'
-                    )?.isActive
-                  }
-                >
-                  <Button
-                    type="icon"
-                    icon="library"
-                    action={() =>
-                      parent.postMessage(
-                        {
-                          pluginMessage: {
-                            type: 'OPEN_IN_BROWSER',
-                            url: 'https://uicp.link/docs',
-                          },
-                        },
-                        '*'
-                      )
+                    isActive={
+                      features.find(
+                        (feature) => feature.name === 'SHORTCUTS_DOCUMENTATION'
+                      )?.isActive
                     }
-                  />
-                </Feature>
+                  >
+                    <Button
+                      type="icon"
+                      icon="library"
+                      action={() =>
+                        parent.postMessage(
+                          {
+                            pluginMessage: {
+                              type: 'OPEN_IN_BROWSER',
+                              url: 'https://uicp.link/docs',
+                            },
+                          },
+                          '*'
+                        )
+                      }
+                    />
+                  </Feature>
                   {this.props.userSession.connectionStatus === 'CONNECTED' ? (
                     <Menu
                       id="user-menu"
@@ -418,7 +418,7 @@ export default class Shortcuts extends React.Component<
                         (feature) => feature.name === 'SHORTCUTS_REPORTING'
                       )?.isNew,
                       children: [],
-                      action: this.props.onReOpenReport
+                      action: this.props.onReOpenReport,
                     },
                     {
                       label: locals[this.props.lang].about.getHelp.email,

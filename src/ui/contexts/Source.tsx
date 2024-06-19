@@ -73,10 +73,9 @@ export default class Source extends React.Component<SourceProps, SourceStates> {
             }
             onLoadColourLoversPalettesList={(e, shouldBeEmpty) =>
               this.setState({
-                colourLoversPaletteList:
-                  !shouldBeEmpty
-                    ? this.state.colourLoversPaletteList.concat(e)
-                    : [],
+                colourLoversPaletteList: !shouldBeEmpty
+                  ? this.state.colourLoversPaletteList.concat(e)
+                  : [],
               })
             }
           />

@@ -10,6 +10,7 @@ import {
 import React from 'react'
 
 import { signIn, supabase } from '../../bridges/publication/authentication'
+import unpublishPalette from '../../bridges/publication/unpublishPalette'
 import { locals } from '../../content/locals'
 import { Context, Language, PlanStatus } from '../../types/app'
 import {
@@ -21,12 +22,11 @@ import {
 } from '../../types/configurations'
 import { ExternalPalettes } from '../../types/data'
 import { FetchStatus } from '../../types/management'
+import { ActionsList } from '../../types/models'
 import { UserSession } from '../../types/user'
 import { pageSize, palettesDbTableName } from '../../utils/config'
 import { trackPublicationEvent } from '../../utils/eventsTracker'
 import PaletteItem from '../components/PaletteItem'
-import { ActionsList } from '../../types/models'
-import unpublishPalette from '../../bridges/publication/unpublishPalette'
 
 interface MyPalettesProps {
   context: Context
@@ -62,7 +62,7 @@ export default class MyPalettes extends React.Component<
       isLoadMoreActionLoading: false,
       isSignInActionLoading: false,
       isAddToFileActionLoading: [],
-      isContextActionLoading: []
+      isContextActionLoading: [],
     }
   }
 
@@ -70,40 +70,34 @@ export default class MyPalettes extends React.Component<
   componentDidMount = async () => {
     const actions: ActionsList = {
       UNLOADED: () => {
-        this.callUICPAgent(
-          1,
-          ''
-        )
+        this.callUICPAgent(1, '')
         this.props.onChangeStatus('LOADING')
       },
       LOADING: () => null,
       COMPLETE: () => null,
-      LOADED: () => null
+      LOADED: () => null,
     }
 
-   return actions[this.props.status]?.()
+    return actions[this.props.status]?.()
   }
 
   // Lifecycle
-  componentDidUpdate = (
-    prevProps: Readonly<MyPalettesProps>
-  ): void => {
+  componentDidUpdate = (prevProps: Readonly<MyPalettesProps>): void => {
     if (
       prevProps.userSession.connectionStatus !==
-      this.props.userSession.connectionStatus
-      && this.props.palettesList.length === 0
+        this.props.userSession.connectionStatus &&
+      this.props.palettesList.length === 0
     ) {
-      this.callUICPAgent(
-        1,
-        ''
-      )
+      this.callUICPAgent(1, '')
     }
-    if (
-      prevProps.palettesList.length !== this.props.palettesList.length
-    ) 
+    if (prevProps.palettesList.length !== this.props.palettesList.length)
       this.setState({
-        isAddToFileActionLoading: Array(this.props.palettesList.length).fill(false),
-        isContextActionLoading: Array(this.props.palettesList.length).fill(false),
+        isAddToFileActionLoading: Array(this.props.palettesList.length).fill(
+          false
+        ),
+        isContextActionLoading: Array(this.props.palettesList.length).fill(
+          false
+        ),
       })
   }
 
@@ -113,19 +107,14 @@ export default class MyPalettes extends React.Component<
     currentPage: number,
     searchQuery: string
   ) => {
-    if (batch.length === 0 && currentPage === 1)
-      return 'EMPTY'
+    if (batch.length === 0 && currentPage === 1) return 'EMPTY'
     if (batch.length === 0 && currentPage === 1 && searchQuery !== '')
       return 'NO_RESULT'
-    else if (batch.length < pageSize)
-      return 'COMPLETE'
+    else if (batch.length < pageSize) return 'COMPLETE'
     return 'LOADED'
   }
 
-  callUICPAgent = async (
-    currentPage: number,
-    searchQuery: string
-  ) => {
+  callUICPAgent = async (currentPage: number, searchQuery: string) => {
     let data, error
 
     if (searchQuery === '') {
@@ -136,10 +125,7 @@ export default class MyPalettes extends React.Component<
           'palette_id, screenshot, name, preset, colors, themes, creator_avatar, creator_full_name, creator_id'
         )
         .eq('creator_id', this.props.userSession.userId)
-        .range(
-          pageSize * (currentPage - 1),
-          pageSize * currentPage - 1
-        ))
+        .range(pageSize * (currentPage - 1), pageSize * currentPage - 1))
     } else {
       // eslint-disable-next-line @typescript-eslint/no-extra-semi
       ;({ data, error } = await supabase
@@ -148,10 +134,7 @@ export default class MyPalettes extends React.Component<
           'palette_id, screenshot, name, preset, colors, themes, creator_avatar, creator_full_name, creator_id'
         )
         .eq('creator_id', this.props.userSession.userId)
-        .range(
-          pageSize * (currentPage - 1),
-          pageSize * currentPage - 1
-        )
+        .range(pageSize * (currentPage - 1), pageSize * currentPage - 1)
         .ilike('name', `%${searchQuery}%`))
     }
 
@@ -168,10 +151,9 @@ export default class MyPalettes extends React.Component<
         )
       )
       this.setState({
-        isLoadMoreActionLoading: false
+        isLoadMoreActionLoading: false,
       })
-    } else
-      this.props.onChangeStatus('ERROR')
+    } else this.props.onChangeStatus('ERROR')
   }
 
   getPaletteMeta = (
@@ -292,12 +274,10 @@ export default class MyPalettes extends React.Component<
             this.setState({
               isLoadMoreActionLoading: true,
             })
-          }
-          }
+          }}
         />
       )
-    }
-    else if (this.props.status === 'COMPLETE')
+    } else if (this.props.status === 'COMPLETE')
       fragment = (
         <Message
           icon="check"
@@ -310,10 +290,11 @@ export default class MyPalettes extends React.Component<
         className={[
           'rich-list',
           this.props.status === 'LOADING' ? 'rich-list--loading' : null,
-          this.props.status === 'ERROR'
-            || this.props.status === 'EMPTY'
-            || this.props.status === 'NO_RESULT' ? 'rich-list--message' : null
-          
+          this.props.status === 'ERROR' ||
+          this.props.status === 'EMPTY' ||
+          this.props.status === 'NO_RESULT'
+            ? 'rich-list--message'
+            : null,
         ]
           .filter((n) => n)
           .join(' ')}
@@ -349,7 +330,7 @@ export default class MyPalettes extends React.Component<
             />
           </div>
         )}
-        {(this.props.status === 'LOADED' || this.props.status === 'COMPLETE') && 
+        {(this.props.status === 'LOADED' || this.props.status === 'COMPLETE') &&
           this.props.palettesList.map((palette, index: number) => (
             <PaletteItem
               id={palette.palette_id}
@@ -380,23 +361,30 @@ export default class MyPalettes extends React.Component<
                     action: async () => {
                       this.setState({
                         isContextActionLoading:
-                          this.state.isContextActionLoading
-                            .map((loading, i) => (i === index ? true : loading))
+                          this.state.isContextActionLoading.map((loading, i) =>
+                            i === index ? true : loading
+                          ),
                       })
-                      unpublishPalette({
-                        id: palette.palette_id,
-                        userSession: this.props.userSession,
-
-                      }, true)
+                      unpublishPalette(
+                        {
+                          id: palette.palette_id,
+                          userSession: this.props.userSession,
+                        },
+                        true
+                      )
                         .then(() => {
-                          const currentPalettesList = this.props.palettesList
-                            .filter(pal => pal.palette_id !== palette.palette_id)
+                          const currentPalettesList =
+                            this.props.palettesList.filter(
+                              (pal) => pal.palette_id !== palette.palette_id
+                            )
 
                           parent.postMessage(
                             {
                               pluginMessage: {
                                 type: 'SEND_MESSAGE',
-                                message: locals[this.props.lang].success.nonPublication,
+                                message:
+                                  locals[this.props.lang].success
+                                    .nonPublication,
                               },
                             },
                             '*'
@@ -407,24 +395,23 @@ export default class MyPalettes extends React.Component<
                             this.props.onChangeStatus('EMPTY')
                           if (currentPalettesList.length < pageSize)
                             this.props.onChangeCurrentPage(1)
-                          
+
                           trackPublicationEvent(
                             this.props.figmaUserId,
                             this.props.userConsent.find(
                               (consent) => consent.id === 'mixpanel'
                             )?.isConsented ?? false,
                             {
-                              feature: 'UNPUBLISH_PALETTE'
+                              feature: 'UNPUBLISH_PALETTE',
                             }
                           )
                         })
                         .finally(() => {
                           this.setState({
                             isContextActionLoading:
-                              this.state.isContextActionLoading
-                                .map((loading, i) =>
-                                  i === index ? false : loading
-                                ),
+                              this.state.isContextActionLoading.map(
+                                (loading, i) => (i === index ? false : loading)
+                              ),
                           })
                         })
                         .catch(() => {
@@ -432,7 +419,9 @@ export default class MyPalettes extends React.Component<
                             {
                               pluginMessage: {
                                 type: 'SEND_MESSAGE',
-                                message: locals[this.props.lang].warning.nonPublication,
+                                message:
+                                  locals[this.props.lang].warning
+                                    .nonPublication,
                               },
                             },
                             '*'
@@ -442,7 +431,9 @@ export default class MyPalettes extends React.Component<
                   },
                 ]}
                 state={
-                  this.state.isContextActionLoading[index] ? 'LOADING' : 'DEFAULT'
+                  this.state.isContextActionLoading[index]
+                    ? 'LOADING'
+                    : 'DEFAULT'
                 }
                 alignment="BOTTOM_RIGHT"
               />
@@ -460,8 +451,8 @@ export default class MyPalettes extends React.Component<
                     .finally(() => {
                       this.setState({
                         isAddToFileActionLoading:
-                          this.state.isAddToFileActionLoading.map((loading, i) =>
-                            i === index ? false : loading
+                          this.state.isAddToFileActionLoading.map(
+                            (loading, i) => (i === index ? false : loading)
                           ),
                       })
                     })
@@ -479,8 +470,7 @@ export default class MyPalettes extends React.Component<
                 }}
               />
             </PaletteItem>
-          )
-        )}
+          ))}
         <div className="list-control">{fragment}</div>
       </ul>
     )
@@ -533,7 +523,6 @@ export default class MyPalettes extends React.Component<
 
     return (
       <div className="controls__control">
-        
         <div className="control__block control__block--no-padding">
           {this.props.status !== 'SIGN_IN_FIRST' && (
             <Bar
@@ -553,10 +542,7 @@ export default class MyPalettes extends React.Component<
                     this.props.onChangeStatus('LOADING')
                     this.props.onChangeCurrentPage(1)
                     this.props.onLoadPalettesList([])
-                    this.callUICPAgent(
-                      1,
-                      (e.target as HTMLInputElement).value
-                    )
+                    this.callUICPAgent(1, (e.target as HTMLInputElement).value)
                   }}
                 />
               }
