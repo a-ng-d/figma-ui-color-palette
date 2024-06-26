@@ -1208,8 +1208,7 @@ export default class Settings extends React.Component<SettingsProps> {
             {...this.props}
             context="DEPLOY"
           />
-        )
-      }
+        )}
       </div>
     )
   }

@@ -33,10 +33,20 @@ interface ExploreProps {
     source: ThirdParty
   ) => void
   onChangeContexts: () => void
-  onLoadColourLoversPaletteList: (palettes: Array<ColourLovers>, shouldBeEmpty: boolean) => void
+  onLoadColourLoversPalettesList: (
+    palettes: Array<ColourLovers>,
+    shouldBeEmpty: boolean
+  ) => void
 }
 
-type FilterOptions = 'ANY' | 'YELLOW' | 'ORANGE' | 'RED' | 'GREEN' | 'VIOLET' | 'BLUE'
+type FilterOptions =
+  | 'ANY'
+  | 'YELLOW'
+  | 'ORANGE'
+  | 'RED'
+  | 'GREEN'
+  | 'VIOLET'
+  | 'BLUE'
 
 interface ExploreStates {
   colourLoversPalettesListStatus: FetchStatus
@@ -53,19 +63,26 @@ export default class Explore extends React.Component<
 
   constructor(props: ExploreProps) {
     super(props)
-    this.filters = ['ANY', 'YELLOW', 'ORANGE', 'RED', 'GREEN', 'VIOLET', 'BLUE'],
-    this.state = {
-      colourLoversPalettesListStatus: 'LOADING',
-      currentPage: 1,
-      isLoadMoreActionLoading: false,
-      activeFilters: ['ANY'],
-    }
+    ;(this.filters = [
+      'ANY',
+      'YELLOW',
+      'ORANGE',
+      'RED',
+      'GREEN',
+      'VIOLET',
+      'BLUE',
+    ]),
+      (this.state = {
+        colourLoversPalettesListStatus: 'LOADING',
+        currentPage: 1,
+        isLoadMoreActionLoading: false,
+        activeFilters: ['ANY'],
+      })
   }
 
   // Lifecycle
   componentDidMount = () => {
-    if (this.props.colourLoversPaletteList.length === 0)
-      this.callUICPAgent()
+    if (this.props.colourLoversPaletteList.length === 0) this.callUICPAgent()
     else {
       this.setState({
         colourLoversPalettesListStatus: 'LOADED',
@@ -77,12 +94,11 @@ export default class Explore extends React.Component<
     prevProps: Readonly<ExploreProps>,
     prevState: Readonly<ExploreStates>
   ): void => {
-    if (prevState.currentPage !== this.state.currentPage){
+    if (prevState.currentPage !== this.state.currentPage) {
       this.callUICPAgent()
     }
 
-    if (this.state.colourLoversPalettesListStatus === 'ERROR'
-    ) {
+    if (this.state.colourLoversPalettesListStatus === 'ERROR') {
       return
     }
 
@@ -91,10 +107,9 @@ export default class Explore extends React.Component<
         currentPage: 1,
         colourLoversPalettesListStatus: 'LOADING',
       })
-      this.props.onLoadColourLoversPaletteList([], true)
+      this.props.onLoadColourLoversPalettesList([], true)
       this.callUICPAgent()
     }
-      
   }
 
   // Direct actions
@@ -104,12 +119,10 @@ export default class Explore extends React.Component<
         encodeURIComponent(
           `https://www.colourlovers.com/api/palettes?format=json&numResults=${pageSize}&resultOffset=${
             this.state.currentPage - 1
-          }&hueOption=${
-            this.state.activeFilters
-              .filter((filter) => filter !== 'ANY')
-              .map((filter) => filter.toLowerCase())
-              .join(',')
-          }`
+          }&hueOption=${this.state.activeFilters
+            .filter((filter) => filter !== 'ANY')
+            .map((filter) => filter.toLowerCase())
+            .join(',')}`
         ),
       {
         cache: 'no-cache',
@@ -125,7 +138,7 @@ export default class Explore extends React.Component<
           colourLoversPalettesListStatus:
             data.length === pageSize ? 'LOADED' : 'COMPLETE',
         })
-        this.props.onLoadColourLoversPaletteList(data, false)
+        this.props.onLoadColourLoversPalettesList(data, false)
       })
       .finally(() =>
         this.setState({
@@ -142,7 +155,10 @@ export default class Explore extends React.Component<
   setFilters = () => {
     return this.filters.map((filter) => {
       return {
-        label: locals[this.props.lang].source.colourLovers.filters[filter.toLowerCase()],
+        label:
+          locals[this.props.lang].source.colourLovers.filters[
+            filter.toLowerCase()
+          ],
         value: filter,
         feature: 'EDIT_FILTER',
         position: 0,
@@ -155,18 +171,22 @@ export default class Explore extends React.Component<
     }) as Array<DropdownOption>
   }
 
-  onAddFilter = (value: FilterOptions) => {  
+  onAddFilter = (value: FilterOptions) => {
     if (value === 'ANY' || this.state.activeFilters.length === 0)
       this.setState({
-        activeFilters: this.state.activeFilters.filter(filter => filter === 'ANY')
+        activeFilters: this.state.activeFilters.filter(
+          (filter) => filter === 'ANY'
+        ),
       })
     else if (this.state.activeFilters.includes(value))
       this.setState({
-        activeFilters: this.state.activeFilters.filter(filter => filter !== value)
+        activeFilters: this.state.activeFilters.filter(
+          (filter) => filter !== value
+        ),
       })
     else
       this.setState({
-        activeFilters: this.state.activeFilters.concat(value)
+        activeFilters: this.state.activeFilters.concat(value),
       })
   }
 
@@ -174,8 +194,10 @@ export default class Explore extends React.Component<
   ExternalSourceColorsList = () => {
     let fragment
 
-    if (this.state.colourLoversPalettesListStatus === 'LOADED'
-      || this.state.colourLoversPalettesListStatus === 'COMPLETE') {
+    if (
+      this.state.colourLoversPalettesListStatus === 'LOADED' ||
+      this.state.colourLoversPalettesListStatus === 'COMPLETE'
+    ) {
       fragment = (
         <>
           {this.props.colourLoversPaletteList.map((palette, index: number) => (
@@ -265,8 +287,7 @@ export default class Explore extends React.Component<
           </div>
         </>
       )
-    }
-    else if (this.state.colourLoversPalettesListStatus === 'ERROR')
+    } else if (this.state.colourLoversPalettesListStatus === 'ERROR')
       fragment = (
         <div className="onboarding__callout--centered">
           <Message
@@ -287,8 +308,12 @@ export default class Explore extends React.Component<
       <ul
         className={[
           'rich-list',
-          this.state.colourLoversPalettesListStatus === 'LOADING' ? 'rich-list--loading' : null,
-          this.state.colourLoversPalettesListStatus === 'ERROR' ? 'rich-list--message' : null
+          this.state.colourLoversPalettesListStatus === 'LOADING'
+            ? 'rich-list--loading'
+            : null,
+          this.state.colourLoversPalettesListStatus === 'ERROR'
+            ? 'rich-list--message'
+            : null,
         ]
           .filter((n) => n)
           .join(' ')}
@@ -308,15 +333,25 @@ export default class Explore extends React.Component<
               leftPart={
                 <FormItem
                   id="explore__filters"
-                  label={locals[this.props.lang].source.colourLovers.filters.label}
+                  label={
+                    locals[this.props.lang].source.colourLovers.filters.label
+                  }
                 >
                   <Dropdown
                     id="explore__filters"
                     options={this.setFilters()}
-                    selected={this.state.activeFilters.includes('ANY') && this.state.activeFilters.length > 1
-                      ? this.state.activeFilters.filter(((filter) => filter !== 'ANY')).join(', ')
-                      : this.state.activeFilters.join(', ')}
-                    isDisabled={this.state.colourLoversPalettesListStatus === 'LOADING'}
+                    selected={
+                      this.state.activeFilters.includes('ANY') &&
+                      this.state.activeFilters.length > 1
+                        ? this.state.activeFilters
+                            .filter((filter) => filter !== 'ANY')
+                            .join(', ')
+                        : this.state.activeFilters.join(', ')
+                    }
+                    isDisabled={
+                      this.state.colourLoversPalettesListStatus === 'LOADING' ||
+                      this.state.colourLoversPalettesListStatus === 'ERROR'
+                    }
                     parentClassName="ui"
                   />
                 </FormItem>

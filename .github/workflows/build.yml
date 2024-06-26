@@ -19,7 +19,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
 
-    - name: 'Create .env file'
+    - name: Create .env file
       run: |
         touch .env
         echo REACT_APP_SUPABASE_URL="${{ vars.REACT_APP_SUPABASE_URL }}" >> .env

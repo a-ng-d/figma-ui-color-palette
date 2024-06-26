@@ -1,10 +1,18 @@
-import { ConsentConfiguration, Dialog, FormItem, Input, texts } from '@a_ng_d/figmug-ui'
+import * as Sentry from '@sentry/browser'
+import {
+  ConsentConfiguration,
+  Dialog,
+  FormItem,
+  Input,
+  texts,
+} from '@a_ng_d/figmug-ui'
 import React from 'react'
 
 import package_json from '../../../package.json'
 import { signIn } from '../../bridges/publication/authentication'
 import cp from '../../content/images/choose_plan.webp'
 import pp from '../../content/images/pro_plan.webp'
+import p from '../../content/images/publication.webp'
 import t from '../../content/images/trial.webp'
 import { locals } from '../../content/locals'
 import { Language, PlanStatus, TrialStatus } from '../../types/app'
@@ -17,7 +25,6 @@ import Feature from '../components/Feature'
 import About from './About'
 import Highlight from './Highlight'
 import Publication from './Publication'
-import * as Sentry from "@sentry/browser"
 
 interface PriorityContainerProps {
   context: PriorityContext
@@ -75,7 +82,7 @@ export default class PriorityContainer extends React.Component<
         this.setState({
           userFullName: '',
           userEmail: '',
-          userMessage: ''
+          userMessage: '',
         })
         parent.postMessage(
           {
@@ -378,7 +385,7 @@ export default class PriorityContainer extends React.Component<
           >
             <div className="dialog__cover">
               <img
-                src={pp}
+                src={p}
                 style={{
                   width: '100%',
                 }}
@@ -421,11 +428,10 @@ export default class PriorityContainer extends React.Component<
             primary: {
               label: locals[this.props.lang].report.cta,
               state: (() => {
-                if (this.state.userMessage === '') { 
+                if (this.state.userMessage === '') {
                   return 'DISABLED'
                 }
-                if (this.state.isPrimaryActionLoading)
-                  return 'LOADING'
+                if (this.state.isPrimaryActionLoading) return 'LOADING'
                 return 'DEFAULT'
               })(),
               action: this.reportHandler,
@@ -433,9 +439,7 @@ export default class PriorityContainer extends React.Component<
           }}
           onClose={this.props.onClose}
         >
-          <div
-            className="dialog__form"
-          >
+          <div className="dialog__form">
             <div className="dialog__form__item">
               <FormItem
                 label={locals[this.props.lang].report.fullName.label}
@@ -446,8 +450,12 @@ export default class PriorityContainer extends React.Component<
                   type="TEXT"
                   value={this.state.userFullName}
                   isAutoFocus={true}
-                  placeholder={locals[this.props.lang].report.fullName.placeholder}
-                  onChange={(e) => this.setState({ userFullName: e.target.value })}
+                  placeholder={
+                    locals[this.props.lang].report.fullName.placeholder
+                  }
+                  onChange={(e) =>
+                    this.setState({ userFullName: e.target.value })
+                  }
                 />
               </FormItem>
             </div>
@@ -473,9 +481,13 @@ export default class PriorityContainer extends React.Component<
               >
                 <Input
                   type="LONG_TEXT"
-                  placeholder={locals[this.props.lang].report.message.placeholder}
+                  placeholder={
+                    locals[this.props.lang].report.message.placeholder
+                  }
                   value={this.state.userMessage}
-                  onChange={(e) => this.setState({ userMessage: e.target.value })}
+                  onChange={(e) =>
+                    this.setState({ userMessage: e.target.value })
+                  }
                 />
               </FormItem>
             </div>

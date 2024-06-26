@@ -108,14 +108,11 @@ Sentry.init({
     Sentry.browserTracingIntegration(),
     Sentry.replayIntegration(),
     Sentry.feedbackIntegration({
-      colorScheme: "system",
-    })
+      colorScheme: 'system',
+    }),
   ],
   tracesSampleRate: 1.0,
-  tracePropagationTargets: [
-    'localhost',
-    /^https:\/\/yourserver\.io\/api/,
-  ],
+  tracePropagationTargets: ['localhost', /^https:\/\/yourserver\.io\/api/],
   replaysSessionSampleRate: 0.1,
   replaysOnErrorSampleRate: 1.0,
 })
@@ -263,9 +260,8 @@ class App extends React.Component<Record<string, never>, AppStates> {
           })
           trackRunningEvent(
             e.data.pluginMessage.id,
-            this.state.userConsent.find(
-              (consent) => consent.id === 'mixpanel'
-            )?.isConsented ?? false
+            this.state.userConsent.find((consent) => consent.id === 'mixpanel')
+              ?.isConsented ?? false
           )
         }
 
@@ -533,9 +529,8 @@ class App extends React.Component<Record<string, never>, AppStates> {
           })
           trackExportEvent(
             e.data.pluginMessage.id,
-            this.state.userConsent.find(
-              (consent) => consent.id === 'mixpanel'
-            )?.isConsented ?? false,
+            this.state.userConsent.find((consent) => consent.id === 'mixpanel')
+              ?.isConsented ?? false,
             {
               context: e.data.pluginMessage.context,
               colorSpace: e.data.pluginMessage.colorSpace,
@@ -563,9 +558,8 @@ class App extends React.Component<Record<string, never>, AppStates> {
           })
           trackExportEvent(
             e.data.pluginMessage.id,
-            this.state.userConsent.find(
-              (consent) => consent.id === 'mixpanel'
-            )?.isConsented ?? false,
+            this.state.userConsent.find((consent) => consent.id === 'mixpanel')
+              ?.isConsented ?? false,
             {
               context: e.data.pluginMessage.context,
             }
@@ -588,9 +582,8 @@ class App extends React.Component<Record<string, never>, AppStates> {
           })
           trackExportEvent(
             e.data.pluginMessage.id,
-            this.state.userConsent.find(
-              (consent) => consent.id === 'mixpanel'
-            )?.isConsented ?? false,
+            this.state.userConsent.find((consent) => consent.id === 'mixpanel')
+              ?.isConsented ?? false,
             {
               context: e.data.pluginMessage.context,
             }
@@ -613,9 +606,8 @@ class App extends React.Component<Record<string, never>, AppStates> {
           })
           trackExportEvent(
             e.data.pluginMessage.id,
-            this.state.userConsent.find(
-              (consent) => consent.id === 'mixpanel'
-            )?.isConsented ?? false,
+            this.state.userConsent.find((consent) => consent.id === 'mixpanel')
+              ?.isConsented ?? false,
             {
               context: e.data.pluginMessage.context,
             }
@@ -638,9 +630,8 @@ class App extends React.Component<Record<string, never>, AppStates> {
           })
           trackExportEvent(
             e.data.pluginMessage.id,
-            this.state.userConsent.find(
-              (consent) => consent.id === 'mixpanel'
-            )?.isConsented ?? false,
+            this.state.userConsent.find((consent) => consent.id === 'mixpanel')
+              ?.isConsented ?? false,
             {
               context: e.data.pluginMessage.context,
             }
@@ -663,9 +654,8 @@ class App extends React.Component<Record<string, never>, AppStates> {
           })
           trackExportEvent(
             e.data.pluginMessage.id,
-            this.state.userConsent.find(
-              (consent) => consent.id === 'mixpanel'
-            )?.isConsented ?? false,
+            this.state.userConsent.find((consent) => consent.id === 'mixpanel')
+              ?.isConsented ?? false,
             {
               context: e.data.pluginMessage.context,
             }
@@ -688,9 +678,8 @@ class App extends React.Component<Record<string, never>, AppStates> {
           })
           trackExportEvent(
             e.data.pluginMessage.id,
-            this.state.userConsent.find(
-              (consent) => consent.id === 'mixpanel'
-            )?.isConsented ?? false,
+            this.state.userConsent.find((consent) => consent.id === 'mixpanel')
+              ?.isConsented ?? false,
             {
               context: e.data.pluginMessage.context,
             }
@@ -723,9 +712,8 @@ class App extends React.Component<Record<string, never>, AppStates> {
           })
           trackPurchaseEvent(
             e.data.pluginMessage.id,
-            this.state.userConsent.find(
-              (consent) => consent.id === 'mixpanel'
-            )?.isConsented ?? false
+            this.state.userConsent.find((consent) => consent.id === 'mixpanel')
+              ?.isConsented ?? false
           )
         }
 
@@ -737,9 +725,8 @@ class App extends React.Component<Record<string, never>, AppStates> {
           })
           trackTrialEnablementEvent(
             e.data.pluginMessage.id,
-            this.state.userConsent.find(
-              (consent) => consent.id === 'mixpanel'
-            )?.isConsented ?? false,
+            this.state.userConsent.find((consent) => consent.id === 'mixpanel')
+              ?.isConsented ?? false,
             {
               date: e.data.pluginMessage.date,
               trialTime: e.data.pluginMessage.trialTime,
@@ -884,9 +871,7 @@ class App extends React.Component<Record<string, never>, AppStates> {
           >
             <TransferPalette {...this.state} />
           </Feature>
-          <Feature
-            isActive={this.state.priorityContainerContext !== 'EMPTY'}
-          >
+          <Feature isActive={this.state.priorityContainerContext !== 'EMPTY'}>
             <PriorityContainer
               context={this.state.priorityContainerContext}
               rawData={this.state}
@@ -921,9 +906,7 @@ class App extends React.Component<Record<string, never>, AppStates> {
                     '*'
                   ),
               }}
-              moreDetailsLabel={
-                locals[this.state.lang].user.cookies.customize
-              }
+              moreDetailsLabel={locals[this.state.lang].user.cookies.customize}
               lessDetailsLabel={locals[this.state.lang].user.cookies.back}
               consentActions={{
                 consent: {

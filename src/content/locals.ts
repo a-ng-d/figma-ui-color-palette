@@ -45,7 +45,7 @@ export const locals: { [key: string]: any } = {
       titleSynchronize: 'Synchronize palette',
       titleSignIn: 'Publish or Synchronize palette',
       message:
-        'Publish your palette as a single source of truth and reuse it in other Figma documents. You can also distribute your palettes by sharing them with the community.',
+        'Publish your palette as a single source of truth and reuse it in other Figma documents (like a component instance). You can also distribute your palettes by sharing them with the community.',
       selectToShare: 'Share with the community',
       statusLocalChanges: 'Local changes',
       statusUptoDate: 'No change',
@@ -55,7 +55,7 @@ export const locals: { [key: string]: any } = {
       statusNotFound: 'Not found',
       publish: 'Publish…',
       unpublish: 'Unpublish',
-      synchronize: 'Synchronize',
+      synchronize: 'Synchronize…',
       revert: 'Revert',
       detach: 'Detach',
       waiting: 'Waiting…',
@@ -93,10 +93,9 @@ export const locals: { [key: string]: any } = {
         signIn: 'Sign in to fetch your palettes',
       },
       lazyLoad: {
-        search: 'Search palettes',
+        search: 'Search palettes…',
         loadMore: 'Load more palettes',
         completeList: 'The palettes list is complete',
-        emptyList: 'No palette has been found',
       },
       devMode: {
         title: 'UI Color Palettes on the page',
@@ -151,7 +150,7 @@ export const locals: { [key: string]: any } = {
           green: 'Green',
           violet: 'Violet',
           blue: 'Blue',
-        }
+        },
       },
     },
     scale: {
@@ -324,7 +323,8 @@ export const locals: { [key: string]: any } = {
       },
       message: {
         label: 'Message (required)',
-        placeholder: 'Describe the issue you encountered by trying to describe the steps to reproduce it.',
+        placeholder:
+          'Describe the issue you encountered by trying to describe the steps to reproduce it.',
       },
       cta: 'Submit your issue',
     },
@@ -390,15 +390,15 @@ export const locals: { [key: string]: any } = {
         message:
           'This upgrade will unlock a range of tools that enable you to convert your color palette into a color system. We hope you will enjoy the benefits.',
         trial:
-          'This upgrade will unlock a range of tools that enable you to convert your color palette into a color system. We hope you will enjoy the benefits for the next 48 hours.',
+          'This upgrade will unlock a range of tools that enable you to convert your color palette into a color system. We hope you will enjoy the benefits for the next 72 hours.',
         cta: "Let's build",
       },
       trial: {
         title:
-          'Would you like to upgrade to the Pro plan within the next 48 hours?',
+          'Would you like to upgrade to the Pro plan within the next 72 hours?',
         message:
           'Explore the potential of synchronizing your color palette with variables, exporting it as design tokens, app resources, or for Tokens Studio and simulating a vision impairment.',
-        cta: 'Enable the 48-hour trial',
+        cta: 'Enable the 72-hour trial',
         option: 'Purchase',
       },
     },
@@ -469,6 +469,7 @@ export const locals: { [key: string]: any } = {
       variableMode: 'variable mode',
       variableModes: 'variable modes',
       signOut: '☻ See you later',
+      noResult: 'No palette match your search',
     },
     warning: {
       tooManyThemesToCreateModes:
@@ -482,7 +483,10 @@ export const locals: { [key: string]: any } = {
       paletteNameRecommendation: '64 characters max is recommended',
       noPaletteOnCurrrentPage:
         'There is no UI Color Palette on the current page. You can ask a member with editing permissions to create.',
-      noPaletteOnRemote: 'No palette has been found',
+      noSelfPaletteOnRemote:
+        'This is quite empty around here! Publish your palette to reuse it across multiple documents.',
+      noCommunityPaletteOnRemote:
+        'This is quite empty around here! Be the first to share your palette with other users!',
     },
     error: {
       corruption:
