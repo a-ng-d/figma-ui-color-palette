@@ -1,21 +1,25 @@
-import * as React from 'react'
-import type { Language, ReleaseNote } from '../../utils/types'
-import { Dialog } from '@a-ng-d/figmug.dialogs.dialog'
-import releaseNotes from '../../content/releaseNotes'
-import { locals } from '../../content/locals'
-import { texts } from '@a-ng-d/figmug.stylesheets.texts'
+import { Dialog, texts } from '@a_ng_d/figmug-ui'
+import React from 'react'
 
-interface Props {
+import { locals } from '../../content/locals'
+import releaseNotes from '../../content/releaseNotes'
+import { Language } from '../../types/app'
+import { ReleaseNote } from '../../types/content'
+
+interface HighlightProps {
   lang: Language
   onCloseHighlight: React.ReactEventHandler
 }
 
-interface States {
+interface HighlightStates {
   position: number
 }
 
-export default class Highlight extends React.Component<Props, States> {
-  constructor(props: Props) {
+export default class Highlight extends React.Component<
+  HighlightProps,
+  HighlightStates
+> {
+  constructor(props: HighlightProps) {
     super(props)
     this.state = {
       position: 0,
@@ -26,8 +30,8 @@ export default class Highlight extends React.Component<Props, States> {
     e: React.SyntheticEvent<Element, Event>,
     currentNote: ReleaseNote
   ) => {
-    if (this.state['position'] + 1 < currentNote['numberOfNotes'])
-      this.setState({ position: this.state['position'] + 1 })
+    if (this.state.position + 1 < currentNote['numberOfNotes'])
+      this.setState({ position: this.state.position + 1 })
     else {
       this.props.onCloseHighlight(e)
       this.setState({ position: 0 })
@@ -38,11 +42,11 @@ export default class Highlight extends React.Component<Props, States> {
     const currentNote = releaseNotes.filter((note) => note['isMostRecent'])[0]
     return (
       <Dialog
-        title={currentNote['title'][this.state['position']]}
+        title={currentNote['title'][this.state.position]}
         actions={{
           primary: {
             label:
-              this.state['position'] + 1 < currentNote['numberOfNotes']
+              this.state.position + 1 < currentNote['numberOfNotes']
                 ? locals[this.props.lang].highlight.cta.next
                 : locals[this.props.lang].highlight.cta.gotIt,
             action: (e) => this.goNextSlide(e, currentNote),
@@ -51,14 +55,14 @@ export default class Highlight extends React.Component<Props, States> {
             label: locals[this.props.lang].highlight.cta.learnMore,
             action: () =>
               window.open(
-                currentNote['learnMore'][this.state['position']],
+                currentNote['learnMore'][this.state.position],
                 '_blank'
               ),
           },
         }}
         indicator={
           currentNote['numberOfNotes'] > 1
-            ? `${this.state['position'] + 1} of ${currentNote['numberOfNotes']}`
+            ? `${this.state.position + 1} of ${currentNote['numberOfNotes']}`
             : undefined
         }
         onClose={(e) => {
@@ -66,13 +70,19 @@ export default class Highlight extends React.Component<Props, States> {
           this.setState({ position: 0 })
         }}
       >
-        <img
-          className="dialog__cover"
-          src={currentNote['image'][this.state['position']]}
-        />
-        <p className={`dialog__text type ${texts.type}`}>
-          {currentNote['content'][this.state['position']]}
-        </p>
+        <div className="dialog__cover">
+          <img
+            src={currentNote['image'][this.state.position]}
+            style={{
+              width: '100%',
+            }}
+          />
+        </div>
+        <div className="dialog__text">
+          <p className={`type ${texts.type}`}>
+            {currentNote['content'][this.state.position]}
+          </p>
+        </div>
       </Dialog>
     )
   }

@@ -1,16 +1,14 @@
-import * as React from 'react'
-import chroma from 'chroma-js'
-import type { HexModel, Language } from '../../utils/types'
-import Feature from './Feature'
-import { Input } from '@a-ng-d/figmug.inputs.input'
-import { Button } from '@a-ng-d/figmug.actions.button'
-import { FormItem } from '@a-ng-d/figmug.layouts.form-item'
-import { texts } from '@a-ng-d/figmug.stylesheets.texts'
 import { doMap } from '@a-ng-d/figmug.modules.do-map'
-import features from '../../utils/config'
-import { locals } from '../../content/locals'
+import { Button, FormItem, HexModel, Input, InputsBar } from '@a_ng_d/figmug-ui'
+import chroma from 'chroma-js'
+import React from 'react'
 
-interface Props {
+import { locals } from '../../content/locals'
+import { Language } from '../../types/app'
+import features from '../../utils/config'
+import Feature from './Feature'
+
+interface ColorItemProps {
   name: string
   hex: HexModel
   oklch: boolean
@@ -45,8 +43,8 @@ interface States {
   hasMoreOptions: boolean
 }
 
-export default class ColorItem extends React.Component<Props, States> {
-  constructor(props: Props) {
+export default class ColorItem extends React.Component<ColorItemProps, States> {
+  constructor(props: ColorItemProps) {
     super(props)
     this.state = {
       isDragged: false,
@@ -57,7 +55,7 @@ export default class ColorItem extends React.Component<Props, States> {
   // Handlers
   optionsHandler = () => {
     this.props.onCancellationSelection
-    this.setState({ hasMoreOptions: !this.state['hasMoreOptions'] })
+    this.setState({ hasMoreOptions: !this.state.hasMoreOptions })
   }
 
   // Direct actions
@@ -122,10 +120,10 @@ export default class ColorItem extends React.Component<Props, States> {
         data-position={this.props.index}
         className={[
           'list__item',
-          this.state['isDragged'] ? 'list__item--dragged' : null,
+          this.state.isDragged ? 'list__item--dragged' : null,
           this.props.guideAbove ? 'list__item--above' : null,
           this.props.guideBelow ? 'list__item--below' : null,
-          this.state['hasMoreOptions'] ? 'list__item--emphasis' : null,
+          this.state.hasMoreOptions ? 'list__item--emphasis' : null,
         ]
           .filter((n) => n)
           .join(' ')}
@@ -173,47 +171,45 @@ export default class ColorItem extends React.Component<Props, States> {
                     onBlur={this.props.onChangeColors}
                   />
                 </div>
-                <div className="list__item__param inputs">
-                  <div className={`label ${texts.label}`}>
-                    {locals[this.props.lang].colors.lch.label}
-                  </div>
-                  <div className="inputs__bar">
-                    <Input
-                      type="NUMBER"
-                      value={chroma(this.props.hex).lch()[0].toFixed(0)}
-                      min="0"
-                      max="100"
-                      feature="UPDATE_LIGHTNESS"
-                      onFocus={this.props.onCancellationSelection}
-                      onBlur={this.props.onChangeColors}
-                      onConfirm={this.props.onChangeColors}
-                    />
-                    <Input
-                      type="NUMBER"
-                      value={chroma(this.props.hex).lch()[1].toFixed(0)}
-                      min="0"
-                      max="100"
-                      feature="UPDATE_CHROMA"
-                      onFocus={this.props.onCancellationSelection}
-                      onBlur={this.props.onChangeColors}
-                      onConfirm={this.props.onChangeColors}
-                    />
-                    <Input
-                      type="NUMBER"
-                      value={
-                        chroma(this.props.hex).lch()[2].toFixed(0) == 'NaN'
-                          ? '0'
-                          : chroma(this.props.hex).lch()[2].toFixed(0)
-                      }
-                      min="0"
-                      max="360"
-                      feature="UPDATE_HUE"
-                      onFocus={this.props.onCancellationSelection}
-                      onBlur={this.props.onChangeColors}
-                      onConfirm={this.props.onChangeColors}
-                    />
-                  </div>
-                </div>
+                <InputsBar
+                  label={locals[this.props.lang].colors.lch.label}
+                  customClassName="list__item__param"
+                >
+                  <Input
+                    type="NUMBER"
+                    value={chroma(this.props.hex).lch()[0].toFixed(0)}
+                    min="0"
+                    max="100"
+                    feature="UPDATE_LIGHTNESS"
+                    onFocus={this.props.onCancellationSelection}
+                    onBlur={this.props.onChangeColors}
+                    onConfirm={this.props.onChangeColors}
+                  />
+                  <Input
+                    type="NUMBER"
+                    value={chroma(this.props.hex).lch()[1].toFixed(0)}
+                    min="0"
+                    max="100"
+                    feature="UPDATE_CHROMA"
+                    onFocus={this.props.onCancellationSelection}
+                    onBlur={this.props.onChangeColors}
+                    onConfirm={this.props.onChangeColors}
+                  />
+                  <Input
+                    type="NUMBER"
+                    value={
+                      chroma(this.props.hex).lch()[2].toFixed(0) === 'NaN'
+                        ? '0'
+                        : chroma(this.props.hex).lch()[2].toFixed(0)
+                    }
+                    min="0"
+                    max="360"
+                    feature="UPDATE_HUE"
+                    onFocus={this.props.onCancellationSelection}
+                    onBlur={this.props.onChangeColors}
+                    onConfirm={this.props.onChangeColors}
+                  />
+                </InputsBar>
               </>
             </Feature>
           </div>
@@ -231,7 +227,7 @@ export default class ColorItem extends React.Component<Props, States> {
               <Button
                 type="icon"
                 icon="ellipsis"
-                state={this.state['hasMoreOptions'] ? 'selected' : ''}
+                state={this.state.hasMoreOptions ? 'selected' : ''}
                 feature="DISPLAY_MORE"
                 action={this.optionsHandler}
               />
@@ -244,7 +240,7 @@ export default class ColorItem extends React.Component<Props, States> {
             />
           </div>
         </div>
-        {this.state['hasMoreOptions'] ? (
+        {this.state.hasMoreOptions ? (
           <div className="list__item__secondary">
             <Feature
               isActive={
@@ -260,7 +256,7 @@ export default class ColorItem extends React.Component<Props, States> {
                 >
                   <Input
                     type="NUMBER"
-                    icon={{ type: 'ICON', value: 'arrow-left-right' }}
+                    icon={{ type: 'PICTO', value: 'arrow-left-right' }}
                     value={this.props.shift.toString()}
                     min="-360"
                     max="360"

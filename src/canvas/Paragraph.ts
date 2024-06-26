@@ -24,7 +24,7 @@ export default class Paragraph {
   }
 
   makeNodeText = () => {
-    // base
+    // Base
     this.nodeText = figma.createText()
     this.nodeText.name = '_text'
     this.nodeText.characters = this.content
@@ -48,14 +48,14 @@ export default class Paragraph {
       },
     ]
 
-    // layout
+    // Layout
     this.nodeText.layoutGrow = 1
 
     return this.nodeText
   }
 
   makeNode() {
-    // base
+    // Base
     this.node = figma.createFrame()
     this.node.name = this.name
     this.node.fills = [
@@ -70,11 +70,11 @@ export default class Paragraph {
       },
     ]
     this.node.cornerRadius = 16
-    if (this.type == 'FIXED') this.node.resize(this.width ?? 100, 100)
+    if (this.type === 'FIXED') this.node.resize(this.width ?? 100, 100)
 
-    // layout
+    // Layout
     this.node.layoutMode = 'HORIZONTAL'
-    if (this.type == 'FIXED') this.node.layoutSizingHorizontal = 'FIXED'
+    if (this.type === 'FIXED') this.node.layoutSizingHorizontal = 'FIXED'
     else {
       this.node.primaryAxisSizingMode = 'FIXED'
       this.node.layoutAlign = 'STRETCH'
@@ -83,7 +83,7 @@ export default class Paragraph {
     this.node.horizontalPadding = 8
     this.node.verticalPadding = 8
 
-    // insert
+    // Insert
     this.node.appendChild(this.makeNodeText())
 
     return this.node

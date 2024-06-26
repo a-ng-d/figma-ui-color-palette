@@ -1,3 +1,4 @@
+import { lang, locals } from '../content/locals'
 import Tag from './Tag'
 
 export default class Status {
@@ -15,12 +16,12 @@ export default class Status {
   }
 
   makeNode = () => {
-    // base
+    // Base
     this.node = figma.createFrame()
     this.node.name = '_status'
     this.node.fills = []
 
-    // layout
+    // Layout
     this.node.layoutMode = 'HORIZONTAL'
     this.node.primaryAxisSizingMode = 'FIXED'
     this.node.layoutAlign = 'STRETCH'
@@ -28,10 +29,16 @@ export default class Status {
 
     if (this.status.isClosestToRef)
       this.node.appendChild(
-        new Tag('_close', 'Closest to source', 10).makeNodeTag(
-          [this.source.r, this.source.g, this.source.b, 1],
-          true
-        )
+        new Tag({
+          name: '_close',
+          content: locals[lang].paletteProperties.closest,
+          fontSize: 10,
+        }).makeNodeTagwithIndicator([
+          this.source.r,
+          this.source.g,
+          this.source.b,
+          1,
+        ])
       )
 
     return this.node

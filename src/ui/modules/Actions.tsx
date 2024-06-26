@@ -1,33 +1,86 @@
-import * as React from 'react'
-import type {
-  Language,
-  PlanStatus,
-  SourceColorConfiguration,
-} from '../../utils/types'
-import Feature from '../components/Feature'
-import { Button } from '@a-ng-d/figmug.actions.button'
-import { Menu } from '@a-ng-d/figmug.navigation.menu'
-import { texts } from '@a-ng-d/figmug.stylesheets.texts'
+import { Button, DropdownOption, Menu, texts } from '@a_ng_d/figmug-ui'
+import React from 'react'
+
+import { locals } from '../../content/locals'
+import { EditorType, Language, PlanStatus } from '../../types/app'
+import { SourceColorConfiguration } from '../../types/configurations'
+import { Identity } from '../../types/user'
 import features from '../../utils/config'
 import isBlocked from '../../utils/isBlocked'
-import { locals } from '../../content/locals'
+import Feature from '../components/Feature'
 
-interface Props {
+interface ActionsProps {
   context: string
   sourceColors: Array<SourceColorConfiguration> | []
+  identity?: Identity
   exportType?: string
   planStatus?: PlanStatus
+  editorType?: EditorType
   lang: Language
   onCreatePalette?: React.MouseEventHandler & React.KeyboardEventHandler
-  onSyncLocalStyles?: React.MouseEventHandler & React.KeyboardEventHandler
-  onSyncLocalVariables?: React.MouseEventHandler & React.KeyboardEventHandler
+  onSyncLocalStyles?: (
+    e:
+      | React.MouseEvent<HTMLLIElement, MouseEvent>
+      | React.KeyboardEvent<HTMLLIElement>
+  ) => void
+  onSyncLocalVariables?: (
+    e:
+      | React.MouseEvent<HTMLLIElement, MouseEvent>
+      | React.KeyboardEvent<HTMLLIElement>
+  ) => void
+  onPublishPalette?: (
+    e: React.MouseEvent<Element> | React.KeyboardEvent<Element>
+  ) => void
   onExportPalette?: React.MouseEventHandler & React.KeyboardEventHandler
-  onChangeActions?: (value: string) => void
 }
 
-export default class Actions extends React.Component<Props> {
+export default class Actions extends React.Component<ActionsProps> {
   static defaultProps = {
     sourceColors: [],
+  }
+
+  // Direct actions
+  publicationAction = (): Partial<DropdownOption> => {
+    if (this.props.identity?.connectionStatus === 'UNCONNECTED')
+      return {
+        label: locals[this.props.lang].actions.publishOrSyncPalette,
+        value: 'PALETTE_PUBLICATION',
+        feature: 'PUBLISH_SYNC_PALETTE',
+      }
+    else if (this.props.identity?.userId === this.props.identity?.creatorId)
+      return {
+        label: locals[this.props.lang].actions.publishPalette,
+        value: 'PALETTE_PUBLICATION',
+        feature: 'PUBLISH_PALETTE',
+      }
+    else if (
+      this.props.identity?.userId !== this.props.identity?.creatorId &&
+      this.props.identity?.creatorId !== ''
+    )
+      return {
+        label: locals[this.props.lang].actions.syncPalette,
+        value: 'PALETTE_PUBLICATION',
+        feature: 'SYNC_PALETTE',
+      }
+    else
+      return {
+        label: locals[this.props.lang].actions.publishPalette,
+        value: 'PALETTE_PUBLICATION',
+        feature: 'PUBLISH_PALETTE',
+      }
+  }
+
+  publicationLabel = (): string => {
+    if (this.props.identity?.connectionStatus === 'UNCONNECTED')
+      return locals[this.props.lang].actions.publishOrSyncPalette
+    else if (this.props.identity?.userId === this.props.identity?.creatorId)
+      return locals[this.props.lang].actions.publishPalette
+    else if (
+      this.props.identity?.userId !== this.props.identity?.creatorId &&
+      this.props.identity?.creatorId !== ''
+    )
+      return locals[this.props.lang].actions.syncPalette
+    else return locals[this.props.lang].actions.publishPalette
   }
 
   // Templates
@@ -67,52 +120,85 @@ export default class Actions extends React.Component<Props> {
     return (
       <div className="actions">
         <div className="actions__right">
-          <Menu
-            id="local-styles-variables"
-            label={locals[this.props.lang].actions.sync}
-            type="PRIMARY"
-            options={[
-              {
-                label: locals[this.props.lang].actions.createLocalStyles,
-                value: 'LOCAL_STYLES',
-                feature: 'SYNC_LOCAL_STYLES',
-                position: 0,
-                type: 'OPTION',
-                isActive: features.find(
-                  (feature) => feature.name === 'SYNC_LOCAL_STYLES'
-                )?.isActive,
-                isBlocked: isBlocked(
-                  'SYNC_LOCAL_STYLES',
-                  this.props.planStatus ?? 'UNPAID'
-                ),
-                isNew: features.find(
-                  (feature) => feature.name === 'SYNC_LOCAL_STYLES'
-                )?.isNew,
-                children: [],
-                action: (e) => this.props.onSyncLocalStyles?.(e),
-              },
-              {
-                label: locals[this.props.lang].actions.createLocalVariables,
-                value: 'LOCAL_VARIABLES',
-                feature: 'SYNC_LOCAL_VARIABLES',
-                position: 0,
-                type: 'OPTION',
-                isActive: features.find(
-                  (feature) => feature.name === 'SYNC_LOCAL_VARIABLES'
-                )?.isActive,
-                isBlocked: isBlocked(
-                  'SYNC_LOCAL_VARIABLES',
-                  this.props.planStatus ?? 'UNPAID'
-                ),
-                isNew: features.find(
-                  (feature) => feature.name === 'SYNC_LOCAL_VARIABLES'
-                )?.isNew,
-                children: [],
-                action: (e) => this.props.onSyncLocalVariables?.(e),
-              },
-            ]}
-            alignment="TOP_RIGHT"
-          />
+          {this.props.editorType === 'figma' ? (
+            <Menu
+              id="local-styles-variables"
+              label={locals[this.props.lang].actions.run}
+              type="PRIMARY"
+              options={[
+                {
+                  label: locals[this.props.lang].actions.createLocalStyles,
+                  value: 'LOCAL_STYLES',
+                  feature: 'SYNC_LOCAL_STYLES',
+                  position: 0,
+                  type: 'OPTION',
+                  isActive: features.find(
+                    (feature) => feature.name === 'SYNC_LOCAL_STYLES'
+                  )?.isActive,
+                  isBlocked: isBlocked(
+                    'SYNC_LOCAL_STYLES',
+                    this.props.planStatus ?? 'UNPAID'
+                  ),
+                  isNew: features.find(
+                    (feature) => feature.name === 'SYNC_LOCAL_STYLES'
+                  )?.isNew,
+                  children: [],
+                  action: (e) => this.props.onSyncLocalStyles?.(e),
+                },
+                {
+                  label: locals[this.props.lang].actions.createLocalVariables,
+                  value: 'LOCAL_VARIABLES',
+                  feature: 'SYNC_LOCAL_VARIABLES',
+                  position: 0,
+                  type: 'OPTION',
+                  isActive: features.find(
+                    (feature) => feature.name === 'SYNC_LOCAL_VARIABLES'
+                  )?.isActive,
+                  isBlocked: isBlocked(
+                    'SYNC_LOCAL_VARIABLES',
+                    this.props.planStatus ?? 'UNPAID'
+                  ),
+                  isNew: features.find(
+                    (feature) => feature.name === 'SYNC_LOCAL_VARIABLES'
+                  )?.isNew,
+                  children: [],
+                  action: (e) => this.props.onSyncLocalVariables?.(e),
+                },
+                {
+                  ...this.publicationAction(),
+                  position: 0,
+                  type: 'OPTION',
+                  isActive: features.find(
+                    (feature) => feature.name === 'PUBLISH_PALETTE'
+                  )?.isActive,
+                  isBlocked: isBlocked(
+                    'PUBLISH_PALETTE',
+                    this.props.planStatus ?? 'UNPAID'
+                  ),
+                  isNew: features.find(
+                    (feature) => feature.name === 'PUBLISH_PALETTE'
+                  )?.isNew,
+                  children: [],
+                  action: (e) => this.props.onPublishPalette?.(e),
+                } as DropdownOption,
+              ]}
+              alignment="TOP_RIGHT"
+            />
+          ) : (
+            <Feature
+              isActive={
+                features.find((feature) => feature.name === 'PUBLISH_PALETTE')
+                  ?.isActive
+              }
+            >
+              <Button
+                type="primary"
+                label={this.publicationLabel()}
+                feature="PUBLISH_PALETTE"
+                action={this.props.onPublishPalette}
+              />
+            </Feature>
+          )}
         </div>
         <div className="actions__left"></div>
       </div>

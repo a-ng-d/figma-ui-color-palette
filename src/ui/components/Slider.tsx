@@ -1,17 +1,19 @@
-import * as React from 'react'
-import type { ScaleConfiguration, Easing } from '../../utils/types'
-import Knob from './Knob'
 import { doMap } from '@a-ng-d/figmug.modules.do-map'
+import React from 'react'
+
+import { ScaleConfiguration } from '../../types/configurations'
+import { Easing } from '../../types/management'
+import doLightnessScale from '../../utils/doLightnessScale'
+import { palette } from '../../utils/palettePackage'
 import addStop from './../handlers/addStop'
 import deleteStop from './../handlers/deleteStop'
 import shiftLeftStop from './../handlers/shiftLeftStop'
 import shiftRightStop from './../handlers/shiftRightStop'
-import { palette } from '../../utils/palettePackage'
-import doLightnessScale from '../../utils/doLightnessScale'
+import Knob from './Knob'
 
 const safeGap = 0.1
 
-interface Props {
+interface SliderProps {
   stops: Array<number>
   hasPreset: boolean
   presetName: string
@@ -23,7 +25,7 @@ interface Props {
   onChange: (state: string, feature?: string) => void
 }
 
-export default class Slider extends React.Component<Props> {
+export default class Slider extends React.Component<SliderProps> {
   // Handlers
   validHandler = (
     stopId: string,
@@ -32,7 +34,7 @@ export default class Slider extends React.Component<Props> {
       | React.KeyboardEvent<HTMLInputElement>
   ) => {
     const target = e.target as HTMLInputElement
-    if (target.value != '') {
+    if (target.value !== '') {
       palette.scale = this.props.scale ?? {}
       if (parseFloat(target.value) < parseFloat(target.min))
         palette.scale[`lightness-${stopId}`] = parseFloat(target.min)
@@ -121,11 +123,11 @@ export default class Slider extends React.Component<Props> {
 
     update()
 
-    if (stop == range.lastChild) {
+    if (stop === range.lastChild) {
       // 900
       limitMin = 0
       limitMax = (stop.previousElementSibling as HTMLElement).offsetLeft - gap
-    } else if (stop == range.firstChild) {
+    } else if (stop === range.firstChild) {
       // 50
       limitMin = (stop.nextElementSibling as HTMLElement).offsetLeft + gap
       limitMax = rangeWidth
@@ -137,15 +139,15 @@ export default class Slider extends React.Component<Props> {
     if (offset <= limitMin) offset = limitMin
     else if (offset >= limitMax) offset = limitMax
 
-    // distribute stops horizontal spacing
-    if (stop == range.lastChild && e.shiftKey)
+    // Distribute stops horizontal spacing
+    if (stop === range.lastChild && e.shiftKey)
       // 900
       this.distributeStops(
         'MIN',
         parseFloat(doMap(offset, 0, rangeWidth, 0, 100).toFixed(1)),
         stops
       )
-    else if (stop == range.firstChild && e.shiftKey)
+    else if (stop === range.firstChild && e.shiftKey)
       // 50
       this.distributeStops(
         'MAX',
@@ -153,7 +155,7 @@ export default class Slider extends React.Component<Props> {
         stops
       )
 
-    // link every stop
+    // Link every stop
     if (e.ctrlKey || e.metaKey) {
       if (
         offset <
@@ -167,14 +169,14 @@ export default class Slider extends React.Component<Props> {
       else this.linkStops(offset, stop, stops, rangeWidth)
     }
 
-    if (e.ctrlKey == false && e.metaKey == false && e.shiftKey == false)
+    if (e.ctrlKey === false && e.metaKey === false && e.shiftKey === false)
       stops.forEach(
         (stop) => ((stop.children[0] as HTMLElement).style.display = 'none')
       )
 
     stop.style.left = doMap(offset, 0, rangeWidth, 0, 100).toFixed(1) + '%'
 
-    // update lightness scale
+    // Update lightness scale
     this.updateStopTooltip(
       tooltip,
       parseFloat(doMap(offset, 0, rangeWidth, 0, 100).toFixed(1))
@@ -203,7 +205,7 @@ export default class Slider extends React.Component<Props> {
   onAdd = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     if (
       (e.target as HTMLElement).classList[0] === 'slider__range' &&
-      Object.keys(this.props.scale != undefined ? this.props.scale : {})
+      Object.keys(this.props.scale !== undefined ? this.props.scale : {})
         .length < 24 &&
       this.props.presetName === 'Custom' &&
       !this.props.hasPreset
@@ -248,8 +250,8 @@ export default class Slider extends React.Component<Props> {
   updateStopTooltip = (tooltip: HTMLElement, value: number | string) => {
     tooltip.style.display = 'block'
     if (typeof value === 'string')
-      tooltip.textContent = value == '100.0' ? '100' : value
-    else tooltip.textContent = value == 100 ? '100' : value?.toFixed(1)
+      tooltip.textContent = value === '100.0' ? '100' : value
+    else tooltip.textContent = value === 100 ? '100' : value?.toFixed(1)
   }
 
   distributeStops = (
@@ -285,7 +287,7 @@ export default class Slider extends React.Component<Props> {
   ) => {
     stops.forEach((stop) => {
       const shift = stop.offsetLeft - src.offsetLeft + offset
-      if (stop != src)
+      if (stop !== src)
         stop.style.left =
           parseFloat(doMap(shift, 0, width, 0, 100).toFixed(1)) + '%'
       this.updateStopTooltip(
@@ -331,7 +333,7 @@ export default class Slider extends React.Component<Props> {
           this.props.presetName === 'Custom' && this.props.stops.length < 24
             ? 'slider__range--add'
             : null,
-          this.props.stops.length == 24 ? 'slider__range--not-allowed' : null,
+          this.props.stops.length === 24 ? 'slider__range--not-allowed' : null,
         ]
           .filter((n) => n)
           .join(' ')}
@@ -345,16 +347,16 @@ export default class Slider extends React.Component<Props> {
               shortId={lightness[0].replace('lightness-', '')}
               value={lightness[1]}
               min={
-                original[index + 1] == undefined
+                original[index + 1] === undefined
                   ? '0'
                   : (original[index + 1][1] + safeGap).toString()
               }
               max={
-                original[index - 1] == undefined
+                original[index - 1] === undefined
                   ? '100'
                   : (original[index - 1][1] - safeGap).toString()
               }
-              canBeTyped={true}
+              canBeTyped={!this.props.hasPreset}
               onShiftRight={(e) => {
                 this.onShiftRight(e.target as HTMLElement, e.metaKey, e.ctrlKey)
               }}

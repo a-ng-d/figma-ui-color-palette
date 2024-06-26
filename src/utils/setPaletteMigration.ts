@@ -1,69 +1,83 @@
-import type {
-  AlgorithmVersionConfiguration,
-  visionSimulationModeConfiguration,
-  ColorConfiguration,
-  ColorSpaceConfiguration,
-} from './types'
-import setData from './setData'
-import Colors from '../canvas/Colors'
-import { presets } from './palettePackage'
-import { lang, locals } from '../content/locals'
 import { uid } from 'uid'
 
-const setPaletteMigration = (palette: BaseNode) => {
-  const id = palette.getPluginData('id'),
-    type = palette.getPluginData('type'),
+import Colors from '../canvas/Colors'
+import { lang, locals } from '../content/locals'
+import {
+  AlgorithmVersionConfiguration,
+  ColorConfiguration,
+  ColorSpaceConfiguration,
+  VisionSimulationModeConfiguration,
+} from '../types/configurations'
+import { presets } from './palettePackage'
+import setData from './setData'
+
+const setPaletteMigration = async (palette: BaseNode) => {
+  const type = palette.getPluginData('type'),
+    name = palette.getPluginData('name'),
     min = palette.getPluginData('min'),
     max = palette.getPluginData('max'),
     description = palette.getPluginData('description'),
     preset = palette.getPluginData('preset'),
     scale = palette.getPluginData('scale'),
-    colors: Array<ColorConfiguration> = JSON.parse(
-      palette.getPluginData('colors')
-    ),
+    colors = palette.getPluginData('colors'),
+    colorsObject: Array<ColorConfiguration> = JSON.parse(colors),
     colorSpace = palette.getPluginData('colorSpace'),
     visionSimulationMode = palette.getPluginData('visionSimulationMode'),
     themes = palette.getPluginData('themes'),
     captions = palette.getPluginData('captions'),
     properties = palette.getPluginData('properties'),
     textColorsTheme = palette.getPluginData('textColorsTheme'),
-    algorithmVersion = palette.getPluginData('algorithmVersion')
+    algorithmVersion = palette.getPluginData('algorithmVersion'),
+    data = palette.getPluginData('data'),
+    isPublished = palette.getPluginData('isPublished'),
+    isShared = palette.getPluginData('isShared'),
+    createdAt = palette.getPluginData('createdAt'),
+    updatedAt = palette.getPluginData('updatedAt'),
+    creatorFullName = palette.getPluginData('creatorFullName'),
+    creatorAvatar = palette.getPluginData('creatorAvatar'),
+    creatorAvatarImg =
+      creatorAvatar !== '' && figma.editorType !== 'dev'
+        ? await figma
+            .createImageAsync(creatorAvatar)
+            .then(async (image: Image) => image)
+            .catch(() => null)
+        : null
 
-  // id
-  if (id === '') palette.setPluginData('id', uid())
+  // Id
+  if (!isPublished) palette.setPluginData('id', '')
 
-  // type
+  // Type
   if (type === '') palette.setPluginData('type', 'UI_COLOR_PALETTE')
 
-  // min-max
-  if (min != '' || max != '') {
+  // Min-Max
+  if (min !== '' || max !== '') {
     palette.setPluginData('min', '')
     palette.setPluginData('max', '')
   }
 
-  // description
+  // Description
   if (description === '') palette.setPluginData('description', '')
 
-  // preset
+  // Preset
   if (preset === '')
     palette.setPluginData(
       'preset',
       JSON.stringify(presets.find((preset) => preset.id === 'MATERIAL'))
     )
 
-  // colors
-  if (colors.length != 0) {
-    if (!Object.prototype.hasOwnProperty.call(colors[0], 'hueShifting'))
-      palette.setPluginData('colors', setData(colors, 'hueShifting', 0))
+  // Colors
+  if (colorsObject.length !== 0) {
+    if (!Object.prototype.hasOwnProperty.call(colorsObject[0], 'hueShifting'))
+      palette.setPluginData('colors', setData(colorsObject, 'hueShifting', 0))
 
-    if (!Object.prototype.hasOwnProperty.call(colors[0], 'description'))
-      palette.setPluginData('colors', setData(colors, 'description', ''))
+    if (!Object.prototype.hasOwnProperty.call(colorsObject[0], 'description'))
+      palette.setPluginData('colors', setData(colorsObject, 'description', ''))
 
-    if (!Object.prototype.hasOwnProperty.call(colors[0], 'id'))
+    if (!Object.prototype.hasOwnProperty.call(colorsObject[0], 'id'))
       palette.setPluginData(
         'colors',
         JSON.stringify(
-          colors.map((color) => {
+          colorsObject.map((color) => {
             color.id = uid()
             return color
           })
@@ -71,7 +85,9 @@ const setPaletteMigration = (palette: BaseNode) => {
       )
   }
 
-  if (colors.filter((color) => color.oklch).length == colors.length)
+  if (
+    colorsObject.filter((color) => color.oklch).length === colorsObject.length
+  )
     palette.setPluginData('colorSpace', 'OKLCH')
 
   if (colorSpace === '') palette.setPluginData('colorSpace', 'LCH')
@@ -79,7 +95,7 @@ const setPaletteMigration = (palette: BaseNode) => {
   if (visionSimulationMode === '')
     palette.setPluginData('visionSimulationMode', 'NONE')
 
-  // themes
+  // Themes
   if (themes === '')
     palette.setPluginData(
       'themes',
@@ -96,18 +112,21 @@ const setPaletteMigration = (palette: BaseNode) => {
       ])
     )
 
-  // view
-  if (captions == 'hasCaptions' || properties == 'hasProperties') {
+  // View
+  if (captions === 'hasCaptions' || properties === 'hasProperties') {
     palette.setPluginData('captions', '')
     palette.setPluginData('properties', '')
     palette.setPluginData('view', 'PALETTE_WITH_PROPERTIES')
-  } else if (captions == 'hasNotCaptions' || properties == 'hasNotProperties') {
+  } else if (
+    captions === 'hasNotCaptions' ||
+    properties === 'hasNotProperties'
+  ) {
     palette.setPluginData('captions', '')
     palette.setPluginData('properties', '')
     palette.setPluginData('view', 'PALETTE')
   }
 
-  // textColorsTheme
+  // TextColorsTheme
   if (textColorsTheme === '') {
     palette.setPluginData(
       'textColorsTheme',
@@ -118,17 +137,14 @@ const setPaletteMigration = (palette: BaseNode) => {
     )
   }
 
-  // algorithm
+  // Algorithm
   if (algorithmVersion === '') palette.setPluginData('algorithmVersion', 'v1')
 
-  // data
-  if (
-    palette.getPluginData('data') === '' ||
-    JSON.parse(palette.getPluginData('data')).type == undefined
-  )
+  // Data
+  if (data === '' || JSON.parse(data).type === undefined)
     new Colors(
       {
-        name: palette.getPluginData('name'),
+        name: name,
         description: palette.getPluginData('description'),
         preset: JSON.parse(palette.getPluginData('preset')),
         scale: JSON.parse(palette.getPluginData('scale')),
@@ -138,16 +154,28 @@ const setPaletteMigration = (palette: BaseNode) => {
         ) as ColorSpaceConfiguration,
         visionSimulationMode: palette.getPluginData(
           'visionSimulationMode'
-        ) as visionSimulationModeConfiguration,
+        ) as VisionSimulationModeConfiguration,
         themes: JSON.parse(palette.getPluginData('themes')),
         view: 'SHEET',
         textColorsTheme: JSON.parse(palette.getPluginData('textColorsTheme')),
         algorithmVersion: palette.getPluginData(
           'algorithmVersion'
         ) as AlgorithmVersionConfiguration,
+        creatorFullName: creatorFullName,
+        creatorAvatarImg: creatorAvatarImg,
       },
       palette as FrameNode
     ).makePaletteData('CREATE')
+
+  // Publication and Share
+  if (isPublished === '') palette.setPluginData('isPublished', 'false')
+  if (isShared === '') palette.setPluginData('isShared', 'false')
+
+  // Created, Updated and Published
+  if (createdAt === '')
+    palette.setPluginData('createdAt', new Date().toISOString())
+  if (updatedAt === '')
+    palette.setPluginData('updatedAt', new Date().toISOString())
 }
 
 export default setPaletteMigration

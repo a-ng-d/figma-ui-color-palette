@@ -1,7 +1,18 @@
-import type { Feature } from './types'
+import { Feature } from '../types/app'
 
-export const trialTime = 48
-export const oldTrialTime = 168
+export const trialTime = 72
+export const oldTrialTime = 48
+
+export const pageSize = 20
+export const workerUrl = process.env.REACT_APP_WORKER_URL as string
+export const databaseUrl = process.env.REACT_APP_SUPABASE_URL as string
+export const authUrl = process.env.REACT_APP_AUTH_URL as string
+
+export const palettesDbTableName = 'palettes'
+export const palettesStorageName = 'palette.screenshots'
+
+export const userConsentVersion = '2024.01'
+export const trialVersion = '2024.02'
 
 export const features: Array<Feature> = [
   {
@@ -41,51 +52,6 @@ export const features: Array<Feature> = [
     service: ['CREATE', 'EDIT'],
   },
   {
-    name: 'BROWSE',
-    description: 'Browse UI Color Palette on the current page',
-    isActive: true,
-    isPro: false,
-    isNew: false,
-    type: 'CONTEXT',
-    service: ['TRANSFER'],
-  },
-  {
-    name: 'VIEWS',
-    description: 'Information arrangement',
-    isActive: true,
-    isPro: false,
-    isNew: false,
-    type: 'DIVISION',
-    service: ['CREATE', 'EDIT'],
-  },
-  {
-    name: 'VIEWS_PALETTE',
-    description: 'Palette view',
-    isActive: true,
-    isPro: false,
-    isNew: false,
-    type: 'ACTION',
-    service: ['CREATE', 'EDIT'],
-  },
-  {
-    name: 'VIEWS_PALETTE_WITH_PROPERTIES',
-    description: 'Detailed palette view',
-    isActive: true,
-    isPro: false,
-    isNew: false,
-    type: 'ACTION',
-    service: ['CREATE', 'EDIT'],
-  },
-  {
-    name: 'VIEWS_SHEET',
-    description: 'Detailed color sheet view',
-    isActive: true,
-    isPro: true,
-    isNew: false,
-    type: 'ACTION',
-    service: ['CREATE', 'EDIT'],
-  },
-  {
     name: 'CREATE_PALETTE',
     description: 'Generate a palette',
     isActive: true,
@@ -98,7 +64,7 @@ export const features: Array<Feature> = [
     name: 'SYNC_LOCAL_STYLES',
     description: 'Styles local sychronization',
     isActive: true,
-    isPro: false,
+    isPro: true,
     isNew: false,
     type: 'ACTION',
     service: ['EDIT'],
@@ -113,11 +79,74 @@ export const features: Array<Feature> = [
     service: ['EDIT'],
   },
   {
+    name: 'PUBLISH_PALETTE',
+    description: 'Publish palette to the community and self',
+    isActive: true,
+    isPro: false,
+    isNew: false,
+    type: 'ACTION',
+    service: ['EDIT'],
+  },
+  {
+    name: 'PALETTES',
+    description: 'Palettes that can be reused',
+    isActive: true,
+    isPro: true,
+    isNew: false,
+    type: 'CONTEXT',
+    service: ['CREATE'],
+  },
+  {
+    name: 'PALETTES_SELF',
+    description: 'Self-created palettes',
+    isActive: true,
+    isPro: false,
+    isNew: false,
+    type: 'CONTEXT',
+    service: ['CREATE'],
+  },
+  {
+    name: 'PALETTES_COMMUNITY',
+    description: 'Community palettes',
+    isActive: true,
+    isPro: false,
+    isNew: false,
+    type: 'CONTEXT',
+    service: ['CREATE'],
+  },
+  {
+    name: 'PALETTES_DEV',
+    description: 'Dev mode palettes',
+    isActive: true,
+    isPro: true,
+    isNew: false,
+    type: 'DIVISION',
+    service: ['CREATE'],
+  },
+  {
     name: 'SOURCE',
     description: 'Raw source colors',
     isActive: true,
     isPro: false,
     isNew: true,
+    type: 'CONTEXT',
+    service: ['CREATE'],
+  },
+  {
+    name: 'SOURCE_OVERVIEW',
+    description: 'Source colors overview and import',
+    isActive: true,
+    isPro: false,
+    isNew: false,
+    type: 'CONTEXT',
+    service: ['CREATE'],
+  },
+  {
+    name: 'SOURCE_EXPLORE',
+    description: 'External color palettes from Colour Lovers',
+    isActive: true,
+    isPro: false,
+    isNew: false,
     type: 'CONTEXT',
     service: ['CREATE'],
   },
@@ -144,6 +173,15 @@ export const features: Array<Feature> = [
     description: 'Import colors from a Realtime Colors simulation',
     isActive: true,
     isPro: true,
+    isNew: false,
+    type: 'ACTION',
+    service: ['CREATE'],
+  },
+  {
+    name: 'SOURCE_COLOUR_LOVERS',
+    description: 'Import colors from a Colour Lovers palette',
+    isActive: true,
+    isPro: false,
     isNew: false,
     type: 'ACTION',
     service: ['CREATE'],
@@ -188,7 +226,7 @@ export const features: Array<Feature> = [
     name: 'PRESETS_MATERIAL_3',
     description: 'Material 3 color system',
     isActive: true,
-    isPro: false,
+    isPro: true,
     isNew: false,
     type: 'ACTION',
     service: ['CREATE'],
@@ -572,6 +610,42 @@ export const features: Array<Feature> = [
     service: ['CREATE', 'EDIT'],
   },
   {
+    name: 'VIEWS',
+    description: 'Information arrangement',
+    isActive: true,
+    isPro: false,
+    isNew: false,
+    type: 'DIVISION',
+    service: ['CREATE', 'EDIT'],
+  },
+  {
+    name: 'VIEWS_PALETTE',
+    description: 'Palette view',
+    isActive: true,
+    isPro: false,
+    isNew: false,
+    type: 'ACTION',
+    service: ['CREATE', 'EDIT'],
+  },
+  {
+    name: 'VIEWS_PALETTE_WITH_PROPERTIES',
+    description: 'Detailed palette view',
+    isActive: true,
+    isPro: false,
+    isNew: false,
+    type: 'ACTION',
+    service: ['CREATE', 'EDIT'],
+  },
+  {
+    name: 'VIEWS_SHEET',
+    description: 'Detailed color sheet view',
+    isActive: true,
+    isPro: true,
+    isNew: false,
+    type: 'ACTION',
+    service: ['CREATE', 'EDIT'],
+  },
+  {
     name: 'SETTINGS_COLOR_SPACE',
     description: 'Palette global color space',
     isActive: true,
@@ -752,6 +826,15 @@ export const features: Array<Feature> = [
     service: ['CREATE', 'EDIT'],
   },
   {
+    name: 'SHORTCUTS_USER',
+    description: 'User menu',
+    isActive: true,
+    isPro: false,
+    isNew: false,
+    type: 'DIVISION',
+    service: ['CREATE', 'EDIT'],
+  },
+  {
     name: 'SHORTCUTS_HIGHLIGHT',
     description: 'Release notes',
     isActive: true,
@@ -833,6 +916,15 @@ export const features: Array<Feature> = [
     service: ['CREATE', 'EDIT'],
   },
   {
+    name: 'PUBLICATION',
+    description: 'Palette publication pitch',
+    isActive: true,
+    isPro: false,
+    isNew: false,
+    type: 'DIVISION',
+    service: ['EDIT'],
+  },
+  {
     name: 'GET_PRO_PLAN',
     description: 'Pro plan subscription',
     isActive: true,
@@ -840,6 +932,24 @@ export const features: Array<Feature> = [
     isNew: false,
     type: 'ACTION',
     service: ['CREATE', 'EDIT'],
+  },
+  {
+    name: 'CONSENT',
+    description: 'User vendors consent',
+    isActive: true,
+    isPro: false,
+    isNew: false,
+    type: 'DIVISION',
+    service: ['CREATE', 'EDIT', 'TRANSFER'],
+  },
+  {
+    name: 'REPORT',
+    description: 'Bugs reportung form',
+    isActive: true,
+    isPro: false,
+    isNew: false,
+    type: 'DIVISION',
+    service: ['CREATE', 'EDIT', 'TRANSFER'],
   },
 ]
 

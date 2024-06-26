@@ -1,4 +1,7 @@
-import type { PaletteConfiguration, PresetConfiguration } from './types'
+import {
+  PaletteConfiguration,
+  PresetConfiguration,
+} from '../types/configurations'
 
 export const presets: Array<PresetConfiguration> = [
   {
@@ -78,6 +81,8 @@ export const presets: Array<PresetConfiguration> = [
   },
 ]
 
+export const defaultPreset = presets[0]
+
 export const palette: PaletteConfiguration = {
   name: '',
   description: '',
@@ -92,4 +97,5 @@ export const palette: PaletteConfiguration = {
     lightColor: '#FFFFFF',
     darkColor: '#000000',
   },
+  algorithmVersion: 'v2',
 }

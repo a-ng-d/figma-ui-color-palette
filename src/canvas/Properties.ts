@@ -1,22 +1,22 @@
-import type {
-  ActionsList,
-  visionSimulationModeConfiguration,
-  ColorSpaceConfiguration,
-  HexModel,
-  TextColorsThemeHexModel,
-} from '../utils/types'
-import chroma from 'chroma-js'
 import * as blinder from 'color-blind'
+import { HexModel } from '@a_ng_d/figmug-ui'
+import { APCAcontrast, fontLookupAPCA, sRGBtoY } from 'apca-w3'
+import chroma from 'chroma-js'
 import { Hsluv } from 'hsluv'
-import { APCAcontrast, sRGBtoY, fontLookupAPCA } from 'apca-w3'
+
+import { lang, locals } from '../content/locals'
+import {
+  ColorSpaceConfiguration,
+  VisionSimulationModeConfiguration,
+} from '../types/configurations'
+import { ActionsList, TextColorsThemeHexModel } from '../types/models'
 import Tag from './Tag'
-import { locals, lang } from '../content/locals'
 
 export default class Properties {
   name: string
   rgb: [number, number, number]
   colorSpace: ColorSpaceConfiguration
-  visionSimulationMode: visionSimulationModeConfiguration
+  visionSimulationMode: VisionSimulationModeConfiguration
   textColorsTheme: TextColorsThemeHexModel
   hex: HexModel
   lch: Array<number>
@@ -42,7 +42,7 @@ export default class Properties {
     name: string,
     rgb: [number, number, number],
     colorSpace: ColorSpaceConfiguration,
-    visionSimulationMode: visionSimulationModeConfiguration,
+    visionSimulationMode: VisionSimulationModeConfiguration,
     textColorsTheme: TextColorsThemeHexModel
   ) {
     this.name = name
@@ -73,7 +73,7 @@ export default class Properties {
 
   simulateColorBlind = (
     sourceColor: string,
-    visionSimulationMode: visionSimulationModeConfiguration
+    visionSimulationMode: VisionSimulationModeConfiguration
   ): string => {
     const actions: ActionsList = {
       NONE: () => sourceColor,
@@ -91,7 +91,7 @@ export default class Properties {
     return result !== undefined ? result : '#000000'
   }
 
-  getContrast = (textColor: string) => {
+  getWcagContrast = (textColor: string) => {
     return chroma.contrast(
       chroma(this.rgb).hex(),
       textColor === 'DARK'
@@ -107,36 +107,89 @@ export default class Properties {
   }
 
   getAPCAContrast = (textColor: string) => {
-    return APCAcontrast(
-      sRGBtoY(
-        textColor === 'DARK'
-          ? chroma(
-              this.simulateColorBlind(
-                this.textColorsTheme.darkColor,
-                this.visionSimulationMode
-              )
-            ).rgb()
-          : chroma(
-              this.simulateColorBlind(
-                this.textColorsTheme.lightColor,
-                this.visionSimulationMode
-              )
-            ).rgb()
-      ),
-      sRGBtoY(this.rgb)
+    return Math.abs(
+      APCAcontrast(
+        sRGBtoY(
+          textColor === 'DARK'
+            ? chroma(
+                this.simulateColorBlind(
+                  this.textColorsTheme.darkColor,
+                  this.visionSimulationMode
+                )
+              ).rgb()
+            : chroma(
+                this.simulateColorBlind(
+                  this.textColorsTheme.lightColor,
+                  this.visionSimulationMode
+                )
+              ).rgb()
+        ),
+        sRGBtoY(this.rgb)
+      )
     )
   }
 
-  getLevel = (textColor: string) => {
-    return this.getContrast(textColor) < 4.5
+  getWcagScore = (textColor: string) => {
+    return this.getWcagContrast(textColor) < 4.5
       ? 'A'
-      : this.getContrast(textColor) >= 4.5 && this.getContrast(textColor) < 7
-      ? 'AA'
-      : 'AAA'
+      : this.getWcagContrast(textColor) >= 4.5 &&
+          this.getWcagContrast(textColor) < 7
+        ? 'AA'
+        : 'AAA'
+  }
+
+  getScoreColor = (score: string) => {
+    if (score !== 'A' && score !== locals[lang].paletteProperties.avoid)
+      return {
+        r: 0.5294117647,
+        g: 0.8156862745,
+        b: 0.6941176471,
+      }
+    else {
+      return {
+        r: 0.8274509804,
+        g: 0.7019607843,
+        b: 0.7803921569,
+      }
+    }
   }
 
   getMinFontSizes = (textColor: string) => {
     return fontLookupAPCA(this.getAPCAContrast(textColor))
+  }
+
+  getRecommendedUsage = (textColor: string) => {
+    if (this.getAPCAContrast(textColor) >= 90)
+      return locals[lang].paletteProperties.fluentText
+    if (
+      this.getAPCAContrast(textColor) >= 75 &&
+      this.getAPCAContrast(textColor) < 90
+    )
+      return locals[lang].paletteProperties.contentText
+    if (
+      this.getAPCAContrast(textColor) >= 60 &&
+      this.getAPCAContrast(textColor) < 75
+    )
+      return locals[lang].paletteProperties.bodyText
+    if (
+      this.getAPCAContrast(textColor) >= 45 &&
+      this.getAPCAContrast(textColor) < 60
+    )
+      return locals[lang].paletteProperties.headlines
+    if (
+      this.getAPCAContrast(textColor) >= 30 &&
+      this.getAPCAContrast(textColor) < 45
+    )
+      return locals[lang].paletteProperties.spotText
+    if (
+      this.getAPCAContrast(textColor) >= 15 &&
+      this.getAPCAContrast(textColor) < 30
+    )
+      return locals[lang].paletteProperties.nonText
+    if (this.getAPCAContrast(textColor) < 15)
+      return locals[lang].paletteProperties.avoid
+
+    return locals[lang].paletteProperties.unknown
   }
 
   getHsluv = (rgb: [number, number, number]) => {
@@ -150,12 +203,12 @@ export default class Properties {
   }
 
   makeNodeTopProps = () => {
-    // base
+    // Base
     this.nodeTopProps = figma.createFrame()
     this.nodeTopProps.name = '_top'
     this.nodeTopProps.fills = []
 
-    // layout
+    // Layout
     this.nodeTopProps.layoutMode = 'HORIZONTAL'
     this.nodeTopProps.primaryAxisSizingMode = 'FIXED'
     this.nodeTopProps.layoutAlign = 'STRETCH'
@@ -165,30 +218,30 @@ export default class Properties {
   }
 
   makeNodeBottomProps = () => {
-    // base
+    // Base
     this.nodeBottomProps = figma.createFrame()
     this.nodeBottomProps.name = '_bottom'
     this.nodeBottomProps.fills = []
 
-    // layout
+    // Layout
     this.nodeBottomProps.layoutMode = 'VERTICAL'
     this.nodeBottomProps.counterAxisSizingMode = 'FIXED'
     this.nodeBottomProps.layoutAlign = 'STRETCH'
     this.nodeBottomProps.layoutSizingVertical = 'HUG'
 
-    // insert
+    // Insert
     this.nodeBottomProps.appendChild(this.makeNodeContrastScoresProps())
 
     return this.nodeBottomProps
   }
 
   makeNodeBaseProps = () => {
-    // base
+    // Base
     this.nodeBaseProps = figma.createFrame()
     this.nodeBaseProps.name = '_base'
     this.nodeBaseProps.fills = []
 
-    // layout
+    // Layout
     this.nodeBaseProps.layoutMode = 'VERTICAL'
     this.nodeBaseProps.counterAxisSizingMode = 'FIXED'
     this.nodeBaseProps.layoutGrow = 1
@@ -199,52 +252,55 @@ export default class Properties {
     let basePropViaColorSpace
 
     if (this.colorSpace === 'LCH') {
-      basePropViaColorSpace = new Tag(
-        '_lch',
-        `L ${Math.floor(this.lch[0])} • C ${Math.floor(
+      basePropViaColorSpace = new Tag({
+        name: '_lch',
+        content: `L ${Math.floor(this.lch[0])} • C ${Math.floor(
           this.lch[1]
-        )} • H ${Math.floor(this.lch[2])}`
-      ).makeNodeTag()
+        )} • H ${Math.floor(this.lch[2])}`,
+      }).makeNodeTag()
     } else if (this.colorSpace === 'OKLCH') {
-      basePropViaColorSpace = new Tag(
-        '_oklch',
-        `L ${parseFloat(this.oklch[0].toFixed(2))} • C ${parseFloat(
+      basePropViaColorSpace = new Tag({
+        name: '_oklch',
+        content: `L ${parseFloat(this.oklch[0].toFixed(2))} • C ${parseFloat(
           this.oklch[1].toFixed(2)
-        )} • H ${Math.floor(this.oklch[2])}`
-      ).makeNodeTag()
+        )} • H ${Math.floor(this.oklch[2])}`,
+      }).makeNodeTag()
     } else if (this.colorSpace === 'LAB') {
-      basePropViaColorSpace = new Tag(
-        '_lab',
-        `L ${Math.floor(this.lab[0])} • A ${Math.floor(
+      basePropViaColorSpace = new Tag({
+        name: '_lab',
+        content: `L ${Math.floor(this.lab[0])} • A ${Math.floor(
           this.lab[1]
-        )} • B ${Math.floor(this.lab[2])}`
-      ).makeNodeTag()
+        )} • B ${Math.floor(this.lab[2])}`,
+      }).makeNodeTag()
     } else if (this.colorSpace === 'OKLAB') {
-      basePropViaColorSpace = new Tag(
-        '_oklab',
-        `L ${parseFloat(this.oklab[0].toFixed(2))} • A ${parseFloat(
+      basePropViaColorSpace = new Tag({
+        name: '_oklab',
+        content: `L ${parseFloat(this.oklab[0].toFixed(2))} • A ${parseFloat(
           this.oklab[1].toFixed(2)
-        )} • B ${parseFloat(this.oklab[2].toFixed(2))}`
-      ).makeNodeTag()
+        )} • B ${parseFloat(this.oklab[2].toFixed(2))}`,
+      }).makeNodeTag()
     } else if (this.colorSpace === 'HSL') {
-      basePropViaColorSpace = new Tag(
-        '_hsl',
-        `H ${Math.floor(this.hsl[0])} • S ${Math.floor(
+      basePropViaColorSpace = new Tag({
+        name: '_hsl',
+        content: `H ${Math.floor(this.hsl[0])} • S ${Math.floor(
           this.hsl[1] * 100
-        )} • L ${Math.floor(this.hsl[2] * 100)}`
-      ).makeNodeTag()
+        )} • L ${Math.floor(this.hsl[2] * 100)}`,
+      }).makeNodeTag()
     } else if (this.colorSpace === 'HSLUV') {
-      basePropViaColorSpace = new Tag(
-        '_hsluv',
-        `H ${Math.floor(this.hsluv[0])} • S ${Math.floor(
+      basePropViaColorSpace = new Tag({
+        name: '_hsluv',
+        content: `H ${Math.floor(this.hsluv[0])} • S ${Math.floor(
           this.hsluv[1]
-        )} • L ${Math.floor(this.hsluv[2])}`
-      ).makeNodeTag()
+        )} • L ${Math.floor(this.hsluv[2])}`,
+      }).makeNodeTag()
     }
 
-    // insert
+    // Insert
     this.nodeBaseProps.appendChild(
-      new Tag('_hex', this.hex.toUpperCase()).makeNodeTag()
+      new Tag({
+        name: '_hex',
+        content: this.hex.toUpperCase(),
+      }).makeNodeTag()
     )
     this.nodeBaseProps.appendChild(basePropViaColorSpace as FrameNode)
 
@@ -252,79 +308,123 @@ export default class Properties {
   }
 
   makeNodeContrastScoresProps = () => {
-    // base
+    // Base
     this.nodeContrastScoresProps = figma.createFrame()
     this.nodeContrastScoresProps.name = '_contrast-scores'
     this.nodeContrastScoresProps.fills = []
 
-    // layout
+    // Layout
     this.nodeContrastScoresProps.layoutMode = 'VERTICAL'
     this.nodeContrastScoresProps.counterAxisSizingMode = 'FIXED'
     this.nodeContrastScoresProps.layoutAlign = 'STRETCH'
     this.nodeContrastScoresProps.layoutSizingVertical = 'HUG'
     this.nodeContrastScoresProps.itemSpacing = 4
 
-    // insert
-    this.nodeContrastScoresProps.appendChild(
-      new Tag(
-        '_wcag21-light',
-        `${this.getContrast('LIGHT').toFixed(2)} • ${this.getLevel('LIGHT')}`
-      ).makeNodeTag(
+    // Insert
+    // WCAG
+    const wcagLightContrast = this.getWcagContrast('LIGHT').toFixed(2),
+      wcagDarkContrast = this.getWcagContrast('DARK').toFixed(2),
+      wcagLightScore = this.getWcagScore('LIGHT'),
+      wcagDarkScore = this.getWcagScore('DARK')
+
+    const nodeWcagLightProp = new Tag({
+        name: '_wcag21-light',
+        content: wcagLightContrast,
+        isCompact: true,
+      }).makeNodeTagwithIndicator(
         chroma(
           this.simulateColorBlind(
             this.textColorsTheme.lightColor,
             this.visionSimulationMode
           )
-        ).gl(),
-        true
-      )
-    )
-    this.nodeContrastScoresProps.appendChild(
-      new Tag(
-        '_wcag21-dark',
-        `${this.getContrast('DARK').toFixed(2)} • ${this.getLevel('DARK')}`
-      ).makeNodeTag(
+        ).gl()
+      ),
+      nodeWcagLightScore = new Tag({
+        name: '_wcag21-light-score',
+        content: wcagLightScore,
+        backgroundColor: {
+          rgb: this.getScoreColor(wcagLightScore),
+          alpha: 1,
+        },
+      }).makeNodeTag(),
+      nodeWcagDarkProp = new Tag({
+        name: '_wcag21-dark',
+        content: wcagDarkContrast,
+        isCompact: true,
+      }).makeNodeTagwithIndicator(
         chroma(
           this.simulateColorBlind(
             this.textColorsTheme.darkColor,
             this.visionSimulationMode
           )
-        ).gl(),
-        true
-      )
-    )
-    this.nodeContrastScoresProps.appendChild(
-      new Tag(
-        '_apca-light',
-        `Lc ${this.getAPCAContrast('LIGHT').toFixed(1)} • ${
-          this.getMinFontSizes('LIGHT')[4]
-        }pt (400)`
-      ).makeNodeTag(
+        ).gl()
+      ),
+      nodeWcagDarkScore = new Tag({
+        name: '_wcag21-dark-score',
+        content: wcagDarkScore,
+        backgroundColor: {
+          rgb: this.getScoreColor(wcagDarkScore),
+          alpha: 1,
+        },
+      }).makeNodeTag()
+
+    nodeWcagLightProp.appendChild(nodeWcagLightScore)
+    nodeWcagDarkProp.appendChild(nodeWcagDarkScore)
+
+    // APCA
+    const apcaLightContrast = this.getAPCAContrast('LIGHT').toFixed(1),
+      apcaLightRecommendation = this.getRecommendedUsage('LIGHT'),
+      apcaDarkContrast = this.getAPCAContrast('DARK').toFixed(1),
+      apcaDarkRecommendation = this.getRecommendedUsage('DARK')
+
+    const nodeApcaLightProp = new Tag({
+        name: '_apca-light',
+        content: `Lc ${apcaLightContrast}`,
+        isCompact: true,
+      }).makeNodeTagwithIndicator(
         chroma(
           this.simulateColorBlind(
             this.textColorsTheme.lightColor,
             this.visionSimulationMode
           )
-        ).gl(),
-        true
-      )
-    )
-    this.nodeContrastScoresProps.appendChild(
-      new Tag(
-        '_apca-dark',
-        `Lc ${this.getAPCAContrast('DARK').toFixed(1)} • ${
-          this.getMinFontSizes('DARK')[4]
-        }pt (400)`
-      ).makeNodeTag(
+        ).gl()
+      ),
+      nodeApcaLightScore = new Tag({
+        name: '_apca-light-score',
+        content: apcaLightRecommendation,
+        backgroundColor: {
+          rgb: this.getScoreColor(apcaLightRecommendation),
+          alpha: 1,
+        },
+      }).makeNodeTag(),
+      nodeApcaDarkProp = new Tag({
+        name: '_apca-dark',
+        content: `Lc ${apcaDarkContrast}`,
+        isCompact: true,
+      }).makeNodeTagwithIndicator(
         chroma(
           this.simulateColorBlind(
             this.textColorsTheme.darkColor,
             this.visionSimulationMode
           )
-        ).gl(),
-        true
-      )
-    )
+        ).gl()
+      ),
+      nodeApcaDarkScore = new Tag({
+        name: '_apca-dark-score',
+        content: apcaDarkRecommendation,
+        backgroundColor: {
+          rgb: this.getScoreColor(apcaDarkRecommendation),
+          alpha: 1,
+        },
+      }).makeNodeTag()
+
+    nodeApcaLightProp.appendChild(nodeApcaLightScore)
+    nodeApcaDarkProp.appendChild(nodeApcaDarkScore)
+
+    this.nodeContrastScoresProps.appendChild(nodeWcagLightProp)
+    this.nodeContrastScoresProps.appendChild(nodeApcaLightProp)
+    this.nodeContrastScoresProps.appendChild(nodeWcagDarkProp)
+    this.nodeContrastScoresProps.appendChild(nodeApcaDarkProp)
 
     return this.nodeContrastScoresProps
   }
@@ -334,7 +434,7 @@ export default class Properties {
     this.nodeDetailedBaseProps.name = '_base'
     this.nodeDetailedBaseProps.fills = []
 
-    // layout
+    // Layout
     this.nodeDetailedBaseProps.layoutMode = 'VERTICAL'
     this.nodeDetailedBaseProps.counterAxisSizingMode = 'FIXED'
     this.nodeDetailedBaseProps.layoutAlign = 'STRETCH'
@@ -344,55 +444,62 @@ export default class Properties {
     let basePropViaColorSpace
 
     if (this.colorSpace === 'LCH') {
-      basePropViaColorSpace = new Tag(
-        '_lch',
-        `L ${Math.floor(this.lch[0])} • C ${Math.floor(
+      basePropViaColorSpace = new Tag({
+        name: '_lch',
+        content: `L ${Math.floor(this.lch[0])} • C ${Math.floor(
           this.lch[1]
-        )} • H ${Math.floor(this.lch[2])}`
-      ).makeNodeTag()
+        )} • H ${Math.floor(this.lch[2])}`,
+      }).makeNodeTag()
     } else if (this.colorSpace === 'OKLCH') {
-      basePropViaColorSpace = new Tag(
-        '_oklch',
-        `L ${parseFloat(this.oklch[0].toFixed(2))} • C ${parseFloat(
+      basePropViaColorSpace = new Tag({
+        name: '_oklch',
+        content: `L ${parseFloat(this.oklch[0].toFixed(2))} • C ${parseFloat(
           this.oklch[1].toFixed(2)
-        )} • H ${Math.floor(this.oklch[2])}`
-      ).makeNodeTag()
+        )} • H ${Math.floor(this.oklch[2])}`,
+      }).makeNodeTag()
     } else if (this.colorSpace === 'LAB') {
-      basePropViaColorSpace = new Tag(
-        '_lab',
-        `L ${Math.floor(this.lab[0])} • A ${Math.floor(
+      basePropViaColorSpace = new Tag({
+        name: '_lab',
+        content: `L ${Math.floor(this.lab[0])} • A ${Math.floor(
           this.lab[1]
-        )} • B ${Math.floor(this.lab[2])}`
-      ).makeNodeTag()
+        )} • B ${Math.floor(this.lab[2])}`,
+      }).makeNodeTag()
     } else if (this.colorSpace === 'OKLAB') {
-      basePropViaColorSpace = new Tag(
-        '_oklab',
-        `L ${parseFloat(this.oklab[0].toFixed(2))} • A ${parseFloat(
+      basePropViaColorSpace = new Tag({
+        name: '_oklab',
+        content: `L ${parseFloat(this.oklab[0].toFixed(2))} • A ${parseFloat(
           this.oklab[1].toFixed(2)
-        )} • B ${parseFloat(this.oklab[2].toFixed(2))}`
-      ).makeNodeTag()
+        )} • B ${parseFloat(this.oklab[2].toFixed(2))}`,
+      }).makeNodeTag()
     } else if (this.colorSpace === 'HSL') {
-      basePropViaColorSpace = new Tag(
-        '_lab',
-        `H ${Math.floor(this.hsl[0])} • S ${Math.floor(
+      basePropViaColorSpace = new Tag({
+        name: '_lab',
+        content: `H ${Math.floor(this.hsl[0])} • S ${Math.floor(
           this.hsl[1] * 100
-        )} • L ${Math.floor(this.hsl[2] * 100)}`
-      ).makeNodeTag()
+        )} • L ${Math.floor(this.hsl[2] * 100)}`,
+      }).makeNodeTag()
     } else if (this.colorSpace === 'HSLUV') {
-      basePropViaColorSpace = new Tag(
-        '_hsluv',
-        `H ${Math.floor(this.hsluv[0])} • S ${Math.floor(
+      basePropViaColorSpace = new Tag({
+        name: '_hsluv',
+        content: `H ${Math.floor(this.hsluv[0])} • S ${Math.floor(
           this.hsluv[1]
-        )} • L ${Math.floor(this.hsluv[2])}`
-      ).makeNodeTag()
+        )} • L ${Math.floor(this.hsluv[2])}`,
+      }).makeNodeTag()
     }
 
-    // insert
+    // Insert
     this.nodeDetailedBaseProps.appendChild(
-      new Tag('_title', locals[lang].properties.base, 10).makeNodeTag()
+      new Tag({
+        name: '_title',
+        content: locals[lang].paletteProperties.base,
+        fontSize: 10,
+      }).makeNodeTag()
     )
     this.nodeDetailedBaseProps.appendChild(
-      new Tag('_hex', this.hex.toUpperCase()).makeNodeTag()
+      new Tag({
+        name: '_hex',
+        content: this.hex.toUpperCase(),
+      }).makeNodeTag()
     )
     this.nodeDetailedBaseProps.appendChild(basePropViaColorSpace as FrameNode)
 
@@ -404,28 +511,71 @@ export default class Properties {
     this.nodeDetailedWCAGScoresProps.name = '_wcag-scores'
     this.nodeDetailedWCAGScoresProps.fills = []
 
-    // layout
+    // Layout
     this.nodeDetailedWCAGScoresProps.layoutMode = 'VERTICAL'
     this.nodeDetailedWCAGScoresProps.layoutAlign = 'STRETCH'
     this.nodeDetailedWCAGScoresProps.layoutSizingVertical = 'HUG'
     this.nodeDetailedWCAGScoresProps.itemSpacing = 4
 
-    // insert
+    // Insert
+    const wcagLightContrast = this.getWcagContrast('LIGHT').toFixed(2),
+      wcagDarkContrast = this.getWcagContrast('DARK').toFixed(2),
+      wcagLightScore = this.getWcagScore('LIGHT'),
+      wcagDarkScore = this.getWcagScore('DARK')
+
+    const nodeWcagLightProp = new Tag({
+        name: '_wcag21-light',
+        content: wcagLightContrast,
+        isCompact: true,
+      }).makeNodeTagwithIndicator(
+        chroma(
+          this.simulateColorBlind(
+            this.textColorsTheme.lightColor,
+            this.visionSimulationMode
+          )
+        ).gl()
+      ),
+      nodeWcagLightScore = new Tag({
+        name: '_wcag21-light-score',
+        content: wcagLightScore,
+        backgroundColor: {
+          rgb: this.getScoreColor(wcagLightScore),
+          alpha: 1,
+        },
+      }).makeNodeTag(),
+      nodeWcagDarkProp = new Tag({
+        name: '_wcag21-dark',
+        content: wcagDarkContrast,
+        isCompact: true,
+      }).makeNodeTagwithIndicator(
+        chroma(
+          this.simulateColorBlind(
+            this.textColorsTheme.darkColor,
+            this.visionSimulationMode
+          )
+        ).gl()
+      ),
+      nodeWcagDarkScore = new Tag({
+        name: '_wcag21-dark-score',
+        content: wcagDarkScore,
+        backgroundColor: {
+          rgb: this.getScoreColor(wcagDarkScore),
+          alpha: 1,
+        },
+      }).makeNodeTag()
+
+    nodeWcagLightProp.appendChild(nodeWcagLightScore)
+    nodeWcagDarkProp.appendChild(nodeWcagDarkScore)
+
     this.nodeDetailedWCAGScoresProps.appendChild(
-      new Tag('_title', locals[lang].properties.wcag, 10).makeNodeTag()
+      new Tag({
+        name: '_title',
+        content: locals[lang].paletteProperties.wcag,
+        fontSize: 10,
+      }).makeNodeTag()
     )
-    this.nodeDetailedWCAGScoresProps.appendChild(
-      new Tag(
-        '_wcag21-light',
-        `${this.getContrast('LIGHT').toFixed(2)} • ${this.getLevel('LIGHT')}`
-      ).makeNodeTag(chroma(this.textColorsTheme.lightColor).gl(), true)
-    )
-    this.nodeDetailedWCAGScoresProps.appendChild(
-      new Tag(
-        '_wcag21-dark',
-        `${this.getContrast('DARK').toFixed(2)} • ${this.getLevel('DARK')}`
-      ).makeNodeTag(chroma(this.textColorsTheme.darkColor).gl(), true)
-    )
+    this.nodeDetailedWCAGScoresProps.appendChild(nodeWcagLightProp)
+    this.nodeDetailedWCAGScoresProps.appendChild(nodeWcagDarkProp)
 
     return this.nodeDetailedWCAGScoresProps
   }
@@ -439,86 +589,133 @@ export default class Properties {
       minimumLightFontSize: Array<string | number> =
         this.getMinFontSizes('LIGHT')
 
-    // layout
+    // Layout
     this.nodeDetailedAPCAScoresProps.layoutMode = 'VERTICAL'
     this.nodeDetailedAPCAScoresProps.counterAxisSizingMode = 'FIXED'
     this.nodeDetailedAPCAScoresProps.layoutAlign = 'STRETCH'
     this.nodeDetailedAPCAScoresProps.layoutSizingVertical = 'HUG'
     this.nodeDetailedAPCAScoresProps.itemSpacing = 4
 
-    // insert
+    // Insert
+    const apcaLightContrast = this.getAPCAContrast('LIGHT').toFixed(1),
+      apcaLightRecommendation = this.getRecommendedUsage('LIGHT'),
+      apcaDarkContrast = this.getAPCAContrast('DARK').toFixed(1),
+      apcaDarkRecommendation = this.getRecommendedUsage('DARK')
+
+    const nodeApcaLightProp = new Tag({
+        name: '_apca-light',
+        content: `Lc ${apcaLightContrast}`,
+        isCompact: true,
+      }).makeNodeTagwithIndicator(
+        chroma(
+          this.simulateColorBlind(
+            this.textColorsTheme.lightColor,
+            this.visionSimulationMode
+          )
+        ).gl()
+      ),
+      nodeApcaLightScore = new Tag({
+        name: '_apca-light-score',
+        content: apcaLightRecommendation,
+        backgroundColor: {
+          rgb: this.getScoreColor(apcaLightRecommendation),
+          alpha: 1,
+        },
+      }).makeNodeTag(),
+      nodeApcaDarkProp = new Tag({
+        name: '_apca-dark',
+        content: `Lc ${apcaDarkContrast}`,
+        isCompact: true,
+      }).makeNodeTagwithIndicator(
+        chroma(
+          this.simulateColorBlind(
+            this.textColorsTheme.darkColor,
+            this.visionSimulationMode
+          )
+        ).gl()
+      ),
+      nodeApcaDarkScore = new Tag({
+        name: '_apca-dark-score',
+        content: apcaDarkRecommendation,
+        backgroundColor: {
+          rgb: this.getScoreColor(apcaDarkRecommendation),
+          alpha: 1,
+        },
+      }).makeNodeTag()
+
+    nodeApcaLightProp.appendChild(nodeApcaLightScore)
+    nodeApcaDarkProp.appendChild(nodeApcaDarkScore)
+
     this.nodeDetailedAPCAScoresProps.appendChild(
-      new Tag('_title', locals[lang].properties.apca, 10).makeNodeTag()
+      new Tag({
+        name: '_title',
+        content: locals[lang].paletteProperties.apca,
+        fontSize: 10,
+      }).makeNodeTag()
     )
     this.nodeDetailedAPCAScoresProps.appendChild(
       this.makeNodeColumns(
         [
-          new Tag(
-            '_apca-light',
-            `Lc ${this.getAPCAContrast('LIGHT').toFixed(1)}`
-          ).makeNodeTag(chroma(this.textColorsTheme.lightColor).gl(), true),
-          new Tag(
-            '_minimum-font-sizes',
-            locals[lang].properties.fontSize
-          ).makeNodeTag(),
-          new Tag(
-            '_200-light',
-            `${minimumLightFontSize[2]}pt (200)`
-          ).makeNodeTag(),
-          new Tag(
-            '_300-light',
-            `${minimumLightFontSize[3]}pt (300)`
-          ).makeNodeTag(),
-          new Tag(
-            '_400-light',
-            `${minimumLightFontSize[4]}pt (400)`
-          ).makeNodeTag(),
-          new Tag(
-            '_500-light',
-            `${minimumLightFontSize[5]}pt (500)`
-          ).makeNodeTag(),
-          new Tag(
-            '_500-light',
-            `${minimumLightFontSize[6]}pt (600)`
-          ).makeNodeTag(),
-          new Tag(
-            '_700-light',
-            `${minimumLightFontSize[7]}pt (700)`
-          ).makeNodeTag(),
+          nodeApcaLightProp,
+          new Tag({
+            name: '_minimum-font-sizes',
+            content: locals[lang].paletteProperties.fontSize,
+          }).makeNodeTag(),
+          new Tag({
+            name: '_200-light',
+            content: `${minimumLightFontSize[2]}pt (Extra-Light 200)`,
+          }).makeNodeTag(),
+          new Tag({
+            name: '_300-light',
+            content: `${minimumLightFontSize[3]}pt (Light 300)`,
+          }).makeNodeTag(),
+          new Tag({
+            name: '_400-light',
+            content: `${minimumLightFontSize[4]}pt (Regular 400)`,
+          }).makeNodeTag(),
+          new Tag({
+            name: '_500-light',
+            content: `${minimumLightFontSize[5]}pt (Medium 500)`,
+          }).makeNodeTag(),
+          new Tag({
+            name: '_500-light',
+            content: `${minimumLightFontSize[6]}pt (Semi-Bold 600)`,
+          }).makeNodeTag(),
+          new Tag({
+            name: '_700-light',
+            content: `${minimumLightFontSize[7]}pt (Bold 700)`,
+          }).makeNodeTag(),
         ],
         [
-          new Tag(
-            '_apca-dark',
-            `Lc ${this.getAPCAContrast('DARK').toFixed(1)}`
-          ).makeNodeTag(chroma(this.textColorsTheme.darkColor).gl(), true),
-          new Tag(
-            '_minimum-font-sizes',
-            locals[lang].properties.fontSize
-          ).makeNodeTag(),
-          new Tag(
-            '_200-dark',
-            `${minimumDarkFontSize[2]}pt (200)`
-          ).makeNodeTag(),
-          new Tag(
-            '_300-dark',
-            `${minimumDarkFontSize[3]}pt (300)`
-          ).makeNodeTag(),
-          new Tag(
-            '_400-dark',
-            `${minimumDarkFontSize[4]}pt (400)`
-          ).makeNodeTag(),
-          new Tag(
-            '_500-dark',
-            `${minimumDarkFontSize[5]}pt (500)`
-          ).makeNodeTag(),
-          new Tag(
-            '_600-dark',
-            `${minimumDarkFontSize[6]}pt (600)`
-          ).makeNodeTag(),
-          new Tag(
-            '_700-dark',
-            `${minimumDarkFontSize[7]}pt (700)`
-          ).makeNodeTag(),
+          nodeApcaDarkProp,
+          new Tag({
+            name: '_minimum-font-sizes',
+            content: locals[lang].paletteProperties.fontSize,
+          }).makeNodeTag(),
+          new Tag({
+            name: '_200-dark',
+            content: `${minimumDarkFontSize[2]}pt (Extra-Light 200)`,
+          }).makeNodeTag(),
+          new Tag({
+            name: '_300-dark',
+            content: `${minimumDarkFontSize[3]}pt (Light 300)`,
+          }).makeNodeTag(),
+          new Tag({
+            name: '_400-dark',
+            content: `${minimumDarkFontSize[4]}pt (Regular 400)`,
+          }).makeNodeTag(),
+          new Tag({
+            name: '_500-dark',
+            content: `${minimumDarkFontSize[5]}pt (Medium 500)`,
+          }).makeNodeTag(),
+          new Tag({
+            name: '_600-dark',
+            content: `${minimumDarkFontSize[6]}pt (Semi-Bold 600)`,
+          }).makeNodeTag(),
+          new Tag({
+            name: '_700-dark',
+            content: `${minimumDarkFontSize[7]}pt (Bold 700)`,
+          }).makeNodeTag(),
         ]
       )
     )
@@ -538,7 +735,7 @@ export default class Properties {
       this.nodeRightColumn.fills =
         []
 
-    // layout
+    // Layout
     this.nodeColumns.layoutMode = 'HORIZONTAL'
     this.nodeColumns.primaryAxisSizingMode = 'FIXED'
     this.nodeColumns.layoutAlign = 'STRETCH'
@@ -554,7 +751,7 @@ export default class Properties {
       this.nodeRightColumn.layoutSizingVertical = 'HUG'
     this.nodeLeftColumn.itemSpacing = this.nodeRightColumn.itemSpacing = 4
 
-    // insert
+    // Insert
     leftNodes.forEach((node) => this.nodeLeftColumn?.appendChild(node))
     rightNodes.forEach((node) => this.nodeRightColumn?.appendChild(node))
     this.nodeColumns.appendChild(this.nodeLeftColumn)
@@ -564,12 +761,12 @@ export default class Properties {
   }
 
   makeNodeDetailed = () => {
-    // base
+    // Base
     this.node = figma.createFrame()
     this.node.name = '_properties'
     this.node.fills = []
 
-    // layout
+    // Layout
     this.node.layoutMode = 'VERTICAL'
     this.node.counterAxisSizingMode = 'FIXED'
     this.node.layoutAlign = 'STRETCH'
@@ -577,7 +774,7 @@ export default class Properties {
     this.node.layoutGrow = 1
     this.node.itemSpacing = 16
 
-    // insert
+    // Insert
     this.node.appendChild(
       this.makeNodeColumns(
         [this.makeNodeDetailedBaseProps()],
@@ -590,12 +787,12 @@ export default class Properties {
   }
 
   makeNode = () => {
-    // base
+    // Base
     this.node = figma.createFrame()
     this.node.name = '_properties'
     this.node.fills = []
 
-    // layout
+    // Layout
     this.node.layoutMode = 'VERTICAL'
     this.node.counterAxisSizingMode = 'FIXED'
     this.node.layoutAlign = 'STRETCH'
@@ -603,10 +800,14 @@ export default class Properties {
     this.node.layoutGrow = 1
     this.node.primaryAxisAlignItems = 'SPACE_BETWEEN'
 
-    // insert
+    // Insert
     this.node.appendChild(this.makeNodeTopProps())
     this.nodeTopProps?.appendChild(
-      new Tag('_scale', this.name, 10).makeNodeTag()
+      new Tag({
+        name: '_scale',
+        content: this.name,
+        fontSize: 10,
+      }).makeNodeTag()
     )
     this.nodeTopProps?.appendChild(this.makeNodeBaseProps())
     this.node.appendChild(this.makeNodeBottomProps())

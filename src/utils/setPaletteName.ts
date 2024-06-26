@@ -10,7 +10,7 @@ const setPaletteName = (
   const parameters: Array<string> = []
 
   name === '' ? parameters.push(locals[lang].name) : parameters.push(name)
-  theme === 'None' || theme == undefined ? null : parameters.push(theme)
+  theme === 'None' || theme === undefined ? null : parameters.push(theme)
   parameters.push(preset)
   parameters.push(colorSpace)
   visionSimulationMode === 'NONE'

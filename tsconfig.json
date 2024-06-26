@@ -8,9 +8,16 @@
     "jszip": ["node_modules/jszip/dist/jszip.min.js"]
   },
   "compilerOptions": {
-    "target": "es6",
-    "lib": ["es6", "dom", "es2022"],
+    "target": "ES2015",
+    "lib": [
+      "ES2019",
+      "DOM",
+      "ES6",
+      "DOM.Iterable",
+      "ScriptHost"
+    ],
     "moduleResolution": "node",
+    "module": "CommonJS",
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "strict": true,

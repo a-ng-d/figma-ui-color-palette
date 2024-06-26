@@ -1,11 +1,11 @@
-import * as React from 'react'
+import React from 'react'
 
-interface Props {
+interface FeatureProps {
   isActive: boolean
   children: React.ReactNode
 }
 
-export default class Feature extends React.Component<Props> {
+export default class Feature extends React.Component<FeatureProps> {
   static defaultProps = {
     isActive: false,
     isPro: false,

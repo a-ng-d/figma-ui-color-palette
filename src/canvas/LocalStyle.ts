@@ -1,4 +1,4 @@
-import type { RgbModel } from '../utils/types'
+import { RgbModel } from '../types/models'
 
 export default class LocalStyle {
   name: string

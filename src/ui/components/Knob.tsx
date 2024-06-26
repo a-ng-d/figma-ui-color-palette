@@ -1,9 +1,9 @@
-import * as React from 'react'
-import type { ActionsList } from '../../utils/types'
-import { Input } from '@a-ng-d/figmug.inputs.input'
-import { texts } from '@a-ng-d/figmug.stylesheets.texts'
+import { Input, texts } from '@a_ng_d/figmug-ui'
+import React from 'react'
 
-interface Props {
+import { ActionsList } from '../../types/models'
+
+interface KnobProps {
   id: string
   shortId: string
   value: string | number
@@ -27,8 +27,8 @@ interface States {
   stopInputValue: string | number
 }
 
-export default class Knob extends React.Component<Props, States> {
-  constructor(props: Props) {
+export default class Knob extends React.Component<KnobProps, States> {
+  constructor(props: KnobProps) {
     super(props)
     this.state = {
       isStopInputOpen: false,
@@ -40,10 +40,10 @@ export default class Knob extends React.Component<Props, States> {
   keyboardHandler = (action: string, e: React.KeyboardEvent) => {
     const actions: ActionsList = {
       ArrowRight: () => {
-        if (this.props.onShiftRight != undefined) this.props.onShiftRight(e)
+        if (this.props.onShiftRight !== undefined) this.props.onShiftRight(e)
       },
       ArrowLeft: () => {
-        if (this.props.onShiftLeft != undefined) this.props.onShiftLeft(e)
+        if (this.props.onShiftLeft !== undefined) this.props.onShiftLeft(e)
       },
       Enter: () => {
         if (this.props.canBeTyped)
@@ -57,7 +57,7 @@ export default class Knob extends React.Component<Props, States> {
         this.setState({ isStopInputOpen: false })
       },
       Backspace: () => {
-        if (this.props.onDelete != undefined) this.props.onDelete(e)
+        if (this.props.onDelete !== undefined) this.props.onDelete(e)
       },
     }
 
@@ -65,7 +65,7 @@ export default class Knob extends React.Component<Props, States> {
   }
 
   clickHandler = (e: React.MouseEvent) => {
-    if (e.detail == 2 && this.props.canBeTyped)
+    if (e.detail === 2 && this.props.canBeTyped)
       this.setState({
         isStopInputOpen: true,
         stopInputValue: this.props.value,
@@ -74,12 +74,12 @@ export default class Knob extends React.Component<Props, States> {
 
   transformStopValue = (value: string | number) =>
     typeof value === 'string'
-      ? value == '100.0'
+      ? value === '100.0'
         ? '100'
         : value
       : value === 100
-      ? '100'
-      : value.toFixed(1)
+        ? '100'
+        : value.toFixed(1)
 
   render() {
     return (
@@ -87,7 +87,7 @@ export default class Knob extends React.Component<Props, States> {
         className={[
           'slider__knob',
           this.props.id,
-          this.state['isStopInputOpen'] ? 'slider__knob--editing' : null,
+          this.state.isStopInputOpen ? 'slider__knob--editing' : null,
         ]
           .filter((n) => n)
           .join(' ')}
@@ -100,11 +100,11 @@ export default class Knob extends React.Component<Props, States> {
         <div className={`type ${texts.type} type--inverse slider__tooltip`}>
           {this.transformStopValue(this.props.value)}
         </div>
-        {this.state['isStopInputOpen'] ? (
+        {this.state.isStopInputOpen ? (
           <div className="slider__input">
             <Input
               type="NUMBER"
-              value={this.state['stopInputValue'].toString() ?? '0'}
+              value={this.state.stopInputValue.toString() ?? '0'}
               min={this.props.min}
               max={this.props.max}
               step="0.1"

@@ -1,11 +1,12 @@
 import { uid } from 'uid'
-import type {
-  ActionsList,
+
+import { lang, locals } from '../content/locals'
+import {
   SourceColorConfiguration,
   ThemeConfiguration,
-} from '../utils/types'
+} from '../types/configurations'
+import { ActionsList } from '../types/models'
 import setPaletteMigration from '../utils/setPaletteMigration'
-import { lang, locals } from '../content/locals'
 
 export let currentSelection: ReadonlyArray<SceneNode>
 export let previousSelection: ReadonlyArray<SceneNode> | undefined
@@ -13,7 +14,7 @@ export let isSelectionChanged = false
 
 const processSelection = () => {
   previousSelection =
-    currentSelection == undefined ? undefined : currentSelection
+    currentSelection === undefined ? undefined : currentSelection
   isSelectionChanged = true
 
   const selection: ReadonlyArray<BaseNode> = figma.currentPage.selection
@@ -24,13 +25,17 @@ const processSelection = () => {
   const palette: FrameNode | InstanceNode = selection[0] as
     | FrameNode
     | InstanceNode
-  const selectionHandler = (state: string, element: any = null) => {
+  const selectionHandler = (
+    state: string,
+    element: FrameNode | null = null
+  ) => {
     const actions: ActionsList = {
-      PALETTE_SELECTED: () => {
+      PALETTE_SELECTED: async () => {
         figma.ui.postMessage({
           type: 'PALETTE_SELECTED',
           data: {
             editorType: figma.editorType,
+            id: palette.getPluginData('id'),
             name: palette.getPluginData('name'),
             description: palette.getPluginData('description'),
             preset: JSON.parse(palette.getPluginData('preset')),
@@ -46,11 +51,38 @@ const processSelection = () => {
               palette.getPluginData('textColorsTheme')
             ),
             algorithmVersion: palette.getPluginData('algorithmVersion'),
+            isPublished: palette.getPluginData('isPublished') === 'true',
+            isShared: palette.getPluginData('isShared') === 'true',
+            creatorFullName: palette.getPluginData('creatorFullName'),
+            creatorAvatar: palette.getPluginData('creatorAvatar'),
+            creatorId: palette.getPluginData('creatorId'),
+            createdAt: palette.getPluginData('createdAt'),
+            updatedAt: palette.getPluginData('updatedAt'),
+            publishedAt: palette.getPluginData('publishedAt'),
           },
-        }),
-          palette.setRelaunchData({
-            edit: locals[lang].relaunch.edit.description,
+        })
+
+        await palette
+          .exportAsync({
+            format: 'PNG',
+            constraint: { type: 'SCALE', value: 0.25 },
           })
+          .then((image) =>
+            figma.ui.postMessage({
+              type: 'UPDATE_SCREENSHOT',
+              data: image,
+            })
+          )
+          .catch(() =>
+            figma.ui.postMessage({
+              type: 'UPDATE_SCREENSHOT',
+              data: null,
+            })
+          )
+
+        palette.setRelaunchData({
+          edit: locals[lang].relaunch.edit.description,
+        })
       },
       EMPTY_SELECTION: () =>
         figma.ui.postMessage({
@@ -60,9 +92,11 @@ const processSelection = () => {
       COLOR_SELECTED: () => {
         figma.ui.postMessage({
           type: 'COLOR_SELECTED',
-          data: viableSelection,
+          data: {
+            selection: viableSelection,
+          },
         })
-        element.setRelaunchData({
+        element?.setRelaunchData({
           create: locals[lang].relaunch.create.description,
         })
       },
@@ -72,46 +106,56 @@ const processSelection = () => {
   }
 
   if (
-    selection.length == 1 &&
+    selection.length === 1 &&
     palette.getPluginData('type') === 'UI_COLOR_PALETTE' &&
-    palette.type != 'INSTANCE'
+    palette.type !== 'INSTANCE'
   ) {
     setPaletteMigration(palette) // Migration
     selectionHandler('PALETTE_SELECTED')
   } else if (
-    selection.length == 1 &&
+    selection.length === 1 &&
     palette.getPluginDataKeys().length > 0 &&
-    palette.type != 'INSTANCE'
+    palette.type !== 'INSTANCE'
   ) {
     setPaletteMigration(palette) // Migration
     selectionHandler('PALETTE_SELECTED')
-  } else if (selection.length == 0) selectionHandler('EMPTY_SELECTION')
-  else if (selection.length > 1 && palette.getPluginDataKeys().length != 0)
+  } else if (selection.length === 0) selectionHandler('EMPTY_SELECTION')
+  else if (selection.length > 1 && palette.getPluginDataKeys().length !== 0)
     selectionHandler('EMPTY_SELECTION')
   else if (selection[0].type === 'INSTANCE') selectionHandler('EMPTY_SELECTION')
-  else if ((selection[0] as any).fills == undefined)
+  else if ((selection[0] as FrameNode).fills === undefined)
     selectionHandler('EMPTY_SELECTION')
-  else if ((selection[0] as any).fills.length == 0)
+  else if (
+    (selection[0] as FrameNode).fills &&
+    ((selection[0] as FrameNode).fills as readonly Paint[]).length === 0
+  )
     selectionHandler('EMPTY_SELECTION')
 
   selection.forEach((element) => {
     if (
-      element.type != 'CONNECTOR' &&
-      element.type != 'GROUP' &&
-      element.type != 'EMBED'
+      element.type !== 'CONNECTOR' &&
+      element.type !== 'GROUP' &&
+      element.type !== 'EMBED' &&
+      element.type !== 'SLICE'
     )
       if (
-        (element as any).fills.filter((fill: Paint) => fill.type === 'SOLID')
-          .length != 0 &&
-        element.getPluginDataKeys().length == 0
+        ((element as FrameNode).fills as readonly Paint[]).filter(
+          (fill: Paint) => fill.type === 'SOLID'
+        ).length !== 0 &&
+        element.getPluginDataKeys().length === 0
       ) {
+        const solidFill = ((element as FrameNode).fills as Array<Paint>).find(
+          (fill: Paint) => fill.type === 'SOLID'
+        ) as SolidPaint
+
         viableSelection.push({
-          name: (element as any).name,
-          rgb: (element as any).fills[0].color,
+          name: (element as FrameNode).name,
+          rgb: solidFill.color,
           source: 'CANVAS',
           id: uid(),
+          isRemovable: false,
         })
-        selectionHandler('COLOR_SELECTED', element)
+        selectionHandler('COLOR_SELECTED', element as FrameNode)
       }
   })
 

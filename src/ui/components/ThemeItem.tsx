@@ -1,14 +1,13 @@
-import * as React from 'react'
-import { HexModel, Language } from '../../utils/types'
-import Feature from './Feature'
-import { Input } from '@a-ng-d/figmug.inputs.input'
-import { Button } from '@a-ng-d/figmug.actions.button'
-import { FormItem } from '@a-ng-d/figmug.layouts.form-item'
 import { doMap } from '@a-ng-d/figmug.modules.do-map'
-import features from '../../utils/config'
-import { locals } from '../../content/locals'
+import { Button, FormItem, HexModel, Input } from '@a_ng_d/figmug-ui'
+import React from 'react'
 
-interface Props {
+import { locals } from '../../content/locals'
+import { Language } from '../../types/app'
+import features from '../../utils/config'
+import Feature from './Feature'
+
+interface ThemeItemProps {
   name: string
   description: string
   paletteBackground: HexModel
@@ -36,13 +35,16 @@ interface Props {
   onChangeOrder: (e: React.DragEvent<HTMLLIElement>) => void
 }
 
-interface States {
+interface ThemeItemStates {
   isDragged: boolean
   hasMoreOptions: boolean
 }
 
-export default class ThemeItem extends React.Component<Props, States> {
-  constructor(props: Props) {
+export default class ThemeItem extends React.Component<
+  ThemeItemProps,
+  ThemeItemStates
+> {
+  constructor(props: ThemeItemProps) {
     super(props)
     this.state = {
       isDragged: false,
@@ -53,7 +55,7 @@ export default class ThemeItem extends React.Component<Props, States> {
   // Handlers
   optionsHandler = () => {
     this.props.onCancellationSelection
-    this.setState({ hasMoreOptions: !this.state['hasMoreOptions'] })
+    this.setState({ hasMoreOptions: !this.state.hasMoreOptions })
   }
 
   // Direct actions
@@ -118,10 +120,10 @@ export default class ThemeItem extends React.Component<Props, States> {
         data-position={this.props.index}
         className={[
           'list__item',
-          this.state['isDragged'] ? 'list__item--dragged' : null,
+          this.state.isDragged ? 'list__item--dragged' : null,
           this.props.guideAbove ? 'list__item--above' : null,
           this.props.guideBelow ? 'list__item--below' : null,
-          this.state['hasMoreOptions'] ? 'list__item--emphasis' : null,
+          this.state.hasMoreOptions ? 'list__item--emphasis' : null,
         ]
           .filter((n) => n)
           .join(' ')}
@@ -189,7 +191,7 @@ export default class ThemeItem extends React.Component<Props, States> {
               <Button
                 type="icon"
                 icon="ellipsis"
-                state={this.state['hasMoreOptions'] ? 'selected' : ''}
+                state={this.state.hasMoreOptions ? 'selected' : ''}
                 feature="DISPLAY_MORE"
                 action={this.optionsHandler}
               />
@@ -202,7 +204,7 @@ export default class ThemeItem extends React.Component<Props, States> {
             />
           </div>
         </div>
-        {this.state['hasMoreOptions'] ? (
+        {this.state.hasMoreOptions ? (
           <div className="list__item__secondary">
             <Feature
               isActive={

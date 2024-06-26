@@ -1,14 +1,12 @@
-import type { PaletteConfiguration } from './utils/types'
-import processSelection from './bridges/processSelection'
-import checkPlanStatus from './bridges/checkPlanStatus'
-import createPalette from './bridges/createPalette'
-import { presets } from './utils/palettePackage'
-import doLightnessScale from './utils/doLightnessScale'
-import loadUI from './bridges/loadUI'
+import checkPlanStatus from './bridges/checks/checkPlanStatus'
+import createPalette from './bridges/creations/createPalette'
 import loadParameters from './bridges/loadParameters'
+import loadUI from './bridges/loadUI'
+import processSelection from './bridges/processSelection'
+import { PaletteConfiguration } from './types/configurations'
+import doLightnessScale from './utils/doLightnessScale'
+import { presets } from './utils/palettePackage'
 import setPaletteMigration from './utils/setPaletteMigration'
-
-let palette: SceneNode
 
 // Fonts
 figma.loadFontAsync({ family: 'Inter', style: 'Regular' })
@@ -24,61 +22,62 @@ figma.parameters.on(
 
 // Loader
 figma.on('run', async ({ parameters }: RunEvent) => {
-  if (parameters == undefined) loadUI(palette)
+  if (parameters === undefined) loadUI()
   else {
     const selectedPreset = presets.find(
       (preset) => preset.name === parameters.preset
     )
-    createPalette(
-      {
-        data: {
-          sourceColors: figma.currentPage.selection
-            .filter(
-              (element) =>
-                element.type != 'GROUP' &&
-                element.type != 'EMBED' &&
-                element.type != 'CONNECTOR' &&
-                element.getPluginDataKeys().length == 0 &&
-                (element as any).fills.filter(
-                  (fill: Paint) => fill.type === 'SOLID'
-                ).length != 0
-            )
-            .map((element) => {
-              return {
-                name: element.name,
-                rgb: (element as any).fills[0].color,
-                source: 'CANVAS',
-                id: '',
-              }
-            }),
-          palette: {
-            name: parameters.name == undefined ? '' : parameters.name,
-            description: '',
-            preset: presets.find((preset) => preset.name === parameters.preset),
-            scale: doLightnessScale(
-              selectedPreset?.scale ?? [1, 2],
-              selectedPreset?.min ?? 0,
-              selectedPreset?.max ?? 100,
-              selectedPreset?.isDistributed ? true : false
-            ),
-            colorSpace: parameters.space.toUpperCase().replace(' ', '_'),
-            visionSimulationMode: 'NONE',
-            view: parameters.view.toUpperCase().split(' ').join('_'),
-            textColorsTheme: {
-              lightColor: '#FFFFFF',
-              darkColor: '#000000',
-            },
-          } as PaletteConfiguration,
-        },
+    createPalette({
+      data: {
+        sourceColors: figma.currentPage.selection
+          .filter(
+            (element) =>
+              element.type !== 'GROUP' &&
+              element.type !== 'EMBED' &&
+              element.type !== 'CONNECTOR' &&
+              element.getPluginDataKeys().length === 0 &&
+              ((element as FrameNode).fills as readonly SolidPaint[]).filter(
+                (fill: Paint) => fill.type === 'SOLID'
+              ).length !== 0
+          )
+          .map((element) => {
+            return {
+              name: element.name,
+              rgb: ((element as FrameNode).fills as readonly SolidPaint[])[0]
+                .color,
+              source: 'CANVAS',
+              id: '',
+              isRemovable: false,
+            }
+          }),
+        palette: {
+          name: parameters.name === undefined ? '' : parameters.name,
+          description: '',
+          preset: presets.find((preset) => preset.name === parameters.preset),
+          scale: doLightnessScale(
+            selectedPreset?.scale ?? [1, 2],
+            selectedPreset?.min ?? 0,
+            selectedPreset?.max ?? 100,
+            selectedPreset?.isDistributed ? true : false
+          ),
+          colorSpace: parameters.space.toUpperCase().replace(' ', '_'),
+          visionSimulationMode: 'NONE',
+          view: parameters.view.toUpperCase().split(' ').join('_'),
+          textColorsTheme: {
+            lightColor: '#FFFFFF',
+            darkColor: '#000000',
+          },
+          algorithmVersion: 'v2',
+        } as PaletteConfiguration,
       },
-      palette
-    )
+    })
     figma.closePlugin()
   }
 })
 
 // Migration
-figma.on('run', () => {
+figma.on('run', async () => {
+  await figma.currentPage.loadAsync()
   figma.currentPage
     .findAllWithCriteria({
       pluginData: {},
@@ -87,7 +86,8 @@ figma.on('run', () => {
       setPaletteMigration(palette)
     })
 })
-figma.on('currentpagechange', () => () => {
+figma.on('currentpagechange', async () => {
+  await figma.currentPage.loadAsync()
   figma.currentPage
     .findAllWithCriteria({
       pluginData: {},

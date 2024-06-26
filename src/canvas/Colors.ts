@@ -1,20 +1,23 @@
-import chroma from 'chroma-js'
 import * as blinder from 'color-blind'
+import chroma from 'chroma-js'
 import { Hsluv } from 'hsluv'
-import type {
-  PaletteNode,
+
+import { lang, locals } from '../content/locals'
+import {
   ScaleConfiguration,
-  PaletteDataThemeItem,
-  PaletteDataColorItem,
+  VisionSimulationModeConfiguration,
+} from '../types/configurations'
+import {
   PaletteData,
-  visionSimulationModeConfiguration,
-  ActionsList,
-} from '../utils/types'
-import Title from './Title'
+  PaletteDataColorItem,
+  PaletteDataThemeItem,
+} from '../types/data'
+import { ActionsList } from '../types/models'
+import { PaletteNode } from '../types/nodes'
 import Header from './Header'
 import Sample from './Sample'
 import Signature from './Signature'
-import { locals, lang } from '../content/locals'
+import Title from './Title'
 
 export default class Colors {
   parent: PaletteNode
@@ -71,14 +74,14 @@ export default class Colors {
       newColor = chroma
         .lch(
           lightness,
-          algorithmVersion == 'v2'
+          algorithmVersion === 'v2'
             ? Math.sin((lightness / 100) * Math.PI) * lch[1]
             : lch[1],
           lch[2] + hueShifting < 0
             ? 0
             : lch[2] + hueShifting > 360
-            ? 360
-            : lch[2] + hueShifting
+              ? 360
+              : lch[2] + hueShifting
         )
         .rgb()
 
@@ -95,14 +98,14 @@ export default class Colors {
       newColor = chroma
         .oklch(
           lightness / 100,
-          algorithmVersion == 'v2'
+          algorithmVersion === 'v2'
             ? Math.sin((lightness / 100) * Math.PI) * oklch[1]
             : oklch[1],
           oklch[2] + hueShifting < 0
             ? 0
             : oklch[2] + hueShifting > 360
-            ? 360
-            : oklch[2] + hueShifting
+              ? 360
+              : oklch[2] + hueShifting
         )
         .rgb()
 
@@ -126,11 +129,11 @@ export default class Colors {
     let newLabA = chr * Math.cos(h),
       newLabB = chr * Math.sin(h)
 
-    if (Math.sign(labA) == -1 && Math.sign(labB) == 1) {
+    if (Math.sign(labA) === -1 && Math.sign(labB) === 1) {
       newLabA *= -1
       newLabB *= -1
     }
-    if (Math.sign(labA) == -1 && Math.sign(labB) == -1) {
+    if (Math.sign(labA) === -1 && Math.sign(labB) === -1) {
       newLabA *= -1
       newLabB *= -1
     }
@@ -138,10 +141,10 @@ export default class Colors {
     const newColor = chroma
       .lab(
         lightness,
-        algorithmVersion == 'v2'
+        algorithmVersion === 'v2'
           ? Math.sin((lightness / 100) * Math.PI) * newLabA
           : newLabA,
-        algorithmVersion == 'v2'
+        algorithmVersion === 'v2'
           ? Math.sin((lightness / 100) * Math.PI) * newLabB
           : newLabB
       )
@@ -167,11 +170,11 @@ export default class Colors {
     let newLabA = chr * Math.cos(h),
       newLabB = chr * Math.sin(h)
 
-    if (Math.sign(labA) == -1 && Math.sign(labB) == 1) {
+    if (Math.sign(labA) === -1 && Math.sign(labB) === 1) {
       newLabA *= -1
       newLabB *= -1
     }
-    if (Math.sign(labA) == -1 && Math.sign(labB) == -1) {
+    if (Math.sign(labA) === -1 && Math.sign(labB) === -1) {
       newLabA *= -1
       newLabB *= -1
     }
@@ -179,10 +182,10 @@ export default class Colors {
     const newColor = chroma
       .oklab(
         lightness / 100,
-        algorithmVersion == 'v2'
+        algorithmVersion === 'v2'
           ? Math.sin((lightness / 100) * Math.PI) * newLabA
           : newLabA,
-        algorithmVersion == 'v2'
+        algorithmVersion === 'v2'
           ? Math.sin((lightness / 100) * Math.PI) * newLabB
           : newLabB
       )
@@ -203,9 +206,9 @@ export default class Colors {
           hsl[0] + hueShifting < 0
             ? 0
             : hsl[0] + hueShifting > 360
-            ? 360
-            : hsl[0] + hueShifting,
-          algorithmVersion == 'v2'
+              ? 360
+              : hsl[0] + hueShifting,
+          algorithmVersion === 'v2'
             ? Math.sin((lightness / 100) * Math.PI) * hsl[1]
             : hsl[1],
           lightness / 100
@@ -231,15 +234,15 @@ export default class Colors {
 
     hsluv.hsluv_l = lightness
     hsluv.hsluv_s =
-      algorithmVersion == 'v2'
+      algorithmVersion === 'v2'
         ? Math.sin((lightness / 100) * Math.PI) * hsluv.hsluv_s
         : hsluv.hsluv_s
     hsluv.hsluv_h =
       hsluv.hsluv_h + hueShifting < 0
         ? 0
         : hsluv.hsluv_h + hueShifting > 360
-        ? 360
-        : hsluv.hsluv_h + hueShifting
+          ? 360
+          : hsluv.hsluv_h + hueShifting
 
     if (Number.isNaN(hsluv.hsluv_s)) hsluv.hsluv_s = 0
     if (Number.isNaN(hsluv.hsluv_h)) hsluv.hsluv_h = 0
@@ -257,7 +260,7 @@ export default class Colors {
 
   simulateColorBlind = (
     sourceColor: [number, number, number],
-    visionSimulationMode: visionSimulationModeConfiguration
+    visionSimulationMode: VisionSimulationModeConfiguration
   ): [number, number, number] => {
     const actions: ActionsList = {
       NONE: () => sourceColor,
@@ -284,20 +287,20 @@ export default class Colors {
   }
 
   makeEmptyCase = () => {
-    // base
+    // Base
     this.nodeEmpty = figma.createFrame()
     this.nodeEmpty.name = '_message'
     this.nodeEmpty.resize(100, 48)
     this.nodeEmpty.fills = []
 
-    // layout
+    // Layout
     this.nodeEmpty.layoutMode = 'HORIZONTAL'
     this.nodeEmpty.primaryAxisSizingMode = 'FIXED'
     this.nodeEmpty.layoutSizingVertical = 'FIXED'
     this.nodeEmpty.layoutAlign = 'STRETCH'
     this.nodeEmpty.primaryAxisAlignItems = 'CENTER'
 
-    // insert
+    // Insert
     this.nodeEmpty.appendChild(
       new Sample(
         locals[lang].warning.emptySourceColors,
@@ -316,9 +319,9 @@ export default class Colors {
 
   searchForModeId = (themes: Array<PaletteDataThemeItem>, themeId: string) => {
     const themeMatch = themes.find((record) => record.id === themeId),
-      modeId = themeMatch == undefined ? '' : themeMatch.modeId
+      modeId = themeMatch === undefined ? '' : themeMatch.modeId
 
-    return modeId == undefined ? '' : modeId
+    return modeId === undefined ? '' : modeId
   }
 
   searchForShadeVariableId = (
@@ -329,16 +332,16 @@ export default class Colors {
   ) => {
     const themeMatch = themes.find((theme) => theme.id === themeId),
       colorMatch =
-        themeMatch == undefined
+        themeMatch === undefined
           ? undefined
           : themeMatch.colors.find((color) => color.id === colorId),
       shadeMatch =
-        colorMatch == undefined
+        colorMatch === undefined
           ? undefined
           : colorMatch.shades.find((shade) => shade.name === shadeName),
-      variableId = shadeMatch == undefined ? '' : shadeMatch.variableId
+      variableId = shadeMatch === undefined ? '' : shadeMatch.variableId
 
-    return variableId == undefined ? '' : variableId
+    return variableId === undefined ? '' : variableId
   }
 
   searchForShadeStyleId = (
@@ -349,16 +352,16 @@ export default class Colors {
   ) => {
     const themeMatch = themes.find((theme) => theme.id === themeId),
       colorMatch =
-        themeMatch == undefined
+        themeMatch === undefined
           ? undefined
           : themeMatch.colors.find((color) => color.id === colorId),
       shadeMatch =
-        colorMatch == undefined
+        colorMatch === undefined
           ? undefined
           : colorMatch.shades.find((shade) => shade.name === shadeName),
-      styleId = shadeMatch == undefined ? '' : shadeMatch.styleId
+      styleId = shadeMatch === undefined ? '' : shadeMatch.styleId
 
-    return styleId == undefined ? '' : styleId
+    return styleId === undefined ? '' : styleId
   }
 
   makePaletteData = (service: string) => {
@@ -537,17 +540,17 @@ export default class Colors {
   }
 
   makeNodeShades = () => {
-    // base
+    // Base
     this.nodeShades = figma.createFrame()
     this.nodeShades.name = '_shades'
     this.nodeShades.fills = []
 
-    // layout
+    // Layout
     this.nodeShades.layoutMode = 'VERTICAL'
     this.nodeShades.layoutSizingHorizontal = 'HUG'
     this.nodeShades.layoutSizingVertical = 'HUG'
 
-    // insert
+    // Insert
     this.nodeShades.appendChild(
       new Header(
         this.parent as PaletteNode,
@@ -565,7 +568,7 @@ export default class Colors {
         color.rgb.b * 255,
       ]
 
-      // base
+      // Base
       this.nodeRow = figma.createFrame()
       this.nodeRowSource = figma.createFrame()
       this.nodeRowShades = figma.createFrame()
@@ -577,7 +580,7 @@ export default class Colors {
         this.nodeRowShades.fills =
           []
 
-      // layout
+      // Layout
       this.nodeRow.layoutMode =
         this.nodeRowSource.layoutMode =
         this.nodeRowShades.layoutMode =
@@ -593,7 +596,7 @@ export default class Colors {
       if (!this.parent.view.includes('PALETTE'))
         this.nodeRow.itemSpacing = this.gap
 
-      // insert
+      // Insert
       this.nodeRowSource.appendChild(
         this.parent.view.includes('PALETTE')
           ? new Sample(
@@ -707,7 +710,7 @@ export default class Colors {
               )
             )
           } else {
-            if (this.nodeRowShades != null) {
+            if (this.nodeRowShades !== null) {
               this.nodeRowShades.layoutSizingHorizontal = 'FIXED'
               this.nodeRowShades.layoutWrap = 'WRAP'
               this.nodeRowShades.itemSpacing = this.gap
@@ -742,31 +745,31 @@ export default class Colors {
       this.nodeShades?.appendChild(this.nodeRow)
     })
     this.makePaletteData(this.parent.service ?? 'EDIT')
-    if (this.parent.colors.length == 0)
+    if (this.parent.colors.length === 0)
       this.nodeShades.appendChild(this.makeEmptyCase())
 
     return this.nodeShades
   }
 
   makeNode = () => {
-    // base
+    // Base
     this.node = figma.createFrame()
     this.node.name = '_colors﹒do not edit any layer'
     this.node.fills = []
     this.node.locked = true
 
-    // layout
+    // Layout
     this.node.layoutMode = 'VERTICAL'
     this.node.layoutSizingHorizontal = 'HUG'
     this.node.layoutSizingVertical = 'HUG'
     this.node.itemSpacing = 16
 
-    // insert
+    // Insert
     this.node.appendChild(new Title(this.parent).makeNode())
     this.node.appendChild(this.makeNodeShades())
     this.node.appendChild(new Signature().makeNode())
 
-    if (this.palette != undefined)
+    if (this.palette !== undefined)
       this.palette.fills = [
         {
           type: 'SOLID',

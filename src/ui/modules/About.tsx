@@ -1,19 +1,20 @@
-import * as React from 'react'
-import type { Language, PlanStatus, TrialStatus } from '../../utils/types'
-import Feature from '../components/Feature'
-import Icon from './Icon'
-import { texts } from '@a-ng-d/figmug.stylesheets.texts'
-import features from '../../utils/config'
-import package_json from './../../../package.json'
-import { locals } from '../../content/locals'
+import { texts } from '@a_ng_d/figmug-ui'
+import React from 'react'
 
-interface Props {
+import { locals } from '../../content/locals'
+import { Language, PlanStatus, TrialStatus } from '../../types/app'
+import features from '../../utils/config'
+import Feature from '../components/Feature'
+import package_json from './../../../package.json'
+import Icon from './Icon'
+
+interface AboutProps {
   planStatus: PlanStatus
   trialStatus: TrialStatus
   lang: Language
 }
 
-export default class About extends React.Component<Props> {
+export default class About extends React.Component<AboutProps> {
   render() {
     return (
       <div className="about controls__control">
@@ -25,10 +26,9 @@ export default class About extends React.Component<Props> {
                 {locals[this.props.lang].name}
               </p>
               <div className="about__info">
-                <p className={`type ${texts.type}`}>{`Version ${
-                  package_json.version.slice(0, 1) +
-                  package_json.version.slice(2, 3)
-                }`}</p>
+                <p
+                  className={`type ${texts.type}`}
+                >{`Version ${package_json.version}`}</p>
                 <Feature
                   isActive={
                     features.find((feature) => feature.name === 'GET_PRO_PLAN')
@@ -40,9 +40,9 @@ export default class About extends React.Component<Props> {
                     {this.props.planStatus === 'UNPAID'
                       ? locals[this.props.lang].plan.free
                       : this.props.planStatus === 'PAID' &&
-                        this.props.trialStatus === 'PENDING'
-                      ? locals[this.props.lang].plan.trial
-                      : locals[this.props.lang].plan.pro}
+                          this.props.trialStatus === 'PENDING'
+                        ? locals[this.props.lang].plan.trial
+                        : locals[this.props.lang].plan.pro}
                   </p>
                 </Feature>
               </div>
