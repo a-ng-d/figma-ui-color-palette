@@ -23,7 +23,7 @@ jobs:
       run: |
         touch .env
         echo REACT_APP_SUPABASE_URL="${{ vars.REACT_APP_SUPABASE_URL }}" >> .env
-        echo REACT_APP_SUPABASE_PUBLIC_ANON_KEY="${{ secrets.SUPABASE_PUBLIC_ANON_KEY }}" >> .env
+        echo REACT_APP_SUPABASE_PUBLIC_ANON_KEY="${{ secrets.REACT_APP_SUPABASE_PUBLIC_ANON_KEY }}" >> .env
         echo REACT_APP_SENTRY_URL="${{ vars.REACT_APP_SENTRY_URL }}" >> .env
         echo SENTRY_AUTH_TOKEN="${{ secrets.SENTRY_AUTH_TOKEN }}" >> .env
         echo REACT_APP_MIXPANEL_TOKEN="${{ vars.REACT_APP_MIXPANEL_TOKEN }}" >> .env
