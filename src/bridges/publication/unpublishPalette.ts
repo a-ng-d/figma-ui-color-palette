@@ -6,7 +6,7 @@ const unpublishPalette = async (
   rawData: Partial<AppStates>,
   isRemote = false
 ): Promise<Partial<AppStates>> => {
-  if (rawData.screenshot !== null && !isRemote) {
+  if (rawData.screenshot !== null || !isRemote) {
     const { error } = await supabase.storage
       .from(palettesStorageName)
       .remove([`${rawData.userSession?.userId}/${rawData.id}.png`])

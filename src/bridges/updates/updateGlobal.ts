@@ -62,10 +62,7 @@ const updateGlobal = async (msg: any) => {
       'textColorsTheme',
       JSON.stringify(msg.data.textColorsTheme)
     )
-    palette.setPluginData(
-      'algorithmVersion',
-      JSON.stringify(msg.data.algorithmVersion)
-    )
+    palette.setPluginData('algorithmVersion', msg.data.algorithmVersion)
     palette.setPluginData('createdAt', msg.data.dates.createdAt)
     palette.setPluginData('updatedAt', msg.data.dates.updatedAt)
     palette.setPluginData('publishedAt', msg.data.dates.publishedAt)

@@ -8,8 +8,12 @@ export const workerUrl = process.env.REACT_APP_WORKER_URL as string
 export const databaseUrl = process.env.REACT_APP_SUPABASE_URL as string
 export const authUrl = process.env.REACT_APP_AUTH_URL as string
 
-export const palettesDbTableName = 'palettes'
-export const palettesStorageName = 'palette.screenshots'
+export const palettesDbTableName =
+  process.env.NODE_ENV === 'development' ? 'sandbox.palettes' : 'palettes'
+export const palettesStorageName =
+  process.env.NODE_ENV === 'development'
+    ? 'Palette screenshots'
+    : 'palette.screenshots'
 
 export const userConsentVersion = '2024.01'
 export const trialVersion = '2024.02'
@@ -83,7 +87,7 @@ export const features: Array<Feature> = [
     description: 'Publish palette to the community and self',
     isActive: true,
     isPro: false,
-    isNew: false,
+    isNew: true,
     type: 'ACTION',
     service: ['EDIT'],
   },
@@ -92,7 +96,7 @@ export const features: Array<Feature> = [
     description: 'Palettes that can be reused',
     isActive: true,
     isPro: true,
-    isNew: false,
+    isNew: true,
     type: 'CONTEXT',
     service: ['CREATE'],
   },
@@ -101,7 +105,7 @@ export const features: Array<Feature> = [
     description: 'Self-created palettes',
     isActive: true,
     isPro: false,
-    isNew: false,
+    isNew: true,
     type: 'CONTEXT',
     service: ['CREATE'],
   },
@@ -110,7 +114,7 @@ export const features: Array<Feature> = [
     description: 'Community palettes',
     isActive: true,
     isPro: false,
-    isNew: false,
+    isNew: true,
     type: 'CONTEXT',
     service: ['CREATE'],
   },
@@ -146,7 +150,7 @@ export const features: Array<Feature> = [
     description: 'External color palettes from Colour Lovers',
     isActive: true,
     isPro: false,
-    isNew: false,
+    isNew: true,
     type: 'CONTEXT',
     service: ['CREATE'],
   },
@@ -163,7 +167,7 @@ export const features: Array<Feature> = [
     name: 'SOURCE_COOLORS',
     description: 'Import colors from a Coolors palette',
     isActive: true,
-    isPro: true,
+    isPro: false,
     isNew: false,
     type: 'ACTION',
     service: ['CREATE'],
@@ -172,7 +176,7 @@ export const features: Array<Feature> = [
     name: 'SOURCE_REALTIME_COLORS',
     description: 'Import colors from a Realtime Colors simulation',
     isActive: true,
-    isPro: true,
+    isPro: false,
     isNew: false,
     type: 'ACTION',
     service: ['CREATE'],
@@ -182,7 +186,7 @@ export const features: Array<Feature> = [
     description: 'Import colors from a Colour Lovers palette',
     isActive: true,
     isPro: false,
-    isNew: false,
+    isNew: true,
     type: 'ACTION',
     service: ['CREATE'],
   },
@@ -191,7 +195,7 @@ export const features: Array<Feature> = [
     description: 'Lightness scale configuration',
     isActive: true,
     isPro: false,
-    isNew: true,
+    isNew: false,
     type: 'CONTEXT',
     service: ['CREATE', 'EDIT'],
   },
@@ -290,7 +294,7 @@ export const features: Array<Feature> = [
     description: 'Customized color system',
     isActive: true,
     isPro: false,
-    isNew: true,
+    isNew: false,
     type: 'ACTION',
     service: ['CREATE'],
   },
@@ -317,7 +321,7 @@ export const features: Array<Feature> = [
     description: 'Distribution mode according to easings',
     isActive: true,
     isPro: false,
-    isNew: true,
+    isNew: false,
     type: 'ACTION',
     service: ['CREATE', 'EDIT'],
   },
@@ -739,7 +743,7 @@ export const features: Array<Feature> = [
     name: 'SETTINGS_VISION_SIMULATION_MODE_PROTANOPIA',
     description: 'Protanopia vision simulation mode',
     isActive: true,
-    isPro: true,
+    isPro: false,
     isNew: false,
     type: 'ACTION',
     service: ['CREATE', 'EDIT'],
@@ -884,7 +888,7 @@ export const features: Array<Feature> = [
     description: 'Bug reports',
     isActive: true,
     isPro: false,
-    isNew: false,
+    isNew: true,
     type: 'ACTION',
     service: ['CREATE', 'EDIT'],
   },

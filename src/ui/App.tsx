@@ -508,7 +508,7 @@ class App extends React.Component<Record<string, never>, AppStates> {
                 (consent) => consent.id === 'mixpanel'
               )?.isConsented ?? false,
               {
-                context: e.data.pluginMessage.context,
+                feature: e.data.pluginMessage.context,
               }
             )
         }
@@ -532,7 +532,7 @@ class App extends React.Component<Record<string, never>, AppStates> {
             this.state.userConsent.find((consent) => consent.id === 'mixpanel')
               ?.isConsented ?? false,
             {
-              context: e.data.pluginMessage.context,
+              feature: e.data.pluginMessage.context,
               colorSpace: e.data.pluginMessage.colorSpace,
             }
           )
@@ -561,7 +561,7 @@ class App extends React.Component<Record<string, never>, AppStates> {
             this.state.userConsent.find((consent) => consent.id === 'mixpanel')
               ?.isConsented ?? false,
             {
-              context: e.data.pluginMessage.context,
+              feature: e.data.pluginMessage.context,
             }
           )
         }
@@ -585,7 +585,7 @@ class App extends React.Component<Record<string, never>, AppStates> {
             this.state.userConsent.find((consent) => consent.id === 'mixpanel')
               ?.isConsented ?? false,
             {
-              context: e.data.pluginMessage.context,
+              feature: e.data.pluginMessage.context,
             }
           )
         }
@@ -609,7 +609,7 @@ class App extends React.Component<Record<string, never>, AppStates> {
             this.state.userConsent.find((consent) => consent.id === 'mixpanel')
               ?.isConsented ?? false,
             {
-              context: e.data.pluginMessage.context,
+              feature: e.data.pluginMessage.context,
             }
           )
         }
@@ -633,7 +633,7 @@ class App extends React.Component<Record<string, never>, AppStates> {
             this.state.userConsent.find((consent) => consent.id === 'mixpanel')
               ?.isConsented ?? false,
             {
-              context: e.data.pluginMessage.context,
+              feature: e.data.pluginMessage.context,
             }
           )
         }
@@ -657,7 +657,7 @@ class App extends React.Component<Record<string, never>, AppStates> {
             this.state.userConsent.find((consent) => consent.id === 'mixpanel')
               ?.isConsented ?? false,
             {
-              context: e.data.pluginMessage.context,
+              feature: e.data.pluginMessage.context,
             }
           )
         }
@@ -681,7 +681,7 @@ class App extends React.Component<Record<string, never>, AppStates> {
             this.state.userConsent.find((consent) => consent.id === 'mixpanel')
               ?.isConsented ?? false,
             {
-              context: e.data.pluginMessage.context,
+              feature: e.data.pluginMessage.context,
             }
           )
         }
