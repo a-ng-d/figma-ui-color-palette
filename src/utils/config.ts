@@ -8,8 +8,12 @@ export const workerUrl = process.env.REACT_APP_WORKER_URL as string
 export const databaseUrl = process.env.REACT_APP_SUPABASE_URL as string
 export const authUrl = process.env.REACT_APP_AUTH_URL as string
 
-export const palettesDbTableName = 'palettes'
-export const palettesStorageName = 'palette.screenshots'
+export const palettesDbTableName = process.env.NODE_ENV === 'development'
+  ? 'sandbox.palettes'
+  : 'palettes'
+export const palettesStorageName = process.env.NODE_ENV === 'development'
+  ? 'Palette screenshots'
+  : 'palette.screenshots'
 
 export const userConsentVersion = '2024.01'
 export const trialVersion = '2024.02'
