@@ -20,6 +20,8 @@ jobs:
 
     - name: Set tag and release name
       id: set_vars
+      env:
+        GH_TOKEN: ${{ secrets.GH_TOKEN }}
       run: |
         if [[ "${{ github.event_name }}" == "push" ]]; then
           echo "TAG_NAME=${GITHUB_REF_NAME}" >> $GITHUB_ENV
