@@ -107,7 +107,8 @@ export default class MyPalettes extends React.Component<
     currentPage: number,
     searchQuery: string
   ) => {
-    if (batch.length === 0 && currentPage === 1) return 'EMPTY'
+    if (batch.length === 0 && currentPage === 1 && searchQuery === '')
+      return 'EMPTY'
     if (batch.length === 0 && currentPage === 1 && searchQuery !== '')
       return 'NO_RESULT'
     else if (batch.length < pageSize) return 'COMPLETE'
@@ -524,7 +525,8 @@ export default class MyPalettes extends React.Component<
     return (
       <div className="controls__control">
         <div className="control__block control__block--no-padding">
-          {this.props.status !== 'SIGN_IN_FIRST' && (
+          {this.props.status !== 'SIGN_IN_FIRST'
+            && this.props.status !== 'EMPTY' && (
             <Bar
               soloPart={
                 <Input

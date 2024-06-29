@@ -93,7 +93,8 @@ export default class CommunityPalettes extends React.Component<
     currentPage: number,
     searchQuery: string
   ) => {
-    if (batch.length === 0 && currentPage === 1) return 'EMPTY'
+    if (batch.length === 0 && currentPage === 1 && searchQuery === '')
+      return 'EMPTY'
     if (batch.length === 0 && currentPage === 1 && searchQuery !== '')
       return 'NO_RESULT'
     else if (batch.length < pageSize) return 'COMPLETE'
@@ -380,30 +381,33 @@ export default class CommunityPalettes extends React.Component<
     return (
       <div className="controls__control">
         <div className="control__block control__block--no-padding">
-          <Bar
-            soloPart={
-              <Input
-                type="TEXT"
-                icon={{
-                  type: 'PICTO',
-                  value: 'search',
-                }}
-                placeholder={locals[this.props.lang].palettes.lazyLoad.search}
-                value={this.props.searchQuery}
-                onChange={(e) => {
-                  this.props.onChangeSearchQuery(
-                    (e.target as HTMLInputElement).value
-                  )
-                  this.props.onChangeStatus('LOADING')
-                  this.props.onChangeCurrentPage(1)
-                  this.props.onLoadPalettesList([])
-                  this.callUICPAgent(1, (e.target as HTMLInputElement).value)
-                }}
-              />
-            }
-            border={['BOTTOM']}
-          />
-          {<this.ExternalPalettesList />}
+          {this.props.status !== 'SIGN_IN_FIRST'
+            && this.props.status !== 'EMPTY' && (
+            <Bar
+              soloPart={
+                <Input
+                  type="TEXT"
+                  icon={{
+                    type: 'PICTO',
+                    value: 'search',
+                  }}
+                  placeholder={locals[this.props.lang].palettes.lazyLoad.search}
+                  value={this.props.searchQuery}
+                  onChange={(e) => {
+                    this.props.onChangeSearchQuery(
+                      (e.target as HTMLInputElement).value
+                    )
+                    this.props.onChangeStatus('LOADING')
+                    this.props.onChangeCurrentPage(1)
+                    this.props.onLoadPalettesList([])
+                    this.callUICPAgent(1, (e.target as HTMLInputElement).value)
+                  }}
+                />
+              }
+              border={['BOTTOM']}
+            />
+          )}
+          <this.ExternalPalettesList />
         </div>
       </div>
     )
