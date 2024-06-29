@@ -24,7 +24,7 @@ jobs:
       env:
         GH_TOKEN: ${{ secrets.GH_TOKEN }}
       with:
-        tag_name: ${{ github.event.pull_request.milestone }}
+        tag_name: v${{ github.event.pull_request.milestone }}
         release_name: UI Color Palette ${{ github.event.pull_request.milestone }} • ${{ github.event.pull_request.title}}
         body: |
           ## What's Changed
