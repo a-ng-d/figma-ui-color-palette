@@ -169,7 +169,7 @@ export const trackExportEvent = (
   if (!consent) return
   mixpanel.identify(id)
   mixpanel.track('Color Shades Exported', {
-    Context: options.context,
+    Feature: options.feature,
     'Color Space': options.colorSpace ?? 'NC',
     ...eventsRecurringProperties,
   })

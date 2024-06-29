@@ -69,7 +69,7 @@ export interface ColorThemeEvent {
 }
 
 export interface ExportEvent {
-  context?: string
+  feature?: string
   colorSpace?: ColorSpaceConfiguration
 }
 
