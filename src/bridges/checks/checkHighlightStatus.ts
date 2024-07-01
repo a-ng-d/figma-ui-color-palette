@@ -1,36 +1,26 @@
-import releaseNotes from '../../content/releaseNotes'
+import { releaseNotesVersion } from '../../utils/config'
 
-const checkHighlightStatus = async (version: string) => {
+const checkHighlightStatus = async () => {
   // figma.clientStorage.deleteAsync(`${version}_isRead`)
-  const mostRecentReleaseNoteVersion: string = releaseNotes.filter(
-    (note) => note['isMostRecent']
-  )[0]['version']
+  const isRead = await figma.clientStorage.getAsync(
+    `${releaseNotesVersion}_isRead`
+  )
 
-  if (mostRecentReleaseNoteVersion !== version)
-    await figma.ui.postMessage({
+  if (isRead === undefined || !isRead)
+    figma.ui.postMessage({
       type: 'CHECK_HIGHLIGHT_STATUS',
-      data: 'NO_RELEASE_NOTE',
+      data:
+        figma.payments !== undefined
+          ? figma.payments.getUserFirstRanSecondsAgo() > 60
+            ? 'UNREAD_RELEASE_NOTE'
+            : 'READ_RELEASE_NOTE'
+          : 'READ_RELEASE_NOTE',
     })
-  else {
-    if (
-      (await figma.clientStorage.getAsync(`${version}_isRead`)) === undefined ||
-      (await !figma.clientStorage.getAsync(`${version}_isRead`))
-    )
-      await figma.ui.postMessage({
-        type: 'CHECK_HIGHLIGHT_STATUS',
-        data:
-          figma.payments !== undefined
-            ? figma.payments.getUserFirstRanSecondsAgo() > 60
-              ? 'UNREAD_RELEASE_NOTE'
-              : 'READ_RELEASE_NOTE'
-            : 'READ_RELEASE_NOTE',
-      })
-    else
-      await figma.ui.postMessage({
-        type: 'CHECK_HIGHLIGHT_STATUS',
-        data: 'READ_RELEASE_NOTE',
-      })
-  }
+  else
+    figma.ui.postMessage({
+      type: 'CHECK_HIGHLIGHT_STATUS',
+      data: 'READ_RELEASE_NOTE',
+    })
 }
 
 export default checkHighlightStatus

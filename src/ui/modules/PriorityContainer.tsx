@@ -18,7 +18,7 @@ import { locals } from '../../content/locals'
 import { Language, PlanStatus, TrialStatus } from '../../types/app'
 import { PriorityContext } from '../../types/management'
 import { UserSession } from '../../types/user'
-import features from '../../utils/config'
+import features, { releaseNotesVersion } from '../../utils/config'
 import { trackSignInEvent } from '../../utils/eventsTracker'
 import type { AppStates } from '../App'
 import Feature from '../components/Feature'
@@ -295,11 +295,13 @@ export default class PriorityContainer extends React.Component<
             parent.postMessage(
               {
                 pluginMessage: {
-                  type: 'CLOSE_HIGHLIGHT',
-                  data: {
-                    version: package_json.version,
-                    isRead: true,
-                  },
+                  type: 'SET_ITEMS',
+                  items: [
+                    {
+                      key: `${releaseNotesVersion}_isRead`,
+                      value: true,
+                    },
+                  ],
                 },
               },
               '*'

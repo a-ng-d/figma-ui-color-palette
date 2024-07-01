@@ -1,12 +1,10 @@
 import { lang, locals } from '../content/locals'
 import { windowSize } from '../types/app'
 import { ActionsList } from '../types/models'
-import package_json from './../../package.json'
 import checkEditorType from './checks/checkEditorType'
 import checkHighlightStatus from './checks/checkHighlightStatus'
 import checkPlanStatus from './checks/checkPlanStatus'
 import checkUserConsent from './checks/checkUserConsent'
-import closeHighlight from './closeHighlight'
 import createLocalStyles from './creations/createLocalStyles'
 import createLocalVariables from './creations/createLocalVariables'
 import createPalette from './creations/createPalette'
@@ -48,7 +46,7 @@ const loadUI = async () => {
 
   checkUserConsent()
     .then(() => checkEditorType())
-    .then(() => checkHighlightStatus(package_json.version))
+    .then(() => checkHighlightStatus())
   processSelection()
 
   await checkPlanStatus()
@@ -83,7 +81,6 @@ const loadUI = async () => {
         figma.ui.resize(windowSize.w, windowSize.h)
       },
       CHECK_USER_CONSENT: () => checkUserConsent(),
-      CLOSE_HIGHLIGHT: () => closeHighlight(msg),
       CREATE_PALETTE: () => createPalette(msg),
       UPDATE_SCALE: () => updateScale(msg),
       UPDATE_VIEW: () => updateView(msg),
