@@ -139,7 +139,8 @@ const setPaletteMigration = async (palette: BaseNode) => {
 
   // Algorithm
   if (algorithmVersion === '') palette.setPluginData('algorithmVersion', 'v1')
-  if (algorithmVersion.includes('v2')) palette.setPluginData('algorithmVersion', 'v2')
+  if (algorithmVersion.includes('v2'))
+    palette.setPluginData('algorithmVersion', 'v2')
 
   // Data
   if (data === '' || JSON.parse(data).type === undefined)

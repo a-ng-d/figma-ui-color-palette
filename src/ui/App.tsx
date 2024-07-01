@@ -291,7 +291,6 @@ class App extends React.Component<Record<string, never>, AppStates> {
         const checkHighlightStatus = () =>
           this.setState({
             priorityContainerContext:
-              e.data.pluginMessage.data === 'NO_RELEASE_NOTE' ||
               e.data.pluginMessage.data === 'READ_RELEASE_NOTE'
                 ? 'EMPTY'
                 : 'HIGHLIGHT',
