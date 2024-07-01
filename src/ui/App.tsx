@@ -790,10 +790,6 @@ class App extends React.Component<Record<string, never>, AppStates> {
                 ?.isConsented,
             },
             {
-              key: 'sentry_user_consent',
-              value: e.find((consent) => consent.id === 'sentry')?.isConsented,
-            },
-            {
               key: 'user_consent_version',
               value: userConsentVersion,
             },
