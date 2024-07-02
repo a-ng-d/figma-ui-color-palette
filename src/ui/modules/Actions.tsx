@@ -165,6 +165,18 @@ export default class Actions extends React.Component<ActionsProps> {
                   action: (e) => this.props.onSyncLocalVariables?.(e),
                 },
                 {
+                  label: null,
+                  value: null,
+                  feature: null,
+                  position: 0,
+                  type: 'SEPARATOR',
+                  isActive: true,
+                  isBlocked: false,
+                  isNew: false,
+                  children: [],
+                  action: () => null,
+                },
+                {
                   ...this.publicationAction(),
                   position: 0,
                   type: 'OPTION',
