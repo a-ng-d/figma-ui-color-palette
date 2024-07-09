@@ -8,7 +8,6 @@ import {
 } from '@a_ng_d/figmug-ui'
 import React from 'react'
 
-import package_json from '../../../package.json'
 import { signIn } from '../../bridges/publication/authentication'
 import cp from '../../content/images/choose_plan.webp'
 import pp from '../../content/images/pro_plan.webp'
