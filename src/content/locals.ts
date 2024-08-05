@@ -18,8 +18,7 @@ const glossary: {
 export const locals: { [key: string]: any } = {
   'en-US': {
     name: 'UI Color Palette',
-    tagline:
-      'Create accessible color palettes for UI with consistent lightness and contrast',
+    tagline: 'Create, Manage, Deploy & Publish WCAG-compliant color palettes.',
     url: 'www.ui-color-palette.com',
     global: {
       description: {
