@@ -6,6 +6,7 @@ import {
   Button,
   Chip,
   ConsentConfiguration,
+  Drawer,
   Dropdown,
   HexModel,
   layouts,
@@ -60,14 +61,16 @@ interface PreviewStates {
   isWCAGDisplayed: boolean
   isAPCADisplayed: boolean
   isDrawerCollapsed: boolean
-  drawerHeight: string
 }
 
-export default class Preview extends PureComponent<PreviewProps, PreviewStates> {
-  private drawerRef: React.RefObject<HTMLDivElement>
+export default class Preview extends PureComponent<
+  PreviewProps,
+  PreviewStates
+> {
   private unsubscribeWCAG: (() => void) | undefined
   private unsubscribeAPCA: (() => void) | undefined
   private palette: typeof $palette
+  private drawerRef: React.RefObject<Drawer>
 
   static features = (planStatus: PlanStatus) => ({
     PREVIEW_SCORES: new FeatureStatus({
@@ -189,9 +192,8 @@ export default class Preview extends PureComponent<PreviewProps, PreviewStates> 
       isWCAGDisplayed: true,
       isAPCADisplayed: true,
       isDrawerCollapsed: false,
-      drawerHeight: 'auto',
     }
-    this.drawerRef = React.createRef()
+    this.drawerRef = React.createRef() as React.RefObject<Drawer>
   }
 
   // Lifecycle
@@ -209,25 +211,7 @@ export default class Preview extends PureComponent<PreviewProps, PreviewStates> 
     if (this.unsubscribeAPCA) this.unsubscribeAPCA()
   }
 
-  componentDidUpdate = (): void => {
-    if (this.props.colors.length === 0)
-      this.setState({
-        drawerHeight: 'auto',
-      })
-  }
-
   // Handlers
-  clickHandler = (e: React.MouseEvent<HTMLDivElement>) => {
-    document.body.style.cursor = ''
-    document.removeEventListener('mousemove', this.onDrag)
-
-    if (e.detail === 2)
-      this.setState({
-        drawerHeight: this.state.drawerHeight === 'auto' ? '100%' : 'auto',
-        isDrawerCollapsed: false,
-      })
-  }
-
   displayHandler = (): string => {
     const options = []
     if (this.state.isWCAGDisplayed) options.push('ENABLE_WCAG_SCORE')
@@ -392,31 +376,6 @@ export default class Preview extends PureComponent<PreviewProps, PreviewStates> 
     }
   }
 
-  onGrab = () => {
-    document.body.style.cursor = 'ns-resize'
-    document.addEventListener('mousemove', this.onDrag)
-  }
-
-  onDrag = (e: MouseEvent) => {
-    const { drawerRef } = this
-    const { clientY } = e
-    const bottom = drawerRef.current
-      ? drawerRef.current.getBoundingClientRect().bottom
-      : 0
-    const delta = bottom - clientY
-
-    this.setState({
-      drawerHeight: `${delta}px`,
-      isDrawerCollapsed: delta <= 40,
-    })
-
-    document.body.style.cursor = 'ns-resize'
-    document.addEventListener('mouseup', () => {
-      document.body.style.cursor = ''
-      document.removeEventListener('mousemove', this.onDrag)
-    })
-  }
-
   // Templates
   stopTag = ({ stop }: { stop: string }) => (
     <Chip state="ON_BACKGROUND">{stop}</Chip>
@@ -424,33 +383,41 @@ export default class Preview extends PureComponent<PreviewProps, PreviewStates> 
 
   // Render
   render() {
+    console.log(this.state.isDrawerCollapsed)
     if (!this.props.colors.length) return null
     return (
-      <div
+      <Drawer
         id="preview"
-        className="preview"
-        style={{
-          height: this.state.drawerHeight,
+        direction="VERTICAL"
+        pin="BOTTOM"
+        defaultSize={{
+          unit: 'AUTO',
         }}
+        maxSize={{
+          value: 100,
+          unit: 'PERCENT',
+        }}
+        minSize={{
+          value: 40,
+          unit: 'PIXEL',
+        }}
+        border={['TOP']}
+        onCollapse={() => this.setState({ isDrawerCollapsed: true })}
+        onExpand={() => this.setState({ isDrawerCollapsed: false })}
         ref={this.drawerRef}
       >
-        <div
-          className="preview__knob-spot"
-          onMouseDown={this.onGrab}
-          onClick={this.clickHandler}
-        />
         <Bar
           leftPartSlot={
             <div className={layouts['snackbar--tight']}>
               <Button
                 type="icon"
                 icon={this.state.isDrawerCollapsed ? 'upward' : 'downward'}
-                action={() =>
-                  this.setState({
-                    isDrawerCollapsed: !this.state.isDrawerCollapsed,
-                    drawerHeight: 'auto',
-                  })
-                }
+                action={() => {
+                  if (!this.state.isDrawerCollapsed)
+                    this.drawerRef.current?.collapseDrawer()
+                  else this.drawerRef.current?.expandDrawer()
+                  console.log(this.drawerRef.current)
+                }}
               />
               <Menu
                 id="change-score-display"
@@ -953,7 +920,7 @@ export default class Preview extends PureComponent<PreviewProps, PreviewStates> 
             </div>
           </div>
         )}
-      </div>
+      </Drawer>
     )
   }
 }
