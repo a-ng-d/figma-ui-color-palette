@@ -98,12 +98,22 @@ export default class Shade extends PureComponent<ShadeProps, ShadeStates> {
   lockColorTag = () => (
     <Chip
       state="ON_BACKGROUND"
-      rightSlot={
-        <Icon
-          type="PICTO"
-          iconName="lock-on"
-          iconColor="var(--black)"
-        />
+      leftSlot={
+        <div
+          style={{
+            width: 'var(--size-xsmall)',
+            height: 'var(--size-xsmall)',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <Icon
+            type="PICTO"
+            iconName="lock-on"
+            iconColor="var(--black)"
+          />
+        </div>
       }
     >
       {locals[this.props.lang].preview.lock.tag}
