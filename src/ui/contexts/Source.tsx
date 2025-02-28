@@ -123,7 +123,6 @@ export default class Source extends PureComponent<SourceProps, SourceStates> {
             />
           }
           border={['BOTTOM']}
-          isOnlyText={true}
         />
         {fragment}
       </>

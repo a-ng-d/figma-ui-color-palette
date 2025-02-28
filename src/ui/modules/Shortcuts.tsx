@@ -180,7 +180,8 @@ export default class Shortcuts extends PureComponent<
     )
       fragment = (
         <Button
-          type="compact"
+          type="alternative"
+          size="small"
           icon="lock-off"
           label={locals[this.props.lang].plan.getPro}
           action={() =>
@@ -195,7 +196,7 @@ export default class Shortcuts extends PureComponent<
           rightPartSlot={
             <>
               <div
-                className={['shortcuts', layouts['snackbar--tight']]
+                className={['shortcuts', layouts['snackbar--medium']]
                   .filter((n) => n)
                   .join(' ')}
               >

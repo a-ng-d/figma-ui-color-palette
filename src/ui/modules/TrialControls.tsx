@@ -68,7 +68,8 @@ export default class TrialControls extends PureComponent<TrialControlsProps> {
   FreePlan = () => (
     <>
       <Button
-        type="compact"
+        type="alternative"
+        size="small"
         icon="lock-off"
         label={locals[this.props.lang].plan.tryPro}
         action={this.props.onGetProPlan}
@@ -81,7 +82,8 @@ export default class TrialControls extends PureComponent<TrialControlsProps> {
   ExpiredTrial = () => (
     <>
       <Button
-        type="compact"
+        type="alternative"
+        size="small"
         icon="lock-off"
         label={locals[this.props.lang].plan.getPro}
         action={this.props.onGetProPlan}

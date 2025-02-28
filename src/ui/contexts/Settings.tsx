@@ -568,7 +568,6 @@ export default class Settings extends PureComponent<
               />
             }
             border={['BOTTOM']}
-            isOnlyText={true}
           />
         )}
         <Layout

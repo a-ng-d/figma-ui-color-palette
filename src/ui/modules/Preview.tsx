@@ -63,10 +63,7 @@ interface PreviewStates {
   isDrawerCollapsed: boolean
 }
 
-export default class Preview extends PureComponent<
-  PreviewProps,
-  PreviewStates
-> {
+export default class Preview extends PureComponent<PreviewProps, PreviewStates> {
   private unsubscribeWCAG: (() => void) | undefined
   private unsubscribeAPCA: (() => void) | undefined
   private palette: typeof $palette
@@ -383,7 +380,6 @@ export default class Preview extends PureComponent<
 
   // Render
   render() {
-    console.log(this.state.isDrawerCollapsed)
     if (!this.props.colors.length) return null
     return (
       <Drawer
@@ -408,15 +404,18 @@ export default class Preview extends PureComponent<
       >
         <Bar
           leftPartSlot={
-            <div className={layouts['snackbar--tight']}>
+            <div className={layouts['snackbar--medium']}>
               <Button
                 type="icon"
-                icon={this.state.isDrawerCollapsed ? 'upward' : 'downward'}
+                icon={
+                  this.state.isDrawerCollapsed
+                    ? 'toggle-sidebar-top'
+                    : 'toggle-sidebar-bottom'
+                }
                 action={() => {
                   if (!this.state.isDrawerCollapsed)
                     this.drawerRef.current?.collapseDrawer()
                   else this.drawerRef.current?.expandDrawer()
-                  console.log(this.drawerRef.current)
                 }}
               />
               <Menu
@@ -499,7 +498,7 @@ export default class Preview extends PureComponent<
             </div>
           }
           rightPartSlot={
-            <div className={layouts['snackbar--tight']}>
+            <div className={layouts['snackbar--medium']}>
               <Feature
                 isActive={Preview.features(
                   this.props.planStatus
@@ -834,7 +833,7 @@ export default class Preview extends PureComponent<
                 />
               </Feature>
               {this.props.onResetSourceColors && (
-                <div className={layouts['snackbar']}>
+                <div className={layouts['snackbar--medium']}>
                   <span
                     className={`type ${texts['type']} ${texts['type--secondary']}`}
                   >

@@ -1090,7 +1090,7 @@ export default class Scale extends PureComponent<ScaleProps, ScaleStates> {
                     <SectionTitle label={locals[this.props.lang].scale.title} />
                   }
                   rightPartSlot={
-                    <>
+                    <div className={layouts['snackbar--tight']}>
                       <Feature
                         isActive={Scale.features(
                           this.props.planStatus
@@ -1140,7 +1140,7 @@ export default class Scale extends PureComponent<ScaleProps, ScaleStates> {
                           </>
                         )}
                       </Feature>
-                    </>
+                    </div>
                   }
                 />
 
@@ -1157,8 +1157,8 @@ export default class Scale extends PureComponent<ScaleProps, ScaleStates> {
                     min={this.palette.get().min}
                     max={this.palette.get().max}
                     colors={{
-                      min: 'var(--black)',
-                      max: 'var(--white)',
+                      min: 'black',
+                      max: 'white',
                     }}
                     onChange={this.slideHandler}
                   />
@@ -1298,8 +1298,8 @@ export default class Scale extends PureComponent<ScaleProps, ScaleStates> {
                       presetName={this.props.preset.name}
                       stops={this.props.preset.scale}
                       colors={{
-                        min: 'var(--black)',
-                        max: 'var(--white)',
+                        min: 'black',
+                        max: 'white',
                       }}
                       onChange={this.slideHandler}
                     />
@@ -1310,8 +1310,8 @@ export default class Scale extends PureComponent<ScaleProps, ScaleStates> {
                       presetName={this.props.preset.name}
                       stops={this.props.preset.scale}
                       colors={{
-                        min: 'var(--black)',
-                        max: 'var(--white)',
+                        min: 'black',
+                        max: 'white',
                       }}
                       onChange={this.slideHandler}
                     />

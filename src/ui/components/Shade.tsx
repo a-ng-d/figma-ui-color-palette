@@ -33,11 +33,14 @@ interface ShadeStates {
 }
 
 export default class Shade extends PureComponent<ShadeProps, ShadeStates> {
+  private theme: string | null
+
   constructor(props: ShadeProps) {
     super(props)
     this.state = {
       isCompact: false,
     }
+    this.theme = document.documentElement.getAttribute('data-theme')
   }
 
   // Templates
@@ -62,7 +65,15 @@ export default class Shade extends PureComponent<ShadeProps, ShadeStates> {
           isRounded
         />
       }
-      rightSlot={<span className={'type'}>{score <= 4.5 ? '✘' : '✔'}</span>}
+      rightSlot={
+        <span
+          style={{
+            fontSize: this.theme === 'figma-ui3' ? '10px' : '11px',
+          }}
+        >
+          {score <= 4.5 ? '✘' : '✔'}
+        </span>
+      }
     >
       {!isCompact ? `${score.toFixed(2)} : 1` : friendlyScore}
     </Chip>
@@ -89,7 +100,15 @@ export default class Shade extends PureComponent<ShadeProps, ShadeStates> {
           isRounded
         />
       }
-      rightSlot={<span className={'type'}>{score <= 45 ? '✘' : '✔'}</span>}
+      rightSlot={
+        <span
+          style={{
+            fontSize: this.theme === 'figma-ui3' ? '10px' : '11px',
+          }}
+        >
+          {score <= 45 ? '✘' : '✔'}
+        </span>
+      }
     >
       {!isCompact ? `Lc ${score.toFixed(1)}` : friendlyScore}
     </Chip>
@@ -101,17 +120,17 @@ export default class Shade extends PureComponent<ShadeProps, ShadeStates> {
       leftSlot={
         <div
           style={{
-            width: 'var(--size-xsmall)',
-            height: 'var(--size-xsmall)',
+            width: 'var(--size-xxsmall)',
+            height: 'var(--size-xxsmall)',
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
+            '--icon-picto-color': 'black',
           }}
         >
           <Icon
             type="PICTO"
             iconName="lock-on"
-            iconColor="var(--black)"
           />
         </div>
       }

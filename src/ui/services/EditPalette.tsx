@@ -543,7 +543,6 @@ export default class EditPalette extends PureComponent<EditPaletteProps, EditPal
             </Feature>
           }
           border={['BOTTOM']}
-          isOnlyText={true}
         />
         <section className="context">{fragment}</section>
         <Feature isActive={this.state.context !== 'EXPORT'}>

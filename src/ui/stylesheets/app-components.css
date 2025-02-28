@@ -7,8 +7,8 @@
   justify-content: end;
   align-items: end;
   cursor: nwse-resize;
-  width: var(--size-small);
-  height: 100%;
+  width: var(--size-xxsmall);
+  height: var(--size-xsmall);
   padding: var(--size-xxxsmall);
 }
 
@@ -26,7 +26,7 @@ div.slider .slider__range {
   flex: 1 1 auto;
   box-shadow: inset 0 0 0 1px var(--figma-color-border-disabled-strong);
   border-radius: var(--border-radius-large);
-  height: var(--size-small);
+  height: var(--size-xsmall);
 }
 
 div.slider .slider__range--add {

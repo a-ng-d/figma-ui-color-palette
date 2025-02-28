@@ -42,7 +42,7 @@ export default class ContrastSettings extends PureComponent<ContrastSettingsProp
   }
 
   // Templates
-  TextColorsTheme = () => {
+  LightTextColorsTheme = () => {
     return (
       <Feature
         isActive={ContrastSettings.features(
@@ -74,6 +74,17 @@ export default class ContrastSettings extends PureComponent<ContrastSettingsProp
             onBlur={this.props.onChangeSettings}
           />
         </FormItem>
+      </Feature>
+    )
+  }
+
+  DarkTextColorsTheme = () => {
+    return (
+      <Feature
+        isActive={ContrastSettings.features(
+          this.props.planStatus
+        ).SETTINGS_TEXT_COLORS_THEME.isActive()}
+      >
         <FormItem
           id="update-text-dark-color"
           label={
@@ -99,13 +110,6 @@ export default class ContrastSettings extends PureComponent<ContrastSettingsProp
             onBlur={this.props.onChangeSettings}
           />
         </FormItem>
-        <SemanticMessage
-          type="INFO"
-          message={
-            locals[this.props.lang].settings.contrast.textColors
-              .textThemeColorsDescription
-          }
-        />
       </Feature>
     )
   }
@@ -126,7 +130,21 @@ export default class ContrastSettings extends PureComponent<ContrastSettingsProp
         }
         body={[
           {
-            node: <this.TextColorsTheme />,
+            node: <this.LightTextColorsTheme />,
+          },
+          {
+            node: <this.DarkTextColorsTheme />,
+          },
+          {
+            node: (
+              <SemanticMessage
+                type="INFO"
+                message={
+                  locals[this.props.lang].settings.contrast.textColors
+                    .textThemeColorsDescription
+                }
+              />
+            ),
           },
         ]}
         border={!this.props.isLast ? ['BOTTOM'] : undefined}

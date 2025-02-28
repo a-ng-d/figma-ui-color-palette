@@ -171,7 +171,6 @@ export default class Palettes extends PureComponent<
             />
           }
           border={['BOTTOM']}
-          isOnlyText={true}
         />
         <Layout
           id="palettes"
