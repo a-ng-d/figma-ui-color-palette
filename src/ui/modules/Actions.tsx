@@ -199,12 +199,10 @@ export default class Actions extends PureComponent<
               onFocus={this.nameHandler}
               onBlur={this.nameHandler}
             />
-            <span
-              className={`type ${texts['type']} ${texts['type--secondary']}`}
-            >
+            <span className={`${texts['type']} ${texts['type--secondary']}`}>
               ・
             </span>
-            <div className={`type ${texts.type}`}>
+            <div className={`${texts.type}`}>
               {this.props.sourceColors.length > 1
                 ? locals[
                     this.props.lang

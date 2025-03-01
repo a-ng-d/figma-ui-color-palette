@@ -864,17 +864,17 @@ export default class Publication extends PureComponent<
             }}
           >
             <div>
-              <div className={`${texts.type} type--large`}>
+              <div className={`${texts.type}`}>
                 {this.props.rawData.name === ''
                   ? locals[this.props.lang].name
                   : this.props.rawData.name}
                 {this.getPaletteStatus()}
               </div>
-              <div className={`${texts.type} type`}>
+              <div className={`${texts.type}`}>
                 {this.props.rawData.preset.name}
               </div>
               <div
-                className={`${texts.type} ${texts['type--secondary']} type`}
+                className={`${texts.type} ${texts['type--secondary']}`}
                 style={{
                   marginTop: '2px',
                 }}
@@ -894,9 +894,7 @@ export default class Publication extends PureComponent<
               />
             )}
           </div>
-          <div
-            className={`type ${texts.type} ${texts['type--secondary']}`}
-          ></div>
+          <div className={`${texts.type} ${texts['type--secondary']}`}></div>
         </div>
       </Dialog>
     )

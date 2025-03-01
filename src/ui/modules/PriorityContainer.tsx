@@ -183,7 +183,7 @@ export default class PriorityContainer extends PureComponent<
             />
           </div>
           <div className="dialog__text">
-            <p className={`type ${texts.type}`}>
+            <p className={`${texts.type}`}>
               {locals[this.props.lang].proPlan.trial.message}
             </p>
           </div>
@@ -218,7 +218,7 @@ export default class PriorityContainer extends PureComponent<
             />
           </div>
           <div className="dialog__text">
-            <p className={`type ${texts.type}`}>
+            <p className={`${texts.type}`}>
               {locals[this.props.lang].proPlan.welcome.trial}
             </p>
           </div>
@@ -253,7 +253,7 @@ export default class PriorityContainer extends PureComponent<
             />
           </div>
           <div className="dialog__text">
-            <p className={`type ${texts.type}`}>
+            <p className={`${texts.type}`}>
               {locals[this.props.lang].proPlan.welcome.message}
             </p>
           </div>
@@ -378,7 +378,7 @@ export default class PriorityContainer extends PureComponent<
                   />
                 </div>
                 <div className="dialog__text">
-                  <p className={`type ${texts.type}`}>
+                  <p className={`${texts.type}`}>
                     {locals[this.props.lang].publication.message}
                   </p>
                 </div>

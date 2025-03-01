@@ -156,7 +156,7 @@ export default class Highlight extends PureComponent<
             />
           </div>
           <div className="dialog__text">
-            <p className={`type ${texts.type}`}>
+            <p className={`${texts.type}`}>
               {
                 this.state.announcements[this.state.position].properties
                   .Description.rich_text[0].plain_text

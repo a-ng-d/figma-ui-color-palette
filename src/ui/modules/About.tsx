@@ -40,12 +40,12 @@ export default class About extends PureComponent<AboutProps> {
                 <div className={layouts['snackbar--large']}>
                   <Icon size={32} />
                   <div>
-                    <span className={`type ${texts.type} type--xlarge`}>
+                    <span className={`${texts.type} type--xlarge`}>
                       {locals[this.props.lang].name}
                     </span>
                     <div className={layouts.snackbar}>
                       <span
-                        className={`type ${texts.type}`}
+                        className={`${texts.type}`}
                       >{`Version ${package_json.version}`}</span>
                       <Feature
                         isActive={
@@ -54,8 +54,8 @@ export default class About extends PureComponent<AboutProps> {
                           ).GET_PRO_PLAN.isActive() && isProEnabled
                         }
                       >
-                        <span className={`type ${texts.type}`}>・</span>
-                        <span className={`type ${texts.type}`}>
+                        <span className={`${texts.type}`}>・</span>
+                        <span className={`${texts.type}`}>
                           {this.props.planStatus === 'UNPAID'
                             ? locals[this.props.lang].plan.free
                             : this.props.planStatus === 'PAID' &&
@@ -68,7 +68,7 @@ export default class About extends PureComponent<AboutProps> {
                   </div>
                 </div>
                 <div className={layouts.stackbar}>
-                  <span className={`type ${texts.type}`}>
+                  <span className={`${texts.type}`}>
                     {locals[this.props.lang].about.createdBy}
                     <a
                       href={authorUrl}
@@ -78,7 +78,7 @@ export default class About extends PureComponent<AboutProps> {
                       {locals[this.props.lang].about.author}
                     </a>
                   </span>
-                  <span className={`type ${texts.type}`}>
+                  <span className={`${texts.type}`}>
                     <a
                       href={repositoryUrl}
                       target="_blank"

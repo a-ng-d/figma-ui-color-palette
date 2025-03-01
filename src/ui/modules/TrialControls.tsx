@@ -38,7 +38,7 @@ export default class TrialControls extends PureComponent<TrialControlsProps> {
   // Templates
   RemainingTime = () => (
     <div
-      className={`type ${texts.type} ${texts['type--secondary']} ${texts['type--truncated']}`}
+      className={`${texts.type} ${texts['type--secondary']} ${texts['type--truncated']}`}
     >
       {Math.ceil(this.props.trialRemainingTime) > 72 && (
         <span>
@@ -88,11 +88,9 @@ export default class TrialControls extends PureComponent<TrialControlsProps> {
         label={locals[this.props.lang].plan.getPro}
         action={this.props.onGetProPlan}
       />
-      <span className={`type ${texts.type} ${texts['type--secondary']}`}>
-        ・
-      </span>
+      <span className={`${texts.type} ${texts['type--secondary']}`}>・</span>
       <div
-        className={`type ${texts.type} ${texts['type--secondary']} ${texts['type--truncated']}`}
+        className={`${texts.type} ${texts['type--secondary']} ${texts['type--truncated']}`}
       >
         <span>{locals[this.props.lang].plan.trialEnded}</span>
       </div>
@@ -101,9 +99,7 @@ export default class TrialControls extends PureComponent<TrialControlsProps> {
           this.props.planStatus
         ).SHORTCUTS_FEEDBACK.isActive()}
       >
-        <span className={`type ${texts.type} ${texts['type--secondary']}`}>
-          ・
-        </span>
+        <span className={`${texts.type} ${texts['type--secondary']}`}>・</span>
         <Button
           type="tertiary"
           label={locals[this.props.lang].plan.trialFeedback}

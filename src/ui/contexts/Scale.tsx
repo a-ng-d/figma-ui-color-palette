@@ -1230,7 +1230,7 @@ export default class Scale extends PureComponent<ScaleProps, ScaleStates> {
                             }
                           />
                           <span
-                            className={`type ${texts.type} ${texts['type--secondary']}`}
+                            className={`${texts.type} ${texts['type--secondary']}`}
                           >
                             ・
                           </span>
@@ -1385,7 +1385,7 @@ export default class Scale extends PureComponent<ScaleProps, ScaleStates> {
                             }
                           />
                           <span
-                            className={`type ${texts.type} ${texts['type--secondary']}`}
+                            className={`${texts.type} ${texts['type--secondary']}`}
                           >
                             ・
                           </span>

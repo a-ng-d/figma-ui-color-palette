@@ -835,7 +835,7 @@ export default class Preview extends PureComponent<PreviewProps, PreviewStates> 
               {this.props.onResetSourceColors && (
                 <div className={layouts['snackbar--medium']}>
                   <span
-                    className={`type ${texts['type']} ${texts['type--secondary']}`}
+                    className={`${texts['type']} ${texts['type--secondary']}`}
                   >
                     ・
                   </span>
