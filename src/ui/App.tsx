@@ -396,6 +396,15 @@ export default class App extends Component<Record<string, never>, AppStates> {
           })
         }
 
+        const handleOnboarding = () => {
+          this.setState({
+            priorityContainerContext:
+              e.data.pluginMessage.data !== 'DISPLAY_ONBOARDING_DIALOG'
+                ? 'EMPTY'
+                : 'ONBOARDING',
+          })
+        }
+
         const checkPlanStatus = () =>
           this.setState({
             planStatus: e.data.pluginMessage.data.planStatus,
@@ -893,6 +902,7 @@ export default class App extends Component<Record<string, never>, AppStates> {
           CHECK_USER_PREFERENCES: () => checkUserPreferences(),
           CHECK_EDITOR_TYPE: () => checkEditorType(),
           PUSH_HIGHLIGHT_STATUS: () => handleHighlight(),
+          PUSH_ONBOARDING_STATUS: () => handleOnboarding(),
           CHECK_PLAN_STATUS: () => checkPlanStatus(),
           EMPTY_SELECTION: () => updateWhileEmptySelection(),
           COLOR_SELECTED: () => updateWhileColorSelected(),
@@ -1098,6 +1108,9 @@ export default class App extends Component<Record<string, never>, AppStates> {
               {...this.state}
               onReOpenHighlight={() =>
                 this.setState({ priorityContainerContext: 'HIGHLIGHT' })
+              }
+              onReOpenOnboarding={() =>
+                this.setState({ priorityContainerContext: 'ONBOARDING' })
               }
               onReOpenReport={() =>
                 this.setState({ priorityContainerContext: 'REPORT' })

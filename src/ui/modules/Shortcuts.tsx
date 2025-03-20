@@ -45,6 +45,7 @@ interface ShortcutsProps {
   editorType: EditorType
   highlight: HighlightDigest
   onReOpenHighlight: () => void
+  onReOpenOnboarding: () => void
   onReOpenStore: () => void
   onReOpenAbout: () => void
   onReOpenReport: () => void
@@ -56,19 +57,21 @@ interface ShortcutsStates {
   isUserMenuLoading: boolean
 }
 
-export default class Shortcuts extends PureComponent<
-  ShortcutsProps,
-  ShortcutsStates
-> {
+export default class Shortcuts extends PureComponent<ShortcutsProps, ShortcutsStates> {
   static features = (planStatus: PlanStatus) => ({
+    SHORTCUTS_USER: new FeatureStatus({
+      features: features,
+      featureName: 'SHORTCUTS_USER',
+      planStatus: planStatus,
+    }),
     SHORTCUTS_HIGHLIGHT: new FeatureStatus({
       features: features,
       featureName: 'SHORTCUTS_HIGHLIGHT',
       planStatus: planStatus,
     }),
-    SHORTCUTS_USER: new FeatureStatus({
+    SHORTCUTS_ONBOARDING: new FeatureStatus({
       features: features,
-      featureName: 'SHORTCUTS_USER',
+      featureName: 'SHORTCUTS_ONBOARDING',
       planStatus: planStatus,
     }),
     SHORTCUTS_REPOSITORY: new FeatureStatus({
@@ -417,6 +420,20 @@ export default class Shortcuts extends PureComponent<
                           ? true
                           : false,
                       action: () => this.props.onReOpenHighlight(),
+                    },
+                    {
+                      label: locals[this.props.lang].shortcuts.onboarding,
+                      type: 'OPTION',
+                      isActive: Shortcuts.features(
+                        this.props.planStatus
+                      ).SHORTCUTS_ONBOARDING.isActive(),
+                      isBlocked: Shortcuts.features(
+                        this.props.planStatus
+                      ).SHORTCUTS_ONBOARDING.isBlocked(),
+                      isNew: Shortcuts.features(
+                        this.props.planStatus
+                      ).SHORTCUTS_ONBOARDING.isNew(),
+                      action: () => this.props.onReOpenOnboarding(),
                     },
                     {
                       label: locals[this.props.lang].shortcuts.repository,

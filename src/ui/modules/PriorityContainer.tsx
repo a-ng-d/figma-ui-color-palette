@@ -36,6 +36,7 @@ import Feature from '../components/Feature'
 import About from './About'
 import Highlight from './Highlight'
 import Publication from './Publication'
+import Onboarding from './Onboarding'
 
 interface PriorityContainerProps {
   context: PriorityContext
@@ -72,6 +73,11 @@ export default class PriorityContainer extends PureComponent<
     SHORTCUTS_HIGHLIGHT: new FeatureStatus({
       features: features,
       featureName: 'SHORTCUTS_HIGHLIGHT',
+      planStatus: planStatus,
+    }),
+    SHORTCUTS_ONBOARDING: new FeatureStatus({
+      features: features,
+      featureName: 'SHORTCUTS_ONBOARDING',
       planStatus: planStatus,
     }),
     PUBLICATION: new FeatureStatus({
@@ -265,6 +271,37 @@ export default class PriorityContainer extends PureComponent<
                 },
                 '*'
               )
+            this.props.onClose()
+          }}
+        />
+      </Feature>
+    )
+  }
+
+  OnBoarding = () => {
+    return (
+      <Feature
+        isActive={PriorityContainer.features(
+          this.props.planStatus
+        ).SHORTCUTS_ONBOARDING.isActive()}
+      >
+        <Onboarding
+          {...this.props}
+          onCloseOnboarding={() => {
+            parent.postMessage(
+              {
+                pluginMessage: {
+                  type: 'SET_ITEMS',
+                  items: [
+                    {
+                      key: 'is_onboarding_read',
+                      value: 'true',
+                    },
+                  ],
+                },
+              },
+              '*'
+            )
             this.props.onClose()
           }}
         />
@@ -548,6 +585,7 @@ export default class PriorityContainer extends PureComponent<
       <>
         {this.props.context === 'PUBLICATION' && <this.Publication />}
         {this.props.context === 'HIGHLIGHT' && <this.Highlight />}
+        {this.props.context === 'ONBOARDING' && <this.OnBoarding />}
         {this.props.context === 'TRY' && <this.TryPro />}
         {this.props.context === 'WELCOME_TO_TRIAL' && <this.WelcomeToTrial />}
         {this.props.context === 'WELCOME_TO_PRO' && <this.WelcomeToPro />}

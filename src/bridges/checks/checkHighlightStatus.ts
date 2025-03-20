@@ -1,10 +1,17 @@
 const checkHighlightStatus = async (remoteVersion: string) => {
   const localVersion = await figma.clientStorage.getAsync('highlight_version')
+  const isOnboardingRead =
+    await figma.clientStorage.getAsync('is_onboarding_read')
 
   if (localVersion === undefined && remoteVersion === undefined)
     return figma.ui.postMessage({
       type: 'PUSH_HIGHLIGHT_STATUS',
       data: 'NO_HIGHLIGHT',
+    })
+  else if (localVersion === undefined && isOnboardingRead === undefined)
+    return figma.ui.postMessage({
+      type: 'PUSH_ONBOARDING_STATUS',
+      data: 'DISPLAY_ONBOARDING_DIALOG',
     })
   else if (localVersion === undefined)
     return figma.ui.postMessage({

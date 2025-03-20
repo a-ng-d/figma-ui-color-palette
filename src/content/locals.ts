@@ -478,6 +478,13 @@ export const locals: { [key: string]: any } = {
         learnMore: 'Learn more',
       },
     },
+    onboarding: {
+      cta: {
+        next: 'Next',
+        gotIt: 'Got it',
+        learnMore: 'Learn more',
+      },
+    },
     plan: {
       getPro: 'Get Pro',
       tryPro: 'Try Pro',
