@@ -9,6 +9,7 @@ import {
 import { PureComponent } from 'preact/compat'
 import React from 'react'
 
+import { doClassnames } from '@a_ng_d/figmug-utils'
 import { UserConfiguration } from 'src/types/configurations'
 import { supabase } from '../../bridges/publication/authentication'
 import detachPalette from '../../bridges/publication/detachPalette'
@@ -22,7 +23,6 @@ import { Language } from '../../types/app'
 import { trackPublicationEvent } from '../../utils/eventsTracker'
 import getPaletteMeta from '../../utils/setPaletteMeta'
 import type { AppStates } from '../App'
-import { doClassnames } from '@a_ng_d/figmug-utils'
 
 interface PublicationProps {
   rawData: AppStates

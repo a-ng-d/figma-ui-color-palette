@@ -17,10 +17,10 @@ import { UserConfiguration } from 'src/types/configurations'
 import { signIn } from '../../bridges/publication/authentication'
 import features, { isbUrl } from '../../config'
 import cp from '../../content/images/choose_plan.webp'
+import isb from '../../content/images/isb_product_thumbnail.webp'
 import pp from '../../content/images/pro_plan.webp'
 import p from '../../content/images/publication.webp'
 import t from '../../content/images/trial.webp'
-import isb from '../../content/images/isb_product_thumbnail.webp'
 import { locals } from '../../content/locals'
 import {
   HighlightDigest,

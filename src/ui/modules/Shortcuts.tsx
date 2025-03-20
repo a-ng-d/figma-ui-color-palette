@@ -3,8 +3,8 @@ import {
   Button,
   ConsentConfiguration,
   Icon,
-  Menu,
   layouts,
+  Menu,
 } from '@a_ng_d/figmug-ui'
 import { doClassnames, FeatureStatus } from '@a_ng_d/figmug-utils'
 import { PureComponent } from 'preact/compat'

@@ -8,12 +8,12 @@ import {
 import { PureComponent } from 'preact/compat'
 import React from 'react'
 
+import { doClassnames } from '@a_ng_d/figmug-utils'
 import { locals } from '../../content/locals'
 import { EditorType, Language } from '../../types/app'
 import { ExtractOfPaletteConfiguration } from '../../types/configurations'
 import { ActionsList } from '../../types/models'
 import getPaletteMeta from '../../utils/setPaletteMeta'
-import { doClassnames } from '@a_ng_d/figmug-utils'
 
 interface InternalPalettesProps {
   editorType: EditorType
