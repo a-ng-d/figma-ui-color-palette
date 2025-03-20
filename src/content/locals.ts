@@ -134,6 +134,9 @@ export const locals: { [key: string]: any } = {
           blue: 'Blue',
         },
       },
+      action: {
+        paletteLink: 'Open the palette',
+      },
     },
     scale: {
       title: 'Lightness scale',
@@ -374,7 +377,6 @@ export const locals: { [key: string]: any } = {
       signIn: 'Sign in to publish',
     },
     shortcuts: {
-      documentation: 'Read the documentation',
       news: "What's new",
       onboarding: 'Quick start',
       repository: 'Contribute',
@@ -384,8 +386,11 @@ export const locals: { [key: string]: any } = {
       store: 'Discover more products',
       follow: 'Support us',
       author: 'Support the author',
-      userMenu: 'User menu',
-      helpMenu: 'Help/Support menu',
+      tooltips: {
+        documentation: 'Read the documentation',
+        userMenu: 'User menu',
+        helpMenu: 'Help/Support menu',
+      },
     },
     report: {
       title: 'Report a bug',

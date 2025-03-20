@@ -212,7 +212,9 @@ export default class Shortcuts extends PureComponent<ShortcutsProps, ShortcutsSt
                     type="icon"
                     icon="library"
                     helper={{
-                      label: locals[this.props.lang].shortcuts.documentation,
+                      label:
+                        locals[this.props.lang].shortcuts.tooltips
+                          .documentation,
                       pin: 'TOP',
                       isSingleLine: true,
                     }}
@@ -317,7 +319,8 @@ export default class Shortcuts extends PureComponent<ShortcutsProps, ShortcutsSt
                       ]}
                       alignment="TOP_RIGHT"
                       helper={{
-                        label: locals[this.props.lang].shortcuts.userMenu,
+                        label:
+                          locals[this.props.lang].shortcuts.tooltips.userMenu,
                         pin: 'TOP',
                         isSingleLine: true,
                       }}
@@ -383,7 +386,8 @@ export default class Shortcuts extends PureComponent<ShortcutsProps, ShortcutsSt
                       }
                       alignment="TOP_RIGHT"
                       helper={{
-                        label: locals[this.props.lang].shortcuts.userMenu,
+                        label:
+                          locals[this.props.lang].shortcuts.tooltips.userMenu,
                         pin: 'TOP',
                         isSingleLine: true,
                       }}
@@ -600,7 +604,7 @@ export default class Shortcuts extends PureComponent<ShortcutsProps, ShortcutsSt
                   ]}
                   alignment="TOP_RIGHT"
                   helper={{
-                    label: locals[this.props.lang].shortcuts.helpMenu,
+                    label: locals[this.props.lang].shortcuts.tooltips.helpMenu,
                     pin: 'TOP',
                     isSingleLine: true,
                   }}
