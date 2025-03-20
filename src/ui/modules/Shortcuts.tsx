@@ -211,6 +211,11 @@ export default class Shortcuts extends PureComponent<ShortcutsProps, ShortcutsSt
                   <Button
                     type="icon"
                     icon="library"
+                    helper={{
+                      label: locals[this.props.lang].shortcuts.documentation,
+                      pin: 'TOP',
+                      isSingleLine: true,
+                    }}
                     isBlocked={Shortcuts.features(
                       this.props.planStatus
                     ).SHORTCUTS_DOCUMENTATION.isBlocked()}
@@ -311,6 +316,11 @@ export default class Shortcuts extends PureComponent<ShortcutsProps, ShortcutsSt
                         },
                       ]}
                       alignment="TOP_RIGHT"
+                      helper={{
+                        label: locals[this.props.lang].shortcuts.userMenu,
+                        pin: 'TOP',
+                        isSingleLine: true,
+                      }}
                     />
                   ) : (
                     <Menu
@@ -372,6 +382,11 @@ export default class Shortcuts extends PureComponent<ShortcutsProps, ShortcutsSt
                         this.state.isUserMenuLoading ? 'LOADING' : 'DEFAULT'
                       }
                       alignment="TOP_RIGHT"
+                      helper={{
+                        label: locals[this.props.lang].shortcuts.userMenu,
+                        pin: 'TOP',
+                        isSingleLine: true,
+                      }}
                     />
                   )}
                 </Feature>
@@ -584,6 +599,11 @@ export default class Shortcuts extends PureComponent<ShortcutsProps, ShortcutsSt
                     },
                   ]}
                   alignment="TOP_RIGHT"
+                  helper={{
+                    label: locals[this.props.lang].shortcuts.helpMenu,
+                    pin: 'TOP',
+                    isSingleLine: true,
+                  }}
                   isNew={
                     this.props.highlight.status ===
                     'DISPLAY_HIGHLIGHT_NOTIFICATION'
