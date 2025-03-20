@@ -586,6 +586,7 @@ export default class Themes extends PureComponent<ThemesProps, ThemesStates> {
                         }
                       })}
                       isScrollable={true}
+                      isTopBorderEnabled={true}
                       onChangeSortableList={this.onChangeOrder}
                       onRemoveItem={this.themesHandler}
                       isBlocked={Themes.features(

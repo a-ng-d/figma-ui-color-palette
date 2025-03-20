@@ -895,6 +895,7 @@ export default class Colors extends PureComponent<ColorsProps, ColorsStates> {
                       }
                     })}
                     isScrollable={true}
+                    isTopBorderEnabled={true}
                     onChangeSortableList={this.onChangeOrder}
                     onRemoveItem={this.colorsHandler}
                   />
