@@ -45,6 +45,7 @@ interface ShortcutsProps {
   editorType: EditorType
   highlight: HighlightDigest
   onReOpenHighlight: () => void
+  onReOpenStore: () => void
   onReOpenAbout: () => void
   onReOpenReport: () => void
   onGetProPlan: () => void
@@ -55,10 +56,7 @@ interface ShortcutsStates {
   isUserMenuLoading: boolean
 }
 
-export default class Shortcuts extends PureComponent<
-  ShortcutsProps,
-  ShortcutsStates
-> {
+export default class Shortcuts extends PureComponent<ShortcutsProps, ShortcutsStates> {
   static features = (planStatus: PlanStatus) => ({
     SHORTCUTS_HIGHLIGHT: new FeatureStatus({
       features: features,
@@ -93,6 +91,11 @@ export default class Shortcuts extends PureComponent<
     SHORTCUTS_REQUESTS: new FeatureStatus({
       features: features,
       featureName: 'SHORTCUTS_REQUESTS',
+      planStatus: planStatus,
+    }),
+    SHORTCUTS_STORE: new FeatureStatus({
+      features: features,
+      featureName: 'SHORTCUTS_STORE',
       planStatus: planStatus,
     }),
     SHORTCUTS_ABOUT: new FeatureStatus({
@@ -504,6 +507,20 @@ export default class Shortcuts extends PureComponent<
                     },
                     {
                       type: 'SEPARATOR',
+                    },
+                    {
+                      label: locals[this.props.lang].shortcuts.store,
+                      type: 'OPTION',
+                      isActive: Shortcuts.features(
+                        this.props.planStatus
+                      ).SHORTCUTS_STORE.isActive(),
+                      isBlocked: Shortcuts.features(
+                        this.props.planStatus
+                      ).SHORTCUTS_STORE.isBlocked(),
+                      isNew: Shortcuts.features(
+                        this.props.planStatus
+                      ).SHORTCUTS_STORE.isNew(),
+                      action: this.props.onReOpenStore,
                     },
                     {
                       label: locals[this.props.lang].about.title,

@@ -1,8 +1,11 @@
 import {
+  Button,
+  Card,
   ConsentConfiguration,
   Dialog,
   FormItem,
   Input,
+  List,
   texts,
 } from '@a_ng_d/figmug-ui'
 import * as Sentry from '@sentry/browser'
@@ -12,11 +15,12 @@ import React from 'react'
 import { FeatureStatus } from '@a_ng_d/figmug-utils'
 import { UserConfiguration } from 'src/types/configurations'
 import { signIn } from '../../bridges/publication/authentication'
-import features from '../../config'
+import features, { isbUrl } from '../../config'
 import cp from '../../content/images/choose_plan.webp'
 import pp from '../../content/images/pro_plan.webp'
 import p from '../../content/images/publication.webp'
 import t from '../../content/images/trial.webp'
+import isb from '../../content/images/isb_product_thumbnail.webp'
 import { locals } from '../../content/locals'
 import {
   HighlightDigest,
@@ -59,8 +63,6 @@ export default class PriorityContainer extends PureComponent<
   PriorityContainerProps,
   PriorityContainerStates
 > {
-  private counter: number
-
   static features = (planStatus: PlanStatus) => ({
     GET_PRO_PLAN: new FeatureStatus({
       features: features,
@@ -70,11 +72,6 @@ export default class PriorityContainer extends PureComponent<
     SHORTCUTS_HIGHLIGHT: new FeatureStatus({
       features: features,
       featureName: 'SHORTCUTS_HIGHLIGHT',
-      planStatus: planStatus,
-    }),
-    SHORTCUTS_ABOUT: new FeatureStatus({
-      features: features,
-      featureName: 'SHORTCUTS_ABOUT',
       planStatus: planStatus,
     }),
     PUBLICATION: new FeatureStatus({
@@ -87,11 +84,20 @@ export default class PriorityContainer extends PureComponent<
       featureName: 'REPORT',
       planStatus: planStatus,
     }),
+    SHORTCUTS_ABOUT: new FeatureStatus({
+      features: features,
+      featureName: 'SHORTCUTS_ABOUT',
+      planStatus: planStatus,
+    }),
+    SHORTCUTS_STORE: new FeatureStatus({
+      features: features,
+      featureName: 'SHORTCUTS_STORE',
+      planStatus: planStatus,
+    }),
   })
 
   constructor(props: PriorityContainerProps) {
     super(props)
-    this.counter = 0
     this.state = {
       isPrimaryActionLoading: false,
       isSecondaryActionLoading: false,
@@ -145,6 +151,127 @@ export default class PriorityContainer extends PureComponent<
   }
 
   // Templates
+  Publication = () => {
+    return (
+      <Feature
+        isActive={PriorityContainer.features(
+          this.props.planStatus
+        ).PUBLICATION.isActive()}
+      >
+        {this.props.rawData.userSession.connectionStatus === 'UNCONNECTED'
+          ? createPortal(
+              <Dialog
+                title={locals[this.props.lang].publication.titleSignIn}
+                actions={{
+                  primary: {
+                    label: locals[this.props.lang].publication.signIn,
+                    state: this.state.isPrimaryActionLoading
+                      ? 'LOADING'
+                      : 'DEFAULT',
+                    action: async () => {
+                      this.setState({ isPrimaryActionLoading: true })
+                      signIn(this.props.userIdentity.id)
+                        .then(() => {
+                          trackSignInEvent(
+                            this.props.userIdentity.id,
+                            this.props.userConsent.find(
+                              (consent) => consent.id === 'mixpanel'
+                            )?.isConsented ?? false
+                          )
+                        })
+                        .finally(() => {
+                          this.setState({ isPrimaryActionLoading: false })
+                        })
+                        .catch((error) => {
+                          parent.postMessage(
+                            {
+                              pluginMessage: {
+                                type: 'SEND_MESSAGE',
+                                message:
+                                  error.message === 'Authentication timeout'
+                                    ? locals[this.props.lang].error.timeout
+                                    : locals[this.props.lang].error
+                                        .authentication,
+                              },
+                            },
+                            '*'
+                          )
+                        })
+                    },
+                  },
+                }}
+                onClose={this.props.onClose}
+              >
+                <div className="dialog__cover">
+                  <img
+                    src={p}
+                    style={{
+                      width: '100%',
+                    }}
+                  />
+                </div>
+                <div className="dialog__text">
+                  <p className={`${texts.type}`}>
+                    {locals[this.props.lang].publication.message}
+                  </p>
+                </div>
+              </Dialog>,
+              document.getElementById('modal') ?? document.createElement('app')
+            )
+          : createPortal(
+              <Publication
+                {...this.props}
+                isPrimaryActionLoading={this.state.isPrimaryActionLoading}
+                isSecondaryActionLoading={this.state.isSecondaryActionLoading}
+                onLoadPrimaryAction={(e) =>
+                  this.setState({ isPrimaryActionLoading: e })
+                }
+                onLoadSecondaryAction={(e) =>
+                  this.setState({ isSecondaryActionLoading: e })
+                }
+                onClosePublication={this.props.onClose}
+              />,
+              document.getElementById('modal') ?? document.createElement('app')
+            )}
+      </Feature>
+    )
+  }
+
+  Highlight = () => {
+    return (
+      <Feature
+        isActive={PriorityContainer.features(
+          this.props.planStatus
+        ).SHORTCUTS_HIGHLIGHT.isActive()}
+      >
+        <Highlight
+          {...this.props}
+          onCloseHighlight={() => {
+            if (
+              this.props.highlight.version !== undefined ||
+              this.props.highlight.version !== ''
+            )
+              parent.postMessage(
+                {
+                  pluginMessage: {
+                    type: 'SET_ITEMS',
+                    items: [
+                      {
+                        key: 'highlight_version',
+                        value: this.props.highlight.version,
+                      },
+                    ],
+                  },
+                },
+                '*'
+              )
+            this.props.onClose()
+          }}
+        />
+      </Feature>
+    )
+  }
+
   TryPro = () => {
     return (
       <Feature
@@ -262,148 +389,6 @@ export default class PriorityContainer extends PureComponent<
     )
   }
 
-  Highlight = () => {
-    return (
-      <Feature
-        isActive={PriorityContainer.features(
-          this.props.planStatus
-        ).SHORTCUTS_HIGHLIGHT.isActive()}
-      >
-        <Highlight
-          {...this.props}
-          onCloseHighlight={() => {
-            if (
-              this.props.highlight.version !== undefined ||
-              this.props.highlight.version !== ''
-            )
-              parent.postMessage(
-                {
-                  pluginMessage: {
-                    type: 'SET_ITEMS',
-                    items: [
-                      {
-                        key: 'highlight_version',
-                        value: this.props.highlight.version,
-                      },
-                    ],
-                  },
-                },
-                '*'
-              )
-            this.props.onClose()
-          }}
-        />
-      </Feature>
-    )
-  }
-
-  About = () => {
-    return (
-      <Feature
-        isActive={PriorityContainer.features(
-          this.props.planStatus
-        ).SHORTCUTS_ABOUT.isActive()}
-      >
-        <Dialog
-          title={locals[this.props.lang].about.title}
-          onClose={this.props.onClose}
-        >
-          <About
-            planStatus={this.props.planStatus}
-            trialStatus={this.props.trialStatus}
-            lang={this.props.lang}
-          />
-        </Dialog>
-      </Feature>
-    )
-  }
-
-  Publication = () => {
-    return (
-      <Feature
-        isActive={PriorityContainer.features(
-          this.props.planStatus
-        ).PUBLICATION.isActive()}
-      >
-        {this.props.rawData.userSession.connectionStatus === 'UNCONNECTED'
-          ? createPortal(
-              <Dialog
-                title={locals[this.props.lang].publication.titleSignIn}
-                actions={{
-                  primary: {
-                    label: locals[this.props.lang].publication.signIn,
-                    state: this.state.isPrimaryActionLoading
-                      ? 'LOADING'
-                      : 'DEFAULT',
-                    action: async () => {
-                      this.setState({ isPrimaryActionLoading: true })
-                      signIn(this.props.userIdentity.id)
-                        .then(() => {
-                          trackSignInEvent(
-                            this.props.userIdentity.id,
-                            this.props.userConsent.find(
-                              (consent) => consent.id === 'mixpanel'
-                            )?.isConsented ?? false
-                          )
-                        })
-                        .finally(() => {
-                          this.setState({ isPrimaryActionLoading: false })
-                        })
-                        .catch((error) => {
-                          parent.postMessage(
-                            {
-                              pluginMessage: {
-                                type: 'SEND_MESSAGE',
-                                message:
-                                  error.message === 'Authentication timeout'
-                                    ? locals[this.props.lang].error.timeout
-                                    : locals[this.props.lang].error
-                                        .authentication,
-                              },
-                            },
-                            '*'
-                          )
-                        })
-                    },
-                  },
-                }}
-                onClose={this.props.onClose}
-              >
-                <div className="dialog__cover">
-                  <img
-                    src={p}
-                    style={{
-                      width: '100%',
-                    }}
-                  />
-                </div>
-                <div className="dialog__text">
-                  <p className={`${texts.type}`}>
-                    {locals[this.props.lang].publication.message}
-                  </p>
-                </div>
-              </Dialog>,
-              document.getElementById('modal') ?? document.createElement('app')
-            )
-          : createPortal(
-              <Publication
-                {...this.props}
-                isPrimaryActionLoading={this.state.isPrimaryActionLoading}
-                isSecondaryActionLoading={this.state.isSecondaryActionLoading}
-                onLoadPrimaryAction={(e) =>
-                  this.setState({ isPrimaryActionLoading: e })
-                }
-                onLoadSecondaryAction={(e) =>
-                  this.setState({ isSecondaryActionLoading: e })
-                }
-                onClosePublication={this.props.onClose}
-              />,
-              document.getElementById('modal') ?? document.createElement('app')
-            )}
-      </Feature>
-    )
-  }
-
   Report = () => {
     return (
       <Feature
@@ -497,17 +482,78 @@ export default class PriorityContainer extends PureComponent<
     )
   }
 
+  Store = () => {
+    return (
+      <Feature
+        isActive={PriorityContainer.features(
+          this.props.planStatus
+        ).SHORTCUTS_STORE.isActive()}
+      >
+        <Dialog
+          title={locals[this.props.lang].store.title}
+          pin="RIGHT"
+          onClose={this.props.onClose}
+        >
+          <List padding="var(--size-xsmall)">
+            <Card
+              src={isb}
+              label={locals[this.props.lang].store.isb.label}
+            >
+              <Button
+                type="primary"
+                label={locals[this.props.lang].store.isb.cta}
+                action={() => {
+                  parent.postMessage(
+                    {
+                      pluginMessage: {
+                        type: 'OPEN_IN_BROWSER',
+                        url: isbUrl,
+                      },
+                    },
+                    '*'
+                  )
+                }}
+              />
+            </Card>
+          </List>
+        </Dialog>
+      </Feature>
+    )
+  }
+
+  About = () => {
+    return (
+      <Feature
+        isActive={PriorityContainer.features(
+          this.props.planStatus
+        ).SHORTCUTS_ABOUT.isActive()}
+      >
+        <Dialog
+          title={locals[this.props.lang].about.title}
+          onClose={this.props.onClose}
+        >
+          <About
+            planStatus={this.props.planStatus}
+            trialStatus={this.props.trialStatus}
+            lang={this.props.lang}
+          />
+        </Dialog>
+      </Feature>
+    )
+  }
+
   // Render
   render() {
     return (
       <>
+        {this.props.context === 'PUBLICATION' && <this.Publication />}
+        {this.props.context === 'HIGHLIGHT' && <this.Highlight />}
         {this.props.context === 'TRY' && <this.TryPro />}
         {this.props.context === 'WELCOME_TO_TRIAL' && <this.WelcomeToTrial />}
         {this.props.context === 'WELCOME_TO_PRO' && <this.WelcomeToPro />}
-        {this.props.context === 'HIGHLIGHT' && <this.Highlight />}
-        {this.props.context === 'ABOUT' && <this.About />}
-        {this.props.context === 'PUBLICATION' && <this.Publication />}
         {this.props.context === 'REPORT' && <this.Report />}
+        {this.props.context === 'STORE' && <this.Store />}
+        {this.props.context === 'ABOUT' && <this.About />}
       </>
     )
   }

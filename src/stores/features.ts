@@ -1169,6 +1169,15 @@ export const featuresScheme: Array<Feature<'CREATE' | 'EDIT' | 'TRANSFER'>> = [
     service: ['CREATE', 'EDIT', 'TRANSFER'],
   },
   {
+    name: 'SHORTCUTS_STORE',
+    description: 'Other products and services',
+    isActive: true,
+    isPro: false,
+    isNew: false,
+    type: 'ACTION',
+    service: ['CREATE', 'EDIT', 'TRANSFER'],
+  },
+  {
     name: 'SHORTCUTS_ABOUT',
     description: 'Additional information',
     isActive: true,

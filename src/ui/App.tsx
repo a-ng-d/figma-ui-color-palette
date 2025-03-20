@@ -1099,11 +1099,14 @@ export default class App extends Component<Record<string, never>, AppStates> {
               onReOpenHighlight={() =>
                 this.setState({ priorityContainerContext: 'HIGHLIGHT' })
               }
-              onReOpenAbout={() =>
-                this.setState({ priorityContainerContext: 'ABOUT' })
-              }
               onReOpenReport={() =>
                 this.setState({ priorityContainerContext: 'REPORT' })
+              }
+              onReOpenStore={() =>
+                this.setState({ priorityContainerContext: 'STORE' })
+              }
+              onReOpenAbout={() =>
+                this.setState({ priorityContainerContext: 'ABOUT' })
               }
               onGetProPlan={() => {
                 if (this.state.trialStatus === 'EXPIRED')

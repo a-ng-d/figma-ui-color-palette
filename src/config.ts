@@ -49,6 +49,7 @@ export const authorUrl = 'https://uicp.link/author'
 export const licenseUrl = 'https://uicp.link/license'
 export const vsCodeFigmaPluginUrl =
   'https://marketplace.visualstudio.com/items?itemName=figma.figma-vscode-extension'
+export const isbUrl = 'https://isb.ylb.lt/run'
 
 // Features modes
 const devMode = featuresScheme

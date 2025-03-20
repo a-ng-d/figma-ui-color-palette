@@ -60,11 +60,11 @@ export interface HighlightDigest {
 
 export type PriorityContext =
   | 'EMPTY'
+  | 'PUBLICATION'
   | 'HIGHLIGHT'
   | 'TRY'
   | 'WELCOME_TO_PRO'
   | 'WELCOME_TO_TRIAL'
-  | 'PUBLICATION'
   | 'REPORT'
   | 'STORE'
   | 'ABOUT'
