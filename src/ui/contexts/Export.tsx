@@ -3,6 +3,7 @@ import {
   Dropdown,
   Input,
   Layout,
+  layouts,
   Menu,
   SectionTitle,
   SimpleItem,
@@ -500,7 +501,7 @@ export default class Export extends PureComponent<ExportProps, ExportStates> {
                       />
                     }
                     rightPartSlot={
-                      <>
+                      <div className={layouts['snackbar--medium']}>
                         <Dropdown
                           id="select-format"
                           options={[
@@ -757,7 +758,7 @@ export default class Export extends PureComponent<ExportProps, ExportStates> {
                             }}
                           />
                         )}
-                      </>
+                      </div>
                     }
                   />
                   <div className="export-palette__preview">

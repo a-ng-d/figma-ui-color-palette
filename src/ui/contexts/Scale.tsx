@@ -1090,7 +1090,7 @@ export default class Scale extends PureComponent<ScaleProps, ScaleStates> {
                     <SectionTitle label={locals[this.props.lang].scale.title} />
                   }
                   rightPartSlot={
-                    <div className={layouts['snackbar--tight']}>
+                    <div className={layouts['snackbar--medium']}>
                       <Feature
                         isActive={Scale.features(
                           this.props.planStatus
