@@ -220,6 +220,7 @@ export const locals: { [key: string]: any } = {
           'Create a source color to split it into multiple shades according to your lightness scale',
         cta: 'Create a source color',
       },
+      optionsTitle: '$1 color options',
       lch: {
         label: 'LCH',
       },
