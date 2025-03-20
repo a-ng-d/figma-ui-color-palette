@@ -36,8 +36,8 @@ import type { AppStates } from '../App'
 import Feature from '../components/Feature'
 import About from './About'
 import Highlight from './Highlight'
-import Publication from './Publication'
 import Onboarding from './Onboarding'
+import Publication from './Publication'
 
 interface PriorityContainerProps {
   context: PriorityContext
