@@ -101,6 +101,8 @@ export const locals: { [key: string]: any } = {
         title: 'Coolors',
         helper:
           'Coolors is a tool for creating and exploring beautiful color schemes',
+        add: 'Add a Coolors palette',
+        empty: 'Remove the Coolors palette',
         url: {
           label: 'Palette URL',
           placeholder: 'Paste a link－https://coolors.co/…',
@@ -113,6 +115,8 @@ export const locals: { [key: string]: any } = {
         title: 'Realtime Colors',
         helper:
           'Realtime Colors is a tool for visualizing a color palette through a page template',
+        add: 'Add a Realtime Colors palette',
+        empty: 'Remove the Realtime Colors palette',
         url: {
           label: 'Realtime URL',
           placeholder: 'Paste a link－https://www.realtimecolors.com/…',
@@ -126,6 +130,8 @@ export const locals: { [key: string]: any } = {
         title: 'Colour Lovers',
         helper:
           'Colour Lovers is a tool for creating and exploring beautiful color schemes',
+        add: 'Add a Colour Lovers palette',
+        empty: 'Remove the Colour Lovers palette',
         filters: {
           label: 'Colors',
           any: 'Any',
@@ -186,6 +192,10 @@ export const locals: { [key: string]: any } = {
         remove: 'Remove stop',
         distributeAsTooltip: 'Press ⇧ to distribute stops based on easing',
       },
+      actions: {
+        addStop: 'Add stop',
+        removeStop: 'Remove stop',
+      },
     },
     colors: {
       title: 'Source colors',
@@ -195,7 +205,7 @@ export const locals: { [key: string]: any } = {
           'Create a source color to split it into multiple shades according to your lightness scale',
         cta: 'Create a source color',
       },
-      optionsTitle: '$1 color options',
+      optionsTitle: '$1 color parameters',
       lch: {
         label: 'LCH',
       },
@@ -204,6 +214,10 @@ export const locals: { [key: string]: any } = {
       },
       chromaShifting: {
         label: 'Shift chroma',
+      },
+      actions: {
+        removeColor: 'Remove color',
+        moreParameters: 'More parameters',
       },
     },
     themes: {
@@ -214,13 +228,17 @@ export const locals: { [key: string]: any } = {
           'Create color themes to manage multiple color palettes within one single (e.g. light and dark modes)',
         cta: 'Create a color theme',
       },
-      optionsTitle: '$1 theme options',
+      optionsTitle: '$1 theme parameters',
       paletteBackgroundColor: {
         label: 'Palette background color',
       },
       switchTheme: {
         label: 'Theme',
         defaultTheme: 'None',
+      },
+      actions: {
+        removeColor: 'Remove theme',
+        moreParameters: 'More parameters',
       },
     },
     export: {

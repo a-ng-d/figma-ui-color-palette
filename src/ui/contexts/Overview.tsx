@@ -392,6 +392,10 @@ export default class Overview extends PureComponent<
             .filter((sourceColor) => sourceColor.source === 'COOLORS')
             .length.toString()}
           helper={locals[this.props.lang].source.coolors.helper}
+          helpers={{
+            add: locals[this.props.lang].source.coolors.add,
+            empty: locals[this.props.lang].source.coolors.empty,
+          }}
           isExpanded={this.state.isCoolorsImportOpen}
           isBlocked={Overview.features(
             this.props.planStatus
@@ -471,6 +475,10 @@ export default class Overview extends PureComponent<
             .filter((sourceColor) => sourceColor.source === 'REALTIME_COLORS')
             .length.toString()}
           helper={locals[this.props.lang].source.realtimeColors.helper}
+          helpers={{
+            add: locals[this.props.lang].source.realtimeColors.add,
+            empty: locals[this.props.lang].source.realtimeColors.empty,
+          }}
           isExpanded={this.state.isRealtimeColorsImportOpen}
           isBlocked={Overview.features(
             this.props.planStatus
@@ -551,6 +559,10 @@ export default class Overview extends PureComponent<
             .length.toString()}
           icon="adjust"
           helper={locals[this.props.lang].source.colourLovers.helper}
+          helpers={{
+            add: locals[this.props.lang].source.colourLovers.add,
+            empty: locals[this.props.lang].source.colourLovers.empty,
+          }}
           isExpanded={this.state.isColourLoversImportOpen}
           isBlocked={Overview.features(
             this.props.planStatus

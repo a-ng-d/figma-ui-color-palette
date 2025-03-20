@@ -573,6 +573,10 @@ export default class Colors extends PureComponent<ColorsProps, ColorsStates> {
                       type="icon"
                       icon="plus"
                       feature="ADD_COLOR"
+                      helper={{
+                        label: locals[this.props.lang].colors.new,
+                        isSingleLine: true,
+                      }}
                       isBlocked={Colors.features(
                         this.props.planStatus
                       ).COLORS.isReached(this.props.colors.length)}
@@ -894,6 +898,12 @@ export default class Colors extends PureComponent<ColorsProps, ColorsStates> {
                         ))(),
                       }
                     })}
+                    helpers={{
+                      remove:
+                        locals[this.props.lang].colors.actions.removeColor,
+                      more: locals[this.props.lang].colors.actions
+                        .moreParameters,
+                    }}
                     isScrollable={true}
                     isTopBorderEnabled={true}
                     onChangeSortableList={this.onChangeOrder}

@@ -403,6 +403,10 @@ export default class Themes extends PureComponent<ThemesProps, ThemesStates> {
                     <Button
                       type="icon"
                       icon="plus"
+                      helper={{
+                        label: locals[this.props.lang].themes.new,
+                        isSingleLine: true,
+                      }}
                       isBlocked={Themes.features(
                         this.props.planStatus
                       ).THEMES.isBlocked()}
@@ -585,6 +589,12 @@ export default class Themes extends PureComponent<ThemesProps, ThemesStates> {
                           ))(),
                         }
                       })}
+                      helpers={{
+                        remove:
+                          locals[this.props.lang].themes.actions.removeColor,
+                        more: locals[this.props.lang].themes.actions
+                          .moreParameters,
+                      }}
                       isScrollable={true}
                       isTopBorderEnabled={true}
                       onChangeSortableList={this.onChangeOrder}
