@@ -88,7 +88,9 @@ export default class TrialControls extends PureComponent<TrialControlsProps> {
         label={locals[this.props.lang].plan.getPro}
         action={this.props.onGetProPlan}
       />
-      <span className={`${texts.type} ${texts['type--secondary']}`}>・</span>
+      <span className={`${texts.type} ${texts['type--secondary']}`}>
+        {locals[this.props.lang].separator}
+      </span>
       <div
         className={`${texts.type} ${texts['type--secondary']} ${texts['type--truncated']}`}
       >
@@ -99,7 +101,9 @@ export default class TrialControls extends PureComponent<TrialControlsProps> {
           this.props.planStatus
         ).SHORTCUTS_FEEDBACK.isActive()}
       >
-        <span className={`${texts.type} ${texts['type--secondary']}`}>・</span>
+        <span className={`${texts.type} ${texts['type--secondary']}`}>
+          {locals[this.props.lang].separator}
+        </span>
         <Button
           type="tertiary"
           label={locals[this.props.lang].plan.trialFeedback}

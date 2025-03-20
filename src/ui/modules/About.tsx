@@ -54,7 +54,9 @@ export default class About extends PureComponent<AboutProps> {
                           ).GET_PRO_PLAN.isActive() && isProEnabled
                         }
                       >
-                        <span className={`${texts.type}`}>・</span>
+                        <span className={`${texts.type}`}>
+                          {locals[this.props.lang].separator}
+                        </span>
                         <span className={`${texts.type}`}>
                           {this.props.planStatus === 'UNPAID'
                             ? locals[this.props.lang].plan.free

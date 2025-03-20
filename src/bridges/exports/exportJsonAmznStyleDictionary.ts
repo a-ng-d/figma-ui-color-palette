@@ -22,7 +22,7 @@ const exportJsonAmznStyleDictionary = (palette: FrameNode) => {
       value: shade.hex,
       comment:
         color.description !== ''
-          ? color.description + '・' + shade.description
+          ? color.description + locals[lang].separator + shade.description
           : shade.description,
     }
   }

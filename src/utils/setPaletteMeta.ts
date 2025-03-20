@@ -37,7 +37,7 @@ const getPaletteMeta = (
       themesNumber
     )
 
-  return `${colorLabel}・${themeLabel}`
+  return `${colorLabel}${locals[lang].separator}${themeLabel}`
 }
 
 export default getPaletteMeta

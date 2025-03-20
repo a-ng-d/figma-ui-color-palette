@@ -847,7 +847,7 @@ export default class Preview extends PureComponent<PreviewProps, PreviewStates> 
                   <span
                     className={`${texts['type']} ${texts['type--secondary']}`}
                   >
-                    ・
+                    {locals[this.props.lang].separator}
                   </span>
                   <Button
                     type="icon"

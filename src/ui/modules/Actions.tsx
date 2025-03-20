@@ -200,7 +200,7 @@ export default class Actions extends PureComponent<
               onBlur={this.nameHandler}
             />
             <span className={`${texts['type']} ${texts['type--secondary']}`}>
-              ・
+              {locals[this.props.lang].separator}
             </span>
             <div className={`${texts.type}`}>
               {this.props.sourceColors.length > 1

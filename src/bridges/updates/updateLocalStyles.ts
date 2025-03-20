@@ -53,7 +53,9 @@ const updateLocalStyles = async (palette: FrameNode) => {
                       }/${shade.name}`,
                 description =
                   color.description !== ''
-                    ? color.description + '・' + shade.description
+                    ? color.description +
+                      locals[lang].separator +
+                      shade.description
                     : shade.description
 
               if (
@@ -160,7 +162,7 @@ const updateLocalStyles = async (palette: FrameNode) => {
           messages.push(locals[lang].info.removedLocalStyles.single)
         else messages.push(locals[lang].info.removedLocalStyles.none)
 
-        return messages.join('・')
+        return messages.join(locals[lang].separator)
       })
       .catch(() => locals[lang].error.generic)
 

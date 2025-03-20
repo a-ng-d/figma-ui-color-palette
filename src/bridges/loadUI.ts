@@ -116,7 +116,9 @@ const loadUI = async () => {
         createLocalStyles(palette)
           .then(async (message) => [message, await updateLocalStyles(palette)])
           .then((messages) =>
-            figma.notify(messages.join('・'), { timeout: 10000 })
+            figma.notify(messages.join(locals[lang].separator), {
+              timeout: 10000,
+            })
           )
           .finally(() => figma.ui.postMessage({ type: 'STOP_LOADER' }))
           .catch((error) => {
@@ -130,7 +132,9 @@ const loadUI = async () => {
             await updateLocalVariables(palette),
           ])
           .then((messages) =>
-            figma.notify(messages.join('・'), { timeout: 10000 })
+            figma.notify(messages.join(locals[lang].separator), {
+              timeout: 10000,
+            })
           )
           .finally(() => figma.ui.postMessage({ type: 'STOP_LOADER' }))
           .catch((error) => {

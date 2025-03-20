@@ -21,7 +21,7 @@ const setPaletteName = (
         ]
       )
 
-  return parameters.join('・')
+  return parameters.join(locals[lang].separator)
 }
 
 export default setPaletteName

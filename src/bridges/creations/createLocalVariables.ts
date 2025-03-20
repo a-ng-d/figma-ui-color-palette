@@ -197,7 +197,7 @@ const createLocalVariables = async (palette: SceneNode) => {
         if (themesList.length > 4)
           figma.notify(locals[lang].warning.tooManyThemesToCreateModes)
 
-        return messages.join('・')
+        return messages.join(locals[lang].separator)
       })
       .catch(() => locals[lang].error.generic)
 

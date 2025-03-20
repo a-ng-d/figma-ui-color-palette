@@ -220,7 +220,7 @@ const updateLocalVariables = async (palette: FrameNode) => {
           else if (l === 0 && m === 1)
             messages.push(locals[lang].info.removedVariablesAndModes.noneSingle)
 
-          return messages.join('・')
+          return messages.join(locals[lang].separator)
         })
         .catch(() => locals[lang].error.generic)
 

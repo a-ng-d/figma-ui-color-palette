@@ -1243,7 +1243,7 @@ export default class Scale extends PureComponent<ScaleProps, ScaleStates> {
                           <span
                             className={`${texts.type} ${texts['type--secondary']}`}
                           >
-                            ・
+                            {locals[this.props.lang].separator}
                           </span>
                           <Button
                             type="tertiary"
@@ -1398,7 +1398,7 @@ export default class Scale extends PureComponent<ScaleProps, ScaleStates> {
                           <span
                             className={`${texts.type} ${texts['type--secondary']}`}
                           >
-                            ・
+                            {locals[this.props.lang].separator}
                           </span>
                           <Button
                             type="tertiary"
