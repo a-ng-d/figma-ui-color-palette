@@ -239,6 +239,7 @@ export const locals: { [key: string]: any } = {
           'Create color themes to manage multiple color palettes within one single (e.g. light and dark modes)',
         cta: 'Create a color theme',
       },
+      optionsTitle: '$1 theme options',
       paletteBackgroundColor: {
         label: 'Palette background color',
       },
