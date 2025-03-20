@@ -205,7 +205,7 @@ export const locals: { [key: string]: any } = {
           'Create a source color to split it into multiple shades according to your lightness scale',
         cta: 'Create a source color',
       },
-      optionsTitle: '$1 color parameters',
+      moreParameters: '$1 parameters',
       lch: {
         label: 'LCH',
       },
@@ -228,7 +228,7 @@ export const locals: { [key: string]: any } = {
           'Create color themes to manage multiple color palettes within one single (e.g. light and dark modes)',
         cta: 'Create a color theme',
       },
-      optionsTitle: '$1 theme parameters',
+      moreParameters: '$1 parameters',
       paletteBackgroundColor: {
         label: 'Palette background color',
       },

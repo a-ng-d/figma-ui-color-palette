@@ -545,7 +545,7 @@ export default class Themes extends PureComponent<ThemesProps, ThemesStates> {
                         return {
                           title: locals[
                             this.props.lang
-                          ].themes.optionsTitle.replace('$1', theme.name),
+                          ].themes.moreParameters.replace('$1', theme.name),
                           node: (() => (
                             <>
                               <Feature

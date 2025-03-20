@@ -744,7 +744,7 @@ export default class Colors extends PureComponent<ColorsProps, ColorsStates> {
                       return {
                         title: locals[
                           this.props.lang
-                        ].colors.optionsTitle.replace('$1', color.name),
+                        ].colors.moreParameters.replace('$1', color.name),
                         node: (() => (
                           <>
                             <Feature
