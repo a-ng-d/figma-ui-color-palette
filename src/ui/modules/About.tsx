@@ -1,5 +1,5 @@
 import { Layout, layouts, texts } from '@a_ng_d/figmug-ui'
-import { FeatureStatus } from '@a_ng_d/figmug-utils'
+import { doClassnames, FeatureStatus } from '@a_ng_d/figmug-utils'
 import { PureComponent } from 'preact/compat'
 import React from 'react'
 import features, {
@@ -40,12 +40,17 @@ export default class About extends PureComponent<AboutProps> {
                 <div className={layouts['snackbar--large']}>
                   <Icon size={32} />
                   <div>
-                    <span className={`${texts.type} type--xlarge`}>
+                    <span
+                      className={doClassnames([
+                        texts.type,
+                        texts['type--xlarge'],
+                      ])}
+                    >
                       {locals[this.props.lang].name}
                     </span>
                     <div className={layouts.snackbar}>
                       <span
-                        className={`${texts.type}`}
+                        className={texts.type}
                       >{`Version ${package_json.version}`}</span>
                       <Feature
                         isActive={
@@ -54,10 +59,10 @@ export default class About extends PureComponent<AboutProps> {
                           ).GET_PRO_PLAN.isActive() && isProEnabled
                         }
                       >
-                        <span className={`${texts.type}`}>
+                        <span className={texts.type}>
                           {locals[this.props.lang].separator}
                         </span>
-                        <span className={`${texts.type}`}>
+                        <span className={texts.type}>
                           {this.props.planStatus === 'UNPAID'
                             ? locals[this.props.lang].plan.free
                             : this.props.planStatus === 'PAID' &&
@@ -70,7 +75,7 @@ export default class About extends PureComponent<AboutProps> {
                   </div>
                 </div>
                 <div className={layouts.stackbar}>
-                  <span className={`${texts.type}`}>
+                  <span className={texts.type}>
                     {locals[this.props.lang].about.createdBy}
                     <a
                       href={authorUrl}
@@ -80,7 +85,7 @@ export default class About extends PureComponent<AboutProps> {
                       {locals[this.props.lang].about.author}
                     </a>
                   </span>
-                  <span className={`${texts.type}`}>
+                  <span className={texts.type}>
                     <a
                       href={repositoryUrl}
                       target="_blank"

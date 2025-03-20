@@ -1,5 +1,5 @@
 import { Button, layouts, texts } from '@a_ng_d/figmug-ui'
-import { FeatureStatus } from '@a_ng_d/figmug-utils'
+import { doClassnames, FeatureStatus } from '@a_ng_d/figmug-utils'
 import React, { PureComponent } from 'react'
 import features, { trialFeedbackUrl } from '../../config'
 import { locals } from '../../content/locals'
@@ -38,7 +38,11 @@ export default class TrialControls extends PureComponent<TrialControlsProps> {
   // Templates
   RemainingTime = () => (
     <div
-      className={`${texts.type} ${texts['type--secondary']} ${texts['type--truncated']}`}
+      className={doClassnames([
+        texts.type,
+        texts['type--secondary'],
+        texts['type--truncated'],
+      ])}
     >
       {Math.ceil(this.props.trialRemainingTime) > 72 && (
         <span>
@@ -88,11 +92,15 @@ export default class TrialControls extends PureComponent<TrialControlsProps> {
         label={locals[this.props.lang].plan.getPro}
         action={this.props.onGetProPlan}
       />
-      <span className={`${texts.type} ${texts['type--secondary']}`}>
+      <span className={doClassnames([texts.type, texts['type--secondary']])}>
         {locals[this.props.lang].separator}
       </span>
       <div
-        className={`${texts.type} ${texts['type--secondary']} ${texts['type--truncated']}`}
+        className={doClassnames([
+          texts.type,
+          texts['type--secondary'],
+          texts['type--truncated'],
+        ])}
       >
         <span>{locals[this.props.lang].plan.trialEnded}</span>
       </div>
@@ -101,7 +109,7 @@ export default class TrialControls extends PureComponent<TrialControlsProps> {
           this.props.planStatus
         ).SHORTCUTS_FEEDBACK.isActive()}
       >
-        <span className={`${texts.type} ${texts['type--secondary']}`}>
+        <span className={doClassnames([texts.type, texts['type--secondary']])}>
           {locals[this.props.lang].separator}
         </span>
         <Button
@@ -132,11 +140,7 @@ export default class TrialControls extends PureComponent<TrialControlsProps> {
   // Render
   render() {
     return (
-      <div
-        className={['pro-zone', layouts['snackbar--tight']]
-          .filter((n) => n)
-          .join(' ')}
-      >
+      <div className={doClassnames(['pro-zone', layouts['snackbar--tight']])}>
         {this.props.trialStatus === 'UNUSED' &&
           this.props.planStatus === 'UNPAID' && <this.FreePlan />}
         {this.props.trialStatus === 'PENDING' && <this.PendingTrial />}

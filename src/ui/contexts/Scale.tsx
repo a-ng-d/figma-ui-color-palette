@@ -14,7 +14,7 @@ import {
   SimpleSlider,
   texts,
 } from '@a_ng_d/figmug-ui'
-import { FeatureStatus } from '@a_ng_d/figmug-utils'
+import { doClassnames, FeatureStatus } from '@a_ng_d/figmug-utils'
 import { createPortal, PureComponent } from 'preact/compat'
 import React from 'react'
 
@@ -1241,7 +1241,10 @@ export default class Scale extends PureComponent<ScaleProps, ScaleStates> {
                             }
                           />
                           <span
-                            className={`${texts.type} ${texts['type--secondary']}`}
+                            className={doClassnames([
+                              texts.type,
+                              texts['type--secondary'],
+                            ])}
                           >
                             {locals[this.props.lang].separator}
                           </span>
@@ -1292,9 +1295,7 @@ export default class Scale extends PureComponent<ScaleProps, ScaleStates> {
                     />
                   }
                   rightPartSlot={
-                    <div className={`label ${texts.label}`}>
-                      {this.props.preset.name}
-                    </div>
+                    <div className={texts.label}>{this.props.preset.name}</div>
                   }
                 />
                 <Feature
@@ -1396,7 +1397,10 @@ export default class Scale extends PureComponent<ScaleProps, ScaleStates> {
                             }
                           />
                           <span
-                            className={`${texts.type} ${texts['type--secondary']}`}
+                            className={doClassnames([
+                              texts.type,
+                              texts['type--secondary'],
+                            ])}
                           >
                             {locals[this.props.lang].separator}
                           </span>

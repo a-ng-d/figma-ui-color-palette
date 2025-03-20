@@ -9,7 +9,7 @@ import {
   texts,
   Tooltip,
 } from '@a_ng_d/figmug-ui'
-import { FeatureStatus } from '@a_ng_d/figmug-utils'
+import { doClassnames, FeatureStatus } from '@a_ng_d/figmug-utils'
 import { PureComponent } from 'preact/compat'
 import React from 'react'
 
@@ -199,10 +199,15 @@ export default class Actions extends PureComponent<
               onFocus={this.nameHandler}
               onBlur={this.nameHandler}
             />
-            <span className={`${texts['type']} ${texts['type--secondary']}`}>
+            <span
+              className={doClassnames([
+                texts['type'],
+                texts['type--secondary'],
+              ])}
+            >
               {locals[this.props.lang].separator}
             </span>
-            <div className={`${texts.type}`}>
+            <div className={texts.type}>
               {this.props.sourceColors.length > 1
                 ? locals[
                     this.props.lang

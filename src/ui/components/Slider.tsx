@@ -1,7 +1,7 @@
-import { doMap } from '@a_ng_d/figmug-utils'
+import { Knob } from '@a_ng_d/figmug-ui'
+import { doClassnames, doMap } from '@a_ng_d/figmug-utils'
 import { Component } from 'preact/compat'
 import React from 'react'
-import { Knob } from '@a_ng_d/figmug-ui'
 import { locals } from '../../content/locals'
 import { $palette } from '../../stores/palette'
 import { Easing, Language } from '../../types/app'
@@ -395,7 +395,7 @@ export default class Slider extends Component<SliderProps, SliderStates> {
     this.palette.setKey('scale', this.props.scale ?? {})
     return (
       <div
-        className={[
+        className={doClassnames([
           'slider__range',
           this.props.presetName === 'Custom' &&
             this.props.stops.length < 24 &&
@@ -405,9 +405,7 @@ export default class Slider extends Component<SliderProps, SliderStates> {
             this.props.stops.length === 24 &&
             !this.props.hasPreset &&
             'slider__range--not-allowed',
-        ]
-          .filter((n) => n)
-          .join(' ')}
+        ])}
         style={{
           background: `linear-gradient(90deg, ${this.props.colors.min}, ${this.props.colors.max})`,
         }}

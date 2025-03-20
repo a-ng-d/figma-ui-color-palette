@@ -13,6 +13,7 @@ import { EditorType, Language } from '../../types/app'
 import { ExtractOfPaletteConfiguration } from '../../types/configurations'
 import { ActionsList } from '../../types/models'
 import getPaletteMeta from '../../utils/setPaletteMeta'
+import { doClassnames } from '@a_ng_d/figmug-utils'
 
 interface InternalPalettesProps {
   editorType: EditorType
@@ -96,7 +97,11 @@ export default class InternalPalettes extends PureComponent<
           <>
             {this.props.editorType === 'dev' && (
               <div
-                className={`${texts.type} ${texts['type--secondary']} type rich-list__title`}
+                className={doClassnames([
+                  texts.type,
+                  texts['type--secondary'],
+                  'rich-list__title',
+                ])}
                 style={{ padding: '0 var(--size-small)' }}
               >
                 {locals[this.props.lang].palettes.devMode.title}

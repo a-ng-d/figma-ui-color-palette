@@ -271,7 +271,7 @@ export default class Explore extends PureComponent<
                   }
                 />
               ) : (
-                <div className={`${texts['type--secondary']}`}>
+                <div className={texts['type--secondary']}>
                   {locals[this.props.lang].palettes.lazyLoad.completeList}
                 </div>
               )

@@ -22,6 +22,7 @@ import { Language } from '../../types/app'
 import { trackPublicationEvent } from '../../utils/eventsTracker'
 import getPaletteMeta from '../../utils/setPaletteMeta'
 import type { AppStates } from '../App'
+import { doClassnames } from '@a_ng_d/figmug-utils'
 
 interface PublicationProps {
   rawData: AppStates
@@ -855,7 +856,7 @@ export default class Publication extends PureComponent<
         <div className="dialog__cover dialog__cover--padding">
           <Thumbnail src={this.getImageSrc()} />
         </div>
-        <div className={`dialog__text`}>
+        <div className="dialog__text">
           <div
             style={{
               display: 'flex',
@@ -864,17 +865,15 @@ export default class Publication extends PureComponent<
             }}
           >
             <div>
-              <div className={`${texts.type}`}>
+              <div className={texts.type}>
                 {this.props.rawData.name === ''
                   ? locals[this.props.lang].name
                   : this.props.rawData.name}
                 {this.getPaletteStatus()}
               </div>
-              <div className={`${texts.type}`}>
-                {this.props.rawData.preset.name}
-              </div>
+              <div className={texts.type}>{this.props.rawData.preset.name}</div>
               <div
-                className={`${texts.type} ${texts['type--secondary']}`}
+                className={doClassnames([texts.type, texts['type--secondary']])}
                 style={{
                   marginTop: '2px',
                 }}
@@ -894,7 +893,9 @@ export default class Publication extends PureComponent<
               />
             )}
           </div>
-          <div className={`${texts.type} ${texts['type--secondary']}`}></div>
+          <div
+            className={doClassnames([texts.type, texts['type--secondary']])}
+          ></div>
         </div>
       </Dialog>
     )

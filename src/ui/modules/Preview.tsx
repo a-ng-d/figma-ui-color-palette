@@ -14,7 +14,7 @@ import {
   Select,
   texts,
 } from '@a_ng_d/figmug-ui'
-import { FeatureStatus } from '@a_ng_d/figmug-utils'
+import { doClassnames, FeatureStatus } from '@a_ng_d/figmug-utils'
 import features from '../../config'
 import { locals } from '../../content/locals'
 import { $palette } from '../../stores/palette'
@@ -845,7 +845,10 @@ export default class Preview extends PureComponent<PreviewProps, PreviewStates> 
               {this.props.onResetSourceColors && (
                 <div className={layouts['snackbar--medium']}>
                   <span
-                    className={`${texts['type']} ${texts['type--secondary']}`}
+                    className={doClassnames([
+                      texts['type'],
+                      texts['type--secondary'],
+                    ])}
                   >
                     {locals[this.props.lang].separator}
                   </span>

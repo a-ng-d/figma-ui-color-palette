@@ -6,7 +6,7 @@ import {
   Menu,
   layouts,
 } from '@a_ng_d/figmug-ui'
-import { FeatureStatus } from '@a_ng_d/figmug-utils'
+import { doClassnames, FeatureStatus } from '@a_ng_d/figmug-utils'
 import { PureComponent } from 'preact/compat'
 import React from 'react'
 import { signIn, signOut } from '../../bridges/publication/authentication'
@@ -56,7 +56,10 @@ interface ShortcutsStates {
   isUserMenuLoading: boolean
 }
 
-export default class Shortcuts extends PureComponent<ShortcutsProps, ShortcutsStates> {
+export default class Shortcuts extends PureComponent<
+  ShortcutsProps,
+  ShortcutsStates
+> {
   static features = (planStatus: PlanStatus) => ({
     SHORTCUTS_HIGHLIGHT: new FeatureStatus({
       features: features,
@@ -199,9 +202,10 @@ export default class Shortcuts extends PureComponent<ShortcutsProps, ShortcutsSt
           rightPartSlot={
             <>
               <div
-                className={['shortcuts', layouts['snackbar--medium']]
-                  .filter((n) => n)
-                  .join(' ')}
+                className={doClassnames([
+                  'shortcuts',
+                  layouts['snackbar--medium'],
+                ])}
               >
                 <Feature
                   isActive={Shortcuts.features(
@@ -619,7 +623,7 @@ export default class Shortcuts extends PureComponent<ShortcutsProps, ShortcutsSt
               {this.props.editorType !== 'dev' &&
                 this.props.editorType !== 'dev_vscode' && (
                   <div
-                    className={`box-resizer-grip`}
+                    className="box-resizer-grip"
                     onMouseDown={this.onHold.bind(this)}
                   >
                     <Icon
