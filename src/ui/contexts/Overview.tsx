@@ -441,7 +441,7 @@ export default class Overview extends PureComponent<
               />
             </FormItem>
           </div>
-          <List>
+          <List isTopBorderEnabled>
             {this.props.sourceColors
               .filter((sourceColor) => sourceColor.source === 'COOLORS')
               .map((sourceColor) => {
