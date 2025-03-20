@@ -749,6 +749,12 @@ export default class Export extends PureComponent<ExportProps, ExportStates> {
                             options={this.state.colorSpace.options}
                             selected={`${this.state.format}_${this.state.colorSpace.selected}`}
                             alignment="BOTTOM_RIGHT"
+                            helper={{
+                              label:
+                                locals[this.props.lang].export.css
+                                  .selectColorSpace,
+                              isSingleLine: true,
+                            }}
                           />
                         )}
                       </>

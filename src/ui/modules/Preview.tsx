@@ -412,6 +412,12 @@ export default class Preview extends PureComponent<PreviewProps, PreviewStates> 
                     ? 'toggle-sidebar-top'
                     : 'toggle-sidebar-bottom'
                 }
+                helper={{
+                  label: this.state.isDrawerCollapsed
+                    ? locals[this.props.lang].preview.actions.expandPreview
+                    : locals[this.props.lang].preview.actions.collapsePreview,
+                  isSingleLine: true,
+                }}
                 action={() => {
                   if (!this.state.isDrawerCollapsed)
                     this.drawerRef.current?.collapseDrawer()
@@ -488,6 +494,10 @@ export default class Preview extends PureComponent<PreviewProps, PreviewStates> 
                 ]}
                 selected={this.displayHandler()}
                 alignment="TOP_LEFT"
+                helper={{
+                  label: locals[this.props.lang].preview.actions.displayScores,
+                  isSingleLine: true,
+                }}
                 isBlocked={Preview.features(
                   this.props.planStatus
                 ).PREVIEW_SCORES.isBlocked()}
@@ -856,7 +866,12 @@ export default class Preview extends PureComponent<PreviewProps, PreviewStates> 
                         ? false
                         : true
                     }
-                    helper={locals[this.props.lang].preview.reset.helper}
+                    helper={{
+                      label:
+                        locals[this.props.lang].preview.actions
+                          .resetImportedColors,
+                      isSingleLine: true,
+                    }}
                   />
                 </div>
               )}

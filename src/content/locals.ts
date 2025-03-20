@@ -252,6 +252,7 @@ export const locals: { [key: string]: any } = {
       },
       css: {
         customProperties: 'Custom Properties (CSS)',
+        selectColorSpace: 'Select a color space',
       },
       tailwind: {
         config: 'Tailwind (JS)',
@@ -363,6 +364,12 @@ export const locals: { [key: string]: any } = {
       },
     },
     preview: {
+      actions: {
+        expandPreview: 'Expand preview',
+        collapsePreview: 'Collapse preview',
+        displayScores: 'Display scores',
+        resetImportedColors: 'Reset the imported colors',
+      },
       score: {
         wcag: 'Display WCAG 2.1 scores',
         apca: 'Display APCA scores',
@@ -370,9 +377,6 @@ export const locals: { [key: string]: any } = {
       lock: {
         tag: 'Locked',
         label: 'Lock source colors',
-      },
-      reset: {
-        helper: 'Reset the imported colors',
       },
     },
     publication: {
