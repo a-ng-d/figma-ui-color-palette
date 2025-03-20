@@ -347,7 +347,7 @@ export default class Overview extends PureComponent<
         {this.props.sourceColors.filter(
           (sourceColor) => sourceColor.source === 'CANVAS'
         ).length > 0 ? (
-          <List>
+          <List isTopBorderEnabled>
             {this.props.sourceColors
               .filter((sourceColor) => sourceColor.source === 'CANVAS')
               .sort((a, b) => {
@@ -441,7 +441,7 @@ export default class Overview extends PureComponent<
               />
             </FormItem>
           </div>
-          <List isTopBorderEnabled>
+          <List>
             {this.props.sourceColors
               .filter((sourceColor) => sourceColor.source === 'COOLORS')
               .map((sourceColor) => {
