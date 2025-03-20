@@ -3,10 +3,11 @@ import { PureComponent } from 'preact/compat'
 import React from 'react'
 import { announcementsWorkerUrl } from '../../config'
 import { locals } from '../../content/locals'
-import { Language } from '../../types/app'
+import { EditorType, Language } from '../../types/app'
 
 interface OnboardingProps {
   lang: Language
+  editorType: EditorType
   onCloseOnboarding: (e: MouseEvent) => void
 }
 
@@ -36,12 +37,42 @@ export default class Onboarding extends PureComponent<
     )
       .then((response) => response.json())
       .then((data) => {
-        if (data.message !== 'The database could not be queried')
+        console.log(data)
+        if (data.message !== 'The database could not be queried') {
+          interface AnnouncementProperties {
+            Rôle: {
+              multi_select: Array<{
+                name: string
+              }>
+            }
+          }
+
+          interface Announcement {
+            properties: AnnouncementProperties
+          }
+
+          const forDev: Announcement[] = data.announcements.filter(
+            (announcement: Announcement) =>
+              announcement.properties['Rôle'].multi_select.some(
+                (role: { name: string }) => role.name === 'Dev'
+              )
+          )
+          const forDesigner: Announcement[] = data.announcements.filter(
+            (announcement: Announcement) =>
+              announcement.properties['Rôle'].multi_select.some(
+                (role: { name: string }) => role.name === 'Design'
+              )
+          )
+
           this.setState({
-            announcements: data.announcements,
+            announcements:
+              this.props.editorType === 'dev' ||
+              this.props.editorType === 'dev_vscode'
+                ? forDev
+                : forDesigner,
             status: 'LOADED',
           })
-        else this.setState({ status: 'ERROR' })
+        } else this.setState({ status: 'ERROR' })
       })
       .catch(() => {
         this.setState({ status: 'ERROR' })
