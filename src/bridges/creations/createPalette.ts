@@ -1,4 +1,5 @@
 import Palette from '../../canvas/Palette'
+import { lang, locals } from '../../content/locals'
 import {
   MetaConfiguration,
   PaletteConfiguration,
@@ -52,6 +53,11 @@ const createPalette = async (msg: Msg) => {
     palette.y = figma.viewport.center.y - palette.height / 2
     figma.currentPage.selection = scene
     figma.viewport.scrollAndZoomIntoView(scene)
+
+    await figma.saveVersionHistoryAsync(
+      locals[lang].info.paletteCreated.replace('$1', msg.data.palette.name)
+    )
+
     return true
   } else palette.remove()
 }
