@@ -204,7 +204,7 @@ export default class Explore extends PureComponent<
                     type="icon"
                     icon="link-connected"
                     helper={{
-                      label: locals[this.props.lang].shortcuts.userMenu,
+                      label: locals[this.props.lang].source.actions.openPalette,
                       isSingleLine: true,
                     }}
                     action={() =>

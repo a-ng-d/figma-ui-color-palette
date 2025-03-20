@@ -525,6 +525,11 @@ export default class SelfPalettes extends PureComponent<
                         : 'DEFAULT'
                     }
                     alignment="BOTTOM_RIGHT"
+                    helper={{
+                      label:
+                        locals[this.props.lang].palettes.actions.managePalette,
+                      isSingleLine: true,
+                    }}
                   />
                   <Button
                     type="secondary"

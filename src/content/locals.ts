@@ -83,6 +83,9 @@ export const locals: { [key: string]: any } = {
           cta: 'Try it out',
         },
       },
+      actions: {
+        managePalette: 'Manage palette',
+      },
     },
     source: {
       title: 'Source colors',
@@ -134,8 +137,8 @@ export const locals: { [key: string]: any } = {
           blue: 'Blue',
         },
       },
-      action: {
-        paletteLink: 'Open the palette',
+      actions: {
+        openPalette: 'Open palette',
       },
     },
     scale: {
