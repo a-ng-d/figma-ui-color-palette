@@ -573,6 +573,7 @@ export const locals: { [key: string]: any } = {
     },
     pending: {
       announcements: 'Pending announcements…',
+      onboarding: 'Pending onboarding…',
       primaryAction: '………',
       secondaryAction: '………',
     },
