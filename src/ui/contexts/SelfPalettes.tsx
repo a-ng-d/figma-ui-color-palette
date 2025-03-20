@@ -576,39 +576,41 @@ export default class SelfPalettes extends PureComponent<
       fragment = <this.ExternalPalettesList />
     else
       fragment = (
-        <SemanticMessage
-          type="NEUTRAL"
-          message={locals[this.props.lang].palettes.signInFirst.message}
-          orientation="VERTICAL"
-          actionsSlot={
-            <Button
-              type="primary"
-              label={locals[this.props.lang].palettes.signInFirst.signIn}
-              isLoading={this.state.isSignInActionLoading}
-              action={async () => {
-                this.setState({ isSignInActionLoading: true })
-                signIn(this.props.userIdentity.id)
-                  .finally(() => {
-                    this.setState({ isSignInActionLoading: false })
-                  })
-                  .catch((error) => {
-                    parent.postMessage(
-                      {
-                        pluginMessage: {
-                          type: 'SEND_MESSAGE',
-                          message:
-                            error.message === 'Authentication timeout'
-                              ? locals[this.props.lang].error.timeout
-                              : locals[this.props.lang].error.authentication,
+        <List isMessage>
+          <SemanticMessage
+            type="NEUTRAL"
+            message={locals[this.props.lang].palettes.signInFirst.message}
+            orientation="VERTICAL"
+            actionsSlot={
+              <Button
+                type="primary"
+                label={locals[this.props.lang].palettes.signInFirst.signIn}
+                isLoading={this.state.isSignInActionLoading}
+                action={async () => {
+                  this.setState({ isSignInActionLoading: true })
+                  signIn(this.props.userIdentity.id)
+                    .finally(() => {
+                      this.setState({ isSignInActionLoading: false })
+                    })
+                    .catch((error) => {
+                      parent.postMessage(
+                        {
+                          pluginMessage: {
+                            type: 'SEND_MESSAGE',
+                            message:
+                              error.message === 'Authentication timeout'
+                                ? locals[this.props.lang].error.timeout
+                                : locals[this.props.lang].error.authentication,
+                          },
                         },
-                      },
-                      '*'
-                    )
-                  })
-              }}
-            />
-          }
-        />
+                        '*'
+                      )
+                    })
+                }}
+              />
+            }
+          />
+        </List>
       )
 
     return (

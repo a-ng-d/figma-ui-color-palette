@@ -9,12 +9,7 @@ const checkHighlightStatus = async (remoteVersion: string) => {
   else if (localVersion === undefined)
     return figma.ui.postMessage({
       type: 'PUSH_HIGHLIGHT_STATUS',
-      data:
-        figma.payments !== undefined
-          ? figma.payments.getUserFirstRanSecondsAgo() > 60
-            ? 'DISPLAY_HIGHLIGHT_DIALOG'
-            : 'NO_HIGHLIGHT'
-          : 'NO_HIGHLIGHT',
+      data: 'DISPLAY_HIGHLIGHT_DIALOG',
     })
   else {
     const remoteMajorVersion = remoteVersion.split('.')[0],

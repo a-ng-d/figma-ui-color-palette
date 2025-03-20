@@ -3,12 +3,14 @@ import mixpanel from 'mixpanel-figma'
 import React from 'react'
 import { createRoot } from 'react-dom/client'
 import App from './App'
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { tokens } from '@a_ng_d/figmug-ui'
+import { theme } from '../config'
 
 const container = document.getElementById('app'),
   root = createRoot(container)
 
-document.documentElement.setAttribute('data-theme', 'figma-ui3')
+document.documentElement.setAttribute('data-theme', theme)
 
 mixpanel.init(process.env.REACT_APP_MIXPANEL_TOKEN ?? '', {
   debug: process.env.NODE_ENV === 'development',

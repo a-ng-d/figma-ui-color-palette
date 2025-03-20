@@ -1,5 +1,8 @@
 import { doSpecificMode, featuresScheme } from './stores/features'
 
+// Theme
+export const theme = 'figma-ui3'
+
 // Limitations
 export const isTrialEnabled = false
 export const isProEnabled = true
