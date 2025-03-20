@@ -531,7 +531,7 @@ export default class Settings extends PureComponent<
         >
           <ContrastSettings
             {...this.props}
-            isLast={true}
+            isLast
             onChangeSettings={this.settingsHandler}
           />
         </Feature>

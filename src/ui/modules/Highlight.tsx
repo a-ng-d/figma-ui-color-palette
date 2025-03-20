@@ -64,7 +64,7 @@ export default class Highlight extends PureComponent<
       return (
         <Dialog
           title={locals[this.props.lang].pending.announcements}
-          isLoading={true}
+          isLoading
           onClose={this.props.onCloseHighlight}
         />
       )
@@ -72,7 +72,7 @@ export default class Highlight extends PureComponent<
       return (
         <Dialog
           title={locals[this.props.lang].error.generic}
-          isMessage={true}
+          isMessage
           onClose={this.props.onCloseHighlight}
         >
           <SemanticMessage

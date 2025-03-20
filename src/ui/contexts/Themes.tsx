@@ -579,7 +579,7 @@ export default class Themes extends PureComponent<ThemesProps, ThemesStates> {
                                       isNew={Themes.features(
                                         this.props.planStatus
                                       ).THEMES_DESCRIPTION.isNew()}
-                                      isGrowing={true}
+                                      isGrowing
                                       onBlur={this.themesHandler}
                                     />
                                   </FormItem>
@@ -595,8 +595,8 @@ export default class Themes extends PureComponent<ThemesProps, ThemesStates> {
                         more: locals[this.props.lang].themes.actions
                           .moreParameters,
                       }}
-                      isScrollable={true}
-                      isTopBorderEnabled={true}
+                      isScrollable
+                      isTopBorderEnabled
                       onChangeSortableList={this.onChangeOrder}
                       onRemoveItem={this.themesHandler}
                       isBlocked={Themes.features(

@@ -371,7 +371,7 @@ export default class Slider extends Component<SliderProps, SliderStates> {
                   ? locals[this.props.lang].scale.tips.distributeAsTooltip
                   : undefined
               }
-              canBeTyped={true}
+              canBeTyped
               isDisplayed={this.state.isTooltipDisplay[index]}
               onShiftRight={(e: React.KeyboardEvent<HTMLInputElement>) => {
                 this.onShiftRight(e.target as HTMLElement, e.metaKey, e.ctrlKey)
@@ -434,7 +434,7 @@ export default class Slider extends Component<SliderProps, SliderStates> {
                   ? locals[this.props.lang].scale.tips.distributeAsTooltip
                   : undefined
               }
-              canBeTyped={true}
+              canBeTyped
               isDisplayed={this.state.isTooltipDisplay[index]}
               onShiftRight={(e: React.KeyboardEvent<HTMLInputElement>) => {
                 this.onShiftRight(e.target as HTMLElement, e.metaKey, e.ctrlKey)

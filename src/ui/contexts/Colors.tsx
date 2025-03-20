@@ -888,7 +888,7 @@ export default class Colors extends PureComponent<ColorsProps, ColorsStates> {
                                     isNew={Colors.features(
                                       this.props.planStatus
                                     ).COLORS_DESCRIPTION.isNew()}
-                                    isGrowing={true}
+                                    isGrowing
                                     onBlur={this.colorsHandler}
                                   />
                                 </FormItem>
@@ -904,8 +904,8 @@ export default class Colors extends PureComponent<ColorsProps, ColorsStates> {
                       more: locals[this.props.lang].colors.actions
                         .moreParameters,
                     }}
-                    isScrollable={true}
-                    isTopBorderEnabled={true}
+                    isScrollable
+                    isTopBorderEnabled
                     onChangeSortableList={this.onChangeOrder}
                     onRemoveItem={this.colorsHandler}
                   />

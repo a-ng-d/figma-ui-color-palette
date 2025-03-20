@@ -432,7 +432,7 @@ export default class Overview extends PureComponent<
                   locals[this.props.lang].source.coolors.url.placeholder
                 }
                 value={this.state.coolorsUrl.value}
-                isAutoFocus={true}
+                isAutoFocus
                 onChange={this.isTypingCoolorsUrlHandler}
                 onBlur={() => {
                   if (this.state.coolorsUrl.canBeSubmitted)
@@ -515,7 +515,7 @@ export default class Overview extends PureComponent<
                   locals[this.props.lang].source.realtimeColors.url.placeholder
                 }
                 value={this.state.realtimeColorsUrl.value}
-                isAutoFocus={true}
+                isAutoFocus
                 onChange={this.isTypingRealtimeColorsUrlHandler}
                 onBlur={() => {
                   if (this.state.realtimeColorsUrl.canBeSubmitted)
