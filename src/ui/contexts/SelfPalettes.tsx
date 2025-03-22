@@ -528,7 +528,6 @@ export default class SelfPalettes extends PureComponent<
                     helper={{
                       label:
                         locals[this.props.lang].palettes.actions.managePalette,
-                      isSingleLine: true,
                     }}
                   />
                   <Button

@@ -226,7 +226,6 @@ export default class Shortcuts extends PureComponent<
                         locals[this.props.lang].shortcuts.tooltips
                           .documentation,
                       pin: 'TOP',
-                      isSingleLine: true,
                     }}
                     isBlocked={Shortcuts.features(
                       this.props.planStatus
@@ -332,7 +331,6 @@ export default class Shortcuts extends PureComponent<
                         label:
                           locals[this.props.lang].shortcuts.tooltips.userMenu,
                         pin: 'TOP',
-                        isSingleLine: true,
                       }}
                     />
                   ) : (
@@ -399,7 +397,6 @@ export default class Shortcuts extends PureComponent<
                         label:
                           locals[this.props.lang].shortcuts.tooltips.userMenu,
                         pin: 'TOP',
-                        isSingleLine: true,
                       }}
                     />
                   )}
@@ -630,7 +627,6 @@ export default class Shortcuts extends PureComponent<
                   helper={{
                     label: locals[this.props.lang].shortcuts.tooltips.helpMenu,
                     pin: 'TOP',
-                    isSingleLine: true,
                   }}
                   isNew={
                     this.props.highlight.status ===

@@ -405,7 +405,6 @@ export default class Themes extends PureComponent<ThemesProps, ThemesStates> {
                       icon="plus"
                       helper={{
                         label: locals[this.props.lang].themes.new,
-                        isSingleLine: true,
                       }}
                       isBlocked={Themes.features(
                         this.props.planStatus

@@ -575,7 +575,6 @@ export default class Colors extends PureComponent<ColorsProps, ColorsStates> {
                       feature="ADD_COLOR"
                       helper={{
                         label: locals[this.props.lang].colors.new,
-                        isSingleLine: true,
                       }}
                       isBlocked={Colors.features(
                         this.props.planStatus

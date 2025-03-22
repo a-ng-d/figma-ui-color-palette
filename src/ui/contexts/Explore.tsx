@@ -205,7 +205,6 @@ export default class Explore extends PureComponent<
                     icon="link-connected"
                     helper={{
                       label: locals[this.props.lang].source.actions.openPalette,
-                      isSingleLine: true,
                     }}
                     action={() =>
                       parent.postMessage(

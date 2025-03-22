@@ -366,11 +366,13 @@ export default class Slider extends Component<SliderProps, SliderStates> {
                   ? '100'
                   : (original[index - 1][1] - this.safeGap).toString()
               }
-              helper={
-                index === 0 || index === original.length - 1
-                  ? locals[this.props.lang].scale.tips.distributeAsTooltip
-                  : undefined
-              }
+              helper={{
+                label:
+                  index === 0 || index === original.length - 1
+                    ? locals[this.props.lang].scale.tips.distributeAsTooltip
+                    : undefined,
+                type: 'MULTI_LINE',
+              }}
               canBeTyped
               isDisplayed={this.state.isTooltipDisplay[index]}
               onShiftRight={(e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -429,11 +431,13 @@ export default class Slider extends Component<SliderProps, SliderStates> {
                   ? '100'
                   : (original[index - 1][1] - this.safeGap).toString()
               }
-              helper={
-                index === 0 || index === original.length - 1
-                  ? locals[this.props.lang].scale.tips.distributeAsTooltip
-                  : undefined
-              }
+              helper={{
+                label:
+                  index === 0 || index === original.length - 1
+                    ? locals[this.props.lang].scale.tips.distributeAsTooltip
+                    : undefined,
+                type: 'MULTI_LINE',
+              }}
               canBeTyped
               isDisplayed={this.state.isTooltipDisplay[index]}
               onShiftRight={(e: React.KeyboardEvent<HTMLInputElement>) => {

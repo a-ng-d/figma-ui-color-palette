@@ -1126,7 +1126,6 @@ export default class Scale extends PureComponent<ScaleProps, ScaleStates> {
                                   label:
                                     locals[this.props.lang].scale.actions
                                       .removeStop,
-                                  isSingleLine: true,
                                 }}
                                 feature="REMOVE_STOP"
                                 action={this.customHandler}
@@ -1139,7 +1138,6 @@ export default class Scale extends PureComponent<ScaleProps, ScaleStates> {
                               helper={{
                                 label:
                                   locals[this.props.lang].scale.actions.addStop,
-                                isSingleLine: true,
                               }}
                               feature="ADD_STOP"
                               action={

@@ -754,7 +754,6 @@ export default class Export extends PureComponent<ExportProps, ExportStates> {
                               label:
                                 locals[this.props.lang].export.css
                                   .selectColorSpace,
-                              isSingleLine: true,
                             }}
                           />
                         )}

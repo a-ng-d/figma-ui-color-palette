@@ -419,7 +419,6 @@ export default class Preview extends PureComponent<
                   label: this.state.isDrawerCollapsed
                     ? locals[this.props.lang].preview.actions.expandPreview
                     : locals[this.props.lang].preview.actions.collapsePreview,
-                  isSingleLine: true,
                 }}
                 action={() => {
                   if (!this.state.isDrawerCollapsed)
@@ -499,7 +498,6 @@ export default class Preview extends PureComponent<
                 alignment="TOP_LEFT"
                 helper={{
                   label: locals[this.props.lang].preview.actions.displayScores,
-                  isSingleLine: true,
                 }}
                 isBlocked={Preview.features(
                   this.props.planStatus
@@ -876,7 +874,6 @@ export default class Preview extends PureComponent<
                       label:
                         locals[this.props.lang].preview.actions
                           .resetImportedColors,
-                      isSingleLine: true,
                     }}
                   />
                 </div>
