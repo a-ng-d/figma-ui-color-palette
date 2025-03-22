@@ -132,7 +132,10 @@ export default class InternalPalettes extends PureComponent<
                   <Button
                     type="icon"
                     icon="target"
-                    label={locals[this.props.lang].actions.addToFile}
+                    helper={{
+                      label:
+                        locals[this.props.lang].palettes.actions.selectPalette,
+                    }}
                     action={() => this.onSelectPalette(palette.id)}
                   />
                 }
