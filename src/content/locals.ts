@@ -85,6 +85,7 @@ export const locals: { [key: string]: any } = {
       },
       actions: {
         managePalette: 'Manage palette',
+        selectPalette: 'Select palette',
       },
     },
     source: {
