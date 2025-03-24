@@ -1,6 +1,5 @@
 import { PureComponent } from 'preact/compat'
 import React from 'react'
-
 import {
   Bar,
   Button,
@@ -37,6 +36,7 @@ import { trackPreviewManagementEvent } from '../../utils/eventsTracker'
 import { AppStates } from '../App'
 import Feature from '../components/Feature'
 import Shade from '../components/Shade'
+import lsc from '../../content/images/lock_source-colors.gif'
 
 interface PreviewProps {
   service: Service
@@ -519,6 +519,11 @@ export default class Preview extends PureComponent<
                   id="lock-source-colors"
                   label={locals[this.props.lang].preview.lock.label}
                   type="SWITCH_BUTTON"
+                  preview={{
+                    image: lsc,
+                    text: locals[this.props.lang].preview.lock.preview,
+                    pin: 'TOP',
+                  }}
                   feature="LOCK_SOURCE_COLORS"
                   isChecked={this.props.areSourceColorsLocked}
                   isBlocked={Preview.features(

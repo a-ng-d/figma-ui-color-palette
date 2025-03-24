@@ -378,6 +378,7 @@ export const locals: { [key: string]: any } = {
       lock: {
         tag: 'Locked',
         label: 'Lock source colors',
+        preview: 'Lock the source colors to include them in the palette',
       },
     },
     publication: {
