@@ -36,7 +36,7 @@ import { trackPreviewManagementEvent } from '../../utils/eventsTracker'
 import { AppStates } from '../App'
 import Feature from '../components/Feature'
 import Shade from '../components/Shade'
-import lsc from '../../content/images/lock_source-colors.gif'
+import lsc from '../../content/images/lock_source_colors.gif'
 
 interface PreviewProps {
   service: Service
