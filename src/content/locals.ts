@@ -681,6 +681,7 @@ export const locals: { [key: string]: any } = {
       noInternetConnection:
         '✕ The connection with the remote palette is unlinked',
       announcements: 'The announcements cannot be loaded',
+      onboarding: 'The onboarding cannot be loaded',
     },
   },
 }

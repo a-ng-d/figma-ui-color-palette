@@ -223,8 +223,6 @@ const setPaletteMigration = async (palette: BaseNode) => {
       palette as FrameNode
     ).makePaletteData('EDIT')
 
-  console.log(JSON.parse(data).version !== paletteDataVersion)
-
   // Publication and Share
   if (isPublished === '') palette.setPluginData('isPublished', 'false')
   if (isShared === '') palette.setPluginData('isShared', 'false')

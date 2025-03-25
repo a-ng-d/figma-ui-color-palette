@@ -37,7 +37,6 @@ export default class Onboarding extends PureComponent<
     )
       .then((response) => response.json())
       .then((data) => {
-        console.log(data)
         if (data.message !== 'The database could not be queried') {
           interface AnnouncementProperties {
             Rôle: {
@@ -106,7 +105,7 @@ export default class Onboarding extends PureComponent<
         >
           <SemanticMessage
             type="WARNING"
-            message={locals[this.props.lang].error.announcements}
+            message={locals[this.props.lang].error.onboarding}
           />
         </Dialog>
       )
