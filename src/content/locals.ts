@@ -380,6 +380,9 @@ export const locals: { [key: string]: any } = {
         label: 'Lock source colors',
         preview: 'Lock the source colors to include them in the palette',
       },
+      closest: {
+        tag: 'Closest',
+      },
     },
     publication: {
       titlePublish: 'Publish palette',

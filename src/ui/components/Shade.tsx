@@ -139,6 +139,31 @@ export default class Shade extends PureComponent<ShadeProps, ShadeStates> {
     </Chip>
   )
 
+  closestColorTag = () => (
+    <Chip
+      state="ON_BACKGROUND"
+      leftSlot={
+        <div
+          style={{
+            width: 'var(--size-xxsmall)',
+            height: 'var(--size-xxsmall)',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            '--icon-picto-color': 'black',
+          }}
+        >
+          <Icon
+            type="PICTO"
+            iconName="resize-to-fit"
+          />
+        </div>
+      }
+    >
+      {locals[this.props.lang].preview.closest.tag}
+    </Chip>
+  )
+
   // Render
   render() {
     const sourceColor = chroma([
@@ -150,6 +175,15 @@ export default class Shade extends PureComponent<ShadeProps, ShadeStates> {
       chroma.distance(sourceColor, scaledColor, 'rgb')
     )
     const minDistanceIndex = distances.indexOf(Math.min(...distances))
+    const distance: number = chroma.distance(
+      chroma([
+        this.props.sourceColor.rgb.r * 255,
+        this.props.sourceColor.rgb.g * 255,
+        this.props.sourceColor.rgb.b * 255,
+      ]).hex(),
+      this.props.color,
+      'rgb'
+    )
 
     const background: HexModel =
       this.props.index === minDistanceIndex && this.props.areSourceColorsLocked
@@ -221,6 +255,9 @@ export default class Shade extends PureComponent<ShadeProps, ShadeStates> {
         )}
         {this.props.index === minDistanceIndex &&
           this.props.areSourceColorsLocked && <this.lockColorTag />}
+        {distance < 4 && !this.props.areSourceColorsLocked && (
+          <this.closestColorTag />
+        )}
       </div>
     )
   }
