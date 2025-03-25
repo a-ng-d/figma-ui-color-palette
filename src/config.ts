@@ -35,7 +35,7 @@ export const palettesDbTableName =
   process.env.NODE_ENV === 'development' ? 'sandbox.palettes' : 'palettes'
 export const palettesStorageName =
   process.env.NODE_ENV === 'development'
-    ? 'sandbox.palette.screenshots'
+    ? 'palette.screenshots'
     : 'palette.screenshots'
 
 // External URLs
