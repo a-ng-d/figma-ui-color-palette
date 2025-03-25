@@ -295,7 +295,7 @@ export const featuresScheme: Array<Feature<'CREATE' | 'EDIT' | 'TRANSFER'>> = [
     name: 'PRESETS_CUSTOM_ADD',
     description: 'New stop for the customized color system',
     isActive: true,
-    isPro: true,
+    isPro: false,
     isNew: false,
     type: 'ACTION',
     service: ['CREATE', 'EDIT'],
