@@ -1092,123 +1092,132 @@ export default class Scale extends PureComponent<ScaleProps, ScaleStates> {
           {
             node: (
               <>
-                <SimpleItem
-                  id="update-preset"
-                  leftPartSlot={
-                    <SectionTitle label={locals[this.props.lang].scale.title} />
-                  }
-                  rightPartSlot={
-                    <div className={layouts['snackbar--medium']}>
-                      <Feature
-                        isActive={Scale.features(
-                          this.props.planStatus
-                        ).SCALE_PRESETS.isActive()}
-                      >
-                        <Dropdown
-                          id="presets"
-                          options={this.presetsOptions()}
-                          selected={this.props.preset.id}
-                          alignment="RIGHT"
-                          pin="TOP"
-                        />
-                      </Feature>
-                      <Feature
-                        isActive={Scale.features(
-                          this.props.planStatus
-                        ).SCALE_PRESETS.isActive()}
-                      >
-                        {this.props.preset.name === 'Custom' && (
-                          <>
-                            <Feature
-                              isActive={Scale.features(
-                                this.props.planStatus
-                              ).SCALE_PRESETS_NAMING_CONVENTION.isActive()}
-                            >
-                              <this.NamingConvention />
-                            </Feature>
-                            {this.props.preset.scale.length > 2 && (
-                              <Button
-                                type="icon"
-                                icon="minus"
-                                helper={{
-                                  label:
-                                    locals[this.props.lang].scale.actions
-                                      .removeStop,
-                                }}
-                                feature="REMOVE_STOP"
-                                action={this.customHandler}
-                              />
-                            )}
-                            <Feature
-                              isActive={Scale.features(
-                                this.props.planStatus
-                              ).PRESETS_CUSTOM_ADD.isActive()}
-                            >
-                              <Button
-                                type="icon"
-                                icon="plus"
-                                isDisabled={
-                                  this.props.preset.scale.length === 24
-                                }
-                                isBlocked={Scale.features(
-                                  this.props.planStatus
-                                ).PRESETS_CUSTOM_ADD.isReached(
-                                  this.props.preset.scale.length
-                                )}
-                                helper={{
-                                  label:
-                                    locals[this.props.lang].scale.actions
-                                      .addStop,
-                                }}
-                                feature="ADD_STOP"
-                                action={
-                                  this.props.preset.scale.length >= 24
-                                    ? () => null
-                                    : this.customHandler
-                                }
-                              />
-                            </Feature>
-                          </>
-                        )}
-                      </Feature>
-                    </div>
-                  }
-                />
-                {Scale.features(
-                  this.props.planStatus
-                ).PRESETS_CUSTOM_ADD.isReached(
-                  this.props.preset.scale.length
-                ) &&
-                  this.props.preset.id === 'CUSTOM' && (
-                    <div
-                      style={{
-                        padding: 'var(--size-xxxsmall) var(--size-xsmall)',
-                      }}
-                    >
-                      <SemanticMessage
-                        type="INFO"
-                        message={locals[
-                          this.props.lang
-                        ].info.maxNumberOfStops.replace(
-                          '$1',
-                          Scale.features(this.props.planStatus)
-                            .PRESETS_CUSTOM_ADD.limit
-                        )}
-                        actionsSlot={
-                          <Button
-                            type="secondary"
-                            label={locals[this.props.lang].plan.getPro}
-                            action={() =>
-                              parent.postMessage(
-                                { pluginMessage: { type: 'GET_PRO_PLAN' } },
-                                '*'
-                              )
-                            }
-                          />
-                        }
+                <div
+                  className={doClassnames([
+                    layouts['stackbar'],
+                    layouts['stackbar--fill'],
+                  ])}
+                >
+                  <SimpleItem
+                    id="update-preset"
+                    leftPartSlot={
+                      <SectionTitle
+                        label={locals[this.props.lang].scale.title}
                       />
-                    </div>
-                  )}
+                    }
+                    rightPartSlot={
+                      <div className={layouts['snackbar--medium']}>
+                        <Feature
+                          isActive={Scale.features(
+                            this.props.planStatus
+                          ).SCALE_PRESETS.isActive()}
+                        >
+                          <Dropdown
+                            id="presets"
+                            options={this.presetsOptions()}
+                            selected={this.props.preset.id}
+                            alignment="RIGHT"
+                            pin="TOP"
+                          />
+                        </Feature>
+                        <Feature
+                          isActive={Scale.features(
+                            this.props.planStatus
+                          ).SCALE_PRESETS.isActive()}
+                        >
+                          {this.props.preset.name === 'Custom' && (
+                            <>
+                              <Feature
+                                isActive={Scale.features(
+                                  this.props.planStatus
+                                ).SCALE_PRESETS_NAMING_CONVENTION.isActive()}
+                              >
+                                <this.NamingConvention />
+                              </Feature>
+                              {this.props.preset.scale.length > 2 && (
+                                <Button
+                                  type="icon"
+                                  icon="minus"
+                                  helper={{
+                                    label:
+                                      locals[this.props.lang].scale.actions
+                                        .removeStop,
+                                  }}
+                                  feature="REMOVE_STOP"
+                                  action={this.customHandler}
+                                />
+                              )}
+                              <Feature
+                                isActive={Scale.features(
+                                  this.props.planStatus
+                                ).PRESETS_CUSTOM_ADD.isActive()}
+                              >
+                                <Button
+                                  type="icon"
+                                  icon="plus"
+                                  isDisabled={
+                                    this.props.preset.scale.length === 24
+                                  }
+                                  isBlocked={Scale.features(
+                                    this.props.planStatus
+                                  ).PRESETS_CUSTOM_ADD.isReached(
+                                    this.props.preset.scale.length
+                                  )}
+                                  helper={{
+                                    label:
+                                      locals[this.props.lang].scale.actions
+                                        .addStop,
+                                  }}
+                                  feature="ADD_STOP"
+                                  action={
+                                    this.props.preset.scale.length >= 24
+                                      ? () => null
+                                      : this.customHandler
+                                  }
+                                />
+                              </Feature>
+                            </>
+                          )}
+                        </Feature>
+                      </div>
+                    }
+                  />
+                  {Scale.features(
+                    this.props.planStatus
+                  ).PRESETS_CUSTOM_ADD.isReached(
+                    this.props.preset.scale.length
+                  ) &&
+                    this.props.preset.id === 'CUSTOM' && (
+                      <div
+                        style={{
+                          padding: 'var(--size-xxxsmall) var(--size-xsmall)',
+                        }}
+                      >
+                        <SemanticMessage
+                          type="INFO"
+                          message={locals[
+                            this.props.lang
+                          ].info.maxNumberOfStops.replace(
+                            '$1',
+                            Scale.features(this.props.planStatus)
+                              .PRESETS_CUSTOM_ADD.limit
+                          )}
+                          actionsSlot={
+                            <Button
+                              type="secondary"
+                              label={locals[this.props.lang].plan.getPro}
+                              action={() =>
+                                parent.postMessage(
+                                  { pluginMessage: { type: 'GET_PRO_PLAN' } },
+                                  '*'
+                                )
+                              }
+                            />
+                          }
+                        />
+                      </div>
+                    )}
+                </div>
                 <Feature
                   isActive={Scale.features(
                     this.props.planStatus
@@ -1338,55 +1347,64 @@ export default class Scale extends PureComponent<ScaleProps, ScaleStates> {
           {
             node: (
               <>
-                <SimpleItem
-                  id="watch-preset"
-                  leftPartSlot={
-                    <SectionTitle
-                      label={locals[this.props.lang].scale.title}
-                      indicator={Object.entries(
-                        this.props.scale ?? {}
-                      ).length.toString()}
-                    />
-                  }
-                  rightPartSlot={
-                    <div className={texts.label}>{this.props.preset.name}</div>
-                  }
-                />
-                {Scale.features(
-                  this.props.planStatus
-                ).PRESETS_CUSTOM_ADD.isReached(
-                  this.props.preset.scale.length
-                ) &&
-                  this.props.preset.id === 'CUSTOM' && (
-                    <div
-                      style={{
-                        padding: 'var(--size-xxxsmall) var(--size-xsmall)',
-                      }}
-                    >
-                      <SemanticMessage
-                        type="INFO"
-                        message={locals[
-                          this.props.lang
-                        ].info.maxNumberOfStops.replace(
-                          '$1',
-                          Scale.features(this.props.planStatus)
-                            .PRESETS_CUSTOM_ADD.limit
-                        )}
-                        actionsSlot={
-                          <Button
-                            type="secondary"
-                            label={locals[this.props.lang].plan.getPro}
-                            action={() =>
-                              parent.postMessage(
-                                { pluginMessage: { type: 'GET_PRO_PLAN' } },
-                                '*'
-                              )
-                            }
-                          />
-                        }
+                <div
+                  className={doClassnames([
+                    layouts['stackbar'],
+                    layouts['stackbar--fill'],
+                  ])}
+                >
+                  <SimpleItem
+                    id="watch-preset"
+                    leftPartSlot={
+                      <SectionTitle
+                        label={locals[this.props.lang].scale.title}
+                        indicator={Object.entries(
+                          this.props.scale ?? {}
+                        ).length.toString()}
                       />
-                    </div>
-                  )}
+                    }
+                    rightPartSlot={
+                      <div className={texts.label}>
+                        {this.props.preset.name}
+                      </div>
+                    }
+                  />
+                  {Scale.features(
+                    this.props.planStatus
+                  ).PRESETS_CUSTOM_ADD.isReached(
+                    this.props.preset.scale.length
+                  ) &&
+                    this.props.preset.id === 'CUSTOM' && (
+                      <div
+                        style={{
+                          padding: 'var(--size-xxxsmall) var(--size-xsmall)',
+                        }}
+                      >
+                        <SemanticMessage
+                          type="INFO"
+                          message={locals[
+                            this.props.lang
+                          ].info.maxNumberOfStops.replace(
+                            '$1',
+                            Scale.features(this.props.planStatus)
+                              .PRESETS_CUSTOM_ADD.limit
+                          )}
+                          actionsSlot={
+                            <Button
+                              type="secondary"
+                              label={locals[this.props.lang].plan.getPro}
+                              action={() =>
+                                parent.postMessage(
+                                  { pluginMessage: { type: 'GET_PRO_PLAN' } },
+                                  '*'
+                                )
+                              }
+                            />
+                          }
+                        />
+                      </div>
+                    )}
+                </div>
                 <Feature
                   isActive={Scale.features(
                     this.props.planStatus
