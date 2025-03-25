@@ -14,6 +14,7 @@ import Header from './Header'
 import Sample from './Sample'
 import Signature from './Signature'
 import Title from './Title'
+import { paletteDataVersion } from '../config'
 
 export default class Colors {
   private parent: PaletteNode
@@ -40,6 +41,7 @@ export default class Colors {
       description: this.parent.description,
       themes: [],
       collectionId: '',
+      version: paletteDataVersion,
       type: 'palette',
     }
     this.currentScale =

@@ -14,6 +14,7 @@ export const pageSize = 20
 export const userConsentVersion = '2024.01'
 export const trialVersion = '2024.03'
 export const algorithmVersion = 'v3'
+export const paletteDataVersion = '2025.03'
 
 // URLs
 export const authWorkerUrl =

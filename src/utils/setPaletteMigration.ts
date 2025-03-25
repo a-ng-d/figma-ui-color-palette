@@ -10,6 +10,7 @@ import {
   VisionSimulationModeConfiguration,
 } from '../types/configurations'
 import setData from './setData'
+import { paletteDataVersion } from '../config'
 
 const setPaletteMigration = async (palette: BaseNode) => {
   const type = palette.getPluginData('type'),
@@ -194,7 +195,7 @@ const setPaletteMigration = async (palette: BaseNode) => {
     palette.setPluginData('algorithmVersion', 'v2')
 
   // Data
-  if (data === '' || JSON.parse(data).type === undefined)
+  if (data === '' || JSON.parse(data).version !== paletteDataVersion)
     new Colors(
       {
         name: name,
@@ -220,7 +221,9 @@ const setPaletteMigration = async (palette: BaseNode) => {
         creatorAvatarImg: creatorAvatarImg,
       },
       palette as FrameNode
-    ).makePaletteData('CREATE')
+    ).makePaletteData('EDIT')
+
+  console.log(JSON.parse(data).version !== paletteDataVersion)
 
   // Publication and Share
   if (isPublished === '') palette.setPluginData('isPublished', 'false')
