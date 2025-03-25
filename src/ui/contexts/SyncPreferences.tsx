@@ -198,6 +198,7 @@ export default class SyncPreferences extends PureComponent<
               />
             }
             isListItem={false}
+            alignment="CENTER"
           />
         }
         body={[

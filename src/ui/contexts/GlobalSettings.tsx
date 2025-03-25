@@ -228,6 +228,7 @@ export default class GlobalSettings extends PureComponent<GlobalSettingsProps> {
               />
             }
             isListItem={false}
+            alignment="CENTER"
           />
         }
         body={[

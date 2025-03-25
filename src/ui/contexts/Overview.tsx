@@ -312,6 +312,7 @@ export default class Overview extends PureComponent<
               }
             />
           }
+          alignment="CENTER"
         />
         {Overview.features(this.props.planStatus).SOURCE.isReached(
           this.props.sourceColors.length - 1

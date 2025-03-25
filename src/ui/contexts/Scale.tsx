@@ -1061,6 +1061,7 @@ export default class Scale extends PureComponent<ScaleProps, ScaleStates> {
                           label={locals[this.props.lang].scale.tips.custom}
                         />
                       }
+                      alignment="CENTER"
                     />
                     <List>
                       <KeyboardShortcutItem
@@ -1181,6 +1182,7 @@ export default class Scale extends PureComponent<ScaleProps, ScaleStates> {
                         </Feature>
                       </div>
                     }
+                    alignment="BASELINE"
                   />
                   {Scale.features(
                     this.props.planStatus
@@ -1325,6 +1327,7 @@ export default class Scale extends PureComponent<ScaleProps, ScaleStates> {
                         </div>
                       </Feature>
                     }
+                    alignment="BASELINE"
                   />
                   {this.state.isTipsOpen && <this.KeyboardShortcuts />}
                 </Feature>
@@ -1368,6 +1371,7 @@ export default class Scale extends PureComponent<ScaleProps, ScaleStates> {
                         {this.props.preset.name}
                       </div>
                     }
+                    alignment="BASELINE"
                   />
                   {Scale.features(
                     this.props.planStatus
@@ -1525,6 +1529,7 @@ export default class Scale extends PureComponent<ScaleProps, ScaleStates> {
                         </div>
                       </Feature>
                     }
+                    alignment="BASELINE"
                   />
                   {this.state.isTipsOpen && <this.KeyboardShortcuts />}
                 </Feature>

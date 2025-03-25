@@ -126,6 +126,7 @@ export default class ContrastSettings extends PureComponent<ContrastSettingsProp
               />
             }
             isListItem={false}
+            alignment="CENTER"
           />
         }
         body={[

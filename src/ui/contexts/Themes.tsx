@@ -413,6 +413,7 @@ export default class Themes extends PureComponent<ThemesProps, ThemesStates> {
                       action={this.themesHandler}
                     />
                   }
+                  alignment="CENTER"
                 />
                 {customThemes.length === 0 ? (
                   <div className={layouts.centered}>

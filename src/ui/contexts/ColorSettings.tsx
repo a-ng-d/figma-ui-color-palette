@@ -580,6 +580,7 @@ export default class ColorSettings extends PureComponent<ColorSettingsProps> {
               />
             }
             isListItem={false}
+            alignment="CENTER"
           />
         }
         body={[

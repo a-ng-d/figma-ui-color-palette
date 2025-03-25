@@ -582,6 +582,7 @@ export default class Colors extends PureComponent<ColorsProps, ColorsStates> {
                       action={(e: Event) => this.colorsHandler(e)}
                     />
                   }
+                  alignment="CENTER"
                 />
                 {Colors.features(this.props.planStatus).COLORS.isReached(
                   this.props.colors.length

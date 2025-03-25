@@ -759,6 +759,7 @@ export default class Export extends PureComponent<ExportProps, ExportStates> {
                         )}
                       </div>
                     }
+                    alignment="BASELINE"
                   />
                   <div className="export-palette__preview">
                     <Input
