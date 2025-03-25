@@ -170,6 +170,8 @@ export const locals: { [key: string]: any } = {
         fastEaseIn: 'Ease in Quad',
         fastEaseOut: 'Ease out Quad',
         fastEaseInOut: 'Ease in and out Quad',
+        preview:
+          'Distribute the color stops to balance your color palette in several ways',
       },
       namingConvention: {
         ones: '1 - 10',
@@ -181,7 +183,7 @@ export const locals: { [key: string]: any } = {
         custom: 'Adjustment with Custom preset',
         cta: 'Got it',
         move: 'Move every stop',
-        distribute: 'Distribute stops based on easing',
+        distribute: 'Distribute stops based on current easing',
         add: 'Add stop',
         select: 'Select stop',
         unselect: 'Unselect stop',
@@ -191,7 +193,8 @@ export const locals: { [key: string]: any } = {
         shiftRight: 'Shift right stop',
         type: 'Type stop value',
         remove: 'Remove stop',
-        distributeAsTooltip: 'Press ⇧ to distribute stops based on easing',
+        distributeAsTooltip:
+          'Press ⇧ to distribute stops based on current easing',
       },
       actions: {
         addStop: 'Add stop',

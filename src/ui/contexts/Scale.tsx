@@ -48,6 +48,7 @@ import type { AppStates } from '../App'
 import Feature from '../components/Feature'
 import Slider from '../components/Slider'
 import Dispatcher from '../modules/Dispatcher'
+import de from '../../content/images/distribution_easing.gif'
 
 interface ScaleProps {
   service: Service
@@ -919,6 +920,11 @@ export default class Scale extends PureComponent<ScaleProps, ScaleStates> {
           selected={this.props.distributionEasing}
           pin="BOTTOM"
           containerId="scale"
+          preview={{
+            image: de,
+            text: locals[this.props.lang].scale.easing.preview,
+            pin: 'TOP',
+          }}
           isBlocked={Scale.features(
             this.props.planStatus
           ).SCALE_HELPER_DISTRIBUTION.isBlocked()}
