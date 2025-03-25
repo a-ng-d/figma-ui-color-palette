@@ -2,10 +2,13 @@ import { palettesDbTableName, palettesStorageName } from '../../config'
 import type { AppStates } from '../../ui/App'
 import { supabase } from './authentication'
 
-const unpublishPalette = async (
-  rawData: Partial<AppStates>,
-  isRemote = false
-): Promise<Partial<AppStates>> => {
+const unpublishPalette = async ({
+  rawData,
+  isRemote = false,
+}: {
+  rawData: Partial<AppStates>
+  isRemote?: boolean
+}): Promise<Partial<AppStates>> => {
   if (rawData.screenshot !== null || !isRemote) {
     const { error } = await supabase.storage
       .from(palettesStorageName)

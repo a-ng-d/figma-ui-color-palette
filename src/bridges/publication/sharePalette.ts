@@ -1,7 +1,13 @@
 import { palettesDbTableName } from '../../config'
 import { supabase } from './authentication'
 
-const sharePalette = async (id: string, isShared: boolean): Promise<void> => {
+const sharePalette = async ({
+  id,
+  isShared,
+}: {
+  id: string
+  isShared: boolean
+}): Promise<void> => {
   const now = new Date().toISOString()
 
   const { error } = await supabase

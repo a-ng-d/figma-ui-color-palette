@@ -8,10 +8,13 @@ import {
 import type { AppStates } from '../../ui/App'
 import { supabase } from './authentication'
 
-const publishPalette = async (
-  rawData: AppStates,
-  isShared = false
-): Promise<Partial<AppStates>> => {
+const publishPalette = async ({
+  rawData,
+  isShared = false,
+}: {
+  rawData: AppStates
+  isShared?: boolean
+}): Promise<Partial<AppStates>> => {
   let imageUrl = null
   const now = new Date().toISOString(),
     name =

@@ -231,7 +231,10 @@ export default class Publication extends PureComponent<
           state: this.props.isPrimaryActionLoading ? 'LOADING' : 'DEFAULT',
           action: async () => {
             this.props.onLoadPrimaryAction(true)
-            publishPalette(this.props.rawData, this.state.isPaletteShared)
+            publishPalette({
+              rawData: this.props.rawData,
+              isShared: this.state.isPaletteShared,
+            })
               .then((data) => {
                 this.props.onChangePublication(data)
                 this.setState({
@@ -282,7 +285,10 @@ export default class Publication extends PureComponent<
           state: this.props.isPrimaryActionLoading ? 'LOADING' : 'DEFAULT',
           action: async () => {
             this.props.onLoadPrimaryAction(true)
-            pushPalette(this.props.rawData, this.state.isPaletteShared)
+            pushPalette({
+              rawData: this.props.rawData,
+              isShared: this.state.isPaletteShared,
+            })
               .then((data) => {
                 this.props.onChangePublication(data)
                 this.setState({
@@ -550,7 +556,10 @@ export default class Publication extends PureComponent<
           })(),
           action: async () => {
             this.props.onLoadPrimaryAction(true)
-            pushPalette(this.props.rawData, this.state.isPaletteShared)
+            pushPalette({
+              rawData: this.props.rawData,
+              isShared: this.state.isPaletteShared,
+            })
               .then((data) => {
                 this.props.onChangePublication(data)
                 this.setState({
@@ -599,7 +608,7 @@ export default class Publication extends PureComponent<
           state: this.props.isSecondaryActionLoading ? 'LOADING' : 'DEFAULT',
           action: async () => {
             this.props.onLoadSecondaryAction(true)
-            unpublishPalette(this.props.rawData)
+            unpublishPalette({ rawData: this.props.rawData })
               .then((data) => {
                 this.props.onChangePublication(data)
                 this.setState({
