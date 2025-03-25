@@ -8,6 +8,7 @@ import { supabase } from '../bridges/publication/authentication'
 import features, {
   algorithmVersion,
   announcementsWorkerUrl,
+  privacyUrl,
   trialTime,
   userConsentVersion,
 } from '../config'
@@ -1065,7 +1066,7 @@ export default class App extends Component<Record<string, never>, AppStates> {
                     {
                       pluginMessage: {
                         type: 'OPEN_IN_BROWSER',
-                        url: 'https://uicp.link/privacy',
+                        url: privacyUrl,
                       },
                     },
                     '*'
