@@ -643,6 +643,7 @@ export const locals: { [key: string]: any } = {
       signOut: '☻ See you later',
       noResult: 'No palette matches your search',
       maxNumberOfSourceColors: 'You cannot add more than $1 source colors',
+      maxNumberOfStops: 'You cannot add more than $1 stops',
       themesOnFree: 'You cannot add or edit themes in the current plan',
       paletteCreated: '$1 palette created',
     },

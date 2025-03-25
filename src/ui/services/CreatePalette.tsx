@@ -262,7 +262,7 @@ export default class CreatePalette extends PureComponent<
         fragment = (
           <Scale
             {...this.props}
-            hasPreset
+            service="CREATE"
             onAddStop={this.props.onCustomPreset}
             onRemoveStop={this.props.onCustomPreset}
             onChangeNamingConvention={this.props.onCustomPreset}
@@ -302,6 +302,7 @@ export default class CreatePalette extends PureComponent<
             {...this.props}
             {...this.state}
             service="CREATE"
+            scale={this.props.scale}
             onCreatePalette={this.onCreatePalette}
           />
         </Feature>

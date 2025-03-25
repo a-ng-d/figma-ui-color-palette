@@ -465,7 +465,7 @@ export default class EditPalette extends PureComponent<
         fragment = (
           <Scale
             {...this.props}
-            hasPreset={false}
+            service="EDIT"
             onChangeScale={this.slideHandler}
             onChangeStop={this.customSlideHandler}
             onChangeShift={this.shiftHandler}

@@ -292,6 +292,16 @@ export const featuresScheme: Array<Feature<'CREATE' | 'EDIT' | 'TRANSFER'>> = [
     service: ['CREATE'],
   },
   {
+    name: 'PRESETS_CUSTOM_ADD',
+    description: 'New stop for the customized color system',
+    isActive: true,
+    isPro: true,
+    isNew: false,
+    type: 'ACTION',
+    service: ['CREATE', 'EDIT'],
+    limit: 10,
+  },
+  {
     name: 'SCALE_CONFIGURATION',
     description: 'Lightness stops on a range slider',
     isActive: true,

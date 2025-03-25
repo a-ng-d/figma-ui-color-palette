@@ -10,6 +10,7 @@ import {
   layouts,
   List,
   SectionTitle,
+  SemanticMessage,
   SimpleItem,
   SimpleSlider,
   texts,
@@ -29,6 +30,7 @@ import {
   Language,
   NamingConvention,
   PlanStatus,
+  Service,
 } from '../../types/app'
 import {
   PaletteConfiguration,
@@ -48,8 +50,8 @@ import Slider from '../components/Slider'
 import Dispatcher from '../modules/Dispatcher'
 
 interface ScaleProps {
+  service: Service
   sourceColors?: Array<SourceColorConfiguration>
-  hasPreset: boolean
   preset: PresetConfiguration
   namingConvention: NamingConvention
   distributionEasing: Easing
@@ -191,6 +193,11 @@ export default class Scale extends PureComponent<ScaleProps, ScaleStates> {
         ])
       )
     })(),
+    PRESETS_CUSTOM_ADD: new FeatureStatus({
+      features: features,
+      featureName: 'PRESETS_CUSTOM_ADD',
+      planStatus: planStatus,
+    }),
   })
 
   constructor(props: ScaleProps) {
@@ -235,7 +242,7 @@ export default class Scale extends PureComponent<ScaleProps, ScaleStates> {
       this.scaleMessage.data = this.palette.value as PaletteConfiguration
       this.scaleMessage.isEditedInRealTime = false
       this.props.onChangeScale()
-      if (!this.props.hasPreset)
+      if (this.props.service === 'EDIT')
         parent.postMessage({ pluginMessage: this.scaleMessage }, '*')
     }
 
@@ -245,7 +252,7 @@ export default class Scale extends PureComponent<ScaleProps, ScaleStates> {
       this.scaleMessage.feature = feature
       this.props.onChangeStop?.()
       this.props.onChangeScale()
-      if (!this.props.hasPreset)
+      if (this.props.service === 'EDIT')
         parent.postMessage({ pluginMessage: this.scaleMessage }, '*')
     }
 
@@ -254,14 +261,14 @@ export default class Scale extends PureComponent<ScaleProps, ScaleStates> {
       this.scaleMessage.isEditedInRealTime = false
       this.props.onChangeStop?.()
       this.props.onChangeScale()
-      if (!this.props.hasPreset)
+      if (this.props.service === 'EDIT')
         parent.postMessage({ pluginMessage: this.scaleMessage }, '*')
     }
 
     const onUpdatingStop = () => {
       this.scaleMessage.isEditedInRealTime = true
       this.props.onChangeScale()
-      if (!this.props.hasPreset && this.state.canPaletteDeepSync)
+      if (this.props.service === 'EDIT' && this.state.canPaletteDeepSync)
         this.dispatch.scale.on.status = true
     }
 
@@ -1044,28 +1051,29 @@ export default class Scale extends PureComponent<ScaleProps, ScaleStates> {
               typeModifier: 'BLANK',
             },
             {
-              node: !this.props.hasPreset ? (
-                <>
-                  <SimpleItem
-                    id="watch-custom-keyboard-shortcuts"
-                    leftPartSlot={
-                      <SectionTitle
-                        label={locals[this.props.lang].scale.tips.custom}
+              node:
+                this.props.service === 'EDIT' ? (
+                  <>
+                    <SimpleItem
+                      id="watch-custom-keyboard-shortcuts"
+                      leftPartSlot={
+                        <SectionTitle
+                          label={locals[this.props.lang].scale.tips.custom}
+                        />
+                      }
+                    />
+                    <List>
+                      <KeyboardShortcutItem
+                        label={locals[this.props.lang].scale.tips.add}
+                        shortcuts={[['click']]}
                       />
-                    }
-                  />
-                  <List>
-                    <KeyboardShortcutItem
-                      label={locals[this.props.lang].scale.tips.add}
-                      shortcuts={[['click']]}
-                    />
-                    <KeyboardShortcutItem
-                      label={locals[this.props.lang].scale.tips.remove}
-                      shortcuts={[['⌫']]}
-                    />
-                  </List>
-                </>
-              ) : undefined,
+                      <KeyboardShortcutItem
+                        label={locals[this.props.lang].scale.tips.remove}
+                        shortcuts={[['⌫']]}
+                      />
+                    </List>
+                  </>
+                ) : undefined,
               typeModifier: 'LIST',
             },
           ]}
@@ -1131,28 +1139,76 @@ export default class Scale extends PureComponent<ScaleProps, ScaleStates> {
                                 action={this.customHandler}
                               />
                             )}
-                            <Button
-                              type="icon"
-                              icon="plus"
-                              isDisabled={this.props.preset.scale.length === 24}
-                              helper={{
-                                label:
-                                  locals[this.props.lang].scale.actions.addStop,
-                              }}
-                              feature="ADD_STOP"
-                              action={
-                                this.props.preset.scale.length >= 24
-                                  ? () => null
-                                  : this.customHandler
-                              }
-                            />
+                            <Feature
+                              isActive={Scale.features(
+                                this.props.planStatus
+                              ).PRESETS_CUSTOM_ADD.isActive()}
+                            >
+                              <Button
+                                type="icon"
+                                icon="plus"
+                                isDisabled={
+                                  this.props.preset.scale.length === 24
+                                }
+                                isBlocked={Scale.features(
+                                  this.props.planStatus
+                                ).PRESETS_CUSTOM_ADD.isReached(
+                                  this.props.preset.scale.length
+                                )}
+                                helper={{
+                                  label:
+                                    locals[this.props.lang].scale.actions
+                                      .addStop,
+                                }}
+                                feature="ADD_STOP"
+                                action={
+                                  this.props.preset.scale.length >= 24
+                                    ? () => null
+                                    : this.customHandler
+                                }
+                              />
+                            </Feature>
                           </>
                         )}
                       </Feature>
                     </div>
                   }
                 />
-
+                {Scale.features(
+                  this.props.planStatus
+                ).PRESETS_CUSTOM_ADD.isReached(
+                  this.props.preset.scale.length
+                ) &&
+                  this.props.preset.id === 'CUSTOM' && (
+                    <div
+                      style={{
+                        padding: 'var(--size-xxxsmall) var(--size-xsmall)',
+                      }}
+                    >
+                      <SemanticMessage
+                        type="INFO"
+                        message={locals[
+                          this.props.lang
+                        ].info.maxNumberOfStops.replace(
+                          '$1',
+                          Scale.features(this.props.planStatus)
+                            .PRESETS_CUSTOM_ADD.limit
+                        )}
+                        actionsSlot={
+                          <Button
+                            type="secondary"
+                            label={locals[this.props.lang].plan.getPro}
+                            action={() =>
+                              parent.postMessage(
+                                { pluginMessage: { type: 'GET_PRO_PLAN' } },
+                                '*'
+                              )
+                            }
+                          />
+                        }
+                      />
+                    </div>
+                  )}
                 <Feature
                   isActive={Scale.features(
                     this.props.planStatus
@@ -1296,6 +1352,41 @@ export default class Scale extends PureComponent<ScaleProps, ScaleStates> {
                     <div className={texts.label}>{this.props.preset.name}</div>
                   }
                 />
+                {Scale.features(
+                  this.props.planStatus
+                ).PRESETS_CUSTOM_ADD.isReached(
+                  this.props.preset.scale.length
+                ) &&
+                  this.props.preset.id === 'CUSTOM' && (
+                    <div
+                      style={{
+                        padding: 'var(--size-xxxsmall) var(--size-xsmall)',
+                      }}
+                    >
+                      <SemanticMessage
+                        type="INFO"
+                        message={locals[
+                          this.props.lang
+                        ].info.maxNumberOfStops.replace(
+                          '$1',
+                          Scale.features(this.props.planStatus)
+                            .PRESETS_CUSTOM_ADD.limit
+                        )}
+                        actionsSlot={
+                          <Button
+                            type="secondary"
+                            label={locals[this.props.lang].plan.getPro}
+                            action={() =>
+                              parent.postMessage(
+                                { pluginMessage: { type: 'GET_PRO_PLAN' } },
+                                '*'
+                              )
+                            }
+                          />
+                        }
+                      />
+                    </div>
+                  )}
                 <Feature
                   isActive={Scale.features(
                     this.props.planStatus
@@ -1431,6 +1522,7 @@ export default class Scale extends PureComponent<ScaleProps, ScaleStates> {
 
   // Render
   render() {
-    return <>{!this.props.hasPreset ? <this.Edit /> : <this.Create />}</>
+    if (this.props.service === 'EDIT') return <this.Edit />
+    else return <this.Create />
   }
 }

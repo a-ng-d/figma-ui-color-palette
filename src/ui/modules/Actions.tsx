@@ -20,6 +20,7 @@ import { $palette } from '../../stores/palette'
 import { EditorType, Language, PlanStatus, Service } from '../../types/app'
 import {
   CreatorConfiguration,
+  ScaleConfiguration,
   SourceColorConfiguration,
 } from '../../types/configurations'
 import { AppStates } from '../App'
@@ -28,6 +29,7 @@ import Feature from '../components/Feature'
 interface ActionsProps {
   service: Service
   sourceColors: Array<SourceColorConfiguration> | []
+  scale: ScaleConfiguration
   name?: string
   creatorIdentity?: CreatorConfiguration
   userSession?: UserSession
@@ -65,6 +67,7 @@ export default class Actions extends PureComponent<
 
   static defaultProps = {
     sourceColors: [],
+    scale: {},
   }
 
   static features = (planStatus: PlanStatus) => ({
@@ -101,6 +104,11 @@ export default class Actions extends PureComponent<
     SETTINGS_NAME: new FeatureStatus({
       features: features,
       featureName: 'SETTINGS_NAME',
+      planStatus: planStatus,
+    }),
+    PRESETS_CUSTOM_ADD: new FeatureStatus({
+      features: features,
+      featureName: 'PRESETS_CUSTOM_ADD',
       planStatus: planStatus,
     }),
   })
@@ -269,9 +277,16 @@ export default class Actions extends PureComponent<
               label={locals[this.props.lang].actions.createPalette}
               feature="CREATE_PALETTE"
               isDisabled={this.props.sourceColors.length === 0}
-              isBlocked={Actions.features(
-                this.props.planStatus
-              ).SOURCE.isReached(this.props.sourceColors.length - 1)}
+              isBlocked={
+                Actions.features(this.props.planStatus).SOURCE.isReached(
+                  this.props.sourceColors.length - 1
+                ) ||
+                Actions.features(
+                  this.props.planStatus
+                ).PRESETS_CUSTOM_ADD.isReached(
+                  Object.keys(this.props.scale).length - 1
+                )
+              }
               isLoading={this.props.isPrimaryLoading}
               action={this.props.onCreatePalette}
             />

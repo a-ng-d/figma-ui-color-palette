@@ -1,20 +1,21 @@
 import { Knob } from '@a_ng_d/figmug-ui'
-import { doClassnames, doMap } from '@a_ng_d/figmug-utils'
+import { doClassnames, doMap, FeatureStatus } from '@a_ng_d/figmug-utils'
 import { Component } from 'preact/compat'
 import React from 'react'
 import { locals } from '../../content/locals'
 import { $palette } from '../../stores/palette'
-import { Easing, Language } from '../../types/app'
+import { Easing, Language, PlanStatus, Service } from '../../types/app'
 import { ScaleConfiguration } from '../../types/configurations'
 import doLightnessScale from '../../utils/doLightnessScale'
 import addStop from './../handlers/addStop'
 import deleteStop from './../handlers/deleteStop'
 import shiftLeftStop from './../handlers/shiftLeftStop'
 import shiftRightStop from './../handlers/shiftRightStop'
+import features from '../../config'
 
 interface SliderProps {
+  service: Service
   stops: Array<number>
-  hasPreset: boolean
   presetName: string
   type: 'EDIT' | 'FULLY_EDIT'
   min?: number
@@ -25,6 +26,7 @@ interface SliderProps {
     min: string
     max: string
   }
+  planStatus: PlanStatus
   lang: Language
   onChange: (state: string, feature?: string) => void
 }
@@ -43,6 +45,14 @@ export default class Slider extends Component<SliderProps, SliderStates> {
       max: 'var(--figma-color-bg-secondary)',
     },
   }
+
+  static features = (planStatus: PlanStatus) => ({
+    PRESETS_CUSTOM_ADD: new FeatureStatus({
+      features: features,
+      featureName: 'PRESETS_CUSTOM_ADD',
+      planStatus: planStatus,
+    }),
+  })
 
   constructor(props: SliderProps) {
     super(props)
@@ -242,10 +252,12 @@ export default class Slider extends Component<SliderProps, SliderStates> {
   onAdd = (e: React.MouseEvent<HTMLDivElement>) => {
     if (
       (e.target as HTMLElement).classList[0] === 'slider__range' &&
-      Object.keys(this.props.scale !== undefined ? this.props.scale : {})
-        .length < 24 &&
+      this.props.stops.length < 24 &&
       this.props.presetName === 'Custom' &&
-      !this.props.hasPreset
+      this.props.service === 'EDIT' &&
+      !Slider.features(this.props.planStatus).PRESETS_CUSTOM_ADD.isReached(
+        this.props.stops.length
+      )
     ) {
       addStop(
         e,
@@ -402,12 +414,18 @@ export default class Slider extends Component<SliderProps, SliderStates> {
         className={doClassnames([
           'slider__range',
           this.props.presetName === 'Custom' &&
-            this.props.stops.length < 24 &&
-            !this.props.hasPreset &&
+            (this.props.stops.length < 24 ||
+              !Slider.features(
+                this.props.planStatus
+              ).PRESETS_CUSTOM_ADD.isReached(this.props.stops.length)) &&
+            this.props.service === 'EDIT' &&
             'slider__range--add',
           this.props.presetName === 'Custom' &&
-            this.props.stops.length === 24 &&
-            !this.props.hasPreset &&
+            (this.props.stops.length === 24 ||
+              Slider.features(
+                this.props.planStatus
+              ).PRESETS_CUSTOM_ADD.isReached(this.props.stops.length)) &&
+            this.props.service === 'EDIT' &&
             'slider__range--not-allowed',
         ])}
         style={{
@@ -454,7 +472,7 @@ export default class Slider extends Component<SliderProps, SliderStates> {
                 if (
                   this.props.stops.length > 2 &&
                   this.props.presetName === 'Custom' &&
-                  !this.props.hasPreset
+                  this.props.service === 'EDIT'
                 )
                   this.onDelete(e.target as HTMLElement)
               }}
