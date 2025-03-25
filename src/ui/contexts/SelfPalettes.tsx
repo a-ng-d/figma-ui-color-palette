@@ -379,13 +379,13 @@ export default class SelfPalettes extends PureComponent<
                                 (loading, i) => (i === index ? true : loading)
                               ),
                           })
-                          unpublishPalette(
-                            {
+                          unpublishPalette({
+                            rawData: {
                               id: palette.palette_id,
                               userSession: this.props.userSession,
                             },
-                            true
-                          )
+                            isRemote: true,
+                          })
                             .then(() => {
                               const currentPalettesList =
                                 this.props.palettesList.filter(
@@ -459,7 +459,10 @@ export default class SelfPalettes extends PureComponent<
                                 (loading, i) => (i === index ? true : loading)
                               ),
                           })
-                          sharePalette(palette.palette_id, !palette.is_shared)
+                          sharePalette({
+                            id: palette.palette_id,
+                            isShared: !palette.is_shared,
+                          })
                             .then(() => {
                               parent.postMessage(
                                 {
