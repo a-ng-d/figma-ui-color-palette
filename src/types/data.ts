@@ -45,6 +45,8 @@ export interface PaletteDataShadeItem {
   hsluv: [number, number, number]
   variableId: string
   styleId: string
+  isClosestToRef?: boolean
+  isSourceColorLocked?: boolean
   type: 'source color' | 'color shade'
 }
 

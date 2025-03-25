@@ -245,7 +245,22 @@ export default class Colors {
           type: 'source color',
         })
 
-        scaledColors.forEach((scaledColor) => {
+        const distances = scaledColors.map((shade) =>
+          chroma.distance(
+            chroma(sourceColor).hex(),
+            chroma(shade[1]).hex(),
+            'rgb'
+          )
+        )
+        const minDistanceIndex = distances.indexOf(Math.min(...distances))
+
+        scaledColors.forEach((scaledColor, index) => {
+          const distance: number = chroma.distance(
+            chroma(sourceColor).hex(),
+            chroma(scaledColor[1]).hex(),
+            'rgb'
+          )
+
           const scaleName: string =
             Object.keys(this.currentScale)
               .find((key) => key === scaledColor[0][0])
@@ -260,14 +275,38 @@ export default class Colors {
           paletteDataColorItem.shades.push({
             name: scaleName,
             description: `Shade color with ${scaledColor[0][1]}% of lightness`,
-            hex: chroma(scaledColor[1]).hex(),
-            rgb: chroma(scaledColor[1]).rgb(),
-            gl: chroma(scaledColor[1]).gl(),
-            lch: chroma(scaledColor[1]).lch(),
-            oklch: chroma(scaledColor[1]).oklch(),
-            lab: chroma(scaledColor[1]).lab(),
-            oklab: chroma(scaledColor[1]).oklab(),
-            hsl: chroma(scaledColor[1]).hsl(),
+            hex:
+              index === minDistanceIndex && this.parent.areSourceColorsLocked
+                ? chroma(sourceColor).hex()
+                : chroma(scaledColor[1]).hex(),
+            rgb:
+              index === minDistanceIndex && this.parent.areSourceColorsLocked
+                ? chroma(sourceColor).rgb()
+                : chroma(scaledColor[1]).rgb(),
+            gl:
+              index === minDistanceIndex && this.parent.areSourceColorsLocked
+                ? chroma(sourceColor).gl()
+                : chroma(scaledColor[1]).gl(),
+            lch:
+              index === minDistanceIndex && this.parent.areSourceColorsLocked
+                ? chroma(sourceColor).lch()
+                : chroma(scaledColor[1]).lch(),
+            oklch:
+              index === minDistanceIndex && this.parent.areSourceColorsLocked
+                ? chroma(sourceColor).oklch()
+                : chroma(scaledColor[1]).oklch(),
+            lab:
+              index === minDistanceIndex && this.parent.areSourceColorsLocked
+                ? chroma(sourceColor).lab()
+                : chroma(scaledColor[1]).lab(),
+            oklab:
+              index === minDistanceIndex && this.parent.areSourceColorsLocked
+                ? chroma(sourceColor).oklab()
+                : chroma(scaledColor[1]).oklab(),
+            hsl:
+              index === minDistanceIndex && this.parent.areSourceColorsLocked
+                ? chroma(sourceColor).hsl()
+                : chroma(scaledColor[1]).hsl(),
             hsluv: [newHsluv.hsluv_h, newHsluv.hsluv_s, newHsluv.hsluv_l],
             variableId:
               service === 'EDIT'
@@ -287,6 +326,9 @@ export default class Colors {
                     scaleName
                   )
                 : '',
+            isClosestToRef: distance < 4 && !this.parent.areSourceColorsLocked,
+            isSourceColorLocked:
+              index === minDistanceIndex && this.parent.areSourceColorsLocked,
             type: 'color shade',
           })
         })
@@ -398,20 +440,9 @@ export default class Colors {
             )
       )
 
-      const distances = color.shades
-        .filter((shade) => shade.name !== 'source')
-        .map((shade) => chroma.distance(sourceColor.hex, shade.hex, 'rgb'))
-      const minDistanceIndex = distances.indexOf(Math.min(...distances))
-
       color.shades
         .filter((shade) => shade.name !== 'source')
-        .forEach((shade, index) => {
-          const distance: number = chroma.distance(
-            sourceColor.hex,
-            shade.hex,
-            'rgb'
-          )
-
+        .forEach((shade) => {
           if (this.parent.view.includes('PALETTE'))
             this.nodeRowShades?.appendChild(
               new Sample(
@@ -422,21 +453,14 @@ export default class Colors {
                   b: sourceColor.rgb[2] / 255,
                 },
                 shade.name,
-                index === minDistanceIndex && this.parent.areSourceColorsLocked
-                  ? new Color({
-                      visionSimulationMode: this.parent.visionSimulationMode,
-                    }).simulateColorBlindRgb(sourceColor.rgb)
-                  : shade.rgb,
+                shade.rgb,
                 this.parent.colorSpace,
                 this.parent.visionSimulationMode,
                 this.parent.view,
                 this.parent.textColorsTheme,
                 {
-                  isClosestToRef:
-                    distance < 4 && !this.parent.areSourceColorsLocked,
-                  isLocked:
-                    index === minDistanceIndex &&
-                    this.parent.areSourceColorsLocked,
+                  isClosestToRef: shade.isClosestToRef ?? false,
+                  isLocked: shade.isSourceColorLocked ?? false,
                 }
               ).makeNodeShade(
                 this.sampleSize,
@@ -462,21 +486,14 @@ export default class Colors {
                   b: sourceColor.rgb[2] / 255,
                 },
                 shade.name,
-                index === minDistanceIndex && this.parent.areSourceColorsLocked
-                  ? new Color({
-                      visionSimulationMode: this.parent.visionSimulationMode,
-                    }).simulateColorBlindRgb(sourceColor.rgb)
-                  : shade.rgb,
+                shade.rgb,
                 this.parent.colorSpace,
                 this.parent.visionSimulationMode,
                 this.parent.view,
                 this.parent.textColorsTheme,
                 {
-                  isClosestToRef:
-                    distance < 4 && !this.parent.areSourceColorsLocked,
-                  isLocked:
-                    index === minDistanceIndex &&
-                    this.parent.areSourceColorsLocked,
+                  isClosestToRef: shade.isClosestToRef ?? false,
+                  isLocked: shade.isSourceColorLocked ?? false,
                 }
               ).makeNodeRichShade(
                 this.sampleSize * this.sampleScale,
