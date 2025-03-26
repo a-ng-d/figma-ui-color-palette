@@ -1054,7 +1054,7 @@ export default class Scale extends PureComponent<ScaleProps, ScaleStates> {
                   />
                 </List>
               ),
-              typeModifier: 'BLANK',
+              typeModifier: 'DISTRIBUTED',
             },
             {
               node:
