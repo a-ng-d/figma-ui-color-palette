@@ -87,16 +87,17 @@ figma.on('run', async ({ parameters }: RunEvent) => {
 })
 
 // Migration
-figma.on('run', async () => {
-  await figma.currentPage.loadAsync()
-  figma.currentPage
-    .findAllWithCriteria({
-      pluginData: {},
-    })
-    .forEach((palette) => {
-      setPaletteMigration(palette)
-    })
-})
+if (figma.editorType !== 'dev')
+  figma.on('run', async () => {
+    await figma.currentPage.loadAsync()
+    figma.currentPage
+      .findAllWithCriteria({
+        pluginData: {},
+      })
+      .forEach((palette) => {
+        setPaletteMigration(palette)
+      })
+  })
 figma.on('currentpagechange', async () => {
   await figma.currentPage.loadAsync()
   figma.currentPage
