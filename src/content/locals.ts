@@ -499,6 +499,7 @@ export const locals: { [key: string]: any } = {
       pro: 'Pro plan',
       free: 'Free plan',
       trial: 'Trial',
+      dev: 'Developer plan',
       trialEnded: 'Your trial has ended',
       trialTimeDays: {
         single: '1 day left in this trial',
@@ -509,7 +510,6 @@ export const locals: { [key: string]: any } = {
         plural: '$1 hours left in this trial',
       },
       trialFeedback: 'How was it?',
-      dev: 'Developer plan',
     },
     proPlan: {
       welcome: {
