@@ -660,7 +660,6 @@ export default class Shortcuts extends PureComponent<
             </Feature>
           }
           border={['TOP']}
-          shouldReflow
         />
       </>
     )
