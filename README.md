@@ -13,15 +13,15 @@ This plugin will allow you to:
 - Publish the palette for reuse across multiple documents or add shared palettes from the community.
 
 ## Documentation
-The full documentation can be consulted on [docs.ui-color-palette.com](https://uicp.link/docs).
+The full documentation can be consulted on [docs.ui-color-palette.com](https://uicp.ylb.lt/docs).
 
 ## Contribution
 ### Community
-Ask questions, submit your ideas or requests on [Canny](https://uicp.link/feature-requests).
+Ask questions, submit your ideas or requests on [Canny](https://uicp.ylb.lt/ideas).
 
 ### Issues
 Have you encountered a bug? Could a feature be improved?
-Go to the [Issues](https://uicp.link/report) section and browse the existing tickets or create a new one.
+Go to the [Issues](https://uicp.ylb.lt/report) section and browse the existing tickets or create a new one.
 
 ### Development
 - Clone this repository (or fork it).
@@ -44,5 +44,5 @@ Go to the [Issues](https://uicp.link/report) section and browse the existing tic
 - The Figma components are emulated thanks to the [Figma Plugin DS](https://github.com/thomas-lowry/figma-plugin-ds) stylesheet by [Tom Lowry](https://github.com/thomas-lowry).
 
 ## Support
-- [Follow the plugin LinkedIn page](https://uicp.link/network).
-- [Connect to my Figma resources page](https://uicp.link/author).
+- [Follow the plugin LinkedIn page](https://uicp.ylb.lt/network).
+- [Connect to my Figma resources page](https://uicp.ylb.lt/author).

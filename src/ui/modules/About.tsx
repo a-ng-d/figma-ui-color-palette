@@ -62,14 +62,20 @@ export default class About extends PureComponent<AboutProps> {
                         <span className={texts.type}>
                           {locals[this.props.lang].separator}
                         </span>
-                        <span className={texts.type}>
-                          {this.props.planStatus === 'UNPAID'
-                            ? locals[this.props.lang].plan.free
-                            : this.props.planStatus === 'PAID' &&
-                                this.props.trialStatus === 'PENDING'
-                              ? locals[this.props.lang].plan.trial
-                              : locals[this.props.lang].plan.pro}
-                        </span>
+                        {process.env.NODE_ENV === 'development' ? (
+                          <span className={texts.type}>
+                            {locals[this.props.lang].plan.dev}
+                          </span>
+                        ) : (
+                          <span className={texts.type}>
+                            {this.props.planStatus === 'UNPAID'
+                              ? locals[this.props.lang].plan.free
+                              : this.props.planStatus === 'PAID' &&
+                                  this.props.trialStatus === 'PENDING'
+                                ? locals[this.props.lang].plan.trial
+                                : locals[this.props.lang].plan.pro}
+                          </span>
+                        )}
                       </Feature>
                     </div>
                   </div>

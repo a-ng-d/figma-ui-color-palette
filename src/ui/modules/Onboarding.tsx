@@ -1,4 +1,4 @@
-import { Dialog, SemanticMessage, texts } from '@a_ng_d/figmug-ui'
+import { Dialog, Icon, SemanticMessage, texts } from '@a_ng_d/figmug-ui'
 import { PureComponent } from 'preact/compat'
 import React from 'react'
 import { announcementsWorkerUrl } from '../../config'
@@ -16,21 +16,21 @@ interface OnboardingStates {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   announcements: Array<any>
   status: 'LOADING' | 'LOADED' | 'ERROR'
+  isImageLoaded: boolean
 }
 
-export default class Onboarding extends PureComponent<
-  OnboardingProps,
-  OnboardingStates
-> {
+export default class Onboarding extends PureComponent<OnboardingProps, OnboardingStates> {
   constructor(props: OnboardingProps) {
     super(props)
     this.state = {
       position: 0,
       announcements: [],
       status: 'LOADING',
+      isImageLoaded: false,
     }
   }
 
+  // Lifecycle
   componentDidMount = () => {
     fetch(
       `${announcementsWorkerUrl}/?action=get_announcements&database_id=${process.env.REACT_APP_NOTION_ONBOARDING_ID}`
@@ -78,15 +78,17 @@ export default class Onboarding extends PureComponent<
       })
   }
 
+  // Direct Actions
   goNextSlide = (e: MouseEvent) => {
     if (this.state.position + 1 < this.state.announcements.length)
-      this.setState({ position: this.state.position + 1 })
+      this.setState({ position: this.state.position + 1, isImageLoaded: false })
     else {
       this.props.onCloseOnboarding(e as MouseEvent)
       this.setState({ position: 0 })
     }
   }
 
+  // Render
   render() {
     if (this.state.status === 'LOADING')
       return (
@@ -152,7 +154,30 @@ export default class Onboarding extends PureComponent<
           }
           onClose={(e: MouseEvent) => this.props.onCloseOnboarding(e)}
         >
-          <div className="dialog__cover">
+          <div
+            className="dialog__cover"
+            style={{
+              position: 'relative',
+            }}
+          >
+            {!this.state.isImageLoaded && (
+              <div
+                style={{
+                  position: 'absolute',
+                  width: '100%',
+                  height: '100%',
+                  inset: '0 0 0 0',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+              >
+                <Icon
+                  type="PICTO"
+                  iconName="spinner"
+                />
+              </div>
+            )}
             <img
               src={
                 this.state.announcements[this.state.position].properties.Image
@@ -160,7 +185,11 @@ export default class Onboarding extends PureComponent<
               }
               style={{
                 width: '100%',
+                visibility: this.state.isImageLoaded ? 'visible' : 'hidden',
+                aspectRatio: '8 / 5',
               }}
+              loading="lazy"
+              onLoad={() => this.setState({ isImageLoaded: true })}
             />
           </div>
           <div className="dialog__text">
