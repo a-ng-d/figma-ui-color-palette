@@ -19,10 +19,7 @@ interface OnboardingStates {
   isImageLoaded: boolean
 }
 
-export default class Onboarding extends PureComponent<
-  OnboardingProps,
-  OnboardingStates
-> {
+export default class Onboarding extends PureComponent<OnboardingProps, OnboardingStates> {
   constructor(props: OnboardingProps) {
     super(props)
     this.state = {
@@ -33,6 +30,7 @@ export default class Onboarding extends PureComponent<
     }
   }
 
+  // Lifecycle
   componentDidMount = () => {
     fetch(
       `${announcementsWorkerUrl}/?action=get_announcements&database_id=${process.env.REACT_APP_NOTION_ONBOARDING_ID}`
@@ -80,6 +78,7 @@ export default class Onboarding extends PureComponent<
       })
   }
 
+  // Direct Actions
   goNextSlide = (e: MouseEvent) => {
     if (this.state.position + 1 < this.state.announcements.length)
       this.setState({ position: this.state.position + 1, isImageLoaded: false })
@@ -89,6 +88,7 @@ export default class Onboarding extends PureComponent<
     }
   }
 
+  // Render
   render() {
     if (this.state.status === 'LOADING')
       return (

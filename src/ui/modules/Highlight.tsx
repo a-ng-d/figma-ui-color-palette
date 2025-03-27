@@ -19,10 +19,7 @@ interface HighlightStates {
   isImageLoaded: boolean
 }
 
-export default class Highlight extends PureComponent<
-  HighlightProps,
-  HighlightStates
-> {
+export default class Highlight extends PureComponent<HighlightProps, HighlightStates> {
   constructor(props: HighlightProps) {
     super(props)
     this.state = {
@@ -33,6 +30,7 @@ export default class Highlight extends PureComponent<
     }
   }
 
+  // Lifecycle
   componentDidMount = () => {
     fetch(
       `${announcementsWorkerUrl}/?action=get_announcements&database_id=${process.env.REACT_APP_NOTION_ANNOUNCEMENTS_ID}`
@@ -51,6 +49,7 @@ export default class Highlight extends PureComponent<
       })
   }
 
+  // Direct Actions
   goNextSlide = (e: MouseEvent) => {
     if (this.state.position + 1 < this.state.announcements.length)
       this.setState({ position: this.state.position + 1, isImageLoaded: false })
