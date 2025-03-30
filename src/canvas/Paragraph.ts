@@ -29,7 +29,7 @@ export default class Paragraph {
     this.nodeText.name = '_text'
     this.nodeText.characters = this.content
     this.nodeText.fontName = {
-      family: 'Red Hat Mono',
+      family: 'Martian Mono',
       style: 'Medium',
     }
     this.nodeText.fontSize = this.fontSize

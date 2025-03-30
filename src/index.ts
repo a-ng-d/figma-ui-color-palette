@@ -12,7 +12,7 @@ import setPaletteMigration from './utils/setPaletteMigration'
 // Fonts
 figma.loadFontAsync({ family: 'Inter', style: 'Regular' })
 figma.loadFontAsync({ family: 'Inter', style: 'Medium' })
-figma.loadFontAsync({ family: 'Red Hat Mono', style: 'Medium' })
+figma.loadFontAsync({ family: 'Martian Mono', style: 'Medium' })
 
 // Parameters
 figma.parameters.on(
