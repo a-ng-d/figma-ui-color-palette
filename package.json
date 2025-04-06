@@ -1,7 +1,7 @@
 {
   "name": "figma-ui-color-palette",
   "version": "4.3.0",
-  "description": "UI Color Palette is a Figma and FigJam plugin that creates, manages, deploys, and publishes consistent and accessible color palettes",
+  "description": "UI Color Palette is a Figma and FigJam plugin that creates, manages, deploys, and publishes consistent and accessible color palettes.",
   "main": "code.js",
   "scripts": {
     "start": "npm-run-all -p start:announcements_worker start:auth_lobby start:dev",
