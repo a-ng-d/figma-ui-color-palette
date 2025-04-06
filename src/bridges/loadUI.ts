@@ -42,7 +42,7 @@ const loadUI = async () => {
   figma.showUI(__html__, {
     width: windowSize.w,
     height: windowSize.h,
-    title: locals[lang].name,
+    title: `${locals[lang].name}${locals[lang].separator}${locals[lang].tagline}`,
     themeColors: true,
   })
 
