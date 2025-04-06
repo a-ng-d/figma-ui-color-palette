@@ -19,7 +19,10 @@ interface OnboardingStates {
   isImageLoaded: boolean
 }
 
-export default class Onboarding extends PureComponent<OnboardingProps, OnboardingStates> {
+export default class Onboarding extends PureComponent<
+  OnboardingProps,
+  OnboardingStates
+> {
   constructor(props: OnboardingProps) {
     super(props)
     this.state = {

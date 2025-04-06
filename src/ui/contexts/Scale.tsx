@@ -20,6 +20,7 @@ import { createPortal, PureComponent } from 'preact/compat'
 import React from 'react'
 
 import features from '../../config'
+import de from '../../content/images/distribution_easing.gif'
 import { locals } from '../../content/locals'
 import { $palette } from '../../stores/palette'
 import { $canPaletteDeepSync } from '../../stores/preferences'
@@ -48,7 +49,6 @@ import type { AppStates } from '../App'
 import Feature from '../components/Feature'
 import Slider from '../components/Slider'
 import Dispatcher from '../modules/Dispatcher'
-import de from '../../content/images/distribution_easing.gif'
 
 interface ScaleProps {
   service: Service

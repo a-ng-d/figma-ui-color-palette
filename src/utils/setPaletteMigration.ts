@@ -1,6 +1,7 @@
 import { uid } from 'uid'
 
 import Colors from '../canvas/Colors'
+import { paletteDataVersion } from '../config'
 import { lang, locals } from '../content/locals'
 import { presets } from '../stores/presets'
 import {
@@ -10,7 +11,6 @@ import {
   VisionSimulationModeConfiguration,
 } from '../types/configurations'
 import setData from './setData'
-import { paletteDataVersion } from '../config'
 
 const setPaletteMigration = async (palette: BaseNode) => {
   const type = palette.getPluginData('type'),

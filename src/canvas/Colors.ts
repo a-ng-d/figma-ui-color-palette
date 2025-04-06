@@ -1,6 +1,7 @@
 import chroma from 'chroma-js'
 import { Hsluv } from 'hsluv'
 
+import { paletteDataVersion } from '../config'
 import { lang, locals } from '../content/locals'
 import { ScaleConfiguration } from '../types/configurations'
 import {
@@ -14,7 +15,6 @@ import Header from './Header'
 import Sample from './Sample'
 import Signature from './Signature'
 import Title from './Title'
-import { paletteDataVersion } from '../config'
 
 export default class Colors {
   private parent: PaletteNode

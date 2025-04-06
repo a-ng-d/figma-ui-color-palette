@@ -1,5 +1,3 @@
-import { PureComponent } from 'preact/compat'
-import React from 'react'
 import {
   Bar,
   Button,
@@ -14,7 +12,10 @@ import {
   texts,
 } from '@a_ng_d/figmug-ui'
 import { doClassnames, FeatureStatus } from '@a_ng_d/figmug-utils'
+import { PureComponent } from 'preact/compat'
+import React from 'react'
 import features from '../../config'
+import lsc from '../../content/images/lock_source_colors.gif'
 import { locals } from '../../content/locals'
 import { $palette } from '../../stores/palette'
 import { $isAPCADisplayed, $isWCAGDisplayed } from '../../stores/preferences'
@@ -36,7 +37,6 @@ import { trackPreviewManagementEvent } from '../../utils/eventsTracker'
 import { AppStates } from '../App'
 import Feature from '../components/Feature'
 import Shade from '../components/Shade'
-import lsc from '../../content/images/lock_source_colors.gif'
 
 interface PreviewProps {
   service: Service
