@@ -219,6 +219,7 @@ export default class Palette {
     this.node.appendChild(new Colors(this as PaletteNode, this.node).makeNode())
 
     this.node.setPluginData('colors', JSON.stringify(this.colors))
+
     return this.node
   }
 }

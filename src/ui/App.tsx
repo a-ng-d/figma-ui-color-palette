@@ -246,6 +246,7 @@ export default class App extends Component<Record<string, never>, AppStates> {
         this.state.preset.easing
       )
     )
+
     fetch(
       `${announcementsWorkerUrl}/?action=get_version&database_id=${process.env.REACT_APP_NOTION_ANNOUNCEMENTS_ID}`
     )
@@ -270,6 +271,7 @@ export default class App extends Component<Record<string, never>, AppStates> {
         }
       })
       .catch((error) => console.error(error))
+
     supabase.auth.onAuthStateChange((event, session) => {
       const actions: ActionsList = {
         SIGNED_IN: () => {
@@ -331,6 +333,7 @@ export default class App extends Component<Record<string, never>, AppStates> {
       // console.log(event, session)
       return actions[event]?.()
     })
+
     onmessage = (e: MessageEvent) => {
       try {
         const checkUserAuthentication = async () => {
