@@ -154,7 +154,7 @@ export default class Sample {
     ]
 
     if (this.backgroundColor !== undefined)
-      newFills.push({
+      newFills.unshift({
         type: 'SOLID',
         color: {
           r: this.backgroundColor[0] / 255,
@@ -169,7 +169,7 @@ export default class Sample {
     this.node.name = name
     this.node.resize(width, height)
     this.node.fills = newFills
-    this.node.fills = this.node.fills.filter(Boolean)
+
     // Layout
     this.node.layoutMode = 'VERTICAL'
     this.node.layoutSizingHorizontal = 'FIXED'
@@ -236,6 +236,29 @@ export default class Sample {
     description?: string
     isColorName?: boolean
   }) => {
+    const newFills: Paint[] = [
+      {
+        type: 'SOLID' as const,
+        color: {
+          r: this.rgb[0] / 255,
+          g: this.rgb[1] / 255,
+          b: this.rgb[2] / 255,
+        },
+        opacity: this.alpha ?? 1,
+      },
+    ]
+
+    if (this.backgroundColor !== undefined)
+      newFills.unshift({
+        type: 'SOLID',
+        color: {
+          r: this.backgroundColor[0] / 255,
+          g: this.backgroundColor[1] / 255,
+          b: this.backgroundColor[2] / 255,
+        },
+        opacity: 1,
+      })
+
     // Base
     this.node = figma.createFrame()
     this.node.name = name
@@ -259,16 +282,7 @@ export default class Sample {
     this.nodeColor.resize(96, 96)
     this.nodeColor.horizontalPadding = this.nodeColor.verticalPadding = 8
     this.nodeColor.itemSpacing = 8
-    this.nodeColor.fills = [
-      {
-        type: 'SOLID',
-        color: {
-          r: this.rgb[0] / 255,
-          g: this.rgb[1] / 255,
-          b: this.rgb[2] / 255,
-        },
-      },
-    ]
+    this.nodeColor.fills = newFills
     this.nodeColor.cornerRadius = 16
 
     // Insert

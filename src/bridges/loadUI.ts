@@ -28,6 +28,7 @@ import getProPlan from './getProPlan'
 import jumpToPalette from './jumpToPalette'
 import processSelection from './processSelection'
 import updateColors from './updates/updateColors'
+import updateDocument from './updates/updateDocument'
 import updateLocalStyles from './updates/updateLocalStyles'
 import updatePalette from './updates/updatePalette'
 import updateScale from './updates/updateScale'
@@ -105,6 +106,18 @@ const loadUI = async () => {
           isAlreadyUpdated: path.isAlreadyUpdated,
           shouldLoadPalette: path.shouldLoadPalette,
         }),
+      UPDATE_DOCUMENT: () =>
+        updateDocument(path.view)
+          .finally(() => figma.ui.postMessage({ type: 'STOP_LOADER' }))
+          .catch((error) => {
+            figma.ui.postMessage({
+              type: 'POST_MESSAGE',
+              data: {
+                type: 'ERROR',
+                message: error.message,
+              },
+            })
+          }),
       UPDATE_LANGUAGE: async () => {
         await figma.clientStorage.setAsync('user_language', path.data.lang)
         locales.set(path.data.lang)

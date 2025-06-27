@@ -89,7 +89,7 @@ const createPalette = async (msg: Msg) => {
         isPublished: false,
       },
     },
-  }).makePaletteFullData()
+  }).makePaletteFullData(['gl'])
 
   figma.currentPage.setPluginData(
     `palette_${palette.meta.id}`,

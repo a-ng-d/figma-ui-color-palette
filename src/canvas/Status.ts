@@ -69,6 +69,15 @@ export default class Status {
         }).makeNodeTag()
       )
 
+    if (this.status.isTransparent)
+      this.node.appendChild(
+        new Tag({
+          name: '_transparent',
+          content: 'Transparent',
+          fontSize: 10,
+        }).makeNodeTag()
+      )
+
     return this.node
   }
 }

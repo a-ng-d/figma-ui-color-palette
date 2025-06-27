@@ -19,6 +19,7 @@ const processSelection = () => {
     | FrameNode
     | InstanceNode
   const selectionHandler = (state: string) => {
+    console.log(`Selection handler: ${state}`)
     const actions: { [key: string]: () => void } = {
       DOCUMENT_SELECTED: async () => {
         figma.ui.postMessage({
@@ -58,14 +59,14 @@ const processSelection = () => {
     document.type !== 'INSTANCE'
   ) {
     //setPaletteMigration(document) // Migration
-    selectionHandler('PALETTE_SELECTED')
+    selectionHandler('DOCUMENT_SELECTED')
   } else if (
     selection.length === 1 &&
     document.getPluginDataKeys().length > 0 &&
     document.type !== 'INSTANCE'
   ) {
     //setPaletteMigration(palette) // Migration
-    selectionHandler('PALETTE_SELECTED')
+    selectionHandler('DOCUMENT_SELECTED')
   } else if (selection.length === 0) selectionHandler('EMPTY_SELECTION')
   else if (selection.length > 1 && document.getPluginDataKeys().length !== 0)
     selectionHandler('EMPTY_SELECTION')

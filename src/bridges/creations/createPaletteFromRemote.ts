@@ -51,7 +51,7 @@ const createPaletteFromRemote = async (msg: Msg) => {
         isPublished: msg.data.meta.publicationStatus.isPublished,
       },
     },
-  }).makePaletteFullData()
+  }).makePaletteFullData(['gl'])
 
   figma.currentPage.setPluginData(
     `palette_${palette.meta.id}`,

@@ -19,7 +19,6 @@ export default class Palette {
   private view: ViewConfiguration
   private sampleRatio: number
   private sampleSize: number
-  private gap: number
   private nodeRow: FrameNode | null
   private nodeRowSource: FrameNode | null
   private nodeRowShades: FrameNode | null
@@ -46,8 +45,7 @@ export default class Palette {
     this.meta = meta
     this.view = view
     this.sampleRatio = 3 / 2
-    this.sampleSize = 184
-    this.gap = 32
+    this.sampleSize = 220
     this.nodeRow = null
     this.nodeRowSource = null
     this.nodeRowShades = null
@@ -140,7 +138,6 @@ export default class Palette {
         this.nodeRowSource.layoutSizingVertical =
         this.nodeRowShades.layoutSizingVertical =
           'HUG'
-      this.nodeRow.itemSpacing = this.gap
 
       // Insert
       const sampleNode = new Sample({

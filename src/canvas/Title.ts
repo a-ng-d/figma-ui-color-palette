@@ -123,6 +123,27 @@ export default class Title {
     this.nodeProps.itemSpacing = 8
 
     // Insert
+    if (
+      this.meta.publicationStatus.isPublished &&
+      this.meta.creatorIdentity.creatorAvatar !== ''
+    )
+      figma
+        .createImageAsync(this.meta.creatorIdentity.creatorAvatar)
+        .then(async (image: Image) =>
+          this.nodeProps?.insertChild(
+            0,
+            new Tag({
+              name: '_provider',
+              content: locales
+                .get()
+                .paletteProperties.provider.replace(
+                  '{$1}',
+                  this.meta.creatorIdentity.creatorFullName
+                ),
+              fontSize: 12,
+            }).makeNodeTagWithAvatar(image)
+          )
+        )
     if (this.data.type !== 'default theme')
       this.nodeProps.appendChild(
         new Tag({

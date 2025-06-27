@@ -131,6 +131,7 @@ export default class Sheet {
         this.nodeRowSource.fills =
         this.nodeRowShades.fills =
           []
+      this.nodeRow.itemSpacing = this.gap
 
       // Layout
       this.nodeRow.layoutMode =
@@ -172,7 +173,7 @@ export default class Sheet {
           this.nodeRowShades.layoutWrap = 'WRAP'
           this.nodeRowShades.itemSpacing = this.gap
           this.nodeRowShades.resize(
-            this.sampleSize * this.sampleScale * 4 + this.gap * 3,
+            this.sampleSize * this.sampleRatio * 3 + this.gap * 2,
             100
           )
           this.nodeRowShades.layoutSizingVertical = 'HUG'

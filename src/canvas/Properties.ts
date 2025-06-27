@@ -143,6 +143,7 @@ export default class Properties {
     this.nodeBaseProps = figma.createFrame()
     this.nodeBaseProps.name = '_base'
     this.nodeBaseProps.fills = []
+    this.nodeBaseProps.clipsContent = false
 
     // Layout
     this.nodeBaseProps.layoutMode = 'VERTICAL'
