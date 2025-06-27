@@ -57,17 +57,17 @@ const processSelection = () => {
     selection.length === 1 &&
     document.getPluginData('type') === 'UI_COLOR_PALETTE' &&
     document.type !== 'INSTANCE'
-  ) 
+  )
     //setPaletteMigration(document) // Migration
     selectionHandler('DOCUMENT_SELECTED')
-   else if (
+  else if (
     selection.length === 1 &&
     document.getPluginDataKeys().length > 0 &&
     document.type !== 'INSTANCE'
-  ) 
+  )
     //setPaletteMigration(palette) // Migration
     selectionHandler('DOCUMENT_SELECTED')
-   else if (selection.length === 0) selectionHandler('EMPTY_SELECTION')
+  else if (selection.length === 0) selectionHandler('EMPTY_SELECTION')
   else if (selection.length > 1 && document.getPluginDataKeys().length !== 0)
     selectionHandler('EMPTY_SELECTION')
   else if (selection[0].type === 'INSTANCE') selectionHandler('EMPTY_SELECTION')

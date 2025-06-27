@@ -199,12 +199,12 @@ export default class Properties {
       }).makeNodeTag()
 
     // Insert
-     this.nodeBaseProps.appendChild(
-     new Tag({
-       name: '_hex',
-       content: this.hex.toUpperCase(),
-     }).makeNodeTag()
-   )
+    this.nodeBaseProps.appendChild(
+      new Tag({
+        name: '_hex',
+        content: this.hex.toUpperCase(),
+      }).makeNodeTag()
+    )
     this.nodeBaseProps.appendChild(basePropViaColorSpace as FrameNode)
 
     if (this.alpha !== undefined) {
