@@ -1,11 +1,8 @@
 import { FeatureStatus } from '@a_ng_d/figmug-utils'
-import features from '../config'
-import { lang, locals } from '../content/locals'
-import { presets } from '../stores/presets'
-import checkPlanStatus from './checks/checkPlanStatus'
+import checkPlanStatus from './checks/checkTrialStatus'
 
 const loadParameters = async ({ key, result }: ParameterInputEvent) => {
-  switch (key) {
+  /*switch (key) {
     case 'preset': {
       const planStatus = (await checkPlanStatus('PARAMETERS')) ?? 'UNPAID'
 
@@ -102,7 +99,7 @@ const loadParameters = async ({ key, result }: ParameterInputEvent) => {
 
     default:
       return
-  }
+  }*/
 }
 
 export default loadParameters

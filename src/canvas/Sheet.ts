@@ -11,12 +11,13 @@ import Sample from './Sample'
 import Signature from './Signature'
 import Title from './Title'
 
-export default class Palette {
+export default class Sheet {
   private base: BaseConfiguration
   private theme: ThemeConfiguration
   private data: PaletteDataThemeItem
   private meta: MetaConfiguration
   private view: ViewConfiguration
+  private sampleScale: number
   private sampleRatio: number
   private sampleSize: number
   private gap: number
@@ -45,7 +46,8 @@ export default class Palette {
     this.data = data
     this.meta = meta
     this.view = view
-    this.sampleRatio = 3 / 2
+    this.sampleScale = 1.25
+    this.sampleRatio = 2
     this.sampleSize = 184
     this.gap = 32
     this.nodeRow = null
@@ -106,7 +108,10 @@ export default class Palette {
         base: this.base,
         theme: this.theme,
         view: this.view,
-        size: this.sampleSize,
+        size:
+          this.sampleSize * this.sampleScale * 4 +
+          this.sampleSize * this.sampleRatio +
+          this.gap * 4,
       }).node
     )
 
@@ -140,7 +145,6 @@ export default class Palette {
         this.nodeRowSource.layoutSizingVertical =
         this.nodeRowShades.layoutSizingVertical =
           'HUG'
-      this.nodeRow.itemSpacing = this.gap
 
       // Insert
       const sampleNode = new Sample({
@@ -150,10 +154,11 @@ export default class Palette {
         visionSimulationMode: this.theme.visionSimulationMode,
         view: this.view,
         textColorsTheme: this.theme.textColorsTheme,
-      }).makeNodeShade({
-        width: this.sampleSize,
-        height: this.sampleSize * this.sampleRatio,
+      }).makeNodeRichShade({
+        width: this.sampleSize * this.sampleRatio,
+        height: this.sampleSize * this.sampleRatio * this.sampleScale,
         name: color.name,
+        description: color.description,
         isColorName: true,
       })
 
@@ -162,6 +167,15 @@ export default class Palette {
       color.shades
         .filter((shade) => shade.name !== 'source')
         .forEach((shade) => {
+          if (!this.nodeRowShades) return
+          this.nodeRowShades.layoutSizingHorizontal = 'FIXED'
+          this.nodeRowShades.layoutWrap = 'WRAP'
+          this.nodeRowShades.itemSpacing = this.gap
+          this.nodeRowShades.resize(
+            this.sampleSize * this.sampleScale * 4 + this.gap * 3,
+            100
+          )
+          this.nodeRowShades.layoutSizingVertical = 'HUG'
           this.nodeRowShades?.appendChild(
             new Sample({
               name: color.name,
@@ -184,9 +198,9 @@ export default class Palette {
                 isLocked: shade.isSourceColorLocked ?? false,
                 isTransparent: shade.isTransparent ?? false,
               },
-            }).makeNodeShade({
-              width: this.sampleSize,
-              height: this.sampleSize * this.sampleRatio,
+            }).makeNodeRichShade({
+              width: this.sampleSize * this.sampleRatio,
+              height: this.sampleSize * this.sampleRatio * this.sampleScale,
               name: shade.name,
             })
           )

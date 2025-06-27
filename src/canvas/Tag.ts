@@ -1,15 +1,15 @@
-import { RgbModel } from '@a_ng_d/figmug-ui'
+import { RgbModel } from '@a_ng_d/utils-ui-color-palette'
 
 export default class Tag {
   private name: string
   private content: string
   private fontSize: number
+  private fontFamily: 'Martian Mono' | 'Lexend'
   private url: string | null
   private backgroundColor: {
     rgb: RgbModel
     alpha: number
   }
-  private isCompact: boolean
   private nodeTag: FrameNode | null
   private nodeTagWithAvatar: FrameNode | null
   private nodeTagwithIndicator: FrameNode | null
@@ -17,30 +17,37 @@ export default class Tag {
   private nodeIndicator: EllipseNode | null
   private nodeAvatar: EllipseNode | null
 
-  constructor(options: {
-    name: string
-    content: string
-    fontSize?: number
-    backgroundColor?: {
-      rgb: RgbModel
-      alpha: number
-    }
-    isCompact?: boolean
-    url?: string | null
-  }) {
-    this.name = options.name
-    this.content = options.content
-    this.fontSize = options.fontSize ?? 8
-    this.url = options.url ?? (null as string | null)
-    this.backgroundColor = options.backgroundColor ?? {
+  constructor({
+    name,
+    content,
+    fontSize = 8,
+    fontFamily = 'Martian Mono',
+    backgroundColor = {
       rgb: {
         r: 1,
         g: 1,
         b: 1,
       },
       alpha: 0.5,
+    },
+    url = null,
+  }: {
+    name: string
+    content: string
+    fontSize?: number
+    fontFamily?: 'Martian Mono' | 'Lexend'
+    backgroundColor?: {
+      rgb: RgbModel
+      alpha: number
     }
-    this.isCompact = options.isCompact ?? false
+    url?: string | null
+  }) {
+    this.name = name
+    this.content = content
+    this.fontSize = fontSize
+    this.fontFamily = fontFamily
+    this.url = url
+    this.backgroundColor = backgroundColor
     this.nodeTag = null
     this.nodeTagwithIndicator = null
     this.nodeTagWithAvatar = null
@@ -82,11 +89,8 @@ export default class Tag {
     this.nodeTag.layoutSizingHorizontal = 'HUG'
     this.nodeTag.layoutSizingVertical = 'HUG'
     this.nodeTag.counterAxisAlignItems = 'CENTER'
-    this.nodeTag.paddingRight = this.isCompact ? 2 : 8
-    this.nodeTag.paddingLeft = 8
-    this.nodeTag.paddingTop = this.nodeTag.paddingBottom = this.isCompact
-      ? 2
-      : 4
+    this.nodeTag.horizontalPadding = 8
+    this.nodeTag.verticalPadding = 4
     this.nodeTag.itemSpacing = 4
 
     // Insert
@@ -128,10 +132,8 @@ export default class Tag {
     this.nodeTagwithIndicator.layoutSizingHorizontal = 'HUG'
     this.nodeTagwithIndicator.layoutSizingVertical = 'HUG'
     this.nodeTagwithIndicator.counterAxisAlignItems = 'CENTER'
-    this.nodeTagwithIndicator.paddingRight = this.isCompact ? 2 : 8
-    this.nodeTagwithIndicator.paddingLeft = 8
-    this.nodeTagwithIndicator.paddingTop =
-      this.nodeTagwithIndicator.paddingBottom = this.isCompact ? 2 : 4
+    this.nodeTagwithIndicator.horizontalPadding = 8
+    this.nodeTagwithIndicator.verticalPadding = 4
     this.nodeTagwithIndicator.itemSpacing = 4
 
     // Insert
@@ -176,8 +178,8 @@ export default class Tag {
     this.nodeTagWithAvatar.layoutSizingHorizontal = 'HUG'
     this.nodeTagWithAvatar.layoutSizingVertical = 'HUG'
     this.nodeTagWithAvatar.counterAxisAlignItems = 'CENTER'
-    this.nodeTagWithAvatar.horizontalPadding = this.isCompact ? 4 : 8
-    this.nodeTagWithAvatar.verticalPadding = this.isCompact ? 2 : 4
+    this.nodeTagWithAvatar.horizontalPadding = 8
+    this.nodeTagWithAvatar.verticalPadding = 4
     this.nodeTagWithAvatar.itemSpacing = 8
 
     // Insert
@@ -193,7 +195,7 @@ export default class Tag {
     this.nodeText.name = '_text'
     this.nodeText.characters = this.content
     this.nodeText.fontName = {
-      family: 'Martian Mono',
+      family: this.fontFamily,
       style: 'Medium',
     }
     this.nodeText.fontSize = this.fontSize
@@ -213,9 +215,9 @@ export default class Tag {
       {
         type: 'SOLID',
         color: {
-          r: 16 / 255,
-          g: 35 / 255,
-          b: 37 / 255,
+          r: 0,
+          g: 0,
+          b: 0,
         },
       },
     ]

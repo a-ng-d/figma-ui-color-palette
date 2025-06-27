@@ -6,7 +6,15 @@ export default class Property {
   private size: number
   private node: FrameNode | null
 
-  constructor(name: string, content: string, size: number) {
+  constructor({
+    name,
+    content,
+    size,
+  }: {
+    name: string
+    content: string
+    size: number
+  }) {
     this.name = name
     this.content = content
     this.size = size

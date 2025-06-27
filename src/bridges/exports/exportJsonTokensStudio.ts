@@ -1,69 +1,109 @@
-import { lang, locals } from '../../content/locals'
 import {
+  Data,
   PaletteData,
   PaletteDataColorItem,
   PaletteDataShadeItem,
-} from '../../types/data'
+} from '@a_ng_d/utils-ui-color-palette'
+import chroma from 'chroma-js'
+import { locales } from '../../content/locales'
 
-const exportJsonTokensStudio = (palette: FrameNode) => {
-  const paletteData: PaletteData = JSON.parse(palette.getPluginData('data')),
+const exportJsonTokensStudio = (id: string) => {
+  const rawPalette = figma.currentPage.getPluginData(`palette_${id}`)
+
+  if (rawPalette === undefined || rawPalette === null)
+    return figma.ui.postMessage({
+      type: 'EXPORT_PALETTE_JSON',
+      data: {
+        id: '',
+        context: 'TOKENS_AMZN_STYLE_DICTIONARY',
+        code: locales.get().error.export,
+      },
+    })
+
+  const paletteData: PaletteData = new Data(
+      JSON.parse(rawPalette)
+    ).makePaletteData(),
     workingThemes =
       paletteData.themes.filter((theme) => theme.type === 'custom theme')
         .length === 0
         ? paletteData.themes.filter((theme) => theme.type === 'default theme')
         : paletteData.themes.filter((theme) => theme.type === 'custom theme'),
-    name: string =
-      palette.getPluginData('name') === ''
-        ? locals[lang].name
-        : palette.getPluginData('name'),
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    json: { [key: string]: any } = {}
+    json: { [key: string]: any } = {
+      $themes: [],
+      $metadata: {
+        activeThemes: [],
+        tokenSetOrder: [],
+        activeSets: [],
+      },
+    }
 
-  const model = (color: PaletteDataColorItem, shade: PaletteDataShadeItem) => {
+  const paletteName = JSON.parse(rawPalette).base.name
+
+  const model = (
+    color: PaletteDataColorItem,
+    shade: PaletteDataShadeItem,
+    source: PaletteDataShadeItem
+  ) => {
     return {
-      value: shade.hex,
-      description:
+      $type: 'color',
+      $value: shade.isTransparent
+        ? chroma(source.hex)
+            .alpha(shade.alpha ?? 1)
+            .hex()
+        : shade.hex,
+      $description:
         color.description !== ''
-          ? color.description + locals[lang].separator + shade.description
+          ? color.description + locales.get().separator + shade.description
           : shade.description,
-      type: 'color',
     }
   }
 
-  if (palette.children.length === 1) {
-    if (workingThemes[0].type === 'custom theme')
-      workingThemes.forEach((theme) => {
-        json[name + ' - ' + theme.name] = {}
-        theme.colors.forEach((color) => {
-          json[name + ' - ' + theme.name][color.name] = {}
-          color.shades.reverse().forEach((shade) => {
-            json[name + ' - ' + theme.name][color.name][shade.name] = model(
-              color,
-              shade
-            )
-          })
-          json[name + ' - ' + theme.name][color.name]['type'] = 'color'
-        })
-      })
-    else
-      workingThemes.forEach((theme) => {
-        json[name] = {}
-        theme.colors.forEach((color) => {
-          json[name][color.name] = {}
-          color.shades.sort().forEach((shade) => {
-            json[name][color.name][shade.name] = model(color, shade)
-          })
-          json[name][color.name]['type'] = 'color'
-        })
-      })
+  if (workingThemes[0].type === 'custom theme')
+    workingThemes.forEach((theme) => {
+      theme.colors.forEach((color) => {
+        const source = color.shades.find(
+          (shade) => shade.type === 'source color'
+        )
 
-    figma.ui.postMessage({
-      type: 'EXPORT_PALETTE_JSON',
-      id: figma.currentUser?.id,
-      context: 'TOKENS_TOKENS_STUDIO',
-      data: JSON.stringify(json, null, '  '),
+        json[`${theme.name}/${color.name}`] = {}
+        color.shades.forEach((shade) => {
+          if (shade && source)
+            json[`${theme.name}/${color.name}`][shade.name] = model(
+              color,
+              shade,
+              source
+            )
+        })
+      })
     })
-  } else figma.notify(locals[lang].error.corruption)
+  else
+    workingThemes.forEach((theme) => {
+      theme.colors.forEach((color) => {
+        const source = color.shades.find(
+          (shade) => shade.type === 'source color'
+        )
+
+        json[`${paletteName}/${color.name}`] = {}
+        color.shades.forEach((shade) => {
+          if (shade && source)
+            json[`${paletteName}/${color.name}`][shade.name] = model(
+              color,
+              shade,
+              source
+            )
+        })
+      })
+    })
+
+  return figma.ui.postMessage({
+    type: 'EXPORT_PALETTE_JSON',
+    data: {
+      id: '',
+      context: 'TOKENS_TOKENS_STUDIO',
+      code: JSON.stringify(json, null, '  '),
+    },
+  })
 }
 
 export default exportJsonTokensStudio

@@ -1,19 +1,31 @@
-import { RgbModel } from '@a_ng_d/figmug-ui'
+import { RgbModel } from '@a_ng_d/utils-ui-color-palette'
 
 export default class LocalStyle {
   private name: string
   private description: string
   private rgb: RgbModel
-  private paintStyle: PaintStyle | null
+  private alpha: number
+  paintStyle: PaintStyle
 
-  constructor(name: string, description: string, rgb: RgbModel) {
+  constructor({
+    name,
+    description = '',
+    rgb,
+    alpha = 1,
+  }: {
+    name: string
+    description: string
+    rgb: RgbModel
+    alpha?: number
+  }) {
     this.name = name
     this.description = description
     this.rgb = rgb
-    this.paintStyle = null
+    this.alpha = alpha
+    this.paintStyle = this.makePaintStyle()
   }
 
-  makePaintStyle = () => {
+  makePaintStyle = (): PaintStyle => {
     this.paintStyle = figma.createPaintStyle()
     this.paintStyle.name = this.name
     this.paintStyle.description = this.description
@@ -21,6 +33,7 @@ export default class LocalStyle {
       {
         type: 'SOLID',
         color: this.rgb,
+        opacity: this.alpha,
       },
     ]
 

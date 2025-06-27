@@ -1,4 +1,4 @@
-import { userConsentVersion } from '../../config'
+import globalConfig from '../../global.config'
 import { userConsent } from '../../utils/userConsent'
 
 const checkUserConsent = async () => {
@@ -11,18 +11,21 @@ const checkUserConsent = async () => {
       return {
         ...consent,
         isConsented:
-          (await figma.clientStorage.getAsync(`${consent.id}_user_consent`)) ??
-          false,
+          (await figma.clientStorage.getAsync(`${consent.id}_user_consent`)) ===
+          'true',
       }
     })
   )
 
-  figma.ui.postMessage({
+  return figma.ui.postMessage({
     type: 'CHECK_USER_CONSENT',
-    mustUserConsent:
-      currentUserConsentVersion !== userConsentVersion ||
-      currentUserConsentVersion === undefined,
-    userConsent: userConsentData,
+    data: {
+      mustUserConsent:
+        currentUserConsentVersion !==
+          globalConfig.versions.userConsentVersion ||
+        currentUserConsentVersion === undefined,
+      userConsent: userConsentData,
+    },
   })
 }
 

@@ -1,20 +1,34 @@
-import { lang, locals } from '../content/locals'
-import { ScaleConfiguration } from '../types/configurations'
-import { PaletteNode } from '../types/nodes'
+import {
+  BaseConfiguration,
+  ThemeConfiguration,
+  ViewConfiguration,
+} from '@a_ng_d/utils-ui-color-palette'
+import { locales } from '../content/locales'
 import Sample from './Sample'
 
 export default class Header {
-  private parent: PaletteNode
-  private currentScale: ScaleConfiguration
+  private base: BaseConfiguration
+  private theme: ThemeConfiguration
+  private view: ViewConfiguration
   private sampleSize: number
-  private node: FrameNode | null
+  node: FrameNode
 
-  constructor(parent: PaletteNode, size: number) {
-    this.parent = parent
-    this.currentScale =
-      this.parent.themes.find((theme) => theme.isEnabled)?.scale ?? {}
+  constructor({
+    base,
+    theme,
+    view,
+    size,
+  }: {
+    base: BaseConfiguration
+    theme: ThemeConfiguration
+    view: ViewConfiguration
+    size: number
+  }) {
+    this.base = base
+    this.theme = theme
+    this.view = view
     this.sampleSize = size
-    this.node = null
+    this.node = this.makeNode()
   }
 
   makeNode = () => {
@@ -31,34 +45,36 @@ export default class Header {
 
     // Insert
     this.node.appendChild(
-      new Sample(
-        locals[lang].paletteProperties.sourceColors,
-        null,
-        null,
-        [255, 255, 255],
-        this.parent.colorSpace,
-        this.parent.visionSimulationMode,
-        this.parent.view,
-        this.parent.textColorsTheme
-      ).makeNodeName('FIXED', this.sampleSize, 48)
+      new Sample({
+        name: locales.get().paletteProperties.sourceColors,
+        rgb: [255, 255, 255],
+        colorSpace: this.base.colorSpace,
+        visionSimulationMode: this.theme.visionSimulationMode,
+        view: this.view,
+        textColorsTheme: this.theme.textColorsTheme,
+      }).makeNodeName({
+        mode: 'FIXED',
+        width: this.sampleSize,
+        height: 48,
+      })
     )
-    if (this.parent.view.includes('PALETTE'))
-      Object.values(this.currentScale)
+    if (this.view === 'PALETTE' || this.view === 'PALETTE_WITH_PROPERTIES')
+      Object.keys(this.theme.scale)
         .reverse()
-        .forEach((lightness) => {
+        .forEach((key) => {
           this.node?.appendChild(
-            new Sample(
-              Object.keys(this.currentScale)
-                .find((key) => this.currentScale[key] === lightness)
-                ?.substr(10) ?? '0',
-              null,
-              null,
-              [255, 255, 255],
-              this.parent.colorSpace,
-              this.parent.visionSimulationMode,
-              this.parent.view,
-              this.parent.textColorsTheme
-            ).makeNodeName('FIXED', this.sampleSize, 48)
+            new Sample({
+              name: key,
+              rgb: [255, 255, 255],
+              colorSpace: this.base.colorSpace,
+              visionSimulationMode: this.theme.visionSimulationMode,
+              view: this.view,
+              textColorsTheme: this.theme.textColorsTheme,
+            }).makeNodeName({
+              mode: 'FIXED',
+              width: this.sampleSize,
+              height: 48,
+            })
           )
         })
 

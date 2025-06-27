@@ -1,18 +1,13 @@
-import checkPlanStatus from './bridges/checks/checkPlanStatus'
-import createPalette from './bridges/creations/createPalette'
+import checkPlanStatus from './bridges/checks/checkTrialStatus'
 import loadParameters from './bridges/loadParameters'
 import loadUI from './bridges/loadUI'
 import processSelection from './bridges/processSelection'
-import { algorithmVersion } from './config'
-import { presets } from './stores/presets'
-import { PaletteConfiguration } from './types/configurations'
-import doLightnessScale from './utils/doLightnessScale'
-import setPaletteMigration from './utils/setPaletteMigration'
 
 // Fonts
 figma.loadFontAsync({ family: 'Inter', style: 'Regular' })
 figma.loadFontAsync({ family: 'Inter', style: 'Medium' })
 figma.loadFontAsync({ family: 'Martian Mono', style: 'Medium' })
+figma.loadFontAsync({ family: 'Lexend', style: 'Medium' })
 
 // Parameters
 figma.parameters.on(
@@ -28,7 +23,7 @@ figma.on('run', async ({ parameters }: RunEvent) => {
     figma.on('selectionchange', async () => await checkPlanStatus())
     loadUI()
   } else {
-    const selectedPreset = presets.find(
+    /*const selectedPreset = presets.find(
       (preset) => preset.name === parameters.preset
     )
     createPalette({
@@ -82,7 +77,7 @@ figma.on('run', async ({ parameters }: RunEvent) => {
         } as PaletteConfiguration,
       },
     })
-    figma.closePlugin()
+    figma.closePlugin()*/
   }
 })
 
@@ -90,21 +85,21 @@ figma.on('run', async ({ parameters }: RunEvent) => {
 if (figma.editorType !== 'dev')
   figma.on('run', async () => {
     await figma.currentPage.loadAsync()
-    figma.currentPage
+    /*figma.currentPage
       .findAllWithCriteria({
         pluginData: {},
       })
       .forEach((palette) => {
         setPaletteMigration(palette)
-      })
+      })*/
   })
 figma.on('currentpagechange', async () => {
   await figma.currentPage.loadAsync()
-  figma.currentPage
+  /*figma.currentPage
     .findAllWithCriteria({
       pluginData: {},
     })
     .forEach((palette) => {
       setPaletteMigration(palette)
-    })
+    })*/
 })

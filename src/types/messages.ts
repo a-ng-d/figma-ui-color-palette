@@ -2,54 +2,49 @@ import {
   AlgorithmVersionConfiguration,
   ColorConfiguration,
   ColorSpaceConfiguration,
-  PaletteConfiguration,
   ThemeConfiguration,
   VisionSimulationModeConfiguration,
-} from './configurations'
-import { TextColorsThemeHexModel } from './models'
+  ExchangeConfiguration,
+  TextColorsThemeConfiguration,
+} from '@a_ng_d/utils-ui-color-palette'
 
 export interface ScaleMessage {
   type: 'UPDATE_SCALE'
-  data: PaletteConfiguration
-  isEditedInRealTime: boolean
+  id: string
+  data: ExchangeConfiguration
   feature?: string
 }
 
 export interface ColorsMessage {
   type: 'UPDATE_COLORS'
+  id: string
   data: Array<ColorConfiguration>
-  isEditedInRealTime: boolean
 }
 
 export interface ThemesMessage {
   type: 'UPDATE_THEMES'
+  id: string
   data: Array<ThemeConfiguration>
-  isEditedInRealTime: boolean
-}
-
-export interface ViewMessage {
-  type: 'UPDATE_VIEW'
-  data: PaletteConfiguration
-  isEditedInRealTime: boolean
 }
 
 export interface SettingsMessage {
   type: 'UPDATE_SETTINGS'
+  id: string
   data: {
     name: string
     description: string
     colorSpace: ColorSpaceConfiguration
     visionSimulationMode: VisionSimulationModeConfiguration
     algorithmVersion: AlgorithmVersionConfiguration
-    textColorsTheme: TextColorsThemeHexModel
+    textColorsTheme: TextColorsThemeConfiguration<'HEX'>
   }
-  isEditedInRealTime: boolean
 }
 
-export interface CollectionMessage {
-  type: 'UPDATE_COLLECTION'
-  data: {
-    id: string
-  }
-  isEditedInRealTime: boolean
+export interface PaletteMessage {
+  type: 'UPDATE_PALETTE'
+  id: string
+  items: Array<{
+    key: string
+    value: boolean | object | string
+  }>
 }

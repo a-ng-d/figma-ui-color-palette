@@ -1,20 +1,21 @@
+import { locales } from '../../content/locales'
+import { Language } from '../../types/translations'
+
 const checkUserPreferences = async () => {
   const isWCAGDisplayed =
     await figma.clientStorage.getAsync('is_wcag_displayed')
   const isAPCADisplayed =
     await figma.clientStorage.getAsync('is_apca_displayed')
-  const canDeepSyncPalette = await figma.clientStorage.getAsync(
-    'can_deep_sync_palette'
+  const canDeepSyncStyles = await figma.clientStorage.getAsync(
+    'can_deep_sync_styles'
   )
   const canDeepSyncVariables = await figma.clientStorage.getAsync(
     'can_deep_sync_variables'
   )
-  const canDeepSyncStyles = await figma.clientStorage.getAsync(
-    'can_deep_sync_styles'
-  )
   const isVsCodeMessageDisplayed = await figma.clientStorage.getAsync(
-    'is_vs_code_displayed'
+    'is_vscode_message_displayed'
   )
+  const userLanguage = await figma.clientStorage.getAsync('user_language')
 
   if (isWCAGDisplayed === undefined)
     await figma.clientStorage.setAsync('is_wcag_displayed', true)
@@ -22,31 +23,35 @@ const checkUserPreferences = async () => {
   if (isAPCADisplayed === undefined)
     await figma.clientStorage.setAsync('is_apca_displayed', true)
 
-  if (canDeepSyncPalette === undefined)
-    await figma.clientStorage.setAsync('can_deep_sync_palette', false)
+  if (canDeepSyncStyles === undefined)
+    await figma.clientStorage.setAsync('can_deep_sync_styles', false)
 
   if (canDeepSyncVariables === undefined)
     await figma.clientStorage.setAsync('can_deep_sync_variables', false)
 
-  if (canDeepSyncStyles === undefined)
-    await figma.clientStorage.setAsync('can_deep_sync_styles', false)
-
   if (isVsCodeMessageDisplayed === undefined)
-    await figma.clientStorage.setAsync('is_vs_code_displayed', true)
+    await figma.clientStorage.setAsync('is_vscode_message_displayed', true)
 
-  figma.ui.postMessage({
+  if (userLanguage === undefined)
+    await figma.clientStorage.setAsync('user_language', 'en-US')
+
+  locales.set((userLanguage as Language) ?? 'en-US')
+
+  return figma.ui.postMessage({
     type: 'CHECK_USER_PREFERENCES',
     data: {
-      isWCAGDisplayed: isWCAGDisplayed ?? true,
-      isAPCADisplayed: isAPCADisplayed ?? true,
-      canDeepSyncPalette: canDeepSyncPalette ?? false,
-      canDeepSyncVariables: canDeepSyncVariables ?? false,
-      canDeepSyncStyles: canDeepSyncStyles ?? false,
-      isVsCodeMessageDisplayed: isVsCodeMessageDisplayed ?? true,
+      isWCAGDisplayed: isWCAGDisplayed === 'true',
+      isAPCADisplayed: isAPCADisplayed === 'true',
+      canDeepSyncStyles: canDeepSyncStyles === 'true',
+      canDeepSyncVariables: canDeepSyncVariables === 'true',
+      isVsCodeMessageDisplayed:
+        isVsCodeMessageDisplayed === null ||
+        isVsCodeMessageDisplayed === undefined
+          ? true
+          : isVsCodeMessageDisplayed === 'true',
+      userLanguage: userLanguage ?? 'en-US',
     },
   })
-
-  return true
 }
 
 export default checkUserPreferences

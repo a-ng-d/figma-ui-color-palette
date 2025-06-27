@@ -1,10 +1,7 @@
 import chroma from 'chroma-js'
 
-import { lang, locals } from '../../content/locals'
-import { PaletteData } from '../../types/data'
-
 const updateLocalVariables = async (palette: FrameNode) => {
-  const paletteData: PaletteData = JSON.parse(palette.getPluginData('data'))
+  /*const paletteData: PaletteData = JSON.parse(palette.getPluginData('data'))
   const canDeepSyncVariables = await figma.clientStorage.getAsync(
     'can_deep_sync_variables'
   )
@@ -226,7 +223,7 @@ const updateLocalVariables = async (palette: FrameNode) => {
 
       return await updateLocalVariablesStatusMessage
     } else return locals[lang].warning.collectionDoesNotExist
-  } else return locals[lang].error.corruption
+  } else return locals[lang].error.corruption*/
 }
 
 export default updateLocalVariables

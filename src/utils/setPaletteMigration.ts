@@ -1,19 +1,5 @@
-import { uid } from 'uid'
-
-import Colors from '../canvas/Colors'
-import { paletteDataVersion } from '../config'
-import { lang, locals } from '../content/locals'
-import { presets } from '../stores/presets'
-import {
-  AlgorithmVersionConfiguration,
-  ColorConfiguration,
-  ColorSpaceConfiguration,
-  VisionSimulationModeConfiguration,
-} from '../types/configurations'
-import setData from './setData'
-
 const setPaletteMigration = async (palette: BaseNode) => {
-  const type = palette.getPluginData('type'),
+  /*const type = palette.getPluginData('type'),
     name = palette.getPluginData('name'),
     min = palette.getPluginData('min'),
     max = palette.getPluginData('max'),
@@ -231,7 +217,7 @@ const setPaletteMigration = async (palette: BaseNode) => {
   if (createdAt === '')
     palette.setPluginData('createdAt', new Date().toISOString())
   if (updatedAt === '')
-    palette.setPluginData('updatedAt', new Date().toISOString())
+    palette.setPluginData('updatedAt', new Date().toISOString())*/
 }
 
 export default setPaletteMigration

@@ -1,63 +1,50 @@
+import { FullConfiguration } from '@a_ng_d/utils-ui-color-palette'
 import LocalStyle from '../../canvas/LocalStyle'
-import { lang, locals } from '../../content/locals'
-import { PaletteData } from '../../types/data'
+import { locales } from '../../content/locales'
 
-const createLocalStyles = async (palette: FrameNode) => {
-  const paletteData: PaletteData = JSON.parse(palette.getPluginData('data')),
-    workingThemes =
-      paletteData.themes.filter((theme) => theme.type === 'custom theme')
-        .length === 0
-        ? paletteData.themes.filter((theme) => theme.type === 'default theme')
-        : paletteData.themes.filter((theme) => theme.type === 'custom theme')
+const createLocalStyles = async (id: string) => {
+  const rawPalette = figma.currentPage.getPluginData(`palette_${id}`)
 
-  if (palette.children.length === 1) {
-    const createdLocalStylesStatusMessage = figma
-      .getLocalPaintStylesAsync()
-      .then((localStyles) => {
-        let i = 0
-        workingThemes.forEach((theme) => {
-          theme.colors.forEach((color) => {
-            color.shades.forEach((shade) => {
-              if (
-                localStyles.find(
-                  (localStyle) => localStyle.id === shade.styleId
-                ) === undefined
-              ) {
-                const style = new LocalStyle(
-                  workingThemes[0].type === 'custom theme'
-                    ? `${
-                        paletteData.name === '' ? '' : paletteData.name + '/'
-                      }${theme.name}/${color.name}/${shade.name}`
-                    : `${paletteData.name === '' ? '' : paletteData.name}/${
-                        color.name
-                      }/${shade.name}`,
-                  color.description !== ''
-                    ? color.description +
-                      locals[lang].separator +
-                      shade.description
-                    : shade.description,
-                  {
-                    r: shade.gl[0],
-                    g: shade.gl[1],
-                    b: shade.gl[2],
-                  }
-                ).makePaintStyle()
-                shade.styleId = style.id
-                i++
-              }
-            })
+  if (rawPalette === undefined || rawPalette === null)
+    throw new Error(locales.get().error.unfoundPalette)
+
+  const palette = JSON.parse(rawPalette) as FullConfiguration
+
+  const createdLocalStylesStatusMessage = await figma
+    .getLocalPaintStylesAsync()
+    .then((localStyles) => {
+      let i = 0
+      palette.libraryData.map((item) => {
+        if (
+          localStyles.find((localStyle) => localStyle.id === item.styleId) ===
+            undefined &&
+          item.hex !== undefined
+        ) {
+          const style = new LocalStyle({
+            name: `${item.path} / ${item.name}`,
+            rgb: {
+              r: (item.gl ?? [0, 0, 0])[0],
+              g: (item.gl ?? [0, 0, 0])[1],
+              b: (item.gl ?? [0, 0, 0])[2],
+            },
+            alpha: item.alpha,
+            description: item.description || '',
           })
-        })
-        palette.setPluginData('data', JSON.stringify(paletteData))
+          item.styleId = style.paintStyle.id
+          i++
+        }
 
-        if (i > 1) return `${i} ${locals[lang].info.createdLocalStyles.plural}`
-        else if (i === 1) return locals[lang].info.createdLocalStyle.single
-        else return locals[lang].info.createdLocalStyles.none
+        return item
       })
-      .catch(() => locals[lang].error.generic)
 
-    return await createdLocalStylesStatusMessage
-  } else locals[lang].error.corruption
+      figma.currentPage.setPluginData(`palette_${id}`, JSON.stringify(palette))
+
+      if (i > 1) return `${i} ${locales.get().info.createdLocalStyles.plural}`
+      else if (i === 1) return locales.get().info.createdLocalStyles.single
+      else return locales.get().info.createdLocalStyles.none
+    })
+
+  return createdLocalStylesStatusMessage
 }
 
 export default createLocalStyles

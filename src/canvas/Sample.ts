@@ -1,10 +1,11 @@
-import { RgbModel } from '@a_ng_d/figmug-ui'
-import { TextColorsThemeHexModel } from 'src/types/models'
 import {
+  Channel,
   ColorSpaceConfiguration,
+  RgbModel,
+  TextColorsThemeConfiguration,
   ViewConfiguration,
   VisionSimulationModeConfiguration,
-} from '../types/configurations'
+} from '@a_ng_d/utils-ui-color-palette'
 import Paragraph from './Paragraph'
 import Properties from './Properties'
 import Property from './Property'
@@ -12,39 +13,68 @@ import Status from './Status'
 
 export default class Sample {
   private name: string
-  private source: RgbModel | null
-  private scale: string | null
-  private rgb: [number, number, number]
+  private source?: RgbModel
+  private scale?: string
+  private rgb: Channel
+  private alpha?: number
+  private backgroundColor?: Channel
+  private mixedColor?: Channel
   private colorSpace: ColorSpaceConfiguration
   private visionSimulationMode: VisionSimulationModeConfiguration
   private view: ViewConfiguration
-  private textColorsTheme: TextColorsThemeHexModel
+  private textColorsTheme: TextColorsThemeConfiguration<'HEX'>
   private status: {
     isClosestToRef: boolean
     isLocked: boolean
+    isTransparent: boolean
   }
   private nodeColor: FrameNode | null
   private node: FrameNode | null
   private children: FrameNode | null
 
-  constructor(
-    name: string,
-    source: RgbModel | null,
-    scale: string | null,
-    rgb: [number, number, number],
-    colorSpace: ColorSpaceConfiguration,
-    visionSimulationMode: VisionSimulationModeConfiguration,
-    view: ViewConfiguration,
-    textColorsTheme: TextColorsThemeHexModel,
-    status: { isClosestToRef: boolean; isLocked: boolean } = {
+  constructor({
+    name,
+    source,
+    scale,
+    rgb,
+    alpha,
+    backgroundColor,
+    mixedColor,
+    colorSpace,
+    visionSimulationMode,
+    view,
+    textColorsTheme,
+    status = {
       isClosestToRef: false,
       isLocked: false,
+      isTransparent: false,
+    },
+  }: {
+    id?: string
+    name: string
+    source?: RgbModel
+    scale?: string
+    rgb: Channel
+    alpha?: number
+    backgroundColor?: Channel
+    mixedColor?: Channel
+    colorSpace: ColorSpaceConfiguration
+    visionSimulationMode: VisionSimulationModeConfiguration
+    view: ViewConfiguration
+    textColorsTheme: TextColorsThemeConfiguration<'HEX'>
+    status?: {
+      isClosestToRef: boolean
+      isLocked: boolean
+      isTransparent: boolean
     }
-  ) {
+  }) {
     this.name = name
     this.source = source
     this.scale = scale
     this.rgb = rgb
+    this.alpha = alpha
+    this.backgroundColor = backgroundColor
+    this.mixedColor = mixedColor
     this.colorSpace = colorSpace
     this.visionSimulationMode = visionSimulationMode
     this.view = view
@@ -55,7 +85,15 @@ export default class Sample {
     this.children = null
   }
 
-  makeNodeName = (mode: string, width: number, height: number) => {
+  makeNodeName = ({
+    mode,
+    width,
+    height,
+  }: {
+    mode: string
+    width: number
+    height: number
+  }) => {
     // Base
     this.node = figma.createFrame()
     this.node.name = this.name
@@ -74,9 +112,17 @@ export default class Sample {
     if (mode === 'FILL') {
       this.node.counterAxisSizingMode = 'FIXED'
       this.node.layoutGrow = 1
-      this.children = new Property('_large-label', this.name, 16).makeNode()
+      this.children = new Property({
+        name: '_large-label',
+        content: this.name,
+        size: 16,
+      }).makeNode()
     } else if (mode === 'FIXED')
-      this.children = new Property('_label', this.name, 10).makeNode()
+      this.children = new Property({
+        name: '_label',
+        content: this.name,
+        size: 10,
+      }).makeNode()
 
     // Insert
     this.node.appendChild(this.children as FrameNode)
@@ -84,27 +130,46 @@ export default class Sample {
     return this.node
   }
 
-  makeNodeShade = (
-    width: number,
-    height: number,
-    name: string,
-    isColorName = false
-  ) => {
-    // Base
-    this.node = figma.createFrame()
-    this.node.name = name
-    this.node.resize(width, height)
-    this.node.fills = [
+  makeNodeShade = ({
+    width,
+    height,
+    name,
+    isColorName = false,
+  }: {
+    width: number
+    height: number
+    name: string
+    isColorName?: boolean
+  }) => {
+    const newFills: Paint[] = [
       {
-        type: 'SOLID',
+        type: 'SOLID' as const,
         color: {
           r: this.rgb[0] / 255,
           g: this.rgb[1] / 255,
           b: this.rgb[2] / 255,
         },
+        opacity: this.alpha ?? 1,
       },
     ]
 
+    if (this.backgroundColor !== undefined)
+      newFills.push({
+        type: 'SOLID',
+        color: {
+          r: this.backgroundColor[0] / 255,
+          g: this.backgroundColor[1] / 255,
+          b: this.backgroundColor[2] / 255,
+        },
+        opacity: 1,
+      })
+
+    // Base
+    this.node = figma.createFrame()
+    this.node.name = name
+    this.node.resize(width, height)
+    this.node.fills = newFills
+    this.node.fills = this.node.fills.filter(Boolean)
     // Layout
     this.node.layoutMode = 'VERTICAL'
     this.node.layoutSizingHorizontal = 'FIXED'
@@ -118,38 +183,59 @@ export default class Sample {
     this.node.itemSpacing = 8
 
     // Insert
-    if (this.view.includes('PALETTE_WITH_PROPERTIES') && !isColorName)
-      this.node.appendChild(
-        new Properties(
-          this.scale ?? '0',
-          this.rgb,
-          this.colorSpace,
-          this.visionSimulationMode,
-          this.textColorsTheme
-        ).makeNode()
-      )
-    else if (isColorName)
-      this.node.appendChild(new Property('_label', this.name, 10).makeNode())
-    if (this.status.isClosestToRef || this.status.isLocked)
-      this.node.appendChild(
-        new Status(
-          this.status,
-          this.source
-            ? { r: this.source.r, g: this.source.g, b: this.source.b }
-            : {}
-        ).makeNode()
-      )
+    if (this.view.includes('PALETTE_WITH_PROPERTIES') && !isColorName) {
+      const propertiesNode = new Properties({
+        name: this.scale ?? '0',
+        rgb: this.rgb,
+        alpha: this.alpha,
+        mixedColor: this.mixedColor,
+        colorSpace: this.colorSpace,
+        visionSimulationMode: this.visionSimulationMode,
+        textColorsTheme: this.textColorsTheme,
+      }).makeNode()
+
+      this.node.appendChild(propertiesNode)
+    } else if (isColorName) {
+      const propertyNode = new Property({
+        name: '_label',
+        content: this.name,
+        size: 10,
+      }).makeNode()
+
+      this.node.appendChild(propertyNode)
+    }
+
+    if (
+      this.status.isClosestToRef ||
+      this.status.isLocked ||
+      this.status.isTransparent
+    ) {
+      const statusNode = new Status({
+        status: this.status,
+        source: this.source
+          ? { r: this.source.r, g: this.source.g, b: this.source.b }
+          : {},
+      }).node
+
+      this.node.appendChild(statusNode)
+    }
 
     return this.node
   }
 
-  makeNodeRichShade = (
-    width: number,
-    height: number,
-    name: string,
+  makeNodeRichShade = ({
+    width,
+    height,
+    name,
+    description = '',
     isColorName = false,
-    description = ''
-  ) => {
+  }: {
+    width: number
+    height: number
+    name: string
+    description?: string
+    isColorName?: boolean
+  }) => {
     // Base
     this.node = figma.createFrame()
     this.node.name = name
@@ -163,7 +249,7 @@ export default class Sample {
     this.node.primaryAxisAlignItems = 'MIN'
     this.node.itemSpacing = 8
 
-    // color
+    // Color
     this.nodeColor = figma.createFrame()
     this.nodeColor.name = '_color'
     this.nodeColor.layoutMode = 'VERTICAL'
@@ -171,11 +257,7 @@ export default class Sample {
     this.nodeColor.layoutSizingVertical = 'FIXED'
     this.nodeColor.layoutAlign = 'STRETCH'
     this.nodeColor.resize(96, 96)
-    this.nodeColor.paddingTop =
-      this.nodeColor.paddingRight =
-      this.nodeColor.paddingBottom =
-      this.nodeColor.paddingLeft =
-        8
+    this.nodeColor.horizontalPadding = this.nodeColor.verticalPadding = 8
     this.nodeColor.itemSpacing = 8
     this.nodeColor.fills = [
       {
@@ -190,38 +272,54 @@ export default class Sample {
     this.nodeColor.cornerRadius = 16
 
     // Insert
-    this.nodeColor.appendChild(new Property('_label', name, 10).makeNode())
-    if (this.status.isClosestToRef)
-      this.nodeColor.appendChild(
-        new Status(
-          this.status,
-          this.source
-            ? { r: this.source.r, g: this.source.g, b: this.source.b }
-            : {}
-        ).makeNode()
-      )
+    const propertyNode = new Property({
+      name: '_label',
+      content: name,
+      size: 10,
+    }).makeNode()
+
+    this.nodeColor.appendChild(propertyNode)
+
+    if (
+      this.status.isClosestToRef ||
+      this.status.isLocked ||
+      this.status.isTransparent
+    ) {
+      const statusNode = new Status({
+        status: this.status,
+        source: this.source
+          ? { r: this.source.r, g: this.source.g, b: this.source.b }
+          : {},
+      }).node
+
+      this.nodeColor.appendChild(statusNode)
+    }
 
     this.node.appendChild(this.nodeColor)
-    if (isColorName && description !== '')
-      this.node.appendChild(
-        new Paragraph(
-          '_description',
-          description,
-          'FILL',
-          undefined,
-          8
-        ).makeNode()
-      )
-    else if (!this.view.includes('SHEET_SAFE_MODE') && !isColorName)
-      this.node.appendChild(
-        new Properties(
-          this.scale ?? '0',
-          this.rgb,
-          this.colorSpace,
-          this.visionSimulationMode,
-          this.textColorsTheme
-        ).makeNodeDetailed()
-      )
+
+    if (isColorName && description !== '') {
+      const paragraphNode = new Paragraph({
+        name: '_description',
+        content: description,
+        type: 'FILL',
+        fontSize: 8,
+        fontFamily: 'Lexend',
+      }).node
+
+      this.node.appendChild(paragraphNode)
+    } else if (!isColorName) {
+      const propertiesNode = new Properties({
+        name: this.scale ?? '0',
+        rgb: this.rgb,
+        alpha: this.alpha,
+        mixedColor: this.mixedColor,
+        colorSpace: this.colorSpace,
+        visionSimulationMode: this.visionSimulationMode,
+        textColorsTheme: this.textColorsTheme,
+      }).makeNodeDetailed()
+
+      this.node.appendChild(propertiesNode)
+    }
 
     return this.node
   }

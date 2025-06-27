@@ -1,19 +1,17 @@
-import LocalVariable from '../../canvas/LocalVariable'
-import { lang, locals } from '../../content/locals'
-import { PaletteData } from '../../types/data'
+const createLocalVariables = async (id: string) => {
+  /*const rawPalette = figma.currentPage.getPluginData(`palette_${id}`)
+  
+    if (rawPalette === undefined || rawPalette === null)
+      throw new Error(locales.get().error.unfoundPalette)
+  
+    const palette = JSON.parse(rawPalette) as FullConfiguration
 
-const createLocalVariables = async (palette: SceneNode) => {
-  palette = figma.currentPage.selection[0] as FrameNode
-
-  const paletteData: PaletteData = JSON.parse(palette.getPluginData('data'))
-
-  if (palette.children.length === 1) {
     const name: string =
-        palette.getPluginData('name') === ''
-          ? locals[lang].name
-          : palette.getPluginData('name'),
-      themesList =
-        paletteData.themes
+        palette.base.name === ''
+          ? locales.get().name
+          : palette.base.name
+    const themesList =
+        palette.themes
           .map((theme) => {
             if (theme.type === 'custom theme')
               return {
@@ -27,20 +25,14 @@ const createLocalVariables = async (palette: SceneNode) => {
       .getLocalVariableCollectionsAsync()
       .then((collections) =>
         collections.find(
-          (collection) => collection.id === paletteData.collectionId
+          (collection) => collection.id === palette.libraryData.collectionId[0]
         )
       )
       .then(async (collection) => {
         if (collection === undefined) {
           collection = new LocalVariable().makeCollection(name)
-          paletteData.collectionId = collection.id
-
-          figma.ui.postMessage({
-            type: 'NEW_VARIABLE_COLLECTION',
-            data: {
-              id: collection.id,
-              name: collection.name,
-            },
+          palette.libraryData.forEach((data) => {
+            data.collectionId = collection?.id
           })
         }
         return collection
@@ -201,8 +193,7 @@ const createLocalVariables = async (palette: SceneNode) => {
       })
       .catch(() => locals[lang].error.generic)
 
-    return await createLocalVariablesStatusMessage
-  } else return locals[lang].error.corruption
+    return await createLocalVariablesStatusMessage*/
 }
 
 export default createLocalVariables

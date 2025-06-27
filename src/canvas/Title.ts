@@ -1,23 +1,43 @@
-import { lang, locals } from '../content/locals'
-import { PaletteNode } from '../types/nodes'
+import {
+  BaseConfiguration,
+  MetaConfiguration,
+  PaletteDataThemeItem,
+  ThemeConfiguration,
+} from '@a_ng_d/utils-ui-color-palette'
+import { locales } from '../content/locales'
 import Paragraph from './Paragraph'
 import Tag from './Tag'
 
 export default class Title {
-  private parent: PaletteNode
+  private base: BaseConfiguration
+  private theme: ThemeConfiguration
+  private data: PaletteDataThemeItem
+  private meta: MetaConfiguration
   private nodeGlobalInfo: FrameNode | null
   private nodeDescriptions: FrameNode | null
   private nodeProps: FrameNode | null
-  private node: FrameNode | null
+  node: FrameNode
 
-  constructor(parent: PaletteNode) {
-    this.parent = parent
+  constructor({
+    base,
+    theme,
+    data,
+    meta,
+  }: {
+    base: BaseConfiguration
+    theme: ThemeConfiguration
+    data: PaletteDataThemeItem
+    meta: MetaConfiguration
+  }) {
+    this.base = base
+    this.theme = theme
+    this.data = data
+    this.meta = meta
     this.nodeGlobalInfo = null
     this.nodeDescriptions = null
     this.nodeProps = null
-    this.node = null
+    this.node = this.makeNode()
   }
-
   makeNodeGlobalInfo = () => {
     // Base
     this.nodeGlobalInfo = figma.createFrame()
@@ -34,14 +54,11 @@ export default class Title {
     this.nodeGlobalInfo.appendChild(
       new Tag({
         name: '_name',
-        content: this.parent.name === '' ? locals[lang].name : this.parent.name,
+        content: this.base.name === '' ? locales.get().name : this.base.name,
         fontSize: 20,
       }).makeNodeTag()
     )
-    if (
-      this.parent.description !== '' ||
-      this.parent.themes.find((theme) => theme.isEnabled)?.description !== ''
-    )
+    if (this.base.description !== '' || this.theme.description !== '')
       this.nodeGlobalInfo.appendChild(this.makeNodeDescriptions())
 
     return this.nodeGlobalInfo
@@ -54,33 +71,39 @@ export default class Title {
     this.nodeDescriptions.fills = []
 
     // Layout
-    this.nodeDescriptions.layoutMode = 'HORIZONTAL'
+    this.nodeDescriptions.layoutMode = 'VERTICAL'
     this.nodeDescriptions.layoutSizingHorizontal = 'HUG'
     this.nodeDescriptions.layoutSizingVertical = 'HUG'
     this.nodeDescriptions.itemSpacing = 8
 
     // Insert
-    if (this.parent.description !== '')
+    if (this.base.description !== '')
       this.nodeDescriptions.appendChild(
-        new Paragraph(
-          '_palette-description',
-          this.parent.description,
-          'FIXED',
-          644,
-          12
-        ).makeNode()
+        new Paragraph({
+          name: '_palette-description',
+          content: this.base.description,
+          type: 'FIXED',
+          width: 644,
+          fontSize: 12,
+          fontFamily: 'Lexend',
+        }).node
       )
 
-    if (this.parent.themes.find((theme) => theme.isEnabled)?.description !== '')
+    if (this.theme.description !== '')
       this.nodeDescriptions.appendChild(
-        new Paragraph(
-          '_theme-description',
-          'Theme description: ' +
-            this.parent.themes.find((theme) => theme.isEnabled)?.description,
-          'FIXED',
-          644,
-          12
-        ).makeNode()
+        new Paragraph({
+          name: '_theme-description',
+          content: locales
+            .get()
+            .paletteProperties.themeDescription.replace(
+              '{$1}',
+              this.theme.description
+            ),
+          type: 'FIXED',
+          width: 644,
+          fontSize: 12,
+          fontFamily: 'Lexend',
+        }).node
       )
 
     return this.nodeDescriptions
@@ -100,56 +123,60 @@ export default class Title {
     this.nodeProps.itemSpacing = 8
 
     // Insert
-    if (
-      this.parent.creatorFullName !== undefined &&
-      this.parent.creatorFullName !== ''
-    )
-      this.nodeProps.appendChild(
-        new Tag({
-          name: '_creator_id',
-          content: `${locals[lang].paletteProperties.provider}${this.parent.creatorFullName}`,
-          fontSize: 12,
-        }).makeNodeTagWithAvatar(this.parent.creatorAvatarImg)
-      )
-
-    if (
-      this.parent.themes.find((theme) => theme.isEnabled)?.type !==
-      'default theme'
-    )
+    if (this.data.type !== 'default theme')
       this.nodeProps.appendChild(
         new Tag({
           name: '_theme',
-          content: `${locals[lang].paletteProperties.theme}${
-            this.parent.themes.find((theme) => theme.isEnabled)?.name
-          }`,
+          content: locales
+            .get()
+            .paletteProperties.theme.replace('{$1}', this.data.name),
           fontSize: 12,
         }).makeNodeTag()
       )
     this.nodeProps.appendChild(
       new Tag({
         name: '_preset',
-        content: `${locals[lang].paletteProperties.preset}${this.parent.preset.name}`,
+        content: locales
+          .get()
+          .paletteProperties.preset.replace('{$1}', this.base.preset.name),
         fontSize: 12,
       }).makeNodeTag()
     )
     this.nodeProps.appendChild(
       new Tag({
         name: '_color-space',
-        content: `${locals[lang].paletteProperties.colorSpace}${this.parent.colorSpace}`,
+        content: locales
+          .get()
+          .paletteProperties.colorSpace.replace('{$1}', this.base.colorSpace),
         fontSize: 12,
       }).makeNodeTag()
     )
-    if (this.parent.visionSimulationMode !== 'NONE')
+    if (this.base.visionSimulationMode !== 'NONE')
       this.nodeProps.appendChild(
         new Tag({
           name: '_vision-simulation',
-          content: `${locals[lang].paletteProperties.visionSimulation}${
-            this.parent.visionSimulationMode.charAt(0) +
-            this.parent.visionSimulationMode.toLocaleLowerCase().slice(1)
-          }`,
+          content: locales
+            .get()
+            .paletteProperties.visionSimulation.replace(
+              '{$1}',
+              this.theme.visionSimulationMode.charAt(0) +
+                this.theme.visionSimulationMode.toLocaleLowerCase().slice(1)
+            ),
           fontSize: 12,
         }).makeNodeTag()
       )
+    this.nodeProps.appendChild(
+      new Tag({
+        name: '_updated_at',
+        content: locales
+          .get()
+          .paletteProperties.updatedAt.replace(
+            '{$1}',
+            new Date(this.meta.dates.updatedAt).toDateString()
+          ),
+        fontSize: 12,
+      }).makeNodeTag()
+    )
 
     return this.nodeProps
   }

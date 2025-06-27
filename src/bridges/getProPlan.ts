@@ -7,8 +7,10 @@ const getProPlan = async () => {
       if (figma.payments?.status.type === 'PAID')
         figma.ui.postMessage({
           type: 'GET_PRO_PLAN',
-          data: figma.payments.status.type,
-          id: figma.currentUser?.id,
+          data: {
+            status: figma.payments.status.type,
+            id: figma.currentUser?.id,
+          },
         })
     })
 }
