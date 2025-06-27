@@ -2,11 +2,9 @@
   "include": [
     "src/**/*.ts",
     "src/**/*.tsx",
+    "vite.config.ts",
     "env.d.ts",
   ],
-  "paths": {
-    "jszip": ["./node_modules/jszip/dist/jszip.min.js"]
-  },
   "compilerOptions": {
     "target": "ES2015",
     "lib": [
@@ -32,7 +30,9 @@
       "react": ["./node_modules/preact/compat/"],
       "react/jsx-runtime": ["./node_modules/preact/jsx-runtime"],
       "react-dom": ["./node_modules/preact/compat/"],
-      "react-dom/*": ["./node_modules/preact/compat/*"]
+      "react-dom/*": ["./node_modules/preact/compat/*"],
+      "jszip": ["./node_modules/jszip/dist/jszip.min.js"],
+      "@ui-lib/*": ["packages/ui-ui-color-palette/src/*"],
     }
   }
 }
