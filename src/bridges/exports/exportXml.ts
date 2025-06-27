@@ -6,7 +6,7 @@ import { locales } from '../../content/locales'
 const exportXml = (id: string) => {
   const rawPalette = figma.currentPage.getPluginData(`palette_${id}`)
 
-  if (rawPalette === undefined || rawPalette === null)
+  if (rawPalette === '')
     return figma.ui.postMessage({
       type: 'EXPORT_PALETTE_XML',
       data: {

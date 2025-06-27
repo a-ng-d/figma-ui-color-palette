@@ -6,8 +6,7 @@ const createPaletteFromDuplication = async (id: string) => {
   const rawPalette = figma.currentPage.getPluginData(`palette_${id}`)
   const now = new Date().toISOString()
 
-  if (rawPalette === undefined || rawPalette === null)
-    throw new Error(locales.get().error.unfoundPalette)
+  if (rawPalette === '') throw new Error(locales.get().error.unfoundPalette)
 
   const palette = JSON.parse(rawPalette) as FullConfiguration
 

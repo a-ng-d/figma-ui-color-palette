@@ -5,8 +5,7 @@ import { locales } from '../../content/locales'
 const createLocalStyles = async (id: string) => {
   const rawPalette = figma.currentPage.getPluginData(`palette_${id}`)
 
-  if (rawPalette === undefined || rawPalette === null)
-    throw new Error(locales.get().error.unfoundPalette)
+  if (rawPalette === '') throw new Error(locales.get().error.unfoundPalette)
 
   const palette = JSON.parse(rawPalette) as FullConfiguration
 

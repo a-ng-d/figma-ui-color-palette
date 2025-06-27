@@ -5,7 +5,7 @@ import { locales } from '../../content/locales'
 const exportUIKit = (id: string) => {
   const rawPalette = figma.currentPage.getPluginData(`palette_${id}`)
 
-  if (rawPalette === undefined || rawPalette === null)
+  if (rawPalette === '')
     return figma.ui.postMessage({
       type: 'EXPORT_PALETTE_UIKIT',
       data: {

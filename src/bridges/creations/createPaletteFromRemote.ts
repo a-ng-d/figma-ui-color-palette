@@ -19,7 +19,7 @@ const createPaletteFromRemote = async (msg: Msg) => {
     `palette_${msg.data.meta.id}`
   )
 
-  if (localPalette !== undefined) throw new Error(locales.get().info.addToLocal)
+  if (localPalette === undefined) throw new Error(locales.get().info.addToLocal)
 
   const palette = new Data({
     base: {

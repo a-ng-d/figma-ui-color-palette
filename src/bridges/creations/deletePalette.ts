@@ -3,8 +3,7 @@ import { locales } from '../../content/locales'
 const deletePalette = async (id: string) => {
   const rawPalette = figma.currentPage.getPluginData(`palette_${id}`)
 
-  if (rawPalette === undefined)
-    throw new Error(locales.get().error.unfoundPalette)
+  if (rawPalette === '') throw new Error(locales.get().error.unfoundPalette)
 
   const palette = JSON.parse(rawPalette)
 

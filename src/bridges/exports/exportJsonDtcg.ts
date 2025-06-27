@@ -9,7 +9,7 @@ import { locales } from '../../content/locales'
 const exportJsonDtcg = (id: string, colorSpace: ColorSpaceConfiguration) => {
   const rawPalette = figma.currentPage.getPluginData(`palette_${id}`)
 
-  if (rawPalette === undefined || rawPalette === null)
+  if (rawPalette === '')
     return figma.ui.postMessage({
       type: 'EXPORT_PALETTE_JSON',
       data: {
