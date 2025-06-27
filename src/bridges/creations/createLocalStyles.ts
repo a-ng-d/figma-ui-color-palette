@@ -14,6 +14,7 @@ const createLocalStyles = async (id: string) => {
     .then((localStyles) => {
       let i = 0
       palette.libraryData.map((item) => {
+        console.log(item)
         if (
           localStyles.find((localStyle) => localStyle.id === item.styleId) ===
             undefined &&
