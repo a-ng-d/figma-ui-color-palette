@@ -10,6 +10,7 @@ import chroma from 'chroma-js'
 import setPaletteName from '../utils/setPaletteName'
 import Palette from './Palette'
 import Sheet from './Sheet'
+import globalConfig from 'src/global.config'
 
 export default class Documents {
   private base: BaseConfiguration
@@ -99,6 +100,7 @@ export default class Documents {
 
     // data
     document.setPluginData('type', 'UI_COLOR_PALETTE')
+    document.setPluginData('version', globalConfig.versions.paletteVersion)
     document.setPluginData('view', this.view)
     document.setPluginData('id', this.meta.id)
     document.setPluginData('themeId', theme.id)
