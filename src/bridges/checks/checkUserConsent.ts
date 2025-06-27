@@ -1,5 +1,5 @@
-import globalConfig from '../../global.config'
 import { userConsent } from '../../utils/userConsent'
+import globalConfig from '../../global.config'
 
 const checkUserConsent = async () => {
   const currentUserConsentVersion = await figma.clientStorage.getAsync(

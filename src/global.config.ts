@@ -1,6 +1,6 @@
 import { doSpecificMode } from '@ui-lib/stores/features'
-import { locales } from './content/locales'
 import { Config } from './types/config'
+import { locales } from './content/locales'
 
 const isDev = import.meta.env.MODE === 'development'
 

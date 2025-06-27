@@ -1,6 +1,6 @@
 import { FullConfiguration } from '@a_ng_d/utils-ui-color-palette'
-import LocalStyle from '../../canvas/LocalStyle'
 import { locales } from '../../content/locales'
+import LocalStyle from '../../canvas/LocalStyle'
 
 const createLocalStyles = async (id: string) => {
   const rawPalette = figma.currentPage.getPluginData(`palette_${id}`)
@@ -12,6 +12,7 @@ const createLocalStyles = async (id: string) => {
   const createdLocalStylesStatusMessage = await figma
     .getLocalPaintStylesAsync()
     .then((localStyles) => {
+      console.log(`Creating local styles for palette ${id}...`)
       let i = 0
       palette.libraryData.map((item) => {
         console.log(item)

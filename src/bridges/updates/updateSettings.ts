@@ -1,6 +1,6 @@
 import { Data, FullConfiguration } from '@a_ng_d/utils-ui-color-palette'
-import { locales } from '../../content/locales'
 import { SettingsMessage } from '../../types/messages'
+import { locales } from '../../content/locales'
 
 const updateSettings = async (msg: SettingsMessage) => {
   const now = new Date().toISOString()

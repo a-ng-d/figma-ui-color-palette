@@ -1,5 +1,5 @@
-import { FullConfiguration } from '@a_ng_d/utils-ui-color-palette'
 import { uid } from 'uid'
+import { FullConfiguration } from '@a_ng_d/utils-ui-color-palette'
 import { locales } from '../../content/locales'
 
 const createPaletteFromDuplication = async (id: string) => {

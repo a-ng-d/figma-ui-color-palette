@@ -1,3 +1,4 @@
+import chroma from 'chroma-js'
 import {
   BaseConfiguration,
   MetaConfiguration,
@@ -6,11 +7,10 @@ import {
   ThemeConfiguration,
   ViewConfiguration,
 } from '@a_ng_d/utils-ui-color-palette'
-import chroma from 'chroma-js'
 import setPaletteName from '../utils/setPaletteName'
-import Palette from './Palette'
+import globalConfig from '../global.config'
 import Sheet from './Sheet'
-import globalConfig from 'src/global.config'
+import Palette from './Palette'
 
 export default class Documents {
   private base: BaseConfiguration

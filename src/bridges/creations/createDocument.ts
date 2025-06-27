@@ -3,8 +3,8 @@ import {
   FullConfiguration,
   ViewConfiguration,
 } from '@a_ng_d/utils-ui-color-palette'
-import Documents from '../../canvas/Documents'
 import { locales } from '../../content/locales'
+import Documents from '../../canvas/Documents'
 
 const createDocument = async (id: string, view: ViewConfiguration) => {
   const rawPalette = figma.currentPage.getPluginData(`palette_${id}`)

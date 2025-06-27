@@ -1,4 +1,4 @@
 # ESLint ignores
 node_modules/
 dist/
-webpack.config.js
+packages/

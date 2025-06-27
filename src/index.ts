@@ -1,7 +1,7 @@
-import checkPlanStatus from './bridges/checks/checkTrialStatus'
-import loadParameters from './bridges/loadParameters'
-import loadUI from './bridges/loadUI'
 import processSelection from './bridges/processSelection'
+import loadUI from './bridges/loadUI'
+import loadParameters from './bridges/loadParameters'
+import checkPlanStatus from './bridges/checks/checkTrialStatus'
 
 // Fonts
 figma.loadFontAsync({ family: 'Inter', style: 'Regular' })

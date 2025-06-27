@@ -1,5 +1,5 @@
-import { Case } from '@a_ng_d/figmug-utils'
 import { Data, PaletteData } from '@a_ng_d/utils-ui-color-palette'
+import { Case } from '@a_ng_d/figmug-utils'
 import { locales } from '../../content/locales'
 
 const exportUIKit = (id: string) => {

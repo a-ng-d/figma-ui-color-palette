@@ -1,3 +1,4 @@
+import chroma from 'chroma-js'
 import {
   Data,
   FullConfiguration,
@@ -5,10 +6,9 @@ import {
   ThemeConfiguration,
   ViewConfiguration,
 } from '@a_ng_d/utils-ui-color-palette'
-import chroma from 'chroma-js'
-import Palette from '../../canvas/Palette'
-import Sheet from '../../canvas/Sheet'
 import { locales } from '../../content/locales'
+import Sheet from '../../canvas/Sheet'
+import Palette from '../../canvas/Palette'
 
 const updateDocument = async (view: ViewConfiguration) => {
   const document = figma.currentPage.selection[0] as FrameNode

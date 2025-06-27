@@ -6,10 +6,10 @@ import {
   ViewConfiguration,
 } from '@a_ng_d/utils-ui-color-palette'
 import { locales } from '../content/locales'
-import Header from './Header'
-import Sample from './Sample'
-import Signature from './Signature'
 import Title from './Title'
+import Signature from './Signature'
+import Sample from './Sample'
+import Header from './Header'
 
 export default class Sheet {
   private base: BaseConfiguration

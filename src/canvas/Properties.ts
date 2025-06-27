@@ -1,3 +1,4 @@
+import chroma from 'chroma-js'
 import {
   Channel,
   Color,
@@ -7,7 +8,6 @@ import {
   TextColorsThemeConfiguration,
   VisionSimulationModeConfiguration,
 } from '@a_ng_d/utils-ui-color-palette'
-import chroma from 'chroma-js'
 import { locales } from '../content/locales'
 import Tag from './Tag'
 

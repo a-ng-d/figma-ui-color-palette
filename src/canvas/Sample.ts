@@ -6,10 +6,10 @@ import {
   ViewConfiguration,
   VisionSimulationModeConfiguration,
 } from '@a_ng_d/utils-ui-color-palette'
-import Paragraph from './Paragraph'
-import Properties from './Properties'
-import Property from './Property'
 import Status from './Status'
+import Property from './Property'
+import Properties from './Properties'
+import Paragraph from './Paragraph'
 
 export default class Sample {
   private name: string
