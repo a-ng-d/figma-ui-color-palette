@@ -1,3 +1,4 @@
+import chroma from 'chroma-js'
 import { FullConfiguration } from '@a_ng_d/utils-ui-color-palette'
 import { locales } from '../../content/locales'
 
@@ -8,8 +9,9 @@ const updateLocalStyles = async (id: string) => {
 
   const palette = JSON.parse(rawPalette) as FullConfiguration
 
-  const canDeepSyncStyles =
-    figma.root.getPluginData('can_deep_sync_styles') === 'true'
+  const canDeepSyncStyles = await figma.clientStorage.getAsync(
+    'can_deep_sync_styles'
+  )
 
   const updatedLocalStylesStatusMessage = figma
     .getLocalPaintStylesAsync()
@@ -47,6 +49,16 @@ const updateLocalStyles = async (id: string) => {
         } as SolidPaint
 
         if (styleMatch !== undefined) {
+          const styleMatchHex = chroma([
+            (styleMatch.paints[0] as SolidPaint).color.r * 255,
+            (styleMatch.paints[0] as SolidPaint).color.g * 255,
+            (styleMatch.paints[0] as SolidPaint).color.b * 255,
+          ]).hex()
+          const fillHex = chroma([
+            fill.color.r * 255,
+            fill.color.g * 255,
+            fill.color.b * 255,
+          ]).hex()
           if (styleMatch.name !== path) {
             styleMatch.name = path
             j++
@@ -57,7 +69,11 @@ const updateLocalStyles = async (id: string) => {
             j++
           }
 
-          if (styleMatch.paints[0] !== fill) {
+          if (
+            parseFloat(styleMatch.paints[0].opacity?.toFixed(2) ?? '1') !==
+              fill.opacity ||
+            styleMatchHex !== fillHex
+          ) {
             styleMatch.paints = [fill]
             j++
           }
