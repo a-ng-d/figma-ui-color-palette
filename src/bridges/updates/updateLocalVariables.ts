@@ -88,7 +88,6 @@ const updateLocalVariables = async (id: string) => {
               : item.id.includes('00000000000')
           })
           .forEach((item) => {
-            console.log(item)
             const modeMatch = collection.modes.find(
               (mode) => mode.modeId === item.modeId
             )
