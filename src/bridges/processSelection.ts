@@ -19,7 +19,6 @@ const processSelection = () => {
     | FrameNode
     | InstanceNode
   const selectionHandler = (state: string) => {
-    console.log(`Selection handler: ${state}`)
     const actions: { [key: string]: () => void } = {
       DOCUMENT_SELECTED: async () => {
         figma.ui.postMessage({
