@@ -70,6 +70,14 @@ const createLocalVariables = async (id: string) => {
           const boundVariable = localVariables.find(
             (localVariable) => localVariable.id === item.variableId
           )
+          const path = [
+            item.colorName === ''
+              ? locales.get().colors.defaultName
+              : item.colorName,
+            item.shadeName,
+          ]
+            .filter((item) => item !== '' && item !== 'None')
+            .join('/')
 
           if (boundVariable?.variableCollectionId !== collection?.id) {
             boundVariable?.remove()
@@ -77,7 +85,7 @@ const createLocalVariables = async (id: string) => {
           }
           if (boundVariable === undefined || isRemoved) {
             const variable = new LocalVariable().makeVariable(
-              `${item.colorName}/${item.shadeName}`,
+              path,
               collection,
               item.description ?? ''
             )
@@ -107,6 +115,10 @@ const createLocalVariables = async (id: string) => {
         .reduce((acc: Array<LibraryData>, item) => {
           const [themeId] = item.id.split(':')
           const lastItem = acc[acc.length - 1]
+          const themeName =
+            item.themeName === ''
+              ? locales.get().themes.defaultName
+              : item.themeName
 
           if (collection !== undefined) {
             const hasModeMatch = collection.modes.some(
@@ -119,11 +131,11 @@ const createLocalVariables = async (id: string) => {
 
             if (isPassed) item.modeId = lastItem.modeId
             if (!isPassed && collection?.modes[0].name === 'Mode 1') {
-              collection.renameMode(collection.defaultModeId, item.themeName)
+              collection.renameMode(collection.defaultModeId, themeName)
               item.modeId = collection.defaultModeId
             } else if (!isPassed && !hasModeMatch)
               try {
-                const modeId = collection.addMode(item.themeName)
+                const modeId = collection.addMode(themeName)
                 item.modeId = modeId
                 j++
               } catch {
@@ -137,10 +149,18 @@ const createLocalVariables = async (id: string) => {
       palette.libraryData
         .filter((item) => !item.id.includes('00000000000'))
         .forEach((item) => {
+          const path = [
+            item.colorName === ''
+              ? locales.get().colors.defaultName
+              : item.colorName,
+            item.shadeName,
+          ]
+            .filter((item) => item !== '' && item !== 'None')
+            .join('/')
+
           if (collection !== undefined) {
             const variableMatch = createdVariables.find(
-              (variable) =>
-                variable.name === `${item.colorName}/${item.shadeName}`
+              (variable) => variable.name === path
             )
             const hasModeMatch = collection.modes.some(
               (mode) => mode.modeId === item.modeId

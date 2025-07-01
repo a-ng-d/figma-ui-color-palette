@@ -102,6 +102,7 @@
     "chromaShifting": {
       "label": "Shift chroma"
     },
+    "defaultName": "Untitled UI color",
     "hueShifting": {
       "label": "Shift hue"
     },
@@ -682,6 +683,7 @@
       "cta": "Create a color mode",
       "message": "Create color modes to manage multiple color palettes within one single (e.g. light and dark modes)"
     },
+    "defaultName": "Untitled UI mode",
     "moreParameters": "{$1} parameters",
     "paletteBackgroundColor": {
       "label": "Document background"

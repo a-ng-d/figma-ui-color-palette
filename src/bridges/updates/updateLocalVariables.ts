@@ -94,13 +94,17 @@ const updateLocalVariables = async (id: string) => {
             const variableMatch = localVariables.find(
               (localVariable) => localVariable.id === item.variableId
             )
+            const themeName =
+              item.themeName === ''
+                ? locales.get().themes.defaultName
+                : item.themeName
 
             if (modeMatch !== undefined)
               if (
-                modeMatch.name !== item.themeName &&
+                modeMatch.name !== themeName &&
                 !item.id.includes('00000000000')
               ) {
-                collection.renameMode(modeMatch.modeId, item.themeName)
+                collection.renameMode(modeMatch.modeId, themeName)
                 j++
               }
 
@@ -125,11 +129,19 @@ const updateLocalVariables = async (id: string) => {
                   2
                 ) ?? '1'
               )
+              const path = [
+                item.colorName === ''
+                  ? locales.get().colors.defaultName
+                  : item.colorName,
+                item.shadeName,
+              ]
+                .filter((item) => item !== '' && item !== 'None')
+                .join('/')
 
-              if (
-                variableMatch.name !== `${item.colorName}/${item.shadeName}`
-              ) {
-                variableMatch.name = `${item.colorName}/${item.shadeName}`
+              console.log(variableMatch.name, path)
+
+              if (variableMatch.name !== path) {
+                variableMatch.name = path
                 k++
               }
 

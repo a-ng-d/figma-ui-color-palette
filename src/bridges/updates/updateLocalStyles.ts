@@ -25,6 +25,9 @@ const updateLocalStyles = async (id: string) => {
   const canDeepSyncStyles = await figma.clientStorage.getAsync(
     'can_deep_sync_styles'
   )
+  const hasThemes = palette.libraryData.some(
+    (item) => !item.id.includes('00000000000')
+  )
 
   const updatedLocalStylesStatusMessage = figma
     .getLocalPaintStylesAsync()
@@ -46,63 +49,73 @@ const updateLocalStyles = async (id: string) => {
           }
         })
 
-      palette.libraryData?.forEach((item) => {
-        const styleMatch = localStyles.find(
-          (localStyle) => localStyle.id === item.styleId
-        )
-        const path = [
-          item.paletteName,
-          item.themeName,
-          item.colorName,
-          item.shadeName,
-        ]
-          .filter((item) => item !== '' && item !== 'None')
-          .join('/')
-        const fill = {
-          type: 'SOLID',
-          color: {
-            r: (item.gl ?? [0, 0, 0])[0],
-            g: (item.gl ?? [0, 0, 0])[1],
-            b: (item.gl ?? [0, 0, 0])[2],
-          },
-          opacity: item.alpha ?? 1,
-        } as SolidPaint
+      palette.libraryData
+        .filter((item) => {
+          return hasThemes
+            ? !item.id.includes('00000000000')
+            : item.id.includes('00000000000')
+        })
+        .forEach((item) => {
+          const styleMatch = localStyles.find(
+            (localStyle) => localStyle.id === item.styleId
+          )
+          const path = [
+            item.paletteName,
+            item.themeName === ''
+              ? locales.get().themes.defaultName
+              : item.themeName,
+            item.colorName === ''
+              ? locales.get().colors.defaultName
+              : item.colorName,
+            item.shadeName,
+          ]
+            .filter((item) => item !== '' && item !== 'None')
+            .join('/')
+          const fill = {
+            type: 'SOLID',
+            color: {
+              r: (item.gl ?? [0, 0, 0])[0],
+              g: (item.gl ?? [0, 0, 0])[1],
+              b: (item.gl ?? [0, 0, 0])[2],
+            },
+            opacity: item.alpha ?? 1,
+          } as SolidPaint
 
-        if (styleMatch !== undefined) {
-          const styleMatchHex = chroma([
-            (styleMatch.paints[0] as SolidPaint).color.r * 255,
-            (styleMatch.paints[0] as SolidPaint).color.g * 255,
-            (styleMatch.paints[0] as SolidPaint).color.b * 255,
-          ]).hex()
-          const fillHex = chroma([
-            fill.color.r * 255,
-            fill.color.g * 255,
-            fill.color.b * 255,
-          ]).hex()
+          if (styleMatch !== undefined) {
+            const styleMatchHex = chroma([
+              (styleMatch.paints[0] as SolidPaint).color.r * 255,
+              (styleMatch.paints[0] as SolidPaint).color.g * 255,
+              (styleMatch.paints[0] as SolidPaint).color.b * 255,
+            ]).hex()
+            const fillHex = chroma([
+              fill.color.r * 255,
+              fill.color.g * 255,
+              fill.color.b * 255,
+            ]).hex()
 
-          if (styleMatch.name !== path) {
-            styleMatch.name = path
-            j++
+            if (styleMatch.name !== path) {
+              styleMatch.name = path
+              j++
+            }
+
+            if (styleMatch.description !== item.description) {
+              styleMatch.description = item.description ?? ''
+              j++
+            }
+
+            if (
+              parseFloat(styleMatch.paints[0].opacity?.toFixed(2) ?? '1') !==
+                fill.opacity ||
+              styleMatchHex !== fillHex
+            ) {
+              styleMatch.paints = [fill]
+              j++
+            }
+
+            j > 0 ? i++ : i
+            j = 0
           }
-
-          if (styleMatch.description !== item.description) {
-            styleMatch.description = item.description ?? ''
-            j++
-          }
-
-          if (
-            parseFloat(styleMatch.paints[0].opacity?.toFixed(2) ?? '1') !==
-              fill.opacity ||
-            styleMatchHex !== fillHex
-          ) {
-            styleMatch.paints = [fill]
-            j++
-          }
-
-          j > 0 ? i++ : i
-          j = 0
-        }
-      })
+        })
 
       if (i > 1)
         messages.push(

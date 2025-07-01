@@ -22,41 +22,54 @@ const createLocalStyles = async (id: string) => {
     palette.libraryData
   )
 
+  const hasThemes = palette.libraryData.some(
+    (item) => !item.id.includes('00000000000')
+  )
+
   const createdLocalStylesStatusMessage = await figma
     .getLocalPaintStylesAsync()
     .then((localStyles) => {
       let i = 0
-      palette.libraryData.map((item) => {
-        const path = [
-          item.paletteName,
-          item.themeName,
-          item.colorName,
-          item.shadeName,
-        ]
-          .filter((item) => item !== '' && item !== 'None')
-          .join('/')
 
-        if (
-          localStyles.find((localStyle) => localStyle.id === item.styleId) ===
-            undefined &&
-          item.gl !== undefined
-        ) {
-          const style = new LocalStyle({
-            name: path,
-            rgb: {
-              r: (item.gl ?? [0, 0, 0])[0],
-              g: (item.gl ?? [0, 0, 0])[1],
-              b: (item.gl ?? [0, 0, 0])[2],
-            },
-            alpha: item.alpha,
-            description: item.description || '',
-          })
-          item.styleId = style.paintStyle.id
-          i++
-        }
+      palette.libraryData
+        .filter((item) => {
+          return hasThemes
+            ? !item.id.includes('00000000000')
+            : item.id.includes('00000000000')
+        })
+        .forEach((item) => {
+          const path = [
+            item.paletteName,
+            item.themeName === ''
+              ? locales.get().themes.defaultName
+              : item.themeName,
+            item.colorName === ''
+              ? locales.get().colors.defaultName
+              : item.colorName,
+            item.shadeName,
+          ]
+            .filter((item) => item !== '' && item !== 'None')
+            .join('/')
 
-        return item
-      })
+          if (
+            localStyles.find((localStyle) => localStyle.id === item.styleId) ===
+              undefined &&
+            item.gl !== undefined
+          ) {
+            const style = new LocalStyle({
+              name: path,
+              rgb: {
+                r: (item.gl ?? [0, 0, 0])[0],
+                g: (item.gl ?? [0, 0, 0])[1],
+                b: (item.gl ?? [0, 0, 0])[2],
+              },
+              alpha: item.alpha,
+              description: item.description || '',
+            })
+            item.styleId = style.paintStyle.id
+            i++
+          }
+        })
 
       palette.libraryData = new Data(palette).makeLibraryData(
         ['style_id', 'collection_id', 'variable_id', 'mode_id'],
