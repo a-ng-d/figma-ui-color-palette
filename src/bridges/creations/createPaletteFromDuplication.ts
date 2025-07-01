@@ -10,9 +10,10 @@ const createPaletteFromDuplication = async (id: string) => {
 
   const palette = JSON.parse(rawPalette) as FullConfiguration
 
-  palette.base.name = locales
-    .get()
-    .browse.copy.replace('{$1}', palette.base.name)
+  const name: string =
+    palette.base.name === '' ? locales.get().name : palette.base.name
+
+  palette.base.name = locales.get().browse.copy.replace('{$1}', name)
   delete (palette as Partial<FullConfiguration>).libraryData
   palette.meta.id = uid()
   palette.meta.publicationStatus.isPublished = false

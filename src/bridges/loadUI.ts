@@ -277,7 +277,7 @@ const loadUI = async () => {
         ),
       //
       OPEN_IN_BROWSER: () => figma.openExternal(path.url),
-      GET_PALETTES: async () => await getPalettesOnCurrentPage(),
+      GET_PALETTES: async () => getPalettesOnCurrentPage(),
       JUMP_TO_PALETTE: async () =>
         await jumpToPalette(path.id).catch((error) =>
           figma.ui.postMessage({
@@ -289,8 +289,11 @@ const loadUI = async () => {
           })
         ),
       DUPLICATE_PALETTE: async () =>
-        await createPaletteFromDuplication(path.id)
-          .finally(async () => await getPalettesOnCurrentPage())
+        createPaletteFromDuplication(path.id)
+          .finally(async () => {
+            getPalettesOnCurrentPage()
+            figma.ui.postMessage({ type: 'STOP_LOADER' })
+          })
           .catch((error) => {
             figma.ui.postMessage({
               type: 'POST_MESSAGE',
@@ -301,11 +304,12 @@ const loadUI = async () => {
             })
           }),
       DELETE_PALETTE: async () =>
-        await deletePalette(path.id).finally(
-          async () => await getPalettesOnCurrentPage()
-        ),
+        deletePalette(path.id).finally(async () => {
+          getPalettesOnCurrentPage()
+          figma.ui.postMessage({ type: 'STOP_LOADER' })
+        }),
       //
-      GET_PRO_PLAN: async () => await getProPlan(),
+      GET_PRO_PLAN: async () => getProPlan(),
       GET_TRIAL: async () =>
         figma.ui.postMessage({
           type: 'GET_TRIAL',
