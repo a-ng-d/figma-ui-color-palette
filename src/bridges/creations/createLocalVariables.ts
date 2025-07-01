@@ -3,6 +3,7 @@ import {
   FullConfiguration,
   LibraryData,
 } from '@a_ng_d/utils-ui-color-palette'
+import { getJsonSize } from '../../utils/getSize'
 import { locales } from '../../content/locales'
 import LocalVariable from '../../canvas/LocalVariable'
 
@@ -189,7 +190,12 @@ const createLocalVariables = async (id: string) => {
         palette.libraryData
       )
 
-      figma.currentPage.setPluginData(`palette_${id}`, JSON.stringify(palette))
+      if (getJsonSize(palette) < 100)
+        figma.currentPage.setPluginData(
+          `palette_${id}`,
+          JSON.stringify(palette)
+        )
+      else throw new Error(locales.get().error.paletteSizeExceeded)
 
       if (i > 1 && j > 1)
         messages.push(

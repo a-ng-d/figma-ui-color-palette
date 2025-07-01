@@ -98,15 +98,64 @@ const loadUI = async () => {
       CHECK_ANNOUNCEMENTS_STATUS: () =>
         checkAnnouncementsStatus(path.data.version),
       //
-      UPDATE_SCALE: () => updateScale(path),
-      UPDATE_COLORS: () => updateColors(path),
-      UPDATE_THEMES: () => updateThemes(path),
-      UPDATE_SETTINGS: () => updateSettings(path),
+      UPDATE_SCALE: () =>
+        updateScale(path).catch((error) => {
+          figma.ui.postMessage({
+            type: 'POST_MESSAGE',
+            data: {
+              type: 'ERROR',
+              message: error.message,
+              timer: 10000,
+            },
+          })
+        }),
+      UPDATE_COLORS: () =>
+        updateColors(path).catch((error) => {
+          figma.ui.postMessage({
+            type: 'POST_MESSAGE',
+            data: {
+              type: 'ERROR',
+              message: error.message,
+              timer: 10000,
+            },
+          })
+        }),
+      UPDATE_THEMES: () =>
+        updateThemes(path).catch((error) => {
+          figma.ui.postMessage({
+            type: 'POST_MESSAGE',
+            data: {
+              type: 'ERROR',
+              message: error.message,
+              timer: 10000,
+            },
+          })
+        }),
+      UPDATE_SETTINGS: () =>
+        updateSettings(path).catch((error) => {
+          figma.ui.postMessage({
+            type: 'POST_MESSAGE',
+            data: {
+              type: 'ERROR',
+              message: error.message,
+              timer: 10000,
+            },
+          })
+        }),
       UPDATE_PALETTE: () =>
         updatePalette({
           msg: path,
           isAlreadyUpdated: path.isAlreadyUpdated,
           shouldLoadPalette: path.shouldLoadPalette,
+        }).catch((error) => {
+          figma.ui.postMessage({
+            type: 'POST_MESSAGE',
+            data: {
+              type: 'ERROR',
+              message: error.message,
+              timer: 10000,
+            },
+          })
         }),
       UPDATE_DOCUMENT: () =>
         updateDocument(path.view)

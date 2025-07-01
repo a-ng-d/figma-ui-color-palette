@@ -1,4 +1,5 @@
 import { Data, FullConfiguration } from '@a_ng_d/utils-ui-color-palette'
+import { getJsonSize } from '../../utils/getSize'
 import { PaletteMessage } from '../../types/messages'
 import { locales } from '../../content/locales'
 
@@ -54,10 +55,12 @@ const updatePalette = async ({
     `${palette.base.name} - ${locales.get().events.paletteUpdated}`
   )
 
-  return figma.currentPage.setPluginData(
-    `palette_${msg.id}`,
-    JSON.stringify(palette)
-  )
+  if (getJsonSize(palette) < 100)
+    return figma.currentPage.setPluginData(
+      `palette_${msg.id}`,
+      JSON.stringify(palette)
+    )
+  else throw new Error(locales.get().error.paletteSizeExceeded)
 }
 
 const flattenObject = (

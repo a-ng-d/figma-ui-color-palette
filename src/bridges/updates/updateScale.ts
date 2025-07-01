@@ -1,5 +1,6 @@
 import { Data, FullConfiguration } from '@a_ng_d/utils-ui-color-palette'
 import { doScale } from '@a_ng_d/figmug-utils'
+import { getJsonSize } from '../../utils/getSize'
 import { ScaleMessage } from '../../types/messages'
 import { locales } from '../../content/locales'
 
@@ -45,10 +46,12 @@ const updateScale = async (msg: ScaleMessage) => {
     `${palette.base.name} - ${locales.get().events.scaleUpdated}`
   )
 
-  return figma.currentPage.setPluginData(
-    `palette_${msg.data.id}`,
-    JSON.stringify(palette)
-  )
+  if (getJsonSize(palette) < 100)
+    return figma.currentPage.setPluginData(
+      `palette_${msg.id}`,
+      JSON.stringify(palette)
+    )
+  else throw new Error(locales.get().error.paletteSizeExceeded)
 }
 
 export default updateScale

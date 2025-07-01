@@ -138,8 +138,6 @@ const updateLocalVariables = async (id: string) => {
                 .filter((item) => item !== '' && item !== 'None')
                 .join('/')
 
-              console.log(variableMatch.name, path)
-
               if (variableMatch.name !== path) {
                 variableMatch.name = path
                 k++

@@ -1,4 +1,5 @@
 import { Data, FullConfiguration } from '@a_ng_d/utils-ui-color-palette'
+import { getJsonSize } from '../../utils/getSize'
 import { SettingsMessage } from '../../types/messages'
 import { locales } from '../../content/locales'
 
@@ -34,10 +35,12 @@ const updateSettings = async (msg: SettingsMessage) => {
     `${palette.base.name} - ${locales.get().events.settingsUpdated}`
   )
 
-  return figma.currentPage.setPluginData(
-    `palette_${msg.id}`,
-    JSON.stringify(palette)
-  )
+  if (getJsonSize(palette) < 100)
+    return figma.currentPage.setPluginData(
+      `palette_${msg.id}`,
+      JSON.stringify(palette)
+    )
+  else throw new Error(locales.get().error.paletteSizeExceeded)
 }
 
 export default updateSettings

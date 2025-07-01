@@ -139,6 +139,7 @@
     "nonPublication": "The palette cannot be unpublished",
     "onboarding": "The onboarding cannot be loaded",
     "palettesPicking": "The palettes cannot be picked for now",
+    "paletteSizeExceeded": "The palette size exceeds the limit. Please reduce the number of color modes, source colors or shades.",
     "publication": "The palette cannot be published",
     "share": "The palette has not been shared with the community",
     "styles": "The styles cannot be synchronized",
