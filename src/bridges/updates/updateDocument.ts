@@ -66,6 +66,16 @@ const updateDocument = async (view: ViewConfiguration) => {
   document.setPluginData('updatedAt', palette.meta.dates.updatedAt.toString())
   document.setPluginData('backup', JSON.stringify(palette))
 
+  figma.ui.postMessage({
+    type: 'DOCUMENT_SELECTED',
+    data: {
+      view: view,
+      id: id,
+      updatedAt: palette.meta.dates.updatedAt.toString(),
+      isLinkedToPalette: true,
+    },
+  })
+
   figma.saveVersionHistoryAsync(
     `${palette.base.name} - ${locales.get().events.documentUpdated}`
   )
