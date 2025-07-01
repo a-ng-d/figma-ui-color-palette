@@ -11,7 +11,14 @@ const updateThemes = async (msg: ThemesMessage) => {
   palette.themes = msg.data
 
   palette.libraryData = new Data(palette).makeLibraryData(
-    ['style_id', 'collection_id', 'gl', 'variable_id', 'description'],
+    [
+      'style_id',
+      'collection_id',
+      'gl',
+      'variable_id',
+      'mode_id',
+      'description',
+    ],
     palette.libraryData
   )
 
