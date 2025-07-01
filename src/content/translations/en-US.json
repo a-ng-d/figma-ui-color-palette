@@ -227,7 +227,7 @@
     "addToLocal": "The palette already exists in this page",
     "createdLocalStyles": {
       "none": "No style created",
-      "plural": "styles created",
+      "plural": "{$1} styles created",
       "single": "1 style created"
     },
     "maxNumberOfSourceColors": "You cannot add more than {$1} source colors",
@@ -237,14 +237,14 @@
     "paletteCreated": "{$1} palette created",
     "removedLocalStyles": {
       "none": "No style removed",
-      "plural": "styles removed",
+      "plural": "{$1} styles removed",
       "single": "1 style removed"
     },
     "signOut": "See you later",
     "themesOnFree": "You cannot add or edit modes in the current plan",
     "updatedLocalStyles": {
       "none": "No style updated",
-      "plural": "styles updated",
+      "plural": "{$1} styles updated",
       "single": "1 style updated"
     },
     "createdVariablesAndModes": {
@@ -768,6 +768,7 @@
     "noPaletteOnCurrrentPage": "There is no UI Color Palette on this page",
     "noSelfPaletteOnRemote": "This is quite empty around here! Publish your palette to reuse it across multiple documents",
     "paletteNameRecommendation": "64 characters max is recommended",
+    "tooManyThemesToCreateModes": "You cannot create more than 4 modes in the current plan",
     "unselectedColor": "Select a layer that is filled with at least one solid color"
   },
   "platform": {
