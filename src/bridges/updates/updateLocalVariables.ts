@@ -23,12 +23,13 @@ const updateLocalVariables = async (id: string) => {
     palette.libraryData
   )
 
-  console.log(palette.libraryData)
-
   const name: string =
     palette.base.name === '' ? locales.get().name : palette.base.name
   const canDeepSyncVariables = await figma.clientStorage.getAsync(
     'can_deep_sync_variables'
+  )
+  const hasThemes = palette.libraryData.some(
+    (item) => !item.id.includes('00000000000')
   )
 
   const collection = await figma.variables
@@ -80,70 +81,80 @@ const updateLocalVariables = async (id: string) => {
           })
         }
 
-        palette.libraryData.forEach((item) => {
-          const modeMatch = collection.modes.find(
-            (mode) => mode.modeId === item.modeId
-          )
-          const variableMatch = localVariables.find(
-            (localVariable) => localVariable.id === item.variableId
-          )
-
-          if (modeMatch !== undefined)
-            if (
-              modeMatch.name !== item.themeName &&
-              !item.id.includes('00000000000')
-            ) {
-              collection.renameMode(modeMatch.modeId, item.themeName)
-              j++
-            }
-
-          if (
-            variableMatch !== undefined &&
-            modeMatch !== undefined &&
-            item.gl !== undefined &&
-            item.modeId !== undefined
-          ) {
-            const variableMatchHex = chroma([
-              (variableMatch.valuesByMode[item.modeId] as RGBA).r * 255,
-              (variableMatch.valuesByMode[item.modeId] as RGBA).g * 255,
-              (variableMatch.valuesByMode[item.modeId] as RGBA).b * 255,
-            ]).hex()
-            const itemHex = chroma([
-              (item.gl ?? [0, 0, 0])[0] * 255,
-              (item.gl ?? [0, 0, 0])[1] * 255,
-              (item.gl ?? [0, 0, 0])[2] * 255,
-            ]).hex()
-            const variableMatchOpacity = parseFloat(
-              (variableMatch.valuesByMode[item.modeId] as RGBA).a.toFixed(2) ??
-                '1'
+        palette.libraryData
+          .filter((item) => {
+            return hasThemes
+              ? !item.id.includes('00000000000')
+              : item.id.includes('00000000000')
+          })
+          .forEach((item) => {
+            console.log(item)
+            const modeMatch = collection.modes.find(
+              (mode) => mode.modeId === item.modeId
+            )
+            const variableMatch = localVariables.find(
+              (localVariable) => localVariable.id === item.variableId
             )
 
-            if (variableMatch.name !== `${item.colorName}/${item.shadeName}`) {
-              variableMatch.name = `${item.colorName}/${item.shadeName}`
-              k++
-            }
-
-            if (variableMatch.description !== item.description) {
-              variableMatch.description = item.description ?? ''
-              k++
-            }
+            if (modeMatch !== undefined)
+              if (
+                modeMatch.name !== item.themeName &&
+                !item.id.includes('00000000000')
+              ) {
+                collection.renameMode(modeMatch.modeId, item.themeName)
+                j++
+              }
 
             if (
-              variableMatchHex !== itemHex ||
-              variableMatchOpacity !== (item.alpha ?? 1)
+              variableMatch !== undefined &&
+              modeMatch !== undefined &&
+              item.gl !== undefined &&
+              item.modeId !== undefined
             ) {
-              variableMatch.setValueForMode(item.modeId, {
-                r: (item.gl ?? [0, 0, 0])[0],
-                g: (item.gl ?? [0, 0, 0])[1],
-                b: (item.gl ?? [0, 0, 0])[2],
-                a: item.alpha ?? 1,
-              })
-              k++
+              const variableMatchHex = chroma([
+                (variableMatch.valuesByMode[item.modeId] as RGBA).r * 255,
+                (variableMatch.valuesByMode[item.modeId] as RGBA).g * 255,
+                (variableMatch.valuesByMode[item.modeId] as RGBA).b * 255,
+              ]).hex()
+              const itemHex = chroma([
+                (item.gl ?? [0, 0, 0])[0] * 255,
+                (item.gl ?? [0, 0, 0])[1] * 255,
+                (item.gl ?? [0, 0, 0])[2] * 255,
+              ]).hex()
+              const variableMatchOpacity = parseFloat(
+                (variableMatch.valuesByMode[item.modeId] as RGBA).a.toFixed(
+                  2
+                ) ?? '1'
+              )
+
+              if (
+                variableMatch.name !== `${item.colorName}/${item.shadeName}`
+              ) {
+                variableMatch.name = `${item.colorName}/${item.shadeName}`
+                k++
+              }
+
+              if (variableMatch.description !== item.description) {
+                variableMatch.description = item.description ?? ''
+                k++
+              }
+
+              if (
+                variableMatchHex !== itemHex ||
+                variableMatchOpacity !== (item.alpha ?? 1)
+              ) {
+                variableMatch.setValueForMode(item.modeId, {
+                  r: (item.gl ?? [0, 0, 0])[0],
+                  g: (item.gl ?? [0, 0, 0])[1],
+                  b: (item.gl ?? [0, 0, 0])[2],
+                  a: item.alpha ?? 1,
+                })
+                k++
+              }
             }
-          }
-          if (k > 0) i++
-          k = 0
-        })
+            if (k > 0) i++
+            k = 0
+          })
 
         if (i > 1 && j > 1)
           messages.push(

@@ -70,6 +70,7 @@ const createLocalVariables = async (id: string) => {
           const boundVariable = localVariables.find(
             (localVariable) => localVariable.id === item.variableId
           )
+
           if (boundVariable?.variableCollectionId !== collection?.id) {
             boundVariable?.remove()
             isRemoved = true
@@ -108,6 +109,9 @@ const createLocalVariables = async (id: string) => {
           const lastItem = acc[acc.length - 1]
 
           if (collection !== undefined) {
+            const hasModeMatch = collection.modes.some(
+              (mode) => mode.modeId === item.modeId
+            )
             const isPassed = acc.some((accItem) => {
               const [accThemeId] = accItem.id.split(':')
               return accThemeId === themeId
@@ -117,7 +121,7 @@ const createLocalVariables = async (id: string) => {
             if (!isPassed && collection?.modes[0].name === 'Mode 1') {
               collection.renameMode(collection.defaultModeId, item.themeName)
               item.modeId = collection.defaultModeId
-            } else if (!isPassed)
+            } else if (!isPassed && !hasModeMatch)
               try {
                 const modeId = collection.addMode(item.themeName)
                 item.modeId = modeId
