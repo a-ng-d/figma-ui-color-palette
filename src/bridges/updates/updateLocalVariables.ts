@@ -1,5 +1,5 @@
 import chroma from 'chroma-js'
-import { FullConfiguration } from '@a_ng_d/utils-ui-color-palette'
+import { Data, FullConfiguration } from '@a_ng_d/utils-ui-color-palette'
 import { locales } from '../../content/locales'
 
 const updateLocalVariables = async (id: string) => {
@@ -9,6 +9,21 @@ const updateLocalVariables = async (id: string) => {
     throw new Error(locales.get().error.unfoundPalette)
 
   const palette = JSON.parse(rawPalette) as FullConfiguration
+
+  palette.libraryData = new Data(palette).makeLibraryData(
+    [
+      'style_id',
+      'collection_id',
+      'variable_id',
+      'mode_id',
+      'alpha',
+      'gl',
+      'description',
+    ],
+    palette.libraryData
+  )
+
+  console.log(palette.libraryData)
 
   const name: string =
     palette.base.name === '' ? locales.get().name : palette.base.name
@@ -76,7 +91,7 @@ const updateLocalVariables = async (id: string) => {
           if (modeMatch !== undefined)
             if (
               modeMatch.name !== item.themeName &&
-              item.themeName !== 'None'
+              !item.id.includes('00000000000')
             ) {
               collection.renameMode(modeMatch.modeId, item.themeName)
               j++

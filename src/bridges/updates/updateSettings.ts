@@ -20,14 +20,7 @@ const updateSettings = async (msg: SettingsMessage) => {
   palette.base.algorithmVersion = msg.data.algorithmVersion
 
   palette.libraryData = new Data(palette).makeLibraryData(
-    [
-      'style_id',
-      'collection_id',
-      'gl',
-      'variable_id',
-      'mode_id',
-      'description',
-    ],
+    ['style_id', 'collection_id', 'variable_id', 'mode_id'],
     palette.libraryData
   )
 

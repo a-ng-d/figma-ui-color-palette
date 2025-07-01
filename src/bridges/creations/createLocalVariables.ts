@@ -1,4 +1,8 @@
-import { FullConfiguration, LibraryData } from '@a_ng_d/utils-ui-color-palette'
+import {
+  Data,
+  FullConfiguration,
+  LibraryData,
+} from '@a_ng_d/utils-ui-color-palette'
 import { locales } from '../../content/locales'
 import LocalVariable from '../../canvas/LocalVariable'
 
@@ -9,6 +13,19 @@ const createLocalVariables = async (id: string) => {
     throw new Error(locales.get().error.unfoundPalette)
 
   const palette = JSON.parse(rawPalette) as FullConfiguration
+
+  palette.libraryData = new Data(palette).makeLibraryData(
+    [
+      'style_id',
+      'collection_id',
+      'variable_id',
+      'mode_id',
+      'alpha',
+      'gl',
+      'description',
+    ],
+    palette.libraryData
+  )
 
   const name: string =
     palette.base.name === '' ? locales.get().name : palette.base.name
@@ -47,7 +64,7 @@ const createLocalVariables = async (id: string) => {
 
       // Create variables
       palette.libraryData
-        .filter((item) => item.type === 'default theme')
+        .filter((item) => item.id.includes('00000000000'))
         .forEach((item) => {
           let isRemoved = false
           const boundVariable = localVariables.find(
@@ -85,7 +102,7 @@ const createLocalVariables = async (id: string) => {
 
       // Create modes
       palette.libraryData
-        .filter((item) => item.type === 'custom theme')
+        .filter((item) => !item.id.includes('00000000000'))
         .reduce((acc: Array<LibraryData>, item) => {
           const [themeId] = item.id.split(':')
           const lastItem = acc[acc.length - 1]
@@ -114,7 +131,7 @@ const createLocalVariables = async (id: string) => {
 
       // Set values
       palette.libraryData
-        .filter((item) => item.type === 'custom theme')
+        .filter((item) => !item.id.includes('00000000000'))
         .forEach((item) => {
           if (collection !== undefined) {
             const variableMatch = createdVariables.find(
@@ -142,6 +159,11 @@ const createLocalVariables = async (id: string) => {
             }
           }
         })
+
+      palette.libraryData = new Data(palette).makeLibraryData(
+        ['style_id', 'collection_id', 'variable_id', 'mode_id'],
+        palette.libraryData
+      )
 
       figma.currentPage.setPluginData(`palette_${id}`, JSON.stringify(palette))
 

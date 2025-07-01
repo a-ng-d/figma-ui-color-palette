@@ -1,4 +1,4 @@
-import { FullConfiguration } from '@a_ng_d/utils-ui-color-palette'
+import { Data, FullConfiguration } from '@a_ng_d/utils-ui-color-palette'
 import { locales } from '../../content/locales'
 import LocalStyle from '../../canvas/LocalStyle'
 
@@ -8,6 +8,19 @@ const createLocalStyles = async (id: string) => {
   if (rawPalette === '') throw new Error(locales.get().error.unfoundPalette)
 
   const palette = JSON.parse(rawPalette) as FullConfiguration
+
+  palette.libraryData = new Data(palette).makeLibraryData(
+    [
+      'style_id',
+      'collection_id',
+      'variable_id',
+      'mode_id',
+      'alpha',
+      'gl',
+      'description',
+    ],
+    palette.libraryData
+  )
 
   const createdLocalStylesStatusMessage = await figma
     .getLocalPaintStylesAsync()
@@ -44,6 +57,11 @@ const createLocalStyles = async (id: string) => {
 
         return item
       })
+
+      palette.libraryData = new Data(palette).makeLibraryData(
+        ['style_id', 'collection_id', 'variable_id', 'mode_id'],
+        palette.libraryData
+      )
 
       figma.currentPage.setPluginData(`palette_${id}`, JSON.stringify(palette))
 

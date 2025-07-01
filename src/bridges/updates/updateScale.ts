@@ -31,14 +31,7 @@ const updateScale = async (msg: ScaleMessage) => {
   palette.base.preset = msg.data.preset
 
   palette.libraryData = new Data(palette).makeLibraryData(
-    [
-      'style_id',
-      'collection_id',
-      'gl',
-      'variable_id',
-      'mode_id',
-      'description',
-    ],
+    ['style_id', 'collection_id', 'variable_id', 'mode_id'],
     palette.libraryData
   )
 
