@@ -37,7 +37,14 @@ const updateLocalStyles = async (id: string) => {
         const styleMatch = localStyles.find(
           (localStyle) => localStyle.id === item.styleId
         )
-        const path = `${item.path}/${item.name}`
+        const path = [
+          item.paletteName,
+          item.themeName,
+          item.colorName,
+          item.shadeName,
+        ]
+          .filter((item) => item !== '' && item !== 'None')
+          .join('/')
         const fill = {
           type: 'SOLID',
           color: {
@@ -59,6 +66,7 @@ const updateLocalStyles = async (id: string) => {
             fill.color.g * 255,
             fill.color.b * 255,
           ]).hex()
+
           if (styleMatch.name !== path) {
             styleMatch.name = path
             j++
@@ -84,13 +92,21 @@ const updateLocalStyles = async (id: string) => {
       })
 
       if (i > 1)
-        messages.push(`${i} ${locales.get().info.updatedLocalStyles.plural}`)
+        messages.push(
+          locales
+            .get()
+            .info.updatedLocalStyles.plural.replace('{$1}', i.toString())
+        )
       else if (i === 1)
         messages.push(locales.get().info.updatedLocalStyles.single)
       else messages.push(locales.get().info.updatedLocalStyles.none)
 
       if (k > 1)
-        messages.push(`${k} ${locales.get().info.removedLocalStyles.plural}`)
+        messages.push(
+          locales
+            .get()
+            .info.removedLocalStyles.plural.replace('{$1}', k.toString())
+        )
       else if (k === 1)
         messages.push(locales.get().info.removedLocalStyles.single)
       else messages.push(locales.get().info.removedLocalStyles.none)

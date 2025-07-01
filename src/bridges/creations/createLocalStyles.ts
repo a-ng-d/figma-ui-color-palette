@@ -14,13 +14,22 @@ const createLocalStyles = async (id: string) => {
     .then((localStyles) => {
       let i = 0
       palette.libraryData.map((item) => {
+        const path = [
+          item.paletteName,
+          item.themeName,
+          item.colorName,
+          item.shadeName,
+        ]
+          .filter((item) => item !== '' && item !== 'None')
+          .join('/')
+
         if (
           localStyles.find((localStyle) => localStyle.id === item.styleId) ===
             undefined &&
           item.gl !== undefined
         ) {
           const style = new LocalStyle({
-            name: `${item.path} / ${item.name}`,
+            name: path,
             rgb: {
               r: (item.gl ?? [0, 0, 0])[0],
               g: (item.gl ?? [0, 0, 0])[1],
@@ -38,7 +47,10 @@ const createLocalStyles = async (id: string) => {
 
       figma.currentPage.setPluginData(`palette_${id}`, JSON.stringify(palette))
 
-      if (i > 1) return `${i} ${locales.get().info.createdLocalStyles.plural}`
+      if (i > 1)
+        return locales
+          .get()
+          .info.createdLocalStyles.plural.replace('{$1}', i.toString())
       else if (i === 1) return locales.get().info.createdLocalStyles.single
       else return locales.get().info.createdLocalStyles.none
     })
