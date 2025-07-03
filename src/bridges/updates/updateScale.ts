@@ -14,18 +14,38 @@ const updateScale = async (msg: ScaleMessage) => {
   if (theme !== undefined) theme.scale = msg.data.scale
 
   if (msg.feature === 'ADD_STOP' || msg.feature === 'DELETE_STOP')
-    palette.themes.forEach((theme) => {
-      if (!theme.isEnabled)
+    palette.themes
+      .filter((theme) => !theme.isEnabled)
+      .forEach((theme) => {
+        const currentScaleArray = Object.entries(theme.scale)
+
+        const isInverted = currentScaleArray.every((val, index, arr) => {
+          if (index === 0) return true
+          return (
+            parseFloat(val[1].toString()) <
+            parseFloat(arr[index - 1][1].toString())
+          )
+        })
+
+        const scaleValues = Object.values(theme.scale)
+        const scaleMin = !isInverted
+          ? Math.max(...scaleValues)
+          : Math.min(...scaleValues)
+        const scaleMax = !isInverted
+          ? Math.min(...scaleValues)
+          : Math.max(...scaleValues)
+
         theme.scale = doScale(
-          Object.keys(msg.data.scale).map((stop) => {
-            return parseFloat(stop)
-          }),
-          theme.scale[
-            Object.keys(theme.scale)[Object.keys(theme.scale).length - 1]
-          ],
-          theme.scale[Object.keys(theme.scale)[0]]
+          Object.keys(msg.data.scale).map((stop) => parseFloat(stop)),
+          scaleMin,
+          scaleMax
         )
-    })
+
+        if (!isInverted) {
+          const newScaleArray = Object.entries(theme.scale)
+          theme.scale = Object.fromEntries(newScaleArray.reverse())
+        }
+      })
 
   palette.base.preset = msg.data.preset
   palette.base.shift = msg.data.shift
