@@ -1,6 +1,15 @@
+import { presets } from '@ui-lib/stores/presets'
+import {
+  ExchangeConfiguration,
+  ViewConfiguration,
+} from '@a_ng_d/utils-ui-color-palette'
+import { doScale } from '@a_ng_d/figmug-utils'
+import globalConfig from './global.config'
 import processSelection from './bridges/processSelection'
 import loadUI from './bridges/loadUI'
 import loadParameters from './bridges/loadParameters'
+import createPalette from './bridges/creations/createPalette'
+import createDocument from './bridges/creations/createDocument'
 import checkPlanStatus from './bridges/checks/checkTrialStatus'
 
 // Fonts
@@ -23,61 +32,71 @@ figma.on('run', async ({ parameters }: RunEvent) => {
     figma.on('selectionchange', async () => await checkPlanStatus())
     loadUI()
   } else {
-    /*const selectedPreset = presets.find(
+    const selectedPreset = presets.find(
       (preset) => preset.name === parameters.preset
     )
-    createPalette({
-      data: {
-        sourceColors: figma.currentPage.selection
-          .filter(
-            (element) =>
-              element.type !== 'GROUP' &&
-              element.type !== 'EMBED' &&
-              element.type !== 'CONNECTOR' &&
-              element.getPluginDataKeys().length === 0 &&
-              ((element as FrameNode).fills as readonly SolidPaint[]).filter(
-                (fill: Paint) => fill.type === 'SOLID'
-              ).length !== 0
-          )
-          .map((element) => {
-            return {
-              name: element.name,
-              rgb: ((element as FrameNode).fills as readonly SolidPaint[])[0]
-                .color,
-              source: 'CANVAS',
-              id: '',
-              isRemovable: false,
-            }
-          }),
-        palette: {
-          name:
-            parameters.name === undefined
-              ? ''
-              : parameters.name.substring(0, 64),
-          description: '',
-          preset: presets.find((preset) => preset.name === parameters.preset),
-          scale: doLightnessScale(
-            selectedPreset?.scale ?? [1, 2],
-            selectedPreset?.min ?? 0,
-            selectedPreset?.max ?? 100,
-            selectedPreset?.easing ?? 'LINEAR'
-          ),
-          shift: {
-            chroma: 100,
-          },
-          areSourceColorsLocked: false,
-          colorSpace: parameters.space.toUpperCase().replace(' ', '_'),
-          visionSimulationMode: 'NONE',
-          view: parameters.view.toUpperCase().split(' ').join('_'),
-          algorithmVersion: algorithmVersion,
-          textColorsTheme: {
-            lightColor: '#FFFFFF',
-            darkColor: '#000000',
-          },
-        } as PaletteConfiguration,
+    createPalette(
+      {
+        data: {
+          sourceColors: figma.currentPage.selection
+            .filter(
+              (element) =>
+                element.type !== 'GROUP' &&
+                element.type !== 'EMBED' &&
+                element.type !== 'CONNECTOR' &&
+                element.getPluginDataKeys().length === 0 &&
+                ((element as FrameNode).fills as readonly SolidPaint[]).filter(
+                  (fill: Paint) => fill.type === 'SOLID'
+                ).length !== 0
+            )
+            .map((element) => {
+              return {
+                name: element.name,
+                rgb: ((element as FrameNode).fills as readonly SolidPaint[])[0]
+                  .color,
+                source: 'CANVAS',
+                id: '',
+                isRemovable: false,
+              }
+            }),
+          exchange: {
+            name:
+              parameters.name === undefined
+                ? ''
+                : parameters.name.substring(0, 64),
+            description: '',
+            preset: presets.find((preset) => preset.name === parameters.preset),
+            scale: doScale(
+              selectedPreset?.stops ?? [1, 2],
+              selectedPreset?.min ?? 0,
+              selectedPreset?.max ?? 100,
+              selectedPreset?.easing ?? 'LINEAR'
+            ),
+            shift: {
+              chroma: 100,
+            },
+            areSourceColorsLocked: false,
+            colorSpace: parameters.space.toUpperCase().replace(' ', '_'),
+            visionSimulationMode: 'NONE',
+            algorithmVersion: globalConfig.versions.algorithmVersion,
+            textColorsTheme: {
+              lightColor: '#FFFFFF',
+              darkColor: '#000000',
+            },
+          } as ExchangeConfiguration,
+        },
       },
-    })
-    figma.closePlugin()*/
+      false
+    )
+      .then((palette) => {
+        let view = 'PALETTE' as ViewConfiguration
+        if (parameters.view.includes('Color')) view = 'SHEET'
+        else if (parameters.view.includes('properties'))
+          view = 'PALETTE_WITH_PROPERTIES'
+
+        createDocument(palette.meta.id, view)
+      })
+      .then(() => figma.closePlugin())
   }
 })
 

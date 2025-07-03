@@ -15,7 +15,7 @@ interface Msg {
   }
 }
 
-const createPalette = async (msg: Msg) => {
+const createPalette = async (msg: Msg, fromUI = true) => {
   const colors: Array<ColorConfiguration> = msg.data.sourceColors
     .map((sourceColor) => {
       return {
@@ -95,10 +95,11 @@ const createPalette = async (msg: Msg) => {
     `palette_${palette.meta.id}`,
     JSON.stringify(palette)
   )
-  figma.ui.postMessage({
-    type: 'LOAD_PALETTE',
-    data: palette,
-  })
+  if (fromUI)
+    figma.ui.postMessage({
+      type: 'LOAD_PALETTE',
+      data: palette,
+    })
 
   await new Promise((r) => setTimeout(r, 1000))
   await figma.saveVersionHistoryAsync(
