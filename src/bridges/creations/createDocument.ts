@@ -24,11 +24,12 @@ const createDocument = async (id: string, view: ViewConfiguration) => {
   figma.currentPage.selection = documents.documents
   figma.viewport.scrollAndZoomIntoView(figma.currentPage.selection)
 
-  figma.saveVersionHistoryAsync(
+  await new Promise((r) => setTimeout(r, 1000))
+  await figma.saveVersionHistoryAsync(
     `${palette.base.name} - ${locales.get().events.documentCreated}`
   )
 
-  return true
+  return palette
 }
 
 export default createDocument

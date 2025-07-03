@@ -22,16 +22,19 @@ const updateColors = async (msg: ColorsMessage) => {
     palette.libraryData
   )
 
-  await figma.saveVersionHistoryAsync(
-    `${palette.base.name} - ${locales.get().events.colorsUpdated}`
-  )
-
-  if (getJsonSize(palette) < 100)
-    return figma.currentPage.setPluginData(
+  if (getJsonSize(palette) < 100) {
+    figma.currentPage.setPluginData(
       `palette_${msg.id}`,
       JSON.stringify(palette)
     )
-  else throw new Error(locales.get().error.paletteSizeExceeded)
+
+    await new Promise((r) => setTimeout(r, 1000))
+    await figma.saveVersionHistoryAsync(
+      `${palette.base.name} - ${locales.get().events.colorsUpdated}`
+    )
+
+    return palette
+  } else throw new Error(locales.get().error.paletteSizeExceeded)
 }
 
 export default updateColors

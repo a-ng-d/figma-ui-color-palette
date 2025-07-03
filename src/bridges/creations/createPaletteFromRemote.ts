@@ -51,21 +51,23 @@ const createPaletteFromRemote = async (msg: Msg) => {
         isPublished: msg.data.meta.publicationStatus.isPublished,
       },
     },
-  }).makePaletteFullData(['gl'])
+  }).makePaletteFullData()
 
   figma.currentPage.setPluginData(
     `palette_${palette.meta.id}`,
     JSON.stringify(palette)
   )
+  figma.ui.postMessage({
+    type: 'LOAD_PALETTE',
+    data: palette,
+  })
 
+  await new Promise((r) => setTimeout(r, 1000))
   await figma.saveVersionHistoryAsync(
     `${palette.base.name} - ${locales.get().events.palettePulled}`
   )
 
-  return figma.ui.postMessage({
-    type: 'LOAD_PALETTE',
-    data: palette,
-  })
+  return palette
 }
 
 export default createPaletteFromRemote

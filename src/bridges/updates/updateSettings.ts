@@ -31,16 +31,19 @@ const updateSettings = async (msg: SettingsMessage) => {
     data: now,
   })
 
-  await figma.saveVersionHistoryAsync(
-    `${palette.base.name} - ${locales.get().events.settingsUpdated}`
-  )
-
-  if (getJsonSize(palette) < 100)
-    return figma.currentPage.setPluginData(
+  if (getJsonSize(palette) < 100) {
+    figma.currentPage.setPluginData(
       `palette_${msg.id}`,
       JSON.stringify(palette)
     )
-  else throw new Error(locales.get().error.paletteSizeExceeded)
+
+    await new Promise((r) => setTimeout(r, 1000))
+    await figma.saveVersionHistoryAsync(
+      `${palette.base.name} - ${locales.get().events.settingsUpdated}`
+    )
+
+    return palette
+  } else throw new Error(locales.get().error.paletteSizeExceeded)
 }
 
 export default updateSettings

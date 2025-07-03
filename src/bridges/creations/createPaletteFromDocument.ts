@@ -29,17 +29,18 @@ const createPaletteFromDocument = async () => {
     `palette_${backup.meta.id}`,
     JSON.stringify(backup)
   )
+  figma.ui.postMessage({
+    type: 'LOAD_PALETTE',
+    data: backup,
+  })
+  processSelection()
 
+  await new Promise((r) => setTimeout(r, 1000))
   await figma.saveVersionHistoryAsync(
     `${backup.base.name} - ${locales.get().events.paletteCreatedFromDocument}`
   )
 
-  processSelection()
-
-  return figma.ui.postMessage({
-    type: 'LOAD_PALETTE',
-    data: backup,
-  })
+  return backup
 }
 
 export default createPaletteFromDocument

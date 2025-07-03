@@ -279,6 +279,10 @@ const updateLocalVariables = async (id: string) => {
         else if (l === 0 && m === 1)
           messages.push(locales.get().info.removedVariablesAndModes.noneSingle)
 
+        figma.saveVersionHistoryAsync(
+          `${palette.base.name} - ${locales.get().events.variablesSynced}`
+        )
+
         return messages.join(locales.get().separator)
       })
 

@@ -89,21 +89,23 @@ const createPalette = async (msg: Msg) => {
         isPublished: false,
       },
     },
-  }).makePaletteFullData(['gl'])
+  }).makePaletteFullData()
 
   figma.currentPage.setPluginData(
     `palette_${palette.meta.id}`,
     JSON.stringify(palette)
   )
+  figma.ui.postMessage({
+    type: 'LOAD_PALETTE',
+    data: palette,
+  })
 
+  await new Promise((r) => setTimeout(r, 1000))
   await figma.saveVersionHistoryAsync(
     `${palette.base.name} - ${locales.get().events.paletteCreated}`
   )
 
-  return figma.ui.postMessage({
-    type: 'LOAD_PALETTE',
-    data: palette,
-  })
+  return palette
 }
 
 export default createPalette

@@ -51,16 +51,19 @@ const updatePalette = async ({
       data: palette,
     })
 
-  await figma.saveVersionHistoryAsync(
-    `${palette.base.name} - ${locales.get().events.paletteUpdated}`
-  )
-
-  if (getJsonSize(palette) < 100)
-    return figma.currentPage.setPluginData(
+  if (getJsonSize(palette) < 100) {
+    figma.currentPage.setPluginData(
       `palette_${msg.id}`,
       JSON.stringify(palette)
     )
-  else throw new Error(locales.get().error.paletteSizeExceeded)
+
+    await new Promise((r) => setTimeout(r, 1000))
+    await figma.saveVersionHistoryAsync(
+      `${palette.base.name} - ${locales.get().events.paletteUpdated}`
+    )
+
+    return palette
+  } else throw new Error(locales.get().error.paletteSizeExceeded)
 }
 
 const flattenObject = (

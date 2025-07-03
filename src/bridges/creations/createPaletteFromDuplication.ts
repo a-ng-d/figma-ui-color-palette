@@ -26,14 +26,17 @@ const createPaletteFromDuplication = async (id: string) => {
   palette.meta.creatorIdentity.creatorFullName = ''
   palette.meta.creatorIdentity.creatorAvatar = ''
 
+  figma.currentPage.setPluginData(
+    `palette_${palette.meta.id}`,
+    JSON.stringify(palette)
+  )
+
+  await new Promise((r) => setTimeout(r, 1000))
   await figma.saveVersionHistoryAsync(
     `${palette.base.name} - ${locales.get().events.paletteDuplicated}`
   )
 
-  return figma.currentPage.setPluginData(
-    `palette_${palette.meta.id}`,
-    JSON.stringify(palette)
-  )
+  return palette
 }
 
 export default createPaletteFromDuplication

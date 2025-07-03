@@ -76,11 +76,12 @@ const updateDocument = async (view: ViewConfiguration) => {
     },
   })
 
-  figma.saveVersionHistoryAsync(
+  await new Promise((r) => setTimeout(r, 1000))
+  await figma.saveVersionHistoryAsync(
     `${palette.base.name} - ${locales.get().events.documentUpdated}`
   )
 
-  return true
+  return palette
 }
 
 export default updateDocument

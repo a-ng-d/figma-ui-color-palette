@@ -7,11 +7,14 @@ const deletePalette = async (id: string) => {
 
   const palette = JSON.parse(rawPalette)
 
+  figma.currentPage.setPluginData(`palette_${id}`, '')
+
+  await new Promise((r) => setTimeout(r, 1000))
   await figma.saveVersionHistoryAsync(
     `${palette.base.name} - ${locales.get().events.paletteRemoved}`
   )
 
-  return figma.currentPage.setPluginData(`palette_${id}`, '')
+  return palette
 }
 
 export default deletePalette
