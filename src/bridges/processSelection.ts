@@ -1,5 +1,6 @@
 import { uid } from 'uid'
 import { SourceColorConfiguration } from '@a_ng_d/utils-ui-color-palette'
+import { locales } from '../content/locales'
 
 export let currentSelection: ReadonlyArray<SceneNode>
 export let previousSelection: ReadonlyArray<SceneNode> | undefined
@@ -32,6 +33,9 @@ const processSelection = () => {
                 `palette_${document.getPluginData('id')}`
               ) !== '',
           },
+        })
+        document.setRelaunchData({
+          edit: locales.get().relaunch.edit.description,
         })
       },
       EMPTY_SELECTION: () =>
@@ -103,6 +107,9 @@ const processSelection = () => {
           })
         })
         selectionHandler('COLOR_SELECTED')
+        element?.setRelaunchData({
+          create: locales.get().relaunch.create.description,
+        })
       }
     }
   })

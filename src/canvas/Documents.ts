@@ -9,6 +9,7 @@ import {
 } from '@a_ng_d/utils-ui-color-palette'
 import setPaletteName from '../utils/setPaletteName'
 import globalConfig from '../global.config'
+import { locales } from '../content/locales'
 import Sheet from './Sheet'
 import Palette from './Palette'
 
@@ -115,6 +116,10 @@ export default class Documents {
         type: 'UI_COLOR_PALETTE',
       })
     )
+
+    document.setRelaunchData({
+      edit: locales.get().relaunch.edit.description,
+    })
 
     // Insert
     if (this.view === 'PALETTE' || this.view === 'PALETTE_WITH_PROPERTIES')

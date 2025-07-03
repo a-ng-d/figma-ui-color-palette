@@ -69,6 +69,29 @@ const loadUI = async () => {
     },
   })
 
+  if (figma.command === 'create')
+    figma.ui.postMessage({
+      type: 'SWITCH_SERVICE',
+      data: {
+        service: 'CREATE',
+      },
+    })
+  else if (figma.command === 'edit') {
+    const document = figma.currentPage.selection[0]
+    const id = document.getPluginData('id')
+
+    if (id !== '')
+      jumpToPalette(id).catch((error) =>
+        figma.ui.postMessage({
+          type: 'POST_MESSAGE',
+          data: {
+            type: 'ERROR',
+            message: error.message,
+          },
+        })
+      )
+  }
+
   // Checks
   checkUserConsent()
     .then(() => checkEditorType())
@@ -328,7 +351,7 @@ const loadUI = async () => {
       OPEN_IN_BROWSER: () => figma.openExternal(path.url),
       GET_PALETTES: async () => getPalettesOnCurrentPage(),
       JUMP_TO_PALETTE: async () =>
-        await jumpToPalette(path.id).catch((error) =>
+        jumpToPalette(path.id).catch((error) =>
           figma.ui.postMessage({
             type: 'POST_MESSAGE',
             data: {
