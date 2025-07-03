@@ -210,7 +210,8 @@
     "themesUpdated": "Modes updated",
     "settingsUpdated": "Settings updated",
     "paletteUpdated": "Palette updated",
-    "stylesSynced": "Styles synchronized"
+    "stylesSynced": "Styles synchronized",
+    "variablesSynced": "Variables synchronized"
   },
   "global": {
     "description": {
