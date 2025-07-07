@@ -60,7 +60,8 @@ const globalConfig: Config = {
     privacyUrl: 'https://uicp.ylb.lt/privacy',
     vsCodeFigmaPluginUrl:
       'https://marketplace.visualstudio.com/items?itemName=figma.figma-vscode-extension',
-    isbUrl: 'https://isb.ylb.lt/run',
+    isbUrl: 'https://isb.ylb.lt/run-figma',
+    uicpUrl: 'https://uicp.ylb.lt/run-figma-one',
     storeUrl: isDev
       ? 'https://uicp.ylb.lt/store-dev'
       : 'https://uicp.ylb.lt/store',
