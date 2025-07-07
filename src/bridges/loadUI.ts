@@ -8,8 +8,8 @@ import updateLocalStyles from './updates/updateLocalStyles'
 import updateDocument from './updates/updateDocument'
 import updateColors from './updates/updateColors'
 import processSelection from './processSelection'
+import payProPlan from './payProPlan'
 import jumpToPalette from './jumpToPalette'
-import getProPlan from './getProPlan'
 import getPalettesOnCurrentPage from './getPalettesOnCurrentPage'
 import exportXml from './exports/exportXml'
 import exportUIKit from './exports/exportUIKit'
@@ -381,7 +381,6 @@ const loadUI = async () => {
           figma.ui.postMessage({ type: 'STOP_LOADER' })
         }),
       //
-      GET_PRO_PLAN: async () => getProPlan(),
       GET_TRIAL: async () =>
         figma.ui.postMessage({
           type: 'GET_TRIAL',
@@ -389,13 +388,19 @@ const loadUI = async () => {
             id: figma.currentUser?.id,
           },
         }),
-      WELCOME_TO_PRO: async () =>
+      ENABLE_TRIAL: async () => {
+        enableTrial(path.data.trialTime, path.data.trialVersion).then(() =>
+          checkTrialStatus()
+        )
+      },
+      GET_PRO_PLAN: async () =>
         figma.ui.postMessage({
-          type: 'WELCOME_TO_PRO',
+          type: 'GET_PRICING',
           data: {
-            id: figma.currentUser?.id,
+            plans: ['ONE', 'FIGMA'],
           },
         }),
+      PAY_PRO_PLAN: async () => payProPlan(),
       ENABLE_PRO_PLAN: async () =>
         figma.ui.postMessage({
           type: 'ENABLE_PRO_PLAN',
@@ -410,11 +415,13 @@ const loadUI = async () => {
             id: figma.currentUser?.id,
           },
         }),
-      ENABLE_TRIAL: async () => {
-        enableTrial(path.data.trialTime, path.data.trialVersion).then(() =>
-          checkTrialStatus()
-        )
-      },
+      WELCOME_TO_PRO: async () =>
+        figma.ui.postMessage({
+          type: 'WELCOME_TO_PRO',
+          data: {
+            id: figma.currentUser?.id,
+          },
+        }),
       //
       SIGN_OUT: () =>
         figma.ui.postMessage({

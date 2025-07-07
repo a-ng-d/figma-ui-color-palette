@@ -1,4 +1,4 @@
-const getProPlan = async () => {
+const payProPlan = async () => {
   await figma.payments
     ?.initiateCheckoutAsync({
       interstitial: 'SKIP',
@@ -15,4 +15,4 @@ const getProPlan = async () => {
     })
 }
 
-export default getProPlan
+export default payProPlan
