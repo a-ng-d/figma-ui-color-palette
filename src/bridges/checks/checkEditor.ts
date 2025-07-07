@@ -1,6 +1,6 @@
 const checkEditorType = async () => {
   return figma.ui.postMessage({
-    type: 'CHECK_EDITOR_TYPE',
+    type: 'CHECK_EDITOR',
     data: {
       id: figma.currentUser?.id,
       editor: figma.vscode ? 'dev_vscode' : figma.editorType,

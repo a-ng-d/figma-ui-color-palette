@@ -34,7 +34,7 @@ import createDocument from './creations/createDocument'
 import checkUserPreferences from './checks/checkUserPreferences'
 import checkUserConsent from './checks/checkUserConsent'
 import checkTrialStatus from './checks/checkTrialStatus'
-import checkEditorType from './checks/checkEditorType'
+import checkEditor from './checks/checkEditor'
 import checkAnnouncementsStatus from './checks/checkAnnouncementsStatus'
 
 interface Window {
@@ -94,7 +94,7 @@ const loadUI = async () => {
 
   // Checks
   checkUserConsent()
-    .then(() => checkEditorType())
+    .then(() => checkEditor())
     .then(() => checkTrialStatus())
     .then(() => checkUserPreferences())
     .then(() => processSelection())
