@@ -363,7 +363,8 @@
     "lock": {
       "label": "Lock source colors",
       "preview": "Lock the source colors to include them in the palette",
-      "tag": "Locked"
+      "tag": "Locked",
+      "warning": "You cannot save a palette with locked source colors"
     },
     "score": {
       "apca": "Display APCA scores",
@@ -371,6 +372,17 @@
     },
     "source": {
       "tag": "Source"
+    }
+  },
+  "pricing": {
+    "title": "Subscribe to UI Color Palette Pro",
+    "one": {
+      "cta": "Get your license",
+      "message": "UI Color Palette Pro/One: Your multi-platform license, working on Figma, Penpot and soon Sketch, to create unlimited palettes with unlimited source colors, stops, and color modes what ever the platform you are using."
+    },
+    "figma": {
+      "cta": "Get Pro for Figma only",
+      "message": "UI Color Palette Pro/Figma: Upgrade to the Pro plan to create unlimited palettes with unlimited source colors, stops, and color modes. You will also be able to export your palette to more formats, and synchronize it with the local library."
     }
   },
   "proPlan": {
@@ -442,7 +454,9 @@
   "scale": {
     "actions": {
       "addStop": "Add stop",
-      "removeStop": "Remove stop"
+      "removeStop": "Remove stop",
+      "resetScale": "Reset lightness and chroma",
+      "resetLightness": "Reset lightness"
     },
     "contrast": {
       "label": "Contrast mode",
@@ -487,7 +501,10 @@
 
     },
     "shift": {
-      "chroma": "Chroma"
+      "chroma": {
+        "label": "Chroma",
+        "warning": "You cannot save a palette with a modified chroma shift. Reset it to 100% to save it."
+      }
     },
     "tips": {
       "add": "Add stop",
@@ -545,7 +562,8 @@
         "protanomaly": "Protanomaly (red-weak)",
         "protanopia": "Protanopia (red-blind)",
         "tritanomaly": "Tritanomaly (blue-weak)",
-        "tritanopia": "Tritanopia (blue-blind)"
+        "tritanopia": "Tritanopia (blue-blind)",
+        "warning": "You cannot save a palette with this vision simulation mode"
       }
     },
     "contexts": {
@@ -588,7 +606,7 @@
     "repository": "Contribute",
     "request": "Share your ideas",
     "store": "Discover more products",
-    "community": "Join the Discord",
+    "community": "Join our Discord",
     "chat": "Chat with us",
     "tooltips": {
       "documentation": "Read the documentation",
