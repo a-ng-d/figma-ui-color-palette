@@ -6,7 +6,7 @@ import { locales } from '../../content/locales'
 const updateColors = async (msg: ColorsMessage) => {
   const now = new Date().toISOString()
   const palette: FullConfiguration = JSON.parse(
-    figma.currentPage.getPluginData(`palette_${msg.id}`) ?? '{}'
+    figma.currentPage.getSharedPluginData('uicp', `palette_${msg.id}`) ?? '{}'
   )
 
   palette.base.colors = msg.data
@@ -23,7 +23,8 @@ const updateColors = async (msg: ColorsMessage) => {
   )
 
   if (getJsonSize(palette) < 100) {
-    figma.currentPage.setPluginData(
+    figma.currentPage.setSharedPluginData(
+      'uicp',
       `palette_${msg.id}`,
       JSON.stringify(palette)
     )

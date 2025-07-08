@@ -15,7 +15,8 @@ interface Msg {
 }
 
 const createPaletteFromRemote = async (msg: Msg) => {
-  const localPalette = figma.currentPage.getPluginData(
+  const localPalette = figma.currentPage.getSharedPluginData(
+    'uicp',
     `palette_${msg.data.meta.id}`
   )
 
@@ -53,7 +54,8 @@ const createPaletteFromRemote = async (msg: Msg) => {
     },
   }).makePaletteFullData()
 
-  figma.currentPage.setPluginData(
+  figma.currentPage.setSharedPluginData(
+    'uicp',
     `palette_${palette.meta.id}`,
     JSON.stringify(palette)
   )

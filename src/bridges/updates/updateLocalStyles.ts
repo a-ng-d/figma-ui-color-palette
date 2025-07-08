@@ -3,7 +3,10 @@ import { Data, FullConfiguration } from '@a_ng_d/utils-ui-color-palette'
 import { locales } from '../../content/locales'
 
 const updateLocalStyles = async (id: string) => {
-  const rawPalette = figma.currentPage.getPluginData(`palette_${id}`)
+  const rawPalette = figma.currentPage.getSharedPluginData(
+    'uicp',
+    `palette_${id}`
+  )
 
   if (rawPalette === '') throw new Error(locales.get().error.unfoundPalette)
 

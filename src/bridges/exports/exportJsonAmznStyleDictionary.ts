@@ -8,7 +8,10 @@ import {
 import { locales } from '../../content/locales'
 
 const exportJsonAmznStyleDictionary = (id: string) => {
-  const rawPalette = figma.currentPage.getPluginData(`palette_${id}`)
+  const rawPalette = figma.currentPage.getSharedPluginData(
+    'uicp',
+    `palette_${id}`
+  )
 
   if (rawPalette === '')
     return figma.ui.postMessage({

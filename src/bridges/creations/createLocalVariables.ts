@@ -8,7 +8,10 @@ import { locales } from '../../content/locales'
 import LocalVariable from '../../canvas/LocalVariable'
 
 const createLocalVariables = async (id: string) => {
-  const rawPalette = figma.currentPage.getPluginData(`palette_${id}`)
+  const rawPalette = figma.currentPage.getSharedPluginData(
+    'uicp',
+    `palette_${id}`
+  )
 
   if (rawPalette === undefined || rawPalette === null)
     throw new Error(locales.get().error.unfoundPalette)
@@ -191,7 +194,8 @@ const createLocalVariables = async (id: string) => {
       )
 
       if (getJsonSize(palette) < 100)
-        figma.currentPage.setPluginData(
+        figma.currentPage.setSharedPluginData(
+          'uicp',
           `palette_${id}`,
           JSON.stringify(palette)
         )

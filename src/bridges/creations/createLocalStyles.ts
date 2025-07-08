@@ -4,7 +4,10 @@ import { locales } from '../../content/locales'
 import LocalStyle from '../../canvas/LocalStyle'
 
 const createLocalStyles = async (id: string) => {
-  const rawPalette = figma.currentPage.getPluginData(`palette_${id}`)
+  const rawPalette = figma.currentPage.getSharedPluginData(
+    'uicp',
+    `palette_${id}`
+  )
 
   if (rawPalette === '') throw new Error(locales.get().error.unfoundPalette)
 
@@ -78,7 +81,8 @@ const createLocalStyles = async (id: string) => {
       )
 
       if (getJsonSize(palette) < 100)
-        figma.currentPage.setPluginData(
+        figma.currentPage.setSharedPluginData(
+          'uicp',
           `palette_${id}`,
           JSON.stringify(palette)
         )

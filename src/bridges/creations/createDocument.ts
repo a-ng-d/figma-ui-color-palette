@@ -7,7 +7,10 @@ import { locales } from '../../content/locales'
 import Documents from '../../canvas/Documents'
 
 const createDocument = async (id: string, view: ViewConfiguration) => {
-  const rawPalette = figma.currentPage.getPluginData(`palette_${id}`)
+  const rawPalette = figma.currentPage.getSharedPluginData(
+    'uicp',
+    `palette_${id}`
+  )
 
   if (rawPalette === '') throw new Error(locales.get().error.unfoundPalette)
 

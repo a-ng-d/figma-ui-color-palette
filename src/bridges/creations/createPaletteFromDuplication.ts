@@ -3,7 +3,10 @@ import { FullConfiguration } from '@a_ng_d/utils-ui-color-palette'
 import { locales } from '../../content/locales'
 
 const createPaletteFromDuplication = async (id: string) => {
-  const rawPalette = figma.currentPage.getPluginData(`palette_${id}`)
+  const rawPalette = figma.currentPage.getSharedPluginData(
+    'uicp',
+    `palette_${id}`
+  )
   const now = new Date().toISOString()
 
   if (rawPalette === '') throw new Error(locales.get().error.unfoundPalette)
@@ -26,7 +29,8 @@ const createPaletteFromDuplication = async (id: string) => {
   palette.meta.creatorIdentity.creatorFullName = ''
   palette.meta.creatorIdentity.creatorAvatar = ''
 
-  figma.currentPage.setPluginData(
+  figma.currentPage.setSharedPluginData(
+    'uicp',
     `palette_${palette.meta.id}`,
     JSON.stringify(palette)
   )

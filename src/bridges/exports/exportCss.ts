@@ -9,7 +9,10 @@ import { Case } from '@a_ng_d/figmug-utils'
 import { locales } from '../../content/locales'
 
 const exportCss = (id: string, colorSpace: ColorSpaceConfiguration) => {
-  const rawPalette = figma.currentPage.getPluginData(`palette_${id}`)
+  const rawPalette = figma.currentPage.getSharedPluginData(
+    'uicp',
+    `palette_${id}`
+  )
 
   if (rawPalette === '')
     return figma.ui.postMessage({

@@ -25,7 +25,8 @@ const createPaletteFromDocument = async () => {
   document.setPluginData('createdAt', now)
   document.setPluginData('updatedAt', now)
 
-  figma.currentPage.setPluginData(
+  figma.currentPage.setSharedPluginData(
+    'uicp',
     `palette_${backup.meta.id}`,
     JSON.stringify(backup)
   )

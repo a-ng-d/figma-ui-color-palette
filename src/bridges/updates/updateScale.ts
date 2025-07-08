@@ -7,7 +7,8 @@ import { locales } from '../../content/locales'
 const updateScale = async (msg: ScaleMessage) => {
   const now = new Date().toISOString()
   const palette: FullConfiguration = JSON.parse(
-    figma.currentPage.getPluginData(`palette_${msg.data.id}`) ?? '{}'
+    figma.currentPage.getSharedPluginData('uicp', `palette_${msg.data.id}`) ??
+      '{}'
   )
 
   const theme = palette.themes.find((theme) => theme.isEnabled)
@@ -68,7 +69,8 @@ const updateScale = async (msg: ScaleMessage) => {
   })
 
   if (getJsonSize(palette) < 100) {
-    figma.currentPage.setPluginData(
+    figma.currentPage.setSharedPluginData(
+      'uicp',
       `palette_${msg.id}`,
       JSON.stringify(palette)
     )

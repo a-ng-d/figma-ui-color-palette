@@ -15,7 +15,10 @@ const updateDocument = async (view: ViewConfiguration) => {
   const id = document.getPluginData('id')
   const themeId = document.getPluginData('themeId')
 
-  const rawPalette = figma.currentPage.getPluginData(`palette_${id}`)
+  const rawPalette = figma.currentPage.getSharedPluginData(
+    'uicp',
+    `palette_${id}`
+  )
 
   if (rawPalette === '') throw new Error(locales.get().error.unfoundPalette)
 

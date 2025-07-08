@@ -7,7 +7,10 @@ import {
 import { locales } from '../../content/locales'
 
 const exportJsonDtcg = (id: string, colorSpace: ColorSpaceConfiguration) => {
-  const rawPalette = figma.currentPage.getPluginData(`palette_${id}`)
+  const rawPalette = figma.currentPage.getSharedPluginData(
+    'uicp',
+    `palette_${id}`
+  )
 
   if (rawPalette === '')
     return figma.ui.postMessage({

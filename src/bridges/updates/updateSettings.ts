@@ -6,7 +6,7 @@ import { locales } from '../../content/locales'
 const updateSettings = async (msg: SettingsMessage) => {
   const now = new Date().toISOString()
   const palette: FullConfiguration = JSON.parse(
-    figma.currentPage.getPluginData(`palette_${msg.id}`) ?? '{}'
+    figma.currentPage.getSharedPluginData('uicp', `palette_${msg.id}`) ?? '{}'
   )
 
   const theme = palette.themes.find((theme) => theme.isEnabled)
@@ -32,7 +32,8 @@ const updateSettings = async (msg: SettingsMessage) => {
   })
 
   if (getJsonSize(palette) < 100) {
-    figma.currentPage.setPluginData(
+    figma.currentPage.setSharedPluginData(
+      'uicp',
       `palette_${msg.id}`,
       JSON.stringify(palette)
     )

@@ -91,7 +91,8 @@ const createPalette = async (msg: Msg, fromUI = true) => {
     },
   }).makePaletteFullData()
 
-  figma.currentPage.setPluginData(
+  figma.currentPage.setSharedPluginData(
+    'uicp',
     `palette_${palette.meta.id}`,
     JSON.stringify(palette)
   )
