@@ -113,6 +113,7 @@ export default class Documents {
         base: this.base,
         themes: this.themes,
         meta: this.meta,
+        version: globalConfig.versions.paletteVersion,
         type: 'UI_COLOR_PALETTE',
       })
     )

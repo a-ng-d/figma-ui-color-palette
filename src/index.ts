@@ -4,6 +4,7 @@ import {
   ViewConfiguration,
 } from '@a_ng_d/utils-ui-color-palette'
 import { doScale } from '@a_ng_d/figmug-utils'
+import setPaletteMigration from './utils/setPaletteMigration'
 import globalConfig from './global.config'
 import processSelection from './bridges/processSelection'
 import loadUI from './bridges/loadUI'
@@ -104,21 +105,35 @@ figma.on('run', async ({ parameters }: RunEvent) => {
 if (figma.editorType !== 'dev')
   figma.on('run', async () => {
     await figma.currentPage.loadAsync()
-    /*figma.currentPage
+    figma.currentPage
       .findAllWithCriteria({
         pluginData: {},
       })
-      .forEach((palette) => {
-        setPaletteMigration(palette)
-      })*/
+      .forEach((document) => {
+        const type = document.getPluginData('type')
+        const version = document.getPluginData('version')
+
+        if (
+          type === 'UI_COLOR_PALETTE' &&
+          version !== globalConfig.versions.paletteVersion
+        )
+          setPaletteMigration(document)
+      })
   })
 figma.on('currentpagechange', async () => {
   await figma.currentPage.loadAsync()
-  /*figma.currentPage
+  figma.currentPage
     .findAllWithCriteria({
       pluginData: {},
     })
-    .forEach((palette) => {
-      setPaletteMigration(palette)
-    })*/
+    .forEach((document) => {
+      const type = document.getPluginData('type')
+      const version = document.getPluginData('version')
+
+      if (
+        type === 'UI_COLOR_PALETTE' &&
+        version !== globalConfig.versions.paletteVersion
+      )
+        setPaletteMigration(document)
+    })
 })
