@@ -2,6 +2,7 @@ import { createRoot } from 'react-dom/client'
 import React from 'react'
 import mixpanel from 'mixpanel-figma'
 import App from '@ui-lib/ui/App'
+import { initMixpanel } from '@ui-lib/external/tracking/client'
 import { initSupabase } from '@ui-lib/external/auth/client'
 import { ThemeProvider } from '@ui-lib/config/ThemeContext'
 import { ConfigProvider } from '@ui-lib/config/ConfigContext'
@@ -11,13 +12,18 @@ import globalConfig from '../global.config'
 const container = document.getElementById('app'),
   root = createRoot(container)
 
-if (globalConfig.env.isMixpanelEnabled)
+if (globalConfig.env.isMixpanelEnabled) {
   mixpanel.init(import.meta.env.VITE_MIXPANEL_TOKEN as string, {
+    api_host: 'https://api-eu.mixpanel.com',
     debug: globalConfig.env.isDev,
     disable_persistence: true,
     disable_cookie: true,
     opt_out_tracking_by_default: true,
   })
+  mixpanel.opt_in_tracking()
+
+  initMixpanel(mixpanel)
+}
 
 if (globalConfig.env.isMixpanelEnabled && !globalConfig.env.isDev)
   Sentry.init({
@@ -106,6 +112,7 @@ root.render(
       licenseUrl: globalConfig.urls.licenseUrl,
       privacyUrl: globalConfig.urls.privacyUrl,
       vsCodeFigmaPluginUrl: globalConfig.urls.vsCodeFigmaPluginUrl,
+      uicpUrl: globalConfig.urls.uicpUrl,
       isbUrl: globalConfig.urls.isbUrl,
       storeUrl: globalConfig.urls.storeUrl,
       storeManagementUrl: globalConfig.urls.storeManagementUrl,
