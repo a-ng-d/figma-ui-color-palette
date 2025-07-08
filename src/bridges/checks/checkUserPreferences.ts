@@ -45,7 +45,6 @@ const checkUserPreferences = async () => {
       canDeepSyncStyles: canDeepSyncStyles === 'true',
       canDeepSyncVariables: canDeepSyncVariables === 'true',
       isVsCodeMessageDisplayed:
-        isVsCodeMessageDisplayed === null ||
         isVsCodeMessageDisplayed === undefined
           ? true
           : isVsCodeMessageDisplayed === 'true',
