@@ -22,12 +22,6 @@ const processSelection = () => {
   const selectionHandler = (state: string) => {
     const actions: { [key: string]: () => void } = {
       DOCUMENT_SELECTED: async () => {
-        console.log(
-          figma.currentPage.getSharedPluginData(
-            'uicp',
-            `palette_${document.getPluginData('id')}`
-          )
-        )
         figma.ui.postMessage({
           type: 'DOCUMENT_SELECTED',
           data: {
