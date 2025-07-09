@@ -6,7 +6,7 @@ const jumpToPalette = async (id: string) => {
     `palette_${id}`
   )
 
-  if (!rawPalette) throw new Error(locales.get().error.fetchPalette)
+  if (rawPalette === '') throw new Error(locales.get().error.fetchPalette)
 
   const palette = JSON.parse(rawPalette)
   palette.meta.dates.openedAt = new Date().toISOString()

@@ -13,8 +13,7 @@ const createLocalVariables = async (id: string) => {
     `palette_${id}`
   )
 
-  if (rawPalette === undefined || rawPalette === null)
-    throw new Error(locales.get().error.unfoundPalette)
+  if (rawPalette === '') throw new Error(locales.get().error.unfoundPalette)
 
   const palette = JSON.parse(rawPalette) as FullConfiguration
 
