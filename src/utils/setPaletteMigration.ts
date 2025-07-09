@@ -1,237 +1,317 @@
 import { uid } from 'uid'
-
-import Colors from '../canvas/Colors'
-import { paletteDataVersion } from '../config'
-import { lang, locals } from '../content/locals'
-import { presets } from '../stores/presets'
 import {
   AlgorithmVersionConfiguration,
   ColorConfiguration,
   ColorSpaceConfiguration,
+  CreatorConfiguration,
+  Data,
+  DatesConfiguration,
+  FullConfiguration,
+  LibraryData,
+  LockedSourceColorsConfiguration,
+  PaletteData,
+  PaletteDataShadeItem,
+  PaletteDataThemeItem,
+  PresetConfiguration,
+  PublicationConfiguration,
+  ScaleConfiguration,
+  ShiftConfiguration,
+  TextColorsThemeConfiguration,
+  ThemeConfiguration,
+  ViewConfiguration,
   VisionSimulationModeConfiguration,
-} from '../types/configurations'
-import setData from './setData'
+} from '@a_ng_d/utils-ui-color-palette'
+import { doScale } from '@a_ng_d/figmug-utils'
+import globalConfig from '../global.config'
+import { locales } from '../content/locales'
 
-const setPaletteMigration = async (palette: BaseNode) => {
-  const type = palette.getPluginData('type'),
-    name = palette.getPluginData('name'),
-    min = palette.getPluginData('min'),
-    max = palette.getPluginData('max'),
-    description = palette.getPluginData('description'),
-    preset = palette.getPluginData('preset'),
-    scale = palette.getPluginData('scale'),
-    shift = palette.getPluginData('shift'),
-    areSourceColorsLocked = palette.getPluginData('areSourceColorsLocked'),
-    colors = palette.getPluginData('colors'),
-    colorsObject: Array<ColorConfiguration> = JSON.parse(colors),
-    colorSpace = palette.getPluginData('colorSpace'),
-    visionSimulationMode = palette.getPluginData('visionSimulationMode'),
-    themes = palette.getPluginData('themes'),
-    captions = palette.getPluginData('captions'),
-    properties = palette.getPluginData('properties'),
-    textColorsTheme = palette.getPluginData('textColorsTheme'),
-    algorithmVersion = palette.getPluginData('algorithmVersion'),
-    data = palette.getPluginData('data'),
-    isPublished = palette.getPluginData('isPublished'),
-    isShared = palette.getPluginData('isShared'),
-    createdAt = palette.getPluginData('createdAt'),
-    updatedAt = palette.getPluginData('updatedAt'),
-    creatorFullName = palette.getPluginData('creatorFullName'),
-    creatorAvatar = palette.getPluginData('creatorAvatar'),
-    creatorAvatarImg =
-      creatorAvatar !== '' && figma.editorType !== 'dev'
-        ? await figma
-            .createImageAsync(creatorAvatar)
-            .then(async (image: Image) => image)
-            .catch(() => null)
-        : null
-
-  // Id
-  if (!isPublished) palette.setPluginData('id', '')
-
-  // Type
-  if (type === '') palette.setPluginData('type', 'UI_COLOR_PALETTE')
-
-  // Min-Max
-  if (min !== '' || max !== '') {
-    palette.setPluginData('min', '')
-    palette.setPluginData('max', '')
-  }
-
-  // Description
-  if (description === '') palette.setPluginData('description', '')
-
-  // Preset
-  if (preset === '')
-    palette.setPluginData(
-      'preset',
-      JSON.stringify(presets.find((preset) => preset.id === 'MATERIAL'))
-    )
-
-  // Shift
-  if (shift === '')
-    palette.setPluginData(
-      'shift',
-      JSON.stringify({
+const setPaletteMigration = async (document: BaseNode) => {
+  const palette = {
+    base: {
+      name: '',
+      description: '',
+      preset: {
+        id: 'MATERIAL',
+        name: 'Material Design, 50-900',
+        max: 96,
+        min: 24,
+        family: 'Google',
+        stops: [50, 100, 200, 300, 400, 500, 600, 700, 800, 900],
+        easing: 'LINEAR',
+      },
+      shift: {
         chroma: 100,
-      })
-    )
+      },
+      areSourceColorsLocked: false,
+      colors: [],
+      colorSpace: 'LCH',
+      algorithmVersion: 'v3',
+    },
+    themes: [
+      {
+        id: '00000000000',
+        name: 'None',
+        description: '',
+        scale: {},
+        paletteBackground: '#FFFFFF',
+        isEnabled: true,
+        visionSimulationMode: 'NONE',
+        textColorsTheme: {
+          lightColor: '#FFFFFF',
+          darkColor: '#000000',
+        },
+        type: 'default theme',
+      },
+    ],
+    libraryData: [],
+    meta: {
+      id: '',
+      dates: {
+        createdAt: '',
+        updatedAt: '',
+        publishedAt: '',
+        openedAt: '',
+      },
+      creatorIdentity: {
+        creatorId: '',
+        creatorAvatar: '',
+        creatorFullName: '',
+      },
+      publicationStatus: {
+        isPublished: false,
+        isShared: false,
+      },
+    },
+    version: globalConfig.versions.paletteVersion,
+    type: 'UI_COLOR_PALETTE',
+  } as FullConfiguration
 
-  // Lock
-  if (areSourceColorsLocked === '')
-    palette.setPluginData('areSourceColorsLocked', 'false')
+  const rawName = document.getPluginData('name')
+  const rawDescription = document.getPluginData('description')
+  const rawPreset = document.getPluginData('preset')
+  const rawScale = document.getPluginData('scale')
+  const rawShift = document.getPluginData('shift')
+  const rawAreSourceColorsLocked = document.getPluginData(
+    'areSourceColorsLocked'
+  )
+  const rawColors = document.getPluginData('colors')
+  const rawColorSpace = document.getPluginData('colorSpace')
+  const rawVisionSimulationMode = document.getPluginData('visionSimulationMode')
+  const rawThemes = document.getPluginData('themes')
+  const rawTextColorsTheme = document.getPluginData('textColorsTheme')
+  const rawAlgorithmVersion = document.getPluginData('algorithmVersion')
+  const rawData = document.getPluginData('data')
+  const rawIsPublished = document.getPluginData('isPublished')
+  const rawIsShared = document.getPluginData('isShared')
+  const rawCreatedAt = document.getPluginData('createdAt')
+  const rawUpdatedAt = document.getPluginData('updatedAt')
+  const rawPublishedAt = document.getPluginData('publishedAt')
+  const rawCreatorId = document.getPluginData('creatorId')
+  const rawCreatorFullName = document.getPluginData('creatorFullName')
+  const rawCreatorAvatar = document.getPluginData('creatorAvatar')
+  const rawId = document.getPluginData('id')
+  const rawView = document.getPluginData('view')
 
-  // Colors
-  if (colorsObject.length !== 0) {
-    if (!Object.prototype.hasOwnProperty.call(colorsObject[0], 'description'))
-      palette.setPluginData('colors', setData(colorsObject, 'description', ''))
+  const name = rawName !== '' ? rawName : ''
+  const description = rawDescription !== '' ? rawDescription : ''
+  const preset: PresetConfiguration & { scale: Array<number> } =
+    rawPreset !== undefined
+      ? JSON.parse(rawPreset)
+      : {
+          id: 'MATERIAL',
+          name: 'Material Design, 50-900',
+          max: 96,
+          min: 24,
+          family: 'Google',
+          stops: [50, 100, 200, 300, 400, 500, 600, 700, 800, 900],
+          easing: 'LINEAR',
+        }
+  const scale: ScaleConfiguration =
+    rawScale !== ''
+      ? JSON.parse(rawScale)
+      : doScale(preset.scale, preset.min, preset.max)
+  const shift: ShiftConfiguration =
+    rawShift !== '' ? JSON.parse(rawShift) : { chroma: 100 }
+  const areSourceColorsLocked: LockedSourceColorsConfiguration =
+    rawAreSourceColorsLocked !== undefined
+      ? rawAreSourceColorsLocked === 'true'
+      : false
+  const colors: Array<
+    ColorConfiguration & { hueShifting: number } & {
+      chromaShifting: number
+    }
+  > = rawColors !== '' ? JSON.parse(rawColors) : []
+  const textColorsTheme: TextColorsThemeConfiguration<'HEX'> =
+    rawTextColorsTheme !== '' ? JSON.parse(rawTextColorsTheme) : ''
+  const colorSpace: ColorSpaceConfiguration =
+    rawColorSpace !== '' ? (rawColorSpace as ColorSpaceConfiguration) : 'LCH'
+  const visionSimulationMode: VisionSimulationModeConfiguration =
+    rawVisionSimulationMode !== ''
+      ? (rawVisionSimulationMode as VisionSimulationModeConfiguration)
+      : 'NONE'
+  const algorithmVersion: AlgorithmVersionConfiguration =
+    rawAlgorithmVersion !== ''
+      ? (rawAlgorithmVersion as AlgorithmVersionConfiguration)
+      : 'v3'
+  const themes: Array<ThemeConfiguration> =
+    rawThemes !== ''
+      ? JSON.parse(rawThemes)
+      : [
+          {
+            id: '00000000000',
+            name: locales.get().themes.switchTheme.defaultTheme,
+            description: '',
+            scale: scale,
+            paletteBackground: '#FFFFFF',
+            isEnabled: true,
+            visionSimulationMode: visionSimulationMode,
+            textColorsTheme: textColorsTheme,
+            type: 'default theme',
+          },
+        ]
+  const publicationStatus: PublicationConfiguration = {
+    isPublished: rawIsPublished !== '' ? rawIsPublished === 'true' : false,
+    isShared: rawIsShared !== '' ? rawIsShared === 'true' : false,
+  }
+  const dates: DatesConfiguration = {
+    createdAt: rawCreatedAt !== '' ? rawCreatedAt : new Date().toISOString(),
+    updatedAt: rawUpdatedAt !== '' ? rawUpdatedAt : new Date().toISOString(),
+    publishedAt: rawPublishedAt !== '' ? rawPublishedAt : '',
+    openedAt: new Date().toISOString(),
+  }
+  const creatorIdentity: CreatorConfiguration = {
+    creatorId: rawCreatorId !== '' ? rawCreatorId : '',
+    creatorFullName: rawCreatorFullName !== '' ? rawCreatorFullName : '',
+    creatorAvatar: rawCreatorAvatar !== '' ? rawCreatorAvatar : '',
+  }
+  const id = rawId !== '' ? rawId : uid()
+  const view = rawView !== '' ? (rawView as ViewConfiguration) : 'PALETTE'
 
-    if (!Object.prototype.hasOwnProperty.call(colorsObject[0], 'id'))
-      palette.setPluginData(
-        'colors',
-        JSON.stringify(
-          colorsObject.map((color) => {
-            color.id = uid()
-            return color
-          })
+  palette.base.name = name
+  palette.base.description = description
+  palette.base.preset.name = preset.name
+  palette.base.preset.id = preset.id
+  palette.base.preset.family = preset.family
+  palette.base.preset.max = preset.max
+  palette.base.preset.min = preset.min
+  palette.base.preset.stops = preset.scale
+  palette.base.preset.easing = preset.easing
+  palette.base.shift.chroma = shift.chroma
+  palette.base.areSourceColorsLocked = areSourceColorsLocked
+  palette.base.colorSpace = colorSpace
+  palette.base.algorithmVersion = algorithmVersion
+
+  palette.base.colors = colors.map((color) => {
+    return {
+      id: color.id || uid(),
+      name: color.name || '',
+      rgb: color.rgb,
+      hue: {
+        shift: color.hue?.shift || color.hueShifting || 0,
+        isLocked: color.hue?.isLocked || false,
+      },
+      chroma: {
+        shift: color.chroma?.shift || color.chromaShifting || 100,
+        isLocked: color.chroma?.isLocked || false,
+      },
+      description: color.description || '',
+      alpha: {
+        isEnabled: false,
+        backgroundColor: '#FFFFFF',
+      },
+    }
+  })
+
+  palette.themes = themes.map((theme) => {
+    return {
+      id: theme.id,
+      name: theme.name,
+      description: theme.description,
+      scale: transformScale(theme.scale) || transformScale(scale),
+      paletteBackground: theme.paletteBackground || '#FFFFFF',
+      isEnabled: theme.isEnabled || false,
+      visionSimulationMode: theme.visionSimulationMode || visionSimulationMode,
+      textColorsTheme: theme.textColorsTheme || textColorsTheme,
+      type: theme.type,
+    }
+  })
+
+  palette.meta.id = id
+  palette.meta.dates = dates
+  palette.meta.creatorIdentity = creatorIdentity
+  palette.meta.publicationStatus = publicationStatus
+
+  const data: PaletteData & { collectionId: string } =
+    rawData !== '' ? JSON.parse(rawData) : new Data(palette).makePaletteData()
+
+  const libraryData: Array<LibraryData> = data.themes.flatMap(
+    (theme: PaletteDataThemeItem & { modeId?: string }) => {
+      return theme.colors.flatMap((color) =>
+        color.shades.flatMap(
+          (
+            shade: PaletteDataShadeItem & { variableId?: string } & {
+              styleId?: string
+            }
+          ) => {
+            const generatedId = `${theme.id}:${color.id}:${shade.name}`
+
+            return {
+              id: generatedId,
+              paletteName: data.name,
+              themeName: theme.name,
+              colorName: color.name,
+              shadeName: shade.name,
+              ...(data.collectionId !== '' && {
+                collectionId: data.collectionId,
+              }),
+              ...(theme.modeId !== '' && { modeId: theme.modeId }),
+              ...(shade.variableId !== '' && { variableId: shade.variableId }),
+              ...(shade.styleId !== '' && { styleId: shade.styleId }),
+            }
+          }
         )
       )
-
-    if (Object.prototype.hasOwnProperty.call(colorsObject[0], 'oklch')) {
-      colorsObject.map((color) => {
-        if ('oklch' in color) delete color.oklch
-        return color
-      })
-      palette.setPluginData('colors', JSON.stringify(colorsObject))
     }
+  )
 
-    if (Object.prototype.hasOwnProperty.call(colorsObject[0], 'hueShifting')) {
-      colorsObject.map((color) => {
-        color.hue = {
-          shift: color.hueShifting as number,
-          isLocked: false,
-        }
-        if ('hueShifting' in color) delete color.hueShifting
-        return color
-      })
-      palette.setPluginData('colors', JSON.stringify(colorsObject))
-    }
+  palette.libraryData = libraryData
 
-    if (
-      Object.prototype.hasOwnProperty.call(colorsObject[0], 'chromaShifting')
-    ) {
-      colorsObject.map((color) => {
-        color.chroma = {
-          shift: color.chromaShifting as number,
-          isLocked: false,
-        }
-        if ('chromaShifting' in color) delete color.chromaShifting
-        return color
-      })
-      palette.setPluginData('colors', JSON.stringify(colorsObject))
-    }
+  document.getPluginDataKeys().forEach((key) => {
+    document.setPluginData(key, '')
+  })
 
-    if (!Object.prototype.hasOwnProperty.call(colorsObject[0], 'chroma')) {
-      colorsObject.map((color) => {
-        color.chroma = {
-          shift: 100,
-          isLocked: false,
-        }
-        return color
-      })
-      palette.setPluginData('colors', JSON.stringify(colorsObject))
-    }
-  }
+  document.setPluginData('type', palette.type)
+  document.setPluginData('version', palette.version)
+  document.setPluginData('view', view)
+  document.setPluginData('id', palette.meta.id)
+  document.setPluginData(
+    'themeId',
+    palette.themes.find((theme: ThemeConfiguration) => theme.isEnabled)?.id ||
+      '00000000000'
+  )
+  document.setPluginData('createdAt', palette.meta.dates.createdAt as string)
+  document.setPluginData('updatedAt', palette.meta.dates.updatedAt as string)
+  document.setPluginData('backup', JSON.stringify(palette))
 
-  if (colorSpace === '') palette.setPluginData('colorSpace', 'LCH')
+  document.setRelaunchData({
+    edit: locales.get().relaunch.edit.description,
+  })
 
-  if (visionSimulationMode === '')
-    palette.setPluginData('visionSimulationMode', 'NONE')
+  figma.currentPage.setSharedPluginData(
+    'uicp',
+    `palette_${palette.meta.id}`,
+    JSON.stringify(palette)
+  )
+}
 
-  // Themes
-  if (themes === '')
-    palette.setPluginData(
-      'themes',
-      JSON.stringify([
-        {
-          name: locals[lang].themes.switchTheme.defaultTheme,
-          description: '',
-          scale: JSON.parse(scale),
-          paletteBackground: '#FFFFFF',
-          isEnabled: true,
-          id: '00000000000',
-          type: 'default theme',
-        },
-      ])
-    )
+const transformScale = (scale: ScaleConfiguration): ScaleConfiguration => {
+  const transformedScale: ScaleConfiguration = {}
 
-  // View
-  if (captions === 'hasCaptions' || properties === 'hasProperties') {
-    palette.setPluginData('captions', '')
-    palette.setPluginData('properties', '')
-    palette.setPluginData('view', 'PALETTE_WITH_PROPERTIES')
-  } else if (
-    captions === 'hasNotCaptions' ||
-    properties === 'hasNotProperties'
-  ) {
-    palette.setPluginData('captions', '')
-    palette.setPluginData('properties', '')
-    palette.setPluginData('view', 'PALETTE')
-  }
+  Object.entries(scale).forEach(([key, value]) => {
+    transformedScale[key.replace('lightness-', '')] = value
+  })
 
-  // TextColorsTheme
-  if (textColorsTheme === '')
-    palette.setPluginData(
-      'textColorsTheme',
-      JSON.stringify({
-        lightColor: '#FFFFFF',
-        darkColor: '#000000',
-      })
-    )
-
-  // Algorithm
-  if (algorithmVersion === '') palette.setPluginData('algorithmVersion', 'v1')
-  if (algorithmVersion.includes('v2'))
-    palette.setPluginData('algorithmVersion', 'v2')
-
-  // Data
-  if (data === '' || JSON.parse(data).version !== paletteDataVersion)
-    new Colors(
-      {
-        name: name,
-        description: palette.getPluginData('description'),
-        preset: JSON.parse(palette.getPluginData('preset')),
-        scale: JSON.parse(palette.getPluginData('scale')),
-        areSourceColorsLocked:
-          palette.getPluginData('areSourceColorsLocked') === 'true',
-        colors: JSON.parse(palette.getPluginData('colors')),
-        colorSpace: palette.getPluginData(
-          'colorSpace'
-        ) as ColorSpaceConfiguration,
-        visionSimulationMode: palette.getPluginData(
-          'visionSimulationMode'
-        ) as VisionSimulationModeConfiguration,
-        themes: JSON.parse(palette.getPluginData('themes')),
-        view: 'SHEET',
-        algorithmVersion: palette.getPluginData(
-          'algorithmVersion'
-        ) as AlgorithmVersionConfiguration,
-        textColorsTheme: JSON.parse(palette.getPluginData('textColorsTheme')),
-        creatorFullName: creatorFullName,
-        creatorAvatarImg: creatorAvatarImg,
-      },
-      palette as FrameNode
-    ).makePaletteData('EDIT')
-
-  // Publication and Share
-  if (isPublished === '') palette.setPluginData('isPublished', 'false')
-  if (isShared === '') palette.setPluginData('isShared', 'false')
-
-  // Created, Updated and Published
-  if (createdAt === '')
-    palette.setPluginData('createdAt', new Date().toISOString())
-  if (updatedAt === '')
-    palette.setPluginData('updatedAt', new Date().toISOString())
+  return transformedScale
 }
 
 export default setPaletteMigration

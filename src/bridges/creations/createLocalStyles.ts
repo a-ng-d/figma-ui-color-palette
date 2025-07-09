@@ -1,63 +1,102 @@
+import { Data, FullConfiguration } from '@a_ng_d/utils-ui-color-palette'
+import { getJsonSize } from '../../utils/getSize'
+import { locales } from '../../content/locales'
 import LocalStyle from '../../canvas/LocalStyle'
-import { lang, locals } from '../../content/locals'
-import { PaletteData } from '../../types/data'
 
-const createLocalStyles = async (palette: FrameNode) => {
-  const paletteData: PaletteData = JSON.parse(palette.getPluginData('data')),
-    workingThemes =
-      paletteData.themes.filter((theme) => theme.type === 'custom theme')
-        .length === 0
-        ? paletteData.themes.filter((theme) => theme.type === 'default theme')
-        : paletteData.themes.filter((theme) => theme.type === 'custom theme')
+const createLocalStyles = async (id: string) => {
+  const rawPalette = figma.currentPage.getSharedPluginData(
+    'uicp',
+    `palette_${id}`
+  )
 
-  if (palette.children.length === 1) {
-    const createdLocalStylesStatusMessage = figma
-      .getLocalPaintStylesAsync()
-      .then((localStyles) => {
-        let i = 0
-        workingThemes.forEach((theme) => {
-          theme.colors.forEach((color) => {
-            color.shades.forEach((shade) => {
-              if (
-                localStyles.find(
-                  (localStyle) => localStyle.id === shade.styleId
-                ) === undefined
-              ) {
-                const style = new LocalStyle(
-                  workingThemes[0].type === 'custom theme'
-                    ? `${
-                        paletteData.name === '' ? '' : paletteData.name + '/'
-                      }${theme.name}/${color.name}/${shade.name}`
-                    : `${paletteData.name === '' ? '' : paletteData.name}/${
-                        color.name
-                      }/${shade.name}`,
-                  color.description !== ''
-                    ? color.description +
-                      locals[lang].separator +
-                      shade.description
-                    : shade.description,
-                  {
-                    r: shade.gl[0],
-                    g: shade.gl[1],
-                    b: shade.gl[2],
-                  }
-                ).makePaintStyle()
-                shade.styleId = style.id
-                i++
-              }
-            })
-          })
+  if (rawPalette === '') throw new Error(locales.get().error.unfoundPalette)
+
+  const palette = JSON.parse(rawPalette) as FullConfiguration
+
+  palette.libraryData = new Data(palette).makeLibraryData(
+    [
+      'style_id',
+      'collection_id',
+      'variable_id',
+      'mode_id',
+      'alpha',
+      'gl',
+      'description',
+    ],
+    palette.libraryData
+  )
+
+  const hasThemes = palette.libraryData.some(
+    (item) => !item.id.includes('00000000000')
+  )
+
+  const createdLocalStylesStatusMessage = await figma
+    .getLocalPaintStylesAsync()
+    .then((localStyles) => {
+      let i = 0
+
+      palette.libraryData
+        .filter((item) => {
+          return hasThemes
+            ? !item.id.includes('00000000000')
+            : item.id.includes('00000000000')
         })
-        palette.setPluginData('data', JSON.stringify(paletteData))
+        .forEach((item) => {
+          const path = [
+            item.paletteName,
+            item.themeName === ''
+              ? locales.get().themes.defaultName
+              : item.themeName,
+            item.colorName === ''
+              ? locales.get().colors.defaultName
+              : item.colorName,
+            item.shadeName,
+          ]
+            .filter((item) => item !== '' && item !== 'None')
+            .join('/')
 
-        if (i > 1) return `${i} ${locals[lang].info.createdLocalStyles.plural}`
-        else if (i === 1) return locals[lang].info.createdLocalStyle.single
-        else return locals[lang].info.createdLocalStyles.none
-      })
-      .catch(() => locals[lang].error.generic)
+          if (
+            localStyles.find((localStyle) => localStyle.id === item.styleId) ===
+              undefined &&
+            item.gl !== undefined
+          ) {
+            const style = new LocalStyle({
+              name: path,
+              rgb: {
+                r: (item.gl ?? [0, 0, 0])[0],
+                g: (item.gl ?? [0, 0, 0])[1],
+                b: (item.gl ?? [0, 0, 0])[2],
+              },
+              alpha: item.alpha,
+              description: item.description || '',
+            })
+            item.styleId = style.paintStyle.id
+            i++
+          }
+        })
 
-    return await createdLocalStylesStatusMessage
-  } else locals[lang].error.corruption
+      palette.libraryData = new Data(palette).makeLibraryData(
+        ['style_id', 'collection_id', 'variable_id', 'mode_id'],
+        palette.libraryData
+      )
+
+      if (getJsonSize(palette) < 100)
+        figma.currentPage.setSharedPluginData(
+          'uicp',
+          `palette_${id}`,
+          JSON.stringify(palette)
+        )
+      else throw new Error(locales.get().error.paletteSizeExceeded)
+
+      if (i > 1)
+        return locales
+          .get()
+          .info.createdLocalStyles.plural.replace('{$1}', i.toString())
+      else if (i === 1) return locales.get().info.createdLocalStyles.single
+      else return locales.get().info.createdLocalStyles.none
+    })
+
+  return createdLocalStylesStatusMessage
 }
 
 export default createLocalStyles

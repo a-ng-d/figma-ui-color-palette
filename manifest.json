@@ -25,7 +25,6 @@
     "allowedDomains": [
       "https://figma.com",
       "https://*.figma.com",
-      "https://rsms.me",
       "https://*.gravatar.com",
       "https://*.wp.com",
       "https://corsproxy.io",
@@ -35,7 +34,9 @@
       "https://*.mixpanel.com",
       "https://asset.brandfetch.io",
       "https://*.sentry.io",
-      "https://*.amazonaws.com"
+      "https://*.amazonaws.com",
+      "https://fonts.googleapis.com",
+      "https://fonts.gstatic.com"
     ],
     "devAllowedDomains": [
       "http://localhost:3000",
@@ -68,6 +69,6 @@
     }
   ],
   "parameterOnly": false,
-  "main": "dist/code.js",
-  "ui": "dist/ui.html"
+  "main": "dist/plugin.js",
+  "ui": "dist/index.html"
 }

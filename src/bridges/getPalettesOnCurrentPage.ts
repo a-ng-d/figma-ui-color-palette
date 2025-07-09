@@ -1,71 +1,29 @@
-import { lang, locals } from '../content/locals'
+import { FullConfiguration, PaletteData } from '@a_ng_d/utils-ui-color-palette'
 
 const getPalettesOnCurrentPage = async () => {
-  const palettes = (await figma.currentPage
-    .loadAsync()
-    .then(() =>
-      figma.currentPage.findAllWithCriteria({
-        pluginData: {},
-      })
-    )
-    .catch(() => {
-      figma.notify(locals[lang].error.palettesPicking)
-      return []
-    })) as Array<FrameNode>
-
-  if (palettes.length !== 0) {
-    const palettesList = async () => {
-      const palettePromises = palettes.map(async (palette) => {
-        const name = palette.getPluginData('name')
-        const preset = palette.getPluginData('preset')
-        const colors = palette.getPluginData('colors')
-        const themes = palette.getPluginData('themes')
-
-        if (preset === '' || colors === '' || themes === '') return null
-
-        const bytes = await palette.exportAsync({
-          format: 'PNG',
-          constraint: { type: 'SCALE', value: 0.25 },
-        })
-        return {
-          id: palette.id,
-          name: name,
-          preset: JSON.parse(preset).name,
-          colors: JSON.parse(colors),
-          themes: JSON.parse(themes),
-          screenshot: bytes,
-          devStatus: palette.devStatus !== null && palette.devStatus.type,
-        }
-      })
-      const filteredPalettes = (await Promise.all(palettePromises)).filter(
-        (palette) => palette !== null
-      )
-      return filteredPalettes
-    }
-
-    figma.ui.postMessage({
-      type: 'EXPOSE_PALETTES',
-      data: await palettesList().then((list) => {
-        return list.sort((a, b) => {
-          if (
-            a.devStatus === 'READY_FOR_DEV' &&
-            b.devStatus !== 'READY_FOR_DEV'
-          )
-            return -1
-          else if (
-            a.devStatus !== 'READY_FOR_DEV' &&
-            b.devStatus === 'READY_FOR_DEV'
-          )
-            return 1
-          else return 0
-        })
-      }),
-    })
-  } else
-    figma.ui.postMessage({
+  const dataKeys = figma.currentPage.getSharedPluginDataKeys('uicp')
+  if (dataKeys === undefined)
+    return figma.ui.postMessage({
       type: 'EXPOSE_PALETTES',
       data: [],
     })
+
+  const dataList = dataKeys
+    .filter((data: string) => data.includes('palette_'))
+    .map((key: string) => {
+      const data = figma.currentPage.getSharedPluginData('uicp', key)
+      return data ? JSON.parse(data) : undefined
+    })
+  const palettesList: Array<PaletteData> = dataList.filter(
+    (data: FullConfiguration) => {
+      if (data !== undefined) return data.type === 'UI_COLOR_PALETTE'
+    }
+  )
+
+  return figma.ui.postMessage({
+    type: 'EXPOSE_PALETTES',
+    data: palettesList,
+  })
 }
 
 export default getPalettesOnCurrentPage

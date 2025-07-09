@@ -1,9 +1,26 @@
+import { Data, PaletteData } from '@a_ng_d/utils-ui-color-palette'
 import { Case } from '@a_ng_d/figmug-utils'
-import { lang, locals } from '../../content/locals'
-import { PaletteData } from '../../types/data'
+import { locales } from '../../content/locales'
 
-const exportSwiftUI = (palette: FrameNode) => {
-  const paletteData: PaletteData = JSON.parse(palette.getPluginData('data')),
+const exportSwiftUI = (id: string) => {
+  const rawPalette = figma.currentPage.getSharedPluginData(
+    'uicp',
+    `palette_${id}`
+  )
+
+  if (rawPalette === '')
+    return figma.ui.postMessage({
+      type: 'EXPORT_PALETTE_SWIFTUI',
+      data: {
+        id: '',
+        context: 'APPLE_SWIFTUI',
+        code: locales.get().error.export,
+      },
+    })
+
+  const paletteData: PaletteData = new Data(
+      JSON.parse(rawPalette)
+    ).makePaletteData(),
     workingThemes =
       paletteData.themes.filter((theme) => theme.type === 'custom theme')
         .length === 0
@@ -11,46 +28,60 @@ const exportSwiftUI = (palette: FrameNode) => {
         : paletteData.themes.filter((theme) => theme.type === 'custom theme'),
     swift: Array<string> = []
 
-  if (palette.children.length === 1) {
-    workingThemes.forEach((theme) => {
-      theme.colors.forEach((color) => {
-        const Colors: Array<string> = []
-        Colors.unshift(
-          `// ${
-            workingThemes[0].type === 'custom theme' ? theme.name + ' - ' : ''
-          }${color.name}`
+  workingThemes.forEach((theme) => {
+    theme.colors.forEach((color) => {
+      const source = color.shades.find((shade) => shade.type === 'source color')
+      const Colors: Array<string> = []
+
+      Colors.push(
+        `// ${
+          workingThemes[0].type === 'custom theme' ? theme.name + ' - ' : ''
+        }${color.name}`
+      )
+      color.shades.reverse().forEach((shade) => {
+        Colors.push(
+          shade.isTransparent
+            ? `public let ${
+                workingThemes[0].type === 'custom theme'
+                  ? new Case(theme.name + ' ' + color.name).doCamelCase()
+                  : new Case(color.name).doCamelCase()
+              }${
+                shade.name === 'source' ? 'Source' : shade.name
+              } = Color(red: ${source?.gl[0].toFixed(
+                3
+              )}, green: ${source?.gl[1].toFixed(3)}, blue: ${shade.gl[2].toFixed(
+                3
+              )}).opacity(${shade.alpha ?? 1})`
+            : `public let ${
+                workingThemes[0].type === 'custom theme'
+                  ? new Case(theme.name + ' ' + color.name).doCamelCase()
+                  : new Case(color.name).doCamelCase()
+              }${
+                shade.name === 'source' ? 'Source' : shade.name
+              } = Color(red: ${shade.gl[0].toFixed(
+                3
+              )}, green: ${shade.gl[1].toFixed(3)}, blue: ${shade.gl[2].toFixed(
+                3
+              )})`
         )
-        color.shades.forEach((shade) => {
-          Colors.unshift(
-            `public let ${
-              workingThemes[0].type === 'custom theme'
-                ? new Case(theme.name + ' ' + color.name).doCamelCase()
-                : new Case(color.name).doCamelCase()
-            }${
-              shade.name === 'source' ? 'Source' : shade.name
-            } = Color(red: ${shade.gl[0].toFixed(
-              3
-            )}, green: ${shade.gl[1].toFixed(3)}, blue: ${shade.gl[2].toFixed(
-              3
-            )})`
-          )
-        })
-        Colors.unshift('')
-        Colors.reverse().forEach((color) => swift.push(color))
       })
+      Colors.push('')
+      Colors.forEach((color) => swift.push(color))
     })
+  })
 
-    swift.pop()
+  swift.pop()
 
-    figma.ui.postMessage({
-      type: 'EXPORT_PALETTE_SWIFTUI',
-      id: figma.currentUser?.id,
+  return figma.ui.postMessage({
+    type: 'EXPORT_PALETTE_SWIFTUI',
+    data: {
+      id: '',
       context: 'APPLE_SWIFTUI',
-      data: `import SwiftUI\n\npublic extension Color {\n  static let Token = Color.TokenColor()\n  struct TokenColor {\n    ${swift.join(
+      code: `import SwiftUI\n\npublic extension Color {\n  static let Token = Color.TokenColor()\n  struct TokenColor {\n    ${swift.join(
         '\n    '
       )}\n  }\n}`,
-    })
-  } else figma.notify(locals[lang].error.corruption)
+    },
+  })
 }
 
 export default exportSwiftUI

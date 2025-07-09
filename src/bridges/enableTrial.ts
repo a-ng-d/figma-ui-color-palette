@@ -1,19 +1,17 @@
-import { trialTime, trialVersion } from '../config'
+const enableTrial = async (trialTime: number, trialVersion: string) => {
+  const now = new Date().getTime()
 
-const enableTrial = async () => {
-  const date = new Date().getTime()
+  await figma.clientStorage.setAsync('trial_start_date', now.toString())
+  await figma.clientStorage.setAsync('trial_version', trialVersion)
+  await figma.clientStorage.setAsync('trial_time', trialTime.toString())
 
-  await figma.clientStorage
-    .setAsync('trial_start_date', date)
-    .then(() => figma.clientStorage.setAsync('trial_version', trialVersion))
-    .then(() =>
-      figma.ui.postMessage({
-        type: 'ENABLE_TRIAL',
-        id: figma.currentUser?.id ?? 'NC',
-        date: date,
-        trialTime: trialTime,
-      })
-    )
+  return figma.ui.postMessage({
+    type: 'ENABLE_TRIAL',
+    data: {
+      date: now,
+      trialTime: trialTime,
+    },
+  })
 }
 
 export default enableTrial

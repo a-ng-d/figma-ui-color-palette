@@ -1,12 +1,31 @@
-import { lang, locals } from '../../content/locals'
+import chroma from 'chroma-js'
 import {
+  Data,
   PaletteData,
   PaletteDataColorItem,
   PaletteDataShadeItem,
-} from '../../types/data'
+} from '@a_ng_d/utils-ui-color-palette'
+import { locales } from '../../content/locales'
 
-const exportJsonAmznStyleDictionary = (palette: FrameNode) => {
-  const paletteData: PaletteData = JSON.parse(palette.getPluginData('data')),
+const exportJsonAmznStyleDictionary = (id: string) => {
+  const rawPalette = figma.currentPage.getSharedPluginData(
+    'uicp',
+    `palette_${id}`
+  )
+
+  if (rawPalette === '')
+    return figma.ui.postMessage({
+      type: 'EXPORT_PALETTE_JSON',
+      data: {
+        id: '',
+        context: 'TOKENS_AMZN_STYLE_DICTIONARY',
+        code: locales.get().error.export,
+      },
+    })
+
+  const paletteData: PaletteData = new Data(
+      JSON.parse(rawPalette)
+    ).makePaletteData(),
     workingThemes =
       paletteData.themes.filter((theme) => theme.type === 'custom theme')
         .length === 0
@@ -17,12 +36,20 @@ const exportJsonAmznStyleDictionary = (palette: FrameNode) => {
       color: {},
     }
 
-  const model = (color: PaletteDataColorItem, shade: PaletteDataShadeItem) => {
+  const model = (
+    color: PaletteDataColorItem,
+    shade: PaletteDataShadeItem,
+    source: PaletteDataShadeItem
+  ) => {
     return {
-      value: shade.hex,
+      value: shade.isTransparent
+        ? chroma(source.hex)
+            .alpha(shade.alpha ?? 1)
+            .hex()
+        : shade.hex,
       comment:
         color.description !== ''
-          ? color.description + locals[lang].separator + shade.description
+          ? color.description + locales.get().separator + shade.description
           : shade.description,
     }
   }
@@ -31,36 +58,47 @@ const exportJsonAmznStyleDictionary = (palette: FrameNode) => {
     json['color'][color.name] = {}
   })
 
-  if (palette.children.length === 1) {
-    if (workingThemes[0].type === 'custom theme')
-      workingThemes.forEach((theme) => {
-        theme.colors.forEach((color) => {
-          json['color'][color.name][theme.name] = {}
-          color.shades.reverse().forEach((shade) => {
+  if (workingThemes[0].type === 'custom theme')
+    workingThemes.forEach((theme) => {
+      theme.colors.forEach((color) => {
+        const source = color.shades.find(
+          (shade) => shade.type === 'source color'
+        )
+
+        json['color'][color.name][theme.name] = {}
+        color.shades.forEach((shade) => {
+          if (shade && source)
             json['color'][color.name][theme.name][shade.name] = model(
               color,
-              shade
+              shade,
+              source
             )
-          })
         })
       })
-    else
-      workingThemes.forEach((theme) => {
-        theme.colors.forEach((color) => {
-          json['color'][color.name] = {}
-          color.shades.sort().forEach((shade) => {
-            json['color'][color.name][shade.name] = model(color, shade)
-          })
-        })
-      })
-
-    figma.ui.postMessage({
-      type: 'EXPORT_PALETTE_JSON',
-      id: figma.currentUser?.id,
-      context: 'TOKENS_AMZN_STYLE_DICTIONARY',
-      data: JSON.stringify(json, null, '  '),
     })
-  } else figma.notify(locals[lang].error.corruption)
+  else
+    workingThemes.forEach((theme) => {
+      theme.colors.forEach((color) => {
+        const source = color.shades.find(
+          (shade) => shade.type === 'source color'
+        )
+
+        json['color'][color.name] = {}
+        color.shades.forEach((shade) => {
+          if (shade && source)
+            json['color'][color.name][shade.name] = model(color, shade, source)
+        })
+      })
+    })
+
+  return figma.ui.postMessage({
+    type: 'EXPORT_PALETTE_JSON',
+    data: {
+      id: '',
+      context: 'TOKENS_AMZN_STYLE_DICTIONARY',
+      code: JSON.stringify(json, null, '  '),
+    },
+  })
 }
 
 export default exportJsonAmznStyleDictionary

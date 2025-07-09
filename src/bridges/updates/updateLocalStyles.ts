@@ -1,173 +1,153 @@
 import chroma from 'chroma-js'
+import { Data, FullConfiguration } from '@a_ng_d/utils-ui-color-palette'
+import { locales } from '../../content/locales'
 
-import { lang, locals } from '../../content/locals'
-import { PaletteData, PaletteDataThemeItem } from '../../types/data'
+const updateLocalStyles = async (id: string) => {
+  const rawPalette = figma.currentPage.getSharedPluginData(
+    'uicp',
+    `palette_${id}`
+  )
 
-const updateLocalStyles = async (palette: FrameNode) => {
-  const paletteData: PaletteData = JSON.parse(palette.getPluginData('data')),
-    workingThemes =
-      paletteData.themes.filter((theme) => theme.type === 'custom theme')
-        .length === 0
-        ? paletteData.themes.filter((theme) => theme.type === 'default theme')
-        : paletteData.themes.filter((theme) => theme.type === 'custom theme')
+  if (rawPalette === '') throw new Error(locales.get().error.unfoundPalette)
+
+  const palette = JSON.parse(rawPalette) as FullConfiguration
+
+  palette.libraryData = new Data(palette).makeLibraryData(
+    [
+      'style_id',
+      'collection_id',
+      'variable_id',
+      'mode_id',
+      'alpha',
+      'gl',
+      'description',
+    ],
+    palette.libraryData
+  )
+
   const canDeepSyncStyles = await figma.clientStorage.getAsync(
     'can_deep_sync_styles'
   )
+  const hasThemes = palette.libraryData.some(
+    (item) => !item.id.includes('00000000000')
+  )
 
-  if (palette.children.length === 1) {
-    const updatedLocalStylesStatusMessage = figma
-      .getLocalPaintStylesAsync()
-      .then((localStyles) => {
-        let i = 0,
-          j = 0,
-          k = 0
-        const messages: Array<string> = []
+  const updatedLocalStylesStatusMessage = figma
+    .getLocalPaintStylesAsync()
+    .then((localStyles) => {
+      let i = 0,
+        j = 0,
+        k = 0
+      const messages: Array<string> = []
 
-        if (canDeepSyncStyles ?? false)
-          localStyles.forEach((localStyle) => {
-            const shadeMatch = workingThemes.find(
-              (theme) =>
-                theme.colors.find(
-                  (color) =>
-                    color.shades.find(
-                      (shade) => shade.styleId === localStyle.id
-                    ) !== undefined
-                ) !== undefined
-            )
-            if (shadeMatch === undefined) {
-              localStyle.remove()
-              k++
-            }
-          })
+      if (canDeepSyncStyles ?? false)
+        localStyles.forEach((localStyle) => {
+          const hasStyleMatch = palette.libraryData.some(
+            (libraryItem) => libraryItem.styleId === localStyle.id
+          )
 
-        workingThemes.forEach((theme: PaletteDataThemeItem) => {
-          theme.colors.forEach((color) => {
-            color.shades.forEach((shade) => {
-              const name =
-                  workingThemes[0].type === 'custom theme'
-                    ? `${paletteData.name === '' ? '' : paletteData.name + '/'}${
-                        theme.name
-                      }/${color.name}/${shade.name}`
-                    : `${paletteData.name === '' ? '' : paletteData.name}/${
-                        color.name
-                      }/${shade.name}`,
-                description =
-                  color.description !== ''
-                    ? color.description +
-                      locals[lang].separator +
-                      shade.description
-                    : shade.description
-
-              if (
-                localStyles.find(
-                  (localStyle) => localStyle.id === shade.styleId
-                ) !== undefined
-              ) {
-                const styleMatch = localStyles.find(
-                  (localStyle) => localStyle.id === shade.styleId
-                )
-
-                if (styleMatch !== undefined) {
-                  if (styleMatch.name !== name) {
-                    styleMatch.name = name
-                    j++
-                  }
-
-                  if (styleMatch.description !== description) {
-                    styleMatch.description = description
-                    j++
-                  }
-
-                  if (
-                    shade.hex !==
-                    chroma([
-                      (styleMatch.paints[0] as SolidPaint).color.r * 255,
-                      (styleMatch.paints[0] as SolidPaint).color.g * 255,
-                      (styleMatch.paints[0] as SolidPaint).color.b * 255,
-                    ]).hex()
-                  ) {
-                    styleMatch.paints = [
-                      {
-                        type: 'SOLID',
-                        color: {
-                          r: shade.gl[0],
-                          g: shade.gl[1],
-                          b: shade.gl[2],
-                        },
-                      },
-                    ]
-                    j++
-                  }
-                }
-
-                j > 0 ? i++ : i
-                j = 0
-              } else if (
-                localStyles.find((localStyle) => localStyle.name === name) !==
-                undefined
-              ) {
-                const styleMatch = localStyles.find(
-                  (localStyle) => localStyle.name === name
-                )
-
-                if (styleMatch !== undefined) {
-                  if (styleMatch.name !== name) {
-                    styleMatch.name = name
-                    j++
-                  }
-
-                  if (styleMatch.description !== shade.description) {
-                    styleMatch.description = shade.description
-                    j++
-                  }
-
-                  if (
-                    shade.hex !==
-                    chroma([
-                      (styleMatch.paints[0] as SolidPaint).color.r * 255,
-                      (styleMatch.paints[0] as SolidPaint).color.g * 255,
-                      (styleMatch.paints[0] as SolidPaint).color.b * 255,
-                    ]).hex()
-                  ) {
-                    styleMatch.paints = [
-                      {
-                        type: 'SOLID',
-                        color: {
-                          r: shade.gl[0],
-                          g: shade.gl[1],
-                          b: shade.gl[2],
-                        },
-                      },
-                    ]
-                    j++
-                  }
-                }
-
-                j > 0 ? i++ : i
-                j = 0
-              }
-            })
-          })
+          if (!hasStyleMatch) {
+            localStyle.remove()
+            k++
+          }
         })
 
-        if (i > 1)
-          messages.push(`${i} ${locals[lang].info.updatedLocalStyles.plural}`)
-        else if (i === 1)
-          messages.push(locals[lang].info.updatedLocalStyles.single)
-        else messages.push(locals[lang].info.updatedLocalStyles.none)
+      palette.libraryData
+        .filter((item) => {
+          return hasThemes
+            ? !item.id.includes('00000000000')
+            : item.id.includes('00000000000')
+        })
+        .forEach((item) => {
+          const styleMatch = localStyles.find(
+            (localStyle) => localStyle.id === item.styleId
+          )
+          const path = [
+            item.paletteName,
+            item.themeName === ''
+              ? locales.get().themes.defaultName
+              : item.themeName,
+            item.colorName === ''
+              ? locales.get().colors.defaultName
+              : item.colorName,
+            item.shadeName,
+          ]
+            .filter((item) => item !== '' && item !== 'None')
+            .join('/')
+          const fill = {
+            type: 'SOLID',
+            color: {
+              r: (item.gl ?? [0, 0, 0])[0],
+              g: (item.gl ?? [0, 0, 0])[1],
+              b: (item.gl ?? [0, 0, 0])[2],
+            },
+            opacity: item.alpha ?? 1,
+          } as SolidPaint
 
-        if (k > 1)
-          messages.push(`${k} ${locals[lang].info.removedLocalStyles.plural}`)
-        else if (k === 1)
-          messages.push(locals[lang].info.removedLocalStyles.single)
-        else messages.push(locals[lang].info.removedLocalStyles.none)
+          if (styleMatch !== undefined) {
+            const styleMatchHex = chroma([
+              (styleMatch.paints[0] as SolidPaint).color.r * 255,
+              (styleMatch.paints[0] as SolidPaint).color.g * 255,
+              (styleMatch.paints[0] as SolidPaint).color.b * 255,
+            ]).hex()
+            const fillHex = chroma([
+              fill.color.r * 255,
+              fill.color.g * 255,
+              fill.color.b * 255,
+            ]).hex()
 
-        return messages.join(locals[lang].separator)
-      })
-      .catch(() => locals[lang].error.generic)
+            if (styleMatch.name !== path) {
+              styleMatch.name = path
+              j++
+            }
 
-    return await updatedLocalStylesStatusMessage
-  } else return locals[lang].error.corruption
+            if (styleMatch.description !== item.description) {
+              styleMatch.description = item.description ?? ''
+              j++
+            }
+
+            if (
+              parseFloat(styleMatch.paints[0].opacity?.toFixed(2) ?? '1') !==
+                fill.opacity ||
+              styleMatchHex !== fillHex
+            ) {
+              styleMatch.paints = [fill]
+              j++
+            }
+
+            j > 0 ? i++ : i
+            j = 0
+          }
+        })
+
+      if (i > 1)
+        messages.push(
+          locales
+            .get()
+            .info.updatedLocalStyles.plural.replace('{$1}', i.toString())
+        )
+      else if (i === 1)
+        messages.push(locales.get().info.updatedLocalStyles.single)
+      else messages.push(locales.get().info.updatedLocalStyles.none)
+
+      if (k > 1)
+        messages.push(
+          locales
+            .get()
+            .info.removedLocalStyles.plural.replace('{$1}', k.toString())
+        )
+      else if (k === 1)
+        messages.push(locales.get().info.removedLocalStyles.single)
+      else messages.push(locales.get().info.removedLocalStyles.none)
+
+      figma.saveVersionHistoryAsync(
+        `${palette.base.name} - ${locales.get().events.stylesSynced}`
+      )
+
+      return messages.join(locales.get().separator)
+    })
+
+  return updatedLocalStylesStatusMessage
 }
 
 export default updateLocalStyles

@@ -1,8 +1,8 @@
+import { presets } from '@ui-lib/stores/presets'
 import { FeatureStatus } from '@a_ng_d/figmug-utils'
-import features from '../config'
-import { lang, locals } from '../content/locals'
-import { presets } from '../stores/presets'
-import checkPlanStatus from './checks/checkPlanStatus'
+import globalConfig from '../global.config'
+import { locales } from '../content/locales'
+import checkPlanStatus from './checks/checkTrialStatus'
 
 const loadParameters = async ({ key, result }: ParameterInputEvent) => {
   switch (key) {
@@ -12,7 +12,7 @@ const loadParameters = async ({ key, result }: ParameterInputEvent) => {
       const filteredPresets = await Promise.all(
         presets.map(async (preset) => {
           const isBlocked = new FeatureStatus({
-            features: features,
+            features: globalConfig.features,
             featureName: `PRESETS_${preset.id}`,
             planStatus: planStatus,
           }).isBlocked()
@@ -32,40 +32,40 @@ const loadParameters = async ({ key, result }: ParameterInputEvent) => {
       const planStatus = (await checkPlanStatus('PARAMETERS')) ?? 'UNPAID'
       const suggestionsList = [
         new FeatureStatus({
-          features: features,
+          features: globalConfig.features,
           featureName: 'SETTINGS_COLOR_SPACE_LCH',
           planStatus: planStatus,
-          suggestion: locals[lang].settings.color.colorSpace.lch,
+          suggestion: locales.get().settings.color.colorSpace.lch,
         }).isAvailableAndBlocked(),
         new FeatureStatus({
-          features: features,
+          features: globalConfig.features,
           featureName: 'SETTINGS_COLOR_SPACE_OKLCH',
           planStatus: planStatus,
-          suggestion: locals[lang].settings.color.colorSpace.oklch,
+          suggestion: locales.get().settings.color.colorSpace.oklch,
         }).isAvailableAndBlocked(),
         new FeatureStatus({
-          features: features,
+          features: globalConfig.features,
           featureName: 'SETTINGS_COLOR_SPACE_LAB',
           planStatus: planStatus,
-          suggestion: locals[lang].settings.color.colorSpace.lab,
+          suggestion: locales.get().settings.color.colorSpace.lab,
         }).isAvailableAndBlocked(),
         new FeatureStatus({
-          features: features,
+          features: globalConfig.features,
           featureName: 'SETTINGS_COLOR_SPACE_OKLAB',
           planStatus: planStatus,
-          suggestion: locals[lang].settings.color.colorSpace.oklab,
+          suggestion: locales.get().settings.color.colorSpace.oklab,
         }).isAvailableAndBlocked(),
         new FeatureStatus({
-          features: features,
+          features: globalConfig.features,
           featureName: 'SETTINGS_COLOR_SPACE_HSL',
           planStatus: planStatus,
-          suggestion: locals[lang].settings.color.colorSpace.hsl,
+          suggestion: locales.get().settings.color.colorSpace.hsl,
         }).isAvailableAndBlocked(),
         new FeatureStatus({
-          features: features,
+          features: globalConfig.features,
           featureName: 'SETTINGS_COLOR_SPACE_HSLUV',
           planStatus: planStatus,
-          suggestion: locals[lang].settings.color.colorSpace.hsluv,
+          suggestion: locales.get().settings.color.colorSpace.hsluv,
         }).isAvailableAndBlocked(),
       ].filter((n) => n) as Array<string>
 
@@ -77,22 +77,22 @@ const loadParameters = async ({ key, result }: ParameterInputEvent) => {
       const planStatus = (await checkPlanStatus('PARAMETERS')) ?? 'UNPAID'
       const suggestionsList = [
         new FeatureStatus({
-          features: features,
+          features: globalConfig.features,
           featureName: 'VIEWS_PALETTE_WITH_PROPERTIES',
           planStatus: planStatus,
-          suggestion: locals[lang].settings.global.views.detailed,
+          suggestion: locales.get().settings.global.views.detailed,
         }).isAvailableAndBlocked(),
         new FeatureStatus({
-          features: features,
+          features: globalConfig.features,
           featureName: 'VIEWS_PALETTE',
           planStatus: planStatus,
-          suggestion: locals[lang].settings.global.views.simple,
+          suggestion: locales.get().settings.global.views.simple,
         }).isAvailableAndBlocked(),
         new FeatureStatus({
-          features: features,
+          features: globalConfig.features,
           featureName: 'VIEWS_SHEET',
           planStatus: planStatus,
-          suggestion: locals[lang].settings.global.views.sheet,
+          suggestion: locales.get().settings.global.views.sheet,
         }).isAvailableAndBlocked(),
       ].filter((n) => n) as Array<string>
 

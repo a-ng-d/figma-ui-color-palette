@@ -2,25 +2,35 @@ export default class Paragraph {
   private name: string
   private content: string
   private fontSize: number
+  private fontFamily: 'Martian Mono' | 'Lexend'
   private type: 'FILL' | 'FIXED'
   private width?: number
   private nodeText: TextNode | null
-  private node: FrameNode | null
+  node: FrameNode
 
-  constructor(
-    name: string,
-    content: string,
-    type: 'FILL' | 'FIXED',
-    width?: number,
-    fontSize = 12
-  ) {
+  constructor({
+    name,
+    content,
+    type,
+    width,
+    fontSize = 12,
+    fontFamily = 'Martian Mono',
+  }: {
+    name: string
+    content: string
+    type: 'FILL' | 'FIXED'
+    width?: number
+    fontSize?: number
+    fontFamily?: 'Martian Mono' | 'Lexend'
+  }) {
     this.name = name
     this.content = content
     this.fontSize = fontSize
+    this.fontFamily = fontFamily
     this.type = type
     this.width = width
     this.nodeText = null
-    this.node = null
+    this.node = this.makeNode()
   }
 
   makeNodeText = () => {
@@ -29,7 +39,7 @@ export default class Paragraph {
     this.nodeText.name = '_text'
     this.nodeText.characters = this.content
     this.nodeText.fontName = {
-      family: 'Martian Mono',
+      family: this.fontFamily,
       style: 'Medium',
     }
     this.nodeText.fontSize = this.fontSize
@@ -41,9 +51,9 @@ export default class Paragraph {
       {
         type: 'SOLID',
         color: {
-          r: 16 / 255,
-          g: 35 / 255,
-          b: 37 / 255,
+          r: 0,
+          g: 0,
+          b: 0,
         },
       },
     ]
@@ -66,6 +76,17 @@ export default class Paragraph {
           r: 1,
           g: 1,
           b: 1,
+        },
+      },
+    ]
+    this.node.strokes = [
+      {
+        type: 'SOLID',
+        opacity: 0.05,
+        color: {
+          r: 0,
+          g: 0,
+          b: 0,
         },
       },
     ]

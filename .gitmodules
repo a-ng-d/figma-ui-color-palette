@@ -1,0 +1,4 @@
+[submodule "packages/ui-ui-color-palette"]
+	path = packages/ui-ui-color-palette
+	url = https://github.com/a-ng-d/ui-ui-color-palette.git
+	branch = main

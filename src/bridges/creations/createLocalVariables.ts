@@ -1,208 +1,267 @@
+import {
+  Data,
+  FullConfiguration,
+  LibraryData,
+} from '@a_ng_d/utils-ui-color-palette'
+import { getJsonSize } from '../../utils/getSize'
+import { locales } from '../../content/locales'
 import LocalVariable from '../../canvas/LocalVariable'
-import { lang, locals } from '../../content/locals'
-import { PaletteData } from '../../types/data'
 
-const createLocalVariables = async (palette: SceneNode) => {
-  palette = figma.currentPage.selection[0] as FrameNode
+const createLocalVariables = async (id: string) => {
+  const rawPalette = figma.currentPage.getSharedPluginData(
+    'uicp',
+    `palette_${id}`
+  )
 
-  const paletteData: PaletteData = JSON.parse(palette.getPluginData('data'))
+  if (rawPalette === undefined || rawPalette === null)
+    throw new Error(locales.get().error.unfoundPalette)
 
-  if (palette.children.length === 1) {
-    const name: string =
-        palette.getPluginData('name') === ''
-          ? locals[lang].name
-          : palette.getPluginData('name'),
-      themesList =
-        paletteData.themes
-          .map((theme) => {
-            if (theme.type === 'custom theme')
-              return {
-                name: theme.name,
-                id: theme.modeId,
-              }
-          })
-          .slice(1) ?? []
+  const palette = JSON.parse(rawPalette) as FullConfiguration
 
-    const collection = await figma.variables
-      .getLocalVariableCollectionsAsync()
-      .then((collections) =>
-        collections.find(
-          (collection) => collection.id === paletteData.collectionId
-        )
+  palette.libraryData = new Data(palette).makeLibraryData(
+    [
+      'style_id',
+      'collection_id',
+      'variable_id',
+      'mode_id',
+      'alpha',
+      'gl',
+      'description',
+    ],
+    palette.libraryData
+  )
+
+  const name: string =
+    palette.base.name === '' ? locales.get().name : palette.base.name
+
+  const collection = await figma.variables
+    .getLocalVariableCollectionsAsync()
+    .then((collections) =>
+      collections.find(
+        (collection) => collection.id === palette.libraryData[0].collectionId
       )
-      .then(async (collection) => {
-        if (collection === undefined) {
-          collection = new LocalVariable().makeCollection(name)
-          paletteData.collectionId = collection.id
+    )
+    .then(async (collection) => {
+      if (collection === undefined) {
+        collection = new LocalVariable().makeCollection(name)
+        palette.libraryData.forEach((item) => {
+          item.collectionId = collection?.id
+        })
+      }
+      return collection
+    })
 
-          figma.ui.postMessage({
-            type: 'NEW_VARIABLE_COLLECTION',
-            data: {
-              id: collection.id,
-              name: collection.name,
-            },
-          })
-        }
-        return collection
-      })
-
-    const createLocalVariablesStatusMessage = figma.variables
-      .getLocalVariablesAsync()
-      .then((allLocalVariables) =>
-        allLocalVariables.filter(
-          async (localVariable) =>
-            localVariable.variableCollectionId === collection?.id
-        )
+  const createLocalVariablesStatusMessage = figma.variables
+    .getLocalVariablesAsync()
+    .then((allLocalVariables) =>
+      allLocalVariables.filter(
+        async (localVariable) =>
+          localVariable.variableCollectionId === collection?.id
       )
-      .then((localVariables) => {
-        let i = 0,
-          j = 0
-        const messages: Array<string> = []
-        let createdVariables: Array<Variable> = []
+    )
+    .then((localVariables) => {
+      let i = 0,
+        j = 0,
+        k = 0
+      const messages: Array<string> = []
+      const createdVariables: Array<Variable> = []
 
-        // Create variables
-        paletteData.themes
-          .filter((theme) => theme.type === 'default theme')
-          .forEach((theme) => {
-            theme.colors.forEach((color) => {
-              color.shades.forEach((shade) => {
-                let isRemoved = false
-                const boundVariable = localVariables.find(
-                  (localVariable) => localVariable.id === shade.variableId
-                )
-                if (boundVariable?.variableCollectionId !== collection?.id) {
-                  boundVariable?.remove()
-                  isRemoved = true
-                }
-                if (boundVariable === undefined || isRemoved) {
-                  const variable = new LocalVariable().makeVariable(
-                    `${color.name}/${shade.name}`,
-                    collection,
-                    color.description
-                  )
-                  shade.variableId = variable.id
-                  createdVariables.push(variable)
-                  if (themesList.length === 0 && collection !== undefined) {
-                    variable.setValueForMode(collection.modes[0].modeId, {
-                      r: shade.gl[0],
-                      g: shade.gl[1],
-                      b: shade.gl[2],
-                    })
-                    theme.modeId = collection?.defaultModeId
-                  }
-                  i++
-                } else if (
-                  themesList.length === 0 &&
-                  collection?.modes[0].name !== 'Mode 1' &&
-                  collection !== undefined
-                ) {
-                  collection.renameMode(collection.defaultModeId, 'Mode 1')
-                  paletteData.themes[0].modeId = collection.defaultModeId
-                }
+      // Create variables
+      palette.libraryData
+        .filter((item) => item.id.includes('00000000000'))
+        .forEach((item) => {
+          let isRemoved = false
+          const boundVariable = localVariables.find(
+            (localVariable) => localVariable.id === item.variableId
+          )
+          const path = [
+            item.colorName === ''
+              ? locales.get().colors.defaultName
+              : item.colorName,
+            item.shadeName,
+          ]
+            .filter((item) => item !== '' && item !== 'None')
+            .join('/')
+
+          if (boundVariable?.variableCollectionId !== collection?.id) {
+            boundVariable?.remove()
+            isRemoved = true
+          }
+          if (boundVariable === undefined || isRemoved) {
+            const variable = new LocalVariable().makeVariable(
+              path,
+              collection,
+              item.description ?? ''
+            )
+            item.variableId = variable.id
+            createdVariables.push(variable)
+            if (collection !== undefined) {
+              variable.setValueForMode(collection.modes[0].modeId, {
+                r: (item.gl ?? [0, 0, 0])[0],
+                g: (item.gl ?? [0, 0, 0])[1],
+                b: (item.gl ?? [0, 0, 0])[2],
+                a: item.alpha ?? 1,
               })
-            })
-          })
-
-        // Create modes
-        if (themesList.length > 0)
-          themesList.forEach((themeItem) => {
-            if (themeItem !== undefined && collection !== undefined) {
-              const theme = paletteData.themes.find(
-                (theme) => theme.name === themeItem.name
-              )
-              if (collection?.modes[0].name === 'Mode 1') {
-                collection.renameMode(collection.defaultModeId, themeItem.name)
-                themeItem.id = collection.defaultModeId
-                theme !== undefined && (theme.modeId = collection.defaultModeId)
-              } else if (
-                collection.modes.find(
-                  (mode) => mode.modeId === themeItem.id
-                ) === undefined
-              )
-                try {
-                  const modeId = collection.addMode(themeItem.name)
-                  themeItem.id = modeId
-                  theme !== undefined && (theme.modeId = modeId)
-                  j++
-                } catch {
-                  figma.notify(locals[lang].warning.tooManyThemesToCreateModes)
-                }
+              item.modeId = collection.defaultModeId
             }
-          })
+            i++
+          }
+          if (
+            collection?.modes[0].name !== 'Mode 1' &&
+            collection !== undefined
+          )
+            collection.renameMode(collection.defaultModeId, 'Mode 1')
+        })
 
-        // Set values
-        themesList.forEach((themeItem) => {
-          if (collection !== undefined && themeItem !== undefined) {
-            if (createdVariables.length === 0) createdVariables = localVariables
-            createdVariables.forEach((variable) => {
-              const rightShade = paletteData.themes
-                .find((theme) => theme.name === themeItem?.name)
-                ?.colors.find(
-                  (color) => color.name === variable.name.split('/')[0]
-                )
-                ?.shades.find(
-                  (shade) => shade.name === variable.name.split('/')[1]
-                )
-              if (rightShade !== undefined && collection !== undefined)
-                rightShade.variableId = variable.id
+      // Create modes
+      palette.libraryData
+        .filter((item) => !item.id.includes('00000000000'))
+        .reduce((acc: Array<LibraryData>, item) => {
+          const [themeId] = item.id.split(':')
+          const lastItem = acc[acc.length - 1]
+          const themeName =
+            item.themeName === ''
+              ? locales.get().themes.defaultName
+              : item.themeName
+
+          if (collection !== undefined) {
+            const hasModeMatch = collection.modes.some(
+              (mode) => mode.modeId === item.modeId
+            )
+            const isPassed = acc.some((accItem) => {
+              const [accThemeId] = accItem.id.split(':')
+              return accThemeId === themeId
             })
+
+            if (isPassed) item.modeId = lastItem.modeId
+            if (!isPassed && collection?.modes[0].name === 'Mode 1') {
+              collection.renameMode(collection.defaultModeId, themeName)
+              item.modeId = collection.defaultModeId
+            } else if (!isPassed && !hasModeMatch)
+              try {
+                const modeId = collection.addMode(themeName)
+                item.modeId = modeId
+                j++
+              } catch {
+                k++
+              }
+          }
+          return (acc = [...acc, item])
+        }, [])
+
+      // Set values
+      palette.libraryData
+        .filter((item) => !item.id.includes('00000000000'))
+        .forEach((item) => {
+          const path = [
+            item.colorName === ''
+              ? locales.get().colors.defaultName
+              : item.colorName,
+            item.shadeName,
+          ]
+            .filter((item) => item !== '' && item !== 'None')
+            .join('/')
+
+          if (collection !== undefined) {
+            const variableMatch = createdVariables.find(
+              (variable) => variable.name === path
+            )
+            const hasModeMatch = collection.modes.some(
+              (mode) => mode.modeId === item.modeId
+            )
+
+            if (
+              variableMatch !== undefined &&
+              item.modeId !== undefined &&
+              item.gl !== undefined &&
+              hasModeMatch
+            ) {
+              variableMatch.setValueForMode(item.modeId, {
+                r: item.gl[0],
+                g: item.gl[1],
+                b: item.gl[2],
+                a: item.alpha ?? 1,
+              })
+
+              item.variableId = variableMatch.id
+            }
           }
         })
 
-        palette.setPluginData('data', JSON.stringify(paletteData))
+      palette.libraryData = new Data(palette).makeLibraryData(
+        ['style_id', 'collection_id', 'variable_id', 'mode_id'],
+        palette.libraryData
+      )
 
-        if (i > 1 && j > 1)
-          messages.push(
-            locals[lang].info.createdVariablesAndModes.pluralPlural
-              .replace('$1', i)
-              .replace('$2', j)
-          )
-        else if (i === 1 && j === 1)
-          messages.push(locals[lang].info.createdVariablesAndModes.singleSingle)
-        else if (i === 0 && j === 0)
-          messages.push(locals[lang].info.createdVariablesAndModes.noneNone)
-        else if (i > 1 && j === 1)
-          messages.push(
-            locals[lang].info.createdVariablesAndModes.pluralSingle.replace(
-              '$1',
-              i
-            )
-          )
-        else if (i === 1 && j > 1)
-          messages.push(
-            locals[lang].info.createdVariablesAndModes.singlePlural.replace(
-              '$1',
-              j
-            )
-          )
-        else if (i > 1 && j === 0)
-          messages.push(
-            locals[lang].info.createdVariablesAndModes.pluralNone.replace(
-              '$1',
-              i
-            )
-          )
-        else if (i === 0 && j > 1)
-          messages.push(
-            locals[lang].info.createdVariablesAndModes.nonePlural.replace(
-              '$1',
-              j
-            )
-          )
-        else if (i === 1 && j === 0)
-          messages.push(locals[lang].info.createdVariablesAndModes.singleNone)
-        else if (i === 0 && j === 1)
-          messages.push(locals[lang].info.createdVariablesAndModes.noneSingle)
+      if (getJsonSize(palette) < 100)
+        figma.currentPage.setSharedPluginData(
+          'uicp',
+          `palette_${id}`,
+          JSON.stringify(palette)
+        )
+      else throw new Error(locales.get().error.paletteSizeExceeded)
 
-        if (themesList.length > 4)
-          figma.notify(locals[lang].warning.tooManyThemesToCreateModes)
+      if (i > 1 && j > 1)
+        messages.push(
+          locales
+            .get()
+            .info.createdVariablesAndModes.pluralPlural.replace(
+              '{$1}',
+              i.toString()
+            )
+            .replace('{$2}', j.toString())
+        )
+      else if (i === 1 && j === 1)
+        messages.push(locales.get().info.createdVariablesAndModes.singleSingle)
+      else if (i === 0 && j === 0)
+        messages.push(locales.get().info.createdVariablesAndModes.noneNone)
+      else if (i > 1 && j === 1)
+        messages.push(
+          locales
+            .get()
+            .info.createdVariablesAndModes.pluralSingle.replace(
+              '{$1}',
+              i.toString()
+            )
+        )
+      else if (i === 1 && j > 1)
+        messages.push(
+          locales
+            .get()
+            .info.createdVariablesAndModes.singlePlural.replace(
+              '{$1}',
+              j.toString()
+            )
+        )
+      else if (i > 1 && j === 0)
+        messages.push(
+          locales
+            .get()
+            .info.createdVariablesAndModes.pluralNone.replace(
+              '{$1}',
+              i.toString()
+            )
+        )
+      else if (i === 0 && j > 1)
+        messages.push(
+          locales
+            .get()
+            .info.createdVariablesAndModes.nonePlural.replace(
+              '{$1}',
+              j.toString()
+            )
+        )
+      else if (i === 1 && j === 0)
+        messages.push(locales.get().info.createdVariablesAndModes.singleNone)
+      else if (i === 0 && j === 1)
+        messages.push(locales.get().info.createdVariablesAndModes.noneSingle)
 
-        return messages.join(locals[lang].separator)
-      })
-      .catch(() => locals[lang].error.generic)
+      if (k > 1) messages.push(locales.get().warning.tooManyThemesToCreateModes)
 
-    return await createLocalVariablesStatusMessage
-  } else return locals[lang].error.corruption
+      return messages.join(locales.get().separator)
+    })
+
+  return await createLocalVariablesStatusMessage
 }
 
 export default createLocalVariables

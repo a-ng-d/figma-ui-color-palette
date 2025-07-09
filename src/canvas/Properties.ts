@@ -1,22 +1,24 @@
-import { HexModel } from '@a_ng_d/figmug-ui'
 import chroma from 'chroma-js'
-
-import { lang, locals } from '../content/locals'
 import {
+  Channel,
+  Color,
   ColorSpaceConfiguration,
+  Contrast,
+  HexModel,
+  TextColorsThemeConfiguration,
   VisionSimulationModeConfiguration,
-} from '../types/configurations'
-import { TextColorsThemeHexModel } from '../types/models'
-import Color from '../utils/Color'
-import Contrast from '../utils/Contrast'
+} from '@a_ng_d/utils-ui-color-palette'
+import { locales } from '../content/locales'
 import Tag from './Tag'
 
 export default class Properties {
   private name: string
-  private rgb: [number, number, number]
+  private rgb: Channel
+  private alpha?: number
+  private mixedColor?: Channel
   private colorSpace: ColorSpaceConfiguration
   private visionSimulationMode: VisionSimulationModeConfiguration
-  private textColorsTheme: TextColorsThemeHexModel
+  private textColorsTheme: TextColorsThemeConfiguration<'HEX'>
   private hex: HexModel
   private lch: Array<number>
   private oklch: Array<number>
@@ -24,11 +26,14 @@ export default class Properties {
   private oklab: Array<number>
   private hsl: Array<number>
   private hsluv: Array<number>
+  private lightTextColor: Channel
+  private darkTextColor: Channel
+  private lightTextColorContrast: Contrast
+  private darkTextColorContrast: Contrast
   private nodeTopProps: FrameNode | null
   private nodeBottomProps: FrameNode | null
   private nodeBaseProps: FrameNode | null
   private nodeContrastScoresProps: FrameNode | null
-  private nodeProperties: TextNode | null
   private nodeDetailedBaseProps: FrameNode | null
   private nodeDetailedWCAGScoresProps: FrameNode | null
   private nodeDetailedAPCAScoresProps: FrameNode | null
@@ -36,20 +41,28 @@ export default class Properties {
   private nodeLeftColumn: FrameNode | null
   private nodeRightColumn: FrameNode | null
   private node: FrameNode | null
-  private lightTextColor: [number, number, number]
-  private darkTextColor: [number, number, number]
-  private lightTextColorContrast: Contrast
-  private darkTextColorContrast: Contrast
 
-  constructor(
-    name: string,
-    rgb: [number, number, number],
-    colorSpace: ColorSpaceConfiguration,
-    visionSimulationMode: VisionSimulationModeConfiguration,
-    textColorsTheme: TextColorsThemeHexModel
-  ) {
+  constructor({
+    name,
+    rgb,
+    alpha,
+    mixedColor,
+    colorSpace,
+    visionSimulationMode,
+    textColorsTheme,
+  }: {
+    name: string
+    rgb: Channel
+    alpha?: number
+    mixedColor?: Channel
+    colorSpace: ColorSpaceConfiguration
+    visionSimulationMode: VisionSimulationModeConfiguration
+    textColorsTheme: TextColorsThemeConfiguration<'HEX'>
+  }) {
     this.name = name
     this.rgb = rgb
+    this.alpha = alpha
+    this.mixedColor = mixedColor
     this.colorSpace = colorSpace
     this.visionSimulationMode = visionSimulationMode
     this.textColorsTheme = textColorsTheme
@@ -63,11 +76,26 @@ export default class Properties {
       sourceColor: rgb,
       visionSimulationMode: this.visionSimulationMode,
     }).getHsluv()
+    this.lightTextColor = new Color({
+      sourceColor: chroma(this.textColorsTheme.lightColor).rgb(),
+      visionSimulationMode: this.visionSimulationMode,
+    }).setColor() as Channel
+    this.darkTextColor = new Color({
+      sourceColor: chroma(this.textColorsTheme.darkColor).rgb(),
+      visionSimulationMode: this.visionSimulationMode,
+    }).setColor() as Channel
+    this.lightTextColorContrast = new Contrast({
+      backgroundColor: this.alpha !== undefined ? this.mixedColor : this.rgb,
+      textColor: chroma(this.lightTextColor).hex(),
+    })
+    this.darkTextColorContrast = new Contrast({
+      backgroundColor: this.alpha !== undefined ? this.mixedColor : this.rgb,
+      textColor: chroma(this.darkTextColor).hex(),
+    })
     this.nodeTopProps = null
     this.nodeBottomProps = null
     this.nodeBaseProps = null
     this.nodeContrastScoresProps = null
-    this.nodeProperties = null
     this.nodeDetailedBaseProps = null
     this.nodeDetailedWCAGScoresProps = null
     this.nodeDetailedAPCAScoresProps = null
@@ -75,20 +103,6 @@ export default class Properties {
     this.nodeLeftColumn = null
     this.nodeRightColumn = null
     this.node = null
-    this.lightTextColor = new Color({
-      visionSimulationMode: this.visionSimulationMode,
-    }).simulateColorBlindRgb(chroma(this.textColorsTheme.lightColor).rgb())
-    this.darkTextColor = new Color({
-      visionSimulationMode: this.visionSimulationMode,
-    }).simulateColorBlindRgb(chroma(this.textColorsTheme.darkColor).rgb())
-    this.lightTextColorContrast = new Contrast({
-      backgroundColor: this.rgb,
-      textColor: chroma(this.lightTextColor).hex(),
-    })
-    this.darkTextColorContrast = new Contrast({
-      backgroundColor: this.rgb,
-      textColor: chroma(this.darkTextColor).hex(),
-    })
   }
 
   makeNodeTopProps = () => {
@@ -129,6 +143,7 @@ export default class Properties {
     this.nodeBaseProps = figma.createFrame()
     this.nodeBaseProps.name = '_base'
     this.nodeBaseProps.fills = []
+    this.nodeBaseProps.clipsContent = false
 
     // Layout
     this.nodeBaseProps.layoutMode = 'VERTICAL'
@@ -192,6 +207,15 @@ export default class Properties {
     )
     this.nodeBaseProps.appendChild(basePropViaColorSpace as FrameNode)
 
+    if (this.alpha !== undefined) {
+      const basePropViaAlpha = new Tag({
+        name: '_alpha',
+        content: `A ${this.alpha.toString()}`,
+      }).makeNodeTag()
+
+      this.nodeBaseProps.appendChild(basePropViaAlpha as FrameNode)
+    }
+
     return this.nodeBaseProps
   }
 
@@ -222,7 +246,6 @@ export default class Properties {
     const nodeWCAGLightProp = new Tag({
         name: '_wcag21-light',
         content: wcagLightContrast,
-        isCompact: true,
       }).makeNodeTagwithIndicator(chroma(this.lightTextColor).gl()),
       nodeWCAGLightScore = new Tag({
         name: '_wcag21-light-score',
@@ -235,7 +258,6 @@ export default class Properties {
       nodeWCAGDarkProp = new Tag({
         name: '_wcag21-dark',
         content: wcagDarkContrast,
-        isCompact: true,
       }).makeNodeTagwithIndicator(chroma(this.darkTextColor).gl()),
       nodeWCAGDarkScore = new Tag({
         name: '_wcag21-dark-score',
@@ -263,7 +285,6 @@ export default class Properties {
     const nodeAPCALightProp = new Tag({
         name: '_apca-light',
         content: `Lc ${apcaLightContrast}`,
-        isCompact: true,
       }).makeNodeTagwithIndicator(chroma(this.lightTextColor).gl()),
       nodeAPCALightScore = new Tag({
         name: '_apca-light-score',
@@ -276,7 +297,6 @@ export default class Properties {
       nodeAPCADarkProp = new Tag({
         name: '_apca-dark',
         content: `Lc ${apcaDarkContrast}`,
-        isCompact: true,
       }).makeNodeTagwithIndicator(chroma(this.darkTextColor).gl()),
       nodeAPCADarkScore = new Tag({
         name: '_apca-dark-score',
@@ -359,7 +379,7 @@ export default class Properties {
     this.nodeDetailedBaseProps.appendChild(
       new Tag({
         name: '_title',
-        content: locals[lang].paletteProperties.base,
+        content: locales.get().paletteProperties.base,
         fontSize: 10,
       }).makeNodeTag()
     )
@@ -370,6 +390,15 @@ export default class Properties {
       }).makeNodeTag()
     )
     this.nodeDetailedBaseProps.appendChild(basePropViaColorSpace as FrameNode)
+
+    if (this.alpha !== undefined) {
+      const basePropViaAlpha = new Tag({
+        name: '_alpha',
+        content: `A ${this.alpha.toString()}`,
+      }).makeNodeTag()
+
+      this.nodeDetailedBaseProps.appendChild(basePropViaAlpha as FrameNode)
+    }
 
     return this.nodeDetailedBaseProps
   }
@@ -398,7 +427,6 @@ export default class Properties {
     const nodeWCAGLightProp = new Tag({
         name: '_wcag21-light',
         content: wcagLightContrast,
-        isCompact: true,
       }).makeNodeTagwithIndicator(chroma(this.lightTextColor).gl()),
       nodeWCAGLightScore = new Tag({
         name: '_wcag21-light-score',
@@ -411,7 +439,6 @@ export default class Properties {
       nodeWCAGDarkProp = new Tag({
         name: '_wcag21-dark',
         content: wcagDarkContrast,
-        isCompact: true,
       }).makeNodeTagwithIndicator(chroma(this.darkTextColor).gl()),
       nodeWCAGDarkScore = new Tag({
         name: '_wcag21-dark-score',
@@ -428,7 +455,7 @@ export default class Properties {
     this.nodeDetailedWCAGScoresProps.appendChild(
       new Tag({
         name: '_title',
-        content: locals[lang].paletteProperties.wcag,
+        content: locales.get().paletteProperties.wcag,
         fontSize: 10,
       }).makeNodeTag()
     )
@@ -468,7 +495,6 @@ export default class Properties {
     const nodeAPCALightProp = new Tag({
         name: '_apca-light',
         content: `Lc ${apcaLightContrast}`,
-        isCompact: true,
       }).makeNodeTagwithIndicator(chroma(this.lightTextColor).gl()),
       nodeAPCALightScore = new Tag({
         name: '_apca-light-score',
@@ -481,7 +507,6 @@ export default class Properties {
       nodeAPCADarkProp = new Tag({
         name: '_apca-dark',
         content: `Lc ${apcaDarkContrast}`,
-        isCompact: true,
       }).makeNodeTagwithIndicator(chroma(this.darkTextColor).gl()),
       nodeAPCADarkScore = new Tag({
         name: '_apca-dark-score',
@@ -498,76 +523,75 @@ export default class Properties {
     this.nodeDetailedAPCAScoresProps.appendChild(
       new Tag({
         name: '_title',
-        content: locals[lang].paletteProperties.apca,
+        content: locales.get().paletteProperties.apca,
         fontSize: 10,
       }).makeNodeTag()
     )
-    this.nodeDetailedAPCAScoresProps.appendChild(
-      this.makeNodeColumns(
-        [
-          nodeAPCALightProp,
-          new Tag({
-            name: '_minimum-font-sizes',
-            content: locals[lang].paletteProperties.fontSize,
-          }).makeNodeTag(),
-          new Tag({
-            name: '_200-light',
-            content: `${minimumLightFontSize[2]}pt (Extra-Light 200)`,
-          }).makeNodeTag(),
-          new Tag({
-            name: '_300-light',
-            content: `${minimumLightFontSize[3]}pt (Light 300)`,
-          }).makeNodeTag(),
-          new Tag({
-            name: '_400-light',
-            content: `${minimumLightFontSize[4]}pt (Regular 400)`,
-          }).makeNodeTag(),
-          new Tag({
-            name: '_500-light',
-            content: `${minimumLightFontSize[5]}pt (Medium 500)`,
-          }).makeNodeTag(),
-          new Tag({
-            name: '_500-light',
-            content: `${minimumLightFontSize[6]}pt (Semi-Bold 600)`,
-          }).makeNodeTag(),
-          new Tag({
-            name: '_700-light',
-            content: `${minimumLightFontSize[7]}pt (Bold 700)`,
-          }).makeNodeTag(),
-        ],
-        [
-          nodeAPCADarkProp,
-          new Tag({
-            name: '_minimum-font-sizes',
-            content: locals[lang].paletteProperties.fontSize,
-          }).makeNodeTag(),
-          new Tag({
-            name: '_200-dark',
-            content: `${minimumDarkFontSize[2]}pt (Extra-Light 200)`,
-          }).makeNodeTag(),
-          new Tag({
-            name: '_300-dark',
-            content: `${minimumDarkFontSize[3]}pt (Light 300)`,
-          }).makeNodeTag(),
-          new Tag({
-            name: '_400-dark',
-            content: `${minimumDarkFontSize[4]}pt (Regular 400)`,
-          }).makeNodeTag(),
-          new Tag({
-            name: '_500-dark',
-            content: `${minimumDarkFontSize[5]}pt (Medium 500)`,
-          }).makeNodeTag(),
-          new Tag({
-            name: '_600-dark',
-            content: `${minimumDarkFontSize[6]}pt (Semi-Bold 600)`,
-          }).makeNodeTag(),
-          new Tag({
-            name: '_700-dark',
-            content: `${minimumDarkFontSize[7]}pt (Bold 700)`,
-          }).makeNodeTag(),
-        ]
-      )
+    const columnsNode = this.makeNodeColumns(
+      [
+        nodeAPCALightProp,
+        new Tag({
+          name: '_minimum-font-sizes',
+          content: locales.get().paletteProperties.fontSize,
+        }).makeNodeTag(),
+        new Tag({
+          name: '_200-light',
+          content: `${minimumLightFontSize[2]}pt (Extra-Light 200)`,
+        }).makeNodeTag(),
+        new Tag({
+          name: '_300-light',
+          content: `${minimumLightFontSize[3]}pt (Light 300)`,
+        }).makeNodeTag(),
+        new Tag({
+          name: '_400-light',
+          content: `${minimumLightFontSize[4]}pt (Regular 400)`,
+        }).makeNodeTag(),
+        new Tag({
+          name: '_500-light',
+          content: `${minimumLightFontSize[5]}pt (Medium 500)`,
+        }).makeNodeTag(),
+        new Tag({
+          name: '_500-light',
+          content: `${minimumLightFontSize[6]}pt (Semi-Bold 600)`,
+        }).makeNodeTag(),
+        new Tag({
+          name: '_700-light',
+          content: `${minimumLightFontSize[7]}pt (Bold 700)`,
+        }).makeNodeTag(),
+      ],
+      [
+        nodeAPCADarkProp,
+        new Tag({
+          name: '_minimum-font-sizes',
+          content: locales.get().paletteProperties.fontSize,
+        }).makeNodeTag(),
+        new Tag({
+          name: '_200-dark',
+          content: `${minimumDarkFontSize[2]}pt (Extra-Light 200)`,
+        }).makeNodeTag(),
+        new Tag({
+          name: '_300-dark',
+          content: `${minimumDarkFontSize[3]}pt (Light 300)`,
+        }).makeNodeTag(),
+        new Tag({
+          name: '_400-dark',
+          content: `${minimumDarkFontSize[4]}pt (Regular 400)`,
+        }).makeNodeTag(),
+        new Tag({
+          name: '_500-dark',
+          content: `${minimumDarkFontSize[5]}pt (Medium 500)`,
+        }).makeNodeTag(),
+        new Tag({
+          name: '_600-dark',
+          content: `${minimumDarkFontSize[6]}pt (Semi-Bold 600)`,
+        }).makeNodeTag(),
+        new Tag({
+          name: '_700-dark',
+          content: `${minimumDarkFontSize[7]}pt (Bold 700)`,
+        }).makeNodeTag(),
+      ]
     )
+    this.nodeDetailedAPCAScoresProps.appendChild(columnsNode)
 
     return this.nodeDetailedAPCAScoresProps
   }
@@ -624,13 +648,16 @@ export default class Properties {
     this.node.itemSpacing = 16
 
     // Insert
-    this.node.appendChild(
-      this.makeNodeColumns(
-        [this.makeNodeDetailedBaseProps()],
-        [this.makeDetailedWCAGScoresProps()]
-      )
+    const detailedBaseProps = this.makeNodeDetailedBaseProps()
+    const detailedWCAGScoresProps = this.makeDetailedWCAGScoresProps()
+    const detailedAPCAScoresProps = this.makeNodeDetailedAPCAScoresProps()
+    const columnsNode = this.makeNodeColumns(
+      [detailedBaseProps],
+      [detailedWCAGScoresProps]
     )
-    this.node.appendChild(this.makeNodeDetailedAPCAScoresProps())
+
+    this.node.appendChild(columnsNode)
+    this.node.appendChild(detailedAPCAScoresProps)
 
     return this.node
   }
@@ -650,7 +677,11 @@ export default class Properties {
     this.node.primaryAxisAlignItems = 'SPACE_BETWEEN'
 
     // Insert
-    this.node.appendChild(this.makeNodeTopProps())
+    const nodeTopPropsNode = this.makeNodeTopProps()
+    const nodeBasePropsNode = this.makeNodeBaseProps()
+    const nodeBottomPropsNode = this.makeNodeBottomProps()
+
+    this.node.appendChild(nodeTopPropsNode)
     this.nodeTopProps?.appendChild(
       new Tag({
         name: '_scale',
@@ -658,8 +689,8 @@ export default class Properties {
         fontSize: 10,
       }).makeNodeTag()
     )
-    this.nodeTopProps?.appendChild(this.makeNodeBaseProps())
-    this.node.appendChild(this.makeNodeBottomProps())
+    this.nodeTopProps?.appendChild(nodeBasePropsNode)
+    this.node.appendChild(nodeBottomPropsNode)
 
     return this.node
   }

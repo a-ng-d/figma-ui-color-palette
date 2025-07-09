@@ -1,98 +1,92 @@
-import { PaletteNode } from 'src/types/nodes'
-import Colors from '../../canvas/Colors'
-import { lang, locals } from '../../content/locals'
-import setPaletteName from '../../utils/setPaletteName'
-import {
-  currentSelection,
-  isSelectionChanged,
-  previousSelection,
-} from '../processSelection'
+import { Data, FullConfiguration } from '@a_ng_d/utils-ui-color-palette'
+import { getJsonSize } from '../../utils/getSize'
+import { PaletteMessage } from '../../types/messages'
+import { locales } from '../../content/locales'
 
-interface Item {
-  key: string
-  value: boolean | object | string
-}
+const updatePalette = async ({
+  msg,
+  isAlreadyUpdated = false,
+  shouldLoadPalette = true,
+}: {
+  msg: PaletteMessage
+  isAlreadyUpdated?: boolean
+  shouldLoadPalette?: boolean
+}) => {
+  const now = new Date().toISOString()
+  const palette: FullConfiguration = JSON.parse(
+    figma.currentPage.getSharedPluginData('uicp', `palette_${msg.id}`) ?? '{}'
+  )
 
-const updatePalette = async (msg: Array<Item>) => {
-  const palette = isSelectionChanged
-    ? (previousSelection?.[0] as FrameNode)
-    : (currentSelection[0] as FrameNode)
+  msg.items.forEach((item) => {
+    const flatPalette = flattenObject(palette)
 
-  if (palette.children.length === 1) {
-    msg.forEach((s: Item) => {
-      if (typeof s.value === 'object')
-        palette.setPluginData(s.key, JSON.stringify(s.value))
-      else if (typeof s.value === 'boolean')
-        palette.setPluginData(s.key, s.value.toString())
-      else palette.setPluginData(s.key, s.value)
-    })
+    if (Object.keys(flatPalette).includes(item.key)) {
+      const pathParts = item.key.split('.')
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      let current: Record<string, any> = palette
 
-    const keys = palette.getPluginDataKeys()
-    const paletteData: [string, string | boolean | object][] = keys.map(
-      (key) => {
-        const value = palette.getPluginData(key)
-        if (value === 'true' || value === 'false')
-          return [key, value === 'true']
-        else if (value.includes('{'))
-          return [key, JSON.parse(palette.getPluginData(key))]
-        return [key, value]
-      }
-    )
-    const paletteObject = makePaletteNode(paletteData)
-    const creatorAvatarImg =
-      paletteObject.creatorAvatar !== ''
-        ? await figma
-            .createImageAsync(paletteObject.creatorAvatar ?? '')
-            .then(async (image: Image) => image)
-            .catch(() => null)
-        : null
+      for (let i = 0; i < pathParts.length - 1; i++)
+        current = current[pathParts[i]]
 
-    palette.children[0].remove()
-    palette.appendChild(
-      new Colors(
-        {
-          ...paletteObject,
-          name: paletteObject.name !== undefined ? paletteObject.name : '',
-          description:
-            paletteObject.description !== undefined
-              ? paletteObject.description
-              : '',
-          creatorAvatarImg: creatorAvatarImg,
-          service: 'EDIT',
-        },
-        palette
-      ).makeNode()
-    )
+      current[pathParts[pathParts.length - 1]] = item.value
+    }
+  })
 
-    // Update
-    const now = new Date().toISOString()
-    palette.setPluginData('updatedAt', now)
+  palette.libraryData = new Data(palette).makeLibraryData(
+    ['style_id', 'collection_id', 'variable_id', 'mode_id'],
+    palette.libraryData
+  )
+
+  if (!isAlreadyUpdated) {
+    palette.meta.dates.updatedAt = now
     figma.ui.postMessage({
       type: 'UPDATE_PALETTE_DATE',
       data: now,
     })
+  }
 
-    // Palette migration
-    palette.counterAxisSizingMode = 'AUTO'
-    palette.name = setPaletteName(
-      paletteObject.name !== undefined ? paletteObject.name : locals[lang].name,
-      paletteObject.themes.find((theme) => theme.isEnabled)?.name,
-      paletteObject.preset.name,
-      paletteObject.colorSpace,
-      paletteObject.visionSimulationMode
+  if (shouldLoadPalette)
+    figma.ui.postMessage({
+      type: 'LOAD_PALETTE',
+      data: palette,
+    })
+
+  if (getJsonSize(palette) < 100) {
+    figma.currentPage.setSharedPluginData(
+      'uicp',
+      `palette_${msg.id}`,
+      JSON.stringify(palette)
     )
-  } else figma.notify(locals[lang].error.corruption)
+
+    await new Promise((r) => setTimeout(r, 1000))
+    await figma.saveVersionHistoryAsync(
+      `${palette.base.name} - ${locales.get().events.paletteUpdated}`
+    )
+
+    return palette
+  } else throw new Error(locales.get().error.paletteSizeExceeded)
 }
 
-const makePaletteNode = (data: [string, string | boolean | object][]) => {
+const flattenObject = (
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const obj: { [key: string]: any } = {}
+  obj: Record<string, any>,
+  prefix = ''
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+): Record<string, any> => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return Object.keys(obj).reduce((acc: Record<string, any>, key: string) => {
+    const pre = prefix.length ? `${prefix}.` : ''
 
-  data.forEach((d) => {
-    obj[d[0]] = d[1]
-  })
+    if (
+      typeof obj[key] === 'object' &&
+      obj[key] !== null &&
+      !Array.isArray(obj[key])
+    )
+      Object.assign(acc, flattenObject(obj[key], pre + key))
+    else acc[pre + key] = obj[key]
 
-  return obj as PaletteNode
+    return acc
+  }, {})
 }
 
 export default updatePalette
