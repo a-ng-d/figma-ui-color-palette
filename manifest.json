@@ -25,7 +25,6 @@
     "allowedDomains": [
       "https://figma.com",
       "https://*.figma.com",
-      "https://rsms.me",
       "https://*.gravatar.com",
       "https://*.wp.com",
       "https://corsproxy.io",
@@ -35,9 +34,7 @@
       "https://*.mixpanel.com",
       "https://asset.brandfetch.io",
       "https://*.sentry.io",
-      "https://*.amazonaws.com",
-      "https://fonts.googleapis.com",
-      "https://fonts.gstatic.com"
+      "https://*.amazonaws.com"
     ],
     "devAllowedDomains": [
       "http://localhost:3000",
