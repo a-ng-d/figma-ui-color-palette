@@ -388,9 +388,6 @@ const loadUI = async () => {
       GET_TRIAL: async () =>
         figma.ui.postMessage({
           type: 'GET_TRIAL',
-          data: {
-            id: figma.currentUser?.id,
-          },
         }),
       ENABLE_TRIAL: async () => {
         enableTrial(path.data.trialTime, path.data.trialVersion).then(() =>
@@ -408,23 +405,14 @@ const loadUI = async () => {
       ENABLE_PRO_PLAN: async () =>
         figma.ui.postMessage({
           type: 'ENABLE_PRO_PLAN',
-          data: {
-            id: figma.currentUser?.id,
-          },
         }),
       LEAVE_PRO_PLAN: async () =>
         figma.ui.postMessage({
           type: 'LEAVE_PRO_PLAN',
-          data: {
-            id: figma.currentUser?.id,
-          },
         }),
       WELCOME_TO_PRO: async () =>
         figma.ui.postMessage({
           type: 'WELCOME_TO_PRO',
-          data: {
-            id: figma.currentUser?.id,
-          },
         }),
       //
       SIGN_OUT: () =>
