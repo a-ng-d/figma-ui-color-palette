@@ -105,6 +105,34 @@ export default class Properties {
     this.node = null
   }
 
+  transformRecommendedUsage = (
+    recommendedUsage:
+      | 'UNKNOWN'
+      | 'AVOID'
+      | 'NON_TEXT'
+      | 'SPOT_TEXT'
+      | 'HEADLINES'
+      | 'BODY_TEXT'
+      | 'CONTENT_TEXT'
+      | 'FLUENT_TEXT'
+  ) => {
+    if (recommendedUsage === 'AVOID')
+      return locales.get().paletteProperties.avoid
+    else if (recommendedUsage === 'NON_TEXT')
+      return locales.get().paletteProperties.nonText
+    else if (recommendedUsage === 'SPOT_TEXT')
+      return locales.get().paletteProperties.spotText
+    else if (recommendedUsage === 'HEADLINES')
+      return locales.get().paletteProperties.headlines
+    else if (recommendedUsage === 'BODY_TEXT')
+      return locales.get().paletteProperties.bodyText
+    else if (recommendedUsage === 'CONTENT_TEXT')
+      return locales.get().paletteProperties.contentText
+    else if (recommendedUsage === 'FLUENT_TEXT')
+      return locales.get().paletteProperties.fluentText
+    return locales.get().paletteProperties.unknown
+  }
+
   makeNodeTopProps = () => {
     // Base
     this.nodeTopProps = figma.createFrame()
@@ -275,12 +303,15 @@ export default class Properties {
     const apcaLightContrast = this.lightTextColorContrast
         .getAPCAContrast()
         .toFixed(1),
-      apcaLightRecommendation =
-        this.lightTextColorContrast.getRecommendedUsage(),
+      apcaLightRecommendation = this.transformRecommendedUsage(
+        this.lightTextColorContrast.getRecommendedUsage()
+      ),
       apcaDarkContrast = this.darkTextColorContrast
         .getAPCAContrast()
         .toFixed(1),
-      apcaDarkRecommendation = this.darkTextColorContrast.getRecommendedUsage()
+      apcaDarkRecommendation = this.transformRecommendedUsage(
+        this.darkTextColorContrast.getRecommendedUsage()
+      )
 
     const nodeAPCALightProp = new Tag({
         name: '_apca-light',
@@ -485,12 +516,15 @@ export default class Properties {
     const apcaLightContrast = this.lightTextColorContrast
         .getAPCAContrast()
         .toFixed(1),
-      apcaLightRecommendation =
-        this.lightTextColorContrast.getRecommendedUsage(),
+      apcaLightRecommendation = this.transformRecommendedUsage(
+        this.lightTextColorContrast.getRecommendedUsage()
+      ),
       apcaDarkContrast = this.darkTextColorContrast
         .getAPCAContrast()
         .toFixed(1),
-      apcaDarkRecommendation = this.darkTextColorContrast.getRecommendedUsage()
+      apcaDarkRecommendation = this.transformRecommendedUsage(
+        this.darkTextColorContrast.getRecommendedUsage()
+      )
 
     const nodeAPCALightProp = new Tag({
         name: '_apca-light',
