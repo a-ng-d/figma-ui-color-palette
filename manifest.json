@@ -34,7 +34,9 @@
       "https://*.mixpanel.com",
       "https://asset.brandfetch.io",
       "https://*.sentry.io",
-      "https://*.amazonaws.com"
+      "https://*.amazonaws.com",
+      "https://fonts.googleapis.com",
+      "https://fonts.gstatic.com"
     ],
     "devAllowedDomains": [
       "http://localhost:3000",

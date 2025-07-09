@@ -75,7 +75,7 @@ const globalConfig: Config = {
     paletteVersion: '2025.06',
   },
   features: doSpecificMode(
-    ['HELP_CHAT'],
+    ['HELP_CHAT', 'USER_LICENSE'],
     [
       'LOCAL_PALETTES',
       'SYNC_LOCAL_STYLES',
