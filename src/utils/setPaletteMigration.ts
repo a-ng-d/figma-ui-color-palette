@@ -189,7 +189,8 @@ const setPaletteMigration = async (document: BaseNode) => {
 
   palette.base.name = name
   palette.base.description = description
-  palette.base.preset.name = preset.name
+  palette.base.preset.name =
+    preset.name === 'Custom' ? locales.get().scale.presets.legacy : preset.name
   palette.base.preset.id = preset.id
   palette.base.preset.family = preset.family
   palette.base.preset.max = preset.max
