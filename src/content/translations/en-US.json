@@ -740,16 +740,17 @@
     "welcomeMessage": "Hello {username}",
     "preferences": {
       "sync": {
-        "message": "A deep synchronization means that the local styles are synchronized with the palette (if a style is not in the palette, it will be removed).",
         "palette": {
           "label": "Synchronize your changes in real time with the palette"
         },
         "styles": {
-          "label": "Deeply synchronize the local styles in the document with the palette"
+          "label": "Deeply synchronize the local styles in the document with the palette",
+          "message": "If a style is not in the palette, it will be removed."
         },
         "variables": {
             "label":
-              "Deeply synchronize the local variables in the collection with the palette"
+              "Deeply synchronize the local variables in the collection with the palette",
+              "message": "If a variable is not in the palette, it will be removed."
           },
         "title": "Synchronization"
       }
