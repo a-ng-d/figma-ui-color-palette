@@ -22,14 +22,14 @@ jobs:
     - name: Create .env.local file
       run: |
         touch .env.local
-        echo REACT_APP_SUPABASE_URL="${{ vars.REACT_APP_SUPABASE_URL }}" >> .env.local
-        echo REACT_APP_SUPABASE_PUBLIC_ANON_KEY="${{ secrets.REACT_APP_SUPABASE_PUBLIC_ANON_KEY }}" >> .env.local
-        echo REACT_APP_SENTRY_DSN="${{ vars.REACT_APP_SENTRY_DSN }}" >> .env.local
-        echo SENTRY_AUTH_TOKEN="${{ secrets.SENTRY_AUTH_TOKEN }}" >> .env.local
-        echo REACT_APP_MIXPANEL_TOKEN="${{ secrets.REACT_APP_MIXPANEL_TOKEN }}" >> .env.local
-        echo REACT_APP_AUTH_WORKER_URL="${{ vars.REACT_APP_AUTH_WORKER_URL }}" >> .env.local
-        echo REACT_APP_ANNOUNCEMENTS_WORKER_URL="${{ vars.REACT_APP_ANNOUNCEMENTS_WORKER_URL }}" >> .env.local
-        echo REACT_APP_NOTION_ANNOUNCEMENTS_ID="${{ vars.REACT_APP_NOTION_ANNOUNCEMENTS_ID }}" >> .env.local
+        echo VITE_SUPABASE_URL="${{ vars.VITE_SUPABASE_URL }}" >> .env.local
+        echo VITE_SUPABASE_PUBLIC_ANON_KEY="${{ secrets.VITE_SUPABASE_PUBLIC_ANON_KEY }}" >> .env.local
+        echo VITE_SENTRY_DSN="${{ vars.VITE_SENTRY_DSN }}" >> .env.local
+        echo VITE_MIXPANEL_TOKEN="${{ secrets.VITE_MIXPANEL_TOKEN }}" >> .env.local
+        echo VITE_AUTH_WORKER_URL="${{ vars.VITE_AUTH_WORKER_URL }}" >> .env.local
+        echo VITE_ANNOUNCEMENTS_WORKER_URL="${{ vars.VITE_ANNOUNCEMENTS_WORKER_URL }}" >> .env.local
+        echo VITE_NOTION_ANNOUNCEMENTS_ID="${{ vars.VITE_NOTION_ANNOUNCEMENTS_ID }}" >> .env.local
+        echo VITE_NOTION_ONBOARDING_ID="${{ vars.VITE_NOTION_ONBOARDING_ID }}" >> .env.local
         cat .env.local
         touch .env.sentry-build-plugin
         echo SENTRY_AUTH_TOKEN="${{ secrets.SENTRY_AUTH_TOKEN }}" >> .env.sentry-build-plugin
