@@ -18,11 +18,7 @@ const checkTrialStatus = async (context = 'UI' as 'UI' | 'PARAMETERS') => {
       1000 /
       (60 * 60)
 
-    if (
-      consumedTime <= currentTrialTime &&
-      currentTrialVersion !== globalConfig.versions.trialVersion &&
-      globalConfig.plan.isTrialEnabled
-    )
+    if (consumedTime <= currentTrialTime && globalConfig.plan.isTrialEnabled)
       trialStatus = 'PENDING'
     else if (
       consumedTime >= globalConfig.plan.trialTime &&

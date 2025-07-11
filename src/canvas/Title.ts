@@ -96,7 +96,7 @@ export default class Title {
           content: locales
             .get()
             .paletteProperties.themeDescription.replace(
-              '{$1}',
+              '{description}',
               this.theme.description
             ),
           type: 'FIXED',
@@ -137,7 +137,7 @@ export default class Title {
               content: locales
                 .get()
                 .paletteProperties.provider.replace(
-                  '{$1}',
+                  '{name}',
                   this.meta.creatorIdentity.creatorFullName
                 ),
               fontSize: 12,
@@ -150,7 +150,7 @@ export default class Title {
           name: '_theme',
           content: locales
             .get()
-            .paletteProperties.theme.replace('{$1}', this.data.name),
+            .paletteProperties.theme.replace('{name}', this.data.name),
           fontSize: 12,
         }).makeNodeTag()
       )
@@ -159,7 +159,7 @@ export default class Title {
         name: '_preset',
         content: locales
           .get()
-          .paletteProperties.preset.replace('{$1}', this.base.preset.name),
+          .paletteProperties.preset.replace('{name}', this.base.preset.name),
         fontSize: 12,
       }).makeNodeTag()
     )
@@ -168,7 +168,7 @@ export default class Title {
         name: '_color-space',
         content: locales
           .get()
-          .paletteProperties.colorSpace.replace('{$1}', this.base.colorSpace),
+          .paletteProperties.colorSpace.replace('{name}', this.base.colorSpace),
         fontSize: 12,
       }).makeNodeTag()
     )
@@ -179,7 +179,7 @@ export default class Title {
           content: locales
             .get()
             .paletteProperties.visionSimulation.replace(
-              '{$1}',
+              '{mode}',
               this.theme.visionSimulationMode.charAt(0) +
                 this.theme.visionSimulationMode.toLocaleLowerCase().slice(1)
             ),
@@ -192,7 +192,7 @@ export default class Title {
         content: locales
           .get()
           .paletteProperties.updatedAt.replace(
-            '{$1}',
+            '{date}',
             new Date(this.meta.dates.updatedAt).toDateString()
           ),
         fontSize: 12,

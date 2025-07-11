@@ -124,7 +124,7 @@ const updateLocalStyles = async (id: string) => {
         messages.push(
           locales
             .get()
-            .info.updatedLocalStyles.plural.replace('{$1}', i.toString())
+            .info.updatedLocalStyles.plural.replace('{count}', i.toString())
         )
       else if (i === 1)
         messages.push(locales.get().info.updatedLocalStyles.single)
@@ -134,7 +134,7 @@ const updateLocalStyles = async (id: string) => {
         messages.push(
           locales
             .get()
-            .info.removedLocalStyles.plural.replace('{$1}', k.toString())
+            .info.removedLocalStyles.plural.replace('{count}', k.toString())
         )
       else if (k === 1)
         messages.push(locales.get().info.removedLocalStyles.single)

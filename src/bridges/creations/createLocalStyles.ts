@@ -91,7 +91,7 @@ const createLocalStyles = async (id: string) => {
       if (i > 1)
         return locales
           .get()
-          .info.createdLocalStyles.plural.replace('{$1}', i.toString())
+          .info.createdLocalStyles.plural.replace('{count}', i.toString())
       else if (i === 1) return locales.get().info.createdLocalStyles.single
       else return locales.get().info.createdLocalStyles.none
     })

@@ -205,10 +205,10 @@ const createLocalVariables = async (id: string) => {
           locales
             .get()
             .info.createdVariablesAndModes.pluralPlural.replace(
-              '{$1}',
+              '{variableCount}',
               i.toString()
             )
-            .replace('{$2}', j.toString())
+            .replace('{modeCount}', j.toString())
         )
       else if (i === 1 && j === 1)
         messages.push(locales.get().info.createdVariablesAndModes.singleSingle)
@@ -219,7 +219,7 @@ const createLocalVariables = async (id: string) => {
           locales
             .get()
             .info.createdVariablesAndModes.pluralSingle.replace(
-              '{$1}',
+              '{variableCount}',
               i.toString()
             )
         )
@@ -228,7 +228,7 @@ const createLocalVariables = async (id: string) => {
           locales
             .get()
             .info.createdVariablesAndModes.singlePlural.replace(
-              '{$1}',
+              '{modeCount}',
               j.toString()
             )
         )
@@ -237,7 +237,7 @@ const createLocalVariables = async (id: string) => {
           locales
             .get()
             .info.createdVariablesAndModes.pluralNone.replace(
-              '{$1}',
+              '{variableCount}',
               i.toString()
             )
         )
@@ -246,7 +246,7 @@ const createLocalVariables = async (id: string) => {
           locales
             .get()
             .info.createdVariablesAndModes.nonePlural.replace(
-              '{$1}',
+              '{modeCount}',
               j.toString()
             )
         )

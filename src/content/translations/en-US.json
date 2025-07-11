@@ -11,8 +11,8 @@
     "addToLocal": "Add to local",
     "addToSource": "Add to source",
     "colorThemesNumber": {
-      "several": "{$1} color modes",
-      "single": "{$1} color mode"
+      "several": "{count} color modes",
+      "single": "{count} color mode"
     },
     "syncLocalStyles": "Sync with the local styles",
     "syncLocalVariables": "Sync with the local variables",
@@ -31,12 +31,12 @@
     "publishPalette": "Publish palette",
     "pushUpdates": "Push updates to the document",
     "shadesNumber": {
-      "several": "{$1} shades",
-      "single": "{$1} shade"
+      "several": "{count} shades",
+      "single": "{count} shade"
     },
     "sourceColorsNumber": {
-      "several": "{$1} source colors",
-      "single": "{$1} source color"
+      "several": "{count} source colors",
+      "single": "{count} source color"
     },
     "sync": "Sync",
     "syncPalette": "Synchronize palette"
@@ -55,14 +55,14 @@
     "deletePaletteDialog": {
       "cancel": "Cancel",
       "delete": "Delete palette",
-      "message": "You're about to delete the \"{$1}\" palette. This action is irreversible.",
+      "message": "You're about to delete the \"{name}\" palette. This action is irreversible.",
       "title": "Delete palette"
     },
     "document": {
       "create": "Create from document",
       "open": "Open document"
     },
-    "copy": "Copy of {$1}",
+    "copy": "Copy of {name}",
     "contexts": {
       "local": "Local",
       "remote": "Library",
@@ -109,7 +109,7 @@
     "lch": {
       "label": "LCH"
     },
-    "moreParameters": "{$1} parameters",
+    "moreParameters": "{count} parameters",
     "title": "Source colors",
     "alpha": {
       "label": "Alpha mode",
@@ -149,7 +149,7 @@
     "timeout": "The authentication has been timed out",
     "unshare": "The palette has not been removed from the community",
     "activatedLicense": "This license key is not valid and cannot be activated. Please check it and try again. If the problem persists, please contact support.",
-    "unlinkedLicense": "Your license key \"{$1}\" is no longer valid or cannot be unlinked remotely. Please unlink it locally in order to replace it with a new one. If the problem persists, please contact support."
+    "unlinkedLicense": "Your license key \"{licenseKey}\" is no longer valid or cannot be unlinked remotely. Please unlink it locally in order to replace it with a new one. If the problem persists, please contact support."
   },
   "export": {
     "actions": {
@@ -230,58 +230,58 @@
     "addToLocal": "The palette already exists in this page",
     "createdLocalStyles": {
       "none": "No style created",
-      "plural": "{$1} styles created",
+      "plural": "{count} styles created",
       "single": "1 style created"
     },
-    "maxNumberOfSourceColors": "You cannot add more than {$1} source colors",
-    "maxNumberOfStops": "You cannot add more than {$1} stops",
-    "maxNumberOfLocalPalettes": "You cannot add more than {$1} local palettes",
+    "maxNumberOfSourceColors": "You cannot add more than {maxCount} source colors",
+    "maxNumberOfStops": "You cannot add more than {maxCount} stops",
+    "maxNumberOfLocalPalettes": "You cannot add more than {maxCount} local palettes",
     "noResult": "No palette matches your search",
-    "paletteCreated": "{$1} palette created",
+    "paletteCreated": "{name} palette created",
     "removedLocalStyles": {
       "none": "No style removed",
-      "plural": "{$1} styles removed",
+      "plural": "{count} styles removed",
       "single": "1 style removed"
     },
     "signOut": "See you later",
     "themesOnFree": "You cannot add or edit modes in the current plan",
     "updatedLocalStyles": {
       "none": "No style updated",
-      "plural": "{$1} styles updated",
+      "plural": "{count} styles updated",
       "single": "1 style updated"
     },
     "createdVariablesAndModes": {
       "noneNone": "No variable and mode created",
       "noneSingle": "1 mode created",
       "singleNone": "1 variable created",
-      "nonePlural": "{$1} modes created",
-      "pluralNone": "{$1} variables created",
+      "nonePlural": "{modeCount} modes created",
+      "pluralNone": "{variableCount} variables created",
       "singleSingle": "1 variable and mode created",
-      "singlePlural": "1 variable and {$1} modes created",
-      "pluralSingle": "{$1} variables and 1 mode created",
-      "pluralPlural": "{$1} variables and {$2} modes created"
+      "singlePlural": "1 variable and {modeCount} modes created",
+      "pluralSingle": "{variableCount} variables and 1 mode created",
+      "pluralPlural": "{variableCount} variables and {modeCount} modes created"
     },
     "updatedVariablesAndModes": {
       "noneNone": "No variable and mode updated",
       "noneSingle": "1 mode updated",
       "singleNone": "1 variable updated",
-      "nonePlural": "{$1} modes updated",
-      "pluralNone": "{$1} variables updated",
+      "nonePlural": "{modeCount} modes updated",
+      "pluralNone": "{variableCount} variables updated",
       "singleSingle": "1 variable and mode updated",
-      "singlePlural": "1 variable and $1 modes updated",
-      "pluralSingle": "{$1} variables and 1 mode updated",
-      "pluralPlural": "{$1} variables and {$2} modes updated"
+      "singlePlural": "1 variable and {modeCount} modes updated",
+      "pluralSingle": "{variableCount} variables and 1 mode updated",
+      "pluralPlural": "{variableCount} variables and {modeCount} modes updated"
     },
     "removedVariablesAndModes": {
       "noneNone": "No variable and mode removed",
       "noneSingle": "1 mode removed",
       "singleNone": "1 variable removed",
-      "nonePlural": "{$1} modes removed",
-      "pluralNone": "{$1} variables removed",
+      "nonePlural": "{modeCount} modes removed",
+      "pluralNone": "{variableCount} variables removed",
       "singleSingle": "1 variable and mode removed",
-      "singlePlural": "1 variable and {$1} modes removed",
-      "pluralSingle": "{$1} variables and 1 mode removed",
-      "pluralPlural": "{$1} variables and {$2} modes removed"
+      "singlePlural": "1 variable and {modeCount} modes removed",
+      "pluralSingle": "{variableCount} variables and 1 mode removed",
+      "pluralPlural": "{variableCount} variables and {modeCount} modes removed"
     }
   },
   "name": "UI Color Palette",
@@ -298,7 +298,7 @@
     "base": "Base",
     "bodyText": "Body text",
     "closest": "Closest to source",
-    "colorSpace": "Color space: {$1}",
+    "colorSpace": "Color space: {name}",
     "contentText": "Content text",
     "fail": "Fail",
     "fluentText": "Fluent text",
@@ -307,17 +307,17 @@
     "locked": "Locked source color",
     "nonText": "Non-text",
     "pass": "Pass",
-    "preset": "Preset: {$1}",
-    "provider": "Provider: {$1}",
+    "preset": "Preset: {name}",
+    "provider": "Provider: {name}",
     "sourceColors": "Source colors",
     "spotText": "Spot text",
-    "theme": "Mode: {$1}",
+    "theme": "Mode: {name}",
     "unknown": "Unknown",
-    "updatedAt": "Updated at: {$1}",
-    "visionSimulation": "Vision simulation: {$1}",
+    "updatedAt": "Updated at: {date}",
+    "visionSimulation": "Vision simulation: {mode}",
     "wcag": "WCAG 2.1 scores",
     "transparent": "Transparent",
-    "themeDescription": "Mode description: {$1}"
+    "themeDescription": "Mode description: {description}"
   },
   "dev": {
     "vscode": {
@@ -341,11 +341,11 @@
     "trialEnded": "Your trial has ended",
     "trialFeedback": "How was it?",
     "trialTimeDays": {
-      "plural": "{$1} days left in this trial",
+      "plural": "{count} days left in this trial",
       "single": "1 day left in this trial"
     },
     "trialTimeHours": {
-      "plural": "{$1} hours left in this trial",
+      "plural": "{count} hours left in this trial",
       "single": "1 hour left in this trial"
     },
     "tryPro": "Try Pro"
@@ -378,30 +378,34 @@
     "title": "Subscribe to UI Color Palette Pro",
     "one": {
       "cta": "Get your license",
-      "message": "UI Color Palette Pro/One: Your multi-platform license, working on Figma, Penpot and soon Sketch, to create unlimited palettes with unlimited source colors, stops, and color modes what ever the platform you are using."
+      "title": "UI Color Palette Pro/One",
+      "subtitle": "$5/month via Lemon Squeezy",
+      "text": "Your multi-platform license working on:{br}◻ Figma{br}◻ Penpot{br}◻ Sketch (soon){br}◻ Framer (soon)"
     },
     "figma": {
       "cta": "Get Pro for Figma only",
-      "message": "UI Color Palette Pro/Figma: Upgrade to the Pro plan to create unlimited palettes with unlimited source colors, stops, and color modes. You will also be able to export your palette to more formats, and synchronize it with the local library."
+      "title": "UI Color Palette Pro/Figma",
+      "subtitle": "$5/month via Figma",
+      "text": "◻ Unlimited palettes{br}◻ Unlimited source colors{br}◻ Unlimited stops{br}◻ Unlimited color modes{br}◻ Export and Sync with library"
     }
   },
   "proPlan": {
     "trial": {
-      "cta": "Enable the {$1}-hour trial",
-      "message": "Supercharge your primitive colors for {$1} hours with the Pro plan. You will be able to create more palette, manage your color modes, and export your palette to more formats.",
+      "cta": "Enable the {hours}-hour trial",
+      "message": "Supercharge your primitive colors for {hours} hours with the Pro plan. You will be able to create more palette, manage your color modes, and export your palette to more formats.",
       "option": "Get Pro directly",
-      "title": "Would you like to upgrade to the Pro plan within the next {$1} hours?"
+      "title": "Would you like to upgrade to the Pro plan within the next {hours} hours?"
     },
     "welcome": {
       "cta": "Let's build",
       "message": "This upgrade will unlock a range of tools that enable you to deploy and transfer your color palette. We hope you will enjoy the benefits.",
       "title": "Welcome to UI Color Palette Pro!",
-      "trial": "This upgrade will unlock a range of tools that enable you to deploy and transfer your color palette. We hope you will enjoy the benefits for the next {$1} hours."
+      "trial": "This upgrade will unlock a range of tools that enable you to deploy and transfer your color palette. We hope you will enjoy the benefits for the next {hours} hours."
     }
   },
   "publication": {
     "detach": "Detach",
-    "message": "Publish your palette as a single source of truth and reuse it in other {$1} documents (like a component instance). You can also distribute your palettes by sharing them with the community.",
+    "message": "Publish your palette as a single source of truth and reuse it in other {platformName} documents (like a component instance). You can also distribute your palettes by sharing them with the community.",
     "publish": "Publish…",
     "revert": "Revert",
     "share": "Share with the community",
@@ -584,7 +588,7 @@
       },
       "name": {
         "default": "Untitled",
-        "self": "{$1}'s UI Color Palette",
+        "self": "{username}'s UI Color Palette",
         "label": "Palette name"
       },
       "title": "Global",
@@ -619,7 +623,7 @@
       "openPalette": "Open palette"
     },
     "canvas": {
-      "tip": "Select a {$1} (filled with color) on the {$2} canvas, then create a UI Color Palette.",
+      "tip": "Select a {element} (filled with color) on the {canvas} canvas, then create a UI Color Palette.",
       "title": "Selected colors"
     },
     "colourLovers": {
@@ -675,7 +679,9 @@
   "store": {
     "isb": {
       "cta": "Try it now",
-      "label": "Ideas Spark Booth・Private Brainstorming & Retrospective Sessions"
+      "title": "Ideas Spark Booth",
+      "subtitle": "Private Brainstorming & Retrospective Sessions",
+      "text": "Engage & Enable your participants through private team sessions for brainstorming and retrospectives"
     },
     "title": "More products from Yelbolt"
   },
@@ -688,8 +694,8 @@
     "share": "The palette has been shared with the community",
     "synchronization": "The palette has been synchronized",
     "unshare": "The palette is no longer shared with the community",
-    "activatedLicense": "The license key \"{$1}\" has been activated",
-    "unlinkedLicense": "Your license key \"{$1}\" has been unlinked"
+    "activatedLicense": "The license key \"{licenseKey}\" has been activated",
+    "unlinkedLicense": "Your license key \"{licenseKey}\" has been unlinked"
   },
   "tagline": "WCAG-Compliant Color Palette Suite",
   "themes": {
@@ -704,7 +710,7 @@
       "message": "Create color modes to manage multiple color palettes within one single (e.g. light and dark modes)"
     },
     "defaultName": "Untitled UI mode",
-    "moreParameters": "{$1} parameters",
+    "moreParameters": "{count} parameters",
     "paletteBackgroundColor": {
       "label": "Document background"
     },
@@ -731,7 +737,7 @@
     "updateConsent": "Manage cookies",
     "updatePreferences": "Update preferences",
     "manageLicense": "Manage license",
-    "welcomeMessage": "Hello {$1}",
+    "welcomeMessage": "Hello {username}",
     "preferences": {
       "sync": {
         "message": "A deep synchronization means that the local styles are synchronized with the palette (if a style is not in the palette, it will be removed).",
