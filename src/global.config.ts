@@ -46,8 +46,8 @@ const globalConfig: Config = {
     uiUrl: isDev
       ? 'http://localhost:4400'
       : 'https://figma.ui-color-palette.com',
-    documentationUrl: 'https://uicp.ylb.lt/docs',
-    repositoryUrl: 'https://uicp.ylb.lt/repository-figma',
+    documentationUrl: 'https://uicp.ylb.lt/docs-figma-plugin',
+    repositoryUrl: 'https://uicp.ylb.lt/repository-figma-plugin',
     communityUrl: 'https://uicp.ylb.lt/community',
     supportEmail: 'https://uicp.ylb.lt/contact',
     feedbackUrl: 'https://uicp.ylb.lt/feedback',
@@ -58,8 +58,8 @@ const globalConfig: Config = {
     licenseUrl: 'https://uicp.ylb.lt/license',
     privacyUrl: 'https://uicp.ylb.lt/privacy',
     vsCodeFigmaPluginUrl: 'https://uicp.ylb.lt/vscode-figma-plugin',
-    isbUrl: 'https://isb.ylb.lt/run-figma',
-    uicpUrl: 'https://uicp.ylb.lt/run-figma',
+    isbUrl: 'https://isb.ylb.lt/run-figma-plugin',
+    uicpUrl: 'https://uicp.ylb.lt/run-figma-plugin',
     storeUrl: isDev
       ? 'https://uicp.ylb.lt/store-dev'
       : 'https://uicp.ylb.lt/store',
