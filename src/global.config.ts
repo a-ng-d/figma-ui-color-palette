@@ -59,7 +59,7 @@ const globalConfig: Config = {
     privacyUrl: 'https://uicp.ylb.lt/privacy',
     vsCodeFigmaPluginUrl: 'https://uicp.ylb.lt/vscode-figma-plugin',
     isbUrl: 'https://isb.ylb.lt/run-figma',
-    uicpUrl: 'https://uicp.ylb.lt/run-figma-one',
+    uicpUrl: 'https://uicp.ylb.lt/run-figma',
     storeUrl: isDev
       ? 'https://uicp.ylb.lt/store-dev'
       : 'https://uicp.ylb.lt/store',
