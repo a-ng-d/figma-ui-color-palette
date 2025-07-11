@@ -47,7 +47,7 @@ const globalConfig: Config = {
       ? 'http://localhost:4400'
       : 'https://figma.ui-color-palette.com',
     documentationUrl: 'https://uicp.ylb.lt/docs',
-    repositoryUrl: 'https://uicp.ylb.lt/repository',
+    repositoryUrl: 'https://uicp.ylb.lt/repository-figma',
     communityUrl: 'https://uicp.ylb.lt/community',
     supportEmail: 'https://uicp.ylb.lt/contact',
     feedbackUrl: 'https://uicp.ylb.lt/feedback',
