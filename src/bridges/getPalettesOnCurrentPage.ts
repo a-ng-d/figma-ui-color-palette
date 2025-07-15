@@ -1,4 +1,4 @@
-import { FullConfiguration, PaletteData } from '@a_ng_d/utils-ui-color-palette'
+import { FullConfiguration } from '@a_ng_d/utils-ui-color-palette'
 
 const getPalettesOnCurrentPage = async () => {
   const dataKeys = figma.currentPage.getSharedPluginDataKeys('uicp')
@@ -14,11 +14,9 @@ const getPalettesOnCurrentPage = async () => {
       const data = figma.currentPage.getSharedPluginData('uicp', key)
       return data ? JSON.parse(data) : undefined
     })
-  const palettesList: Array<PaletteData> = dataList.filter(
-    (data: FullConfiguration) => {
-      if (data !== undefined) return data.type === 'UI_COLOR_PALETTE'
-    }
-  )
+  const palettesList: Array<FullConfiguration> = dataList.filter((data) => {
+    if (data !== undefined) return data.type === 'UI_COLOR_PALETTE'
+  })
 
   return figma.ui.postMessage({
     type: 'EXPOSE_PALETTES',
