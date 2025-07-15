@@ -330,27 +330,6 @@ const loadUI = async () => {
         path.items.forEach(async (item: string) =>
           figma.clientStorage.setAsync(item, '')
         ),
-      SET_DATA: () =>
-        path.items.forEach((item: { key: string; value: string }) =>
-          figma.currentPage.setSharedPluginData(
-            'uicp',
-            item.key,
-            JSON.stringify(item.value)
-          )
-        ),
-      GET_DATA: async () =>
-        path.items.map((item: string) => {
-          const value = figma.currentPage.getSharedPluginData('uicp', item)
-          if (value && typeof value === 'string')
-            figma.ui.postMessage({
-              type: `GET_DATA_${item.toUpperCase()}`,
-              value: value,
-            })
-        }),
-      DELETE_DATA: () =>
-        path.items.forEach(async (item: string) =>
-          figma.currentPage.setSharedPluginData('uicp', item, '')
-        ),
       //
       OPEN_IN_BROWSER: () => figma.openExternal(path.url),
       GET_PALETTES: async () => getPalettesOnCurrentPage(),
