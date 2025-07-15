@@ -13,7 +13,7 @@ const container = document.getElementById('app'),
   root = createRoot(container)
 
 if (globalConfig.env.isMixpanelEnabled) {
-  mixpanel.init(import.meta.env.VITE_MIXPANEL_TOKEN as string, {
+  mixpanel.init(import.meta.env.VITE_MIXPANEL_TOKEN, {
     api_host: 'https://api-eu.mixpanel.com',
     debug: globalConfig.env.isDev,
     disable_persistence: true,
@@ -27,7 +27,7 @@ if (globalConfig.env.isMixpanelEnabled) {
 
 if (globalConfig.env.isMixpanelEnabled && !globalConfig.env.isDev)
   Sentry.init({
-    dsn: import.meta.env.VITE_SENTRY_AUTH_TOKEN as string,
+    dsn: import.meta.env.VITE_SENTRY_DSN,
     environment: 'production',
     integrations: [
       Sentry.browserTracingIntegration(),
