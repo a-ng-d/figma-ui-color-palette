@@ -1,8 +1,19 @@
 {
   "name": "figma-ui-color-palette",
-  "version": "4.3.0",
+  "version": "5.0.0",
   "private": true,
   "description": "UI Color Palette is a Figma and FigJam plugin that creates, manages, deploys, and publishes consistent and accessible color palettes.",
+  "author": "Aurélien Grimaud",
+  "license": "MIT",
+  "repository": "https://github.com/a-ng-d/figma-ui-color-palette",
+  "keywords": [
+    "color",
+    "color-scheme",
+    "lch",
+    "color-system",
+    "ui-color",
+    "figma-plugin"
+  ],
   "type": "module",
   "workspaces": [
     "packages/ui-ui-color-palette",
@@ -23,17 +34,6 @@
     "lint": "npx eslint ./src/** --fix --ext .ts,.tsx .",
     "format": "npx prettier './src' --write"
   },
-  "keywords": [
-    "color",
-    "color-scheme",
-    "lch",
-    "color-system",
-    "ui-color",
-    "figma-plugin"
-  ],
-  "author": "Aurélien Grimaud",
-  "licence": "MIT",
-  "repository": "https://github.com/a-ng-d/figma-ui-color-palette",
   "devDependencies": {
     "@figma/eslint-plugin-figma-plugins": "^0.15.0",
     "@figma/plugin-typings": "^1.89.0",
@@ -41,7 +41,6 @@
     "@sentry/vite-plugin": "^3.5.0",
     "@types/chroma-js": "^2.4.0",
     "@types/file-saver": "^2.0.5",
-    "@types/jszip": "^3.4.1",
     "@types/node": "^22.14.0",
     "@types/react": "^17.0.37",
     "@types/react-dom": "^17.0.11",
@@ -50,54 +49,29 @@
     "@vitejs/plugin-react": "^4.3.4",
     "@vitejs/plugin-react-swc": "^3.8.1",
     "eslint": "^8.57.0",
-    "eslint-config-standard-with-typescript": "^34.0.1",
     "eslint-plugin-import": "^2.26.0",
-    "eslint-plugin-n": "^15.7.0",
-    "eslint-plugin-promise": "^6.1.1",
     "eslint-plugin-react": "^7.25.3",
-    "eslint-watch": "^8.0.0",
-    "preact": "^10.6.4",
     "prettier": "^3.2.5",
     "prettier-plugin-css-order": "^2.1.2",
-    "prettier-plugin-organize-imports": "^4.1.0",
     "typescript": "^5.4.3",
     "vite": "^6.2.5",
     "vite-plugin-environment": "^1.1.3",
-    "vite-plugin-sentry": "^1.4.1",
     "vite-plugin-singlefile": "^2.2.0",
     "vite-tsconfig-paths": "^5.1.4"
   },
   "dependencies": {
-    "@a_ng_d/figmug-ui": "^1.13.1",
-    "@a_ng_d/figmug-utils": "^0.6.0",
+    "@a_ng_d/figmug-ui": "^1.15.19",
+    "@a_ng_d/figmug-utils": "^0.7.1",
     "@a_ng_d/utils-ui-color-palette": "^1.3.20",
     "@nanostores/preact": "^0.5.2",
     "@sentry/react": "^8.8.0",
     "@supabase/supabase-js": "^2.44.2",
-    "apca-w3": "^0.1.9",
     "chroma-js": "^2.4.2",
-    "color-blind": "^0.1.3",
     "file-saver": "^2.0.5",
-    "hsluv": "^1.0.1",
-    "jszip": "^3.10.1",
     "mixpanel-figma": "^2.0.4",
+    "preact": "^10.6.4",
     "react": "npm:@preact/compat",
     "react-dom": "npm:@preact/compat",
     "uid": "^2.0.2"
-  },
-  "engines": {
-    "node": ">=18.0.0"
-  },
-  "overrides": {
-    "@vitejs/plugin-basic-ssl": {
-      "engines": {
-        "node": ">=18.0.0"
-      }
-    },
-    "vite": {
-      "engines": {
-        "node": ">=18.0.0"
-      }
-    }
   }
 }
