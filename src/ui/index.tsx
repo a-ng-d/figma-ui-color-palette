@@ -74,6 +74,15 @@ if (
 if (globalConfig.env.isSupabaseEnabled && supabaseAnonKey !== undefined)
   initSupabase(globalConfig.urls.databaseUrl, supabaseAnonKey)
 
+window.addEventListener('message', (event) => {
+  const data = event.data.pluginMessage
+  console.log(event)
+  const pluginEvent = new CustomEvent('pluginMessage', {
+    detail: data,
+  })
+  window.dispatchEvent(pluginEvent)
+})
+
 root.render(
   <ConfigProvider
     limits={{
