@@ -45,4 +45,4 @@ Go to the [Issues](https://uicp.ylb.lt/report-for-figma-plugin) section and brow
 
 ## Support
 - [Follow the plugin LinkedIn page](https://uicp.ylb.lt/network).
-- [Connect to my Figma resources page](https://uicp.ylb.lt/author).
+- [Connect to my personal LinkedIn](https://uicp.ylb.lt/author).
