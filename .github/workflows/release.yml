@@ -1,4 +1,4 @@
-name: Release for Figma/FigJam/Dev mode
+name: Release for Sketch
 
 on:
   pull_request:
@@ -7,8 +7,64 @@ on:
       - dev
 
 jobs:
-  create-release:
+  build-plugin:
+    name: Build with Node
     runs-on: ubuntu-latest
+    if: github.event.pull_request.merged == true && startsWith(github.head_ref, 'releases/ui-color-palette/')
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: 'recursive'
+          fetch-depth: 0
+      
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Initialize and update submodules
+        run: |
+          git submodule update --init --recursive --force
+          echo "Submodule structure:"
+          ls -la packages/ui-ui-color-palette/src/stores/ || echo "Stores directory not found"
+
+      - name: Create .env.local file
+        run: |
+          touch .env.local
+          echo VITE_SUPABASE_URL="${{ vars.VITE_SUPABASE_URL }}" >> .env.local
+          echo VITE_SUPABASE_PUBLIC_ANON_KEY="${{ secrets.VITE_SUPABASE_PUBLIC_ANON_KEY }}" >> .env.local
+          echo VITE_SENTRY_DSN="${{ vars.VITE_SENTRY_DSN }}" >> .env.local
+          echo VITE_MIXPANEL_TOKEN="${{ secrets.VITE_MIXPANEL_TOKEN }}" >> .env.local
+          echo VITE_AUTH_WORKER_URL="${{ vars.VITE_AUTH_WORKER_URL }}" >> .env.local
+          echo VITE_AUTH_URL="${{ vars.VITE_AUTH_URL }}" >> .env.local
+          echo VITE_ANNOUNCEMENTS_WORKER_URL="${{ vars.VITE_ANNOUNCEMENTS_WORKER_URL }}" >> .env.local
+          echo VITE_NOTION_ANNOUNCEMENTS_ID="${{ vars.VITE_NOTION_ANNOUNCEMENTS_ID }}" >> .env.local
+          echo VITE_NOTION_ONBOARDING_ID="${{ vars.VITE_NOTION_ONBOARDING_ID }}" >> .env.local
+          cat .env.local
+          touch .env.sentry-build-plugin
+          echo SENTRY_AUTH_TOKEN="${{ secrets.SENTRY_AUTH_TOKEN }}" >> .env.sentry-build-plugin
+          cat .env.sentry-build-plugin
+
+      - name: Install and Build
+        run: |
+          npm config set //registry.npmjs.org/:_authToken ${{ secrets.NPM_TOKEN }}
+          npm install
+          npm run build:prod
+
+      - name: Archive production artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: figma-ui-color-palette
+          path: |
+            dist
+            manifest.json
+          retention-days: 5
+        
+  create-release:
+    name: Create release
+    needs: build-plugin
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.merged == true && startsWith(github.head_ref, 'releases/ui-color-palette/')
     permissions:
       contents: write
     steps:
@@ -17,15 +73,22 @@ jobs:
       with:
         fetch-depth: 0
 
+    - name: Download build artifact
+      uses: actions/download-artifact@v4
+      with:
+        name: figma-ui-color-palette
+        path: |
+          dist
+          manifest.json
+
     - name: Extract package version
       id: extract_version
       run: |
         package_version=$(jq -r '.version' package.json)
-        echo "::set-output name=package_version::$package_version"
+        echo "package_version=$package_version" >> $GITHUB_OUTPUT
 
     - name: Create release
       id: create_release
-      if: github.event.pull_request.merged == true && startsWith(github.head_ref, 'ui-color-palette-')
       uses: actions/create-release@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -34,4 +97,15 @@ jobs:
         release_name: ${{ github.event.pull_request.title}}
         body: |
           ## What's Changed
-          [Friendly release note](https://ui-color-palette.canny.io/changelog/${{ github.head_ref }})・[Full Changelog](https://github.com/a-ng-d/figma-ui-color-palette/commits/${{ github.head_ref }})
+          [Friendly release note](https://ui-color-palette.canny.io/changelog/ui-color-palette-${{ steps.extract_version.outputs.package_version }})
+
+    - name: Upload plugin as release asset
+      if: github.event.pull_request.merged == true && startsWith(github.head_ref, 'releases/ui-color-palette/')
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: figma-ui-color-palette.zip
+        asset_name: figma-ui-color-palette.zip
+        asset_content_type: application/zip

@@ -3,7 +3,7 @@ name: Build and Download UI Color Palette
 on: workflow_dispatch
 
 jobs:
-  build:
+  build-plugin:
     name: Build with Node
     runs-on: ubuntu-latest
 
@@ -13,6 +13,15 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+      with:
+        submodules: 'recursive'
+        fetch-depth: 0
+
+    - name: Initialize and update submodules
+      run: |
+        git submodule update --init --recursive --force
+        echo "Submodule structure:"
+        ls -la packages/ui-ui-color-palette/src/stores/ || echo "Stores directory not found"
 
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
@@ -27,6 +36,7 @@ jobs:
         echo VITE_SENTRY_DSN="${{ vars.VITE_SENTRY_DSN }}" >> .env.local
         echo VITE_MIXPANEL_TOKEN="${{ secrets.VITE_MIXPANEL_TOKEN }}" >> .env.local
         echo VITE_AUTH_WORKER_URL="${{ vars.VITE_AUTH_WORKER_URL }}" >> .env.local
+        echo VITE_AUTH_URL="${{ vars.VITE_AUTH_URL }}" >> .env.local
         echo VITE_ANNOUNCEMENTS_WORKER_URL="${{ vars.VITE_ANNOUNCEMENTS_WORKER_URL }}" >> .env.local
         echo VITE_NOTION_ANNOUNCEMENTS_ID="${{ vars.VITE_NOTION_ANNOUNCEMENTS_ID }}" >> .env.local
         echo VITE_NOTION_ONBOARDING_ID="${{ vars.VITE_NOTION_ONBOARDING_ID }}" >> .env.local
@@ -40,7 +50,7 @@ jobs:
         npm config set //registry.npmjs.org/:_authToken ${{ secrets.NPM_TOKEN }}
         npm install
         npm run build:prod
-    
+
     - name: Archive production artifact
       uses: actions/upload-artifact@v4
       with:
