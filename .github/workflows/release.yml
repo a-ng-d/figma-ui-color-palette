@@ -1,4 +1,4 @@
-name: Release for Sketch
+name: Release production version
 
 on:
   pull_request:
