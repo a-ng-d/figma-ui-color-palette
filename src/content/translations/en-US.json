@@ -49,7 +49,7 @@
       "openPalette": "Open palette",
       "new": "New UI Color Palette",
       "moreParameters": "More parameters",
-            "managePalette": "Manage palette",
+      "managePalette": "Manage palette",
       "selectPalette": "Select palette"
     },
     "deletePaletteDialog": {
@@ -68,10 +68,14 @@
       "remote": "Library",
       "community": "Community",
       "page": "This page",
+      "file": "This file",
       "self": "My palettes"
     },
     "page": {
       "title": "UI Color Palettes on this page"
+    },
+    "file": {
+      "title": "UI Color Palettes on this file"
     },
     "search": "Search palettes",
     "lazyLoad": {
@@ -82,6 +86,14 @@
     "signInFirst": {
       "message": "Find and reuse your published palettes once authentified",
       "signIn": "Sign in to fetch your palettes"
+    }
+  },
+  "create": {
+    "leavePaletteDialog": {
+      "cancel": "Cancel",
+      "leave": "Leave and return to palettes",
+      "message": "You have unsaved changes in this palette. Are you sure you want to leave?",
+      "title": "Unsaved changes"
     }
   },
   "colors": {
@@ -228,10 +240,17 @@
   },
   "info": {
     "addToLocal": "The palette already exists in this page",
+    "announcements": "There is no announcement for now",
+    "onboarding": "There is no onboarding for now",
     "createdLocalStyles": {
       "none": "No style created",
       "plural": "{count} styles created",
       "single": "1 style created"
+    },
+    "createdLocalVariables": {
+      "none": "No variable created",
+      "plural": "{count} variables created",
+      "single": "1 variable created"
     },
     "maxNumberOfSourceColors": "You cannot add more than {maxCount} source colors",
     "maxNumberOfStops": "You cannot add more than {maxCount} stops",
@@ -243,12 +262,22 @@
       "plural": "{count} styles removed",
       "single": "1 style removed"
     },
+    "removedLocalVariables": {
+      "none": "No variable removed",
+      "plural": "{count} variables removed",
+      "single": "1 variable removed"
+    },
     "signOut": "See you later",
     "themesOnFree": "You cannot add or edit modes in the current plan",
     "updatedLocalStyles": {
       "none": "No style updated",
       "plural": "{count} styles updated",
       "single": "1 style updated"
+    },
+    "updatedLocalVariables": {
+      "none": "No variable updated",
+      "plural": "{count} variables updated",
+      "single": "1 variable updated"
     },
     "createdVariablesAndModes": {
       "noneNone": "No variable and mode created",
@@ -321,10 +350,10 @@
   },
   "dev": {
     "vscode": {
-        "cta": "Try it out",
-        "message": "UI Color Palette is also available for Visual Studio Code"
-      },
-      "readyForDev": "Ready for development"
+      "cta": "Try it out",
+      "message": "UI Color Palette is also available for Visual Studio Code"
+    },
+    "readyForDev": "Ready for development"
   },
   "pending": {
     "announcements": "Pending announcements…",
@@ -379,13 +408,13 @@
     "one": {
       "cta": "Get your license",
       "title": "UI Color Palette Pro /One",
-      "subtitle": "$5/month via Lemon Squeezy",
-      "text": "Your multi-platform license working on:{br}◻ Figma{br}◻ Penpot{br}◻ Sketch (soon){br}◻ Framer (soon)"
+      "subtitle": "$5 /month via Lemon Squeezy",
+      "text": "Your multi-platform license working on:{br}◻ Figma{br}◻ Penpot{br}◻ Sketch{br}◻ Framer/Webflow (soon)"
     },
     "figma": {
       "cta": "Get Pro for Figma only",
       "title": "UI Color Palette Pro /Figma",
-      "subtitle": "$5/month via Figma",
+      "subtitle": "$5 /month via Figma",
       "text": "◻ Unlimited palettes{br}◻ Unlimited source colors{br}◻ Unlimited stops{br}◻ Unlimited color modes{br}◻ Export and Sync with library"
     }
   },
@@ -435,7 +464,7 @@
       "label": "Edit a UI Color Palette"
     },
     "open": {
-      "description": "WCAG-Compliant Color Palette Suite",
+      "description": "WCAG Palette Manager for Apps & Websites",
       "label": "Open UI Color Palette"
     }
   },
@@ -502,7 +531,6 @@
       "customHundreds": "Custom, 100-1000",
       "atlassian": "Atlassian",
       "google": "Google"
-
     },
     "shift": {
       "chroma": {
@@ -673,7 +701,8 @@
     "title": "Source colors",
     "nodes": {
       "penpot": "shape/board",
-      "figma": "shape/frame"
+      "figma": "shape/frame",
+      "sketch": "shape/frame"
     }
   },
   "store": {
@@ -697,7 +726,7 @@
     "activatedLicense": "The license key \"{licenseKey}\" has been activated",
     "unlinkedLicense": "Your license key \"{licenseKey}\" has been unlinked"
   },
-  "tagline": "WCAG-Compliant Color Palette Suite",
+  "tagline": "WCAG Palette Manager for Apps & Websites",
   "themes": {
     "actions": {
       "moreParameters": "More parameters",
@@ -740,6 +769,7 @@
     "welcomeMessage": "Hello {username}",
     "preferences": {
       "sync": {
+        "message": "When enabled, the palette will be synchronized with the local library, so the local items will be updated , but could be removed.",
         "palette": {
           "label": "Synchronize your changes in real time with the palette"
         },
@@ -748,10 +778,9 @@
           "message": "If a style is not in the palette, it will be removed."
         },
         "variables": {
-            "label":
-              "Deeply synchronize the local variables in the collection with the palette",
-              "message": "If a variable is not in the palette, it will be removed."
-          },
+          "label": "Deeply synchronize the local variables in the collection with the palette",
+          "message": "If a variable is not in the palette, it will be removed."
+        },
         "title": "Synchronization"
       }
     },
@@ -795,6 +824,7 @@
     "noCommunityPaletteOnRemote": "This is quite empty around here! Be the first to share your palette with other users!",
     "noPaletteOnCurrentPageOnDevMode": "You can ask a member with editing permissions to create",
     "noPaletteOnCurrrentPage": "There is no UI Color Palette on this page",
+    "noPaletteOnCurrrentFile": "There is no UI Color Palette on this file",
     "noSelfPaletteOnRemote": "This is quite empty around here! Publish your palette to reuse it across multiple documents",
     "paletteNameRecommendation": "64 characters max is recommended",
     "tooManyThemesToCreateModes": "You cannot create more than 4 modes in the current plan",
@@ -802,6 +832,7 @@
   },
   "platform": {
     "figma": "Figma",
-    "penpot": "Penpot"
+    "penpot": "Penpot",
+    "sketch": "Sketch"
   }
 }

@@ -323,7 +323,9 @@ const loadUI = async () => {
           if (value && typeof value === 'string')
             figma.ui.postMessage({
               type: `GET_ITEM_${item.toUpperCase()}`,
-              value: value,
+              data: {
+                value: value,
+              },
             })
         }),
       DELETE_ITEMS: () =>
