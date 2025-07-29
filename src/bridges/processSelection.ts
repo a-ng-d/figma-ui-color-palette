@@ -19,6 +19,7 @@ const processSelection = () => {
   const document: FrameNode | InstanceNode = selection[0] as
     | FrameNode
     | InstanceNode
+
   const selectionHandler = (state: string) => {
     const actions: { [key: string]: () => void } = {
       DOCUMENT_SELECTED: async () => {

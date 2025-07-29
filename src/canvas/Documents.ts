@@ -99,7 +99,7 @@ export default class Documents {
       },
     ]
 
-    // data
+    // Data
     document.setPluginData('type', 'UI_COLOR_PALETTE')
     document.setPluginData('version', globalConfig.versions.paletteVersion)
     document.setPluginData('view', this.view)
