@@ -6,7 +6,6 @@ jobs:
   build-plugin:
     name: Build with Node
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v3
       with:
