@@ -78,9 +78,11 @@ jobs:
       uses: actions/download-artifact@v4
       with:
         name: figma-ui-color-palette
-        path: |
-          dist
-          manifest.json
+        path: ./figma-ui-color-palette
+
+    - name: Zip plugin
+      run: |
+        zip -r figma-ui-color-palette.zip figma-ui-color-palette/dist figma-ui-color-palette/manifest.json
 
     - name: Extract package version
       id: extract_version
