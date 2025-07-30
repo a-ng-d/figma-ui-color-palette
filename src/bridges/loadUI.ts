@@ -333,7 +333,7 @@ const loadUI = async () => {
           figma.clientStorage.setAsync(item, '')
         ),
       //
-      OPEN_IN_BROWSER: () => figma.openExternal(path.url),
+      OPEN_IN_BROWSER: () => figma.openExternal(path.data.url),
       GET_PALETTES: async () => getPalettesOnCurrentPage(),
       JUMP_TO_PALETTE: async () =>
         jumpToPalette(path.id).catch((error) =>
