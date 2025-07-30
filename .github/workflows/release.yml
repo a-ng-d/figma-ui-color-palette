@@ -87,6 +87,12 @@ jobs:
         package_version=$(jq -r '.version' package.json)
         echo "package_version=$package_version" >> $GITHUB_OUTPUT
 
+    - name: Remove dots from version
+      id: remove_dot_version
+      run: |
+        version_nopoint=$(echo "${{ steps.extract_version.outputs.package_version }}" | tr -d '.')
+        echo "version_nopoint=$version_nopoint" >> $GITHUB_OUTPUT
+
     - name: Create release
       id: create_release
       uses: actions/create-release@v1
@@ -97,7 +103,7 @@ jobs:
         release_name: ${{ github.event.pull_request.title}}
         body: |
           ## What's Changed
-          [Friendly release note](https://ui-color-palette.canny.io/changelog/ui-color-palette-${{ steps.extract_version.outputs.package_version }})
+          [Friendly release note](https://ui-color-palette.canny.io/changelog/ui-color-palette-${{ steps.remove_dot_version.outputs.version_nopoint }})
 
     - name: Upload plugin as release asset
       if: github.event.pull_request.merged == true && startsWith(github.head_ref, 'releases/ui-color-palette/')
