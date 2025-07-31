@@ -65,7 +65,7 @@
     "vite-tsconfig-paths": "^5.1.4"
   },
   "dependencies": {
-    "@a_ng_d/figmug-ui": "^1.15.19",
+    "@a_ng_d/figmug-ui": "^1.15.20",
     "@a_ng_d/figmug-utils": "^0.7.1",
     "@a_ng_d/utils-ui-color-palette": "^1.3.20",
     "@nanostores/preact": "^0.5.2",
