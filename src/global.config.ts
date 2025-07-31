@@ -1,8 +1,112 @@
 import { doSpecificMode } from '@ui-lib/stores/features'
+import { Feature } from '@a_ng_d/figmug-utils'
 import { Config } from './types/config'
 import { locales } from './content/locales'
 
+declare const __PLUGIN__: 'fig' | 'one'
+
 const isDev = import.meta.env.MODE === 'development'
+
+const specConfig: Record<
+  string,
+  {
+    pluginId: string
+    features: Feature<'BROWSE' | 'CREATE' | 'EDIT' | 'TRANSFER'>[]
+  }
+> = {
+  fig: {
+    pluginId: '1063959496693642315',
+    features: doSpecificMode(
+      ['HELP_CHAT', 'USER_LICENSE'],
+      [
+        'LOCAL_PALETTES',
+        'SYNC_LOCAL_STYLES',
+        'SYNC_LOCAL_VARIABLES',
+        'USER_PREFERENCES_SYNC_DEEP_STYLES',
+        'USER_PREFERENCES_SYNC_DEEP_VARIABLES',
+        'PREVIEW_LOCK_SOURCE_COLORS',
+        'SOURCE',
+        'PRESETS_MATERIAL_3',
+        'PRESETS_TAILWIND',
+        'PRESETS_ADS',
+        'PRESETS_ADS_NEUTRAL',
+        'PRESETS_CARBON',
+        'PRESETS_BASE',
+        'PRESETS_POLARIS',
+        'PRESETS_CUSTOM_ADD',
+        'SCALE_CHROMA',
+        'SCALE_HELPER_DISTRIBUTION',
+        'THEMES',
+        'THEMES_NAME',
+        'THEMES_PARAMS',
+        'THEMES_DESCRIPTION',
+        'COLORS',
+        'COLORS_HUE_SHIFTING',
+        'COLORS_CHROMA_SHIFTING',
+        'COLORS_ALPHA',
+        'COLORS_BACKGROUND_COLOR',
+        'EXPORT_TOKENS_JSON_AMZN_STYLE_DICTIONARY',
+        'EXPORT_TAILWIND',
+        'EXPORT_APPLE_SWIFTUI',
+        'EXPORT_APPLE_UIKIT',
+        'EXPORT_ANDROID_COMPOSE',
+        'EXPORT_ANDROID_XML',
+        'EXPORT_CSV',
+        'SETTINGS_VISION_SIMULATION_MODE_PROTANOPIA',
+        'SETTINGS_VISION_SIMULATION_MODE_PROTANOMALY',
+        'SETTINGS_VISION_SIMULATION_MODE_DEUTERANOMALY',
+        'SETTINGS_VISION_SIMULATION_MODE_DEUTERANOPIA',
+        'SETTINGS_VISION_SIMULATION_MODE_TRITANOMALY',
+        'SETTINGS_VISION_SIMULATION_MODE_TRITANOPIA',
+        'SETTINGS_VISION_SIMULATION_MODE_ACHROMATOMALY',
+        'SETTINGS_VISION_SIMULATION_MODE_ACHROMATOPSIA',
+      ],
+      ['SCALE_CONTRAST_RATIO']
+    ),
+  },
+  one: {
+    pluginId: '1532789439226122095',
+    features: doSpecificMode(
+      ['HELP_CHAT'],
+      [
+        'LOCAL_PALETTES',
+        'SYNC_LOCAL_STYLES',
+        'SYNC_LOCAL_VARIABLES',
+        'USER_PREFERENCES_SYNC_DEEP_STYLES',
+        'USER_PREFERENCES_SYNC_DEEP_VARIABLES',
+        'PREVIEW_LOCK_SOURCE_COLORS',
+        'SOURCE',
+        'PRESETS_MATERIAL_3',
+        'PRESETS_TAILWIND',
+        'PRESETS_ADS',
+        'PRESETS_ADS_NEUTRAL',
+        'PRESETS_CARBON',
+        'PRESETS_BASE',
+        'PRESETS_POLARIS',
+        'PRESETS_CUSTOM_ADD',
+        'SCALE_CHROMA',
+        'SCALE_HELPER_DISTRIBUTION',
+        'THEMES',
+        'THEMES_NAME',
+        'THEMES_PARAMS',
+        'THEMES_DESCRIPTION',
+        'COLORS',
+        'COLORS_HUE_SHIFTING',
+        'COLORS_CHROMA_SHIFTING',
+        'COLORS_ALPHA',
+        'COLORS_BACKGROUND_COLOR',
+        'EXPORT_TOKENS_JSON_AMZN_STYLE_DICTIONARY',
+        'EXPORT_TAILWIND',
+        'EXPORT_APPLE_SWIFTUI',
+        'EXPORT_APPLE_UIKIT',
+        'EXPORT_ANDROID_COMPOSE',
+        'EXPORT_ANDROID_XML',
+        'EXPORT_CSV',
+      ],
+      ['SCALE_CONTRAST_RATIO']
+    ),
+  },
+}
 
 const globalConfig: Config = {
   limits: {
@@ -19,7 +123,7 @@ const globalConfig: Config = {
     isSentryEnabled: true,
     announcementsDbId: import.meta.env.VITE_NOTION_ANNOUNCEMENTS_ID as string,
     onboardingDbId: import.meta.env.VITE_NOTION_ONBOARDING_ID as string,
-    pluginId: '1063959496693642315',
+    pluginId: specConfig[__PLUGIN__].pluginId,
   },
   plan: {
     isProEnabled: true,
@@ -73,53 +177,7 @@ const globalConfig: Config = {
     algorithmVersion: 'v3',
     paletteVersion: '2025.06',
   },
-  features: doSpecificMode(
-    ['HELP_CHAT', 'USER_LICENSE'],
-    [
-      'LOCAL_PALETTES',
-      'SYNC_LOCAL_STYLES',
-      'SYNC_LOCAL_VARIABLES',
-      'USER_PREFERENCES_SYNC_DEEP_STYLES',
-      'USER_PREFERENCES_SYNC_DEEP_VARIABLES',
-      'PREVIEW_LOCK_SOURCE_COLORS',
-      'SOURCE',
-      'PRESETS_MATERIAL_3',
-      'PRESETS_TAILWIND',
-      'PRESETS_ADS',
-      'PRESETS_ADS_NEUTRAL',
-      'PRESETS_CARBON',
-      'PRESETS_BASE',
-      'PRESETS_POLARIS',
-      'PRESETS_CUSTOM_ADD',
-      'SCALE_CHROMA',
-      'SCALE_HELPER_DISTRIBUTION',
-      'THEMES',
-      'THEMES_NAME',
-      'THEMES_PARAMS',
-      'THEMES_DESCRIPTION',
-      'COLORS',
-      'COLORS_HUE_SHIFTING',
-      'COLORS_CHROMA_SHIFTING',
-      'COLORS_ALPHA',
-      'COLORS_BACKGROUND_COLOR',
-      'EXPORT_TOKENS_JSON_AMZN_STYLE_DICTIONARY',
-      'EXPORT_TAILWIND',
-      'EXPORT_APPLE_SWIFTUI',
-      'EXPORT_APPLE_UIKIT',
-      'EXPORT_ANDROID_COMPOSE',
-      'EXPORT_ANDROID_XML',
-      'EXPORT_CSV',
-      'SETTINGS_VISION_SIMULATION_MODE_PROTANOPIA',
-      'SETTINGS_VISION_SIMULATION_MODE_PROTANOMALY',
-      'SETTINGS_VISION_SIMULATION_MODE_DEUTERANOMALY',
-      'SETTINGS_VISION_SIMULATION_MODE_DEUTERANOPIA',
-      'SETTINGS_VISION_SIMULATION_MODE_TRITANOMALY',
-      'SETTINGS_VISION_SIMULATION_MODE_TRITANOPIA',
-      'SETTINGS_VISION_SIMULATION_MODE_ACHROMATOMALY',
-      'SETTINGS_VISION_SIMULATION_MODE_ACHROMATOPSIA',
-    ],
-    ['SCALE_CONTRAST_RATIO']
-  ),
+  features: specConfig[__PLUGIN__].features,
   locales: locales.get(),
 }
 

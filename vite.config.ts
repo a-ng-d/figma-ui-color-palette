@@ -39,6 +39,8 @@ export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '')
   const isDev = mode === 'development'
   const isPlugin = process.env.IS_PLUGIN === 'true'
+  const plugin = process.env.PLUGIN || 'fig'
+  const pluginDir = path.resolve(__dirname, plugin)
 
   return {
     plugins: [
@@ -51,6 +53,10 @@ export default defineConfig(({ mode }) => {
       }),
       viteSingleFile(),
     ],
+
+    define: {
+      __PLUGIN__: JSON.stringify(plugin),
+    },
 
     resolve: {
       alias: {
@@ -68,13 +74,13 @@ export default defineConfig(({ mode }) => {
       target: 'es2015',
       sourcemap: isDev,
       minify: !isDev,
-      outDir: 'dist',
+      outDir: path.resolve(pluginDir, 'dist'),
       watch: isDev ? {} : null,
       emptyOutDir: false,
       ...(isPlugin
         ? {
             lib: {
-              entry: 'src/index.ts',
+              entry: path.resolve(__dirname, './src/index.ts'),
               name: 'FigmaPlugin',
               fileName: () => 'plugin.js',
               formats: ['iife'],
@@ -82,9 +88,9 @@ export default defineConfig(({ mode }) => {
           }
         : {
             rollupOptions: {
-              input: 'index.html',
+              input: path.resolve(__dirname, './index.html'),
               output: {
-                dir: 'dist',
+                dir: path.resolve(pluginDir, 'dist'),
                 entryFileNames: 'ui.js',
                 assetFileNames: 'assets/[name].[hash][extname]',
               },

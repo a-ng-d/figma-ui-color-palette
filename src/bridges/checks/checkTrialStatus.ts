@@ -35,7 +35,7 @@ const checkTrialStatus = async (context = 'UI' as 'UI' | 'PARAMETERS') => {
         planStatus:
           trialStatus === 'PENDING' || !globalConfig.plan.isProEnabled
             ? 'PAID'
-            : figma.payments?.status.type,
+            : 'UNPAID',
         trialStatus: trialStatus,
         trialRemainingTime: Math.ceil(
           currentTrialVersion !== globalConfig.versions.trialVersion
@@ -47,8 +47,7 @@ const checkTrialStatus = async (context = 'UI' as 'UI' | 'PARAMETERS') => {
 
   return trialStatus === 'PENDING' || !globalConfig.plan.isProEnabled
     ? 'PAID'
-    : figma.payments?.status.type
+    : 'UNPAID'
 }
 
 export default checkTrialStatus
-figma.payments?.status.type

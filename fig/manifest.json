@@ -1,0 +1,74 @@
+{
+  "name": "UI Color Palette /Figma・WCAG Palette Manager for Apps & Websites",
+  "id": "1063959496693642315",
+  "api": "1.0.0",
+  "editorType": [
+    "figma",
+    "figjam",
+    "dev"
+  ],
+  "capabilities": [
+    "inspect",
+    "vscode"
+  ],
+  "relaunchButtons": [
+    { "command": "open", "name": "Open UI Color Palette" },
+    { "command": "create", "name": "Create a UI Color Palette", "multipleSelection": true },
+    { "command": "edit", "name": "Edit the UI Color Palette" }
+  ],
+  "permissions": [
+    "payments",
+    "currentuser"
+  ],
+  "documentAccess": "dynamic-page",
+  "networkAccess": {
+    "allowedDomains": [
+      "https://figma.com",
+      "https://*.figma.com",
+      "https://*.gravatar.com",
+      "https://*.wp.com",
+      "https://corsproxy.io",
+      "https://zclweepgvqkrelyfwhma.supabase.co",
+      "https://*.yelbolt.workers.dev",
+      "https://www.colourlovers.com",
+      "https://*.mixpanel.com",
+      "https://asset.brandfetch.io",
+      "https://*.sentry.io",
+      "https://*.amazonaws.com",
+      "https://fonts.googleapis.com",
+      "https://fonts.gstatic.com"
+    ],
+    "devAllowedDomains": [
+      "http://localhost:3000",
+      "http://localhost:8787",
+      "http://localhost:8888"
+    ]
+  },
+  "parameters": [
+    {
+      "name": "Preset",
+      "key": "preset",
+      "description": "Select a specific preset"
+    },
+    {
+      "name": "Color space",
+      "key": "space",
+      "description": "Select a specific color space"
+    },
+    {
+      "name": "Palette layout",
+      "key": "view",
+      "description": "Select a specific layout"
+    },
+    {
+      "name": "Palette name",
+      "key": "name",
+      "description": "Select source colors and type a name",
+      "allowFreeform": true,
+      "optional": true
+    }
+  ],
+  "parameterOnly": false,
+  "main": "./dist/plugin.js",
+  "ui": "./dist/index.html"
+}

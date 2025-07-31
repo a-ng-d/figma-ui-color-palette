@@ -1,6 +1,6 @@
 {
-  "name": "UI Color Palette・WCAG-Compliant Color Palette Suite",
-  "id": "1063959496693642315",
+  "name": "UI Color Palette /One・WCAG Palette Manager for Apps & Websites",
+  "id": "1532789439226122095",
   "api": "1.0.0",
   "editorType": [
     "figma",
@@ -17,7 +17,6 @@
     { "command": "edit", "name": "Edit the UI Color Palette" }
   ],
   "permissions": [
-    "payments",
     "currentuser"
   ],
   "documentAccess": "dynamic-page",
@@ -69,6 +68,6 @@
     }
   ],
   "parameterOnly": false,
-  "main": "dist/plugin.js",
-  "ui": "dist/index.html"
+  "main": "./dist/plugin.js",
+  "ui": "./dist/index.html"
 }

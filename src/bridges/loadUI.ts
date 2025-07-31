@@ -32,10 +32,13 @@ import createLocalVariables from './creations/createLocalVariables'
 import createLocalStyles from './creations/createLocalStyles'
 import createDocument from './creations/createDocument'
 import checkUserPreferences from './checks/checkUserPreferences'
+import checkUserLicense from './checks/checkUserLicense'
 import checkUserConsent from './checks/checkUserConsent'
 import checkTrialStatus from './checks/checkTrialStatus'
 import checkEditor from './checks/checkEditor'
 import checkAnnouncementsStatus from './checks/checkAnnouncementsStatus'
+
+declare const __PLUGIN__: 'fig' | 'one'
 
 interface Window {
   width: number
@@ -96,6 +99,7 @@ const loadUI = async () => {
   checkUserConsent()
     .then(() => checkEditor())
     .then(() => checkTrialStatus())
+    .then(() => checkUserLicense(__PLUGIN__))
     .then(() => checkUserPreferences())
     .then(() => processSelection())
 
@@ -379,7 +383,7 @@ const loadUI = async () => {
         figma.ui.postMessage({
           type: 'GET_PRICING',
           data: {
-            plans: ['ONE', 'FIGMA'],
+            plans: __PLUGIN__ === 'fig' ? ['ONE', 'FIGMA'] : ['ONE'],
           },
         }),
       PAY_PRO_PLAN: async () => payProPlan(),

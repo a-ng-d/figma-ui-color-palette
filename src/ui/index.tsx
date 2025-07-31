@@ -76,7 +76,6 @@ if (globalConfig.env.isSupabaseEnabled && supabaseAnonKey !== undefined)
 
 window.addEventListener('message', (event) => {
   const data = event.data.pluginMessage
-  console.log(event)
   const pluginEvent = new CustomEvent('pluginMessage', {
     detail: data,
   })
