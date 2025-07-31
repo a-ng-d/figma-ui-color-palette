@@ -55,7 +55,7 @@ const loadUI = async () => {
   figma.showUI(__html__, {
     width: windowSize.width,
     height: windowSize.height,
-    title: `${locales.get().name}${locales.get().separator}${locales.get().tagline}`,
+    title: `${locales.get().name}${pluginName}${locales.get().separator}${locales.get().tagline}`,
     themeColors: true,
   })
 
