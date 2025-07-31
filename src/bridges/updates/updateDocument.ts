@@ -12,8 +12,8 @@ import Palette from '../../canvas/Palette'
 
 const updateDocument = async (view: ViewConfiguration) => {
   const document = figma.currentPage.selection[0] as FrameNode
-  const id = document.getPluginData('id')
-  const themeId = document.getPluginData('themeId')
+  const id = document.getSharedPluginData('uicp', 'id')
+  const themeId = document.getSharedPluginData('uicp', 'themeId')
 
   const rawPalette = figma.currentPage.getSharedPluginData(
     'uicp',
@@ -65,9 +65,13 @@ const updateDocument = async (view: ViewConfiguration) => {
   ]
 
   // Update
-  document.setPluginData('view', view)
-  document.setPluginData('updatedAt', palette.meta.dates.updatedAt.toString())
-  document.setPluginData('backup', JSON.stringify(palette))
+  document.setSharedPluginData('uicp', 'view', view)
+  document.setSharedPluginData(
+    'uicp',
+    'updatedAt',
+    palette.meta.dates.updatedAt.toString()
+  )
+  document.setSharedPluginData('uicp', 'backup', JSON.stringify(palette))
 
   figma.ui.postMessage({
     type: 'DOCUMENT_SELECTED',

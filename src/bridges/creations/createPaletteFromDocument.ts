@@ -6,7 +6,7 @@ import { locales } from '../../content/locales'
 const createPaletteFromDocument = async () => {
   const document = figma.currentPage.selection[0]
   const backup = JSON.parse(
-    document.getPluginData('backup')
+    document.getSharedPluginData('uicp', 'backup')
   ) as FullConfiguration
 
   const now = new Date().toISOString()
@@ -21,9 +21,9 @@ const createPaletteFromDocument = async () => {
   backup.meta.creatorIdentity.creatorFullName = ''
   backup.meta.creatorIdentity.creatorAvatar = ''
 
-  document.setPluginData('id', backup.meta.id)
-  document.setPluginData('createdAt', now)
-  document.setPluginData('updatedAt', now)
+  document.setSharedPluginData('uicp', 'id', backup.meta.id)
+  document.setSharedPluginData('uicp', 'createdAt', now)
+  document.setSharedPluginData('uicp', 'updatedAt', now)
 
   figma.currentPage.setSharedPluginData(
     'uicp',

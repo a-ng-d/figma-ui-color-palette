@@ -187,6 +187,17 @@ const setPaletteMigration = async (document: BaseNode) => {
   const id = rawId !== '' ? rawId : uid()
   const view = rawView !== '' ? (rawView as ViewConfiguration) : 'PALETTE'
 
+  if (preset.name.includes('Custom')) preset.id = 'CUSTOM'
+  else if (preset.name.includes('Material Design')) preset.id = 'MATERIAL'
+  else if (preset.name.includes('Material 3')) preset.id = 'MATERIAL_3'
+  else if (preset.name.includes('Tailwind')) preset.id = 'TAILWIND'
+  else if (preset.name.includes('Ant Design')) preset.id = 'ANT'
+  else if (preset.name.includes('ADS')) preset.id = 'ADS'
+  else if (preset.name.includes('Neutral')) preset.id = 'ADS_NEUTRAL'
+  else if (preset.name.includes('Carbon')) preset.id = 'CARBON'
+  else if (preset.name.includes('Base')) preset.id = 'BASE'
+  else if (preset.name.includes('Polaris')) preset.id = 'POLARIS'
+
   palette.base.name = name
   palette.base.description = description
   palette.base.preset.name =
@@ -281,18 +292,27 @@ const setPaletteMigration = async (document: BaseNode) => {
     document.setPluginData(key, '')
   })
 
-  document.setPluginData('type', palette.type)
-  document.setPluginData('version', palette.version)
-  document.setPluginData('view', view)
-  document.setPluginData('id', palette.meta.id)
-  document.setPluginData(
+  document.setSharedPluginData('uicp', 'type', palette.type)
+  document.setSharedPluginData('uicp', 'version', palette.version)
+  document.setSharedPluginData('uicp', 'view', view)
+  document.setSharedPluginData('uicp', 'id', palette.meta.id)
+  document.setSharedPluginData(
+    'uicp',
     'themeId',
     palette.themes.find((theme: ThemeConfiguration) => theme.isEnabled)?.id ||
       '00000000000'
   )
-  document.setPluginData('createdAt', palette.meta.dates.createdAt as string)
-  document.setPluginData('updatedAt', palette.meta.dates.updatedAt as string)
-  document.setPluginData('backup', JSON.stringify(palette))
+  document.setSharedPluginData(
+    'uicp',
+    'createdAt',
+    palette.meta.dates.createdAt as string
+  )
+  document.setSharedPluginData(
+    'uicp',
+    'updatedAt',
+    palette.meta.dates.updatedAt as string
+  )
+  document.setSharedPluginData('uicp', 'backup', JSON.stringify(palette))
 
   document.setRelaunchData({
     edit: locales.get().relaunch.edit.description,

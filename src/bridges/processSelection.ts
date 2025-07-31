@@ -26,13 +26,13 @@ const processSelection = () => {
         figma.ui.postMessage({
           type: 'DOCUMENT_SELECTED',
           data: {
-            view: document.getPluginData('view'),
-            id: document.getPluginData('id'),
-            updatedAt: document.getPluginData('updatedAt'),
+            view: document.getSharedPluginData('uicp', 'view'),
+            id: document.getSharedPluginData('uicp', 'id'),
+            updatedAt: document.getSharedPluginData('uicp', 'updatedAt'),
             isLinkedToPalette:
               figma.currentPage.getSharedPluginData(
                 'uicp',
-                `palette_${document.getPluginData('id')}`
+                `palette_${document.getSharedPluginData('uicp', 'id')}`
               ) !== '',
           },
         })
@@ -60,18 +60,21 @@ const processSelection = () => {
 
   if (
     selection.length === 1 &&
-    document.getPluginData('type') === 'UI_COLOR_PALETTE' &&
+    document.getSharedPluginData('uicp', 'type') === 'UI_COLOR_PALETTE' &&
     document.type !== 'INSTANCE'
   )
     selectionHandler('DOCUMENT_SELECTED')
   else if (
     selection.length === 1 &&
-    document.getPluginDataKeys().length > 0 &&
+    document.getSharedPluginDataKeys('uicp').length > 0 &&
     document.type !== 'INSTANCE'
   )
     selectionHandler('DOCUMENT_SELECTED')
   else if (selection.length === 0) selectionHandler('EMPTY_SELECTION')
-  else if (selection.length > 1 && document.getPluginDataKeys().length !== 0)
+  else if (
+    selection.length > 1 &&
+    document.getSharedPluginDataKeys('uicp').length !== 0
+  )
     selectionHandler('EMPTY_SELECTION')
   else if (selection[0].type === 'INSTANCE') selectionHandler('EMPTY_SELECTION')
   else if ((selection[0] as FrameNode).fills === undefined)
@@ -95,7 +98,7 @@ const processSelection = () => {
 
       if (
         foundColors.length !== 0 &&
-        element.getPluginDataKeys().length === 0
+        element.getSharedPluginDataKeys('uicp').length === 0
       ) {
         foundColors.forEach((solidFill: SolidPaint) => {
           viableSelection.push({

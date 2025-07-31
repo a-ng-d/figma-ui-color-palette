@@ -11,7 +11,6 @@ import loadUI from './bridges/loadUI'
 import loadParameters from './bridges/loadParameters'
 import createPalette from './bridges/creations/createPalette'
 import createDocument from './bridges/creations/createDocument'
-import checkPlanStatus from './bridges/checks/checkTrialStatus'
 
 // Fonts
 figma.loadFontAsync({ family: 'Inter', style: 'Regular' })
@@ -30,7 +29,10 @@ figma.parameters.on(
 figma.on('run', async ({ parameters }: RunEvent) => {
   if (parameters === undefined) {
     figma.on('selectionchange', () => processSelection())
-    figma.on('selectionchange', async () => await checkPlanStatus())
+    // figma.on(
+    //   'selectionchange',
+    //   async () => await checkTrialStatus({ context: 'UI', plugin: __PLUGIN__ })
+    // )
     loadUI()
   } else {
     const selectedPreset = presets.find(
@@ -45,7 +47,7 @@ figma.on('run', async ({ parameters }: RunEvent) => {
                 element.type !== 'GROUP' &&
                 element.type !== 'EMBED' &&
                 element.type !== 'CONNECTOR' &&
-                element.getPluginDataKeys().length === 0 &&
+                element.getSharedPluginDataKeys('uicp').length === 0 &&
                 ((element as FrameNode).fills as readonly SolidPaint[]).filter(
                   (fill: Paint) => fill.type === 'SOLID'
                 ).length !== 0

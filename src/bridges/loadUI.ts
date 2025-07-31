@@ -81,7 +81,7 @@ const loadUI = async () => {
     })
   else if (figma.command === 'edit') {
     const document = figma.currentPage.selection[0]
-    const id = document.getPluginData('id')
+    const id = document.getSharedPluginData('uicp', 'id')
 
     if (id !== '')
       jumpToPalette(id).catch((error) =>
