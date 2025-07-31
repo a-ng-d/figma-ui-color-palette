@@ -1,6 +1,12 @@
 import globalConfig from '../../global.config'
 
-const checkTrialStatus = async (context = 'UI' as 'UI' | 'PARAMETERS') => {
+const checkTrialStatus = async ({
+  context = 'UI',
+  plugin = 'fig',
+}: {
+  context?: 'UI' | 'PARAMETERS'
+  plugin?: 'fig' | 'one'
+}) => {
   const trialStartDate: number | undefined =
     await figma.clientStorage.getAsync('trial_start_date')
   const currentTrialVersion: string =
@@ -35,7 +41,9 @@ const checkTrialStatus = async (context = 'UI' as 'UI' | 'PARAMETERS') => {
         planStatus:
           trialStatus === 'PENDING' || !globalConfig.plan.isProEnabled
             ? 'PAID'
-            : 'UNPAID',
+            : plugin === 'fig'
+              ? figma.payments?.status.type
+              : 'UNPAID',
         trialStatus: trialStatus,
         trialRemainingTime: Math.ceil(
           currentTrialVersion !== globalConfig.versions.trialVersion
@@ -47,7 +55,9 @@ const checkTrialStatus = async (context = 'UI' as 'UI' | 'PARAMETERS') => {
 
   return trialStatus === 'PENDING' || !globalConfig.plan.isProEnabled
     ? 'PAID'
-    : 'UNPAID'
+    : plugin === 'fig'
+      ? figma.payments?.status.type
+      : 'UNPAID'
 }
 
 export default checkTrialStatus

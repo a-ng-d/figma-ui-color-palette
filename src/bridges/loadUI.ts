@@ -50,6 +50,7 @@ const loadUI = async () => {
     width: (await figma.clientStorage.getAsync('plugin_window_width')) ?? 640,
     height: (await figma.clientStorage.getAsync('plugin_window_height')) ?? 640,
   }
+  const pluginName = __PLUGIN__ === 'fig' ? ' /Figma' : ' /One'
 
   figma.showUI(__html__, {
     width: windowSize.width,
@@ -98,7 +99,7 @@ const loadUI = async () => {
   // Checks
   checkUserConsent()
     .then(() => checkEditor())
-    .then(() => checkTrialStatus())
+    .then(() => checkTrialStatus({ context: 'UI', plugin: __PLUGIN__ }))
     .then(() => checkUserLicense(__PLUGIN__))
     .then(() => checkUserPreferences())
     .then(() => processSelection())
@@ -376,7 +377,7 @@ const loadUI = async () => {
         }),
       ENABLE_TRIAL: async () => {
         enableTrial(path.data.trialTime, path.data.trialVersion).then(() =>
-          checkTrialStatus()
+          checkTrialStatus({ context: 'UI', plugin: __PLUGIN__ })
         )
       },
       GET_PRO_PLAN: async () =>
