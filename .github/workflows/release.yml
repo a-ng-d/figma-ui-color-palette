@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event.pull_request.merged == true && startsWith(github.head_ref, 'releases/ui-color-palette/')
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       with:
         submodules: 'recursive'
         fetch-depth: 0
@@ -52,13 +52,22 @@ jobs:
         npm install
         npm run build:prod
 
-    - name: Archive production artifact
+    - name: Archive /Figma production artifact
       uses: actions/upload-artifact@v4
       with:
-        name: figma-ui-color-palette
+        name: figma-fig-ui-color-palette
         path: |
-          dist
-          manifest.json
+          fig/dist
+          fig/manifest.json
+        retention-days: 5
+
+    - name: Archive /One production artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: figma-one-ui-color-palette
+        path: |
+          one/dist
+          one/manifest.json
         retention-days: 5
         
   create-release:
@@ -74,15 +83,25 @@ jobs:
       with:
         fetch-depth: 0
 
+    - name: Download /Figma build artifact
+      uses: actions/download-artifact@v4
+      with:
+        name: figma-fig-ui-color-palette
+        path: ./figma-fig-ui-color-palette
+
     - name: Download build artifact
       uses: actions/download-artifact@v4
       with:
-        name: figma-ui-color-palette
-        path: ./figma-ui-color-palette
+        name: figma-one-ui-color-palette
+        path: ./figma-one-ui-color-palette
 
-    - name: Zip plugin
+    - name: Zip /Figma plugin
       run: |
-        zip -r figma-ui-color-palette.zip figma-ui-color-palette/dist figma-ui-color-palette/manifest.json
+        zip -r figma-fig-ui-color-palette.zip fig/dist fig/manifest.json
+
+    - name: Zip /One plugin
+      run: |
+        zip -r figma-one-ui-color-palette.zip one/dist one/manifest.json
 
     - name: Extract package version
       id: extract_version
@@ -114,6 +133,16 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: figma-ui-color-palette.zip
-        asset_name: figma-ui-color-palette.zip
+        asset_path: figma-fig-ui-color-palette.zip
+        asset_name: figma-fig-ui-color-palette.zip
+        asset_content_type: application/zip
+
+    - name: Upload plugin as release asset
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: figma-one-ui-color-palette.zip
+        asset_name: figma-one-ui-color-palette.zip
         asset_content_type: application/zip

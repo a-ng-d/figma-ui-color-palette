@@ -48,16 +48,7 @@ jobs:
         npm run build:fig:prod
         npm run build:one:prod
 
-    - name: Archive production artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: figma-ui-color-palette
-        path: |
-          dist
-          manifest.json
-        retention-days: 5
-
-    - name: Archive production artifact
+    - name: Archive /Figma production artifact
       uses: actions/upload-artifact@v4
       with:
         name: figma-fig-ui-color-palette
@@ -66,7 +57,7 @@ jobs:
           fig/manifest.json
         retention-days: 5
 
-    - name: Archive production artifact
+    - name: Archive /One production artifact
       uses: actions/upload-artifact@v4
       with:
         name: figma-one-ui-color-palette
