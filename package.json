@@ -18,12 +18,13 @@
   "workspaces": [
     "packages/ui-ui-color-palette",
     "packages/ui-ui-color-palette/packages/auth-yelbolt",
+    "packages/ui-ui-color-palette/packages/auth-yelbolt/ui-color-palette",
     "packages/ui-ui-color-palette/packages/auth-yelbolt-worker",
     "packages/ui-ui-color-palette/packages/announcements-yelbolt-worker"
   ],
   "scripts": {
-    "install:packages": "npm install --workspaces",
-    "update:packages": "git submodule update --remote --merge",
+    "install:ext": "npm install --workspaces",
+    "update:ext": "git submodule update --remote --merge",
     "update:figmug": "npm i @a_ng_d/figmug-ui@latest @a_ng_d/figmug-utils@latest",
     "update:uicp": "npm i @a_ng_d/utils-ui-color-palette@latest",
     "start:ext": "npm run start:ext -w ui-ui-color-palette",
@@ -36,8 +37,7 @@
     "build:one:prod": "PLUGIN=one cross-env npx vite build --mode production & IS_PLUGIN=true PLUGIN=one cross-env npx vite build --mode production",
     "typecheck": "npx tsc --noEmit",
     "lint": "npx eslint ./src/** --fix --ext .ts,.tsx .",
-    "format": "npx prettier './src' --write",
-    "clean": "pkill -f 'next dev' && pkill -f 'esbuild' && pkill -f 'workerd'"
+    "format": "npx prettier './src' --write"
   },
   "devDependencies": {
     "@figma/eslint-plugin-figma-plugins": "^0.15.0",
