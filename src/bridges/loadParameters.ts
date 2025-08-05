@@ -9,11 +9,7 @@ declare const __PLUGIN__: 'fig' | 'one'
 const loadParameters = async ({ key, result }: ParameterInputEvent) => {
   switch (key) {
     case 'preset': {
-      const planStatus =
-        (await checkTrialStatus({
-          context: 'PARAMETERS',
-          plugin: __PLUGIN__,
-        })) ?? 'UNPAID'
+      const planStatus = 'UNPAID'
 
       const filteredPresets = await Promise.all(
         presets.map(async (preset) => {
