@@ -64,6 +64,7 @@ const createLocalVariables = async (id: string) => {
         k = 0
       const messages: Array<string> = []
       const createdVariables: Array<Variable> = []
+      const allAvailableVariables: Array<Variable> = [...localVariables]
 
       // Create variables
       palette.libraryData
@@ -94,6 +95,7 @@ const createLocalVariables = async (id: string) => {
             )
             item.variableId = variable.id
             createdVariables.push(variable)
+            allAvailableVariables.push(variable)
             if (collection !== undefined) {
               variable.setValueForMode(collection.modes[0].modeId, {
                 r: (item.gl ?? [0, 0, 0])[0],
@@ -104,7 +106,8 @@ const createLocalVariables = async (id: string) => {
               item.modeId = collection.defaultModeId
             }
             i++
-          }
+          } else if (boundVariable !== undefined)
+            createdVariables.push(boundVariable)
           if (
             collection?.modes[0].name !== 'Mode 1' &&
             collection !== undefined
@@ -124,6 +127,21 @@ const createLocalVariables = async (id: string) => {
               : item.themeName
 
           if (collection !== undefined) {
+            const path = [
+              item.colorName === ''
+                ? locales.get().colors.defaultName
+                : item.colorName,
+              item.shadeName,
+            ]
+              .filter((name) => name !== '' && name !== 'None')
+              .join('/')
+
+            const variableMatch = allAvailableVariables.find(
+              (variable) => variable.name === path
+            )
+
+            if (variableMatch !== undefined) item.variableId = variableMatch.id
+
             const hasModeMatch = collection.modes.some(
               (mode) => mode.modeId === item.modeId
             )
@@ -162,8 +180,9 @@ const createLocalVariables = async (id: string) => {
             .join('/')
 
           if (collection !== undefined) {
-            const variableMatch = createdVariables.find(
-              (variable) => variable.name === path
+            const variableMatch = allAvailableVariables.find(
+              (variable) =>
+                variable.name === path || variable.id === item.variableId
             )
             const hasModeMatch = collection.modes.some(
               (mode) => mode.modeId === item.modeId
