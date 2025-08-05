@@ -31,8 +31,8 @@
     "publishPalette": "Publish palette",
     "pushUpdates": "Push updates to the document",
     "shadesNumber": {
-      "several": "{count} shades",
-      "single": "{count} shade"
+      "several": "{count} shades/tints",
+      "single": "{count} shade/tint"
     },
     "sourceColorsNumber": {
       "several": "{count} source colors",
@@ -109,7 +109,7 @@
     },
     "callout": {
       "cta": "Create a source color",
-      "message": "Create a source color to split it into multiple shades according to your lightness scale"
+      "message": "Create a source color to split it into multiple shades/tints according to your lightness scale"
     },
     "chromaShifting": {
       "label": "Shift chroma"
@@ -151,7 +151,7 @@
     "nonPublication": "The palette cannot be unpublished",
     "onboarding": "The onboarding cannot be loaded",
     "palettesPicking": "The palettes cannot be picked for now",
-    "paletteSizeExceeded": "The palette size exceeds the limit. Please reduce the number of color modes, source colors or shades.",
+    "paletteSizeExceeded": "The palette size exceeds the limit. Please reduce the number of color modes, source colors or shades/tints.",
     "publication": "The palette cannot be published",
     "share": "The palette has not been shared with the community",
     "styles": "The styles cannot be synchronized",
@@ -460,7 +460,7 @@
       "label": "Create a UI Color Palette"
     },
     "edit": {
-      "description": "Manage, publish, transfer shades",
+      "description": "Manage, publish, transfer shades/tints",
       "label": "Edit a UI Color Palette"
     },
     "open": {
