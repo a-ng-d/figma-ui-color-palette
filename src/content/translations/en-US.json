@@ -19,7 +19,7 @@
     "createPalette": "Create a UI Color Palette",
     "savePalette": "Save the UI Color Palette",
     "duplicate": "Duplicate",
-    "export": "Export the UI Color Palette to",
+    "export": "Export ({format})",
     "generateDocument": {
       "label": "Generate a document",
       "palette": "Generate a color palette",
@@ -186,8 +186,11 @@
       "p3": "P3",
       "rgb": "RGB"
     },
-    "css": {
-      "customProperties": "Custom Properties (CSS)"
+    "stylesheet": {
+      "label": "Stylesheet",
+      "customProperties": "Custom Properties (CSS)",
+      "scss": "SCSS Variables (SCSS)",
+      "less": "Less Variables (LESS)"
     },
     "csv": {
       "spreadsheet": "Spreadsheet (CSV)"
@@ -195,18 +198,22 @@
     "format": "Code",
     "preview": "Preview",
     "tailwind": {
-      "config": "Tailwind (JS)"
+      "label": "Tailwind",
+      "v3": "Tailwind v3 (JS)",
+      "v4": "Tailwind v4 (CSS)"
     },
     "tokens": {
-      "amznStyleDictionary": "Amazon Style Dictionary v3 (JSON)",
+      "styleDictionary": "Style Dictionary v3 (JSON)",
       "dtcg": {
-        "label": "DTCG format (JSON)",
+        "label": "DTCG tokens (JSON)",
         "message": "DTCG tokens format is an ongoing work in progress led by a W3C group and can be changed in the future"
       },
-      "global": "Global (JSON)",
-      "label": "Tokens (JSON)",
-      "nativeTokens": "Native tokens (JSON)",
-      "tokensStudio": "Tokens Studio (JSON)"
+      "global": "Universal (JSON)",
+      "label": "Tokens",
+      "nativeTokens": {
+        "label": "Native tokens (JSON)",
+        "message": "Native tokens can be imported on Tokens Studio or Penpot"
+      } 
     }
   },
   "events": {

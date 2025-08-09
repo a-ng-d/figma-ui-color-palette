@@ -13,12 +13,15 @@ import jumpToPalette from './jumpToPalette'
 import getPalettesOnCurrentPage from './getPalettesOnCurrentPage'
 import exportXml from './exports/exportXml'
 import exportUIKit from './exports/exportUIKit'
-import exportTailwind from './exports/exportTailwind'
+import exportTailwindV4 from './exports/exportTailwindV4'
+import exportTailwindV3 from './exports/exportTailwindV3'
 import exportSwiftUI from './exports/exportSwiftUI'
+import exportScss from './exports/exportScss'
+import exportLess from './exports/exportLess'
 import exportKt from './exports/exportKt'
-import exportJsonTokensStudio from './exports/exportJsonTokensStudio'
+import exportJsonStyleDictionaryV3 from './exports/exportJsonStyleDictionaryV3'
+import exportJsonNative from './exports/exportJsonNative'
 import exportJsonDtcg from './exports/exportJsonDtcg'
-import exportJsonAmznStyleDictionary from './exports/exportJsonAmznStyleDictionary'
 import exportJson from './exports/exportJson'
 import exportCsv from './exports/exportCsv'
 import exportCss from './exports/exportCss'
@@ -285,15 +288,19 @@ const loadUI = async () => {
           }),
       //
       EXPORT_PALETTE: () => {
+        path.export === 'TOKENS_NATIVE' && exportJsonNative(path.id)
         path.export === 'TOKENS_DTCG' &&
           exportJsonDtcg(path.id, path.colorSpace)
-        path.export === 'TOKENS_GLOBAL' && exportJson(path.id)
-        path.export === 'TOKENS_AMZN_STYLE_DICTIONARY' &&
-          exportJsonAmznStyleDictionary(path.id)
-        path.export === 'TOKENS_TOKENS_STUDIO' &&
-          exportJsonTokensStudio(path.id)
-        path.export === 'CSS' && exportCss(path.id, path.colorSpace)
-        path.export === 'TAILWIND' && exportTailwind(path.id)
+        path.export === 'TOKENS_STYLE_DICTIONARY_V3' &&
+          exportJsonStyleDictionaryV3(path.id)
+        path.export === 'TOKENS_UNIVERSAL' && exportJson(path.id)
+        path.export === 'STYLESHEET_CSS' && exportCss(path.id, path.colorSpace)
+        path.export === 'STYLESHEET_SCSS' &&
+          exportScss(path.id, path.colorSpace)
+        path.export === 'STYLESHEET_LESS' &&
+          exportLess(path.id, path.colorSpace)
+        path.export === 'TAILWIND_V3' && exportTailwindV3(path.id)
+        path.export === 'TAILWIND_V4' && exportTailwindV4(path.id)
         path.export === 'APPLE_SWIFTUI' && exportSwiftUI(path.id)
         path.export === 'APPLE_UIKIT' && exportUIKit(path.id)
         path.export === 'ANDROID_COMPOSE' && exportKt(path.id)
