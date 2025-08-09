@@ -165,7 +165,8 @@
   },
   "export": {
     "actions": {
-      "selectColorSpace": "Select a color space"
+      "selectColorSpace": "Select a color space",
+      "copyCode": "Copy code to the clipboard"
     },
     "android": {
       "compose": "Compose (KT)",
@@ -259,9 +260,9 @@
       "plural": "{count} variables created",
       "single": "1 variable created"
     },
-    "maxNumberOfSourceColors": "You cannot add more than {maxCount} source colors",
-    "maxNumberOfStops": "You cannot add more than {maxCount} stops",
-    "maxNumberOfLocalPalettes": "You cannot add more than {maxCount} local palettes",
+    "maxNumberOfSourceColors": "Upgrade to Pro to add more than {maxCount} source colors",
+    "maxNumberOfStops": "Upgrade to Pro to add more than {maxCount} stops",
+    "maxNumberOfLocalPalettes": "Upgrade to Pro to add more than {maxCount} local palettes",
     "noResult": "No palette matches your search",
     "paletteCreated": "{name} palette created",
     "removedLocalStyles": {
@@ -275,7 +276,7 @@
       "single": "1 variable removed"
     },
     "signOut": "See you later",
-    "themesOnFree": "You cannot add or edit modes in the current plan",
+    "themesOnFree": "Upgrade to Pro to add or edit modes",
     "updatedLocalStyles": {
       "none": "No style updated",
       "plural": "{count} styles updated",
@@ -318,7 +319,8 @@
       "singlePlural": "1 variable and {modeCount} modes removed",
       "pluralSingle": "{variableCount} variables and 1 mode removed",
       "pluralPlural": "{variableCount} variables and {modeCount} modes removed"
-    }
+    },
+    "copiedCode": "The code has been copied to the clipboard"
   },
   "name": "UI Color Palette",
   "onboarding": {
@@ -400,7 +402,7 @@
       "label": "Lock source colors",
       "preview": "Lock the source colors to include them in the palette",
       "tag": "Locked",
-      "warning": "You cannot save a palette with locked source colors"
+      "warning": "Upgrade to Pro to save a palette with locked source colors"
     },
     "score": {
       "apca": "Display APCA scores",
@@ -542,7 +544,7 @@
     "shift": {
       "chroma": {
         "label": "Chroma",
-        "warning": "You cannot save a palette with a modified chroma shift. Reset it to 100% to save it."
+        "warning": "Upgrade to Pro to save a palette with a modified chroma shift. Reset it to 100% or upgrade."
       }
     },
     "tips": {
@@ -602,7 +604,7 @@
         "protanopia": "Protanopia (red-blind)",
         "tritanomaly": "Tritanomaly (blue-weak)",
         "tritanopia": "Tritanopia (blue-blind)",
-        "warning": "You cannot save a palette with this vision simulation mode"
+        "warning": "Update to Pro to save a palette with this vision simulation mode"
       }
     },
     "contexts": {
@@ -835,7 +837,8 @@
     "noSelfPaletteOnRemote": "This is quite empty around here! Publish your palette to reuse it across multiple documents",
     "paletteNameRecommendation": "64 characters max is recommended",
     "tooManyThemesToCreateModes": "You cannot create more than 4 modes in the current plan",
-    "unselectedColor": "Select a layer that is filled with at least one solid color"
+    "unselectedColor": "Select a layer that is filled with at least one solid color",
+    "uncopiedCode": "The code has not been copied to the clipboard"
   },
   "platform": {
     "figma": "Figma",
