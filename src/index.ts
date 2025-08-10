@@ -12,6 +12,8 @@ import loadParameters from './bridges/loadParameters'
 import createPalette from './bridges/creations/createPalette'
 import createDocument from './bridges/creations/createDocument'
 
+declare const __PLUGIN__: 'fig' | 'one'
+
 // Fonts
 figma.loadFontAsync({ family: 'Inter', style: 'Regular' })
 figma.loadFontAsync({ family: 'Inter', style: 'Medium' })
@@ -117,7 +119,8 @@ if (figma.editorType !== 'dev')
 
         if (
           type === 'UI_COLOR_PALETTE' &&
-          version !== globalConfig.versions.paletteVersion
+          version !== globalConfig.versions.paletteVersion &&
+          __PLUGIN__ === 'fig'
         )
           setPaletteMigration(document)
       })
@@ -134,7 +137,8 @@ figma.on('currentpagechange', async () => {
 
       if (
         type === 'UI_COLOR_PALETTE' &&
-        version !== globalConfig.versions.paletteVersion
+        version !== globalConfig.versions.paletteVersion &&
+        __PLUGIN__ === 'fig'
       )
         setPaletteMigration(document)
     })
