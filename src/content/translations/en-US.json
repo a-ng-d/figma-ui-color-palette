@@ -59,7 +59,7 @@
       "title": "Delete palette"
     },
     "document": {
-      "create": "Create from document",
+      "restore": "Restore palette",
       "open": "Open document"
     },
     "copy": "Copy of {name}",
