@@ -735,7 +735,7 @@
     "activatedLicense": "The license key \"{licenseKey}\" has been activated",
     "unlinkedLicense": "Your license key \"{licenseKey}\" has been unlinked"
   },
-  "tagline": "WCAG Palette Manager for Apps & Websites",
+  "tagline": "WCAG Color Palette Manager for Apps & Websites",
   "themes": {
     "actions": {
       "moreParameters": "More parameters",
