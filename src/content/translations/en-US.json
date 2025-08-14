@@ -372,7 +372,7 @@
   },
   "plan": {
     "dev": "Developer plan",
-    "free": "Free plan",
+    "free": "Basic plan",
     "getPro": "Get Pro",
     "pro": "Pro plan",
     "trial": "Trial",
@@ -469,11 +469,11 @@
       "label": "Create a UI Color Palette"
     },
     "edit": {
-      "description": "Manage, publish, transfer shades/tints",
+      "description": "Manage, export, publish shades/tints",
       "label": "Edit a UI Color Palette"
     },
     "open": {
-      "description": "WCAG Palette Manager for Apps & Websites",
+      "description": "WCAG Color Palette Manager for Apps & Websites",
       "label": "Open UI Color Palette"
     }
   },

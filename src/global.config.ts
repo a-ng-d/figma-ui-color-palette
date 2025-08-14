@@ -107,7 +107,7 @@ const specConfig: Record<
         'EXPORT_ANDROID_XML',
         'EXPORT_CSV',
       ],
-      ['SCALE_CONTRAST_RATIO']
+      ['SCALE_CONTRAST_RATIO', 'INVOLVE_COMMUNITY']
     ),
   },
 }
