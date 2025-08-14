@@ -78,6 +78,10 @@
     "preact": "^10.6.4",
     "react": "npm:@preact/compat",
     "react-dom": "npm:@preact/compat",
+    "react-syntax-highlighter": "^15.6.1",
     "uid": "^2.0.2"
+  },
+  "overrides": {
+    "prismjs": "^1.30.0"
   }
 }
