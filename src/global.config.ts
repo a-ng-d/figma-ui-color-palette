@@ -63,7 +63,7 @@ const specConfig: Record<
         'SETTINGS_VISION_SIMULATION_MODE_ACHROMATOMALY',
         'SETTINGS_VISION_SIMULATION_MODE_ACHROMATOPSIA',
       ],
-      ['SCALE_CONTRAST_RATIO']
+      ['SCALE_CONTRAST_RATIO', 'INVOLVE_COMMUNITY']
     ),
   },
   one: {
@@ -166,8 +166,8 @@ const globalConfig: Config = {
     licenseUrl: 'https://uicp.ylb.lt/license',
     privacyUrl: 'https://uicp.ylb.lt/privacy',
     vsCodeFigmaPluginUrl: 'https://uicp.ylb.lt/vscode-figma-plugin',
-    isbUrl: 'https://isb.ylb.lt/run-figma-plugin',
-    uicpUrl: 'https://uicp.ylb.lt/run-figma-plugin',
+    isbUrl: 'https://isb.ylb.lt/website',
+    uicpUrl: 'https://uicp.ylb.lt/website',
     storeUrl: isDev
       ? 'https://uicp.ylb.lt/store-dev'
       : 'https://uicp.ylb.lt/store',
