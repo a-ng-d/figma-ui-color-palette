@@ -11,6 +11,7 @@ import loadUI from './bridges/loadUI'
 import loadParameters from './bridges/loadParameters'
 import createPalette from './bridges/creations/createPalette'
 import createDocument from './bridges/creations/createDocument'
+import checkTrialStatus from './bridges/checks/checkTrialStatus'
 
 declare const __PLUGIN__: 'fig' | 'one'
 
@@ -31,10 +32,10 @@ figma.parameters.on(
 figma.on('run', async ({ parameters }: RunEvent) => {
   if (parameters === undefined) {
     figma.on('selectionchange', () => processSelection())
-    // figma.on(
-    //   'selectionchange',
-    //   async () => await checkTrialStatus({ context: 'UI', plugin: __PLUGIN__ })
-    // )
+    figma.on(
+      'selectionchange',
+      async () => await checkTrialStatus({ context: 'UI', plugin: __PLUGIN__ })
+    )
     loadUI()
   } else {
     const selectedPreset = presets.find(
