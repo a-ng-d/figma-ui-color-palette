@@ -1,5 +1,6 @@
 import { doSpecificMode } from '@ui-lib/stores/features'
 import { Feature } from '@a_ng_d/figmug-utils'
+import package_json from '../package.json'
 import { Config } from './types/config'
 import { locales } from './content/locales'
 
@@ -135,8 +136,10 @@ const globalConfig: Config = {
     trialTime: 72,
   },
   dbs: {
-    palettesDbTableName: isDev ? 'sandbox.palettes' : 'palettes',
-    palettesStorageName: isDev ? 'palette.screenshots' : 'palette.screenshots',
+    palettesDbViewName: isDev
+      ? 'sandbox_palettes_with_creators'
+      : 'palettes_with_creators',
+    palettesDbTableName: isDev ? 'sandbox_palettes' : 'palettes',
   },
   urls: {
     authWorkerUrl: isDev
@@ -180,6 +183,7 @@ const globalConfig: Config = {
     trialVersion: '2024.03',
     algorithmVersion: 'v3',
     paletteVersion: '2025.06',
+    pluginVersion: package_json.version,
   },
   features: specConfig[__PLUGIN__].features,
   locales: locales.get(),
