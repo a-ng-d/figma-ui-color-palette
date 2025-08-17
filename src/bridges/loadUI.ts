@@ -61,6 +61,9 @@ const loadUI = async () => {
       ),
     },
   })
+  figma.ui.postMessage({
+    type: 'CHECK_ANNOUNCEMENTS_VERSION',
+  })
 
   if (figma.command === 'create')
     figma.ui.postMessage({
