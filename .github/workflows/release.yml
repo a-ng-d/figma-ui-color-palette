@@ -50,9 +50,10 @@ jobs:
       run: |
         npm config set //registry.npmjs.org/:_authToken ${{ secrets.NPM_TOKEN }}
         npm install
-        npm run build:prod
+        npm run build:prod:fig
+        npm run build:prod:one
 
-    - name: Archive /igma production artifact
+    - name: Archive /figma production artifact
       uses: actions/upload-artifact@v4
       with:
         name: figma-fig-ui-color-palette
