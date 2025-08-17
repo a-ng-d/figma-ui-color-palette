@@ -2,7 +2,7 @@
   "name": "figma-ui-color-palette",
   "version": "5.0.0",
   "private": true,
-  "description": "UI Color Palette is a Figma and FigJam plugin that creates, manages, deploys, and publishes consistent and accessible color palettes.",
+  "description": "UI Color Palette is a Figma and FigJam plugin that creates, manages, exports, and publishes consistent and accessible color palettes.",
   "author": "Aurélien Grimaud",
   "license": "MIT",
   "repository": "https://github.com/a-ng-d/figma-ui-color-palette",
