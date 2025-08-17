@@ -19,7 +19,7 @@
     "createPalette": "Create a UI Color Palette",
     "savePalette": "Save the UI Color Palette",
     "duplicate": "Duplicate",
-    "export": "Export ({format})",
+    "export": "Export palette as {format}",
     "generateDocument": {
       "label": "Generate a document",
       "palette": "Generate a color palette",
@@ -416,13 +416,13 @@
     "title": "Subscribe to UI Color Palette Pro",
     "one": {
       "cta": "Get your license",
-      "title": "UI Color Palette Pro /One",
+      "title": "UI Color Palette Pro /one",
       "subtitle": "$5 /month via Lemon Squeezy",
       "text": "Your multi-platform license working on:{br}◻ Figma{br}◻ Penpot{br}◻ Sketch{br}◻ Framer/Webflow (soon)"
     },
     "figma": {
       "cta": "Get Pro for Figma only",
-      "title": "UI Color Palette Pro /Figma",
+      "title": "UI Color Palette Pro /figma",
       "subtitle": "$5 /month via Figma",
       "text": "◻ Unlimited palettes{br}◻ Unlimited source colors{br}◻ Unlimited stops{br}◻ Unlimited color modes{br}◻ Export and Sync with library"
     }
@@ -443,7 +443,7 @@
   },
   "publication": {
     "detach": "Detach",
-    "message": "Publish your palette as a single source of truth and reuse it in other {platformName} documents (like a component instance). You can also distribute your palettes by sharing them with the community.",
+    "message": "Publish your palette as a single source of truth and reuse it in other documents and platforms. You can also distribute your palettes by sharing them with the community.",
     "publish": "Publish…",
     "revert": "Revert",
     "share": "Share with the community",

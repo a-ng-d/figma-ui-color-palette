@@ -39,7 +39,7 @@ const loadUI = async () => {
     width: (await figma.clientStorage.getAsync('plugin_window_width')) ?? 640,
     height: (await figma.clientStorage.getAsync('plugin_window_height')) ?? 640,
   }
-  const pluginName = __PLUGIN__ === 'fig' ? ' /Figma' : ' /One'
+  const pluginName = __PLUGIN__ === 'fig' ? ' /figma' : ' /one'
 
   figma.showUI(__html__, {
     width: windowSize.width,
@@ -60,6 +60,9 @@ const loadUI = async () => {
         'supabase_refresh_token'
       ),
     },
+  })
+  figma.ui.postMessage({
+    type: 'CHECK_ANNOUNCEMENTS_VERSION',
   })
 
   if (figma.command === 'create')
