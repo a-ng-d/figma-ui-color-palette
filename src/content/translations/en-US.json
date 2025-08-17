@@ -443,7 +443,7 @@
   },
   "publication": {
     "detach": "Detach",
-    "message": "Publish your palette as a single source of truth and reuse it in other {platformName} documents (like a component instance). You can also distribute your palettes by sharing them with the community.",
+    "message": "Publish your palette as a single source of truth and reuse it in other documents and platforms. You can also distribute your palettes by sharing them with the community.",
     "publish": "Publish…",
     "revert": "Revert",
     "share": "Share with the community",
