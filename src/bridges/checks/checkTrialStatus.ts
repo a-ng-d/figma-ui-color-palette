@@ -34,7 +34,6 @@ const checkTrialStatus = async ({
     else trialStatus = 'UNUSED'
   }
 
-  if (trialStatus === 'PENDING' || !globalConfig.plan.isProEnabled)
     if (context === 'UI') {
       let planStatus
 
