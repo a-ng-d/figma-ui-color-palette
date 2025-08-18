@@ -35,6 +35,7 @@
     "build:prod:fig": "PLUGIN=fig cross-env npx vite build --mode production & IS_PLUGIN=true PLUGIN=fig cross-env npx vite build --mode production",
     "build:one": "PLUGIN=one cross-env npx vite build --mode development & IS_PLUGIN=true PLUGIN=one cross-env npx vite build --mode development",
     "build:prod:one": "PLUGIN=one cross-env npx vite build --mode production & IS_PLUGIN=true PLUGIN=one cross-env npx vite build --mode production",
+    "build:prod:all": "npm run build:prod:fig & npm run build:prod:one",
     "typecheck": "npx tsc --noEmit",
     "lint": "npx eslint ./src/** --fix --ext .ts,.tsx .",
     "format": "npx prettier './src' --write"

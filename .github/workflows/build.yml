@@ -45,8 +45,7 @@ jobs:
       run: |
         npm config set //registry.npmjs.org/:_authToken ${{ secrets.NPM_TOKEN }}
         npm install
-        npm run build:prod:fig
-        npm run build:prod:one
+        npm run build:prod:all
 
     - name: Archive /figma production artifact
       uses: actions/upload-artifact@v4
