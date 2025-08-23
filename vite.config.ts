@@ -5,7 +5,8 @@ import { sentryVitePlugin } from '@sentry/vite-plugin'
 import preact from '@preact/preset-vite'
 
 const excludeUnwantedCssPlugin = (): Plugin => {
-  const excludePattern = /figma-colors|penpot-colors|penpot-types\.css$/
+  const excludePattern =
+    /figma-colors|penpot-colors|penpot-types|sketch-colors|sketch-types\.css$/
 
   return {
     name: 'exclude-unwanted-css',
@@ -51,7 +52,18 @@ export default defineConfig(({ mode }) => {
         project: 'ui-color-palette',
         authToken: env.SENTRY_AUTH_TOKEN,
         sourcemaps: {
-          filesToDeleteAfterUpload: '**/*.map',
+          assets: plugin === 'fig' ? './fig/dist/**' : './one/dist/**',
+          filesToDeleteAfterUpload: isDev ? undefined : '**/*.map',
+        },
+        release: {
+          name: env.VITE_APP_VERSION,
+          setCommits: {
+            auto: true,
+          },
+          finalize: true,
+          deploy: {
+            env: 'production',
+          },
         },
         telemetry: false,
       }),
@@ -87,7 +99,7 @@ export default defineConfig(({ mode }) => {
               entry: path.resolve(__dirname, './src/index.ts'),
               name: 'FigmaPlugin',
               fileName: () => 'plugin.js',
-              formats: ['iife'],
+              formats: ['iife' as const],
             },
           }
         : {
@@ -97,6 +109,7 @@ export default defineConfig(({ mode }) => {
                 dir: path.resolve(pluginDir, 'dist'),
                 entryFileNames: 'ui.js',
                 assetFileNames: 'assets/[name].[hash][extname]',
+                sourcemapExcludeSources: false,
               },
             },
           }),
