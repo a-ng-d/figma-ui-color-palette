@@ -1,3 +1,4 @@
+import globalConfig from '../global.config'
 import { locales } from '../content/locales'
 import updateThemes from './updates/updateThemes'
 import updateSettings from './updates/updateSettings'
@@ -362,7 +363,11 @@ const loadUI = async () => {
             plans: __PLUGIN__ === 'fig' ? ['ONE', 'FIGMA'] : ['ONE'],
           },
         }),
-      PAY_PRO_PLAN: async () => payProPlan(),
+      GO_TO_ONE: () =>
+        __PLUGIN__ === 'fig'
+          ? figma.openExternal('https://uicp.ylb.lt/run-figma-plugin')
+          : figma.openExternal(globalConfig.urls.storeUrl),
+      GO_TO_CHECKOUT: async () => payProPlan(),
       ENABLE_PRO_PLAN: async () =>
         figma.ui.postMessage({
           type: 'ENABLE_PRO_PLAN',
