@@ -247,6 +247,7 @@
     }
   },
   "info": {
+    "askDesigner": "You can ask designers to create a palette or jump to another page",
     "addToLocal": "The palette already exists in this page",
     "announcements": "There is no announcement for now",
     "onboarding": "There is no onboarding for now",
@@ -260,9 +261,17 @@
       "plural": "{count} variables created",
       "single": "1 variable created"
     },
-    "maxNumberOfSourceColors": "Upgrade to Pro to add more than {maxCount} source colors",
-    "maxNumberOfStops": "Upgrade to Pro to add more than {maxCount} stops",
-    "maxNumberOfLocalPalettes": "Upgrade to Pro to add more than {maxCount} local palettes",
+    "maxNumberOfSourceColors": "Upgrade to /pro to add more than {maxCount} source colors",
+    "maxNumberOfStops": "Upgrade to /pro to add more than {maxCount} stops",
+    "maxNumberOfLocalPalettes": "Upgrade to /pro to add more than {maxCount} local palettes",
+    "multipleBlockingMessages": {
+      "head": "Upgrade to /pro or: {messages}",
+      "sourceColors": "decrease source colors",
+      "stops": "decrease stops",
+      "lockedSourceColors": "unlock source colors",
+      "chroma": "reset chroma",
+      "visionSimulationMode": "reset vision simulation"
+    },
     "noResult": "No palette matches your search",
     "paletteCreated": "{name} palette created",
     "removedLocalStyles": {
@@ -276,7 +285,7 @@
       "single": "1 variable removed"
     },
     "signOut": "See you later",
-    "themesOnFree": "Upgrade to Pro to add or edit modes",
+    "themesOnFree": "Upgrade to /pro to add or edit modes",
     "updatedLocalStyles": {
       "none": "No style updated",
       "plural": "{count} styles updated",
@@ -373,8 +382,8 @@
   "plan": {
     "dev": "Developer plan",
     "free": "Basic plan",
-    "getPro": "Get Pro",
-    "pro": "Pro plan",
+    "getPro": "Go /pro",
+    "pro": "/pro plan",
     "trial": "Trial",
     "trialEnded": "Your trial has ended",
     "trialFeedback": "How was it?",
@@ -386,7 +395,7 @@
       "plural": "{count} hours left in this trial",
       "single": "1 hour left in this trial"
     },
-    "tryPro": "Try Pro"
+    "tryPro": "Try /pro"
   },
   "preview": {
     "actions": {
@@ -402,7 +411,7 @@
       "label": "Lock source colors",
       "preview": "Lock the source colors to include them in the palette",
       "tag": "Locked",
-      "warning": "Upgrade to Pro to save a palette with locked source colors"
+      "warning": "Upgrade to /pro to save a palette with locked source colors"
     },
     "score": {
       "apca": "Display APCA scores",
@@ -413,16 +422,16 @@
     }
   },
   "pricing": {
-    "title": "Subscribe to UI Color Palette Pro",
+    "title": "Subscribe to UI Color Palette /pro",
     "one": {
       "cta": "Get your license",
-      "title": "UI Color Palette Pro /one",
+      "title": "UI Color Palette /pro /one",
       "subtitle": "$5 /month via Lemon Squeezy",
       "text": "Your multi-platform license working on:{br}◻ Figma{br}◻ Penpot{br}◻ Sketch{br}◻ Framer/Webflow (soon)"
     },
     "figma": {
-      "cta": "Get Pro for Figma only",
-      "title": "UI Color Palette Pro /figma",
+      "cta": "Go /pro for Figma only",
+      "title": "UI Color Palette /pro /figma",
       "subtitle": "$5 /month via Figma",
       "text": "◻ Unlimited palettes{br}◻ Unlimited source colors{br}◻ Unlimited stops{br}◻ Unlimited color modes{br}◻ Export and Sync with library"
     }
@@ -430,14 +439,14 @@
   "proPlan": {
     "trial": {
       "cta": "Enable the {hours}-hour trial",
-      "message": "Supercharge your primitive colors for {hours} hours with the Pro plan. You will be able to create more palette, manage your color modes, and export your palette to more formats.",
-      "option": "Get Pro directly",
-      "title": "Would you like to upgrade to the Pro plan within the next {hours} hours?"
+      "message": "Supercharge your primitive colors for {hours} hours with the /pro plan. You will be able to create more palette, manage your color modes, and export your palette to more formats.",
+      "option": "Go /pro directly",
+      "title": "Would you like to upgrade to the /pro plan within the next {hours} hours?"
     },
     "welcome": {
       "cta": "Let's build",
       "message": "This upgrade will unlock a range of tools that enable you to deploy and transfer your color palette. We hope you will enjoy the benefits.",
-      "title": "Welcome to UI Color Palette Pro!",
+      "title": "Welcome to UI Color Palette /pro!",
       "trial": "This upgrade will unlock a range of tools that enable you to deploy and transfer your color palette. We hope you will enjoy the benefits for the next {hours} hours."
     }
   },
@@ -544,7 +553,7 @@
     "shift": {
       "chroma": {
         "label": "Chroma",
-        "warning": "Upgrade to Pro to save a palette with a modified chroma shift. Reset it to 100% or upgrade."
+        "warning": "Upgrade to /pro to save a palette with a modified chroma shift. Reset it to 100% or upgrade."
       }
     },
     "tips": {
@@ -604,7 +613,7 @@
         "protanopia": "Protanopia (red-blind)",
         "tritanomaly": "Tritanomaly (blue-weak)",
         "tritanopia": "Tritanopia (blue-blind)",
-        "warning": "Update to Pro to save a palette with this vision simulation mode"
+        "warning": "Upgrade to /pro to save a palette with this vision simulation mode"
       }
     },
     "contexts": {
@@ -795,7 +804,7 @@
     },
     "license": {
       "messages": {
-        "activate": "Enter your license key to unlock the Pro features",
+        "activate": "Enter your license key to unlock the /pro features",
         "active": "Valid",
         "unactive": "Not valid"
       },
