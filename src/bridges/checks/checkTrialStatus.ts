@@ -34,27 +34,27 @@ const checkTrialStatus = async ({
     else trialStatus = 'UNUSED'
   }
 
-    if (context === 'UI') {
-      let planStatus
+  if (context === 'UI') {
+    let planStatus
 
-      if (trialStatus === 'PENDING' || !globalConfig.plan.isProEnabled)
-        planStatus = 'PAID'
-      else if (plugin === 'fig') planStatus = figma.payments?.status.type
-      else planStatus = undefined
+    if (trialStatus === 'PENDING' || !globalConfig.plan.isProEnabled)
+      planStatus = 'PAID'
+    else if (plugin === 'fig') planStatus = figma.payments?.status.type
+    else planStatus = undefined
 
-      figma.ui.postMessage({
-        type: 'CHECK_TRIAL_STATUS',
-        data: {
-          planStatus: planStatus,
-          trialStatus: trialStatus,
-          trialRemainingTime: Math.ceil(
-            currentTrialVersion !== globalConfig.versions.trialVersion
-              ? currentTrialTime - consumedTime
-              : globalConfig.plan.trialTime - consumedTime
-          ),
-        },
-      })
-    }
+    figma.ui.postMessage({
+      type: 'CHECK_TRIAL_STATUS',
+      data: {
+        planStatus: planStatus,
+        trialStatus: trialStatus,
+        trialRemainingTime: Math.ceil(
+          currentTrialVersion !== globalConfig.versions.trialVersion
+            ? currentTrialTime - consumedTime
+            : globalConfig.plan.trialTime - consumedTime
+        ),
+      },
+    })
+  }
 
   if (trialStatus === 'PENDING' || !globalConfig.plan.isProEnabled)
     return 'PAID'
