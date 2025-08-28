@@ -372,10 +372,12 @@ const loadUI = async () => {
         figma.ui.postMessage({
           type: 'ENABLE_PRO_PLAN',
         }),
-      LEAVE_PRO_PLAN: async () =>
+      LEAVE_PRO_PLAN: async () => {
         figma.ui.postMessage({
           type: 'LEAVE_PRO_PLAN',
-        }),
+        })
+        checkTrialStatus({ context: 'UI', plugin: __PLUGIN__ })
+      },
       WELCOME_TO_PRO: async () =>
         figma.ui.postMessage({
           type: 'WELCOME_TO_PRO',
