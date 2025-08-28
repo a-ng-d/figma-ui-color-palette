@@ -72,6 +72,7 @@ export default defineConfig(({ mode }) => {
 
     define: {
       __PLUGIN__: JSON.stringify(plugin),
+      __APP_VERSION__: JSON.stringify(process.env.npm_package_version),
     },
 
     resolve: {

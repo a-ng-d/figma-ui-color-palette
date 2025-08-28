@@ -1,6 +1,6 @@
 {
   "name": "figma-ui-color-palette",
-  "version": "5.0.0",
+  "version": "5.0.1",
   "private": true,
   "description": "UI Color Palette is a Figma and FigJam plugin that creates, manages, exports, and publishes consistent and accessible color palettes.",
   "author": "Aurélien Grimaud",
@@ -32,8 +32,9 @@
     "start:dev:one": "npm run build:one",
     "start:dev:all": "npm run build:fig & npm run build:one",
     "build:fig": "PLUGIN=fig cross-env npx vite build --mode development & IS_PLUGIN=true PLUGIN=fig cross-env npx vite build --mode development",
-    "build:prod:fig": "PLUGIN=fig cross-env npx vite build --mode production & IS_PLUGIN=true PLUGIN=fig cross-env npx vite build --mode production",
     "build:one": "PLUGIN=one cross-env npx vite build --mode development & IS_PLUGIN=true PLUGIN=one cross-env npx vite build --mode development",
+    "build:all": "npm run build:fig & npm run build:one",
+    "build:prod:fig": "PLUGIN=fig cross-env npx vite build --mode production & IS_PLUGIN=true PLUGIN=fig cross-env npx vite build --mode production",
     "build:prod:one": "PLUGIN=one cross-env npx vite build --mode production & IS_PLUGIN=true PLUGIN=one cross-env npx vite build --mode production",
     "build:prod:all": "npm run build:prod:fig & npm run build:prod:one",
     "typecheck": "npx tsc --noEmit",
@@ -67,9 +68,9 @@
     "vite-tsconfig-paths": "^5.1.4"
   },
   "dependencies": {
-    "@a_ng_d/figmug-ui": "^1.16.0",
+    "@a_ng_d/figmug-ui": "^1.17.2",
     "@a_ng_d/figmug-utils": "^0.7.1",
-    "@a_ng_d/utils-ui-color-palette": "^1.6.2",
+    "@a_ng_d/utils-ui-color-palette": "^1.6.3",
     "@nanostores/preact": "^0.5.2",
     "@sentry/react": "^8.8.0",
     "@supabase/supabase-js": "^2.44.2",
