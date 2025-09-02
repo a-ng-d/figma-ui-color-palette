@@ -2,7 +2,11 @@ import { createRoot } from 'react-dom/client'
 import React from 'react'
 import mixpanel from 'mixpanel-figma'
 import App from '@ui-lib/ui/App'
-import { initMixpanel, setMixpanelEnv } from '@ui-lib/external/tracking/client'
+import {
+  initMixpanel,
+  setEditor,
+  setMixpanelEnv,
+} from '@ui-lib/external/tracking/client'
 import { initSentry } from '@ui-lib/external/monitoring/client'
 import { initSupabase } from '@ui-lib/external/auth/client'
 import { ThemeProvider } from '@ui-lib/config/ThemeContext'
@@ -29,6 +33,7 @@ if (globalConfig.env.isMixpanelEnabled && mixpanelToken !== undefined) {
 
   setMixpanelEnv(import.meta.env.MODE as 'development' | 'production')
   initMixpanel(mixpanel)
+  setEditor(globalConfig.env.editor)
 }
 
 if (
