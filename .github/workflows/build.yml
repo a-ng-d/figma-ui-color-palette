@@ -47,12 +47,21 @@ jobs:
         npm install
         npm run build:prod:all
 
+    - name: Verify build output
+      run: |
+        echo "=== Checking file sizes and structure ==="
+        ls -la fig/dist/ || echo "fig/dist directory not found!"
+        ls -la one/dist/ || echo "one/dist directory not found!"
+        du -sh fig/dist/* fig/manifest.json || echo "Error checking fig file sizes"
+        du -sh one/dist/* one/manifest.json || echo "Error checking one file sizes"
+        
     - name: Archive /figma production artifact
       uses: actions/upload-artifact@v4
       with:
         name: figma-fig-ui-color-palette
         path: |
-          fig/dist
+          fig/dist/index.html
+          fig/dist/plugin.js
           fig/manifest.json
         retention-days: 5
 
@@ -61,6 +70,7 @@ jobs:
       with:
         name: figma-one-ui-color-palette
         path: |
-          one/dist
+          one/dist/index.html
+          one/dist/plugin.js
           one/manifest.json
         retention-days: 5

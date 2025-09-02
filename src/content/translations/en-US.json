@@ -21,10 +21,10 @@
     "duplicate": "Duplicate",
     "export": "Export palette as {format}",
     "generateDocument": {
-      "label": "Generate a document",
-      "palette": "Generate a color palette",
-      "paletteWithProperties": "Generate a detailed color palette",
-      "sheet": "Generate a color sheet"
+      "label": "Generate documentation",
+      "palette": "Simple color palette",
+      "paletteWithProperties": "Detailed color palette",
+      "sheet": "Full color sheet"
     },
     "moreActions": "More actions",
     "publishOrSyncPalette": "Publish or Synchronize palette",
@@ -380,8 +380,8 @@
     "secondaryAction": "………"
   },
   "plan": {
-    "dev": "Developer plan",
-    "free": "Basic plan",
+    "dev": "/dev plan",
+    "free": "/basic plan",
     "getPro": "Go /pro",
     "pro": "/pro plan",
     "trial": "Trial",
@@ -434,6 +434,12 @@
       "title": "UI Color Palette /pro /figma",
       "subtitle": "$5 /month via Figma",
       "text": "◻ Unlimited palettes{br}◻ Unlimited source colors{br}◻ Unlimited stops{br}◻ Unlimited color modes{br}◻ Export and Sync with library"
+    },
+    "oneFigma": {
+      "cta": "Go to UI Color Palette /one",
+      "title": "UI Color Palette /pro /one",
+      "subtitle": "$5 /month via Lemon Squeezy",
+      "text": "◻ All /figma features{br}◻ Tailored for small and larges teams{br}◻ Multi platforms{br}◻ Multi payment options"
     }
   },
   "proPlan": {
