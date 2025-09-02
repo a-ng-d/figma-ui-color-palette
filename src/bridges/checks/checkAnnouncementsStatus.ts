@@ -2,8 +2,18 @@ const checkAnnouncementsStatus = async (remoteVersion: string) => {
   const localVersion = await figma.clientStorage.getAsync(
     'announcements_version'
   )
-  const isOnboardingRead =
+  let isOnboardingRead =
     await figma.clientStorage.getAsync('is_onboarding_read')
+
+  if (isOnboardingRead === undefined) {
+    await figma.clientStorage.setAsync('is_onboarding_read', false)
+    isOnboardingRead = false
+  }
+
+  if (isOnboardingRead === 'true' || isOnboardingRead === 'false') {
+    isOnboardingRead = isOnboardingRead === 'true'
+    await figma.clientStorage.setAsync('is_onboarding_read', isOnboardingRead)
+  }
 
   if (localVersion === '' && remoteVersion === '')
     return {
@@ -12,7 +22,7 @@ const checkAnnouncementsStatus = async (remoteVersion: string) => {
         status: 'NO_ANNOUNCEMENTS',
       },
     }
-  else if (localVersion === '' && isOnboardingRead === '')
+  else if (localVersion === '' && !isOnboardingRead)
     return figma.ui.postMessage({
       type: 'PUSH_ONBOARDING_STATUS',
       data: {

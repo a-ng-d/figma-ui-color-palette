@@ -290,11 +290,8 @@ const loadUI = async () => {
         path.items.forEach(async (item: { key: string; value: unknown }) => {
           if (typeof item.value === 'object')
             figma.clientStorage.setAsync(item.key, JSON.stringify(item.value))
-          else if (
-            typeof item.value === 'boolean' ||
-            typeof item.value === 'number'
-          )
-            figma.clientStorage.setAsync(item.key, item.value.toString())
+          else if (item.value === 'true' || item.value === 'false')
+            figma.clientStorage.setAsync(item.key, item.value === 'true')
           else figma.clientStorage.setAsync(item.key, item.value as string)
         })
       },
@@ -360,13 +357,12 @@ const loadUI = async () => {
         figma.ui.postMessage({
           type: 'GET_PRICING',
           data: {
-            plans: __PLUGIN__ === 'fig' ? ['ONE', 'FIGMA'] : ['ONE'],
+            plans: __PLUGIN__ === 'fig' ? ['FIGMA', 'ONE_FIGMA'] : ['ONE'],
           },
         }),
-      GO_TO_ONE: () =>
-        __PLUGIN__ === 'fig'
-          ? figma.openExternal('https://uicp.ylb.lt/run-figma-plugin')
-          : figma.openExternal(globalConfig.urls.storeUrl),
+      GO_TO_ONE: () => figma.openExternal(globalConfig.urls.storeUrl),
+      GO_TO_ONE_FIGMA: () =>
+        figma.openExternal('https://uicp.ylb.lt/run-figma-plugin'),
       GO_TO_CHECKOUT: async () => payProPlan(),
       ENABLE_PRO_PLAN: async () =>
         figma.ui.postMessage({
