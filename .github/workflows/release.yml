@@ -113,36 +113,7 @@ jobs:
         
     - name: Zip /figma plugin
       run: |
-        # Verify files exist before zipping
-        test -f ./figma-fig-ui-color-palette/index.html || echo "WARNING: index.html is missing!"
-        test -f ./figma-fig-ui-color-palette/plugin.js || echo "WARNING: plugin.js is missing!"
-        test -f ./figma-fig-ui-color-palette/manifest.json || echo "WARNING: manifest.json is missing!"
-        
-        # Create directories structure if it doesn't exist
-        mkdir -p ./figma-fig-ui-color-palette-zip/fig/dist
-        
-        # Copy files with verification
-        if [ -f ./figma-fig-ui-color-palette/index.html ]; then
-          cp ./figma-fig-ui-color-palette/index.html ./figma-fig-ui-color-palette-zip/fig/dist/
-        else
-          # Fallback to original build
-          cp fig/dist/index.html ./figma-fig-ui-color-palette-zip/fig/dist/ || echo "Failed to copy index.html"
-        fi
-        
-        if [ -f ./figma-fig-ui-color-palette/plugin.js ]; then
-          cp ./figma-fig-ui-color-palette/plugin.js ./figma-fig-ui-color-palette-zip/fig/dist/
-        else
-          cp fig/dist/plugin.js ./figma-fig-ui-color-palette-zip/fig/dist/ || echo "Failed to copy plugin.js"
-        fi
-        
-        if [ -f ./figma-fig-ui-color-palette/manifest.json ]; then
-          cp ./figma-fig-ui-color-palette/manifest.json ./figma-fig-ui-color-palette-zip/fig/
-        else
-          cp fig/manifest.json ./figma-fig-ui-color-palette-zip/fig/ || echo "Failed to copy manifest.json"
-        fi
-        
-        # Zip the correctly structured directory
-        zip -r figma-fig-ui-color-palette.zip figma-fig-ui-color-palette-zip/fig
+        zip -r figma-fig-ui-color-palette.zip fig/dist fig/manifest.json
 
     - name: Zip /one plugin
       run: |
