@@ -52,12 +52,21 @@ jobs:
         npm install
         npm run build:prod:all
 
+    - name: Verify build output
+      run: |
+        echo "=== Checking file sizes and structure ==="
+        ls -la fig/dist/ || echo "fig/dist directory not found!"
+        ls -la one/dist/ || echo "one/dist directory not found!"
+        du -sh fig/dist/* fig/manifest.json || echo "Error checking fig file sizes"
+        du -sh one/dist/* one/manifest.json || echo "Error checking one file sizes"
+        
     - name: Archive /figma production artifact
       uses: actions/upload-artifact@v4
       with:
         name: figma-fig-ui-color-palette
         path: |
-          fig/dist
+          fig/dist/index.html
+          fig/dist/plugin.js
           fig/manifest.json
         retention-days: 5
 
@@ -66,7 +75,8 @@ jobs:
       with:
         name: figma-one-ui-color-palette
         path: |
-          one/dist
+          one/dist/index.html
+          one/dist/plugin.js
           one/manifest.json
         retention-days: 5
         
@@ -95,9 +105,44 @@ jobs:
         name: figma-one-ui-color-palette
         path: ./figma-one-ui-color-palette
 
+    - name: Verify downloaded artifacts
+      run: |
+        echo "=== Checking downloaded artifacts ==="
+        find ./figma-fig-ui-color-palette -type f -exec ls -la {} \;
+        find ./figma-one-ui-color-palette -type f -exec ls -la {} \;
+        
     - name: Zip /figma plugin
       run: |
-        zip -r figma-fig-ui-color-palette.zip fig/dist fig/manifest.json
+        # Verify files exist before zipping
+        test -f ./figma-fig-ui-color-palette/index.html || echo "WARNING: index.html is missing!"
+        test -f ./figma-fig-ui-color-palette/plugin.js || echo "WARNING: plugin.js is missing!"
+        test -f ./figma-fig-ui-color-palette/manifest.json || echo "WARNING: manifest.json is missing!"
+        
+        # Create directories structure if it doesn't exist
+        mkdir -p ./figma-fig-ui-color-palette-zip/fig/dist
+        
+        # Copy files with verification
+        if [ -f ./figma-fig-ui-color-palette/index.html ]; then
+          cp ./figma-fig-ui-color-palette/index.html ./figma-fig-ui-color-palette-zip/fig/dist/
+        else
+          # Fallback to original build
+          cp fig/dist/index.html ./figma-fig-ui-color-palette-zip/fig/dist/ || echo "Failed to copy index.html"
+        fi
+        
+        if [ -f ./figma-fig-ui-color-palette/plugin.js ]; then
+          cp ./figma-fig-ui-color-palette/plugin.js ./figma-fig-ui-color-palette-zip/fig/dist/
+        else
+          cp fig/dist/plugin.js ./figma-fig-ui-color-palette-zip/fig/dist/ || echo "Failed to copy plugin.js"
+        fi
+        
+        if [ -f ./figma-fig-ui-color-palette/manifest.json ]; then
+          cp ./figma-fig-ui-color-palette/manifest.json ./figma-fig-ui-color-palette-zip/fig/
+        else
+          cp fig/manifest.json ./figma-fig-ui-color-palette-zip/fig/ || echo "Failed to copy manifest.json"
+        fi
+        
+        # Zip the correctly structured directory
+        zip -r figma-fig-ui-color-palette.zip figma-fig-ui-color-palette-zip/fig
 
     - name: Zip /one plugin
       run: |
