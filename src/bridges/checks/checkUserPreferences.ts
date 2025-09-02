@@ -40,10 +40,16 @@ const checkUserPreferences = async () => {
   return figma.ui.postMessage({
     type: 'CHECK_USER_PREFERENCES',
     data: {
-      isWCAGDisplayed: isWCAGDisplayed === 'true',
-      isAPCADisplayed: isAPCADisplayed === 'true',
-      canDeepSyncStyles: canDeepSyncStyles === 'true',
-      canDeepSyncVariables: canDeepSyncVariables === 'true',
+      isWCAGDisplayed:
+        isWCAGDisplayed === undefined ? true : isWCAGDisplayed === 'true',
+      isAPCADisplayed:
+        isAPCADisplayed === undefined ? true : isAPCADisplayed === 'true',
+      canDeepSyncStyles:
+        canDeepSyncStyles === undefined ? false : canDeepSyncStyles === 'true',
+      canDeepSyncVariables:
+        canDeepSyncVariables === undefined
+          ? false
+          : canDeepSyncVariables === 'true',
       isVsCodeMessageDisplayed:
         isVsCodeMessageDisplayed === undefined
           ? true
