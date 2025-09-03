@@ -108,16 +108,57 @@ jobs:
     - name: Verify downloaded artifacts
       run: |
         echo "=== Checking downloaded artifacts ==="
-        find ./figma-fig-ui-color-palette -type f -exec ls -la {} \;
-        find ./figma-one-ui-color-palette -type f -exec ls -la {} \;
+        echo "Contents of figma-fig-ui-color-palette directory:"
+        find ./figma-fig-ui-color-palette -type f | sort
+        ls -la ./figma-fig-ui-color-palette
         
+        echo "Contents of figma-one-ui-color-palette directory:"
+        find ./figma-one-ui-color-palette -type f | sort
+        ls -la ./figma-one-ui-color-palette
+        
+        echo "Current directory structure:"
+        pwd
+        ls -la
+        
+    - name: Create directory structure for zipping
+      run: |
+        # Create temporary directories with correct structure
+        mkdir -p temp_fig/fig/dist
+        mkdir -p temp_one/one/dist
+        
+        # Copy files to match the expected structure
+        cp ./figma-fig-ui-color-palette/index.html temp_fig/fig/dist/
+        cp ./figma-fig-ui-color-palette/plugin.js temp_fig/fig/dist/
+        cp ./figma-fig-ui-color-palette/manifest.json temp_fig/fig/
+        
+        cp ./figma-one-ui-color-palette/index.html temp_one/one/dist/
+        cp ./figma-one-ui-color-palette/plugin.js temp_one/one/dist/
+        cp ./figma-one-ui-color-palette/manifest.json temp_one/one/
+        
+        # Verify the structure
+        echo "Temp fig directory structure:"
+        find temp_fig -type f | sort
+        
+        echo "Temp one directory structure:"
+        find temp_one -type f | sort
+
     - name: Zip /figma plugin
       run: |
-        zip -r figma-fig-ui-color-palette.zip fig/dist/index.html fig/dist/plugin.js fig/manifest.json
+        # Create zip from the temp directory
+        cd temp_fig
+        zip -r ../figma-fig-ui-color-palette.zip fig
+        cd ..
+        # Verify zip contents
+        unzip -l figma-fig-ui-color-palette.zip
 
     - name: Zip /one plugin
       run: |
-        zip -r figma-one-ui-color-palette.zip one/dist/index.html one/dist/plugin.js one/manifest.json
+        # Create zip from the temp directory
+        cd temp_one
+        zip -r ../figma-one-ui-color-palette.zip one
+        cd ..
+        # Verify zip contents
+        unzip -l figma-one-ui-color-palette.zip
 
     - name: Extract package version
       id: extract_version
