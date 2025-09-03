@@ -113,11 +113,11 @@ jobs:
         
     - name: Zip /figma plugin
       run: |
-        zip -r figma-fig-ui-color-palette.zip fig/dist fig/manifest.json
+        zip -r figma-fig-ui-color-palette.zip fig/dist/index.html fig/dist/plugin.js fig/manifest.json
 
     - name: Zip /one plugin
       run: |
-        zip -r figma-one-ui-color-palette.zip one/dist one/manifest.json
+        zip -r figma-one-ui-color-palette.zip one/dist/index.html one/dist/plugin.js one/manifest.json
 
     - name: Extract package version
       id: extract_version

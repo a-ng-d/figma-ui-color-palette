@@ -36,7 +36,6 @@ const specConfig: Record<
         'PRESETS_POLARIS',
         'PRESETS_CUSTOM_ADD',
         'SCALE_CHROMA',
-        'SCALE_HELPER_DISTRIBUTION',
         'THEMES',
         'THEMES_NAME',
         'THEMES_PARAMS',
