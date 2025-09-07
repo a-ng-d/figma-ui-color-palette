@@ -14,6 +14,7 @@
       "several": "{count} color modes",
       "single": "{count} color mode"
     },
+    "explorePalettes": "Explore palettes from community",
     "syncLocalStyles": "Sync with the local styles",
     "syncLocalVariables": "Sync with the local variables",
     "createPalette": "Create a UI Color Palette",
@@ -102,10 +103,7 @@
       "removeColor": "Remove color",
       "new": "New UI Color",
       "colorName": "Color name",
-      "shiftHue": "Shift hue"
-    },
-    "backgroundColor": {
-      "label": "Background"
+      "alphaBackground": "Background color behind transparency"
     },
     "callout": {
       "cta": "Create a source color",
@@ -125,7 +123,7 @@
     "title": "Source colors",
     "alpha": {
       "label": "Alpha mode",
-      "message": "The lightness scale is applied to the color alpha channel instead of the lightness."
+      "message": "The scale is applied to the color alpha channel instead of the lightness"
     }
   },
   "contexts": {
@@ -134,7 +132,7 @@
     "palettes": "Palettes",
     "scale": "Scale",
     "settings": "Settings",
-    "source": "Source",
+    "source": "Colors",
     "themes": "Modes",
     "back": "Back to palettes"
   },
@@ -369,7 +367,7 @@
   "dev": {
     "vscode": {
       "cta": "Try it out",
-      "message": "UI Color Palette is also available for Visual Studio Code"
+      "message": "UI Color Palette is also available on the Figma VS Code plugin"
     },
     "readyForDev": "Ready for development"
   },
@@ -402,7 +400,9 @@
       "collapsePreview": "Collapse preview",
       "displayScores": "Display scores",
       "expandPreview": "Expand preview",
-      "resetImportedColors": "Reset the imported colors"
+      "resetImportedColors": "Reset imported colors",
+      "colorSpace": "Color space",
+      "visionSimulationMode": "Vision simulation"
     },
     "closest": {
       "tag": "Closest"
@@ -539,7 +539,7 @@
     },
     "presets": {
       "more": "More presets",
-      "custom": "Make your own preset",
+      "custom": "Custom sets",
       "legacy": "Custom (Legacy)",
       "material": "Material Design, 50-900",
       "material3": "Material 3, 0-100",
@@ -619,7 +619,7 @@
         "protanopia": "Protanopia (red-blind)",
         "tritanomaly": "Tritanomaly (blue-weak)",
         "tritanopia": "Tritanopia (blue-blind)",
-        "warning": "Upgrade to /pro to save a palette with this vision simulation mode"
+        "warning": "Upgrade to /pro to save a palette with this vision simulation"
       }
     },
     "contexts": {
@@ -675,7 +675,7 @@
       "openPalette": "Open palette"
     },
     "canvas": {
-      "tip": "Select a {element} (filled with color) on the {canvas} canvas, then create a UI Color Palette.",
+      "tip": "Select a {element} (filled with color) on the {canvas} canvas",
       "title": "Selected colors"
     },
     "colourLovers": {
@@ -697,6 +697,10 @@
     "contexts": {
       "explore": "Explore",
       "overview": "Overview"
+    },
+    "default": {
+      "title": "Default color",
+      "helper": "This color is used when no color is selected or imported"
     },
     "coolors": {
       "add": "Add a Coolors palette",
@@ -756,7 +760,8 @@
       "moreParameters": "More parameters",
       "removeColor": "Remove mode",
       "new": "New UI Mode",
-      "themeName": "Mode name"
+      "themeName": "Mode name",
+      "documentBackground": "This color is used for the generated documents"
     },
     "callout": {
       "cta": "Create a color mode",
@@ -777,6 +782,7 @@
   "user": {
     "cookies": {
       "back": "Back",
+      "close": "Continue without accepting",
       "consent": "Accept all",
       "customize": "Customize cookies",
       "deny": "Deny all",
