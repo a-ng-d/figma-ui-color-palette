@@ -61,23 +61,33 @@ jobs:
         du -sh one/dist/* one/manifest.json || echo "Error checking one file sizes"
         
     - name: Archive /figma production artifact
+      run: |
+        # Create a directory structure that preserves paths
+        mkdir -p figma_artifacts/fig/dist
+        cp fig/dist/index.html figma_artifacts/fig/dist/
+        cp fig/dist/plugin.js figma_artifacts/fig/dist/
+        cp fig/manifest.json figma_artifacts/fig/
+      
+    - name: Upload figma artifact
       uses: actions/upload-artifact@v4
       with:
         name: figma-fig-ui-color-palette
-        path: |
-          fig/dist/index.html
-          fig/dist/plugin.js
-          fig/manifest.json
+        path: figma_artifacts
         retention-days: 5
 
     - name: Archive /one production artifact
+      run: |
+        # Create a directory structure that preserves paths
+        mkdir -p one_artifacts/one/dist
+        cp one/dist/index.html one_artifacts/one/dist/
+        cp one/dist/plugin.js one_artifacts/one/dist/
+        cp one/manifest.json one_artifacts/one/
+      
+    - name: Upload one artifact
       uses: actions/upload-artifact@v4
       with:
         name: figma-one-ui-color-palette
-        path: |
-          one/dist/index.html
-          one/dist/plugin.js
-          one/manifest.json
+        path: one_artifacts
         retention-days: 5
         
   create-release:
@@ -120,43 +130,23 @@ jobs:
         pwd
         ls -la
         
-    - name: Create directory structure for zipping
+    - name: Verify downloaded artifacts
       run: |
-        # Create temporary directories with correct structure
-        mkdir -p temp_fig/fig/dist
-        mkdir -p temp_one/one/dist
-        
-        # Copy files to match the expected structure
-        cp ./figma-fig-ui-color-palette/index.html temp_fig/fig/dist/
-        cp ./figma-fig-ui-color-palette/plugin.js temp_fig/fig/dist/
-        cp ./figma-fig-ui-color-palette/manifest.json temp_fig/fig/
-        
-        cp ./figma-one-ui-color-palette/index.html temp_one/one/dist/
-        cp ./figma-one-ui-color-palette/plugin.js temp_one/one/dist/
-        cp ./figma-one-ui-color-palette/manifest.json temp_one/one/
-        
-        # Verify the structure
-        echo "Temp fig directory structure:"
-        find temp_fig -type f | sort
-        
-        echo "Temp one directory structure:"
-        find temp_one -type f | sort
+        echo "=== Checking downloaded artifacts ==="
+        ls -la ./figma-fig-ui-color-palette/ || echo "Directory not found"
+        ls -la ./figma-one-ui-color-palette/ || echo "Directory not found"
 
     - name: Zip /figma plugin
       run: |
-        # Create zip from the temp directory
-        cd temp_fig
-        zip -r ../figma-fig-ui-color-palette.zip fig
-        cd ..
+        # Simply zip the downloaded artifact directory
+        zip -r figma-fig-ui-color-palette.zip ./figma-fig-ui-color-palette
         # Verify zip contents
         unzip -l figma-fig-ui-color-palette.zip
 
     - name: Zip /one plugin
       run: |
-        # Create zip from the temp directory
-        cd temp_one
-        zip -r ../figma-one-ui-color-palette.zip one
-        cd ..
+        # Simply zip the downloaded artifact directory
+        zip -r figma-one-ui-color-palette.zip ./figma-one-ui-color-palette
         # Verify zip contents
         unzip -l figma-one-ui-color-palette.zip
 
