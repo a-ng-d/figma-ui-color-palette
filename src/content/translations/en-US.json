@@ -398,7 +398,7 @@
   "preview": {
     "actions": {
       "collapsePreview": "Collapse preview",
-      "displayScores": "Display scores",
+      "displayScores": "Show scores",
       "expandPreview": "Expand preview",
       "resetImportedColors": "Reset imported colors",
       "colorSpace": "Color space",
@@ -414,8 +414,8 @@
       "warning": "Upgrade to /pro to save a palette with locked source colors"
     },
     "score": {
-      "apca": "Display APCA scores",
-      "wcag": "Display WCAG 2.1 scores"
+      "apca": "Show APCA scores",
+      "wcag": "Show WCAG 2.1 scores"
     },
     "source": {
       "tag": "Source"
