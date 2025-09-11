@@ -52,6 +52,7 @@ export interface Config {
     uicpUrl: string
     storeUrl: string
     storeManagementUrl: string
+    howToUseUrl: string
   }
   versions: {
     userConsentVersion: string
