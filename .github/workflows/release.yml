@@ -5,6 +5,7 @@ on:
     types: [closed]
     branches:
       - dev
+  workflow_dispatch:
 
 jobs:
   build-plugin:
