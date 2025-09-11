@@ -123,7 +123,7 @@
     "title": "Source colors",
     "alpha": {
       "label": "Alpha mode",
-      "message": "The scale is applied to the color alpha channel instead of the lightness"
+      "helper": "The scale is applied to the color alpha channel instead of the lightness"
     }
   },
   "contexts": {
@@ -512,8 +512,10 @@
     "actions": {
       "addStop": "Add stop",
       "removeStop": "Remove stop",
-      "resetScale": "Reset lightness and chroma",
-      "resetLightness": "Reset lightness"
+      "resetScale": "Reset stops and chroma",
+      "resetStops": "Reset stops",
+      "reverseStops": "Reverse stops",
+      "applyEasing": "Apply directly the easing to the stops"
     },
     "contrast": {
       "label": "Contrast mode",
@@ -782,7 +784,7 @@
   "user": {
     "cookies": {
       "back": "Back",
-      "close": "Continue without accepting",
+      "close": "Close",
       "consent": "Accept all",
       "customize": "Customize cookies",
       "deny": "Deny all",
