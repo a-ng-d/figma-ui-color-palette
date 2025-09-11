@@ -149,6 +149,7 @@ root.render(
       isbUrl: globalConfig.urls.isbUrl,
       storeUrl: globalConfig.urls.storeUrl,
       storeManagementUrl: globalConfig.urls.storeManagementUrl,
+      howToUseUrl: globalConfig.urls.howToUseUrl,
     }}
     versions={{
       userConsentVersion: globalConfig.versions.userConsentVersion,
