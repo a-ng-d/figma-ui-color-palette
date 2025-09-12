@@ -62,33 +62,23 @@ jobs:
         du -sh one/dist/* one/manifest.json || echo "Error checking one file sizes"
         
     - name: Archive /figma production artifact
-      run: |
-        # Create a directory structure that preserves paths
-        mkdir -p figma_artifacts/fig/dist
-        cp fig/dist/index.html figma_artifacts/fig/dist/
-        cp fig/dist/plugin.js figma_artifacts/fig/dist/
-        cp fig/manifest.json figma_artifacts/fig/
-      
-    - name: Upload figma artifact
       uses: actions/upload-artifact@v4
       with:
         name: figma-fig-ui-color-palette
-        path: figma_artifacts
+        path: |
+          fig/dist/index.html
+          fig/dist/plugin.js
+          fig/manifest.json
         retention-days: 5
 
     - name: Archive /one production artifact
-      run: |
-        # Create a directory structure that preserves paths
-        mkdir -p one_artifacts/one/dist
-        cp one/dist/index.html one_artifacts/one/dist/
-        cp one/dist/plugin.js one_artifacts/one/dist/
-        cp one/manifest.json one_artifacts/one/
-      
-    - name: Upload one artifact
       uses: actions/upload-artifact@v4
       with:
         name: figma-one-ui-color-palette
-        path: one_artifacts
+        path: |
+          one/dist/index.html
+          one/dist/plugin.js
+          one/manifest.json
         retention-days: 5
         
   create-release:
