@@ -186,7 +186,7 @@ const globalConfig: Config = {
     howToUseUrl: 'https://uicp.ylb.lt/how-to-use-figma',
   },
   versions: {
-    userConsentVersion: '2024.01',
+    userConsentVersion: '2025.09',
     trialVersion: '2024.03',
     algorithmVersion: 'v3',
     paletteVersion: '2025.06',
