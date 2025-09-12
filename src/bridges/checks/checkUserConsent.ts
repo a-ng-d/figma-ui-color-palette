@@ -10,9 +10,9 @@ const checkUserConsent = async () => {
     userConsent.map(async (consent) => {
       return {
         ...consent,
-        isConsented:
-          (await figma.clientStorage.getAsync(`${consent.id}_user_consent`)) ===
-          'true',
+        isConsented: await figma.clientStorage.getAsync(
+          `${consent.id}_user_consent`
+        ),
       }
     })
   )
