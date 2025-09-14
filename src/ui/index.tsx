@@ -21,6 +21,7 @@ const mixpanelToken = import.meta.env.VITE_MIXPANEL_TOKEN
 const sentryDsn = import.meta.env.VITE_SENTRY_DSN
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_PUBLIC_ANON_KEY
 
+// Mixpanel
 if (globalConfig.env.isMixpanelEnabled && mixpanelToken !== undefined) {
   mixpanel.init(mixpanelToken, {
     api_host: 'https://api-eu.mixpanel.com',
@@ -36,6 +37,7 @@ if (globalConfig.env.isMixpanelEnabled && mixpanelToken !== undefined) {
   setEditor(globalConfig.env.editor)
 }
 
+// Sentry
 if (
   globalConfig.env.isSentryEnabled &&
   !globalConfig.env.isDev &&
@@ -87,9 +89,11 @@ if (
   ;(window as any).Sentry = devLogger
 }
 
+// Supabase
 if (globalConfig.env.isSupabaseEnabled && supabaseAnonKey !== undefined)
   initSupabase(globalConfig.urls.databaseUrl, supabaseAnonKey)
 
+// Bridge Canvas <> UI
 window.addEventListener('message', (event) => {
   const data = event.data.pluginMessage
   const pluginEvent = new CustomEvent('pluginMessage', {
@@ -98,6 +102,7 @@ window.addEventListener('message', (event) => {
   window.dispatchEvent(pluginEvent)
 })
 
+// Render
 root.render(
   <ConfigProvider
     limits={{
