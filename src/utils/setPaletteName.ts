@@ -9,8 +9,11 @@ const setPaletteName = (
 ): string => {
   const parameters: Array<string> = []
 
-  name === '' ? parameters.push(locales.get().name) : parameters.push(name)
-  theme === 'None' || theme === undefined ? null : parameters.push(theme)
+  if (name === '') parameters.push(locales.get().name)
+  else parameters.push(name)
+
+  if (theme !== 'None' && theme !== undefined) parameters.push(theme)
+
   parameters.push(preset)
   parameters.push(colorSpace)
 
