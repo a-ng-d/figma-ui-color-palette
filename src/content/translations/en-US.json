@@ -15,10 +15,10 @@
       "single": "{count} color mode"
     },
     "explorePalettes": "Explore palettes from community",
-    "syncLocalStyles": "Sync with the local styles",
-    "syncLocalVariables": "Sync with the local variables",
-    "createPalette": "Create a UI Color Palette",
-    "savePalette": "Save the UI Color Palette",
+    "syncLocalStyles": "Sync with local styles",
+    "syncLocalVariables": "Sync with local variables",
+    "createPalette": "New UI Color Palette",
+    "savePalette": "Create UI Color Palette",
     "duplicate": "Duplicate",
     "export": "Export palette as {format}",
     "generateDocument": {
@@ -39,7 +39,7 @@
       "several": "{count} source colors",
       "single": "{count} source color"
     },
-    "sync": "Sync",
+    "sync": "Sync with local library",
     "syncPalette": "Synchronize palette"
   },
   "browse": {
@@ -93,8 +93,8 @@
     "leavePaletteDialog": {
       "cancel": "Cancel",
       "leave": "Leave and return to palettes",
-      "message": "You have unsaved changes in this palette. Are you sure you want to leave?",
-      "title": "Unsaved changes"
+      "message": "You have ongoing changes. Are you sure you want to leave?",
+      "title": "Ongoing changes"
     }
   },
   "colors": {
@@ -106,7 +106,7 @@
       "alphaBackground": "Background color behind transparency"
     },
     "callout": {
-      "cta": "Create a source color",
+      "cta": "Create source color",
       "message": "Create a source color to split it into multiple shades/tints according to your lightness scale"
     },
     "chromaShifting": {
@@ -263,12 +263,12 @@
     "maxNumberOfStops": "Upgrade to /pro to add more than {maxCount} stops",
     "maxNumberOfLocalPalettes": "Upgrade to /pro to add more than {maxCount} local palettes",
     "multipleBlockingMessages": {
-      "head": "Upgrade to /pro or: {messages}",
-      "sourceColors": "decrease source colors",
-      "stops": "decrease stops",
-      "lockedSourceColors": "unlock source colors",
-      "chroma": "reset chroma",
-      "visionSimulationMode": "reset vision simulation"
+      "head": "You can unlock the creation if you: {messages}",
+      "sourceColors": "Decrease source colors",
+      "stops": "Decrease stops",
+      "lockedSourceColors": "Unlock source colors",
+      "chroma": "Reset chroma",
+      "visionSimulationMode": "Reset vision simulation"
     },
     "noResult": "No palette matches your search",
     "paletteCreated": "{name} palette created",
@@ -411,7 +411,7 @@
       "label": "Lock source colors",
       "preview": "Lock the source colors to include them in the palette",
       "tag": "Locked",
-      "warning": "Upgrade to /pro to save a palette with locked source colors"
+      "warning": "Upgrade to /pro to create a palette with locked source colors"
     },
     "score": {
       "apca": "Show APCA scores",
@@ -481,11 +481,11 @@
   "relaunch": {
     "create": {
       "description": "Scale the selected colors",
-      "label": "Create a UI Color Palette"
+      "label": "Create UI Color Palette"
     },
     "edit": {
       "description": "Manage, export, publish shades/tints",
-      "label": "Edit a UI Color Palette"
+      "label": "Edit UI Color Palette"
     },
     "open": {
       "description": "WCAG Color Palette Manager for Apps & Websites",
@@ -561,7 +561,7 @@
     "shift": {
       "chroma": {
         "label": "Chroma",
-        "warning": "Upgrade to /pro to save a palette with a modified chroma shift. Reset it to 100% or upgrade."
+        "warning": "Upgrade to /pro to create a palette with a modified chroma shift. Reset it to 100% or upgrade."
       }
     },
     "tips": {
@@ -621,7 +621,7 @@
         "protanopia": "Protanopia (red-blind)",
         "tritanomaly": "Tritanomaly (blue-weak)",
         "tritanopia": "Tritanopia (blue-blind)",
-        "warning": "Upgrade to /pro to save a palette with this vision simulation"
+        "warning": "Upgrade to /pro to create a palette with this vision simulation"
       }
     },
     "contexts": {
@@ -677,7 +677,7 @@
       "openPalette": "Open palette"
     },
     "canvas": {
-      "tip": "Select a {element} (filled with color) on the {canvas} canvas",
+      "tip": "Select as many {element} (filled with color) as you need on the {canvas} canvas",
       "title": "Selected colors"
     },
     "colourLovers": {
@@ -730,9 +730,9 @@
     },
     "title": "Source colors",
     "nodes": {
-      "penpot": "shape/board",
-      "figma": "shape/frame",
-      "sketch": "shape/frame"
+      "penpot": "shapes/boards",
+      "figma": "shapes/frames",
+      "sketch": "shapes/frames"
     }
   },
   "store": {
@@ -806,11 +806,11 @@
           "label": "Synchronize your changes in real time with the palette"
         },
         "styles": {
-          "label": "Deeply synchronize the local styles in the document with the palette",
+          "label": "Deeply synchronize local styles in the document with the palette",
           "message": "If a style is not in the palette, it will be removed."
         },
         "variables": {
-          "label": "Deeply synchronize the local variables in the collection with the palette",
+          "label": "Deeply synchronize local variables in the collection with the palette",
           "message": "If a variable is not in the palette, it will be removed."
         },
         "title": "Synchronization"

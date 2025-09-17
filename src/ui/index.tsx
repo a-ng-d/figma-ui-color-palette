@@ -65,7 +65,7 @@ if (
     maxValueLength: 5000,
     maxBreadcrumbs: 150,
     tracesSampleRate: 1.0,
-    replaysSessionSampleRate: 0.5,
+    replaysSessionSampleRate: 0.01,
     replaysOnErrorSampleRate: 1.0,
     release: globalConfig.versions.pluginVersion,
   })
@@ -94,13 +94,23 @@ if (globalConfig.env.isSupabaseEnabled && supabaseAnonKey !== undefined)
   initSupabase(globalConfig.urls.databaseUrl, supabaseAnonKey)
 
 // Bridge Canvas <> UI
-window.addEventListener('message', (event) => {
-  const data = event.data.pluginMessage
-  const pluginEvent = new CustomEvent('pluginMessage', {
-    detail: data,
-  })
-  window.dispatchEvent(pluginEvent)
-})
+window.addEventListener(
+  'message',
+  (event: MessageEvent) => {
+    const pluginEvent = new CustomEvent('platformMessage', {
+      detail: event.data.pluginMessage,
+    })
+    window.dispatchEvent(pluginEvent)
+  },
+  false
+)
+
+window.addEventListener('pluginMessage', ((event: MessageEvent) => {
+  if (event instanceof CustomEvent && window.parent !== window) {
+    const { message, targetOrigin } = event.detail
+    parent.postMessage(message, targetOrigin)
+  }
+}) as EventListener)
 
 // Render
 root.render(
