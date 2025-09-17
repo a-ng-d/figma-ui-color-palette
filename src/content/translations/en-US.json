@@ -93,8 +93,8 @@
     "leavePaletteDialog": {
       "cancel": "Cancel",
       "leave": "Leave and return to palettes",
-      "message": "You have unsaved changes in this palette. Are you sure you want to leave?",
-      "title": "Unsaved changes"
+      "message": "You have ongoing changes. Are you sure you want to leave?",
+      "title": "Ongoing changes"
     }
   },
   "colors": {
@@ -264,11 +264,11 @@
     "maxNumberOfLocalPalettes": "Upgrade to /pro to add more than {maxCount} local palettes",
     "multipleBlockingMessages": {
       "head": "Upgrade to /pro or: {messages}",
-      "sourceColors": "decrease source colors",
-      "stops": "decrease stops",
-      "lockedSourceColors": "unlock source colors",
-      "chroma": "reset chroma",
-      "visionSimulationMode": "reset vision simulation"
+      "sourceColors": "Decrease source colors",
+      "stops": "Decrease stops",
+      "lockedSourceColors": "Unlock source colors",
+      "chroma": "Reset chroma",
+      "visionSimulationMode": "Reset vision simulation"
     },
     "noResult": "No palette matches your search",
     "paletteCreated": "{name} palette created",
@@ -411,7 +411,7 @@
       "label": "Lock source colors",
       "preview": "Lock the source colors to include them in the palette",
       "tag": "Locked",
-      "warning": "Upgrade to /pro to save a palette with locked source colors"
+      "warning": "Upgrade to /pro to create a palette with locked source colors"
     },
     "score": {
       "apca": "Show APCA scores",
@@ -561,7 +561,7 @@
     "shift": {
       "chroma": {
         "label": "Chroma",
-        "warning": "Upgrade to /pro to save a palette with a modified chroma shift. Reset it to 100% or upgrade."
+        "warning": "Upgrade to /pro to create a palette with a modified chroma shift. Reset it to 100% or upgrade."
       }
     },
     "tips": {
@@ -621,7 +621,7 @@
         "protanopia": "Protanopia (red-blind)",
         "tritanomaly": "Tritanomaly (blue-weak)",
         "tritanopia": "Tritanopia (blue-blind)",
-        "warning": "Upgrade to /pro to save a palette with this vision simulation"
+        "warning": "Upgrade to /pro to create a palette with this vision simulation"
       }
     },
     "contexts": {
