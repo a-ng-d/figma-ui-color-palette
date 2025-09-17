@@ -22,7 +22,6 @@ const sentryDsn = import.meta.env.VITE_SENTRY_DSN
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_PUBLIC_ANON_KEY
 
 // Mixpanel
-// Mixpanel
 if (globalConfig.env.isMixpanelEnabled && mixpanelToken !== undefined) {
   mixpanel.init(mixpanelToken, {
     api_host: 'https://api-eu.mixpanel.com',
