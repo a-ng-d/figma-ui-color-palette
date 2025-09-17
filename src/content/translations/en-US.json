@@ -263,7 +263,7 @@
     "maxNumberOfStops": "Upgrade to /pro to add more than {maxCount} stops",
     "maxNumberOfLocalPalettes": "Upgrade to /pro to add more than {maxCount} local palettes",
     "multipleBlockingMessages": {
-      "head": "Upgrade to /pro or: {messages}",
+      "head": "You can unlock the creation if you: {messages}",
       "sourceColors": "Decrease source colors",
       "stops": "Decrease stops",
       "lockedSourceColors": "Unlock source colors",
