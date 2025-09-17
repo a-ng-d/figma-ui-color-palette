@@ -39,7 +39,6 @@ if (globalConfig.env.isMixpanelEnabled && mixpanelToken !== undefined) {
 }
 
 // Sentry
-// Sentry
 if (
   globalConfig.env.isSentryEnabled &&
   !globalConfig.env.isDev &&
