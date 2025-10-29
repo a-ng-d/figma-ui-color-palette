@@ -1,7 +1,7 @@
+import { Config } from '@ui-lib/types/config'
 import { doSpecificMode } from '@ui-lib/stores/features'
+import { locales } from '@ui-lib/content/locales'
 import { Feature } from '@a_ng_d/figmug-utils'
-import { Config } from './types/config'
-import { locales } from './content/locales'
 
 declare const __PLUGIN__: 'fig' | 'one'
 declare const __APP_VERSION__: string
@@ -12,7 +12,7 @@ const specConfig: Record<
   string,
   {
     pluginId: string
-    features: Feature<'BROWSE' | 'CREATE' | 'EDIT' | 'TRANSFER'>[]
+    features: Feature<'BROWSE' | 'CREATE' | 'EDIT' | 'SEE'>[]
   }
 > = {
   fig: {
@@ -126,12 +126,13 @@ const globalConfig: Config = {
   env: {
     platform: 'figma',
     editor: 'figma',
-    ui: 'figma-ui3',
+    ui: 'figma',
     colorMode: 'figma-dark',
     isDev,
     isSupabaseEnabled: true,
     isMixpanelEnabled: true,
     isSentryEnabled: true,
+    isMistralAiEnabled: true,
     announcementsDbId: import.meta.env.VITE_NOTION_ANNOUNCEMENTS_ID as string,
     onboardingDbId: import.meta.env.VITE_NOTION_ONBOARDING_ID as string,
     pluginId: specConfig[__PLUGIN__].pluginId,
@@ -140,12 +141,16 @@ const globalConfig: Config = {
     isProEnabled: true,
     isTrialEnabled: false,
     trialTime: 72,
+    creditsLimit: 400,
+    creditsRenewalPeriodDays: 1,
+    creditsRenewalPeriodHours: 24,
   },
   dbs: {
     palettesDbViewName: isDev
       ? 'sandbox_palettes_with_creators'
       : 'palettes_with_creators',
     palettesDbTableName: isDev ? 'sandbox_palettes' : 'palettes',
+    starredPalettesDbTableName: 'starred_palettes',
   },
   urls: {
     authWorkerUrl: isDev
@@ -159,6 +164,7 @@ const globalConfig: Config = {
       ? 'http://localhost:3000'
       : (import.meta.env.VITE_AUTH_URL as string),
     storeApiUrl: import.meta.env.VITE_LEMONSQUEEZY_URL as string,
+    aiApiUrl: import.meta.env.VITE_MISTRAL_AI_API_URL as string,
     platformUrl: 'https://www.figma.com',
     uiUrl: isDev
       ? 'http://localhost:4400'
@@ -191,9 +197,19 @@ const globalConfig: Config = {
     algorithmVersion: 'v3',
     paletteVersion: '2025.06',
     pluginVersion: __APP_VERSION__,
+    creditsVersion: '2025.10',
   },
   features: specConfig[__PLUGIN__].features,
   locales: locales.get(),
+  lang: 'en-US',
+  fees: {
+    colourLoversImport: 25,
+    coolorsImport: 25,
+    realtimeColorsImport: 25,
+    imageColorsExtract: 50,
+    harmonyCreate: 50,
+    aiColorsGenerate: 100,
+  },
 }
 
 export default globalConfig
