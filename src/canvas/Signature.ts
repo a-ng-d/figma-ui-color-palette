@@ -1,5 +1,6 @@
 import { locales } from '@ui-lib/content/locales'
 import Tag from './Tag'
+import { darkColor } from './styles'
 
 export default class Signature {
   private nodeInfo: FrameNode | null
@@ -65,11 +66,7 @@ export default class Signature {
       {
         type: 'SOLID',
         opacity: 0.05,
-        color: {
-          r: 0,
-          g: 0,
-          b: 0,
-        },
+        color: darkColor,
       },
     ]
     this.nodeLogotype.cornerRadius = 8
@@ -101,6 +98,12 @@ export default class Signature {
     if (!vectorNode) return null
     this.nodeVector = vectorNode
     this.nodeVector.name = '_vector'
+    this.nodeVector.fills = [
+      {
+        type: 'SOLID',
+        color: darkColor,
+      },
+    ]
 
     this.nodeVector.resize(165.2, 57.6)
 

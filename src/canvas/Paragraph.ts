@@ -1,3 +1,5 @@
+import { darkColor } from './styles'
+
 export default class Paragraph {
   private name: string
   private content: string
@@ -50,11 +52,7 @@ export default class Paragraph {
     this.nodeText.fills = [
       {
         type: 'SOLID',
-        color: {
-          r: 0,
-          g: 0,
-          b: 0,
-        },
+        color: darkColor,
       },
     ]
 
@@ -83,11 +81,7 @@ export default class Paragraph {
       {
         type: 'SOLID',
         opacity: 0.05,
-        color: {
-          r: 0,
-          g: 0,
-          b: 0,
-        },
+        color: darkColor,
       },
     ]
     this.node.cornerRadius = 16

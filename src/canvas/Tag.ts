@@ -1,4 +1,5 @@
 import { RgbModel } from '@a_ng_d/utils-ui-color-palette'
+import { darkColor } from './styles'
 
 export default class Tag {
   private name: string
@@ -74,11 +75,7 @@ export default class Tag {
     this.nodeTag.strokes = [
       {
         type: 'SOLID',
-        color: {
-          r: 0,
-          g: 0,
-          b: 0,
-        },
+        color: darkColor,
         opacity: 0.05,
       },
     ]
@@ -117,11 +114,7 @@ export default class Tag {
     this.nodeTagwithIndicator.strokes = [
       {
         type: 'SOLID',
-        color: {
-          r: 0,
-          g: 0,
-          b: 0,
-        },
+        color: darkColor,
         opacity: 0.05,
       },
     ]
@@ -164,11 +157,7 @@ export default class Tag {
     this.nodeTagWithAvatar.strokes = [
       {
         type: 'SOLID',
-        color: {
-          r: 0,
-          g: 0,
-          b: 0,
-        },
+        color: darkColor,
         opacity: 0.05,
       },
     ]
@@ -216,11 +205,7 @@ export default class Tag {
     this.nodeText.fills = [
       {
         type: 'SOLID',
-        color: {
-          r: 0,
-          g: 0,
-          b: 0,
-        },
+        color: darkColor,
       },
     ]
 
@@ -245,11 +230,7 @@ export default class Tag {
     this.nodeIndicator.strokes = [
       {
         type: 'SOLID',
-        color: {
-          r: 0,
-          g: 0,
-          b: 0,
-        },
+        color: darkColor,
         opacity: 0.1,
       },
     ]
