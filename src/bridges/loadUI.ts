@@ -123,6 +123,8 @@ const loadUI = async () => {
       //
       UPDATE_SCALE: () =>
         updateScale(path).catch((error) => {
+          console.error(error)
+
           figma.ui.postMessage({
             type: 'POST_MESSAGE',
             data: {
@@ -134,6 +136,8 @@ const loadUI = async () => {
         }),
       UPDATE_COLORS: () =>
         updateColors(path).catch((error) => {
+          console.error(error)
+
           figma.ui.postMessage({
             type: 'POST_MESSAGE',
             data: {
@@ -145,6 +149,8 @@ const loadUI = async () => {
         }),
       UPDATE_THEMES: () =>
         updateThemes(path).catch((error) => {
+          console.error(error)
+
           figma.ui.postMessage({
             type: 'POST_MESSAGE',
             data: {
@@ -156,6 +162,8 @@ const loadUI = async () => {
         }),
       UPDATE_SETTINGS: () =>
         updateSettings(path).catch((error) => {
+          console.error(error)
+
           figma.ui.postMessage({
             type: 'POST_MESSAGE',
             data: {
@@ -171,6 +179,8 @@ const loadUI = async () => {
           isAlreadyUpdated: path.isAlreadyUpdated,
           shouldLoadPalette: path.shouldLoadPalette,
         }).catch((error) => {
+          console.error(error)
+
           figma.ui.postMessage({
             type: 'POST_MESSAGE',
             data: {
@@ -184,6 +194,8 @@ const loadUI = async () => {
         updateDocument(path.view)
           .finally(() => figma.ui.postMessage({ type: 'STOP_LOADER' }))
           .catch((error) => {
+            console.error(error)
+
             figma.ui.postMessage({
               type: 'POST_MESSAGE',
               data: {
@@ -209,6 +221,8 @@ const loadUI = async () => {
         createPaletteFromRemote(path)
           .finally(() => figma.ui.postMessage({ type: 'STOP_LOADER' }))
           .catch((error) => {
+            console.error(error)
+
             figma.ui.postMessage({
               type: 'POST_MESSAGE',
               data: {
@@ -232,6 +246,8 @@ const loadUI = async () => {
           )
           .finally(() => figma.ui.postMessage({ type: 'STOP_LOADER' }))
           .catch((error) => {
+            console.error(error)
+
             figma.ui.postMessage({
               type: 'POST_MESSAGE',
               data: {
@@ -258,6 +274,8 @@ const loadUI = async () => {
           )
           .finally(() => figma.ui.postMessage({ type: 'STOP_LOADER' }))
           .catch((error) => {
+            console.error(error)
+
             figma.ui.postMessage({
               type: 'POST_MESSAGE',
               data: {
@@ -270,6 +288,8 @@ const loadUI = async () => {
         createDocument(path.id, path.view)
           .finally(() => figma.ui.postMessage({ type: 'STOP_LOADER' }))
           .catch((error) => {
+            console.error(error)
+
             figma.ui.postMessage({
               type: 'POST_MESSAGE',
               data: {
