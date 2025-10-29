@@ -1,5 +1,5 @@
 import { FullConfiguration } from '@a_ng_d/utils-ui-color-palette'
-import processSelection from '../processSelection'
+import processSelection from '../gets/processSelection'
 import { locales } from '../../content/locales'
 
 const createPaletteFromDocument = async () => {
