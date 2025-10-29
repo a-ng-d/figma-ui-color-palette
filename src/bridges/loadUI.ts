@@ -26,6 +26,7 @@ import checkUserLicense from './checks/checkUserLicense'
 import checkUserConsent from './checks/checkUserConsent'
 import checkTrialStatus from './checks/checkTrialStatus'
 import checkEditor from './checks/checkEditor'
+import checkCredits from './checks/checkCredits'
 import checkAnnouncementsStatus from './checks/checkAnnouncementsStatus'
 
 declare const __PLUGIN__: 'fig' | 'one'
@@ -93,6 +94,7 @@ const loadUI = async () => {
   checkUserConsent()
     .then(() => checkEditor())
     .then(() => checkTrialStatus({ context: 'UI', plugin: __PLUGIN__ }))
+    .then(() => checkCredits())
     .then(() => checkUserLicense(__PLUGIN__))
     .then(() => checkUserPreferences())
     .then(() => processSelection())
