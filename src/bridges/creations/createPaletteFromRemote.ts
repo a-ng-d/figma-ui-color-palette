@@ -5,6 +5,7 @@ import {
   MetaConfiguration,
   ThemeConfiguration,
 } from '@a_ng_d/utils-ui-color-palette'
+import createDocument from './createDocument'
 
 interface Msg {
   data: {
@@ -59,10 +60,13 @@ const createPaletteFromRemote = async (msg: Msg) => {
     `palette_${palette.meta.id}`,
     JSON.stringify(palette)
   )
+
   figma.ui.postMessage({
     type: 'LOAD_PALETTE',
     data: palette,
   })
+
+  createDocument(palette.meta.id, 'PALETTE')
 
   await new Promise((r) => setTimeout(r, 1000))
   await figma.saveVersionHistoryAsync(

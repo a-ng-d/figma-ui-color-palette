@@ -210,13 +210,33 @@ const loadUI = async () => {
       },
       //
       CREATE_PALETTE: () =>
-        createPalette(path).finally(() =>
-          figma.ui.postMessage({ type: 'STOP_LOADER' })
-        ),
+        createPalette(path)
+          .finally(() => figma.ui.postMessage({ type: 'STOP_LOADER' }))
+          .catch((error) => {
+            console.error(error)
+
+            figma.ui.postMessage({
+              type: 'POST_MESSAGE',
+              data: {
+                type: 'ERROR',
+                message: error.message,
+              },
+            })
+          }),
       CREATE_PALETTE_FROM_DOCUMENT: () =>
-        createPaletteFromDocument().finally(() =>
-          figma.ui.postMessage({ type: 'STOP_LOADER' })
-        ),
+        createPaletteFromDocument()
+          .finally(() => figma.ui.postMessage({ type: 'STOP_LOADER' }))
+          .catch((error) => {
+            console.error(error)
+
+            figma.ui.postMessage({
+              type: 'POST_MESSAGE',
+              data: {
+                type: 'INFO',
+                message: error.message,
+              },
+            })
+          }),
       CREATE_PALETTE_FROM_REMOTE: () =>
         createPaletteFromRemote(path)
           .finally(() => figma.ui.postMessage({ type: 'STOP_LOADER' }))
@@ -352,6 +372,8 @@ const loadUI = async () => {
             figma.ui.postMessage({ type: 'STOP_LOADER' })
           })
           .catch((error) => {
+            console.error(error)
+
             figma.ui.postMessage({
               type: 'POST_MESSAGE',
               data: {
