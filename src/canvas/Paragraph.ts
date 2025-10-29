@@ -95,8 +95,10 @@ export default class Paragraph {
       this.node.layoutAlign = 'STRETCH'
     }
     this.node.layoutSizingVertical = 'HUG'
-    this.node.horizontalPadding = 8
-    this.node.verticalPadding = 8
+    this.node.paddingTop = 8
+    this.node.paddingLeft = 8
+    this.node.paddingBottom = 8
+    this.node.paddingRight = 8
 
     // Insert
     this.node.appendChild(this.makeNodeText())

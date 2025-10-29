@@ -86,8 +86,10 @@ export default class Tag {
     this.nodeTag.layoutSizingHorizontal = 'HUG'
     this.nodeTag.layoutSizingVertical = 'HUG'
     this.nodeTag.counterAxisAlignItems = 'CENTER'
-    this.nodeTag.horizontalPadding = 8
-    this.nodeTag.verticalPadding = 4
+    this.nodeTag.paddingTop = 4
+    this.nodeTag.paddingLeft = 8
+    this.nodeTag.paddingBottom = 4
+    this.nodeTag.paddingRight = 8
     this.nodeTag.itemSpacing = 4
 
     // Insert
@@ -172,9 +174,10 @@ export default class Tag {
     this.nodeTagWithAvatar.layoutSizingHorizontal = 'HUG'
     this.nodeTagWithAvatar.layoutSizingVertical = 'HUG'
     this.nodeTagWithAvatar.counterAxisAlignItems = 'CENTER'
+    this.nodeTagWithAvatar.paddingTop = 4
     this.nodeTagWithAvatar.paddingLeft = 8
+    this.nodeTagWithAvatar.paddingBottom = 4
     this.nodeTagWithAvatar.paddingRight = 4
-    this.nodeTagWithAvatar.verticalPadding = 4
     this.nodeTagWithAvatar.itemSpacing = 8
 
     // Insert

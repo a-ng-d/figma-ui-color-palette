@@ -75,8 +75,10 @@ export default class Signature {
     this.nodeLogotype.layoutMode = 'HORIZONTAL'
     this.nodeLogotype.layoutSizingHorizontal = 'HUG'
     this.nodeLogotype.layoutSizingVertical = 'HUG'
-    this.nodeLogotype.horizontalPadding = 8
-    this.nodeLogotype.verticalPadding = 4
+    this.nodeLogotype.paddingTop = 4
+    this.nodeLogotype.paddingLeft = 8
+    this.nodeLogotype.paddingBottom = 4
+    this.nodeLogotype.paddingRight = 8
 
     // Insert
     const vectorNode = this.makeNodeVector()

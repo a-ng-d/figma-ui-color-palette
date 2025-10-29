@@ -87,7 +87,10 @@ export default class Documents {
     document.layoutMode = 'VERTICAL'
     document.layoutSizingHorizontal = 'HUG'
     document.layoutSizingVertical = 'HUG'
-    document.horizontalPadding = document.verticalPadding = 32
+    document.paddingTop = 32
+    document.paddingLeft = 32
+    document.paddingRight = 32
+    document.paddingBottom = 32
     document.fills = [
       {
         type: 'SOLID',

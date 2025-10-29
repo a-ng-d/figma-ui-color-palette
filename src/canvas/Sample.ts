@@ -280,7 +280,10 @@ export default class Sample {
     this.nodeColor.layoutSizingVertical = 'FIXED'
     this.nodeColor.layoutAlign = 'STRETCH'
     this.nodeColor.resize(96, 96)
-    this.nodeColor.horizontalPadding = this.nodeColor.verticalPadding = 8
+    this.nodeColor.paddingLeft = 8
+    this.nodeColor.paddingRight = 8
+    this.nodeColor.paddingTop = 8
+    this.nodeColor.paddingBottom = 8
     this.nodeColor.itemSpacing = 8
     this.nodeColor.fills = newFills
     this.nodeColor.cornerRadius = 16
