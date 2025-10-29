@@ -1,10 +1,10 @@
+import { locales } from '@ui-lib/content/locales'
 import {
   Data,
   FullConfiguration,
   LibraryData,
 } from '@a_ng_d/utils-ui-color-palette'
 import { getJsonSize } from '../../utils/getSize'
-import { locales } from '../../content/locales'
 import LocalVariable from '../../canvas/LocalVariable'
 
 const createLocalVariables = async (id: string) => {

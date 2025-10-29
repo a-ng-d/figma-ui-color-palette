@@ -1,6 +1,6 @@
 import { uid } from 'uid'
+import { locales } from '@ui-lib/content/locales'
 import { SourceColorConfiguration } from '@a_ng_d/utils-ui-color-palette'
-import { locales } from '../content/locales'
 
 export let currentSelection: ReadonlyArray<SceneNode>
 export let previousSelection: ReadonlyArray<SceneNode> | undefined

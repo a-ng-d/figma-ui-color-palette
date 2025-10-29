@@ -1,5 +1,5 @@
+import { locales } from '@ui-lib/content/locales'
 import globalConfig from '../global.config'
-import { locales } from '../content/locales'
 import updateThemes from './updates/updateThemes'
 import updateSettings from './updates/updateSettings'
 import updateScale from './updates/updateScale'

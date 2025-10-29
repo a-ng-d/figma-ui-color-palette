@@ -1,7 +1,7 @@
 import { presets } from '@ui-lib/stores/presets'
+import { locales } from '@ui-lib/content/locales'
 import { FeatureStatus } from '@a_ng_d/figmug-utils'
 import globalConfig from '../global.config'
-import { locales } from '../content/locales'
 import checkTrialStatus from './checks/checkTrialStatus'
 
 declare const __PLUGIN__: 'fig' | 'one'

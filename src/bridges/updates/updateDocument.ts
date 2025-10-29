@@ -1,4 +1,5 @@
 import chroma from 'chroma-js'
+import { locales } from '@ui-lib/content/locales'
 import {
   Data,
   FullConfiguration,
@@ -6,7 +7,6 @@ import {
   ThemeConfiguration,
   ViewConfiguration,
 } from '@a_ng_d/utils-ui-color-palette'
-import { locales } from '../../content/locales'
 import Sheet from '../../canvas/Sheet'
 import Palette from '../../canvas/Palette'
 

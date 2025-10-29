@@ -1,4 +1,5 @@
 import { uid } from 'uid'
+import { locales } from '@ui-lib/content/locales'
 import {
   ColorConfiguration,
   Data,
@@ -6,7 +7,6 @@ import {
   SourceColorConfiguration,
   ThemeConfiguration,
 } from '@a_ng_d/utils-ui-color-palette'
-import { locales } from '../../content/locales'
 
 interface Msg {
   data: {

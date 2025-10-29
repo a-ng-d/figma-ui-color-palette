@@ -1,5 +1,5 @@
-import processSelection from '../processSelection'
-import { locales } from '../../content/locales'
+import { locales } from '@ui-lib/content/locales'
+import processSelection from '../gets/processSelection'
 
 const deletePalette = async (id: string) => {
   const rawPalette = figma.currentPage.getSharedPluginData(
