@@ -98,12 +98,6 @@ export default class Signature {
     if (!vectorNode) return null
     this.nodeVector = vectorNode
     this.nodeVector.name = '_vector'
-    this.nodeVector.fills = [
-      {
-        type: 'SOLID',
-        color: darkColor,
-      },
-    ]
 
     this.nodeVector.resize(165.2, 57.6)
 

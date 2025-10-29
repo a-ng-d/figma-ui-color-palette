@@ -96,7 +96,10 @@ export default class Tag {
     return this.nodeTag
   }
 
-  makeNodeTagwithIndicator = (gl: Array<number> = [0, 0, 0, 1]) => {
+  makeNodeTagwithIndicator = (
+    gl: Array<number> = [0, 0, 0, 1],
+    isCompact = true
+  ) => {
     // Base
     this.nodeTagwithIndicator = figma.createFrame()
     this.nodeTagwithIndicator.name = this.name
@@ -126,8 +129,9 @@ export default class Tag {
     this.nodeTagwithIndicator.layoutSizingVertical = 'HUG'
     this.nodeTagwithIndicator.counterAxisAlignItems = 'CENTER'
     this.nodeTagwithIndicator.paddingLeft = 8
-    this.nodeTagwithIndicator.paddingRight = 2
-    this.nodeTagwithIndicator.verticalPadding = 2
+    this.nodeTagwithIndicator.paddingRight = isCompact ? 2 : 8
+    this.nodeTagwithIndicator.paddingTop = isCompact ? 2 : 4
+    this.nodeTagwithIndicator.paddingBottom = isCompact ? 2 : 4
     this.nodeTagwithIndicator.itemSpacing = 4
 
     // Insert
