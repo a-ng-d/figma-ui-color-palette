@@ -1,10 +1,10 @@
-import { darkColor } from './styles'
+import { bodyFontFamily, darkColor, FontFamily } from './styles'
 
 export default class Paragraph {
   private name: string
   private content: string
   private fontSize: number
-  private fontFamily: 'Martian Mono' | 'Lexend'
+  private fontFamily: FontFamily
   private type: 'FILL' | 'FIXED'
   private width?: number
   private nodeText: TextNode | null
@@ -16,14 +16,14 @@ export default class Paragraph {
     type,
     width,
     fontSize = 12,
-    fontFamily = 'Martian Mono',
+    fontFamily = bodyFontFamily,
   }: {
     name: string
     content: string
     type: 'FILL' | 'FIXED'
     width?: number
     fontSize?: number
-    fontFamily?: 'Martian Mono' | 'Lexend'
+    fontFamily?: FontFamily
   }) {
     this.name = name
     this.content = content
