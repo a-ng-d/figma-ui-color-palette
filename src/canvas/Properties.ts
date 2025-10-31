@@ -561,7 +561,7 @@ export default class Properties {
         fontSize: 10,
       }).makeNodeTag()
     )
-    const columnsNode = this.makeNodeColumns(
+    const nodeColumns = this.makeNodeColumns(
       [
         nodeAPCALightProp,
         new Tag({
@@ -625,7 +625,7 @@ export default class Properties {
         }).makeNodeTag(),
       ]
     )
-    this.nodeDetailedAPCAScoresProps.appendChild(columnsNode)
+    this.nodeDetailedAPCAScoresProps.appendChild(nodeColumns)
 
     return this.nodeDetailedAPCAScoresProps
   }
@@ -685,12 +685,12 @@ export default class Properties {
     const detailedBaseProps = this.makeNodeDetailedBaseProps()
     const detailedWCAGScoresProps = this.makeDetailedWCAGScoresProps()
     const detailedAPCAScoresProps = this.makeNodeDetailedAPCAScoresProps()
-    const columnsNode = this.makeNodeColumns(
+    const nodeColumns = this.makeNodeColumns(
       [detailedBaseProps],
       [detailedWCAGScoresProps]
     )
 
-    this.node.appendChild(columnsNode)
+    this.node.appendChild(nodeColumns)
     this.node.appendChild(detailedAPCAScoresProps)
 
     return this.node
@@ -711,11 +711,11 @@ export default class Properties {
     this.node.primaryAxisAlignItems = 'SPACE_BETWEEN'
 
     // Insert
-    const nodeTopPropsNode = this.makeNodeTopProps()
-    const nodeBasePropsNode = this.makeNodeBaseProps()
-    const nodeBottomPropsNode = this.makeNodeBottomProps()
+    const nodeTopProps = this.makeNodeTopProps()
+    const nodeBaseProps = this.makeNodeBaseProps()
+    const nodeBottomProps = this.makeNodeBottomProps()
 
-    this.node.appendChild(nodeTopPropsNode)
+    this.node.appendChild(nodeTopProps)
     this.nodeTopProps?.appendChild(
       new Tag({
         name: '_scale',
@@ -723,8 +723,8 @@ export default class Properties {
         fontSize: 10,
       }).makeNodeTag()
     )
-    this.nodeTopProps?.appendChild(nodeBasePropsNode)
-    this.node.appendChild(nodeBottomPropsNode)
+    this.nodeTopProps?.appendChild(nodeBaseProps)
+    this.node.appendChild(nodeBottomProps)
 
     return this.node
   }

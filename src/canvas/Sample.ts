@@ -184,7 +184,7 @@ export default class Sample {
 
     // Insert
     if (this.view.includes('PALETTE_WITH_PROPERTIES') && !isColorName) {
-      const propertiesNode = new Properties({
+      const nodeProperties = new Properties({
         name: this.scale ?? '0',
         rgb: this.rgb,
         alpha: this.alpha,
@@ -194,15 +194,15 @@ export default class Sample {
         textColorsTheme: this.textColorsTheme,
       }).makeNode()
 
-      this.node.appendChild(propertiesNode)
+      this.node.appendChild(nodeProperties)
     } else if (isColorName) {
-      const propertyNode = new Property({
+      const nodeProperty = new Property({
         name: '_label',
         content: this.name,
         size: 10,
       }).makeNode()
 
-      this.node.appendChild(propertyNode)
+      this.node.appendChild(nodeProperty)
     }
 
     if (
@@ -210,14 +210,14 @@ export default class Sample {
       this.status.isLocked ||
       this.status.isTransparent
     ) {
-      const statusNode = new Status({
+      const nodeStatus = new Status({
         status: this.status,
         source: this.source
           ? { r: this.source.r, g: this.source.g, b: this.source.b }
           : {},
       }).node
 
-      this.node.appendChild(statusNode)
+      this.node.appendChild(nodeStatus)
     }
 
     return this.node
@@ -289,33 +289,33 @@ export default class Sample {
     this.nodeColor.cornerRadius = 16
 
     // Insert
-    const propertyNode = new Property({
+    const nodeProperty = new Property({
       name: '_label',
       content: name,
       size: 10,
     }).makeNode()
 
-    this.nodeColor.appendChild(propertyNode)
+    this.nodeColor.appendChild(nodeProperty)
 
     if (
       this.status.isClosestToRef ||
       this.status.isLocked ||
       this.status.isTransparent
     ) {
-      const statusNode = new Status({
+      const nodeStatus = new Status({
         status: this.status,
         source: this.source
           ? { r: this.source.r, g: this.source.g, b: this.source.b }
           : {},
       }).node
 
-      this.nodeColor.appendChild(statusNode)
+      this.nodeColor.appendChild(nodeStatus)
     }
 
     this.node.appendChild(this.nodeColor)
 
     if (isColorName && description !== '') {
-      const paragraphNode = new Paragraph({
+      const nodeParagraph = new Paragraph({
         name: '_description',
         content: description,
         type: 'FILL',
@@ -323,9 +323,9 @@ export default class Sample {
         fontFamily: 'Lexend',
       }).node
 
-      this.node.appendChild(paragraphNode)
+      this.node.appendChild(nodeParagraph)
     } else if (!isColorName) {
-      const propertiesNode = new Properties({
+      const nodeProperties = new Properties({
         name: this.scale ?? '0',
         rgb: this.rgb,
         alpha: this.alpha,
@@ -335,7 +335,7 @@ export default class Sample {
         textColorsTheme: this.textColorsTheme,
       }).makeNodeDetailed()
 
-      this.node.appendChild(propertiesNode)
+      this.node.appendChild(nodeProperties)
     }
 
     return this.node
