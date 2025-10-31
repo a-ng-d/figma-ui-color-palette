@@ -118,6 +118,8 @@ export default class Palette {
       else if (index === this.data.colors.length - 1) radii = [0, 0, 16, 16]
       else radii = [0, 0, 0, 0]
 
+      if (this.data.colors.length === 1) radii = [16, 16, 16, 16]
+
       // Base
       this.nodeRow = figma.createFrame()
       this.nodeRowSource = figma.createFrame()
