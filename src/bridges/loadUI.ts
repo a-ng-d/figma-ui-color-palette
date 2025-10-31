@@ -401,7 +401,10 @@ const loadUI = async () => {
         figma.ui.postMessage({
           type: 'GET_PRICING',
           data: {
-            plans: __PLUGIN__ === 'fig' ? ['FIGMA', 'ONE_FIGMA'] : ['ONE'],
+            plans:
+              __PLUGIN__ === 'fig'
+                ? ['FIGMA', 'ONE_FIGMA']
+                : ['ONE', 'ACTIVATE'],
           },
         }),
       GO_TO_ONE: () => figma.openExternal(globalConfig.urls.storeUrl),

@@ -66,7 +66,7 @@ export default class Tag {
         type: 'SOLID',
         opacity: this.backgroundColor.alpha,
         color: {
-          r: this.backgroundColor?.rgb.r,
+          r: this.backgroundColor.rgb.r,
           g: this.backgroundColor.rgb.g,
           b: this.backgroundColor.rgb.b,
         },
@@ -251,7 +251,7 @@ export default class Tag {
     this.nodeAvatar.resize(24, 24)
     this.nodeAvatar.name = '_avatar'
 
-    if (image !== null && image !== undefined)
+    if (image !== null && image !== undefined) {
       this.nodeAvatar.fills = [
         {
           type: 'IMAGE',
@@ -259,6 +259,14 @@ export default class Tag {
           imageHash: image.hash,
         },
       ]
+      this.nodeAvatar.strokes = [
+        {
+          type: 'SOLID',
+          color: darkColor,
+          opacity: 0.1,
+        },
+      ]
+    }
 
     return this.nodeAvatar
   }
