@@ -108,10 +108,15 @@ export default class Palette {
       }).node
     )
 
-    this.data?.colors.forEach((color) => {
+    this.data?.colors.forEach((color, index) => {
       const sourceColor = color.shades.find(
         (shade) => shade.name === 'source'
       ) ?? { hex: '#000000', rgb: [0, 0, 0] }
+
+      let radii = []
+      if (index === 0) radii = [16, 16, 0, 0]
+      else if (index === this.data.colors.length - 1) radii = [0, 0, 16, 16]
+      else radii = [0, 0, 0, 0]
 
       // Base
       this.nodeRow = figma.createFrame()
@@ -124,6 +129,11 @@ export default class Palette {
         this.nodeRowSource.fills =
         this.nodeRowShades.fills =
           []
+
+      this.nodeRow.topLeftRadius = radii[0]
+      this.nodeRow.topRightRadius = radii[1]
+      this.nodeRow.bottomRightRadius = radii[2]
+      this.nodeRow.bottomLeftRadius = radii[3]
 
       // Layout
       this.nodeRow.layoutMode =
