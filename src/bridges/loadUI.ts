@@ -407,7 +407,13 @@ const loadUI = async () => {
                 : ['ONE', 'ACTIVATE'],
           },
         }),
-      GO_TO_ONE: () => figma.openExternal(globalConfig.urls.storeUrl),
+      GO_TO_ONE: async () =>
+        window.open(
+          path.data.context === 'REGULAR'
+            ? globalConfig.urls.storeUrl
+            : globalConfig.urls.storeWithDiscountUrl,
+          '_blank'
+        ),
       GO_TO_ONE_FIGMA: () =>
         figma.openExternal('https://uicp.ylb.lt/run-figma-plugin'),
       GO_TO_CHECKOUT: async () => payProPlan(),

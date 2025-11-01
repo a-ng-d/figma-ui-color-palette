@@ -213,12 +213,9 @@ const globalConfig: Config = {
     vsCodeFigmaPluginUrl: 'https://uicp.ylb.lt/vscode-figma-plugin',
     isbUrl: 'https://isb.ylb.lt/website',
     uicpUrl: 'https://uicp.ylb.lt/website',
-    storeUrl: isDev
-      ? 'https://uicp.ylb.lt/store-dev'
-      : 'https://uicp.ylb.lt/store',
-    storeManagementUrl: isDev
-      ? 'https://uicp.ylb.lt/store-management-dev'
-      : 'https://uicp.ylb.lt/store-management',
+    storeUrl: 'https://uicp.ylb.lt/store',
+    storeManagementUrl: 'https://uicp.ylb.lt/store-management',
+    storeWithDiscountUrl: 'https://uicp.ylb.lt/store-discount',
     howToUseUrl: 'https://uicp.ylb.lt/how-to-use-figma',
   },
   versions: {
