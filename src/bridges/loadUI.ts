@@ -458,7 +458,7 @@ const loadUI = async () => {
       type: 'LOAD_PALETTES',
     })
     figma.ui.postMessage({
-      type: 'RESET_PALETTES',
+      type: 'RESET_PALETTE',
     })
     setTimeout(() => getPalettesOnCurrentPage(), 1000)
   })
