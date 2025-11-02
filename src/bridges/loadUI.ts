@@ -408,11 +408,10 @@ const loadUI = async () => {
           },
         }),
       GO_TO_ONE: async () =>
-        window.open(
+        figma.openExternal(
           path.data.context === 'REGULAR'
             ? globalConfig.urls.storeUrl
-            : globalConfig.urls.storeWithDiscountUrl,
-          '_blank'
+            : globalConfig.urls.storeWithDiscountUrl
         ),
       GO_TO_ONE_FIGMA: () =>
         figma.openExternal('https://uicp.ylb.lt/run-figma-plugin'),
