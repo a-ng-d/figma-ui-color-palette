@@ -45,6 +45,7 @@ Go to the `Issues` section and browse the existing tickets or create a new one.
 - The colors are managed thanks to the [chroma.js](https://github.com/gka/chroma.js) library by [Gregor Aisch](https://github.com/gka)
 - The APCA algorithm is provided thanks to the [apca-w3](https://www.npmjs.com/package/apca-w3) module by [Andrew Somers](https://github.com/Myndex)
 - The color names are provided by [color-name](https://github.com/meodai/color-names) by [meodai](https://github.com/meodai/color-names)
+- Presets inspired by these organizations and projects: [Ant Design](https://ant.design/docs/spec/colors) | [Bootstrap](https://getbootstrap.com/docs/5.3/customize/color/#all-colors) | [Tailwind CSS](https://tailwindcss.com/docs/colors) | [Material (M3)](https://m3.material.io/styles/color/static/baseline) | [Untitled UI](https://untitledui.com/) | [Open Color](https://yeun.github.io/open-color/) | [Radix](https://www.radix-ui.com/colors) | [Atlassian](https://atlassian.design/foundations/color-new/color-palette-new) | [Shopify Polaris](https://polaris-react.shopify.com/design/colors/palettes-and-roles) | [Uber Base](https://base.uber.com/6d2425e9f/p/797362-color-beta) | [Microsoft Fluent](https://fluent2.microsoft.design/color/) | [IBM Carbon](https://carbondesignsystem.com/elements/color/overview/) | [Adobe Spectrum](https://spectrum.adobe.com/page/color-palette/)
 
 ## Support
 - [Follow the plugin LinkedIn page](https://uicp.ylb.lt/network)
