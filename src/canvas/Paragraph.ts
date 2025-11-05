@@ -1,8 +1,10 @@
+import { bodyFontFamily, darkColor, FontFamily } from './styles'
+
 export default class Paragraph {
   private name: string
   private content: string
   private fontSize: number
-  private fontFamily: 'Martian Mono' | 'Lexend'
+  private fontFamily: FontFamily
   private type: 'FILL' | 'FIXED'
   private width?: number
   private nodeText: TextNode | null
@@ -14,14 +16,14 @@ export default class Paragraph {
     type,
     width,
     fontSize = 12,
-    fontFamily = 'Martian Mono',
+    fontFamily = bodyFontFamily,
   }: {
     name: string
     content: string
     type: 'FILL' | 'FIXED'
     width?: number
     fontSize?: number
-    fontFamily?: 'Martian Mono' | 'Lexend'
+    fontFamily?: FontFamily
   }) {
     this.name = name
     this.content = content
@@ -50,11 +52,7 @@ export default class Paragraph {
     this.nodeText.fills = [
       {
         type: 'SOLID',
-        color: {
-          r: 0,
-          g: 0,
-          b: 0,
-        },
+        color: darkColor,
       },
     ]
 
@@ -83,11 +81,7 @@ export default class Paragraph {
       {
         type: 'SOLID',
         opacity: 0.05,
-        color: {
-          r: 0,
-          g: 0,
-          b: 0,
-        },
+        color: darkColor,
       },
     ]
     this.node.cornerRadius = 16
@@ -101,8 +95,10 @@ export default class Paragraph {
       this.node.layoutAlign = 'STRETCH'
     }
     this.node.layoutSizingVertical = 'HUG'
-    this.node.horizontalPadding = 8
-    this.node.verticalPadding = 8
+    this.node.paddingTop = 8
+    this.node.paddingLeft = 8
+    this.node.paddingBottom = 8
+    this.node.paddingRight = 8
 
     // Insert
     this.node.appendChild(this.makeNodeText())

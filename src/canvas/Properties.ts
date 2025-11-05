@@ -1,4 +1,5 @@
 import chroma from 'chroma-js'
+import { locales } from '@ui-lib/content/locales'
 import {
   Channel,
   Color,
@@ -8,7 +9,6 @@ import {
   TextColorsThemeConfiguration,
   VisionSimulationModeConfiguration,
 } from '@a_ng_d/utils-ui-color-palette'
-import { locales } from '../content/locales'
 import Tag from './Tag'
 
 export default class Properties {
@@ -188,14 +188,14 @@ export default class Properties {
         name: '_lch',
         content: `L ${Math.floor(this.lch[0])} • C ${Math.floor(
           this.lch[1]
-        )} • H ${Math.floor(this.lch[2])}`,
+        )} • H ${isNaN(this.lch[2]) ? 0 : Math.floor(this.lch[2])}`,
       }).makeNodeTag()
     else if (this.colorSpace === 'OKLCH')
       basePropViaColorSpace = new Tag({
         name: '_oklch',
         content: `L ${parseFloat(this.oklch[0].toFixed(2))} • C ${parseFloat(
           this.oklch[1].toFixed(2)
-        )} • H ${Math.floor(this.oklch[2])}`,
+        )} • H ${isNaN(this.oklch[2]) ? 0 : Math.floor(this.oklch[2])}`,
       }).makeNodeTag()
     else if (this.colorSpace === 'LAB')
       basePropViaColorSpace = new Tag({
@@ -214,7 +214,7 @@ export default class Properties {
     else if (this.colorSpace === 'HSL')
       basePropViaColorSpace = new Tag({
         name: '_hsl',
-        content: `H ${Math.floor(this.hsl[0])} • S ${Math.floor(
+        content: `H ${isNaN(this.hsl[0]) ? 0 : Math.floor(this.hsl[0])} • S ${Math.floor(
           this.hsl[1] * 100
         )} • L ${Math.floor(this.hsl[2] * 100)}`,
       }).makeNodeTag()
@@ -368,14 +368,14 @@ export default class Properties {
         name: '_lch',
         content: `L ${Math.floor(this.lch[0])} • C ${Math.floor(
           this.lch[1]
-        )} • H ${Math.floor(this.lch[2])}`,
+        )} • H ${isNaN(this.lch[2]) ? 0 : Math.floor(this.lch[2])}`,
       }).makeNodeTag()
     else if (this.colorSpace === 'OKLCH')
       basePropViaColorSpace = new Tag({
         name: '_oklch',
         content: `L ${parseFloat(this.oklch[0].toFixed(2))} • C ${parseFloat(
           this.oklch[1].toFixed(2)
-        )} • H ${Math.floor(this.oklch[2])}`,
+        )} • H ${isNaN(this.oklch[2]) ? 0 : Math.floor(this.oklch[2])}`,
       }).makeNodeTag()
     else if (this.colorSpace === 'LAB')
       basePropViaColorSpace = new Tag({
@@ -393,8 +393,8 @@ export default class Properties {
       }).makeNodeTag()
     else if (this.colorSpace === 'HSL')
       basePropViaColorSpace = new Tag({
-        name: '_lab',
-        content: `H ${Math.floor(this.hsl[0])} • S ${Math.floor(
+        name: '_hsl',
+        content: `H ${isNaN(this.hsl[0]) ? 0 : Math.floor(this.hsl[0])} • S ${Math.floor(
           this.hsl[1] * 100
         )} • L ${Math.floor(this.hsl[2] * 100)}`,
       }).makeNodeTag()
@@ -561,7 +561,7 @@ export default class Properties {
         fontSize: 10,
       }).makeNodeTag()
     )
-    const columnsNode = this.makeNodeColumns(
+    const nodeColumns = this.makeNodeColumns(
       [
         nodeAPCALightProp,
         new Tag({
@@ -625,7 +625,7 @@ export default class Properties {
         }).makeNodeTag(),
       ]
     )
-    this.nodeDetailedAPCAScoresProps.appendChild(columnsNode)
+    this.nodeDetailedAPCAScoresProps.appendChild(nodeColumns)
 
     return this.nodeDetailedAPCAScoresProps
   }
@@ -685,12 +685,12 @@ export default class Properties {
     const detailedBaseProps = this.makeNodeDetailedBaseProps()
     const detailedWCAGScoresProps = this.makeDetailedWCAGScoresProps()
     const detailedAPCAScoresProps = this.makeNodeDetailedAPCAScoresProps()
-    const columnsNode = this.makeNodeColumns(
+    const nodeColumns = this.makeNodeColumns(
       [detailedBaseProps],
       [detailedWCAGScoresProps]
     )
 
-    this.node.appendChild(columnsNode)
+    this.node.appendChild(nodeColumns)
     this.node.appendChild(detailedAPCAScoresProps)
 
     return this.node
@@ -711,11 +711,11 @@ export default class Properties {
     this.node.primaryAxisAlignItems = 'SPACE_BETWEEN'
 
     // Insert
-    const nodeTopPropsNode = this.makeNodeTopProps()
-    const nodeBasePropsNode = this.makeNodeBaseProps()
-    const nodeBottomPropsNode = this.makeNodeBottomProps()
+    const nodeTopProps = this.makeNodeTopProps()
+    const nodeBaseProps = this.makeNodeBaseProps()
+    const nodeBottomProps = this.makeNodeBottomProps()
 
-    this.node.appendChild(nodeTopPropsNode)
+    this.node.appendChild(nodeTopProps)
     this.nodeTopProps?.appendChild(
       new Tag({
         name: '_scale',
@@ -723,8 +723,8 @@ export default class Properties {
         fontSize: 10,
       }).makeNodeTag()
     )
-    this.nodeTopProps?.appendChild(nodeBasePropsNode)
-    this.node.appendChild(nodeBottomPropsNode)
+    this.nodeTopProps?.appendChild(nodeBaseProps)
+    this.node.appendChild(nodeBottomProps)
 
     return this.node
   }

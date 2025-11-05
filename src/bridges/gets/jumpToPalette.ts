@@ -1,4 +1,4 @@
-import { locales } from '../content/locales'
+import { locales } from '@ui-lib/content/locales'
 
 const jumpToPalette = async (id: string) => {
   const rawPalette = figma.currentPage.getSharedPluginData(

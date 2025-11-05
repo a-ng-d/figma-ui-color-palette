@@ -1,7 +1,7 @@
+import { locales } from '@ui-lib/content/locales'
 import { Data, FullConfiguration } from '@a_ng_d/utils-ui-color-palette'
 import { getJsonSize } from '../../utils/getSize'
 import { PaletteMessage } from '../../types/messages'
-import { locales } from '../../content/locales'
 
 const updatePalette = async ({
   msg,

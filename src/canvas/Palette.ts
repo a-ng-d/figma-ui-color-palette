@@ -1,3 +1,4 @@
+import { locales } from '@ui-lib/content/locales'
 import {
   BaseConfiguration,
   MetaConfiguration,
@@ -5,7 +6,6 @@ import {
   ThemeConfiguration,
   ViewConfiguration,
 } from '@a_ng_d/utils-ui-color-palette'
-import { locales } from '../content/locales'
 import Title from './Title'
 import Signature from './Signature'
 import Sample from './Sample'
@@ -108,10 +108,17 @@ export default class Palette {
       }).node
     )
 
-    this.data?.colors.forEach((color) => {
+    this.data?.colors.forEach((color, index) => {
       const sourceColor = color.shades.find(
         (shade) => shade.name === 'source'
       ) ?? { hex: '#000000', rgb: [0, 0, 0] }
+
+      let radii = []
+      if (index === 0) radii = [16, 16, 0, 0]
+      else if (index === this.data.colors.length - 1) radii = [0, 0, 16, 16]
+      else radii = [0, 0, 0, 0]
+
+      if (this.data.colors.length === 1) radii = [16, 16, 16, 16]
 
       // Base
       this.nodeRow = figma.createFrame()
@@ -124,6 +131,11 @@ export default class Palette {
         this.nodeRowSource.fills =
         this.nodeRowShades.fills =
           []
+
+      this.nodeRow.topLeftRadius = radii[0]
+      this.nodeRow.topRightRadius = radii[1]
+      this.nodeRow.bottomRightRadius = radii[2]
+      this.nodeRow.bottomLeftRadius = radii[3]
 
       // Layout
       this.nodeRow.layoutMode =
@@ -140,7 +152,7 @@ export default class Palette {
           'HUG'
 
       // Insert
-      const sampleNode = new Sample({
+      const nodeSample = new Sample({
         name: color.name,
         rgb: sourceColor.rgb,
         colorSpace: this.base.colorSpace,
@@ -154,7 +166,7 @@ export default class Palette {
         isColorName: true,
       })
 
-      this.nodeRowSource.appendChild(sampleNode)
+      this.nodeRowSource.appendChild(nodeSample)
 
       color.shades
         .filter((shade) => shade.name !== 'source')
@@ -213,17 +225,17 @@ export default class Palette {
     this.node.itemSpacing = 16
 
     // Insert
-    const titleNode = new Title({
+    const nodeTitle = new Title({
       base: this.base,
       theme: this.theme,
       data: this.data,
       meta: this.meta,
     }).node
-    const signatureNode = new Signature().node
+    const nodeSignature = new Signature().node
 
-    this.node.appendChild(titleNode)
+    this.node.appendChild(nodeTitle)
     this.node.appendChild(this.makeNodeShades())
-    this.node.appendChild(signatureNode)
+    this.node.appendChild(nodeSignature)
 
     return this.node
   }

@@ -1,4 +1,5 @@
 import chroma from 'chroma-js'
+import { locales } from '@ui-lib/content/locales'
 import {
   BaseConfiguration,
   MetaConfiguration,
@@ -9,7 +10,6 @@ import {
 } from '@a_ng_d/utils-ui-color-palette'
 import setPaletteName from '../utils/setPaletteName'
 import globalConfig from '../global.config'
-import { locales } from '../content/locales'
 import Sheet from './Sheet'
 import Palette from './Palette'
 
@@ -87,7 +87,10 @@ export default class Documents {
     document.layoutMode = 'VERTICAL'
     document.layoutSizingHorizontal = 'HUG'
     document.layoutSizingVertical = 'HUG'
-    document.horizontalPadding = document.verticalPadding = 32
+    document.paddingTop = 32
+    document.paddingLeft = 32
+    document.paddingRight = 32
+    document.paddingBottom = 32
     document.fills = [
       {
         type: 'SOLID',

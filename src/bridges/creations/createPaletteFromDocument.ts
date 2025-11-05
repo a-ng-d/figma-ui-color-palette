@@ -1,12 +1,14 @@
+import { locales } from '@ui-lib/content/locales'
 import { FullConfiguration } from '@a_ng_d/utils-ui-color-palette'
-import processSelection from '../processSelection'
-import { locales } from '../../content/locales'
+import processSelection from '../gets/processSelection'
 
 const createPaletteFromDocument = async () => {
   const document = figma.currentPage.selection[0]
-  const backup = JSON.parse(
-    document.getSharedPluginData('uicp', 'backup')
-  ) as FullConfiguration
+  const rawPalette = document.getSharedPluginData('uicp', 'backup')
+
+  if (rawPalette === '') throw new Error(locales.get().error.unfoundPalette)
+
+  const backup = JSON.parse(rawPalette) as FullConfiguration
 
   figma.currentPage.setSharedPluginData(
     'uicp',

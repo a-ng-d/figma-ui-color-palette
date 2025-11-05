@@ -1,4 +1,5 @@
 import { uid } from 'uid'
+import { locales } from '@ui-lib/content/locales'
 import {
   ColorConfiguration,
   Data,
@@ -6,7 +7,7 @@ import {
   SourceColorConfiguration,
   ThemeConfiguration,
 } from '@a_ng_d/utils-ui-color-palette'
-import { locales } from '../../content/locales'
+import createDocument from './createDocument'
 
 interface Msg {
   data: {
@@ -96,11 +97,14 @@ const createPalette = async (msg: Msg, fromUI = true) => {
     `palette_${palette.meta.id}`,
     JSON.stringify(palette)
   )
-  if (fromUI)
+  if (fromUI) {
     figma.ui.postMessage({
       type: 'LOAD_PALETTE',
       data: palette,
     })
+
+    createDocument(palette.meta.id, 'PALETTE')
+  }
 
   await new Promise((r) => setTimeout(r, 1000))
   await figma.saveVersionHistoryAsync(

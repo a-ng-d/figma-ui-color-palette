@@ -11,7 +11,7 @@ jobs:
   build-plugin:
     name: Build with Node
     runs-on: ubuntu-latest
-    if: github.event.pull_request.merged == true && startsWith(github.head_ref, 'releases/ui-color-palette/')
+    if: github.event.pull_request.merged == true && startsWith(github.head_ref, 'release/ui-color-palette/')
     steps:
     - uses: actions/checkout@v4
       with:
@@ -85,7 +85,7 @@ jobs:
     name: Create release
     needs: build-plugin
     runs-on: ubuntu-latest
-    if: github.event.pull_request.merged == true && startsWith(github.head_ref, 'releases/ui-color-palette/')
+    if: github.event.pull_request.merged == true && startsWith(github.head_ref, 'release/ui-color-palette/')
     permissions:
       contents: write
     steps:

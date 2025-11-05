@@ -1,6 +1,6 @@
 import { uid } from 'uid'
+import { locales } from '@ui-lib/content/locales'
 import { SourceColorConfiguration } from '@a_ng_d/utils-ui-color-palette'
-import { locales } from '../content/locales'
 
 export let currentSelection: ReadonlyArray<SceneNode>
 export let previousSelection: ReadonlyArray<SceneNode> | undefined
@@ -90,7 +90,8 @@ const processSelection = () => {
       element.type !== 'CONNECTOR' &&
       element.type !== 'GROUP' &&
       element.type !== 'EMBED' &&
-      element.type !== 'SLICE'
+      element.type !== 'SLICE' &&
+      element.type !== 'TEXT'
     ) {
       const foundColors = (
         (element as FrameNode).fills as readonly Paint[]

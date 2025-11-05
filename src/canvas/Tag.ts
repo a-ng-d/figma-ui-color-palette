@@ -1,10 +1,11 @@
 import { RgbModel } from '@a_ng_d/utils-ui-color-palette'
+import { darkColor, FontFamily, propertyFontFamily } from './styles'
 
 export default class Tag {
   private name: string
   private content: string
   private fontSize: number
-  private fontFamily: 'Martian Mono' | 'Lexend'
+  private fontFamily: FontFamily
   private url: string | null
   private backgroundColor: {
     rgb: RgbModel
@@ -21,7 +22,7 @@ export default class Tag {
     name,
     content,
     fontSize = 8,
-    fontFamily = 'Martian Mono',
+    fontFamily = propertyFontFamily,
     backgroundColor = {
       rgb: {
         r: 1,
@@ -35,7 +36,7 @@ export default class Tag {
     name: string
     content: string
     fontSize?: number
-    fontFamily?: 'Martian Mono' | 'Lexend'
+    fontFamily?: FontFamily
     backgroundColor?: {
       rgb: RgbModel
       alpha: number
@@ -65,7 +66,7 @@ export default class Tag {
         type: 'SOLID',
         opacity: this.backgroundColor.alpha,
         color: {
-          r: this.backgroundColor?.rgb.r,
+          r: this.backgroundColor.rgb.r,
           g: this.backgroundColor.rgb.g,
           b: this.backgroundColor.rgb.b,
         },
@@ -74,11 +75,7 @@ export default class Tag {
     this.nodeTag.strokes = [
       {
         type: 'SOLID',
-        color: {
-          r: 0,
-          g: 0,
-          b: 0,
-        },
+        color: darkColor,
         opacity: 0.05,
       },
     ]
@@ -89,8 +86,10 @@ export default class Tag {
     this.nodeTag.layoutSizingHorizontal = 'HUG'
     this.nodeTag.layoutSizingVertical = 'HUG'
     this.nodeTag.counterAxisAlignItems = 'CENTER'
-    this.nodeTag.horizontalPadding = 8
-    this.nodeTag.verticalPadding = 4
+    this.nodeTag.paddingTop = 4
+    this.nodeTag.paddingLeft = 8
+    this.nodeTag.paddingBottom = 4
+    this.nodeTag.paddingRight = 8
     this.nodeTag.itemSpacing = 4
 
     // Insert
@@ -99,7 +98,10 @@ export default class Tag {
     return this.nodeTag
   }
 
-  makeNodeTagwithIndicator = (gl: Array<number> = [0, 0, 0, 1]) => {
+  makeNodeTagwithIndicator = (
+    gl: Array<number> = [0, 0, 0, 1],
+    isCompact = true
+  ) => {
     // Base
     this.nodeTagwithIndicator = figma.createFrame()
     this.nodeTagwithIndicator.name = this.name
@@ -117,11 +119,7 @@ export default class Tag {
     this.nodeTagwithIndicator.strokes = [
       {
         type: 'SOLID',
-        color: {
-          r: 0,
-          g: 0,
-          b: 0,
-        },
+        color: darkColor,
         opacity: 0.05,
       },
     ]
@@ -133,8 +131,9 @@ export default class Tag {
     this.nodeTagwithIndicator.layoutSizingVertical = 'HUG'
     this.nodeTagwithIndicator.counterAxisAlignItems = 'CENTER'
     this.nodeTagwithIndicator.paddingLeft = 8
-    this.nodeTagwithIndicator.paddingRight = 2
-    this.nodeTagwithIndicator.verticalPadding = 2
+    this.nodeTagwithIndicator.paddingRight = isCompact ? 2 : 8
+    this.nodeTagwithIndicator.paddingTop = isCompact ? 2 : 4
+    this.nodeTagwithIndicator.paddingBottom = isCompact ? 2 : 4
     this.nodeTagwithIndicator.itemSpacing = 4
 
     // Insert
@@ -164,11 +163,7 @@ export default class Tag {
     this.nodeTagWithAvatar.strokes = [
       {
         type: 'SOLID',
-        color: {
-          r: 0,
-          g: 0,
-          b: 0,
-        },
+        color: darkColor,
         opacity: 0.05,
       },
     ]
@@ -179,9 +174,10 @@ export default class Tag {
     this.nodeTagWithAvatar.layoutSizingHorizontal = 'HUG'
     this.nodeTagWithAvatar.layoutSizingVertical = 'HUG'
     this.nodeTagWithAvatar.counterAxisAlignItems = 'CENTER'
+    this.nodeTagWithAvatar.paddingTop = 4
     this.nodeTagWithAvatar.paddingLeft = 8
+    this.nodeTagWithAvatar.paddingBottom = 4
     this.nodeTagWithAvatar.paddingRight = 4
-    this.nodeTagWithAvatar.verticalPadding = 4
     this.nodeTagWithAvatar.itemSpacing = 8
 
     // Insert
@@ -216,11 +212,7 @@ export default class Tag {
     this.nodeText.fills = [
       {
         type: 'SOLID',
-        color: {
-          r: 0,
-          g: 0,
-          b: 0,
-        },
+        color: darkColor,
       },
     ]
 
@@ -245,11 +237,7 @@ export default class Tag {
     this.nodeIndicator.strokes = [
       {
         type: 'SOLID',
-        color: {
-          r: 0,
-          g: 0,
-          b: 0,
-        },
+        color: darkColor,
         opacity: 0.1,
       },
     ]
@@ -263,7 +251,7 @@ export default class Tag {
     this.nodeAvatar.resize(24, 24)
     this.nodeAvatar.name = '_avatar'
 
-    if (image !== null && image !== undefined)
+    if (image !== null && image !== undefined) {
       this.nodeAvatar.fills = [
         {
           type: 'IMAGE',
@@ -271,6 +259,14 @@ export default class Tag {
           imageHash: image.hash,
         },
       ]
+      this.nodeAvatar.strokes = [
+        {
+          type: 'SOLID',
+          color: darkColor,
+          opacity: 0.1,
+        },
+      ]
+    }
 
     return this.nodeAvatar
   }

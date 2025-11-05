@@ -1,5 +1,5 @@
+import { locales } from '@ui-lib/content/locales'
 import globalConfig from '../global.config'
-import { locales } from '../content/locales'
 import updateThemes from './updates/updateThemes'
 import updateSettings from './updates/updateSettings'
 import updateScale from './updates/updateScale'
@@ -8,12 +8,12 @@ import updateLocalVariables from './updates/updateLocalVariables'
 import updateLocalStyles from './updates/updateLocalStyles'
 import updateDocument from './updates/updateDocument'
 import updateColors from './updates/updateColors'
-import processSelection from './processSelection'
-import payProPlan from './payProPlan'
-import jumpToPalette from './jumpToPalette'
-import getPalettesOnCurrentPage from './getPalettesOnCurrentPage'
-import enableTrial from './enableTrial'
-import deletePalette from './creations/deletePalette'
+import payProPlan from './plans/payProPlan'
+import enableTrial from './plans/enableTrial'
+import processSelection from './gets/processSelection'
+import jumpToPalette from './gets/jumpToPalette'
+import getPalettesOnCurrentPage from './gets/getPalettesOnCurrentPage'
+import deletePalette from './deletions/deletePalette'
 import createPaletteFromRemote from './creations/createPaletteFromRemote'
 import createPaletteFromDuplication from './creations/createPaletteFromDuplication'
 import createPaletteFromDocument from './creations/createPaletteFromDocument'
@@ -26,6 +26,7 @@ import checkUserLicense from './checks/checkUserLicense'
 import checkUserConsent from './checks/checkUserConsent'
 import checkTrialStatus from './checks/checkTrialStatus'
 import checkEditor from './checks/checkEditor'
+import checkCredits from './checks/checkCredits'
 import checkAnnouncementsStatus from './checks/checkAnnouncementsStatus'
 
 declare const __PLUGIN__: 'fig' | 'one'
@@ -93,6 +94,7 @@ const loadUI = async () => {
   checkUserConsent()
     .then(() => checkEditor())
     .then(() => checkTrialStatus({ context: 'UI', plugin: __PLUGIN__ }))
+    .then(() => checkCredits())
     .then(() => checkUserLicense(__PLUGIN__))
     .then(() => checkUserPreferences())
     .then(() => processSelection())
@@ -121,6 +123,8 @@ const loadUI = async () => {
       //
       UPDATE_SCALE: () =>
         updateScale(path).catch((error) => {
+          console.error(error)
+
           figma.ui.postMessage({
             type: 'POST_MESSAGE',
             data: {
@@ -132,6 +136,8 @@ const loadUI = async () => {
         }),
       UPDATE_COLORS: () =>
         updateColors(path).catch((error) => {
+          console.error(error)
+
           figma.ui.postMessage({
             type: 'POST_MESSAGE',
             data: {
@@ -143,6 +149,8 @@ const loadUI = async () => {
         }),
       UPDATE_THEMES: () =>
         updateThemes(path).catch((error) => {
+          console.error(error)
+
           figma.ui.postMessage({
             type: 'POST_MESSAGE',
             data: {
@@ -154,6 +162,8 @@ const loadUI = async () => {
         }),
       UPDATE_SETTINGS: () =>
         updateSettings(path).catch((error) => {
+          console.error(error)
+
           figma.ui.postMessage({
             type: 'POST_MESSAGE',
             data: {
@@ -169,6 +179,8 @@ const loadUI = async () => {
           isAlreadyUpdated: path.isAlreadyUpdated,
           shouldLoadPalette: path.shouldLoadPalette,
         }).catch((error) => {
+          console.error(error)
+
           figma.ui.postMessage({
             type: 'POST_MESSAGE',
             data: {
@@ -182,6 +194,8 @@ const loadUI = async () => {
         updateDocument(path.view)
           .finally(() => figma.ui.postMessage({ type: 'STOP_LOADER' }))
           .catch((error) => {
+            console.error(error)
+
             figma.ui.postMessage({
               type: 'POST_MESSAGE',
               data: {
@@ -196,17 +210,39 @@ const loadUI = async () => {
       },
       //
       CREATE_PALETTE: () =>
-        createPalette(path).finally(() =>
-          figma.ui.postMessage({ type: 'STOP_LOADER' })
-        ),
+        createPalette(path)
+          .finally(() => figma.ui.postMessage({ type: 'STOP_LOADER' }))
+          .catch((error) => {
+            console.error(error)
+
+            figma.ui.postMessage({
+              type: 'POST_MESSAGE',
+              data: {
+                type: 'ERROR',
+                message: error.message,
+              },
+            })
+          }),
       CREATE_PALETTE_FROM_DOCUMENT: () =>
-        createPaletteFromDocument().finally(() =>
-          figma.ui.postMessage({ type: 'STOP_LOADER' })
-        ),
+        createPaletteFromDocument()
+          .finally(() => figma.ui.postMessage({ type: 'STOP_LOADER' }))
+          .catch((error) => {
+            console.error(error)
+
+            figma.ui.postMessage({
+              type: 'POST_MESSAGE',
+              data: {
+                type: 'INFO',
+                message: error.message,
+              },
+            })
+          }),
       CREATE_PALETTE_FROM_REMOTE: () =>
         createPaletteFromRemote(path)
           .finally(() => figma.ui.postMessage({ type: 'STOP_LOADER' }))
           .catch((error) => {
+            console.error(error)
+
             figma.ui.postMessage({
               type: 'POST_MESSAGE',
               data: {
@@ -230,6 +266,8 @@ const loadUI = async () => {
           )
           .finally(() => figma.ui.postMessage({ type: 'STOP_LOADER' }))
           .catch((error) => {
+            console.error(error)
+
             figma.ui.postMessage({
               type: 'POST_MESSAGE',
               data: {
@@ -256,6 +294,8 @@ const loadUI = async () => {
           )
           .finally(() => figma.ui.postMessage({ type: 'STOP_LOADER' }))
           .catch((error) => {
+            console.error(error)
+
             figma.ui.postMessage({
               type: 'POST_MESSAGE',
               data: {
@@ -268,6 +308,8 @@ const loadUI = async () => {
         createDocument(path.id, path.view)
           .finally(() => figma.ui.postMessage({ type: 'STOP_LOADER' }))
           .catch((error) => {
+            console.error(error)
+
             figma.ui.postMessage({
               type: 'POST_MESSAGE',
               data: {
@@ -330,6 +372,8 @@ const loadUI = async () => {
             figma.ui.postMessage({ type: 'STOP_LOADER' })
           })
           .catch((error) => {
+            console.error(error)
+
             figma.ui.postMessage({
               type: 'POST_MESSAGE',
               data: {
@@ -357,10 +401,18 @@ const loadUI = async () => {
         figma.ui.postMessage({
           type: 'GET_PRICING',
           data: {
-            plans: __PLUGIN__ === 'fig' ? ['FIGMA', 'ONE_FIGMA'] : ['ONE'],
+            plans:
+              __PLUGIN__ === 'fig'
+                ? ['FIGMA', 'ONE_FIGMA']
+                : ['ONE', 'ACTIVATE'],
           },
         }),
-      GO_TO_ONE: () => figma.openExternal(globalConfig.urls.storeUrl),
+      GO_TO_ONE: async () =>
+        figma.openExternal(
+          path.data.context === 'REGULAR'
+            ? globalConfig.urls.storeUrl
+            : globalConfig.urls.storeWithDiscountUrl
+        ),
       GO_TO_ONE_FIGMA: () =>
         figma.openExternal('https://uicp.ylb.lt/run-figma-plugin'),
       GO_TO_CHECKOUT: async () => payProPlan(),
@@ -406,7 +458,7 @@ const loadUI = async () => {
       type: 'LOAD_PALETTES',
     })
     figma.ui.postMessage({
-      type: 'RESET_PALETTES',
+      type: 'RESET_PALETTE',
     })
     setTimeout(() => getPalettesOnCurrentPage(), 1000)
   })

@@ -1,10 +1,10 @@
+import { locales } from '@ui-lib/content/locales'
 import {
   BaseConfiguration,
   MetaConfiguration,
   PaletteDataThemeItem,
   ThemeConfiguration,
 } from '@a_ng_d/utils-ui-color-palette'
-import { locales } from '../content/locales'
 import Tag from './Tag'
 import Paragraph from './Paragraph'
 

@@ -1,4 +1,5 @@
 import { uid } from 'uid'
+import { locales } from '@ui-lib/content/locales'
 import {
   AlgorithmVersionConfiguration,
   ColorConfiguration,
@@ -23,7 +24,6 @@ import {
 } from '@a_ng_d/utils-ui-color-palette'
 import { doScale } from '@a_ng_d/figmug-utils'
 import globalConfig from '../global.config'
-import { locales } from '../content/locales'
 
 const setPaletteMigration = async (document: BaseNode) => {
   const palette = {
