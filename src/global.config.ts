@@ -230,9 +230,9 @@ const globalConfig: Config = {
   locales: locales.get(),
   lang: 'en-US',
   fees: {
-    colourLoversImport: 25,
-    coolorsImport: 25,
-    realtimeColorsImport: 25,
+    colourLoversImport: 50,
+    coolorsImport: 50,
+    realtimeColorsImport: 50,
     imageColorsExtract: 100,
     harmonyCreate: 50,
     aiColorsGenerate: 100,
