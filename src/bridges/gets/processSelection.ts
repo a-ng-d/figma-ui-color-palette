@@ -90,7 +90,8 @@ const processSelection = () => {
       element.type !== 'CONNECTOR' &&
       element.type !== 'GROUP' &&
       element.type !== 'EMBED' &&
-      element.type !== 'SLICE'
+      element.type !== 'SLICE' &&
+      element.type !== 'TEXT'
     ) {
       const foundColors = (
         (element as FrameNode).fills as readonly Paint[]
