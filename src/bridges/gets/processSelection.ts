@@ -20,7 +20,8 @@ const processSelection = () => {
     | FrameNode
     | InstanceNode
 
-  const selectionHandler = (state: string) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const selectionHandler = (state: string, data?: any) => {
     const actions: { [key: string]: () => void } = {
       DOCUMENT_SELECTED: async () => {
         figma.ui.postMessage({
@@ -50,6 +51,14 @@ const processSelection = () => {
           type: 'COLOR_SELECTED',
           data: {
             selection: viableSelection,
+          },
+        })
+      },
+      IMAGE_SELECTED: () => {
+        figma.ui.postMessage({
+          type: 'GET_IMAGE_HASH',
+          data: {
+            arrayBuffer: data,
           },
         })
       },
@@ -85,7 +94,7 @@ const processSelection = () => {
   )
     selectionHandler('EMPTY_SELECTION')
 
-  selection.forEach((element) => {
+  selection.forEach(async (element) => {
     if (
       element.type !== 'CONNECTOR' &&
       element.type !== 'GROUP' &&
@@ -96,6 +105,9 @@ const processSelection = () => {
       const foundColors = (
         (element as FrameNode).fills as readonly Paint[]
       ).filter((fill: Paint) => fill.type === 'SOLID')
+      const foundImage = (
+        (element as FrameNode).fills as readonly Paint[]
+      ).filter((fill: Paint) => fill.type === 'IMAGE')
 
       if (
         foundColors.length !== 0 &&
@@ -114,6 +126,24 @@ const processSelection = () => {
         element?.setRelaunchData({
           create: locales.get().relaunch.create.description,
         })
+      }
+
+      if (foundImage.length !== 0) {
+        const hash = foundImage[0] as ImagePaint
+
+        if (hash.imageHash) {
+          const image = await figma
+            .getImageByHash(hash.imageHash)
+            ?.getBytesAsync()
+
+          if (image) {
+            const arrayBuffer = image.buffer.slice(
+              image.byteOffset,
+              image.byteOffset + image.byteLength
+            )
+            selectionHandler('IMAGE_SELECTED', arrayBuffer)
+          }
+        }
       }
     }
   })
