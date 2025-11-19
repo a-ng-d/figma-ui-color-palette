@@ -238,7 +238,7 @@ const globalConfig: Config = {
     coolorsImport: 50,
     realtimeColorsImport: 50,
     imageColorsExtract: 100,
-    harmonyCreate: 50,
+    harmonyCreate: 100,
     aiColorsGenerate: 100,
   },
 }
