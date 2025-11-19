@@ -5,7 +5,8 @@
   "editorType": [
     "figma",
     "figjam",
-    "dev"
+    "dev",
+    "buzz"
   ],
   "capabilities": [
     "inspect",
@@ -37,7 +38,8 @@
       "https://*.sentry.io",
       "https://*.amazonaws.com",
       "https://fonts.googleapis.com",
-      "https://fonts.gstatic.com"
+      "https://fonts.gstatic.com",
+      "https://api.mistral.ai"
     ],
     "devAllowedDomains": [
       "http://localhost:3000",
