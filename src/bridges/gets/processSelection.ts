@@ -58,7 +58,8 @@ const processSelection = () => {
         figma.ui.postMessage({
           type: 'GET_IMAGE_HASH',
           data: {
-            arrayBuffer: data,
+            arrayBuffer: data.arrayBuffer,
+            name: data.element.name,
           },
         })
       },
@@ -141,7 +142,7 @@ const processSelection = () => {
               image.byteOffset,
               image.byteOffset + image.byteLength
             )
-            selectionHandler('IMAGE_SELECTED', arrayBuffer)
+            selectionHandler('IMAGE_SELECTED', { arrayBuffer, element })
           }
         }
       }
