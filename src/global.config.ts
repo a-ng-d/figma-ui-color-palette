@@ -83,13 +83,21 @@ const specConfig: Record<
         'REMOTE_PALETTES_STARRED',
         'REMOTE_PALETTES_ORG',
         'INVOLVE_COMMUNITY',
+        'USER_PREFERENCES',
+        'USER_LANGUAGE',
+        'USER_LANGUAGE_FR_FR',
       ]
     ),
   },
   one: {
     pluginId: '1532789439226122095',
     features: doSpecificMode(
-      ['HELP_CHAT', 'USER_LANGUAGE_ZH_CN', 'USER_LANGUAGE_PT_BR'],
+      [
+        'HELP_CHAT',
+        'USER_LICENSE_JUMP',
+        'USER_LANGUAGE_ZH_CN',
+        'USER_LANGUAGE_PT_BR',
+      ],
       [
         'LOCAL_PALETTES',
         'SYNC_LOCAL_STYLES',
@@ -149,6 +157,9 @@ const specConfig: Record<
         'REMOTE_PALETTES_STARRED',
         'REMOTE_PALETTES_ORG',
         'INVOLVE_COMMUNITY',
+        'USER_PREFERENCES',
+        'USER_LANGUAGE',
+        'USER_LANGUAGE_FR_FR',
       ]
     ),
   },
