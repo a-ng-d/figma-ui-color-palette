@@ -49,24 +49,7 @@ const loadUI = async () => {
     title: `${locales.get().name}${pluginName}${locales.get().separator}${locales.get().tagline}`,
     themeColors: true,
   })
-
-  // Canvas > UI
-  figma.ui.postMessage({
-    type: 'CHECK_USER_AUTHENTICATION',
-    data: {
-      id: figma.currentUser?.id,
-      fullName: figma.currentUser?.name,
-      avatar: figma.currentUser?.photoUrl,
-      accessToken: await figma.clientStorage.getAsync('supabase_access_token'),
-      refreshToken: await figma.clientStorage.getAsync(
-        'supabase_refresh_token'
-      ),
-    },
-  })
-  figma.ui.postMessage({
-    type: 'CHECK_ANNOUNCEMENTS_VERSION',
-  })
-
+  
   if (figma.command === 'create')
     figma.ui.postMessage({
       type: 'SWITCH_SERVICE',
@@ -90,20 +73,38 @@ const loadUI = async () => {
       )
   }
 
-  // Checks
-  checkUserConsent()
-    .then(() => checkEditor())
-    .then(() => checkTrialStatus({ context: 'UI', plugin: __PLUGIN__ }))
-    .then(() => checkCredits())
-    .then(() => checkUserLicense(__PLUGIN__))
-    .then(() => checkUserPreferences())
-    .then(() => processSelection())
-
   // UI > Canvas
   figma.ui.onmessage = async (msg) => {
     const path = msg
 
     const actions: { [key: string]: () => void } = {
+      LOAD_DATA: async () => {
+        figma.ui.postMessage({
+          type: 'CHECK_USER_AUTHENTICATION',
+          data: {
+            id: figma.currentUser?.id,
+            fullName: figma.currentUser?.name,
+            avatar: figma.currentUser?.photoUrl,
+            accessToken: await figma.clientStorage.getAsync(
+              'supabase_access_token'
+            ),
+            refreshToken: await figma.clientStorage.getAsync(
+              'supabase_refresh_token'
+            ),
+          },
+        })
+        figma.ui.postMessage({
+          type: 'CHECK_ANNOUNCEMENTS_VERSION',
+        })
+
+        checkUserConsent()
+          .then(() => checkEditor())
+          .then(() => checkTrialStatus({ context: 'UI', plugin: __PLUGIN__ }))
+          .then(() => checkCredits())
+          .then(() => checkUserLicense(__PLUGIN__))
+          .then(() => checkUserPreferences())
+          .then(() => processSelection())
+      },
       RESIZE_UI: async () => {
         await figma.clientStorage.setAsync(
           'plugin_window_width',
