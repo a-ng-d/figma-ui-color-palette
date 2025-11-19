@@ -7,9 +7,9 @@ import {
   setEditor,
   setMixpanelEnv,
 } from '@ui-lib/external/tracking/client'
-import { initSentry } from '@ui-lib/external/monitoring/client'
+import { initSentry } from '@ui-lib/external/monitoring'
 import { initMistral } from '@ui-lib/external/mistral'
-import { initSupabase } from '@ui-lib/external/auth/client'
+import { initSupabase } from '@ui-lib/external/auth'
 import { ThemeProvider } from '@ui-lib/config/ThemeContext'
 import { ConfigProvider } from '@ui-lib/config/ConfigContext'
 import * as Sentry from '@sentry/react'
@@ -96,8 +96,7 @@ if (globalConfig.env.isSupabaseEnabled && supabaseAnonKey !== undefined)
   initSupabase(globalConfig.urls.databaseUrl, supabaseAnonKey)
 
 // Mistral AI
-if (globalConfig.env.isMistralAiEnabled)
-  initMistral(globalConfig.urls.aiApiUrl, mistralApiKey)
+if (globalConfig.env.isMistralAiEnabled) initMistral(mistralApiKey)
 
 // Bridge Canvas <> UI
 window.addEventListener(
