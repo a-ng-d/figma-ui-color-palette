@@ -49,7 +49,7 @@ const loadUI = async () => {
     title: `${locales.get().name}${pluginName}${locales.get().separator}${locales.get().tagline}`,
     themeColors: true,
   })
-  
+
   if (figma.command === 'create')
     figma.ui.postMessage({
       type: 'SWITCH_SERVICE',
