@@ -1,5 +1,6 @@
 import { Language } from '@ui-lib/types/translations'
 import { locales } from '@ui-lib/content/locales'
+import globalConfig from '../../global.config'
 
 const checkUserPreferences = async () => {
   let isWCAGDisplayed = await figma.clientStorage.getAsync('is_wcag_displayed')
@@ -41,11 +42,11 @@ const checkUserPreferences = async () => {
   }
 
   if (userLanguage === undefined) {
-    await figma.clientStorage.setAsync('user_language', 'en-US')
-    userLanguage = 'en-US'
+    await figma.clientStorage.setAsync('user_language', globalConfig.lang)
+    userLanguage = globalConfig.lang
   }
 
-  locales.set((userLanguage as Language) ?? 'en-US')
+  locales.set((userLanguage as Language) ?? globalConfig.lang)
 
   // Migration - Convert string preferences to boolean
   if (isWCAGDisplayed === 'true' || isWCAGDisplayed === 'false') {

@@ -18,7 +18,12 @@ const specConfig: Record<
   fig: {
     pluginId: '1063959496693642315',
     features: doSpecificMode(
-      ['HELP_CHAT', 'USER_LICENSE'],
+      [
+        'HELP_CHAT',
+        'USER_LICENSE',
+        'USER_LANGUAGE_ZH_CN',
+        'USER_LANGUAGE_PT_BR',
+      ],
       [
         'LOCAL_PALETTES',
         'SYNC_LOCAL_STYLES',
@@ -78,13 +83,21 @@ const specConfig: Record<
         'REMOTE_PALETTES_STARRED',
         'REMOTE_PALETTES_ORG',
         'INVOLVE_COMMUNITY',
+        'USER_PREFERENCES',
+        'USER_LANGUAGE',
+        'USER_LANGUAGE_FR_FR',
       ]
     ),
   },
   one: {
     pluginId: '1532789439226122095',
     features: doSpecificMode(
-      ['HELP_CHAT'],
+      [
+        'HELP_CHAT',
+        'USER_LICENSE_JUMP',
+        'USER_LANGUAGE_ZH_CN',
+        'USER_LANGUAGE_PT_BR',
+      ],
       [
         'LOCAL_PALETTES',
         'SYNC_LOCAL_STYLES',
@@ -144,6 +157,9 @@ const specConfig: Record<
         'REMOTE_PALETTES_STARRED',
         'REMOTE_PALETTES_ORG',
         'INVOLVE_COMMUNITY',
+        'USER_PREFERENCES',
+        'USER_LANGUAGE',
+        'USER_LANGUAGE_FR_FR',
       ]
     ),
   },
@@ -194,7 +210,6 @@ const globalConfig: Config = {
       ? 'http://localhost:3000'
       : (import.meta.env.VITE_AUTH_URL as string),
     storeApiUrl: import.meta.env.VITE_LEMONSQUEEZY_URL as string,
-    aiApiUrl: import.meta.env.VITE_MISTRAL_AI_API_URL as string,
     platformUrl: 'https://www.figma.com',
     uiUrl: isDev
       ? 'http://localhost:4400'
@@ -234,7 +249,7 @@ const globalConfig: Config = {
     coolorsImport: 50,
     realtimeColorsImport: 50,
     imageColorsExtract: 100,
-    harmonyCreate: 50,
+    harmonyCreate: 100,
     aiColorsGenerate: 100,
   },
 }

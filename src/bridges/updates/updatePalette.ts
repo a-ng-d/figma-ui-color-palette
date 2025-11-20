@@ -18,18 +18,16 @@ const updatePalette = async ({
   )
 
   msg.items.forEach((item) => {
-    const flatPalette = flattenObject(palette)
+    const pathParts = item.key.split('.')
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    let current: Record<string, any> = palette
 
-    if (Object.keys(flatPalette).includes(item.key)) {
-      const pathParts = item.key.split('.')
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      let current: Record<string, any> = palette
-
-      for (let i = 0; i < pathParts.length - 1; i++)
-        current = current[pathParts[i]]
-
-      current[pathParts[pathParts.length - 1]] = item.value
+    for (let i = 0; i < pathParts.length - 1; i++) {
+      if (current[pathParts[i]] === undefined) current[pathParts[i]] = {}
+      current = current[pathParts[i]]
     }
+
+    current[pathParts[pathParts.length - 1]] = item.value
   })
 
   palette.libraryData = new Data(palette).makeLibraryData(
@@ -65,28 +63,6 @@ const updatePalette = async ({
 
     return palette
   } else throw new Error(locales.get().error.paletteSizeExceeded)
-}
-
-const flattenObject = (
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  obj: Record<string, any>,
-  prefix = ''
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-): Record<string, any> => {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return Object.keys(obj).reduce((acc: Record<string, any>, key: string) => {
-    const pre = prefix.length ? `${prefix}.` : ''
-
-    if (
-      typeof obj[key] === 'object' &&
-      obj[key] !== null &&
-      !Array.isArray(obj[key])
-    )
-      Object.assign(acc, flattenObject(obj[key], pre + key))
-    else acc[pre + key] = obj[key]
-
-    return acc
-  }, {})
 }
 
 export default updatePalette
