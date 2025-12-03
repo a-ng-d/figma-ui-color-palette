@@ -1,7 +1,7 @@
 import { presets } from '@ui-lib/stores/presets'
-import { locales } from '@ui-lib/content/locales'
 import { FeatureStatus } from '@a_ng_d/figmug-utils'
 import globalConfig from '../global.config'
+import { tolgee } from '..'
 import checkTrialStatus from './checks/checkTrialStatus'
 
 declare const __PLUGIN__: 'fig' | 'one'
@@ -45,7 +45,7 @@ const loadParameters = async ({ key, result }: ParameterInputEvent) => {
           planStatus: planStatus,
           currentService: 'CREATE',
           currentEditor: figma.editorType,
-          suggestion: locales.get().settings.color.colorSpace.lch,
+          suggestion: tolgee.t('settings.color.colorSpace.lch'),
         }).isAvailableAndBlocked(),
         new FeatureStatus({
           features: globalConfig.features,
@@ -53,7 +53,7 @@ const loadParameters = async ({ key, result }: ParameterInputEvent) => {
           planStatus: planStatus,
           currentService: 'CREATE',
           currentEditor: figma.editorType,
-          suggestion: locales.get().settings.color.colorSpace.oklch,
+          suggestion: tolgee.t('settings.color.colorSpace.oklch'),
         }).isAvailableAndBlocked(),
         new FeatureStatus({
           features: globalConfig.features,
@@ -61,7 +61,7 @@ const loadParameters = async ({ key, result }: ParameterInputEvent) => {
           planStatus: planStatus,
           currentService: 'CREATE',
           currentEditor: figma.editorType,
-          suggestion: locales.get().settings.color.colorSpace.lab,
+          suggestion: tolgee.t('settings.color.colorSpace.lab'),
         }).isAvailableAndBlocked(),
         new FeatureStatus({
           features: globalConfig.features,
@@ -69,7 +69,7 @@ const loadParameters = async ({ key, result }: ParameterInputEvent) => {
           planStatus: planStatus,
           currentService: 'CREATE',
           currentEditor: figma.editorType,
-          suggestion: locales.get().settings.color.colorSpace.oklab,
+          suggestion: tolgee.t('settings.color.colorSpace.oklab'),
         }).isAvailableAndBlocked(),
         new FeatureStatus({
           features: globalConfig.features,
@@ -77,7 +77,7 @@ const loadParameters = async ({ key, result }: ParameterInputEvent) => {
           planStatus: planStatus,
           currentService: 'CREATE',
           currentEditor: figma.editorType,
-          suggestion: locales.get().settings.color.colorSpace.hsl,
+          suggestion: tolgee.t('settings.color.colorSpace.hsl'),
         }).isAvailableAndBlocked(),
         new FeatureStatus({
           features: globalConfig.features,
@@ -85,7 +85,7 @@ const loadParameters = async ({ key, result }: ParameterInputEvent) => {
           planStatus: planStatus,
           currentService: 'CREATE',
           currentEditor: figma.editorType,
-          suggestion: locales.get().settings.color.colorSpace.hsluv,
+          suggestion: tolgee.t('settings.color.colorSpace.hsluv'),
         }).isAvailableAndBlocked(),
       ].filter((n) => n) as Array<string>
 
@@ -106,7 +106,7 @@ const loadParameters = async ({ key, result }: ParameterInputEvent) => {
           planStatus: planStatus,
           currentService: 'CREATE',
           currentEditor: figma.editorType,
-          suggestion: locales.get().settings.global.views.detailed,
+          suggestion: tolgee.t('settings.global.views.detailed'),
         }).isAvailableAndBlocked(),
         new FeatureStatus({
           features: globalConfig.features,
@@ -114,7 +114,7 @@ const loadParameters = async ({ key, result }: ParameterInputEvent) => {
           planStatus: planStatus,
           currentService: 'CREATE',
           currentEditor: figma.editorType,
-          suggestion: locales.get().settings.global.views.simple,
+          suggestion: tolgee.t('settings.global.views.simple'),
         }).isAvailableAndBlocked(),
         new FeatureStatus({
           features: globalConfig.features,
@@ -122,7 +122,7 @@ const loadParameters = async ({ key, result }: ParameterInputEvent) => {
           planStatus: planStatus,
           currentService: 'CREATE',
           currentEditor: figma.editorType,
-          suggestion: locales.get().settings.global.views.sheet,
+          suggestion: tolgee.t('settings.global.views.sheet'),
         }).isAvailableAndBlocked(),
       ].filter((n) => n) as Array<string>
 

@@ -1,7 +1,7 @@
-import { locales } from '@ui-lib/content/locales'
 import { Data, FullConfiguration } from '@a_ng_d/utils-ui-color-palette'
 import { getJsonSize } from '../../utils/getSize'
 import { PaletteMessage } from '../../types/messages'
+import { tolgee } from '../..'
 
 const updatePalette = async ({
   msg,
@@ -58,11 +58,11 @@ const updatePalette = async ({
 
     await new Promise((r) => setTimeout(r, 1000))
     await figma.saveVersionHistoryAsync(
-      `${palette.base.name} - ${locales.get().events.paletteUpdated}`
+      `${palette.base.name} - ${tolgee.t('events.paletteUpdated')}`
     )
 
     return palette
-  } else throw new Error(locales.get().error.paletteSizeExceeded)
+  } else throw new Error(tolgee.t('error.paletteSizeExceeded'))
 }
 
 export default updatePalette

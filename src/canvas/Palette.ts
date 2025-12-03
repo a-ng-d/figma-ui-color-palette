@@ -1,4 +1,3 @@
-import { locales } from '@ui-lib/content/locales'
 import {
   BaseConfiguration,
   MetaConfiguration,
@@ -6,6 +5,7 @@ import {
   ThemeConfiguration,
   ViewConfiguration,
 } from '@a_ng_d/utils-ui-color-palette'
+import { tolgee } from '..'
 import Title from './Title'
 import Signature from './Signature'
 import Sample from './Sample'
@@ -71,7 +71,7 @@ export default class Palette {
     // Insert
     this.nodeEmpty.appendChild(
       new Sample({
-        name: locales.get().warning.emptySourceColors,
+        name: tolgee.t('warning.emptySourceColors'),
         rgb: [255, 255, 255],
         colorSpace: this.base.colorSpace,
         visionSimulationMode: this.theme.visionSimulationMode,
@@ -214,7 +214,7 @@ export default class Palette {
   makeNode = () => {
     // Base
     this.node = figma.createFrame()
-    this.node.name = `_colors${locales.get().separator}do not edit any layer`
+    this.node.name = `_colors${tolgee.t('separator')}do not edit any layer`
     this.node.fills = []
     this.node.locked = true
 

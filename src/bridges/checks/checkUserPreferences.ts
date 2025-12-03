@@ -1,6 +1,5 @@
-import { Language } from '@ui-lib/types/translations'
-import { locales } from '@ui-lib/content/locales'
 import globalConfig from '../../global.config'
+import { tolgee } from '../..'
 
 const checkUserPreferences = async () => {
   let isWCAGDisplayed = await figma.clientStorage.getAsync('is_wcag_displayed')
@@ -46,7 +45,7 @@ const checkUserPreferences = async () => {
     userLanguage = globalConfig.lang
   }
 
-  locales.set((userLanguage as Language) ?? globalConfig.lang)
+  tolgee.changeLanguage(userLanguage)
 
   // Migration - Convert string preferences to boolean
   if (isWCAGDisplayed === 'true' || isWCAGDisplayed === 'false') {

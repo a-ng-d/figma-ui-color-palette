@@ -1,5 +1,4 @@
 import { uid } from 'uid'
-import { locales } from '@ui-lib/content/locales'
 import {
   ColorConfiguration,
   Data,
@@ -7,6 +6,7 @@ import {
   SourceColorConfiguration,
   ThemeConfiguration,
 } from '@a_ng_d/utils-ui-color-palette'
+import { tolgee } from '../..'
 import createDocument from './createDocument'
 
 interface Msg {
@@ -46,7 +46,7 @@ const createPalette = async (msg: Msg, fromUI = true) => {
 
   const themes: Array<ThemeConfiguration> = [
     {
-      name: locales.get().themes.switchTheme.defaultTheme,
+      name: tolgee.t('themes.switchTheme.defaultTheme'),
       description: '',
       scale: msg.data.exchange.scale,
       paletteBackground: '#FFFFFF',
@@ -108,7 +108,7 @@ const createPalette = async (msg: Msg, fromUI = true) => {
 
   await new Promise((r) => setTimeout(r, 1000))
   await figma.saveVersionHistoryAsync(
-    `${palette.base.name} - ${locales.get().events.paletteCreated}`
+    `${palette.base.name} - ${tolgee.t('events.paletteCreated')}`
   )
 
   return palette

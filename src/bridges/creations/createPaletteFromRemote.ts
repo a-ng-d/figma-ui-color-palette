@@ -1,10 +1,10 @@
-import { locales } from '@ui-lib/content/locales'
 import {
   BaseConfiguration,
   Data,
   MetaConfiguration,
   ThemeConfiguration,
 } from '@a_ng_d/utils-ui-color-palette'
+import { tolgee } from '../..'
 import createDocument from './createDocument'
 
 interface Msg {
@@ -21,7 +21,7 @@ const createPaletteFromRemote = async (msg: Msg) => {
     `palette_${msg.data.meta.id}`
   )
 
-  if (localPalette !== '') throw new Error(locales.get().info.addToLocal)
+  if (localPalette !== '') throw new Error(tolgee.t('info.addToLocal'))
 
   const palette = new Data({
     base: {
@@ -70,7 +70,7 @@ const createPaletteFromRemote = async (msg: Msg) => {
 
   await new Promise((r) => setTimeout(r, 1000))
   await figma.saveVersionHistoryAsync(
-    `${palette.base.name} - ${locales.get().events.palettePulled}`
+    `${palette.base.name} - ${tolgee.t('events.palettePulled')}`
   )
 
   return palette

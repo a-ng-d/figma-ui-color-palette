@@ -1,4 +1,4 @@
-import { locales } from '@ui-lib/content/locales'
+import { tolgee } from '..'
 import Tag from './Tag'
 
 export default class Status {
@@ -50,7 +50,7 @@ export default class Status {
       this.node.appendChild(
         new Tag({
           name: '_close',
-          content: locales.get().paletteProperties.closest,
+          content: tolgee.t('paletteProperties.closest'),
           fontSize: 10,
         }).makeNodeTagwithIndicator(
           [this.source.r, this.source.g, this.source.b, 1],
@@ -62,7 +62,7 @@ export default class Status {
       this.node.appendChild(
         new Tag({
           name: '_lock',
-          content: locales.get().paletteProperties.locked,
+          content: tolgee.t('paletteProperties.locked'),
           fontSize: 10,
         }).makeNodeTag()
       )

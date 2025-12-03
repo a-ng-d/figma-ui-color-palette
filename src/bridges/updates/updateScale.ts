@@ -1,8 +1,8 @@
-import { locales } from '@ui-lib/content/locales'
 import { Data, FullConfiguration } from '@a_ng_d/utils-ui-color-palette'
 import { doScale } from '@a_ng_d/figmug-utils'
 import { getJsonSize } from '../../utils/getSize'
 import { ScaleMessage } from '../../types/messages'
+import { tolgee } from '../..'
 
 const updateScale = async (msg: ScaleMessage) => {
   const now = new Date().toISOString()
@@ -77,11 +77,11 @@ const updateScale = async (msg: ScaleMessage) => {
 
     await new Promise((r) => setTimeout(r, 1000))
     await figma.saveVersionHistoryAsync(
-      `${palette.base.name} - ${locales.get().events.scaleUpdated}`
+      `${palette.base.name} - ${tolgee.t('events.scaleUpdated')}`
     )
 
     return palette
-  } else throw new Error(locales.get().error.paletteSizeExceeded)
+  } else throw new Error(tolgee.t('error.paletteSizeExceeded'))
 }
 
 export default updateScale

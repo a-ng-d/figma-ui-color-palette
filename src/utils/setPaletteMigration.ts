@@ -1,5 +1,4 @@
 import { uid } from 'uid'
-import { locales } from '@ui-lib/content/locales'
 import {
   AlgorithmVersionConfiguration,
   ColorConfiguration,
@@ -24,6 +23,7 @@ import {
 } from '@a_ng_d/utils-ui-color-palette'
 import { doScale } from '@a_ng_d/figmug-utils'
 import globalConfig from '../global.config'
+import { tolgee } from '..'
 
 const setPaletteMigration = async (document: BaseNode) => {
   const palette = {
@@ -159,7 +159,7 @@ const setPaletteMigration = async (document: BaseNode) => {
       : [
           {
             id: '00000000000',
-            name: locales.get().themes.switchTheme.defaultTheme,
+            name: tolgee.t('themes.switchTheme.defaultTheme'),
             description: '',
             scale: scale,
             paletteBackground: '#FFFFFF',
@@ -201,7 +201,7 @@ const setPaletteMigration = async (document: BaseNode) => {
   palette.base.name = name
   palette.base.description = description
   palette.base.preset.name =
-    preset.name === 'Custom' ? locales.get().scale.presets.legacy : preset.name
+    preset.name === 'Custom' ? tolgee.t('scale.presets.legacy') : preset.name
   palette.base.preset.id = preset.id
   palette.base.preset.family = preset.family
   palette.base.preset.max = preset.max
@@ -315,7 +315,7 @@ const setPaletteMigration = async (document: BaseNode) => {
   document.setSharedPluginData('uicp', 'backup', JSON.stringify(palette))
 
   document.setRelaunchData({
-    edit: locales.get().relaunch.edit.description,
+    edit: tolgee.t('relaunch.edit.description'),
   })
 
   figma.currentPage.setSharedPluginData(

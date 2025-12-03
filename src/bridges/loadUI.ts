@@ -1,5 +1,5 @@
-import { locales } from '@ui-lib/content/locales'
 import globalConfig from '../global.config'
+import { tolgee } from '..'
 import updateThemes from './updates/updateThemes'
 import updateSettings from './updates/updateSettings'
 import updateScale from './updates/updateScale'
@@ -46,7 +46,9 @@ const loadUI = async () => {
   figma.showUI(__html__, {
     width: windowSize.width,
     height: windowSize.height,
-    title: `${locales.get().name}${pluginName}${locales.get().separator}${locales.get().tagline}`,
+    title: tolgee.t('fullName', {
+      instance: pluginName,
+    }),
     themeColors: true,
   })
 
@@ -97,7 +99,7 @@ const loadUI = async () => {
           type: 'CHECK_ANNOUNCEMENTS_VERSION',
         })
 
-        checkUserConsent()
+        checkUserConsent(path.data.userConsent)
           .then(() => checkEditor())
           .then(() => checkTrialStatus({ context: 'UI', plugin: __PLUGIN__ }))
           .then(() => checkCredits())
@@ -118,7 +120,6 @@ const loadUI = async () => {
         figma.ui.resize(path.data.width, path.data.height)
       },
       //
-      CHECK_USER_CONSENT: () => checkUserConsent(),
       CHECK_ANNOUNCEMENTS_STATUS: () =>
         checkAnnouncementsStatus(path.data.version),
       //
@@ -207,7 +208,7 @@ const loadUI = async () => {
           }),
       UPDATE_LANGUAGE: async () => {
         await figma.clientStorage.setAsync('user_language', path.data.lang)
-        locales.set(path.data.lang)
+        tolgee.changeLanguage(path.data.lang)
       },
       //
       CREATE_PALETTE: () =>
@@ -260,7 +261,7 @@ const loadUI = async () => {
               type: 'POST_MESSAGE',
               data: {
                 type: 'INFO',
-                message: messages.join(locales.get().separator),
+                message: messages.join(tolgee.t('separator')),
                 timer: 10000,
               },
             })
@@ -288,7 +289,7 @@ const loadUI = async () => {
               type: 'POST_MESSAGE',
               data: {
                 type: 'INFO',
-                message: messages.join(locales.get().separator),
+                message: messages.join(tolgee.t('separator')),
                 timer: 10000,
               },
             })
@@ -466,7 +467,7 @@ const loadUI = async () => {
 
   // Relaunch
   figma.root.setRelaunchData({
-    open: locales.get().relaunch.open.description,
+    open: tolgee.t('relaunch.open.description'),
   })
 }
 

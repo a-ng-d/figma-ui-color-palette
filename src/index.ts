@@ -1,4 +1,10 @@
 import { presets } from '@ui-lib/stores/presets'
+import zh_Hans_CN from '@ui-lib/content/translations/zh-Hans-CN.json'
+import pt_BR from '@ui-lib/content/translations/pt-BR.json'
+import fr_FR from '@ui-lib/content/translations/fr-FR.json'
+import en_US from '@ui-lib/content/translations/en-US.json'
+import { DevTools, Tolgee, TolgeeInstance } from '@tolgee/web'
+import { FormatIcu } from '@tolgee/format-icu'
 import {
   ExchangeConfiguration,
   ViewConfiguration,
@@ -21,6 +27,9 @@ figma.loadFontAsync({ family: 'Inter', style: 'Medium' })
 figma.loadFontAsync({ family: 'Martian Mono', style: 'Medium' })
 figma.loadFontAsync({ family: 'Lexend', style: 'Medium' })
 
+// Locales
+export let tolgee: TolgeeInstance
+
 // Parameters
 figma.parameters.on(
   'input',
@@ -30,6 +39,22 @@ figma.parameters.on(
 
 // Loader
 figma.on('run', async ({ parameters }: RunEvent) => {
+  tolgee = Tolgee()
+    .use(DevTools())
+    .use(FormatIcu())
+    .init({
+      language: globalConfig.lang,
+      apiUrl: import.meta.env.VITE_TOLGEE_URL,
+      apiKey: import.meta.env.VITE_TOLGEE_API_KEY,
+      fallbackLanguage: globalConfig.lang,
+      staticData: {
+        'zh-Hans-CN': zh_Hans_CN,
+        'pt-BR': pt_BR,
+        'fr-FR': fr_FR,
+        'en-US': en_US,
+      },
+    })
+
   if (parameters === undefined) {
     figma.on('selectionchange', () => processSelection())
     figma.on(

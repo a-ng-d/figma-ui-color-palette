@@ -1,5 +1,5 @@
-import { locales } from '@ui-lib/content/locales'
 import processSelection from '../gets/processSelection'
+import { tolgee } from '../..'
 
 const deletePalette = async (id: string) => {
   const rawPalette = figma.currentPage.getSharedPluginData(
@@ -7,7 +7,7 @@ const deletePalette = async (id: string) => {
     `palette_${id}`
   )
 
-  if (rawPalette === '') throw new Error(locales.get().error.unfoundPalette)
+  if (rawPalette === '') throw new Error(tolgee.t('error.unfoundPalette'))
 
   const palette = JSON.parse(rawPalette)
 
@@ -16,7 +16,7 @@ const deletePalette = async (id: string) => {
 
   await new Promise((r) => setTimeout(r, 1000))
   await figma.saveVersionHistoryAsync(
-    `${palette.base.name} - ${locales.get().events.paletteRemoved}`
+    `${palette.base.name} - ${tolgee.t('events.paletteRemoved')}`
   )
 
   return palette

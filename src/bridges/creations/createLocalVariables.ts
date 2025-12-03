@@ -1,4 +1,3 @@
-import { locales } from '@ui-lib/content/locales'
 import {
   Data,
   FullConfiguration,
@@ -6,6 +5,7 @@ import {
 } from '@a_ng_d/utils-ui-color-palette'
 import { getJsonSize } from '../../utils/getSize'
 import LocalVariable from '../../canvas/LocalVariable'
+import { tolgee } from '../..'
 
 const createLocalVariables = async (id: string) => {
   const rawPalette = figma.currentPage.getSharedPluginData(
@@ -13,7 +13,7 @@ const createLocalVariables = async (id: string) => {
     `palette_${id}`
   )
 
-  if (rawPalette === '') throw new Error(locales.get().error.unfoundPalette)
+  if (rawPalette === '') throw new Error(tolgee.t('error.unfoundPalette'))
 
   const palette = JSON.parse(rawPalette) as FullConfiguration
 
@@ -31,7 +31,7 @@ const createLocalVariables = async (id: string) => {
   )
 
   const name: string =
-    palette.base.name === '' ? locales.get().name : palette.base.name
+    palette.base.name === '' ? tolgee.t('name') : palette.base.name
 
   const collection = await figma.variables
     .getLocalVariableCollectionsAsync()
@@ -76,7 +76,7 @@ const createLocalVariables = async (id: string) => {
           )
           const path = [
             item.colorName === ''
-              ? locales.get().colors.defaultName
+              ? tolgee.t('colors.defaultName')
               : item.colorName,
             item.shadeName,
           ]
@@ -123,13 +123,13 @@ const createLocalVariables = async (id: string) => {
           const lastItem = acc[acc.length - 1]
           const themeName =
             item.themeName === ''
-              ? locales.get().themes.defaultName
+              ? tolgee.t('themes.defaultName')
               : item.themeName
 
           if (collection !== undefined) {
             const path = [
               item.colorName === ''
-                ? locales.get().colors.defaultName
+                ? tolgee.t('colors.defaultName')
                 : item.colorName,
               item.shadeName,
             ]
@@ -172,7 +172,7 @@ const createLocalVariables = async (id: string) => {
         .forEach((item) => {
           const path = [
             item.colorName === ''
-              ? locales.get().colors.defaultName
+              ? tolgee.t('colors.defaultName')
               : item.colorName,
             item.shadeName,
           ]
@@ -217,66 +217,51 @@ const createLocalVariables = async (id: string) => {
           `palette_${id}`,
           JSON.stringify(palette)
         )
-      else throw new Error(locales.get().error.paletteSizeExceeded)
+      else throw new Error(tolgee.t('error.paletteSizeExceeded'))
 
       if (i > 1 && j > 1)
         messages.push(
-          locales
-            .get()
-            .info.createdVariablesAndModes.pluralPlural.replace(
-              '{variableCount}',
-              i.toString()
-            )
-            .replace('{modeCount}', j.toString())
+          tolgee.t('info.createdVariablesAndModes.pluralPlural', {
+            variableCount: i.toString(),
+            modeCount: j.toString(),
+          })
         )
       else if (i === 1 && j === 1)
-        messages.push(locales.get().info.createdVariablesAndModes.singleSingle)
+        messages.push(tolgee.t('info.createdVariablesAndModes.singleSingle'))
       else if (i === 0 && j === 0)
-        messages.push(locales.get().info.createdVariablesAndModes.noneNone)
+        messages.push(tolgee.t('info.createdVariablesAndModes.noneNone'))
       else if (i > 1 && j === 1)
         messages.push(
-          locales
-            .get()
-            .info.createdVariablesAndModes.pluralSingle.replace(
-              '{variableCount}',
-              i.toString()
-            )
+          tolgee.t('info.createdVariablesAndModes.pluralSingle', {
+            variableCount: i.toString(),
+          })
         )
       else if (i === 1 && j > 1)
         messages.push(
-          locales
-            .get()
-            .info.createdVariablesAndModes.singlePlural.replace(
-              '{modeCount}',
-              j.toString()
-            )
+          tolgee.t('info.createdVariablesAndModes.singlePlural', {
+            modeCount: j.toString(),
+          })
         )
       else if (i > 1 && j === 0)
         messages.push(
-          locales
-            .get()
-            .info.createdVariablesAndModes.pluralNone.replace(
-              '{variableCount}',
-              i.toString()
-            )
+          tolgee.t('info.createdVariablesAndModes.pluralNone', {
+            variableCount: i.toString(),
+          })
         )
       else if (i === 0 && j > 1)
         messages.push(
-          locales
-            .get()
-            .info.createdVariablesAndModes.nonePlural.replace(
-              '{modeCount}',
-              j.toString()
-            )
+          tolgee.t('info.createdVariablesAndModes.nonePlural', {
+            modeCount: j.toString(),
+          })
         )
       else if (i === 1 && j === 0)
-        messages.push(locales.get().info.createdVariablesAndModes.singleNone)
+        messages.push(tolgee.t('info.createdVariablesAndModes.singleNone'))
       else if (i === 0 && j === 1)
-        messages.push(locales.get().info.createdVariablesAndModes.noneSingle)
+        messages.push(tolgee.t('info.createdVariablesAndModes.noneSingle'))
 
-      if (k > 1) messages.push(locales.get().warning.tooManyThemesToCreateModes)
+      if (k > 1) messages.push(tolgee.t('warning.tooManyThemesToCreateModes'))
 
-      return messages.join(locales.get().separator)
+      return messages.join(tolgee.t('separator'))
     })
 
   return await createLocalVariablesStatusMessage

@@ -1,6 +1,5 @@
 import { Config } from '@ui-lib/types/config'
 import { doSpecificMode } from '@ui-lib/stores/features'
-import { locales } from '@ui-lib/content/locales'
 import { Feature } from '@a_ng_d/figmug-utils'
 
 declare const __PLUGIN__: 'fig' | 'one'
@@ -18,12 +17,7 @@ const specConfig: Record<
   fig: {
     pluginId: '1063959496693642315',
     features: doSpecificMode(
-      [
-        'HELP_CHAT',
-        'USER_LICENSE',
-        'USER_LANGUAGE_ZH_CN',
-        'USER_LANGUAGE_PT_BR',
-      ],
+      ['HELP_CHAT', 'USER_LICENSE', 'USER_LANGUAGE_ZH_CN'],
       [
         'LOCAL_PALETTES',
         'SYNC_LOCAL_STYLES',
@@ -92,12 +86,7 @@ const specConfig: Record<
   one: {
     pluginId: '1532789439226122095',
     features: doSpecificMode(
-      [
-        'HELP_CHAT',
-        'USER_LICENSE_JUMP',
-        'USER_LANGUAGE_ZH_CN',
-        'USER_LANGUAGE_PT_BR',
-      ],
+      ['HELP_CHAT', 'USER_LICENSE_JUMP', 'USER_LANGUAGE_ZH_CN'],
       [
         'LOCAL_PALETTES',
         'SYNC_LOCAL_STYLES',
@@ -168,6 +157,8 @@ const specConfig: Record<
 const globalConfig: Config = {
   limits: {
     pageSize: 20,
+    minWidth: 640,
+    minHeight: 420,
   },
   env: {
     platform: 'figma',
@@ -184,10 +175,10 @@ const globalConfig: Config = {
     pluginId: specConfig[__PLUGIN__].pluginId,
   },
   plan: {
-    isProEnabled: true,
+    isProEnabled: false,
     isTrialEnabled: false,
     trialTime: 72,
-    creditsLimit: 400,
+    creditsLimit: 200,
     creditsRenewalPeriodDays: 1,
     creditsRenewalPeriodHours: 24,
   },
@@ -239,10 +230,9 @@ const globalConfig: Config = {
     algorithmVersion: 'v3',
     paletteVersion: '2025.06',
     pluginVersion: __APP_VERSION__,
-    creditsVersion: '2025.10',
+    creditsVersion: '2025.12',
   },
   features: specConfig[__PLUGIN__].features,
-  locales: locales.get(),
   lang: 'en-US',
   fees: {
     colourLoversImport: 50,
