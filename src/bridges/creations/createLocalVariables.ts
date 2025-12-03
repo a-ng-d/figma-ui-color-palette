@@ -166,46 +166,6 @@ const createLocalVariables = async (id: string) => {
           return (acc = [...acc, item])
         }, [])
 
-      // Set values
-      palette.libraryData
-        .filter((item) => !item.id.includes('00000000000'))
-        .forEach((item) => {
-          const path = [
-            item.colorName === ''
-              ? tolgee.t('colors.defaultName')
-              : item.colorName,
-            item.shadeName,
-          ]
-            .filter((item) => item !== '' && item !== 'None')
-            .join('/')
-
-          if (collection !== undefined) {
-            const variableMatch = allAvailableVariables.find(
-              (variable) =>
-                variable.name === path || variable.id === item.variableId
-            )
-            const hasModeMatch = collection.modes.some(
-              (mode) => mode.modeId === item.modeId
-            )
-
-            if (
-              variableMatch !== undefined &&
-              item.modeId !== undefined &&
-              item.gl !== undefined &&
-              hasModeMatch
-            ) {
-              variableMatch.setValueForMode(item.modeId, {
-                r: item.gl[0],
-                g: item.gl[1],
-                b: item.gl[2],
-                a: item.alpha ?? 1,
-              })
-
-              item.variableId = variableMatch.id
-            }
-          }
-        })
-
       palette.libraryData = new Data(palette).makeLibraryData(
         ['style_id', 'collection_id', 'variable_id', 'mode_id'],
         palette.libraryData
@@ -219,47 +179,21 @@ const createLocalVariables = async (id: string) => {
         )
       else throw new Error(tolgee.t('error.paletteSizeExceeded'))
 
-      if (i > 1 && j > 1)
+      if (i > 0)
         messages.push(
-          tolgee.t('info.createdVariablesAndModes.pluralPlural', {
-            variableCount: i.toString(),
-            modeCount: j.toString(),
+          tolgee.t('info.createdLocalVariables', {
+            count: i.toString(),
           })
         )
-      else if (i === 1 && j === 1)
-        messages.push(tolgee.t('info.createdVariablesAndModes.singleSingle'))
-      else if (i === 0 && j === 0)
-        messages.push(tolgee.t('info.createdVariablesAndModes.noneNone'))
-      else if (i > 1 && j === 1)
+      if (j > 0)
         messages.push(
-          tolgee.t('info.createdVariablesAndModes.pluralSingle', {
-            variableCount: i.toString(),
+          tolgee.t('info.createdLocalModes', {
+            count: j.toString(),
           })
         )
-      else if (i === 1 && j > 1)
-        messages.push(
-          tolgee.t('info.createdVariablesAndModes.singlePlural', {
-            modeCount: j.toString(),
-          })
-        )
-      else if (i > 1 && j === 0)
-        messages.push(
-          tolgee.t('info.createdVariablesAndModes.pluralNone', {
-            variableCount: i.toString(),
-          })
-        )
-      else if (i === 0 && j > 1)
-        messages.push(
-          tolgee.t('info.createdVariablesAndModes.nonePlural', {
-            modeCount: j.toString(),
-          })
-        )
-      else if (i === 1 && j === 0)
-        messages.push(tolgee.t('info.createdVariablesAndModes.singleNone'))
-      else if (i === 0 && j === 1)
-        messages.push(tolgee.t('info.createdVariablesAndModes.noneSingle'))
-
       if (k > 1) messages.push(tolgee.t('warning.tooManyThemesToCreateModes'))
+
+      if (i + j === 0) messages.push(tolgee.t('info.noChange'))
 
       return messages.join(tolgee.t('separator'))
     })

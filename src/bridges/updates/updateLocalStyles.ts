@@ -124,25 +124,16 @@ const updateLocalStyles = async (id: string) => {
           }
         })
 
-      if (i > 1)
-        messages.push(
-          tolgee.t('info.updatedLocalStyles.plural', {
-            count: i.toString(),
-          })
-        )
-      else if (i === 1)
-        messages.push(tolgee.t('info.updatedLocalStyles.single'))
-      else messages.push(tolgee.t('info.updatedLocalStyles.none'))
-
-      if (k > 1)
-        messages.push(
-          tolgee.t('info.removedLocalStyles.plural', {
-            count: k.toString(),
-          })
-        )
-      else if (k === 1)
-        messages.push(tolgee.t('info.removedLocalStyles.single'))
-      else messages.push(tolgee.t('info.removedLocalStyles.none'))
+      messages.push(
+        tolgee.t('info.updatedLocalStyles', {
+          count: i.toString(),
+        })
+      )
+      messages.push(
+        tolgee.t('info.removedLocalStyles', {
+          count: k.toString(),
+        })
+      )
 
       figma.saveVersionHistoryAsync(
         `${palette.base.name} - ${tolgee.t('events.stylesSynced')}`

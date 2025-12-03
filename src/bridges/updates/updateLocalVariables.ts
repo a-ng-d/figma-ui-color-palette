@@ -167,84 +167,33 @@ const updateLocalVariables = async (id: string) => {
             k = 0
           })
 
-        if (i > 1 && j > 1)
+        if (i > 0)
           messages.push(
-            tolgee.t('info.updatedVariablesAndModes.pluralPlural', {
-              variableCount: i.toString(),
-              modeCount: j.toString(),
+            tolgee.t('info.updatedLocalVariables', {
+              count: i.toString(),
             })
           )
-        else if (i === 1 && j === 1)
-          messages.push(tolgee.t('info.updatedVariablesAndModes.singleSingle'))
-        else if (i === 0 && j === 0)
-          messages.push(tolgee.t('info.updatedVariablesAndModes.noneNone'))
-        else if (i > 1 && j === 1)
+
+        if (j > 0)
           messages.push(
-            tolgee.t('info.updatedVariablesAndModes.pluralSingle', {
-              variableCount: i.toString(),
+            tolgee.t('info.updatedLocalModes', {
+              count: j.toString(),
             })
           )
-        else if (i === 1 && j > 1)
+        if (l > 0)
           messages.push(
-            tolgee.t('info.updatedVariablesAndModes.singlePlural', {
-              modeCount: j.toString(),
+            tolgee.t('info.removedLocalVariables', {
+              count: l.toString(),
             })
           )
-        else if (i > 1 && j === 0)
+        if (m > 0)
           messages.push(
-            tolgee.t('info.updatedVariablesAndModes.pluralNone', {
-              variableCount: i.toString(),
+            tolgee.t('info.removedLocalModes', {
+              count: m.toString(),
             })
           )
-        else if (i === 0 && j > 1)
-          messages.push(
-            tolgee.t('info.updatedVariablesAndModes.nonePlural', {
-              modeCount: j.toString(),
-            })
-          )
-        else if (i === 1 && j === 0)
-          messages.push(tolgee.t('info.updatedVariablesAndModes.singleNone'))
-        else if (i === 0 && j === 1)
-          messages.push(tolgee.t('info.updatedVariablesAndModes.noneSingle'))
-        if (l > 1 && m > 1)
-          messages.push(
-            tolgee.t('info.removedVariablesAndModes.pluralPlural', {
-              variableCount: l.toString(),
-              modeCount: m.toString(),
-            })
-          )
-        else if (l === 1 && m === 1)
-          messages.push(tolgee.t('info.removedVariablesAndModes.singleSingle'))
-        else if (l === 0 && m === 0)
-          messages.push(tolgee.t('info.removedVariablesAndModes.noneNone'))
-        else if (l > 1 && m === 1)
-          messages.push(
-            tolgee.t('info.removedVariablesAndModes.pluralSingle', {
-              variableCount: l.toString(),
-            })
-          )
-        else if (l === 1 && m > 1)
-          messages.push(
-            tolgee.t('info.removedVariablesAndModes.singlePlural', {
-              modeCount: m.toString(),
-            })
-          )
-        else if (l > 1 && m === 0)
-          messages.push(
-            tolgee.t('info.removedVariablesAndModes.pluralNone', {
-              variableCount: l.toString(),
-            })
-          )
-        else if (l === 0 && m > 1)
-          messages.push(
-            tolgee.t('info.removedVariablesAndModes.nonePlural', {
-              modeCount: m.toString(),
-            })
-          )
-        else if (l === 1 && m === 0)
-          messages.push(tolgee.t('info.removedVariablesAndModes.singleNone'))
-        else if (l === 0 && m === 1)
-          messages.push(tolgee.t('info.removedVariablesAndModes.noneSingle'))
+
+        if (i + j + l + m === 0) messages.push(tolgee.t('info.noChange'))
 
         figma.saveVersionHistoryAsync(
           `${palette.base.name} - ${tolgee.t('events.variablesSynced')}`

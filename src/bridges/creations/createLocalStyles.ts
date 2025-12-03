@@ -88,12 +88,9 @@ const createLocalStyles = async (id: string) => {
         )
       else throw new Error(tolgee.t('error.paletteSizeExceeded'))
 
-      if (i > 1)
-        return tolgee.t('info.createdLocalStyles.plural', {
-          count: i.toString(),
-        })
-      else if (i === 1) return tolgee.t('info.createdLocalStyles.single')
-      else return tolgee.t('info.createdLocalStyles.none')
+      return tolgee.t('info.createdLocalStyles', {
+        count: i.toString(),
+      })
     })
 
   return createdLocalStylesStatusMessage
