@@ -12,7 +12,7 @@ const setPaletteName = (
   if (name === '') parameters.push(tolgee.t('name'))
   else parameters.push(name)
 
-  if (theme !== 'None' && theme !== undefined) parameters.push(theme)
+  if (theme !== undefined) parameters.push(theme)
 
   parameters.push(preset)
   parameters.push(colorSpace)
