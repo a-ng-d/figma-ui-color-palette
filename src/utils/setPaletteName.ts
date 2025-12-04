@@ -19,13 +19,8 @@ const setPaletteName = (
 
   if (visionSimulationMode !== 'NONE') {
     const mode = visionSimulationMode.toLowerCase()
-    const visionModes = tolgee.t('settings.color.visionSimulationMode')
-    if (
-      typeof visionModes === 'object' &&
-      visionModes !== null &&
-      mode in visionModes
-    )
-      parameters.push(visionModes[mode as keyof typeof visionModes])
+    const visionModes = tolgee.t(`settings.color.visionSimulationMode.${mode}`)
+    parameters.push(visionModes)
   }
 
   return parameters.join(tolgee.t('separator'))
