@@ -38,8 +38,12 @@ interface Window {
 
 const loadUI = async () => {
   const windowSize: Window = {
-    width: (await figma.clientStorage.getAsync('plugin_window_width')) ?? 640,
-    height: (await figma.clientStorage.getAsync('plugin_window_height')) ?? 640,
+    width:
+      (await figma.clientStorage.getAsync('plugin_window_width')) ??
+      globalConfig.limits.width,
+    height:
+      (await figma.clientStorage.getAsync('plugin_window_height')) ??
+      globalConfig.limits.height,
   }
   const pluginName = __PLUGIN__ === 'fig' ? ' /figma' : ' /one'
 

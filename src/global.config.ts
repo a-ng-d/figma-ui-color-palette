@@ -25,6 +25,13 @@ const specConfig: Record<
         'USER_PREFERENCES_SYNC_DEEP_STYLES',
         'USER_PREFERENCES_SYNC_DEEP_VARIABLES',
         'PREVIEW_LOCK_SOURCE_COLORS',
+        'DOCUMENT_PALETTE',
+        'DOCUMENT_PALETTE_PROPERTIES',
+        'DOCUMENT_SHEET',
+        'DOCUMENT_PUSH_UPDATES',
+        'VIEWS_PALETTE',
+        'VIEWS_PALETTE_WITH_PROPERTIES',
+        'VIEWS_SHEET',
         'SOURCE',
         'SOURCE_COOLORS_ADD',
         'SOURCE_REALTIME_COLORS_ADD',
@@ -80,6 +87,7 @@ const specConfig: Record<
         'USER_PREFERENCES',
         'USER_LANGUAGE',
         'USER_LANGUAGE_FR_FR',
+        'USER_LANGUAGE_PT_BR',
       ]
     ),
   },
@@ -94,6 +102,13 @@ const specConfig: Record<
         'USER_PREFERENCES_SYNC_DEEP_STYLES',
         'USER_PREFERENCES_SYNC_DEEP_VARIABLES',
         'PREVIEW_LOCK_SOURCE_COLORS',
+        'DOCUMENT_PALETTE',
+        'DOCUMENT_PALETTE_PROPERTIES',
+        'DOCUMENT_SHEET',
+        'DOCUMENT_PUSH_UPDATES',
+        'VIEWS_PALETTE',
+        'VIEWS_PALETTE_WITH_PROPERTIES',
+        'VIEWS_SHEET',
         'SOURCE',
         'SOURCE_COOLORS_ADD',
         'SOURCE_REALTIME_COLORS_ADD',
@@ -149,6 +164,7 @@ const specConfig: Record<
         'USER_PREFERENCES',
         'USER_LANGUAGE',
         'USER_LANGUAGE_FR_FR',
+        'USER_LANGUAGE_PT_BR',
       ]
     ),
   },
@@ -157,8 +173,13 @@ const specConfig: Record<
 const globalConfig: Config = {
   limits: {
     pageSize: 20,
-    minWidth: 640,
+    width: 640,
+    height: 640,
+    minWidth: 240,
     minHeight: 420,
+    localPalettes: 1,
+    sourceColors: 5,
+    customStops: 8,
   },
   env: {
     platform: 'figma',
@@ -241,7 +262,26 @@ const globalConfig: Config = {
     imageColorsExtract: 100,
     harmonyCreate: 100,
     aiColorsGenerate: 100,
+    paletteGenerate: 50,
+    paletteWithPropsGenerate: 100,
+    sheetGenerate: 200,
+    paletteUpdates: 50,
+    localStylesSync: 200,
+    localVariablesSync: 200,
   },
 }
+
+const limitsMapping: { [key: string]: keyof typeof globalConfig.limits } = {
+  LOCAL_PALETTES: 'localPalettes',
+  SOURCE: 'sourceColors',
+  COLORS: 'sourceColors',
+  PRESETS_CUSTOM_ADD: 'customStops',
+}
+
+globalConfig.features.forEach((feature) => {
+  const limitKey = limitsMapping[feature.name]
+  if (limitKey && globalConfig.limits[limitKey] !== undefined)
+    feature.limit = globalConfig.limits[limitKey]
+})
 
 export default globalConfig
