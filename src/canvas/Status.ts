@@ -45,6 +45,9 @@ export default class Status {
     this.node.primaryAxisSizingMode = 'FIXED'
     this.node.layoutAlign = 'STRETCH'
     this.node.layoutSizingVertical = 'HUG'
+    this.node.itemSpacing = 4
+    this.node.counterAxisSpacing = 4
+    this.node.layoutWrap = 'WRAP'
 
     if (this.status.isClosestToRef)
       this.node.appendChild(

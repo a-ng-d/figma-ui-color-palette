@@ -199,7 +199,7 @@ const globalConfig: Config = {
     isProEnabled: false,
     isTrialEnabled: false,
     trialTime: 72,
-    creditsLimit: 200,
+    creditsLimit: 250,
     creditsRenewalPeriodDays: 1,
     creditsRenewalPeriodHours: 24,
   },
