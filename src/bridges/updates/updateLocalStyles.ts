@@ -126,12 +126,12 @@ const updateLocalStyles = async (id: string) => {
 
       messages.push(
         tolgee.t('info.updatedLocalStyles', {
-          count: i.toString(),
+          count: i,
         })
       )
       messages.push(
         tolgee.t('info.removedLocalStyles', {
-          count: k.toString(),
+          count: k,
         })
       )
 

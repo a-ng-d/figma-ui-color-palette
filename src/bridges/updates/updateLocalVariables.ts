@@ -170,26 +170,26 @@ const updateLocalVariables = async (id: string) => {
         if (i > 0)
           messages.push(
             tolgee.t('info.updatedLocalVariables', {
-              count: i.toString(),
+              count: i,
             })
           )
 
         if (j > 0)
           messages.push(
             tolgee.t('info.updatedLocalModes', {
-              count: j.toString(),
+              count: j,
             })
           )
         if (l > 0)
           messages.push(
             tolgee.t('info.removedLocalVariables', {
-              count: l.toString(),
+              count: l,
             })
           )
         if (m > 0)
           messages.push(
             tolgee.t('info.removedLocalModes', {
-              count: m.toString(),
+              count: m,
             })
           )
 
