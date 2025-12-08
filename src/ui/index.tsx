@@ -75,7 +75,7 @@ if (
     maxValueLength: 5000,
     maxBreadcrumbs: 150,
     tracesSampleRate: 1.0,
-    replaysSessionSampleRate: 0.01,
+    replaysSessionSampleRate: 0,
     replaysOnErrorSampleRate: 1.0,
     release: globalConfig.versions.pluginVersion,
   })
