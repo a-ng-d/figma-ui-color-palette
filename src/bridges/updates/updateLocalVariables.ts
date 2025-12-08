@@ -1,6 +1,6 @@
 import chroma from 'chroma-js'
-import { locales } from '@ui-lib/content/locales'
 import { Data, FullConfiguration } from '@a_ng_d/utils-ui-color-palette'
+import { tolgee } from '../..'
 
 const updateLocalVariables = async (id: string) => {
   const rawPalette = figma.currentPage.getSharedPluginData(
@@ -8,7 +8,7 @@ const updateLocalVariables = async (id: string) => {
     `palette_${id}`
   )
 
-  if (rawPalette === '') throw new Error(locales.get().error.unfoundPalette)
+  if (rawPalette === '') throw new Error(tolgee.t('error.unfoundPalette'))
 
   const palette = JSON.parse(rawPalette) as FullConfiguration
 
@@ -26,7 +26,7 @@ const updateLocalVariables = async (id: string) => {
   )
 
   const name: string =
-    palette.base.name === '' ? locales.get().name : palette.base.name
+    palette.base.name === '' ? tolgee.t('name') : palette.base.name
   const canDeepSyncVariables = await figma.clientStorage.getAsync(
     'can_deep_sync_variables'
   )
@@ -98,7 +98,7 @@ const updateLocalVariables = async (id: string) => {
             )
             const themeName =
               item.themeName === ''
-                ? locales.get().themes.defaultName
+                ? tolgee.t('themes.defaultName')
                 : item.themeName
 
             if (modeMatch !== undefined)
@@ -133,7 +133,7 @@ const updateLocalVariables = async (id: string) => {
               )
               const path = [
                 item.colorName === ''
-                  ? locales.get().colors.defaultName
+                  ? tolgee.t('colors.defaultName')
                   : item.colorName,
                 item.shadeName,
               ]
@@ -167,125 +167,39 @@ const updateLocalVariables = async (id: string) => {
             k = 0
           })
 
-        if (i > 1 && j > 1)
+        if (i > 0)
           messages.push(
-            locales
-              .get()
-              .info.updatedVariablesAndModes.pluralPlural.replace(
-                '{variableCount}',
-                i.toString()
-              )
-              .replace('{modeCount}', j.toString())
+            tolgee.t('info.updatedLocalVariables', {
+              count: i,
+            })
           )
-        else if (i === 1 && j === 1)
-          messages.push(
-            locales.get().info.updatedVariablesAndModes.singleSingle
-          )
-        else if (i === 0 && j === 0)
-          messages.push(locales.get().info.updatedVariablesAndModes.noneNone)
-        else if (i > 1 && j === 1)
-          messages.push(
-            locales
-              .get()
-              .info.updatedVariablesAndModes.pluralSingle.replace(
-                '{variableCount}',
-                i.toString()
-              )
-          )
-        else if (i === 1 && j > 1)
-          messages.push(
-            locales
-              .get()
-              .info.updatedVariablesAndModes.singlePlural.replace(
-                '{modeCount}',
-                j.toString()
-              )
-          )
-        else if (i > 1 && j === 0)
-          messages.push(
-            locales
-              .get()
-              .info.updatedVariablesAndModes.pluralNone.replace(
-                '{variableCount}',
-                i.toString()
-              )
-          )
-        else if (i === 0 && j > 1)
-          messages.push(
-            locales
-              .get()
-              .info.updatedVariablesAndModes.nonePlural.replace(
-                '{modeCount}',
-                j.toString()
-              )
-          )
-        else if (i === 1 && j === 0)
-          messages.push(locales.get().info.updatedVariablesAndModes.singleNone)
-        else if (i === 0 && j === 1)
-          messages.push(locales.get().info.updatedVariablesAndModes.noneSingle)
 
-        if (l > 1 && m > 1)
+        if (j > 0)
           messages.push(
-            locales
-              .get()
-              .info.removedVariablesAndModes.pluralPlural.replace(
-                '{variableCount}',
-                l.toString()
-              )
-              .replace('{modeCount}', m.toString())
+            tolgee.t('info.updatedLocalModes', {
+              count: j,
+            })
           )
-        else if (l === 1 && m === 1)
+        if (l > 0)
           messages.push(
-            locales.get().info.removedVariablesAndModes.singleSingle
+            tolgee.t('info.removedLocalVariables', {
+              count: l,
+            })
           )
-        else if (l === 0 && m === 0)
-          messages.push(locales.get().info.removedVariablesAndModes.noneNone)
-        else if (l > 1 && m === 1)
+        if (m > 0)
           messages.push(
-            locales
-              .get()
-              .info.removedVariablesAndModes.pluralSingle.replace(
-                '{variableCount}',
-                l.toString()
-              )
+            tolgee.t('info.removedLocalModes', {
+              count: m,
+            })
           )
-        else if (l === 1 && m > 1)
-          messages.push(
-            locales
-              .get()
-              .info.removedVariablesAndModes.singlePlural.replace(
-                '{modeCount}',
-                m.toString()
-              )
-          )
-        else if (l > 1 && m === 0)
-          messages.push(
-            locales
-              .get()
-              .info.removedVariablesAndModes.pluralNone.replace(
-                '{variableCount}',
-                l.toString()
-              )
-          )
-        else if (l === 0 && m > 1)
-          messages.push(
-            locales
-              .get()
-              .info.removedVariablesAndModes.nonePlural.replace(
-                '{modeCount}',
-                m.toString()
-              )
-          )
-        else if (l === 1 && m === 0)
-          messages.push(locales.get().info.removedVariablesAndModes.singleNone)
-        else if (l === 0 && m === 1)
-          messages.push(locales.get().info.removedVariablesAndModes.noneSingle)
+
+        if (i + j + l + m === 0) messages.push(tolgee.t('info.noChange'))
 
         figma.saveVersionHistoryAsync(
-          `${palette.base.name} - ${locales.get().events.variablesSynced}`
+          `${palette.base.name} - ${tolgee.t('events.variablesSynced')}`
         )
 
-        return messages.join(locales.get().separator)
+        return messages.join(tolgee.t('separator'))
       })
 
     return await updateLocalVariablesStatusMessage

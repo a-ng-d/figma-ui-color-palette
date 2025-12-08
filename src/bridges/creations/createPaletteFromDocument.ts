@@ -1,13 +1,12 @@
-import { locales } from '@ui-lib/content/locales'
 import { FullConfiguration } from '@a_ng_d/utils-ui-color-palette'
 import processSelection from '../gets/processSelection'
+import { tolgee } from '../..'
 
 const createPaletteFromDocument = async () => {
   const document = figma.currentPage.selection[0]
   const rawPalette = document.getSharedPluginData('uicp', 'backup')
 
-  if (rawPalette === '') throw new Error(locales.get().error.unfoundPalette)
-
+  if (rawPalette === '') throw new Error(tolgee.t('error.unfoundPalette'))
   const backup = JSON.parse(rawPalette) as FullConfiguration
 
   figma.currentPage.setSharedPluginData(
@@ -23,7 +22,7 @@ const createPaletteFromDocument = async () => {
 
   await new Promise((r) => setTimeout(r, 1000))
   await figma.saveVersionHistoryAsync(
-    `${backup.base.name} - ${locales.get().events.paletteCreatedFromDocument}`
+    `${backup.base.name} - ${tolgee.t('events.paletteCreatedFromDocument')}`
   )
 
   return backup

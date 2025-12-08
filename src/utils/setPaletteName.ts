@@ -1,4 +1,4 @@
-import { locales } from '@ui-lib/content/locales'
+import { tolgee } from '..'
 
 const setPaletteName = (
   name: string,
@@ -9,22 +9,21 @@ const setPaletteName = (
 ): string => {
   const parameters: Array<string> = []
 
-  if (name === '') parameters.push(locales.get().name)
+  if (name === '') parameters.push(tolgee.t('name'))
   else parameters.push(name)
 
-  if (theme !== 'None' && theme !== undefined) parameters.push(theme)
+  if (theme !== undefined) parameters.push(theme)
 
   parameters.push(preset)
   parameters.push(colorSpace)
 
   if (visionSimulationMode !== 'NONE') {
     const mode = visionSimulationMode.toLowerCase()
-    const visionModes = locales.get().settings.color.visionSimulationMode
-    if (mode in visionModes)
-      parameters.push(visionModes[mode as keyof typeof visionModes])
+    const visionModes = tolgee.t(`settings.color.visionSimulationMode.${mode}`)
+    parameters.push(visionModes)
   }
 
-  return parameters.join(locales.get().separator)
+  return parameters.join(tolgee.t('separator'))
 }
 
 export default setPaletteName

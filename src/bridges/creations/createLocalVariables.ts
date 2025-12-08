@@ -1,4 +1,3 @@
-import { locales } from '@ui-lib/content/locales'
 import {
   Data,
   FullConfiguration,
@@ -6,6 +5,7 @@ import {
 } from '@a_ng_d/utils-ui-color-palette'
 import { getJsonSize } from '../../utils/getSize'
 import LocalVariable from '../../canvas/LocalVariable'
+import { tolgee } from '../..'
 
 const createLocalVariables = async (id: string) => {
   const rawPalette = figma.currentPage.getSharedPluginData(
@@ -13,7 +13,7 @@ const createLocalVariables = async (id: string) => {
     `palette_${id}`
   )
 
-  if (rawPalette === '') throw new Error(locales.get().error.unfoundPalette)
+  if (rawPalette === '') throw new Error(tolgee.t('error.unfoundPalette'))
 
   const palette = JSON.parse(rawPalette) as FullConfiguration
 
@@ -31,7 +31,7 @@ const createLocalVariables = async (id: string) => {
   )
 
   const name: string =
-    palette.base.name === '' ? locales.get().name : palette.base.name
+    palette.base.name === '' ? tolgee.t('name') : palette.base.name
 
   const collection = await figma.variables
     .getLocalVariableCollectionsAsync()
@@ -76,7 +76,7 @@ const createLocalVariables = async (id: string) => {
           )
           const path = [
             item.colorName === ''
-              ? locales.get().colors.defaultName
+              ? tolgee.t('colors.defaultName')
               : item.colorName,
             item.shadeName,
           ]
@@ -123,13 +123,13 @@ const createLocalVariables = async (id: string) => {
           const lastItem = acc[acc.length - 1]
           const themeName =
             item.themeName === ''
-              ? locales.get().themes.defaultName
+              ? tolgee.t('themes.defaultName')
               : item.themeName
 
           if (collection !== undefined) {
             const path = [
               item.colorName === ''
-                ? locales.get().colors.defaultName
+                ? tolgee.t('colors.defaultName')
                 : item.colorName,
               item.shadeName,
             ]
@@ -166,46 +166,6 @@ const createLocalVariables = async (id: string) => {
           return (acc = [...acc, item])
         }, [])
 
-      // Set values
-      palette.libraryData
-        .filter((item) => !item.id.includes('00000000000'))
-        .forEach((item) => {
-          const path = [
-            item.colorName === ''
-              ? locales.get().colors.defaultName
-              : item.colorName,
-            item.shadeName,
-          ]
-            .filter((item) => item !== '' && item !== 'None')
-            .join('/')
-
-          if (collection !== undefined) {
-            const variableMatch = allAvailableVariables.find(
-              (variable) =>
-                variable.name === path || variable.id === item.variableId
-            )
-            const hasModeMatch = collection.modes.some(
-              (mode) => mode.modeId === item.modeId
-            )
-
-            if (
-              variableMatch !== undefined &&
-              item.modeId !== undefined &&
-              item.gl !== undefined &&
-              hasModeMatch
-            ) {
-              variableMatch.setValueForMode(item.modeId, {
-                r: item.gl[0],
-                g: item.gl[1],
-                b: item.gl[2],
-                a: item.alpha ?? 1,
-              })
-
-              item.variableId = variableMatch.id
-            }
-          }
-        })
-
       palette.libraryData = new Data(palette).makeLibraryData(
         ['style_id', 'collection_id', 'variable_id', 'mode_id'],
         palette.libraryData
@@ -217,66 +177,25 @@ const createLocalVariables = async (id: string) => {
           `palette_${id}`,
           JSON.stringify(palette)
         )
-      else throw new Error(locales.get().error.paletteSizeExceeded)
+      else throw new Error(tolgee.t('error.paletteSizeExceeded'))
 
-      if (i > 1 && j > 1)
+      if (i > 0)
         messages.push(
-          locales
-            .get()
-            .info.createdVariablesAndModes.pluralPlural.replace(
-              '{variableCount}',
-              i.toString()
-            )
-            .replace('{modeCount}', j.toString())
+          tolgee.t('info.createdLocalVariables', {
+            count: i,
+          })
         )
-      else if (i === 1 && j === 1)
-        messages.push(locales.get().info.createdVariablesAndModes.singleSingle)
-      else if (i === 0 && j === 0)
-        messages.push(locales.get().info.createdVariablesAndModes.noneNone)
-      else if (i > 1 && j === 1)
+      if (j > 0)
         messages.push(
-          locales
-            .get()
-            .info.createdVariablesAndModes.pluralSingle.replace(
-              '{variableCount}',
-              i.toString()
-            )
+          tolgee.t('info.createdLocalModes', {
+            count: j,
+          })
         )
-      else if (i === 1 && j > 1)
-        messages.push(
-          locales
-            .get()
-            .info.createdVariablesAndModes.singlePlural.replace(
-              '{modeCount}',
-              j.toString()
-            )
-        )
-      else if (i > 1 && j === 0)
-        messages.push(
-          locales
-            .get()
-            .info.createdVariablesAndModes.pluralNone.replace(
-              '{variableCount}',
-              i.toString()
-            )
-        )
-      else if (i === 0 && j > 1)
-        messages.push(
-          locales
-            .get()
-            .info.createdVariablesAndModes.nonePlural.replace(
-              '{modeCount}',
-              j.toString()
-            )
-        )
-      else if (i === 1 && j === 0)
-        messages.push(locales.get().info.createdVariablesAndModes.singleNone)
-      else if (i === 0 && j === 1)
-        messages.push(locales.get().info.createdVariablesAndModes.noneSingle)
+      if (k > 1) messages.push(tolgee.t('warning.tooManyThemesToCreateModes'))
 
-      if (k > 1) messages.push(locales.get().warning.tooManyThemesToCreateModes)
+      if (i + j === 0) messages.push(tolgee.t('info.noChange'))
 
-      return messages.join(locales.get().separator)
+      return messages.join(tolgee.t('separator'))
     })
 
   return await createLocalVariablesStatusMessage

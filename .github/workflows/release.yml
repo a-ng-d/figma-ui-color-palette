@@ -38,6 +38,8 @@ jobs:
         echo VITE_ANNOUNCEMENTS_WORKER_URL="${{ vars.VITE_ANNOUNCEMENTS_WORKER_URL }}" >> .env.local
         echo VITE_NOTION_ANNOUNCEMENTS_ID="${{ vars.VITE_NOTION_ANNOUNCEMENTS_ID }}" >> .env.local
         echo VITE_NOTION_ONBOARDING_ID="${{ vars.VITE_NOTION_ONBOARDING_ID }}" >> .env.local
+        echo VITE_TOLGEE_URL="${{ vars.VITE_TOLGEE_URL }}" >> .env.local
+        echo VITE_TOLGEE_API_KEY="${{ secrets.VITE_TOLGEE_API_KEY }}" >> .env.local
         cat .env.local
         touch .env.sentry-build-plugin
         echo SENTRY_AUTH_TOKEN="${{ secrets.SENTRY_AUTH_TOKEN }}" >> .env.sentry-build-plugin

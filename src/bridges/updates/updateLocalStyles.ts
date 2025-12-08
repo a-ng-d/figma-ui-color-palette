@@ -1,6 +1,6 @@
 import chroma from 'chroma-js'
-import { locales } from '@ui-lib/content/locales'
 import { Data, FullConfiguration } from '@a_ng_d/utils-ui-color-palette'
+import { tolgee } from '../..'
 
 const updateLocalStyles = async (id: string) => {
   const rawPalette = figma.currentPage.getSharedPluginData(
@@ -8,7 +8,7 @@ const updateLocalStyles = async (id: string) => {
     `palette_${id}`
   )
 
-  if (rawPalette === '') throw new Error(locales.get().error.unfoundPalette)
+  if (rawPalette === '') throw new Error(tolgee.t('error.unfoundPalette'))
 
   const palette = JSON.parse(rawPalette) as FullConfiguration
 
@@ -69,10 +69,10 @@ const updateLocalStyles = async (id: string) => {
           const path = [
             item.paletteName,
             item.themeName === ''
-              ? locales.get().themes.defaultName
+              ? tolgee.t('themes.defaultName')
               : item.themeName,
             item.colorName === ''
-              ? locales.get().colors.defaultName
+              ? tolgee.t('colors.defaultName')
               : item.colorName,
             item.shadeName,
           ]
@@ -124,31 +124,22 @@ const updateLocalStyles = async (id: string) => {
           }
         })
 
-      if (i > 1)
-        messages.push(
-          locales
-            .get()
-            .info.updatedLocalStyles.plural.replace('{count}', i.toString())
-        )
-      else if (i === 1)
-        messages.push(locales.get().info.updatedLocalStyles.single)
-      else messages.push(locales.get().info.updatedLocalStyles.none)
-
-      if (k > 1)
-        messages.push(
-          locales
-            .get()
-            .info.removedLocalStyles.plural.replace('{count}', k.toString())
-        )
-      else if (k === 1)
-        messages.push(locales.get().info.removedLocalStyles.single)
-      else messages.push(locales.get().info.removedLocalStyles.none)
-
-      figma.saveVersionHistoryAsync(
-        `${palette.base.name} - ${locales.get().events.stylesSynced}`
+      messages.push(
+        tolgee.t('info.updatedLocalStyles', {
+          count: i,
+        })
+      )
+      messages.push(
+        tolgee.t('info.removedLocalStyles', {
+          count: k,
+        })
       )
 
-      return messages.join(locales.get().separator)
+      figma.saveVersionHistoryAsync(
+        `${palette.base.name} - ${tolgee.t('events.stylesSynced')}`
+      )
+
+      return messages.join(tolgee.t('separator'))
     })
 
   return updatedLocalStylesStatusMessage

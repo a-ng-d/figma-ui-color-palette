@@ -1,10 +1,10 @@
-import { locales } from '@ui-lib/content/locales'
 import {
   Data,
   FullConfiguration,
   ViewConfiguration,
 } from '@a_ng_d/utils-ui-color-palette'
 import Documents from '../../canvas/Documents'
+import { tolgee } from '../..'
 
 const createDocument = async (id: string, view: ViewConfiguration) => {
   const rawPalette = figma.currentPage.getSharedPluginData(
@@ -12,7 +12,7 @@ const createDocument = async (id: string, view: ViewConfiguration) => {
     `palette_${id}`
   )
 
-  if (rawPalette === '') throw new Error(locales.get().error.unfoundPalette)
+  if (rawPalette === '') throw new Error(tolgee.t('error.unfoundPalette'))
 
   const palette = JSON.parse(rawPalette) as FullConfiguration
 
@@ -29,7 +29,7 @@ const createDocument = async (id: string, view: ViewConfiguration) => {
 
   await new Promise((r) => setTimeout(r, 1000))
   await figma.saveVersionHistoryAsync(
-    `${palette.base.name} - ${locales.get().events.documentCreated}`
+    `${palette.base.name} - ${tolgee.t('events.documentCreated')}`
   )
 
   return palette

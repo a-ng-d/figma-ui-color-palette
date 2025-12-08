@@ -1,5 +1,4 @@
 import chroma from 'chroma-js'
-import { locales } from '@ui-lib/content/locales'
 import {
   BaseConfiguration,
   MetaConfiguration,
@@ -10,6 +9,7 @@ import {
 } from '@a_ng_d/utils-ui-color-palette'
 import setPaletteName from '../utils/setPaletteName'
 import globalConfig from '../global.config'
+import { tolgee } from '..'
 import Sheet from './Sheet'
 import Palette from './Palette'
 
@@ -77,7 +77,7 @@ export default class Documents {
     const document = figma.createFrame()
     document.name = setPaletteName(
       this.base.name,
-      theme.name,
+      theme.type === 'default theme' ? undefined : theme.name,
       this.base.preset.name,
       this.base.colorSpace,
       theme.visionSimulationMode
@@ -131,7 +131,7 @@ export default class Documents {
     )
 
     document.setRelaunchData({
-      edit: locales.get().relaunch.edit.description,
+      edit: tolgee.t('relaunch.edit.description'),
     })
 
     // Insert

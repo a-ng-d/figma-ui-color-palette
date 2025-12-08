@@ -1,5 +1,4 @@
 import chroma from 'chroma-js'
-import { locales } from '@ui-lib/content/locales'
 import {
   Data,
   FullConfiguration,
@@ -10,6 +9,7 @@ import {
 import setPaletteName from '../../utils/setPaletteName'
 import Sheet from '../../canvas/Sheet'
 import Palette from '../../canvas/Palette'
+import { tolgee } from '../..'
 
 const updateDocument = async (view: ViewConfiguration) => {
   const document = figma.currentPage.selection[0] as FrameNode
@@ -21,7 +21,7 @@ const updateDocument = async (view: ViewConfiguration) => {
     `palette_${id}`
   )
 
-  if (rawPalette === '') throw new Error(locales.get().error.unfoundPalette)
+  if (rawPalette === '') throw new Error(tolgee.t('error.unfoundPalette'))
 
   const palette = JSON.parse(rawPalette) as FullConfiguration
 
@@ -33,7 +33,7 @@ const updateDocument = async (view: ViewConfiguration) => {
   )
 
   if (themeData === undefined || currentTheme === undefined)
-    throw new Error(locales.get().error.document)
+    throw new Error(tolgee.t('error.document'))
 
   const newDocument =
     view === 'PALETTE_WITH_PROPERTIES' || view === 'PALETTE'
@@ -66,7 +66,7 @@ const updateDocument = async (view: ViewConfiguration) => {
   ]
   document.name = setPaletteName(
     palette.base.name,
-    currentTheme.name,
+    currentTheme.type === 'default theme' ? undefined : currentTheme.name,
     palette.base.preset.name,
     palette.base.colorSpace,
     currentTheme.visionSimulationMode
@@ -93,7 +93,7 @@ const updateDocument = async (view: ViewConfiguration) => {
 
   await new Promise((r) => setTimeout(r, 1000))
   await figma.saveVersionHistoryAsync(
-    `${palette.base.name} - ${locales.get().events.documentUpdated}`
+    `${palette.base.name} - ${tolgee.t('events.documentUpdated')}`
   )
 
   return palette
