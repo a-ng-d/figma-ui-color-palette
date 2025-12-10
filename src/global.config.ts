@@ -218,7 +218,7 @@ const globalConfig: Config = {
       ? 'http://localhost:8888'
       : (import.meta.env.VITE_ANNOUNCEMENTS_WORKER_URL as string),
     corsWorkerUrl: isDev
-      ? 'http://localhost:8888'
+      ? 'http://localhost:8989'
       : (import.meta.env.VITE_CORS_WORKER_URL as string),
     databaseUrl: import.meta.env.VITE_SUPABASE_URL as string,
     authUrl: isDev
