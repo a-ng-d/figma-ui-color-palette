@@ -20,7 +20,8 @@
     "packages/ui-ui-color-palette/packages/auth-yelbolt",
     "packages/ui-ui-color-palette/packages/auth-yelbolt/ui-color-palette",
     "packages/ui-ui-color-palette/packages/auth-yelbolt-worker",
-    "packages/ui-ui-color-palette/packages/announcements-yelbolt-worker"
+    "packages/ui-ui-color-palette/packages/announcements-yelbolt-worker",
+    "packages/ui-ui-color-palette/packages/cors-yelbolt-worker"
   ],
   "scripts": {
     "install:ext": "npm install --workspaces",
