@@ -36,6 +36,7 @@ jobs:
         echo VITE_AUTH_WORKER_URL="${{ vars.VITE_AUTH_WORKER_URL }}" >> .env.local
         echo VITE_AUTH_URL="${{ vars.VITE_AUTH_URL }}" >> .env.local
         echo VITE_ANNOUNCEMENTS_WORKER_URL="${{ vars.VITE_ANNOUNCEMENTS_WORKER_URL }}" >> .env.local
+        echo VITE_CORS_WORKER_URL="${{ vars.VITE_CORS_WORKER_URL }}" >> .env.local
         echo VITE_NOTION_ANNOUNCEMENTS_ID="${{ vars.VITE_NOTION_ANNOUNCEMENTS_ID }}" >> .env.local
         echo VITE_NOTION_ONBOARDING_ID="${{ vars.VITE_NOTION_ONBOARDING_ID }}" >> .env.local
         echo VITE_TOLGEE_URL="${{ vars.VITE_TOLGEE_URL }}" >> .env.local
