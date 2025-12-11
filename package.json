@@ -24,7 +24,8 @@
     "packages/ui-ui-color-palette/packages/cors-yelbolt-worker"
   ],
   "scripts": {
-    "install:ext": "npm install --workspaces",
+    "init:submodules": "cd packages/ui-ui-color-palette && git submodule update --init --recursive",
+    "install:ext": "npm install --workspaces && npm install --workspace=packages/ui-ui-color-palette/packages/auth-yelbolt --workspaces && npm install --prefix packages/ui-ui-color-palette/packages/auth-yelbolt/ui-color-palette",
     "update:ext": "git submodule update --remote --merge",
     "update:figmug": "npm i @a_ng_d/figmug-ui@latest @a_ng_d/figmug-utils@latest",
     "update:uicp": "npm i @a_ng_d/utils-ui-color-palette@latest",
