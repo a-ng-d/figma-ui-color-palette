@@ -10,8 +10,8 @@ const checkUserPreferences = async () => {
   let canDeepSyncVariables = await figma.clientStorage.getAsync(
     'can_deep_sync_variables'
   )
-  let isVsCodeMessageDisplayed = await figma.clientStorage.getAsync(
-    'is_vscode_message_displayed'
+  let isSuggestedLanguageDisplayed = await figma.clientStorage.getAsync(
+    'is_suggested_language_displayed'
   )
   let userLanguage = await figma.clientStorage.getAsync('user_language')
 
@@ -35,9 +35,9 @@ const checkUserPreferences = async () => {
     canDeepSyncVariables = false
   }
 
-  if (isVsCodeMessageDisplayed === undefined) {
-    await figma.clientStorage.setAsync('is_vscode_message_displayed', true)
-    isVsCodeMessageDisplayed = true
+  if (isSuggestedLanguageDisplayed === undefined) {
+    await figma.clientStorage.setAsync('is_suggested_language_displayed', true)
+    isSuggestedLanguageDisplayed = true
   }
 
   if (userLanguage === undefined) {
@@ -75,13 +75,13 @@ const checkUserPreferences = async () => {
   }
 
   if (
-    isVsCodeMessageDisplayed === 'true' ||
-    isVsCodeMessageDisplayed === 'false'
+    isSuggestedLanguageDisplayed === 'true' ||
+    isSuggestedLanguageDisplayed === 'false'
   ) {
-    isVsCodeMessageDisplayed = isVsCodeMessageDisplayed === 'true'
+    isSuggestedLanguageDisplayed = isSuggestedLanguageDisplayed === 'true'
     await figma.clientStorage.setAsync(
-      'is_vscode_message_displayed',
-      isVsCodeMessageDisplayed
+      'is_suggested_language_displayed',
+      isSuggestedLanguageDisplayed
     )
   }
 
@@ -92,7 +92,7 @@ const checkUserPreferences = async () => {
       isAPCADisplayed: isAPCADisplayed,
       canDeepSyncStyles: canDeepSyncStyles,
       canDeepSyncVariables: canDeepSyncVariables,
-      isVsCodeMessageDisplayed: isVsCodeMessageDisplayed,
+      isSuggestedLanguageDisplayed: isSuggestedLanguageDisplayed,
       userLanguage: userLanguage,
     },
   })
