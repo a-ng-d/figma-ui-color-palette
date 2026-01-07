@@ -88,6 +88,7 @@ const specConfig: Record<
         'USER_LANGUAGE',
         'USER_LANGUAGE_FR_FR',
         'USER_LANGUAGE_PT_BR',
+        'USER_LANGUAGE_ZH_CN',
       ]
     ),
   },
@@ -165,6 +166,7 @@ const specConfig: Record<
         'USER_LANGUAGE',
         'USER_LANGUAGE_FR_FR',
         'USER_LANGUAGE_PT_BR',
+        'USER_LANGUAGE_ZH_CN',
       ]
     ),
   },
