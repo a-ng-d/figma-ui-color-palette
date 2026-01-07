@@ -17,7 +17,7 @@ const specConfig: Record<
   fig: {
     pluginId: '1063959496693642315',
     features: doSpecificMode(
-      ['HELP_CHAT', 'USER_LICENSE', 'USER_LANGUAGE_ZH_CN'],
+      ['HELP_CHAT', 'USER_LICENSE'],
       [
         'LOCAL_PALETTES',
         'SYNC_LOCAL_STYLES',
@@ -94,7 +94,7 @@ const specConfig: Record<
   one: {
     pluginId: '1532789439226122095',
     features: doSpecificMode(
-      ['HELP_CHAT', 'USER_LICENSE_JUMP', 'USER_LANGUAGE_ZH_CN'],
+      ['HELP_CHAT', 'USER_LICENSE_JUMP'],
       [
         'LOCAL_PALETTES',
         'SYNC_LOCAL_STYLES',
