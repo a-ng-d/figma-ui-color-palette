@@ -56,10 +56,32 @@ export default class Paragraph {
       },
     ]
 
+    this.applyHyperlinks()
+
     // Layout
     this.nodeText.layoutGrow = 1
 
     return this.nodeText
+  }
+
+  applyHyperlinks = () => {
+    if (!this.nodeText) return
+
+    const urlPattern = /https?:\/\/[^\s]+/g
+    let match: RegExpExecArray | null
+
+    while ((match = urlPattern.exec(this.content)) !== null) {
+      const url = match[0]
+      const start = match.index
+      const end = start + url.length
+
+      this.nodeText.setRangeHyperlink(start, end, {
+        type: 'URL',
+        value: url,
+      })
+
+      this.nodeText.setRangeTextDecoration(start, end, 'UNDERLINE')
+    }
   }
 
   makeNode() {
