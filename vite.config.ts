@@ -92,6 +92,10 @@ export default defineConfig(({ mode }) => {
     },
 
     build: {
+      commonjsOptions: {
+        include: [/node_modules/],
+        transformMixedEsModules: true,
+      },
       target: 'es2015',
       sourcemap: true,
       minify: !isDev,
