@@ -257,7 +257,7 @@ const globalConfig: Config = {
     algorithmVersion: 'v3',
     paletteVersion: '2025.06',
     pluginVersion: __APP_VERSION__,
-    creditsVersion: '2025.12',
+    creditsVersion: '2026.01',
   },
   features: specConfig[__PLUGIN__].features,
   lang: 'en-US',
