@@ -257,8 +257,8 @@ const globalConfig: Config = {
     isCreditsEnabled: true,
     trialTime: 72,
     creditsLimit: 500,
-    creditsRenewalPeriodDays: 3,
-    creditsRenewalPeriodHours: 72,
+    creditsRenewalPeriodDays: 2,
+    creditsRenewalPeriodHours: 48,
   },
   dbs: {
     palettesDbViewName: isDev
@@ -314,7 +314,7 @@ const globalConfig: Config = {
     algorithmVersion: 'v3',
     paletteVersion: '2025.06',
     pluginVersion: __APP_VERSION__,
-    creditsVersion: '2026.01',
+    creditsVersion: '2026.02',
   },
   features: specConfig[__PLUGIN__].features,
   lang: 'en-US',
@@ -325,12 +325,12 @@ const globalConfig: Config = {
     imageColorsExtract: 50,
     harmonyCreate: 50,
     aiColorsGenerate: 50,
-    paletteGenerate: 100,
-    paletteWithPropsGenerate: 150,
-    sheetGenerate: 200,
+    paletteGenerate: 150,
+    paletteWithPropsGenerate: 200,
+    sheetGenerate: 250,
     paletteUpdates: 25,
-    localStylesSync: 200,
-    localVariablesSync: 200,
+    localStylesSync: 250,
+    localVariablesSync: 300,
   },
 }
 
