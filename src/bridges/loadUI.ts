@@ -420,34 +420,42 @@ const loadUI = async () => {
           figma.ui.postMessage({ type: 'STOP_LOADER' })
         }),
       //
-      GET_TRIAL: async () =>
-        figma.ui.postMessage({
-          type: 'GET_TRIAL',
-        }),
       ENABLE_TRIAL: async () => {
         enableTrial(path.data.trialTime, path.data.trialVersion).then(() =>
           checkTrialStatus({ context: 'UI', plugin: __PLUGIN__ })
         )
       },
-      GET_PRO_PLAN: async () =>
+      GET_TRIAL: async () =>
+        figma.ui.postMessage({
+          type: 'GET_TRIAL',
+        }),
+      GET_PRO: async () =>
         figma.ui.postMessage({
           type: 'GET_PRICING',
           data: {
-            plans:
-              __PLUGIN__ === 'fig'
-                ? ['FIGMA', 'ONE_FIGMA']
-                : ['ONE', 'ACTIVATE'],
+            licenseTrigger: __PLUGIN__ === 'fig' ? 'JUMP' : 'ACTIVATE',
           },
         }),
-      GO_TO_ONE: async () =>
-        figma.openExternal(
-          path.data.context === 'REGULAR'
-            ? globalConfig.urls.storeUrl
-            : globalConfig.urls.storeWithDiscountUrl
-        ),
-      GO_TO_ONE_FIGMA: () =>
-        figma.openExternal('https://uicp.ylb.lt/run-figma-plugin'),
-      GO_TO_CHECKOUT: async () => payProPlan(),
+      GET_LICENSE: async () =>
+        __PLUGIN__ === 'fig'
+          ? figma.openExternal('https://uicp.ylb.lt/run-figma-plugin')
+          : figma.ui.postMessage({
+              type: 'GET_LICENSE',
+            }),
+      GO_TO_PRO_WEEK: async () =>
+        figma.openExternal(globalConfig.urls.storeProWeekUrl),
+      GO_TO_PRO_MONTH: async () =>
+        __PLUGIN__ === 'fig'
+          ? payProPlan()
+          : figma.openExternal(globalConfig.urls.storeProMonthUrl),
+      GO_TO_PRO_YEAR: async () =>
+        __PLUGIN__ === 'fig'
+          ? payProPlan()
+          : figma.openExternal(globalConfig.urls.storeProYearUrl),
+      GO_TO_PRO_LIFETIME: async () =>
+        figma.openExternal(globalConfig.urls.storeProLifetimeUrl),
+      GO_TO_ULTIMATE_REQUEST: async () =>
+        figma.openExternal(globalConfig.urls.storeUltimateRequestUrl),
       ENABLE_PRO_PLAN: async () =>
         figma.ui.postMessage({
           type: 'ENABLE_PRO_PLAN',

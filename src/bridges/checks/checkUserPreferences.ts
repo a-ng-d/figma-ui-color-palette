@@ -4,6 +4,12 @@ import { tolgee } from '../..'
 const checkUserPreferences = async () => {
   let isWCAGDisplayed = await figma.clientStorage.getAsync('is_wcag_displayed')
   let isAPCADisplayed = await figma.clientStorage.getAsync('is_apca_displayed')
+  let isWCAGIntervalDisplayed = await figma.clientStorage.getAsync(
+    'is_wcag_interval_displayed'
+  )
+  let isAPCAIntervalDisplayed = await figma.clientStorage.getAsync(
+    'is_apca_interval_displayed'
+  )
   let canDeepSyncStyles = await figma.clientStorage.getAsync(
     'can_deep_sync_styles'
   )
@@ -23,6 +29,16 @@ const checkUserPreferences = async () => {
   if (isAPCADisplayed === undefined) {
     await figma.clientStorage.setAsync('is_apca_displayed', true)
     isAPCADisplayed = true
+  }
+
+  if (isWCAGIntervalDisplayed === undefined) {
+    await figma.clientStorage.setAsync('is_wcag_interval_displayed', false)
+    isWCAGIntervalDisplayed = false
+  }
+
+  if (isAPCAIntervalDisplayed === undefined) {
+    await figma.clientStorage.setAsync('is_apca_interval_displayed', false)
+    isAPCAIntervalDisplayed = false
   }
 
   if (canDeepSyncStyles === undefined) {
@@ -90,6 +106,8 @@ const checkUserPreferences = async () => {
     data: {
       isWCAGDisplayed: isWCAGDisplayed,
       isAPCADisplayed: isAPCADisplayed,
+      isWCAGIntervalDisplayed: isWCAGIntervalDisplayed,
+      isAPCAIntervalDisplayed: isAPCAIntervalDisplayed,
       canDeepSyncStyles: canDeepSyncStyles,
       canDeepSyncVariables: canDeepSyncVariables,
       isSuggestedLanguageDisplayed: isSuggestedLanguageDisplayed,
