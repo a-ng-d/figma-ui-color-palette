@@ -15,21 +15,22 @@ const checkAnnouncementsStatus = async (remoteVersion: string) => {
     await figma.clientStorage.setAsync('is_onboarding_read', isOnboardingRead)
   }
 
-  if (localVersion === '' && remoteVersion === '')
+  if (!localVersion && remoteVersion === '')
     return {
       type: 'PUSH_ANNOUNCEMENTS_STATUS',
       data: {
         status: 'NO_ANNOUNCEMENTS',
       },
     }
-  else if (localVersion === '' && !isOnboardingRead)
+  else if (!localVersion && !isOnboardingRead) {
+    console.log('display onboarding dialog')
     return figma.ui.postMessage({
       type: 'PUSH_ONBOARDING_STATUS',
       data: {
         status: 'DISPLAY_ONBOARDING_DIALOG',
       },
     })
-  else if (localVersion === '')
+  } else if (!localVersion)
     return figma.ui.postMessage({
       type: 'PUSH_ANNOUNCEMENTS_STATUS',
       data: {
