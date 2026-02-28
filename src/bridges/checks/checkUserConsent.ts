@@ -1,4 +1,4 @@
-import { ConsentConfiguration } from '@a_ng_d/figmug-ui'
+import { ConsentConfiguration } from '@unoff/ui'
 import globalConfig from '../../global.config'
 
 const checkUserConsent = async (userConsent: Array<ConsentConfiguration>) => {

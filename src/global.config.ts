@@ -1,6 +1,6 @@
 import { Config } from '@ui-lib/types/config'
 import { doSpecificMode } from '@ui-lib/stores/features'
-import { Feature } from '@a_ng_d/figmug-utils'
+import { Feature } from '@unoff/utils'
 
 declare const __PLUGIN__: 'fig' | 'one'
 declare const __APP_VERSION__: string

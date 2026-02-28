@@ -21,7 +21,7 @@ import {
   ViewConfiguration,
   VisionSimulationModeConfiguration,
 } from '@a_ng_d/utils-ui-color-palette'
-import { doScale } from '@a_ng_d/figmug-utils'
+import { doScale } from '@unoff/utils'
 import globalConfig from '../global.config'
 import { tolgee } from '..'
 

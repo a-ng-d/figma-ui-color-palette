@@ -7,7 +7,7 @@ import {
   ExchangeConfiguration,
   ViewConfiguration,
 } from '@a_ng_d/utils-ui-color-palette'
-import { doScale } from '@a_ng_d/figmug-utils'
+import { doScale } from '@unoff/utils'
 import setPaletteMigration from './utils/setPaletteMigration'
 import { createI18n } from './utils/i18n'
 import globalConfig from './global.config'
