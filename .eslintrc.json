@@ -47,6 +47,11 @@
             "position": "before"
           },
           {
+            "pattern": "@unoff/**",
+            "group": "external",
+            "position": "before"
+          },
+          {
             "pattern": "*.css",
             "group": "sibling",
             "position": "after"
