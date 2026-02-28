@@ -1,3 +1,4 @@
+import { doScale } from '@unoff/utils'
 import { presets } from '@ui-lib/stores/presets'
 import zh_Hans_CN from '@ui-lib/content/translations/zh-Hans-CN.json'
 import pt_BR from '@ui-lib/content/translations/pt-BR.json'
@@ -7,7 +8,6 @@ import {
   ExchangeConfiguration,
   ViewConfiguration,
 } from '@a_ng_d/utils-ui-color-palette'
-import { doScale } from '@a_ng_d/figmug-utils'
 import setPaletteMigration from './utils/setPaletteMigration'
 import { createI18n } from './utils/i18n'
 import globalConfig from './global.config'

@@ -1,5 +1,5 @@
+import { FeatureStatus } from '@unoff/utils'
 import { presets } from '@ui-lib/stores/presets'
-import { FeatureStatus } from '@a_ng_d/figmug-utils'
 import globalConfig from '../global.config'
 import { tolgee } from '..'
 import checkTrialStatus from './checks/checkTrialStatus'

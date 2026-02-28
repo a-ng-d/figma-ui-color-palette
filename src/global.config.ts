@@ -1,6 +1,6 @@
+import { Feature } from '@unoff/utils'
 import { Config } from '@ui-lib/types/config'
 import { doSpecificMode } from '@ui-lib/stores/features'
-import { Feature } from '@a_ng_d/figmug-utils'
 
 declare const __PLUGIN__: 'fig' | 'one'
 declare const __APP_VERSION__: string
@@ -60,9 +60,13 @@ const specConfig: Record<
         'PRESETS_FLUENT',
         'PRESETS_POLARIS',
         'PRESETS_CUSTOM_ADD',
+        'SCALE_CONFIGURATION',
         'SCALE_CONTRAST_RATIO',
         'SCALE_CHROMA',
         'SCALE_HUE',
+        'SCALE_HELPER_DISTRIBUTION_EASE_IN',
+        'SCALE_HELPER_DISTRIBUTION_EASE_OUT',
+        'SCALE_HELPER_DISTRIBUTION_EASE_IN_OUT',
         'THEMES',
         'THEMES_NAME',
         'THEMES_PARAMS',
@@ -146,9 +150,13 @@ const specConfig: Record<
         'PRESETS_FLUENT',
         'PRESETS_POLARIS',
         'PRESETS_CUSTOM_ADD',
+        'SCALE_CONFIGURATION',
         'SCALE_CONTRAST_RATIO',
         'SCALE_CHROMA',
         'SCALE_HUE',
+        'SCALE_HELPER_DISTRIBUTION_EASE_IN',
+        'SCALE_HELPER_DISTRIBUTION_EASE_OUT',
+        'SCALE_HELPER_DISTRIBUTION_EASE_IN_OUT',
         'THEMES',
         'THEMES_NAME',
         'THEMES_PARAMS',
