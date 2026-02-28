@@ -1,5 +1,5 @@
-import { presets } from '@ui-lib/stores/presets'
 import { FeatureStatus } from '@unoff/utils'
+import { presets } from '@ui-lib/stores/presets'
 import globalConfig from '../global.config'
 import { tolgee } from '..'
 import checkTrialStatus from './checks/checkTrialStatus'

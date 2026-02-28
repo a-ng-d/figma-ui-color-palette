@@ -1,5 +1,5 @@
-import { Data, FullConfiguration } from '@a_ng_d/utils-ui-color-palette'
 import { doScale } from '@unoff/utils'
+import { Data, FullConfiguration } from '@a_ng_d/utils-ui-color-palette'
 import { getJsonSize } from '../../utils/getSize'
 import { ScaleMessage } from '../../types/messages'
 import { tolgee } from '../..'
