@@ -41,6 +41,7 @@ const setPaletteMigration = async (document: BaseNode) => {
       },
       shift: {
         chroma: 100,
+        hue: 0,
       },
       areSourceColorsLocked: false,
       colors: [],
