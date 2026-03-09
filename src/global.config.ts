@@ -255,7 +255,7 @@ const globalConfig: Config = {
     documentationUrl: 'https://uicp.ylb.lt/docs-figma-plugin',
     repositoryUrl: 'https://uicp.ylb.lt/repository-figma-plugin',
     communityUrl: 'https://uicp.ylb.lt/community',
-    supportEmail: 'https://uicp.ylb.lt/contact',
+    supportEmail: 'https://uicp.ylb.lt/support',
     feedbackUrl: 'https://uicp.ylb.lt/feedback',
     trialFeedbackUrl: 'https://uicp.ylb.lt/feedback-trial',
     requestsUrl: 'https://uicp.ylb.lt/ideas',
