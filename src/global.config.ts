@@ -220,7 +220,7 @@ const globalConfig: Config = {
     pluginId: specConfig[__PLUGIN__].pluginId,
   },
   plan: {
-    isProEnabled: false,
+    isProEnabled: true,
     isTrialEnabled: false,
     isCreditsEnabled: true,
     trialTime: 72,
