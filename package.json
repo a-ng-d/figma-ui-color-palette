@@ -95,6 +95,9 @@
   },
   "overrides": {
     "prismjs": "^1.30.0",
+    "@typescript-eslint/typescript-estree": {
+      "minimatch": "^9.0.5"
+    },
     "miniflare": {
       "undici": "^7.24.3"
     }
