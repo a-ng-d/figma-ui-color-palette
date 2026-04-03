@@ -200,7 +200,6 @@ const globalConfig: Config = {
     height: 640,
     minWidth: 240,
     minHeight: 420,
-    localPalettes: 1,
     sourceColors: 5,
     customStops: 8,
   },
@@ -305,8 +304,6 @@ const globalConfig: Config = {
 }
 
 const limitsMapping: { [key: string]: keyof typeof globalConfig.limits } = {
-  LOCAL_PALETTES: 'localPalettes',
-  SOURCE: 'sourceColors',
   COLORS: 'sourceColors',
   PRESETS_CUSTOM_ADD: 'customStops',
 }
