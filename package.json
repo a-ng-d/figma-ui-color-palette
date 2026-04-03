@@ -72,7 +72,7 @@
     "vite-tsconfig-paths": "^5.1.4"
   },
   "dependencies": {
-    "@a_ng_d/utils-ui-color-palette": "^1.8.1",
+    "@a_ng_d/utils-ui-color-palette": "^1.8.2",
     "@mistralai/mistralai": "^1.10.0",
     "@nanostores/preact": "^0.5.2",
     "@sentry/react": "^9.27.0",
@@ -80,7 +80,7 @@
     "@tolgee/format-icu": "^6.2.7",
     "@tolgee/react": "^6.2.7",
     "@tolgee/web": "^6.2.7",
-    "@unoff/ui": "^1.23.13",
+    "@unoff/ui": "^1.23.14",
     "@unoff/utils": "^0.8.2",
     "chroma-js": "^3.1.2",
     "color-names": "^2.0.0",

@@ -300,6 +300,7 @@ const globalConfig: Config = {
     paletteUpdates: 25,
     localStylesSync: 250,
     localVariablesSync: 300,
+    localTokensSync: 300,
   },
 }
 
