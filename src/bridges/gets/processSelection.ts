@@ -120,13 +120,10 @@ const processSelection = () => {
             rgb: solidFill.color,
             source: 'CANVAS',
             id: uid(),
-            isRemovable: false,
+            isRemovable: true,
           })
         })
         selectionHandler('COLOR_SELECTED')
-        element?.setRelaunchData({
-          create: tolgee.t('relaunch.create.description'),
-        })
       }
 
       if (foundImage.length !== 0) {

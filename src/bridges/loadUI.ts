@@ -56,27 +56,23 @@ const loadUI = async () => {
     themeColors: true,
   })
 
-  if (figma.command === 'create')
-    figma.ui.postMessage({
-      type: 'SWITCH_SERVICE',
-      data: {
-        service: 'CREATE',
-      },
-    })
-  else if (figma.command === 'edit') {
+  if (figma.command === 'edit') {
     const document = figma.currentPage.selection[0]
     const id = document.getSharedPluginData('uicp', 'id')
+    console.log('Document ID:', id)
 
     if (id !== '')
-      jumpToPalette(id).catch((error) =>
-        figma.ui.postMessage({
-          type: 'POST_MESSAGE',
-          data: {
-            type: 'ERROR',
-            message: error.message,
-          },
-        })
-      )
+      setTimeout(() => {
+        jumpToPalette(id).catch((error) =>
+          figma.ui.postMessage({
+            type: 'POST_MESSAGE',
+            data: {
+              type: 'ERROR',
+              message: error.message,
+            },
+          })
+        )
+      }, 3000)
   }
 
   // UI > Canvas
