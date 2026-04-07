@@ -15,7 +15,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
       with:
-        submodules: 'recursive'
+        submodules: false
         fetch-depth: 0
     
     - uses: actions/setup-node@v4
@@ -24,6 +24,7 @@ jobs:
 
     - name: Initialize and update submodules
       run: |
+        git config submodule.skills.update none
         git submodule update --init --recursive --force
 
     - name: Create .env.local file
