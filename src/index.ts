@@ -2,7 +2,10 @@ import { doScale } from '@unoff/utils'
 import { presets } from '@ui-lib/stores/presets'
 import zh_Hans_CN from '@ui-lib/content/translations/zh-Hans-CN.json'
 import pt_BR from '@ui-lib/content/translations/pt-BR.json'
+import ko_KR from '@ui-lib/content/translations/ko-KR.json'
+import ja_JP from '@ui-lib/content/translations/ja-JP.json'
 import fr_FR from '@ui-lib/content/translations/fr-FR.json'
+import es_ES from '@ui-lib/content/translations/es-ES.json'
 import en_US from '@ui-lib/content/translations/en-US.json'
 import {
   ExchangeConfiguration,
@@ -44,6 +47,9 @@ figma.on('run', async ({ parameters }: RunEvent) => {
       'pt-BR': pt_BR,
       'fr-FR': fr_FR,
       'en-US': en_US,
+      'es-ES': es_ES,
+      'ja-JP': ja_JP,
+      'ko-KR': ko_KR,
     },
     globalConfig.lang
   )

@@ -38,7 +38,9 @@
       "https://*.amazonaws.com",
       "https://fonts.googleapis.com",
       "https://fonts.gstatic.com",
-      "https://api.mistral.ai"
+      "https://api.mistral.ai",
+      "https://polar.sh",
+      "https://*.polar.sh/"
     ],
     "devAllowedDomains": [
       "http://localhost:3000",

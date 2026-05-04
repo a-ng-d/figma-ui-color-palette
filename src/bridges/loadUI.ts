@@ -8,7 +8,7 @@ import updateLocalVariables from './updates/updateLocalVariables'
 import updateLocalStyles from './updates/updateLocalStyles'
 import updateDocument from './updates/updateDocument'
 import updateColors from './updates/updateColors'
-import payProPlan from './plans/payProPlan'
+// import payProPlan from './plans/payProPlan'
 import enableTrial from './plans/enableTrial'
 import processSelection from './gets/processSelection'
 import jumpToPalette from './gets/jumpToPalette'
@@ -438,18 +438,6 @@ const loadUI = async () => {
           : figma.ui.postMessage({
               type: 'GET_LICENSE',
             }),
-      GO_TO_PRO_WEEK: async () =>
-        figma.openExternal(globalConfig.urls.storeProWeekUrl),
-      GO_TO_PRO_MONTH: async () =>
-        __PLUGIN__ === 'fig'
-          ? payProPlan()
-          : figma.openExternal(globalConfig.urls.storeProMonthUrl),
-      GO_TO_PRO_YEAR: async () =>
-        __PLUGIN__ === 'fig'
-          ? payProPlan()
-          : figma.openExternal(globalConfig.urls.storeProYearUrl),
-      GO_TO_PRO_LIFETIME: async () =>
-        figma.openExternal(globalConfig.urls.storeProLifetimeUrl),
       GO_TO_ULTIMATE_REQUEST: async () =>
         figma.openExternal(globalConfig.urls.storeUltimateRequestUrl),
       ENABLE_PRO_PLAN: async () =>
