@@ -40,12 +40,9 @@ const specConfig: Record<
         'VIEWS_SHEET',
         'IMPORTS_COOLORS_ADD',
         'IMPORTS_REALTIME_COLORS_ADD',
-        'EXPLORE_ADD',
         'GEN_REQUEST',
         'EXTRACT_UPLOAD',
         'WHEEL_BASE',
-        'WHEEL_ADD',
-        'EXPLORE_ADD',
         'PRESETS_MATERIAL',
         'PRESETS_MATERIAL_3',
         'PRESETS_TAILWIND',
@@ -100,7 +97,13 @@ const specConfig: Record<
         'REPORT',
         'HELP_EMAIL',
       ],
-      ['INVOLVE_COMMUNITY']
+      [
+        'INVOLVE_COMMUNITY',
+        'USER_LANGUAGE_JA_JP',
+        'USER_LANGUAGE_KO_KR',
+        'USER_LANGUAGE_ES_ES',
+        'USER_LANGUAGE',
+      ]
     ),
   },
   one: {
@@ -128,12 +131,9 @@ const specConfig: Record<
         'VIEWS_SHEET',
         'IMPORTS_COOLORS_ADD',
         'IMPORTS_REALTIME_COLORS_ADD',
-        'EXPLORE_ADD',
         'GEN_REQUEST',
         'EXTRACT_UPLOAD',
         'WHEEL_BASE',
-        'WHEEL_ADD',
-        'EXPLORE_ADD',
         'PRESETS_MATERIAL',
         'PRESETS_MATERIAL_3',
         'PRESETS_TAILWIND',
@@ -188,7 +188,13 @@ const specConfig: Record<
         'REPORT',
         'HELP_EMAIL',
       ],
-      ['INVOLVE_COMMUNITY']
+      [
+        'INVOLVE_COMMUNITY',
+        'USER_LANGUAGE_JA_JP',
+        'USER_LANGUAGE_KO_KR',
+        'USER_LANGUAGE_ES_ES',
+        'USER_LANGUAGE',
+      ]
     ),
   },
 }
