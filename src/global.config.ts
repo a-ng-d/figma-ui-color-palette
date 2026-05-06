@@ -3,7 +3,7 @@ import { Config } from '@ui-lib/types/config'
 import { Service } from '@ui-lib/types/app'
 import { doSpecificMode } from '@ui-lib/stores/features'
 
-declare const __PLUGIN__: 'fig' | 'one'
+declare const __PLUGIN__: 'one' | 'team'
 declare const __APP_VERSION__: string
 
 const isDev = import.meta.env.MODE === 'development'
@@ -15,7 +15,7 @@ const specConfig: Record<
     features: Feature<Service>[]
   }
 > = {
-  fig: {
+  one: {
     pluginId: '1063959496693642315',
     features: doSpecificMode(
       ['HELP_CHAT', 'USER_LICENSE'],
@@ -106,10 +106,10 @@ const specConfig: Record<
       ]
     ),
   },
-  one: {
+  team: {
     pluginId: '1532789439226122095',
     features: doSpecificMode(
-      ['HELP_CHAT'],
+      ['HELP_CHAT', 'PRICING'],
       [
         'CREATE_PALETTE',
         'DOCUMENT_CREATE',

@@ -21,7 +21,7 @@ import createPalette from './bridges/creations/createPalette'
 import createDocument from './bridges/creations/createDocument'
 import checkTrialStatus from './bridges/checks/checkTrialStatus'
 
-declare const __PLUGIN__: 'fig' | 'one'
+declare const __PLUGIN__: 'one' | 'team'
 
 // Fonts
 figma.loadFontAsync({ family: 'Inter', style: 'Regular' })
@@ -145,7 +145,7 @@ if (figma.editorType !== 'dev')
         if (
           type === 'UI_COLOR_PALETTE' &&
           version !== globalConfig.versions.paletteVersion &&
-          __PLUGIN__ === 'fig'
+          __PLUGIN__ === 'one'
         )
           setPaletteMigration(document)
       })
@@ -163,7 +163,7 @@ figma.on('currentpagechange', async () => {
       if (
         type === 'UI_COLOR_PALETTE' &&
         version !== globalConfig.versions.paletteVersion &&
-        __PLUGIN__ === 'fig'
+        __PLUGIN__ === 'one'
       )
         setPaletteMigration(document)
     })

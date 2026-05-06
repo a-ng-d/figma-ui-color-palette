@@ -43,6 +43,7 @@ jobs:
         echo VITE_MISTRAL_AI_API_KEY="${{ secrets.VITE_MISTRAL_AI_API_KEY }}" >> .env.local
         echo VITE_TOLGEE_URL="${{ vars.VITE_TOLGEE_URL }}" >> .env.local
         echo VITE_TOLGEE_API_KEY="${{ secrets.VITE_TOLGEE_API_KEY }}" >> .env.local
+        echo VITE_POLAR_ACCESS_TOKEN="${{ secrets.VITE_POLAR_ACCESS_TOKEN }}" >> .env.local
         cat .env.local
         touch .env.sentry-build-plugin
         echo SENTRY_AUTH_TOKEN="${{ secrets.SENTRY_AUTH_TOKEN }}" >> .env.sentry-build-plugin
@@ -58,25 +59,7 @@ jobs:
         npm install
         npm run build:prod:fig
         npm run build:prod:one
-
-    - name: Verify build output
-      run: |
-        echo "=== Checking file sizes and structure ==="
-        ls -la fig/dist/ || echo "fig/dist directory not found!"
-        ls -la one/dist/ || echo "one/dist directory not found!"
-        du -sh fig/dist/* fig/manifest.json || echo "Error checking fig file sizes"
-        du -sh one/dist/* one/manifest.json || echo "Error checking one file sizes"
         
-    - name: Archive /figma production artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: figma-fig-ui-color-palette
-        path: |
-          fig/dist/index.html
-          fig/dist/plugin.js
-          fig/manifest.json
-        retention-days: 5
-
     - name: Archive /one production artifact
       uses: actions/upload-artifact@v4
       with:
@@ -85,4 +68,14 @@ jobs:
           one/dist/index.html
           one/dist/plugin.js
           one/manifest.json
+        retention-days: 5
+
+    - name: Archive /team production artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: figma-team-ui-color-palette
+        path: |
+          team/dist/index.html
+          team/dist/plugin.js
+          team/manifest.json
         retention-days: 5
