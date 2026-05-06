@@ -20,6 +20,10 @@
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "strict": true,
+    "typeRoots": [
+      "./node_modules/@types",
+      "./node_modules/@framer"
+    ],
     "types": [],
     "jsx": "react",
     "skipLibCheck": true,
