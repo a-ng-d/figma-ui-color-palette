@@ -22,7 +22,7 @@
     "strict": true,
     "typeRoots": [
       "./node_modules/@types",
-      "./node_modules/@framer"
+      "./node_modules/@figma"
     ],
     "types": [],
     "jsx": "react",
