@@ -1,4 +1,4 @@
-const checkUserLicense = async (plugin: 'fig' | 'one') => {
+const checkUserLicense = async (plugin: 'one' | 'team') => {
   const licenseKey = await figma.clientStorage.getAsync('user_license_key')
   const instanceId = await figma.clientStorage.getAsync(
     'user_license_instance_id'
@@ -12,7 +12,7 @@ const checkUserLicense = async (plugin: 'fig' | 'one') => {
         instanceId: instanceId,
       },
     })
-  else if (plugin === 'fig') {
+  else if (plugin === 'one') {
     const paymentStatus = figma.payments?.status.type
     if (paymentStatus === 'PAID')
       return figma.ui.postMessage({

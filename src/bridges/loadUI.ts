@@ -8,7 +8,7 @@ import updateLocalVariables from './updates/updateLocalVariables'
 import updateLocalStyles from './updates/updateLocalStyles'
 import updateDocument from './updates/updateDocument'
 import updateColors from './updates/updateColors'
-import payProPlan from './plans/payProPlan'
+// import payProPlan from './plans/payProPlan'
 import enableTrial from './plans/enableTrial'
 import processSelection from './gets/processSelection'
 import jumpToPalette from './gets/jumpToPalette'
@@ -29,7 +29,7 @@ import checkEditor from './checks/checkEditor'
 import checkCredits from './checks/checkCredits'
 import checkAnnouncementsStatus from './checks/checkAnnouncementsStatus'
 
-declare const __PLUGIN__: 'fig' | 'one'
+declare const __PLUGIN__: 'one' | 'team'
 
 interface Window {
   width: number
@@ -45,7 +45,7 @@ const loadUI = async () => {
       (await figma.clientStorage.getAsync('plugin_window_height')) ??
       globalConfig.limits.height,
   }
-  const pluginName = __PLUGIN__ === 'fig' ? ' /figma' : ' /one'
+  const pluginName = __PLUGIN__ === 'one' ? ' /one' : '/team'
 
   figma.showUI(__html__, {
     width: windowSize.width,
@@ -429,27 +429,15 @@ const loadUI = async () => {
         figma.ui.postMessage({
           type: 'GET_PRICING',
           data: {
-            licenseTrigger: __PLUGIN__ === 'fig' ? 'JUMP' : 'ACTIVATE',
+            licenseTrigger: __PLUGIN__ === 'one' ? '' : 'ACTIVATE',
           },
         }),
       GET_LICENSE: async () =>
-        __PLUGIN__ === 'fig'
+        __PLUGIN__ === 'one'
           ? figma.openExternal('https://uicp.ylb.lt/run-figma-plugin')
           : figma.ui.postMessage({
               type: 'GET_LICENSE',
             }),
-      GO_TO_PRO_WEEK: async () =>
-        figma.openExternal(globalConfig.urls.storeProWeekUrl),
-      GO_TO_PRO_MONTH: async () =>
-        __PLUGIN__ === 'fig'
-          ? payProPlan()
-          : figma.openExternal(globalConfig.urls.storeProMonthUrl),
-      GO_TO_PRO_YEAR: async () =>
-        __PLUGIN__ === 'fig'
-          ? payProPlan()
-          : figma.openExternal(globalConfig.urls.storeProYearUrl),
-      GO_TO_PRO_LIFETIME: async () =>
-        figma.openExternal(globalConfig.urls.storeProLifetimeUrl),
       GO_TO_ULTIMATE_REQUEST: async () =>
         figma.openExternal(globalConfig.urls.storeUltimateRequestUrl),
       ENABLE_PRO_PLAN: async () =>

@@ -15,24 +15,20 @@
       "DOM.Iterable",
       "ScriptHost"
     ],
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "module": "ESNext",
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "strict": true,
-    "typeRoots": [
-      "./node_modules/@types",
-      "./node_modules/@figma"
-    ],
+    "types": [],
     "jsx": "react",
     "skipLibCheck": true,
-    "baseUrl": "./",
     "paths": {
       "react": ["./node_modules/preact/compat/"],
       "react/jsx-runtime": ["./node_modules/preact/jsx-runtime"],
       "react-dom": ["./node_modules/preact/compat/"],
       "react-dom/*": ["./node_modules/preact/compat/*"],
-      "@ui-lib/*": ["packages/ui-ui-color-palette/src/*"],
+      "@ui-lib/*": ["./packages/ui-ui-color-palette/src/*"],
     }
   }
 }

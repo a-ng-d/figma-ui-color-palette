@@ -3,6 +3,7 @@ import React from 'react'
 import mixpanel from 'mixpanel-figma'
 import App from '@ui-lib/ui/App'
 import { initTolgee } from '@ui-lib/external/translation'
+import { initPolar } from '@ui-lib/external/transactional'
 import {
   initMixpanel,
   setEditor,
@@ -14,7 +15,10 @@ import { initNotion } from '@ui-lib/external/cms'
 import { initSupabase } from '@ui-lib/external/auth'
 import zh_Hans_CN from '@ui-lib/content/translations/zh-Hans-CN.json'
 import pt_BR from '@ui-lib/content/translations/pt-BR.json'
+import ko_KR from '@ui-lib/content/translations/ko-KR.json'
+import ja_JP from '@ui-lib/content/translations/ja-JP.json'
 import fr_FR from '@ui-lib/content/translations/fr-FR.json'
+import es_ES from '@ui-lib/content/translations/es-ES.json'
 import en_US from '@ui-lib/content/translations/en-US.json'
 import { ThemeProvider } from '@ui-lib/config/ThemeContext'
 import { ConfigProvider } from '@ui-lib/config/ConfigContext'
@@ -32,6 +36,7 @@ const mistralApiKey = import.meta.env.VITE_MISTRAL_AI_API_KEY
 const notionApiKey = import.meta.env.VITE_NOTION_API_KEY
 const tolgeeUrl = import.meta.env.VITE_TOLGEE_URL
 const tolgeeApiKey = import.meta.env.VITE_TOLGEE_API_KEY
+const polarAccessToken = import.meta.env.VITE_POLAR_ACCESS_TOKEN
 
 // Mixpanel
 if (globalConfig.env.isMixpanelEnabled && mixpanelToken !== undefined) {
@@ -125,7 +130,18 @@ const tolgee = initTolgee(tolgeeUrl, tolgeeApiKey, globalConfig.lang, {
   'fr-FR': fr_FR,
   'pt-BR': pt_BR,
   'zh-Hans-CN': zh_Hans_CN,
+  'es-ES': es_ES,
+  'ja-JP': ja_JP,
+  'ko-KR': ko_KR,
 })
+
+// Polar
+if (globalConfig.env.isPolarEnabled && globalConfig.env.isSupabaseEnabled)
+  initPolar(
+    polarAccessToken as string,
+    `${globalConfig.urls.databaseUrl}/functions/v1`,
+    globalConfig.env.isDev ? 'sandbox' : 'production'
+  )
 
 // Bridge Canvas <> UI
 window.addEventListener(

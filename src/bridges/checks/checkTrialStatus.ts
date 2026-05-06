@@ -2,10 +2,10 @@ import globalConfig from '../../global.config'
 
 const checkTrialStatus = async ({
   context = 'UI',
-  plugin = 'fig',
+  plugin = 'one',
 }: {
   context?: 'UI' | 'PARAMETERS'
-  plugin?: 'fig' | 'one'
+  plugin?: 'one' | 'team'
 }) => {
   const trialStartDate: number | undefined =
     await figma.clientStorage.getAsync('trial_start_date')
@@ -39,7 +39,7 @@ const checkTrialStatus = async ({
 
     if (trialStatus === 'PENDING' || !globalConfig.plan.isProEnabled)
       planStatus = 'PAID'
-    else if (plugin === 'fig') planStatus = figma.payments?.status.type
+    else if (plugin === 'one') planStatus = figma.payments?.status.type
     else planStatus = undefined
 
     figma.ui.postMessage({
@@ -58,7 +58,7 @@ const checkTrialStatus = async ({
 
   if (trialStatus === 'PENDING' || !globalConfig.plan.isProEnabled)
     return 'PAID'
-  else if (plugin === 'fig') return figma.payments?.status.type
+  else if (plugin === 'one') return figma.payments?.status.type
   else return undefined
 }
 

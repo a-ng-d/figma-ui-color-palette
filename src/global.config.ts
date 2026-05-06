@@ -3,7 +3,7 @@ import { Config } from '@ui-lib/types/config'
 import { Service } from '@ui-lib/types/app'
 import { doSpecificMode } from '@ui-lib/stores/features'
 
-declare const __PLUGIN__: 'fig' | 'one'
+declare const __PLUGIN__: 'one' | 'team'
 declare const __APP_VERSION__: string
 
 const isDev = import.meta.env.MODE === 'development'
@@ -15,7 +15,7 @@ const specConfig: Record<
     features: Feature<Service>[]
   }
 > = {
-  fig: {
+  one: {
     pluginId: '1063959496693642315',
     features: doSpecificMode(
       ['HELP_CHAT', 'USER_LICENSE'],
@@ -40,12 +40,9 @@ const specConfig: Record<
         'VIEWS_SHEET',
         'IMPORTS_COOLORS_ADD',
         'IMPORTS_REALTIME_COLORS_ADD',
-        'EXPLORE_ADD',
         'GEN_REQUEST',
         'EXTRACT_UPLOAD',
         'WHEEL_BASE',
-        'WHEEL_ADD',
-        'EXPLORE_ADD',
         'PRESETS_MATERIAL',
         'PRESETS_MATERIAL_3',
         'PRESETS_TAILWIND',
@@ -100,13 +97,19 @@ const specConfig: Record<
         'REPORT',
         'HELP_EMAIL',
       ],
-      ['INVOLVE_COMMUNITY']
+      [
+        'INVOLVE_COMMUNITY',
+        'USER_LANGUAGE_JA_JP',
+        'USER_LANGUAGE_KO_KR',
+        'USER_LANGUAGE_ES_ES',
+        'USER_LANGUAGE',
+      ]
     ),
   },
-  one: {
+  team: {
     pluginId: '1532789439226122095',
     features: doSpecificMode(
-      ['HELP_CHAT'],
+      ['HELP_CHAT', 'PRICING'],
       [
         'CREATE_PALETTE',
         'DOCUMENT_CREATE',
@@ -128,12 +131,9 @@ const specConfig: Record<
         'VIEWS_SHEET',
         'IMPORTS_COOLORS_ADD',
         'IMPORTS_REALTIME_COLORS_ADD',
-        'EXPLORE_ADD',
         'GEN_REQUEST',
         'EXTRACT_UPLOAD',
         'WHEEL_BASE',
-        'WHEEL_ADD',
-        'EXPLORE_ADD',
         'PRESETS_MATERIAL',
         'PRESETS_MATERIAL_3',
         'PRESETS_TAILWIND',
@@ -188,7 +188,13 @@ const specConfig: Record<
         'REPORT',
         'HELP_EMAIL',
       ],
-      ['INVOLVE_COMMUNITY']
+      [
+        'INVOLVE_COMMUNITY',
+        'USER_LANGUAGE_JA_JP',
+        'USER_LANGUAGE_KO_KR',
+        'USER_LANGUAGE_ES_ES',
+        'USER_LANGUAGE',
+      ]
     ),
   },
 }
@@ -214,6 +220,7 @@ const globalConfig: Config = {
     isSentryEnabled: true,
     isNotionEnabled: true,
     isMistralAiEnabled: true,
+    isPolarEnabled: true,
     announcementsDbId: import.meta.env.VITE_NOTION_ANNOUNCEMENTS_ID as string,
     onboardingDbId: import.meta.env.VITE_NOTION_ONBOARDING_ID as string,
     pluginId: specConfig[__PLUGIN__].pluginId,
@@ -268,10 +275,10 @@ const globalConfig: Config = {
     isbUrl: 'https://isb.ylb.lt/website',
     uicpUrl: 'https://uicp.ylb.lt/website',
     storeManagementUrl: 'https://uicp.ylb.lt/store-management',
-    storeProWeekUrl: 'https://uicp.ylb.lt/pro-week',
-    storeProMonthUrl: 'https://uicp.ylb.lt/pro-month',
-    storeProYearUrl: 'https://uicp.ylb.lt/pro-year',
-    storeProLifetimeUrl: 'https://uicp.ylb.lt/pro-lifetime',
+    storeProWeekUrl: '17eb1281-cf21-4d58-9144-76a1426ec73c',
+    storeProMonthUrl: '1c4ad049-f424-4ec4-ac66-0997050e0060',
+    storeProYearUrl: '87a83311-cba6-424f-a72f-84a1785a1079',
+    storeProLifetimeUrl: '9ed0e164-8972-4f60-88cf-91b805991e87',
     storeUltimateRequestUrl: 'https://uicp.ylb.lt/ultimate-request',
     howToUseUrl: 'https://uicp.ylb.lt/how-to-use-figma',
   },
@@ -281,7 +288,7 @@ const globalConfig: Config = {
     algorithmVersion: 'v3',
     paletteVersion: '2025.06',
     pluginVersion: __APP_VERSION__,
-    creditsVersion: '2026.02.02',
+    creditsVersion: '2026.05',
   },
   features: specConfig[__PLUGIN__].features,
   lang: 'en-US',
@@ -293,11 +300,11 @@ const globalConfig: Config = {
     harmonyCreate: 50,
     aiColorsGenerate: 50,
     paletteCreate: 100,
-    paletteGenerate: 150,
+    paletteGenerate: 200,
     paletteWithPropsGenerate: 200,
-    sheetGenerate: 250,
-    paletteUpdates: 25,
-    localStylesSync: 250,
+    sheetGenerate: 200,
+    paletteUpdates: 100,
+    localStylesSync: 300,
     localVariablesSync: 300,
     localTokensSync: 300,
   },

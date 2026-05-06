@@ -4,7 +4,7 @@ import globalConfig from '../global.config'
 import { tolgee } from '..'
 import checkTrialStatus from './checks/checkTrialStatus'
 
-declare const __PLUGIN__: 'fig' | 'one'
+declare const __PLUGIN__: 'one' | 'team'
 
 const loadParameters = async ({ key, result }: ParameterInputEvent) => {
   switch (key) {

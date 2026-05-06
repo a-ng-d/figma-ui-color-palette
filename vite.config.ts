@@ -40,7 +40,7 @@ export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '')
   const isDev = mode === 'development'
   const isPlugin = process.env.IS_PLUGIN === 'true'
-  const plugin = process.env.PLUGIN || 'fig'
+  const plugin = process.env.PLUGIN || 'one'
   const pluginDir = path.resolve(__dirname, plugin)
 
   return {
@@ -55,7 +55,7 @@ export default defineConfig(({ mode }) => {
               project: 'ui-color-palette',
               authToken: env.SENTRY_AUTH_TOKEN,
               sourcemaps: {
-                assets: plugin === 'fig' ? './fig/dist/**' : './one/dist/**',
+                assets: plugin === 'one' ? './one/dist/**' : './team/dist/**',
                 filesToDeleteAfterUpload: isDev ? undefined : '**/*.map',
               },
               release: {
