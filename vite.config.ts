@@ -6,7 +6,7 @@ import preact from '@preact/preset-vite'
 
 const excludeUnwantedCssPlugin = (): Plugin => {
   const excludePattern =
-    /figma-colors|penpot-colors|penpot-types|sketch-colors|sketch-types\.css$/
+    /figma-colors|penpot-colors|penpot-types|sketch-colors|sketch-types|framer-colors|framer-types\.css$/
 
   return {
     name: 'exclude-unwanted-css',

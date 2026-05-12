@@ -200,7 +200,6 @@ const specConfig: Record<
         'EXPORT_ANDROID_XML',
         'EXPORT_CSV',
         'REPORT',
-        'HELP_EMAIL',
       ],
       [
         'INVOLVE_COMMUNITY',
