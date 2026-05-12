@@ -60,7 +60,7 @@ figma.on('run', async ({ parameters }: RunEvent) => {
       'selectionchange',
       async () => await checkTrialStatus({ context: 'UI', plugin: __PLUGIN__ })
     )
-    loadUI().then(() => setTimeout(() => processSelection(), 3000))
+    loadUI()
   } else {
     const selectedPreset = presets.find(
       (preset) => preset.name === parameters.preset
