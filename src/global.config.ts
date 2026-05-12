@@ -18,7 +18,14 @@ const specConfig: Record<
   one: {
     pluginId: '1063959496693642315',
     features: doSpecificMode(
-      ['HELP_CHAT', 'USER_LICENSE'],
+      [
+        'HELP_CHAT',
+        'USER_LICENSE',
+        'VIEWS',
+        'VIEWS_PALETTE',
+        'VIEWS_PALETTE_WITH_PROPERTIES',
+        'VIEWS_SHEET',
+      ],
       [
         'CREATE_PALETTE',
         'DOCUMENT_CREATE',
@@ -29,8 +36,8 @@ const specConfig: Record<
         'PREVIEW_LOCK_SOURCE_COLORS',
         'PREVIEW_SCORES_WCAG_INTERVAL',
         'PREVIEW_SCORES_APCA_INTERVAL',
-        'PREVIEW_FILTER_WCAG',
-        'PREVIEW_FILTER_APCA',
+        'PREVIEW_FILTER_PASS',
+        'PREVIEW_FILTER_FAIL',
         'DOCUMENT_PALETTE',
         'DOCUMENT_PALETTE_PROPERTIES',
         'DOCUMENT_SHEET',
@@ -109,7 +116,14 @@ const specConfig: Record<
   team: {
     pluginId: '1532789439226122095',
     features: doSpecificMode(
-      ['HELP_CHAT', 'PRICING'],
+      [
+        'HELP_CHAT',
+        'PRICING',
+        'VIEWS',
+        'VIEWS_PALETTE',
+        'VIEWS_PALETTE_WITH_PROPERTIES',
+        'VIEWS_SHEET',
+      ],
       [
         'CREATE_PALETTE',
         'DOCUMENT_CREATE',
@@ -120,8 +134,8 @@ const specConfig: Record<
         'PREVIEW_LOCK_SOURCE_COLORS',
         'PREVIEW_SCORES_WCAG_INTERVAL',
         'PREVIEW_SCORES_APCA_INTERVAL',
-        'PREVIEW_FILTER_WCAG',
-        'PREVIEW_FILTER_APCA',
+        'PREVIEW_FILTER_PASS',
+        'PREVIEW_FILTER_FAIL',
         'DOCUMENT_PALETTE',
         'DOCUMENT_PALETTE_PROPERTIES',
         'DOCUMENT_SHEET',
@@ -186,7 +200,6 @@ const specConfig: Record<
         'EXPORT_ANDROID_XML',
         'EXPORT_CSV',
         'REPORT',
-        'HELP_EMAIL',
       ],
       [
         'INVOLVE_COMMUNITY',

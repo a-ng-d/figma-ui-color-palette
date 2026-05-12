@@ -56,25 +56,6 @@ const loadUI = async () => {
     themeColors: true,
   })
 
-  if (figma.command === 'edit') {
-    const document = figma.currentPage.selection[0]
-    const id = document.getSharedPluginData('uicp', 'id')
-    console.log('Document ID:', id)
-
-    if (id !== '')
-      setTimeout(() => {
-        jumpToPalette(id).catch((error) =>
-          figma.ui.postMessage({
-            type: 'POST_MESSAGE',
-            data: {
-              type: 'ERROR',
-              message: error.message,
-            },
-          })
-        )
-      }, 3000)
-  }
-
   // UI > Canvas
   figma.ui.onmessage = async (msg) => {
     const path = msg
@@ -118,6 +99,24 @@ const loadUI = async () => {
         )
 
         figma.ui.resize(path.data.width, path.data.height)
+      },
+      OPEN_DOCUMENT: async () => {
+        processSelection()
+        if (figma.command === 'edit') {
+          const document = figma.currentPage.selection[0]
+          const id = document.getSharedPluginData('uicp', 'id')
+
+          if (id !== '')
+            jumpToPalette(id).catch((error) =>
+              figma.ui.postMessage({
+                type: 'POST_MESSAGE',
+                data: {
+                  type: 'ERROR',
+                  message: error.message,
+                },
+              })
+            )
+        }
       },
       //
       CHECK_ANNOUNCEMENTS_STATUS: () =>
