@@ -79,7 +79,7 @@
     "@tolgee/format-icu": "^6.2.7",
     "@tolgee/react": "^6.2.7",
     "@tolgee/web": "^6.2.7",
-    "@unoff/ui": "^1.23.15",
+    "@unoff/ui": "^1.24.1",
     "@unoff/utils": "^0.8.2",
     "chroma-js": "^3.1.2",
     "color-names": "^2.0.0",
