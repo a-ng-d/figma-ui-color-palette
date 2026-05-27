@@ -1,3 +1,4 @@
+import uicpf from '@ui-lib/content/images/uicp_figma.webp'
 import globalConfig from '../global.config'
 import { tolgee } from '..'
 import updateThemes from './updates/updateThemes'
@@ -8,7 +9,7 @@ import updateLocalVariables from './updates/updateLocalVariables'
 import updateLocalStyles from './updates/updateLocalStyles'
 import updateDocument from './updates/updateDocument'
 import updateColors from './updates/updateColors'
-// import payProPlan from './plans/payProPlan'
+import payProPlan from './plans/payProPlan'
 import enableTrial from './plans/enableTrial'
 import processSelection from './gets/processSelection'
 import jumpToPalette from './gets/jumpToPalette'
@@ -428,7 +429,13 @@ const loadUI = async () => {
         figma.ui.postMessage({
           type: 'GET_PRICING',
           data: {
-            licenseTrigger: __PLUGIN__ === 'one' ? '' : 'ACTIVATE',
+            licenseTrigger: {
+              type: __PLUGIN__ === 'one' ? 'CUSTOM_CHECKOUT' : 'ACTIVATE',
+              imageSrc: uicpf,
+              title: tolgee.t('pricing.figma.title'),
+              text: tolgee.t('pricing.figma.text'),
+              cta: tolgee.t('pricing.figma.cta'),
+            },
           },
         }),
       GET_LICENSE: async () =>
@@ -437,6 +444,7 @@ const loadUI = async () => {
           : figma.ui.postMessage({
               type: 'GET_LICENSE',
             }),
+      GO_TO_CHECKOUT: async () => payProPlan(),
       GO_TO_ULTIMATE_REQUEST: async () =>
         figma.openExternal(globalConfig.urls.storeUltimateRequestUrl),
       ENABLE_PRO_PLAN: async () =>
