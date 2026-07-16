@@ -81,9 +81,6 @@ export default defineConfig(({ mode }) => {
 
     resolve: {
       alias: {
-        react: 'preact/compat',
-        'react-dom': 'preact/compat',
-        'react/jsx-runtime': 'preact/jsx-runtime',
         '@ui-lib': path.resolve(
           __dirname,
           './packages/ui-ui-color-palette/src'

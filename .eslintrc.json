@@ -23,6 +23,8 @@
     "import"
   ],
   "rules": {
+    "react/react-in-jsx-scope": "off",
+    "react/jsx-uses-react": "off",
     "@typescript-eslint/no-explicit-any": [1],
     "eqeqeq": ["error", "always", { "null": "ignore" }],
     "curly": ["warn", "multi"],
