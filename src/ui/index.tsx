@@ -25,6 +25,7 @@ import { TolgeeProvider } from '@tolgee/react'
 import * as Sentry from '@sentry/react'
 import globalConfig from '../global.config'
 
+// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 const container = document.getElementById('app')!
 
 const mixpanelToken = import.meta.env.VITE_MIXPANEL_TOKEN
