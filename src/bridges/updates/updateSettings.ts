@@ -1,4 +1,4 @@
-import { Data, FullConfiguration } from '@a_ng_d/utils-ui-color-palette'
+import { Data, FullConfiguration } from '@yelbolt/engine-ui-color-palette'
 import { getJsonSize } from '../../utils/getSize'
 import { SettingsMessage } from '../../types/messages'
 import { tolgee } from '../..'

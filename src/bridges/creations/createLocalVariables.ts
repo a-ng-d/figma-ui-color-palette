@@ -2,7 +2,7 @@ import {
   Data,
   FullConfiguration,
   LibraryData,
-} from '@a_ng_d/utils-ui-color-palette'
+} from '@yelbolt/engine-ui-color-palette'
 import { getJsonSize } from '../../utils/getSize'
 import LocalVariable from '../../canvas/LocalVariable'
 import { tolgee } from '../..'

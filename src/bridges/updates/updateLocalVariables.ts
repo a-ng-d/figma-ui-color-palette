@@ -1,5 +1,5 @@
 import chroma from 'chroma-js'
-import { Data, FullConfiguration } from '@a_ng_d/utils-ui-color-palette'
+import { Data, FullConfiguration } from '@yelbolt/engine-ui-color-palette'
 import { tolgee } from '../..'
 
 const updateLocalVariables = async (id: string) => {

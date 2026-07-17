@@ -1,4 +1,4 @@
-import { RgbModel } from '@a_ng_d/utils-ui-color-palette'
+import { RgbModel } from '@yelbolt/engine-ui-color-palette'
 
 export default class LocalStyle {
   private name: string

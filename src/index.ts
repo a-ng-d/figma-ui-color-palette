@@ -1,3 +1,7 @@
+import {
+  ExchangeConfiguration,
+  ViewConfiguration,
+} from '@yelbolt/engine-ui-color-palette'
 import { doScale } from '@unoff/utils'
 import { presets } from '@ui-lib/stores/presets'
 import zh_Hans_CN from '@ui-lib/content/translations/zh-Hans-CN.json'
@@ -7,10 +11,6 @@ import ja_JP from '@ui-lib/content/translations/ja-JP.json'
 import fr_FR from '@ui-lib/content/translations/fr-FR.json'
 import es_ES from '@ui-lib/content/translations/es-ES.json'
 import en_US from '@ui-lib/content/translations/en-US.json'
-import {
-  ExchangeConfiguration,
-  ViewConfiguration,
-} from '@a_ng_d/utils-ui-color-palette'
 import setPaletteMigration from './utils/setPaletteMigration'
 import { createI18n } from './utils/i18n'
 import globalConfig from './global.config'
