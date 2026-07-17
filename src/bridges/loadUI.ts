@@ -244,7 +244,10 @@ const loadUI = async () => {
           }),
       CREATE_PALETTE_FROM_DOCUMENT: () =>
         createPaletteFromDocument()
-          .finally(() => figma.ui.postMessage({ type: 'STOP_LOADER' }))
+          .finally(() => {
+            getPalettesOnCurrentPage()
+            figma.ui.postMessage({ type: 'STOP_LOADER' })
+          })
           .catch((error) => {
             figma.ui.postMessage({
               type: 'REPORT_ERROR',
