@@ -92,7 +92,6 @@ const specConfig: Record<
     features: doSpecificMode(
       [
         'HELP_CHAT',
-        'PRICING',
         'VIEWS',
         'VIEWS_PALETTE',
         'VIEWS_PALETTE_WITH_PROPERTIES',
