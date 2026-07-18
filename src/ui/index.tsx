@@ -25,6 +25,7 @@ import { TolgeeProvider } from '@tolgee/react'
 import * as Sentry from '@sentry/react'
 import globalConfig from '../global.config'
 
+// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 const container = document.getElementById('app')!
 
 const mixpanelToken = import.meta.env.VITE_MIXPANEL_TOKEN
@@ -49,12 +50,14 @@ if (globalConfig.env.isMixpanelEnabled && mixpanelToken !== undefined) {
 
   const now = new Date()
   const cohort = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`
+  const env = import.meta.env.MODE as 'development' | 'production'
   mixpanel.register({
     Cohort: cohort,
     Version: globalConfig.versions.pluginVersion,
+    Env: env,
   })
 
-  setMixpanelEnv(import.meta.env.MODE as 'development' | 'production')
+  setMixpanelEnv(env)
   initMixpanel(mixpanel)
   setEditor(globalConfig.env.editor)
 }

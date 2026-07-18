@@ -5,7 +5,7 @@ import {
   TextColorsThemeConfiguration,
   ViewConfiguration,
   VisionSimulationModeConfiguration,
-} from '@a_ng_d/utils-ui-color-palette'
+} from '@yelbolt/engine-ui-color-palette'
 import Status from './Status'
 import Property from './Property'
 import Properties from './Properties'

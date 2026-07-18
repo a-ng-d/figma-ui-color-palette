@@ -1,5 +1,6 @@
+import { Data, FullConfiguration } from '@yelbolt/engine-ui-color-palette'
 import { doScale } from '@unoff/utils'
-import { Data, FullConfiguration } from '@a_ng_d/utils-ui-color-palette'
+import scheduleSaveVersion from '../../utils/scheduleSaveVersion'
 import { getJsonSize } from '../../utils/getSize'
 import { ScaleMessage } from '../../types/messages'
 import { tolgee } from '../..'
@@ -75,8 +76,7 @@ const updateScale = async (msg: ScaleMessage) => {
       JSON.stringify(palette)
     )
 
-    await new Promise((r) => setTimeout(r, 1000))
-    await figma.saveVersionHistoryAsync(
+    scheduleSaveVersion(
       `${palette.base.name} - ${tolgee.t('events.scaleUpdated')}`
     )
 

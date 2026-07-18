@@ -3,7 +3,7 @@ import {
   MetaConfiguration,
   PaletteDataThemeItem,
   ThemeConfiguration,
-} from '@a_ng_d/utils-ui-color-palette'
+} from '@yelbolt/engine-ui-color-palette'
 import { tolgee } from '..'
 import Tag from './Tag'
 import Paragraph from './Paragraph'

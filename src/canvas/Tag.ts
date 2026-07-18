@@ -1,4 +1,4 @@
-import { RgbModel } from '@a_ng_d/utils-ui-color-palette'
+import { RgbModel } from '@yelbolt/engine-ui-color-palette'
 import { darkColor, FontFamily, propertyFontFamily } from './styles'
 
 export default class Tag {

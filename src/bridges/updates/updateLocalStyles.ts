@@ -1,5 +1,6 @@
 import chroma from 'chroma-js'
-import { Data, FullConfiguration } from '@a_ng_d/utils-ui-color-palette'
+import { Data, FullConfiguration } from '@yelbolt/engine-ui-color-palette'
+import scheduleSaveVersion from '../../utils/scheduleSaveVersion'
 import { tolgee } from '../..'
 
 const updateLocalStyles = async (id: string) => {
@@ -139,7 +140,7 @@ const updateLocalStyles = async (id: string) => {
         })
       )
 
-      figma.saveVersionHistoryAsync(
+      scheduleSaveVersion(
         `${palette.base.name} - ${tolgee.t('events.stylesSynced')}`
       )
 

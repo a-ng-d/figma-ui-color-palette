@@ -3,7 +3,8 @@ import {
   Data,
   MetaConfiguration,
   ThemeConfiguration,
-} from '@a_ng_d/utils-ui-color-palette'
+} from '@yelbolt/engine-ui-color-palette'
+import scheduleSaveVersion from '../../utils/scheduleSaveVersion'
 import { tolgee } from '../..'
 
 interface Msg {
@@ -65,8 +66,7 @@ const createPaletteFromRemote = async (msg: Msg) => {
     data: palette,
   })
 
-  await new Promise((r) => setTimeout(r, 1000))
-  await figma.saveVersionHistoryAsync(
+  scheduleSaveVersion(
     `${palette.base.name} - ${tolgee.t('events.palettePulled')}`
   )
 

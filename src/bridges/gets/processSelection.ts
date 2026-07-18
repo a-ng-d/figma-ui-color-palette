@@ -1,5 +1,5 @@
 import { uid } from 'uid'
-import { SourceColorConfiguration } from '@a_ng_d/utils-ui-color-palette'
+import { SourceColorConfiguration } from '@yelbolt/engine-ui-color-palette'
 import { tolgee } from '../..'
 
 export let currentSelection: ReadonlyArray<SceneNode>

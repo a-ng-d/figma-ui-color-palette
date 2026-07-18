@@ -6,7 +6,7 @@ import {
   VisionSimulationModeConfiguration,
   ExchangeConfiguration,
   TextColorsThemeConfiguration,
-} from '@a_ng_d/utils-ui-color-palette'
+} from '@yelbolt/engine-ui-color-palette'
 
 export interface ScaleMessage {
   type: 'UPDATE_SCALE'

@@ -1,5 +1,4 @@
 import { uid } from 'uid'
-import { doScale } from '@unoff/utils'
 import {
   AlgorithmVersionConfiguration,
   ColorConfiguration,
@@ -21,7 +20,8 @@ import {
   ThemeConfiguration,
   ViewConfiguration,
   VisionSimulationModeConfiguration,
-} from '@a_ng_d/utils-ui-color-palette'
+} from '@yelbolt/engine-ui-color-palette'
+import { doScale } from '@unoff/utils'
 import globalConfig from '../global.config'
 import { tolgee } from '..'
 

@@ -5,8 +5,9 @@ import {
   PaletteDataThemeItem,
   ThemeConfiguration,
   ViewConfiguration,
-} from '@a_ng_d/utils-ui-color-palette'
+} from '@yelbolt/engine-ui-color-palette'
 import setPaletteName from '../../utils/setPaletteName'
+import scheduleSaveVersion from '../../utils/scheduleSaveVersion'
 import Sheet from '../../canvas/Sheet'
 import Palette from '../../canvas/Palette'
 import { tolgee } from '../..'
@@ -91,8 +92,7 @@ const updateDocument = async (view: ViewConfiguration) => {
     },
   })
 
-  await new Promise((r) => setTimeout(r, 1000))
-  await figma.saveVersionHistoryAsync(
+  scheduleSaveVersion(
     `${palette.base.name} - ${tolgee.t('events.documentUpdated')}`
   )
 
