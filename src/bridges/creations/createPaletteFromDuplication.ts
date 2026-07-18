@@ -1,5 +1,6 @@
 import { uid } from 'uid'
 import { FullConfiguration } from '@yelbolt/engine-ui-color-palette'
+import scheduleSaveVersion from '../../utils/scheduleSaveVersion'
 import { tolgee } from '../..'
 
 const createPaletteFromDuplication = async (id: string) => {
@@ -37,8 +38,7 @@ const createPaletteFromDuplication = async (id: string) => {
     JSON.stringify(palette)
   )
 
-  await new Promise((r) => setTimeout(r, 1000))
-  await figma.saveVersionHistoryAsync(
+  scheduleSaveVersion(
     `${palette.base.name} - ${tolgee.t('events.paletteDuplicated')}`
   )
 

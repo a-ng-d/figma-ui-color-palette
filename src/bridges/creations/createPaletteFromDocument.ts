@@ -1,5 +1,6 @@
 import { FullConfiguration } from '@yelbolt/engine-ui-color-palette'
 import processSelection from '../gets/processSelection'
+import scheduleSaveVersion from '../../utils/scheduleSaveVersion'
 import { tolgee } from '../..'
 
 const createPaletteFromDocument = async () => {
@@ -20,8 +21,7 @@ const createPaletteFromDocument = async () => {
   })
   processSelection()
 
-  await new Promise((r) => setTimeout(r, 1000))
-  await figma.saveVersionHistoryAsync(
+  scheduleSaveVersion(
     `${backup.base.name} - ${tolgee.t('events.paletteCreatedFromDocument')}`
   )
 

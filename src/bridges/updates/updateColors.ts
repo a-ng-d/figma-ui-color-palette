@@ -1,4 +1,5 @@
 import { Data, FullConfiguration } from '@yelbolt/engine-ui-color-palette'
+import scheduleSaveVersion from '../../utils/scheduleSaveVersion'
 import { getJsonSize } from '../../utils/getSize'
 import { ColorsMessage } from '../../types/messages'
 import { tolgee } from '../..'
@@ -29,8 +30,7 @@ const updateColors = async (msg: ColorsMessage) => {
       JSON.stringify(palette)
     )
 
-    await new Promise((r) => setTimeout(r, 1000))
-    await figma.saveVersionHistoryAsync(
+    scheduleSaveVersion(
       `${palette.base.name} - ${tolgee.t('events.colorsUpdated')}`
     )
 

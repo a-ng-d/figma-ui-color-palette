@@ -3,6 +3,7 @@ import {
   FullConfiguration,
   ViewConfiguration,
 } from '@yelbolt/engine-ui-color-palette'
+import scheduleSaveVersion from '../../utils/scheduleSaveVersion'
 import Documents from '../../canvas/Documents'
 import { tolgee } from '../..'
 
@@ -27,8 +28,7 @@ const createDocument = async (id: string, view: ViewConfiguration) => {
   figma.currentPage.selection = documents.documents
   figma.viewport.scrollAndZoomIntoView(figma.currentPage.selection)
 
-  await new Promise((r) => setTimeout(r, 1000))
-  await figma.saveVersionHistoryAsync(
+  scheduleSaveVersion(
     `${palette.base.name} - ${tolgee.t('events.documentCreated')}`
   )
 

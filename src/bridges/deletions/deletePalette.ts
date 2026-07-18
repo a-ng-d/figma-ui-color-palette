@@ -1,4 +1,5 @@
 import processSelection from '../gets/processSelection'
+import scheduleSaveVersion from '../../utils/scheduleSaveVersion'
 import { tolgee } from '../..'
 
 const deletePalette = async (id: string) => {
@@ -14,8 +15,7 @@ const deletePalette = async (id: string) => {
   figma.currentPage.setSharedPluginData('uicp', `palette_${id}`, '')
   processSelection()
 
-  await new Promise((r) => setTimeout(r, 1000))
-  await figma.saveVersionHistoryAsync(
+  scheduleSaveVersion(
     `${palette.base.name} - ${tolgee.t('events.paletteRemoved')}`
   )
 
