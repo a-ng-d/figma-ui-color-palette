@@ -195,6 +195,10 @@ const globalConfig: Config = {
     creditsLimit: 500,
     creditsRenewalPeriodDays: 7,
     creditsRenewalPeriodHours: 168,
+    storeProWeekId: '17eb1281-cf21-4d58-9144-76a1426ec73c',
+    storeProMonthId: '1c4ad049-f424-4ec4-ac66-0997050e0060',
+    storeProYearId: '87a83311-cba6-424f-a72f-84a1785a1079',
+    storeProLifetimeId: '9ed0e164-8972-4f60-88cf-91b805991e87',
   },
   dbs: {
     palettesDbViewName: isDev
@@ -236,11 +240,8 @@ const globalConfig: Config = {
     vsCodeFigmaPluginUrl: 'https://uicp.ylb.lt/vscode-figma-plugin',
     isbUrl: 'https://isb.ylb.lt/website',
     uicpUrl: 'https://uicp.ylb.lt/website',
+    storeUrl: 'https://uicp.ylb.lt/store',
     storeManagementUrl: 'https://uicp.ylb.lt/store-management',
-    storeProWeekUrl: '17eb1281-cf21-4d58-9144-76a1426ec73c',
-    storeProMonthUrl: '1c4ad049-f424-4ec4-ac66-0997050e0060',
-    storeProYearUrl: '87a83311-cba6-424f-a72f-84a1785a1079',
-    storeProLifetimeUrl: '9ed0e164-8972-4f60-88cf-91b805991e87',
     storeUltimateRequestUrl: 'https://uicp.ylb.lt/ultimate-request',
     howToUseUrl: 'https://uicp.ylb.lt/how-to-use-figma',
   },

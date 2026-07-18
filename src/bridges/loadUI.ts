@@ -434,19 +434,22 @@ const loadUI = async () => {
         figma.ui.postMessage({
           type: 'GET_TRIAL',
         }),
-      GET_PRO: async () =>
-        figma.ui.postMessage({
-          type: 'GET_PRICING',
-          data: {
-            licenseTrigger: {
-              type: __PLUGIN__ === 'one' ? 'CUSTOM_CHECKOUT' : 'ACTIVATE',
-              imageSrc: uicpf,
-              title: tolgee.t('pricing.figma.title'),
-              text: tolgee.t('pricing.figma.text'),
-              cta: tolgee.t('pricing.figma.cta'),
+      GET_PRO: async () => {
+        if (__PLUGIN__ === 'one')
+          figma.ui.postMessage({
+            type: 'GET_PRICING',
+            data: {
+              licenseTrigger: {
+                type: __PLUGIN__ === 'one' ? 'CUSTOM_CHECKOUT' : 'ACTIVATE',
+                imageSrc: uicpf,
+                title: tolgee.t('pricing.figma.title'),
+                text: tolgee.t('pricing.figma.text'),
+                cta: tolgee.t('pricing.figma.cta'),
+              },
             },
-          },
-        }),
+          })
+        else figma.openExternal('https://uicp.ylb.lt/store')
+      },
       GET_LICENSE: async () =>
         __PLUGIN__ === 'one'
           ? figma.openExternal('https://uicp.ylb.lt/run-figma-plugin')
