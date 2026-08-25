@@ -161,8 +161,8 @@ const specConfig: Record<
 const globalConfig: Config = {
   limits: {
     pageSize: 20,
-    width: 820,
-    height: 640,
+    width: 800,
+    height: 600,
     minWidth: 240,
     minHeight: 420,
     sourceColors: 5,
