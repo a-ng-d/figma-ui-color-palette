@@ -80,10 +80,10 @@ const specConfig: Record<
       ],
       [
         'INVOLVE_COMMUNITY',
-        'USER_LANGUAGE_JA_JP',
-        'USER_LANGUAGE_KO_KR',
-        'USER_LANGUAGE_ES_ES',
-        'USER_LANGUAGE',
+        'SCALE_CHROMA',
+        'SCALE_HUE',
+        'COLORS_CHROMA_SHIFTING',
+        'COLORS_HUE_SHIFTING',
       ]
     ),
   },
@@ -161,7 +161,7 @@ const specConfig: Record<
 const globalConfig: Config = {
   limits: {
     pageSize: 20,
-    width: 640,
+    width: 820,
     height: 640,
     minWidth: 240,
     minHeight: 420,
@@ -176,6 +176,7 @@ const globalConfig: Config = {
     ui: 'figma',
     colorMode: 'figma-dark',
     isDev,
+    isEmbed: false,
     isSupabaseEnabled: true,
     isMixpanelEnabled: true,
     isSentryEnabled: true,
@@ -248,7 +249,7 @@ const globalConfig: Config = {
     userConsentVersion: '2025.09',
     trialVersion: '2024.03',
     algorithmVersion: 'v3',
-    paletteVersion: '2025.06',
+    paletteVersion: '2026.08',
     pluginVersion: __APP_VERSION__,
     creditsVersion: '2026.05',
   },

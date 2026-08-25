@@ -191,9 +191,14 @@ const createLocalVariables = async (id: string) => {
             count: j,
           })
         )
-      if (k > 1) messages.push(tolgee.t('warning.tooManyThemesToCreateModes'))
+      if (k > 0)
+        messages.push(
+          tolgee.t('warning.tooManyThemesToCreateModes', {
+            count: collection?.modes.length ?? k,
+          })
+        )
 
-      if (i + j === 0) messages.push(tolgee.t('info.noChange'))
+      if (i + j + k === 0) messages.push(tolgee.t('info.noChange'))
 
       return messages.join(tolgee.t('separator'))
     })

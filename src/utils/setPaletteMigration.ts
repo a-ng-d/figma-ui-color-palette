@@ -9,6 +9,8 @@ import {
   FullConfiguration,
   LibraryData,
   LockedSourceColorsConfiguration,
+  normalizeShift,
+  makeDefaultShift,
   PaletteData,
   PaletteDataShadeItem,
   PaletteDataThemeItem,
@@ -40,8 +42,8 @@ const setPaletteMigration = async (document: BaseNode) => {
         easing: 'LINEAR',
       },
       shift: {
-        chroma: 100,
-        hue: 0,
+        chroma: makeDefaultShift('CHROMA'),
+        hue: makeDefaultShift('HUE'),
       },
       areSourceColorsLocked: false,
       colors: [],
@@ -132,7 +134,9 @@ const setPaletteMigration = async (document: BaseNode) => {
       ? JSON.parse(rawScale)
       : doScale(preset.scale, preset.min, preset.max)
   const shift: ShiftConfiguration =
-    rawShift !== '' ? JSON.parse(rawShift) : { chroma: 100 }
+    rawShift !== ''
+      ? JSON.parse(rawShift)
+      : { chroma: makeDefaultShift('CHROMA'), hue: makeDefaultShift('HUE') }
   const areSourceColorsLocked: LockedSourceColorsConfiguration =
     rawAreSourceColorsLocked !== undefined
       ? rawAreSourceColorsLocked === 'true'
@@ -209,7 +213,8 @@ const setPaletteMigration = async (document: BaseNode) => {
   palette.base.preset.min = preset.min
   palette.base.preset.stops = preset.scale
   palette.base.preset.easing = preset.easing
-  palette.base.shift.chroma = shift.chroma
+  palette.base.shift.chroma = normalizeShift(shift.chroma, 'CHROMA')
+  palette.base.shift.hue = normalizeShift(shift.hue, 'HUE')
   palette.base.areSourceColorsLocked = areSourceColorsLocked
   palette.base.colorSpace = colorSpace
   palette.base.algorithmVersion = algorithmVersion
@@ -220,11 +225,14 @@ const setPaletteMigration = async (document: BaseNode) => {
       name: color.name || '',
       rgb: color.rgb,
       hue: {
-        shift: color.hue?.shift || color.hueShifting || 0,
+        shift: normalizeShift(color.hue?.shift ?? color.hueShifting, 'HUE'),
         isLocked: color.hue?.isLocked || false,
       },
       chroma: {
-        shift: color.chroma?.shift || color.chromaShifting || 100,
+        shift: normalizeShift(
+          color.chroma?.shift ?? color.chromaShifting,
+          'CHROMA'
+        ),
         isLocked: color.chroma?.isLocked || false,
       },
       description: color.description || '',
