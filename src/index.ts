@@ -1,5 +1,6 @@
 import {
   ExchangeConfiguration,
+  makeDefaultShift,
   ViewConfiguration,
 } from '@yelbolt/engine-ui-color-palette'
 import { doScale } from '@unoff/utils'
@@ -12,6 +13,7 @@ import fr_FR from '@ui-lib/content/translations/fr-FR.json'
 import es_ES from '@ui-lib/content/translations/es-ES.json'
 import en_US from '@ui-lib/content/translations/en-US.json'
 import setPaletteMigration from './utils/setPaletteMigration'
+import setPagePalettesMigration from './utils/setPagePalettesMigration'
 import { createI18n } from './utils/i18n'
 import globalConfig from './global.config'
 import loadUI from './bridges/loadUI'
@@ -103,7 +105,8 @@ figma.on('run', async ({ parameters }: RunEvent) => {
               selectedPreset?.easing ?? 'LINEAR'
             ),
             shift: {
-              chroma: 100,
+              chroma: makeDefaultShift('CHROMA'),
+              hue: makeDefaultShift('HUE'),
             },
             areSourceColorsLocked: false,
             colorSpace: parameters.space.toUpperCase().replace(' ', '_'),
@@ -144,10 +147,10 @@ if (figma.editorType !== 'dev')
 
         if (
           type === 'UI_COLOR_PALETTE' &&
-          version !== globalConfig.versions.paletteVersion &&
-          __PLUGIN__ === 'one'
+          version !== globalConfig.versions.paletteVersion
         )
           setPaletteMigration(document)
+          setPagePalettesMigration()
       })
   })
 figma.on('currentpagechange', async () => {
@@ -162,9 +165,9 @@ figma.on('currentpagechange', async () => {
 
       if (
         type === 'UI_COLOR_PALETTE' &&
-        version !== globalConfig.versions.paletteVersion &&
-        __PLUGIN__ === 'one'
+        version !== globalConfig.versions.paletteVersion
       )
         setPaletteMigration(document)
+        setPagePalettesMigration()
     })
 })
