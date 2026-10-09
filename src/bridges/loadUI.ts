@@ -446,6 +446,7 @@ const loadUI = async () => {
                 text: tolgee.t('pricing.figma.text'),
                 cta: tolgee.t('pricing.figma.cta'),
               },
+              origin: path.data?.origin ?? 'UNKNOWN',
             },
           })
         else figma.openExternal('https://uicp.ylb.lt/store')

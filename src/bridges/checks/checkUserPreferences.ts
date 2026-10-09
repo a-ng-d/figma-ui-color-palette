@@ -20,10 +20,13 @@ const checkUserPreferences = async () => {
     'is_suggested_language_displayed'
   )
   let userLanguage = await figma.clientStorage.getAsync('user_language')
+  let isOnboardingRead =
+    await figma.clientStorage.getAsync('is_onboarding_read')
+  let palettesView = await figma.clientStorage.getAsync('palettes_view')
 
   if (isWCAGDisplayed === undefined) {
-    await figma.clientStorage.setAsync('is_wcag_displayed', true)
-    isWCAGDisplayed = true
+    await figma.clientStorage.setAsync('is_wcag_displayed', false)
+    isWCAGDisplayed = false
   }
 
   if (isAPCADisplayed === undefined) {
@@ -59,6 +62,16 @@ const checkUserPreferences = async () => {
   if (userLanguage === undefined) {
     await figma.clientStorage.setAsync('user_language', globalConfig.lang)
     userLanguage = globalConfig.lang
+  }
+
+  if (isOnboardingRead === undefined) {
+    await figma.clientStorage.setAsync('is_onboarding_read', false)
+    isOnboardingRead = false
+  }
+
+  if (palettesView === undefined) {
+    await figma.clientStorage.setAsync('palettes_view', 'LIST')
+    palettesView = 'LIST'
   }
 
   tolgee.changeLanguage(userLanguage)
@@ -112,6 +125,8 @@ const checkUserPreferences = async () => {
       canDeepSyncVariables: canDeepSyncVariables,
       isSuggestedLanguageDisplayed: isSuggestedLanguageDisplayed,
       userLanguage: userLanguage,
+      isOnboardingRead: isOnboardingRead,
+      palettesView: palettesView,
     },
   })
 }

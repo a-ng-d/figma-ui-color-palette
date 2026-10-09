@@ -25,6 +25,7 @@ const specConfig: Record<
         'VIEWS_PALETTE',
         'VIEWS_PALETTE_WITH_PROPERTIES',
         'VIEWS_SHEET',
+        'HELP_ONBOARDING_AUTO_DISPLAY',
       ],
       [
         'CREATE_PALETTE',
@@ -60,6 +61,12 @@ const specConfig: Record<
         'PRESETS_FLUENT',
         'PRESETS_POLARIS',
         'PRESETS_CUSTOM_ADD',
+        'SCALE_CHROMA',
+        'SCALE_HUE',
+        'COLORS_CHROMA_SHIFTING',
+        'COLORS_HUE_SHIFTING',
+        'PREVIEW_LOCK_SOURCE_COLORS',
+        'PREVIEW_SHADE_HEX',
         'COLORS_ADD',
         'THEMES_ADD',
         'EXPORT_TOKENS_DTCG',
@@ -78,13 +85,7 @@ const specConfig: Record<
         'REPORT',
         'HELP_EMAIL',
       ],
-      [
-        'INVOLVE_COMMUNITY',
-        'SCALE_CHROMA',
-        'SCALE_HUE',
-        'COLORS_CHROMA_SHIFTING',
-        'COLORS_HUE_SHIFTING',
-      ]
+      ['INVOLVE_COMMUNITY']
     ),
   },
   team: {
@@ -96,6 +97,7 @@ const specConfig: Record<
         'VIEWS_PALETTE',
         'VIEWS_PALETTE_WITH_PROPERTIES',
         'VIEWS_SHEET',
+        'HELP_ONBOARDING_AUTO_DISPLAY',
       ],
       [
         'CREATE_PALETTE',
@@ -130,6 +132,12 @@ const specConfig: Record<
         'PRESETS_FLUENT',
         'PRESETS_POLARIS',
         'PRESETS_CUSTOM_ADD',
+        'SCALE_CHROMA',
+        'SCALE_HUE',
+        'COLORS_CHROMA_SHIFTING',
+        'COLORS_HUE_SHIFTING',
+        'PREVIEW_LOCK_SOURCE_COLORS',
+        'PREVIEW_SHADE_HEX',
         'COLORS_ADD',
         'THEMES_ADD',
         'EXPORT_TOKENS_DTCG',
@@ -147,13 +155,7 @@ const specConfig: Record<
         'EXPORT_CSV',
         'REPORT',
       ],
-      [
-        'INVOLVE_COMMUNITY',
-        'USER_LANGUAGE_JA_JP',
-        'USER_LANGUAGE_KO_KR',
-        'USER_LANGUAGE_ES_ES',
-        'USER_LANGUAGE',
-      ]
+      ['INVOLVE_COMMUNITY']
     ),
   },
 }
@@ -168,7 +170,7 @@ const globalConfig: Config = {
     sourceColors: 5,
     customStops: 6,
     colorThemes: 2,
-    localPalettes: 3,
+    localPalettes: 2,
   },
   env: {
     platform: 'figma',
