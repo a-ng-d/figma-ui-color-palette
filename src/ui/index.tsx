@@ -1,6 +1,6 @@
 import { render } from 'preact'
 import mixpanel from 'mixpanel-figma'
-import { commons, figmaModes, figmaPlugin, figmaTypes } from '@unoff/ui'
+import { commons, figmaPlugin, figmaTypes } from '@unoff/ui'
 import App from '@ui-lib/ui/App'
 import { initTolgee } from '@ui-lib/external/translation'
 import { initPolar } from '@ui-lib/external/transactional'
@@ -168,7 +168,6 @@ window.addEventListener('pluginMessage', ((event: MessageEvent) => {
 void commons
 void figmaPlugin
 void figmaTypes
-void figmaModes
 
 // Render
 tolgee?.run().then(() => {
