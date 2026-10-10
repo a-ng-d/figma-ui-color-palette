@@ -15,6 +15,7 @@ import processSelection from './gets/processSelection'
 import jumpToPalette from './gets/jumpToPalette'
 import getPalettesOnCurrentPage from './gets/getPalettesOnCurrentPage'
 import deletePalette from './deletions/deletePalette'
+import createSimulation from './creations/createSimulation'
 import createPaletteFromRemote from './creations/createPaletteFromRemote'
 import createPaletteFromDuplication from './creations/createPaletteFromDuplication'
 import createPaletteFromDocument from './creations/createPaletteFromDocument'
@@ -337,6 +338,25 @@ const loadUI = async () => {
               },
             })
           }),
+      SIMULATE_PALETTE: async () =>
+        createSimulation(path.id)
+          .then((notice) => {
+            if (notice !== undefined)
+              figma.ui.postMessage({
+                type: 'POST_MESSAGE',
+                data: notice,
+              })
+          })
+          .catch((error) =>
+            figma.ui.postMessage({
+              type: 'POST_MESSAGE',
+              data: {
+                type: 'ERROR',
+                message: error.message,
+              },
+            })
+          )
+          .finally(() => figma.ui.postMessage({ type: 'STOP_LOADER' })),
       CREATE_DOCUMENT: () =>
         createDocument(path.id, path.view)
           .finally(() => figma.ui.postMessage({ type: 'STOP_LOADER' }))
