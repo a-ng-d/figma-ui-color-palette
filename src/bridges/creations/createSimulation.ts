@@ -1,11 +1,6 @@
 import { Data, FullConfiguration } from '@yelbolt/engine-ui-color-palette'
 import { tolgee } from '../..'
 
-// Platform-independent core of "Simulate on selection": given a palette, find
-// for any color the closest color the palette offers. Each platform only owns
-// the canvas traversal (which nodes, which fills, undo, notifications).
-
-// RGB channels are normalized between 0 and 1, like the engine's `gl` values
 type Rgb = { r: number; g: number; b: number }
 
 type Lab = [number, number, number]
@@ -13,11 +8,7 @@ type Lch = { l: number; c: number; h: number }
 type Shade = { rgb: Rgb; lch: Lch }
 type Family = { shades: Array<Shade>; hue: number; chroma: number }
 
-// Below this OKLCH chroma a source color reads as neutral (white, grays,
-// black) and its hue is meaningless; pale tints stay above it
 const NEUTRAL_SOURCE_CHROMA = 0.015
-// A palette color whose most saturated shade stays below this chroma is a
-// neutral family, even when slightly tinted (e.g. cool or warm grays)
 const NEUTRAL_FAMILY_CHROMA = 0.06
 
 const toLinear = (c: number) =>
@@ -52,8 +43,6 @@ const hueGap = (a: number, b: number) => {
 const createFamilies = (palette: FullConfiguration): Array<Family> => {
   const libraryData = new Data(palette).makeLibraryData(['gl', 'alpha'])
 
-  // Palettes with themes also carry a default-theme duplicate: keep only one
-  // set of shades, and only one theme, so families are never mixed
   const hasThemes = libraryData.some((item) => !item.id.includes('00000000000'))
   const items = libraryData
     .filter((item) =>
@@ -75,19 +64,12 @@ const createFamilies = (palette: FullConfiguration): Array<Family> => {
       byName.set(item.colorName, shades)
     })
 
-  // A family's hue is read on its most saturated shade, where it is the most
-  // reliable; its chroma tells whether the family is a neutral one
   return Array.from(byName.values()).map((shades) => {
     const peak = shades.reduce((a, b) => (b.lch.c > a.lch.c ? b : a))
     return { shades, hue: peak.lch.h, chroma: peak.lch.c }
   })
 }
 
-// Simulation in two steps, the way a designer would pick a replacement:
-// 1. the palette color (family of shades) with the closest hue — or the most
-//    neutral one when the source color is itself neutral;
-// 2. within that family, the shade with the closest lightness.
-// Returns null when the palette has no usable color.
 const createPaletteMatcher = (
   palette: FullConfiguration
 ): ((color: Rgb) => Rgb) | null => {
@@ -145,6 +127,24 @@ const remapPaints = (
   return { paints: next, count }
 }
 
+const remapEffects = (
+  effects: ReadonlyArray<Effect>,
+  match: (color: Rgb) => Rgb
+): { effects: Array<Effect>; count: number } => {
+  let count = 0
+  const next = effects.map((effect) => {
+    if (!('color' in effect)) return effect
+
+    count++
+    const { r, g, b } = match(effect.color)
+    const rest = Object.fromEntries(
+      Object.entries(effect).filter(([key]) => key !== 'boundVariables')
+    )
+    return { ...rest, color: { r, g, b, a: effect.color.a } } as Effect
+  })
+  return { effects: next, count }
+}
+
 const remapNode = (node: SceneNode, match: (color: Rgb) => Rgb): number => {
   let count = 0
 
@@ -168,6 +168,14 @@ const remapNode = (node: SceneNode, match: (color: Rgb) => Rgb): number => {
     const result = remapPaints(node.strokes, match)
     if (result.count > 0) {
       node.strokes = result.paints
+      count += result.count
+    }
+  }
+
+  if ('effects' in node) {
+    const result = remapEffects(node.effects, match)
+    if (result.count > 0) {
+      node.effects = result.effects
       count += result.count
     }
   }
