@@ -4,6 +4,24 @@ import { defineConfig, loadEnv } from 'vite'
 import { sentryVitePlugin } from '@sentry/vite-plugin'
 import preact from '@preact/preset-vite'
 
+const onlyOwnPlatformTokens = () => {
+  const otherTokens =
+    /assets\/styles\/tokens\/modules\/(penpot|sketch|framer|yelbolt)-[a-z]+\.css$/
+  const emptyModule = '\0only-figma-tokens:empty'
+
+  return {
+    name: 'only-figma-tokens',
+    enforce: 'pre' as const,
+    resolveId(source: string) {
+      if (otherTokens.test(source.split('?')[0])) return emptyModule
+    },
+    load(id: string) {
+      if (id === emptyModule) return 'export default ""'
+      if (otherTokens.test(id.split('?')[0])) return ''
+    },
+  }
+}
+
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '')
   const isDev = mode === 'development'
@@ -14,6 +32,7 @@ export default defineConfig(({ mode }) => {
   return {
     plugins: [
       preact(),
+      onlyOwnPlatformTokens(),
       viteSingleFile(),
       ...(!isDev
         ? [
