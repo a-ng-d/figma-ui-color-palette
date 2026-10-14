@@ -9,10 +9,7 @@ const isValidPaletteConfiguration = (
 
   if (candidate.type !== 'UI_COLOR_PALETTE') return false
 
-  if (
-    typeof candidate.meta?.id !== 'string' ||
-    candidate.meta.id.length === 0
-  )
+  if (typeof candidate.meta?.id !== 'string' || candidate.meta.id.length === 0)
     return false
 
   if (!Array.isArray(candidate.themes) || candidate.themes.length === 0)

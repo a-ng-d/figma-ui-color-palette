@@ -150,7 +150,7 @@ if (figma.editorType !== 'dev')
           version !== globalConfig.versions.paletteVersion
         )
           setPaletteMigration(document)
-          setPagePalettesMigration()
+        setPagePalettesMigration()
       })
   })
 figma.on('currentpagechange', async () => {
@@ -168,6 +168,6 @@ figma.on('currentpagechange', async () => {
         version !== globalConfig.versions.paletteVersion
       )
         setPaletteMigration(document)
-        setPagePalettesMigration()
+      setPagePalettesMigration()
     })
 })
