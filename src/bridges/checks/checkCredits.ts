@@ -4,6 +4,20 @@ const addHours = (date: Date, hours: number) => {
   return new Date(date.getTime() + hours * 60 * 60 * 1000)
 }
 
+const addMonths = (date: Date, months: number) => {
+  const result = new Date(date.getTime())
+  const day = result.getDate()
+  result.setDate(1)
+  result.setMonth(result.getMonth() + months)
+  const lastDay = new Date(
+    result.getFullYear(),
+    result.getMonth() + 1,
+    0
+  ).getDate()
+  result.setDate(Math.min(day, lastDay))
+  return result
+}
+
 const checkCredits = async () => {
   const creditsCountStr = await figma.clientStorage.getAsync('credits_count')
   const renewDateStr = await figma.clientStorage.getAsync('credits_renew_date')
@@ -18,12 +32,18 @@ const checkCredits = async () => {
       ? new Date(parseInt(renewDateStr, 10))
       : null
 
+  const periodMonths = globalConfig.plan.creditsRenewalPeriodMonths
   const periodHours =
     globalConfig.plan.creditsRenewalPeriodHours ??
     globalConfig.plan.creditsRenewalPeriodDays * 24
 
+  const computeNext = (from: Date) =>
+    periodMonths !== undefined
+      ? addMonths(from, periodMonths)
+      : addHours(from, periodHours)
+
   if (renewDate === null) {
-    const next = addHours(now, periodHours)
+    const next = computeNext(now)
     figma.clientStorage.setAsync(
       'credits_renew_date',
       next.getTime().toString()
@@ -36,7 +56,7 @@ const checkCredits = async () => {
       'credits_count',
       globalConfig.plan.creditsLimit.toString()
     )
-    const next = addHours(now, periodHours)
+    const next = computeNext(now)
     figma.clientStorage.setAsync(
       'credits_renew_date',
       next.getTime().toString()
@@ -61,7 +81,7 @@ const checkCredits = async () => {
       'credits_count',
       globalConfig.plan.creditsLimit.toString()
     )
-    const next = addHours(now, periodHours)
+    const next = computeNext(now)
     figma.clientStorage.setAsync(
       'credits_renew_date',
       next.getTime().toString()

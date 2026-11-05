@@ -49,6 +49,7 @@ const createLocalVariables = async (id: string) => {
       }
       return collection
     })
+  const createdVariableIds = new Set<string>()
 
   const createLocalVariablesStatusMessage = figma.variables
     .getLocalVariablesAsync()
@@ -95,6 +96,7 @@ const createLocalVariables = async (id: string) => {
             )
             item.variableId = variable.id
             createdVariables.push(variable)
+            createdVariableIds.add(variable.id)
             allAvailableVariables.push(variable)
             if (collection !== undefined) {
               variable.setValueForMode(collection.modes[0].modeId, {
@@ -203,7 +205,10 @@ const createLocalVariables = async (id: string) => {
       return messages.join(tolgee.t('separator'))
     })
 
-  return await createLocalVariablesStatusMessage
+  return {
+    message: await createLocalVariablesStatusMessage,
+    createdVariableIds,
+  }
 }
 
 export default createLocalVariables
