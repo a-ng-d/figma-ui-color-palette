@@ -25,6 +25,7 @@ const specConfig: Record<
         'VIEWS_PALETTE',
         'VIEWS_PALETTE_WITH_PROPERTIES',
         'VIEWS_SHEET',
+        'USER_THEME',
         'HELP_ONBOARDING_AUTO_DISPLAY',
       ],
       [
@@ -109,6 +110,7 @@ const specConfig: Record<
         'VIEWS_PALETTE',
         'VIEWS_PALETTE_WITH_PROPERTIES',
         'VIEWS_SHEET',
+        'USER_THEME',
         'HELP_ONBOARDING_AUTO_DISPLAY',
       ],
       [
