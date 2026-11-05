@@ -1,5 +1,6 @@
 import { uid } from 'uid'
 import { SourceColorConfiguration } from '@yelbolt/engine-ui-color-palette'
+import { countSimulableLayers } from '../creations/createSimulation'
 import { tolgee } from '../..'
 
 export let currentSelection: ReadonlyArray<SceneNode>
@@ -13,6 +14,13 @@ const processSelection = () => {
 
   const selection: ReadonlyArray<BaseNode> = figma.currentPage.selection
   currentSelection = figma.currentPage.selection
+
+  figma.ui.postMessage({
+    type: 'SELECTION_MEASURED',
+    data: {
+      layers: countSimulableLayers(selection as ReadonlyArray<SceneNode>),
+    },
+  })
 
   const viableSelection: Array<SourceColorConfiguration> = []
 

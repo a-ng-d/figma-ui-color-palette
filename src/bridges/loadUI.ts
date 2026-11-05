@@ -1,4 +1,5 @@
 import uicpf from '@ui-lib/content/images/uicp_figma.webp'
+import { postUsageReport } from '../utils/usage'
 import globalConfig from '../global.config'
 import { tolgee } from '..'
 import updateThemes from './updates/updateThemes'
@@ -205,6 +206,9 @@ const loadUI = async () => {
         }),
       UPDATE_DOCUMENT: () =>
         updateDocument(path.view)
+          .then(({ pairs }) =>
+            postUsageReport('UPDATE_DOCUMENT', { color: pairs.size })
+          )
           .finally(() => figma.ui.postMessage({ type: 'STOP_LOADER' }))
           .catch((error) => {
             figma.ui.postMessage({
@@ -283,17 +287,25 @@ const loadUI = async () => {
           }),
       SYNC_LOCAL_STYLES: async () =>
         createLocalStyles(path.id)
-          .then(async (message) => [message, await updateLocalStyles(path.id)])
-          .then((messages) =>
+          .then(async (created) => ({
+            created,
+            updated: await updateLocalStyles(path.id),
+          }))
+          .then(({ created, updated }) => {
             figma.ui.postMessage({
               type: 'POST_MESSAGE',
               data: {
                 type: 'INFO',
-                message: messages.join(tolgee.t('separator')),
+                message: [created.message, updated.message].join(
+                  tolgee.t('separator')
+                ),
                 timer: 10000,
               },
             })
-          )
+            postUsageReport('SYNC_LOCAL_STYLES', {
+              style: created.count + updated.count,
+            })
+          })
           .finally(() => figma.ui.postMessage({ type: 'STOP_LOADER' }))
           .catch((error) => {
             figma.ui.postMessage({
@@ -310,20 +322,28 @@ const loadUI = async () => {
           }),
       SYNC_LOCAL_VARIABLES: async () =>
         createLocalVariables(path.id)
-          .then(async (message) => [
-            message,
-            await updateLocalVariables(path.id),
-          ])
-          .then((messages) =>
+          .then(async (created) => ({
+            created,
+            updated: await updateLocalVariables(
+              path.id,
+              created.createdVariableIds
+            ),
+          }))
+          .then(({ created, updated }) => {
             figma.ui.postMessage({
               type: 'POST_MESSAGE',
               data: {
                 type: 'INFO',
-                message: messages.join(tolgee.t('separator')),
+                message: [created.message, updated.message].join(
+                  tolgee.t('separator')
+                ),
                 timer: 10000,
               },
             })
-          )
+            postUsageReport('SYNC_LOCAL_VARIABLES', {
+              variable: updated.count,
+            })
+          })
           .finally(() => figma.ui.postMessage({ type: 'STOP_LOADER' }))
           .catch((error) => {
             figma.ui.postMessage({
@@ -340,12 +360,14 @@ const loadUI = async () => {
           }),
       SIMULATE_PALETTE: async () =>
         createSimulation(path.id)
-          .then((notice) => {
+          .then(({ notice, layers }) => {
             if (notice !== undefined)
               figma.ui.postMessage({
                 type: 'POST_MESSAGE',
                 data: notice,
               })
+            if (layers !== undefined)
+              postUsageReport('SIMULATE_PALETTE', { layer: layers })
           })
           .catch((error) =>
             figma.ui.postMessage({
@@ -359,6 +381,9 @@ const loadUI = async () => {
           .finally(() => figma.ui.postMessage({ type: 'STOP_LOADER' })),
       CREATE_DOCUMENT: () =>
         createDocument(path.id, path.view)
+          .then(({ pairs }) =>
+            postUsageReport('CREATE_DOCUMENT', { color: pairs.size })
+          )
           .finally(() => figma.ui.postMessage({ type: 'STOP_LOADER' }))
           .catch((error) => {
             figma.ui.postMessage({
