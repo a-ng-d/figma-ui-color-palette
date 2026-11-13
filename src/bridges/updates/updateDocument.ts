@@ -6,6 +6,7 @@ import {
   ThemeConfiguration,
   ViewConfiguration,
 } from '@yelbolt/engine-ui-color-palette'
+import { makeDocumentPairs } from '../../utils/usage'
 import setPaletteName from '../../utils/setPaletteName'
 import scheduleSaveVersion from '../../utils/scheduleSaveVersion'
 import Sheet from '../../canvas/Sheet'
@@ -96,7 +97,7 @@ const updateDocument = async (view: ViewConfiguration) => {
     `${palette.base.name} - ${tolgee.t('events.documentUpdated')}`
   )
 
-  return palette
+  return { palette, pairs: makeDocumentPairs([themeData]) }
 }
 
 export default updateDocument

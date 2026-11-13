@@ -3,7 +3,10 @@ import { Data, FullConfiguration } from '@yelbolt/engine-ui-color-palette'
 import scheduleSaveVersion from '../../utils/scheduleSaveVersion'
 import { tolgee } from '../..'
 
-const updateLocalVariables = async (id: string) => {
+const updateLocalVariables = async (
+  id: string,
+  createdVariableIds: Set<string> = new Set()
+) => {
   const rawPalette = figma.currentPage.getSharedPluginData(
     'uicp',
     `palette_${id}`
@@ -43,6 +46,8 @@ const updateLocalVariables = async (id: string) => {
       )
     )
 
+  let count = 0
+
   if (collection !== undefined) {
     const updateLocalVariablesStatusMessage = figma.variables
       .getLocalVariablesAsync()
@@ -63,6 +68,8 @@ const updateLocalVariables = async (id: string) => {
         if (collection.name !== name && (canDeepSyncVariables ?? false))
           collection.name = name
 
+        const modeCountBefore = collection.modes.length
+
         if (canDeepSyncVariables ?? false) {
           collection.modes.forEach((mode) => {
             const themeMatch = palette.libraryData.some(
@@ -79,9 +86,11 @@ const updateLocalVariables = async (id: string) => {
             )
             if (!shadeMatch) {
               localVariable.remove()
+              count += modeCountBefore
               l++
             }
           })
+          count += m * (localVariables.length - l)
         }
 
         palette.libraryData
@@ -164,6 +173,14 @@ const updateLocalVariables = async (id: string) => {
                 k++
               }
             }
+            if (
+              variableMatch !== undefined &&
+              modeMatch !== undefined &&
+              item.gl !== undefined &&
+              item.modeId !== undefined &&
+              (k > 0 || createdVariableIds.has(variableMatch.id))
+            )
+              count++
             if (k > 0) i++
             k = 0
           })
@@ -203,8 +220,10 @@ const updateLocalVariables = async (id: string) => {
         return messages.join(tolgee.t('separator'))
       })
 
-    return await updateLocalVariablesStatusMessage
+    return { message: await updateLocalVariablesStatusMessage, count }
   }
+
+  return { message: undefined, count }
 }
 
 export default updateLocalVariables

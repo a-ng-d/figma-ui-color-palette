@@ -30,6 +30,8 @@ const createLocalStyles = async (id: string) => {
     (item) => !item.id.includes('00000000000')
   )
 
+  let count = 0
+
   const createdLocalStylesStatusMessage = await figma
     .getLocalPaintStylesAsync()
     .then((localStyles) => {
@@ -76,6 +78,7 @@ const createLocalStyles = async (id: string) => {
             })
             item.styleId = style.paintStyle.id
             i++
+            count++
           }
         })
 
@@ -97,7 +100,7 @@ const createLocalStyles = async (id: string) => {
       })
     })
 
-  return createdLocalStylesStatusMessage
+  return { message: createdLocalStylesStatusMessage, count }
 }
 
 export default createLocalStyles

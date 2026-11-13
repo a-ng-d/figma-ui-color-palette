@@ -108,6 +108,11 @@ const createPaletteMatcher = (
   return match
 }
 
+const isSameColor = (a: Rgb, b: Rgb) =>
+  Math.abs(a.r - b.r) < 1e-6 &&
+  Math.abs(a.g - b.g) < 1e-6 &&
+  Math.abs(a.b - b.b) < 1e-6
+
 const remapPaints = (
   paints: ReadonlyArray<Paint>,
   match: (color: Rgb) => Rgb
@@ -115,10 +120,12 @@ const remapPaints = (
   let count = 0
   const next = paints.map((paint) => {
     if (paint.type !== 'SOLID') return paint
+    const color = match(paint.color)
+    if (isSameColor(color, paint.color)) return paint
     count++
     return {
       type: 'SOLID',
-      color: match(paint.color),
+      color,
       opacity: paint.opacity,
       visible: paint.visible,
       blendMode: paint.blendMode,
@@ -135,8 +142,9 @@ const remapEffects = (
   const next = effects.map((effect) => {
     if (!('color' in effect)) return effect
 
-    count++
     const { r, g, b } = match(effect.color)
+    if (isSameColor({ r, g, b }, effect.color)) return effect
+    count++
     const rest = Object.fromEntries(
       Object.entries(effect).filter(([key]) => key !== 'boundVariables')
     )
@@ -183,13 +191,34 @@ const remapNode = (node: SceneNode, match: (color: Rgb) => Rgb): number => {
   return count
 }
 
-const simulateNode = (node: SceneNode, match: (color: Rgb) => Rgb) => {
-  if (!node.visible || node.locked) return
+// Returns the number of layers whose color actually changed
+const simulateNode = (node: SceneNode, match: (color: Rgb) => Rgb): number => {
+  if (!node.visible || node.locked) return 0
 
-  remapNode(node, match)
+  let changed = remapNode(node, match) > 0 ? 1 : 0
   if ('children' in node)
-    node.children.forEach((child) => simulateNode(child, match))
+    node.children.forEach((child) => {
+      changed += simulateNode(child, match)
+    })
+  return changed
 }
+
+const hasRecolorableColor = (node: SceneNode): boolean =>
+  ('fills' in node &&
+    (node.fills === figma.mixed ||
+      node.fills.some((paint) => paint.type === 'SOLID'))) ||
+  ('strokes' in node && node.strokes.some((paint) => paint.type === 'SOLID')) ||
+  ('effects' in node && node.effects.some((effect) => 'color' in effect))
+
+export const countSimulableLayers = (nodes: ReadonlyArray<SceneNode>): number =>
+  nodes.reduce((total, node) => {
+    if (!node.visible || node.locked) return total
+    return (
+      total +
+      (hasRecolorableColor(node) ? 1 : 0) +
+      ('children' in node ? countSimulableLayers(node.children) : 0)
+    )
+  }, 0)
 
 const createSimulation = async (id: string) => {
   const rawPalette = figma.currentPage.getSharedPluginData(
@@ -202,8 +231,11 @@ const createSimulation = async (id: string) => {
   const selection = figma.currentPage.selection
   if (selection.length === 0)
     return {
-      type: 'WARNING' as const,
-      message: tolgee.t('warning.emptySelection'),
+      notice: {
+        type: 'WARNING' as const,
+        message: tolgee.t('warning.emptySelection'),
+      },
+      layers: undefined,
     }
 
   const palette = JSON.parse(rawPalette) as FullConfiguration
@@ -211,9 +243,14 @@ const createSimulation = async (id: string) => {
 
   if (match === null) throw new Error(tolgee.t('error.unfoundPalette'))
 
-  selection.forEach((node) => simulateNode(node, match))
+  const layers = selection.reduce(
+    (total, node) => total + simulateNode(node, match),
+    0
+  )
 
   figma.commitUndo()
+
+  return { notice: undefined, layers }
 }
 
 export default createSimulation

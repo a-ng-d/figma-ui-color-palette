@@ -48,3 +48,26 @@ export interface PaletteMessage {
     value: boolean | object | string
   }>
 }
+
+export type MeteredAction =
+  | 'SYNC_LOCAL_STYLES'
+  | 'SYNC_LOCAL_VARIABLES'
+  | 'SYNC_LOCAL_TOKENS'
+  | 'CREATE_DOCUMENT'
+  | 'UPDATE_DOCUMENT'
+  | 'SIMULATE_PALETTE'
+
+export type UsageUnit = 'color' | 'layer' | 'style' | 'variable' | 'token'
+
+export interface UsageReportMessage {
+  type: 'REPORT_USAGE'
+  data: {
+    action: MeteredAction
+    usage: Partial<Record<UsageUnit, number>>
+  }
+}
+
+export interface SelectionMeasuredMessage {
+  type: 'SELECTION_MEASURED'
+  data: { layers: number }
+}
